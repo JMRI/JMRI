@@ -205,59 +205,35 @@
         <label>invert outputs</label>
       </variable>
       <variable item="Common anode output 1" CV="35" mask="VXXXXXXX" minOut="1" default="0">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>Common anode output 1</label>
       </variable>
       <variable item="Common anode output 2" CV="35" mask="XVXXXXXX" minOut="1" default="0">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>Common anode output 2</label>
       </variable>
       <variable item="Common anode output 3" CV="35" mask="XXVXXXXX" minOut="8" default="0">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>Common anode output 3</label>
       </variable>
       <variable item="Common anode output 4" CV="35" mask="XXXVXXXX" minOut="8" default="0">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>Common anode output 4</label>
       </variable>
       <variable item="Common anode output 5" CV="35" mask="XXXXVXXX" minOut="8" default="0">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>Common anode output 5</label>
       </variable>
       <variable item="Common anode output 6" CV="35" mask="XXXXXVXX" minOut="8" default="0">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>Common anode output 6</label>
       </variable>
       <variable item="Common anode output 7" CV="35" mask="XXXXXXVX" minOut="8" default="0">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>Common anode output 7</label>
       </variable>
       <variable item="Common anode output 8" CV="35" mask="XXXXXXXV" minOut="8" default="0">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>Common anode output 8</label>
       </variable>
       <variable item="default outputs" CV="37" default="0">
@@ -265,59 +241,35 @@
         <label>default outputs</label>
       </variable>
       <variable item="default output 1" CV="37" mask="VXXXXXXX" minOut="8">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>default output 1</label>
       </variable>
       <variable item="default output 2" CV="37" mask="XVXXXXXX" minOut="8">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>default output 2</label>
       </variable>
       <variable item="default output 3" CV="37" mask="XXVXXXXX" minOut="8">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>default output 3</label>
       </variable>
       <variable item="default output 4" CV="37" mask="XXXVXXXX" minOut="8">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>default output 4</label>
       </variable>
       <variable item="default output 5" CV="37" mask="XXXXVXXX" minOut="8">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>default output 5</label>
       </variable>
       <variable item="default output 6" CV="37" mask="XXXXXVXX" minOut="8">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>default output 6</label>
       </variable>
       <variable item="default output 7" CV="37" mask="XXXXXXVX" minOut="8">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>default output 7</label>
       </variable>
       <variable item="default output 8" CV="37" mask="XXXXXXXV" minOut="8">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>default output 8</label>
       </variable>
       <!-- use of item="Locomotive Direction" forces this onto the "basic" pane of the decoder -->
@@ -602,1795 +554,1027 @@
 	  -->
       <!--  Variables 192 to 223 for 32 custom aspects, V023 (productID=57379) and later -->
       <variable item="CustAspect0.A" CV="192" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect0.A</label>
       </variable>
       <variable item="CustAspect0.B" CV="192" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect0.B</label>
       </variable>
       <variable item="CustAspect0.C" CV="192" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect0.C</label>
       </variable>
       <variable item="CustAspect0.D" CV="192" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect0.D</label>
       </variable>
       <variable item="CustAspect0.E" CV="192" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect0.E</label>
       </variable>
       <variable item="CustAspect0.F" CV="192" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect0.F</label>
       </variable>
       <variable item="CustAspect0.G" CV="192" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect0.G</label>
       </variable>
       <variable item="CustAspect0.H" CV="192" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect0.H</label>
       </variable>
       <variable item="CustAspect1.A" CV="193" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect1.A</label>
       </variable>
       <variable item="CustAspect1.B" CV="193" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect1.B</label>
       </variable>
       <variable item="CustAspect1.C" CV="193" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect1.C</label>
       </variable>
       <variable item="CustAspect1.D" CV="193" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect1.D</label>
       </variable>
       <variable item="CustAspect1.E" CV="193" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect1.E</label>
       </variable>
       <variable item="CustAspect1.F" CV="193" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect1.F</label>
       </variable>
       <variable item="CustAspect1.G" CV="193" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect1.G</label>
       </variable>
       <variable item="CustAspect1.H" CV="193" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect1.H</label>
       </variable>
       <variable item="CustAspect2.A" CV="194" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect2.A</label>
       </variable>
       <variable item="CustAspect2.B" CV="194" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect2.B</label>
       </variable>
       <variable item="CustAspect2.C" CV="194" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect2.C</label>
       </variable>
       <variable item="CustAspect2.D" CV="194" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect2.D</label>
       </variable>
       <variable item="CustAspect2.E" CV="194" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect2.E</label>
       </variable>
       <variable item="CustAspect2.F" CV="194" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect2.F</label>
       </variable>
       <variable item="CustAspect2.G" CV="194" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect2.G</label>
       </variable>
       <variable item="CustAspect2.H" CV="194" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect2.H</label>
       </variable>
       <variable item="CustAspect3.A" CV="195" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect3.A</label>
       </variable>
       <variable item="CustAspect3.B" CV="195" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect3.B</label>
       </variable>
       <variable item="CustAspect3.C" CV="195" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect3.C</label>
       </variable>
       <variable item="CustAspect3.D" CV="195" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect3.D</label>
       </variable>
       <variable item="CustAspect3.E" CV="195" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect3.E</label>
       </variable>
       <variable item="CustAspect3.F" CV="195" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect3.F</label>
       </variable>
       <variable item="CustAspect3.G" CV="195" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect3.G</label>
       </variable>
       <variable item="CustAspect3.H" CV="195" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect3.H</label>
       </variable>
       <variable item="CustAspect4.A" CV="196" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect4.A</label>
       </variable>
       <variable item="CustAspect4.B" CV="196" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect4.B</label>
       </variable>
       <variable item="CustAspect4.C" CV="196" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect4.C</label>
       </variable>
       <variable item="CustAspect4.D" CV="196" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect4.D</label>
       </variable>
       <variable item="CustAspect4.E" CV="196" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect4.E</label>
       </variable>
       <variable item="CustAspect4.F" CV="196" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect4.F</label>
       </variable>
       <variable item="CustAspect4.G" CV="196" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect4.G</label>
       </variable>
       <variable item="CustAspect4.H" CV="196" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect4.H</label>
       </variable>
       <variable item="CustAspect5.A" CV="197" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect5.A</label>
       </variable>
       <variable item="CustAspect5.B" CV="197" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect5.B</label>
       </variable>
       <variable item="CustAspect5.C" CV="197" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect5.C</label>
       </variable>
       <variable item="CustAspect5.D" CV="197" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect5.D</label>
       </variable>
       <variable item="CustAspect5.E" CV="197" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect5.E</label>
       </variable>
       <variable item="CustAspect5.F" CV="197" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect5.F</label>
       </variable>
       <variable item="CustAspect5.G" CV="197" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect5.G</label>
       </variable>
       <variable item="CustAspect5.H" CV="197" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect5.H</label>
       </variable>
       <variable item="CustAspect6.A" CV="198" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect6.A</label>
       </variable>
       <variable item="CustAspect6.B" CV="198" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect6.B</label>
       </variable>
       <variable item="CustAspect6.C" CV="198" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect6.C</label>
       </variable>
       <variable item="CustAspect6.D" CV="198" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect6.D</label>
       </variable>
       <variable item="CustAspect6.E" CV="198" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect6.E</label>
       </variable>
       <variable item="CustAspect6.F" CV="198" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect6.F</label>
       </variable>
       <variable item="CustAspect6.G" CV="198" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect6.G</label>
       </variable>
       <variable item="CustAspect6.H" CV="198" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect6.H</label>
       </variable>
       <variable item="CustAspect7.A" CV="199" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect7.A</label>
       </variable>
       <variable item="CustAspect7.B" CV="199" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect7.B</label>
       </variable>
       <variable item="CustAspect7.C" CV="199" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect7.C</label>
       </variable>
       <variable item="CustAspect7.D" CV="199" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect7.D</label>
       </variable>
       <variable item="CustAspect7.E" CV="199" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect7.E</label>
       </variable>
       <variable item="CustAspect7.F" CV="199" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect7.F</label>
       </variable>
       <variable item="CustAspect7.G" CV="199" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect7.G</label>
       </variable>
       <variable item="CustAspect7.H" CV="199" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect7.H</label>
       </variable>
       <variable item="CustAspect8.A" CV="200" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect8.A</label>
       </variable>
       <variable item="CustAspect8.B" CV="200" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect8.B</label>
       </variable>
       <variable item="CustAspect8.C" CV="200" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect8.C</label>
       </variable>
       <variable item="CustAspect8.D" CV="200" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect8.D</label>
       </variable>
       <variable item="CustAspect8.E" CV="200" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect8.E</label>
       </variable>
       <variable item="CustAspect8.F" CV="200" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect8.F</label>
       </variable>
       <variable item="CustAspect8.G" CV="200" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect8.G</label>
       </variable>
       <variable item="CustAspect8.H" CV="200" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect8.H</label>
       </variable>
       <variable item="CustAspect9.A" CV="201" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect9.A</label>
       </variable>
       <variable item="CustAspect9.B" CV="201" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect9.B</label>
       </variable>
       <variable item="CustAspect9.C" CV="201" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect9.C</label>
       </variable>
       <variable item="CustAspect9.D" CV="201" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect9.D</label>
       </variable>
       <variable item="CustAspect9.E" CV="201" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect9.E</label>
       </variable>
       <variable item="CustAspect9.F" CV="201" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect9.F</label>
       </variable>
       <variable item="CustAspect9.G" CV="201" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect9.G</label>
       </variable>
       <variable item="CustAspect9.H" CV="201" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect9.H</label>
       </variable>
       <variable item="CustAspect10.A" CV="202" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect10.A</label>
       </variable>
       <variable item="CustAspect10.B" CV="202" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect10.B</label>
       </variable>
       <variable item="CustAspect10.C" CV="202" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect10.C</label>
       </variable>
       <variable item="CustAspect10.D" CV="202" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect10.D</label>
       </variable>
       <variable item="CustAspect10.E" CV="202" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect10.E</label>
       </variable>
       <variable item="CustAspect10.F" CV="202" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect10.F</label>
       </variable>
       <variable item="CustAspect10.G" CV="202" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect10.G</label>
       </variable>
       <variable item="CustAspect10.H" CV="202" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect10.H</label>
       </variable>
       <variable item="CustAspect11.A" CV="203" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect11.A</label>
       </variable>
       <variable item="CustAspect11.B" CV="203" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect11.B</label>
       </variable>
       <variable item="CustAspect11.C" CV="203" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect11.C</label>
       </variable>
       <variable item="CustAspect11.D" CV="203" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect11.D</label>
       </variable>
       <variable item="CustAspect11.E" CV="203" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect11.E</label>
       </variable>
       <variable item="CustAspect11.F" CV="203" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect11.F</label>
       </variable>
       <variable item="CustAspect11.G" CV="203" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect11.G</label>
       </variable>
       <variable item="CustAspect11.H" CV="203" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect11.H</label>
       </variable>
       <variable item="CustAspect12.A" CV="204" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect12.A</label>
       </variable>
       <variable item="CustAspect12.B" CV="204" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect12.B</label>
       </variable>
       <variable item="CustAspect12.C" CV="204" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect12.C</label>
       </variable>
       <variable item="CustAspect12.D" CV="204" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect12.D</label>
       </variable>
       <variable item="CustAspect12.E" CV="204" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect12.E</label>
       </variable>
       <variable item="CustAspect12.F" CV="204" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect12.F</label>
       </variable>
       <variable item="CustAspect12.G" CV="204" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect12.G</label>
       </variable>
       <variable item="CustAspect12.H" CV="204" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect12.H</label>
       </variable>
       <variable item="CustAspect13.A" CV="205" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect13.A</label>
       </variable>
       <variable item="CustAspect13.B" CV="205" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect13.B</label>
       </variable>
       <variable item="CustAspect13.C" CV="205" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect13.C</label>
       </variable>
       <variable item="CustAspect13.D" CV="205" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect13.D</label>
       </variable>
       <variable item="CustAspect13.E" CV="205" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect13.E</label>
       </variable>
       <variable item="CustAspect13.F" CV="205" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect13.F</label>
       </variable>
       <variable item="CustAspect13.G" CV="205" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect13.G</label>
       </variable>
       <variable item="CustAspect13.H" CV="205" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect13.H</label>
       </variable>
       <variable item="CustAspect14.A" CV="206" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect14.A</label>
       </variable>
       <variable item="CustAspect14.B" CV="206" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect14.B</label>
       </variable>
       <variable item="CustAspect14.C" CV="206" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect14.C</label>
       </variable>
       <variable item="CustAspect14.D" CV="206" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect14.D</label>
       </variable>
       <variable item="CustAspect14.E" CV="206" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect14.E</label>
       </variable>
       <variable item="CustAspect14.F" CV="206" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect14.F</label>
       </variable>
       <variable item="CustAspect14.G" CV="206" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect14.G</label>
       </variable>
       <variable item="CustAspect14.H" CV="206" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect14.H</label>
       </variable>
       <variable item="CustAspect15.A" CV="207" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect15.A</label>
       </variable>
       <variable item="CustAspect15.B" CV="207" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect15.B</label>
       </variable>
       <variable item="CustAspect15.C" CV="207" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect15.C</label>
       </variable>
       <variable item="CustAspect15.D" CV="207" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect15.D</label>
       </variable>
       <variable item="CustAspect15.E" CV="207" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect15.E</label>
       </variable>
       <variable item="CustAspect15.F" CV="207" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect15.F</label>
       </variable>
       <variable item="CustAspect15.G" CV="207" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect15.G</label>
       </variable>
       <variable item="CustAspect15.H" CV="207" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect15.H</label>
       </variable>
       <variable item="CustAspect16.A" CV="208" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect16.A</label>
       </variable>
       <variable item="CustAspect16.B" CV="208" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect16.B</label>
       </variable>
       <variable item="CustAspect16.C" CV="208" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect16.C</label>
       </variable>
       <variable item="CustAspect16.D" CV="208" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect16.D</label>
       </variable>
       <variable item="CustAspect16.E" CV="208" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect16.E</label>
       </variable>
       <variable item="CustAspect16.F" CV="208" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect16.F</label>
       </variable>
       <variable item="CustAspect16.G" CV="208" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect16.G</label>
       </variable>
       <variable item="CustAspect16.H" CV="208" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect16.H</label>
       </variable>
       <variable item="CustAspect17.A" CV="209" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect17.A</label>
       </variable>
       <variable item="CustAspect17.B" CV="209" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect17.B</label>
       </variable>
       <variable item="CustAspect17.C" CV="209" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect17.C</label>
       </variable>
       <variable item="CustAspect17.D" CV="209" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect17.D</label>
       </variable>
       <variable item="CustAspect17.E" CV="209" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect17.E</label>
       </variable>
       <variable item="CustAspect17.F" CV="209" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect17.F</label>
       </variable>
       <variable item="CustAspect17.G" CV="209" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect17.G</label>
       </variable>
       <variable item="CustAspect17.H" CV="209" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect17.H</label>
       </variable>
       <variable item="CustAspect18.A" CV="210" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect18.A</label>
       </variable>
       <variable item="CustAspect18.B" CV="210" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect18.B</label>
       </variable>
       <variable item="CustAspect18.C" CV="210" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect18.C</label>
       </variable>
       <variable item="CustAspect18.D" CV="210" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect18.D</label>
       </variable>
       <variable item="CustAspect18.E" CV="210" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect18.E</label>
       </variable>
       <variable item="CustAspect18.F" CV="210" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect18.F</label>
       </variable>
       <variable item="CustAspect18.G" CV="210" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect18.G</label>
       </variable>
       <variable item="CustAspect18.H" CV="210" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect18.H</label>
       </variable>
       <variable item="CustAspect19.A" CV="211" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect19.A</label>
       </variable>
       <variable item="CustAspect19.B" CV="211" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect19.B</label>
       </variable>
       <variable item="CustAspect19.C" CV="211" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect19.C</label>
       </variable>
       <variable item="CustAspect19.D" CV="211" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect19.D</label>
       </variable>
       <variable item="CustAspect19.E" CV="211" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect19.E</label>
       </variable>
       <variable item="CustAspect19.F" CV="211" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect19.F</label>
       </variable>
       <variable item="CustAspect19.G" CV="211" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect19.G</label>
       </variable>
       <variable item="CustAspect19.H" CV="211" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect19.H</label>
       </variable>
       <variable item="CustAspect20.A" CV="212" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect20.A</label>
       </variable>
       <variable item="CustAspect20.B" CV="212" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect20.B</label>
       </variable>
       <variable item="CustAspect20.C" CV="212" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect20.C</label>
       </variable>
       <variable item="CustAspect20.D" CV="212" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect20.D</label>
       </variable>
       <variable item="CustAspect20.E" CV="212" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect20.E</label>
       </variable>
       <variable item="CustAspect20.F" CV="212" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect20.F</label>
       </variable>
       <variable item="CustAspect20.G" CV="212" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect20.G</label>
       </variable>
       <variable item="CustAspect20.H" CV="212" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect20.H</label>
       </variable>
       <variable item="CustAspect21.A" CV="213" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect21.A</label>
       </variable>
       <variable item="CustAspect21.B" CV="213" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect21.B</label>
       </variable>
       <variable item="CustAspect21.C" CV="213" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect21.C</label>
       </variable>
       <variable item="CustAspect21.D" CV="213" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect21.D</label>
       </variable>
       <variable item="CustAspect21.E" CV="213" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect21.E</label>
       </variable>
       <variable item="CustAspect21.F" CV="213" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect21.F</label>
       </variable>
       <variable item="CustAspect21.G" CV="213" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect21.G</label>
       </variable>
       <variable item="CustAspect21.H" CV="213" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect21.H</label>
       </variable>
       <variable item="CustAspect22.A" CV="214" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect22.A</label>
       </variable>
       <variable item="CustAspect22.B" CV="214" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect22.B</label>
       </variable>
       <variable item="CustAspect22.C" CV="214" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect22.C</label>
       </variable>
       <variable item="CustAspect22.D" CV="214" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect22.D</label>
       </variable>
       <variable item="CustAspect22.E" CV="214" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect22.E</label>
       </variable>
       <variable item="CustAspect22.F" CV="214" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect22.F</label>
       </variable>
       <variable item="CustAspect22.G" CV="214" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect22.G</label>
       </variable>
       <variable item="CustAspect22.H" CV="214" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect22.H</label>
       </variable>
       <variable item="CustAspect23.A" CV="215" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect23.A</label>
       </variable>
       <variable item="CustAspect23.B" CV="215" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect23.B</label>
       </variable>
       <variable item="CustAspect23.C" CV="215" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect23.C</label>
       </variable>
       <variable item="CustAspect23.D" CV="215" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect23.D</label>
       </variable>
       <variable item="CustAspect23.E" CV="215" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect23.E</label>
       </variable>
       <variable item="CustAspect23.F" CV="215" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect23.F</label>
       </variable>
       <variable item="CustAspect23.G" CV="215" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect23.G</label>
       </variable>
       <variable item="CustAspect23.H" CV="215" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect23.H</label>
       </variable>
       <variable item="CustAspect24.A" CV="216" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect24.A</label>
       </variable>
       <variable item="CustAspect24.B" CV="216" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect24.B</label>
       </variable>
       <variable item="CustAspect24.C" CV="216" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect24.C</label>
       </variable>
       <variable item="CustAspect24.D" CV="216" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect24.D</label>
       </variable>
       <variable item="CustAspect24.E" CV="216" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect24.E</label>
       </variable>
       <variable item="CustAspect24.F" CV="216" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect24.F</label>
       </variable>
       <variable item="CustAspect24.G" CV="216" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect24.G</label>
       </variable>
       <variable item="CustAspect24.H" CV="216" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect24.H</label>
       </variable>
       <variable item="CustAspect25.A" CV="217" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect25.A</label>
       </variable>
       <variable item="CustAspect25.B" CV="217" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect25.B</label>
       </variable>
       <variable item="CustAspect25.C" CV="217" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect25.C</label>
       </variable>
       <variable item="CustAspect25.D" CV="217" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect25.D</label>
       </variable>
       <variable item="CustAspect25.E" CV="217" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect25.E</label>
       </variable>
       <variable item="CustAspect25.F" CV="217" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect25.F</label>
       </variable>
       <variable item="CustAspect25.G" CV="217" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect25.G</label>
       </variable>
       <variable item="CustAspect25.H" CV="217" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect25.H</label>
       </variable>
       <variable item="CustAspect26.A" CV="218" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect26.A</label>
       </variable>
       <variable item="CustAspect26.B" CV="218" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect26.B</label>
       </variable>
       <variable item="CustAspect26.C" CV="218" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect26.C</label>
       </variable>
       <variable item="CustAspect26.D" CV="218" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect26.D</label>
       </variable>
       <variable item="CustAspect26.E" CV="218" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect26.E</label>
       </variable>
       <variable item="CustAspect26.F" CV="218" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect26.F</label>
       </variable>
       <variable item="CustAspect26.G" CV="218" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect26.G</label>
       </variable>
       <variable item="CustAspect26.H" CV="218" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect26.H</label>
       </variable>
       <variable item="CustAspect27.A" CV="219" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect27.A</label>
       </variable>
       <variable item="CustAspect27.B" CV="219" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect27.B</label>
       </variable>
       <variable item="CustAspect27.C" CV="219" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect27.C</label>
       </variable>
       <variable item="CustAspect27.D" CV="219" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect27.D</label>
       </variable>
       <variable item="CustAspect27.E" CV="219" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect27.E</label>
       </variable>
       <variable item="CustAspect27.F" CV="219" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect27.F</label>
       </variable>
       <variable item="CustAspect27.G" CV="219" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect27.G</label>
       </variable>
       <variable item="CustAspect27.H" CV="219" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect27.H</label>
       </variable>
       <variable item="CustAspect28.A" CV="220" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect28.A</label>
       </variable>
       <variable item="CustAspect28.B" CV="220" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect28.B</label>
       </variable>
       <variable item="CustAspect28.C" CV="220" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect28.C</label>
       </variable>
       <variable item="CustAspect28.D" CV="220" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect28.D</label>
       </variable>
       <variable item="CustAspect28.E" CV="220" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect28.E</label>
       </variable>
       <variable item="CustAspect28.F" CV="220" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect28.F</label>
       </variable>
       <variable item="CustAspect28.G" CV="220" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect28.G</label>
       </variable>
       <variable item="CustAspect28.H" CV="220" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect28.H</label>
       </variable>
       <variable item="CustAspect29.A" CV="221" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect29.A</label>
       </variable>
       <variable item="CustAspect29.B" CV="221" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect29.B</label>
       </variable>
       <variable item="CustAspect29.C" CV="221" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect29.C</label>
       </variable>
       <variable item="CustAspect29.D" CV="221" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect29.D</label>
       </variable>
       <variable item="CustAspect29.E" CV="221" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect29.E</label>
       </variable>
       <variable item="CustAspect29.F" CV="221" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect29.F</label>
       </variable>
       <variable item="CustAspect29.G" CV="221" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect29.G</label>
       </variable>
       <variable item="CustAspect29.H" CV="221" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect29.H</label>
       </variable>
       <variable item="CustAspect30.A" CV="222" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect30.A</label>
       </variable>
       <variable item="CustAspect30.B" CV="222" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect30.B</label>
       </variable>
       <variable item="CustAspect30.C" CV="222" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect30.C</label>
       </variable>
       <variable item="CustAspect30.D" CV="222" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect30.D</label>
       </variable>
       <variable item="CustAspect30.E" CV="222" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect30.E</label>
       </variable>
       <variable item="CustAspect30.F" CV="222" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect30.F</label>
       </variable>
       <variable item="CustAspect30.G" CV="222" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect30.G</label>
       </variable>
       <variable item="CustAspect30.H" CV="222" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect30.H</label>
       </variable>
       <variable item="CustAspect31.A" CV="223" mask="VXXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect31.A</label>
       </variable>
       <variable item="CustAspect31.B" CV="223" mask="XVXXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect31.B</label>
       </variable>
       <variable item="CustAspect31.C" CV="223" mask="XXVXXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect31.C</label>
       </variable>
       <variable item="CustAspect31.D" CV="223" mask="XXXVXXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect31.D</label>
       </variable>
       <variable item="CustAspect31.E" CV="223" mask="XXXXVXXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect31.E</label>
       </variable>
       <variable item="CustAspect31.F" CV="223" mask="XXXXXVXX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect31.F</label>
       </variable>
       <variable item="CustAspect31.G" CV="223" mask="XXXXXXVX" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect31.G</label>
       </variable>
       <variable item="CustAspect31.H" CV="223" mask="XXXXXXXV" minOut="8" include="57379">
-        <enumVal>
-          <enumChoice choice="No" value="0"/>
-          <enumChoice choice="Yes" value="1"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes-0_1.xml"/>
         <label>CustAspect31.H</label>
       </variable>
     </variables>
