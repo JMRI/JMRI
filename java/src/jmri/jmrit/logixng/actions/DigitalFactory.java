@@ -37,6 +37,7 @@ public class DigitalFactory implements DigitalActionFactory {
                         new AbstractMap.SimpleEntry<>(Category.ITEM, ActionPower.class),
                         new AbstractMap.SimpleEntry<>(Category.ITEM, ActionRequestUpdateAllSensors.class),
                         new AbstractMap.SimpleEntry<>(Category.ITEM, ActionReporter.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, ActionRequestUpdateOfSensor.class),
                         new AbstractMap.SimpleEntry<>(Category.ITEM, ActionScript.class),
                         new AbstractMap.SimpleEntry<>(Category.ITEM, ActionSensor.class),
                         new AbstractMap.SimpleEntry<>(Category.OTHER, ActionShutDownTask.class),
