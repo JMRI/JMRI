@@ -46,12 +46,14 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-oblock-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-power-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-request-update-all-sensors-5.1.6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-request-update-of-sensor-5.7.4.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-reporter-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-script-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-sensor-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-signalhead-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-signalmast-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-sound-4.23.1.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-table-5.7.4.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-timer-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-turnout-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-turnout-lock-4.23.1.xsd"/>
@@ -129,8 +131,9 @@
             <xs:element name="ActionMemory"      type="LogixNG_DigitalAction_ActionMemoryType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionOBlock"      type="LogixNG_DigitalAction_ActionOBlockType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionPower"       type="LogixNG_DigitalAction_ActionPowerType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="ActionRequestUpdateAllSensors"  type="LogixNG_DigitalAction_ActionRequestUpdateAllSensorsType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionReporter"    type="LogixNG_DigitalAction_ActionReporterType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ActionRequestUpdateAllSensors"  type="LogixNG_DigitalAction_ActionRequestUpdateAllSensorsType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ActionRequestUpdateOfSensor"    type="LogixNG_DigitalAction_ActionRequestUpdateOfSensorType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionScript"      type="LogixNG_DigitalAction_ActionScriptType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionSensor"      type="LogixNG_DigitalAction_ActionSensorType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionShutDownTask"  type="LogixNG_DigitalAction_ShutdownTaskType" minOccurs="0" maxOccurs="unbounded" />
@@ -138,6 +141,7 @@
             <xs:element name="ActionSignalMast"  type="LogixNG_DigitalAction_ActionSignalMastType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionSimpleScript"  type="LogixNG_DigitalAction_ActionScriptType" minOccurs="0" maxOccurs="unbounded" /> <!-- Kept temporary. Remove for 4.26 -->
             <xs:element name="ActionSound"       type="LogixNG_DigitalAction_ActionSoundType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="ActionTable"       type="LogixNG_DigitalAction_ActionTableType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionTimer"       type="LogixNG_DigitalAction_ActionTimerType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionTurnout"     type="LogixNG_DigitalAction_ActionTurnoutType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ActionTurnoutLock" type="LogixNG_DigitalAction_ActionTurnoutLockType" minOccurs="0" maxOccurs="unbounded" />

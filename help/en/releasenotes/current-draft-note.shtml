@@ -424,7 +424,12 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>The action <strong>Table</strong> is added. It  lets the
+              user set the value of a cell in a LogixNG table.</li>
+          <li>The action <strong>Request update of sensor</strong> is
+              added. It requests that the state of a sensor is updated
+              from the layout, if possible. Not all connections supports
+              this, for example LocoNet.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
