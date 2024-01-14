@@ -502,7 +502,9 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
             fireTableRowsUpdated(row, row);
         } else {
             super.setValueAt(value, row, col);
-            fireTableRowsUpdated(row, row);
+            if (row < getRowCount()) {
+                fireTableRowsUpdated(row, row);
+            }
         }
     }
 
