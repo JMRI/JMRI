@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng;
 
 import jmri.jmrit.logixng.MaleSocket.ErrorHandlingType;
+import jmri.jmrit.logixng.actions.IfThenElse;
 
 /**
  * Preferences for LogixNG
@@ -104,5 +105,45 @@ public interface LogixNGPreferences {
      * @return true if the system names should be shown, false otherwise
      */
     boolean getShowSystemNameInException();
+
+    /**
+     * Set whenether strict typing should be used for global variables.
+     * @param value true if strict typing should be used for global variables,
+     *              false otherwise
+     */
+    void setStrictTypingGlobalVariables(boolean value);
+
+    /**
+     * Get whenether strict typing should be used for global variables.
+     * @return true if strict typing should be used for global variables,
+     *         false otherwise
+     */
+    boolean getStrictTypingGlobalVariables();
+
+    /**
+     * Set whenether strict typing should be used for local variables.
+     * @param value true if strict typing should be used for local variables,
+     *              false otherwise
+     */
+    void setStrictTypingLocalVariables(boolean value);
+
+    /**
+     * Get whenether strict typing should be used for local variables.
+     * @return true if strict typing should be used for local variables,
+     *         false otherwise
+     */
+    boolean getStrictTypingLocalVariables();
+
+    /**
+     * Set the default execute type for IfThenElse.
+     * @param value the default
+     */
+    void setIfThenElseExecuteTypeDefault(IfThenElse.ExecuteType value);
+
+    /**
+     * Get the default execute type for IfThenElse.
+     * @return the default
+     */
+    IfThenElse.ExecuteType getIfThenElseExecuteTypeDefault();
 
 }
