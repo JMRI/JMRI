@@ -529,14 +529,14 @@
             </xs:documentation></xs:annotation>
           </xs:attribute>
           <xs:attribute name="maxInputVolts" type="xs:string">
-                    <xs:annotation><xs:documentation>Deprecated, see the power element</xs:documentation></xs:annotation>
-                </xs:attribute>
+            <xs:annotation><xs:documentation>Deprecated, see the power element</xs:documentation></xs:annotation>
+          </xs:attribute>
           <xs:attribute name="maxMotorCurrent" type="xs:string">
-                    <xs:annotation><xs:documentation>Deprecated, see the power element</xs:documentation></xs:annotation>
-                </xs:attribute>
+            <xs:annotation><xs:documentation>Deprecated, see the power element</xs:documentation></xs:annotation>
+          </xs:attribute>
           <xs:attribute name="maxTotalCurrent" type="xs:string">
-                    <xs:annotation><xs:documentation>Deprecated, see the power element</xs:documentation></xs:annotation>
-                </xs:attribute>
+            <xs:annotation><xs:documentation>Deprecated, see the power element</xs:documentation></xs:annotation>
+          </xs:attribute>
           <xs:attribute name="formFactor" type="xs:string" />
           <xs:attribute name="nmraWarrant" type="yesNoType" default="no" />
           <xs:attribute name="nmraWarrantStart" type="xs:string" />
