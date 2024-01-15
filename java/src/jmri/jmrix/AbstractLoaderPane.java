@@ -1,7 +1,6 @@
 package jmri.jmrix;
 
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -22,6 +21,7 @@ import javax.swing.JTextField;
 import jmri.jmrit.MemoryContents;
 import jmri.util.FileUtil;
 import jmri.util.swing.JmriJOptionPane;
+import jmri.util.swing.WrapLayout;
 
 /**
  * Pane for downloading .hex files and .dmf files to those LocoNet devices which
@@ -92,7 +92,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
              * selection pushbutton
              */
             inputFileNamePanel = new JPanel();
-            inputFileNamePanel.setLayout(new FlowLayout());
+            inputFileNamePanel.setLayout(new WrapLayout());
             JLabel l = new JLabel(Bundle.getMessage("LabelInpFile"));
             inputFileLabelWidth = l.getMinimumSize().width;
             l.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
@@ -105,7 +105,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
             add(inputFileNamePanel);
 
             JPanel p = new JPanel();
-            p.setLayout(new FlowLayout());
+            p.setLayout(new WrapLayout());
             selectButton = new JButton(Bundle.getMessage("ButtonSelect"));
             selectButton.addActionListener((ActionEvent e) -> {
                 inputContent = new MemoryContents();
@@ -145,7 +145,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
         {
             // create a panel for the upload, verify, and abort buttons
             JPanel p = new JPanel();
-            p.setLayout(new FlowLayout());
+            p.setLayout(new WrapLayout());
 
             loadButton = new JButton(Bundle.getMessage("ButtonDownload"));
             loadButton.setEnabled(false);
@@ -187,7 +187,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
             {
                 // create a panel for displaying a status message
                 p = new JPanel();
-                p.setLayout(new FlowLayout());
+                p.setLayout(new WrapLayout());
                 status.setText(Bundle.getMessage("StatusSelectFile"));
                 // layout
                 status.setAlignmentX(JLabel.LEFT_ALIGNMENT);

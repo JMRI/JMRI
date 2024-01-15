@@ -8,6 +8,7 @@ import java.util.*;
 import javax.swing.*;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.WrapLayout;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import org.openlcb.*;
@@ -79,7 +80,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
 
         // Add to GUI here
         var ns = new JPanel();
-        ns.setLayout(new FlowLayout());
+        ns.setLayout(new WrapLayout());
         add(ns);
         nodeSelector = new org.openlcb.swing.NodeSelector(store, Integer.MAX_VALUE);
         ns.add(nodeSelector);
@@ -88,7 +89,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         check.addActionListener(this::pushedCheckButton);
 
         var ms = new JPanel();
-        ms.setLayout(new FlowLayout());
+        ms.setLayout(new WrapLayout());
         add(ms);
         ms.add(new JLabel("Memory Space:"));
         spaceField = new JTextField("255");
@@ -99,7 +100,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         ms.add(trustStatusReply);
 
         var bb = new JPanel();
-        bb.setLayout(new FlowLayout());
+        bb.setLayout(new WrapLayout());
         add(bb);
         gb = new JButton(Bundle.getMessage("ButtonGet"));
         bb.add(gb);
@@ -112,7 +113,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         cb.addActionListener(this::pushedCancel);
 
         bb = new JPanel();
-        bb.setLayout(new FlowLayout());
+        bb.setLayout(new WrapLayout());
         add(bb);
         statusField = new JLabel("                          ",SwingConstants.CENTER);
         bb.add(statusField);
@@ -152,7 +153,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
 
         JPanel q = new JPanel();
-        q.setLayout(new java.awt.FlowLayout());
+        q.setLayout(new WrapLayout());
         p.add(q);
         q.add(new JLabel(node.toString()));
 
@@ -165,7 +166,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
                 if (ident != null) {
                     name = ident.getUserName();
                     q = new JPanel();
-                    q.setLayout(new java.awt.FlowLayout());
+                    q.setLayout(new WrapLayout());
                     q.add(new JLabel(name));
                     p.add(q);
                 }
