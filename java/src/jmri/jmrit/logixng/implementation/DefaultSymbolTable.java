@@ -8,6 +8,7 @@ import jmri.jmrit.logixng.GlobalVariable;
 import jmri.jmrit.logixng.GlobalVariableManager;
 import jmri.jmrit.logixng.Module.Parameter;
 import jmri.jmrit.logixng.Stack;
+import jmri.jmrit.logixng.Stack.ValueAndType;
 import jmri.jmrit.logixng.SymbolTable;
 
 /**
@@ -53,8 +54,8 @@ public class DefaultSymbolTable implements SymbolTable {
         _symbols.putAll(prevSymbolTable.getSymbols());
         _stack = new DefaultStack();
         for (Symbol symbol : _symbols.values()) {
-            _stack.setValueAtIndex(symbol.getIndex(),
-                    prevSymbolTable.getValue(symbol.getName()));
+            _stack.setValueAndTypeAtIndex(symbol.getIndex(),
+                    prevSymbolTable.getValueAndType(symbol.getName()));
 
         }
         _firstSymbolIndex = _stack.getCount();
@@ -95,6 +96,16 @@ public class DefaultSymbolTable implements SymbolTable {
         GlobalVariable globalVariable = InstanceManager.getDefault(GlobalVariableManager.class).getByUserName(name);
         if (globalVariable != null) {
             return globalVariable.getValue();
+        }
+        throw new SymbolNotFound(String.format("Symbol '%s' does not exist in symbol table", name));
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public ValueAndType getValueAndType(String name) {
+        Symbol symbol = _symbols.get(name);
+        if (symbol != null) {
+            return _stack.getValueAndTypeAtIndex(_firstSymbolIndex + symbol.getIndex());
         }
         throw new SymbolNotFound(String.format("Symbol '%s' does not exist in symbol table", name));
     }
@@ -155,15 +166,16 @@ public class DefaultSymbolTable implements SymbolTable {
                 throw new IllegalArgumentException("Symbol table already contains the variable " + symbol.getName());
             }
 
+            InitialValueType initialValueType = variable.getInitialValueType();
             Object initialValue = SymbolTable.getInitialValue(
-                    variable.getInitialValueType(),
+                    initialValueType,
                     variable.getInitialValueData(),
                     symbolTable,
                     _symbols);
 
 //            System.out.format("Add symbol: %s = %s%n", symbol.getName(), initialValue);
 
-            _stack.push(initialValue);
+            _stack.push(new ValueAndType(initialValueType, initialValue));
             _symbols.put(symbol.getName(), symbol);
         }
     }

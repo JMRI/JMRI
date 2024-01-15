@@ -93,7 +93,12 @@ public class DefaultGlobalVariable extends AbstractNamedBean
     @Override
     public void setValue(Object value) {
         Object old = _value;
-        _value = value;
+        LogixNGPreferences prefs = InstanceManager.getDefault(LogixNGPreferences.class);
+        if (prefs.getStrictTypingLocalVariables()) {
+            _value = SymbolTable.validateStrictTyping(_initialValueType, _value, value);
+        } else {
+            _value = value;
+        }
         // notify
         firePropertyChange("value", old, _value);
     }

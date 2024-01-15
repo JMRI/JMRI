@@ -16,11 +16,13 @@ import javax.script.SimpleBindings;
 
 import jmri.*;
 import jmri.JmriException;
+import jmri.jmrit.logixng.Stack.ValueAndType;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
 import jmri.jmrit.logixng.util.parser.LocalVariableExpressionVariable;
 import jmri.script.JmriScriptEngineManager;
+import jmri.util.TypeConversionUtil;
 
 import org.slf4j.Logger;
 
@@ -49,6 +51,14 @@ public interface SymbolTable {
      * @return the value
      */
     Object getValue(String name);
+
+    /**
+     * Get the value and type of a symbol.
+     * This method does not lookup global variables.
+     * @param name the name
+     * @return the value and type
+     */
+    ValueAndType getValueAndType(String name);
 
     /**
      * Is the symbol in the symbol table?
@@ -449,6 +459,37 @@ public interface SymbolTable {
         return new RecursiveDescentParser(variables);
     }
 
+    /**
+     * Validates that the value can be assigned to a local or global variable
+     * of the specified type if strict typing is enforced. The caller must check
+     * first if this method should be called or not.
+     * @param type the type
+     * @param oldValue the old value
+     * @param newValue the new value
+     * @return the value to assign. It might be converted if needed.
+     */
+    public static Object validateStrictTyping(InitialValueType type, Object oldValue, Object newValue)
+            throws NumberFormatException {
+
+        switch (type) {
+            case None:
+                return newValue;
+            case Integer:
+                return TypeConversionUtil.convertToLong(newValue, true, true);
+            case FloatingNumber:
+                return TypeConversionUtil.convertToDouble(newValue, false, true, true);
+            case String:
+                if (newValue == null) {
+                    return null;
+                }
+                return newValue.toString();
+            default:
+                if (oldValue == null) {
+                    return newValue;
+                }
+                throw new IllegalArgumentException(String.format("A variable of type %s cannot change its value", type._descr));
+        }
+    }
 
 
     static class SymbolNotFound extends IllegalArgumentException {
