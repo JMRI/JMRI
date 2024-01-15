@@ -276,7 +276,7 @@
 
         <h4>MRC</h4>
             <ul>
-                <li></li>
+                <li>MRC serial connections should use odd parity.</li>
             </ul>
 
         <h4>NCE</h4>

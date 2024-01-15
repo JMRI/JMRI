@@ -97,7 +97,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @return the serial port object for later use
      */
     final protected com.fazecast.jSerialComm.SerialPort activatePort(String portName, org.slf4j.Logger log) {
-        return this.activatePort(portName, log, 1); 
+        return this.activatePort(portName, log, 1, PARITY_NONE); 
     }
     
     /**
@@ -116,6 +116,27 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @return the serial port object for later use
      */
     final protected com.fazecast.jSerialComm.SerialPort activatePort(String portName, org.slf4j.Logger log, int stop_bits) {
+        return this.activatePort(portName, log, stop_bits, PARITY_NONE); 
+    }
+
+    /**
+     * Do the formal opening of the port,
+     * set the port for blocking reads without timeout,
+     * set the port to 8 data bits, the indicated number of stop bits and parity,
+     * and purge the port's input stream.
+     * <p>
+     * Does not do the rest of the setup implied in the {@link #openPort} method.
+     * This is usually followed by calls to 
+     * {@link #setBaudRate}, {@link #configureLeads} and {@link #setFlowControl}.
+     * 
+     * @param portName local system name for the desired port
+     * @param log Logger to use for errors, passed so that errors are logged from low-level class'
+     * @param stop_bits The number of stop bits, either 1 or 2
+     * @param parity one of the defined parity contants
+     * @return the serial port object for later use
+     */
+
+    final protected com.fazecast.jSerialComm.SerialPort activatePort(String portName, org.slf4j.Logger log, int stop_bits, int parity) {
         com.fazecast.jSerialComm.SerialPort serialPort = null;
         
         // convert the 1 or 2 stop_bits argument to the proper jSerialComm code value
@@ -137,7 +158,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             serialPort.setComPortTimeouts(com.fazecast.jSerialComm.SerialPort.TIMEOUT_READ_BLOCKING, 0, 0);
             serialPort.setNumDataBits(8);
             serialPort.setNumStopBits(stop_bits_code);
-            serialPort.setParity(com.fazecast.jSerialComm.SerialPort.NO_PARITY);
+            serialPort.setParity(parity);
             purgeStream(serialPort.getInputStream());
         } catch (java.io.IOException | com.fazecast.jSerialComm.SerialPortInvalidPortException ex) {
             // IOException includes 
@@ -262,6 +283,20 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
 
     }
 
+    // Possible parity options
+    static final protected int PARITY_NONE = com.fazecast.jSerialComm.SerialPort.NO_PARITY;
+    static final protected int PARITY_EVEN = com.fazecast.jSerialComm.SerialPort.EVEN_PARITY;
+    static final protected int PARITY_ODD  = com.fazecast.jSerialComm.SerialPort.ODD_PARITY;
+
+    /**
+     * Configure the port's parity
+     * 
+     * @param parity the desired parity as one of the define static final constants
+     */
+    final protected void setParity(com.fazecast.jSerialComm.SerialPort serialPort, int parity) {
+        serialPort.setParity(parity);  // constants are defined with values for the specific port class
+    }
+    
     /**
      * Enumerate the possible flow control choices
      */
