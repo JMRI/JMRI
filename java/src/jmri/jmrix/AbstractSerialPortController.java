@@ -291,6 +291,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     /**
      * Configure the port's parity
      * 
+     * @param serialPort Port to be updated
      * @param parity the desired parity as one of the define static final constants
      */
     final protected void setParity(com.fazecast.jSerialComm.SerialPort serialPort, int parity) {
