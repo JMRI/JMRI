@@ -547,7 +547,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     protected final List<AllocatedSection> allocatedSections = new ArrayList<>();  // List of AllocatedSection objects
     private boolean optionsRead = false;
     private AutoTurnouts autoTurnouts = null;
-    private AutoAllocate autoAllocate = null;
+    public AutoAllocate autoAllocate = null;
     private OptionsMenu optionsMenu = null;
     private ActivateTrainFrame atFrame = null;
     private EditorManager editorManager = null;

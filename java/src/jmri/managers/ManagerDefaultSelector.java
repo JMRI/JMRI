@@ -14,6 +14,7 @@ import java.util.prefs.Preferences;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.AddressedProgrammerManager;
+import jmri.ClockControl;
 import jmri.CommandStation;
 import jmri.ConfigureManager;
 import jmri.ConsistManager;
@@ -280,7 +281,8 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
         new Item("<html>Command<br>Station</html>", CommandStation.class),
         new Item("<html>Service<br>Programmer</html>", GlobalProgrammerManager.class),
         new Item("<html>Ops Mode<br>Programmer</html>", AddressedProgrammerManager.class),
-        new Item("<html>Consists</html>", ConsistManager.class)
+        new Item("<html>Consists</html>", ConsistManager.class),
+        new Item("<html>Clocks</html>", ClockControl.class)
     };
 
     @Override
