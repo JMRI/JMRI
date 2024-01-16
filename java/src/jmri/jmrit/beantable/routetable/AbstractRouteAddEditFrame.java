@@ -74,6 +74,9 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
             "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("TurnoutStateClosed"),
             "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("TurnoutStateThrown")
     };
+    private static String[] turnoutFeedbackModes = new String[]{Bundle.getMessage("TurnoutFeedbackKnown"), 
+                                                                Bundle.getMessage("TurnoutFeedbackCommanded")};
+    
     private static String[] lockTurnoutInputModes = new String[]{
             Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("TurnoutStateClosed"),
             Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("TurnoutStateThrown"),
@@ -89,6 +92,7 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
     final JComboBox<String> sensor3mode = new JComboBox<>(sensorInputModes);
     final JSpinner timeDelay = new JSpinner();
     final JComboBox<String> cTurnoutStateBox = new JComboBox<>(turnoutInputModes);
+    final JComboBox<String> cTurnoutFeedbackBox = new JComboBox<>(turnoutFeedbackModes);
     final JComboBox<String> cLockTurnoutStateBox = new JComboBox<>(lockTurnoutInputModes);
     final JLabel nameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
     final JLabel userLabel = new JLabel(Bundle.getMessage("LabelUserName"));
@@ -385,6 +389,9 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
         p34.add(new JLabel("   " + Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelCondition"))));
         cTurnoutStateBox.setToolTipText(Bundle.getMessage("TooltipTurnoutCondition"));
         p34.add(cTurnoutStateBox);
+        p34.add(new JLabel(Bundle.getMessage("Is")));
+        cTurnoutFeedbackBox.setToolTipText(Bundle.getMessage("TooltipTurnoutFeedback"));
+        p34.add(cTurnoutFeedbackBox);
         p3.add(p34);
         // add additional route-specific delay
         JPanel p36 = new JPanel();
@@ -680,6 +687,8 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
             g.setControlTurnout(cTurnout.getSelectedItemDisplayName());
             // set up Control Turnout state
             g.setControlTurnoutState(turnoutModeFromBox(cTurnoutStateBox));
+            g.setControlTurnoutFeedback(cTurnoutFeedbackBox.getSelectedIndex() == 1);
+            
         } else {
             // No Control Turnout was entered
             g.setControlTurnout("");
@@ -836,6 +845,12 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
         cTurnout.setSelectedItem(route.getCtlTurnout());
 
         setTurnoutModeBox(route.getControlTurnoutState(), cTurnoutStateBox);
+        
+        if (route.getControlTurnoutFeedback()) {
+            cTurnoutFeedbackBox.setSelectedIndex(1); // Known
+        } else {
+            cTurnoutFeedbackBox.setSelectedIndex(0);  // Commanded
+        }
 
         // set up Lock Control Turnout if there is one
         cLockTurnout.setSelectedItem(route.getLockCtlTurnout());
