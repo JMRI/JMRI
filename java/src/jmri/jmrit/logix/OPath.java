@@ -164,7 +164,7 @@ public class OPath extends jmri.Path {
     private void fireTurnouts(List<BeanSetting> list, boolean set, int lockState, boolean lock) {
         for (BeanSetting bs : list) {
             Turnout t = (Turnout) bs.getBean();
-            if (set) {
+            if (set && bs.getSetting() != t.getKnownState()) {
                 t.setCommandedState(bs.getSetting());
             }
             if (lockState > 0) {

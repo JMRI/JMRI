@@ -94,7 +94,7 @@ public class AutoAllocate implements Runnable {
     private int nextPlanNum = 1;
     private final List<AllocationRequest> orderedRequests = new ArrayList<>();
     private List<AllocationRequest> allocationRequests = null;
-    private final Map<String, String> reservedSections = new HashMap<String, String>();
+    public final Map<String, String> reservedSections = new HashMap<String, String>();
 
     private boolean abort = false;
 

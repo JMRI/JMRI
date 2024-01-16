@@ -772,7 +772,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      * attached IPL-capable equipment, check to see if it reports a UR92/UR93/LNWI device
      * as attached. If so, increment count of devices. Else ignore.
      *
-     * @return true if message is an IPL device report indicating a UR92
+     * @return true if message is an IPL device report indicating a UR92 and/or 93
      *         present, else return false.
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE",
