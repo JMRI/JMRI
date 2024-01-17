@@ -25,7 +25,7 @@ public class SerialDriverAdapter extends MrcPortController {
     @Override
     public String openPort(String portName, String appName) {
         // get and open the primary port
-        currentSerialPort = activatePort(portName, log);
+        currentSerialPort = activatePort(portName, log, 1, PARITY_ODD);
         if (currentSerialPort == null) {
             log.error("failed to connect MRC to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
