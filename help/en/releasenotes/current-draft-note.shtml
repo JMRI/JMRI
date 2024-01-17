@@ -430,6 +430,29 @@
               added. It requests that the state of a sensor is updated
               from the layout, if possible. Not all connections supports
               this, for example LocoNet.</li>
+          <li>LogixNG has two new preferences which are disabled by default:
+              <ul>
+                  <li><strong>Use strict typing of global variables</strong></li>
+                  <li><strong>Use strict typing of local variables</strong></li>
+              </ul>
+              If strict typing is enabled, local and global variables
+              that are initialized to a string, integer or floating number
+              cannot be set to a value of another type. LogixNG will try
+              to convert the new value to the desired type, for example
+              a local variable of type floating number will be assigned
+              the value 12.0 if it's assigned 12 and it will be assigned
+              the value 32. if it's assigned the string "32.5".
+              <br>
+              Local and global variables that are initialized to another
+              type, for example array, map or LogixNG table can't be
+              assigned a new value.
+              <br>
+              If you want to use strict typing but still want to override
+              this setting for a particular local or global variable, then
+              initialize this variable to <strict>None</strict>. Variables
+              that are initialized to <strict>None</strict> will not have
+              strict typing,
+          </li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
