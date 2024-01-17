@@ -493,7 +493,11 @@
     <h3>Routes</h3>
         <a id="Routes" name="Routes"></a>
        <ul>
-            <li></li>
+            <li>You can now specify where the control turnout should have its
+                known state (the default old behavior) or its commanded state
+                checked to see if the route should be set.  This can be useful
+                e.g. if you have feedback set on the turnout and want to react
+                quickly to a commanded change.</li>
        </ul>
 
     <h3>Scripting</h3>

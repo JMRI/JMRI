@@ -95,6 +95,7 @@
             <xs:attribute name="userName" type="userNameType" />
             <xs:attribute name="controlTurnout" type="xs:string" />
             <xs:attribute name="controlTurnoutState" type="xs:string" /> <!-- CLOSED/THROWN/? -->
+            <xs:attribute name="controlTurnoutFeedback" type="xs:string" /> <!-- true/false -->
             <xs:attribute name="controlLockTurnout" type="xs:string" />
             <xs:attribute name="controlLockTurnoutState" type="xs:string" /> <!-- CLOSED/THROWN/? -->
             <xs:attribute name="addedDelay" type="xs:int" />
