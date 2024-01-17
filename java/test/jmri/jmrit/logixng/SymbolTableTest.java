@@ -244,8 +244,6 @@ public class SymbolTableTest {
             } else {
                 IllegalArgumentException ex;
 
-                SymbolTable symbolTable;
-
                 switch (type) {
                     case None:
                         globalVariable.initialize();
