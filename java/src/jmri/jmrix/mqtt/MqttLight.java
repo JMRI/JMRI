@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
  * @author Fredrik Elestedt  Copyright (C) 2020
  */
 public class MqttLight extends AbstractVariableLight implements MqttEventListener {
-    private MqttAdapter mqttAdapter;
+    private final MqttAdapter mqttAdapter;
     private final String sendTopic;
     private final String rcvTopic;
 
@@ -195,7 +195,6 @@ public class MqttLight extends AbstractVariableLight implements MqttEventListene
     @Override
     public void dispose() {
         mqttAdapter.unsubscribe(rcvTopic,this);
-        mqttAdapter = null;
         super.dispose();
     }
 

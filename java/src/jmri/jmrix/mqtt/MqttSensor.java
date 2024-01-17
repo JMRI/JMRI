@@ -12,7 +12,7 @@ import jmri.implementation.AbstractSensor;
  */
 public class MqttSensor extends AbstractSensor implements MqttEventListener {
 
-    private MqttAdapter mqttAdapter;
+    private final MqttAdapter mqttAdapter;
     private final String sendTopic;
     private final String rcvTopic;
 
@@ -117,7 +117,6 @@ public class MqttSensor extends AbstractSensor implements MqttEventListener {
     @Override
     public void dispose() {
         mqttAdapter.unsubscribe(rcvTopic, this);
-        mqttAdapter = null;
         super.dispose();
     }
 

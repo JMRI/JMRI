@@ -29,7 +29,7 @@ class MqttReporter extends AbstractIdTagReporter implements MqttEventListener {
         mqttAdapter.subscribe(rcvTopic, MqttReporter.this);
     }
 
-    private MqttAdapter mqttAdapter;
+    private final MqttAdapter mqttAdapter;
     private final String rcvTopic;
 
     @Override
@@ -79,7 +79,6 @@ class MqttReporter extends AbstractIdTagReporter implements MqttEventListener {
     @Override
     public void dispose() {
         mqttAdapter.unsubscribe(rcvTopic, this);
-        mqttAdapter = null;
         super.dispose();
     }
 

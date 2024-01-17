@@ -12,7 +12,7 @@ import jmri.implementation.AbstractTurnout;
  */
 public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
 
-    private MqttAdapter mqttAdapter;
+    private final MqttAdapter mqttAdapter;
     private final String sendTopic;
     private final String rcvTopic;
 
@@ -145,7 +145,6 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
     @Override
     public void dispose() {
         mqttAdapter.unsubscribe(rcvTopic, this);
-        mqttAdapter = null;
         super.dispose();
     }
 
