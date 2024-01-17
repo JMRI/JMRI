@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet.slotmon;
 
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -20,6 +19,7 @@ import jmri.jmrix.loconet.LocoNetSlot;
 import jmri.jmrix.loconet.SlotListener;
 import jmri.jmrix.loconet.SlotMapEntry.SlotType;
 import jmri.swing.JmriJTablePersistenceManager;
+import jmri.util.swing.WrapLayout;
 import jmri.util.table.*;
 
 /**
@@ -148,7 +148,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel implements Slo
 
         // install items in GUI
         topPanel = new JPanel();
-        topPanel.setLayout(new FlowLayout());
+        topPanel.setLayout(new WrapLayout());
 
         topPanel.add(dcsCSLabel);
         dcsType.setEditable(false);
