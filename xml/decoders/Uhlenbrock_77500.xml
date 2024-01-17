@@ -763,59 +763,35 @@
         <label>Assignment of function key to switch output 8</label>
       </variable>
       <variable item="Special function 1 dimmed" CV="112" mask="XXXXXXXV" default="0">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Special function 1 dimmed</label>
       </variable>
       <variable item="Special function 2 dimmed" CV="112" mask="XXXXXXVX" default="0">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Special function 2 dimmed</label>
       </variable>
       <variable item="Special function 3 dimmed" CV="112" mask="XXXXXVXX" default="0">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Special function 3 dimmed</label>
       </variable>
       <variable item="Special function 4 dimmed" CV="112" mask="XXXXVXXX" default="0">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Special function 4 dimmed</label>
       </variable>
       <variable item="Special function 5 dimmed" CV="112" mask="XXXVXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Special function 5 dimmed</label>
       </variable>
       <variable item="Special function 6 dimmed" CV="112" mask="XXVXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Special function 6 dimmed</label>
       </variable>
       <variable item="Special function 7 dimmed" CV="112" mask="XVXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Special function 7 dimmed</label>
       </variable>
       <variable item="Special function 8 dimmed" CV="112" mask="VXXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Special function 8 dimmed</label>
       </variable>
       <variable item="Dimming value" CV="113" default="32" tooltip="(0=off, 63=100%">
