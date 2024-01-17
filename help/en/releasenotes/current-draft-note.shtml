@@ -86,7 +86,8 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Several tools have improved layout when the
+                    screen size is reduced.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -130,6 +131,8 @@
                 <p>This script populates a set of events to match the traffic circuit and then
                 creates a listener for them. That listener populates and maintains a memory to
                 show text for the state of the traffic circuit.</li>
+                <li>Several tools have improved layout when the
+                    screen size is reduced.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -279,7 +282,7 @@
 
         <h4>MRC</h4>
             <ul>
-                <li></li>
+                <li>MRC serial connections should use odd parity.</li>
             </ul>
 
         <h4>NCE</h4>
@@ -478,7 +481,7 @@
     <h3>Resources</h3>
         <a id="Resources" name="Resources"></a>
         <ul>
-            <li></li>
+            <li>Added a blue medium LED.</li>
         </ul>
 
     <h3>Roster</h3>
