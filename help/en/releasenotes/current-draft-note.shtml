@@ -455,6 +455,11 @@
               that are initialized to <strict>None</strict> will not have
               strict typing,
           </li>
+          <li>A new preference is added that selects if the
+              <strong>If Then Else</strong> action should have
+              <strong>Execute on change</strong> or
+              <strong>Always execute</strong> as the default.
+          </li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
