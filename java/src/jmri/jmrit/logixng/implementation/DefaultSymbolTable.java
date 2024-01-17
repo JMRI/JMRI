@@ -168,6 +168,8 @@ public class DefaultSymbolTable implements SymbolTable {
 
             InitialValueType initialValueType = variable.getInitialValueType();
             Object initialValue = SymbolTable.getInitialValue(
+                    SymbolTable.Type.Local,
+                    symbol.getName(),
                     initialValueType,
                     variable.getInitialValueData(),
                     symbolTable,

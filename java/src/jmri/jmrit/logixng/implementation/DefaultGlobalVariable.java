@@ -63,6 +63,8 @@ public class DefaultGlobalVariable extends AbstractNamedBean
 
             case Array:
                 var newArray = SymbolTable.getInitialValue(
+                        SymbolTable.Type.Global,
+                        getUserName(),
                         _initialValueType,
                         _initialValueData,
                         symbolTable,
@@ -80,6 +82,8 @@ public class DefaultGlobalVariable extends AbstractNamedBean
 
             default:
                 value = SymbolTable.getInitialValue(
+                        SymbolTable.Type.Global,
+                        getUserName(),
                         _initialValueType,
                         _initialValueData,
                         symbolTable,

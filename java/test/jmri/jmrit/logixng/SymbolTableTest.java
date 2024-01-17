@@ -1,13 +1,13 @@
 package jmri.jmrit.logixng;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -163,6 +163,139 @@ public class SymbolTableTest {
         symbolTable.setValue("myVar", 12);
         Assert.assertEquals("variable has correct value",
                 12.0, (double)symbolTable.getValue("myVar"), 0.00000001);
+    }
+
+    @Test
+    public void testInitializeLocalVariables() throws JmriException {
+        for (InitialValueType type : InitialValueType.values()) {
+            if (null == type) {
+                SymbolTable symbolTable = createLocalVariable(type, null);
+                Assert.assertNull("variable is null", symbolTable.getValue("myVar"));
+            } else {
+                IllegalArgumentException ex;
+
+                SymbolTable symbolTable;
+
+                switch (type) {
+                    case None:
+                        symbolTable = createLocalVariable(type, null);
+                        Assert.assertNull("variable is null", symbolTable.getValue("myVar"));
+                        break;
+
+                    case String:
+                        symbolTable = createLocalVariable(type, null);
+                        Assert.assertNull("variable is null", symbolTable.getValue("myVar"));
+                        break;
+
+                    case Integer:
+                        ex = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+                            createLocalVariable(type, null);
+                        });
+                        Assert.assertEquals("Initial data is null for local variable \"myVar\". Sets value to 0.", ex.getMessage());
+                        break;
+
+                    case FloatingNumber:
+                        ex = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+                            createLocalVariable(type, null);
+                        });
+                        Assert.assertEquals("Initial data is null for local variable \"myVar\". Sets value to 0.0.", ex.getMessage());
+                        break;
+
+                    case Map:
+                        symbolTable = createLocalVariable(type, null);
+                        Assert.assertTrue("variable is a map", symbolTable.getValue("myVar") instanceof Map);
+                        Assert.assertTrue("map is empty", ((Map)symbolTable.getValue("myVar")).isEmpty());
+                        break;
+
+                    case Array:
+                        symbolTable = createLocalVariable(type, null);
+                        Assert.assertTrue("variable is a list", symbolTable.getValue("myVar") instanceof List);
+                        Assert.assertTrue("list is empty", ((List)symbolTable.getValue("myVar")).isEmpty());
+                        break;
+
+                    default:
+                        ex = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+                            createLocalVariable(type, null);
+                        });
+                        Assert.assertEquals(String.format(
+                                "Initial data is null for local variable \"myVar\". Can't set value from %s.",
+                                type.toString().toLowerCase()),
+                                ex.getMessage());
+                }
+                Assert.assertTrue("backlog is empty", JUnitAppender.getBacklog().isEmpty());
+            }
+        }
+    }
+
+    @Test
+    public void testInitializeGlobalVariables() throws JmriException {
+        GlobalVariableManager mgr = InstanceManager.getDefault(GlobalVariableManager.class);
+
+        for (InitialValueType type : InitialValueType.values()) {
+
+            GlobalVariable globalVariable = mgr.createGlobalVariable("myVar");
+            globalVariable.setInitialValueType(type);
+            globalVariable.setInitialValueData(null);
+
+            if (null == type) {
+                globalVariable.initialize();
+                SymbolTable symbolTable = createLocalVariable(type, null);
+                Assert.assertNull("variable is null", symbolTable.getValue("myVar"));
+            } else {
+                IllegalArgumentException ex;
+
+                SymbolTable symbolTable;
+
+                switch (type) {
+                    case None:
+                        globalVariable.initialize();
+                        Assert.assertNull("variable is null", globalVariable.getValue());
+                        break;
+
+                    case String:
+                        globalVariable.initialize();
+                        Assert.assertNull("variable is null", globalVariable.getValue());
+                        break;
+
+                    case Integer:
+                        ex = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+                            globalVariable.initialize();
+                        });
+                        Assert.assertEquals("Initial data is null for global variable \"myVar\". Sets value to 0.", ex.getMessage());
+                        break;
+
+                    case FloatingNumber:
+                        ex = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+                            globalVariable.initialize();
+                        });
+                        Assert.assertEquals("Initial data is null for global variable \"myVar\". Sets value to 0.0.", ex.getMessage());
+                        break;
+
+                    case Map:
+                        globalVariable.initialize();
+                        Assert.assertTrue("variable is a map", globalVariable.getValue() instanceof Map);
+                        Assert.assertTrue("map is empty", ((Map)globalVariable.getValue()).isEmpty());
+                        break;
+
+                    case Array:
+                        globalVariable.initialize();
+                        Assert.assertTrue("variable is a list", globalVariable.getValue() instanceof List);
+                        Assert.assertTrue("list is empty", ((List)globalVariable.getValue()).isEmpty());
+                        break;
+
+                    default:
+                        ex = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+                            globalVariable.initialize();
+                        });
+                        Assert.assertEquals(String.format(
+                                "Initial data is null for global variable \"myVar\". Can't set value from %s.",
+                                type.toString().toLowerCase()),
+                                ex.getMessage());
+                }
+                Assert.assertTrue("backlog is empty", JUnitAppender.getBacklog().isEmpty());
+            }
+            mgr.deleteGlobalVariable(globalVariable);
+        }
     }
 
     // The minimal setup for log4J
