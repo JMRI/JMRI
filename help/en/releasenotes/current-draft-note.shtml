@@ -127,6 +127,10 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
+                <li>Updated script DisplayTrackCircuit.py to support the Tower +Que node
+                <p>This script populates a set of events to match the traffic circuit and then
+                creates a listener for them. That listener populates and maintains a memory to
+                show text for the state of the traffic circuit.</li>
                 <li>Several tools have improved layout when the
                     screen size is reduced.</li>
             </ul>
