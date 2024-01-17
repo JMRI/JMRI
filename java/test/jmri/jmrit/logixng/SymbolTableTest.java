@@ -191,14 +191,14 @@ public class SymbolTableTest {
                         ex = Assertions.assertThrows(IllegalArgumentException.class, () -> {
                             createLocalVariable(type, null);
                         });
-                        Assert.assertEquals("Initial data is null for local variable \"myVar\". Sets value to 0.", ex.getMessage());
+                        Assert.assertEquals("Initial data is null for local variable \"myVar\". Can't set value to integer.", ex.getMessage());
                         break;
 
                     case FloatingNumber:
                         ex = Assertions.assertThrows(IllegalArgumentException.class, () -> {
                             createLocalVariable(type, null);
                         });
-                        Assert.assertEquals("Initial data is null for local variable \"myVar\". Sets value to 0.0.", ex.getMessage());
+                        Assert.assertEquals("Initial data is null for local variable \"myVar\". Can't set value to floating number.", ex.getMessage());
                         break;
 
                     case Map:
@@ -259,14 +259,14 @@ public class SymbolTableTest {
                         ex = Assertions.assertThrows(IllegalArgumentException.class, () -> {
                             globalVariable.initialize();
                         });
-                        Assert.assertEquals("Initial data is null for global variable \"myVar\". Sets value to 0.", ex.getMessage());
+                        Assert.assertEquals("Initial data is null for global variable \"myVar\". Can't set value to integer.", ex.getMessage());
                         break;
 
                     case FloatingNumber:
                         ex = Assertions.assertThrows(IllegalArgumentException.class, () -> {
                             globalVariable.initialize();
                         });
-                        Assert.assertEquals("Initial data is null for global variable \"myVar\". Sets value to 0.0.", ex.getMessage());
+                        Assert.assertEquals("Initial data is null for global variable \"myVar\". Can't set value to floating number.", ex.getMessage());
                         break;
 
                     case Map:

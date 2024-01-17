@@ -81,6 +81,7 @@ public class CreateLogixNGTreeScaffold {
     private StringActionManager stringActionManager;
     private StringExpressionManager stringExpressionManager;
     private LogixNG_InitializationManager logixNG_InitializationManager;
+    private GlobalVariableManager globalVariables_Manager;
 
 //    private AudioManager audioManager;
 
@@ -199,6 +200,22 @@ public class CreateLogixNGTreeScaffold {
         stringActionManager = InstanceManager.getDefault(StringActionManager.class);
         stringExpressionManager = InstanceManager.getDefault(StringExpressionManager.class);
         logixNG_InitializationManager = InstanceManager.getDefault(LogixNG_InitializationManager.class);
+        globalVariables_Manager = InstanceManager.getDefault(GlobalVariableManager.class);
+
+
+        // Test that global variables of any type can be stored and loaded
+        // even if the initial value is null.
+        for (InitialValueType type : InitialValueType.values()) {
+            GlobalVariable globalVariable = globalVariables_Manager
+                    .createGlobalVariable("TestVariable_"+type.name());
+            globalVariable.setInitialValueType(type);
+            globalVariable.setInitialValueData(null);
+
+            globalVariable = globalVariables_Manager
+                    .createGlobalVariable("TestVariable_"+type.name()+"_2");
+            globalVariable.setInitialValueType(type);
+            globalVariable.setInitialValueData("");
+        }
 
 
         // Load table turnout_and_signals.csv

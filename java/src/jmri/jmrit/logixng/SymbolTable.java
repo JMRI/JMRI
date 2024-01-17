@@ -359,6 +359,15 @@ public interface SymbolTable {
     }
 
 
+    private static void validateValue(Type type, String name, String initialData, String descr) {
+        if (initialData == null) {
+            throw new IllegalArgumentException(String.format("Initial data is null for %s \"%s\". Can't set value %s.", type._descr, name, descr));
+        }
+        if (initialData.isBlank()) {
+            throw new IllegalArgumentException(String.format("Initial data is empty string for %s \"%s\". Can't set value %s.", type._descr, name, descr));
+        }
+    }
+
     static Object getInitialValue(
             Type type,
             String name,
@@ -373,15 +382,11 @@ public interface SymbolTable {
                 return null;
 
             case Integer:
-                if (initialData == null) {
-                    throw new IllegalArgumentException(String.format("Initial data is null for %s \"%s\". Sets value to 0.", type._descr, name));
-                }
+                validateValue(type, name, initialData, "to integer");
                 return Long.valueOf(initialData);
 
             case FloatingNumber:
-                if (initialData == null) {
-                    throw new IllegalArgumentException(String.format("Initial data is null for %s \"%s\". Sets value to 0.0.", type._descr, name));
-                }
+                validateValue(type, name, initialData, "to floating number");
                 return Double.valueOf(initialData);
 
             case String:
@@ -432,23 +437,17 @@ public interface SymbolTable {
                 return new java.util.HashMap<>();
 
             case LocalVariable:
-                if (initialData == null) {
-                    throw new IllegalArgumentException(String.format("Initial data is null for %s \"%s\". Can't set value from local variable.", type._descr, name));
-                }
+                validateValue(type, name, initialData, "from local variable");
                 return symbolTable.getValue(initialData);
 
             case Memory:
-                if (initialData == null) {
-                    throw new IllegalArgumentException(String.format("Initial data is null for %s \"%s\". Can't set value from memory.", type._descr, name));
-                }
+                validateValue(type, name, initialData, "from memory");
                 Memory m = InstanceManager.getDefault(MemoryManager.class).getNamedBean(initialData);
                 if (m != null) return m.getValue();
                 else return null;
 
             case Reference:
-                if (initialData == null) {
-                    throw new IllegalArgumentException(String.format("Initial data is null for %s \"%s\". Can't set value from reference.", type._descr, name));
-                }
+                validateValue(type, name, initialData, "from reference");
                 if (ReferenceUtil.isReference(initialData)) {
                     return ReferenceUtil.getReference(
                             symbolTable, initialData);
@@ -458,30 +457,22 @@ public interface SymbolTable {
                 }
 
             case Formula:
-                if (initialData == null) {
-                    throw new IllegalArgumentException(String.format("Initial data is null for %s \"%s\". Can't set value from formula.", type._descr, name));
-                }
+                validateValue(type, name, initialData, "from formula");
                 RecursiveDescentParser parser = createParser(symbols);
                 ExpressionNode expressionNode = parser.parseExpression(
                         initialData);
                 return expressionNode.calculate(symbolTable);
 
             case ScriptExpression:
-                if (initialData == null) {
-                    throw new IllegalArgumentException(String.format("Initial data is null for %s \"%s\". Can't set value from script expression.", type._descr, name));
-                }
+                validateValue(type, name, initialData, "from script expression");
                 return runScriptExpression(initialData);
 
             case ScriptFile:
-                if (initialData == null) {
-                    throw new IllegalArgumentException(String.format("Initial data is null for %s \"%s\". Can't set value from script file.", type._descr, name));
-                }
+                validateValue(type, name, initialData, "from script file");
                 return runScriptFile(initialData);
 
             case LogixNG_Table:
-                if (initialData == null) {
-                    throw new IllegalArgumentException(String.format("Initial data is null for %s \"%s\". Can't set value from logixng table.", type._descr, name));
-                }
+                validateValue(type, name, initialData, "from logixng table");
                 return copyLogixNG_Table(initialData);
 
             default:
