@@ -29,7 +29,7 @@ class MqttReporter extends AbstractIdTagReporter implements MqttEventListener {
         mqttAdapter.subscribe(rcvTopic, MqttReporter.this);
     }
 
-    private final MqttAdapter mqttAdapter;
+    private MqttAdapter mqttAdapter;
     private final String rcvTopic;
 
     @Override
@@ -74,6 +74,13 @@ class MqttReporter extends AbstractIdTagReporter implements MqttEventListener {
         } catch (IllegalArgumentException e) {
             log.error("Reporter {} cannot make a tag from input ({})", getSystemName(), message);
         }
+    }
+
+    @Override
+    public void dispose() {
+        mqttAdapter.unsubscribe(rcvTopic, this);
+        mqttAdapter = null;
+        super.dispose();
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MqttReporter.class);

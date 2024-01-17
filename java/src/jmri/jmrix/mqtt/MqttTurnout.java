@@ -12,7 +12,7 @@ import jmri.implementation.AbstractTurnout;
  */
 public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
 
-    private final MqttAdapter mqttAdapter;
+    private MqttAdapter mqttAdapter;
     private final String sendTopic;
     private final String rcvTopic;
 
@@ -141,6 +141,14 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         log.warn("Send command to {} Pushbutton in {} not yet coded", (_pushButtonLockout ? "Lock" : "Unlock"), getSystemName());
     }
+
+    @Override
+    public void dispose() {
+        mqttAdapter.unsubscribe(rcvTopic, this);
+        mqttAdapter = null;
+        super.dispose();
+    }
+
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MqttTurnout.class);
 

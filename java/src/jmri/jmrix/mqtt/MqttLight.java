@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
  * @author Fredrik Elestedt  Copyright (C) 2020
  */
 public class MqttLight extends AbstractVariableLight implements MqttEventListener {
-    private final MqttAdapter mqttAdapter;
+    private MqttAdapter mqttAdapter;
     private final String sendTopic;
     private final String rcvTopic;
 
@@ -190,6 +190,13 @@ public class MqttLight extends AbstractVariableLight implements MqttEventListene
 
         // handle on/off
         parser.beanFromPayload(this, message, receivedTopic);
+    }
+
+    @Override
+    public void dispose() {
+        mqttAdapter.unsubscribe(rcvTopic,this);
+        mqttAdapter = null;
+        super.dispose();
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MqttLight.class);

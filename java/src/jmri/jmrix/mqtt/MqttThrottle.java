@@ -198,7 +198,8 @@ import java.util.regex.*;
 
         mqttAdapter.unsubscribe(this.rcvThrottleTopic.replaceFirst("\\{0\\}", String.valueOf(address)), this);
         mqttAdapter.unsubscribe(this.rcvDirectionTopic.replaceFirst("\\{0\\}", String.valueOf(address)), this);
-        mqttAdapter.unsubscribe(this.rcvFunctionTopic.replaceFirst("\\{0\\}", String.valueOf(address)).replaceFirst("\\{0\\}", "#"),  this);
+        mqttAdapter.unsubscribe(this.rcvFunctionTopic.replaceFirst("\\{0\\}", String.valueOf(address)).replaceFirst("\\{1\\}", "+"), this);
+
 
     }
 
@@ -234,13 +235,13 @@ import java.util.regex.*;
 
             mqttAdapter.unsubscribe(this.rcvThrottleTopic.replaceFirst("\\{0\\}", String.valueOf(address)), this);
             mqttAdapter.unsubscribe(this.rcvDirectionTopic.replaceFirst("\\{0\\}", String.valueOf(address)), this);
-            mqttAdapter.unsubscribe(this.rcvFunctionTopic.replaceFirst("\\{0\\}", String.valueOf(address)).replaceFirst("\\{1\\}", "#"), this);
+            mqttAdapter.unsubscribe(this.rcvFunctionTopic.replaceFirst("\\{0\\}", String.valueOf(address)).replaceFirst("\\{1\\}", "+"), this);
         }
         address = newaddress;
 
         mqttAdapter.subscribe(this.rcvThrottleTopic.replaceFirst("\\{0\\}", String.valueOf(address)), this);
         mqttAdapter.subscribe(this.rcvDirectionTopic.replaceFirst("\\{0\\}", String.valueOf(address)), this);
-        mqttAdapter.subscribe(this.rcvFunctionTopic.replaceFirst("\\{0\\}", String.valueOf(address)).replaceFirst("\\{1\\}", "#"), this);
+        mqttAdapter.subscribe(this.rcvFunctionTopic.replaceFirst("\\{0\\}", String.valueOf(address)).replaceFirst("\\{1\\}", "+"), this);
 
         consistManager.activateConsist(getLocoAddress());
         setSpeedSetting(0);

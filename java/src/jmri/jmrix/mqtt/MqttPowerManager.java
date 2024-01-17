@@ -17,7 +17,7 @@ public class MqttPowerManager extends AbstractPowerManager<MqttSystemConnectionM
 
     private static final String onText = "ON";
     private static final String offText = "OFF";
-    private final MqttAdapter mqttAdapter;
+    private MqttAdapter mqttAdapter;
 
     public MqttPowerManager(MqttSystemConnectionMemo memo) {
         super(memo);
@@ -65,6 +65,8 @@ public class MqttPowerManager extends AbstractPowerManager<MqttSystemConnectionM
     // to free resources when no longer used
     @Override
     public void dispose() throws JmriException {
+            this.mqttAdapter.unsubscribe(rcvTopic, this);
+            mqttAdapter = null;
     }
 
 

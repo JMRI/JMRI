@@ -12,7 +12,7 @@ import jmri.implementation.AbstractSensor;
  */
 public class MqttSensor extends AbstractSensor implements MqttEventListener {
 
-    private final MqttAdapter mqttAdapter;
+    private MqttAdapter mqttAdapter;
     private final String sendTopic;
     private final String rcvTopic;
 
@@ -111,6 +111,14 @@ public class MqttSensor extends AbstractSensor implements MqttEventListener {
         }
         
         parser.beanFromPayload(this, message, receivedTopic);
+    }
+
+
+    @Override
+    public void dispose() {
+        mqttAdapter.unsubscribe(rcvTopic, this);
+        mqttAdapter = null;
+        super.dispose();
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MqttSensor.class);
