@@ -25,13 +25,13 @@ public class SerialDriverAdapter extends MrcPortController {
     @Override
     public String openPort(String portName, String appName) {
         // get and open the primary port
-        currentSerialPort = activatePort(portName, log, 1, PARITY_ODD);
+        currentSerialPort = activatePort(portName, log, 1, Parity.ODD);
         if (currentSerialPort == null) {
             log.error("failed to connect MRC to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
         log.info("Connecting MRC to {} {}", portName, currentSerialPort);
-        
+
         // try to set it for communication via SerialDriver
         // find the baud rate value, configure comm options
         int baud = currentBaudNumber(getCurrentBaudRate());
