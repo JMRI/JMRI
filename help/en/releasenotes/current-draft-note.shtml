@@ -107,6 +107,9 @@
 
         <h4>MQTT</h4>
             <ul>
+                <li>Fixed missing topic unsubscribes when deleting turnouts, sensors, etc</li>
+                <li>Fixed missing topic unsubscribe on throttle release for cab functions</li>
+                <li>Added code to properly dispose of MQTT components</li>
                 <li></li>
             </ul>
 

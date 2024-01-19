@@ -113,6 +113,13 @@ public class MqttSensor extends AbstractSensor implements MqttEventListener {
         parser.beanFromPayload(this, message, receivedTopic);
     }
 
+
+    @Override
+    public void dispose() {
+        mqttAdapter.unsubscribe(rcvTopic, this);
+        super.dispose();
+    }
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MqttSensor.class);
 
 }
