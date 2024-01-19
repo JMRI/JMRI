@@ -439,6 +439,10 @@
               added. It requests that the state of a sensor is updated
               from the layout, if possible. Not all connections supports
               this, for example LocoNet.</li>
+          <li>The action <strong>Table: For each</strong> can now loop
+              thru the headers too. If indirect addressing is used for
+              the row or column name, use the empty string to get the
+              headers.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
