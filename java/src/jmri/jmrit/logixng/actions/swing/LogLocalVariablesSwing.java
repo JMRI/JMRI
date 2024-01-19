@@ -54,6 +54,7 @@ public class LogLocalVariablesSwing extends AbstractDigitalActionSwing {
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
         LogLocalVariables action = new LogLocalVariables(systemName, userName);
+        updateObject(action);
         return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
     }
 
