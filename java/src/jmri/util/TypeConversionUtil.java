@@ -238,7 +238,7 @@ public final class TypeConversionUtil {
             if (!(value instanceof Byte) && !(value instanceof Short) && !(value instanceof Integer) && !(value instanceof Long)) {
                 if (throwOnError) {
                     throw new NumberFormatException(
-                            String.format("the null value cannot be converted to an integer"));
+                            String.format("the value %s cannot be converted to an integer", value));
                 }
             }
             return ((Number)value).longValue();
