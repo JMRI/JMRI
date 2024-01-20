@@ -316,7 +316,7 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
         /** {@inheritDoc} */
         @Override
         public int getColumnCount() {
-            return super.getColumnCount() + 1;
+            return STARTUP_COL + 1;
         }
 
         @Override
