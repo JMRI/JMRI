@@ -334,7 +334,9 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
     }
 
     public Set<Positionable> getPositionablesByClassName(String className) {
-        return Collections.unmodifiableSet(_classContents.get(className));
+        Set<Positionable> set = _classContents.get(className);
+        if (set == null) return null;
+        return Collections.unmodifiableSet(set);
     }
 
     public void setDefaultToolTip(ToolTip dtt) {
