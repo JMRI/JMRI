@@ -194,10 +194,15 @@
           "HW Downloader Pane" width="145" height="171"></a>
         </li>
       
-        <li>The Memory Tool
+        <li>The
         <a href="../../../package/jmri/jmrix/openlcb/swing/memtool/MemoryToolPane.shtml">Memory Tool</a>
         lets you read from and directly write to a nodes memory.  This can be 
         useful for diagnostic purposes.
+        </li>
+        
+        <li>The=
+        <a href="../../../package/jmri/jmrix/openlcb/swing/idtool/IdToolPane.shtml">ID Tool</a>
+        helps you find a specific physical node on the layout by flashing its activity lights.
         </li>
         
       </ul>
