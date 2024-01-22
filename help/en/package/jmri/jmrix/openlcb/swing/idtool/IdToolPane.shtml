@@ -19,7 +19,7 @@
         <p>
         On RR-CirKits nodes, this is the blue LED.
         <p>
-        Press "Identify" to start and "Cancel" end the process.
+        Press "Identify" to start and "Cancel" to end the process.
         
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
