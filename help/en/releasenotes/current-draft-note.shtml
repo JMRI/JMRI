@@ -483,8 +483,8 @@
               indirect addressing, an error message is added to the
               log:<br>
               <strong>Error during loading Sensor Edge expression
-              IQDE:AUTO:0003 due to: Addressing must be Direct</strong>
-              there IQDE:AUTO:0003 is the system name of the expression.</li>
+              IQDE:AUTO:0003 due to: Addressing must be Direct</strong><br>
+              where IQDE:AUTO:0003 is the system name of the expression.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
