@@ -85,7 +85,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="1:56 PM">
+    <memory value="10:09 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -176,7 +176,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Wed Jan 17 13:56:42 CET 2024" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon Jan 22 22:09:16 CET 2024" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <LogixNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <Thread>
       <id>0</id>
@@ -10512,12 +10512,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDE:AUTO:0107</systemName>
       <comment>A comment</comment>
       <namedBean>
-        <addressing>LocalVariable</addressing>
+        <addressing>Direct</addressing>
         <name>IS1</name>
-        <reference>{IM1}</reference>
         <listenToMemory>no</listenToMemory>
-        <localVariable>index</localVariable>
-        <formula>"IT"+index</formula>
       </namedBean>
       <fromState>
         <addressing>Formula</addressing>
@@ -10612,12 +10609,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDE:AUTO:0108</systemName>
       <comment>A comment</comment>
       <namedBean>
-        <addressing>Formula</addressing>
+        <addressing>Direct</addressing>
         <name>IS1</name>
-        <reference>{IM1}</reference>
         <listenToMemory>no</listenToMemory>
-        <localVariable>index</localVariable>
-        <formula>"IT"+index</formula>
       </namedBean>
       <fromState>
         <addressing>Reference</addressing>
@@ -10709,12 +10703,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDE:AUTO:0109</systemName>
       <comment>A comment</comment>
       <namedBean>
-        <addressing>Reference</addressing>
+        <addressing>Direct</addressing>
         <name>IS1</name>
-        <reference>{IM1}</reference>
         <listenToMemory>no</listenToMemory>
-        <localVariable>index</localVariable>
-        <formula>"IT"+index</formula>
       </namedBean>
       <fromState>
         <addressing>Direct</addressing>
@@ -49574,9 +49565,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Wed Jan 17 13:56:46 CET 2024</date>
+      <date>Mon Jan 22 22:09:22 CET 2024</date>
       <filename>/home/daniel/Dokument/GitHub/JMRI/temp/temp/LogixNG_temp.xml</filename>
     </operation>
   </filehistory>
-  <!--Written by JMRI version 5.7.3plus+daniel+2024-01-17T12:56:37Z+RUNKNOWN on Wed Jan 17 13:56:46 CET 2024-->
+  <!--Written by JMRI version 5.7.3plus+daniel+2024-01-22T21:09:10Z+RUNKNOWN on Mon Jan 22 22:09:22 CET 2024-->
 </layout-config>
