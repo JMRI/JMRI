@@ -34,6 +34,7 @@ import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.TextAreaFIFO;
+import jmri.util.swing.WrapLayout;
 
 /**
  * Abstract base class for JPanels displaying communications monitor
@@ -290,8 +291,17 @@ public abstract class AbstractMonPane extends JmriPanel {
         JPanel paneA = new JPanel();
         paneA.setLayout(new BoxLayout(paneA, BoxLayout.Y_AXIS));
 
-        JPanel pane1 = new JPanel();
-        pane1.setLayout(new BoxLayout(pane1, BoxLayout.X_AXIS));
+        JPanel pane1 = new JPanel(){
+            public Dimension getPreferredSize() {
+                Dimension min = super.getMinimumSize();
+                Dimension max = super.getMaximumSize();
+                return new Dimension(max.width, min.height);
+            }
+            public Dimension getMaximumSize() {
+                return getPreferredSize();
+            }
+        };
+        pane1.setLayout(new WrapLayout());
         pane1.add(clearButton);
         pane1.add(freezeButton);
         pane1.add(rawCheckBox);
