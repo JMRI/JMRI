@@ -62,7 +62,7 @@ public class ExpressionSensorEdgeXml extends jmri.managers.configurexml.Abstract
         try {
             selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
         } catch (IllegalArgumentException e) {
-            log.error("Error during loading Sensor Edge expression {}", h.getDisplayName(), e);
+            log.error("Error during loading Sensor Edge expression {} due to: {}", h.getDisplayName(), e.getMessage());
         }
 
         selectEnumFromStateXml.load(shared.getChild("fromState"), h.getSelectEnumFromState());

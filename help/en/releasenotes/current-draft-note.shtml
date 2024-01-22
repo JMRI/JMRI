@@ -474,6 +474,17 @@
               <strong>Execute on change</strong> or
               <strong>Always execute</strong> as the default.
           </li>
+          <li>The expression <strong>Sensor Edge</strong> no longer
+              supports indirect addressing of the sensor. It has never
+              really worked since Sensor Edge needs to listen on the
+              sensor and it cannot listen on a sensor if indirect
+              addressing is used.<br>
+              If a panel is loaded and a Sensor Edge expression uses
+              indirect addressing, an error message is added to the
+              log:<br>
+              <strong>Error during loading Sensor Edge expression
+              IQDE:AUTO:0003 due to: Addressing must be Direct</strong>
+              there IQDE:AUTO:0003 is the system name of the expression.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
