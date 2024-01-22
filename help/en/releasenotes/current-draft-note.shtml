@@ -140,6 +140,9 @@
                     physical node to flash.  This can be a convenient way to identify which 
                     physical node underneath the layout is the one you're working with in JMRI, 
                     e.g. when you need to move a wire.
+                <li>Configuration of large String fields now has an improved interface:
+                    You can see how many characters remain in the large field and word
+                    breaks are now respected.
             </ul>
 
         <h4>Powerline</h4>
