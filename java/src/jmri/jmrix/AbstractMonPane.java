@@ -292,11 +292,13 @@ public abstract class AbstractMonPane extends JmriPanel {
         paneA.setLayout(new BoxLayout(paneA, BoxLayout.Y_AXIS));
 
         JPanel pane1 = new JPanel(){
+            @Override
             public Dimension getPreferredSize() {
                 Dimension min = super.getMinimumSize();
                 Dimension max = super.getMaximumSize();
                 return new Dimension(max.width, min.height);
             }
+            @Override
             public Dimension getMaximumSize() {
                 return getPreferredSize();
             }
