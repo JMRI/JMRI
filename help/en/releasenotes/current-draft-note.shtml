@@ -131,11 +131,15 @@
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
                 <li>Updated script DisplayTrackCircuit.py to support the Tower +Que node
-                  <p>This script populates a set of events to match the traffic circuit and then
-                  creates a listener for them. That listener populates and maintains a memory to
-                  show text for the state of the traffic circuit.</li>
+                    <p>This script populates a set of events to match the traffic circuit and then
+                    creates a listener for them. That listener populates and maintains a memory to
+                    show text for the state of the traffic circuit.</li>
                 <li>Several tools have improved layout when the
                     screen size is reduced.</li>
+                <li>Added an "ID Tool". This will cause the transmit LED on one
+                    physical node to flash.  This can be a convenient way to identify which 
+                    physical node underneath the layout is the one you're working with in JMRI, 
+                    e.g. when you need to move a wire.
                 <li>Configuration of large String fields now has an improved interface:
                     You can see how many characters remain in the large field and word
                     breaks are now respected.
