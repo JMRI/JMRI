@@ -4442,10 +4442,6 @@ public class CreateLogixNGTreeScaffold {
         expressionSensorEdge = new ExpressionSensorEdge(digitalExpressionManager.getAutoSystemName(), null);
         expressionSensorEdge.setComment("A comment");
         expressionSensorEdge.getSelectNamedBean().setNamedBean(sensor1);
-        expressionSensorEdge.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
-        expressionSensorEdge.getSelectNamedBean().setFormula("\"IT\"+index");
-        expressionSensorEdge.getSelectNamedBean().setLocalVariable("index");
-        expressionSensorEdge.getSelectNamedBean().setReference("{IM1}");
         expressionSensorEdge.getSelectEnumFromState().setEnum(ExpressionSensorEdge.SensorState.Inactive);
         expressionSensorEdge.getSelectEnumFromState().setAddressing(NamedBeanAddressing.Formula);
         expressionSensorEdge.getSelectEnumFromState().setFormula("\"IT\"+index2");
@@ -4462,10 +4458,6 @@ public class CreateLogixNGTreeScaffold {
         expressionSensorEdge = new ExpressionSensorEdge(digitalExpressionManager.getAutoSystemName(), null);
         expressionSensorEdge.setComment("A comment");
         expressionSensorEdge.getSelectNamedBean().setNamedBean(sensor1);
-        expressionSensorEdge.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
-        expressionSensorEdge.getSelectNamedBean().setFormula("\"IT\"+index");
-        expressionSensorEdge.getSelectNamedBean().setLocalVariable("index");
-        expressionSensorEdge.getSelectNamedBean().setReference("{IM1}");
         expressionSensorEdge.getSelectEnumFromState().setEnum(ExpressionSensorEdge.SensorState.Inactive);
         expressionSensorEdge.getSelectEnumFromState().setAddressing(NamedBeanAddressing.Reference);
         expressionSensorEdge.getSelectEnumFromState().setFormula("\"IT\"+index2");
@@ -4478,10 +4470,6 @@ public class CreateLogixNGTreeScaffold {
         expressionSensorEdge = new ExpressionSensorEdge(digitalExpressionManager.getAutoSystemName(), null);
         expressionSensorEdge.setComment("A comment");
         expressionSensorEdge.getSelectNamedBean().setNamedBean(sensor1);
-        expressionSensorEdge.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
-        expressionSensorEdge.getSelectNamedBean().setFormula("\"IT\"+index");
-        expressionSensorEdge.getSelectNamedBean().setLocalVariable("index");
-        expressionSensorEdge.getSelectNamedBean().setReference("{IM1}");
         expressionSensorEdge.getSelectEnumFromState().setEnum(ExpressionSensorEdge.SensorState.Inactive);
         expressionSensorEdge.getSelectEnumFromState().setAddressing(NamedBeanAddressing.Direct);
         expressionSensorEdge.getSelectEnumFromState().setFormula("\"IT\"+index2");

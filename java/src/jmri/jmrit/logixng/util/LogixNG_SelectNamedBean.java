@@ -65,6 +65,10 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
         _onlyDirectAddressingAllowed = true;
     }
 
+    public boolean getOnlyDirectAddressingAllowed() {
+        return _onlyDirectAddressingAllowed;
+    }
+
     public void copy(LogixNG_SelectNamedBean<E> copy) throws ParserException {
         copy.setAddressing(_addressing);
         if (_handle != null) copy.setNamedBean(_handle);
