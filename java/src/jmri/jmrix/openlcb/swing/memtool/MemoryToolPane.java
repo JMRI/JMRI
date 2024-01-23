@@ -139,7 +139,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         if (memo != null) {
             return (memo.getUserName() + " Memory Tool");
         }
-        return getTitle(Bundle.getMessage("TitleEventTable"));
+        return getTitle(Bundle.getMessage("TitleMemoryTool"));
     }
 
     void pushedCheckButton(ActionEvent e) {

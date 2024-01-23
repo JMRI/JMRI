@@ -346,9 +346,14 @@ public class TrainCommon {
      * @return true if this car is the next one to be processed
      */
     public static boolean isNextCar(Car car, RouteLocation rl, RouteLocation rld) {
+        return isNextCar(car, rl, rld, false);
+    }
+        
+        
+    public static boolean isNextCar(Car car, RouteLocation rl, RouteLocation rld, boolean isIgnoreTrack) {
         Train train = car.getTrain();
         if (train != null &&
-                car.getTrack() != null &&
+                (car.getTrack() != null || isIgnoreTrack) &&
                 car.getRouteLocation() == rl &&
                 (rld == car.getRouteDestination() &&
                         !car.isCaboose() &&
