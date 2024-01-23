@@ -99,7 +99,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         add(scrollPane);
 
         var buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+        buttonPanel.setLayout(new jmri.util.swing.WrapLayout());
 
         add(buttonPanel);
 
@@ -125,13 +125,16 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         });
         buttonPanel.add(popcorn);
 
+        JPanel fpanel = new JPanel();
+        buttonPanel.add(fpanel);
+        
         JButton find = new JButton("Find");
-        buttonPanel.add(find);
+        fpanel.add(find);
         find.addActionListener(this::findRequested);
 
         findID = EventIdTextField.getEventIdTextField();
         findID.addActionListener(this::findRequested);
-        buttonPanel.add(findID);
+        fpanel.add(findID);
 
         buttonPanel.setMaximumSize(buttonPanel.getPreferredSize());
 
