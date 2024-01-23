@@ -139,7 +139,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         findpanel.add(findID);
 
         JButton sensor = new JButton("Names from Sensors");
-        findID.addActionListener(this::sensorRequested);
+        sensor.addActionListener(this::sensorRequested);
         buttonPanel.add(sensor);
         
         JButton turnout = new JButton("Names from Turnouts");
