@@ -152,7 +152,7 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
                 // the train.
                 for (RouteLocation rld : _train.getRoute().getLocationsBySequenceList()) {
                     for (Car car : carManager.getByTrainDestinationList(_train)) {
-                        if (car.getTrack() == null || TrainCommon.isNextCar(car, rl, rld)) {
+                        if (TrainCommon.isNextCar(car, rl, rld, true)) {
                             log.debug("car ({}) routelocation ({}) track ({}) route destination ({})",
                                     car.toString(), car
                                             .getRouteLocation().getName(),
