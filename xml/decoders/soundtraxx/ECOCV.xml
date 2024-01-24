@@ -105,6 +105,12 @@
                 <authorinitials>MM</authorinitials>
                 <revremark>productID change for 11 bit Soundtraxx ID</revremark>
             </revision>
+            <revision>
+                <revnumber>5</revnumber>
+                <date>2024-01-04</date>
+                <authorinitials>MM</authorinitials>
+                <revremark>update CV256</revremark>
+            </revision>
         </revhistory>
     <!-- Specific CVs for ECO decoders -->
     <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
@@ -968,6 +974,108 @@
             </enumChoice>
             <enumChoice>
                 <choice>TSU-21PNEM8 Electric</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-KN1 Diesel</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-N18 Steam-2</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-N18 Diesel EMD</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-N18 Diesel GE</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-N18 Diesel ALCO</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-N18 Diesel Baldwin &amp; Others</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-N18 Diesel EMD-2</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-N18 Electric</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-1100 Big Steam</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-2200 Big Steam</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-21PNEM8 Big Steam</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-BH2 Steam-2</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-BH1 Diesel EMD</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-BH1 Diesel GE</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>TSU-BH1 Diesel ALCO</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>BLU-2200 Steam-2</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>BLU-2200 EMD</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>BLU-2200 GE</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>BLU-2200 ALCO</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>BLU-2200 Baldwin &amp; Others</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>BLU-2200 EMD-2</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>BLU-2200 Electric</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>BLU-4408 Steam-2</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>BLU-4408 EMD</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>BLU-4408 GE</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>BLU-4408 ALCO</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>BLU-4408 Baldwin &amp; Others</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>BLU-4408 EMD-2</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>BLU-4408 Electric</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>BLU-PNP8 EMD</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>BLU-PNP8 GE</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>BLU-PNP8 ALCO</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>BLU-PNP8 Baldwin &amp; Others</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>BLU-PNP8 EMD-2</choice>
             </enumChoice>
         </enumVal>
     </variable>
