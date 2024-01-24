@@ -38,6 +38,8 @@ import org.openlcb.cdi.impl.ConfigRepresentation;
  * TODO
  *    Finish Operator enum
  *    Make the node selector full width
+ *    Retain logic split location
+ *    Select by group
  *    Implement CDI connection
  *    Figure out the conversion logic
  *
@@ -66,12 +68,14 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     JComboBox<Operator> _operators = new JComboBox<>(Operator.values());
 
+    private List<GroupList> _groupList = new ArrayList<>();
     private List<LogicList> _logicList = new ArrayList<>();
     private List<InputList> _inputList = new ArrayList<>();
     private List<OutputList> _outputList = new ArrayList<>();
     private List<ReceiverList> _receiverList = new ArrayList<>();
     private List<TransmitterList> _transmitterList = new ArrayList<>();
 
+    private JTable _groupTable;
     private JTable _logicTable;
     private JTable _inputTable;
     private JTable _outputTable;
@@ -155,7 +159,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         JComboBoxUtil.setupComboBoxMaxRows(_nodeBox);
 
 
-//         _nodeBox.revalidate();
+        _nodeBox.revalidate();
 //         _nodeBox.repaint();
         nodeSelector.add(_nodeBox);
         add(nodeSelector, BorderLayout.NORTH);
@@ -178,7 +182,22 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     // --------------  tab configurations ---------
 
-    private JScrollPane buildLogicPanel() {
+    private JScrollPane buildGroupPanel() {
+        // Create scroll pane
+        var model = new GroupModel();
+        _groupTable = new JTable(model);
+        var scrollPane = new JScrollPane(_groupTable);
+
+        // resize columns
+        for (int i = 0; i < model.getColumnCount(); i++) {
+            int width = model.getPreferredWidth(i);
+            _groupTable.getColumnModel().getColumn(i).setPreferredWidth(width);
+        }
+
+        return scrollPane;
+    }
+
+    private JSplitPane buildLogicPanel() {
         // Create scroll pane
         var model = new LogicModel();
         _logicTable = new JTable(model);
@@ -199,7 +218,8 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         selectionModel.addListSelectionListener(this::handleRowSelection);
 
-        return _logicScrollPane;
+        var logicPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, buildGroupPanel(), _logicScrollPane);
+        return logicPanel;
     }
 
     private JScrollPane buildInputPanel() {
@@ -344,6 +364,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         log.info("nodeSelected: {}", _nodeBox.getSelectedItem());
 
         // Load data
+        loadGroups();
         loadLogic();
         loadInputs();
         loadOutputs();
@@ -508,6 +529,19 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     // --------------  load lists ---------
 
+    private void loadGroups() {
+        _groupList.clear();
+        for (int i = 0; i < 16; i++) {
+            if (i < 1) {
+                _groupList.add(new GroupList("Demo"));
+            } else {
+                _groupList.add(new GroupList("group " + (i + 1)));
+            }
+        }
+
+        _groupTable.revalidate();
+    }
+
     private void loadLogic() {
         _logicList.clear();
         _logicList.add(new LogicList("L001:", Operator.A, "O-E14 /* Check for block occupancy */", "I0.0"));
@@ -595,6 +629,26 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     /**
      * The name and assigned event id for a circuit transmitter.
+     */
+    private static class GroupList {
+        String _name;
+
+        GroupList(String name) {
+            _name = name;
+        }
+
+        String getName() {
+            return _name;
+        }
+
+        void setName(String newName) {
+            _name = newName;
+            _dirty = true;
+        }
+    }
+
+    /**
+     * The definition of a logic row
      */
     private static class LogicList {
         String _label;
@@ -792,6 +846,78 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     // --------------  table models ---------
+
+    /**
+     * TableModel for Group table entries.
+     */
+    class GroupModel extends AbstractTableModel {
+
+        GroupModel() {
+        }
+
+        public static final int NAME_COLUMN = 0;
+
+        @Override
+        public int getRowCount() {
+            return _groupList.size();
+        }
+
+        @Override
+        public int getColumnCount() {
+            return 1;
+        }
+
+        @Override
+        public Class<?> getColumnClass(int c) {
+            return String.class;
+        }
+
+        @Override
+        public String getColumnName(int col) {
+            switch (col) {
+                case NAME_COLUMN:
+                    return Bundle.getMessage("ColumnName");  // NOI18N
+                default:
+                    return "unknown";  // NOI18N
+            }
+        }
+
+        @Override
+        public Object getValueAt(int r, int c) {
+            switch (c) {
+                case NAME_COLUMN:
+                    return _groupList.get(r).getName();
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public void setValueAt(Object type, int r, int c) {
+            switch (c) {
+                case NAME_COLUMN:
+                    _groupList.get(r).setName((String) type);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        @Override
+        public boolean isCellEditable(int r, int c) {
+            return (c == NAME_COLUMN);
+        }
+
+        public int getPreferredWidth(int col) {
+            switch (col) {
+                case NAME_COLUMN:
+                    return new JTextField(20).getPreferredSize().width;
+                default:
+                    log.warn("Unexpected column in getPreferredWidth: {}", col);  // NOI18N
+                    return new JTextField(8).getPreferredSize().width;
+            }
+        }
+    }
 
     /**
      * TableModel for STL table entries.
