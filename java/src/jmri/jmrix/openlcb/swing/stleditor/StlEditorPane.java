@@ -10,6 +10,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.AbstractTableModel;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -33,6 +35,12 @@ import org.openlcb.cdi.impl.ConfigRepresentation;
 /**
  * Pane for editing STL logic.
  *
+ * TODO
+ *    Finish Operator enum
+ *    Make the node selector full width
+ *    Implement CDI connection
+ *    Figure out the conversion logic
+ *
  * @author Dave Sand Copyright (C) 2024
  * @since 5.7.x
  */
@@ -48,28 +56,42 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     boolean cancelled = false;
     boolean ready = false;
+    static boolean _dirty = false;
+    int _logicRow = -1;     // The last selected row, -1 for none
 
     JLabel statusField;
 
-    JComboBox<NodeEntry> box;
-    private DefaultComboBoxModel<NodeEntry> model = new DefaultComboBoxModel<NodeEntry>();
+    JComboBox<NodeEntry> _nodeBox;
+    private DefaultComboBoxModel<NodeEntry> _nodeModel = new DefaultComboBoxModel<NodeEntry>();
 
-    private List<LogicList> _logicList;
-    private List<InputList> _inputList;
-    private List<OutputList> _outputList;
-    private List<ReceiverList> _receiverList;
-    private List<TransmitterList> _transmitterList;
+    JComboBox<Operator> _operators = new JComboBox<>(Operator.values());
+
+    private List<LogicList> _logicList = new ArrayList<>();
+    private List<InputList> _inputList = new ArrayList<>();
+    private List<OutputList> _outputList = new ArrayList<>();
+    private List<ReceiverList> _receiverList = new ArrayList<>();
+    private List<TransmitterList> _transmitterList = new ArrayList<>();
+
+    private JTable _logicTable;
+    private JTable _inputTable;
+    private JTable _outputTable;
+    private JTable _receiverTable;
+    private JTable _transmitterTable;
+
+    private JScrollPane _logicScrollPane;
+
+    private JTabbedPane _detailTabs;
+
+    private JPanel _editButtons;
+    private JButton _addButton;
+    private JButton _insertButton;
+    private JButton _moveUpButton;
+    private JButton _moveDownButton;
+    private JButton _deleteButton;
+    private JButton _refreshButton;
+    private JButton _storeButton;
 
     public StlEditorPane() {
-    }
-
-    public String getTitle(String menuTitle) {
-        return Bundle.getMessage("TitleMemoryTool");
-    }
-
-    @Override
-    public boolean isMultipleInstances() {
-        return false;
     }
 
     @Override
@@ -78,204 +100,233 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         _iface = memo.get(OlcbInterface.class);
         _store = memo.get(MimicNodeStore.class);
 
-        EventTable stdEventTable = _canMemo.get(OlcbInterface.class).getEventTable();
-        if (stdEventTable == null) {
-            log.error("no OLCB EventTable found");
-            return;
-        }
-
         // Add to GUI here
         setLayout(new BorderLayout());
-        var header = new JPanel();
-        add(header, BorderLayout.NORTH);
-
-        var body = new JPanel();
-        add(body, BorderLayout.CENTER);
+//         var header = new JPanel();
+//         add(header, BorderLayout.NORTH);
 
         var footer = new JPanel();
-        footer.add(new JButton("Store"));
+        footer.setLayout(new BorderLayout());
+
+        _addButton = new JButton(Bundle.getMessage("ButtonAdd"));
+        _insertButton = new JButton(Bundle.getMessage("ButtonInsert"));
+        _moveUpButton = new JButton(Bundle.getMessage("ButtonMoveUp"));
+        _moveDownButton = new JButton(Bundle.getMessage("ButtonMoveDown"));
+        _deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
+        _refreshButton = new JButton(Bundle.getMessage("ButtonRefresh"));
+        _storeButton = new JButton(Bundle.getMessage("ButtonStore"));
+
+
+        _addButton.addActionListener(this::pushedAddButton);
+        _insertButton.addActionListener(this::pushedInsertButton);
+        _moveUpButton.addActionListener(this::pushedMoveUpButton);
+        _moveDownButton.addActionListener(this::pushedMoveDownButton);
+        _deleteButton.addActionListener(this::pushedDeleteButton);
+//         _refreshButton.addActionListener(this::pushedRefreshButton);
+//         _storeButton.addActionListener(this::pushedStoreButton);
+
+        _editButtons = new JPanel();
+        _editButtons.add(_addButton);
+        _editButtons.add(_insertButton);
+        _editButtons.add(_moveUpButton);
+        _editButtons.add(_moveDownButton);
+        _editButtons.add(_deleteButton);
+        footer.add(_editButtons, BorderLayout.WEST);
+
+        var dataButtons = new JPanel();
+        dataButtons.add(_refreshButton);
+        dataButtons.add(_storeButton);
+        footer.add(dataButtons, BorderLayout.EAST);
         add(footer, BorderLayout.SOUTH);
 
         // Define the node selector which goes in the header
         var nodeSelector = new JPanel();
         nodeSelector.setLayout(new FlowLayout());
-        header.add(nodeSelector);
+//         header.add(nodeSelector);
 
-        box = new JComboBox<NodeEntry>(model);
-        nodeSelector.add(box);
+        _nodeBox = new JComboBox<NodeEntry>(_nodeModel);
 
+        // Load node selector combo box
         for (MimicNodeStore.NodeMemo nodeMemo : _store.getNodeMemos() ) {
             newNodeInList(nodeMemo);
         }
 
-        box.addActionListener(this::nodeSelected);
-        JComboBoxUtil.setupComboBoxMaxRows(box);
+        _nodeBox.addActionListener(this::nodeSelected);
+        JComboBoxUtil.setupComboBoxMaxRows(_nodeBox);
 
-        // Define the body which consists of 5 tab
-        JTabbedPane detailTabs = new JTabbedPane();
 
-        detailTabs.add(Bundle.getMessage("ButtonStl"), buildLogicPanel());  // NOI18N
-        detailTabs.add(Bundle.getMessage("ButtonI"), buildInputPanel());  // NOI18N
-        detailTabs.add(Bundle.getMessage("ButtonQ"), buildOutputPanel());  // NOI18N
-        detailTabs.add(Bundle.getMessage("ButtonY"), buildReceiverPanel());  // NOI18N
-        detailTabs.add(Bundle.getMessage("ButtonZ"), buildTransmitterPanel());  // NOI18N
+//         _nodeBox.revalidate();
+//         _nodeBox.repaint();
+        nodeSelector.add(_nodeBox);
+        add(nodeSelector, BorderLayout.NORTH);
 
-        body.add(detailTabs);
+        // Define the center section of the window which consists of 5 tabs
+        _detailTabs = new JTabbedPane();
 
-        body.setBorder(BorderFactory.createLineBorder(Color.green, 2));
-        detailTabs.setBorder(BorderFactory.createLineBorder(Color.blue));
+        _detailTabs.add(Bundle.getMessage("ButtonStl"), buildLogicPanel());  // NOI18N
+        _detailTabs.add(Bundle.getMessage("ButtonI"), buildInputPanel());  // NOI18N
+        _detailTabs.add(Bundle.getMessage("ButtonQ"), buildOutputPanel());  // NOI18N
+        _detailTabs.add(Bundle.getMessage("ButtonY"), buildReceiverPanel());  // NOI18N
+        _detailTabs.add(Bundle.getMessage("ButtonZ"), buildTransmitterPanel());  // NOI18N
+
+        _detailTabs.addChangeListener(this::tabSelected);
+
+        add(_detailTabs, BorderLayout.CENTER);
 
         setReady(false);
     }
 
     // --------------  tab configurations ---------
 
-    private JPanel buildLogicPanel() {
-        var panel = new JPanel();
-//         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
-        // Load list data
-        _logicList = new ArrayList<>();
-        _logicList.add(new LogicList("L001:", "A", "O-E14 /* Check for block occupancy */", "I0.3"));
-        _logicList.add(new LogicList("", "R", "XYZ-AS", "Q1.1"));
-        _logicList.add(new LogicList("", "JU", "L009", ""));
-        _logicList.add(new LogicList("L009:", "", "", ""));
-
+    private JScrollPane buildLogicPanel() {
+        // Create scroll pane
         var model = new LogicModel();
-        var table = new JTable(model);
-        table.setRowSelectionAllowed(false);
-        var scrollpane = new JScrollPane(table);
-        panel.add(scrollpane);
+        _logicTable = new JTable(model);
+        _logicScrollPane = new JScrollPane(_logicTable);
 
         // resize columns
-        for (int i = 0; i < table.getColumnCount(); i++) {
+        for (int i = 0; i < _logicTable.getColumnCount(); i++) {
             int width = model.getPreferredWidth(i);
-            table.getColumnModel().getColumn(i).setPreferredWidth(width);
+            _logicTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
 
-        // Force panel width
-//         var fix = new JPanel();
-//             var label = new JLabel("-");
-//             var dim = new Dimension(100, 10);
-//             label.setPreferredSize(dim);
-//             label.setMinimumSize(dim);
-//             label.setMaximumSize(dim);
-//             fix.add(label);
-//         panel.add(fix);
+        // Use the operators combo box for the operator column
+        var col = _logicTable.getColumnModel().getColumn(1);
+        col.setCellEditor(new DefaultCellEditor(_operators));
+        JComboBoxUtil.setupComboBoxMaxRows(_operators);
 
-        return panel;
+        var  selectionModel = _logicTable.getSelectionModel();
+        selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        selectionModel.addListSelectionListener(this::handleRowSelection);
+
+        return _logicScrollPane;
     }
 
-    private JPanel buildInputPanel() {
-        var panel = new JPanel();
-
-        // Load list data
-        _inputList = new ArrayList<>();
-        for (int i = 0; i < 128; i++) {
-            if (i < 6) {
-                _inputList.add(new InputList("some user name", "00.01.02.03.04.05.06.07", "99.88.77.66.55.44.33.22"));
-            } else {
-                _inputList.add(new InputList("", "00.01.02.03.04.05.06.07", "99.88.77.66.55.44.33.22"));
-            }
-        }
-
+    private JScrollPane buildInputPanel() {
+        // Create scroll pane
         var model = new InputModel();
-        var table = new JTable(model);
-        table.setRowSelectionAllowed(false);
-        var scrollpane = new JScrollPane(table);
-        panel.add(scrollpane);
+        _inputTable = new JTable(model);
+        _inputTable.setRowSelectionAllowed(false);
+        var scrollPane = new JScrollPane(_inputTable);
 
         // resize columns
         for (int i = 0; i < model.getColumnCount(); i++) {
             int width = model.getPreferredWidth(i);
-            table.getColumnModel().getColumn(i).setPreferredWidth(width);
+            _inputTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
 
-        return panel;
+        return scrollPane;
     }
 
-    private JPanel buildOutputPanel() {
-        var panel = new JPanel();
-
-        // Load list data
-        _outputList = new ArrayList<>();
-        for (int i = 0; i < 128; i++) {
-            if (i < 6) {
-                _outputList.add(new OutputList("some user name", "00.01.02.03.04.05.06.07", "99.88.77.66.55.44.33.22"));
-            } else {
-                _outputList.add(new OutputList("", "00.01.02.03.04.05.06.07", "99.88.77.66.55.44.33.22"));
-            }
-        }
-
+    private JScrollPane buildOutputPanel() {
+        // Create scroll pane
         var model = new OutputModel();
-        var table = new JTable(model);
-        table.setRowSelectionAllowed(false);
-        var scrollpane = new JScrollPane(table);
-        panel.add(scrollpane);
+        _outputTable = new JTable(model);
+        _outputTable.setRowSelectionAllowed(false);
+        var scrollPane = new JScrollPane(_outputTable);
 
         // resize columns
         for (int i = 0; i < model.getColumnCount(); i++) {
             int width = model.getPreferredWidth(i);
-            table.getColumnModel().getColumn(i).setPreferredWidth(width);
+            _outputTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
 
-        return panel;
+        return scrollPane;
     }
 
-    private JPanel buildReceiverPanel() {
-        var panel = new JPanel();
-
-        // Load list data
-        _receiverList = new ArrayList<>();
-        for (int i = 0; i < 16; i++) {
-            if (i < 6) {
-                _receiverList.add(new ReceiverList("some user name", "00.01.02.03.04.05.06.07"));
-            } else {
-                _receiverList.add(new ReceiverList("", "00.01.02.03.04.05.06.07"));
-            }
-        }
-
+    private JScrollPane buildReceiverPanel() {
+        // Create scroll pane
         var model = new ReceiverModel();
-        var table = new JTable(model);
-        table.setRowSelectionAllowed(false);
-        var scrollpane = new JScrollPane(table);
-        panel.add(scrollpane);
+        _receiverTable = new JTable(model);
+        _receiverTable.setRowSelectionAllowed(false);
+        var scrollPane = new JScrollPane(_receiverTable);
 
         // resize columns
         for (int i = 0; i < model.getColumnCount(); i++) {
             int width = model.getPreferredWidth(i);
-            table.getColumnModel().getColumn(i).setPreferredWidth(width);
+            _receiverTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
 
-        return panel;
+        return scrollPane;
     }
 
-    private JPanel buildTransmitterPanel() {
-        var panel = new JPanel();
-
-        // Load list data
-        _transmitterList = new ArrayList<>();
-        for (int i = 0; i < 16; i++) {
-            if (i < 6) {
-                _transmitterList.add(new TransmitterList("some user name", "00.01.02.03.04.05.06.07"));
-            } else {
-                _transmitterList.add(new TransmitterList("", "00.01.02.03.04.05.06.07"));
-            }
-        }
-
+    private JScrollPane buildTransmitterPanel() {
+        // Create scroll pane
         var model = new TransmitterModel();
-        var table = new JTable(model);
-        table.setRowSelectionAllowed(false);
-        var scrollpane = new JScrollPane(table);
-        panel.add(scrollpane);
+        _transmitterTable = new JTable(model);
+        _transmitterTable.setRowSelectionAllowed(false);
+        var scrollPane = new JScrollPane(_transmitterTable);
 
         // resize columns
         for (int i = 0; i < model.getColumnCount(); i++) {
             int width = model.getPreferredWidth(i);
-            table.getColumnModel().getColumn(i).setPreferredWidth(width);
+            _transmitterTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
 
-        return panel;
+        return scrollPane;
+    }
+
+    private void tabSelected(ChangeEvent e) {
+        if (_detailTabs.getSelectedIndex() == 0) {
+            _editButtons.setVisible(true);
+        } else {
+            _editButtons.setVisible(false);
+        }
+    }
+
+    // --------------  Logic table methods ---------
+
+    public void handleRowSelection(ListSelectionEvent e) {
+        if (!e.getValueIsAdjusting()) {
+            _logicRow = _logicTable.getSelectedRow();
+            _moveUpButton.setEnabled(_logicRow > 0);
+            _moveDownButton.setEnabled(_logicRow < _logicTable.getRowCount() - 1);
+        }
+    }
+
+    private void pushedAddButton(ActionEvent e) {
+        _logicList.add(new LogicList("", null, "", ""));
+        _logicRow = _logicList.size() - 1;
+        _logicTable.revalidate();
+        _logicTable.setRowSelectionInterval(_logicRow, _logicRow);
+        _logicScrollPane.revalidate();
+    }
+
+    private void pushedInsertButton(ActionEvent e) {
+        if (_logicRow >= 0 && _logicRow < _logicList.size()) {
+            _logicList.add(_logicRow, new LogicList("", null, "", ""));
+            _logicTable.revalidate();
+            _logicTable.setRowSelectionInterval(_logicRow, _logicRow);
+            _logicScrollPane.revalidate();
+        }
+    }
+
+    private void pushedMoveUpButton(ActionEvent e) {
+        if (_logicRow >= 0 && _logicRow < _logicList.size()) {
+            var logicRow = _logicList.remove(_logicRow);
+            _logicList.add(_logicRow - 1, logicRow);
+            _logicRow--;
+            _logicTable.revalidate();
+            _logicTable.setRowSelectionInterval(_logicRow, _logicRow);
+        }
+    }
+
+    private void pushedMoveDownButton(ActionEvent e) {
+        if (_logicRow >= 0 && _logicRow < _logicList.size()) {
+            var logicRow = _logicList.remove(_logicRow);
+            _logicList.add(_logicRow + 1, logicRow);
+            _logicRow++;
+            _logicTable.revalidate();
+            _logicTable.setRowSelectionInterval(_logicRow, _logicRow);
+        }
+    }
+
+    private void pushedDeleteButton(ActionEvent e) {
+        if (_logicRow >= 0 && _logicRow < _logicList.size()) {
+            _logicList.remove(_logicRow);
+            _logicTable.revalidate();
+            _logicScrollPane.revalidate();
+        }
     }
 
     // --------------  node selector ---------
@@ -289,43 +340,34 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
      * @parm e The combo box action event.
      */
     private void nodeSelected(ActionEvent e) {
-        var item = box.getSelectedItem();
-        log.info("nodeSelected: {}", box.getSelectedItem());
+        var item = _nodeBox.getSelectedItem();
+        log.info("nodeSelected: {}", _nodeBox.getSelectedItem());
+
+        // Load data
+        loadLogic();
+        loadInputs();
+        loadOutputs();
+        loadReceivers();
+        loadTransmitters();
+
         setReady(true);
     }
 
     private void newNodeInList(MimicNodeStore.NodeMemo nodeMemo) {
         // Add filter for Tower LCC+Q
 
-        int i = 0;
-        if (model.getIndexOf(nodeMemo.getNodeID()) >= 0) {
-            // already exists. Do nothing.
-            return;
-        }
+//         int i = 0;
+//         if (_nodeModel.getIndexOf(nodeMemo.getNodeID()) >= 0) {
+//             // already exists. Do nothing.
+//             return;
+//         }
         NodeEntry e = new NodeEntry(nodeMemo);
-        while ((i < model.getSize()) && (model.getElementAt(i).compareTo(e) < 0)) {
-            ++i;
-        }
-        model.insertElementAt(e, i);
-    }
 
-    @Override
-    public void dispose() {
-        // and complete this
-        super.dispose();
-    }
-
-    @Override
-    public String getHelpTarget() {
-        return "package.jmri.jmrix.openlcb.swing.memtool.MemoryToolPane";
-    }
-
-    @Override
-    public String getTitle() {
-        if (_canMemo != null) {
-            return (_canMemo.getUserName() + " STL Editor");
-        }
-        return getTitle(Bundle.getMessage("TitleEventTable"));
+//         while ((i < _nodeModel.getSize()) && (_nodeModel.getElementAt(i).compareTo(e) < 0)) {
+//             ++i;
+//         }
+//         _nodeModel.insertElementAt(e, i);
+        _nodeModel.addElement(e);
     }
 
     void pushedCancel(ActionEvent e) {
@@ -334,23 +376,23 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
     }
 
-    // Notifies that the contents ofa given entry have changed. This will delete and re-add the
+    // Notifies that the contents of a given entry have changed. This will delete and re-add the
     // entry to the model, forcing a refresh of the box.
     private void updateComboBoxModelEntry(NodeEntry nodeEntry) {
-        int idx = model.getIndexOf(nodeEntry.getNodeID());
+        int idx = _nodeModel.getIndexOf(nodeEntry.getNodeID());
         if (idx < 0) {
             return;
         }
-        NodeEntry last = model.getElementAt(idx);
+        NodeEntry last = _nodeModel.getElementAt(idx);
         if (last != nodeEntry) {
             // not the same object -- we're talking about an abandoned entry.
             nodeEntry.dispose();
             return;
         }
-        NodeEntry sel = (NodeEntry) model.getSelectedItem();
-        model.removeElementAt(idx);
-        model.insertElementAt(nodeEntry, idx);
-        model.setSelectedItem(sel);
+        NodeEntry sel = (NodeEntry) _nodeModel.getSelectedItem();
+        _nodeModel.removeElementAt(idx);
+        _nodeModel.insertElementAt(nodeEntry, idx);
+        _nodeModel.setSelectedItem(sel);
     }
 
     protected class NodeEntry implements Comparable<NodeEntry>, PropertyChangeListener {
@@ -402,7 +444,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             if (!description.equals(newDescription)) {
                 description = newDescription;
                 // update combo box model.
-                updateComboBoxModelEntry(this);
+//                 updateComboBoxModelEntry(this);
             }
         }
 
@@ -464,17 +506,103 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
     }
 
+    // --------------  load lists ---------
+
+    private void loadLogic() {
+        _logicList.clear();
+        _logicList.add(new LogicList("L001:", Operator.A, "O-E14 /* Check for block occupancy */", "I0.0"));
+        _logicList.add(new LogicList("", Operator.Op, "", ""));
+        _logicList.add(new LogicList("", Operator.AN, "T-Hopkins-West /* turnout closed */", "I1.0"));
+        _logicList.add(new LogicList("", Operator.A, "O-Main /* block occupied */", "I0.1"));
+        _logicList.add(new LogicList("", Operator.Cp, "", ""));
+        _logicList.add(new LogicList("", Operator.Op, "", ""));
+        _logicList.add(new LogicList("", Operator.A, "T-Hopkins-West /* turnout thrown */", "I1.0"));
+        _logicList.add(new LogicList("", Operator.A, "O-Side /* block occupied */", "I0.2"));
+        _logicList.add(new LogicList("", Operator.Cp, "", ""));
+        _logicList.add(new LogicList("", Operator.R, "Mast /* use the stop aspect */", "Q0.0"));
+        _logicList.add(new LogicList("", Operator.JU, "L009", ""));
+        _logicList.add(new LogicList("L002:", null, "/* set the other aspects */", ""));
+        _logicList.add(new LogicList("L009:", null, "/* Finished the signal logic */", ""));
+
+        _logicTable.revalidate();
+    }
+
+    private void loadInputs() {
+        _inputList.clear();
+        for (int i = 0; i < 128; i++) {
+            if (i == 0) {
+                _inputList.add(new InputList("O-E14", "03.00.02.23.03.21.C1.22", "03.00.02.23.03.21.C1.21"));
+            }
+            else if (i == 1) {
+                _inputList.add(new InputList("O-Main", "03.00.02.23.03.21.C5.22", "03.00.02.23.03.21.C5.21"));
+            }
+            else if (i == 2) {
+                _inputList.add(new InputList("O-Side", "03.00.02.23.03.21.C6.22", "03.00.02.23.03.21.C6.21"));
+            }
+            else if (i < 6) {
+                _inputList.add(new InputList("some user name", "00.01.02.03.04.05.06.07", "99.88.77.66.55.44.33.22"));
+            } else {
+                _inputList.add(new InputList("", "00.01.02.03.04.05.06.07", "99.88.77.66.55.44.33.22"));
+            }
+        }
+
+        _inputTable.revalidate();
+    }
+
+    private void loadOutputs() {
+        _outputList.clear();
+        for (int i = 0; i < 128; i++) {
+            if (i == 0) {
+                _outputList.add(new OutputList("Mast", "03.00.02.23.03.30.C1.31", "03.00.02.23.03.30.C1.36"));
+            }
+            else if (i < 6) {
+                _outputList.add(new OutputList("some user name", "00.01.02.03.04.05.06.07", "99.88.77.66.55.44.33.22"));
+            } else {
+                _outputList.add(new OutputList("", "00.01.02.03.04.05.06.07", "99.88.77.66.55.44.33.22"));
+            }
+        }
+
+        _outputTable.revalidate();
+    }
+
+    private void loadReceivers() {
+        _receiverList.clear();
+        for (int i = 0; i < 16; i++) {
+            if (i < 6) {
+                _receiverList.add(new ReceiverList("some user name", "00.01.02.03.04.05.06.07"));
+            } else {
+                _receiverList.add(new ReceiverList("", "00.01.02.03.04.05.06.07"));
+            }
+        }
+
+        _receiverTable.revalidate();
+    }
+
+    private void loadTransmitters() {
+        _transmitterList.clear();
+        for (int i = 0; i < 16; i++) {
+            if (i < 6) {
+                _transmitterList.add(new TransmitterList("some user name", "00.01.02.03.04.05.06.07"));
+            } else {
+                _transmitterList.add(new TransmitterList("", "00.01.02.03.04.05.06.07"));
+            }
+        }
+
+        _transmitterTable.revalidate();
+    }
+
     // --------------  table lists ---------
+
     /**
      * The name and assigned event id for a circuit transmitter.
      */
     private static class LogicList {
         String _label;
-        String _oper;
+        Operator _oper;
         String _name;
         String _variable;
 
-        LogicList(String label, String oper, String name, String variable) {
+        LogicList(String label, Operator oper, String name, String variable) {
             _label = label;
             _oper = oper;
             _name = name;
@@ -487,14 +615,16 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         void setLabel(String newLabel) {
             _label = newLabel;
+            _dirty = true;
         }
 
-        String getOper() {
+        Operator getOper() {
             return _oper;
         }
 
-        void setOper(String newOper) {
+        void setOper(Operator newOper) {
             _oper = newOper;
+            _dirty = true;
         }
 
         String getName() {
@@ -503,6 +633,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         void setName(String newName) {
             _name = newName;
+            _dirty = true;
         }
 
         String getVariable() {
@@ -534,6 +665,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         void setName(String newName) {
             _name = newName;
+            _dirty = true;
         }
 
         String getEventTrue() {
@@ -542,6 +674,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         void setEventTrue(String newEventTrue) {
             _eventTrue = newEventTrue;
+            _dirty = true;
         }
 
         String getEventFalse() {
@@ -550,6 +683,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         void setEventFalse(String newEventFalse) {
             _eventFalse = newEventFalse;
+            _dirty = true;
         }
     }
 
@@ -573,6 +707,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         void setName(String newName) {
             _name = newName;
+            _dirty = true;
         }
 
         String getEventTrue() {
@@ -581,6 +716,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         void setEventTrue(String newEventTrue) {
             _eventTrue = newEventTrue;
+            _dirty = true;
         }
 
         String getEventFalse() {
@@ -589,6 +725,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         void setEventFalse(String newEventFalse) {
             _eventFalse = newEventFalse;
+            _dirty = true;
         }
     }
 
@@ -610,6 +747,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         void setName(String newName) {
             _name = newName;
+            _dirty = true;
         }
 
         String getEventId() {
@@ -618,6 +756,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         void setEventId(String newEventid) {
             _eventid = newEventid;
+            _dirty = true;
         }
     }
 
@@ -639,6 +778,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         void setName(String newName) {
             _name = newName;
+            _dirty = true;
         }
 
         String getEventId() {
@@ -647,6 +787,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         void setEventId(String newEventid) {
             _eventid = newEventid;
+            _dirty = true;
         }
     }
 
@@ -655,10 +796,9 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     /**
      * TableModel for STL table entries.
      */
-    class LogicModel extends AbstractTableModel /* implements PropertyChangeListener */ {
+    class LogicModel extends AbstractTableModel {
 
         LogicModel() {
-//             InstanceManager.sensorManagerInstance().addPropertyChangeListener(this);
         }
 
         public static final int LABEL_COLUMN = 0;
@@ -678,6 +818,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         @Override
         public Class<?> getColumnClass(int c) {
+            if (c == OPER_COLUMN) return JComboBox.class;
             return String.class;
         }
 
@@ -720,7 +861,17 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                     _logicList.get(r).setLabel((String) type);
                     break;
                 case OPER_COLUMN:
-                    _logicList.get(r).setOper((String) type);
+                    var z = (Operator) type;
+                    if (z != null) {
+                        if (z.name().startsWith("z")) {
+                            return;
+                        }
+                        if (z.name().equals("x0")) {
+                            _logicList.get(r).setOper(null);
+                            return;
+                        }
+                    }
+                    _logicList.get(r).setOper((Operator) type);
                     break;
                 case NAME_COLUMN:
                     _logicList.get(r).setName((String) type);
@@ -741,9 +892,9 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 case VAR_COLUMN:
                     return new JTextField(6).getPreferredSize().width;
                 case OPER_COLUMN:
-                    return new JTextField(10).getPreferredSize().width;
+                    return new JTextField(20).getPreferredSize().width;
                 case NAME_COLUMN:
-                    return new JTextField(50).getPreferredSize().width;
+                    return new JTextField(60).getPreferredSize().width;
                 default:
                     log.warn("Unexpected column in getPreferredWidth: {}", col);  // NOI18N
                     return new JTextField(8).getPreferredSize().width;
@@ -754,10 +905,9 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     /**
      * TableModel for Input table entries.
      */
-    class InputModel extends AbstractTableModel /* implements PropertyChangeListener */ {
+    class InputModel extends AbstractTableModel {
 
         InputModel() {
-//             InstanceManager.sensorManagerInstance().addPropertyChangeListener(this);
         }
 
         public static final int INPUT_COLUMN = 0;
@@ -841,7 +991,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 case INPUT_COLUMN:
                     return new JTextField(6).getPreferredSize().width;
                 case NAME_COLUMN:
-                    return new JTextField(20).getPreferredSize().width;
+                    return new JTextField(50).getPreferredSize().width;
                 case TRUE_COLUMN:
                     return new JTextField(20).getPreferredSize().width;
                 case FALSE_COLUMN:
@@ -856,9 +1006,8 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     /**
      * TableModel for Output table entries.
      */
-    class OutputModel extends AbstractTableModel /* implements PropertyChangeListener */ {
+    class OutputModel extends AbstractTableModel {
         OutputModel() {
-//             InstanceManager.sensorManagerInstance().addPropertyChangeListener(this);
         }
 
         public static final int OUTPUT_COLUMN = 0;
@@ -942,7 +1091,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 case OUTPUT_COLUMN:
                     return new JTextField(6).getPreferredSize().width;
                 case NAME_COLUMN:
-                    return new JTextField(20).getPreferredSize().width;
+                    return new JTextField(50).getPreferredSize().width;
                 case TRUE_COLUMN:
                     return new JTextField(20).getPreferredSize().width;
                 case FALSE_COLUMN:
@@ -957,10 +1106,9 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     /**
      * TableModel for circuit receiver table entries.
      */
-    class ReceiverModel extends AbstractTableModel /* implements PropertyChangeListener */ {
+    class ReceiverModel extends AbstractTableModel {
 
         ReceiverModel() {
-//             InstanceManager.sensorManagerInstance().addPropertyChangeListener(this);
         }
 
         public static final int CIRCUIT_COLUMN = 0;
@@ -1034,7 +1182,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 case CIRCUIT_COLUMN:
                     return new JTextField(6).getPreferredSize().width;
                 case NAME_COLUMN:
-                    return new JTextField(30).getPreferredSize().width;
+                    return new JTextField(50).getPreferredSize().width;
                 case EVENTID_COLUMN:
                     return new JTextField(20).getPreferredSize().width;
                 default:
@@ -1047,10 +1195,9 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     /**
      * TableModel for circuit transmitter table entries.
      */
-    class TransmitterModel extends AbstractTableModel /* implements PropertyChangeListener */ {
+    class TransmitterModel extends AbstractTableModel {
 
         TransmitterModel() {
-//             InstanceManager.sensorManagerInstance().addPropertyChangeListener(this);
         }
 
         public static final int CIRCUIT_COLUMN = 0;
@@ -1124,7 +1271,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 case CIRCUIT_COLUMN:
                     return new JTextField(6).getPreferredSize().width;
                 case NAME_COLUMN:
-                    return new JTextField(30).getPreferredSize().width;
+                    return new JTextField(50).getPreferredSize().width;
                 case EVENTID_COLUMN:
                     return new JTextField(20).getPreferredSize().width;
                 default:
@@ -1134,7 +1281,80 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
     }
 
-    // --------------  other items ---------
+    // --------------  Operator Enum ---------
+
+    public enum Operator {
+        x0(Bundle.getMessage("Separator0")),
+        z1(Bundle.getMessage("Separator1")),
+        A(Bundle.getMessage("OperatorA")),
+        AN(Bundle.getMessage("OperatorAN")),
+        O(Bundle.getMessage("OperatorO")),
+        ON(Bundle.getMessage("OperatorON")),
+        X(Bundle.getMessage("OperatorX")),
+        XN(Bundle.getMessage("OperatorXN")),
+
+        z2(Bundle.getMessage("Separator2")),    // The STL parens are represented by lower case p
+        Ap(Bundle.getMessage("OperatorAp")),
+        ANp(Bundle.getMessage("OperatorANp")),
+        Op(Bundle.getMessage("OperatorOp")),
+        ONp(Bundle.getMessage("OperatorONp")),
+        Xp(Bundle.getMessage("OperatorXp")),
+        XNp(Bundle.getMessage("OperatorXNp")),
+        Cp(Bundle.getMessage("OperatorCp")),    // Close paren
+
+        z3(Bundle.getMessage("Separator3")),
+        EQ(Bundle.getMessage("OperatorEQ")),    // = operator
+        R(Bundle.getMessage("OperatorR")),
+        S(Bundle.getMessage("OperatorS")),
+
+        z4(Bundle.getMessage("Separator4")),
+        NOT(Bundle.getMessage("OperatorNOT")),
+        SET(Bundle.getMessage("OperatorSET")),
+        CLR(Bundle.getMessage("OperatorCLR")),
+        SAVE(Bundle.getMessage("OperatorSAVE")),
+
+        z5(Bundle.getMessage("Separator5")),
+        JU(Bundle.getMessage("OperatorJU")),
+
+
+        z6(Bundle.getMessage("Separator6")),
+
+        z7(Bundle.getMessage("Separator7"));
+
+
+        private final String _text;
+
+        private Operator(String text) {
+            this._text = text;
+        }
+
+        @Override
+        public String toString() {
+            return _text;
+        }
+
+    }
+
+    // --------------  misc items ---------
+
+    @Override
+    public void dispose() {
+        // and complete this
+        super.dispose();
+    }
+
+    @Override
+    public String getHelpTarget() {
+        return "package.jmri.jmrix.openlcb.swing.memtool.MemoryToolPane";
+    }
+
+    @Override
+    public String getTitle() {
+        if (_canMemo != null) {
+            return (_canMemo.getUserName() + " STL Editor");
+        }
+        return Bundle.getMessage("TitleSTLEditor");
+    }
 
     /**
      * Nested class to create one of these using old-style defaults
