@@ -143,6 +143,9 @@
                 <li>Configuration of large String fields now has an improved interface:
                     You can see how many characters remain in the large field and word
                     breaks are now respected.
+                <li>The Event Table now has buttons to copy Sensor and Turnout user names
+                    into the relevant Event ID names. These only fill in blank Event ID
+                    names, they don't overwrite any names you might have already entered.
             </ul>
 
         <h4>Powerline</h4>
