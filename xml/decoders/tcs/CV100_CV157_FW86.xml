@@ -14,7 +14,7 @@
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 - 3-Feb-17 WestAust55 -Motor Pane Restructured plus CV182 for Special BEMF and Keep-Alive added -->
 <!-- version 1.1 - 3-Feb-17 WestAust55 -CV104 added for third Private User ID purposes -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <variable CV="104" item="User Id #3">
     <decVal/>
     <label>User Private ID #0</label>

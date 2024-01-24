@@ -10,7 +10,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <version author="Howard G. Penny" version="1" lastUpdated="20050616"/>
   <!-- version 1 - modified for QSI CV.PI.SI format - Howard -->
   <version author="jacobsen@mac.com" version="2" lastUpdated="20150628"/>
@@ -695,14 +695,7 @@
         <decVal max="63"/>
       </variable>
       <variable label="Horn Triggered Doppler" CV="51.2" mask="XXXXXXXV" default="1" comment="QSI" item="CV51.2bit0">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
       </variable>
       <!-- Sound volumes -->
       <variable label="Horn" CV="52.0" default="11" comment="QSI" item="CV52.0">

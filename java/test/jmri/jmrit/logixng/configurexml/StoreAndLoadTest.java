@@ -98,6 +98,16 @@ public class StoreAndLoadTest {
             log.debug(results ? "load was successful" : "store failed");
             if (results) {
                 logixNG_Manager.setupAllLogixNGs();
+                logixNG_Manager.activateAllLogixNGs(false, false);
+
+                for (SymbolTable.InitialValueType type : SymbolTable.InitialValueType.values()) {
+                    if (type == SymbolTable.InitialValueType.None) continue;
+                    if (type == SymbolTable.InitialValueType.String) continue;
+                    if (type == SymbolTable.InitialValueType.Array) continue;
+                    if (type == SymbolTable.InitialValueType.Map) continue;
+                    JUnitAppender.assertWarnMessage(String.format("Variable %s could not be initialized", "TestVariable_"+type.name()));
+                    JUnitAppender.assertWarnMessage(String.format("Variable %s could not be initialized", "TestVariable_"+type.name()+"_2"));
+                }
 
                 stringWriter = new StringWriter();
                 printWriter = new PrintWriter(stringWriter);
@@ -144,11 +154,6 @@ public class StoreAndLoadTest {
 //        for (LoggingEvent evt : JUnitAppender.getBacklog()) {
 //            System.out.format("Log: %s, %s%n", evt.getLevel(), evt.getMessage());
 //        }
-
-
-        JUnitAppender.assertErrorMessage("systemName is already registered: IH1");
-        JUnitAppender.assertErrorMessage("systemName is already registered: IH2");
-        JUnitAppender.assertWarnMessage("No state variables found for conditional IX1C1");
     }
 
 

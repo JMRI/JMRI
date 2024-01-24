@@ -368,6 +368,15 @@
       of the 'veto' Sensors and the 'veto' Turnout, if there is one, must be in their non-veto
       state _and_ at least one of the triggering Sensors or a triggering Turnout must see the
       appropriate change for the Route to be set.</p>
+      
+      <p>You can also specify whether the Route should respond to changes in the Known state
+        (the default) or whether it should respond to changes in the Commanded state.
+        If you are not using
+        <a href="../doc/Technical/TurnoutFeedback.shtml">turnout feedback</a>
+        these are the same.  If you do have feedback enabled, the Commanded state is what 
+        JMRI has requested will be set on the turnout, and the Known state is what
+        is returned from the feedback. Usually the default is the right choice here.
+      
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

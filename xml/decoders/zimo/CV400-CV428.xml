@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 - Added include statment for CV399, Mark Waters 26 Jan 2015 -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV399.xml"/>
   <variable item="Input mapping for internal F0" CV="400">
     <decVal/>

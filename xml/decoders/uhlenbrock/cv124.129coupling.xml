@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
 	<copyright xmlns="http://docbook.org/ns/docbook">
 		<year>2014</year>
 		<holder>JMRI</holder>
@@ -47,10 +47,16 @@
 			<revnumber>3</revnumber>
 			<date>2023-01-08</date>
 			<authorinitials>UG</authorinitials>
-			<revremark>Added "Tillig 0423x" decoder</revremark>
+			<revremark>Added "Tillig0423x" decoder</revremark>
 		</revision>	
-	</revhistory>
-	<variable item="Coupling option 1" CV="124" default="0" exclude="73105,PIKO41RH2400">
+		<revision>
+			<revnumber>4</revnumber>
+			<date>2023-12-26</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Added "Tillig66036" decoder</revremark>
+		</revision>	
+		</revhistory>
+	<variable item="Coupling option 1" CV="124" default="0" exclude="73105,73235,PIKO41RH2400,Tillig0423x,Tillig66036">
 		<decVal/>
 		<label>Coupling repeats A1/A2</label>
 		<label xml:lang="de">Kupplungswiederholungen A1/A2</label>
@@ -61,18 +67,18 @@
 		<tooltip xml:lang="nl">voor electrische koppelingen (0=geen koppeling)</tooltip>
 		<tooltip xml:lang="cs">pro elektrické spřáhlo (0=není spřáhlo)</tooltip>
 	</variable>
-	<variable item="Coupling option 1" CV="124" default="1" include="73105,PIKO41RH2400">
+	<variable item="Coupling option 1" CV="124" default="1" include="73105,73235,PIKO41RH2400,Tillig0423x,Tillig66036">
 		<decVal/>
-		<label>Coupling repeats A1-A7</label>
-		<label xml:lang="de">Kupplungswiederholungen A1 - A7</label>
-		<label xml:lang="nl">Koppelingsherhaling A1 - A7</label>
-		<label xml:lang="cs">Opakování svěšení A1-A7</label>
+		<label>Coupling repeats</label>
+		<label xml:lang="de">Kupplungswiederholungen</label>
+		<label xml:lang="nl">Koppelingsherhaling</label>
+		<label xml:lang="cs">Opakování svěšení</label>
 		<tooltip>for electric couplings (0=no coupling)</tooltip>
 		<tooltip xml:lang="de">für elektrische Kupplungen (0=keine Kupplung)</tooltip>
 		<tooltip xml:lang="nl">voor electrische koppelingen (0=geen koppeling)</tooltip>
 		<tooltip xml:lang="cs">pro elektrické spřáhlo (0=není spřáhlo)</tooltip>
 	</variable>
-	<variable item="Coupling option 2" CV="125" default="255" exclude="73105,74120,PIKO41RH2400,Tillig 0423x">
+	<variable item="Coupling option 2" CV="125" default="255" exclude="73105,73235,74120,PIKO41RH2400,Tillig0423x,Tillig66036">
 		<decVal/>
 		<label>On PWM A1/A2</label>
 		<label xml:lang="de">Einschalt-PWM A1/A2</label>
@@ -83,18 +89,18 @@
 		<tooltip xml:lang="nl">voor electrische koppelingen</tooltip>
 		<tooltip xml:lang="cs">pro elektrické spřáhlo</tooltip>
 	</variable>
-	<variable item="Coupling option 2" CV="125" default="10" include="73105,74120,PIKO41RH2400,Tillig 0423x">
+	<variable item="Coupling option 2" CV="125" default="10" include="73105,73235,74120,PIKO41RH2400,Tillig0423x,Tillig66036">
 		<decVal/>
 		<label>On time - coupling</label>
 		<label xml:lang="de">Einschaltzeit - Kupplung</label>
 		<label xml:lang="nl">Koppeling - Inschakeltijd</label>
 		<label xml:lang="cs">Čas zapnutí - svěšování</label>
-		<tooltip>value * 100ms</tooltip>
-		<tooltip xml:lang="de">Wert * 100ms</tooltip>
-		<tooltip xml:lang="nl">Waarde * 100ms</tooltip>
-		<tooltip xml:lang="cs">Hodnota × 100 ms</tooltip>
+		<tooltip>value * 100ms (PWM CV117 - 123)</tooltip>
+		<tooltip xml:lang="de">Wert * 100ms (PWM CV117 - 123)</tooltip>
+		<tooltip xml:lang="nl">Waarde * 100ms (PWM CV117 - 123)</tooltip>
+		<tooltip xml:lang="cs">Hodnota × 100 ms (PWM CV117 - 123)</tooltip>
 	</variable>
-	<variable item="Coupling option 3" CV="126" default="64" exclude="73105,74120,PIKO41RH2400,Tillig 0423x">
+	<variable item="Coupling option 3" CV="126" default="64" exclude="73105,73235,74120,PIKO41RH2400,Tillig0423x,Tillig66036">
 		<decVal/>
 		<label>Hold PWM A1/A2</label>
 		<label xml:lang="de">Halte-PWM A1/A2</label>
@@ -105,7 +111,7 @@
 		<tooltip xml:lang="nl">voor electrische koppelingen</tooltip>
 		<tooltip xml:lang="cs">pro elektrické spřáhlo</tooltip>
 	</variable>
-	<variable item="Coupling option 3" CV="126" default="20" include="73105,74120,PIKO41RH2400,Tillig 0423x">
+	<variable item="Coupling option 3" CV="126" default="20" include="73105,73235,74120,PIKO41RH2400,Tillig0423x,Tillig66036">
 		<decVal/>
 		<label>Hold time - coupling</label>
 		<label xml:lang="de">Haltezeit - Kupplung</label>
@@ -116,18 +122,18 @@
 		<tooltip xml:lang="nl">Waarde * 100ms</tooltip>
 		<tooltip xml:lang="cs">Hodnota × 100 ms</tooltip>
 	</variable>
-	<variable item="Coupling option 4" CV="127" default="5" exclude="73105,PIKO41RH2400,Tillig 0423x">
+	<variable item="Coupling option 4" CV="127" default="5" exclude="73105,73235,74120,PIKO41RH2400,Tillig0423x,Tillig66036">
 		<decVal/>
-		<label>On time - coupling</label>
-		<label xml:lang="de">Einschaltzeit - Kupplung</label>
-		<label xml:lang="nl">Koppeling - Inschakeltijd</label>
-		<label xml:lang="cs">Čas zapnutí - svěšování</label>
+		<label>On time - coupling A1/A2</label>
+		<label xml:lang="de">Einschaltzeit - Kupplung A1/A2</label>
+		<label xml:lang="nl">Koppeling - Inschakeltijd A1/A2</label>
+		<label xml:lang="cs">Čas zapnutí - svěšování A1/A2</label>
 		<tooltip>value * 50ms</tooltip>
 		<tooltip xml:lang="de">Wert * 50ms</tooltip>
 		<tooltip xml:lang="nl">Waarde * 50ms</tooltip>
 		<tooltip xml:lang="cs">Hodnota × 50 ms</tooltip>
 	</variable>
-	<variable item="Coupling option 4" CV="127" default="10" include="73105,74120,PIKO41RH2400,Tillig 0423x">
+	<variable item="Coupling option 4" CV="127" default="10" include="73105,73235,74120,PIKO41RH2400,Tillig0423x,Tillig66036">
 		<decVal/>
 		<label>Pause time - coupling</label>
 		<label xml:lang="de">Pausenzeit - Kupplung</label>
@@ -138,83 +144,83 @@
 		<tooltip xml:lang="nl">Waarde * 100ms</tooltip>
 		<tooltip xml:lang="cs">Hodnota × 100 ms</tooltip>
 	</variable>
-	<variable item="Coupling option 5" CV="128" default="20" exclude="73105,74120,PIKO41RH2400,Tillig 0423x">
+	<variable item="Coupling option 5" CV="128" default="20" exclude="73105,73235,74120,PIKO41RH2400,Tillig0423x,Tillig66036">
 		<decVal/>
-		<label>Hold time - coupling</label>
-		<label xml:lang="de">Haltezeit - Kupplung</label>
-		<label xml:lang="nl">Koppeling - Vasthoudtijd</label>
-		<label xml:lang="cs">Čas držení - svěšování</label>
+		<label>Hold time - coupling A1/A2</label>
+		<label xml:lang="de">Haltezeit - Kupplung A1/A2</label>
+		<label xml:lang="nl">Koppeling - Vasthoudtijd A1/A2</label>
+		<label xml:lang="cs">Čas držení - svěšování A1/A2</label>
 		<tooltip>value * 100ms</tooltip>
 		<tooltip xml:lang="de">Wert * 100ms</tooltip>
 		<tooltip xml:lang="nl">Waarde * 100ms</tooltip>
 		<tooltip xml:lang="cs">Hodnota × 100 ms</tooltip>
 	</variable>
-	<variable item="Coupling option 5" CV="128" default="30" include="73105,74120,PIKO41RH2400,Tillig 0423x">
+	<variable item="Coupling option 5" CV="128" default="30" include="73105,73235,74120,PIKO41RH2400,Tillig0423x,Tillig66036">
 		<decVal/>
-		<label>Hold PWM A1-A7</label>
-		<label xml:lang="de">Halte-PWM A1-A7</label>
-		<label xml:lang="nl">Vasthoud-PWM A1-A7</label>
-		<label xml:lang="cs">Držet PWM A1-A7</label>
+		<label>Hold PWM - coupling</label>
+		<label xml:lang="de">Halte-PWM - Kupplung</label>
+		<label xml:lang="nl">Vasthoud-PWM - Pauzeduur</label>
+		<label xml:lang="cs">Držet PWM - svěšování</label>
 		<tooltip>for electric couplings</tooltip>
 		<tooltip xml:lang="de">für elektrische Kupplungen</tooltip>
 		<tooltip xml:lang="nl">voor electrische koppelingen</tooltip>
 		<tooltip xml:lang="cs">pro elektrické spřáhlo</tooltip>
 	</variable>
-	<variable item="Coupling option 6" CV="129" default="20" exclude="73105,74120,PIKO41RH2400,Tillig 0423x">
+	<variable item="Coupling option 6" CV="129" default="20" exclude="73105,73235,74120,PIKO41RH2400,Tillig0423x,Tillig66036">
 		<decVal/>
-		<label>Pause time - coupling</label>
-		<label xml:lang="de">Pausenzeit - Kupplung</label>
-		<label xml:lang="nl">Koppeling - Pauzeduur</label>
-		<label xml:lang="cs">Pozastavit čas - svěšování</label>
+		<label>Pause time - coupling A1/A2</label>
+		<label xml:lang="de">Pausenzeit - Kupplung A1/A2</label>
+		<label xml:lang="nl">Koppeling - Pauzeduur A1/A2</label>
+		<label xml:lang="cs">Pozastavit čas - svěšování A1/A2</label>
 		<tooltip>value * 100ms</tooltip>
 		<tooltip xml:lang="de">Wert * 100ms</tooltip>
 		<tooltip xml:lang="nl">Waarde * 100ms</tooltip>
 		<tooltip xml:lang="cs">Hodnota × 100 ms</tooltip>
 	</variable>
 	<!--IntelliDraw2 per output coupler activation-->
-	<variable item="Coupling option 7" CV="129" default="0" mask="XXXXXXXV" include="73105,74120,PIKO41RH2400,Tillig 0423x">
+	<variable item="Coupling option 7" CV="129" default="0" mask="XXXXXXVX" include="73105,73235,74120,PIKO41RH2400,Tillig0423x,Tillig66036">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Coupler - A1</label>
 		<label xml:lang="de">E-Kupplung - A1</label>
 		<label xml:lang="nl">Koppeling - A1</label>
 		<label xml:lang="cs">Spřáhlo - A1</label>
 	</variable>
-	<variable item="Coupling option 8" CV="129" default="0" mask="XXXXXXVX" minOut="4" include="73105,74120,PIKO41RH2400,Tillig 0423x">
+	<variable item="Coupling option 8" CV="129" default="0" mask="XXXXXVXX" minOut="4" include="73105,73235,74120,PIKO41RH2400,Tillig0423x,Tillig66036">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Coupler - A2</label>
 		<label xml:lang="de">E-Kupplung - A2</label>
 		<label xml:lang="nl">Koppeling - A2</label>
 		<label xml:lang="cs">Spřáhlo - A2</label>
 	</variable>
-	<variable item="Coupling option 9" CV="129" default="0" mask="XXXXXVXX" minOut="5" include="73105,PIKO41RH2400,Tillig 0423x">
+	<variable item="Coupling option 9" CV="129" default="0" mask="XXXXVXXX" minOut="5" include="73105,73235,PIKO41RH2400,Tillig0423x,Tillig66036">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Coupler - A3</label>
 		<label xml:lang="de">E-Kupplung - A3</label>
 		<label xml:lang="nl">Koppeling - A3</label>
 		<label xml:lang="cs">Spřáhlo - A3</label>
 	</variable>
-	<variable item="Coupling option 10" CV="129" default="0" mask="XXXXVXXX" minOut="6" include="73105,PIKO41RH2400,Tillig 0423x">
+	<variable item="Coupling option 10" CV="129" default="0" mask="XXXVXXXX" minOut="6" include="73105,73235,PIKO41RH2400,Tillig0423x,Tillig66036">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Coupler - A4</label>
 		<label xml:lang="de">E-Kupplung - A4</label>
 		<label xml:lang="nl">Koppeling - A4</label>
 		<label xml:lang="cs">Spřáhlo - A4</label>
 	</variable>
-	<variable item="Coupling option 11" CV="129" default="0" mask="XXXVXXXX" minOut="7" include="73105,PIKO41RH2400">
+	<variable item="Coupling option 11" CV="129" default="0" mask="XXVXXXXX" minOut="7" include="73105,73235,PIKO41RH2400">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Coupler - A5</label>
 		<label xml:lang="de">E-Kupplung - A5</label>
 		<label xml:lang="nl">Koppeling - A5</label>
 		<label xml:lang="cs">Spřáhlo - A5</label>
 	</variable>
-	<variable item="Coupling option 12" CV="129" default="0" mask="XXVXXXXX" minOut="8" include="73105,PIKO41RH2400">
+	<variable item="Coupling option 12" CV="129" default="0" mask="XVXXXXXX" minOut="8" include="73105,73235,PIKO41RH2400">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Coupler - A6</label>
 		<label xml:lang="de">E-Kupplung - A6</label>
 		<label xml:lang="nl">Koppeling - A6</label>
 		<label xml:lang="cs">Spřáhlo - A6</label>
 	</variable>
-	<variable item="Coupling option 13" CV="129" default="0" mask="XVXXXXXX" minOut="9" include="73105,PIKO41RH2400">
+	<variable item="Coupling option 13" CV="129" default="0" mask="VXXXXXXX" minOut="9" include="73105,73235,PIKO41RH2400">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Coupler - A7</label>
 		<label xml:lang="de">E-Kupplung - A7</label>

@@ -7554,7 +7554,7 @@
       <registerListenerScript>sensors.provideSensor("IS1").addPropertyChangeListener(self)</registerListenerScript>
       <unregisterListenerScript>sensors.provideSensor("IS1").removePropertyChangeListener(self)</unregisterListenerScript>
       <scriptLanguage>
-        <language>ECMAScript</language>
+        <language>python</language>
       </scriptLanguage>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
@@ -7644,7 +7644,7 @@
       <registerListenerScript>sensors.provideSensor("IS1").addPropertyChangeListener(self)</registerListenerScript>
       <unregisterListenerScript>sensors.provideSensor("IS1").removePropertyChangeListener(self)</unregisterListenerScript>
       <scriptLanguage>
-        <language>ECMAScript</language>
+        <language>python</language>
       </scriptLanguage>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
@@ -19203,6 +19203,7 @@
       </reporterNamedBean>
       <listenToReporter>no</listenToReporter>
       <variableOperation>SetToString</variableOperation>
+      <constantType>String</constantType>
       <constant />
       <otherVariable />
       <reference />
@@ -19311,6 +19312,7 @@
       </reporterNamedBean>
       <listenToReporter>no</listenToReporter>
       <variableOperation>CopyReferenceToVariable</variableOperation>
+      <constantType>String</constantType>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
       <reference>{{MyVarName}}</reference>
@@ -19419,6 +19421,7 @@
       </reporterNamedBean>
       <listenToReporter>no</listenToReporter>
       <variableOperation>CalculateFormula</variableOperation>
+      <constantType>String</constantType>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
       <reference>{{MyVarName}}</reference>
@@ -19529,6 +19532,7 @@
       </reporterNamedBean>
       <listenToReporter>no</listenToReporter>
       <variableOperation>CopyMemoryToVariable</variableOperation>
+      <constantType>String</constantType>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
       <reference />
@@ -19639,6 +19643,7 @@
       </reporterNamedBean>
       <listenToReporter>no</listenToReporter>
       <variableOperation>CopyBlockToVariable</variableOperation>
+      <constantType>String</constantType>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
       <reference />
@@ -19749,6 +19754,7 @@
       </reporterNamedBean>
       <listenToReporter>no</listenToReporter>
       <variableOperation>CopyReporterToVariable</variableOperation>
+      <constantType>String</constantType>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
       <reference />
@@ -19857,6 +19863,7 @@
       </reporterNamedBean>
       <listenToReporter>no</listenToReporter>
       <variableOperation>CopyVariableToVariable</variableOperation>
+      <constantType>String</constantType>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
       <reference />
@@ -19979,6 +19986,7 @@
       </reporterNamedBean>
       <listenToReporter>no</listenToReporter>
       <variableOperation>CopyTableCellToVariable</variableOperation>
+      <constantType>String</constantType>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
       <reference />
@@ -20099,6 +20107,7 @@
       </reporterNamedBean>
       <listenToReporter>no</listenToReporter>
       <variableOperation>SetToNull</variableOperation>
+      <constantType>String</constantType>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
       <reference />
@@ -20219,6 +20228,7 @@
       </reporterNamedBean>
       <listenToReporter>no</listenToReporter>
       <variableOperation>SetToString</variableOperation>
+      <constantType>String</constantType>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
       <reference />
@@ -22440,7 +22450,7 @@
       <scriptLocalVariable>myOtherVar</scriptLocalVariable>
       <scriptFormula>c+d</scriptFormula>
       <scriptLanguage>
-        <language>ECMAScript</language>
+        <language>python</language>
       </scriptLanguage>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />

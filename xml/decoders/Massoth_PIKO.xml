@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <version author="Jeff Schmaltz escopetas@comcast.net" version="1.0" lastUpdated="20110820"/>
   <!-- 
       This decoder XML is meant to be used with the "Custom" programmer format.
@@ -826,17 +826,11 @@
         <label>F3: Special Function Servo</label>
       </variable>
       <variable item="F3: Servo Inverse Operation" CV="121" mask="XXXXXVXX" default="0" tooltip="F3 servo has inverse operation">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3: Servo Inverse Operation</label>
       </variable>
       <variable item="F3: Servo Switched Off" CV="121" mask="XXXXVXXX" default="0" tooltip="F3 servo is switched off after a motion">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3: Servo Switched Off</label>
       </variable>
       <variable item="F3: Servo Lower End Position" CV="122" default="16" tooltip="Needs to be adjusted to servo">

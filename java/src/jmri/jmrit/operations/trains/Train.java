@@ -3335,7 +3335,8 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 txt = getDescription() + " " + Bundle.getMessage("Terminated") + " (" + getTrainTerminatesName() + ")";
             } else {
                 txt = Bundle.getMessage("TrainAtNext",
-                        getDescription(), getCurrentLocationName(), getNextLocationName());
+                        getDescription(), getCurrentLocationName(), getNextLocationName(), getTrainLength(),
+                        Setup.getLengthUnit().toLowerCase());
             }
             _trainIcon.getToolTip().setText(txt);
             _trainIcon.getToolTip().setBackgroundColor(Color.white);

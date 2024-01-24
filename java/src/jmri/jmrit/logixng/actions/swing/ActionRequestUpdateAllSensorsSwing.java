@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.actions.swing;
 
-import java.awt.Color;
 import java.util.*;
 
 import javax.annotation.CheckForNull;
@@ -33,9 +32,6 @@ public class ActionRequestUpdateAllSensorsSwing extends AbstractDigitalActionSwi
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        JPanel queryPanel = new JPanel();
-        queryPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-
         JPanel connectionPanel = new JPanel();
         connectionPanel.add(new JLabel(Bundle.getMessage("ActionRequestUpdateAllSensorsSwing_Connection")));
 
@@ -53,7 +49,11 @@ public class ActionRequestUpdateAllSensorsSwing extends AbstractDigitalActionSwi
         }
         connectionPanel.add(_connection);
 
+        JPanel infoPanel = new JPanel();
+        infoPanel.add(new JLabel(Bundle.getMessage("ActionRequestUpdateAllSensorsSwing_Info")));
+
         panel.add(connectionPanel);
+        panel.add(infoPanel);
     }
 
     /** {@inheritDoc} */

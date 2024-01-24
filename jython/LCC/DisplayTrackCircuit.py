@@ -18,16 +18,16 @@
 # Sensor name can be system name or user name
 # Memory name must be user name
 # If the sensors do not exist, they will be created with user names formed
-#   from the memory name and TC states
+#	from the memory name and TC states
 # You can also put these lines into Logix or LogixNG script features, like an initialzation script
 
-##a = DisplayTrackCircuit() # create one of these
+##a = DisplayTrackCircuit() # create one of these 
 ##a.init('MS02.01.57.10.00.66.01.A0', 'CP21 South Main TC') # invoke this for the track circuit
 ## or using a user name
 ##a.init('CP 21 South Main TC - Stop', 'CP21 South Main TC') # invoke this for the track circuit
 #
 # then create more, like this:
-##b = DisplayTrackCircuit() # create one of these
+##b = DisplayTrackCircuit() # create one of these 
 ##b.init('MS02.01.57.10.00.66.01.C0', 'CP21 South Side TC') # invoke this for the track circuit
 ## or using a user name
 ##b.init('CP 21 South Side TC - Stop', 'CP21 South Side TC') # invoke this for the track circuit
@@ -95,15 +95,17 @@ class DisplayTrackCircuit(java.beans.PropertyChangeListener) :
             l.setCallBack(self.sensorHandler)
             l.setSensor(s)
             idx = self.sensorList.index(s)
-            #print("setting up listener [" + str(idx) + "]: " + s.getUserName())
+            if (self.debugLevel > 1) :
+                print("setting up listener [" + str(idx) + "]: " + s.getSysName() + " " + s.getUserName()) 
             l.setText(self.stateNames[idx])
             s.addPropertyChangeListener(l)
         print("TC: " + outMemory + " setup complete")
         return
-
+        
     # using sensor and memory name, find/create sensors
     def createSensorSet(self, inSensor, outMemory) :
         # test if sensor name is user name
+        print("createSensorSet(" + inSensor + ", " + outMemory + ")")
         testSensor = None
         uName = outMemory + " - Stop"
         try :
@@ -122,28 +124,14 @@ class DisplayTrackCircuit(java.beans.PropertyChangeListener) :
                 print("TC: Unexpected error:", sys.exc_info()[0])
                 self.failed = True
                 return
-        if (testSensor == None) :
-            try:
-                testSensor = sensors.newSensor(inSensor, uName)
-                print("TC: created: " + inSensor + " (" + uName + ")")
-                testSensor.setAuthoritative(False)
-            except:
-                print("TC: Problem with creating sensor name: " + inSensor + " (" + uName + ")")
-                print("TC: Unexpected error:", sys.exc_info()[0])
-                self.failed = True
-                return
-        if (testSensor == None) :
-            print("TC: Sensor not found/created: " + inSensor)
-            self.failed = True
-            return
-        # save this sensor
-        sysName = testSensor.getSystemName()
-        self.sensorList.append(testSensor)
-        self.sensorNameList.append(sysName)
         # make base string
-        self.baseString = sysName[0:len(sysName)-1]
-        for i in range(1, 8) :
-            testSys = self.baseString + str(i)
+        baseString = inSensor[0:len(inSensor)-1]
+        #print("baseString: " + baseString)
+        baseDigit = inSensor[len(inSensor)-1:len(inSensor)]
+        #print("baseDigit: " + baseDigit)
+        for i in range(0, 8) :
+            x = hex(i + int(baseDigit)).upper()
+            testSys = baseString + x[len(x)-1:len(x)]
             testUser = outMemory + " - " + self.stateNames[i]
             testSensor = None
             #print("building sensor list. At: " + testSys + "(" + testUser + ")")
@@ -155,12 +143,14 @@ class DisplayTrackCircuit(java.beans.PropertyChangeListener) :
                 self.failed = True
                 return
             if (testSensor == None) :
-                print("TC: not found by system name: : " + testSys)
+                if (self.debugLevel > 1) :
+                    print("TC: creating system name: : " + testSys)
                 try:
                     # create entry
                     testSensor = sensors.newSensor(testSys, testUser)
                     if (testSensor != None) :
-                        print("TC: created sensor: " + testSys + " (" + testUser + ")")
+                        if (self.debugLevel > 1) :
+                            print("TC: created sensor: " + testSys + " (" + testUser + ")")
                         testSensor.setAuthoritative(False)
                 except:
                     print("TC: create for: " + testSys + "(" + testUser + ") failed")
@@ -170,44 +160,69 @@ class DisplayTrackCircuit(java.beans.PropertyChangeListener) :
                 self.failed = True
                 return
             testUser = testSensor.getUserName()
-            #print("TC: adding sensor: " + testUser + " list size: " + str(testSensor))
+            if (self.debugLevel > 1) :
+                print("TC: adding sensor: " + testUser + " list size: " + str(testSensor))
             self.sensorList.append(testSensor)
             self.sensorNameList.append(testSys)
         return
 
-    #To detect sensor status, first define the listener.
+    #To detect sensor status, first define the listener. 
     class SensorListener(java.beans.PropertyChangeListener):
         cb = None
         thisSensor = None
         thisText = None
+        debugLevel = 0
 
         def setSensor(self, sensor) :
             self.thisSensor = sensor
+            if (self.debugLevel > 1) :
+                print("SL_setSensor(" + str(sensor) + ")")
             return
 
         def setText(self, txt) :
             self.thisText = txt
+            if (self.debugLevel > 1) :
+                print("SL_setText(" + txt + ")")
             return
 
         def setCallBack(self, ptr) :
             self.cb = ptr
+            if (self.debugLevel > 1) :
+                print("SL_setCallBack(" + str(ptr) + ")")
             return
 
         def propertyChange(self, event):
             if (self.cb != None) :
                 self.cb(self.thisSensor, self.thisText, event)
+                if (self.debugLevel > 1) :
+                    print("SL_propertyChange(" + str(event) + ")")
             return
 
+        def setDebugLevel(self, value) :
+            if (value >= 0 and value <= 2) :
+                self.debugValue = value
+            return
+    
+        def getDebugLevel(self) :
+            return self.thisText + "(" + self.debugValue + ")"
+    
     def sensorHandler(self, sensor, text, event) :
         # read event to see which sensor
         self.memory.setValue(text)
-        #print("sensorHandler(" + text + ")")
+        if (self.debugLevel > 0) :
+        	print("sensorHandler_" + self.memoryName + "(" + sensor + ", " + text + ", " + str(event) + ")")
         return
 
     def setDebugLevel(self, value) :
         if (value >= 0 and value <= 2) :
             self.debugValue = value
+            for s in self.sensorListeners :
+                s.setDebugLevel(value)
+        print("setDebugLevel = " + str(self.debugValue))
         return
 
     def getDebugLevel(self) :
+        print("getDebugLevel = " + str(self.debugValue))
+        for s in self.sensorListeners :
+            print s.getDebugLevel()
         return self.debugLevel

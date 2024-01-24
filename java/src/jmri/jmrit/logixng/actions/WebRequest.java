@@ -180,6 +180,8 @@ public class WebRequest extends AbstractDigitalAction
             for (Parameter parameter : _parameters) {
 
                 Object v = SymbolTable.getInitialValue(
+                        SymbolTable.Type.Parameter,
+                        parameter._name,
                         parameter._type,
                         parameter._data,
                         newSymbolTable,

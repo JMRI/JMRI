@@ -7,7 +7,7 @@
 <!-- manual hints that control of sound in slot, looping etc. is possible, but gives no details -->
 <!-- see Zimo German manual for small decoders, -->
   <!-- v1.1,  Added CVs for Sound Sample selection.   Mark Waters, 11 Mar 2016 -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <!-- include this CV to put it onto the Sound Levels pane -->
   <variable CV="744" item="Z1 Sound Sample" >
     <decVal/>

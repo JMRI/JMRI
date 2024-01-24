@@ -334,7 +334,9 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
     }
 
     public Set<Positionable> getPositionablesByClassName(String className) {
-        return Collections.unmodifiableSet(_classContents.get(className));
+        Set<Positionable> set = _classContents.get(className);
+        if (set == null) return null;
+        return Collections.unmodifiableSet(set);
     }
 
     public void setDefaultToolTip(ToolTip dtt) {
@@ -464,6 +466,16 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
     ToolTipTimer _tooltipTimer;
 
     protected void setToolTip(ToolTip tt) {
+        if (tt != null) {
+            var pos = tt.getPositionable();
+            if (pos != null) {  // LE turnout tooltips do not have a Positionable
+                if (pos.isHidden() && !isEditable()) {
+                    // Skip hidden objects
+                    return;
+                }
+            }
+        }
+
         if (tt == null) {
             _tooltip = null;
             if (_tooltipTimer != null) {

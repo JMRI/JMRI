@@ -109,10 +109,6 @@ public class TableForEach extends AbstractDigitalAction
             log.error("rowOrColumnName is null");
             return;
         }
-        if (rowOrColumnName.isEmpty()) {
-            log.error("rowOrColumnName is empty string");
-            return;
-        }
         if (_variableName == null) {
             log.error("variableName is null");
             return;
@@ -125,7 +121,10 @@ public class TableForEach extends AbstractDigitalAction
         SymbolTable symbolTable = getConditionalNG().getSymbolTable();
 
         if (_tableRowOrColumn == TableRowOrColumn.Row) {
-            int row = table.getRowNumber(rowOrColumnName);
+            int row = 0;    // Empty row name is header row
+            if (!rowOrColumnName.isEmpty()) {
+                row = table.getRowNumber(rowOrColumnName);
+            }
             for (int column=1; column <= table.numColumns(); column++) {
                 // If the header is null or empty, treat the row as a comment
                 Object header = table.getCell(0, column);
@@ -141,7 +140,10 @@ public class TableForEach extends AbstractDigitalAction
                 }
             }
         } else {
-            int column = table.getColumnNumber(rowOrColumnName);
+            int column = 0;    // Empty column name is header column
+            if (!rowOrColumnName.isEmpty()) {
+                column = table.getColumnNumber(rowOrColumnName);
+            }
             for (int row=1; row <= table.numRows(); row++) {
                 // If the header is null or empty, treat the row as a comment
                 Object header = table.getCell(row, 0);
@@ -305,7 +307,9 @@ public class TableForEach extends AbstractDigitalAction
 
         switch (_rowOrColumnAddressing) {
             case Direct:
-                rowOrColumnName = Bundle.getMessage(locale, "AddressByDirect", _rowOrColumnName);
+                String name = _rowOrColumnName;
+                if (name.isEmpty()) name = Bundle.getMessage("TableForEach_Header");
+                rowOrColumnName = Bundle.getMessage(locale, "AddressByDirect", name);
                 break;
 
             case Reference:

@@ -41,6 +41,12 @@ public class MqttSystemConnectionMemo extends DefaultSystemConnectionMemo implem
     }
 
     @Override
+    public void dispose() {
+        InstanceManager.deregister(this, MqttSystemConnectionMemo.class);
+        super.dispose();
+    }
+
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return null;
     }

@@ -5,7 +5,7 @@
 <!-- 					Egbert Broerse (28-01-2019)  				 -->
 <!-- 	Valid for 4.1 Sound families (non exhaustive list)           -->
 <!-- 																 -->
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>Piko</name>
   <column>
     <separator/>

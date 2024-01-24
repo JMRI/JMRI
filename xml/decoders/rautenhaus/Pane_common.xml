@@ -4,7 +4,7 @@
 <!-- version 3 - 2015-03-05 - PB - Spelling.  -->
 <!-- version 2 - 2014-06-03 - PB - improved XML -->
 <!-- version 1 - 2014-02-20 - PB - for common D&H software -->
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>F-Options</name>
   <name xml:lang="de">F-Einstellungen</name>
   <column>

@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2019 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- 																		-->
+<!-- version 1 - include file for Uhlenbrock IntelliDrive2 Decoder          -->
+<!-- Extended Function Mapping                                              -->
+<!-- 																		-->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2019</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Egbert</firstname>
+				<surname>Broerse</surname>
+			</personname>
+		</author>
+		<author>
+			<personname>
+				<firstname>Ulrich</firstname>
+				<surname>Gerlach</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2019-02-10</date>
+			<authorinitials>EBR</authorinitials>
+			<revremark>Initial version for Uhlenbrock_73xx5.xml.
+                Based on Piko help desk supplied datasheet</revremark>
+		</revision>
+		<!-- Uhlenbrock IntelliDrive2 Extended Function Mapping -->
+		<revision>
+			<revnumber>2</revnumber>
+			<date>2022-12-11</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Indexfehler korrigiert</revremark>
+		</revision>
+	</revhistory>
+	<!-- Declaration of the "switch" CVs -->
+	<!--	<variable item="Bank switch 1" CV="31" default="0">
+		<enumVal>
+			<enumChoice choice="Banks Off" value="0">
+				<choice>Banks Off</choice>
+				<choice xml:lang="de">Bank Aus</choice>
+				<choice xml:lang="nl">Banken UIT</choice>
+				<choice xml:lang="cs">Banky Vypnuto</choice>
+			</enumChoice>
+			<enumChoice choice="Banks Unknown" value="1">
+				<choice>Unknown</choice>
+				<choice xml:lang="de">RailCom Plus</choice>
+				<choice xml:lang="nl">Onbekend</choice>
+				<choice xml:lang="cs">Neznámý</choice>
+			</enumChoice>
+			<enumChoice choice="Banks Program" value="8">
+				<choice>Bank Program</choice>
+				<choice xml:lang="de">Bank Programmieren</choice>
+				<choice xml:lang="nl">Programmeren</choice>
+				<choice xml:lang="cs">Programování</choice>
+			</enumChoice>
+		</enumVal>
+		<label>State</label>
+		<label xml:lang="de">Zustand</label>
+		<label xml:lang="cs">Stav</label>
+		<tooltip>Reset to Off after programming</tooltip>
+		<tooltip xml:lang="de">Bank Aus nach Programmierung</tooltip>
+		<tooltip xml:lang="cs">Po programování resetujte na Vypnuto</tooltip>
+	</variable>
+	<variable item="Bank switch 2" CV="32" default="0">
+		<enumVal>
+			<enumChoice choice="Extended Function Mapping 1-16" value="0">
+				<choice>1. Extended Function Mapping 1-16</choice>
+				<choice xml:lang="de">1. Erweitertes Fkt.-Mapping 1-16</choice>
+				<choice xml:lang="cs">1. Rozšířené mapování funkcí 1-16</choice>
+			</enumChoice>
+			<enumChoice choice="Extended Function Mapping 17-32" value="1">
+				<choice>2. Extended Function Mapping 17-32</choice>
+				<choice xml:lang="de">2. Erweitertes Fkt.-Mapping 17-32</choice>
+				<choice xml:lang="cs">1. Rozšířené mapování funkcí 17-32</choice>
+			</enumChoice>
+			<enumChoice choice="PWM Modulation 1-4" value="3">
+				<choice>3. PWM Modulation 1-4</choice>
+				<choice xml:lang="de">3. PWM Modulationen 1-4</choice>
+				<choice xml:lang="cs">3. PWM Modulace 1-4</choice>
+			</enumChoice>
+			<enumChoice choice="PWM Modulation 5-8" value="4">
+				<choice>4. PWM Modulation 5-8</choice>
+				<choice xml:lang="de">4. PWM Modulationen 5-8</choice>
+				<choice xml:lang="cs">3. PWM Modulace 5-8</choice>
+			</enumChoice>
+			<enumChoice choice="Intellimatic" value="5">
+				<choice>5. Intellimatic</choice>
+			</enumChoice>
+			<enumChoice choice="None" value="255">
+				<choice>None</choice>
+				<choice xml:lang="de">Keine</choice>
+				<choice xml:lang="cs">Nic</choice>
+			</enumChoice>
+		</enumVal>
+		<label>Bank</label>
+		<label xml:lang="de">Bank</label>
+		<label xml:lang="cs">Banka</label>
+	</variable>-->
+	<!-- Bank 5 CVs Intellimatic (Index CV 32 = 5) -->
+	<!-- group hides/shows with CV 32 choice = 5 -->
+	<!-- Macro block 1-->
+	<variable item="Bank5 Intellimatic 1.1" CV="257.31=8.32=5" default="0">
+		<decVal/>
+		<label>1 </label>
+		<tooltip>Action 1.</tooltip>
+		<tooltip xml:lang="de">Handlung 1.</tooltip>
+		<tooltip xml:lang="nl">Actie 1.</tooltip>
+		<tooltip xml:lang="cs">Akce 1.</tooltip>
+	</variable>
+	<variable item="Bank5 Intellimatic 1.1 enum" CV="257.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+		<tooltip>Next enter value if choice ends with ":"</tooltip>
+		<tooltip xml:lang="de">Wert folgt wenn Option endet in ":"</tooltip>
+		<tooltip xml:lang="nl">Vul hierna een waarde in als keuze eindigt op ":"</tooltip>
+		<tooltip xml:lang="cs">Pokud volba končí na ":" zadejte další hodnotu</tooltip>
+	</variable>
+	<variable item="Bank5 Intellimatic 1.2" CV="258.31=8.32=5" default="0">
+		<decVal/>
+		<label>2 </label>
+		<tooltip>Action/value 2</tooltip>
+		<tooltip xml:lang="de">Handlung/Wert 2</tooltip>
+		<tooltip xml:lang="nl">Actie/Waarde 2</tooltip>
+		<tooltip xml:lang="cs">Akce/hodnota 2</tooltip>
+	</variable>
+	<variable item="Bank5 Intellimatic 1.2 enum" CV="258.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+	</variable>
+	<variable item="Bank5 Intellimatic 1.3" CV="259.31=8.32=5" default="0">
+		<decVal/>
+		<label>3 </label>
+	</variable>
+	<variable item="Bank5 Intellimatic 1.3 enum" CV="259.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+	</variable>
+	<variable item="Bank5 Intellimatic 1.4" CV="260.31=8.32=5" default="0">
+		<decVal/>
+		<label>4 </label>
+	</variable>
+	<variable item="Bank5 Intellimatic 1.4 enum" CV="260.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+	</variable>
+	<variable item="Bank5 Intellimatic 1.5" CV="261.31=8.32=5" default="0">
+		<decVal/>
+		<label>5 </label>
+	</variable>
+	<variable item="Bank5 Intellimatic 1.5 enum" CV="261.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+	</variable>
+	<variable item="Bank5 Intellimatic 1.6" CV="262.31=8.32=5" default="0">
+		<decVal/>
+		<label>6 </label>
+	</variable>
+	<variable item="Bank5 Intellimatic 1.6 enum" CV="262.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+	</variable>
+	<variable item="Bank5 Intellimatic 1.7" CV="263.31=8.32=5" default="0">
+		<decVal/>
+		<label>7 </label>
+	</variable>
+	<variable item="Bank5 Intellimatic 1.7 enum" CV="263.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+	</variable>
+	<variable item="Bank5 Intellimatic 1.8" CV="264.31=8.32=5" default="0">
+		<decVal/>
+		<label>8 </label>
+	</variable>
+	<variable item="Bank5 Intellimatic 1.8 enum" CV="264.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+	</variable>
+	<!-- Test with only 1 series TODO enter remaining CVs 264.4 - 272.4 -->
+	<variable item="Bank5 Intellimatic 1.9" CV="265.31=8.32=5" default="0">
+		<decVal/>
+		<label>9 </label>
+	</variable>
+	<variable item="Bank5 Intellimatic 1.9 enum" CV="265.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+	</variable>
+	<variable item="Bank5 Intellimatic 1.10" CV="266.31=8.32=5" default="0">
+		<decVal/>
+		<label>10</label>
+	</variable>
+	<variable item="Bank5 Intellimatic 1.10 enum" CV="266.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+	</variable>
+	<variable item="Bank5 Intellimatic 1.11" CV="267.31=8.32=5" default="0">
+		<decVal/>
+		<label>11</label>
+	</variable>
+	<variable item="Bank5 Intellimatic 1.11 enum" CV="267.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+	</variable>
+	<variable item="Bank5 Intellimatic 1.12" CV="268.31=8.32=5" default="0">
+		<decVal/>
+		<label>12</label>
+	</variable>
+	<variable item="Bank5 Intellimatic 1.12 enum" CV="268.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+	</variable>
+	<variable item="Bank5 Intellimatic 1.13" CV="269.31=8.32=5" default="0">
+		<decVal/>
+		<label>13</label>
+	</variable>
+	<variable item="Bank5 Intellimatic 1.13 enum" CV="269.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+	</variable>
+	<variable item="Bank5 Intellimatic 1.14" CV="270.31=8.32=5" default="0">
+		<decVal/>
+		<label>14</label>
+	</variable>
+	<variable item="Bank5 Intellimatic 1.14 enum" CV="270.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+	</variable>
+	<variable item="Bank5 Intellimatic 1.15" CV="271.31=8.32=5" default="0">
+		<decVal/>
+		<label>15</label>
+	</variable>
+	<variable item="Bank5 Intellimatic 1.15 enum" CV="271.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+	</variable>
+	<variable item="Bank5 Intellimatic 1.16" CV="272.31=8.32=5" default="0">
+		<decVal/>
+		<label>16</label>
+	</variable>
+	<variable item="Bank5 Intellimatic 1.16 enum" CV="272.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+	</variable>
+	<!--Macro block 2-->
+	<variable item="Bank5 Intellimatic 2.1" CV="273.31=8.32=5" default="0">
+		<decVal/>
+		<label>1 </label>
+		<tooltip>Action 1.</tooltip>
+		<tooltip xml:lang="de">Handlung 1.</tooltip>
+		<tooltip xml:lang="nl">Actie 1.</tooltip>
+		<tooltip xml:lang="cs">Akce 1.</tooltip>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.1 enum" CV="273.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+		<tooltip>Next enter value if choice ends with ":"</tooltip>
+		<tooltip xml:lang="de">Wert folgt wenn Option endet in ":"</tooltip>
+		<tooltip xml:lang="nl">Vul hierna een waarde in als keuze eindigt op ":"</tooltip>
+		<tooltip xml:lang="cs">Pokud volba končí na ":" zadejte další hodnotu</tooltip>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.2" CV="274.31=8.32=5" default="0">
+		<decVal/>
+		<label>2 </label>
+		<tooltip>Action/value 2</tooltip>
+		<tooltip xml:lang="de">Handlung/Wert 2</tooltip>
+		<tooltip xml:lang="nl">Actie/Waarde 2</tooltip>
+		<tooltip xml:lang="cs">Akce/hodnota 2</tooltip>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.2 enum" CV="274.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.3" CV="275.31=8.32=5" default="0">
+		<decVal/>
+		<label>3 </label>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.3 enum" CV="275.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.4" CV="276.31=8.32=5" default="0">
+		<decVal/>
+		<label>4 </label>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.4 enum" CV="276.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.5" CV="277.31=8.32=5" default="0">
+		<decVal/>
+		<label>5 </label>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.5 enum" CV="277.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.6" CV="278.31=8.32=5" default="0">
+		<decVal/>
+		<label>6 </label>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.6 enum" CV="278.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.7" CV="279.31=8.32=5" default="0">
+		<decVal/>
+		<label>7 </label>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.7 enum" CV="279.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.8" CV="280.31=8.32=5" default="0">
+		<decVal/>
+		<label>8 </label>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.8 enum" CV="280.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.9" CV="281.31=8.32=5" default="0">
+		<decVal/>
+		<label>9 </label>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.9 enum" CV="281.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.10" CV="282.31=8.32=5" default="0">
+		<decVal/>
+		<label>10</label>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.10 enum" CV="282.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.11" CV="283.31=8.32=5" default="0">
+		<decVal/>
+		<label>11</label>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.11 enum" CV="283.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.12" CV="284.31=8.32=5" default="0">
+		<decVal/>
+		<label>12</label>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.12 enum" CV="284.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.13" CV="285.31=8.32=5" default="0">
+		<decVal/>
+		<label>13</label>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.13 enum" CV="285.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.14" CV="286.31=8.32=5" default="0">
+		<decVal/>
+		<label>14</label>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.14 enum" CV="286.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.15" CV="287.31=8.32=5" default="0">
+		<decVal/>
+		<label>15</label>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.15 enum" CV="287.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.16" CV="288.31=8.32=5" default="0">
+		<decVal/>
+		<label>16</label>
+	</variable>
+	<variable item="Bank5 Intellimatic 2.16 enum" CV="288.31=8.32=5" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumIntellimatic.xml"/>
+	</variable>
+	<!--TODO add remaining CVs up to 512.4-->
+	<!-- End Bank 5 -->
+</variables>

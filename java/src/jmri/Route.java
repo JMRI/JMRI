@@ -326,6 +326,21 @@ public interface Route extends NamedBean {
      */
     int getControlTurnoutState();
 
+
+    /**
+     * Set the feedback to use when checking the control turnout state
+     *
+     * @param turnoutFeedbackIsCommanded true if commanded state is to be checked; default is false
+     */
+    void setControlTurnoutFeedback(boolean turnoutFeedbackIsCommanded);
+
+    /**
+     * Get the feedback to use when checking the control turnout state
+     *
+     * @return true if commanded state is to be checked; false is known state
+     */
+    boolean getControlTurnoutFeedback();
+
     /**
      * Set the lock control Turnout for this Route.
      *

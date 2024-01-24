@@ -15,7 +15,7 @@
 <!-- version 1 - Alain Le Marchand - 2022-04-17                             -->
 <!--    include file for Zimo decoder - Product IDs of CV250                -->
 <!--                                                                        -->
-<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <enumChoice choice="Unknown" value ="0">
         <choice>Unknown</choice>
         <choice xml:lang="de">Unbekannt</choice>

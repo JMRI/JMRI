@@ -16,7 +16,7 @@
                    John McMasters' PaneDigitraxSoundExtSeries6.xml file     -->
 <!--                             for Digitrax Series 7 Sound Decoders       -->
 <!--                                    John McMasters (2023-04-04)      -->
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
   <row>
     <column>
       <display item="Feature Disable Group 1"/>

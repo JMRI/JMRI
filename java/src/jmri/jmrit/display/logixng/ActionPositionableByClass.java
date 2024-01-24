@@ -294,6 +294,24 @@ public class ActionPositionableByClass extends AbstractDigitalAction implements 
 
         Set<Positionable> positionableSet = _editor.getPositionablesByClassName(className);
 
+        if (positionableSet == null) {
+            var lng = getConditionalNG();
+            var cng = getConditionalNG();
+            var m = getModule();
+            String errorMessage;
+            if (m != null) {
+                errorMessage = Bundle.getMessage(
+                        "ActionPositionableByClass_ErrorNoPositionables_Module",
+                        getLongDescription(), m.getDisplayName(), getSystemName());
+            } else {
+                errorMessage = Bundle.getMessage(
+                        "ActionPositionableByClass_ErrorNoPositionables_LogixNG",
+                        getLongDescription(), lng.getDisplayName(), cng.getDisplayName(), getSystemName());
+            }
+            List<String> list = Arrays.asList(errorMessage.split("\n"));
+            throw new JmriException(Bundle.getMessage("ActionPositionableByClass_ErrorNoPositionables"), list);
+        }
+
         String name = (_stateAddressing != NamedBeanAddressing.Direct)
                 ? getNewState() : null;
 

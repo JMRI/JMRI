@@ -86,7 +86,8 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Several tools have improved layout when the
+                    screen size is reduced.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -106,6 +107,9 @@
 
         <h4>MQTT</h4>
             <ul>
+                <li>Fixed missing topic unsubscribes when deleting turnouts, sensors, etc</li>
+                <li>Fixed missing topic unsubscribe on throttle release for cab functions</li>
+                <li>Added code to properly dispose of MQTT components</li>
                 <li></li>
             </ul>
 
@@ -116,7 +120,7 @@
 
         <h4>NCE</h4>
             <ul>
-                <li>NCE serial connections have been updated to use a new serial library.</li>
+                <li></li>
             </ul>
 
         <h4>Oak Tree</h4>
@@ -126,7 +130,22 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Updated script DisplayTrackCircuit.py to support the Tower +Que node
+                    <p>This script populates a set of events to match the traffic circuit and then
+                    creates a listener for them. That listener populates and maintains a memory to
+                    show text for the state of the traffic circuit.</li>
+                <li>Several tools have improved layout when the
+                    screen size is reduced.</li>
+                <li>Added an "ID Tool". This will cause the transmit LED on one
+                    physical node to flash.  This can be a convenient way to identify which 
+                    physical node underneath the layout is the one you're working with in JMRI, 
+                    e.g. when you need to move a wire.
+                <li>Configuration of large String fields now has an improved interface:
+                    You can see how many characters remain in the large field and word
+                    breaks are now respected.
+                <li>The Event Table now has buttons to copy Sensor and Turnout user names
+                    into the relevant Event ID names. These only fill in blank Event ID
+                    names, they don't overwrite any names you might have already entered.
             </ul>
 
         <h4>Powerline</h4>
@@ -216,8 +235,7 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li>Updated LocoNet Monitor to display PM74 and SE74 device 
-		types for certain LocoNet messages.</li>
+                <li></li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -277,7 +295,7 @@
 
         <h4>MRC</h4>
             <ul>
-                <li></li>
+                <li>MRC serial connections should use odd parity.</li>
             </ul>
 
         <h4>NCE</h4>
@@ -378,9 +396,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Added a SplitHundredsVal which defines a large value
-                split across multiple CVs in groups of two decimal digits.
-                This is used by the new Logic Rail Tech definition.</li>
+            <li></li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -427,7 +443,55 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-            <li>Add Audio support to Where Used.</li>
+          <li>The action <strong>Table: For each</strong> can now loop
+              thru the headers too. If indirect addressing is used for
+              the row or column name, use the empty string to get the
+              headers.</li>
+          <li>The action <strong>Table</strong> is added. It  lets the
+              user set the value of a cell in a LogixNG table.</li>
+          <li>The action <strong>Request update of sensor</strong> is
+              added. It requests that the state of a sensor is updated
+              from the layout, if possible. Not all connections supports
+              this, for example LocoNet.</li>
+          <li>LogixNG has two new preferences which are disabled by default:
+              <ul>
+                  <li><strong>Use strict typing of global variables</strong></li>
+                  <li><strong>Use strict typing of local variables</strong></li>
+              </ul>
+              If strict typing is enabled, local and global variables
+              that are initialized to a string, integer or floating number
+              cannot be set to a value of another type. LogixNG will try
+              to convert the new value to the desired type, for example
+              a local variable of type floating number will be assigned
+              the value 12.0 if it's assigned 12 and it will be assigned
+              the value 32. if it's assigned the string "32.5".
+              <br>
+              Local and global variables that are initialized to another
+              type, for example array, map or LogixNG table can't be
+              assigned a new value.
+              <br>
+              If you want to use strict typing but still want to override
+              this setting for a particular local or global variable, then
+              initialize this variable to <strict>None</strict>. Variables
+              that are initialized to <strict>None</strict> will not have
+              strict typing,
+          </li>
+          <li>A new preference is added that selects if the
+              <strong>If Then Else</strong> action should have
+              <strong>Execute on change</strong> or
+              <strong>Always execute</strong> as the default.
+          </li>
+          <li>The expression <strong>Sensor Edge</strong> no longer
+              supports indirect addressing of the sensor. It has never
+              really worked since Sensor Edge needs to listen on the
+              sensor and it cannot listen on a sensor if indirect
+              addressing is used.<br>
+              If a panel is loaded and a Sensor Edge expression uses
+              indirect addressing, an error message is added to the
+              log:<br>
+              <strong>Error during loading Sensor Edge expression
+              IQDE:AUTO:0003 due to: Addressing must be Direct</strong><br>
+              where IQDE:AUTO:0003 is the system name of the expression.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -473,7 +537,7 @@
     <h3>Resources</h3>
         <a id="Resources" name="Resources"></a>
         <ul>
-            <li></li>
+            <li>Added a blue medium LED.</li>
         </ul>
 
     <h3>Roster</h3>
@@ -485,7 +549,11 @@
     <h3>Routes</h3>
         <a id="Routes" name="Routes"></a>
        <ul>
-            <li></li>
+            <li>You can now specify where the control turnout should have its
+                known state (the default old behavior) or its commanded state
+                checked to see if the route should be set.  This can be useful
+                e.g. if you have feedback set on the turnout and want to react
+                quickly to a commanded change.</li>
        </ul>
 
     <h3>Scripting</h3>
@@ -561,7 +629,8 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>Fixed a bug where deleting the last (highest-numbered) Turnout
+                would throw an exception.</li>
         </ul>
 
    <h3>Warrants</h3>
@@ -579,7 +648,7 @@
     <h3>Where Used</h3>
         <a id="WhereUsed" name="WhereUsed"></a>
         <ul>
-            <li>Add Audio support.</li>
+            <li></li>
         </ul>
 
    <h3>WiThrottle Server</h3>
