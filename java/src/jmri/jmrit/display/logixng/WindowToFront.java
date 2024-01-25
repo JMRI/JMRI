@@ -178,11 +178,9 @@ public class WindowToFront extends AbstractDigitalAction implements VetoableChan
 
         switch (_addressing) {
             case Direct:
-                log.error("aaa");
                 jmriJFrame = this._jmriJFrame;
                 if (jmriJFrame == null && (_jmriJFrameTitle != null && !_jmriJFrameTitle.isBlank())) {
-                    log.error("bbb");                    jmriJFrame = JmriJFrame.getFrame(_jmriJFrameTitle);
-                    log.error("ccc");
+                    jmriJFrame = JmriJFrame.getFrame(_jmriJFrameTitle);
                     if (jmriJFrame == null) {
                         log.error("ddd");
                         throwErrorJmriJFrameDoesNotExists();
@@ -217,7 +215,7 @@ public class WindowToFront extends AbstractDigitalAction implements VetoableChan
 //        System.out.format("WindowToFront.execute: positionable: %s%n", positionable);
 
         if (jmriJFrame == null) {
-            log.error("positionable is null");
+            log.error("Frame is null");
             return;
         }
 

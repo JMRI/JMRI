@@ -788,9 +788,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
      */
     public static JmriJFrame getFrame(String name) {
         for (JmriJFrame j : getFrameList()) {
-            log.error("JmriJFrame: {}, name: {}", j.getTitle(), name);
             if (j.getTitle().equals(name)) {
-                log.error("Found");
                 return j;
             }
         }
