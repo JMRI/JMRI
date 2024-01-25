@@ -98,7 +98,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         windowInterface = new JmriJFrameInterface();
 
         /*
-         * This ensures that different jframes do not get placed directly on top of each other, 
+         * This ensures that different jframes do not get placed directly on top of each other,
          * but are offset. However a saved preferences can override this.
          */
         JmriJFrameManager m = getJmriJFrameManager();
@@ -454,10 +454,10 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         int REQUIRED_OFFSET = 25; // units are pixels
         int REQUIRED_OFFSET_X = Math.max(REQUIRED_OFFSET, f.getInsets().left);
         int REQUIRED_OFFSET_Y = Math.max(REQUIRED_OFFSET, f.getInsets().top);
-        
+
         int frameOffSetx = this.getX() + REQUIRED_OFFSET_X;
         int frameOffSety = this.getY() + REQUIRED_OFFSET_Y;
-        
+
         Dimension dim = getMaximumSize();
 
         if (frameOffSetx >= (dim.getWidth() * 0.75)) {
@@ -788,7 +788,9 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
      */
     public static JmriJFrame getFrame(String name) {
         for (JmriJFrame j : getFrameList()) {
+            log.error("JmriJFrame: {}, name: {}", j.getTitle(), name);
             if (j.getTitle().equals(name)) {
+                log.error("Found");
                 return j;
             }
         }

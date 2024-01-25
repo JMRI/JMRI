@@ -2537,6 +2537,13 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        jmri.jmrit.display.logixng.WindowToFront windowToFront =
+                new jmri.jmrit.display.logixng.WindowToFront(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(windowToFront);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         jmri.jmrit.display.logixng.ActionAudioIcon actionAudioIcon =
                 new jmri.jmrit.display.logixng.ActionAudioIcon(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionAudioIcon);
