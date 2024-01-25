@@ -21,8 +21,6 @@ import jmri.util.swing.JComboBoxUtil;
  */
 public class WindowToFrontSwing extends AbstractDigitalActionSwing {
 
-    private JmriJFrame _selectedJmriJFrame;
-
     private JComboBox<JmriJFrameItem> _jmriJFrameComboBox;
     private JTabbedPane _tabbedPaneJmriJFrame;
     private JPanel _panelJmriJFrameDirect;
