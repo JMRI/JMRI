@@ -492,6 +492,10 @@
               <strong>Error during loading Sensor Edge expression
               IQDE:AUTO:0003 due to: Addressing must be Direct</strong><br>
               where IQDE:AUTO:0003 is the system name of the expression.</li>
+          <li>The action <strong>Window to front</strong> as been added.
+              It brings a window to the front and can be used if you for
+              example want to have an icon on a panel that moves focus to
+              another window.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
