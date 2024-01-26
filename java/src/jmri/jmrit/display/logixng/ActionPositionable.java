@@ -329,7 +329,7 @@ public class ActionPositionable extends AbstractDigitalAction implements Vetoabl
             operation = Operation.valueOf(name);
         }
 
-        ThreadingUtil.runOnLayout(() -> {
+        ThreadingUtil.runOnGUI(() -> {
             switch (operation) {
                 case Disable:
                     positionable.setControlling(false);

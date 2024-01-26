@@ -322,7 +322,7 @@ public class ActionPositionableByClass extends AbstractDigitalAction implements 
             operation = Operation.valueOf(name);
         }
 
-        ThreadingUtil.runOnLayout(() -> {
+        ThreadingUtil.runOnGUI(() -> {
             for (Positionable p : positionableSet) {
                 switch (operation) {
                     case Disable:
