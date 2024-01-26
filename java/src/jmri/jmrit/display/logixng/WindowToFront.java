@@ -220,7 +220,7 @@ public class WindowToFront extends AbstractDigitalAction implements VetoableChan
         }
 
         JmriJFrame frame = jmriJFrame;
-        ThreadingUtil.runOnLayout(() -> {
+        ThreadingUtil.runOnGUI(() -> {
             frame.toFront();
         });
     }
