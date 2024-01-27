@@ -274,7 +274,7 @@
       from MQTT sensors (that is, devices managing sensors and publishing MQTT messages). The publisher of those messages
       decides whether values are retained by the broker so JMRI will receive them when a panel is loaded or a new sensor
       created.  Turnouts and lights commands are generally published by JMRI so JMRI will not receive anything on 
-      startup as it woould not be subscribing to its own messages.
+      startup as it would not be subscribing to its own messages.
       </p>
 
       <p><a href="#top"><em><small>[Go to top of page]</small></em></a>
