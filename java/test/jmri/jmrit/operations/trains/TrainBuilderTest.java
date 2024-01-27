@@ -16230,8 +16230,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         Track midtownSpur1 = midtown.getTrackByName("Midtown spur 1", null);
         Track midtownSpur2 = midtown.getTrackByName("Midtown spur 2", null);
 
-        Location eastend = lmanager.getLocationByName("Eastend");
-        Track eastendSpur1 = eastend.getTrackByName("Eastend spur 1", Track.SPUR);
+//        Location eastend = lmanager.getLocationByName("Eastend");
+//        Track eastendSpur1 = eastend.getTrackByName("Eastend spur 1", Track.SPUR);
 
         Location westend = lmanager.getLocationByName("Westend");
         Track westendSpur1 = westend.getTrackByName("Westend spur 1", Track.SPUR);
@@ -16271,7 +16271,8 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         sch1Item1.setRandom("0"); // 0% chance
         sch1Item2.setRandom("0");
-        sch1Item3.setRandom("100"); // only choice 100% chance
+        // see doRandom adjustment
+        sch1Item3.setRandom("105"); // only choice 100% (4 boxcars)
 
         new TrainBuilder().build(train);
         Assert.assertTrue(train.isBuilt());
@@ -16291,7 +16292,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // test bogus random number
         sch1Item1.setRandom("0"); // 0% chance
-        sch1Item2.setRandom("A"); // random disabled, 100% chance
+        sch1Item2.setRandom("A"); // random disabled, 0% chance
         sch1Item3.setRandom("0"); // 0% chance
 
         train.reset();
@@ -16301,8 +16302,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         // there are 4 spurs with this schedule, but only one error messages
         jmri.util.JUnitAppender.assertErrorMessage("Schedule item (1c2) random value (A) isn't a number");
 
-        Assert.assertEquals("car load", "Flour", c3.getLoadName());
-        Assert.assertEquals("car destination track", eastendSpur1, c3.getDestinationTrack());
+        Assert.assertEquals("car load", "E", c3.getLoadName());
+        Assert.assertEquals("car destination track", westendSpur1, c3.getDestinationTrack());
 
         Assert.assertEquals("car load", "E", c4.getLoadName());
         Assert.assertEquals("car destination track", westendSpur1, c4.getDestinationTrack());
