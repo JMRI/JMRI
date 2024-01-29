@@ -35,9 +35,9 @@
 
       <ul>
         <li><a href="#objects">MQTT-connected objects</a>: Certain JMRI objects can be defined as being
-      connected via MQTT. As of release 4.21.1, JMRI implements MQTT-connected turnouts, sensors,
-      and lights.  Signal masts have been available as MQTT objects since release 4.26. Other object
-      types may be added in the future based on user requests.</li>
+      connected via MQTT. As of release 4.26, JMRI implements MQTT-connected turnouts, sensors, lights, 
+      and signal masts. Reporters were added in release 5.3.2. Power and throttle control functions were 
+      added in release 5.5.4.  Other object types and functions may be added in the future based on user requests.</li>
 
         <li><a href="#LNG">LogxiNG</a>: As of release 4.99.7, <a href="../../tools/logixng/LogixNG.shtml">LogixNG</a> has
       the capability to publish and subscribe MQTT messages on any topic of your choosing.</li>
@@ -456,7 +456,7 @@
       <p><span class="since">Since 5.5.4</span>
       JMRI supports controlling locomotives over MQTT.  Throttles attached to the specified MQTT connection (either by
       default or by using <strong>Tools&rArr;Throttles&rArr;Throttles for connections&rArr;[select from pulldown]</strong>)
-      will publish MQTT messages on the indicated topics. The protocol is controller agnostic though the internal design
+      will publish MQTT messages on the indicated topics. The protocol is controller agnostic, however the internal design
       of JMRI imposes some compliance with DCC standards.
       </p>
           
@@ -484,7 +484,7 @@
       </p>
       
       <p>
-      If you selct an MQTT connection as the default for Throttle Control (by selecting the "Throttle" button on 
+      If you select an MQTT connection as the default for Throttle Control (by selecting the "Throttle" button on 
       <strong>Edit&rArr; Preferences&rArr;Defaults</strong>), any Throttle opened with 
       <strong>Tools&rArr;Throttle&rArr;New Throttle</strong> from the main Panel window or using smartphone applications
       such as <a href="../../../package/jmri/jmrit/withrottle/UserInterface.shtml">WiThrottle and EngineDriver</a>
