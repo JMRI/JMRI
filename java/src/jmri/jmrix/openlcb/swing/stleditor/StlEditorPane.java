@@ -6,6 +6,9 @@ import java.io.*;
 import java.util.*;
 import java.util.List;
 
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -33,14 +36,11 @@ import org.openlcb.cdi.impl.ConfigRepresentation;
 
 
 /**
- * Pane for editing STL logic.
+ * Panel for editing STL logic.
  *
  * TODO
- *    Finish Operator enum
  *    Make the node selector full width
- *    Retain logic split location
  *    Implement CDI connection
- *    Figure out the conversion logic
  *
  * @author Dave Sand Copyright (C) 2024
  * @since 5.7.x
@@ -61,7 +61,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     int _logicRow = -1;     // The last selected row, -1 for none
     int _groupRow = -1;
 
-    JLabel statusField;
+    JLabel _statusField;
 
     JComboBox<NodeEntry> _nodeBox;
     private DefaultComboBoxModel<NodeEntry> _nodeModel = new DefaultComboBoxModel<NodeEntry>();
@@ -92,6 +92,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private JButton _moveUpButton;
     private JButton _moveDownButton;
     private JButton _deleteButton;
+    private JButton _percentButton;
     private JButton _refreshButton;
     private JButton _storeButton;
 
@@ -111,7 +112,11 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private static String GROUP_NAME = "Conditionals.Logic(%s).Group_Description";
     private static String GROUP_LINE = "Conditionals.Logic(%s).Line_%s";
 
-
+    // Regex Patterns
+    private static Pattern PARSE_VARIABLE = Pattern.compile("[IQYZM](\\d+)\\.(\\d+)");
+    private static Pattern PARSE_LABEL = Pattern.compile("\\D\\w{0,3}:");
+    private static Pattern PARSE_TIMERWORD = Pattern.compile("W#[0123]#\\d{1,3}");
+    private static Pattern PARSE_TIMERVAR = Pattern.compile("T\\d{1,2}");
 
     public StlEditorPane() {
     }
@@ -124,8 +129,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         // Add to GUI here
         setLayout(new BorderLayout());
-//         var header = new JPanel();
-//         add(header, BorderLayout.NORTH);
 
         var footer = new JPanel();
         footer.setLayout(new BorderLayout());
@@ -135,16 +138,20 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         _moveUpButton = new JButton(Bundle.getMessage("ButtonMoveUp"));
         _moveDownButton = new JButton(Bundle.getMessage("ButtonMoveDown"));
         _deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
+        _percentButton = new JButton("0%");
         _refreshButton = new JButton(Bundle.getMessage("ButtonRefresh"));
         _storeButton = new JButton(Bundle.getMessage("ButtonStore"));
 
+        _percentButton.setEnabled(false);
+        _storeButton.setEnabled(false);
 
         _addButton.addActionListener(this::pushedAddButton);
         _insertButton.addActionListener(this::pushedInsertButton);
         _moveUpButton.addActionListener(this::pushedMoveUpButton);
         _moveDownButton.addActionListener(this::pushedMoveDownButton);
         _deleteButton.addActionListener(this::pushedDeleteButton);
-//         _refreshButton.addActionListener(this::pushedRefreshButton);
+        _percentButton.addActionListener(this::pushedPercentButton);
+        _refreshButton.addActionListener(this::pushedRefreshButton);
         _storeButton.addActionListener(this::pushedStoreButton);
 
         _editButtons = new JPanel();
@@ -156,7 +163,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         footer.add(_editButtons, BorderLayout.WEST);
 
         var dataButtons = new JPanel();
-        dataButtons.add(_refreshButton);
+        dataButtons.add(_percentButton);
         dataButtons.add(_storeButton);
         footer.add(dataButtons, BorderLayout.EAST);
         add(footer, BorderLayout.SOUTH);
@@ -241,6 +248,9 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         selectionModel.addListSelectionListener(this::handleLogicRowSelection);
 
         var logicPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, buildGroupPanel(), _logicScrollPane);
+        logicPanel.setDividerSize(10);
+        logicPanel.setResizeWeight(.10);
+
         return logicPanel;
     }
 
@@ -248,7 +258,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         // Create scroll pane
         var model = new InputModel();
         _inputTable = new JTable(model);
-        _inputTable.setRowSelectionAllowed(false);
         var scrollPane = new JScrollPane(_inputTable);
 
         // resize columns
@@ -264,7 +273,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         // Create scroll pane
         var model = new OutputModel();
         _outputTable = new JTable(model);
-        _outputTable.setRowSelectionAllowed(false);
         var scrollPane = new JScrollPane(_outputTable);
 
         // resize columns
@@ -280,7 +288,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         // Create scroll pane
         var model = new ReceiverModel();
         _receiverTable = new JTable(model);
-        _receiverTable.setRowSelectionAllowed(false);
         var scrollPane = new JScrollPane(_receiverTable);
 
         // resize columns
@@ -296,7 +303,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         // Create scroll pane
         var model = new TransmitterModel();
         _transmitterTable = new JTable(model);
-        _transmitterTable.setRowSelectionAllowed(false);
         var scrollPane = new JScrollPane(_transmitterTable);
 
         // resize columns
@@ -334,7 +340,13 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             _logicTable.revalidate();
             _logicScrollPane.revalidate();
             _logicScrollPane.repaint();
+            pushedPercentButton(null);
         }
+    }
+
+    private void pushedPercentButton(ActionEvent e) {
+        encode(_groupList.get(_groupRow));
+        _percentButton.setText(_groupList.get(_groupRow).getSize());
     }
 
     public void handleLogicRowSelection(ListSelectionEvent e) {
@@ -346,7 +358,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     private void pushedAddButton(ActionEvent e) {
-        _logicList.add(new LogicRow("", null, "", _groupRow));
+        _logicList.add(new LogicRow("", null, "", ""));
         _logicRow = _logicList.size() - 1;
         _logicTable.revalidate();
         _logicTable.setRowSelectionInterval(_logicRow, _logicRow);
@@ -355,7 +367,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     private void pushedInsertButton(ActionEvent e) {
         if (_logicRow >= 0 && _logicRow < _logicList.size()) {
-            _logicList.add(_logicRow, new LogicRow("", null, "", _groupRow));
+            _logicList.add(_logicRow, new LogicRow("", null, "", ""));
             _logicTable.revalidate();
             _logicTable.setRowSelectionInterval(_logicRow, _logicRow);
             _logicScrollPane.revalidate();
@@ -390,6 +402,331 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
     }
 
+    // --------------  Encode/Decode methods ---------
+
+    private String nameToVariable(String name) {
+        String variable = null;
+
+        if (name != null && !name.isEmpty()) {
+            if (!name.contains("~")) {
+                // Search input and output tables
+                for (int i = 0; i < 16; i++) {
+                    for (int j = 0; j < 8; j++) {
+                        int row = (i * 8) + j;
+                        if (_inputList.get(row).getName().equals(name)) {
+                            return "I" + i + "." + j;
+                        }
+                    }
+                }
+
+                for (int i = 0; i < 16; i++) {
+                    for (int j = 0; j < 8; j++) {
+                        int row = (i * 8) + j;
+                        if (_outputList.get(row).getName().equals(name)) {
+                            return "Q" + i + "." + j;
+                        }
+                    }
+                }
+            } else {
+                // Search receiver and transmitter tables
+                var splitName = name.split("~");
+                var baseName = splitName[0];
+                var speed = 0;
+                try {
+                    speed = Integer.parseInt(splitName[1]);
+                } catch (NumberFormatException e) {
+                    log.error("Unable to get speed value for name '{}', default zero", name);
+                    speed = 0;
+                }
+                for (int i = 0; i < 16; i++) {
+                    if (_receiverList.get(i).getName().equals(baseName)) {
+                        return "Y" + i + "." + speed;
+                    }
+                }
+
+                for (int i = 0; i < 16; i++) {
+                    if (_transmitterList.get(i).getName().equals(baseName)) {
+                        return "Z" + i + "." + speed;
+                    }
+                }
+            }
+        }
+
+        return variable;
+    }
+
+    private String variableToName(String variable) {
+        String name = "";
+
+        if (variable.length() > 1) {
+            var varType = variable.substring(0, 1);
+            var match = PARSE_VARIABLE.matcher(variable);
+            if (match.find() && match.groupCount() == 2) {
+                int first = -1;
+                int second = -1;
+                int row = -1;
+
+                try {
+                    first = Integer.parseInt(match.group(1));
+                    second = Integer.parseInt(match.group(2));
+                } catch (NumberFormatException e) {
+                    log.error("Unable to parse variable name '{}'", variable);
+                    return name;
+                }
+
+                switch (varType) {
+                    case "I":
+                        row = (first * 8) + second;
+                        name = _inputList.get(row).getName();
+                        break;
+                    case "Q":
+                        row = (first * 8) + second;
+                        name = _outputList.get(row).getName();
+                        break;
+                    case "Y":
+                        row = first;
+                        name = _receiverList.get(row).getName() + "~" + second;
+                        break;
+                    case "Z":
+                        row = first;
+                        name = _receiverList.get(row).getName() + "~" + second;
+                        break;
+                    default:
+                        log.error("Variable '{}' has an invalid first letter (IQYZ)", variable);
+               }
+            }
+        }
+
+        return name;
+    }
+
+    private void encode(GroupRow groupRow) {
+        List<String> lines = new ArrayList<>();
+        String longLine = "";
+
+        var logicList = groupRow.getLogicList();
+        for (var row : logicList) {
+            var sb = new StringBuilder();
+            var jumpLabel = false;
+
+            if (!row.getLabel().isEmpty()) {
+                sb.append(row.getLabel() + " ");
+            }
+
+            if (row.getOper() != null) {
+                var oper = row.getOper();
+                var operName = oper.name();
+
+                // Fix special enums
+                if (operName.equals("Cp")) {
+                    operName = ")";
+                } else if (operName.equals("EQ")) {
+                    operName = "=";
+                } else if (operName.contains("p")) {
+                    operName = operName.replace("p", "(");
+                }
+
+                if (operName.startsWith("J")) {
+                    jumpLabel =true;
+                }
+                sb.append(operName + " ");
+            }
+
+            if (!row.getName().isEmpty()) {
+                var name = row.getName().trim();
+
+                if (jumpLabel) {
+                    sb.append(name + " ");
+                    jumpLabel = false;
+                } else if (isMemory(name)) {
+                    sb.append(name + " ");
+                } else if (isTimerWord(name)) {
+                    sb.append(name + " ");
+                } else if (isTimerVar(name)) {
+                    sb.append(name + " ");
+                } else {
+                    var variable = nameToVariable(name);
+                    if (variable == null) {
+                        log.error("bad name");
+                    } else {
+                        sb.append(variable + " ");
+                    }
+                }
+            }
+
+            if (!row.getComment().isEmpty()) {
+                var comment = row.getComment().trim();
+                sb.append("/* " + comment + " */ ");
+            }
+
+            log.info("{}", sb.toString());
+            longLine = longLine + sb.toString();
+        }
+
+        var size = longLine.length();
+        groupRow.setLine1("");
+        groupRow.setLine2("");
+        groupRow.setLine3("");
+        groupRow.setLine4("");
+
+        if (longLine.length() < 64) {
+            groupRow.setLine1(longLine);
+            log.info("Line 1:  {}", groupRow.getLine1());
+            return;
+        } else {
+            groupRow.setLine1(longLine.substring(0, 63));
+            log.info("Line 1:  {}", groupRow.getLine1());
+            longLine = longLine.substring(63);
+        }
+
+        if (longLine.length() < 64) {
+            groupRow.setLine2(longLine);
+            log.info("Line 2:  {}", groupRow.getLine2());
+            return;
+        } else {
+            groupRow.setLine2(longLine.substring(0, 63));
+            log.info("Line 2:  {}", groupRow.getLine2());
+            longLine = longLine.substring(63);
+        }
+
+        if (longLine.length() < 64) {
+            groupRow.setLine3(longLine);
+            log.info("Line 3:  {}", groupRow.getLine3());
+            return;
+        } else {
+            groupRow.setLine3(longLine.substring(0, 63));
+            log.info("Line 3:  {}", groupRow.getLine3());
+            longLine = longLine.substring(63);
+        }
+
+        if (longLine.length() < 64) {
+            groupRow.setLine4(longLine);
+            log.info("Line 4:  {}", groupRow.getLine4());
+            return;
+        } else {
+            groupRow.setLine4(longLine.substring(0, 63));
+            log.info("Line 4:  {}", groupRow.getLine4());
+            longLine = longLine.substring(63);
+        }
+
+        log.error("The line overflowed, content truncated:  {}", longLine);
+    }
+
+    private boolean isMemory(String name) {
+        var match = PARSE_VARIABLE.matcher(name);
+        return (match.find() && name.startsWith("M"));
+    }
+
+    private boolean isTimerWord(String name) {
+        var match = PARSE_TIMERWORD.matcher(name);
+        return match.find();
+    }
+
+    private boolean isTimerVar(String name) {
+        var match = PARSE_TIMERVAR.matcher(name);
+        return match.find();
+    }
+
+    private void decode(GroupRow groupRow) {
+        var sb = new StringBuilder();
+        sb.append(groupRow.getLine1());
+        sb.append(groupRow.getLine2());
+        sb.append(groupRow.getLine3());
+        sb.append(groupRow.getLine4());
+
+        String[] tokens = sb.toString().split(" ");
+        for (int i = 0; i < tokens.length; i++) {
+            log.info("{} :: {}", i, tokens[i]);
+        }
+
+        // Find the operators and create empty logic rows.
+        Operator oper;
+        for (int i = 0; i < tokens.length; i++) {
+            oper = getEnum(tokens[i]);
+            if (oper != null) {
+                var logic = new LogicRow("", oper, "", "");
+                logic.setDecodeLine(i);
+                groupRow.getLogicList().add(logic);
+            }
+        }
+
+        // For each logic row, look for labels, names and comments.
+        var logicList = groupRow.getLogicList();
+        for (LogicRow logic : logicList) {
+            int decodeLine = logic.getDecodeLine();
+
+            // Look for a label
+            if (decodeLine > 0) {
+                var label = tokens[decodeLine - 1];
+                var match = PARSE_LABEL.matcher(label);
+                if (match.find()) {
+                    logic.setLabel(label);
+                }
+            }
+
+            // Look for a name
+            if (decodeLine < tokens.length - 1) {
+                var name = tokens[decodeLine + 1];
+
+                if (logic.getOper().name().startsWith("J")) {   // Jump label
+                    logic.setName(name);
+                    decodeLine++;
+                } else if (isTimerWord(name)) {  // Load timer
+                    logic.setName(name);
+                    decodeLine++;
+                } else if (isMemory(name)) {  // Memory variable
+                    logic.setName(name);
+                    decodeLine++;
+                } else if (isTimerVar(name)) {  // Timer variable
+                    logic.setName(name);
+                    decodeLine++;
+                } else {
+                    var match = PARSE_VARIABLE.matcher(name);
+                    if (match.find()) {
+                        logic.setName(variableToName(name));
+                        decodeLine++;
+                    }
+                }
+            }
+
+            // Look for a comment, decoderLine was incremented if there was a name.
+            if (decodeLine < tokens.length - 2) {
+                var idx = decodeLine + 1;
+                var slashAstr = tokens[idx];
+                if (slashAstr.equals("/*")) {
+                    sb = new StringBuilder();
+                    idx++;
+                    var word = tokens[idx];
+
+                    while (!word.equals("*/")) {
+                        sb.append(word + " ");
+                        idx++;
+                        word = tokens[idx];
+                    }
+                    logic.setComment(sb.toString());
+                }
+            }
+        }
+    }
+
+    private Operator getEnum(String name) {
+        try {
+            var temp = name;
+            if (name.equals("=")) {
+                temp = "EQ";
+            } else if (name.equals(")")) {
+                temp = "Cp";
+            } else if (name.endsWith("(")) {
+                temp = name.replace("(", "p");
+            }
+
+            Operator oper = Enum.valueOf(Operator.class, temp);
+            return oper;
+        } catch (IllegalArgumentException ex) {
+            return null;
+        }
+    }
+
     // --------------  node selector ---------
 
     void setReady(boolean t) {
@@ -403,23 +740,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private void nodeSelected(ActionEvent e) {
         var item = _nodeBox.getSelectedItem();
         log.info("nodeSelected: {}", _nodeBox.getSelectedItem());
-
-        try {
-            FileInputStream in = new FileInputStream("/Users/das/JMRI/_Profiles/STL_Editor.jmri/stleditor.properties");
-            _cdiTest.load(in);
-        }
-        catch (Exception exx) {
-            log.error("Properties load failed {}", exx);
-        }
-
-        // Load data
-        loadInputs();
-        loadOutputs();
-        loadReceivers();
-        loadTransmitters();
-        loadGroups();
-
-        setReady(true);
+        loadData();
     }
 
     private void newNodeInList(MimicNodeStore.NodeMemo nodeMemo) {
@@ -577,6 +898,38 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     // --------------  load lists ---------
 
+    private void loadData() {
+        try {
+            FileInputStream in = new FileInputStream("/Users/das/JMRI/_Profiles/STL_Editor.jmri/STL Editor.properties");
+            _cdiTest.load(in);
+        }
+        catch (Exception exx) {
+            log.error("Properties load failed {}", exx);
+        }
+
+        // Load data
+        loadInputs();
+        loadOutputs();
+        loadReceivers();
+        loadTransmitters();
+        loadGroups();
+
+        for (GroupRow row : _groupList) {
+            decode(row);
+        }
+
+        setReady(true);
+
+        _groupTable.setRowSelectionInterval(0, 0);
+
+        _percentButton.setEnabled(true);
+        _storeButton.setEnabled(true);
+    }
+
+    private void pushedRefreshButton(ActionEvent e) {
+        loadData();
+    }
+
     private void loadGroups() {
         _groupList.clear();
         _logicList.clear();
@@ -590,7 +943,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             groupRow.setLine3(_cdiTest.getProperty(String.format(GROUP_LINE, i, 3)));
             groupRow.setLine4(_cdiTest.getProperty(String.format(GROUP_LINE, i, 4)));
 
-            groupRow.decode();
             _groupList.add(groupRow);
         }
 
@@ -613,7 +965,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 //         _logicTable.revalidate();
 
         // Select first group
-        _groupTable.setRowSelectionInterval(0, 0);
+//         _groupTable.setRowSelectionInterval(0, 0);
     }
 
     private void loadInputs() {
@@ -674,7 +1026,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         storeGroups();
 
         try {
-            FileOutputStream out = new FileOutputStream("/Users/das/JMRI/_Profiles/STL_Editor.jmri/stleditor_new.properties");
+            FileOutputStream out = new FileOutputStream("/Users/das/JMRI/_Profiles/STL_Editor.jmri/STL Editor.properties");
             _cdiTest.store(out, "test");
         }
         catch (Exception exx) {
@@ -695,7 +1047,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             var row = _groupList.get(i);
 
             // update the group lines
-            row.encode();
+            encode(row);
 
             _cdiTest.setProperty(String.format(GROUP_NAME, i), row.getName());
             _cdiTest.setProperty(String.format(GROUP_LINE, i, 1), row.getLine1());
@@ -757,6 +1109,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         String _line4 = "";
         List<LogicRow> _logicList = new ArrayList<>();
 
+
         GroupRow(String name) {
             _name = name.isEmpty() ? "--" : name;
         }
@@ -815,11 +1168,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             _dirty = true;
         }
 
-        void decode() {
-            _logicList.add(new LogicRow("", null, _name, 0));
-        }
-
-        void encode() {
+        String getSize() {
+            int size = _line1.length() + _line2.length() + _line3.length() + _line4.length();
+            size = (size * 100) / 255;
+            return String.valueOf(size) + "%";
         }
     }
 
@@ -830,14 +1182,15 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         String _label;
         Operator _oper;
         String _name;
-        int _group;
+        String _comment;
         String _variable = "";
+        int _decodeLine = 0;
 
-        LogicRow(String label, Operator oper, String name, int group) {
+        LogicRow(String label, Operator oper, String name, String comment) {
             _label = label;
             _oper = oper;
             _name = name;
-            _group = group;
+            _comment = comment;
         }
 
         String getLabel() {
@@ -867,12 +1220,12 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             _dirty = true;
         }
 
-        int getGroup() {
-            return _group;
+        String getComment() {
+            return _comment;
         }
 
-        void setGroup(int newGroup) {
-            _group = newGroup;
+        void setComment(String newComment) {
+            _comment = newComment;
             _dirty = true;
         }
 
@@ -882,6 +1235,14 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         void setVariable(String newVariable) {
             _variable = newVariable;
+        }
+
+        int getDecodeLine() {
+            return _decodeLine;
+        }
+
+        void setDecodeLine(int decodeLine) {
+            _decodeLine = decodeLine;
         }
     }
 
@@ -1116,7 +1477,8 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         public static final int LABEL_COLUMN = 0;
         public static final int OPER_COLUMN = 1;
         public static final int NAME_COLUMN = 2;
-        public static final int VAR_COLUMN = 3;
+        public static final int COMMENT_COLUMN = 3;
+        public static final int VAR_COLUMN = 4;
 
         @Override
         public int getRowCount() {
@@ -1125,7 +1487,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         @Override
         public int getColumnCount() {
-            return 4;
+            return 5;
         }
 
         @Override
@@ -1143,6 +1505,8 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                     return Bundle.getMessage("ColumnOper");  // NOI18N
                 case NAME_COLUMN:
                     return Bundle.getMessage("ColumnName");  // NOI18N
+                case COMMENT_COLUMN:
+                    return Bundle.getMessage("ColumnComment");  // NOI18N
                 case VAR_COLUMN:
                     return Bundle.getMessage("ColumnVar");  // NOI18N
                 default:
@@ -1159,6 +1523,8 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                     return _logicList.get(r).getOper();
                 case NAME_COLUMN:
                     return _logicList.get(r).getName();
+                case COMMENT_COLUMN:
+                    return _logicList.get(r).getComment();
                 case VAR_COLUMN:
                     return _logicList.get(r).getVariable();
                 default:
@@ -1188,6 +1554,9 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 case NAME_COLUMN:
                     _logicList.get(r).setName((String) type);
                     break;
+                case COMMENT_COLUMN:
+                    _logicList.get(r).setComment((String) type);
+                    break;
                 default:
                     break;
             }
@@ -1195,7 +1564,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         @Override
         public boolean isCellEditable(int r, int c) {
-            return ((c == LABEL_COLUMN || c == OPER_COLUMN || c == NAME_COLUMN));
+            return ((c == LABEL_COLUMN || c == OPER_COLUMN || c == NAME_COLUMN || c == COMMENT_COLUMN));
         }
 
         public int getPreferredWidth(int col) {
@@ -1206,7 +1575,9 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 case OPER_COLUMN:
                     return new JTextField(20).getPreferredSize().width;
                 case NAME_COLUMN:
-                    return new JTextField(60).getPreferredSize().width;
+                    return new JTextField(40).getPreferredSize().width;
+                case COMMENT_COLUMN:
+                    return new JTextField(40).getPreferredSize().width;
                 default:
                     log.warn("Unexpected column in getPreferredWidth: {}", col);  // NOI18N
                     return new JTextField(8).getPreferredSize().width;
@@ -1627,12 +1998,25 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         z5(Bundle.getMessage("Separator5")),
         JU(Bundle.getMessage("OperatorJU")),
-
+        JC(Bundle.getMessage("OperatorJC")),
+        JCN(Bundle.getMessage("OperatorJCN")),
+        JCB(Bundle.getMessage("OperatorJCB")),
+        JNB(Bundle.getMessage("OperatorJNB")),
+        JBI(Bundle.getMessage("OperatorJBI")),
+        JNBI(Bundle.getMessage("OperatorJNBI")),
 
         z6(Bundle.getMessage("Separator6")),
+        FN(Bundle.getMessage("OperatorFN")),
+        FP(Bundle.getMessage("OperatorFP")),
 
-        z7(Bundle.getMessage("Separator7"));
-
+        z7(Bundle.getMessage("Separator7")),
+        L(Bundle.getMessage("OperatorL")),
+        FR(Bundle.getMessage("OperatorFR")),
+        SP(Bundle.getMessage("OperatorSP")),
+        SE(Bundle.getMessage("OperatorSE")),
+        SD(Bundle.getMessage("OperatorSD")),
+        SS(Bundle.getMessage("OperatorSS")),
+        SF(Bundle.getMessage("OperatorSF"));
 
         private final String _text;
 
