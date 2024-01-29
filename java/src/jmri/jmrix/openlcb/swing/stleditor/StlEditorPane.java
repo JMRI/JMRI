@@ -328,7 +328,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         if (!e.getValueIsAdjusting()) {
             var currentRow = _groupRow;
             _groupRow = _groupTable.getSelectedRow();
-            log.info("group {} selected, handle logic change", _groupRow);
+//             log.info("group {} selected, handle logic change", _groupRow);
             if (currentRow >= 0) {
                 // Transfer the working logic list to the group's logic list
                 _groupList.get(currentRow).setLogicList(_logicList);
@@ -559,7 +559,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 sb.append("/* " + comment + " */ ");
             }
 
-            log.info("{}", sb.toString());
+//             log.info("{}", sb.toString());
             longLine = longLine + sb.toString();
         }
 
@@ -571,41 +571,41 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         if (longLine.length() < 64) {
             groupRow.setLine1(longLine);
-            log.info("Line 1:  {}", groupRow.getLine1());
+//             log.info("Line 1:  {}", groupRow.getLine1());
             return;
         } else {
             groupRow.setLine1(longLine.substring(0, 63));
-            log.info("Line 1:  {}", groupRow.getLine1());
+//             log.info("Line 1:  {}", groupRow.getLine1());
             longLine = longLine.substring(63);
         }
 
         if (longLine.length() < 64) {
             groupRow.setLine2(longLine);
-            log.info("Line 2:  {}", groupRow.getLine2());
+//             log.info("Line 2:  {}", groupRow.getLine2());
             return;
         } else {
             groupRow.setLine2(longLine.substring(0, 63));
-            log.info("Line 2:  {}", groupRow.getLine2());
+//             log.info("Line 2:  {}", groupRow.getLine2());
             longLine = longLine.substring(63);
         }
 
         if (longLine.length() < 64) {
             groupRow.setLine3(longLine);
-            log.info("Line 3:  {}", groupRow.getLine3());
+//             log.info("Line 3:  {}", groupRow.getLine3());
             return;
         } else {
             groupRow.setLine3(longLine.substring(0, 63));
-            log.info("Line 3:  {}", groupRow.getLine3());
+//             log.info("Line 3:  {}", groupRow.getLine3());
             longLine = longLine.substring(63);
         }
 
         if (longLine.length() < 64) {
             groupRow.setLine4(longLine);
-            log.info("Line 4:  {}", groupRow.getLine4());
+//             log.info("Line 4:  {}", groupRow.getLine4());
             return;
         } else {
             groupRow.setLine4(longLine.substring(0, 63));
-            log.info("Line 4:  {}", groupRow.getLine4());
+//             log.info("Line 4:  {}", groupRow.getLine4());
             longLine = longLine.substring(63);
         }
 
@@ -635,9 +635,9 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         sb.append(groupRow.getLine4());
 
         String[] tokens = sb.toString().split(" ");
-        for (int i = 0; i < tokens.length; i++) {
-            log.info("{} :: {}", i, tokens[i]);
-        }
+//         for (int i = 0; i < tokens.length; i++) {
+//             log.info("{} :: {}", i, tokens[i]);
+//         }
 
         // Find the operators and create empty logic rows.
         Operator oper;
@@ -900,13 +900,13 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     private void loadData() {
         try {
-            FileInputStream in = new FileInputStream("/Users/das/JMRI/_Profiles/STL_Editor.jmri/STL Editor.properties");
+            FileInputStream in = new FileInputStream(jmri.util.FileUtil.getUserFilesPath() + "STL Editor.properties");
             _cdiTest.load(in);
         }
         catch (Exception exx) {
             log.error("Properties load failed {}", exx);
         }
-
+// jmri.util.FileUtil.getUserFilesPath() + 'yaat'
         // Load data
         loadInputs();
         loadOutputs();
@@ -1026,7 +1026,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         storeGroups();
 
         try {
-            FileOutputStream out = new FileOutputStream("/Users/das/JMRI/_Profiles/STL_Editor.jmri/STL Editor.properties");
+            FileOutputStream out = new FileOutputStream(jmri.util.FileUtil.getUserFilesPath() + "STL Editor.properties");
             _cdiTest.store(out, "test");
         }
         catch (Exception exx) {
