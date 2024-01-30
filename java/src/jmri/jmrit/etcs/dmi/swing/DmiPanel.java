@@ -603,8 +603,8 @@ public class DmiPanel extends JPanel {
 
     /**
      * Get the next Planning Track Announcement with the Movement Authority.
-     * @param mustBeStation
-     * @return 
+     * @param mustBeStation true if only station data is required.
+     * @return the next Announcement, may be null if none within the Movement Authority.
      */
     @CheckForNull
     public TrackCondition getNextAnnouncement(boolean mustBeStation){

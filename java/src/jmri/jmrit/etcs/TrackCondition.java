@@ -55,7 +55,7 @@ public class TrackCondition {
 
     /**
      * Get the Distance to the start of the Track Condition.
-     * @return 
+     * @return the distance.
      */
     public int getDistanceFromStart() {
         return distanceFromStart;
@@ -109,7 +109,7 @@ public class TrackCondition {
      * If this is an order, get the acknowledgement String for when
      * the driver clicks the button.
      * These can be listened for via adding a changeListener to DmiPanel.
-     * @return 
+     * @return the Acknowledgement String for the Condition.
      */
     public String getAckString(){
         return actionCommand;
