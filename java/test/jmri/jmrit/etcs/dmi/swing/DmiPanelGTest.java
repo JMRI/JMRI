@@ -1,14 +1,15 @@
 package jmri.jmrit.etcs.dmi.swing;
 
-import jmri.jmrit.etcs.*;
-
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
+import jmri.jmrit.etcs.*;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
@@ -16,6 +17,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  * Tests for DmiPanelG.
  * @author Steve Young Copyright (C) 2024
  */
+@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
 public class DmiPanelGTest {
 
     @Test
