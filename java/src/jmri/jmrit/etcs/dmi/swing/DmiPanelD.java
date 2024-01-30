@@ -450,7 +450,7 @@ public class DmiPanelD extends JPanel {
      * 3 : 0 - 8000
      * 4 : 0 - 16000
      * 5 : 0 - 32000
-     * @param scale 
+     * @param scale the scale to use.
      */
     protected void setScale(int scale){
         currentScale = scale;

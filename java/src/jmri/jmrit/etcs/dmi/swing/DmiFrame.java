@@ -21,7 +21,7 @@ public class DmiFrame extends jmri.util.JmriJFrame {
 
     /**
      * Create a new DmiFrame with a given title.
-     * @param frameName 
+     * @param frameName the Frame Title.
      */
     public DmiFrame(String frameName){
         super(frameName, false, true);

@@ -39,7 +39,7 @@ public class CabMessage {
 
     /**
      * Create a new CabMessage.
-     * @param messageId
+     * @param messageId unique ID String.
      * @param msg String of message value
      * @param intValue 1 if system status / important, 2 for auxiliary messages.
      * @param ackReqd true if an acknowledgement is required, else false.

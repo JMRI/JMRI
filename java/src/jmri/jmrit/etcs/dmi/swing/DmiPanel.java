@@ -371,7 +371,7 @@ public class DmiPanel extends JPanel {
 
     /**
      * Add a TrackCondition Announcement to under the Dial.
-     * @param tc 
+     * @param tc the Announcement to add.
      */
     public void addAnnouncement( TrackCondition tc ) {
         ThreadingUtil.runOnGUI( () -> panelB.addAnnouncement(tc) );
@@ -379,7 +379,7 @@ public class DmiPanel extends JPanel {
 
     /**
      * Remove an Announcement from under the Dial.
-     * @param tc 
+     * @param tc the Announcement to remove.
      */
     public void removeAnnouncement ( TrackCondition tc ) {
         ThreadingUtil.runOnGUI( () -> panelB.removeAnnouncement(tc) );
@@ -398,7 +398,7 @@ public class DmiPanel extends JPanel {
      * Set the distance to target bar.
      * A negative value hides the field.
      * Values displayed to nearest 10m.
-     * @param distance
+     * @param distance the distance to set.
      */
     public void setDistanceToTarget(int distance){
         ThreadingUtil.runOnGUI( () -> panelA.setDistanceToTarget(distance) );
@@ -432,7 +432,7 @@ public class DmiPanel extends JPanel {
      * Set the Indication marker.
      * Negative values not displayed.
      * @param distance the distance at which to display the marker.
-     * @param whichSpeedChange
+     * @param whichSpeedChange the order of the speed change in the Movement Authority.
      */
     public void setIndicationMarker(int distance, int whichSpeedChange ) {
         ThreadingUtil.runOnGUI( () -> panelD.setIndicationMarkerLine(distance, whichSpeedChange) );
@@ -570,7 +570,7 @@ public class DmiPanel extends JPanel {
      * 3 : 0 - 8000
      * 4 : 0 - 16000
      * 5 : 0 - 32000
-     * @param scale 
+     * @param scale the scale to use.
      */
     public void setScale(int scale){
         ThreadingUtil.runOnGUI( () -> panelD.setScale(scale) );

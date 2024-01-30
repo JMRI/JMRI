@@ -134,8 +134,8 @@ public class DmiPanelC extends JPanel {
      * Note that some valid options for ERTMS3.6 are invalid for ERTMS4 ,
      * e.g. 2, false.
      * 
-     * @param newLevel
-     * @param ackRequired 
+     * @param newLevel the level to set.
+     * @param ackRequired true if acknowledgement required by driver, false if automatic.
      */
     protected void setLevelTransition(int newLevel, boolean ackRequired) {
         mainPanel.removeFlashListener(pclC1, false);
