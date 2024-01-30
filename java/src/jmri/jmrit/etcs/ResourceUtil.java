@@ -255,7 +255,10 @@ public class ResourceUtil {
         String f = (RESOURCES_DIRECTORY + SOUNDS + s );
         String path = FileUtil.getExternalFilename(f);
         Path p = Paths.get(path);
-        if ( ! Files.exists(p) && ! getInTest() ){
+        if ( getInTest() ){
+            return;
+        }
+        if ( ! Files.exists(p) ) {
             log.error("Could not play sound file {}", path);
         } else {
             jmri.jmrit.Sound snd = new jmri.jmrit.Sound(path);
