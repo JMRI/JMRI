@@ -4173,7 +4173,7 @@ public class LocoNetMessageInterpret {
                             * the first data byte being the most significant bits of 
                             * the address. The Configuration variable being addressed 
                             * is the provided 10-bit address plus 1. For example, to 
-                            * address CV1 the 10 bit address is “00 00000000”.
+                            * address CV1 the 10 bit address is "00 00000000".
                             *
                             * The defined values for Instruction type (CC) are:
                             *       GG=00 Reserved for future use
