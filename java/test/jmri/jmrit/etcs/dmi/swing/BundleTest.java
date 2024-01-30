@@ -1,7 +1,5 @@
 package jmri.jmrit.etcs.dmi.swing;
 
-import jmri.jmrit.etcs.dmi.swing.Bundle;
-
 import java.util.Locale;
 
 import org.junit.Assert;

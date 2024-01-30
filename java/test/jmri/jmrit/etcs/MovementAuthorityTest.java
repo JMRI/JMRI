@@ -1,9 +1,5 @@
 package jmri.jmrit.etcs;
 
-import jmri.jmrit.etcs.TrackSection;
-import jmri.jmrit.etcs.ResourceUtil;
-import jmri.jmrit.etcs.MovementAuthority;
-
 import java.util.ArrayList;
 import java.util.List;
 

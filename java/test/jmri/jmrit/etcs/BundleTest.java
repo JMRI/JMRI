@@ -1,7 +1,5 @@
 package jmri.jmrit.etcs;
 
-import jmri.jmrit.etcs.Bundle;
-
 import java.util.Locale;
 
 import org.junit.Assert;
