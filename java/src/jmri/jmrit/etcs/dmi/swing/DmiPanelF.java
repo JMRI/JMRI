@@ -149,12 +149,12 @@ public class DmiPanelF extends JPanel {
         }
 
         private void runDemo(java.awt.event.ActionEvent e){
-            log.debug("running demo from ", e.getActionCommand());
+            log.debug("running demo from {}", e.getActionCommand());
             new DmiDemo(main).runDemo();
         }
 
         private void setCentreSpeedText(java.awt.event.ActionEvent e) {
-            log.debug("set centre speed pref from ", e.getActionCommand());
+            log.debug("set centre speed pref from {}", e.getActionCommand());
             p.setSimplePreferenceState(DmiPanel.PROPERTY_CENTRE_TEXT, jcmi.isSelected());
             main.repaint();
         }
