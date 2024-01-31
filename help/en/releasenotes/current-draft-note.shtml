@@ -496,6 +496,9 @@
               It brings a window to the front and can be used if you for
               example want to have an icon on a panel that moves focus to
               another window.</li>
+          <li>The action <strong>Decode JSON</strong> is added. It decodes
+              a JSON string in a local variable to a JsonNode tree and
+              puts it in another local variable.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
