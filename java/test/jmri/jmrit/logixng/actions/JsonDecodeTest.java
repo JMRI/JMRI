@@ -20,35 +20,35 @@ import org.junit.Test;
  */
 public class JsonDecodeTest extends AbstractDigitalActionTestBase {
 
-    private static final String JSON_STRING =
-            "{\n" +
-            "  \"id\":\"tk\",\n" +
-            "  \"config\":{\n" +
-            "    \"signature\":\"TK\",\n" +
-            "    \"name\":\"Tr\\u00e4kvista\",\n" +
-            "    \"destinations\":2,\n" +
-            "    \"destination\":{\n" +
-            "      \"A\":{\n" +
-            "        \"tracks\":1,\n" +
-            "        \"type\":\"single\",\n" +
-            "        \"single\":{\n" +
-            "          \"id\":\"blo\",\n" +
-            "          \"tracks\":1,\n" +
-            "          \"exit\":\"B\",\n" +
-            "          \"track\":\"left\",\n" +
-            "          \"distance\":1,\n" +
-            "          \"signature\":\"BLO\",\n" +
-            "          \"name\":\"Bilbo\",\n" +
-            "          \"signalin\":\"22\",\n" +
-            "          \"signalout\":\"U1\",\n" +
-            "          \"blockout\":\"sa1\"\n" +
+    private static final String JSON_STRING = String.format(
+            "{%n" +
+            "  \"id\":\"tk\",%n" +
+            "  \"config\":{%n" +
+            "    \"signature\":\"TK\",%n" +
+            "    \"name\":\"Tr\\u00e4kvista\",%n" +
+            "    \"destinations\":2,%n" +
+            "    \"destination\":{%n" +
+            "      \"A\":{%n" +
+            "        \"tracks\":1,%n" +
+            "        \"type\":\"single\",%n" +
+            "        \"single\":{%n" +
+            "          \"id\":\"blo\",%n" +
+            "          \"tracks\":1,%n" +
+            "          \"exit\":\"B\",%n" +
+            "          \"track\":\"left\",%n" +
+            "          \"distance\":1,%n" +
+            "          \"signature\":\"BLO\",%n" +
+            "          \"name\":\"Bilbo\",%n" +
+            "          \"signalin\":\"22\",%n" +
+            "          \"signalout\":\"U1\",%n" +
+            "          \"blockout\":\"sa1\"%n" +
             "        }" +
-            "      }\n" +
-            "    },\n" +
-            "    \"B\":[\"Something\"],\n" +
-            "    \"C\":[1,2,3]\n" +
+            "      }%n" +
+            "    },%n" +
+            "    \"B\":[\"Something\"],%n" +
+            "    \"C\":[1,2,3]%n" +
             "  }" +
-            "}";
+            "}");
 
     private LogixNG _logixNG;
     private ConditionalNG _conditionalNG;
@@ -87,8 +87,8 @@ public class JsonDecodeTest extends AbstractDigitalActionTestBase {
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
                 "         Many ::: Use default\n" +
-                "            ::: Local variable \"MyJsonVariable\", init to String \"" + JSON_STRING + "\"\n" +
-                "            ::: Local variable \"MyResultVariable\", init to None \"null\"\n" +
+                "            ::: Local variable \"MyJsonVariable\", init to String \"" + JSON_STRING + "\"%n" +
+                "            ::: Local variable \"MyResultVariable\", init to None \"null\"%n" +
                 "            ! A1%n" +
                 "               Decode JSON in variable MyJsonVariable to variable MyResultVariable ::: Use default%n" +
                 "            ! A2%n" +
