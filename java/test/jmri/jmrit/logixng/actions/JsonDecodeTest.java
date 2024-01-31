@@ -16,7 +16,7 @@ import org.junit.Test;
 /**
  * Test JsonDecode
  *
- * @author Daniel Bergqvist 2019
+ * @author Daniel Bergqvist 2024
  */
 public class JsonDecodeTest extends AbstractDigitalActionTestBase {
 
