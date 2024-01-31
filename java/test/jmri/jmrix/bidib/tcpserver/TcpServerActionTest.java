@@ -18,8 +18,14 @@ public class TcpServerActionTest {
     BiDiBSystemConnectionMemo memo;
 
     @Test
-    public void testCTor() {
+    public void testCTor3() {
         TcpServerAction t = new TcpServerAction(memo, "Enabletext", "Disabletext");
+        Assertions.assertNotNull(t, "exists");
+    }
+
+    @Test
+    public void testCTor() {
+        TcpServerAction t = new TcpServerAction();
         Assertions.assertNotNull(t, "exists");
     }
 
