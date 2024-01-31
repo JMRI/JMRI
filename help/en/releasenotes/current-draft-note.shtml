@@ -635,6 +635,7 @@
         <ul>
             <li>Fixed a bug where deleting the last (highest-numbered) Turnout
                 would throw an exception.</li>
+            <li>Fixed a Turnout Table bug where an incorrect border may display in Turnout Feedback.</li>
         </ul>
 
    <h3>Warrants</h3>
