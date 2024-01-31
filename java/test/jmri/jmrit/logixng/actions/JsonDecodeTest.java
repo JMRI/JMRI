@@ -37,6 +37,7 @@ public class JsonDecodeTest extends AbstractDigitalActionTestBase {
             "          \"exit\":\"B\",%n" +
             "          \"track\":\"left\",%n" +
             "          \"distance\":1,%n" +
+            "          \"list\":[\"a\",\"b\",\"c\",\"d\",\"e\",\"f\",\"g\"],%n" +
             "          \"signature\":\"BLO\",%n" +
             "          \"name\":\"Bilbo\",%n" +
             "          \"signalin\":\"22\",%n" +
@@ -47,14 +48,15 @@ public class JsonDecodeTest extends AbstractDigitalActionTestBase {
             "    },%n" +
             "    \"B\":[\"Something\"],%n" +
             "    \"C\":[1,2,3]%n" +
-            "  }" +
-            "}");
+            "  }%n" +
+            "}%n");
 
     private LogixNG _logixNG;
     private ConditionalNG _conditionalNG;
     private JsonDecode _jsonDecode;
     private MaleSocket _maleSocket;
     private Memory _memoryResult;
+    private Memory _memoryResult2;
 
     @Override
     public ConditionalNG getConditionalNG() {
@@ -94,6 +96,12 @@ public class JsonDecodeTest extends AbstractDigitalActionTestBase {
                 "            ! A2%n" +
                 "               Set memory IM_RESULT to the value of variable MyResultVariable ::: Use default\n" +
                 "            ! A3\n" +
+                "               Digital Formula: MyResultVariable = str( MyResultVariable{\"config\"}{\"destination\"}{\"A\"}{\"single\"}{\"list\"}[3] ) ::: Use default\n" +
+                "                  ?* E1\n" +
+                "                     Socket not connected\n" +
+                "            ! A4%n" +
+                "               Set memory IM_RESULT_2 to the value of variable MyResultVariable ::: Use default\n" +
+                "            ! A5\n" +
                 "               Socket not connected\n");
     }
 
@@ -151,8 +159,13 @@ public class JsonDecodeTest extends AbstractDigitalActionTestBase {
 
         Assert.assertEquals("com.fasterxml.jackson.databind.node.ObjectNode",
                 _memoryResult.getValue().getClass().getName());
-        Assert.assertEquals("{\"id\":\"tk\",\"config\":{\"signature\":\"TK\",\"name\":\"Träkvista\",\"destinations\":2,\"destination\":{\"A\":{\"tracks\":1,\"type\":\"single\",\"single\":{\"id\":\"blo\",\"tracks\":1,\"exit\":\"B\",\"track\":\"left\",\"distance\":1,\"signature\":\"BLO\",\"name\":\"Bilbo\",\"signalin\":\"22\",\"signalout\":\"U1\",\"blockout\":\"sa1\"}}},\"B\":[\"Something\"],\"C\":[1,2,3]}}",
+        Assert.assertEquals("{\"id\":\"tk\",\"config\":{\"signature\":\"TK\",\"name\":\"Träkvista\",\"destinations\":2,\"destination\":{\"A\":{\"tracks\":1,\"type\":\"single\",\"single\":{\"id\":\"blo\",\"tracks\":1,\"exit\":\"B\",\"track\":\"left\",\"distance\":1,\"list\":[\"a\",\"b\",\"c\",\"d\",\"e\",\"f\",\"g\"],\"signature\":\"BLO\",\"name\":\"Bilbo\",\"signalin\":\"22\",\"signalout\":\"U1\",\"blockout\":\"sa1\"}}},\"B\":[\"Something\"],\"C\":[1,2,3]}}",
                 _memoryResult.getValue().toString());
+
+        Assert.assertEquals("java.lang.String",
+               _memoryResult2.getValue().getClass().getName());
+        Assert.assertEquals("d",
+                _memoryResult2.getValue().toString());
     }
 
     @Test
@@ -188,6 +201,8 @@ public class JsonDecodeTest extends AbstractDigitalActionTestBase {
 
         _memoryResult = InstanceManager.getDefault(MemoryManager.class).provide("IM_RESULT");
 
+        _memoryResult2 = InstanceManager.getDefault(MemoryManager.class).provide("IM_RESULT_2");
+
         _category = Category.OTHER;
 
         _logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
@@ -217,6 +232,16 @@ public class JsonDecodeTest extends AbstractDigitalActionTestBase {
         memory.setMemoryOperation(ActionMemory.MemoryOperation.CopyVariableToMemory);
         memory.setOtherLocalVariable("MyResultVariable");
         many.getChild(1).connect(InstanceManager.getDefault(DigitalActionManager.class).registerAction(memory));
+
+        DigitalFormula formula = new DigitalFormula("IQDA103", null);
+        formula.setFormula("MyResultVariable = str( MyResultVariable{\"config\"}{\"destination\"}{\"A\"}{\"single\"}{\"list\"}[3] )");
+        many.getChild(2).connect(InstanceManager.getDefault(DigitalActionManager.class).registerAction(formula));
+
+        memory = new ActionMemory("IQDA104", null);
+        memory.getSelectNamedBean().setNamedBean("IM_RESULT_2");
+        memory.setMemoryOperation(ActionMemory.MemoryOperation.CopyVariableToMemory);
+        memory.setOtherLocalVariable("MyResultVariable");
+        many.getChild(3).connect(InstanceManager.getDefault(DigitalActionManager.class).registerAction(memory));
 
         _logixNG.activate();
         _logixNG.setEnabled(false);
