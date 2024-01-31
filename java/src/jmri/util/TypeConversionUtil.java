@@ -382,6 +382,11 @@ public final class TypeConversionUtil {
             return "";
         }
 
+        // JSON text node
+        if (value instanceof com.fasterxml.jackson.databind.node.TextNode) {
+            return ((com.fasterxml.jackson.databind.node.TextNode)value).asText();
+        }
+
         if (value instanceof Reportable) {
             return ((Reportable)value).toReportString();
         }
