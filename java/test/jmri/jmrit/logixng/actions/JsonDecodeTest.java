@@ -88,21 +88,21 @@ public class JsonDecodeTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Many ::: Use default\n" +
+                "         Many ::: Use default%n" +
                 "            ::: Local variable \"MyJsonVariable\", init to String \"" + JSON_STRING + "\"%n" +
                 "            ::: Local variable \"MyResultVariable\", init to None \"null\"%n" +
                 "            ! A1%n" +
                 "               Decode JSON in variable MyJsonVariable to variable MyResultVariable ::: Use default%n" +
                 "            ! A2%n" +
-                "               Set memory IM_RESULT to the value of variable MyResultVariable ::: Use default\n" +
-                "            ! A3\n" +
-                "               Digital Formula: MyResultVariable = str( MyResultVariable{\"config\"}{\"destination\"}{\"A\"}{\"single\"}{\"list\"}[3] ) ::: Use default\n" +
-                "                  ?* E1\n" +
-                "                     Socket not connected\n" +
+                "               Set memory IM_RESULT to the value of variable MyResultVariable ::: Use default%n" +
+                "            ! A3%n" +
+                "               Digital Formula: MyResultVariable = str( MyResultVariable{\"config\"}{\"destination\"}{\"A\"}{\"single\"}{\"list\"}[3] ) ::: Use default%n" +
+                "                  ?* E1%n" +
+                "                     Socket not connected%n" +
                 "            ! A4%n" +
-                "               Set memory IM_RESULT_2 to the value of variable MyResultVariable ::: Use default\n" +
-                "            ! A5\n" +
-                "               Socket not connected\n");
+                "               Set memory IM_RESULT_2 to the value of variable MyResultVariable ::: Use default%n" +
+                "            ! A5%n" +
+                "               Socket not connected%n");
     }
 
     @Override
