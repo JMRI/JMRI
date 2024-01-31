@@ -193,10 +193,6 @@ public class DeepCopyTest {
         // Add new LogixNG actions and expressions to jmri.jmrit.logixng.CreateLogixNGTreeScaffold
         createLogixNGTreeScaffold.createLogixNGTree();
 
-        Map<String, String> systemNames = new HashMap<>();
-        Map<String, String> userNames = new HashMap<>();
-        Map<String, String> comments = new HashMap<>();
-
         java.util.Set<LogixNG> newLogixNG_Set = new java.util.HashSet<>(logixNG_Manager.getNamedBeanSet());
         for (LogixNG aLogixNG : newLogixNG_Set) {
             for (int i=0; i < aLogixNG.getNumConditionalNGs(); i++) {
