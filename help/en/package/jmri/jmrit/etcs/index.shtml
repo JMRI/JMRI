@@ -21,7 +21,7 @@
 
 
       <h2>Driver Machine Interface Simulation</h2>
-      
+
       <span class="since">since 5.7.4</span>
       <p>
       The Driver Machine Interface  ( DMI, the in-cab screen which displays speed and signalling
@@ -30,22 +30,22 @@
 
       <a href="etcs_did_640x478.png">
       <img src="etcs_did_640x478.png" alt="ERTMS ETCS JMRI DMI" width="320" height="239"></a>
-      
+
       <p>The DMI can include information about speed, track conditions, and system alerts.</p>
 
-      <p>It is possible simulate DMI screens and control their content programatically,
+      <p>It is possible to simulate DMI screens and control their content programmatically,
       currently there is no train control logic within the DMI Panel.</p>
-      
+
       <p>The DMI follows the touch screen layout ( as apposed to the soft key layout ),
       as it is able to receive button and mouse clicks directly.</p>
 
       <p>The JMRI Fast Clock is used as the source for the time display.</p>
-      
+
       <h3>Launching DMI Displays with Jython</h3>
-      
+
       <p>DMI Displays can be launched via <a href="https://www.jmri.org/help/en/html/tools/scripting/index.shtml">JMRI Jython Scripting</a>.</p>
-      
-      
+
+
 <div style="margin:10px; padding:20px;">
 <code>import jmri<br>
 from jmri.jmrit.etcs.dmi.swing import DmiFrame<br>
@@ -67,8 +67,8 @@ dmiPanel.setActualSpeed(100)<br>
       "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/etcs/dmi/swing/DmiDemo.java"
       >code for the DMI Demonstration</a> also provides examples of how to manipulate
       the panel.</p>
-        
-        
+
+
 
 
     <h3>Installing the Graphics</h3>
@@ -80,7 +80,7 @@ dmiPanel.setActualSpeed(100)<br>
         </ul>
       <p>Download the zip file under the listing for the ETCS Driver Machine interface and extract the contents to somewhere handy.</p>
         <p>Launch a DMI display and check the warning within the JMRI Console log for the expected directory, eg.</p>
-        
+
         <div style="margin:10px; padding:20px;">
 <code> jmri.jmrit.etcs.ResourceUtil          ERROR - Image file C:\Users\Steve\JMRI\CBUS_Sim.jmri\resources\etcs\symbols\Mode\MO_13.bmp not found!
 </code>
@@ -89,7 +89,7 @@ dmiPanel.setActualSpeed(100)<br>
         <p>In the system file explorer, navigate to the <strong>resources\etcs</strong> directory and paste the contents
         ( the sounds and symbols directories ) of the downloaded zip file.</p>
         <p>There's no harm in including the pdf file, it's a good reminder of which ETCS version you have installed.</p>
-        
+
         <a href="etcs_resource_folder_761x250.png">
         <img src="etcs_resource_folder_761x250.png" alt="DMI Resource Folder" width="380" height="125"></a>
 
@@ -97,17 +97,17 @@ dmiPanel.setActualSpeed(100)<br>
         <p>Sound and symbols for ETCS 4 can be tested by running the DMI Demonstration.</p>
 
     <h3>DMI Demonstration</h3>
-        
+
         <p>On the right hand side of the DMI, locate the Tool Menu Button ( a spanner icon if graphics are loaded ).</p>
-        
+
         <p>Right click on the Tool menu and one of the options will be DMI Demo, which starts the demonstration.</p>
 
         <a href="etcs_did_2_640x480.png">
       <img src="etcs_did_2_640x480.png" alt="ERTMS ETCS JMRI DMI" width="320" height="240"></a>
 
       <h2>Further ERTMS / ETCS Info</h2>
-      
-      
+
+
     <a href="https://www.era.europa.eu/domains/infrastructure/european-rail-traffic-management-system-ertms_en">European Rail Agency - ERTMS</a>
       <br>
       <a href="https://en.wikipedia.org/wiki/European_Train_Control_System">Wikipedia - ETCS</a>
