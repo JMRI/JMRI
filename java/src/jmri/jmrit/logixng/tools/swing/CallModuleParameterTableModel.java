@@ -239,6 +239,7 @@ public class CallModuleParameterTableModel extends AbstractTableModel {
         }
 
         @Override
+        @SuppressWarnings("unchecked")  // Not possible to check that event.getSource() is instanceof JComboBox<InitialValueType>
         public void actionPerformed(ActionEvent event) {
             if (! (event.getSource() instanceof JComboBox<?>)) {
                 throw new IllegalArgumentException("value is not an JComboBox: " + event.getSource().getClass().getName());
@@ -286,6 +287,7 @@ public class CallModuleParameterTableModel extends AbstractTableModel {
         }
 
         @Override
+        @SuppressWarnings("unchecked")  // Not possible to check that event.getSource() is instanceof JComboBox<ReturnValueType>
         public void actionPerformed(ActionEvent event) {
             if (! (event.getSource() instanceof JComboBox<?>)) {
                 throw new IllegalArgumentException("value is not an JComboBox: " + event.getSource().getClass().getName());
