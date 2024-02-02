@@ -329,7 +329,7 @@ public final class JmriPreferencesProvider {
 
     private class JmriPreferences extends AbstractPreferences {
 
-        private final Map<String, String> root;
+        private final Map<String, String> theRoot;
         private final Map<String, JmriPreferences> children;
         private boolean isRemoved = false;
 
@@ -338,7 +338,7 @@ public final class JmriPreferencesProvider {
 
             log.trace("Instantiating node \"{}\"", name);
 
-            root = new TreeMap<>();
+            theRoot = new TreeMap<>();
             children = new TreeMap<>();
 
             try {
@@ -350,7 +350,7 @@ public final class JmriPreferencesProvider {
 
         @Override
         protected void putSpi(String key, String value) {
-            root.put(key, value);
+            theRoot.put(key, value);
             try {
                 flush();
             } catch (BackingStoreException e) {
@@ -360,12 +360,12 @@ public final class JmriPreferencesProvider {
 
         @Override
         protected String getSpi(String key) {
-            return root.get(key);
+            return theRoot.get(key);
         }
 
         @Override
         protected void removeSpi(String key) {
-            root.remove(key);
+            theRoot.remove(key);
             try {
                 flush();
             } catch (BackingStoreException e) {
@@ -381,7 +381,7 @@ public final class JmriPreferencesProvider {
 
         @Override
         protected String[] keysSpi() throws BackingStoreException {
-            return root.keySet().toArray(new String[root.keySet().size()]);
+            return theRoot.keySet().toArray(new String[theRoot.keySet().size()]);
         }
 
         @Override
@@ -429,7 +429,7 @@ public final class JmriPreferencesProvider {
                             String subKey = propKey.substring(pp.length());
                             // Only load immediate descendants
                             if (subKey.indexOf('.') == -1) {
-                                root.put(subKey, p.getProperty(propKey));
+                                theRoot.put(subKey, p.getProperty(propKey));
                             }
                         }
                     }
@@ -488,7 +488,7 @@ public final class JmriPreferencesProvider {
 
                     // If this node hasn't been removed, add back in any values
                     if (!isRemoved) {
-                        root.keySet().stream().forEach(s -> p.setProperty(pp + s, root.get(s)));
+                        theRoot.keySet().stream().forEach(s -> p.setProperty(pp + s, theRoot.get(s)));
                     }
 
                     if (!JmriPreferencesProvider.this.isBackedUp() && file.exists()) {
