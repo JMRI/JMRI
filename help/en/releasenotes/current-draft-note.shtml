@@ -313,6 +313,11 @@
                 <li></li>
             </ul>
 
+        <h4>PIKO</h4>
+            <ul>
+                <li>Add CVs for PMW modulations, add tooltips</li>
+            </ul>
+
         <h4>QSI</h4>
             <ul>
                 <li></li>
@@ -365,7 +370,7 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li></li>
+                <li>Add CVs for PMW modulations, add tooltips</li>
             </ul>
 
         <h4>Umelec</h4>
