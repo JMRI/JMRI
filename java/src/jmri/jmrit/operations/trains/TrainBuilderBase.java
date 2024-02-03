@@ -2204,18 +2204,11 @@ public class TrainBuilderBase extends TrainCommon {
             return null;
         }
         if (!si.getRandom().equals(ScheduleItem.NONE)) {
-            try {
-                int value = Integer.parseInt(si.getRandom());
-                double random = 100 * Math.random();
-                log.debug("Selected random {}, created random {}", si.getRandom(), random);
-                if (random > value) {
-                    addLine(_buildReport, SEVEN,
-                            Bundle.getMessage("buildScheduleRandom", track.getLocation().getName(), track.getName(),
-                                    track.getScheduleName(), si.getId(), si.getReceiveLoadName(), value, random));
-                    return null;
-                }
-            } catch (NumberFormatException e) {
-                log.error("Schedule item ({}) random value ({}) isn't a number", si.getId(), si.getRandom());
+            if (!si.doRandom()) {
+                addLine(_buildReport, SEVEN,
+                        Bundle.getMessage("buildScheduleRandom", track.getLocation().getName(), track.getName(),
+                                track.getScheduleName(), si.getId(), si.getReceiveLoadName(), si.getRandom(), si.getCalculatedRandom()));
+                return null;
             }
         }
         log.debug("Found track ({}) schedule item id ({}) for car ({})", track.getName(), si.getId(), car.toString());

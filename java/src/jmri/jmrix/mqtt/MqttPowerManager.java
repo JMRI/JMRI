@@ -65,6 +65,7 @@ public class MqttPowerManager extends AbstractPowerManager<MqttSystemConnectionM
     // to free resources when no longer used
     @Override
     public void dispose() throws JmriException {
+            this.mqttAdapter.unsubscribe(rcvTopic, this);
     }
 
 

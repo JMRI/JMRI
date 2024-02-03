@@ -2300,7 +2300,7 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
         numbers for them to work.</p>
 
       <p>
-        This feature is disabled if the option to show <a href="#SortByTrack">Sort by Track</a> is
+        This feature is disabled if the <a href="#PrintOptions">Manifest Print Option</a> <a href="#SortByTrack">Sort by Track</a> is
         enabled.
       </p>
 

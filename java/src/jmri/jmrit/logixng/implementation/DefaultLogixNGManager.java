@@ -305,7 +305,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
             for (GlobalVariable gv : globalVariables) {
                 try {
                     gv.initialize();
-                } catch (JmriException e) {
+                } catch (JmriException | IllegalArgumentException e) {
                     log.warn("Variable {} could not be initialized", gv.getUserName(), e);
                 }
             }

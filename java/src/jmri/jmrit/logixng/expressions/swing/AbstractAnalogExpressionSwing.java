@@ -12,32 +12,33 @@ import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Abstract class for SwingConfiguratorInterface
- * 
+ *
  * @author Daniel Bergqvist Copyright 2021
  */
 public abstract class AbstractAnalogExpressionSwing extends AbstractSwingConfigurator {
 
     protected JPanel panel;
-    
+
     /** {@inheritDoc} */
     @Override
     public String getExecuteEvaluateMenuText() {
         return Bundle.getMessage("MenuText_ExecuteEvaluate");
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void executeEvaluate(@Nonnull Base object) {
         ConditionalNG conditionalNG = object.getConditionalNG();
         if (conditionalNG == null) throw new RuntimeException("Not supported yet");
-        
+
         SymbolTable symbolTable = new DefaultSymbolTable();
         getAllSymbols(object, symbolTable);
-        
+
         conditionalNG.getCurrentThread().runOnLogixNGEventually(() -> {
             SymbolTable oldSymbolTable = conditionalNG.getSymbolTable();
-            
+
             try {
+                conditionalNG.setCurrentConditionalNG(conditionalNG);
                 conditionalNG.setSymbolTable(symbolTable);
                 double result = ((AnalogExpression)object).evaluate();
                 jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
@@ -50,46 +51,46 @@ public abstract class AbstractAnalogExpressionSwing extends AbstractSwingConfigu
                 log.warn("ConditionalNG {} got an exception during execute: {}",
                         conditionalNG.getSystemName(), e, e);
             }
-            
+
             conditionalNG.setSymbolTable(oldSymbolTable);
         });
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public BaseManager<? extends NamedBean> getManager() {
         return InstanceManager.getDefault(AnalogExpressionManager.class);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public JPanel getConfigPanel(@Nonnull JPanel buttonPanel) throws IllegalArgumentException {
         createPanel(null, buttonPanel);
         return panel;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public JPanel getConfigPanel(@Nonnull Base object, @Nonnull JPanel buttonPanel) throws IllegalArgumentException {
         createPanel(object, buttonPanel);
         return panel;
     }
-    
+
     protected abstract void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel);
-    
+
     /** {@inheritDoc} */
     @Override
     public String getExampleSystemName() {
         return InstanceManager.getDefault(AnalogExpressionManager.class).getSystemNamePrefix() + "AE10";
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public String getAutoSystemName() {
         return InstanceManager.getDefault(AnalogExpressionManager.class).getAutoSystemName();
     }
-    
-    
+
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractAnalogExpressionSwing.class);
-    
+
 }

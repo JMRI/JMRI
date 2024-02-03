@@ -402,6 +402,7 @@
             </xs:element>
             <xs:element name="outputs" type="OutputsType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element ref="xi:include" minOccurs="0" maxOccurs="unbounded" />
+
             <xs:element name="size" minOccurs="0" maxOccurs="1" >
               <xs:annotation><xs:documentation>
                   Describes the physical size of the package, for reference.
@@ -422,6 +423,32 @@
                 <xs:attribute name="comment" type="xs:string" />
               </xs:complexType>
             </xs:element>
+
+            <xs:element name="power" minOccurs="0" maxOccurs="1" >
+              <xs:annotation><xs:documentation>
+                  Describes the power limits of the device.  This replaces the 
+                  similar attributes on the model element, which are deprecated.
+              </xs:documentation></xs:annotation>
+              <xs:complexType>
+                <xs:attribute name="maxInputVolts" type="xs:float">
+                    <xs:annotation><xs:documentation>Unit is Volts</xs:documentation></xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="continuousTotalCurrent" type="xs:float" >
+                    <xs:annotation><xs:documentation>Max continuous current allowed, including decoder functions and motor control. Unit is Amps</xs:documentation></xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="continuousMotorCurrent" type="xs:float" >
+                    <xs:annotation><xs:documentation>Max continuous current allowed for motor control. Unit is Amps</xs:documentation></xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="peakTotalCurrent" type="xs:float" >
+                    <xs:annotation><xs:documentation>Short duration peak current that will not damage the decoder, combined total for functions and motor control. Unit is Amps</xs:documentation></xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="peakMotorCurrent" type="xs:float" >
+                    <xs:annotation><xs:documentation>Short duration peak current that will not damage the decoder for motor control. Unit is Amps</xs:documentation></xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="comment" type="xs:string" />
+              </xs:complexType>
+            </xs:element>
+
             <xs:element name="protocols" minOccurs="0" maxOccurs="1" >
               <xs:annotation><xs:documentation>
                   Lists communication protocols this decoder will respond to.
@@ -448,6 +475,7 @@
             </xs:element>
             <xs:element name="functionlabels" type="functionlabelsType" minOccurs="0" maxOccurs="1"/>
             <xs:element name="soundlabels" type="soundlabelsType" minOccurs="0" maxOccurs="1"/>
+            
           </xs:sequence>
           <xs:attribute name="model" type="familyModelNameType" use="required" />
           <xs:attribute name="show" type="yesNoMaybeType" default="yes" >
@@ -500,9 +528,15 @@
                 to an appropriate decoder definition
             </xs:documentation></xs:annotation>
           </xs:attribute>
-          <xs:attribute name="maxInputVolts" type="xs:string" />
-          <xs:attribute name="maxMotorCurrent" type="xs:string" />
-          <xs:attribute name="maxTotalCurrent" type="xs:string" />
+          <xs:attribute name="maxInputVolts" type="xs:string">
+            <xs:annotation><xs:documentation>Deprecated, see the power element</xs:documentation></xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="maxMotorCurrent" type="xs:string">
+            <xs:annotation><xs:documentation>Deprecated, see the power element</xs:documentation></xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="maxTotalCurrent" type="xs:string">
+            <xs:annotation><xs:documentation>Deprecated, see the power element</xs:documentation></xs:annotation>
+          </xs:attribute>
           <xs:attribute name="formFactor" type="xs:string" />
           <xs:attribute name="nmraWarrant" type="yesNoType" default="no" />
           <xs:attribute name="nmraWarrantStart" type="xs:string" />
@@ -569,6 +603,11 @@
           <xs:attribute name="replacementFamily" type="xs:string" default="">
             <xs:annotation><xs:documentation>Update Decoders will replace the current family with the one in this attribute if non-blank</xs:documentation></xs:annotation>
           </xs:attribute>
+
+          <xs:attribute name="uid" type="xs:string" default="">
+            <xs:annotation><xs:documentation>Globally unique ID used by DCCwiki; JMRI does not check for nor maintain uniqueness</xs:documentation></xs:annotation>
+          </xs:attribute>
+          
         </xs:complexType>
       </xs:element>
 
@@ -587,6 +626,11 @@
     <xs:attribute name="highVersionID" type="xs:int" />
     <xs:attribute name="type" type="xs:string" />
     <xs:attribute name="comment" type="xs:string" />
+
+    <xs:attribute name="uid" type="xs:string" default="">
+      <xs:annotation><xs:documentation>Globally unique ID used by DCCwiki; JMRI does not check for nor maintain uniqueness</xs:documentation></xs:annotation>
+    </xs:attribute>
+
   </xs:complexType>
 
   <xs:complexType name="OutputElementType">
@@ -990,6 +1034,10 @@
     <xs:attribute ref="xml:base" />
     <xs:attribute name="include" type="xs:string"/>
     <xs:attribute name="exclude" type="xs:string"/>
+
+    <xs:attribute name="uid" type="xs:string" default="">
+      <xs:annotation><xs:documentation>Globally unique ID used by DCCwiki; JMRI does not check for nor maintain uniqueness</xs:documentation></xs:annotation>
+    </xs:attribute>
   </xs:complexType>
 
   <xs:complexType name="ResetsType">
@@ -1176,6 +1224,10 @@
     <xs:attribute name="include" type="xs:string"/>
     <xs:attribute name="exclude" type="xs:string"/>
     <xs:attribute name="comment" type="xs:string"/>
+
+    <xs:attribute name="uid" type="xs:string" default="">
+      <xs:annotation><xs:documentation>Globally unique ID used by DCCwiki; JMRI does not check for nor maintain uniqueness</xs:documentation></xs:annotation>
+    </xs:attribute>
   </xs:complexType>
 
   <xs:complexType name="EnumChoiceGroupType">
@@ -1216,6 +1268,10 @@
     <xs:attribute name="include" type="xs:string"/>
     <xs:attribute name="exclude" type="xs:string"/>
     <xs:attribute name="comment" type="xs:string"/>
+
+    <xs:attribute name="uid" type="xs:string" default="">
+      <xs:annotation><xs:documentation>Globally unique ID used by DCCwiki; JMRI does not check for nor maintain uniqueness</xs:documentation></xs:annotation>
+    </xs:attribute>
   </xs:complexType>
 
   <xs:complexType name="CompositeValType">

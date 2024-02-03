@@ -53,7 +53,7 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Table: For each column of row \"\" in table \"''\" set variable \"\" and execute action A1 ::: Use default%n" +
+                "Table: For each column of row \"-- Header --\" in table \"''\" set variable \"\" and execute action A1 ::: Use default%n" +
                 "   ! A1%n" +
                 "      MyAction ::: Use default%n");
     }
@@ -64,7 +64,7 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Table: For each column of row \"\" in table \"''\" set variable \"\" and execute action A1 ::: Use default%n" +
+                "         Table: For each column of row \"-- Header --\" in table \"''\" set variable \"\" and execute action A1 ::: Use default%n" +
                 "            ! A1%n" +
                 "               MyAction ::: Use default%n");
     }
@@ -213,7 +213,7 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
         TableForEach a1 = new TableForEach("IQDA321", null);
         Assert.assertEquals("strings are equal", "Table: For each", a1.getShortDescription());
         TableForEach a2 = new TableForEach("IQDA321", null);
-        Assert.assertEquals("strings are equal", "Table: For each column of row \"\" in table \"''\" set variable \"\" and execute action A1", a2.getLongDescription());
+        Assert.assertEquals("strings are equal", "Table: For each column of row \"-- Header --\" in table \"''\" set variable \"\" and execute action A1", a2.getLongDescription());
     }
 
     @Test

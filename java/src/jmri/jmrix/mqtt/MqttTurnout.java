@@ -142,6 +142,13 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
         log.warn("Send command to {} Pushbutton in {} not yet coded", (_pushButtonLockout ? "Lock" : "Unlock"), getSystemName());
     }
 
+    @Override
+    public void dispose() {
+        mqttAdapter.unsubscribe(rcvTopic, this);
+        super.dispose();
+    }
+
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MqttTurnout.class);
 
 }

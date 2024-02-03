@@ -41,6 +41,7 @@ public class OpenLcbMenu extends JMenu {
         new Item("MenuItemEventTable", "jmri.jmrix.openlcb.swing.eventtable.EventTablePane"), // NOI18N
         new Item("MenuItemSendFrame", "jmri.jmrix.openlcb.swing.send.OpenLcbCanSendPane"), // NOI18N
         new Item("MenuItemMemoryTool", "jmri.jmrix.openlcb.swing.memtool.MemoryToolPane"), // NOI18N
+        new Item("MenuItemIdTool", "jmri.jmrix.openlcb.swing.idtool.IdToolPane"), // NOI18N
         new Item("MenuItemSTLEditor", "jmri.jmrix.openlcb.swing.stleditor.StlEditorPane"), // NOI18N
     };
 

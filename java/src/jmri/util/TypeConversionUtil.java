@@ -238,7 +238,7 @@ public final class TypeConversionUtil {
             if (!(value instanceof Byte) && !(value instanceof Short) && !(value instanceof Integer) && !(value instanceof Long)) {
                 if (throwOnError) {
                     throw new NumberFormatException(
-                            String.format("the null value cannot be converted to an integer"));
+                            String.format("the value %s cannot be converted to an integer", value));
                 }
             }
             return ((Number)value).longValue();
@@ -380,6 +380,11 @@ public final class TypeConversionUtil {
     public static String convertToString(@CheckForNull Object value, boolean do_i18n) {
         if (value == null) {
             return "";
+        }
+
+        // JSON text node
+        if (value instanceof com.fasterxml.jackson.databind.node.TextNode) {
+            return ((com.fasterxml.jackson.databind.node.TextNode)value).asText();
         }
 
         if (value instanceof Reportable) {
