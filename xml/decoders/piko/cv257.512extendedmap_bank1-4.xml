@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2019 All rights reserved -->
+<!-- Copyright (C) JMRI 2022 All rights reserved                            -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -11,22 +11,12 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<!-- 																		-->
-<!-- version 1 - include file for Uhlenbrock IntelliDrive2 Decoder          -->
-<!-- Extended Function Mapping                                              -->
-<!-- 																		-->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
 	<copyright xmlns="http://docbook.org/ns/docbook">
-		<year>2019</year>
+		<year>2022</year>
 		<holder>JMRI</holder>
 	</copyright>
 	<authorgroup xmlns="http://docbook.org/ns/docbook">
-		<author>
-			<personname>
-				<firstname>Egbert</firstname>
-				<surname>Broerse</surname>
-			</personname>
-		</author>
 		<author>
 			<personname>
 				<firstname>Ulrich</firstname>
@@ -37,20 +27,12 @@
 	<revhistory xmlns="http://docbook.org/ns/docbook">
 		<revision>
 			<revnumber>1</revnumber>
-			<date>2019-02-10</date>
-			<authorinitials>EBR</authorinitials>
-			<revremark>Initial version for Uhlenbrock_73xx5.xml.
-                Based on Piko help desk supplied datasheet</revremark>
+			<date>2022-11-11</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Initial version for Piko SmartDecoder 4.1</revremark>
 		</revision>
-		<!-- Uhlenbrock IntelliDrive2 Extended Function Mapping -->
 		<revision>
 			<revnumber>2</revnumber>
-			<date>2022-12-11</date>
-			<authorinitials>UG</authorinitials>
-			<revremark>Indexfehler korrigiert</revremark>
-		</revision>
-		<revision>
-			<revnumber>3</revnumber>
 			<date>2024-02-02</date>
 			<authorinitials>UG</authorinitials>
 			<revremark>Add CVs for PWM modulations, Add SUSI output tooltips</revremark>

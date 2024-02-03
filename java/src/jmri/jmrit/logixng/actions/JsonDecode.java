@@ -33,7 +33,7 @@ public class JsonDecode extends AbstractDigitalAction
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws ParserException {
         DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
         String sysName = systemNames.get(getSystemName());
-        String userName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         JsonDecode copy = new JsonDecode(sysName, userName);
         copy.setComment(getComment());
@@ -82,9 +82,7 @@ public class JsonDecode extends AbstractDigitalAction
         ObjectMapper om = new ObjectMapper();
         try {
             JsonNode jsonNode = om.readTree(json);
-//            log.error("Node: {}", jsonNode);
             symbolTable.setValue(_resultLocalVariable, jsonNode);
-//            log.error("Variable: {}, {}", _resultLocalVariable, symbolTable.getValue(_resultLocalVariable));
         } catch (JsonProcessingException ex) {
             throw new JmriException(ex);
         }

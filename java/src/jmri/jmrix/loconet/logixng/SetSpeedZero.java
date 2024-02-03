@@ -32,6 +32,7 @@ public class SetSpeedZero extends AbstractDigitalAction {
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         SetSpeedZero copy = new SetSpeedZero(sysName, userName, _memo);
+        copy.setComment(getComment());
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
 

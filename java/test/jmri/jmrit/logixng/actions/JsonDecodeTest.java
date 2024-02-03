@@ -182,12 +182,6 @@ public class JsonDecodeTest extends AbstractDigitalActionTestBase {
         super.testMaleSocketIsActive();
     }
 
-    @org.junit.Ignore   // Temporary disable this test
-    @Test
-    @Override
-    public void testGetDeepCopy() throws JmriException {
-    }
-
     // The minimal setup for log4J
     @Before
     public void setUp() throws SocketAlreadyConnectedException, ParserException {
