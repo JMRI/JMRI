@@ -19,9 +19,9 @@ import javax.swing.table.AbstractTableModel;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.FileUtil;
-import jmri.util.JmriJFrame;
+// import jmri.util.JmriJFrame;
 import jmri.util.swing.JComboBoxUtil;
-import jmri.util.swing.JmriPanel;
+// imp  ort jmri.util.swing.JmriPanel;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 // import static org.openlcb.MimicNodeStore.ADD_PROP_NODE;
@@ -368,7 +368,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             _transmitterList.add(new TransmitterRow("", ""));
         }
 
-        _groupTable.setRowSelectionInterval(0, 0);
+        _groupTable.setRowSelectionInterval(15, 15);
 
     }
 

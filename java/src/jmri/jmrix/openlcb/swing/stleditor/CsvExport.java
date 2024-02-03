@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.*;
 
 import jmri.util.FileUtil;
-import jmri.jmrix.openlcb.swing.stleditor.StlEditorPane;
+// import jmri.jmrix.openlcb.swing.stleditor.StlEditorPane;
 import jmri.jmrix.openlcb.swing.stleditor.StlEditorPane.*;
 
 import org.apache.commons.csv.CSVFormat;
@@ -47,7 +47,7 @@ public class CsvExport {
                  Bundle.getMessage("ColumnOper"), Bundle.getMessage("ColumnName"), Bundle.getMessage("ColumnComment"));
 
         for (int i = 0; i < 16; i++) {
-            var row = (GroupRow) groupList.get(i);
+            var row = groupList.get(i);
             var groupName = row.getName();
             csvFile.printRecord(groupName);
             var logicRow = row.getLogicList();
@@ -73,7 +73,7 @@ public class CsvExport {
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 8; j++) {
                 var variable = "I" + i + "." + j;
-                var row = (InputRow) inputList.get((i * 8) + j);
+                var row = inputList.get((i * 8) + j);
             csvFile.printRecord(variable, row.getName(), row.getEventTrue(), row.getEventFalse());
             }
         }
@@ -94,7 +94,7 @@ public class CsvExport {
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 8; j++) {
                 var variable = "Q" + i + "." + j;
-                var row = (OutputRow) outputList.get((i * 8) + j);
+                var row = outputList.get((i * 8) + j);
             csvFile.printRecord(variable, row.getName(), row.getEventTrue(), row.getEventFalse());
             }
         }
@@ -114,7 +114,7 @@ public class CsvExport {
 
         for (int i = 0; i < 16; i++) {
             var variable = "Y" + i;
-            var row = (ReceiverRow) receiverList.get(i);
+            var row = receiverList.get(i);
             csvFile.printRecord(variable, row.getName(), row.getEventId());
         }
 
@@ -133,7 +133,7 @@ public class CsvExport {
 
         for (int i = 0; i < 16; i++) {
             var variable = "Z" + i;
-            var row = (TransmitterRow) transmitterList.get(i);
+            var row = transmitterList.get(i);
             csvFile.printRecord(variable, row.getName(), row.getEventId());
         }
 
