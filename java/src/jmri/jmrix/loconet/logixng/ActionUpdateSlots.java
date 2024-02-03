@@ -12,18 +12,18 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
 /**
  * Request an update of the LocoNet slots
- * 
+ *
  * @author Daniel Bergqvist Copyright 2020
  */
 public class ActionUpdateSlots extends AbstractDigitalAction {
 
     private LocoNetSystemConnectionMemo _memo;
-    
+
     public ActionUpdateSlots(String sys, String user, LocoNetSystemConnectionMemo memo) {
         super(sys, user);
         _memo = memo;
     }
-    
+
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
         DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
@@ -31,9 +31,10 @@ public class ActionUpdateSlots extends AbstractDigitalAction {
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionUpdateSlots copy = new ActionUpdateSlots(sysName, userName, _memo);
+        copy.setComment(getComment());
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -44,11 +45,11 @@ public class ActionUpdateSlots extends AbstractDigitalAction {
         assertListenersAreNotRegistered(log, "setMemo");
         _memo = memo;
     }
-    
+
     public LocoNetSystemConnectionMemo getMemo() {
         return _memo;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void execute() {
@@ -81,7 +82,7 @@ public class ActionUpdateSlots extends AbstractDigitalAction {
     public void setup() {
         // Do nothing
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
@@ -89,13 +90,13 @@ public class ActionUpdateSlots extends AbstractDigitalAction {
             _listenersAreRegistered = true;
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
         _listenersAreRegistered = false;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
