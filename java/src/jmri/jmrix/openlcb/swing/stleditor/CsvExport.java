@@ -38,7 +38,7 @@ public class CsvExport {
         return messages;
     }
 
-    static void exportGroupLogic(List groupList) throws IOException {
+    static void exportGroupLogic(List<GroupRow> groupList) throws IOException {
         var fileWriter = new FileWriter(FILE_DIRECTORY_PATH + "group_logic.csv");
         var bufferedWriter = new BufferedWriter(fileWriter);
         var csvFile = new CSVPrinter(bufferedWriter, CSVFormat.DEFAULT);
@@ -62,7 +62,7 @@ public class CsvExport {
         csvFile.close();
     }
 
-    static void exportInputs(List inputList) throws IOException {
+    static void exportInputs(List<InputRow> inputList) throws IOException {
         var fileWriter = new FileWriter(FILE_DIRECTORY_PATH + "inputs.csv");
         var bufferedWriter = new BufferedWriter(fileWriter);
         var csvFile = new CSVPrinter(bufferedWriter, CSVFormat.DEFAULT);
@@ -83,7 +83,7 @@ public class CsvExport {
         csvFile.close();
     }
 
-    static void exportOutputs(List outputList) throws IOException {
+    static void exportOutputs(List<OutputRow> outputList) throws IOException {
         var fileWriter = new FileWriter(FILE_DIRECTORY_PATH + "outputs.csv");
         var bufferedWriter = new BufferedWriter(fileWriter);
         var csvFile = new CSVPrinter(bufferedWriter, CSVFormat.DEFAULT);
@@ -104,7 +104,7 @@ public class CsvExport {
         csvFile.close();
     }
 
-    static void exportReceivers(List receiverList) throws IOException {
+    static void exportReceivers(List<ReceiverRow> receiverList) throws IOException {
         var fileWriter = new FileWriter(FILE_DIRECTORY_PATH + "receivers.csv");
         var bufferedWriter = new BufferedWriter(fileWriter);
         var csvFile = new CSVPrinter(bufferedWriter, CSVFormat.DEFAULT);
@@ -123,7 +123,7 @@ public class CsvExport {
         csvFile.close();
     }
 
-    static void exportTransmitters(List transmitterList) throws IOException {
+    static void exportTransmitters(List<TransmitterRow> transmitterList) throws IOException {
         var fileWriter = new FileWriter(FILE_DIRECTORY_PATH + "transmitters.csv");
         var bufferedWriter = new BufferedWriter(fileWriter);
         var csvFile = new CSVPrinter(bufferedWriter, CSVFormat.DEFAULT);

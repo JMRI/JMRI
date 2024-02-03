@@ -7,7 +7,7 @@ import java.util.*;
 import java.util.List;
 
 import java.util.regex.Pattern;
-import java.util.regex.Matcher;
+// import java.util.regex.Matcher;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -24,8 +24,8 @@ import jmri.util.swing.JComboBoxUtil;
 import jmri.util.swing.JmriPanel;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-import static org.openlcb.MimicNodeStore.ADD_PROP_NODE;
-import static org.openlcb.MimicNodeStore.CLEAR_ALL_NODES;
+// import static org.openlcb.MimicNodeStore.ADD_PROP_NODE;
+// import static org.openlcb.MimicNodeStore.CLEAR_ALL_NODES;
 import static org.openlcb.MimicNodeStore.NodeMemo.UPDATE_PROP_SIMPLE_NODE_IDENT;
 
 import org.apache.commons.csv.CSVFormat;
@@ -33,11 +33,11 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 import org.openlcb.*;
-import org.openlcb.implementations.*;
-import org.openlcb.swing.*;
-import org.openlcb.swing.memconfig.MemConfigDescriptionPane;
+// import org.openlcb.implementations.*;
+// import org.openlcb.swing.*;
+// import org.openlcb.swing.memconfig.MemConfigDescriptionPane;
 import org.openlcb.cdi.impl.ConfigRepresentation;
-import org.openlcb.cdi.impl.ConfigRepresentation.StringEntry;
+// import org.openlcb.cdi.impl.ConfigRepresentation.StringEntry;
 // import org.openlcb.MimicNodeStore.NodeMemo;
 
 
@@ -837,7 +837,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     // Notifies that the contents of a given entry have changed. This will delete and re-add the
     // entry to the model, forcing a refresh of the box.
-    private void updateComboBoxModelEntry(NodeEntry nodeEntry) {
+    public void updateComboBoxModelEntry(NodeEntry nodeEntry) {
         int idx = _nodeModel.getIndexOf(nodeEntry.getNodeID());
         if (idx < 0) {
             return;
@@ -869,7 +869,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
          *
          * @param description prototype display value
          */
-        private NodeEntry(String description) {
+        public NodeEntry(String description) {
             this.nodeMemo = null;
             this.description = description;
         }
