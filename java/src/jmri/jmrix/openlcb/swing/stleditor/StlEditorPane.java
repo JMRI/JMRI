@@ -854,7 +854,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         _nodeModel.setSelectedItem(sel);
     }
 
-    protected class NodeEntry implements Comparable<NodeEntry>, PropertyChangeListener {
+    protected static class NodeEntry implements Comparable<NodeEntry>, PropertyChangeListener {
         final MimicNodeStore.NodeMemo nodeMemo;
         String description = "";
 
@@ -968,13 +968,22 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     // --------------  load lists ---------
 
     private void loadData() {
+        FileInputStream in = null;
         try {
-            FileInputStream in = new FileInputStream(jmri.util.FileUtil.getUserFilesPath() + "STL Editor.properties");
+            in = new FileInputStream(jmri.util.FileUtil.getUserFilesPath() + "STL Editor.properties");
             _cdiTest.load(in);
             in.close();
         }
-        catch (Exception exx) {
-            log.error("Properties load failed {}", exx);
+        catch (IOException e1) {
+            log.error("Properties load failed {}", e1.getMessage());
+        }
+
+        if (in != null) {
+            try {
+                in.close();
+            } catch (IOException e2) {
+                log.error("Error closing in");
+            }
         }
 
         // Load data
@@ -1089,13 +1098,22 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         storeTransmitters();
         storeGroups();
 
+        FileOutputStream out = null;
         try {
-            FileOutputStream out = new FileOutputStream(jmri.util.FileUtil.getUserFilesPath() + "STL Editor.properties");
+            out = new FileOutputStream(jmri.util.FileUtil.getUserFilesPath() + "STL Editor.properties");
             _cdiTest.store(out, "test");
             out.close();
         }
-        catch (Exception exx) {
-            log.error("Properties store failed {}", exx);
+        catch (IOException e1) {
+            log.error("Properties store failed :: {}", e1.getMessage());
+        }
+
+        if (out != null) {
+            try {
+                out.close();
+            } catch (IOException e2) {
+                log.error("Error closing out");
+            }
         }
 //         _dirty = false;
     }
