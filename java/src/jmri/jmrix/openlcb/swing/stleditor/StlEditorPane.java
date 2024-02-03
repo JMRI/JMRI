@@ -899,6 +899,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             if (count < termCount) {
                 count += addToDescription(ident.getSoftwareVersion(), sb);
             }
+            log.debug("fake out dead local store error: count = {}", count);
             String newDescription = sb.toString();
             if (!description.equals(newDescription)) {
                 description = newDescription;
