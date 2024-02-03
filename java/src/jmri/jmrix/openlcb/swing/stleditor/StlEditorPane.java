@@ -1073,11 +1073,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     private void storeGroups() {
-        if (_groupRow >= 0) {
-            // Transfer the working logic list to the current group's logic list
-//            _groupList.get(_groupRow).setLogicList(_logicList);
-        }
-
         // store the group data
         for (int i = 0; i < 16; i++) {
             var row = _groupList.get(i);
