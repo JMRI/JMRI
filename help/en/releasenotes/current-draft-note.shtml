@@ -687,5 +687,6 @@
         <a id="Misc" name="Misc"></a>
         <ul>
             <li>Initial support for creating <a href="https://www.jmri.org/help/en/package/jmri/jmrit/etcs/index.shtml">ERTMS / ETCS Driver Interfaces</a></li>
+            <li>The JOAL library has been updated to run natively on Windows and Linux machines.</li>
         </ul>
 
