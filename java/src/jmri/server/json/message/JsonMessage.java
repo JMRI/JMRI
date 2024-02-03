@@ -55,7 +55,7 @@ public class JsonMessage {
     }
 
     /**
-     * Create a message with an {@value #INFO} type to be sent to all JSON
+     * Create a message with an {@link TYPE#INFO} type to be sent to all JSON
      * clients.
      *
      * @param message the message to send
