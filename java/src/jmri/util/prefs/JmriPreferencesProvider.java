@@ -505,6 +505,7 @@ public final class JmriPreferencesProvider {
             }
         }
 
+        @SuppressWarnings("hiding")     // Field has same name as a field in the outer class
         private final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JmriPreferences.class);
     }
 
