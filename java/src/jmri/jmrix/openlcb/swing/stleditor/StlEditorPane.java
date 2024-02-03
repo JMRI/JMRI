@@ -5,9 +5,7 @@ import java.awt.event.*;
 import java.io.*;
 import java.util.*;
 import java.util.List;
-
 import java.util.regex.Pattern;
-// import java.util.regex.Matcher;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -19,13 +17,9 @@ import javax.swing.table.AbstractTableModel;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.FileUtil;
-// import jmri.util.JmriJFrame;
 import jmri.util.swing.JComboBoxUtil;
-// imp  ort jmri.util.swing.JmriPanel;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-// import static org.openlcb.MimicNodeStore.ADD_PROP_NODE;
-// import static org.openlcb.MimicNodeStore.CLEAR_ALL_NODES;
 import static org.openlcb.MimicNodeStore.NodeMemo.UPDATE_PROP_SIMPLE_NODE_IDENT;
 
 import org.apache.commons.csv.CSVFormat;
@@ -33,12 +27,7 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 import org.openlcb.*;
-// import org.openlcb.implementations.*;
-// import org.openlcb.swing.*;
-// import org.openlcb.swing.memconfig.MemConfigDescriptionPane;
 import org.openlcb.cdi.impl.ConfigRepresentation;
-// import org.openlcb.cdi.impl.ConfigRepresentation.StringEntry;
-// import org.openlcb.MimicNodeStore.NodeMemo;
 
 
 /**
@@ -47,6 +36,7 @@ import org.openlcb.cdi.impl.ConfigRepresentation;
  * TODO
  *    Check dirty logic
  *    Implement CDI connection
+ *    Add error dialogs
  *
  * @author Dave Sand Copyright (C) 2024
  * @since 5.7.x
@@ -73,7 +63,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private JComboBox<Operator> _operators = new JComboBox<>(Operator.values());
 
     List<GroupRow> _groupList = new ArrayList<>();
-    List<LogicRow> _logicList = new ArrayList<>();
     List<InputRow> _inputList = new ArrayList<>();
     List<OutputRow> _outputList = new ArrayList<>();
     List<ReceiverRow> _receiverList = new ArrayList<>();
@@ -85,9 +74,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private JTable _outputTable;
     private JTable _receiverTable;
     private JTable _transmitterTable;
-
-    private JScrollPane _logicScrollPane;
-    private JScrollPane _receiverScrollPane = new JScrollPane();
 
     private JTabbedPane _detailTabs;
 
@@ -248,7 +234,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         // Create scroll pane
         var model = new LogicModel();
         _logicTable = new JTable(model);
-        _logicScrollPane = new JScrollPane(_logicTable);
+        var logicScrollPane = new JScrollPane(_logicTable);
 
         // resize columns
         for (int i = 0; i < _logicTable.getColumnCount(); i++) {
@@ -265,7 +251,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         selectionModel.addListSelectionListener(this::handleLogicRowSelection);
 
-        var logicPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, buildGroupPanel(), _logicScrollPane);
+        var logicPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, buildGroupPanel(), logicScrollPane);
         logicPanel.setDividerSize(10);
         logicPanel.setResizeWeight(.10);
 
@@ -306,7 +292,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         // Create scroll pane
         var model = new ReceiverModel();
         _receiverTable = new JTable(model);
-        _receiverScrollPane = new JScrollPane(_receiverTable);
+        var scrollPane = new JScrollPane(_receiverTable);
 
         // resize columns
         for (int i = 0; i < model.getColumnCount(); i++) {
@@ -314,7 +300,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             _receiverTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
 
-        return _receiverScrollPane;
+        return scrollPane;
     }
 
     private JScrollPane buildTransmitterPanel() {
@@ -367,28 +353,14 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         for (int i = 0; i < 16; i++) {
             _transmitterList.add(new TransmitterRow("", ""));
         }
-
-        _groupTable.setRowSelectionInterval(15, 15);
-
     }
 
     // --------------  Logic table methods ---------
 
     public void handleGroupRowSelection(ListSelectionEvent e) {
         if (!e.getValueIsAdjusting()) {
-            var currentRow = _groupRow;
             _groupRow = _groupTable.getSelectedRow();
-            if (currentRow >= 0) {
-                // Transfer the working logic list to the group's logic list
-                _groupList.get(currentRow).setLogicList(_logicList);
-            }
-
-            // Replace the working logic list content with the new group logic list
-            _logicList.clear();
-            _logicList.addAll(_groupList.get(_groupRow).getLogicList());
             _logicTable.revalidate();
-            _logicScrollPane.revalidate();
-            _logicScrollPane.repaint();
             pushedPercentButton(null);
         }
     }
@@ -407,26 +379,27 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     private void pushedAddButton(ActionEvent e) {
-        _logicList.add(new LogicRow("", null, "", ""));
-        _logicRow = _logicList.size() - 1;
+        var logicList = _groupList.get(_groupRow).getLogicList();
+        logicList.add(new LogicRow("", null, "", ""));
+        _logicRow = logicList.size() - 1;
         _logicTable.revalidate();
         _logicTable.setRowSelectionInterval(_logicRow, _logicRow);
-        _logicScrollPane.revalidate();
     }
 
     private void pushedInsertButton(ActionEvent e) {
-        if (_logicRow >= 0 && _logicRow < _logicList.size()) {
-            _logicList.add(_logicRow, new LogicRow("", null, "", ""));
+        var logicList = _groupList.get(_groupRow).getLogicList();
+        if (_logicRow >= 0 && _logicRow < logicList.size()) {
+            logicList.add(_logicRow, new LogicRow("", null, "", ""));
             _logicTable.revalidate();
             _logicTable.setRowSelectionInterval(_logicRow, _logicRow);
-            _logicScrollPane.revalidate();
         }
     }
 
     private void pushedMoveUpButton(ActionEvent e) {
-        if (_logicRow >= 0 && _logicRow < _logicList.size()) {
-            var logicRow = _logicList.remove(_logicRow);
-            _logicList.add(_logicRow - 1, logicRow);
+        var logicList = _groupList.get(_groupRow).getLogicList();
+        if (_logicRow >= 0 && _logicRow < logicList.size()) {
+            var logicRow = logicList.remove(_logicRow);
+            logicList.add(_logicRow - 1, logicRow);
             _logicRow--;
             _logicTable.revalidate();
             _logicTable.setRowSelectionInterval(_logicRow, _logicRow);
@@ -434,9 +407,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     private void pushedMoveDownButton(ActionEvent e) {
-        if (_logicRow >= 0 && _logicRow < _logicList.size()) {
-            var logicRow = _logicList.remove(_logicRow);
-            _logicList.add(_logicRow + 1, logicRow);
+        var logicList = _groupList.get(_groupRow).getLogicList();
+        if (_logicRow >= 0 && _logicRow < logicList.size()) {
+            var logicRow = logicList.remove(_logicRow);
+            logicList.add(_logicRow + 1, logicRow);
             _logicRow++;
             _logicTable.revalidate();
             _logicTable.setRowSelectionInterval(_logicRow, _logicRow);
@@ -444,10 +418,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     private void pushedDeleteButton(ActionEvent e) {
-        if (_logicRow >= 0 && _logicRow < _logicList.size()) {
-            _logicList.remove(_logicRow);
+        var logicList = _groupList.get(_groupRow).getLogicList();
+        if (_logicRow >= 0 && _logicRow < logicList.size()) {
+            logicList.remove(_logicRow);
             _logicTable.revalidate();
-            _logicScrollPane.revalidate();
         }
     }
 
@@ -997,7 +971,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     private void loadGroups() {
         _groupList.clear();
-        _logicList.clear();
 
         for (int i = 0; i < 16; i++) {
             String groupName = _cdiTest.getProperty(String.format(GROUP_NAME, i));
@@ -1012,6 +985,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         _groupTable.revalidate();
+        _groupTable.repaint();
     }
 
     private void loadInputs() {
@@ -1062,9 +1036,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     // --------------  store data ---------
     private void pushedExportButton(ActionEvent e) {
-        // Made sure that changes are applied
-        _groupList.get(_groupRow).setLogicList(_logicList);
-
         _csvMessages.clear();
         _csvMessages = CsvExport.exportData(this);
 
@@ -1074,9 +1045,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     private void pushedStoreButton(ActionEvent e) {
-        // Made sure that changes are applied
-        _groupList.get(_groupRow).setLogicList(_logicList);
-
         // Store data
         storeInputs();
         storeOutputs();
@@ -1107,7 +1075,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private void storeGroups() {
         if (_groupRow >= 0) {
             // Transfer the working logic list to the current group's logic list
-            _groupList.get(_groupRow).setLogicList(_logicList);
+//            _groupList.get(_groupRow).setLogicList(_logicList);
         }
 
         // store the group data
@@ -1167,7 +1135,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     private void pushedImportButton(ActionEvent e) {
         importCsvData();
-        log.info("msg = {}", _csvMessages.size());
         for (var msg : _csvMessages) {
             log.info("CsvImport: {}", msg);
         }
@@ -1189,6 +1156,8 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         _percentButton.setEnabled(true);
         _storeButton.setEnabled(true);
+
+        _groupTable.repaint();
 
         for (var msg : _csvMessages) {
             log.info("Import message: {}", msg);
@@ -1229,8 +1198,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         _groupTable.revalidate();
-        _logicScrollPane.revalidate();
-        _logicScrollPane.repaint();
+        _logicTable.revalidate();
     }
 
     void importInputs() {
@@ -1776,7 +1744,8 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         @Override
         public int getRowCount() {
-            return _logicList.size();
+            var logicList = _groupList.get(_groupRow).getLogicList();
+            return logicList.size();
         }
 
         @Override
@@ -1810,17 +1779,18 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         @Override
         public Object getValueAt(int r, int c) {
+            var logicList = _groupList.get(_groupRow).getLogicList();
             switch (c) {
                 case LABEL_COLUMN:
-                    return _logicList.get(r).getLabel();
+                    return logicList.get(r).getLabel();
                 case OPER_COLUMN:
-                    return _logicList.get(r).getOper();
+                    return logicList.get(r).getOper();
                 case NAME_COLUMN:
-                    return _logicList.get(r).getName();
+                    return logicList.get(r).getName();
                 case COMMENT_COLUMN:
-                    return _logicList.get(r).getComment();
+                    return logicList.get(r).getComment();
                 case VAR_COLUMN:
-                    return _logicList.get(r).getVariable();
+                    return logicList.get(r).getVariable();
                 default:
                     return null;
             }
@@ -1828,9 +1798,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         @Override
         public void setValueAt(Object type, int r, int c) {
+            var logicList = _groupList.get(_groupRow).getLogicList();
             switch (c) {
                 case LABEL_COLUMN:
-                    _logicList.get(r).setLabel((String) type);
+                    logicList.get(r).setLabel((String) type);
                     break;
                 case OPER_COLUMN:
                     var z = (Operator) type;
@@ -1839,17 +1810,17 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                             return;
                         }
                         if (z.name().equals("x0")) {
-                            _logicList.get(r).setOper(null);
+                            logicList.get(r).setOper(null);
                             return;
                         }
                     }
-                    _logicList.get(r).setOper((Operator) type);
+                    logicList.get(r).setOper((Operator) type);
                     break;
                 case NAME_COLUMN:
-                    _logicList.get(r).setName((String) type);
+                    logicList.get(r).setName((String) type);
                     break;
                 case COMMENT_COLUMN:
-                    _logicList.get(r).setComment((String) type);
+                    logicList.get(r).setComment((String) type);
                     break;
                 default:
                     break;
