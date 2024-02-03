@@ -879,42 +879,27 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         private void updateDescription() {
-            int termCount = 99;
             SimpleNodeIdent ident = nodeMemo.getSimpleNodeIdent();
             StringBuilder sb = new StringBuilder();
             sb.append(nodeMemo.getNodeID().toString());
-            int count = 0;
-            if (count < termCount) {
-                count += addToDescription(ident.getUserName(), sb);
+
+            addToDescription(ident.getUserName(), sb);
+            addToDescription(ident.getUserDesc(), sb);
+            if (!ident.getMfgName().isEmpty() || !ident.getModelName().isEmpty()) {
+                addToDescription(ident.getMfgName() + " " +ident.getModelName(), sb);
             }
-            if (count < termCount) {
-                count += addToDescription(ident.getUserDesc(), sb);
-            }
-            if (count < termCount) {
-                if (!ident.getMfgName().isEmpty() || !ident.getModelName().isEmpty()) {
-                    count += addToDescription(ident.getMfgName() + " " +ident.getModelName(),
-                        sb);
-                }
-            }
-            if (count < termCount) {
-                count += addToDescription(ident.getSoftwareVersion(), sb);
-            }
-            log.debug("fake out dead local store error: count = {}", count);
+            addToDescription(ident.getSoftwareVersion(), sb);
             String newDescription = sb.toString();
             if (!description.equals(newDescription)) {
                 description = newDescription;
-                // update combo box model.
-//                 updateComboBoxModelEntry(this);
             }
         }
 
-        private int addToDescription(String s, StringBuilder sb) {
-            if (s.isEmpty()) {
-                return 0;
+        private void addToDescription(String s, StringBuilder sb) {
+            if (!s.isEmpty()) {
+                sb.append(" - ");
+                sb.append(s);
             }
-            sb.append(" - ");
-            sb.append(s);
-            return 1;
         }
 
         private long reorder(long n) {
