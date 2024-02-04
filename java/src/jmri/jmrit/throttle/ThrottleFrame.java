@@ -288,11 +288,11 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         } catch (FileNotFoundException ex) {
             // Don't show error dialog if file is not found
             log.debug("Loading throttle exception: {}", ex.getMessage());
-            log.info("Couldn't load throttle file \"{}\" , reverting to default one, if any", sfile);
+            log.debug("Tried loading throttle file \"{}\" , reverting to default, if any", sfile);
             loadDefaultThrottle(); // revert to loading default one
         } catch (NullPointerException | IOException | JDOMException ex) {
             log.debug("Loading throttle exception: {}", ex.getMessage());
-            log.info("Couldn't load throttle file \"{}\" , reverting to default one, if any", sfile);
+            log.debug("Tried loading throttle file \"{}\" , reverting to default, if any", sfile);
             jmri.configurexml.ConfigXmlManager.creationErrorEncountered(
                     null, "parsing file " + sfile,
                     "Parse error", null, null, ex);
