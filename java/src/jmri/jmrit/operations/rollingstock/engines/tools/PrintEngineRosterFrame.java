@@ -35,7 +35,6 @@ public class PrintEngineRosterFrame extends OperationsFrame {
     boolean _isPreview;
     EnginesTableFrame _etf;
 
-    static final String NEW_LINE = "\n"; // NOI18N
     private int numberCharPerLine = 90;
     private int lastLength = 19;
 

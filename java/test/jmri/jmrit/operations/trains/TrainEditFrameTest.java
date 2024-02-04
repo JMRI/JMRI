@@ -31,6 +31,11 @@ public class TrainEditFrameTest extends OperationsTestCase {
     }
 
     @Test
+    public void testNEW_LINE() {
+        Assert.assertEquals("\n", TrainEditFrame.NEW_LINE);
+    }
+
+    @Test
     public void testTrainEditFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainEditFrame trainEditFrame = new TrainEditFrame(null);
@@ -159,7 +164,7 @@ public class TrainEditFrameTest extends OperationsTestCase {
         // testTrainBuildOptionFrame() and testTrainEditFrameRead()
         JemmyUtil.pressDialogButton(trainEditFrame, Bundle.getMessage("deleteTrain"), Bundle.getMessage("ButtonNo"));
         JemmyUtil.waitFor(trainEditFrame);
-        
+
         ThreadingUtil.runOnGUI(() -> {
             JUnitUtil.dispose(ref);
             JUnitUtil.dispose(trainEditFrame);
@@ -229,7 +234,7 @@ public class TrainEditFrameTest extends OperationsTestCase {
         trainEditFrame.setTitle("Test Edit Train Frame");
         // fill in name and description fields
         trainEditFrame.trainNameTextField.setText("Test Add Train Name");
-        
+
         JemmyUtil.enterClickAndLeaveThreadSafe(trainEditFrame.addTrainButton);
         // clear can not add train dialog box
         JemmyUtil.pressDialogButton(trainEditFrame,
@@ -238,7 +243,7 @@ public class TrainEditFrameTest extends OperationsTestCase {
         JemmyUtil.waitFor(trainEditFrame);
         JUnitUtil.dispose(trainEditFrame);
     }
-    
+
     @Test
     public void testTrainEditFrameAddButtonTrainNameTooLong() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -260,7 +265,7 @@ public class TrainEditFrameTest extends OperationsTestCase {
         JemmyUtil.waitFor(trainEditFrame);
         JUnitUtil.dispose(trainEditFrame);
     }
-    
+
     @Test
     public void testTrainEditFrameAddButtonTrainNameSpecialCharacter() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -440,7 +445,7 @@ public class TrainEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeaveThreadSafe(trainEditFrame.deleteTrainButton);
         JemmyUtil.pressDialogButton(trainEditFrame, Bundle.getMessage("deleteTrain"), Bundle.getMessage("ButtonNo"));
         JemmyUtil.waitFor(trainEditFrame);
-        
+
         // confirm that train wasn't deleted
         Train t2 = tmanager.getTrainByName("Test Train Save Button");
         Assert.assertNotNull(t2);
@@ -511,7 +516,7 @@ public class TrainEditFrameTest extends OperationsTestCase {
         // And now press the confirmation button
         JemmyUtil.pressDialogButton(trainEditFrame, Bundle.getMessage("deleteTrain"), Bundle.getMessage("ButtonYes"));
         JemmyUtil.waitFor(trainEditFrame);
-        
+
         train = tmanager.getTrainByName("Test_Train 1");
         Assert.assertNull("train deleted", train);
 
@@ -556,13 +561,13 @@ public class TrainEditFrameTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(trainEditFrame, Bundle.getMessage("CanNotResetTrain"),
                 Bundle.getMessage("ButtonOK"));
         JemmyUtil.waitFor(trainEditFrame);
-        
+
         Assert.assertTrue("Train status", train1.isBuilt());
 
         JUnitUtil.dispose(trainEditFrame);
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
-    
+
     @Test
     public void testCloseWindowOnSave() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
