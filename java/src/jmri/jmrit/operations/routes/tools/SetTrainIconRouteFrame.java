@@ -222,6 +222,8 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
 
     private final int FORWARD = 1;
     private final int BACK = -1;
+
+    // This field hides a field in the super class, but a different type
     private final int NONE = 0;
 
     private void updateRouteLocation(int direction) {
@@ -253,7 +255,7 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
         // disable or enable previous and next buttons
         previousButton.setEnabled(_routeIndex != 0);
         nextButton.setEnabled(_routeIndex != _routeList.size() - 1);
-        
+
         setTrainIconNameAndColor();
     }
 

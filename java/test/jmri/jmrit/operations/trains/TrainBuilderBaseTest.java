@@ -18,11 +18,11 @@ import jmri.jmrit.operations.rollingstock.cars.CarManager;
  * @author Daniel Boudreau Copyright (C) 2021
  */
 public class TrainBuilderBaseTest extends OperationsTestCase {
-    
+
     private LocationManager lmanager;
     private CarManager cmanager;
     TrainBuilderBase tbb;
-    
+
     // NOTE: this test uses reflection to test a protected method.
     java.lang.reflect.Method sortCarsOnFifoLifoTracks = null;
 
@@ -31,7 +31,15 @@ public class TrainBuilderBaseTest extends OperationsTestCase {
         TrainBuilderBase tb = new TrainBuilderBase();
         Assert.assertNotNull("Train Builder Constructor", tb);
     }
-    
+
+    @Test
+    public void testField() {
+        TrainBuilderBase tb = new TrainBuilderBase();
+        Assert.assertEquals(tb.carManager, InstanceManager.getDefault(CarManager.class));
+        Assert.assertEquals(tb.locationManager, InstanceManager.getDefault(LocationManager.class));
+        Assert.assertEquals(tb.engineManager, InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.engines.EngineManager.class));
+    }
+
     // test protected method sortCarsOnFifoLifoTracks
     @Test
     public void testCarOrderNORMAL() {
@@ -204,7 +212,7 @@ public class TrainBuilderBaseTest extends OperationsTestCase {
             Assert.fail("getCarOrder  executon failed reason: " + cause.getMessage());
         }
     }
-    
+
     @Override
     @BeforeEach
     public void setUp() {
@@ -213,9 +221,9 @@ public class TrainBuilderBaseTest extends OperationsTestCase {
         // setup managers
         lmanager = InstanceManager.getDefault(LocationManager.class);
         cmanager = InstanceManager.getDefault(CarManager.class);
-        
+
         tbb = new TrainBuilderBase();
-        
+
         try {
             sortCarsOnFifoLifoTracks = tbb.getClass().getDeclaredMethod("sortCarsOnFifoLifoTracks");
         } catch (java.lang.NoSuchMethodException nsm) {
