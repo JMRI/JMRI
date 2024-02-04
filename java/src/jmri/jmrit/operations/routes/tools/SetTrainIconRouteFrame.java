@@ -217,12 +217,12 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
     private void updateRoute() {
         log.debug("Updating route");
         _routeList = _route.getLocationsBySequenceList();
-        updateRouteLocation(NONE);
+        updateRouteLocation(NO_CHANGE);
     }
 
-    private final int FORWARD = 1;
-    private final int BACK = -1;
-    private final int NONE = 0;
+    private static final int FORWARD = 1;
+    private static final int BACK = -1;
+    private static final int NO_CHANGE = 0;
 
     private void updateRouteLocation(int direction) {
         if (direction == FORWARD) {
@@ -321,7 +321,7 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
             updateRoute();
         }
         if (e.getSource().equals(_rl)) {
-            updateRouteLocation(NONE);
+            updateRouteLocation(NO_CHANGE);
         }
     }
 
