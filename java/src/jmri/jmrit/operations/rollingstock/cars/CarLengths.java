@@ -20,7 +20,6 @@ public class CarLengths extends RollingStockAttribute implements InstanceManager
     public static final String CARLENGTHS_CHANGED_PROPERTY = "CarLengths"; // NOI18N
     public static final String CARLENGTHS_NAME_CHANGED_PROPERTY = "CarLengthsName"; // NOI18N
 
-    // This field hides a field in the super class, but it has a different value.
     protected static final int MIN_NAME_LENGTH = Control.max_len_string_length_name;
 
     public CarLengths() {

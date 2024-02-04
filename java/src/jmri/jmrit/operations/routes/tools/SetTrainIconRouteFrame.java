@@ -223,7 +223,6 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
     private final int FORWARD = 1;
     private final int BACK = -1;
 
-    // This field hides a field in the super class, but a different type
     private final int NONE = 0;
 
     private void updateRouteLocation(int direction) {
