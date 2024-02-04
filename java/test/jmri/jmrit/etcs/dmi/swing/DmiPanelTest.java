@@ -6,7 +6,6 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
 
 import jmri.jmrit.etcs.*;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
