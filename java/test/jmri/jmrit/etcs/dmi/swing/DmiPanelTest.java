@@ -2,7 +2,11 @@ package jmri.jmrit.etcs.dmi.swing;
 
 import java.util.ArrayList;
 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.LineUnavailableException;
+
 import jmri.jmrit.etcs.*;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -146,6 +150,13 @@ public class DmiPanelTest {
 
     @Test
     public void testSounds(){
+
+        try {
+            AudioSystem.getClip();
+        } catch (IllegalArgumentException | LineUnavailableException ex) {
+            Assumptions.assumeFalse(true, "Unable to initialize AudioSystem");
+        }
+
         DmiPanel p = new DmiPanel();
         
         p.playDmiSound(4);

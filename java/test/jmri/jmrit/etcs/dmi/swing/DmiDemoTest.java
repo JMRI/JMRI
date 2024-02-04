@@ -1,5 +1,8 @@
 package jmri.jmrit.etcs.dmi.swing;
 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.LineUnavailableException;
+
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 
@@ -16,6 +19,12 @@ public class DmiDemoTest {
 
     @Test
     public void testDemo(){
+
+        try {
+            AudioSystem.getClip();
+        } catch (IllegalArgumentException | LineUnavailableException ex) {
+            Assumptions.assumeFalse(true, "Unable to initialize AudioSystem");
+        }
 
         DmiDemo.setDelayMultiplier(0);
 
