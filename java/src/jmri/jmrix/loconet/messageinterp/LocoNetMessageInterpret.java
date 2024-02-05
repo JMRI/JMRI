@@ -5019,34 +5019,27 @@ public class LocoNetMessageInterpret {
        String detailInfo = "";
        switch (slot) {
            case 248:
-                // Basic Identifying information
-                baseInfo = interpretExtendedSlot_StatusData_Base_Detail(l, slot);
-                // Flags
-                detailInfo = interpretExtendedSlot_Query_Mode_248(l);
+                
+                baseInfo = interpretExtendedSlot_StatusData_Base_Detail(l, slot); // Basic Identifying information
+                detailInfo = interpretExtendedSlot_Query_Mode_248(l);  // Flags
+
                 break;
            case 249:
-                // Basic Identifying information
-                baseInfo = interpretExtendedSlot_StatusData_Base(l, slot);
-                // Electrical properties
-                detailInfo = interpretExtendedSlot_Query_Mode_249(l);
+                baseInfo = interpretExtendedSlot_StatusData_Base(l, slot); // Basic Identifying information
+                detailInfo = interpretExtendedSlot_Query_Mode_249(l); // Electrical properties
+
                 break;
             case 250:
-                // Basic Identifying information
-                baseInfo = interpretExtendedSlot_StatusData_Base(l, slot);
-                // Slots info
-                detailInfo = interpretExtendedSlot_Query_Mode_250(l);
+                baseInfo = interpretExtendedSlot_StatusData_Base(l, slot); // Basic Identifying information
+                detailInfo = interpretExtendedSlot_Query_Mode_250(l); // Slots info
                 break;
             case 251:
-                // Basic Identifying information
-                baseInfo = interpretExtendedSlot_StatusData_Base(l, slot);
-                // LocoNet events and messages and stats
-                detailInfo = interpretExtendedSlot_Query_Mode_251(l);
+                baseInfo = interpretExtendedSlot_StatusData_Base(l, slot); // Basic Identifying information
+                detailInfo = interpretExtendedSlot_Query_Mode_251(l); // LocoNet events and messages and stats
                 break;
             case 252:
-                // Basic Identifying information
-                baseInfo = interpretExtendedSlot_StatusData_Base(l, slot);
-                // DCC track status info
-                detailInfo = interpretExtendedSlot_Query_Mode_252(l);
+                baseInfo = interpretExtendedSlot_StatusData_Base(l, slot); // Basic Identifying information
+                detailInfo = interpretExtendedSlot_Query_Mode_252(l); // DCC track status info
                 break;
             default:
                 baseInfo = "Wrong Slot # ("+Integer.toString(slot)+")";
@@ -5098,6 +5091,10 @@ public class LocoNetMessageInterpret {
                 hwVersion, swVersion);
     }
 
+    private static String queryOnOff(int val, int bit) {
+        return (((val & 1 << bit) == 1 << bit)?Ln_On:Ln_Off);
+    }
+    
     /**
      * Interprets _some_ of the data in Query Mode report of slot 248 (and aliases!)
      * - "Flags" info.
@@ -5108,38 +5105,23 @@ public class LocoNetMessageInterpret {
     private static String interpretExtendedSlot_Query_Mode_248(LocoNetMessage l) {
         
         int b = l.getElement(4);
-        String lnetVmin = Bundle.getMessage("LNET_QUERY_LNETVMIN",
-                ((b & 0x40) == 0x40) ? Ln_On:Ln_Off);
-        String overTemp = Bundle.getMessage("LNET_QUERY_OVERTEMP",
-                ((b & 0x20) == 0x20) ? Ln_On:Ln_Off);
-        String fuseBad = Bundle.getMessage("LNET_QUERY_FUSEBAD",
-                ((b & 0x10) == 0x10) ? Ln_On:Ln_Off);
-        String rsynMax = Bundle.getMessage("LNET_QUERY_RSYNMAX",
-                ((b & 0x08) == 0x08) ? Ln_On:Ln_Off);
-        String vinHi = Bundle.getMessage("LNET_QUERY_VINHI",
-                ((b & 0x04) == 0x04) ? Ln_On:Ln_Off);
-        String vinLo = Bundle.getMessage("LNET_QUERY_VINLO",
-                ((b & 0x02) == 0x02) ? Ln_On:Ln_Off);
-        String iTrk = Bundle.getMessage("LNET_QUERY_ITRK",
-                ((b & 0x01) == 0x01) ? Ln_On:Ln_Off);
+        String lnetVmin = Bundle.getMessage("LNET_QUERY_LNETVMIN", queryOnOff(b, 6));
+        String overTemp = Bundle.getMessage("LNET_QUERY_OVERTEMP", queryOnOff(b, 5));
+        String fuseBad = Bundle.getMessage("LNET_QUERY_FUSEBAD", queryOnOff(b, 4));
+        String rsynMax = Bundle.getMessage("LNET_QUERY_RSYNMAX", queryOnOff(b, 3));
+        String vinHi = Bundle.getMessage("LNET_QUERY_VINHI", queryOnOff(b, 2));
+        String vinLo = Bundle.getMessage("LNET_QUERY_VINLO", queryOnOff(b, 1));
+        String iTrk = Bundle.getMessage("LNET_QUERY_ITRK", queryOnOff(b, 0));
 
         b = l.getElement(5);
-        String usbLink = Bundle.getMessage("LNET_QUERY_ULINK",
-                ((b & 0x20) == 0x20) ? Ln_On:Ln_Off);
-        String iLim = Bundle.getMessage("LNET_QUERY_ILIM",
-                ((b & 0x08) == 0x08) ? Ln_On:Ln_Off);
-        String PTrkMaxI = Bundle.getMessage("LNET_QUERY_PTRKMAXI",
-                ((b & 0x04) == 0x04) ? Ln_On:Ln_Off);
-        String PtrkIsol = Bundle.getMessage("LNET_QUERY_PTRKISOL",
-                ((b & 0x02) == 0x02) ? Ln_On:Ln_Off);
+        String usbLink = Bundle.getMessage("LNET_QUERY_ULINK", queryOnOff(b, 5));
+        String iLim = Bundle.getMessage("LNET_QUERY_ILIM", queryOnOff(b, 3));
+        String PTrkMaxI = Bundle.getMessage("LNET_QUERY_PTRKMAXI", queryOnOff(b, 2));
+        String PtrkIsol = Bundle.getMessage("LNET_QUERY_PTRKISOL", queryOnOff(b, 1));
 
         return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_FLAGS",
-                rsynMax,
-                usbLink,
-                iTrk, vinLo, vinHi, fuseBad,
-                overTemp, lnetVmin, 
-                PtrkIsol, PTrkMaxI, iLim
-                );
+                rsynMax, usbLink, iTrk, vinLo, vinHi, fuseBad,
+                overTemp, lnetVmin, PtrkIsol, PTrkMaxI, iLim);
     }
 
     /**
