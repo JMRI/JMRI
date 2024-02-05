@@ -149,7 +149,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
     void discoverPressed(ActionEvent e) {
         if (!InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
             int response = JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("EnableLayoutBlockRouting"),
-                Bundle.getMessage("QuestionTitle"), JmriJOptionPane.QUESTION_MESSAGE);
+                Bundle.getMessage("QuestionTitle"), JmriJOptionPane.YES_NO_OPTION);
             if ( response == JmriJOptionPane.OK_OPTION ) {
                 InstanceManager.getDefault(LayoutBlockManager.class).enableAdvancedRouting(true);
                 JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("LayoutBlockRoutingEnabledShort"));  // NOI18N
