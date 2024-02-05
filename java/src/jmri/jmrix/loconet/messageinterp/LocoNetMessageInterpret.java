@@ -5004,6 +5004,16 @@ public class LocoNetMessageInterpret {
                         idString(id1, id2)));
     }
 
+    /**
+     * Interprets an Enhanced Slot Report message in the "Query Mode" range of
+     * slot numbers.
+     * 
+     * Only the primary slot numbers are interpreted, not any "aliases".
+     * 
+     * @param l Enhanced Slot report LocoNetMessage to be interpreted
+     * @param slot
+     * @return String showing interpretation.
+     */
     private static String interpretExtendedSlot_StatusData(LocoNetMessage l, int slot) {
        String baseInfo = "";
        String detailInfo = "";
@@ -5039,7 +5049,7 @@ public class LocoNetMessageInterpret {
                 detailInfo = interpretExtendedSlot_Query_Mode_252(l);
                 break;
             default:
-                baseInfo = "Still working on it";
+                baseInfo = "Wrong Slot # ("+Integer.toString(slot)+")";
         }
        return Bundle.getMessage("LN_MSG_OPC_EXP_QUERY_MODE_OVERALL",
                slot, baseInfo, detailInfo);
@@ -5047,10 +5057,11 @@ public class LocoNetMessageInterpret {
 
     /**
      * Interpret the base information in bytes 16,18,19
-     * for slots 249,250,251. not 248
-     * @param l LocoNetMessage
+     * for slots 249,250,251, but not 248.
+     * 
+     * @param l LocoNetMessage to be interpreted
      * @param slot slot number
-     * @return a format message.
+     * @return formatted message
      */
     private static String interpretExtendedSlot_StatusData_Base(LocoNetMessage l, int slot) {
         String hwType = LnConstants.IPL_NAME(l.getElement(16));
@@ -5064,8 +5075,9 @@ public class LocoNetMessageInterpret {
     }
 
     /**
-     * Interpret slot 248 base details
-     * @param l LocoNetMessage
+     * Interpret slot 248 base details.
+     * 
+     * @param l LocoNetMessage to be interpreted
      * @param slot slot number
      * @return formatted message
      */
@@ -5090,8 +5102,8 @@ public class LocoNetMessageInterpret {
      * Interprets _some_ of the data in Query Mode report of slot 248 (and aliases!)
      * - "Flags" info.
      * 
-     * @param l LocoNet message with Query mode report
-     * @return 
+     * @param l LocoNetMessage to be interpreted
+     * @return formatted message
      */
     private static String interpretExtendedSlot_Query_Mode_248(LocoNetMessage l) {
         
@@ -5134,7 +5146,7 @@ public class LocoNetMessageInterpret {
      * Interprets _some_ of the data in Query Mode report of slot 249 (and aliases!)
      * - "Electrical" info.
      * 
-     * @param l LocoNetMessage
+     * @param l LocoNetMessage to be interpreted
      * @return formatted message
      */
     private static String interpretExtendedSlot_Query_Mode_249(LocoNetMessage l) {
@@ -5157,7 +5169,7 @@ public class LocoNetMessageInterpret {
      * Interprets _some_ of the data in Query Mode report of slot 250 (and aliases!)
      * - "Slots" info.
      * 
-     * @param l LocoNetMessage
+     * @param l LocoNetMessage to be interpreted
      * @return formatted message
      */
     private static String interpretExtendedSlot_Query_Mode_250(LocoNetMessage l) {
@@ -5175,7 +5187,7 @@ public class LocoNetMessageInterpret {
      * Interprets _some_ of the data in Query Mode report of slot 251 (and aliases!)
      * - "LocoNet message" info.
      * 
-     * @param l LocoNetMessage
+     * @param l LocoNetMessage to be interpreted
      * @return formatted message
      */
     private static String interpretExtendedSlot_Query_Mode_251(LocoNetMessage l) {
@@ -5191,12 +5203,7 @@ public class LocoNetMessageInterpret {
      * Interprets _some_ of the data in Query Mode report of slot 252 (and aliases!)
      * - "DCC status" info.
      * 
-     * Reports Flt, Arv, Dst.
-     * 
-     * Assumes bytes 10-15 are unknown and don't care.
-     * Assumes some other routine interprets the info in bytes 16 thru 19.
-     * 
-     * @param l LoconetMessage to be interpreted
+     * @param l LocoNetMessage to be interpreted
      * @return formatted message
      */
     private static String interpretExtendedSlot_Query_Mode_252(LocoNetMessage l) {
