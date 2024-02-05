@@ -25,7 +25,7 @@
 #
 -err:+hiding
   # 195 cases of members hiding superclass members
--err:+fieldHiding
+-err:-fieldHiding
   # thousands of places where parameters are named for members
 -err:-localHiding
 -err:+maskedCatchBlocks
