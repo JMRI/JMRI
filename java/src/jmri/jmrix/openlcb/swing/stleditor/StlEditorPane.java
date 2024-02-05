@@ -1058,9 +1058,9 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         _exportButton.setEnabled(_dirty);
     }
 
-    private boolean isDirty() {
-        return _dirty;
-    }
+//     private boolean isDirty() {
+//         return _dirty;
+//     }
 
     private void pushedExportButton(ActionEvent e) {
         _csvMessages.clear();
@@ -1503,6 +1503,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         String _name;
         String _comment;
         String _variable = "";
+        int _decodeLine = 0;
 
         LogicRow(String label, Operator oper, String name, String comment) {
             _label = label;
@@ -1574,6 +1575,14 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         void setVariable(String newVariable) {
             _variable = newVariable;
+        }
+
+        int getDecodeLine() {
+            return _decodeLine;
+        }
+
+        void setDecodeLine(int decodeLine) {
+            _decodeLine = decodeLine;
         }
     }
 
