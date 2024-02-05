@@ -510,6 +510,8 @@
               example by <strong>MyJson{"decoder}{"model"}[4]</strong>.
               The result is a Json text node, so use the <strong>str()</strong>
               function to convert the value to a string afterwards.</li>
+          <li>Local variables and Global variables can now be initialized
+              to boolean values as well. True or false. Case insensitive.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>

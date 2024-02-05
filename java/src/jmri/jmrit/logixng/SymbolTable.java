@@ -141,6 +141,7 @@ public interface SymbolTable {
     enum InitialValueType {
 
         None(Bundle.getMessage("InitialValueType_None"), true),
+        Boolean(Bundle.getMessage("InitialValueType_Boolean"), true),
         Integer(Bundle.getMessage("InitialValueType_Integer"), true),
         FloatingNumber(Bundle.getMessage("InitialValueType_FloatingNumber"), true),
         String(Bundle.getMessage("InitialValueType_String"), true),
@@ -381,6 +382,10 @@ public interface SymbolTable {
             case None:
                 return null;
 
+            case Boolean:
+                validateValue(type, name, initialData, "to boolean");
+                return Boolean.valueOf(initialData);
+
             case Integer:
                 validateValue(type, name, initialData, "to integer");
                 return Long.valueOf(initialData);
@@ -508,6 +513,8 @@ public interface SymbolTable {
         switch (type) {
             case None:
                 return newValue;
+            case Boolean:
+                return TypeConversionUtil.convertToBoolean(newValue, true);
             case Integer:
                 return TypeConversionUtil.convertToLong(newValue, true, true);
             case FloatingNumber:

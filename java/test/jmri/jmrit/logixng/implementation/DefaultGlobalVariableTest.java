@@ -42,6 +42,12 @@ public class DefaultGlobalVariableTest {
                 getVariableValue(InitialValueType.Array, "").getClass().getName());
         Assert.assertEquals("java.util.concurrent.ConcurrentHashMap",
                 getVariableValue(InitialValueType.Map, "").getClass().getName());
+        Assert.assertTrue((boolean)getVariableValue(InitialValueType.Formula, "1 == 1"));
+        Assert.assertFalse((boolean)getVariableValue(InitialValueType.Formula, "1 == 2"));
+        Assert.assertTrue((boolean)getVariableValue(InitialValueType.Boolean, "true"));
+        Assert.assertFalse((boolean)getVariableValue(InitialValueType.Boolean, "false"));
+        Assert.assertTrue((boolean)getVariableValue(InitialValueType.Boolean, "True"));
+        Assert.assertFalse((boolean)getVariableValue(InitialValueType.Boolean, "False"));
         Assert.assertEquals(25, (long)getVariableValue(InitialValueType.Formula, "12*2+1"));
         Assert.assertEquals(352, (long)getVariableValue(InitialValueType.Integer, "352"));
         Assert.assertNull(getVariableValue(InitialValueType.None, ""));
