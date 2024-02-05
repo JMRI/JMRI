@@ -20,7 +20,7 @@ public class CarLengthsTest extends OperationsTestCase {
 
     @Test
     public void testField() {
-        Assert.assertEquals(CarLengths.MIN_NAME_LENGTH, jmri.jmrit.operations.setup.Control.max_len_string_length_name);
+        Assert.assertEquals(CarLengths.CAR_MIN_NAME_LENGTH, jmri.jmrit.operations.setup.Control.max_len_string_length_name);
     }
 
     @Test
