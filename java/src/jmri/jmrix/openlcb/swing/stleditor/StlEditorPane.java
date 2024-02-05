@@ -1054,13 +1054,13 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private void setDirty(boolean dirty) {
         log.info("Dirty = {}", dirty);
         _dirty = dirty;
-        _storeButton.setEnabled(_dirty);
-        _exportButton.setEnabled(_dirty);
+        _storeButton.setEnabled(isDirty());
+        _exportButton.setEnabled(isDirty());
     }
 
-//     private boolean isDirty() {
-//         return _dirty;
-//     }
+    private boolean isDirty() {
+        return _dirty;
+    }
 
     private void pushedExportButton(ActionEvent e) {
         _csvMessages.clear();
@@ -1404,7 +1404,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             return true;
         }
 
-        if (name.indexOf(" ") > 0) {
+        if (name.indexOf(" ") >= 0) {
             JmriJOptionPane.showMessageDialog(null,
                     Bundle.getMessage("MessageName", name),
                     Bundle.getMessage("TitleName"),
