@@ -216,7 +216,6 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - cross-platform .jar files
     joal.jar
     gluegen-rt.jar
-    gluegen.jar
 
 - plus helper native libraries:
   for MacOS X 10.4+

@@ -1422,11 +1422,6 @@
             <version>${jogamp.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.jogamp.gluegen</groupId>
-            <artifactId>gluegen</artifactId>
-            <version>${jogamp.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.jogamp.joal</groupId>
             <artifactId>joal-main</artifactId>
             <version>${jogamp.version}</version>
