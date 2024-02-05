@@ -31,11 +31,6 @@ public class TrainEditFrameTest extends OperationsTestCase {
     }
 
     @Test
-    public void testNEW_LINE() {
-        Assert.assertEquals("\n", TrainEditFrame.NEW_LINE);
-    }
-
-    @Test
     public void testTrainEditFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainEditFrame trainEditFrame = new TrainEditFrame(null);

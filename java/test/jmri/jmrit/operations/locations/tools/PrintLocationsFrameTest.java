@@ -28,11 +28,6 @@ public class PrintLocationsFrameTest extends OperationsTestCase {
     }
 
     @Test
-    public void testNEW_LINE() {
-        Assert.assertEquals("\n", PrintLocationsFrame.NEW_LINE);
-    }
-
-    @Test
     public void testPrintPreview() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 

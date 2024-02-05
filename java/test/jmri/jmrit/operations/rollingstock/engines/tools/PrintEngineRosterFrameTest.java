@@ -19,11 +19,6 @@ import jmri.util.swing.JemmyUtil;
 public class PrintEngineRosterFrameTest extends OperationsTestCase {
 
     @Test
-    public void testNEW_LINE() {
-        Assert.assertEquals("\n", PrintEngineRosterFrame.NEW_LINE);
-    }
-
-    @Test
     public void testPrintPreview() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 

@@ -21,11 +21,6 @@ import jmri.util.*;
 public class PrintTrainTest extends OperationsTestCase {
 
     @Test
-    public void testNEW_LINE() {
-        Assert.assertEquals("\n", PrintTrainsFrame.NEW_LINE);
-    }
-
-    @Test
     public void testPrint() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 

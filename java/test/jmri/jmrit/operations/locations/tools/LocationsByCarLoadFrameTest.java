@@ -36,11 +36,6 @@ public class LocationsByCarLoadFrameTest extends OperationsTestCase {
     }
 
     @Test
-    public void testNEW_LINE() {
-        Assert.assertEquals("\n", LocationsByCarLoadFrame.NEW_LINE);
-    }
-
-    @Test
     public void testFrameLocation() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData();

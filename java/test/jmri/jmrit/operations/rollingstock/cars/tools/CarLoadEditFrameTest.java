@@ -24,11 +24,6 @@ import jmri.util.swing.JemmyUtil;
 public class CarLoadEditFrameTest extends OperationsTestCase {
 
     @Test
-    public void testNONE() {
-        Assert.assertEquals("", CarLoadEditFrame.NONE);
-    }
-
-    @Test
     public void testCarLoadEditFrameAddButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CarLoadEditFrame f = new CarLoadEditFrame();

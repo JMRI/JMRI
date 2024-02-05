@@ -32,14 +32,6 @@ public class TrainBuilderBaseTest extends OperationsTestCase {
         Assert.assertNotNull("Train Builder Constructor", tb);
     }
 
-    @Test
-    public void testField() {
-        TrainBuilderBase tb = new TrainBuilderBase();
-        Assert.assertEquals(tb.carManager, InstanceManager.getDefault(CarManager.class));
-        Assert.assertEquals(tb.locationManager, InstanceManager.getDefault(LocationManager.class));
-        Assert.assertEquals(tb.engineManager, InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.engines.EngineManager.class));
-    }
-
     // test protected method sortCarsOnFifoLifoTracks
     @Test
     public void testCarOrderNORMAL() {

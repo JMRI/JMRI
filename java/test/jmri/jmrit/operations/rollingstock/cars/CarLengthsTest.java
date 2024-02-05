@@ -19,11 +19,6 @@ import jmri.jmrit.operations.OperationsTestCase;
 public class CarLengthsTest extends OperationsTestCase {
 
     @Test
-    public void testField() {
-        Assert.assertEquals(CarLengths.CAR_MIN_NAME_LENGTH, jmri.jmrit.operations.setup.Control.max_len_string_length_name);
-    }
-
-    @Test
     public void testDefaultCarLengths() {
         CarLengths cl1 = InstanceManager.getDefault(CarLengths.class);
 
