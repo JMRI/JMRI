@@ -1,0 +1,1644 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config showEmptyPanes="no" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2023</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Vincent</firstname><surname>Kispersky</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber><date>2023-12-05</date><authorinitials>VK</authorinitials>
+      <revremark>Initial creation</revremark>
+    </revision>
+  </revhistory>
+
+  <!-- Version 1 - Copied from and/or based on MDE_HDD.xml v1 (Bob Jacobsen), Massoth_eMOTION_Sound.xml (Jeff Schmaltz) and MDE_mXion.xml for DRIVE-S and XS Decoders by Ulrich Gerlach-->
+
+  <decoder>
+    <family name="mXion" mfg="MD Electronics">
+      <model model="Drive-L" numOuts="8" numFns="68" maxMotorCurrent="3.5 A" formFactor="G" connector="SUSI" lowVersionID="15" highVersionID="15"> 
+		<output name="1" label="F0(f)" connection="wire" maxcurrent="1000 mA"/>
+		<output name="2" label="F0(r)" connection="wire" maxcurrent="1000 mA"/>
+		<output name="3" label=". A1 ." connection="solder" maxcurrent="1.5 A"/>
+		<output name="4" label=". A2 ." connection="solder" maxcurrent="1.5 A"/>
+		<output name="5" label=". A3 ." connection="solder" maxcurrent="1.5 A"/>
+		<output name="6" label=". A4 ." connection="solder" maxcurrent="1.5 A"/>
+		<output name="7" label=". A5 ." connection="solder" maxcurrent="1.5 A"/>
+		<output name="8" label=". A6 ." connection="solder" maxcurrent="1.5 A"/>		
+	  
+	  </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+	
+	<!-- CVs 1, 17, 29 bit 5 -->
+		<xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+
+	<!-- CVs 2-9 -->
+	  <variable CV="2" default="5" item="Vstart" tooltip="x (1/255 Track Voltage)">
+		<decVal />
+		<label>Starting Voltage</label>
+	  </variable>
+
+	  <variable CV="3" default="20" item="Accel" tooltip="x 2ms x (1/255 Track Voltage)">
+		<decVal />
+		<label>Acceleration Time</label>
+		<label xml:lang="it">Accellerazione (0-255)</label>
+		<label xml:lang="fr">Accelération (0-255)</label>
+		<label xml:lang="de">Anfahrverzögerung (0-255)</label>
+	  </variable>
+
+	  <variable CV="4" default="20" item="Decel" tooltip="x 2ms x (1/255 Track Voltage)">
+		<decVal min="1" max="255"/>
+		<label>Braking Time</label>
+		<label xml:lang="it">Decellerazione (1-255)</label>
+		<label xml:lang="fr">Décélération (1-255)</label>
+		<label xml:lang="de">Bremszeit (1-255)</label>
+	  </variable>
+
+	  <variable CV="5" default="220" item="Vhigh" tooltip="x (1/255 Track Voltage)">
+		<decVal />
+		<label>Top Speed</label>
+		<label xml:lang="it">Volt Massimi (0-255):</label>
+		<label xml:lang="de">Höchstgeschwindigkeit</label>
+	  </variable>
+
+	  <variable CV="6" default="70" item="Vmid" tooltip="x (1/255 Track Voltage)">
+		<decVal />
+		<label>Intermediate Speed</label>
+		<label xml:lang="it">Volts intermedi (0-255)</label>
+		<label xml:lang="de">Mittleregeschwindigkeit (0-255)</label>
+	  </variable>
+
+	  <variable CV="7" item="Decoder Version" tooltip="The decoder version number (read only)">
+		<decVal/>
+		<label>Decoder Version Number</label>
+		<label xml:lang="it">Versione Decoder: </label>
+		<label xml:lang="fr">Version décodeur: </label>
+		<label xml:lang="de">Decoder Version: </label>
+	  </variable>
+
+	  <variable CV="8" readOnly="yes" default="160" item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
+		<decVal/>
+		<label>Manufacturer ID</label>
+		<label xml:lang="it">ID Costruttore: </label>
+		<label xml:lang="fr">ID constructeur: </label>
+		<label xml:lang="de">Hersteller ID: </label>
+	  </variable>
+
+	  <variable CV="9" default="0" item="Total PWM Period" tooltip="Factory pre-set (23.5 (16) kHz) is optimized for LGB motors">
+		<enumVal>
+		  <enumChoice choice="16 kHz"/>
+		  <enumChoice choice="2 kHz"/>
+		  <enumChoice choice="250 Hz"/>
+		  <enumChoice choice="60 Hz"/>
+		  <enumChoice choice="100 Hz"/>
+		</enumVal>
+		<label>Motor Frequency</label>
+	  </variable>
+
+	<!-- CV=11-->
+		<variable CV="11" default="50" item="Analog Time-out Value" tooltip="1 ms per value">
+			<decVal min="30" max="255"/>
+			<label>Analog Timeout</label>
+			<label xml:lang="de">Analogwechsel</label>
+		</variable>
+
+	<!-- CV=13 -->
+		<variable CV="13" mask="XXXXXXXV" default="1" item="Analog Mode Function Status - F1" tooltip="On if value set">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>A1 Function Output in Analog Mode</label>
+		</variable>
+		<variable CV="13" mask="XXXXXXVX" default="1" item="Analog Mode Function Status - F2" tooltip="On if value set">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>A2 Function Output in Analog Mode</label>
+		</variable>
+		<variable CV="13" mask="XXXXXVXX" default="0" item="Analog Mode Function Status - F3" tooltip="On if value set">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>A3 Function Output in Analog Mode</label>
+		</variable>
+		<variable CV="13" mask="XXXXVXXX" default="0" item="Analog Mode Function Status - F4" tooltip="On if value set">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>A4 Function Output in Analog Mode</label>
+		</variable>
+		<variable CV="13" mask="XXXVXXXX" default="0" item="Analog Mode Function Status - F5" tooltip="On if value set">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>A5 Function Output in Analog Mode</label>
+		</variable>
+		<variable CV="13" mask="XXVXXXXX" default="0" item="Analog Mode Function Status - F6" tooltip="On if value set">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>A6 Function Output in Analog Mode</label>
+		</variable>
+		
+	<!-- CV=16 -->
+		<!-- The following is from xml/decoders/nmra/decoderLockId16.xml with specific default -->
+		<variable item="Decoder Lock ID number" CV="16" mask="XXXXXVVV" default="205">
+			<decVal/>
+			<label>Decoder Lock ID number</label>
+			<label xml:lang="it">ID Codice Blocco Decoder</label>
+			<label xml:lang="fr">No de verrouillage décodeur (Lock ID)</label>
+			<label xml:lang="de">Nummer der Decoder Lock ID</label>
+			<label xml:lang="cs">Zámek dekodéru ID číslo</label>
+			<label xml:lang="nl">Nummer van het Decoder Lock ID</label>
+			<label xml:lang="es">Número ID de bloqueo del decodificador</label>
+		</variable>
+		
+    <!-- CV=19 -->
+		<xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+
+
+    <!-- CV=20 -->
+		<variable item="Wheelspin" CV="20" default="5" tooltip="Higher Means More Wheelspin; Sound Only Effect">
+			<decVal min="0" max="30"/>
+			<label>Wheelspin Sound Effect</label>
+		</variable>
+
+
+	<!-- CV=24 -->
+		<variable item="Auto Uncoupling F-Key" CV="24" default="0" mask="XXVVVVVV" tooltip="Sets F-Key for Automatic Uncoupler">
+			<decVal min="0" max="63"/>
+			<label>F-Key to Enable Automatic Uncoupler</label>
+		</variable>
+		<variable item="Auto Uncoupling Control" CV="24" mask="VVXXXXXX" default="1" tooltip="Fully Enable/Disable or Select F-Key for Automatic Uncoupler">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-ChoiceFunctionControl.xml"/>
+			<label>Automatic Uncoupler Control</label>
+		</variable>	
+	
+	<!-- CV=26 -->
+		<variable item="Noise Filter" CV="26" default="2" tooltip="Max 5; Higher Means More Filtration">
+			<decVal min="0" max="5"/>
+			<label>Noise Filter</label>
+		</variable>
+		
+		
+    <!-- CV=29 -->
+		<xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/nmra/cv29RailCom.xml"/>
+	 
+	 
+	<!-- Automatic Shuttle Control CVs 30, 102-104-->
+		<variable item="ASC F-Key" CV="30" default="28" mask="XXVVVVVV" tooltip="Sets F-Key for Automatic Shuttle Control">
+			<decVal min="0" max="63"/>
+			<label>F-Key to Enable Automatic Shuttle</label>
+		</variable>
+		<variable item="ASC Control" CV="30" mask="VVXXXXXX" default="0" tooltip="Fully Enable/Disable or Select F-Key for Automatic Shuttle">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-ChoiceFunctionControl.xml"/>
+			<label>Automatic Shuttle Control</label>
+		</variable>		 
+		<variable item="Shuttle Speed" CV="102" default="100" tooltip="Sets Shuttle Speed as Value x (1/255 Track Voltage)">
+			<decVal min="1"/>
+			<label>Set Shuttle Speed</label>
+		</variable>	
+		<variable item="Shuttle Duration" CV="103" default="5" tooltip="Sets Shuttle Drive Duration, 5s per Value">
+			<decVal />
+			<label>Set Shuttle Drive Duration</label>
+		</variable>	
+		<variable item="Shuttle Delay" CV="104" default="5" tooltip="Sets Shuttle Delay Before Reversing, 5s per Value">
+			<decVal />
+			<label>Set Shuttle Delay Time</label>
+		</variable>		 
+
+    <!-- CV=49 mXion Configuration -->
+		<variable item="Digital BEMF Control" CV="49" mask="XXXXXXXV" default="1" tooltip="Back EMF keeps the loco speed constant even as the load varies">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>Digital Back EMF Control</label>
+		</variable>
+		<variable item="Analog BEMF Control" CV="49" mask="XXXXXXVX" default="1" tooltip="Back EMF keeps the loco speed constant even as the load varies">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>Analog Back EMF Control</label>
+		</variable>
+		<variable item="SUSI On-Off" CV="49" mask="XXXXXVXX" default="1" tooltip="Enables the SUSI Plug Connector">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>SUSI on/off</label>
+		</variable>
+		<variable item="A1 Output" CV="49" mask="XXXXVXXX" default="0" tooltip="Enables A1 Serial Data Output for LGB MTS/MZS">
+			<enumVal>
+				<enumChoice choice="Standard"/>
+				<enumChoice choice="Serial Data"/>
+			</enumVal>
+			<label>A1 Data Output</label>
+		</variable>
+		<variable item="Locking Brake" CV="49" mask="XXXVXXXX" default="1" tooltip="Turns the locking brake on">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>Locking Brake</label>
+		</variable>
+		<variable item="Front-Rear Light Outputs" CV="49" mask="XXVXXXXX" default="0" tooltip="Reverses Front and Rear Light Outputs if on">
+			<enumVal>
+				<enumChoice choice="Normal"/>
+				<enumChoice choice="Reversed"/>
+			</enumVal>
+			<label>Front/Rear Light Outputs</label>
+		</variable>
+		<variable item="Swiss Lighting" CV="49" mask="XVXXXXXX" default="0" tooltip="Swiss Lighting/Mapping Enabled when on">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>Swiss Lighting</label>
+		</variable>      
+		<variable item="Analog-Digital Direction" CV="49" mask="VXXXXXXX" default="0" tooltip="Sets Direction in Analog to Match Direction in Digital use if on">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>Retain Digitally Set Direction in Analog</label>
+		</variable>
+    
+    <!-- CV=50-54 Front Light Functions-->
+		<variable item="Front Light Command Allocation" CV="50" mask="XXVVVVVV" default="0" tooltip="Determines F-Key For Front Light; 0 = Light F-Key">
+			<decVal min="0" max="63"/>
+			<label>Front Light Function Key</label>
+		</variable>
+		<variable item="Front Light Control" CV="50" mask="VVXXXXXX" default="0" tooltip="Fully Enable/Disable or Select F-Key for Front Light">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-ChoiceFunctionControl.xml"/>
+			<label>Front Light Control</label>
+		</variable>		
+		<variable item="Front Light Dim Value" CV="51" default="15" mask="XVVVVVVV" tooltip="Sets Voltage to Front Lights as a Percent of Track Voltage; ~0.2V per %">
+			<decVal max="100"/>
+			<label>Front Light Dim Value (0-100%)</label>
+		</variable>
+		<variable item="Front Light Fade" CV="51" mask="VXXXXXXX" tooltip="Fade Front Light In or Out">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>Front Light Fade</label>
+		</variable>
+		<variable item="Front Light Function Conditions" CV="52" default="1" tooltip="Sets Conditions Under Which the Front Light is on">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-FunctionConditions.xml"/>
+			<label>Front Light Function Conditions</label>
+		</variable> 
+		<variable item="Front Light Special Functions" CV="53" default="0" mask="XXVVVVVV" tooltip="Selects Special Functions for Front Light">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-SpecialFunctions.xml"/>
+			<label>Front Light Special Functions</label>
+		</variable> 
+		<variable item="Front Light Special High Beam" CV="53" default="1" mask="XVXXXXXX" tooltip="Adds High Beam for Front Light">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>High Beam</label>
+		</variable>
+		<variable item="Front Light Special Inverted" CV="53" default="0" mask="VXXXXXXX" tooltip="Inverts Special Functions for Front Light">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>Inverted</label>
+		</variable>		
+		<variable item="Front Light Special Function Time" CV="54" default="10" tooltip="0.1s per Value">
+			<decVal min="1" max="255"/>
+			<label>Spec Fn Time</label>
+		</variable> 
+
+    <!-- CV=55-59 Rear Light Functions-->
+		<variable item="Rear Light Command Allocation" CV="55" default="0" mask="XXVVVVVV" tooltip="Determines F-Key For Rear Light">
+			<decVal min="0" max="63"/>
+			<label>Rear Light Control Function Key</label>
+		</variable>
+		<variable item="Rear Light Control" CV="55" default="0" mask="VVXXXXXX" tooltip="Fully Enable/Disable or Select F-Key for Rear Light">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-ChoiceFunctionControl.xml"/>
+			<label>Rear Light Control</label>
+		</variable>	
+		<variable item="Rear Light Dim Value" CV="56" default="15" mask="XVVVVVVV" tooltip="Sets Voltage to Rear Lights as a Percent of Track Voltage; ~0.2V per %">
+			<decVal max="100"/>
+			<label>Rear Light Dim Value (0-100%)</label>
+		</variable>
+		<variable item="Rear Light Fade" CV="56" mask="VXXXXXXX" tooltip="Fade Rear Light In or Out">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>Rear Light Fade</label>
+		</variable>
+		<variable item="Rear Light Function Conditions" CV="57" default="2" tooltip="Sets Conditions Under Which the Rear Light is on">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-FunctionConditions.xml"/>
+			<label>Rear Light Function Conditions</label>
+		</variable> 
+		<variable item="Rear Light Special Functions" CV="58" default="0" mask="XXVVVVVV" tooltip="Selects Special Functions for Rear Light">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-SpecialFunctions.xml"/>
+			<label>Rear Light Special Functions</label>
+		</variable>  
+		<variable item="Rear Light Special High Beam" CV="58" default="1" mask="XVXXXXXX" tooltip="Adds High Beam for Rear Light">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>High Beam</label>
+		</variable>
+		<variable item="Rear Light Special Inverted" CV="58" default="0" mask="VXXXXXXX" tooltip="Inverts Special Functions for Rear Light">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>Inverted</label>
+		</variable>
+		<variable item="Rear Light Special Function Time" CV="59" default="10" tooltip="0.1s per Value">
+			<decVal min="1" max="255"/>
+			<label>Spec Fn Time</label>
+		</variable>    
+
+    <!-- Back EMF Adjustment CVs 60-62 -->
+		<variable item="Back EMF Adjustment Factor" CV="60" default="1" tooltip="Big Value = Fast Regulation">
+			<decVal min="1" max="255"/>
+			<label>Back EMF Adjustment Factor</label>
+		</variable>
+		<variable item="Back EMF Adjustment Speed" CV="61" default="0" tooltip="Big Value = Slow Regulation">
+			<decVal min="1" max="255"/>
+			<label>Back EMF Adjustment Speed</label>
+		</variable>
+		<variable item="Back EMF Adjustment Strength" CV="62" default="2" tooltip="255 = max. Strength">
+			<decVal min="1" max="255"/>
+			<label>Back EMF Adjustment Strength</label>
+		</variable>
+
+    <!-- CVs 63-65 -->
+		<variable item="Monoflop CV96" CV="63" default="0" tooltip="0 = normal function; 1-255 Shutoff after CV63 seconds">
+			<decVal />
+			<label>Monoflop for CV96 (Hand Brake)</label>
+		</variable>
+		<variable item="Servo Swing Mode Sweep" CV="64" default="5" tooltip="Sets Sweep for Servo Swing Mode e.g. Bells">
+			<decVal />
+			<label>Servo Swing Mode Sweep</label>
+		</variable>
+		<variable item="Internal Speedsteps Consumption" CV="65" default="50" tooltip="Sets speed steps for consumption simulation when storage is empty">
+			<decVal />
+			<label>Internal Speedsteps for Consumption Simulation when Empty</label>
+		</variable>
+
+
+    <!-- CVs 66, 95 - Forward and Reverse Trim -->
+		<xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
+
+    <!-- Speed Table CVs 67-94 -->
+		<xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
+
+
+    <!-- CVs 96-101 -->
+		<variable item="Hand Brake F-Key" CV="96" default="12" mask="XXVVVVVV" tooltip="Determines F-Key for Hand Brake (with CV63)">
+			<decVal min="0" max="63"/>
+			<label>Hand Brake F-Key Selection</label>
+		</variable>
+		<variable item="Hand Brake Control" CV="96" default="0" mask="VVXXXXXX" tooltip="Fully Enable/Disable or Select F-Key for Hand Brake">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-ChoiceFunctionControl.xml"/>
+			<label>Hand Brake Control</label>
+		</variable>	
+		<variable item="High Beam F-Key" CV="97" default="14" mask="XXVVVVVV" tooltip="High Beam F-Key (on dims lights by 50%); Must be enabled by special function for a particular function output">
+			<decVal min="0" max="63"/>
+			<label>High Beam F-Key Selection</label>
+		</variable>
+		<variable item="High Beam Control" CV="97" default="0" mask="VVXXXXXX" tooltip="Fully Enable/Disable or Select F-Key for High Beam">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-ChoiceFunctionControl.xml"/>
+			<label>High Beam Control</label>
+		</variable>	
+		<variable CV="98" mask="XXXXXXXV" default="0" item="Randomizer - A1" tooltip="Randomly Activates Function Output - Can still be activated manually">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>Randomly Activate A1</label>
+		</variable>
+		<variable CV="98" mask="XXXXXXVX" default="0" item="Randomizer - A2" tooltip="Randomly Activates Function Output - Can still be activated manually">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>Randomly Activate A2</label>
+		</variable>
+		<variable CV="98" mask="XXXXXVXX" default="0" item="Randomizer - A3" tooltip="Randomly Activates Function Output - Can still be activated manually">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>Randomly Activate A3</label>
+		</variable>
+		<variable CV="98" mask="XXXXVXXX" default="0" item="Randomizer - A4" tooltip="Randomly Activates Function Output - Can still be activated manually">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>Randomly Activate A4</label>
+		</variable>
+		<variable CV="98" mask="XXXVXXXX" default="0" item="Randomizer - A5" tooltip="Randomly Activates Function Output - Can still be activated manually">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>Randomly Activate A5</label>
+		</variable>
+		<variable CV="98" mask="XXVXXXXX" default="0" item="Randomizer - A6" tooltip="Randomly Activates Function Output - Can still be activated manually">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>Randomly Activate A6</label>
+		</variable>
+		<variable item="Pause Time for Stop and Reversing" CV="99" default="0" tooltip="Time in 0.5s per value">
+			<decVal />
+			<label>Pause Time When Direction is Changed</label>
+		</variable>
+		<variable item="Shunting Mode" CV="100" default="15" mask="XXVVVVVV" tooltip="Sets F-Key for Shunting Mode">
+			<decVal min="0" max="63"/>
+			<label>Shunting Mode F-Key Selection</label>
+		</variable>
+		<variable item="Shunting Mode Control" CV="100" default="0" mask="VVXXXXXX" tooltip="Fully Enable/Disable or Select F-Key for Shunting Mode">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-ChoiceFunctionControl.xml"/>
+			<label>Shunting Mode Control</label>
+		</variable>	
+		<variable item="AccelBrake Timer" CV="101" default="16" mask="XXVVVVVV" tooltip="Sets F-Key to Enable/Disable Acceleration and Braking Time">
+			<decVal min="0" max="63"/>
+			<label>F-Key to Enable/Disable Acceration and Braking Times (CVs 3 and 4)</label>
+		</variable>
+		<variable item="AccelBrake Control" CV="101" default="0" mask="VVXXXXXX" tooltip="Fully Enable/Disable or Select F-Key for Acceleration and Braking Time">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-ChoiceFunctionControl.xml"/>
+			<label>Acceleration and Braking Time Control</label>
+		</variable>	
+
+
+	<!-- Swiss Lighting/Mapping CVs 107-110-->
+		<variable item="Swiss Lighting F-Key" CV="107" default="10" mask="XXVVVVVV" tooltip="Sets F-Key for Different Swiss Lighting if CV49 bit 6 is active">
+			<decVal min="0" max="63"/>
+			<label>Swiss Lighting Mode F-Key: 3x white/2x red or 3x white/1x white</label>
+		</variable>
+		<variable item="SM Control" CV="107" mask="VVXXXXXX" default="0" tooltip="Fully Enable/Disable or Select F-Key for Swiss Lighting">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-ChoiceFunctionControl.xml"/>
+			<label>Swiss Lighting Control</label>
+		</variable>		
+		<variable item="Swiss Lighting Interior 1" CV="108" default="11" mask="XXVVVVVV" tooltip="Sets F-Key for Interior Light 1 in Swiss Lighting Mode if CV49 bit 6 is active">
+			<decVal min="0" max="63"/>
+			<label>Swiss Lighting Mode F-Key: Interior Light 1</label>
+		</variable>
+	  	<variable item="SMI1 Control" CV="108" default="0" mask="VVXXXXXX" tooltip="Fully Enable/Disable or Select F-Key for Swiss Lighting Interior Light 1">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-ChoiceFunctionControl.xml"/>
+			<label>Swiss Lighting Interior Light 1 Control</label>
+		</variable>	
+		<variable item="Swiss Lighting Interior 2" CV="109" default="12" mask="XXVVVVVV" tooltip="Sets F-Key for Interior Light 2 in Swiss Lighting Mode if CV49 bit 6 is active">
+			<decVal min="0" max="63"/>
+			<label>Swiss Lighting Mode F-Key: Interior Light 2</label>
+		</variable>
+	  	<variable item="SMI2 Control" CV="109" default="0" mask="VVXXXXXX" tooltip="Fully Enable/Disable or Select F-Key for Swiss Lighting Interior Light 2">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-ChoiceFunctionControl.xml"/>
+			<label>Swiss Lighting Interior Light 2 Control</label>
+		</variable>	
+		<!-- I couldn't quite figure out the proper translation for Double-A lighting.  The best I figured out was that the top and bottom left and right lights on one side of the loco form an A and double-A refers to both sets of lights being on and that this is sometimes used in shunting operations-->
+		<variable item="Shunting Mode Lights" CV="110" default="13" mask="XXVVVVVV" tooltip="Sets F-Key for Double A Shunting Lights if CV49 bit 6 is active">
+			<decVal min="0" max="63"/>
+			<label>Double A Shunting Mode Lights F-Key</label>
+		</variable>
+	  	<variable item="DASM Control" CV="110" default="0" mask="VVXXXXXX" tooltip="Fully Enable/Disable or Select F-Key for Double A Shunting Mode Lights">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-ChoiceFunctionControl.xml"/>
+			<label>Double A Shunting Mode Control</label>
+		</variable>	
+
+		
+	<!-- Auto Uncoupling CVs 112-114 -->
+		<variable item="Auto Uncoupling Push Time" CV="112" default="5" tooltip="Time in seconds">
+			<decVal min="1"/>
+			<label>Auto Uncoupling Push Time</label>
+		</variable>
+		<variable item="Auto Uncoupling Drive Away Time" CV="113" default="5" tooltip="Time in seconds">
+			<decVal min="1"/>
+			<label>Auto Uncoupling Drive Away Time</label>
+		</variable>
+		<variable item="Auto Uncoupling Speed" CV="114" default="30" tooltip="Locomotive Speed">
+			<decVal min="1"/>
+			<label>Auto Uncoupling Speed</label>
+		</variable>
+	
+	
+	<!-- Clock Controls CVs 115, 116--> 
+		<variable CV="115" default="0" item="Clock Control" tooltip="Sets Clock Input to Either External or Internal (Simulated)">
+			<enumVal>
+				<enumChoice choice="External"/>
+				<enumChoice choice="Internal (Simulated)" />
+			</enumVal>
+			<label>Clock Input</label>
+		</variable>
+		<variable item="Clock Simulation Correction" CV="116" default="50" tooltip="Correction for Simulated Internal Clock">
+			<decVal min="1"/>
+			<label>Internal Simulated Clock Correction</label>
+		</variable>	
+	
+	
+	<!-- CVs 120-179 A1-A6 Function Outputs-->
+	<!-- CVs 120-129 A1 Function Outputs-->
+		<variable item="A1 Function Key" CV="120" default="1" mask="XXVVVVVV" tooltip="Sets F-Key for A1 Function Output">
+			<decVal min="0" max="63"/>
+			<label>A1 Function Key</label>
+		</variable>
+		<variable item="A1 Function" CV="120" mask="VVXXXXXX" default="0" tooltip="Fully Enable/Disable or Select F-Key for A1 Function Output">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-ChoiceFunctionControl.xml"/>
+			<label>A1 Control</label>
+		</variable>	
+		<variable item="A1 Dim Value" CV="121" default="100" mask="XVVVVVVV" tooltip="Sets Voltage to A1 as a Percent of Track Voltage; ~0.2V per %">
+			<decVal max="100"/>
+			<label>A1 Dim Value (0-100%)</label>
+		</variable>
+		<variable item="A1 Fade" CV="121" mask="VXXXXXXX" default="0" tooltip="Fade A1 In or Out">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>A1 Fade</label>
+		</variable>
+		<variable item="A1 Function Conditions" CV="122" default="0" tooltip="Sets Conditions Under Which A1 is on">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-FunctionConditions.xml"/>
+			<label>A1 Function Conditions</label>
+		</variable> 
+		<variable item="A1 Special Functions" CV="123" default="0" mask="XXVVVVVV" tooltip="Selects Special Functions for A1">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-SpecialFunctions.xml"/>
+			<label>A1 Special Functions</label>
+		</variable>
+		<variable item="A1 Special High Beam" CV="123" default="0" mask="XVXXXXXX" tooltip="Adds High Beam to A1 Function Output">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>High Beam</label>
+		</variable>
+		<variable item="A1 Special Inverted" CV="123" default="0" mask="VXXXXXXX" tooltip="Inverts Special Functions for A1">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>Inverted</label>
+		</variable>		
+		<variable item="A1 Special Function Time" CV="124" default="5" tooltip="0.1s per Value">
+			<decVal min="1" max="255"/>
+			<label>Spec Fn Time</label>
+		</variable>    
+		<variable item="A1 Servo Speed" CV="125" default="1" tooltip="1 ms per Value">
+			<decVal/>
+			<label>A1 Servo Speed</label>
+		</variable>    
+		<variable item="A1 Servo Endpoint Right" CV="126" default="200" tooltip="Position in Degrees">
+			<decVal/>
+			<label>A1 Servo Endpoint Right</label>
+		</variable>  
+		<variable item="A1 Servo Endpoint Left" CV="127" default="20" tooltip="Position in Degrees">
+			<decVal/>
+			<label>A1 Servo Endpoint Left</label>
+		</variable>  
+		<variable item="A1 Servo Inverted" CV="128" default="0" tooltip="Servo Movement is Inverted">
+			<enumVal>
+				<enumChoice choice="Normal"/>
+				<enumChoice choice="Inverted"/>
+			</enumVal>
+			<label>A1 Servo Inverted</label>
+		</variable>  
+		<variable item="A1 Servo Disabled" CV="129" default="1" tooltip="Servo is Disabled">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+			<label>A1 Servo Endpoint Left</label>
+		</variable>  
+
+
+	<!-- CVs 130-139 A2 Function Outputs-->
+		<variable item="A2 Function Key" CV="130" default="1" mask="XXVVVVVV" tooltip="Sets F-Key for A2 Function Output">
+			<decVal min="0" max="63"/>
+			<label>A2 Function Key</label>
+		</variable>
+		<variable item="A2 Function" CV="130" mask="VVXXXXXX" default="0" tooltip="Fully Enable/Disable or Select F-Key for A2 Function Output">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-ChoiceFunctionControl.xml"/>
+			<label>A2 Control</label>
+		</variable>	
+		<variable item="A2 Dim Value" CV="131" default="100" mask="XVVVVVVV" tooltip="Sets Voltage to A2 as a Percent of Track Voltage; ~0.2V per %">
+			<decVal max="100"/>
+			<label>A2 Dim Value (0-100%)</label>
+		</variable>
+		<variable item="A2 Fade" CV="131" mask="VXXXXXXX" default="0" tooltip="Fade A2 In or Out">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>A2 Fade</label>
+		</variable>
+		<variable item="A2 Function Conditions" CV="132" default="0" tooltip="Sets Conditions Under Which A2 is on">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-FunctionConditions.xml"/>
+			<label>A2 Function Conditions</label>
+		</variable> 
+		<variable item="A2 Special Functions" CV="133" default="0" mask="XXVVVVVV" tooltip="Selects Special Functions for A2">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-SpecialFunctions.xml"/>
+			<label>A2 Special Functions</label>
+		</variable>
+		<variable item="A2 Special High Beam" CV="133" default="0" mask="XVXXXXXX" tooltip="Adds High Beam to A2 Function Output">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>High Beam</label>
+		</variable>
+		<variable item="A2 Special Inverted" CV="133" default="0" mask="VXXXXXXX" tooltip="Inverts Special Functions for A2">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>Inverted</label>
+		</variable>		
+		<variable item="A2 Special Function Time" CV="134" default="5" tooltip="0.1s per Value">
+			<decVal min="1" max="255"/>
+			<label>Spec Fn Time</label>
+		</variable>    
+		<variable item="A2 Servo Speed" CV="135" default="1" tooltip="1 ms per Value">
+			<decVal/>
+			<label>A2 Servo Speed</label>
+		</variable>    
+		<variable item="A2 Servo Endpoint Right" CV="136" default="200" tooltip="Position in Degrees">
+			<decVal/>
+			<label>A2 Servo Endpoint Right</label>
+		</variable>  
+		<variable item="A2 Servo Endpoint Left" CV="137" default="20" tooltip="Position in Degrees">
+			<decVal/>
+			<label>A2 Servo Endpoint Left</label>
+		</variable>  
+		<variable item="A2 Servo Inverted" CV="138" default="0" tooltip="Servo Movement is Inverted">
+			<enumVal>
+				<enumChoice choice="Normal"/>
+				<enumChoice choice="Inverted"/>
+			</enumVal>
+			<label>A2 Servo Inverted</label>
+		</variable>  
+		<variable item="A2 Servo Disabled" CV="139" default="1" tooltip="Servo is Disabled">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+			<label>A2 Servo Endpoint Left</label>
+		</variable>  
+
+
+	<!-- CVs 140-149 A3 Function Outputs-->
+		<variable item="A3 Function Key" CV="140" default="1" mask="XXVVVVVV" tooltip="Sets F-Key for A3 Function Output">
+			<decVal min="0" max="63"/>
+			<label>A3 Function Key</label>
+		</variable>
+		<variable item="A3 Function" CV="140" mask="VVXXXXXX" default="0" tooltip="Fully Enable/Disable or Select F-Key for A3 Function Output">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-ChoiceFunctionControl.xml"/>
+			<label>A3 Control</label>
+		</variable>	
+		<variable item="A3 Dim Value" CV="141" default="100" mask="XVVVVVVV" tooltip="Sets Voltage to A3 as a Percent of Track Voltage; ~0.2V per %">
+			<decVal max="100"/>
+			<label>A3 Dim Value (0-100%)</label>
+		</variable>
+		<variable item="A3 Fade" CV="141" mask="VXXXXXXX" default="0" tooltip="Fade A3 In or Out">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>A3 Fade</label>
+		</variable>
+		<variable item="A3 Function Conditions" CV="142" default="0" tooltip="Sets Conditions Under Which A3 is on">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-FunctionConditions.xml"/>
+			<label>A3 Function Conditions</label>
+		</variable> 
+		<variable item="A3 Special Functions" CV="143" default="0" mask="XXVVVVVV" tooltip="Selects Special Functions for A3">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-SpecialFunctions.xml"/>
+			<label>A3 Special Functions</label>
+		</variable>
+		<variable item="A3 Special High Beam" CV="143" default="0" mask="XVXXXXXX" tooltip="Adds High Beam to A3 Function Output">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>High Beam</label>
+		</variable>
+		<variable item="A3 Special Inverted" CV="143" default="0" mask="VXXXXXXX" tooltip="Inverts Special Functions for A3">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>Inverted</label>
+		</variable>		
+		<variable item="A3 Special Function Time" CV="144" default="5" tooltip="0.1s per Value">
+			<decVal min="1" max="255"/>
+			<label>Spec Fn Time</label>
+		</variable>    
+		<variable item="A3 Servo Speed" CV="145" default="1" tooltip="1 ms per Value">
+			<decVal/>
+			<label>A3 Servo Speed</label>
+		</variable>    
+		<variable item="A3 Servo Endpoint Right" CV="146" default="200" tooltip="Position in Degrees">
+			<decVal/>
+			<label>A3 Servo Endpoint Right</label>
+		</variable>  
+		<variable item="A3 Servo Endpoint Left" CV="147" default="20" tooltip="Position in Degrees">
+			<decVal/>
+			<label>A3 Servo Endpoint Left</label>
+		</variable>  
+		<variable item="A3 Servo Inverted" CV="148" default="0" tooltip="Servo Movement is Inverted">
+			<enumVal>
+				<enumChoice choice="Normal"/>
+				<enumChoice choice="Inverted"/>
+			</enumVal>
+			<label>A3 Servo Inverted</label>
+		</variable>  
+		<variable item="A3 Servo Disabled" CV="149" default="1" tooltip="Servo is Disabled">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+			<label>A3 Servo Endpoint Left</label>
+		</variable> 
+
+
+	<!-- CVs 150-159 A4 Function Outputs-->
+		<variable item="A4 Function Key" CV="150" default="1" mask="XXVVVVVV" tooltip="Sets F-Key for A4 Function Output">
+			<decVal min="0" max="63"/>
+			<label>A4 Function Key</label>
+		</variable>
+		<variable item="A4 Function" CV="150" mask="VVXXXXXX" default="0" tooltip="Fully Enable/Disable or Select F-Key for A4 Function Output">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-ChoiceFunctionControl.xml"/>
+			<label>A4 Control</label>
+		</variable>	
+		<variable item="A4 Dim Value" CV="151" default="100" mask="XVVVVVVV" tooltip="Sets Voltage to A4 as a Percent of Track Voltage; ~0.2V per %">
+			<decVal max="100"/>
+			<label>A4 Dim Value (0-100%)</label>
+		</variable>
+		<variable item="A4 Fade" CV="151" mask="VXXXXXXX" default="0" tooltip="Fade A4 In or Out">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>A4 Fade</label>
+		</variable>
+		<variable item="A4 Function Conditions" CV="152" default="0" tooltip="Sets Conditions Under Which A4 is on">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-FunctionConditions.xml"/>
+			<label>A4 Function Conditions</label>
+		</variable> 
+		<variable item="A4 Special Functions" CV="153" default="0" mask="XXVVVVVV" tooltip="Selects Special Functions for A4">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-SpecialFunctions.xml"/>
+			<label>A4 Special Functions</label>
+		</variable>
+		<variable item="A4 Special High Beam" CV="153" default="0" mask="XVXXXXXX" tooltip="Adds High Beam to A4 Function Output">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>High Beam</label>
+		</variable>
+		<variable item="A4 Special Inverted" CV="153" default="0" mask="VXXXXXXX" tooltip="Inverts Special Functions for A4">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>Inverted</label>
+		</variable>		
+		<variable item="A4 Special Function Time" CV="154" default="5" tooltip="0.1s per Value">
+			<decVal min="1" max="255"/>
+			<label>Spec Fn Time</label>
+		</variable>    
+		<variable item="A4 Servo Speed" CV="155" default="1" tooltip="1 ms per Value">
+			<decVal/>
+			<label>A4 Servo Speed</label>
+		</variable>    
+		<variable item="A4 Servo Endpoint Right" CV="156" default="200" tooltip="Position in Degrees">
+			<decVal/>
+			<label>A4 Servo Endpoint Right</label>
+		</variable>  
+		<variable item="A4 Servo Endpoint Left" CV="157" default="20" tooltip="Position in Degrees">
+			<decVal/>
+			<label>A4 Servo Endpoint Left</label>
+		</variable>  
+		<variable item="A4 Servo Inverted" CV="158" default="0" tooltip="Servo Movement is Inverted">
+			<enumVal>
+				<enumChoice choice="Normal"/>
+				<enumChoice choice="Inverted"/>
+			</enumVal>
+			<label>A4 Servo Inverted</label>
+		</variable>  
+		<variable item="A4 Servo Disabled" CV="159" default="1" tooltip="Servo is Disabled">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+			<label>A4 Servo Endpoint Left</label>
+		</variable> 
+
+
+	<!-- CVs 160-169 A5 Function Outputs-->
+		<variable item="A5 Function Key" CV="160" default="1" mask="XXVVVVVV" tooltip="Sets F-Key for A5 Function Output">
+			<decVal min="0" max="63"/>
+			<label>A5 Function Key</label>
+		</variable>
+		<variable item="A5 Function" CV="160" mask="VVXXXXXX" default="0" tooltip="Fully Enable/Disable or Select F-Key for A5 Function Output">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-ChoiceFunctionControl.xml"/>
+			<label>A5 Control</label>
+		</variable>	
+		<variable item="A5 Dim Value" CV="161" default="100" mask="XVVVVVVV" tooltip="Sets Voltage to A5 as a Percent of Track Voltage; ~0.2V per %">
+			<decVal max="100"/>
+			<label>A5 Dim Value (0-100%)</label>
+		</variable>
+		<variable item="A5 Fade" CV="161" mask="VXXXXXXX" default="0" tooltip="Fade A5 In or Out">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>A5 Fade</label>
+		</variable>
+		<variable item="A5 Function Conditions" CV="162" default="0" tooltip="Sets Conditions Under Which A5 is on">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-FunctionConditions.xml"/>
+			<label>A5 Function Conditions</label>
+		</variable> 
+		<variable item="A5 Special Functions" CV="163" default="0" mask="XXVVVVVV" tooltip="Selects Special Functions for A5">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-SpecialFunctions.xml"/>
+			<label>A5 Special Functions</label>
+		</variable>
+		<variable item="A5 Special High Beam" CV="163" default="0" mask="XVXXXXXX" tooltip="Adds High Beam to A5 Function Output">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>High Beam</label>
+		</variable>
+		<variable item="A5 Special Inverted" CV="163" default="0" mask="VXXXXXXX" tooltip="Inverts Special Functions for A5">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>Inverted</label>
+		</variable>		
+		<variable item="A5 Special Function Time" CV="164" default="5" tooltip="0.1s per Value">
+			<decVal min="1" max="255"/>
+			<label>Spec Fn Time</label>
+		</variable>    
+		<variable item="A5 Servo Speed" CV="165" default="1" tooltip="1 ms per Value">
+			<decVal/>
+			<label>A5 Servo Speed</label>
+		</variable>    
+		<variable item="A5 Servo Endpoint Right" CV="166" default="200" tooltip="Position in Degrees">
+			<decVal/>
+			<label>A5 Servo Endpoint Right</label>
+		</variable>  
+		<variable item="A5 Servo Endpoint Left" CV="167" default="20" tooltip="Position in Degrees">
+			<decVal/>
+			<label>A5 Servo Endpoint Left</label>
+		</variable>  
+		<variable item="A5 Servo Inverted" CV="168" default="0" tooltip="Servo Movement is Inverted">
+			<enumVal>
+				<enumChoice choice="Normal"/>
+				<enumChoice choice="Inverted"/>
+			</enumVal>
+			<label>A5 Servo Inverted</label>
+		</variable>  
+		<variable item="A5 Servo Disabled" CV="169" default="1" tooltip="Servo is Disabled">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+			<label>A5 Servo Endpoint Left</label>
+		</variable> 
+
+
+	<!-- CVs 170-179 A6 Function Outputs-->
+		<variable item="A6 Function Key" CV="170" default="1" mask="XXVVVVVV" tooltip="Sets F-Key for A6 Function Output">
+			<decVal min="0" max="63"/>
+			<label>A6 Function Key</label>
+		</variable>
+		<variable item="A6 Function" CV="170" mask="VVXXXXXX" default="0" tooltip="Fully Enable/Disable or Select F-Key for A6 Function Output">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-ChoiceFunctionControl.xml"/>
+			<label>A6 Control</label>
+		</variable>	
+		<variable item="A6 Dim Value" CV="171" default="100" mask="XVVVVVVV" tooltip="Sets Voltage to A6 as a Percent of Track Voltage; ~0.2V per %">
+			<decVal max="100"/>
+			<label>A6 Dim Value (0-100%)</label>
+		</variable>
+		<variable item="A6 Fade" CV="171" mask="VXXXXXXX" default="0" tooltip="Fade A6 In or Out">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>A6 Fade</label>
+		</variable>
+		<variable item="A6 Function Conditions" CV="172" default="0" tooltip="Sets Conditions Under Which A6 is on">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-FunctionConditions.xml"/>
+			<label>A6 Function Conditions</label>
+		</variable> 
+		<variable item="A6 Special Functions" CV="173" default="0" mask="XXVVVVVV" tooltip="Selects Special Functions for A6">
+			<xi:include href="http://jmri.org/xml/decoders/mde/enum-SpecialFunctions.xml"/>
+			<label>A6 Special Functions</label>
+		</variable>
+		<variable item="A6 Special High Beam" CV="173" default="0" mask="XVXXXXXX" tooltip="Adds High Beam to A6 Function Output">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>High Beam</label>
+		</variable>
+		<variable item="A6 Special Inverted" CV="173" default="0" mask="VXXXXXXX" tooltip="Inverts Special Functions for A6">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label>Inverted</label>
+		</variable>		
+		<variable item="A6 Special Function Time" CV="174" default="5" tooltip="0.1s per Value">
+			<decVal min="1" max="255"/>
+			<label>Spec Fn Time</label>
+		</variable>    
+		<variable item="A6 Servo Speed" CV="175" default="1" tooltip="1 ms per Value">
+			<decVal/>
+			<label>A6 Servo Speed</label>
+		</variable>    
+		<variable item="A6 Servo Endpoint Right" CV="176" default="200" tooltip="Position in Degrees">
+			<decVal/>
+			<label>A6 Servo Endpoint Right</label>
+		</variable>  
+		<variable item="A6 Servo Endpoint Left" CV="177" default="20" tooltip="Position in Degrees">
+			<decVal/>
+			<label>A6 Servo Endpoint Left</label>
+		</variable>  
+		<variable item="A6 Servo Inverted" CV="178" default="0" tooltip="Servo Movement is Inverted">
+			<enumVal>
+				<enumChoice choice="Normal"/>
+				<enumChoice choice="Inverted"/>
+			</enumVal>
+			<label>A6 Servo Inverted</label>
+		</variable>  
+		<variable item="A6 Servo Disabled" CV="179" default="1" tooltip="Servo is Disabled">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+			<label>A6 Servo Endpoint Left</label>
+		</variable> 
+        
+
+    <!-- SUSI Sound Module CVs 897, 900-939-->
+        <!-- F29+ can be programmed in MDE SUSI modules but are not implemented here for now -->
+        <variable item="SUSI Address Range" CV="897" default="1" tooltip="Range for multiple SUSI Modules; 1 = CVs 900-939, 2 = CVs 940-979, 3 = CVs 980-1019">
+			<decVal min="1" max="3"/>
+			<label>SUSI Address Range</label>
+		</variable>  
+        <variable item="SUSI Manufacturer ID" CV="900" tooltip="Manufacturer ID">
+			<decVal/>
+			<label>Manufacturer ID</label>
+		</variable>  
+        <variable item="SUSI Software Version" CV="901" tooltip="Software Version">
+			<decVal/>
+			<label>SUSI Software Version</label>
+		</variable>  
+        <variable item="SUSI Volume" CV="902" default="192" tooltip="Master Volume Range:50-200">
+			<decVal min="50" max="200"/>
+			<label>SUSI Master Volume</label>
+		</variable> 
+        <variable item="SUSI F0" CV="903" default="38" tooltip="Select sound file number from 0 to 39 to play with this F-Key. Refer to manufacturers datasheet for sound descriptions.">
+			<decVal min="0" max="39"/>
+			<label>Set Sound for F0 key</label>
+		</variable> 
+        <variable item="SUSI F1" CV="904" default="3" tooltip="Select sound file number from 0 to 39 to play with this F-Key. Refer to manufacturers datasheet for sound descriptions.">
+			<decVal min="0" max="39"/>
+			<label>Set Sound for F1 key</label>
+		</variable> 
+        <variable item="SUSI F2" CV="905" default="2" tooltip="Select sound file number from 0 to 39 to play with this F-Key. Refer to manufacturers datasheet for sound descriptions.">
+			<decVal min="0" max="39"/>
+			<label>Set Sound for F2 key</label>
+		</variable> 
+        <variable item="SUSI F3" CV="906" default="1" tooltip="Select sound file number from 0 to 39 to play with this F-Key. Refer to manufacturers datasheet for sound descriptions.">
+			<decVal min="0" max="39"/>
+			<label>Set Sound for F3 key</label>
+		</variable> 
+        <variable item="SUSI F4" CV="907" default="6" tooltip="Select sound file number from 0 to 39 to play with this F-Key. Refer to manufacturers datasheet for sound descriptions.">
+			<decVal min="0" max="39"/>
+			<label>Set Sound for F4 key</label>
+		</variable> 
+        <variable item="SUSI F5" CV="908" default="14" tooltip="Select sound file number from 0 to 39 to play with this F-Key. Refer to manufacturers datasheet for sound descriptions.">
+			<decVal min="0" max="39"/>
+			<label>Set Sound for F5 key</label>
+		</variable> 
+        <variable item="SUSI F6" CV="909" default="32" tooltip="Select sound file number from 0 to 39 to play with this F-Key. Refer to manufacturers datasheet for sound descriptions.">
+			<decVal min="0" max="39"/>
+			<label>Set Sound for F6 key</label>
+		</variable> 
+        <variable item="SUSI F7" CV="910" default="4" tooltip="Select sound file number from 0 to 39 to play with this F-Key. Refer to manufacturers datasheet for sound descriptions.">
+			<decVal min="0" max="39"/>
+			<label>Set Sound for F7 key</label>
+		</variable> 
+        <variable item="SUSI F8" CV="911" default="19" tooltip="Select sound file number from 0 to 39 to play with this F-Key. Refer to manufacturers datasheet for sound descriptions.">
+			<decVal min="0" max="39"/>
+			<label>Set Sound for F8 key</label>
+		</variable> 
+        <variable item="SUSI F9" CV="912" default="23" tooltip="Select sound file number from 0 to 39 to play with this F-Key. Refer to manufacturers datasheet for sound descriptions.">
+			<decVal min="0" max="39"/>
+			<label>Set Sound for F9 key</label>
+		</variable> 
+        <variable item="SUSI F10" CV="913" default="22" tooltip="Select sound file number from 0 to 39 to play with this F-Key. Refer to manufacturers datasheet for sound descriptions.">
+			<decVal min="0" max="39"/>
+			<label>Set Sound for F10 key</label>
+		</variable> 
+        <variable item="SUSI F11" CV="914" default="31" tooltip="Select sound file number from 0 to 39 to play with this F-Key. Refer to manufacturers datasheet for sound descriptions.">
+			<decVal min="0" max="39"/>
+			<label>Set Sound for F11 key</label>
+		</variable> 
+        <variable item="SUSI F12" CV="915" default="36" tooltip="Select sound file number from 0 to 39 to play with this F-Key. Refer to manufacturers datasheet for sound descriptions.">
+			<decVal min="0" max="39"/>
+			<label>Set Sound for F12 key</label>
+		</variable> 
+        <variable item="SUSI F13" CV="916" default="38" tooltip="Select sound file number from 0 to 39 to play with this F-Key. Refer to manufacturers datasheet for sound descriptions.">
+			<decVal min="0" max="39"/>
+			<label>Set Sound for F13 key</label>
+		</variable> 
+        <variable item="SUSI F14" CV="917" default="38" tooltip="Select sound file number from 0 to 39 to play with this F-Key. Refer to manufacturers datasheet for sound descriptions.">
+			<decVal min="0" max="39"/>
+			<label>Set Sound for F14 key</label>
+		</variable> 
+        <variable item="SUSI F15" CV="918" default="27" tooltip="Select sound file number from 0 to 39 to play with this F-Key. Refer to manufacturers datasheet for sound descriptions.">
+			<decVal min="0" max="39"/>
+			<label>Set Sound for F15 key</label>
+		</variable> 
+        <variable item="SUSI F16" CV="919" default="35" tooltip="Select sound file number from 0 to 39 to play with this F-Key. Refer to manufacturers datasheet for sound descriptions.">
+			<decVal min="0" max="39"/>
+			<label>Set Sound for F16 key</label>
+		</variable> 
+        <variable item="SUSI F17" CV="920" default="29" tooltip="Select sound file number from 0 to 39 to play with this F-Key. Refer to manufacturers datasheet for sound descriptions.">
+			<decVal min="0" max="39"/>
+			<label>Set Sound for F17 key</label>
+		</variable> 
+        <variable item="SUSI F18" CV="921" default="11" tooltip="Select sound file number from 0 to 39 to play with this F-Key. Refer to manufacturers datasheet for sound descriptions.">
+			<decVal min="0" max="39"/>
+			<label>Set Sound for F18 key</label>
+		</variable> 
+        <variable item="SUSI F19" CV="922" default="10" tooltip="Select sound file number from 0 to 39 to play with this F-Key. Refer to manufacturers datasheet for sound descriptions.">
+			<decVal min="0" max="39"/>
+			<label>Set Sound for F19 key</label>
+		</variable> 
+        <variable item="SUSI F20" CV="923" default="7" tooltip="Select sound file number from 0 to 39 to play with this F-Key. Refer to manufacturers datasheet for sound descriptions.">
+			<decVal min="0" max="39"/>
+			<label>Set Sound for F20 key</label>
+		</variable> 
+        <variable item="SUSI F21" CV="924" default="0" tooltip="Select sound file number from 0 to 39 to play with this F-Key. Refer to manufacturers datasheet for sound descriptions.">
+			<decVal min="0" max="39"/>
+			<label>Set Sound for F21 key</label>
+		</variable> 
+        <variable item="SUSI F22" CV="925" default="5" tooltip="Select sound file number from 0 to 39 to play with this F-Key. Refer to manufacturers datasheet for sound descriptions.">
+			<decVal min="0" max="39"/>
+			<label>Set Sound for F22 key</label>
+		</variable> 
+        <variable item="SUSI F23" CV="926" default="33" tooltip="Select sound file number from 0 to 39 to play with this F-Key. Refer to manufacturers datasheet for sound descriptions.">
+			<decVal min="0" max="39"/>
+			<label>Set Sound for F23 key</label>
+		</variable> 
+        <variable item="SUSI F24" CV="927" default="9" tooltip="Select sound file number from 0 to 39 to play with this F-Key. Refer to manufacturers datasheet for sound descriptions.">
+			<decVal min="0" max="39"/>
+			<label>Set Sound for F24 key</label>
+		</variable> 
+        <variable item="SUSI F25" CV="928" default="15" tooltip="Select sound file number from 0 to 39 to play with this F-Key. Refer to manufacturers datasheet for sound descriptions.">
+			<decVal min="0" max="39"/>
+			<label>Set Sound for F25 key</label>
+		</variable> 
+        <variable item="SUSI F26" CV="929" default="38" tooltip="Select sound file number from 0 to 39 to play with this F-Key. Refer to manufacturers datasheet for sound descriptions.">
+			<decVal min="0" max="39"/>
+			<label>Set Sound for F26 key</label>
+		</variable> 
+        <variable item="SUSI F27" CV="930" default="38" tooltip="Select sound file number from 0 to 39 to play with this F-Key. Refer to manufacturers datasheet for sound descriptions.">
+			<decVal min="0" max="39"/>
+			<label>Set Sound for F27 key</label>
+		</variable> 
+        <variable item="SUSI F28" CV="931" default="26" tooltip="Select sound file number from 0 to 39 to play with this F-Key. Refer to manufacturers datasheet for sound descriptions.">
+			<decVal min="0" max="39"/>
+			<label>Set Sound for F28 key</label>
+		</variable> 
+        <variable item="SUSI Sound Off Time" CV="933" default="0" tooltip="Idle/stationary time (in s) when sounds turn off">
+			<decVal/>
+			<label>Idle Sound Shutoff in s</label>
+		</variable> 
+        <variable item="SUSI Electic Air Cooler" CV="934" default="0" tooltip="Level at which electric locomotive air cooler sound is turned on. 0 = immediately; 255 = off; value in ms">
+			<decVal/>
+			<label>Electric Air Cooler Activation</label>
+		</variable> 
+        <variable item="SUSI Configuration" CV="935" default="137" tooltip="Refer to SUSI Manual to configure bits, sum values, then enter">
+			<decVal/>
+			<label>SUSI Configuration</label>
+		</variable> 
+        <variable item="SUSI Braking Squeal" CV="936" default="80" tooltip="Level at Which Brake Squeals are Activated; 255 = no squeal">
+			<decVal min="10"/>
+			<label>Brake Squeal Activation</label>
+		</variable> 
+        <variable item="SUSI Idling Time" CV="937" default="15" tooltip="Idling Time in Seconds; 0 = Off, 255 = Always On">
+			<decVal/>
+			<label>Idling Time</label>
+		</variable> 
+        <variable item="SUSI Max Speed Steam Pulse" CV="938" default="0" tooltip="Time, in ms, between steam pulses at maximum speed without external pulse input (0-100)">
+			<decVal min="0" max="100"/>
+			<label>Max Speed Steam Pulse Time</label>
+		</variable> 
+        <variable item="SUSI Min Speed Steam Pulse" CV="939" default="245" tooltip="Time, in ms, between steam pulses at minimum speed without external pulse input (50-255)">
+			<decVal min="50"/>
+			<label>Min Speed Steam Pulse Time</label>
+		</variable> 
+
+    </variables>
+	  
+    <resets>
+		<factReset label="Reset Basic Settings" CV="7" default="11"/>
+		<factReset label="Reset Programming Lock" CV="7" default="16"/>
+		<factReset label="Reset Light Settings" CV="7" default="22"/>
+		<factReset label="Reset Functions" CV="7" default="33"/>
+		<factReset label="Reset Motor Controls" CV="7" default="44"/>
+		<factReset label="Reset Sound Functions" CV="7" default="55"/>
+		<factReset label="Reset Speed Table" CV="7" default="66"/>
+    </resets>	
+  </decoder>
+ 
+ 
+<!-- Begins Section Defining Panes and Layout in Panes-->
+
+	<pane>
+		<name>Motor</name>
+		<column>
+			<display item="Accel"/>
+			<display item="Decel"/>
+			<label>
+			<text> </text>
+			</label>
+			<display item="Total PWM Period"/>
+			<label>
+			<text> </text>
+			</label>
+			<display item="Pause Time for Stop and Reversing"/>
+			<label>
+			<text> </text>
+			</label>
+			<display item="Digital BEMF Control"/>
+			<display item="Analog BEMF Control"/>
+			<label>
+			<text> </text>
+			</label>
+			<display item="Back EMF Adjustment Factor"/>
+			<display item="Back EMF Adjustment Speed"/>
+			<display item="Back EMF Adjustment Strength"/>
+		</column>
+	</pane>
+
+
+	<pane>
+		<name>Lights</name>
+		<column>
+			<label>
+				<text> </text>
+			</label>			
+            <label>
+				<text>Front Light Controls</text>
+			</label>
+			<separator/>
+			<label>
+				<text> </text>
+			</label>
+			<grid>
+				<griditem gridx="0" gridy="0" gridwidth="REMAINDER">
+					<column>						
+                        <display item="Front Light Command Allocation"/>
+						<display item="Front Light Control"/>
+						<display item="Front Light Dim Value"/> 
+						<display item="Front Light Fade"/>
+						<display item="Front Light Function Conditions"/>
+						<label>
+							<text> </text>
+						</label>
+						<display item="Front Light Special Functions"/>
+					</column>
+				</griditem>
+				<griditem gridx="0" gridy="1" gridwidth="REMAINDER" ipadx="5" ipady="5"> 
+					<display item="Front Light Special High Beam" layout="above" format="checkbox"/>
+					<label>
+						<text> </text>
+					</label>
+					<display item="Front Light Special Inverted" layout="above" format="checkbox"/>	
+					<label>
+						<text> </text>
+					</label>
+					<display item="Front Light Special Function Time" layout="above"/>		
+				 </griditem> 
+			</grid>
+			<label>
+				<text> </text>
+			</label>
+			<label>
+				<text>Rear Light Controls</text>
+			</label>
+			<separator/>
+			<label>
+				<text> </text>
+			</label>
+			<grid>
+				<griditem gridx="0" gridy="0" gridwidth="REMAINDER">
+					<column>					
+                        <display item="Rear Light Command Allocation"/>
+						<display item="Rear Light Control"/>
+						<display item="Rear Light Dim Value"/>
+						<display item="Rear Light Fade"/>
+						<display item="Rear Light Function Conditions"/>
+						<label>
+							<text> </text>
+						</label>
+						<display item="Rear Light Special Functions"/>
+					</column>
+				</griditem>
+				<griditem gridx="0" gridy="1" gridwidth="REMAINDER" ipadx="5" ipady="5"> 
+					<display item="Rear Light Special High Beam" layout="above" format="checkbox"/>
+					<label>
+						<text> </text>
+					</label>
+					<display item="Rear Light Special Inverted" layout="above" format="checkbox"/>	
+					<label>
+						<text> </text>
+					</label>
+					<display item="Rear Light Special Function Time" layout="above"/>
+				</griditem>
+			</grid>
+			<label>
+				<text> </text>
+			</label>
+			<label>  
+				<text>Swiss Lighting/Mapping (SM)</text>
+			</label>
+			<separator/>
+			<label>
+				<text> </text>
+			</label>
+			<display item="Swiss Lighting F-Key"/>
+			<display item="SM Control"/>
+			<display item="Swiss Lighting Interior 1"/>
+			<display item="SMI1 Control"/>
+			<display item="Swiss Lighting Interior 2"/>
+			<display item="SMI2 Control"/>
+			<display item="Shunting Mode Lights"/>
+			<display item="DASM Control"/>
+		</column>
+	</pane>
+
+	<pane>
+		<name>Functions</name>
+		<grid ipadx="20">
+			<griditem gridx="0" gridy="0">
+				<column>
+					<label>
+						<text> </text>
+					</label>
+					<label>  
+						<text>A1 Functions</text>
+					</label>
+					<separator/>
+					<grid>
+						<griditem gridx="0" gridy="0" gridwidth="REMAINDER">
+							<column>
+								<display item="Randomizer - A1" format="checkbox"/>
+								<display item="A1 Function Key"/>
+								<display item="A1 Function"/>
+								<display item="A1 Dim Value"/>
+								<display item="A1 Fade"/>
+								<display item="A1 Function Conditions"/>
+								<display item="A1 Servo Speed"/>
+								<display item="A1 Servo Endpoint Right"/>
+								<display item="A1 Servo Endpoint Left"/>
+								<display item="A1 Servo Inverted"/>
+								<display item="A1 Servo Disabled"/>						
+								<label>
+									<text> </text>
+								</label>
+								<display item="A1 Special Functions"/>
+							</column>
+						</griditem>
+						<griditem gridx="0" gridy="1" gridwidth="REMAINDER" ipadx="5" ipady="5"> 
+							<display item="A1 Special High Beam" layout="above" format="checkbox"/>
+							<label>
+								<text> </text>
+							</label>
+							<display item="A1 Special Inverted" layout="above" format="checkbox"/>	
+							<label>
+								<text> </text>
+							</label>
+							<display item="A1 Special Function Time" layout="above"/>		
+						 </griditem> 
+					</grid>
+				</column>
+			</griditem>
+			<griditem gridx="1" gridy="0">
+				<column>
+					<label>
+						<text> </text>
+					</label>
+					<label>  
+						<text>A2 Functions</text>
+					</label>
+					<separator/>
+					<grid>
+						<griditem gridx="0" gridy="0" gridwidth="REMAINDER">
+							<column>
+								<display item="Randomizer - A2" format="checkbox"/>
+								<display item="A2 Function Key"/>
+								<display item="A2 Function"/>
+								<display item="A2 Dim Value"/>
+								<display item="A2 Fade"/>
+								<display item="A2 Function Conditions"/>
+								<display item="A2 Servo Speed"/>
+								<display item="A2 Servo Endpoint Right"/>
+								<display item="A2 Servo Endpoint Left"/>
+								<display item="A2 Servo Inverted"/>
+								<display item="A2 Servo Disabled"/>						
+								<label>
+									<text> </text>
+								</label>
+								<display item="A2 Special Functions"/>
+							</column>
+						</griditem>
+						<griditem gridx="0" gridy="1" gridwidth="REMAINDER" ipadx="5" ipady="5"> 
+							<display item="A2 Special High Beam" layout="above" format="checkbox"/>
+							<label>
+								<text> </text>
+							</label>
+							<display item="A2 Special Inverted" layout="above" format="checkbox"/>	
+							<label>
+								<text> </text>
+							</label>
+							<display item="A2 Special Function Time" layout="above"/>		
+						 </griditem> 
+					</grid>
+				</column>
+			</griditem>
+			<griditem gridx="0" gridy="1">
+				<column>
+					<label>
+						<text> </text>
+					</label>
+					<label>  
+						<text>A3 Functions</text>
+					</label>
+					<separator/>
+					<grid>
+						<griditem gridx="0" gridy="0" gridwidth="REMAINDER">
+							<column>
+								<display item="Randomizer - A3" format="checkbox"/>
+								<display item="A3 Function Key"/>
+								<display item="A3 Function"/>
+								<display item="A3 Dim Value"/>
+								<display item="A3 Fade"/>
+								<display item="A3 Function Conditions"/>
+								<display item="A3 Servo Speed"/>
+								<display item="A3 Servo Endpoint Right"/>
+								<display item="A3 Servo Endpoint Left"/>
+								<display item="A3 Servo Inverted"/>
+								<display item="A3 Servo Disabled"/>						
+								<label>
+									<text> </text>
+								</label>
+								<display item="A3 Special Functions"/>
+							</column>
+						</griditem>
+						<griditem gridx="0" gridy="1" gridwidth="REMAINDER" ipadx="5" ipady="5"> 
+							<display item="A3 Special High Beam" layout="above" format="checkbox"/>
+							<label>
+								<text> </text>
+							</label>
+							<display item="A3 Special Inverted" layout="above" format="checkbox"/>	
+							<label>
+								<text> </text>
+							</label>
+							<display item="A3 Special Function Time" layout="above"/>		
+						 </griditem> 
+					</grid>
+				</column>
+			</griditem>
+			<griditem gridx="1" gridy="1">
+				<column>
+					<label>
+						<text> </text>
+					</label>
+					<label>  
+						<text>A4 Functions</text>
+					</label>
+					<separator/>
+					<grid>
+						<griditem gridx="0" gridy="0" gridwidth="REMAINDER">
+							<column>
+								<display item="Randomizer - A4" format="checkbox"/>
+								<display item="A4 Function Key"/>
+								<display item="A4 Function"/>
+								<display item="A4 Dim Value"/>
+								<display item="A4 Fade"/>
+								<display item="A4 Function Conditions"/>
+								<display item="A4 Servo Speed"/>
+								<display item="A4 Servo Endpoint Right"/>
+								<display item="A4 Servo Endpoint Left"/>
+								<display item="A4 Servo Inverted"/>
+								<display item="A4 Servo Disabled"/>						
+								<label>
+									<text> </text>
+								</label>
+								<display item="A4 Special Functions"/>
+							</column>
+						</griditem>
+						<griditem gridx="0" gridy="1" gridwidth="REMAINDER" ipadx="5" ipady="5"> 
+							<display item="A4 Special High Beam" layout="above" format="checkbox"/>
+							<label>
+								<text> </text>
+							</label>
+							<display item="A4 Special Inverted" layout="above" format="checkbox"/>	
+							<label>
+								<text> </text>
+							</label>
+							<display item="A4 Special Function Time" layout="above"/>		
+						 </griditem> 
+					</grid>
+				</column>
+			</griditem>
+			<griditem gridx="0" gridy="2">
+				<column>
+					<label>
+						<text> </text>
+					</label>
+					<label>  
+						<text>A5 Functions</text>
+					</label>
+					<separator/>
+					<grid>
+						<griditem gridx="0" gridy="0" gridwidth="REMAINDER">
+							<column>
+								<display item="Randomizer - A5" format="checkbox"/>
+								<display item="A5 Function Key"/>
+								<display item="A5 Function"/>
+								<display item="A5 Dim Value"/>
+								<display item="A5 Fade"/>
+								<display item="A5 Function Conditions"/>
+								<display item="A5 Servo Speed"/>
+								<display item="A5 Servo Endpoint Right"/>
+								<display item="A5 Servo Endpoint Left"/>
+								<display item="A5 Servo Inverted"/>
+								<display item="A5 Servo Disabled"/>						
+								<label>
+									<text> </text>
+								</label>
+								<display item="A5 Special Functions"/>
+							</column>
+						</griditem>
+						<griditem gridx="0" gridy="1" gridwidth="REMAINDER" ipadx="5" ipady="5"> 
+							<display item="A5 Special High Beam" layout="above" format="checkbox"/>
+							<label>
+								<text> </text>
+							</label>
+							<display item="A5 Special Inverted" layout="above" format="checkbox"/>	
+							<label>
+								<text> </text>
+							</label>
+							<display item="A5 Special Function Time" layout="above"/>		
+						 </griditem> 
+					</grid>
+				</column>
+			</griditem>
+			<griditem gridx="1" gridy="2">
+				<column>
+					<label>
+						<text> </text>
+					</label>
+					<label>  
+						<text>A6 Functions</text>
+					</label>
+					<separator/>
+					<grid>
+						<griditem gridx="0" gridy="0" gridwidth="REMAINDER">
+							<column>
+								<display item="Randomizer - A6" format="checkbox"/>
+								<display item="A6 Function Key"/>
+								<display item="A6 Function"/>
+								<display item="A6 Dim Value"/>
+								<display item="A6 Fade"/>
+								<display item="A6 Function Conditions"/>
+								<display item="A6 Servo Speed"/>
+								<display item="A6 Servo Endpoint Right"/>
+								<display item="A6 Servo Endpoint Left"/>
+								<display item="A6 Servo Inverted"/>
+								<display item="A6 Servo Disabled"/>						
+								<label>
+									<text> </text>
+								</label>
+								<display item="A6 Special Functions"/>
+							</column>
+						</griditem>
+						<griditem gridx="0" gridy="1" gridwidth="REMAINDER" ipadx="5" ipady="5"> 
+							<display item="A6 Special High Beam" layout="above" format="checkbox"/>
+							<label>
+								<text> </text>
+							</label>
+							<display item="A6 Special Inverted" layout="above" format="checkbox"/>	
+							<label>
+								<text> </text>
+							</label>
+							<display item="A6 Special Function Time" layout="above"/>		
+						 </griditem> 
+					</grid>
+				</column>
+			</griditem>
+		</grid>
+	</pane>
+
+	<pane>
+		<name>mXion Config</name>
+		<column>
+		  <row>
+			<column>
+				<label>
+					<text>mXion configuration (CV49)</text>
+				</label>
+				<separator/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Digital BEMF Control"/>
+				<display item="Analog BEMF Control"/>
+				<display item="SUSI On-Off"/>
+				<display item="A1 Output"/>
+				<display item="Locking Brake"/>
+				<display item="Front-Rear Light Outputs"/>
+				<display item="Swiss Lighting"/>
+				<display item="Analog-Digital Direction"/>
+				<label>
+					<text> </text>
+				</label>
+				<label>  
+					<text>Clock Controls</text>
+				</label>
+				<separator/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Clock Control"/>
+				<display item="Clock Simulation Correction"/>
+			</column>
+			<column>
+				<label>  
+					<text>Miscellaneous</text>
+				</label>
+				<separator/>
+				<label>
+					<text> </text>
+				</label>
+                <display item="Wheelspin"/>				
+                <display item="Monoflop CV96"/>
+				<display item="Servo Swing Mode Sweep"/>
+				<display item="Internal Speedsteps Consumption"/>   
+				<display item="Hand Brake F-Key"/>  
+				<display item="Hand Brake Control"/> 
+				<display item="High Beam F-Key"/>  
+				<display item="High Beam Control"/>
+				<display item="Analog Time-out Value"/>
+				<display item="Noise Filter"/>
+			</column>
+		  </row>
+		</column>
+	</pane>
+  
+  
+  
+	<pane>
+		<name>Shuttle and Uncoupling</name>
+		<column>
+		  <label>  
+			<text>Automatic Shuttle Control (ASC)</text>
+		  </label>
+		  <separator/>
+		  <label>
+			<text> </text>
+		  </label>
+		  <display item="ASC F-Key"/>
+		  <display item="ASC Control"/>
+		  <display item="Shuttle Speed"/>
+		  <display item="Shuttle Duration"/>
+		  <display item="Shuttle Delay"/>
+		</column>
+		<column>
+		  <label>  
+			<text>Automatic Uncoupling</text>
+		  </label>
+		  <separator/>
+		  <label>
+			<text> </text>
+		  </label>      
+		  <display item="Auto Uncoupling F-Key"/>
+		  <display item="Auto Uncoupling Control"/>
+		  <display item="Auto Uncoupling Push Time"/>
+		  <display item="Auto Uncoupling Drive Away Time"/>
+		  <display item="Auto Uncoupling Speed"/>
+		</column>
+	</pane>
+
+    <pane>
+        <name>SUSI</name>
+        <qualifier>
+              <variableref>SUSI Address Range</variableref>
+              <relation>exists</relation>
+              <value>1</value>
+        </qualifier>
+        <grid ipadx="60" ipady="30">        
+            <griditem gridx="0" gridy="0" gridwidth="REMAINDER">
+                <column>
+				<label>
+					<text> </text>
+				</label>
+				<label>  
+					<text> </text>
+				</label>
+                <row>
+                    <display item="SUSI Volume" format="hslider" layout="above"/>
+                    <display item="SUSI Volume" layout="above" label=""/>
+                </row>
+				<label>  
+					<text> </text>
+				</label>			
+<!--	            <separator/> -->
+                </column>
+            </griditem>
+            <griditem gridx="0" gridy="1">
+                <column>
+					<label>
+						<text> </text>
+					</label>
+					<label>  
+						<text>SUSI Sound Settings</text>
+					</label>
+					<separator/>           
+					<label>
+						<text> </text>
+					</label>     
+                    <display item="SUSI Address Range"/>
+                    <display item="SUSI Manufacturer ID"/>
+                    <display item="SUSI Software Version"/>
+                    <display item="SUSI Sound Off Time"/>
+                    <display item="SUSI Electric Air Cooler"/>
+                    <display item="SUSI Configuration"/>
+                    <display item="SUSI Braking Squeal"/>
+                    <display item="SUSI Idling Time"/>
+                    <display item="SUSI Max Speed Steam Pulse"/>
+                    <display item="SUSI Min Speed Steam Pulse"/>
+                </column>
+            </griditem>
+            <griditem gridx="1" gridy="1">
+                <column>
+					<label>
+						<text> </text>
+					</label>
+					<label>  
+						<text>SUSI Sound F-Keys 0-13</text>
+					</label>
+					<separator/> 
+					<label>
+						<text> </text>
+					</label>               
+                    <display item="SUSI F0"/>
+                    <display item="SUSI F1"/>
+                    <display item="SUSI F2"/>
+                    <display item="SUSI F3"/>
+                    <display item="SUSI F4"/>
+                    <display item="SUSI F5"/>
+                    <display item="SUSI F6"/>
+                    <display item="SUSI F7"/>
+                    <display item="SUSI F8"/>
+                    <display item="SUSI F9"/>
+                    <display item="SUSI F10"/>
+                    <display item="SUSI F11"/>
+                    <display item="SUSI F12"/>
+                    <display item="SUSI F13"/>
+                </column>
+            </griditem>
+            <griditem gridx="2" gridy="1">
+                <column>
+					<label>
+						<text> </text>
+					</label>
+					<label>  
+						<text>SUSI Sound F-Keys 14-28</text>
+					</label>
+					<separator/> 
+					<label>
+						<text> </text>
+					</label> 
+                    <display item="SUSI F14"/>              
+                    <display item="SUSI F15"/>
+                    <display item="SUSI F16"/>
+                    <display item="SUSI F17"/>
+                    <display item="SUSI F18"/>
+                    <display item="SUSI F19"/>
+                    <display item="SUSI F20"/>
+                    <display item="SUSI F21"/>
+                    <display item="SUSI F22"/>
+                    <display item="SUSI F23"/>
+                    <display item="SUSI F24"/>
+                    <display item="SUSI F25"/>
+                    <display item="SUSI F26"/>
+                    <display item="SUSI F27"/>
+                    <display item="SUSI F28"/>
+                </column>
+            </griditem>
+        </grid>
+    </pane>
+
+
+</decoder-config>

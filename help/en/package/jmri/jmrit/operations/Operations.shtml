@@ -2413,7 +2413,8 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
       program will also create a backup file containing the last settings for all of your locations.
 
       <h3 id="Spurs">Spurs</h3>
-      A spur is used to service an industry. To add a spur, select the "Spurs" radio button and then
+      A spur is used to service an industry. Most use the industy's name as the spur's name. 
+      To add a spur, select the "Spurs" radio button and then
       press the "Add Spur Track" button in the <a href="#AddLocation">Edit Location</a> window.
       Spurs are very similar to <a href="#Yards">Yards</a> , so see above for more information. When
       entering the length of the spur, enter the length of the cars that will service the industry

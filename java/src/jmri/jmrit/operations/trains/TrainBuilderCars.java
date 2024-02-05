@@ -864,28 +864,59 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                             car.getKernel().getSize(),
                             car.getKernel().getTotalLength(), Setup.getLengthUnit().toLowerCase()));
         }
-        if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
-            log.debug("Car ({}) has home division ({}) and load type empty", car.toString(), car.getDivisionName());
-            if (car.getTrack().isYard() && car.getTrack().getDivision() == car.getDivision()) {
-                log.debug("Car ({}) at it's home division yard", car.toString());
-                if (!sendCarToHomeDivisionTrack(car, Track.SPUR, HOME_DIVISION)) {
-                    return sendCarToHomeDivisionTrack(car, Track.STAGING, HOME_DIVISION);
+        // does train terminate into staging?
+        if (_terminateStageTrack != null) {
+            log.debug("Train terminates into staging track ({})", _terminateStageTrack.getName());
+            // bias cars to staging
+            if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
+                log.debug("Car ({}) has home division ({}) and load type empty", car.toString(), car.getDivisionName());
+                if (car.getTrack().isYard() && car.getTrack().getDivision() == car.getDivision()) {
+                    log.debug("Car ({}) at it's home division yard", car.toString());
+                    if (!sendCarToHomeDivisionTrack(car, Track.STAGING, HOME_DIVISION)) {
+                        return sendCarToHomeDivisionTrack(car, Track.SPUR, HOME_DIVISION);
+                    }
                 }
-            }
-            // try to send to home division yard, then home division staging,
-            // then home division spur
-            else if (!sendCarToHomeDivisionTrack(car, Track.YARD, HOME_DIVISION)) {
-                if (!sendCarToHomeDivisionTrack(car, Track.STAGING, HOME_DIVISION)) {
-                    return sendCarToHomeDivisionTrack(car, Track.SPUR, HOME_DIVISION);
+                // try to send to home division staging, then home division yard,
+                // then home division spur
+                else if (!sendCarToHomeDivisionTrack(car, Track.STAGING, HOME_DIVISION)) {
+                    if (!sendCarToHomeDivisionTrack(car, Track.YARD, HOME_DIVISION)) {
+                        return sendCarToHomeDivisionTrack(car, Track.SPUR, HOME_DIVISION);
+                    }
+                }
+            } else {
+                log.debug("Car ({}) has home division ({}) and load type load", car.toString(), car.getDivisionName());
+                // 1st send car to staging dependent of shipping track division, then
+                // try spur
+                if (!sendCarToHomeDivisionTrack(car, Track.STAGING, car.getTrack().getDivision() != car.getDivision())) {
+                    return sendCarToHomeDivisionTrack(car, Track.SPUR,
+                            car.getTrack().getDivision() != car.getDivision());
                 }
             }
         } else {
-            log.debug("Car ({}) has home division ({}) and load type load", car.toString(), car.getDivisionName());
-            // 1st send car to spur dependent of shipping track division, then
-            // try staging
-            if (!sendCarToHomeDivisionTrack(car, Track.SPUR, car.getTrack().getDivision() != car.getDivision())) {
-                return sendCarToHomeDivisionTrack(car, Track.STAGING,
-                        car.getTrack().getDivision() != car.getDivision());
+            // train doesn't terminate into staging
+            if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
+                log.debug("Car ({}) has home division ({}) and load type empty", car.toString(), car.getDivisionName());
+                if (car.getTrack().isYard() && car.getTrack().getDivision() == car.getDivision()) {
+                    log.debug("Car ({}) at it's home division yard", car.toString());
+                    if (!sendCarToHomeDivisionTrack(car, Track.SPUR, HOME_DIVISION)) {
+                        return sendCarToHomeDivisionTrack(car, Track.STAGING, HOME_DIVISION);
+                    }
+                }
+                // try to send to home division yard, then home division staging,
+                // then home division spur
+                else if (!sendCarToHomeDivisionTrack(car, Track.YARD, HOME_DIVISION)) {
+                    if (!sendCarToHomeDivisionTrack(car, Track.STAGING, HOME_DIVISION)) {
+                        return sendCarToHomeDivisionTrack(car, Track.SPUR, HOME_DIVISION);
+                    }
+                }
+            } else {
+                log.debug("Car ({}) has home division ({}) and load type load", car.toString(), car.getDivisionName());
+                // 1st send car to spur dependent of shipping track division, then
+                // try staging
+                if (!sendCarToHomeDivisionTrack(car, Track.SPUR, car.getTrack().getDivision() != car.getDivision())) {
+                    return sendCarToHomeDivisionTrack(car, Track.STAGING,
+                            car.getTrack().getDivision() != car.getDivision());
+                }
             }
         }
         return true;
