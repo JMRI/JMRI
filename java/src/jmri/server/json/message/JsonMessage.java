@@ -29,22 +29,6 @@ public class JsonMessage {
      * {@value #CONTEXT}
      */
     public static final String CONTEXT = "context"; // NOI18N
-    /**
-     * {@value #INFO}
-     */
-    public static final String INFO = "info"; // NOI18N
-    /**
-     * {@value #SUCCESS}
-     */
-    public static final String SUCCESS = "success"; // NOI18N
-    /**
-     * {@value #WARNING}
-     */
-    public static final String WARNING = "warning"; // NOI18N
-    /**
-     * {@value #ERROR}
-     */
-    public static final String ERROR = "error"; // NOI18N
 
     private final String message;
     private final Locale locale;
@@ -53,11 +37,25 @@ public class JsonMessage {
     private final TYPE type;
 
     public static enum TYPE {
-        INFO, SUCCESS, WARNING, ERROR
+        INFO("info"),
+        SUCCESS("success"),
+        WARNING("warning"),
+        ERROR("error");
+
+        private final String message;
+
+        private TYPE(String message) {
+            this.message = message;
+        }
+
+        @Override
+        public String toString() {
+            return message;
+        }
     }
 
     /**
-     * Create a message with an {@value #INFO} type to be sent to all JSON
+     * Create a message with an {@link TYPE#INFO} type to be sent to all JSON
      * clients.
      *
      * @param message the message to send
@@ -146,17 +144,8 @@ public class JsonMessage {
      * @return the token value
      */
     public String getType() {
-        switch (this.type) {
-            case SUCCESS:
-                return SUCCESS;
-            case WARNING:
-                return WARNING;
-            case ERROR:
-                return ERROR;
-            case INFO:
-            default:
-                return INFO;
-        }
+        if (type == null) return TYPE.INFO.message;
+        return this.type.message;
     }
 
     /**

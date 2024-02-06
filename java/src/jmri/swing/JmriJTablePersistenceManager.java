@@ -658,6 +658,7 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager
             }, 500); // milliseconds
         }
 
+        @SuppressWarnings("hiding")     // Field has same name as a field in the outer class
         private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JTableListener.class);
 
     }

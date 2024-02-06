@@ -39,6 +39,8 @@
       <p>The DMI follows the touch screen layout ( as apposed to the soft key layout ),
       as it is able to receive button and mouse clicks directly.</p>
 
+      <p>The icons in the resources/icons/etcs folder contain the graphics for both ETCS 3.6 and 4.0</p>
+
       <p>The JMRI Fast Clock is used as the source for the time display.</p>
 
       <h3>Launching DMI Displays with Jython</h3>
@@ -68,33 +70,6 @@ dmiPanel.setActualSpeed(100)<br>
       >code for the DMI Demonstration</a> also provides examples of how to manipulate
       the panel.</p>
 
-
-
-
-    <h3>Installing the Graphics</h3>
-      <p>JMRI does not yet contain all of the graphics required to display the full DMI, however
-      the European Rail Association has example ETCS graphics for download : </p>
-        <ul>
-        <li><a href="https://www.era.europa.eu/era-folder/1-ccs-tsi-appendix-mandatory-specifications-etcs-b4-r1-rmr-gsm-r-b1-mr1-frmcs-b0-ato-b1">ETCS 4</a></li>
-        <li><a href="https://www.era.europa.eu/era-folder/archived-set-specifications-3-etcs-b3-r2-gsm-r-b1">ETCS 3.6</a></li>
-        </ul>
-      <p>Download the zip file under the listing for the ETCS Driver Machine interface and extract the contents to somewhere handy.</p>
-        <p>Launch a DMI display and check the warning within the JMRI Console log for the expected directory, eg.</p>
-
-        <div style="margin:10px; padding:20px;">
-<code> jmri.jmrit.etcs.ResourceUtil          ERROR - Image file C:\Users\Steve\JMRI\CBUS_Sim.jmri\resources\etcs\symbols\Mode\MO_13.bmp not found!
-</code>
-</div>
-
-        <p>In the system file explorer, navigate to the <strong>resources\etcs</strong> directory and paste the contents
-        ( the sounds and symbols directories ) of the downloaded zip file.</p>
-        <p>There's no harm in including the pdf file, it's a good reminder of which ETCS version you have installed.</p>
-
-        <a href="etcs_resource_folder_761x250.png">
-        <img src="etcs_resource_folder_761x250.png" alt="DMI Resource Folder" width="380" height="125"></a>
-
-        <p>Not all graphics will be available until JMRI is restarted.</p>
-        <p>Sound and symbols for ETCS 4 can be tested by running the DMI Demonstration.</p>
 
     <h3>DMI Demonstration</h3>
 

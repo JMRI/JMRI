@@ -204,7 +204,7 @@ public class ProgDebugger extends PropertyChangeSupport implements AddressedProg
         final int returnResult = result;  // final to allow passing to inner class
         Runnable r = new Runnable() {
             ProgListener l = m;
-            int result = returnResult;
+            int res = returnResult;
 
             @Override
             public void run() {
@@ -212,7 +212,7 @@ public class ProgDebugger extends PropertyChangeSupport implements AddressedProg
                 if (confirmOK) {
                     notifyProgListenerEnd(l, val, ProgListener.OK);
                 } else {
-                    notifyProgListenerEnd(l, result, ProgListener.ConfirmFailed);
+                    notifyProgListenerEnd(l, res, ProgListener.ConfirmFailed);
                 }
             }
         };
@@ -391,19 +391,19 @@ public class ProgDebugger extends PropertyChangeSupport implements AddressedProg
         } else {
             javax.swing.Timer timer = new javax.swing.Timer(DELAY, null);
             java.awt.event.ActionListener l = new java.awt.event.ActionListener() {
-                javax.swing.Timer timer;
-                Runnable run;
+                javax.swing.Timer myTimer;
+                Runnable runnable;
 
                 java.awt.event.ActionListener init(javax.swing.Timer t, Runnable r) {
-                    this.timer = t;
-                    this.run = r;
+                    this.myTimer = t;
+                    this.runnable = r;
                     return this;
                 }
 
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    this.timer.stop();
-                    javax.swing.SwingUtilities.invokeLater(run);
+                    this.myTimer.stop();
+                    javax.swing.SwingUtilities.invokeLater(runnable);
                 }
             }.init(timer, run);
             timer.addActionListener(l);
