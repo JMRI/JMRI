@@ -597,7 +597,7 @@
 
         <h4>Signal Masts</h4>
             <ul>
-                <li>Fixed bug whereby Discover Signalling Mast Pairs would fail if Layout Block Routing is not enabled.</li>
+                <li>Fixed bug where no dialogue would display when Discovering Signalling Mast Pairs and Layout Block Routing is not enabled.</li>
             </ul>
 
         <h4>Signal Groups</h4>
