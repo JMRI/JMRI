@@ -3108,6 +3108,7 @@ public class CreateLogixNGTreeScaffold {
         logLocalVariables.setComment("A comment");
         logLocalVariables.setIncludeGlobalVariables(true);
         logLocalVariables.setExpandArraysAndMaps(false);
+        logLocalVariables.setShowClassName(false);
         maleSocket = digitalActionManager.registerAction(logLocalVariables);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -3115,6 +3116,15 @@ public class CreateLogixNGTreeScaffold {
         logLocalVariables.setComment("A comment");
         logLocalVariables.setIncludeGlobalVariables(false);
         logLocalVariables.setExpandArraysAndMaps(true);
+        logLocalVariables.setShowClassName(false);
+        maleSocket = digitalActionManager.registerAction(logLocalVariables);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        logLocalVariables = new LogLocalVariables(digitalActionManager.getAutoSystemName(), null);
+        logLocalVariables.setComment("A comment");
+        logLocalVariables.setIncludeGlobalVariables(false);
+        logLocalVariables.setExpandArraysAndMaps(true);
+        logLocalVariables.setShowClassName(true);
         maleSocket = digitalActionManager.registerAction(logLocalVariables);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 

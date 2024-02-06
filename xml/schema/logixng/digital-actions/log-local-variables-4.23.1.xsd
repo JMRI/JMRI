@@ -42,6 +42,7 @@
 
               <xs:element name="includeGlobalVariables" type="yesNoType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="expandArraysAndMaps" type="yesNoType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="showClassName" type="yesNoType" minOccurs="0" maxOccurs="1"/>
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 

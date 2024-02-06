@@ -246,6 +246,7 @@ public interface SymbolTable {
      * @param name         the name
      * @param value        the value
      * @param expandArraysAndMaps   true if arrays and maps should be expanded, false otherwise
+     * @param showClassName         true if class name should be shown
      * @param headerName   header for the variable name
      * @param headerValue  header for the variable value
      */
@@ -257,6 +258,7 @@ public interface SymbolTable {
             String name,
             Object value,
             boolean expandArraysAndMaps,
+            boolean showClassName,
             String headerName,
             String headerValue) {
 
@@ -264,16 +266,26 @@ public interface SymbolTable {
             log.warn("{}{}: {},", pad, headerName, name);
             var map = ((Map<? extends Object, ? extends Object>)value);
             for (var entry : map.entrySet()) {
-                log.warn("{}{}{} -> {},", pad, pad, entry.getKey(), entry.getValue());
+                String className = showClassName && entry.getValue() != null
+                        ? ", " + entry.getValue().getClass().getName()
+                        : "";
+                log.warn("{}{}{} -> {}{},", pad, pad, entry.getKey(), entry.getValue(), className);
             }
         } else if (expandArraysAndMaps && (value instanceof List)) {
             log.warn("{}{}: {},", pad, headerName, name);
             var list = ((List<? extends Object>)value);
             for (int i=0; i < list.size(); i++) {
-                log.warn("{}{}{}: {},", pad, pad, i, list.get(i));
+                Object val = list.get(i);
+                String className = showClassName && val != null
+                        ? ", " + val.getClass().getName()
+                        : "";
+                log.warn("{}{}{}: {}{},", pad, pad, i, val, className);
             }
         } else  {
-            log.warn("{}{}: {}, {}: {}", pad, headerName, name, headerValue, value);
+            String className = showClassName && value != null
+                    ? ", " + value.getClass().getName()
+                    : "";
+            log.warn("{}{}: {}, {}: {}{}", pad, headerName, name, headerValue, value, className);
         }
     }
 

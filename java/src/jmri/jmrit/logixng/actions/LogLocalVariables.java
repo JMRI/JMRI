@@ -15,6 +15,7 @@ public class LogLocalVariables extends AbstractDigitalAction {
 
     private boolean _includeGlobalVariables = true;
     private boolean _expandArraysAndMaps = false;
+    private boolean _showClassName = false;
 
 
     public LogLocalVariables(String sys, String user)
@@ -32,6 +33,7 @@ public class LogLocalVariables extends AbstractDigitalAction {
         copy.setComment(getComment());
         copy._includeGlobalVariables = _includeGlobalVariables;
         copy._expandArraysAndMaps = _expandArraysAndMaps;
+        copy._showClassName = _showClassName;
         return manager.registerAction(copy);
     }
 
@@ -49,6 +51,14 @@ public class LogLocalVariables extends AbstractDigitalAction {
 
     public boolean isExpandArraysAndMaps() {
         return _expandArraysAndMaps;
+    }
+
+    public void setShowClassName(boolean value) {
+        _showClassName = value;
+    }
+
+    public boolean isShowClassName() {
+        return _showClassName;
     }
 
     /** {@inheritDoc} */
@@ -71,6 +81,7 @@ public class LogLocalVariables extends AbstractDigitalAction {
                     s.getName(),
                     c.getSymbolTable().getValue(s.getName()),
                     _expandArraysAndMaps,
+                    _showClassName,
                     Bundle.getMessage("LogLocalVariables_VariableName"),
                     Bundle.getMessage("LogLocalVariables_VariableValue"));
         }
@@ -83,6 +94,7 @@ public class LogLocalVariables extends AbstractDigitalAction {
                         gv.getUserName(),
                         gv.getValue(),
                         _expandArraysAndMaps,
+                        _showClassName,
                         Bundle.getMessage("LogLocalVariables_GlobalVariableName"),
                         Bundle.getMessage("LogLocalVariables_GlobalVariableValue"));
             }
