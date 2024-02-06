@@ -90,7 +90,6 @@ public class DmiPanelATest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.jmrit.etcs.ResourceUtil.setInTest(true);
     }
 
     @AfterEach
