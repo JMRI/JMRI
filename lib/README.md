@@ -210,8 +210,9 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 ##### JavaMail 1.4.1 (used to validate email address formats)
 - mailapi.jar
 
-##### Joal 2.4.0-rc-20210111
-- -javadoc at https://jogamp.org/deployment/archive/rc/v2.5.0-rc-20230507/jar/
+##### Joal 2.4.0-rc-20230507 (Windows x86 and Linux i386 from v2.4.0-rc-20210111)
+- from https://jogamp.org/deployment/archive/rc/v2.5.0-rc-20230507/jar/ (no longer accessible)
+- -javadoc at https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/
 - cross-platform .jar files
     joal.jar
     gluegen-rt.jar
@@ -224,55 +225,61 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
     extracted from gluegen-rt-natives-macosx-universal.jar
       libgluegen_rt.dylib
 
-Windows and Linux libraries from <https://jogamp.org/deployment/archive/rc/v2.4.0-rc-20210111/jar/>
-
-- for Windows x86
-    extracted from joal-natives-windows-i586.jar
-      joal.dll
-      soft_oal.dll
-    extracted from glugen-rt-natives-windows-i586.jar
-      gluegen_rt.dll
-
-- for Windows x64
+- Windows and Linux libraries from v2.5.0-rc-20230507 <https://jogamp.org/deployment/archive/master/gluegen_954-joal_672-jogl_1522-jocl_1160/jar/>
+  for Windows x64
     extracted from joal-natives-windows-amd64.jar
       joal.dll
-      soft_oal.dll
+      OpenAL32.dll
     extracted from glugen-rt-natives-windows-amd64.jar
       gluegen_rt.dll
 
-- for Linux i386
-    extracted from joal-natives-linux-i586.jar
-      libjoal.so
-      libopenal.so
-    extracted from glugen-rt-natives-linux-i586.jar
-      libgluegen_rt.so
+  for Windows x86
+    not provided, see v2.4.0-rc-20210111 below
 
-- for Linux x86_64
+  for Linux x86_64
     extracted from joal-natives-linux-amd64.jar
       libjoal.so
       libopenal.so
     extracted from glugen-rt-natives-linux-amd64.jar
       libgluegen_rt.so
 
-- for Linux armv6l
+  for Linux armv6l
     extracted from joal-natives-linux-armv6hf.jar
       libjoal.so
       libopenal.so
     extracted from glugen-rt-natives-linux-armv6hf.jar
       libgluegen_rt.so
 
-- for Linux armv7l
+  for Linux armv7l
     extracted from joal-natives-linux-armv6hf.jar
       libjoal.so
       libopenal.so
     extracted from glugen-rt-natives-linux-armv6hf.jar
       libgluegen_rt.so
 
-- for Linux aarch64
+  for Linux aarch64
     extracted from joal-natives-linux-aarch64.jar
       libjoal.so
       libopenal.so
     extracted from glugen-rt-natives-linux-aarch64.jar
+      libgluegen_rt.so
+
+  for Linux i386
+    not provided, see v2.4.0-rc-20210111 below
+
+- Windows and Linux libraries from v2.4.0-rc-20210111 <https://jogamp.org/deployment/archive/rc/v2.4.0-rc-20210111/jar/> (no longer accessible)
+  for Windows x86
+    extracted from joal-natives-windows-i586.jar
+      joal.dll
+      soft_oal.dll
+    extracted from glugen-rt-natives-windows-i586.jar
+      gluegen_rt.dll
+
+  for Linux i386
+    extracted from joal-natives-linux-i586.jar
+      libjoal.so
+      libopenal.so
+    extracted from glugen-rt-natives-linux-i586.jar
       libgluegen_rt.so
 
 ##### jmdns.jar

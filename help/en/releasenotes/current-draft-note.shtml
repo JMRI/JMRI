@@ -88,6 +88,8 @@
             <ul>
                 <li>Several tools have improved layout when the
                     screen size is reduced.</li>
+                <li>LocoNet Monitor has improved reporting of "Query Mode" 
+                    messages.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -691,6 +693,5 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>The JOAL library has been updated to run natively on Windows and Linux machines.</li>
         </ul>
-
