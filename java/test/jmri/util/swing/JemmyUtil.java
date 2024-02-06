@@ -2,6 +2,7 @@ package jmri.util.swing;
 
 import java.awt.Component;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import org.junit.Assert;
@@ -130,7 +131,85 @@ public class JemmyUtil {
         });
         return jl;
     }
-    
+
+    /**
+     * Get a JLabelOperator for a Named JLabel.
+     * @param jfo the JFrameOperator containing the JLabel.
+     * @param name the name given to the JLabel
+     * @return a new JLabelOperator.
+     * Fails test if JLabel is not located.
+     */
+    public static JLabelOperator getLabelOperatorByName(@Nonnull JFrameOperator jfo, @Nonnull String name) {
+        return new JLabelOperator(jfo,new ComponentChooser(){
+            @Override
+            public boolean checkComponent(Component comp){
+                if(comp == null){
+                    return false;
+                } else if (comp instanceof JLabel ) {
+                    return name.equals(((JLabel)comp).getName());
+                } else {
+                    return false;
+                }
+            }
+            @Override
+            public String getDescription(){
+                return "find JLabel with Name: " + name;
+            }
+        });
+    }
+
+    /**
+     * Get a JButtonOperator for a Named Button.
+     * @param jfo the JFrameOperator containing the JButton.
+     * @param name the name given to the JButton
+     * @return a new JButtonOperator.
+     * Fails test if JButton is not located.
+     */
+    public static JButtonOperator getButtonOperatorByName(@Nonnull JFrameOperator jfo, @Nonnull String name) {
+        return new JButtonOperator(jfo,new ComponentChooser(){
+            @Override
+            public boolean checkComponent(Component comp){
+                if(comp == null){
+                    return false;
+                } else if (comp instanceof JButton ) {
+                    return name.equals(((JButton)comp).getName());
+                } else {
+                    return false;
+                }
+            }
+            @Override
+            public String getDescription(){
+                return "find JButton with Name: " + name;
+            }
+        });
+    }
+
+    /**
+     * Get a JButtonOperator for a JButton with a specific Action Command.
+     * @param jfo the JFrameOperator containing the JButton.
+     * @param action  the ActionCommand of the JButton
+     * @return a new JButtonOperator.
+     * Fails test if JButton is not located.
+     */
+    public static JButtonOperator getButtonOperatorByActionComnmand(@Nonnull JFrameOperator jfo, @Nonnull String action ) {
+        return new JButtonOperator(jfo,new ComponentChooser(){
+            @Override
+            public boolean checkComponent(Component comp){
+                if(comp == null){
+                    return false;
+                } else if (comp instanceof JButton ) {
+                    return action.equals(((JButton)comp).getActionCommand());
+                } else {
+                    return false;
+                }
+            }
+            @Override
+            public String getDescription(){
+                return "find JButton with Action: " + action ;
+            }
+        });
+    }
+
     static public void waitFor(JmriJFrame f) {
         int count = 5;
         f.requestFocus();

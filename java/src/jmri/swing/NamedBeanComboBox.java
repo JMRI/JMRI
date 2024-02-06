@@ -463,7 +463,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
 
     private class NamedBeanEditor implements ComboBoxEditor {
 
-        private final ComboBoxEditor editor;
+        private final ComboBoxEditor myEditor;
 
         /**
          * Create a NamedBeanEditor using another editor as its base. This
@@ -473,7 +473,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
          * @param editor the underlying editor
          */
         public NamedBeanEditor(ComboBoxEditor editor) {
-            this.editor = editor;
+            this.myEditor = editor;
             Component ec = editor.getEditorComponent();
             if (ec instanceof JComponent) {
                 JComponent jc = (JComponent) ec;
@@ -531,7 +531,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
 
         @Override
         public Component getEditorComponent() {
-            return editor.getEditorComponent();
+            return myEditor.getEditorComponent();
         }
 
         @Override
@@ -546,40 +546,40 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
                     jtc.setText("");
                 }
             } else {
-                editor.setItem(anObject);
+                myEditor.setItem(anObject);
             }
         }
 
         @Override
         public Object getItem() {
-            return editor.getItem();
+            return myEditor.getItem();
         }
 
         @Override
         public void selectAll() {
-            editor.selectAll();
+            myEditor.selectAll();
         }
 
         @Override
         public void addActionListener(ActionListener l) {
-            editor.addActionListener(l);
+            myEditor.addActionListener(l);
         }
 
         @Override
         public void removeActionListener(ActionListener l) {
-            editor.removeActionListener(l);
+            myEditor.removeActionListener(l);
         }
     }
 
     private class NamedBeanRenderer implements ListCellRenderer<B>, JComboBox.KeySelectionManager {
 
-        private final ListCellRenderer<? super B> renderer;
+        private final ListCellRenderer<? super B> myRenderer;
         private final long timeFactor;
         private long lastTime;
         private String prefix = "";
 
         public NamedBeanRenderer(ListCellRenderer<? super B> renderer) {
-            this.renderer = renderer;
+            this.myRenderer = renderer;
             Long l = (Long) UIManager.get("ComboBox.timeFactor");
             timeFactor = l != null ? l : 1000;
         }
@@ -587,7 +587,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
         @Override
         public Component getListCellRendererComponent(JList<? extends B> list, B value, int index, boolean isSelected,
                 boolean cellHasFocus) {
-            JLabel label = (JLabel) renderer.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+            JLabel label = (JLabel) myRenderer.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             if (value != null) {
                 label.setText(value.getDisplayName(displayOptions));
             }

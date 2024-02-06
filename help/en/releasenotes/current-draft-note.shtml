@@ -275,7 +275,7 @@
 
         <h4>MD Electronics</h4>
              <ul>
-                <li></li>
+                <li>New definition for the mXion DRIVE-L decoder.</li>
              </ul>
 
         <h4>MGP</h4>
@@ -311,6 +311,11 @@
         <h4>Public Domain and DIY decoders</h4>
             <ul>
                 <li></li>
+            </ul>
+
+        <h4>PIKO</h4>
+            <ul>
+                <li>Add CVs for PMW modulations, add tooltips</li>
             </ul>
 
         <h4>QSI</h4>
@@ -365,7 +370,7 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li></li>
+                <li>Add CVs for PMW modulations, add tooltips</li>
             </ul>
 
         <h4>Umelec</h4>
@@ -496,6 +501,15 @@
               It brings a window to the front and can be used if you for
               example want to have an icon on a panel that moves focus to
               another window.</li>
+          <li>The action <strong>Decode JSON</strong> is added. It decodes
+              a JSON string in a local variable to a JsonNode tree and
+              puts it in another local variable.</li>
+          <li>LogixNG formula now supports JSON as well. It's in particular
+              useful together with the action <strong>Decode JSON</strong>.
+              A JSON dataset can be indexed as a map or as an array, for
+              example by <strong>MyJson{"decoder}{"model"}[4]</strong>.
+              The result is a Json text node, so use the <strong>str()</strong>
+              function to convert the value to a string afterwards.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -677,6 +691,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Initial support for creating <a href="https://www.jmri.org/help/en/package/jmri/jmrit/etcs/index.shtml">ERTMS / ETCS Driver Interfaces</a></li>
         </ul>
 

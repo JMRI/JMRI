@@ -8,35 +8,43 @@ import jmri.util.TypeConversionUtil;
 
 /**
  * A parsed expression
- * 
+ *
  * @author Daniel Bergqvist 2021
  */
 public class ExpressionNodeArray implements ExpressionNodeWithParameter {
 
     private final ExpressionNode _exprNode;
-    
+
     public ExpressionNodeArray(ExpressionNode exprNode) throws FunctionNotExistsException {
         _exprNode = exprNode;
     }
-    
+
     @SuppressWarnings("unchecked")
     @Override
     public Object calculate(Object parameter, SymbolTable symbolTable) throws JmriException {
         if (parameter == null) throw new NullPointerException("Parameter is null");
-        if (!(parameter instanceof List)) throw new IllegalArgumentException("Parameter is not a List");
-        
+
         int index = (int) TypeConversionUtil.convertToLong(_exprNode.calculate(symbolTable));
-        
+
+        // JSON array node
+        if (parameter instanceof com.fasterxml.jackson.databind.node.ArrayNode) {
+            return ((com.fasterxml.jackson.databind.node.ArrayNode)parameter).get(index);
+        }
+
+//        if (!(parameter instanceof List)) return parameter.getClass().getName();
+
+        if (!(parameter instanceof List)) throw new IllegalArgumentException("Parameter is not a List");
+
         return ((List<Object>)parameter).get(index);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean canBeAssigned() {
         // We don't know so we assume that it is.
         return true;
     }
-    
+
     /**
      * Assign a value to this expression from a parameter.
      * @param parameter the parameter
@@ -49,12 +57,12 @@ public class ExpressionNodeArray implements ExpressionNodeWithParameter {
     public void assignValue(Object parameter, SymbolTable symbolTable, Object value) throws JmriException {
         if (parameter == null) throw new NullPointerException("Parameter is null");
         if (!(parameter instanceof List)) throw new IllegalArgumentException("Parameter is not a List");
-        
+
         int index = (int) TypeConversionUtil.convertToLong(_exprNode.calculate(symbolTable));
-        
+
         ((List<Object>)parameter).set(index, value);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public String getDefinitionString() {
@@ -64,5 +72,5 @@ public class ExpressionNodeArray implements ExpressionNodeWithParameter {
         str.append("]");
         return str.toString();
     }
-    
+
 }

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>JMRI: ERTMS / ETCS</title>
+  <meta name="author" content="Steve Young">
+  <meta name="keywords" content="JMRI ERTMS ETCS DMI">
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>JMRI : ERTMS ETCS</h1>
+
+        <p>The European Rail Traffic Management System ( ERTMS ) aims to improve
+        interobability between the multiple systems in use by European railways,
+        making it easier for trains to cross national borders without needing to change systems.</p>
+
+        <p>European Train Control System ( ETCS ) is the signalling component of ERTMS.</p>
+
+
+      <h2>Driver Machine Interface Simulation</h2>
+
+      <span class="since">since 5.7.4</span>
+      <p>
+      The Driver Machine Interface  ( DMI, the in-cab screen which displays speed and signalling
+      information to the driver ) is one of the most recognisable elements of ETCS.
+      </p>
+
+      <a href="etcs_did_640x478.png">
+      <img src="etcs_did_640x478.png" alt="ERTMS ETCS JMRI DMI" width="320" height="239"></a>
+
+      <p>The DMI can include information about speed, track conditions, and system alerts.</p>
+
+      <p>It is possible to simulate DMI screens and control their content programmatically,
+      currently there is no train control logic within the DMI Panel.</p>
+
+      <p>The DMI follows the touch screen layout ( as apposed to the soft key layout ),
+      as it is able to receive button and mouse clicks directly.</p>
+
+      <p>The icons in the resources/icons/etcs folder contain the graphics for both ETCS 3.6 and 4.0</p>
+
+      <p>The JMRI Fast Clock is used as the source for the time display.</p>
+
+      <h3>Launching DMI Displays with Jython</h3>
+
+      <p>DMI Displays can be launched via <a href="https://www.jmri.org/help/en/html/tools/scripting/index.shtml">JMRI Jython Scripting</a>.</p>
+
+
+<div style="margin:10px; padding:20px;">
+<code>import jmri<br>
+from jmri.jmrit.etcs.dmi.swing import DmiFrame<br>
+<br>
+f = DmiFrame()<br>
+f.setVisible(True)<br>
+<br>
+dmiPanel = f.getDmiPanel()<br>
+dmiPanel.setActualSpeed(100)<br>
+<br>
+</code>
+</div>
+
+      <p>This screen is now viewable on other devices via the JMRI Web Server.</p>
+
+      <p>For the full list of available methods, see the <a href=
+      "https://www.jmri.org/JavaDoc/doc/jmri/jmrit/etcs/dmi/swing/DmiPanel.html">DmiPanel JavaDoc</a>.</p>
+      <p>The <a href=
+      "https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/etcs/dmi/swing/DmiDemo.java"
+      >code for the DMI Demonstration</a> also provides examples of how to manipulate
+      the panel.</p>
+
+
+    <h3>DMI Demonstration</h3>
+
+        <p>On the right hand side of the DMI, locate the Tool Menu Button ( a spanner icon if graphics are loaded ).</p>
+
+        <p>Right click on the Tool menu and one of the options will be DMI Demo, which starts the demonstration.</p>
+
+        <a href="etcs_did_2_640x480.png">
+      <img src="etcs_did_2_640x480.png" alt="ERTMS ETCS JMRI DMI" width="320" height="240"></a>
+
+      <h2>Further ERTMS / ETCS Info</h2>
+
+
+    <a href="https://www.era.europa.eu/domains/infrastructure/european-rail-traffic-management-system-ertms_en">European Rail Agency - ERTMS</a>
+      <br>
+      <a href="https://en.wikipedia.org/wiki/European_Train_Control_System">Wikipedia - ETCS</a>
+      <br>
+      <a href="https://youtu.be/eBnoQ_fGFas?si=5vvOOAglGA_pxqhF">YouTube - UK ERTMS on the Northern City Line</a>
+      <br>
+      <a href="https://www.youtube.com/watch?v=X_OSooP_9Es">Youtube - UK Presentation Track Engineers guide to ETCS (Cambrian line)</a>
+
+
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/help.js"></script>
+</body>
+</html>

@@ -2949,6 +2949,19 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        JsonDecode jsonDecode = new JsonDecode(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(jsonDecode);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        jsonDecode = new JsonDecode(digitalActionManager.getAutoSystemName(), null);
+        jsonDecode.setComment("A comment");
+        jsonDecode.setJsonLocalVariable("JsonVariable");
+        jsonDecode.setResultLocalVariable("ResultVariable");
+        maleSocket = digitalActionManager.registerAction(jsonDecode);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         jmri.jmrit.logixng.actions.Logix logix =
                 new jmri.jmrit.logixng.actions.Logix(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(logix);

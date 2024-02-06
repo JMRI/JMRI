@@ -16779,22 +16779,9 @@ public class TrainBuilderTest extends OperationsTestCase {
         Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", null);
 
         Location chelmsford = lmanager.getLocationByName("Chelmsford");
-        Track chelmsfordStaging1 = chelmsford.addTrack("Staging 1", Track.STAGING);
-        chelmsfordStaging1.setLength(400);
-        Track chelmsfordStaging2 = chelmsford.addTrack("Staging 2", Track.STAGING);
-        chelmsfordStaging2.setLength(400);
-        chelmsfordStaging2.setMoves(10);
-        // delete spurs at Chelmsford
         Track chelmsfordSpur1 = chelmsford.getTrackByName("Chelmsford Spur 1", null);
-        chelmsford.deleteTrack(chelmsfordSpur1);
-        Track chelmsfordSpur2 = chelmsford.getTrackByName("Chelmsford Spur 2", null);
-        chelmsford.deleteTrack(chelmsfordSpur2);
 
         Car c1 = JUnitOperationsUtil.createAndPlaceCar("UP", "1", "Boxcar", "40", "DAB", "1958", actonYard1, 16);
-
-        // for test coverage, make staging with the lowest moves unavailable for
-        // this train
-        JUnitOperationsUtil.createAndPlaceCar("UP", "2", "Boxcar", "40", "DAB", "1958", chelmsfordStaging1, 0);
 
         // create division
         DivisionManager dm = InstanceManager.getDefault(DivisionManager.class);
@@ -16843,15 +16830,118 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertTrue(train.isBuilt());
 
         // confirm car's destination spur at Boston
-        Assert.assertEquals("Confirm c1 destination 3", bostonSpur1, c1.getDestinationTrack());
+        Assert.assertEquals("Confirm c1 destination 3", chelmsfordSpur1, c1.getDestinationTrack());
 
-        boston.setDivision(null);
+        chelmsford.setDivision(null);
         train.reset();
         new TrainBuilder().build(train);
         Assert.assertTrue(train.isBuilt());
 
         // confirm car's destination staging
-        Assert.assertEquals("Confirm c1 destination 4", chelmsfordStaging2, c1.getDestinationTrack());
+        Assert.assertEquals("Confirm c1 destination 4", bostonSpur1, c1.getDestinationTrack());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+    
+    /**
+     * Tests division feature. Car with empty load at a home division yard
+     * should move to a car's home division staging.
+     */
+    @Test
+    public void testDivisionDepartingYardLoadEmptyTerminateStaging() {
+        Train train = tmanager.newTrain("Train Acton-Boston-Chelmsford DivisionTest2");
+        Route route = JUnitOperationsUtil.createThreeLocationRoute();
+        train.setRoute(route);
+
+        Location acton = lmanager.getLocationByName("Acton");
+        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+        Track actonYard1 = acton.getTrackByName("Acton Yard 1", null);
+
+        Location boston = lmanager.getLocationByName("Boston");
+        Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", null);
+
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
+        Track chelmsfordStaging1 = chelmsford.addTrack("Staging 1", Track.STAGING);
+        chelmsfordStaging1.setLength(400);
+        Track chelmsfordStaging2 = chelmsford.addTrack("Staging 2", Track.STAGING);
+        chelmsfordStaging2.setLength(44); // one car
+        chelmsfordStaging2.setMoves(10);
+        // delete spurs at Chelmsford
+        Track chelmsfordSpur1 = chelmsford.getTrackByName("Chelmsford Spur 1", null);
+        chelmsford.deleteTrack(chelmsfordSpur1);
+        Track chelmsfordSpur2 = chelmsford.getTrackByName("Chelmsford Spur 2", null);
+        chelmsford.deleteTrack(chelmsfordSpur2);
+
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("UP", "1", "Boxcar", "40", "DAB", "1958", actonYard1, 16);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "Boxcar", "40", "DAB", "1958", actonYard1, 20);
+        
+        // for test coverage, make staging with the lowest moves unavailable for
+        // this train
+        JUnitOperationsUtil.createAndPlaceCar("UP", "3", "Boxcar", "40", "DAB", "1958", chelmsfordStaging1, 0);
+
+        // create division
+        DivisionManager dm = InstanceManager.getDefault(DivisionManager.class);
+        Division divEast = dm.newDivision("divisionEast");
+
+        c1.setDivision(divEast);
+        c2.setDivision(divEast);
+
+        c1.setLoadName(cld.getDefaultEmptyName());
+        c2.setLoadName(cld.getDefaultEmptyName());
+        // confirm default is type empty load
+        Assert.assertEquals("Confirm load type", CarLoad.LOAD_TYPE_EMPTY, c1.getLoadType());
+
+        // car with empty load should move to staging at car's home division
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm car's destination (no home division)
+        Assert.assertEquals("Confirm c1 destination null", null, c1.getDestinationTrack());
+        Assert.assertEquals("Confirm c2 destination null", null, c2.getDestinationTrack());
+
+        // car with empty load should return to yard at car's home division
+        acton.setDivision(divEast);
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm default train can perform local move
+        Assert.assertTrue("Local moves allowed", train.isAllowLocalMovesEnabled());
+
+        // confirm car's destination is home division spur
+        Assert.assertEquals("Confirm c1 destination 1", actonSpur1, c1.getDestinationTrack());
+        Assert.assertEquals("Confirm c2 destination 1", actonSpur1, c2.getDestinationTrack());
+
+        // disable local moves for train
+        train.setAllowLocalMovesEnabled(false);
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm car's destination (no local moves for train)
+        Assert.assertEquals("Confirm c1 destination 2", null, c1.getDestinationTrack());
+        Assert.assertEquals("Confirm c2 destination 2", null, c2.getDestinationTrack());
+
+        // provide a home division spur at a new location
+        boston.setDivision(divEast);
+        chelmsford.setDivision(divEast);
+
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm car's destination Staging
+        Assert.assertEquals("Confirm c1 destination 3", chelmsfordStaging2, c1.getDestinationTrack());
+        Assert.assertEquals("Confirm c2 destination 3", bostonSpur1, c2.getDestinationTrack());
+
+        chelmsford.setDivision(null);
+        train.reset();
+        new TrainBuilder().build(train);
+        Assert.assertTrue(train.isBuilt());
+
+        // confirm car's destination spur
+        Assert.assertEquals("Confirm c1 destination 4", bostonSpur1, c1.getDestinationTrack());
+        Assert.assertEquals("Confirm c2 destination 4", bostonSpur1, c2.getDestinationTrack());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }

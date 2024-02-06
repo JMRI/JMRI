@@ -31,3 +31,9 @@ Dick Bronson contributed the following files:
 Older versions of some sounds can be found in the "old"
 subdirectory, in case somebody was using them and prefers
 the original ones.
+
+click.wav, S1_toofast.wav, S2_warning.wav and S_info.wav
+are reproduced from the European Railways Association ETCS DMI documentation at
+[ETCS 4.0](https://www.era.europa.eu/system/files/2023-12/index006_-_ERA_ERTMS_015560_v400.zip)
+accessed January 2024, as per their Copyright notice at 
+[ERA Copyright Notice](https://www.era.europa.eu/content/disclaimer-and-copyright-notice)
