@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config showEmptyPanes="no" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2022</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Ulrich</firstname>
+				<surname>Gerlach</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2022-12-10</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Initial creation</revremark>
+		</revision>
+	</revhistory>
+	<decoder>
+		<family name="mXion" mfg="MD Electronics">
+			<model model="DRIVE-XS" numOuts="3" numFns="68" maxMotorCurrent="0.5A" formFactor="N" connector="Wires" lowVersionID="10" highVersionID="10">
+				<output name="1" label="F0(f)" connection="wire" maxcurrent="200 mA"/>
+				<output name="2" label="F0(r)" connection="wire" maxcurrent="200 mA"/>
+				<output name="3" label=". A1 ." connection="wire" maxcurrent="5 mA"/>
+			</model>
+			<model model="DRIVE-S" numOuts="4" numFns="68" maxMotorCurrent="1.5A" formFactor="H0" connector="Wires" lowVersionID="10" highVersionID="10">
+				<output name="1" label="F0(f)" connection="wire" maxcurrent="200 mA"/>
+				<output name="2" label="F0(r)" connection="wire" maxcurrent="200 mA"/>
+				<output name="3" label=". A1 ." connection="wire" maxcurrent="5 mA"/>
+				<output name="4" label=". A2 ." connection="wire" maxcurrent="5 mA"/>
+			</model>
+		</family>
+		<programming direct="yes" paged="yes" register="yes" ops="yes">
+    </programming>
+		<variables>
+			<!-- standard variables that go in standard panes -->
+			<!-- CVs 1, 17, 29 bit 5 -->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+			<!-- CVs 3, 4 -->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
+			<!-- CVs 2, 5, 6 -->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/vStartHighMid.xml"/>
+			<!-- CV 65 -->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
+			<!-- CVs 7 - 8 -->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+			<!-- CV 9 -->
+			<variable item="Motor Option 1" CV="9" default="4">
+				<enumVal>
+					<enumChoice value="0">
+						<choice>0 = 16 kHz</choice>
+					</enumChoice>
+					<enumChoice value="1">
+						<choice>1 =  2 kHz</choice>
+					</enumChoice>
+					<enumChoice value="2">
+						<choice>2 = 250 Hz</choice>
+					</enumChoice>
+					<enumChoice value="3">
+						<choice>3 =  60 Hz</choice>
+					</enumChoice>
+					<enumChoice value="4">
+						<choice>4 = 100 Hz</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Engine frequency</label>
+				<label xml:lang="de">Motorfrequenz</label>
+			</variable>
+			<!-- CV 11 -->
+			<variable item="Motor Option 3" CV="11" default="30">
+				<decVal/>
+				<label>Analog timeout [time in ms]</label>
+				<label xml:lang="de">Analogwechsel [Zeit in ms]</label>
+			</variable>
+			<!-- CV 26 -->
+			<variable item="Motor Option 4" CV="26" default="2">
+				<decVal max="5"/>
+				<label>Noise filter </label>
+				<label xml:lang="de">Entstörfilter</label>
+			</variable>
+			<!-- CV 13 - Analog Mode Functions F0 - F12 -->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction.xml" exclude="DRIVE-XS"/>
+			<!-- CVs 17 - 18 - already in place with CV 1-->
+			<!-- CV 19 Consisting Information -->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+			<!-- CV 29 - DCC configuration -->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29RailCom.xml"/>
+			<variable item="Product Number" CV="105" default="11" readOnly="yes">
+				<decVal/>
+				<label>Product Number</label>
+			</variable>
+			<!-- The following is from xml/decoders/nmra/decoderLockId16.xml with specific default -->
+			<variable item="Decoder Lock ID number" CV="16" mask="XXXXXVVV" default="205">
+				<decVal/>
+				<label>Decoder Lock ID number</label>
+				<label xml:lang="it">ID Codice Blocco Decoder</label>
+				<label xml:lang="fr">No de verrouillage décodeur (Lock ID)</label>
+				<label xml:lang="de">Nummer der Decoder Lock ID</label>
+				<label xml:lang="cs">Zámek dekodéru ID číslo</label>
+				<label xml:lang="nl">Nummer van het Decoder Lock ID</label>
+				<label xml:lang="es">Número ID de bloqueo del decodificador</label>
+			</variable>
+			<!-- CV 66 -->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
+			<!-- CV 95 -->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
+			<!-- CVs 67 - 94 -->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
+			<!-- special variables that go in special panes -->
+			<variable mask="XXVVVVVV" item="High Beam Function Key" CV="97" default="14" exclude="DRIVE-XS">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-F1-F28.xml"/>
+				<label>High Beam Function key</label>
+				<label xml:lang="de">Fernlicht Funktionstaste (CV 97)</label>
+			</variable>
+			<variable mask="XXVVVVVV" item="Shunting mode Function Key" CV="100" default="15" exclude="DRIVE-XS">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-F1-F28.xml"/>
+				<label>Shunting Mode Function key</label>
+				<label xml:lang="de">Rangiergang Funktionstaste (CV 100)</label>
+			</variable>
+			<variable mask="XXVVVVVV" item="Accl/Decl Off Function Key" CV="101" default="16" exclude="DRIVE-XS">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-F1-F28.xml"/>
+				<label>Accl/Decl Off function key</label>
+				<label xml:lang="de">ABV Aus Funktionstaste (CV 101)</label>
+			</variable>
+			<!--Output A0v Definitions-->
+			<variable mask="XXVVVVVV" item="A0v Function Key" CV="50" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/mde/ChoiceFunctionF0-F28.xml"/>
+				<label>A0(f) Function key</label>
+				<label xml:lang="de">A0(v) Funktionstaste (CV 50)</label>
+			</variable>
+			<variable mask="VVXXXXXX" item="A0v Function" CV="50">
+				<enumVal>
+					<enumChoice>
+						<choice>Normal</choice>
+					</enumChoice>
+					<enumChoice value="1">
+						<choice>Permanent Off</choice>
+						<choice xml:lang="de">Permanent Aus</choice>
+					</enumChoice>
+					<enumChoice value="2">
+						<choice>Permanent On</choice>
+						<choice xml:lang="de">Permanent An</choice>
+					</enumChoice>
+				</enumVal>
+				<label>A0(f) Function</label>
+				<label xml:lang="de">A0(v) Funktion</label>
+			</variable>
+			<variable mask="XVVVVVVV" item="A0v Dimming Value" CV="51" default="100">
+				<decVal min="1" max="100"/>
+				<label>A0(f) Dimming Value</label>
+				<label xml:lang="de">A0(v) Dimmwert [%]</label>
+			</variable>
+			<variable mask="VXXXXXXX" item="A0v Dimming" CV="51">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>A0(f) Fading On/Off</label>
+				<label xml:lang="de">A0(v) Ein-/Ausblenden Ein/Aus (CV 121)</label>
+			</variable>
+			<variable item="A0v Condition" CV="52" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/mde/ChoiceFunctionConditions.xml"/>
+				<label>A0(f) Condition</label>
+				<label xml:lang="de">A0(v) Bedingung (CV 52)</label>
+			</variable>
+			<variable mask="XXVVVVVV" item="A0v Special Function" CV="53" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/mde/ChoiceHDDSpecialFunction.xml"/>
+				<label>A0(f) Special Function</label>
+				<label xml:lang="de">A0(v) Sonderfunktion (CV 53)</label>
+			</variable>
+			<variable mask="XVXXXXXX" item="A0v High Beam Function" CV="53">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>A0(f) High Beam Function On/Off</label>
+				<label xml:lang="de">A0(v) Fernlichtfunktion Ein/Aus</label>
+			</variable>
+			<variable mask="VXXXXXXX" item="A0v Special Function Inverse" CV="53">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>A0(f) Special Function Inverse On/Off</label>
+				<label xml:lang="de">A0(v) Sonderfunktion invers Ein/Aus</label>
+			</variable>
+			<variable item="A0v Time For Special Function" CV="54" default="5">
+				<decVal/>
+				<label>A0(f) Time For Special Function</label>
+				<label xml:lang="de">A0(v) Zeitwert für Sonderfunktion (CV 54)</label>
+			</variable>
+			<!--Output A0r Definitions-->
+			<variable mask="XXVVVVVV" item="A0r Function Key" CV="55" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/mde/ChoiceFunctionF0-F28.xml"/>
+				<label>A0(r) Function key</label>
+				<label xml:lang="de">A0(r) Funktionstaste (CV 55)</label>
+			</variable>
+			<variable mask="VVXXXXXX" item="A0r Function" CV="55">
+				<enumVal>
+					<enumChoice>
+						<choice>Normal</choice>
+					</enumChoice>
+					<enumChoice value="1">
+						<choice>Permanent Off</choice>
+						<choice xml:lang="de">Permanent Aus</choice>
+					</enumChoice>
+					<enumChoice value="2">
+						<choice>Permanent On</choice>
+						<choice xml:lang="de">Permanent An</choice>
+					</enumChoice>
+				</enumVal>
+				<label>A0(r) Function</label>
+				<label xml:lang="de">A0(r) Funktion</label>
+			</variable>
+			<variable mask="XVVVVVVV" item="A0r Dimming Value" CV="56" default="100">
+				<decVal min="1" max="100"/>
+				<label>A0(r) Dimming Value</label>
+				<label xml:lang="de">A0(r) Dimmwert [%]</label>
+			</variable>
+			<variable mask="VXXXXXXX" item="A0r Dimming" CV="56">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>A0(r) Fading On/Off</label>
+				<label xml:lang="de">A0(r) Ein-/Ausblenden Ein/Aus (CV 56)</label>
+			</variable>
+			<variable item="A0r Condition" CV="57" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/mde/ChoiceFunctionConditions.xml"/>
+				<label>A0(r) Condition</label>
+				<label xml:lang="de">A0(r) Bedingung (CV 57)</label>
+			</variable>
+			<variable mask="XXVVVVVV" item="A0r Special Function" CV="58" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/mde/ChoiceHDDSpecialFunction.xml"/>
+				<label>A0(r) Special Function</label>
+				<label xml:lang="de">A0(r) Sonderfunktion (CV 58)</label>
+			</variable>
+			<variable mask="XVXXXXXX" item="A0r High Beam Function" CV="58">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>A0(r) High Beam Function On/Off</label>
+				<label xml:lang="de">A0(r) Fernlichtfunktion Ein/Aus</label>
+			</variable>
+			<variable mask="VXXXXXXX" item="A0r Special Function Inverse" CV="58">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>A0(r) Special Function Inverse On/Off</label>
+				<label xml:lang="de">A0(r) Sonderfunktion invers Ein/Aus</label>
+			</variable>
+			<variable item="A0r Time For Special Function" CV="59" default="5">
+				<decVal/>
+				<label>A0(r) Time For Special Function</label>
+				<label xml:lang="de">A0(r) Zeitwert für Sonderfunktion (CV 59)</label>
+			</variable>
+			<!--Output A1 Definitions-->
+			<variable mask="XXVVVVVV" item="A1 Function Key" CV="120" default="1">
+				<xi:include href="http://jmri.org/xml/decoders/mde/ChoiceFunctionF0-F28.xml"/>
+				<label>A1 Function key</label>
+				<label xml:lang="de">A1 Funktionstaste (CV 120)</label>
+			</variable>
+			<variable mask="VVXXXXXX" item="A1 Function" CV="120">
+				<enumVal>
+					<enumChoice>
+						<choice>Normal</choice>
+					</enumChoice>
+					<enumChoice value="1">
+						<choice>Permanent Off</choice>
+						<choice xml:lang="de">Permanent An</choice>
+					</enumChoice>
+					<enumChoice value="2">
+						<choice>Permanent On</choice>
+						<choice xml:lang="de">Permanent An</choice>
+					</enumChoice>
+				</enumVal>
+				<label>A1 Function</label>
+				<label xml:lang="de">A1 Funktion</label>
+			</variable>
+			<variable mask="XVVVVVVV" item="A1 Dimming Value" CV="121" default="100">
+				<decVal min="1" max="100"/>
+				<label>A1 Dimming Value</label>
+				<label xml:lang="de">A1 Dimmwert [%]</label>
+			</variable>
+			<variable mask="VXXXXXXX" item="A1 Dimming" CV="121">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>A1 Fading On/Off</label>
+				<label xml:lang="de">A1 Ein-/Ausblenden Ein/Aus (CV 121)</label>
+			</variable>
+			<variable item="A1 Condition" CV="122" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/mde/ChoiceFunctionConditions.xml"/>
+				<label>A1 Condition</label>
+				<label xml:lang="de">A1 Bedingung (CV 122)</label>
+			</variable>
+			<variable mask="XXVVVVVV" item="A1 Special Function" CV="123" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/mde/ChoiceHDDSpecialFunction.xml"/>
+				<label>A1 Special Function</label>
+				<label xml:lang="de">A1 Sonderfunktion (CV 123)</label>
+			</variable>
+			<variable mask="XVXXXXXX" item="A1 High Beam Function" CV="123">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>A1 High Beam Function On/Off</label>
+				<label xml:lang="de">A1 Fernlichtfunktion Ein/Aus</label>
+			</variable>
+			<variable mask="VXXXXXXX" item="A1 Special Function Inverse" CV="123">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label> A1 Special Function Inverse On/Off</label>
+				<label xml:lang="de">A1 Sonderfunktion invers Ein/Aus</label>
+			</variable>
+			<variable item="A1 Time For Special Function" CV="124" default="5">
+				<decVal/>
+				<label>A1 Time For Special Function</label>
+				<label xml:lang="de">A1 Zeitwert für Sonderfunktion (CV 124)</label>
+			</variable>
+			<!--Output A2 Definitions-->
+			<variable mask="XXVVVVVV" item="A2 Function Key" CV="130" default="1" exclude="DRIVE-XS">
+				<xi:include href="http://jmri.org/xml/decoders/mde/ChoiceFunctionF0-F28.xml"/>
+				<label>A2 Function key</label>
+				<label xml:lang="de">A2 Funktionstaste (CV 130)</label>
+			</variable>
+			<variable mask="VVXXXXXX" item="A2 Function" CV="130" exclude="DRIVE-XS">
+				<enumVal>
+					<enumChoice>
+						<choice>Normal</choice>
+					</enumChoice>
+					<enumChoice value="1">
+						<choice>Permanent Off</choice>
+						<choice xml:lang="de">Permanent An</choice>
+					</enumChoice>
+					<enumChoice value="2">
+						<choice>Permanent On</choice>
+						<choice xml:lang="de">Permanent An</choice>
+					</enumChoice>
+				</enumVal>
+				<label>A2 Function</label>
+				<label xml:lang="de">A2 Funktion</label>
+			</variable>
+			<variable mask="XVVVVVVV" item="A2 Dimming Value" CV="131" default="100" exclude="DRIVE-XS">
+				<decVal min="1" max="100"/>
+				<label>A2 Dimming Value</label>
+				<label xml:lang="de">A2 Dimmwert [%]</label>
+			</variable>
+			<variable mask="VXXXXXXX" item="A2 Dimming" CV="131" exclude="DRIVE-XS">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>A2 Fading On/Off</label>
+				<label xml:lang="de">A2 Ein-/Ausblenden Ein/Aus (CV 131)</label>
+			</variable>
+			<variable item="A2 Condition" CV="132" default="0" exclude="DRIVE-XS">
+				<xi:include href="http://jmri.org/xml/decoders/mde/ChoiceFunctionConditions.xml"/>
+				<label>A2 Condition</label>
+				<label xml:lang="de">A2 Bedingung (CV 132)</label>
+			</variable>
+			<variable mask="XXVVVVVV" item="A2 Special Function" CV="133" default="0" exclude="DRIVE-XS">
+				<xi:include href="http://jmri.org/xml/decoders/mde/ChoiceHDDSpecialFunction.xml"/>
+				<label>A2 Special Function</label>
+				<label xml:lang="de">A2 Sonderfunktion (CV 133)</label>
+			</variable>
+			<variable mask="XVXXXXXX" item="A2 High Beam Function" CV="133" exclude="DRIVE-XS">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>A2 High Beam Function On/Off</label>
+				<label xml:lang="de">A2 Fernlichtfunktion Ein/Aus</label>
+			</variable>
+			<variable mask="VXXXXXXX" item="A2 Special Function Inverse" CV="133" exclude="DRIVE-XS">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label> A2 Special Function Inverse On/Off</label>
+				<label xml:lang="de">A2 Sonderfunktion invers Ein/Aus</label>
+			</variable>
+			<variable item="A2 Time For Special Function" CV="134" default="5" exclude="DRIVE-XS">
+				<decVal/>
+				<label>A2 Time For Special Function</label>
+				<label xml:lang="de">A2 Zeitwert für Sonderfunktion (CV 134)</label>
+			</variable>
+		</variables>
+		<resets>
+			<factReset label="Basic settings     (CV 1,11-13,17-19,29-119) CV7=>11" CV="7" default="11"/>
+			<factReset label="Programming lock   (CV 15/16)                CV7=>16" CV="7" default="16"/>
+			<factReset label="Light outputs      (CV 50-59)                CV7=>22" CV="7" default="22"/>
+			<factReset label="Function Ax output (CV 120-124,130-134)      CV7=>33" CV="7" default="33"/>
+			<factReset label="Engine functions   (CV 2-6,9,10,54,60-66)    CV7=>44" CV="7" default="44"/>
+			<factReset label="Drive courve       (CV 67–94)                CV7=>66" CV="7" default="66"/>
+		</resets>
+	</decoder>
+	<pane>
+		<grid>
+			<griditem gridx="0" gridy="0">
+				<column>
+					<display item="A0v Function Key"/>
+					<display item="A0v Function"/>
+					<display item="A0v Dimming Value"/>
+					<display item="A0v Dimming"/>
+					<display item="A0v Condition"/>
+					<display item="A0v Special Function"/>
+					<display item="A0v High Beam Function"/>
+					<display item="A0v Special Function Inverse"/>
+					<display item="A0v Time For Special Function"/>
+					<separator/>
+				</column>
+			</griditem>
+			<griditem gridx="1" gridy="0">
+				<separator/>
+				<column>
+					<display item="A0r Function Key"/>
+					<display item="A0r Function"/>
+					<display item="A0r Dimming Value"/>
+					<display item="A0r Dimming"/>
+					<display item="A0r Condition"/>
+					<display item="A0r Special Function"/>
+					<display item="A0r High Beam Function"/>
+					<display item="A0r Special Function Inverse"/>
+					<display item="A0r Time For Special Function"/>
+					<separator/>
+				</column>
+			</griditem>
+			<griditem gridx="0" gridy="1">
+				<column>
+					<display item="A1 Function Key"/>
+					<display item="A1 Function"/>
+					<display item="A1 Dimming Value"/>
+					<display item="A1 Dimming"/>
+					<display item="A1 Condition"/>
+					<display item="A1 Special Function"/>
+					<display item="A1 High Beam Function"/>
+					<display item="A1 Special Function Inverse"/>
+					<display item="A1 Time For Special Function"/>
+					<separator/>
+				</column>
+			</griditem>
+			<griditem gridx="1" gridy="1">
+				<separator/>
+				<column>
+					<display item="A2 Function Key"/>
+					<display item="A2 Function"/>
+					<display item="A2 Dimming Value"/>
+					<display item="A2 Dimming"/>
+					<display item="A2 Condition"/>
+					<display item="A2 Special Function"/>
+					<display item="A2 High Beam Function"/>
+					<display item="A2 Special Function Inverse"/>
+					<display item="A2 Time For Special Function"/>
+					<separator/>
+				</column>
+			</griditem>
+			<griditem gridx="0" gridy="2">
+				<column>
+					<label>
+						<text>    </text>
+					</label>
+					<display item="High Beam Function Key"/>
+					<display item="Shunting mode Function Key"/>
+					<display item="Accl/Decl Off Function Key"/>
+				</column>
+			</griditem>
+		</grid>
+		<name>mXion DRIVE Functions</name>
+	</pane>
+</decoder-config>

@@ -20,7 +20,7 @@
                  only to show with SDXH166D Extended Series 6
                                     Alain Le Marchand (2015-04-29)          -->
 <!--                                                                        -->
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" include="SDXH166DExt,SDXH166DExtS,SDXH166DExtD">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" include="SDXH166DExt,SDXH166DExtS,SDXH166DExtD">
   <row>
     <column>
       <display item="Feature Disable Group 1"/>

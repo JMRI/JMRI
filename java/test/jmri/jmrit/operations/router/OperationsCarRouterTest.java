@@ -3360,6 +3360,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         // null);
 
         Location boston = lmanager.getLocationByName("Boston");
+        Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", null);
         Track bostonSpur2 = boston.getTrackByName("Boston Spur 2", null);
         Track bostonYard1 = boston.getTrackByName("Boston Yard 1", null);
         Track bostonYard2 = boston.getTrackByName("Boston Yard 2", null);
@@ -3430,10 +3431,8 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         actonTrain.build();
         // confirm that car destinations
         Assert.assertEquals("car's destination track", actonSpur2, c3.getDestinationTrack());
-        Assert.assertEquals("car's destination track", actonYard, c4.getDestinationTrack()); // c4
-                                                                                             // is
-                                                                                             // a
-                                                                                             // Flatcar
+        // c4 is a Flatcar
+        Assert.assertEquals("car's destination track", actonYard, c4.getDestinationTrack()); 
         Assert.assertEquals("car's destination track", null, c5.getDestinationTrack());
         Assert.assertEquals("car's destination track", null, c6.getDestinationTrack());
 
@@ -3549,7 +3548,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         actonToBostonTrain.build();
         // confirm that car destinations
         Assert.assertEquals("car's destination track", bostonSpur2, c3.getDestinationTrack());
-        Assert.assertEquals("car's destination track", bostonInterchange1, c4.getDestinationTrack());
+        Assert.assertEquals("car's destination track", bostonSpur1, c4.getDestinationTrack());
         Assert.assertEquals("car's destination track", bostonInterchange1, c5.getDestinationTrack());
         Assert.assertEquals("car's destination track", bostonInterchange1, c6.getDestinationTrack());
 

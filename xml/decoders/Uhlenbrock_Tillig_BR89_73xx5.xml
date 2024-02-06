@@ -1,0 +1,1264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2019,2023 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+	<version author="Egbert Broerse" version="1" lastUpdated="20190304"/>
+	<!-- Version 1 - For new 2017-18 decoders. Copied and adapted from Uhlenbrock_76560.xml Uses common parts -->
+	<version author="Ulrich Gerlach" version="2" lastUpdated="20230510"/>
+	<!-- Version 2 - Extension with additional CVs for the Extended Function Mapping -->
+	<version author="Ulrich Gerlach" version="3" lastUpdated="20231226"/>
+	<!-- Version 3 - Add AUX3 and AUX4 -->
+	<!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
+	<decoder>
+		<family name="IntelliDrive2" mfg="Uhlenbrock Elektronik" comment="Decoders not sorted (necessarily) in numerical order">
+			<!-- to be checked by hardware owner -->
+			<model model="Tillig 0423x" highVersionID="27" numOuts="6" numFns="14" maxMotorCurrent="0.8A" formFactor="N" connector="Wires" productID="Tillig0423x" comment="Tillig BR 89 mit IntelliDrive2 Mini-Lokdecoder and RailCom(R) ohne Sound">
+				<output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+				<output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+				<output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+				<output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
+				<output name="5" label=". A3 ." connection="plug" maxcurrent="400 mA"/>
+				<output name="6" label=". A4 ." connection="plug" maxcurrent="400 mA"/>
+				<output name="Shunting" label=". RG ."/>
+				<!-- Anfahren/Bremsen -->
+				<output name="Start/brake" label=". ABV ."/>
+				<!-- Anfahren/Bremsen -->
+				<size length="12" width="12" height="2.4" units="mm"/>
+			</model>
+		</family>
+		<programming direct="yes" paged="yes" register="yes" ops="yes">
+			<capability>
+				<name>Indexed CV access</name>
+				<parameter name="PI">31</parameter>
+				<!-- for Banks -->
+				<parameter name="SI">32</parameter>
+				<!-- Not used, but need to be declared for cvFirst to be read -->
+				<parameter name="cvFirst">true</parameter>
+			</capability>
+			<capability>
+				<name>Ops Mode Delayed Programming</name>
+				<parameter name="Delay">600</parameter>
+			</capability>
+		</programming>
+		<variables>
+			<!-- CV 1, 17, 29 bit 5 -->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+			<!-- CV 2 - 6 -->
+			<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/vStartHighMid-accelDecel.xml"/>
+			<variable item="Decoder Version" CV="7" readOnly="yes" default="27">
+				<decVal/>
+				<label>Manufacturer Version No: </label>
+				<label xml:lang="it">Versione Decoder:</label>
+				<label xml:lang="fr">Version décodeur:</label>
+				<label xml:lang="de">Decoder Software Version:</label>
+				<label xml:lang="nl">Versie van decoder:</label>
+			</variable>
+			<variable item="Manufacturer" CV="8" readOnly="yes" default="85" exclude="PIKO41RH2400,PIKO41BR82,PIKO56400,PIKO56401">
+				<!-- Uhlenbrock -->
+				<decVal/>
+				<!--<defaultItem default="162" include="PIKO41RH2400,PIKO41BR82"/> somehow not validating -->
+				<label>Manufacturer ID: </label>
+				<label xml:lang="it">ID Costruttore: </label>
+				<label xml:lang="fr">ID constructeur: </label>
+				<label xml:lang="de">Hersteller ID: </label>
+				<label xml:lang="nl">Fabrikant-ID: </label>
+			</variable>
+			<variable item="Manufacturer" CV="8" readOnly="yes" default="162" include="PIKO41RH2400,PIKO41BR82,PIKO56400,PIKO56401">
+				<!-- Piko -->
+				<decVal/>
+				<label>Manufacturer ID: </label>
+				<label xml:lang="it">ID Costruttore: </label>
+				<label xml:lang="fr">ID constructeur: </label>
+				<label xml:lang="de">Hersteller ID: </label>
+				<label xml:lang="nl">Fabrikant-ID: </label>
+			</variable>
+			<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv12dataformat2.xml"/>
+			<variable item="Selectrix Operation" CV="12" default="1" mask="XXXVXXXX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>Selectrix Mode</label>
+				<label xml:lang="de">Selectrix Datenformat</label>
+				<label xml:lang="nl">Selectrix modus</label>
+			</variable>
+			<variable item="Mfx Operation" CV="12" default="1" mask="XXVXXXXX" include="PIKO41RH2400,PIKO41BR82,PIKO56400">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>Mfx Mode</label>
+				<label xml:lang="de">Mfx Datenformat</label>
+				<label xml:lang="nl">Mfx modus</label>
+			</variable>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction_F12.xml"/>
+			<variable CV="15" item="Decoder Lock ID" default="1">
+				<decVal/>
+				<label>Decoder Lock ID</label>
+				<label xml:lang="de">Decoder Lock</label>
+				<label xml:lang="ca">Bloqueig decoder per ID</label>
+				<tooltip>Set this to match value below and decoder will unlock</tooltip>
+				<tooltip xml:lang="de">Setzen Sie diesen Wert auf den unten stehenden Wert und der Decoder wird entsperrt</tooltip>
+				<tooltip xml:lang="nl">Stel hier dezelfde waarde in als ID hieronder en de decoder kan geprogrammeerd worden</tooltip>
+			</variable>
+			<variable CV="16" item="Decoder Lock Index" default="1">
+				<decVal/>
+				<label>Preset Lock ID</label>
+				<label xml:lang="de">Decoder-Typ Lock</label>
+				<label xml:lang="ca">ID locomotora per tipus</label>
+				<tooltip>Set this to decoder type: 1=motor, 2=sound, 3=function etc.</tooltip>
+				<tooltip xml:lang="de">Setzen Sie diesen Wert auf Decoder-Typ: 1 = Motor, 2 = Sound, 3 = Funktion etc.</tooltip>
+				<tooltip xml:lang="nl">Stel in als Decoder-type: 1=motor, 2=geluid, 3=functie e.d.</tooltip>
+			</variable>
+			<!-- CV 17 - 18 already in place with CV 1-->
+			<!-- CV 19 Consisting Information -->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+			<variable item="ABC stop with asymmetrical DCC" CV="27" mask="VXXXXXVV">
+				<enumVal>
+					<enumChoice choice="Does Not Stop">
+						<choice>Inactive</choice>
+						<choice xml:lang="it">Non si ferma</choice>
+						<choice xml:lang="cs">Nezastavuje</choice>
+						<choice xml:lang="de">Kein Bremsen</choice>
+						<choice xml:lang="nl">Niet actief</choice>
+					</enumChoice>
+					<enumChoice choice="When Right rail is higher voltage">
+						<choice>When Right rail is higher voltage</choice>
+						<choice xml:lang="it">Si ferma se rotaia destra ha tensione più alta</choice>
+						<choice xml:lang="cs">Zastaví když pravá kolejnice má vyšší napětí</choice>
+						<choice xml:lang="de">Wenn rechte Schienenspannung höher</choice>
+						<choice xml:lang="nl">Als de spanning op de rechter rail hoger is</choice>
+					</enumChoice>
+					<enumChoice choice="When Left rail is higher voltage">
+						<choice>When Left rail is higher voltage</choice>
+						<choice xml:lang="it">Si ferma se rotaia sinistra ha tensione più alta</choice>
+						<choice xml:lang="cs">Zastaví když levá kolejnice má vyšší napětí</choice>
+						<choice xml:lang="de">Wenn linke Schienenspannung höher</choice>
+						<choice xml:lang="nl">Als de spanning op de linker rail hoger is</choice>
+					</enumChoice>
+					<enumChoice choice="Stops in Both Directions">
+						<choice>In Either Direction</choice>
+						<choice xml:lang="it">Si ferma in entrambe le direzioni</choice>
+						<choice xml:lang="cs">Zastaví v obou směrech</choice>
+						<choice xml:lang="de">In entweder Richtung</choice>
+						<choice xml:lang="nl">In beide richtingen</choice>
+					</enumChoice>
+					<enumChoice choice="Stops in Forward Only" include="74120">
+						<choice>Forward Braking Only</choice>
+						<choice xml:lang="de">Nur Vorwärts</choice>
+						<choice xml:lang="nl">Alleen Vooruit</choice>
+					</enumChoice>
+					<enumChoice choice="Stops in Reverse Only" include="74120">
+						<choice>Reverse Braking Only</choice>
+						<choice xml:lang="de">Nur Rückwärts</choice>
+						<choice xml:lang="nl">Alleen Achteruit</choice>
+					</enumChoice>
+				</enumVal>
+				<label>ABC Braking Setup</label>
+				<label xml:lang="de">ABC Bremseinstellung</label>
+				<tooltip>Brake on asymmetrical DCC detect</tooltip>
+				<tooltip xml:lang="de">Bremskonfiguration mittels asymmetrischer DCC-Digitalspannung</tooltip>
+				<tooltip xml:lang="nl">Rem op asymmetrische DCC</tooltip>
+			</variable>
+			<!-- CV 27 bit 4-5 Märklin DC Braking -->
+			<variable item="Marklin Brake Mode" CV="27" mask="XXVVXXXX">
+				<enumVal>
+					<enumChoice choice="Does Not Stop">
+						<choice>Inactive</choice>
+						<choice xml:lang="it">Non si ferma</choice>
+						<choice xml:lang="cs">Nezastavuje</choice>
+						<choice xml:lang="de">Kein Bremsen</choice>
+						<choice xml:lang="nl">Niet actief</choice>
+					</enumChoice>
+					<enumChoice choice="Stops on DC">
+						<choice>Polarity against direction</choice>
+						<choice xml:lang="de">Wenn Polarität entgegen der Fahrtrichtung</choice>
+						<choice xml:lang="nl">Spanning tegengesteld aan rijrichting</choice>
+					</enumChoice>
+					<enumChoice choice="Stops on opposite DC">
+						<choice>Polarity in same direction</choice>
+						<choice xml:lang="de">Wenn Polarität mit der Fahrtrichtung</choice>
+						<choice xml:lang="nl">Spanning in rijrichting</choice>
+					</enumChoice>
+					<enumChoice choice="Stops in Both Directions">
+						<choice>In Either Direction</choice>
+						<choice xml:lang="de">In entweder Richtung</choice>
+						<choice xml:lang="nl">In beide richtingen</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Märklin Brake mode</label>
+				<label xml:lang="de">Märklin Bremsmodus</label>
+				<label xml:lang="nl">Märklin Remmen</label>
+				<tooltip>Brake on analog DC detect</tooltip>
+				<tooltip xml:lang="de">Bremsen mit analoge DC Gleichspannung</tooltip>
+				<tooltip xml:lang="nl">Remmen met analoge DC gelijkspanning</tooltip>
+			</variable>
+			<variable item="RailCom channel 1 (Broadcast)" CV="28" mask="XXXXXXXV">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>RailCom channel 1 (Broadcast)</label>
+				<label xml:lang="it">RailCom canale 1 (Broadcast)</label>
+				<label xml:lang="cs">RailCom kanál 1 (adresa)</label>
+				<label xml:lang="de">RailCom Kanal 1 (Broadcast)</label>
+				<label xml:lang="nl">RailCom Kanaal 1 (Broadcast)</label>
+			</variable>
+			<variable item="RailCom channel 2 (Data)" CV="28" mask="XXXXXXVX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>RailCom channel 2 (Data)</label>
+				<label xml:lang="it">RailCom canale 2 (Dati)</label>
+				<label xml:lang="cs">RailCom kanál 2 (data)</label>
+				<label xml:lang="de">RailCom Kanal 2 (Daten)</label>
+				<label xml:lang="nl">RailCom Kanaal 1 (Data)</label>
+			</variable>
+			<variable item="RailCom Plus" CV="28" mask="VXXXXXXX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>RailCom Plus®</label>
+			</variable>
+			<!-- CV 29 DCC Configuration -->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+			<!--CV 29 bit5 already declared as part of nmra/shortAndLongAddress.xml incl-->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29RailCom.xml"/>
+			<!-- CV 30 Error memory -->
+			<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv30error.xml"/>
+			<!-- CV 31 - 32 Banks are on cv257.512extendedmap include -->
+			<!-- CV 33 - 46 simple function mapping -->
+			<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/functionmapID2outputs.xml"/>
+			<!--Motorola addresses - read only-->
+			<variable item="Motorola 1" CV="47" readOnly="yes" default="12">
+				<decVal/>
+				<label>Motorola 1st Trinary Address</label>
+				<label xml:lang="de">Motorola 1. trinäre adresse</label>
+				<label xml:lang="nl">1e trinair Motorola adres</label>
+			</variable>
+			<variable item="Motorola 2" CV="48" readOnly="yes">
+				<decVal/>
+				<label>Motorola 2nd Trinary Address</label>
+				<label xml:lang="de">Motorola 2. trinäre adresse</label>
+				<label xml:lang="nl">2e trinair Motorola adres</label>
+			</variable>
+			<variable item="Motorola 3" CV="49" readOnly="yes">
+				<decVal/>
+				<label>Motorola 3rd Trinary Address</label>
+				<label xml:lang="de">Motorola 3. trinäre adresse</label>
+				<label xml:lang="nl">3e trinair Motorola adres</label>
+			</variable>
+			<!-- CV 50 - 51 decoder configuration -->
+			<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv50.51config.xml"/>
+			<!-- CV 53 - 58  Motor Control-->
+			<variable item="EMF Option 1" CV="53" default="20">
+				<decVal max="255"/>
+				<label>Repetition rate</label>
+				<label xml:lang="de">Minimale Periodendauer der Motorregelung</label>
+				<label xml:lang="nl">Herhaling Motorregeling</label>
+				<tooltip>Lower if the locomotive does not run smoothly - Value * 0.1 msec</tooltip>
+				<tooltip xml:lang="de">verkleinern, wenn Lok ungleichmäßig läuft in 100μs Schritten (max = CV 202)</tooltip>
+				<tooltip xml:lang="nl">verlaag als Loc ongelijkmatig rijdt - Waarde * 0,1 ms</tooltip>
+			</variable>
+			<variable item="EMF Static Config" CV="54" default="100">
+				<decVal max="255"/>
+				<label>Motor regulation P Constant PID</label>
+				<label xml:lang="de">Motorregelung P-Konstante PID</label>
+				<label xml:lang="nl">Motorregeling P-Constante PID</label>
+			</variable>
+			<variable item="EMF Dynamic Config" CV="55" default="44">
+				<decVal max="255"/>
+				<label>Motor regulation I Constant PID</label>
+				<label xml:lang="de">Motorregelung I-Konstante PID</label>
+				<label xml:lang="nl">Motorregeling I-Constante PID</label>
+			</variable>
+			<variable item="EMF Droop Config" CV="56" default="32">
+				<decVal max="255"/>
+				<label>Motor regulation D Constant PID</label>
+				<label xml:lang="de">Motorregelung D-Konstante PID</label>
+				<label xml:lang="nl">Motorregeling D-Constante PID</label>
+			</variable>
+			<variable item="EMF Option 3" CV="57" default="4">
+				<decVal max="255"/>
+				<label>Control Offset</label>
+				<label xml:lang="de">Regeler Offset</label>
+				<label xml:lang="nl">Regelaar Offset</label>
+				<tooltip>Lower Value if top speed too low, Raise Value if Speed at Step 1 too fast</tooltip>
+				<tooltip xml:lang="de">verkleinern, wenn Höchstgeschwindigkeit zu gering - vergrößern, wenn geschwindigkeit Schritt 1 zu schnell</tooltip>
+				<tooltip xml:lang="nl">verlaag als topsnelheid te laag - verhoog als snelheid in Stap 1 te snel</tooltip>
+			</variable>
+			<variable item="EMF Option 2" CV="58" default="5">
+				<decVal max="255"/>
+				<label>Time slot for AD measurement</label>
+				<label xml:lang="de">Messlücke zur EMK Messung</label>
+				<label xml:lang="nl">Tijdsduur AD-meting</label>
+				<tooltip>Increase if loc does not run smoothly at low speeds - Decrease if the top speed is too low after CV53 has been lowered</tooltip>
+				<tooltip xml:lang="de">vergrößern, wenn Lok bei geringer Geschwindigkeit ungleichmäßig läuft; verkleinern, wenn bei heruntergesetztem CV 53 Höchstgeschwindigkeit der Lok zu gering ist</tooltip>
+				<tooltip xml:lang="nl">verhoog als de Loc op lage snelheid onregelmatig rijdt; verlaag als bij verlaagde CV 53 topsnelheid van Loc te laag is</tooltip>
+			</variable>
+			<!--CV59 Reset incl at the bottom-->
+			<variable item="Short circuit supervision" CV="60" readOnly="yes">
+				<decVal max="9"/>
+				<label>Motor and Function Output Short circuit supervision</label>
+				<label xml:lang="de">Kurzschlussüberwachung Motor- und Funktionsausgänge</label>
+				<label xml:lang="nl">Kortsluitbeveiliging Motor- und Functie-uitgangen</label>
+				<tooltip>Do not change! 0=deactivated - 137=activated</tooltip>
+			</variable>
+			<variable item="Shutdown Temperature" CV="61" readOnly="yes">
+				<decVal/>
+				<label>Shutdown Temperature</label>
+				<label xml:lang="de">Abschalttemperatur</label>
+				<label xml:lang="nl">Uitschakeltemperatuur</label>
+				<tooltip>in °C, different with each decoder</tooltip>
+			</variable>
+			<variable item="Function Outputs Short Constant" CV="62" readOnly="yes">
+				<decVal/>
+				<label>Function Outputs Short Constant</label>
+				<label xml:lang="de">Kurzschlussüberwachung Fkt.-Ausgänge</label>
+				<label xml:lang="nl">Kortsluitbeveiliging functieuitgangen</label>
+			</variable>
+			<variable item="Motor Output Short Constant" CV="63" readOnly="yes">
+				<decVal/>
+				<label>Motor Output Short Constant</label>
+				<label xml:lang="de">Kurzschlussüberwachung Motorausgang</label>
+				<label xml:lang="nl">Kortsluitbeveiliging motoruitgang</label>
+			</variable>
+			<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv64.65registers.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
+			<!-- CV66 -->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
+			<!-- CV95 -->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
+			<variable item="Advanced Function Mapping" CV="96" default="1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+				<label>Use Advanced Function Mapping</label>
+				<label xml:lang="de">Erweitertes Funktionsmapping aktiv</label>
+				<label xml:lang="nl">Uitgebreide Functiemapping actief</label>
+				<label xml:lang="cs">Použití mapování pokročilých funkcí</label>
+				<tooltip>0 = einfaches Funtionsmapping, 1 = erweitertes Funktionsmapping</tooltip>
+				<tooltip xml:lang="de">0 = Simple Function Mapping, 1 = Advanced Function Mapping</tooltip>
+			</variable>
+			<variable item="ABC Braking Value" CV="97" default="8">
+				<decVal/>
+				<label>ABC detection threshold</label>
+				<label xml:lang="de">ABC Modus „Empfindlichkeit”</label>
+				<label xml:lang="nl">ABC Remdrempel</label>
+				<label xml:lang="cs">ABC práh detekce</label>
+				<tooltip>Voltage drop in Diode block = CV value * 0.12 Volts</tooltip>
+				<tooltip xml:lang="de">Spannungsdifferenz für Diodenstrecke ist ca. CV-Wert * 0,12V</tooltip>
+				<tooltip xml:lang="nl">Spanningsval over Diodebaanvak is ong. CV-Waarde * 0,12V</tooltip>
+				<tooltip xml:lang="cs">Úbytek napětí na diodách = hodnota CV × 0,12 V</tooltip>
+			</variable>
+			<variable item="ABC Slow Speed" CV="98" default="30">
+				<decVal/>
+				<label>ABC mode reduced speed</label>
+				<label xml:lang="de">ABC Modus „Langsamfahrt”</label>
+				<label xml:lang="ca">Velociatat limitada en mode ABC</label>
+				<label xml:lang="nl">ABC-modus Langzaamrijden</label>
+				<label xml:lang="cs">ABC režim snížení rychlosti</label>
+				<tooltip>Speed in ABC Slow block</tooltip>
+				<tooltip xml:lang="de">Geschwindigkeit in der ABC Langsamfahrstrecke</tooltip>
+				<tooltip xml:lang="nl">Snelheid in ABC Langzaamrijden baanvak</tooltip>
+				<tooltip xml:lang="cs">Rychlost v ABC úseku</tooltip>
+			</variable>
+			<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv107.108indepOutputs.xml"/>
+			<!--<variable item="Fn Map Shift F1" CV="100" default="0" mask="XXXXXXXV">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            </variable>
+            <variable item="Fn Map Shift F2" CV="100" default="0" mask="XXXXXXVX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            </variable>
+            <variable item="Fn Map Shift F3" CV="100" default="0" mask="XXXXXVXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            </variable>
+            <variable item="Fn Map Shift F4" CV="100" default="0" mask="XXXXVXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            </variable>
+            <variable item="Fn Map Shift F0f" CV="100" default="0" mask="XXXVXXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            </variable>
+            <variable item="Fn Map Shift F0r" CV="100" default="0" mask="XXVXXXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            </variable>
+            <variable item="Fn Map Shift F5" CV="101" default="0" mask="XXXXXXXV">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            </variable>
+            <variable item="Fn Map Shift F6" CV="101" default="0" mask="XXXXXXVX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            </variable>
+            <variable item="Fn Map Shift F7" CV="101" default="0" mask="XXXXXVXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            </variable>
+            <variable item="Fn Map Shift F8" CV="101" default="0" mask="XXXXVXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            </variable>
+            <variable item="Fn Map Shift F9" CV="101" default="0" mask="XXXVXXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            </variable>
+            <variable item="Fn Map Shift F10" CV="101" default="0" mask="XXVXXXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            </variable>
+            <variable item="Fn Map Shift F11" CV="101" default="0" mask="XVXXXXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            </variable>
+            <variable item="Fn Map Shift F12" CV="101" default="0" mask="VXXXXXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            </variable>
+            <variable item="Function Map Option 1" CV="101">
+                <decVal/>
+                <label>Set Fn Mapping Shift on tab Uhlenbrock to map F0-F12 to A2-A7</label>
+                <label xml:lang="de">Fn Mapping Shift eingeben auf Reiter Uhlenbrock um F0-F12 auf A2-A7 zu verbinden</label>
+                <label xml:lang="nl">Configureer Fn Mapping Shift op tab Uhlenbrock om F0-F12 te mappen naar A2-A7</label>
+                <tooltip>instead of to A0-A4 (don't edit here)</tooltip>
+                <tooltip xml:lang="de">statt A0-A4 (nicht hier ändern)</tooltip>
+                <tooltip xml:lang="nl">in plaats van normaal A0-A4 (dit veld niet bewerken)</tooltip>
+            </variable>-->
+			<variable item="Analog Control option 1" CV="102" default="2" mask="XXXXXXVV">
+				<enumVal>
+					<enumChoice choice="Inactive">
+						<choice>Inactive</choice>
+						<choice xml:lang="it">Non si ferma</choice>
+						<choice xml:lang="cs">Neaktivní</choice>
+						<choice xml:lang="de">Keine Regelung</choice>
+						<choice xml:lang="nl">Geen Regeling</choice>
+					</enumChoice>
+					<enumChoice choice="Max CV106">
+						<choice>Max. speed from CV106</choice>
+						<choice xml:lang="de">max. Geschw. wie CV106</choice>
+						<choice xml:lang="nl">max. snelheid vlg. CV106</choice>
+					</enumChoice>
+					<enumChoice choice="Compare voltage to CV103-104">
+						<choice>Compare voltage to CV103-104</choice>
+						<choice xml:lang="de">Trafospng. messen und CV103-104</choice>
+						<choice xml:lang="nl">Spanning meten t.o.v. CV103-104</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Analog Operation Max Speed</label>
+				<label xml:lang="de">Analogbetrieb Max Speed</label>
+				<label xml:lang="nl">Max. Snelheid in Analoogbedrijf</label>
+				<tooltip>uses CVs 103-106 below</tooltip>
+				<tooltip xml:lang="de">benutzt unterstehende CVs 103-106</tooltip>
+				<tooltip xml:lang="nl">gebruikt de volgende CV's 103-106</tooltip>
+			</variable>
+			<variable item="Analog Control option 2" CV="102" default="3" mask="XXXXVVXX">
+				<enumVal>
+					<enumChoice choice="Control Off">
+						<choice>Inactive</choice>
+						<choice xml:lang="it">Non si ferma</choice>
+						<choice xml:lang="cs">Neaktivní</choice>
+						<choice xml:lang="de">Keine Regelung</choice>
+						<choice xml:lang="nl">Geen Regeling</choice>
+					</enumChoice>
+					<enumChoice choice="PID Control" value="1">
+						<choice>PID Control</choice>
+						<choice xml:lang="de">PID-Regler</choice>
+						<choice xml:lang="nl">PID-Regelaar</choice>
+					</enumChoice>
+					<enumChoice choice="SX Control" value="3">
+						<choice>SX Control</choice>
+						<choice xml:lang="de">SX-Regler</choice>
+						<choice xml:lang="nl">SX-Regelaar</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Analog Operation Control</label>
+				<label xml:lang="de">Analogbetrieb Regelung</label>
+				<label xml:lang="nl">Regeling bij Analoogbedrijf</label>
+				<tooltip>uses CVs 103-106 below</tooltip>
+				<tooltip xml:lang="de">benutzt untenstehende CVs 103-106</tooltip>
+				<tooltip xml:lang="nl">gebruikt de volgende CV's 103-106</tooltip>
+			</variable>
+			<variable CV="102" item="Analog Control check 1" default="1" mask="XXXVXXXX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>Dynamic repeat rate on</label>
+				<label xml:lang="de">dynamische Wiederholrate ein</label>
+				<label xml:lang="nl">dynamische Herhaling</label>
+			</variable>
+			<variable item="Analog Control slider 1" CV="103" default="150">
+				<decVal/>
+				<label>Minimum Voltage</label>
+				<label xml:lang="de">Mindest Trafospannung</label>
+				<label xml:lang="nl">Laagste Rijspanning</label>
+				<tooltip>for V = 0</tooltip>
+				<tooltip xml:lang="de">für Vsoll = 0</tooltip>
+				<tooltip xml:lang="nl">voor Vwens = 0</tooltip>
+			</variable>
+			<variable item="Analog Control slider 2" CV="104" default="180">
+				<decVal/>
+				<label>Maximum Voltage</label>
+				<label xml:lang="de">Maximale Trafospannung</label>
+				<label xml:lang="nl">Maximum Rijspanning</label>
+				<tooltip>for V = Vmax</tooltip>
+				<tooltip xml:lang="de">für Vsoll = Vmax</tooltip>
+				<tooltip xml:lang="nl">voor Vwens = Vmax</tooltip>
+			</variable>
+			<variable item="Analog Control slider 3" CV="105" default="30">
+				<decVal/>
+				<label>Hysteresis</label>
+				<label xml:lang="de">Hysterese</label>
+				<label xml:lang="nl">Hysteresis</label>
+				<tooltip>in analog mode</tooltip>
+				<tooltip xml:lang="de">in Analogmodus</tooltip>
+				<tooltip xml:lang="nl">tijdens Analoog rijden</tooltip>
+			</variable>
+			<variable item="Analog Control slider 4" CV="106" default="200">
+				<decVal/>
+				<label>Vmax (Analog)</label>
+				<tooltip>in analog mode</tooltip>
+				<tooltip xml:lang="de">im Analogmodus</tooltip>
+				<tooltip xml:lang="nl">tijdens Analoog rijden</tooltip>
+			</variable>
+			<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv115lissy.xml"/>
+			<!-- CV 109 - 114, 116 - 123, 150 - 157 -->
+			<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/optionVars7outputsID2.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv124.129coupling.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv130.134smoke.xml"/>
+			<!--Rangiertango-->
+			<variable item="Rangiertango Step" CV="135" default="0">
+				<decVal/>
+				<label>Shunting Speed</label>
+				<label xml:lang="de">Rangiertango Fahrstufe</label>
+				<label xml:lang="nl">Rangeersnelheid</label>
+				<tooltip>Autom. shunting speed (0 = Tango Off)</tooltip>
+				<tooltip xml:lang="de">Fahrtgeschwindigkeit in Automatikbetrieb (0 = Tango Aus)</tooltip>
+				<tooltip xml:lang="nl">Rangeersnelheid (0 = Tango Uit)</tooltip>
+			</variable>
+			<variable item="Rangiertango Pushtime" CV="136" default="10">
+				<decVal/>
+				<label>Push Duration</label>
+				<label xml:lang="de">Andrückzeit T1</label>
+				<label xml:lang="nl">Aanduwtijd</label>
+				<tooltip>Coupling Push Duration T1 * 0.1 Sec</tooltip>
+				<tooltip xml:lang="de">Andrückzeit T1 * 0,1 Sek</tooltip>
+				<tooltip xml:lang="nl">Aanduwtijd T1 * 0,1 Sek</tooltip>
+			</variable>
+			<variable item="Rangiertango Pulltime" CV="137" default="10">
+				<decVal/>
+				<label>Retract Duration</label>
+				<label xml:lang="de">Abrückzeit T2</label>
+				<label xml:lang="nl">Wegrijtijd</label>
+				<tooltip>Decoupling Pull Duration T2 * 0.1 Sec</tooltip>
+				<tooltip xml:lang="de">Abrückzeit T2 * 0,1 Sek</tooltip>
+				<tooltip xml:lang="nl">Terugrijtijd T2 * 0,1 s</tooltip>
+			</variable>
+			<!-- CV 138 - 143 Bremsweg-->
+			<variable item="Constant Brakedist Threshold" CV="138" default="0">
+				<decVal/>
+				<label>Speed Step Threshold</label>
+				<label xml:lang="de">Fahrstufenschwellwert</label>
+				<label xml:lang="nl">Snelheidsdrempel</label>
+				<tooltip>Only above this speed step is constant distance braking applied. 0 = Off</tooltip>
+				<tooltip xml:lang="de">Erst oberhalb wird mit konstanter Bremsweg gebremst. 0 = Aus</tooltip>
+				<tooltip xml:lang="nl">Pas vanaf deze snelheid werkt vaste remweg. 0 = Uit</tooltip>
+			</variable>
+			<variable item="Constant Brakedist 1" CV="139" default="50">
+				<decVal/>
+				<label>Brake Distance</label>
+				<label xml:lang="de">Konstanter Bremsweg</label>
+				<label xml:lang="nl">Remafstand</label>
+				<tooltip>First brake distance (in cm)</tooltip>
+				<tooltip xml:lang="de">Erster Bremweg (in cm)</tooltip>
+				<tooltip xml:lang="nl">1e Remweg (in cm)</tooltip>
+			</variable>
+			<variable item="Constant Brakedist 2" CV="140" default="25">
+				<decVal/>
+				<label>Brake Distance w/CROSS</label>
+				<label xml:lang="de">Konstanter Bremsweg alternativ mit CROSS</label>
+				<label xml:lang="nl">Remafstand met CROSS</label>
+				<tooltip>Alternative brake distance (in cm), activated by CROSS-bit</tooltip>
+				<tooltip xml:lang="de">Alternativer Bremsweg (in cm), aktiviert durch CROSS-bit</tooltip>
+				<tooltip xml:lang="nl">Alternatieve Remweg (in cm), geactiveerd door CROSS-bit</tooltip>
+			</variable>
+			<variable item="Constant Brakedist Max" CV="141" default="80">
+				<decVal/>
+				<label>Max. Speed</label>
+				<label xml:lang="de">Max. Geschwindigkeit</label>
+				<label xml:lang="nl">Max. snelheid</label>
+				<tooltip>Maximum speed of loco (in cm/sec)</tooltip>
+				<tooltip xml:lang="de">Maximalgeschwindigkeit der Modellok (in cm/S)</tooltip>
+				<tooltip xml:lang="nl">Maximumsnelheid van lok (in cm/s)</tooltip>
+			</variable>
+			<variable item="Constant Brakedist Rest" CV="142" default="120">
+				<decVal/>
+				<label>Rest Speed</label>
+				<label xml:lang="de">Rest. Geschwindigkeit</label>
+				<label xml:lang="nl">Restsnelheid</label>
+				<tooltip>Remainder of calculated max. speed (255 = 100%)</tooltip>
+				<tooltip xml:lang="de">Restwert der ermittelten Maximalgeschwindigkeit (255 = 100%)</tooltip>
+				<tooltip xml:lang="nl">Restant van berekende maximum (255 = 100%)</tooltip>
+			</variable>
+			<variable item="Constant Brakedist Trigger" CV="143">
+				<enumVal>
+					<enumChoice choice="Off">
+						<choice>Inactive</choice>
+						<choice xml:lang="it">Non si ferma</choice>
+						<choice xml:lang="cs">Vypnuto</choice>
+						<choice xml:lang="de">Ausgeschaltet</choice>
+						<choice xml:lang="nl">Uitgeschakeld</choice>
+					</enumChoice>
+					<enumChoice choice="ALL" value="15">
+						<choice>All Types</choice>
+						<choice xml:lang="de">Alle Bremstypen</choice>
+						<choice xml:lang="nl">Alle methodes</choice>
+					</enumChoice>
+					<enumChoice choice="Step 0" value="1">
+						<choice>Speed Step 0</choice>
+						<choice xml:lang="de">Sollfahrstufe 0</choice>
+						<choice xml:lang="nl">Snelheidsstap 0</choice>
+					</enumChoice>
+					<enumChoice choice="ABC" value="2">
+						<choice>ABC Braking</choice>
+						<choice xml:lang="de">ABC  Bremsen</choice>
+						<choice xml:lang="nl">ABC Remmen</choice>
+					</enumChoice>
+					<enumChoice choice="DC" value="4">
+						<choice>DC Braking</choice>
+						<choice xml:lang="de">DC Bremsen</choice>
+						<choice xml:lang="nl">DC Remmen</choice>
+					</enumChoice>
+					<enumChoice choice="DCC" value="8">
+						<choice>DCC Brake Signal</choice>
+						<choice xml:lang="de">DCC Bremssignal</choice>
+						<choice xml:lang="nl">DCC Remsignaal</choice>
+					</enumChoice>
+					<enumChoice choice="Step 0 ABC" value="3">
+						<choice>Step 0 and ABC Braking</choice>
+						<choice xml:lang="de">Stufe 0 u. ABC Bremsen</choice>
+						<choice xml:lang="nl">Stap 0 en ABC Remmen</choice>
+					</enumChoice>
+					<enumChoice choice="Step 0 DC" value="5">
+						<choice>Step 0 and DC Braking</choice>
+						<choice xml:lang="de">Stufe 0 u. DC Bremsen</choice>
+						<choice xml:lang="nl">Stap 0 en DC Remmen</choice>
+					</enumChoice>
+					<enumChoice choice="Step 0 DCC" value="9">
+						<choice>Step 0 and DCC Braking</choice>
+						<choice xml:lang="de">Stufe 0 u. DCC Bremsen</choice>
+						<choice xml:lang="nl">Stap 0 en DCC Remmen</choice>
+					</enumChoice>
+					<enumChoice choice="Step 0 ABC DC" value="10">
+						<choice>Step 0, ABC and DC Braking</choice>
+						<choice xml:lang="de">Stufe 0, ABC u. DC Bremsen</choice>
+						<choice xml:lang="nl">Stap 0, ABC en DC Remmen</choice>
+					</enumChoice>
+					<enumChoice choice="Step 0 ABC DCC" value="11">
+						<choice>Step 0, ABC and DCC Braking</choice>
+						<choice xml:lang="de">Stufe 0, ABC u. DCC Bremsen</choice>
+						<choice xml:lang="nl">Stap 0, ABC en DCC Remmen</choice>
+					</enumChoice>
+					<enumChoice choice="ABC DC" value="6">
+						<choice>ABC and DC Braking</choice>
+						<choice xml:lang="de">ABC u. DC Bremsen</choice>
+						<choice xml:lang="nl">ABC en DC Remmen</choice>
+					</enumChoice>
+					<enumChoice choice="ABC DCC" value="10">
+						<choice>ABC and DCC Braking Signal</choice>
+						<choice xml:lang="de">ABC u. DCC Bremssignal</choice>
+						<choice xml:lang="nl">ABC en DCC Remsignal</choice>
+					</enumChoice>
+					<enumChoice choice="DC DCC" value="12">
+						<choice>DC and DCC Braking Signal</choice>
+						<choice xml:lang="de">DC u. DCC Bremssignal</choice>
+						<choice xml:lang="nl">DC en DCC Remsignal</choice>
+					</enumChoice>
+					<enumChoice choice="ABC DC DCC" value="14">
+						<choice>ABC, DC and DCC Braking</choice>
+						<choice xml:lang="de">ABC, DC u. DCC Bremsen</choice>
+						<choice xml:lang="nl">ABC, DC en DCC Remmen</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Constant Braking Trigger</label>
+				<label xml:lang="de">Aktiviert durch</label>
+				<label xml:lang="nl">Geactiveerd door</label>
+				<tooltip>Select which (combination of) methods activates CB</tooltip>
+				<tooltip xml:lang="de">Welche Bremstypen aktivieren Konstanter Bremweg?</tooltip>
+				<tooltip xml:lang="nl">Welke remmethoden activeren constante Remweg?</tooltip>
+			</variable>
+			<variable item="Accel2" CV="144" default="12" comment="Range 0-255">
+				<decVal/>
+				<label>Acceleration Rate 2</label>
+				<label xml:lang="it">Accellerazione 2</label>
+				<label xml:lang="cs">Míra zrychlení 2</label>
+				<label xml:lang="fr">2ème Accelération</label>
+				<label xml:lang="de">2. Anfahrverzögerung</label>
+				<label xml:lang="nl">2e Wegrijvertraging</label>
+				<tooltip>Range 0-255</tooltip>
+				<tooltip xml:lang="it">Valori 0-255</tooltip>
+				<tooltip xml:lang="cs">Meze 0-255</tooltip>
+				<tooltip xml:lang="fr">Valeur 0-255</tooltip>
+				<tooltip xml:lang="de">Wert 0-255</tooltip>
+				<tooltip xml:lang="nl">Waarde van 0-255</tooltip>
+			</variable>
+			<variable item="Decel2" CV="145" default="12" comment="Range 0-255">
+				<decVal/>
+				<label>Deceleration Rate 2</label>
+				<label xml:lang="it">Decellerazione 2</label>
+				<label xml:lang="cs">Míra zpomalení 2</label>
+				<label xml:lang="fr">2ème Décélération</label>
+				<label xml:lang="de">2. Bremsverzögerung</label>
+				<label xml:lang="nl">2e Remvertraging</label>
+				<tooltip>Range 0-255</tooltip>
+				<tooltip xml:lang="it">Valori 0-255</tooltip>
+				<tooltip xml:lang="cs">Meze 0-255</tooltip>
+				<tooltip xml:lang="fr">Valeur 0-255</tooltip>
+				<tooltip xml:lang="de">Wert 0-255</tooltip>
+				<tooltip xml:lang="nl">Waarde van 0-255</tooltip>
+			</variable>
+			<variable item="Accel3" CV="146" default="24" comment="Range 0-255">
+				<decVal/>
+				<label>Acceleration Rate 3</label>
+				<label xml:lang="it">Accellerazione 3</label>
+				<label xml:lang="cs">Míra zrychlení 3</label>
+				<label xml:lang="fr">3ème Accelération</label>
+				<label xml:lang="de">3. Anfahrverzögerung</label>
+				<label xml:lang="nl">3e Wegrijvertraging</label>
+				<tooltip>Range 0-255</tooltip>
+				<tooltip xml:lang="it">Valori 0-255</tooltip>
+				<tooltip xml:lang="cs">Meze 0-255</tooltip>
+				<tooltip xml:lang="fr">Valeur 0-255</tooltip>
+				<tooltip xml:lang="de">Wert 0-255</tooltip>
+				<tooltip xml:lang="nl">Waarde van 0-255</tooltip>
+			</variable>
+			<variable item="Decel3" CV="147" default="24" comment="Range 0-255">
+				<decVal/>
+				<label>Deceleration Rate 3</label>
+				<label xml:lang="it">Decellerazione 3</label>
+				<label xml:lang="cs">Míra zpomalení 3</label>
+				<label xml:lang="fr">3ème Décélération</label>
+				<label xml:lang="de">3. Bremsverzögerung</label>
+				<label xml:lang="nl">3e Remvertraging</label>
+				<tooltip>Range 0-255</tooltip>
+				<tooltip xml:lang="it">Valori 0-255</tooltip>
+				<tooltip xml:lang="cs">Meze 0-255</tooltip>
+				<tooltip xml:lang="fr">Valeur 0-255</tooltip>
+				<tooltip xml:lang="de">Wert 0-255</tooltip>
+				<tooltip xml:lang="nl">Waarde van 0-255</tooltip>
+			</variable>
+			<variable item="ABV2 F Key" CV="148" default="255">
+				<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoiceOff255.xml"/>
+				<label>Key to activate Rate 2:</label>
+				<label xml:lang="de">ABV2 Funktionstaste (0-28):</label>
+				<label xml:lang="nl">ABV2 Functietoets:</label>
+			</variable>
+			<variable item="ABV3 F Key" CV="149" default="255">
+				<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoiceOff255.xml"/>
+				<label>Key to activate Rate 3:</label>
+				<label xml:lang="de">ABV3 Funktionstaste (0-28):</label>
+				<label xml:lang="nl">ABV3 Functietoets:</label>
+			</variable>
+			<!-- CV 150 - 157 are in optionVars7outputsID2.xml include -->
+			<!-- CV 159 pass Function Key to SUSI-->
+			<variable item="SUSI F22" CV="159" mask="XXXXXXXV" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>Pass F Key to SUSI</label>
+			</variable>
+			<variable item="SUSI F23" CV="159" mask="XXXXXXVX" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="SUSI F24" CV="159" mask="XXXXXVXX" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="SUSI F25" CV="159" mask="XXXXVXXX" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="SUSI F26" CV="159" mask="XXXVXXXX" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="SUSI F27" CV="159" mask="XXVXXXXX" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="SUSI F28" CV="159" mask="XVXXXXXX" default="0">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<!-- CV 160 - 168 Servossteuerung -->
+			<variable item="Servo 1 Pos 1" CV="160" default="20">
+				<decVal/>
+				<label>Servo 1 - Position 1</label>
+				<label xml:lang="de">Servo 1 - Stellung 1</label>
+				<label xml:lang="nl">Servo 1 - Positie 1</label>
+				<tooltip>Function key Off</tooltip>
+				<tooltip xml:lang="de">Funktionstaste Aus</tooltip>
+				<tooltip xml:lang="nl">Functietoets Uit</tooltip>
+			</variable>
+			<variable item="Servo 1 Pos 2" CV="161" default="200">
+				<decVal/>
+				<label>Position 2</label>
+				<label xml:lang="de">Stellung 2</label>
+				<label xml:lang="nl">Positie 2</label>
+				<tooltip>Function key On</tooltip>
+				<tooltip xml:lang="de">Funktionstaste Ein</tooltip>
+				<tooltip xml:lang="nl">Functietoets Aan</tooltip>
+			</variable>
+			<variable item="Servo 1 Speed" CV="162" default="30">
+				<decVal/>
+				<label>Speed</label>
+				<label xml:lang="de">Umlaufzeit</label>
+				<label xml:lang="nl">Omlooptijd</label>
+				<tooltip>Duration of full Servo 1 rotation (Value * 0.1 sec)</tooltip>
+				<tooltip xml:lang="de">Umlaufzeit Servo 1 (Wert * 0.1 sec)</tooltip>
+				<tooltip xml:lang="nl">Duur van hele rotatie Servo 1 (waarde * 0.1 sec)</tooltip>
+			</variable>
+			<variable item="Servo 2 Pos 1" CV="163" default="20">
+				<decVal/>
+				<label>Servo 2 - Position 1</label>
+				<label xml:lang="de">Servo 2 - Stellung 1</label>
+				<label xml:lang="nl">Servo 2 - Positie 1</label>
+				<tooltip>Function key Off</tooltip>
+				<tooltip xml:lang="de">Funktionstaste Aus</tooltip>
+				<tooltip xml:lang="nl">Functietoets Uit</tooltip>
+			</variable>
+			<variable item="Servo 2 Pos 2" CV="164" default="200">
+				<decVal/>
+				<label>Position 2</label>
+				<label xml:lang="de">Stellung 2</label>
+				<label xml:lang="nl">Positie 2</label>
+				<tooltip>Function key On</tooltip>
+				<tooltip xml:lang="de">Funktionstaste Ein</tooltip>
+				<tooltip xml:lang="nl">Functietoets Aan</tooltip>
+			</variable>
+			<variable item="Servo 2 Speed" CV="165" default="30">
+				<decVal/>
+				<label>Speed</label>
+				<label xml:lang="de">Umlaufzeit</label>
+				<label xml:lang="nl">Omlooptijd</label>
+				<tooltip>Duration of full Servo 2 rotation (Value * 0.1 sec)</tooltip>
+				<tooltip xml:lang="de">Umlaufzeit Servo 2 (Wert * 0.1 sec)</tooltip>
+				<tooltip xml:lang="nl">Duur van hele rotatie Servo 2 (waarde * 0.1 sec)</tooltip>
+			</variable>
+			<variable item="Servo Connection" CV="166" default="0">
+				<enumVal>
+					<enumChoice choice="Off" value="0">
+						<choice>Inactive</choice>
+						<choice xml:lang="it">Non si ferma</choice>
+						<choice xml:lang="cs">Nezastavuje</choice>
+						<choice xml:lang="de">Ausgeschaltet</choice>
+						<choice xml:lang="nl">Uitgeschakeld</choice>
+					</enumChoice>
+					<enumChoice choice="SUSI" value="1">
+						<choice>SUSI</choice>
+					</enumChoice>
+					<enumChoice choice="A6" value="64">
+						<choice>A6</choice>
+						<choice xml:lang="de">AUX6</choice>
+						<choice xml:lang="nl">A6</choice>
+					</enumChoice>
+					<enumChoice choice="A7" value="128">
+						<choice>A7</choice>
+						<choice xml:lang="de">AUX7</choice>
+						<choice xml:lang="nl">A7</choice>
+					</enumChoice>
+					<enumChoice choice="A6 A7" value="192">
+						<choice>A6 and A7</choice>
+						<choice xml:lang="de">AUX6 and AUX 7</choice>
+						<choice xml:lang="nl">A6 en A7</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Servo Control on:</label>
+				<label xml:lang="de">Servosteuerung über:</label>
+				<label xml:lang="nl">Servobesturing op:</label>
+			</variable>
+			<variable item="Servo 1 F Key" CV="167" default="7">
+				<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoice.xml"/>
+				<label>Key on SUSI-CLK:</label>
+				<label xml:lang="de">Taste an SUSI-CLK:</label>
+				<label xml:lang="nl">Toets op SUSI-CLK:</label>
+			</variable>
+			<variable item="Servo 2 F Key" CV="168" default="8">
+				<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoice.xml"/>
+				<label>Key on SUSI-Data:</label>
+				<label xml:lang="de">Taste an SUSI-Data:</label>
+				<label xml:lang="nl">Toets op SUSI-Data:</label>
+			</variable>
+			<!-- PWM CV 170 - 180 -->
+			<variable item="PWM Modulation on A0" CV="170" mask="XVVVVVVV">
+				<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumPwm.xml"/>
+				<label>PWM Modulation on A0</label>
+				<label xml:lang="de">PWM-Verlauf auf A0</label>
+				<label xml:lang="nl">PWM Modulatie op A0</label>
+				<tooltip>Select one of the 8 available pulse modulations to be used on output A0</tooltip>
+				<tooltip xml:lang="de">Zuordnung eines der 8 PWM-Verläufe für Lichtausgang A0</tooltip>
+			</variable>
+			<variable item="PWM Cross on A0" CV="170" mask="VXXXXXXX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>On CROSS</label>
+				<label xml:lang="de">mit CROSS</label>
+				<label xml:lang="nl">met CROSS</label>
+				<tooltip>only when CROSS-bit is set</tooltip>
+				<tooltip xml:lang="de">nur aktiv wenn CROSS-Ausgabebit gesetzt</tooltip>
+			</variable>
+			<variable item="PWM Modulation on A1" CV="171" mask="XVVVVVVV" minOut="3">
+				<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumPwm.xml"/>
+				<label>PWM Modulation on A1</label>
+				<label xml:lang="de">PWM-Verlauf auf A1</label>
+				<label xml:lang="nl">PWM Modulatie op A1</label>
+				<tooltip>Select one of the 8 available pulse modulations to be used on output A1</tooltip>
+				<tooltip xml:lang="de">Zuordnung eines der 8 PWM-Verläufe für Lichtausgang A1</tooltip>
+			</variable>
+			<variable item="PWM Cross on A1" CV="171" mask="VXXXXXXX" minOut="3">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>On CROSS</label>
+				<label xml:lang="de">mit CROSS</label>
+				<label xml:lang="nl">met CROSS</label>
+				<tooltip>only when CROSS-bit is set</tooltip>
+				<tooltip xml:lang="de">nur aktiv wenn CROSS-Ausgabebit gesetzt</tooltip>
+			</variable>
+			<variable item="PWM Modulation on A2" CV="172" mask="XVVVVVVV" minOut="4">
+				<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumPwm.xml"/>
+				<label>PWM Modulation on A2</label>
+				<label xml:lang="de">PWM-Verlauf auf A2</label>
+				<label xml:lang="nl">PWM Modulatie op A2</label>
+				<tooltip>Select one of the 8 available pulse modulations to be used on output A2</tooltip>
+				<tooltip xml:lang="de">Zuordnung eines der 8 PWM-Verläufe für Lichtausgang A2</tooltip>
+			</variable>
+			<variable item="PWM Cross on A2" CV="172" mask="VXXXXXXX" minOut="4">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>On CROSS</label>
+				<label xml:lang="de">mit CROSS</label>
+				<label xml:lang="nl">met CROSS</label>
+				<tooltip>only when CROSS-bit is set</tooltip>
+				<tooltip xml:lang="de">nur aktiv wenn CROSS-Ausgabebit gesetzt</tooltip>
+			</variable>
+			<variable item="PWM Modulation on A3" CV="173" mask="XVVVVVVV" minOut="5">
+				<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumPwm.xml"/>
+				<label>PWM Modulation on A3</label>
+				<label xml:lang="de">PWM-Verlauf auf A3</label>
+				<label xml:lang="nl">PWM Modulatie op A3</label>
+				<tooltip>Select one of the 8 available pulse modulations to be used on output A3</tooltip>
+				<tooltip xml:lang="de">Zuordnung eines der 8 PWM-Verläufe für Lichtausgang A3</tooltip>
+			</variable>
+			<variable item="PWM Cross on A3" CV="173" mask="VXXXXXXX" minOut="5">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>On CROSS</label>
+				<label xml:lang="de">mit CROSS</label>
+				<label xml:lang="nl">met CROSS</label>
+				<tooltip>only when CROSS-bit is set</tooltip>
+				<tooltip xml:lang="de">nur aktiv wenn CROSS-Ausgabebit gesetzt</tooltip>
+			</variable>
+			<variable item="PWM Modulation on A4" CV="174" mask="XVVVVVVV" minOut="6">
+				<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumPwm.xml"/>
+				<label>PWM Modulation on A4</label>
+				<label xml:lang="de">PWM-Verlauf auf A4</label>
+				<label xml:lang="nl">PWM Modulatie op A4</label>
+				<tooltip>Select one of the 8 available pulse modulations to be used on output A4</tooltip>
+				<tooltip xml:lang="de">Zuordnung eines der 8 PWM-Verläufe für Lichtausgang A4</tooltip>
+			</variable>
+			<variable item="PWM Cross on A4" CV="174" mask="VXXXXXXX" minOut="6">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>On CROSS</label>
+				<label xml:lang="de">mit CROSS</label>
+				<label xml:lang="nl">met CROSS</label>
+				<tooltip>only when CROSS-bit is set</tooltip>
+				<tooltip xml:lang="de">nur aktiv wenn CROSS-Ausgabebit gesetzt</tooltip>
+			</variable>
+			<variable item="PWM Modulation on A5" CV="175" mask="XVVVVVVV" minOut="7">
+				<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumPwm.xml"/>
+				<label>PWM Modulation on A5</label>
+				<label xml:lang="de">PWM-Verlauf auf A5</label>
+				<label xml:lang="nl">PWM Modulatie op A5</label>
+				<tooltip>Select one of the 8 available pulse modulations to be used on output A5</tooltip>
+				<tooltip xml:lang="de">Zuordnung eines der 8 PWM-Verläufe für Lichtausgang A5</tooltip>
+			</variable>
+			<variable item="PWM Cross on A5" CV="175" mask="VXXXXXXX" minOut="7">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>On CROSS</label>
+				<label xml:lang="de">mit CROSS</label>
+				<label xml:lang="nl">met CROSS</label>
+				<tooltip>only when CROSS-bit is set</tooltip>
+				<tooltip xml:lang="de">nur aktiv wenn CROSS-Ausgabebit gesetzt</tooltip>
+			</variable>
+			<variable item="PWM Modulation on A6" CV="176" mask="XVVVVVVV" minOut="8">
+				<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumPwm.xml"/>
+				<label>PWM Modulation on A6</label>
+				<label xml:lang="de">PWM-Verlauf auf A6</label>
+				<label xml:lang="nl">PWM Modulatie op A6</label>
+				<tooltip>Select one of the 8 available pulse modulations to be used on output A6</tooltip>
+				<tooltip xml:lang="de">Zuordnung eines der 8 PWM-Verläufe für Lichtausgang A6</tooltip>
+			</variable>
+			<variable item="PWM Cross on A6" CV="176" mask="VXXXXXXX" minOut="8">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>On CROSS</label>
+				<label xml:lang="de">mit CROSS</label>
+				<label xml:lang="nl">met CROSS</label>
+				<tooltip>only when CROSS-bit is set</tooltip>
+				<tooltip xml:lang="de">nur aktiv wenn CROSS-Ausgabebit gesetzt</tooltip>
+			</variable>
+			<variable item="PWM Modulation on A7" CV="177" mask="XVVVVVVV" minOut="9">
+				<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumPwm.xml"/>
+				<label>PWM Modulation on A7</label>
+				<label xml:lang="de">PWM-Verlauf auf A7</label>
+				<label xml:lang="nl">PWM Modulatie op A7</label>
+				<tooltip>Select one of the 8 available pulse modulations to be used on output A7</tooltip>
+				<tooltip xml:lang="de">Zuordnung eines der 8 PWM-Verläufe für Lichtausgang A7</tooltip>
+			</variable>
+			<variable item="PWM Cross on A7" CV="177" mask="VXXXXXXX" minOut="9">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>On CROSS</label>
+				<label xml:lang="de">mit CROSS</label>
+				<label xml:lang="nl">met CROSS</label>
+				<tooltip>only when CROSS-bit is set</tooltip>
+				<tooltip xml:lang="de">nur aktiv wenn CROSS-Ausgabebit gesetzt</tooltip>
+			</variable>
+			<variable item="PWM Duration" CV="178" default="15">
+				<decVal/>
+				<label>PWM Duration</label>
+				<label xml:lang="de">PWM Periodendauer</label>
+				<label xml:lang="nl">PWM-duur</label>
+				<tooltip>Period display duration (value * 64 Milliseconds)</tooltip>
+				<tooltip xml:lang="de">Periodendauer der Wiedergabe (Wert * 64 ms)</tooltip>
+			</variable>
+			<variable item="PWM Phase A0" CV="179" mask="XXXXXXXV">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<tooltip>Unchecked/normal = 0 deg Checked/reversed = 180 deg</tooltip>
+				<tooltip xml:lang="de">Normal = 0 Grad Ausgewählt/umgekehrt = 180 Grad</tooltip>
+			</variable>
+			<variable item="PWM Phase A1" CV="179" mask="XXXXXXVX" minOut="3">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<tooltip>Unchecked/normal = 0 deg Checked/reversed = 180 deg</tooltip>
+				<tooltip xml:lang="de">Normal = 0 Grad Ausgewählt/umgekehrt = 180 Grad</tooltip>
+			</variable>
+			<variable item="PWM Phase A2" CV="179" mask="XXXXXVXX" minOut="4">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<tooltip>Unchecked/normal = 0 deg Checked/reversed = 180 deg</tooltip>
+				<tooltip xml:lang="de">Normal = 0 Grad Ausgewählt/umgekehrt = 180 Grad</tooltip>
+			</variable>
+			<variable item="PWM Phase A3" CV="179" mask="XXXXVXXX" minOut="5">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<tooltip>Unchecked/normal = 0 deg Checked/reversed = 180 deg</tooltip>
+				<tooltip xml:lang="de">Normal = 0 Grad Ausgewählt/umgekehrt = 180 Grad</tooltip>
+			</variable>
+			<variable item="PWM Phase A4" CV="179" mask="XXXVXXXX" minOut="6">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<tooltip>Unchecked/normal = 0 deg Checked/reversed = 180 deg</tooltip>
+				<tooltip xml:lang="de">Normal = 0 Grad Ausgewählt/umgekehrt = 180 Grad</tooltip>
+			</variable>
+			<variable item="PWM Phase A5" CV="179" mask="XXVXXXXX" minOut="7">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<tooltip>Unchecked/normal = 0 deg Checked/reversed = 180 deg</tooltip>
+				<tooltip xml:lang="de">Normal = 0 Grad Ausgewählt/umgekehrt = 180 Grad</tooltip>
+			</variable>
+			<variable item="PWM Phase A6" CV="179" mask="XVXXXXXX" minOut="8">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<tooltip>Unchecked/normal = 0 deg Checked/reversed = 180 deg</tooltip>
+				<tooltip xml:lang="de">Normal = 0 Grad Ausgewählt/umgekehrt = 180 Grad</tooltip>
+			</variable>
+			<variable item="PWM Phase A7" CV="179" mask="VXXXXXXX" minOut="9">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<tooltip>Unchecked/normal = 0 deg Checked/reversed = 180 deg</tooltip>
+				<tooltip xml:lang="de">Normal = 0 Grad Ausgewählt/umgekehrt = 180 Grad</tooltip>
+			</variable>
+			<variable item="PWM Wait" CV="180">
+				<decVal/>
+				<label>PWM Wait</label>
+				<label xml:lang="de">PWM Haltezeit</label>
+				<label xml:lang="nl">PWM-pauze</label>
+				<tooltip>Wait time after CROSS-bit off (value * 100 Milliseconds)</tooltip>
+				<tooltip xml:lang="de">Haltezeit nach dem CROSS-Ausgabebit aus (Wert * 100 ms)</tooltip>
+			</variable>
+			<!-- Light Effects CVs 181 - 190 -->
+			<variable item="Light Flicker A0" CV="181" mask="XXXXXXXV">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Flicker A1" CV="181" mask="XXXXXXVX" minOut="3">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Flicker A2" CV="181" mask="XXXXXVXX" minOut="4">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Flicker A3" CV="181" mask="XXXXVXXX" minOut="5">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Flicker A4" CV="181" mask="XXXVXXXX" minOut="6">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Flicker A5" CV="181" mask="XXVXXXXX" minOut="7">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Flicker A6" CV="181" mask="XVXXXXXX" minOut="8">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Flicker A7" CV="181" mask="VXXXXXXX" minOut="9">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Flicker Rythm" CV="182" default="0" mask="XXXXVVVV">
+				<decVal max="15"/>
+				<label>Flicker Effect - Rythm</label>
+				<label xml:lang="de">Flackereffekt - Rythmus</label>
+				<label xml:lang="nl">Flakkeren - Tempo</label>
+				<tooltip>Flicker Effect Speed Variation (0-15)</tooltip>
+				<tooltip xml:lang="de">Flackereffekt Rythmusvariation (0-15)</tooltip>
+				<tooltip xml:lang="nl">Tempovariatie (0-15)</tooltip>
+			</variable>
+			<variable item="Light Flicker Change" CV="182" default="0" mask="XVVVXXXX">
+				<decVal max="7"/>
+				<label>Variation</label>
+				<label xml:lang="de">Abwechslung</label>
+				<label xml:lang="nl">Helderheidswissel</label>
+				<tooltip>Flicker Effect brightness variation (0-7)</tooltip>
+				<tooltip xml:lang="de">Flackereffekt Helligkeitsabwechslung (0-7)</tooltip>
+				<tooltip xml:lang="nl">Helderheidsvariatie (0-7)</tooltip>
+			</variable>
+			<variable item="Light Flicker Bright" CV="182" mask="VXXXXXXX">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>Full Brightness</label>
+				<label xml:lang="de">Immer hell</label>
+				<label xml:lang="nl">Continu helder</label>
+				<tooltip>Output always full brightness</tooltip>
+				<tooltip xml:lang="de">Ausgang immer hell</tooltip>
+				<tooltip xml:lang="nl">Flakkeren zonder variatie, steeds op volle helderheid</tooltip>
+			</variable>
+			<variable item="Light Energy A0" CV="183" mask="XXXXXXXV">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Energy A1" CV="183" mask="XXXXXXVX" minOut="3">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Energy A2" CV="183" mask="XXXXXVXX" minOut="4">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Energy A3" CV="183" mask="XXXXVXXX" minOut="5">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Energy A4" CV="183" mask="XXXVXXXX" minOut="6">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Energy A5" CV="183" mask="XXVXXXXX" minOut="7">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Energy A6" CV="183" mask="XVXXXXXX" minOut="8">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Energy A7" CV="183" mask="VXXXXXXX" minOut="9">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Energy Start" CV="184" default="10">
+				<decVal max="63"/>
+				<label>Energy Save - Initial brightness</label>
+				<label xml:lang="de">Energiespar - Grundhelligkeit</label>
+				<label xml:lang="nl">Spaarlamp - Beginhelderheid</label>
+				<tooltip>(Value 0-63)</tooltip>
+				<tooltip xml:lang="de">(Wert 0-63)</tooltip>
+				<tooltip xml:lang="nl">(Bereik 0-63)</tooltip>
+			</variable>
+			<variable item="Light Energy Time" CV="185" default="100">
+				<decVal/>
+				<label>Warm Up Time</label>
+				<label xml:lang="de">Aufheizdauer</label>
+				<label xml:lang="nl">Opwarmtijd</label>
+				<tooltip>Energy Save - Time to reach full brightness - Value * 5 millisec</tooltip>
+				<tooltip xml:lang="de">Energiespar - Zeit bis maximale Helligkeit erreicht ist - Wert * 5 mSek</tooltip>
+				<tooltip xml:lang="nl">Spaarlamp - Duur totdat max. helderheid is bereikt - waarde * 5 ms</tooltip>
+			</variable>
+			<variable item="Light Blend A0" CV="186" mask="XXXXXXXV">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Blend A1" CV="186" mask="XXXXXXVX" minOut="3">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Blend A2" CV="186" mask="XXXXXVXX" minOut="4">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Blend A3" CV="186" mask="XXXXVXXX" minOut="5">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Blend A4" CV="186" mask="XXXVXXXX" minOut="6">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Blend A5" CV="186" mask="XXVXXXXX" minOut="7">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Blend A6" CV="186" mask="XVXXXXXX" minOut="8">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Blend A7" CV="186" mask="VXXXXXXX" minOut="9">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Blend Time" CV="187" default="30">
+				<decVal/>
+				<label>Blend In/Blend Out - Duration</label>
+				<label xml:lang="de">Ein-/Ausblenden - Blendzeit</label>
+				<label xml:lang="nl">In-/Uitfaden - Duur</label>
+				<tooltip>Blend Effect Duration - Value * 1 millisec</tooltip>
+				<tooltip xml:lang="de">Dauer des Blendes - Wert * 1 mSek</tooltip>
+				<tooltip xml:lang="nl">Duur van het verloop - waarde * 1 ms</tooltip>
+			</variable>
+			<variable item="Light Neon A0" CV="188" mask="XXXXXXXV">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Neon A1" CV="188" mask="XXXXXXVX" minOut="3">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Neon A2" CV="188" mask="XXXXXVXX" minOut="4">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Neon A3" CV="188" mask="XXXXVXXX" minOut="5">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Neon A4" CV="188" mask="XXXVXXXX" minOut="6">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Neon A5" CV="188" mask="XXVXXXXX" minOut="7">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Neon A6" CV="188" mask="XVXXXXXX" minOut="8">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Neon A7" CV="188" mask="VXXXXXXX" minOut="9">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			</variable>
+			<variable item="Light Neon Time" CV="189" default="20">
+				<decVal/>
+				<label>Neon - Flash Time</label>
+				<label xml:lang="de">Neonlicht - Blitzzeit</label>
+				<label xml:lang="nl">Neon - Knippertijd</label>
+				<tooltip>Start Flash Duration - Value * 5 millisec</tooltip>
+				<tooltip xml:lang="de">Dauer des Blitzen - Wert * 5 mSek</tooltip>
+				<tooltip xml:lang="nl">Duur van het knipperen - waarde * 5 ms</tooltip>
+			</variable>
+			<variable item="Light Neon Flashes" CV="190" default="20">
+				<decVal/>
+				<label>Max. no. of Flashes</label>
+				<label xml:lang="de">Max. Blitzanzahl</label>
+				<label xml:lang="nl">Max. aantal flitsen</label>
+				<tooltip>Maximum number of flashes on startup</tooltip>
+				<tooltip xml:lang="de">maximale Blitzanzahl</tooltip>
+				<tooltip xml:lang="nl">Maximum aantal keer knipperen na inschakelen</tooltip>
+			</variable>
+			<variable item="Motor Management 1" CV="200" default="10">
+				<decVal/>
+				<label>Minimum Speed Step</label>
+				<label xml:lang="de">Minimale Fahrstufe für min. Peridendauer</label>
+				<label xml:lang="cs">Minimální rychlostní krok</label>
+				<tooltip>Minimal speed step to which the Period = CV53 is set</tooltip>
+				<tooltip xml:lang="de">minimale Fahrstufe bis zu der die Periodendauer = CV53 gesetzt wird</tooltip>
+				<tooltip xml:lang="cs">Minimální rychlostní krok do kterého je doba trvání = CV53 nastaveno</tooltip>
+			</variable>
+			<variable item="Motor Management 2" CV="201" default="150">
+				<decVal/>
+				<label>Maximum Speed Step</label>
+				<label xml:lang="de">Maximale Fahrstufe für max. Periodendauer</label>
+				<label xml:lang="cs">Maximální rychlostní krok</label>
+				<tooltip>Maximal speed step from where the Period = CV202 is set</tooltip>
+				<tooltip xml:lang="de">maximale Fahrstufe ab der die Periodendauer = CV202 gesetzt wird</tooltip>
+				<tooltip xml:lang="cs">Maximální rychlostní krok od kterého je doba trvání = CV202 nastaveno</tooltip>
+			</variable>
+			<variable item="Motor Management 3" CV="202" default="250">
+				<decVal/>
+				<label>Maximum Period Length</label>
+				<label xml:lang="de">Maximale Periodendauer der Motorregelung</label>
+				<label xml:lang="cs">Maximální délka doby trvání</label>
+				<tooltip>Maximum Period length in 100μs steps (min = CV53)</tooltip>
+				<tooltip xml:lang="de">maximale Periodendauer in 100μs Schritten (min = CV 53)</tooltip>
+				<tooltip xml:lang="cs">Maximální délka doby trvání je v krocích po 100 μs (min = CV53)</tooltip>
+			</variable>
+			<!--extended function mapping on IntelliDrive2 includes CV 31-32 bank switches-->
+			<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv257.512extendedmap_bank1-4.xml"/>
+			<!--		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv257.512extendedmap_bank5.xml"/> kein Intellimatic! -->
+		</variables>
+		<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/factReset4.xml"/>
+	</decoder>
+	<!-- special panes -->
+	<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneRailcom.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneUhlenbrock.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneId2Advanced.xml"/>
+	<!-- IntelliDrive2, overrides some CVs set above -->
+	<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneExtendedFmap.xml"/>
+</decoder-config>

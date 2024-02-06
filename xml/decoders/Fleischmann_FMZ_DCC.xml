@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <version author="Nigel Cliffe" version="1" lastUpdated="20101110"/>
   <!-- Version 1 - from information at http://www.uli-johann.homepage.t-online.de/decoderdcc1.htm -->
   <decoder>
@@ -82,36 +82,15 @@
       <!-- Function Mapping follows -->
       <!-- Decoder has virtually no function mapping capability ! -->
       <variable CV="39" mask="XVXXXXXX" default="1" item="Advanced Group 1 Option 4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 can disable accel/decel settings</label>
       </variable>
       <variable CV="40" mask="XVXXXXXX" default="1" item="Advanced Group 1 Option 5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 enables Shunt Speed</label>
       </variable>
       <variable CV="51" mask="XXXXXXXV" default="1" item="Advanced Group 2 Option 5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Motor Control</label>
       </variable>
       <variable CV="51" mask="XXXXXXVX" default="0" item="Advanced Group 2 Option 6">
@@ -148,14 +127,7 @@
         <label>Load Simulation under FMZ</label>
       </variable>
       <variable CV="51" mask="XXVXXXXX" default="1" item="Advanced Group 2 Option 4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Lamp indicates error state</label>
       </variable>
       <variable CV="52" mask="XXXXXVVV" item="Advanced Group 1 Option 7" default="7">

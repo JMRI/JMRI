@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.implementation;
 
 import java.io.IOException;
 
+import jmri.jmrit.logixng.actions.IfThenElse;
 import jmri.util.JUnitUtil;
 
 import org.junit.*;
@@ -111,6 +112,36 @@ public class LogixNGPreferencesTest {
         prefsA.save();
         prefsB = new DefaultLogixNGPreferences();
         Assert.assertTrue(prefsB.getInstallDebugger());
+
+        prefsA.setStrictTypingGlobalVariables(false);
+        prefsA.save();
+        prefsB = new DefaultLogixNGPreferences();
+        Assert.assertFalse(prefsB.getStrictTypingGlobalVariables());
+
+        prefsA.setStrictTypingGlobalVariables(true);
+        prefsA.save();
+        prefsB = new DefaultLogixNGPreferences();
+        Assert.assertTrue(prefsB.getStrictTypingGlobalVariables());
+
+        prefsA.setStrictTypingLocalVariables(false);
+        prefsA.save();
+        prefsB = new DefaultLogixNGPreferences();
+        Assert.assertFalse(prefsB.getStrictTypingLocalVariables());
+
+        prefsA.setStrictTypingLocalVariables(true);
+        prefsA.save();
+        prefsB = new DefaultLogixNGPreferences();
+        Assert.assertTrue(prefsB.getStrictTypingLocalVariables());
+
+        prefsA.setIfThenElseExecuteTypeDefault(IfThenElse.ExecuteType.AlwaysExecute);
+        prefsA.save();
+        prefsB = new DefaultLogixNGPreferences();
+        Assert.assertEquals(IfThenElse.ExecuteType.AlwaysExecute, prefsB.getIfThenElseExecuteTypeDefault());
+
+        prefsA.setIfThenElseExecuteTypeDefault(IfThenElse.ExecuteType.ExecuteOnChange);
+        prefsA.save();
+        prefsB = new DefaultLogixNGPreferences();
+        Assert.assertEquals(IfThenElse.ExecuteType.ExecuteOnChange, prefsB.getIfThenElseExecuteTypeDefault());
     }
 
     // The minimal setup for log4J

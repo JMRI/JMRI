@@ -17,7 +17,7 @@
 <!-- such as the the MRC_soundbrillance1806.xml file                         -->
 <!--                     WCGAGE@YMAIL.COM                                -->
 <!--                                                                                                                                           -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <version author="William C Gage" version="1.0" lastUpdated="20091011"/>
   <version author="Steve Todd" version="2" lastUpdated="20120522"/>
   <!-- added function label defaults -->

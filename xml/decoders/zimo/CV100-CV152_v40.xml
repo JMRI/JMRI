@@ -17,7 +17,7 @@
 <!-- version 1.10 8 Mar 2021 Nigel Cliffe -  CV112 bit 5 tooltip correction -->
 <!-- version 1.11 1 Dec 2021 Ronald Kuhn -  Choice-Light4_v40 for v40.x -->
 <!-- version 1.12 31 Oct 2022 Ronald Kuhn -  decVal for CV#115 to max -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
  <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
   <!-- Used unrelated item names used to place CV107-108 on the Lights pane -->
   <variable CV="107" mask="XXXVVVVV" item="Function F0F option 1">

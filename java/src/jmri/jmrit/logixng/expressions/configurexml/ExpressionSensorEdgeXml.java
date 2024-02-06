@@ -58,7 +58,12 @@ public class ExpressionSensorEdgeXml extends jmri.managers.configurexml.Abstract
         var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Sensor>();
         var selectEnumFromStateXml = new LogixNG_SelectEnumXml<ExpressionSensorEdge.SensorState>();
         var selectEnumToStateXml = new LogixNG_SelectEnumXml<ExpressionSensorEdge.SensorState>();
-        selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
+
+        try {
+            selectNamedBeanXml.load(shared.getChild("namedBean"), h.getSelectNamedBean());
+        } catch (IllegalArgumentException e) {
+            log.error("Error during loading Sensor Edge expression {} due to: {}", h.getDisplayName(), e.getMessage());
+        }
 
         selectEnumFromStateXml.load(shared.getChild("fromState"), h.getSelectEnumFromState());
         selectEnumToStateXml.load(shared.getChild("toState"), h.getSelectEnumToState());
@@ -72,5 +77,5 @@ public class ExpressionSensorEdgeXml extends jmri.managers.configurexml.Abstract
         return true;
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSensorEdgeXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSensorEdgeXml.class);
 }

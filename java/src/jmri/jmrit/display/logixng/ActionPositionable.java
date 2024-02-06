@@ -255,6 +255,24 @@ public class ActionPositionable extends AbstractDigitalAction implements Vetoabl
         }
     }
 
+    private void throwErrorPositionableDoesNotExists() throws JmriException {
+        var lng = getConditionalNG();
+        var cng = getConditionalNG();
+        var m = getModule();
+        String errorMessage;
+        if (m != null) {
+            errorMessage = Bundle.getMessage(
+                    "ActionPositionable_ErrorNoPositionable_Module",
+                    getLongDescription(), m.getDisplayName(), getSystemName());
+        } else {
+            errorMessage = Bundle.getMessage(
+                    "ActionPositionable_ErrorNoPositionable_LogixNG",
+                    getLongDescription(), lng.getDisplayName(), cng.getDisplayName(), getSystemName());
+        }
+        List<String> list = Arrays.asList(errorMessage.split("\n"));
+        throw new JmriException(Bundle.getMessage("ActionPositionable_ErrorNoPositionable"), list);
+    }
+
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
@@ -265,6 +283,9 @@ public class ActionPositionable extends AbstractDigitalAction implements Vetoabl
         switch (_addressing) {
             case Direct:
                 positionable = this._positionable;
+                if (positionable == null && (_positionableName != null && !_positionableName.isBlank())) {
+                    throwErrorPositionableDoesNotExists();
+                }
                 break;
 
             case Reference:
@@ -308,7 +329,7 @@ public class ActionPositionable extends AbstractDigitalAction implements Vetoabl
             operation = Operation.valueOf(name);
         }
 
-        ThreadingUtil.runOnLayout(() -> {
+        ThreadingUtil.runOnGUI(() -> {
             switch (operation) {
                 case Disable:
                     positionable.setControlling(false);

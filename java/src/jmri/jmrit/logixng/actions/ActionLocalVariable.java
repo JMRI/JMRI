@@ -14,6 +14,7 @@ import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.LogixNG_SelectTable;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.util.ThreadingUtil;
+import jmri.util.TypeConversionUtil;
 
 /**
  * This action sets the value of a local variable.
@@ -38,6 +39,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
                     this, Reporter.class, InstanceManager.getDefault(ReporterManager.class), this);
 
     private VariableOperation _variableOperation = VariableOperation.SetToString;
+    private ConstantType _constantType = ConstantType.String;
     private String _constantValue = "";
     private String _otherLocalVariable = "";
     private String _reference = "";
@@ -64,12 +66,13 @@ public class ActionLocalVariable extends AbstractDigitalAction
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws ParserException {
         DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
         String sysName = systemNames.get(getSystemName());
-        String userName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionLocalVariable copy = new ActionLocalVariable(sysName, userName);
         copy.setComment(getComment());
         copy.setLocalVariable(_localVariable);
         copy.setVariableOperation(_variableOperation);
+        copy.setConstantType(_constantType);
         copy.setConstantValue(_constantValue);
         _selectMemoryNamedBean.copy(copy._selectMemoryNamedBean);
         _selectBlockNamedBean.copy(copy._selectBlockNamedBean);
@@ -134,6 +137,14 @@ public class ActionLocalVariable extends AbstractDigitalAction
 
     public String getReference() {
         return _reference;
+    }
+
+    public void setConstantType(ConstantType constantType) {
+        _constantType = constantType;
+    }
+
+    public ConstantType getConstantType() {
+        return _constantType;
     }
 
     public void setConstantValue(String constantValue) {
@@ -212,9 +223,28 @@ public class ActionLocalVariable extends AbstractDigitalAction
                     symbolTable.setValue(_localVariable, null);
                     break;
 
-                case SetToString:
-                    symbolTable.setValue(_localVariable, _constantValue);
+                case SetToString: {
+                    Object value;
+                    switch (_constantType) {
+                        case String:
+                            value = _constantValue;
+                            break;
+                        case Integer:
+                            value = TypeConversionUtil.convertToLong(_constantValue);
+                            break;
+                        case FloatingNumber:
+                            value = TypeConversionUtil.convertToDouble(_constantValue, true, true, true);
+                            break;
+                        case Boolean:
+                            value = TypeConversionUtil.convertToBoolean(_constantValue, true);
+                            break;
+                        default:
+                            // Throw exception
+                            throw new IllegalArgumentException("_constantType has invalid value: {}" + _constantType.name());
+                    }
+                    symbolTable.setValue(_localVariable, value);
                     break;
+                }
 
                 case CopyVariableToVariable:
                     Object variableValue = conditionalNG
@@ -274,7 +304,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
 
                 default:
                     // Throw exception
-                    throw new IllegalArgumentException("_memoryOperation has invalid value: {}" + _variableOperation.name());
+                    throw new IllegalArgumentException("_variableOperation has invalid value: {}" + _variableOperation.name());
             }
         });
 
@@ -307,7 +337,8 @@ public class ActionLocalVariable extends AbstractDigitalAction
                 return Bundle.getMessage(locale, "ActionLocalVariable_Long_Null", _localVariable);
 
             case SetToString:
-                return Bundle.getMessage(locale, "ActionLocalVariable_Long_Value", _localVariable, _constantValue);
+                return Bundle.getMessage(locale, "ActionLocalVariable_Long_Value",
+                        _localVariable, _constantType._text, _constantValue);
 
             case CopyVariableToVariable:
                 return Bundle.getMessage(locale, "ActionLocalVariable_Long_CopyVariableToVariable",
@@ -421,6 +452,25 @@ public class ActionLocalVariable extends AbstractDigitalAction
         private final String _text;
 
         private VariableOperation(String text) {
+            this._text = text;
+        }
+
+        @Override
+        public String toString() {
+            return _text;
+        }
+
+    }
+
+    public enum ConstantType {
+        String(Bundle.getMessage("ActionLocalVariable_ConstantType_String")),
+        Integer(Bundle.getMessage("ActionLocalVariable_ConstantType_Integer")),
+        FloatingNumber(Bundle.getMessage("ActionLocalVariable_ConstantType_FloatingNumber")),
+        Boolean(Bundle.getMessage("ActionLocalVariable_ConstantType_Boolean"));
+
+        private final String _text;
+
+        private ConstantType(String text) {
             this._text = text;
         }
 

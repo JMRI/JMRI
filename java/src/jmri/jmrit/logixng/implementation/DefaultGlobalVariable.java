@@ -63,6 +63,8 @@ public class DefaultGlobalVariable extends AbstractNamedBean
 
             case Array:
                 var newArray = SymbolTable.getInitialValue(
+                        SymbolTable.Type.Global,
+                        getUserName(),
                         _initialValueType,
                         _initialValueData,
                         symbolTable,
@@ -80,6 +82,8 @@ public class DefaultGlobalVariable extends AbstractNamedBean
 
             default:
                 value = SymbolTable.getInitialValue(
+                        SymbolTable.Type.Global,
+                        getUserName(),
                         _initialValueType,
                         _initialValueData,
                         symbolTable,
@@ -93,7 +97,12 @@ public class DefaultGlobalVariable extends AbstractNamedBean
     @Override
     public void setValue(Object value) {
         Object old = _value;
-        _value = value;
+        LogixNGPreferences prefs = InstanceManager.getDefault(LogixNGPreferences.class);
+        if (prefs.getStrictTypingLocalVariables()) {
+            _value = SymbolTable.validateStrictTyping(_initialValueType, _value, value);
+        } else {
+            _value = value;
+        }
         // notify
         firePropertyChange("value", old, _value);
     }

@@ -100,18 +100,21 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.logixng.actions.ActionOBlock.class);
         classes.add(jmri.jmrit.logixng.actions.ActionPower.class);
         classes.add(jmri.jmrit.logixng.actions.ActionRequestUpdateAllSensors.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionRequestUpdateOfSensor.class);
         classes.add(jmri.jmrit.logixng.actions.ActionReporter.class);
         classes.add(jmri.jmrit.logixng.actions.ActionScript.class);
         classes.add(jmri.jmrit.logixng.actions.ActionSensor.class);
         classes.add(jmri.jmrit.logixng.actions.ActionSignalHead.class);
         classes.add(jmri.jmrit.logixng.actions.ActionSignalMast.class);
         classes.add(jmri.jmrit.logixng.actions.ActionSound.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionTable.class);
         classes.add(jmri.jmrit.logixng.actions.ActionThrottle.class);
         classes.add(jmri.jmrit.logixng.actions.ActionThrottleFunction.class);
         classes.add(jmri.jmrit.logixng.actions.ActionTurnout.class);
         classes.add(jmri.jmrit.logixng.actions.ActionTurnoutLock.class);
         classes.add(jmri.jmrit.logixng.actions.ActionWarrant.class);
         classes.add(jmri.jmrit.logixng.actions.EnableLogix.class);
+        classes.add(jmri.jmrit.logixng.actions.ProgramOnMain.class);
         classes.add(jmri.jmrit.logixng.actions.TriggerRoute.class);
         map.put(Category.ITEM, classes);
 
@@ -144,6 +147,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.display.logixng.ActionLayoutTurnout.class);
         classes.add(jmri.jmrit.display.logixng.ActionPositionable.class);
         classes.add(jmri.jmrit.display.logixng.ActionPositionableByClass.class);
+        classes.add(jmri.jmrit.display.logixng.WindowToFront.class);
         map.put(CategoryDisplay.DISPLAY, classes);
 
         classes = new ArrayList<>();
@@ -153,6 +157,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.logixng.actions.ActionListenOnBeansLocalVariable.class);
         classes.add(jmri.jmrit.logixng.actions.ActionListenOnBeansTable.class);
         classes.add(jmri.jmrit.logixng.actions.ActionShutDownTask.class);
+        classes.add(jmri.jmrit.logixng.actions.JsonDecode.class);
         classes.add(jmri.jmrit.logixng.actions.Logix.class);
         classes.add(jmri.jmrit.logixng.actions.LogData.class);
         classes.add(jmri.jmrit.logixng.actions.LogLocalVariables.class);

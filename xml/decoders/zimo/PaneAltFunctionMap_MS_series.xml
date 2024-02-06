@@ -8,7 +8,7 @@
 <!--        Split to avoid future problems as MS-series receives updates  -->  
 <!-- version 2.3 - Ronald Kuhn - added MN series ID numbers to include statements --> 
 
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>Alt Function Map</name>
   <name xml:lang="it">Mappa Funzioni Speciali</name>
   <name xml:lang="cs">Alternativní přiřazení funkcí</name>

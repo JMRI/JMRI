@@ -189,14 +189,7 @@ function processPanelXML($returnedData, $success, $xhr) {
 
     // insert the canvas layer and set up context used by LayoutEditor "drawn" objects, set some defaults
     if ($gPanel.paneltype == "LayoutPanel") {
-        $("#panel-area").prepend("<canvas id='panelCanvas' width=" + $gPanel.panelwidth + "px height=" +
-            $gPanel.panelheight + "px style='position:absolute;z-index:2;'>");
-        var canvas = document.getElementById("panelCanvas");
-        $gCtx = canvas.getContext("2d");
-        $gCtx.strokeStyle = $gPanel.defaulttrackcolor;
-        $gCtx.lineWidth = $gPanel.sidelinetrackwidth;
-        //set background color from panel attribute (single hex value)
-        $("#panel-area").css({'background-color': $gPanel.backgroundcolor});
+        createPanelCanvas(); //insure canvas layer is available for drawing
     }
 
     // set up context used by SwitchboardEditor "beanswitch" objects, set some defaults
@@ -1202,8 +1195,10 @@ function processPanelXML($returnedData, $success, $xhr) {
                             //copy and reformat some attributes from children into object
                             $widget['width'] = $(this).find('size').attr('width');
                             $widget['height'] = $(this).find('size').attr('height');
-                            $widget['cornerRadius'] = 0; //default to no corner
                             $widget['cornerRadius'] = $(this).find('size').attr('cornerRadius');
+                            if (isUndefined($widget['cornerRadius'])) {
+                                $widget['cornerRadius'] = 0; //default to no corner
+                            }                             
                             lc = $(this).find('lineColor');
                             $widget['lineColor'] = 
                                 'rgba('+lc.attr('red')+','+lc.attr('green')+',' +
@@ -1217,6 +1212,31 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $gWidgets[$widget.id] = $widget;
                             //draw the positionableRoundRect
                             $drawPositionableRoundRect($widget);
+                            break;
+                        case "positionableCircle" : //identical except circle has size radius, 
+                        case "positionableEllipse" : //ellipse has size width height
+                            //copy and reformat some attributes from children into object
+                            $widget['radius'] = ($(this).find('size').attr('radius'));
+                            if (isDefined($widget['radius'])) {
+                                $widget['height'] = $widget.radius; //use radius for height if populated
+                                $widget['width']  = $widget.radius; //use radius for width if populated                               
+                            } else {                            
+                                $widget['height'] = ($(this).find('size').attr('height'));
+                                $widget['width']  = ($(this).find('size').attr('width'));
+                            }
+                            lc = $(this).find('lineColor');
+                            $widget['lineColor'] = 
+                                'rgba('+lc.attr('red')+','+lc.attr('green')+',' +
+                                lc.attr('blue')+','+lc.attr('alpha')/256+')';
+                            fc = $(this).find('fillColor');
+                            $widget['fillColor'] = 
+                                 'rgba('+fc.attr('red')+','+fc.attr('green')+',' + 
+                                fc.attr('blue')+','+fc.attr('alpha')/256+')';
+                            //store this widget in persistent array, with ident as key
+                            $widget['id'] = $widget.ident;
+                            $gWidgets[$widget.id] = $widget;
+                            //draw the positionableEllipse
+                            $drawPositionableEllipse($widget);
                             break;
                         default:
                             log.warn("unknown $widget.widgetType: " + $widget.widgetType + ".");
@@ -2398,6 +2418,8 @@ var $getWidgetFamily = function($widget, $element) {
         case "layoutShape" :
         case "positionableRectangle" :
         case "positionableRoundRect" :
+        case "positionableCircle" :
+        case "positionableEllipse" :
             return "drawn";
             break;
         case "beanswitch" :
@@ -3563,14 +3585,8 @@ function $drawSlip($widget) {
 
 function $drawPositionableRoundRect($widget) {
     //log.log("drawing PositionableRoundRect")
-    if ($gCtx == undefined) {  //create context if needed for drawing
-        $("#panel-area").prepend("<canvas id='panelCanvas' width=" + $gPanel.panelwidth + "px height=" +
-            $gPanel.panelheight + "px style='position:absolute;z-index:2;'>");
-        var canvas = document.getElementById("panelCanvas");
-        $gCtx = canvas.getContext("2d");
-        $gCtx.strokeStyle = $gPanel.defaulttrackcolor;
-        $gCtx.lineWidth = $gPanel.sidelinetrackwidth;
-    }
+    createPanelCanvas(); //insure canvas layer is available for drawing
+
     $gCtx.save();   // save current line width and color
 
     if (isDefined($widget.lineColor)) {
@@ -3584,12 +3600,40 @@ function $drawPositionableRoundRect($widget) {
     }
 
     $gCtx.beginPath();
+//    $gCtx.rotate($toRadians($widget.degrees));
     $gCtx.roundRect($widget.x, $widget.y, $widget.width, $widget.height, $widget.cornerRadius);
     $gCtx.stroke()
     $gCtx.fill()
     $gCtx.restore();        // restore color and width back to default
 
 }   // function $drawPositionableRoundRect($widget)
+
+function $drawPositionableEllipse($widget) {
+    //log.log("drawing PositionableEllipse");
+    createPanelCanvas(); //insure canvas layer is available for drawing
+
+    $gCtx.save();   // save current line width and color
+
+    if (isDefined($widget.lineColor)) {
+        $gCtx.strokeStyle = $widget.lineColor;
+    }
+    if (isDefined($widget.fillColor)) {
+        $gCtx.fillStyle = $widget.fillColor;
+    }
+    if (isDefined($widget.lineWidth)) {
+        $gCtx.lineWidth = $widget.lineWidth;
+    }
+    rw = $widget.width/2;
+    rh = $widget.height/2;
+    x  = $widget.x * 1.0;
+    y  = $widget.y * 1.0;
+    $gCtx.beginPath();
+    $gCtx.ellipse(x + rw, y + rh, rw, rh, $toRadians($widget.degrees), 0, 2 * Math.PI);    
+    $gCtx.stroke()
+    $gCtx.fill()
+    $gCtx.restore();        // restore color and width back to default
+
+}   // function $drawPositionableEllipse($widget)
 
 function $drawLayoutShape($widget) {
     var $pts = $widget.points;   // get the points
@@ -4209,6 +4253,19 @@ var $drawAllSwitchIcons = function() {
                 break;
         }
     });
+};
+
+function createPanelCanvas() {
+    if ($gCtx == undefined) {  //create canvas if not already created
+        $("#panel-area").prepend("<canvas id='panelCanvas' width=" + $gPanel.panelwidth + "px height=" +
+            $gPanel.panelheight + "px style='position:absolute;z-index:2;'>");
+        var canvas = document.getElementById("panelCanvas");
+        $gCtx = canvas.getContext("2d");
+        $gCtx.strokeStyle = $gPanel.defaulttrackcolor;
+        $gCtx.lineWidth = $gPanel.sidelinetrackwidth;
+        //set background color from panel attribute (single hex value)
+        $("#panel-area").css({'background-color': $gPanel.backgroundcolor});
+    }    
 };
 
 function updateWidgets(name, state, data) {

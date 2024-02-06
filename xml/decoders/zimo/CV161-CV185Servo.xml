@@ -7,7 +7,7 @@
 -->
 <!-- version 1.2 - Ronald Kuhn - add german translation -->
 <!-- version 1.3 - Ronald Kuhn - exclusion for MX615 and MX616 -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <variable item="Servo Protocol" CV="161" mask="XXXXXXXV" default="0" exclude="194,195">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NegPosPulse.xml"/>
     <label>Servo Protocol</label>

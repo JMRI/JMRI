@@ -1,6 +1,5 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2006 All rights reserved -->
 <!-- $Id: Lenz_Silver.xml,v 1.10 2009/10/19 04:59:05 jacobsen Exp $ -->
@@ -15,7 +14,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.   -->
 
 <!--    VERSION EN ESPANOL 15-11-2021  por Osvaldo Hojvat / archivo LDH_SyM-v60-spa / en la lista muestra: LDH 4F1.5 v60 Motor y Sonido (esp)  -->
-<decoder-config>
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
 	<version author="LDH"
 				version="1" lastUpdated="20211103" />
 
@@ -139,7 +138,7 @@
 				</enumVal></variable>
 <!--	*********** termina Analog Controls *************  -->
 <!-- comment es solo para verlo aca, similar a este sistema de comentario, pero no sale ni interfiere con el parrafo del CV -->
-    <variable label="Codigo de Bloqueo de CVs" CV="15" default="2" comment="Cuando el CV15 coincide con el CV16 desbloquea CVS">
+    <variable label="Codigo de Bloqueo de CVs" CV="15" item="User Id #4"  default="2" comment="Cuando el CV15 coincide con el CV16 desbloquea CVS">
 			<decVal min="0" max="255"/>
 		</variable>
 
@@ -286,58 +285,58 @@
 
      <!-- ***default=0 ; si no esta lo asume 0 ******  panel de mapeo ; estos labels no salen ***NO CAMBIAR***; vienen de otro lado ***********
  item="Function Map Option 1"  no sirve, sale label pero hace otra cosa Parche enlinea29 escribo luego de marron ???? nocambia???                 	 -->
-  	 	   	<variable label="FL(f) controls output 1" CV="33" default="1" mask="XXXXXXXV" > <enumVal>
+  	 	   	<variable item="FL(f) controls output 1" CV="33" default="1" mask="XXXXXXXV" > <enumVal>
 				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>     <!-- ***default=0 si no esta lo asume = 0** -->
-			<variable label="FL(f) controls output 2" CV="35" mask="XXXXXXVX"> <enumVal>        <!-- y no hace falta -->
+			<variable item="FL(f) controls output 2" CV="35" mask="XXXXXXVX"> <enumVal>        <!-- y no hace falta -->
 				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="FL(f) controls output 3" CV="33" mask="XXXXXVXX"> <enumVal>
+			<variable item="FL(f) controls output 3" CV="33" mask="XXXXXVXX"> <enumVal>
 				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="FL(f) controls output 4" CV="33" mask="XXXXVXXX"> <enumVal>
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-
-			<variable label="FL(r) controls output 1" CV="34" mask="XXXXXXXV"> <enumVal>
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="FL(r) controls output 2" CV="34" default="1" mask="XXXXXXVX"> <enumVal>
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="FL(r) controls output 3" CV="34" mask="XXXXXVXX"> <enumVal>
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="FL(r) controls output 4" CV="34" mask="XXXXVXXX"> <enumVal>
+			<variable item="FL(f) controls output 4" CV="33" mask="XXXXVXXX"> <enumVal>
 				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 
-			<variable label="F1 controls output 1" CV="35" mask="XXXXXXXV"> <enumVal>
+			<variable item="FL(r) controls output 1" CV="34" mask="XXXXXXXV"> <enumVal>
 				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F1 controls output 2" CV="35" mask="XXXXXXVX"> <enumVal>
+			<variable item="FL(r) controls output 2" CV="34" default="1" mask="XXXXXXVX"> <enumVal>
 				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F1 controls output 3" CV="35" mask="XXXXXVXX"> <enumVal>
+			<variable item="FL(r) controls output 3" CV="34" mask="XXXXXVXX"> <enumVal>
 				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F1 controls output 4" CV="35" mask="XXXXVXXX"> <enumVal>
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-
-			<variable label="F2 controls output 1" CV="36" mask="XXXXXXXV"> <enumVal>
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F2 controls output 2" CV="36" mask="XXXXXXVX"> <enumVal>
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F2 controls output 3" CV="36" mask="XXXXXVXX"> <enumVal>
-				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F2 controls output 4" CV="36" mask="XXXXVXXX"> <enumVal>
+			<variable item="FL(r) controls output 4" CV="34" mask="XXXXVXXX"> <enumVal>
 				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 
- 			<variable label="F5 controls output 1" CV="39" mask="XXXXXXXV"> <enumVal>
+			<variable item="F1 controls output 1" CV="35" mask="XXXXXXXV"> <enumVal>
 				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F5 controls output 2" CV="39" mask="XXXXXXVX"> <enumVal>
+			<variable item="F1 controls output 2" CV="35" mask="XXXXXXVX"> <enumVal>
 				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F5 controls output 3" CV="39" default="1" mask="XXXXXVXX"> <enumVal>
+			<variable item="F1 controls output 3" CV="35" mask="XXXXXVXX"> <enumVal>
 				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F5 controls output 4" CV="39" mask="XXXXVXXX"> <enumVal>
+			<variable item="F1 controls output 4" CV="35" mask="XXXXVXXX"> <enumVal>
+				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+			<variable item="F2 controls output 1" CV="36" mask="XXXXXXXV"> <enumVal>
+				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+			<variable item="F2 controls output 2" CV="36" mask="XXXXXXVX"> <enumVal>
+				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+			<variable item="F2 controls output 3" CV="36" mask="XXXXXVXX"> <enumVal>
+				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+			<variable item="F2 controls output 4" CV="36" mask="XXXXVXXX"> <enumVal>
+				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+
+ 			<variable item="F5 controls output 1" CV="39" mask="XXXXXXXV"> <enumVal>
+				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+			<variable item="F5 controls output 2" CV="39" mask="XXXXXXVX"> <enumVal>
+				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+			<variable item="F5 controls output 3" CV="39" default="1" mask="XXXXXVXX"> <enumVal>
+				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
+			<variable item="F5 controls output 4" CV="39" mask="XXXXVXXX"> <enumVal>
 				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 			                                      <!-- La explic JMRI user no se entiende - hay ejemplos  ;   lo saco porque no hace nada      xv"  ...minOut="1" minFn="2"... ><enumval> -->
-			<variable label="F6 controls output 1" CV="40" mask="XXXXXXXV" > <enumVal>
+			<variable item="F6 controls output 1" CV="40" mask="XXXXXXXV" > <enumVal>
 				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F6 controls output 2" CV="40" mask="XXXXXXVX"> <enumVal>
+			<variable item="F6 controls output 2" CV="40" mask="XXXXXXVX"> <enumVal>
 				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F6 controls output 3" CV="40" mask="XXXXXVXX"> <enumVal>
+			<variable item="F6 controls output 3" CV="40" mask="XXXXXVXX"> <enumVal>
 				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-			<variable label="F6 controls output 4" CV="40" default="1" mask="XXXXVXXX"> <enumVal>
+			<variable item="F6 controls output 4" CV="40" default="1" mask="XXXXVXXX"> <enumVal>
 				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 
   <!-- **************** fin panel de mapeo *******************  -->
@@ -520,37 +519,8 @@
 			default="120" item="EMF Option 3" comment="Rango 1-255" tooltip="CV 64">
 			<decVal min="1" max="255"/>        	</variable>
 
-		<variable label="Speed Table" CV="67" default="1">
+		<variable item="Speed Table" CV="67" default="1">
 			<speedTableVal/>                  	</variable>
-
-    <variable label="Valores" CV="67" default="1"><decVal/></variable>
-    <variable label="Valores" CV="68" default="3"><decVal/></variable>
-    <variable label="Valores" CV="69" default="6"><decVal/></variable>
-    <variable label="Valores" CV="70" default="10"><decVal/></variable>
-    <variable label="Valores" CV="71" default="15"><decVal/></variable>
-    <variable label="Valores" CV="72" default="21"><decVal/></variable>
-    <variable label="Valores" CV="73" default="28"><decVal/></variable>
-    <variable label="Valores" CV="74" default="36"><decVal/></variable>
-    <variable label="Valores" CV="75" default="44"><decVal/></variable>
-    <variable label="Valores" CV="76" default="52"><decVal/></variable>
-    <variable label="Valores" CV="77" default="60"><decVal/></variable>
-    <variable label="Valores" CV="78" default="69"><decVal/></variable>
-    <variable label="Valores" CV="79" default="78"><decVal/></variable>
-    <variable label="Valores" CV="80" default="87"><decVal/></variable>
-    <variable label="Valores" CV="81" default="96"><decVal/></variable>
-    <variable label="Valores" CV="82" default="105"><decVal/></variable>
-    <variable label="Valores" CV="83" default="114"><decVal/></variable>
-    <variable label="Valores" CV="84" default="123"><decVal/></variable>
-    <variable label="Valores" CV="85" default="131"><decVal/></variable>
-    <variable label="Valores" CV="86" default="140"><decVal/></variable>
-    <variable label="Valores" CV="87" default="150"><decVal/></variable>
-    <variable label="Valores" CV="88" default="160"><decVal/></variable>
-    <variable label="Valores" CV="89" default="170"><decVal/></variable>
-    <variable label="Valores" CV="90" default="180"><decVal/></variable>
-    <variable label="Valores" CV="91" default="190"><decVal/></variable>
-    <variable label="Valores" CV="92" default="200"><decVal/></variable>
-    <variable label="Valores" CV="93" default="210"><decVal/></variable>
-    <variable label="Valores" CV="94" default="220"><decVal/></variable>
 
 		<variable label="Libre para usuario 1" CV="105"
 			item="User Id #1" default="0"

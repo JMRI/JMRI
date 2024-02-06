@@ -1,6 +1,5 @@
 package jmri.jmrix.openlcb.swing;
 
-import java.awt.FlowLayout;
 import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +13,7 @@ import javax.swing.Timer;
 import jmri.ShutDownTask;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.WrapLayout;
 
 import org.openlcb.NodeID;
 import org.openlcb.OlcbInterface;
@@ -120,7 +120,7 @@ public class ClientActions {
             public void handleGroupPaneEnd(JPanel pane) {
                 if (gpane != null && evt1 != null && evt2 != null && desc != null) {
                     JPanel p = new JPanel();
-                    p.setLayout(new FlowLayout());
+                    p.setLayout(new WrapLayout());
                     p.setAlignmentX(-1.0f);
                     pane.add(p);
                     JButton button = new JButton(Bundle.getMessage("CdiPanelMakeSensor"));

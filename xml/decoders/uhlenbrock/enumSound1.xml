@@ -16,7 +16,7 @@
 <!-- 			 created from Uhlenbrock_32100.xml version 1.0				-->
 <!--			 plus German translation									-->
 <!-- 																		-->
-<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <enumChoice choice="None">
 	<choice>No Sound</choice>
 	<choice xml:lang="de">kein Sound</choice>

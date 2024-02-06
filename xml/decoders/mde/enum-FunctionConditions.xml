@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012 All rights reserved -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <enumChoice choice="Always on (Normal)" value="0" />
+    <enumChoice choice="in Forward Direction" value="1" />
+    <enumChoice choice="in Reverse Direction" value="2" />
+    <enumChoice choice="Stationary" value="3" />
+    <enumChoice choice="Stationary &amp; Forward" value="4" />
+    <enumChoice choice="Stationary &amp; Reverse" value="5" />
+    <enumChoice choice="When Moving" value="6" />
+    <enumChoice choice="Moving Forward" value="7" />
+    <enumChoice choice="Reversing" value="8" />
+
+</enumVal>
