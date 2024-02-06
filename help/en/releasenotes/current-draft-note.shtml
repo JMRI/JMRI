@@ -88,6 +88,8 @@
             <ul>
                 <li>Several tools have improved layout when the
                     screen size is reduced.</li>
+                <li>LocoNet Monitor has improved reporting of "Query Mode" 
+                    messages.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -693,4 +695,3 @@
         <ul>
             <li>Initial support for creating <a href="https://www.jmri.org/help/en/package/jmri/jmrit/etcs/index.shtml">ERTMS / ETCS Driver Interfaces</a></li>
         </ul>
-
