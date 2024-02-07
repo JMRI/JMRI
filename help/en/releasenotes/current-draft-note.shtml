@@ -599,7 +599,7 @@
 
         <h4>Signal Masts</h4>
             <ul>
-                <li></li>
+                <li>Fixed bug where no dialogue would display when Discovering Signalling Mast Pairs and Layout Block Routing is not enabled.</li>
             </ul>
 
         <h4>Signal Groups</h4>
@@ -609,7 +609,7 @@
 
         <h4>Cab Signals</h4>
             <ul>
-                <li></li>
+                <li>Initial support for creating <a href="https://www.jmri.org/help/en/package/jmri/jmrit/etcs/index.shtml">ERTMS / ETCS Driver Interfaces</a></li>
             </ul>
 
         <h4>Simple Signal Logic</h4>
@@ -693,6 +693,5 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Initial support for creating <a href="https://www.jmri.org/help/en/package/jmri/jmrit/etcs/index.shtml">ERTMS / ETCS Driver Interfaces</a></li>
             <li>The JOAL library has been updated to run natively on Windows and Linux machines.</li>
         </ul>
