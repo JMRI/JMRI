@@ -231,6 +231,23 @@
           <p>For macOS, use Cmd instead of Ctrl.</p>
         </dd>
 
+        <dt>Use strict typing of global variables / Use strict typing of local variables
+        <span class="since">since 5.7.4</span></dt>
+
+        <dd>
+          <p>Strict variable typing can be selected for global and/or local variables.  The default
+          is that strict variable typing is not enabled for either.</p>
+
+          <p>When strict typing is enabled, variables that are are assigned the
+          <strong>String</strong>, <strong>Integer</strong> or <strong>Floating number</strong> type
+          cannot be set to a value of another type. LogixNG will try to convert the new value to the
+          desired type, for example a local variable of type floating number will be assigned the
+          value 12.0 if it's assigned 12 and it will be assigned the value 32.5 if it's assigned the
+          string "32.5".</p>
+
+          <p>Local and global variables that are assigned any of the other variable types are not affected.</p>
+        </dd>
+
         <dt>Show system names in exceptions<span class="since">since 5.1.6</span></dt>
 
         <dd>
@@ -248,20 +265,20 @@
           <a href="ErrorHandling.shtml">Error Handling</a></p>
         </dd>
 
+        <dt>If Then Else &mdash; Default execution<span class="since">since 5.7.4</span></dt>
+
         <dd>
+          When the <strong>If Then Else</strong> action is added, the execution mode is set to
+          <strong>Execute on change</strong>. The default can be changed to <strong>Always execute</strong>.
         </dd>
       </dl>
 
-      <p><em><strong>Note</strong>: LogixNG execution can be stopped using <strong>Tools &rArr; LogixNG
-      &rArr; Stop LogixNG</strong>.</em>
-      </p>
-
       <h2 id="tools">LogixNG Tools</h2>
 
-      <p>LogixNG has five system level tools at <strong>Tools &rArr; LogixNG</strong>.</p>
+      <p>LogixNG has six system level tools at <strong>Tools &rArr; LogixNG</strong>.</p>
 
       <p><strong>Start LogixNG</strong> and <strong>Stop LogixNG</strong> are used to control the
-      processing of LogixNG ConditionalNG defintions. When LogixNG is <strong>active</strong> ,
+      processing of LogixNG ConditionalNG definitions. When LogixNG is <strong>active</strong> ,
       then the <strong>enabled</strong> LogixNGs will run its ConditionalNGs.
       <strong>Note:</strong> The execution of currently running ConditionalNGs doesn't stop
       immediately when "Stop LogixNG" is selected. The ConditonalNGs will continue to run until
@@ -278,6 +295,10 @@
       <p>The <strong>Inline LogixNG</strong> tool displays the LogixNG definitions that have been
       attached to panel items.  For details, see
       <a href="../../../package/jmri/jmrit/logixng/InlineLogixNG.shtml">Inline LogixNG</a>.</p>
+
+      <p>The <strong>Where Used</strong> tool displays the LogixNG definitions that have references
+      to JMRI table items.  For details, see
+      <a href="../../../package/jmri/jmrit/logixng/LogixNGWhereUsed.shtml">LogixNG Where used</a>.</p>
 
       <h2>Documentation</h2>
 
