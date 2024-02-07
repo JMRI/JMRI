@@ -144,6 +144,11 @@ public final class TypeConversionUtil {
             return !collection.isEmpty();
         }
 
+        // JSON text node
+        if (value instanceof com.fasterxml.jackson.databind.node.TextNode) {
+            value = ((com.fasterxml.jackson.databind.node.TextNode)value).asText();
+        }
+
         if (value instanceof Reportable) {
             value = ((Reportable)value).toReportString();
         }
@@ -227,6 +232,11 @@ public final class TypeConversionUtil {
         if (value == null) {
             log.warn("the object is null and the returned number is therefore 0.0");
             return 0;
+        }
+
+        // JSON text node
+        if (value instanceof com.fasterxml.jackson.databind.node.TextNode) {
+            value = ((com.fasterxml.jackson.databind.node.TextNode)value).asText();
         }
 
         if (value instanceof Reportable) {
@@ -331,6 +341,11 @@ public final class TypeConversionUtil {
         if (value == null) {
             log.warn("the object is null and the returned number is therefore 0.0");
             return 0.0d;
+        }
+
+        // JSON text node
+        if (value instanceof com.fasterxml.jackson.databind.node.TextNode) {
+            value = ((com.fasterxml.jackson.databind.node.TextNode)value).asText();
         }
 
         if (value instanceof Reportable) {
