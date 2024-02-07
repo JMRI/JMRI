@@ -23,8 +23,6 @@ import jmri.util.swing.JmriJOptionPane;
  */
 public class CarLoadEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    public static final String NONE = "";
-
     CarLoads carLoads = InstanceManager.getDefault(CarLoads.class);
     CarTypes carTypes = InstanceManager.getDefault(CarTypes.class);
 
@@ -158,7 +156,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         addComboBoxAction(loadComboBox);
 
         updateCarCommentFields();
-        
+
         enableButtons();
 
         // build menu
@@ -356,7 +354,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         }
         quanity.setText(Integer.toString(number));
     }
-    
+
     private void updateLoadComboBox() {
         carLoads.updateComboBox(_type, loadComboBox);
         loadComboBox.setSelectedItem(addTextBox.getText().trim());
@@ -388,7 +386,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         pickupCommentTextField.setText(carLoads.getPickupComment(_type, (String) loadComboBox.getSelectedItem()));
         dropCommentTextField.setText(carLoads.getDropComment(_type, (String) loadComboBox.getSelectedItem()));
     }
-    
+
     private void enableButtons() {
         addButton.setEnabled(_type != null);
         deleteButton.setEnabled(_type != null);
