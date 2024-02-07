@@ -512,6 +512,11 @@
               function to convert the value to a string afterwards.</li>
           <li>Local variables and Global variables can now be initialized
               to boolean values as well. True or false. Case insensitive.</li>
+          <li>The action <strong>Log local variables</strong> now has the
+              option <strong>Show class name</strong>.If it is selected,
+              the name of the class will be shown after the value. This
+              is useful for debugging, when you want to know the type of
+              the value.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
