@@ -148,6 +148,7 @@
                 <li>The Event Table now has buttons to copy Sensor and Turnout user names
                     into the relevant Event ID names. These only fill in blank Event ID
                     names, they don't overwrite any names you might have already entered.
+                <li>Fixed a bug in the event table that could cause duplicate event listings.
             </ul>
 
         <h4>Powerline</h4>
