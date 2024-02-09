@@ -263,15 +263,15 @@
 
       <p><strong>You must not use single or double quotes in the CSV table. OpenOffice Calc uses
       different single quote characters at the beginning of a word and at the end of a word, and if
-      you store a csv file with these, you might end up with non readable characters in the CSV
-      file. OpenOffice Calc also writes non readable characters for double qoute characters to the
+      you store a CSV file with these, you might end up with non readable characters in the CSV
+      file. OpenOffice Calc also writes non readable characters for double quote characters to the
       CSV file.</strong>
       </p>
 
       <p>Also, don't use backspace in the CSV file. It might later be supported to quote other
-      characters so it's reserved fornow.</p>
+      characters so it's reserved for now.</p>
 
-      <p>If a name has the characters comma, left or righ square bracket or left or right curly
+      <p>If a name has the characters comma, left or right square bracket or left or right curly
       brackets, these characters must be escaped by preceding them with a backslash. Examples: \,
       \[ \] \{ \} \\</p>
 
@@ -311,8 +311,12 @@
       will change based on the table and row/column selections. Enter the name of a local
       variable.  The table, row and column names can also refer to local variables or references.</p>
 
-      <p>After the action has been created, add another action to the new A1 do handle the current
+      <p>After the action has been created, add another action to the new A1 to handle the current
       cell item.</p>
+
+      <p>If the <strong>-- Header --</strong> item is selected, the column names will be returned if
+      <strong>Row</strong> is selected and the row names if <strong>Column</strong> is selected.
+      <span class="since">since 5.7.4</span></p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
