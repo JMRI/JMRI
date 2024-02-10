@@ -71,6 +71,8 @@ public class CreateLogixNGTreeScaffold {
     private jmri.Logix logixIX1 = logixManager.createNewLogix("IX1", null);
     private Conditional conditionalIX1C1 = conditionalManager.createNewConditional("IX1C1", "First conditional");
 
+    private LogixNG logixNG99;
+
     private LogixNG_Manager logixNG_Manager;
     private ConditionalNG_Manager conditionalNGManager;
     private AnalogActionManager analogActionManager;
@@ -201,6 +203,8 @@ public class CreateLogixNGTreeScaffold {
         stringExpressionManager = InstanceManager.getDefault(StringExpressionManager.class);
         logixNG_InitializationManager = InstanceManager.getDefault(LogixNG_InitializationManager.class);
         globalVariables_Manager = InstanceManager.getDefault(GlobalVariableManager.class);
+
+        logixNG99 = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("IQ99", null);
 
 
         // Test that global variables of any type can be stored and loaded
@@ -2801,6 +2805,72 @@ public class CreateLogixNGTreeScaffold {
         enableLogix.getSelectEnum().setLocalVariable("index2");
         enableLogix.getSelectEnum().setReference("{IM2}");
         maleSocket = digitalActionManager.registerAction(enableLogix);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        EnableLogixNG enableLogixNG = new EnableLogixNG(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(enableLogixNG);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        enableLogixNG = new EnableLogixNG(digitalActionManager.getAutoSystemName(), null);
+        enableLogixNG.setComment("A comment");
+        enableLogixNG.getSelectNamedBean().setNamedBean(logixNG99);
+        enableLogixNG.getSelectEnum().setEnum(EnableLogixNG.Operation.Enable);
+        enableLogixNG.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        enableLogixNG.getSelectNamedBean().setFormula("\"IT\"+index");
+        enableLogixNG.getSelectNamedBean().setLocalVariable("index");
+        enableLogixNG.getSelectNamedBean().setReference("{IM1}");
+        enableLogixNG.getSelectEnum().setAddressing(NamedBeanAddressing.LocalVariable);
+        enableLogixNG.getSelectEnum().setFormula("\"IT\"+index2");
+        enableLogixNG.getSelectEnum().setLocalVariable("index2");
+        enableLogixNG.getSelectEnum().setReference("{IM2}");
+        maleSocket = digitalActionManager.registerAction(enableLogixNG);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        enableLogixNG = new EnableLogixNG(digitalActionManager.getAutoSystemName(), null);
+        enableLogixNG.setComment("A comment");
+        enableLogixNG.getSelectNamedBean().setNamedBean(logixNG99);
+        enableLogixNG.getSelectEnum().setEnum(EnableLogixNG.Operation.Disable);
+        enableLogixNG.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        enableLogixNG.getSelectNamedBean().setFormula("\"IT\"+index");
+        enableLogixNG.getSelectNamedBean().setLocalVariable("index");
+        enableLogixNG.getSelectNamedBean().setReference("{IM1}");
+        enableLogixNG.getSelectEnum().setAddressing(NamedBeanAddressing.Formula);
+        enableLogixNG.getSelectEnum().setFormula("\"IT\"+index2");
+        enableLogixNG.getSelectEnum().setLocalVariable("index2");
+        enableLogixNG.getSelectEnum().setReference("{IM2}");
+        maleSocket = digitalActionManager.registerAction(enableLogixNG);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        enableLogixNG = new EnableLogixNG(digitalActionManager.getAutoSystemName(), null);
+        enableLogixNG.setComment("A comment");
+        enableLogixNG.getSelectNamedBean().setNamedBean(logixNG99);
+        enableLogixNG.getSelectEnum().setEnum(EnableLogixNG.Operation.Activate);
+        enableLogixNG.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
+        enableLogixNG.getSelectNamedBean().setFormula("\"IT\"+index");
+        enableLogixNG.getSelectNamedBean().setLocalVariable("index");
+        enableLogixNG.getSelectNamedBean().setReference("{IM1}");
+        enableLogixNG.getSelectEnum().setAddressing(NamedBeanAddressing.Reference);
+        enableLogixNG.getSelectEnum().setFormula("\"IT\"+index2");
+        enableLogixNG.getSelectEnum().setLocalVariable("index2");
+        enableLogixNG.getSelectEnum().setReference("{IM2}");
+        maleSocket = digitalActionManager.registerAction(enableLogixNG);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        enableLogixNG = new EnableLogixNG(digitalActionManager.getAutoSystemName(), null);
+        enableLogixNG.setComment("A comment");
+        enableLogixNG.getSelectNamedBean().setNamedBean(logixNG99);
+        enableLogixNG.getSelectEnum().setEnum(EnableLogixNG.Operation.Deactivate);
+        enableLogixNG.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        enableLogixNG.getSelectNamedBean().setFormula("\"IT\"+index");
+        enableLogixNG.getSelectNamedBean().setLocalVariable("index");
+        enableLogixNG.getSelectNamedBean().setReference("{IM1}");
+        enableLogixNG.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
+        enableLogixNG.getSelectEnum().setFormula("\"IT\"+index2");
+        enableLogixNG.getSelectEnum().setLocalVariable("index2");
+        enableLogixNG.getSelectEnum().setReference("{IM2}");
+        maleSocket = digitalActionManager.registerAction(enableLogixNG);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 

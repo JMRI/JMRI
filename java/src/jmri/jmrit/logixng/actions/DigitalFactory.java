@@ -58,6 +58,7 @@ public class DigitalFactory implements DigitalActionFactory {
                         new AbstractMap.SimpleEntry<>(Category.COMMON, DoAnalogAction.class),
                         new AbstractMap.SimpleEntry<>(Category.COMMON, DoStringAction.class),
                         new AbstractMap.SimpleEntry<>(Category.ITEM, EnableLogix.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, EnableLogixNG.class),
                         new AbstractMap.SimpleEntry<>(Category.FLOW_CONTROL, Error.class),
                         new AbstractMap.SimpleEntry<>(Category.COMMON, ExecuteDelayed.class),
                         new AbstractMap.SimpleEntry<>(Category.FLOW_CONTROL, Exit.class),

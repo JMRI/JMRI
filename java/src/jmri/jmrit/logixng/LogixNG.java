@@ -73,10 +73,19 @@ public interface LogixNG extends Base, NamedBean {
     /**
      * Activates this LogixNG.
      * <P>
-     * This method is only called by the LogixNG manager and it is called
-     * during initialization of the LogixNGs.
+     * This method is primarily called by the LogixNG manager during
+     * initialization of the LogixNGs, but it can also be called by the LogixNG
+     * action EnableLogixNG to temporary activate a LogixNG.
      */
     void activate();
+
+    /**
+     * Activates this LogixNG.
+     * <P>
+     * This method is used by the LogixNG action EnableLogixNG to temporary
+     * deactivate a LogixNG.
+     */
+    public void deActivate();
 
     /**
      * Set the system name for the conditionalNG at the specified position in this list
