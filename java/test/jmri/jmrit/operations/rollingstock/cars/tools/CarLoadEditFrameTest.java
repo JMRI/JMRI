@@ -37,7 +37,7 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(f);
     }
-    
+
     /**
      * Test load name contains the split char.  Should be rejected.
      */
@@ -48,17 +48,17 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
         f.initComponents("Boxcar", "");
         f.addTextBox.setText("A" + CarLoad.SPLIT_CHAR + "B");
         JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
-        
+
         // error dialog window should appear
         JemmyUtil.pressDialogButton(Bundle.getMessage("canNotUseLoadName"), Bundle.getMessage("ButtonOK"));
         JemmyUtil.waitFor(f);
-        
+
         CarLoads cl = InstanceManager.getDefault(CarLoads.class);
         Assert.assertFalse("exists", cl.containsName("Boxcar", "A" + CarLoad.SPLIT_CHAR + "B"));
 
         JUnitUtil.dispose(f);
     }
-    
+
     /**
      * test load name too long.
      */
@@ -67,20 +67,20 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CarLoadEditFrame f = new CarLoadEditFrame();
         f.initComponents("Boxcar", "");
-        
+
         // create too long load name
         StringBuffer sb = new StringBuffer("A");
         for (int i = 0; i < Control.max_len_string_attibute; i++) {
             sb.append("A");
         }
-        
+
         f.addTextBox.setText(sb.toString());
         JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
-        
+
         // error dialog window should appear
         JemmyUtil.pressDialogButton(Bundle.getMessage("canNotUseLoadName"), Bundle.getMessage("ButtonOK"));
         JemmyUtil.waitFor(f);
-        
+
         CarLoads cl = InstanceManager.getDefault(CarLoads.class);
         Assert.assertFalse("exists", cl.containsName(sb.toString()));
 
@@ -90,7 +90,7 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
     @Test
     public void testCarLoadEditFrameReplaceButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         // create load to replace
         CarLoads cl = InstanceManager.getDefault(CarLoads.class);
         cl.addName("Boxcar", "Test Load");
@@ -98,17 +98,17 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
         cl.setPriority("Boxcar", "Test Load", "Medium");
         cl.setDropComment("Boxcar", "Test Load", "Drop Comment");
         cl.setPickupComment("Boxcar", "Test Load", "Pickup Comment");
-        
+
         CarLoadEditFrame f = new CarLoadEditFrame();
         f.initComponents("Boxcar", "Test Load");
         f.addTextBox.setText("Replace Load");
-        
+
         JemmyUtil.enterClickAndLeaveThreadSafe(f.replaceButton);
-        
+
         // dialog window should appear
         JemmyUtil.pressDialogButton(Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
         JemmyUtil.waitFor(f);
-        
+
         Assert.assertFalse("deleted", cl.containsName("Boxcar", "Test Load"));
         Assert.assertTrue("exists", cl.containsName("Boxcar", "Replace Load"));
         Assert.assertEquals("Confirm load type", cl.getLoadType("Boxcar", "Replace Load"), "EMpty");
@@ -118,114 +118,114 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(f);
     }
-    
+
     @Test
     public void testCarLoadEditFrameReplaceNoChange() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         // create load to replace
         CarLoads cl = InstanceManager.getDefault(CarLoads.class);
         cl.addName("Boxcar", "Test Load");
-        
+
         CarLoadEditFrame f = new CarLoadEditFrame();
         f.initComponents("Boxcar", "Test Load");
         f.addTextBox.setText("Test Load");
-        
+
         JemmyUtil.enterClickAndLeaveThreadSafe(f.replaceButton);
-        
+
         // dialog window should appear
         JemmyUtil.pressDialogButton(Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
         JemmyUtil.waitFor(f);
-        
+
         Assert.assertTrue("exists", cl.containsName("Boxcar", "Test Load"));
 
         JUnitUtil.dispose(f);
     }
-    
+
     /**
      * Replace default "E" name
      */
     @Test
     public void testCarLoadEditFrameReplaceButtonDefaultEmpty() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         CarLoads cl = InstanceManager.getDefault(CarLoads.class);
         Assert.assertEquals("default empty name", "E", cl.getDefaultEmptyName());
-        
+
         CarLoadEditFrame f = new CarLoadEditFrame();
         f.initComponents("Boxcar", "E");
         f.addTextBox.setText("Replace E");
-        
+
         JemmyUtil.enterClickAndLeaveThreadSafe(f.replaceButton);
         // dialog window should appear
         JemmyUtil.pressDialogButton(Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
         JemmyUtil.waitFor(f);
-        
+
         Assert.assertFalse("exists", cl.containsName("Boxcar", "E"));
         Assert.assertTrue("exists", cl.containsName("Boxcar", "Replace E"));
-        
+
         Assert.assertEquals("default empty name", "Replace E", cl.getDefaultEmptyName());
 
         JUnitUtil.dispose(f);
     }
-    
+
     /**
      * Replace default "L" name
      */
     @Test
     public void testCarLoadEditFrameReplaceButtonDefaultLoad() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         CarLoads cl = InstanceManager.getDefault(CarLoads.class);
         Assert.assertEquals("default load name", "L", cl.getDefaultLoadName());
-        
+
         CarLoadEditFrame f = new CarLoadEditFrame();
         f.initComponents("Boxcar", "L");
         f.addTextBox.setText("Replace L");
-        
+
         JemmyUtil.enterClickAndLeaveThreadSafe(f.replaceButton);
         // dialog window should appear
         JemmyUtil.pressDialogButton(Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
         JemmyUtil.waitFor(f);
-        
+
         Assert.assertFalse("exists", cl.containsName("Boxcar", "L"));
         Assert.assertTrue("exists", cl.containsName("Boxcar", "Replace L"));
-        
+
         Assert.assertEquals("default empty name", "Replace L", cl.getDefaultLoadName());
 
         JUnitUtil.dispose(f);
     }
 
-    
+
     @Test
     public void testCarLoadEditFrameDeleteButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         // create load to delete
         CarLoads cl = InstanceManager.getDefault(CarLoads.class);
         cl.addName("Boxcar", "Test Load");
-        
+
         CarLoadEditFrame f = new CarLoadEditFrame();
         f.initComponents("Boxcar", "Test Load");
         JemmyUtil.enterClickAndLeave(f.deleteButton);
-        
+
         Assert.assertFalse("exists", cl.containsName("Boxcar", "Test Load"));
 
         JUnitUtil.dispose(f);
     }
-    
+
     @Test
     public void testCarLoadEditFrameSaveButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         // create load modify
         CarLoads cl = InstanceManager.getDefault(CarLoads.class);
         cl.addName("Boxcar", "Test Load");
-        
+
         CarLoadEditFrame f = new CarLoadEditFrame();
         f.initComponents("Boxcar", "Test Load");
         f.toggleShowQuanity();
-        
+
         // change load type
         f.loadTypeComboBox.setSelectedItem("Empty");
         f.priorityComboBox.setSelectedItem("High");
@@ -233,7 +233,7 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
         f.pickupCommentTextField.setText("test pickup message");
         f.dropCommentTextField.setText("test drop message");
         JemmyUtil.enterClickAndLeave(f.saveButton);
-        
+
         Assert.assertEquals("Empty", cl.getLoadType("Boxcar", "Test Load"));
         Assert.assertEquals("High", cl.getPriority("Boxcar", "Test Load"));
         Assert.assertEquals("test pickup message", cl.getPickupComment("Boxcar", "Test Load"));
@@ -241,29 +241,29 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(f);
     }
-    
+
     /**
      * Test deleting the default loads "E" and "L".
      */
     @Test
     public void testCarLoadEditFrameDeleteButtonException() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         CarLoadEditFrame f = new CarLoadEditFrame();
         f.initComponents("Boxcar", "L");
         JemmyUtil.enterClickAndLeaveThreadSafe(f.deleteButton);
-        
+
         // error dialog window should appear
         JemmyUtil.pressDialogButton(MessageFormat.format(Bundle
                 .getMessage("canNotDelete"), new Object[]{Bundle.getMessage("Load")}), Bundle.getMessage("ButtonOK"));
         JemmyUtil.waitFor(f);
-        
+
         CarLoads cl = InstanceManager.getDefault(CarLoads.class);
         Assert.assertTrue("exists", cl.containsName("Boxcar", "L"));
 
         JUnitUtil.dispose(f);
     }
-    
+
     @Test
     public void testCloseWindowOnSave() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());

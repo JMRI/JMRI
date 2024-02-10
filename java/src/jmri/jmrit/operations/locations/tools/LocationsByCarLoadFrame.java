@@ -27,8 +27,6 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
     private final static String SHIP = "s";
     private final static String HYPHEN = "-";
 
-    private final static String NEW_LINE = "\n";
-
     LocationManager locationManager;
 
     // checkboxes track id as the checkbox name

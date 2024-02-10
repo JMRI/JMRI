@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>5.7.3-SNAPSHOT</version>
+    <version>5.7.4-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -25,7 +25,7 @@
         <jackson-core.version>2.13.4</jackson-core.version>
         <jackson-databind.version>2.13.4.2</jackson-databind.version>
         <jackson-annotations.version>2.13.4</jackson-annotations.version>
-        <jogamp.version>2.3.2</jogamp.version>
+        <jogamp.version>2.5.0</jogamp.version>
         <openlcb.version>0.7.33</openlcb.version>
         <netbeans.version>RELEASE150</netbeans.version>
         <jacoco.version>0.8.11</jacoco.version>
@@ -1802,6 +1802,12 @@
         <repository>
             <id>mvnrepository.com</id>
             <url>https://repo1.maven.org/maven2/</url>
+        </repository>
+        <repository>
+            <id>jogamp-remote</id>
+            <name>jogamp test mirror</name>
+            <url>https://www.jogamp.org/deployment/maven/</url>
+            <layout>default</layout>
         </repository>
         <!--
         Local "repository" hosting libraries not available through maven.org

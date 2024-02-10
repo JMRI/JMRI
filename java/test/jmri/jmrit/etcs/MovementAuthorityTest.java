@@ -53,7 +53,6 @@ public class MovementAuthorityTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        ResourceUtil.setInTest(true);
     }
 
     @AfterEach

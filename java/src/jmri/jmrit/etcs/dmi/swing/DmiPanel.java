@@ -10,7 +10,6 @@ import javax.swing.border.Border;
 
 import jmri.jmrit.etcs.*;
 import jmri.util.ThreadingUtil;
-import jmri.util.swing.JmriJOptionPane;
 
 import org.apiguardian.api.API;
 
@@ -134,12 +133,6 @@ public class DmiPanel extends JPanel {
         add(getPanelY());
         add(getPanelZ());
 
-        if (ResourceUtil.resourceMissing() && !ResourceUtil.getInTest() ){
-            ThreadingUtil.runOnGUI(() -> 
-                JmriJOptionPane.showMessageDialog(DmiPanel.this, 
-                Bundle.getMessage("ResourceMissingText"),
-                Bundle.getMessage("GraphicsMissingTitle"), JmriJOptionPane.ERROR_MESSAGE));
-        }
     }
 
     // distance countdown bar

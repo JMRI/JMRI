@@ -141,13 +141,7 @@ public class DmiPanelA extends JPanel {
                 hints.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 g2.setRenderingHints(hints);
 
-                // try filename ERTMS < 4 
-                var inputFile = ResourceUtil.LIMITED_SUPERVISION36;
-                if (!inputFile.canRead()){
-                    // use filename ERTMS 4
-                    inputFile = ResourceUtil.getImageFile("LS_01.bmp");
-                }
-                BufferedImage image = ResourceUtil.readFile(inputFile);
+                BufferedImage image = ResourceUtil.readFile(ResourceUtil.getImageFile("LS_01.bmp"));
 
                 Font font = new Font(DmiPanel.FONT_NAME, Font.PLAIN, 18);
                 g2.setFont(font);

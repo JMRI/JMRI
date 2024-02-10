@@ -444,6 +444,9 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         }
         if (throttle != null) {
             throttle.removePropertyChangeListener(this);
+            if (throttle.getPropertyChangeListeners().length == 0) {
+                    throttle.release(this);
+            }
         }
     }
 
@@ -633,12 +636,12 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         log.debug("Requesting new slot for address {} rosterEntry {}",currentAddress,rosterEntry);
         boolean requestOK;
         if (rosterEntry == null) {
-            requestOK = throttleManager.requestThrottle(currentAddress, this, true);
             requestedAddress = currentAddress;
+            requestOK = throttleManager.requestThrottle(currentAddress, this, true);
         }
         else {
-            requestOK = throttleManager.requestThrottle(rosterEntry, this, true);
             requestedAddress = rosterEntry.getDccLocoAddress();
+            requestOK = throttleManager.requestThrottle(rosterEntry, this, true);
         }
         if (!requestOK) {
             requestedAddress = null;
@@ -656,8 +659,8 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
             l.notifyAddressChosen(currentAddress);
         });
         log.debug("Requesting new slot for consist address {}",consistAddress);        
-        boolean requestOK = throttleManager.requestThrottle(consistAddress, this, true);
         requestedAddress = consistAddress;
+        boolean requestOK = throttleManager.requestThrottle(consistAddress, this, true);
         if (!requestOK) {
             requestedAddress = null;
             JmriJOptionPane.showMessageDialog(mainPanel, Bundle.getMessage("AddressInUse"));
