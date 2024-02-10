@@ -265,6 +265,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         var logicPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, buildGroupPanel(), logicScrollPane);
         logicPanel.setDividerSize(10);
         logicPanel.setResizeWeight(.10);
+        logicPanel.setDividerLocation(150);
 
         return logicPanel;
     }
@@ -372,6 +373,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         if (!e.getValueIsAdjusting()) {
             _groupRow = _groupTable.getSelectedRow();
             _logicTable.revalidate();
+            _logicTable.repaint();
             pushedPercentButton(null);
         }
     }
@@ -585,7 +587,11 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 } else {
                     var variable = nameToVariable(name);
                     if (variable == null) {
-                        log.error("bad name");
+                        JmriJOptionPane.showMessageDialog(null,
+                                Bundle.getMessage("MessageBadName", groupRow.getName(), name),
+                                Bundle.getMessage("TitleBadName"),
+                                JmriJOptionPane.ERROR_MESSAGE);
+                        log.error("bad name: {}", name);
                     } else {
                         sb.append(variable + " ");
                     }
@@ -597,7 +603,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 sb.append("/* " + comment + " */ ");
             }
 
-//             log.info("{}", sb.toString());
             longLine = longLine + sb.toString();
         }
 
@@ -608,43 +613,48 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         if (longLine.length() < 64) {
             groupRow.setLine1(longLine);
-//             log.info("Line 1:  {}", groupRow.getLine1());
+            log.debug("row 1: {}", groupRow.getLine1());
             return;
         } else {
             groupRow.setLine1(longLine.substring(0, 63));
-//             log.info("Line 1:  {}", groupRow.getLine1());
+            log.debug("row 1: {}", groupRow.getLine1());
             longLine = longLine.substring(63);
         }
 
         if (longLine.length() < 64) {
             groupRow.setLine2(longLine);
-//             log.info("Line 2:  {}", groupRow.getLine2());
+            log.debug("row 2: {}", groupRow.getLine2());
             return;
         } else {
             groupRow.setLine2(longLine.substring(0, 63));
-//             log.info("Line 2:  {}", groupRow.getLine2());
+            log.debug("row 2: {}", groupRow.getLine2());
             longLine = longLine.substring(63);
         }
 
         if (longLine.length() < 64) {
             groupRow.setLine3(longLine);
-//             log.info("Line 3:  {}", groupRow.getLine3());
+            log.debug("row 3: {}", groupRow.getLine3());
             return;
         } else {
             groupRow.setLine3(longLine.substring(0, 63));
-//             log.info("Line 3:  {}", groupRow.getLine3());
+            log.debug("row 3: {}", groupRow.getLine3());
             longLine = longLine.substring(63);
         }
 
         if (longLine.length() < 64) {
             groupRow.setLine4(longLine);
-//             log.info("Line 4:  {}", groupRow.getLine4());
+            log.debug("row 4: {}", groupRow.getLine4());
             return;
         } else {
             groupRow.setLine4(longLine.substring(0, 63));
-//             log.info("Line 4:  {}", groupRow.getLine4());
+            log.debug("row 4: {}", groupRow.getLine4());
             longLine = longLine.substring(63);
         }
+
+        JmriJOptionPane.showMessageDialog(null,
+                Bundle.getMessage("MessageOverflow", groupRow.getName(), longLine),
+                Bundle.getMessage("TitleOverflow"),
+                JmriJOptionPane.ERROR_MESSAGE);
 
         log.error("The line overflowed, content truncated:  {}", longLine);
     }
@@ -779,7 +789,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         log.info("nodeSelected: {}", node);
         if (node.toString().startsWith("02.01.12")) {
             log.info("JMRI Node");
-            loadData();     // temporary to load properties CDI version
+//             loadData();     // temporary to load properties CDI version
             return;
         }
 
@@ -1052,9 +1062,9 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     // --------------  store data ---------
     private void setDirty(boolean dirty) {
-        log.info("Dirty = {}", dirty);
+//         log.info("Dirty = {}", dirty);
         _dirty = dirty;
-        _storeButton.setEnabled(isDirty());
+        // _storeButton.setEnabled(isDirty());
         _exportButton.setEnabled(isDirty());
     }
 
@@ -1158,6 +1168,16 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     // --------------  CSV Import ---------
 
     private void pushedImportButton(ActionEvent e) {
+        if (isDirty()) {
+            int response = JmriJOptionPane.showConfirmDialog(null,
+                    Bundle.getMessage("MessageRevert"),
+                    Bundle.getMessage("TitleRevert"),
+                    JmriJOptionPane.YES_NO_OPTION);
+            if (response != JmriJOptionPane.YES_OPTION) {
+                return;
+            }
+        }
+
         importCsvData();
         setDirty(false);
         _percentButton.setEnabled(true);
@@ -1489,7 +1509,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         String getSize() {
             int size = _line1.length() + _line2.length() + _line3.length() + _line4.length();
-            size = (size * 100) / 255;
+            size = (size * 100) / 252;
             return String.valueOf(size) + "%";
         }
     }
