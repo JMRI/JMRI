@@ -39,18 +39,18 @@ public class TypeConversionUtilTest {
         Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean(false, false));
         Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean(true, false));
         assertIAE("Value is null", () -> {TypeConversionUtil.convertToBoolean(null, false);});
-        assertIAE("Value can't be converted to a boolean", () -> {TypeConversionUtil.convertToBoolean("", false);});
+        assertIAE("Value \"\" can't be converted to a boolean", () -> {TypeConversionUtil.convertToBoolean("", false);});
         Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean("0", false));
         Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean("0.000", false));
-        assertIAE("Value can't be converted to a boolean", () -> {TypeConversionUtil.convertToBoolean(list, false);});
-        assertIAE("Value can't be converted to a boolean", () -> {TypeConversionUtil.convertToBoolean(set, false);});
-        assertIAE("Value can't be converted to a boolean", () -> {TypeConversionUtil.convertToBoolean(map, false);});
+        assertIAE("Value \"[]\" can't be converted to a boolean", () -> {TypeConversionUtil.convertToBoolean(list, false);});
+        assertIAE("Value \"[]\" can't be converted to a boolean", () -> {TypeConversionUtil.convertToBoolean(set, false);});
+        assertIAE("Value \"{}\" can't be converted to a boolean", () -> {TypeConversionUtil.convertToBoolean(map, false);});
         Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean(0, false));
         Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean(-0.499999, false));
         Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean(0.499999, false));
         Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean(0.0, false));
         Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean(-0.0, false));
-        assertIAE("Value can't be converted to a boolean", () -> {TypeConversionUtil.convertToBoolean("Abc", false);});
+        assertIAE("Value \"Abc\" can't be converted to a boolean", () -> {TypeConversionUtil.convertToBoolean("Abc", false);});
         Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean("123", false));
         Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean("-32", false));
         Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean("-0.4999", false));
@@ -58,16 +58,16 @@ public class TypeConversionUtilTest {
         Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean("-0.5", false));
         Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean("0.5", false));
         list.add(0);    // A list that contains at least one element can't still not be converted to a boolean
-        assertIAE("Value can't be converted to a boolean", () -> {TypeConversionUtil.convertToBoolean(list, false);});
+        assertIAE("Value \"[0]\" can't be converted to a boolean", () -> {TypeConversionUtil.convertToBoolean(list, false);});
         set.add(0);     // A set that contains at least one element can't still not be converted to a boolean
-        assertIAE("Value can't be converted to a boolean", () -> {TypeConversionUtil.convertToBoolean(set, false);});
+        assertIAE("Value \"[0]\" can't be converted to a boolean", () -> {TypeConversionUtil.convertToBoolean(set, false);});
         map.put(0,0);   // A map that contains at least one key can't still not be converted to a boolean
-        assertIAE("Value can't be converted to a boolean", () -> {TypeConversionUtil.convertToBoolean(map, false);});
+        assertIAE("Value \"{0=0}\" can't be converted to a boolean", () -> {TypeConversionUtil.convertToBoolean(map, false);});
         Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean(-0.5, false));
         Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean(0.5, false));
         Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean(123.56, false));
         Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean(-123.56, false));
-        assertIAE("Value can't be converted to a boolean", () -> {TypeConversionUtil.convertToBoolean("0abc", false);});
+        assertIAE("Value \"0abc\" can't be converted to a boolean", () -> {TypeConversionUtil.convertToBoolean("0abc", false);});
         Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean("false", false));
         Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean("faLSe", false));
         Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean("false", false));
