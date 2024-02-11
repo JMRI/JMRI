@@ -6,6 +6,7 @@ import java.io.*;
 import java.util.*;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.nio.file.*;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -101,17 +102,17 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private Properties _cdiTest = new Properties();
 
     // CDI Names
-    private static String INPUT_NAME = "Logic_Inputs.Group_I%s(%s).Input_Description";
-    private static String INPUT_TRUE = "Logic_Inputs.Group_I%s(%s).True";
-    private static String INPUT_FALSE = "Logic_Inputs.Group_I%s(%s).False";
-    private static String OUTPUT_NAME = "Logic_Outputs.Group_Q%s(%s).Output_Description";
-    private static String OUTPUT_TRUE = "Logic_Outputs.Group_Q%s(%s).True";
-    private static String OUTPUT_FALSE = "Logic_Outputs.Group_Q%s(%s).False";
-    private static String RECEIVER_NAME = "Track_Receivers.Rx_Circuit(%s).Remote_Mast_Description";
-    private static String RECEIVER_EVENT = "Track_Receivers.Rx_Circuit(%s).Link_Address";
-    private static String TRANSMITTER_NAME = "Track_Transmitters.Tx_Circuit(%s).Track_Circuit_Description";
-    private static String TRANSMITTER_EVeNT = "Track_Transmitters.Tx_Circuit(%s).Link_Address";
-    private static String GROUP_NAME = "Conditionals.Logic(%s).Group_Description";
+    private static String INPUT_NAME = "Logic Inputs.Group I%s(%s).Input Description";
+    private static String INPUT_TRUE = "Logic Inputs.Group I%s(%s).True";
+    private static String INPUT_FALSE = "Logic Inputs.Group I%s(%s).False";
+    private static String OUTPUT_NAME = "Logic Outputs.Group Q%s(%s).Output Description";
+    private static String OUTPUT_TRUE = "Logic Outputs.Group Q%s(%s).True";
+    private static String OUTPUT_FALSE = "Logic Outputs.Group Q%s(%s).False";
+    private static String RECEIVER_NAME = "Track Receivers.Rx Circuit(%s).Remote Mast Description";
+    private static String RECEIVER_EVENT = "Track Receivers.Rx Circuit(%s).Link Address";
+    private static String TRANSMITTER_NAME = "Track Transmitters.Tx Circuit(%s).Track Circuit Description";
+    private static String TRANSMITTER_EVeNT = "Track Transmitters.Tx Circuit(%s).Link Address";
+    private static String GROUP_NAME = "Conditionals.Logic(%s).Group Description";
     private static String GROUP_LINE = "Conditionals.Logic(%s).Line_%s";
 
     // Regex Patterns
@@ -282,6 +283,8 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             _inputTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
 
+        _inputTable.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+
         return scrollPane;
     }
 
@@ -296,6 +299,8 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             int width = model.getPreferredWidth(i);
             _outputTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
+
+        _outputTable.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
 
         return scrollPane;
     }
@@ -312,6 +317,8 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             _receiverTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
 
+        _receiverTable.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+
         return scrollPane;
     }
 
@@ -326,6 +333,8 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             int width = model.getPreferredWidth(i);
             _transmitterTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
+
+        _transmitterTable.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
 
         return scrollPane;
     }
@@ -789,7 +798,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         log.info("nodeSelected: {}", node);
         if (node.toString().startsWith("02.01.12")) {
             log.info("JMRI Node");
-//             loadData();     // temporary to load properties CDI version
+            loadBackupData();     // Load from a node backup file
             return;
         }
 
@@ -951,9 +960,9 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
     }
 
-    // --------------  load lists ---------
+    // --------------  load lists from CDI---------
 
-    private void loadData() {
+    private void loadCdiData() {
         FileInputStream in = null;
         try {
             in = new FileInputStream(jmri.util.FileUtil.getUserFilesPath() + "STL Editor.properties");
@@ -973,11 +982,11 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         // Load data
-        loadInputs();
-        loadOutputs();
-        loadReceivers();
-        loadTransmitters();
-        loadGroups();
+        loadCdiInputs();
+        loadCdiOutputs();
+        loadCdiReceivers();
+        loadCdiTransmitters();
+        loadCdiGroups();
 
         for (GroupRow row : _groupList) {
             decode(row);
@@ -988,14 +997,16 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         _groupTable.setRowSelectionInterval(0, 0);
 
+        _groupTable.repaint();
+
         _percentButton.setEnabled(true);
     }
 
     private void pushedRefreshButton(ActionEvent e) {
-        loadData();
+        loadCdiData();
     }
 
-    private void loadGroups() {
+    private void loadCdiGroups() {
         _groupList.clear();
 
         for (int i = 0; i < 16; i++) {
@@ -1014,20 +1025,26 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         _groupTable.repaint();
     }
 
-    private void loadInputs() {
-        _inputList.clear();
+    private void loadCdiInputs() {
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 8; j++) {
                 String name = _cdiTest.getProperty(String.format(INPUT_NAME, i, j));
                 String trueEvent = _cdiTest.getProperty(String.format(INPUT_TRUE, i, j));
                 String falseEvent = _cdiTest.getProperty(String.format(INPUT_FALSE, i, j));
+                log.info("input: {} :: {} :: {}", name, trueEvent, falseEvent);
+
+                var inputRow = _inputList.get((i * 8) + j);
+                inputRow.setName(name);
+                inputRow.setEventTrue(trueEvent);
+                inputRow.setEventFalse(falseEvent);
+
                 _inputList.add(new InputRow(name, trueEvent, falseEvent));
             }
         }
         _inputTable.revalidate();
     }
 
-    private void loadOutputs() {
+    private void loadCdiOutputs() {
         _outputList.clear();
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 8; j++) {
@@ -1040,7 +1057,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         _outputTable.revalidate();
     }
 
-    private void loadReceivers() {
+    private void loadCdiReceivers() {
         _receiverList.clear();
         for (int i = 0; i < 16; i++) {
             String name = _cdiTest.getProperty(String.format(RECEIVER_NAME, i));
@@ -1050,7 +1067,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         _receiverTable.revalidate();
     }
 
-    private void loadTransmitters() {
+    private void loadCdiTransmitters() {
         _transmitterList.clear();
         for (int i = 0; i < 16; i++) {
             String name = _cdiTest.getProperty(String.format(TRANSMITTER_NAME, i));
@@ -1163,6 +1180,121 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             _cdiTest.setProperty(String.format(TRANSMITTER_NAME, i), row.getName());
             _cdiTest.setProperty(String.format(TRANSMITTER_EVeNT, i), row.getEventId());
         }
+    }
+
+    // --------------  Backup Import ---------
+
+    private void loadBackupData() {
+        List<String> lines = null;
+        try {
+            lines = Files.readAllLines(Paths.get(jmri.util.FileUtil.getUserFilesPath() + "stl_import_backup.txt"));
+        } catch (IOException e) {
+            log.error("Failed to load file.", e);
+            return;
+        }
+
+        for (int i = 0; i < lines.size(); i++) {
+            if (lines.get(i).startsWith("Logic Inputs.Group")) {
+                loadBackupInputs(i, lines);
+                i += 128 * 3;
+            }
+
+            if (lines.get(i).startsWith("Logic Outputs.Group")) {
+                loadBackupOutputs(i, lines);
+                i += 128 * 3;
+            }
+            if (lines.get(i).startsWith("Track Receivers")) {
+                loadBackupReceivers(i, lines);
+                i += 16 * 2;
+            }
+            if (lines.get(i).startsWith("Track Transmitters")) {
+                loadBackupTransmitters(i, lines);
+                i += 16 * 2;
+            }
+            if (lines.get(i).startsWith("Conditionals.Logic")) {
+                loadBackupGroups(i, lines);
+                i += 16 * 5;
+            }
+        }
+
+        setReady(true);
+        setDirty(false);
+        _groupTable.setRowSelectionInterval(0, 0);
+        _groupTable.repaint();
+        _percentButton.setEnabled(true);
+    }
+
+    private String getLineValue(String line) {
+        if (line.endsWith("=")) {
+            return "";
+        }
+        int index = line.indexOf("=");
+        return line.substring(index + 1);
+    }
+
+    private void loadBackupInputs(int index, List<String> lines) {
+        for (int i = 0; i < 128; i++) {
+            var inputRow = _inputList.get(i);
+
+            inputRow.setName(getLineValue(lines.get(index)));
+            inputRow.setEventTrue(getLineValue(lines.get(index + 1)));
+            inputRow.setEventFalse(getLineValue(lines.get(index + 2)));
+            index += 3;
+        }
+
+        _inputTable.revalidate();
+    }
+
+    private void loadBackupOutputs(int index, List<String> lines) {
+        for (int i = 0; i < 128; i++) {
+            var outputRow = _outputList.get(i);
+
+            outputRow.setName(getLineValue(lines.get(index)));
+            outputRow.setEventTrue(getLineValue(lines.get(index + 1)));
+            outputRow.setEventFalse(getLineValue(lines.get(index + 2)));
+            index += 3;
+        }
+
+        _outputTable.revalidate();
+    }
+
+    private void loadBackupReceivers(int index, List<String> lines) {
+        for (int i = 0; i < 16; i++) {
+            var receiverRow = _receiverList.get(i);
+
+            receiverRow.setName(getLineValue(lines.get(index)));
+            receiverRow.setEventId(getLineValue(lines.get(index + 1)));
+            index += 2;
+        }
+
+        _receiverTable.revalidate();
+    }
+
+    private void loadBackupTransmitters(int index, List<String> lines) {
+        for (int i = 0; i < 16; i++) {
+            var transmitterRow = _transmitterList.get(i);
+
+            transmitterRow.setName(getLineValue(lines.get(index)));
+            transmitterRow.setEventId(getLineValue(lines.get(index + 1)));
+            index += 2;
+        }
+
+        _transmitterTable.revalidate();
+    }
+
+    private void loadBackupGroups(int index, List<String> lines) {
+        for (int i = 0; i < 16; i++) {
+            var groupRow = _groupList.get(i);
+
+            groupRow.setName(getLineValue(lines.get(index)));
+//             groupRow.setLine1(getLineValue(lines.get(index + 1)));
+//             groupRow.setLine2(getLineValue(lines.get(index + 2)));
+//             groupRow.setLine3(getLineValue(lines.get(index + 3)));
+//             groupRow.setLine4(getLineValue(lines.get(index + 4)));
+            index += 5;
+        }
+
+        _groupTable.revalidate();
     }
 
     // --------------  CSV Import ---------
@@ -1414,25 +1546,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                     Bundle.getMessage("MessageEvent", event),
                     Bundle.getMessage("TitleEvent"),
                     JmriJOptionPane.ERROR_MESSAGE);
+            log.error("bad event: {}", event);
         }
 
         return valid;
-    }
-
-    static boolean isNameValid(String name) {
-        if (name.isEmpty()) {
-            return true;
-        }
-
-        if (name.indexOf(" ") >= 0) {
-            JmriJOptionPane.showMessageDialog(null,
-                    Bundle.getMessage("MessageName", name),
-                    Bundle.getMessage("TitleName"),
-                    JmriJOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        return true;
     }
 
     // --------------  table lists ---------
@@ -1575,10 +1692,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         void setName(String newName) {
-            var name = newName.trim();
-            if (isNameValid(name)) {
-                _name = name;
-            }
+            _name = newName.trim();
         }
 
         String getComment() {
@@ -1625,10 +1739,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         void setName(String newName) {
-            var name = newName.trim();
-            if (isNameValid(name)) {
-                _name = name;
-            }
+            _name = newName.trim();
         }
 
         String getEventTrue() {
@@ -1673,10 +1784,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         void setName(String newName) {
-            var name = newName.trim();
-            if (isNameValid(name)) {
-                _name = name;
-            }
+            _name = newName.trim();
         }
 
         String getEventTrue() {
@@ -1719,10 +1827,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         void setName(String newName) {
-            var name = newName.trim();
-            if (isNameValid(name)) {
-                _name = name;
-            }
+            _name = newName.trim();
         }
 
         String getEventId() {
@@ -1754,10 +1859,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         void setName(String newName) {
-            var name = newName.trim();
-            if (isNameValid(name)) {
-                _name = name;
-            }
+            _name = newName.trim();
         }
 
         String getEventId() {
