@@ -47,6 +47,7 @@ import org.openlcb.cdi.impl.ConfigRepresentation;
  * TODO
  *    Implement CDI connection
  *    Add error dialogs
+ *    Create a real parser
  *
  * @author Dave Sand Copyright (C) 2024
  * @since 5.7.x
@@ -98,8 +99,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private JButton _storeButton;
     private JButton _exportButton;
     private JButton _importButton;
-
-    private Properties _cdiTest = new Properties();
 
     // CDI Names
     private static String INPUT_NAME = "Logic Inputs.Group I%s(%s).Input Description";
@@ -1019,10 +1018,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
                 var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(INPUT_NAME, i, j));
                 inputRow.setName(entry.getValue());
-                entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(INPUT_TRUE, i, j));
-                inputRow.setEventTrue(entry.getValue());
-                entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(INPUT_FALSE, i, j));
-                inputRow.setEventFalse(entry.getValue());
+                var event = (ConfigRepresentation.EventEntry) _cdi.getVariableForKey(String.format(INPUT_TRUE, i, j));
+                inputRow.setEventTrue(event.getValue().toShortString());
+                event = (ConfigRepresentation.EventEntry) _cdi.getVariableForKey(String.format(INPUT_FALSE, i, j));
+                inputRow.setEventFalse(event.getValue().toShortString());
             }
         }
         _inputTable.revalidate();
@@ -1035,10 +1034,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
                 var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(OUTPUT_NAME, i, j));
                 outputRow.setName(entry.getValue());
-                entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(OUTPUT_TRUE, i, j));
-                outputRow.setEventTrue(entry.getValue());
-                entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(OUTPUT_FALSE, i, j));
-                outputRow.setEventFalse(entry.getValue());
+                var event = (ConfigRepresentation.EventEntry) _cdi.getVariableForKey(String.format(OUTPUT_TRUE, i, j));
+                outputRow.setEventTrue(event.getValue().toShortString());
+                event = (ConfigRepresentation.EventEntry) _cdi.getVariableForKey(String.format(OUTPUT_FALSE, i, j));
+                outputRow.setEventFalse(event.getValue().toShortString());
             }
         }
         _outputTable.revalidate();
@@ -1050,8 +1049,8 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
             var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(RECEIVER_NAME, i));
             receiverRow.setName(entry.getValue());
-            entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(RECEIVER_EVENT, i));
-            receiverRow.setEventId(entry.getValue());
+            var event = (ConfigRepresentation.EventEntry) _cdi.getVariableForKey(String.format(RECEIVER_EVENT, i));
+            receiverRow.setEventId(event.getValue().toShortString());
         }
         _receiverTable.revalidate();
     }
@@ -1062,8 +1061,8 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
             var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(TRANSMITTER_NAME, i));
             transmitterRow.setName(entry.getValue());
-            entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(TRANSMITTER_EVeNT, i));
-            transmitterRow.setEventId(entry.getValue());
+            var event = (ConfigRepresentation.EventEntry) _cdi.getVariableForKey(String.format(TRANSMITTER_EVeNT, i));
+            transmitterRow.setEventId(event.getValue().toShortString());
         }
         _transmitterTable.revalidate();
     }
@@ -1098,24 +1097,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         storeTransmitters();
         storeGroups();
 
-        FileOutputStream out = null;
-        try {
-            out = new FileOutputStream(jmri.util.FileUtil.getUserFilesPath() + "STL Editor.properties");
-            _cdiTest.store(out, "test");
-            out.close();
-        }
-        catch (IOException e1) {
-            log.error("Properties store failed :: {}", e1.getMessage());
-        }
-
-        if (out != null) {
-            try {
-                out.close();
-            } catch (IOException e2) {
-                log.error("Error closing out");
-            }
-        }
-
         setDirty(false);
     }
 
@@ -1127,11 +1108,16 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             // update the group lines
             encode(row);
 
-            _cdiTest.setProperty(String.format(GROUP_NAME, i), row.getName());
-            _cdiTest.setProperty(String.format(GROUP_LINE, i, 1), row.getLine1());
-            _cdiTest.setProperty(String.format(GROUP_LINE, i, 2), row.getLine2());
-            _cdiTest.setProperty(String.format(GROUP_LINE, i, 3), row.getLine3());
-            _cdiTest.setProperty(String.format(GROUP_LINE, i, 4), row.getLine4());
+            var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(GROUP_NAME, i));
+            entry.setValue(row.getName());
+            entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(GROUP_LINE, i, 1));
+            entry.setValue(row.getLine1());
+            entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(GROUP_LINE, i, 2));
+            entry.setValue(row.getLine2());
+            entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(GROUP_LINE, i, 3));
+            entry.setValue(row.getLine3());
+            entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(GROUP_LINE, i, 4));
+            entry.setValue(row.getLine4());
         }
     }
 
@@ -1139,9 +1125,13 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 8; j++) {
                 var row = _inputList.get((i * 8) + j);
-                _cdiTest.setProperty(String.format(INPUT_NAME, i, j), row.getName());
-                _cdiTest.setProperty(String.format(INPUT_TRUE, i, j), row.getEventTrue());
-                _cdiTest.setProperty(String.format(INPUT_FALSE, i, j), row.getEventFalse());
+
+                var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(INPUT_NAME, i, j));
+                entry.setValue(row.getName());
+                entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(INPUT_TRUE, i, j));
+                entry.setValue(row.getEventTrue());
+                entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(INPUT_FALSE, i, j));
+                entry.setValue(row.getEventFalse());
             }
         }
     }
@@ -1150,9 +1140,13 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 8; j++) {
                 var row = _outputList.get((i * 8) + j);
-                _cdiTest.setProperty(String.format(OUTPUT_NAME, i, j), row.getName());
-                _cdiTest.setProperty(String.format(OUTPUT_TRUE, i, j), row.getEventTrue());
-                _cdiTest.setProperty(String.format(OUTPUT_FALSE, i, j), row.getEventFalse());
+
+                var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(OUTPUT_NAME, i, j));
+                entry.setValue(row.getName());
+                entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(OUTPUT_TRUE, i, j));
+                entry.setValue(row.getEventTrue());
+                entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(OUTPUT_FALSE, i, j));
+                entry.setValue(row.getEventFalse());
             }
         }
     }
@@ -1160,16 +1154,22 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private void storeReceivers() {
         for (int i = 0; i < 16; i++) {
             var row = _receiverList.get(i);
-            _cdiTest.setProperty(String.format(RECEIVER_NAME, i), row.getName());
-            _cdiTest.setProperty(String.format(RECEIVER_EVENT, i), row.getEventId());
+
+            var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(RECEIVER_NAME, i));
+            entry.setValue(row.getName());
+            entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(RECEIVER_EVENT, i));
+            entry.setValue(row.getEventId());
         }
     }
 
     private void storeTransmitters() {
         for (int i = 0; i < 16; i++) {
             var row = _transmitterList.get(i);
-            _cdiTest.setProperty(String.format(TRANSMITTER_NAME, i), row.getName());
-            _cdiTest.setProperty(String.format(TRANSMITTER_EVeNT, i), row.getEventId());
+
+            var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(TRANSMITTER_NAME, i));
+            entry.setValue(row.getName());
+            entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(TRANSMITTER_EVeNT, i));
+            entry.setValue(row.getEventId());
         }
     }
 
@@ -1207,6 +1207,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 i += 16 * 5;
             }
         }
+
+//         for (GroupRow row : _groupList) {
+//             decode(row);
+//         }
 
         setReady(true);
         setDirty(false);
@@ -1290,6 +1294,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         _groupTable.revalidate();
+        _logicTable.revalidate();
     }
 
     // --------------  CSV Import ---------
