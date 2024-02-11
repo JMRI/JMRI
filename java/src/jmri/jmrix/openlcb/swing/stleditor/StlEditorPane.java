@@ -817,12 +817,13 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     private void loadDone() {
+        loadCdiData();
         // Example for reading and writing a CDI entry
-        var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey("Node ID.Your name and description for this node.Node Name");
-        log.info("d = {}", entry);
-        var val = entry.getValue();
-        log.info("val = {}", val);
-        entry.setValue(val + "xyz");
+//         var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey("Node ID.Your name and description for this node.Node Name");
+//         log.info("d = {}", entry);
+//         var val = entry.getValue();
+//         log.info("val = {}", val);
+//         entry.setValue(val + "xyz");
     }
 
     private void newNodeInList(MimicNodeStore.NodeMemo nodeMemo) {
@@ -963,24 +964,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     // --------------  load lists from CDI---------
 
     private void loadCdiData() {
-        FileInputStream in = null;
-        try {
-            in = new FileInputStream(jmri.util.FileUtil.getUserFilesPath() + "STL Editor.properties");
-            _cdiTest.load(in);
-            in.close();
-        }
-        catch (IOException e1) {
-            log.error("Properties load failed {}", e1.getMessage());
-        }
-
-        if (in != null) {
-            try {
-                in.close();
-            } catch (IOException e2) {
-                log.error("Error closing in");
-            }
-        }
-
         // Load data
         loadCdiInputs();
         loadCdiOutputs();
@@ -988,9 +971,9 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         loadCdiTransmitters();
         loadCdiGroups();
 
-        for (GroupRow row : _groupList) {
-            decode(row);
-        }
+//         for (GroupRow row : _groupList) {
+//             decode(row);
+//         }
 
         setReady(true);
         setDirty(false);
@@ -1007,72 +990,76 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     private void loadCdiGroups() {
-        _groupList.clear();
-
         for (int i = 0; i < 16; i++) {
-            String groupName = _cdiTest.getProperty(String.format(GROUP_NAME, i));
-            var groupRow = new GroupRow(groupName);
+            var groupRow = _groupList.get(i);
 
-            groupRow.setLine1(_cdiTest.getProperty(String.format(GROUP_LINE, i, 1)));
-            groupRow.setLine2(_cdiTest.getProperty(String.format(GROUP_LINE, i, 2)));
-            groupRow.setLine3(_cdiTest.getProperty(String.format(GROUP_LINE, i, 3)));
-            groupRow.setLine4(_cdiTest.getProperty(String.format(GROUP_LINE, i, 4)));
-
-            _groupList.add(groupRow);
+            var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(GROUP_NAME, i));
+            groupRow.setName(entry.getValue());
+//             entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(GROUP_LINE, i, 1));
+//             groupRow.setLine1(entry.getValue());
+//             entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(GROUP_LINE, i, 2));
+//             groupRow.setLine2(entry.getValue());
+//             entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(GROUP_LINE, i, 3));
+//             groupRow.setLine3(entry.getValue());
+//             entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(GROUP_LINE, i, 4));
+//             groupRow.setLine4(entry.getValue());
         }
 
         _groupTable.revalidate();
-        _groupTable.repaint();
     }
 
     private void loadCdiInputs() {
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 8; j++) {
-                String name = _cdiTest.getProperty(String.format(INPUT_NAME, i, j));
-                String trueEvent = _cdiTest.getProperty(String.format(INPUT_TRUE, i, j));
-                String falseEvent = _cdiTest.getProperty(String.format(INPUT_FALSE, i, j));
-                log.info("input: {} :: {} :: {}", name, trueEvent, falseEvent);
-
                 var inputRow = _inputList.get((i * 8) + j);
-                inputRow.setName(name);
-                inputRow.setEventTrue(trueEvent);
-                inputRow.setEventFalse(falseEvent);
 
-                _inputList.add(new InputRow(name, trueEvent, falseEvent));
+                var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(INPUT_NAME, i, j));
+                inputRow.setName(entry.getValue());
+                entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(INPUT_TRUE, i, j));
+                inputRow.setEventTrue(entry.getValue());
+                entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(INPUT_FALSE, i, j));
+                inputRow.setEventFalse(entry.getValue());
             }
         }
         _inputTable.revalidate();
     }
 
     private void loadCdiOutputs() {
-        _outputList.clear();
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 8; j++) {
-                String name = _cdiTest.getProperty(String.format(OUTPUT_NAME, i, j));
-                String trueEvent = _cdiTest.getProperty(String.format(OUTPUT_TRUE, i, j));
-                String falseEvent = _cdiTest.getProperty(String.format(OUTPUT_FALSE, i, j));
-                _outputList.add(new OutputRow(name, trueEvent, falseEvent));
+                var outputRow = _outputList.get((i * 8) + j);
+
+                var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(OUTPUT_NAME, i, j));
+                outputRow.setName(entry.getValue());
+                entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(OUTPUT_TRUE, i, j));
+                outputRow.setEventTrue(entry.getValue());
+                entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(OUTPUT_FALSE, i, j));
+                outputRow.setEventFalse(entry.getValue());
             }
         }
         _outputTable.revalidate();
     }
 
     private void loadCdiReceivers() {
-        _receiverList.clear();
         for (int i = 0; i < 16; i++) {
-            String name = _cdiTest.getProperty(String.format(RECEIVER_NAME, i));
-            String event = _cdiTest.getProperty(String.format(RECEIVER_EVENT, i));
-            _receiverList.add(new ReceiverRow(name, event));
+            var receiverRow = _receiverList.get(i);
+
+            var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(RECEIVER_NAME, i));
+            receiverRow.setName(entry.getValue());
+            entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(RECEIVER_EVENT, i));
+            receiverRow.setEventId(entry.getValue());
         }
         _receiverTable.revalidate();
     }
 
     private void loadCdiTransmitters() {
-        _transmitterList.clear();
         for (int i = 0; i < 16; i++) {
-            String name = _cdiTest.getProperty(String.format(TRANSMITTER_NAME, i));
-            String event = _cdiTest.getProperty(String.format(TRANSMITTER_EVeNT, i));
-            _transmitterList.add(new TransmitterRow(name, event));
+            var transmitterRow = _transmitterList.get(i);
+
+            var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(TRANSMITTER_NAME, i));
+            transmitterRow.setName(entry.getValue());
+            entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(TRANSMITTER_EVeNT, i));
+            transmitterRow.setEventId(entry.getValue());
         }
         _transmitterTable.revalidate();
     }
