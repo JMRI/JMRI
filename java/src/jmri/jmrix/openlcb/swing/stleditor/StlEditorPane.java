@@ -970,9 +970,9 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         loadCdiTransmitters();
         loadCdiGroups();
 
-//         for (GroupRow row : _groupList) {
-//             decode(row);
-//         }
+        for (GroupRow row : _groupList) {
+            decode(row);
+        }
 
         setReady(true);
         setDirty(false);
@@ -994,18 +994,18 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
             var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(GROUP_NAME, i));
             groupRow.setName(entry.getValue());
-//             entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(GROUP_LINE, i, 1));
-//             groupRow.setLine1(entry.getValue());
-//             entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(GROUP_LINE, i, 2));
-//             groupRow.setLine2(entry.getValue());
-//             entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(GROUP_LINE, i, 3));
-//             groupRow.setLine3(entry.getValue());
-//             entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(GROUP_LINE, i, 4));
-//             groupRow.setLine4(entry.getValue());
-            groupRow.setLine1("");
-            groupRow.setLine2("");
-            groupRow.setLine3("");
-            groupRow.setLine4("");
+            entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(GROUP_LINE, i, 1));
+            groupRow.setLine1(entry.getValue());
+            entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(GROUP_LINE, i, 2));
+            groupRow.setLine2(entry.getValue());
+            entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(GROUP_LINE, i, 3));
+            groupRow.setLine3(entry.getValue());
+            entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(GROUP_LINE, i, 4));
+            groupRow.setLine4(entry.getValue());
+//             groupRow.setLine1("");
+//             groupRow.setLine2("");
+//             groupRow.setLine3("");
+//             groupRow.setLine4("");
         }
 
         _groupTable.revalidate();
@@ -1208,9 +1208,9 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             }
         }
 
-//         for (GroupRow row : _groupList) {
-//             decode(row);
-//         }
+        for (GroupRow row : _groupList) {
+            decode(row);
+        }
 
         setReady(true);
         setDirty(false);
@@ -1282,14 +1282,14 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             var groupRow = _groupList.get(i);
 
             groupRow.setName(getLineValue(lines.get(index)));
-//             groupRow.setLine1(getLineValue(lines.get(index + 1)));
-//             groupRow.setLine2(getLineValue(lines.get(index + 2)));
-//             groupRow.setLine3(getLineValue(lines.get(index + 3)));
-//             groupRow.setLine4(getLineValue(lines.get(index + 4)));
-            groupRow.setLine1("");
-            groupRow.setLine2("");
-            groupRow.setLine3("");
-            groupRow.setLine4("");
+            groupRow.setLine1(getLineValue(lines.get(index + 1)));
+            groupRow.setLine2(getLineValue(lines.get(index + 2)));
+            groupRow.setLine3(getLineValue(lines.get(index + 3)));
+            groupRow.setLine4(getLineValue(lines.get(index + 4)));
+//             groupRow.setLine1("");
+//             groupRow.setLine2("");
+//             groupRow.setLine3("");
+//             groupRow.setLine4("");
             index += 5;
         }
 
