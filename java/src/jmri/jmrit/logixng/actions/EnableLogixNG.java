@@ -128,9 +128,9 @@ public class EnableLogixNG extends AbstractDigitalAction
 
     public enum Operation {
         Enable(Bundle.getMessage("EnableLogixNG_Enable"), (lng) -> {lng.setEnabled(true);}),
-        Disable(Bundle.getMessage("EnableLogixNG_Disable"), (lng) -> {lng.setEnabled(true);}),
+        Disable(Bundle.getMessage("EnableLogixNG_Disable"), (lng) -> {lng.setEnabled(false);}),
         Activate(Bundle.getMessage("EnableLogixNG_Activate"), (lng) -> {lng.activate();}),
-        Deactivate(Bundle.getMessage("EnableLogixNG_Deactivate"), (lng) -> {lng.activate();});
+        Deactivate(Bundle.getMessage("EnableLogixNG_Deactivate"), (lng) -> {lng.deactivate();});
 
         private final String _text;
         private final LogixNG_Task _task;

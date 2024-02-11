@@ -85,7 +85,7 @@ public interface LogixNG extends Base, NamedBean {
      * This method is used by the LogixNG action EnableLogixNG to temporary
      * deactivate a LogixNG.
      */
-    public void deActivate();
+    public void deactivate();
 
     /**
      * Set the system name for the conditionalNG at the specified position in this list

@@ -189,7 +189,7 @@ public class DefaultLogixNG extends AbstractNamedBean
 
     /** {@inheritDoc} */
     @Override
-    public void deActivate() {
+    public void deactivate() {
         _isActive = false;
     }
 
