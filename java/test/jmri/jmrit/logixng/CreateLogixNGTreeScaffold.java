@@ -1671,6 +1671,106 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        ActionSetReporter actionSetReporter = new ActionSetReporter(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionSetReporter);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionSetReporter = new ActionSetReporter(digitalActionManager.getAutoSystemName(), null);
+        actionSetReporter.setComment("A comment");
+        actionSetReporter.getSelectNamedBean().setNamedBean(reporter1);
+        actionSetReporter.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionSetReporter.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionSetReporter.getSelectNamedBean().setLocalVariable("index");
+        actionSetReporter.getSelectNamedBean().setReference("{IM1}");
+        actionSetReporter.setMemoryOperation(ActionSetReporter.ReporterOperation.CalculateFormula);
+        actionSetReporter.getSelectOtherMemoryNamedBean().setNamedBean(memory3);
+        actionSetReporter.setOtherConstantValue("Some string");
+        actionSetReporter.setOtherFormula("n + 3");
+        actionSetReporter.setOtherLocalVariable("Somevar");
+        maleSocket = digitalActionManager.registerAction(actionSetReporter);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionSetReporter = new ActionSetReporter(digitalActionManager.getAutoSystemName(), null);
+        actionSetReporter.setComment("A comment");
+        actionSetReporter.getSelectNamedBean().setNamedBean(reporter1);
+        actionSetReporter.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
+        actionSetReporter.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionSetReporter.getSelectNamedBean().setLocalVariable("index");
+        actionSetReporter.getSelectNamedBean().setReference("{IM1}");
+        actionSetReporter.setMemoryOperation(ActionSetReporter.ReporterOperation.CopyMemoryToReporter);
+        actionSetReporter.getSelectOtherMemoryNamedBean().setNamedBean(memory3);
+        actionSetReporter.setOtherConstantValue("Some string");
+        actionSetReporter.setOtherFormula("n + 3");
+        actionSetReporter.setOtherLocalVariable("Somevar");
+        maleSocket = digitalActionManager.registerAction(actionSetReporter);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionSetReporter = new ActionSetReporter(digitalActionManager.getAutoSystemName(), null);
+        actionSetReporter.setComment("A comment");
+        actionSetReporter.getSelectNamedBean().setNamedBean(reporter1);
+        actionSetReporter.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        actionSetReporter.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionSetReporter.getSelectNamedBean().setLocalVariable("index");
+        actionSetReporter.getSelectNamedBean().setReference("{IM1}");
+        actionSetReporter.setMemoryOperation(ActionSetReporter.ReporterOperation.CopyVariableToReporter);
+        actionSetReporter.getSelectOtherMemoryNamedBean().setNamedBean(memory3);
+        actionSetReporter.setOtherConstantValue("Some string");
+        actionSetReporter.setOtherFormula("n + 3");
+        actionSetReporter.setOtherLocalVariable("Somevar");
+        set_LogixNG_SelectTable_Data(csvTable, actionSetReporter.getSelectTable(), NamedBeanAddressing.Reference);
+        maleSocket = digitalActionManager.registerAction(actionSetReporter);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionSetReporter = new ActionSetReporter(digitalActionManager.getAutoSystemName(), null);
+        actionSetReporter.setComment("A comment");
+        actionSetReporter.getSelectNamedBean().setNamedBean(reporter1);
+        actionSetReporter.getSelectNamedBean().setAddressing(NamedBeanAddressing.LocalVariable);
+        actionSetReporter.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionSetReporter.getSelectNamedBean().setLocalVariable("index");
+        actionSetReporter.getSelectNamedBean().setReference("{IM1}");
+        actionSetReporter.setMemoryOperation(ActionSetReporter.ReporterOperation.CopyTableCellToReporter);
+        actionSetReporter.getSelectOtherMemoryNamedBean().setNamedBean(memory3);
+        actionSetReporter.setOtherConstantValue("Some string");
+        actionSetReporter.setOtherFormula("n + 3");
+        actionSetReporter.setOtherLocalVariable("Somevar");
+        set_LogixNG_SelectTable_Data(csvTable, actionSetReporter.getSelectTable(), NamedBeanAddressing.Direct);
+        maleSocket = digitalActionManager.registerAction(actionSetReporter);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionSetReporter = new ActionSetReporter(digitalActionManager.getAutoSystemName(), null);
+        actionSetReporter.setComment("A comment");
+        actionSetReporter.getSelectNamedBean().setNamedBean(reporter1);
+        actionSetReporter.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
+        actionSetReporter.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionSetReporter.getSelectNamedBean().setLocalVariable("index");
+        actionSetReporter.getSelectNamedBean().setReference("{IM1}");
+        actionSetReporter.setMemoryOperation(ActionSetReporter.ReporterOperation.SetToNull);
+        actionSetReporter.getSelectOtherMemoryNamedBean().setNamedBean(memory3);
+        actionSetReporter.setOtherConstantValue("Some string");
+        actionSetReporter.setOtherFormula("n + 3");
+        actionSetReporter.setOtherLocalVariable("Somevar");
+        set_LogixNG_SelectTable_Data(csvTable, actionSetReporter.getSelectTable(), NamedBeanAddressing.Formula);
+        maleSocket = digitalActionManager.registerAction(actionSetReporter);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionSetReporter = new ActionSetReporter(digitalActionManager.getAutoSystemName(), null);
+        actionSetReporter.setComment("A comment");
+        actionSetReporter.getSelectNamedBean().setNamedBean(reporter1);
+        actionSetReporter.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionSetReporter.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionSetReporter.getSelectNamedBean().setLocalVariable("index");
+        actionSetReporter.getSelectNamedBean().setReference("{IM1}");
+        actionSetReporter.setMemoryOperation(ActionSetReporter.ReporterOperation.SetToString);
+        actionSetReporter.getSelectOtherMemoryNamedBean().setNamedBean(memory3);
+        actionSetReporter.setOtherConstantValue("Some string");
+        actionSetReporter.setOtherFormula("n + 3");
+        actionSetReporter.setOtherLocalVariable("Somevar");
+        set_LogixNG_SelectTable_Data(csvTable, actionSetReporter.getSelectTable(), NamedBeanAddressing.LocalVariable);
+        maleSocket = digitalActionManager.registerAction(actionSetReporter);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         ActionShutDownTask shutDownTask = new ActionShutDownTask(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(shutDownTask);
         maleSocket.setEnabled(false);
