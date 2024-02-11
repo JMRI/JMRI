@@ -396,7 +396,7 @@ public interface SymbolTable {
 
             case Boolean:
                 validateValue(type, name, initialData, "to boolean");
-                return Boolean.valueOf(initialData);
+                return TypeConversionUtil.convertToBoolean(initialData, true);
 
             case Integer:
                 validateValue(type, name, initialData, "to integer");
