@@ -1003,6 +1003,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 //             groupRow.setLine3(entry.getValue());
 //             entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(GROUP_LINE, i, 4));
 //             groupRow.setLine4(entry.getValue());
+            groupRow.setLine1("");
+            groupRow.setLine2("");
+            groupRow.setLine3("");
+            groupRow.setLine4("");
         }
 
         _groupTable.revalidate();
@@ -1278,6 +1282,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 //             groupRow.setLine2(getLineValue(lines.get(index + 2)));
 //             groupRow.setLine3(getLineValue(lines.get(index + 3)));
 //             groupRow.setLine4(getLineValue(lines.get(index + 4)));
+            groupRow.setLine1("");
+            groupRow.setLine2("");
+            groupRow.setLine3("");
+            groupRow.setLine4("");
             index += 5;
         }
 
