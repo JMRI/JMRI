@@ -38,6 +38,7 @@ public class ActionSetReporterSwing extends AbstractDigitalActionSwing {
     private JTextField _setToConstantTextField;
     private JTextField _copyLocalVariableTextField;
     private JTextField _calculateFormulaTextField;
+    private JCheckBox _provideAnIdTag;
 
 
     @Override
@@ -50,6 +51,9 @@ public class ActionSetReporterSwing extends AbstractDigitalActionSwing {
         selectTableSwing = new LogixNG_SelectTableSwing(getJDialog(), this);
 
         panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+        JPanel innerPanel = new JPanel();
 
         JPanel _tabbedPaneNamedBean;
         if (action != null) {
@@ -92,6 +96,8 @@ public class ActionSetReporterSwing extends AbstractDigitalActionSwing {
         _calculateFormulaTextField = new JTextField(30);
         _calculateFormula.add(_calculateFormulaTextField);
 
+        _provideAnIdTag = new JCheckBox(Bundle.getMessage("ActionSetReporter_ProvideAnIdTag"));
+
 
         if (action != null) {
             if (action.getSelectOtherMemoryNamedBean().getNamedBean() != null) {
@@ -109,6 +115,7 @@ public class ActionSetReporterSwing extends AbstractDigitalActionSwing {
             _setToConstantTextField.setText(action.getConstantValue());
             _copyLocalVariableTextField.setText(action.getOtherLocalVariable());
             _calculateFormulaTextField.setText(action.getOtherFormula());
+            _provideAnIdTag.setSelected(action.isProvideAnIdTag());
         }
 
         JComponent[] components = new JComponent[]{
@@ -119,7 +126,10 @@ public class ActionSetReporterSwing extends AbstractDigitalActionSwing {
         List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(
                 Bundle.getMessage("ActionSetReporter_Components"), components);
 
-        for (JComponent c : componentList) panel.add(c);
+        for (JComponent c : componentList) innerPanel.add(c);
+
+        panel.add(innerPanel);
+        panel.add(_provideAnIdTag);
     }
 
     /** {@inheritDoc} */
@@ -217,6 +227,8 @@ public class ActionSetReporterSwing extends AbstractDigitalActionSwing {
         }
 
         selectTableSwing.updateObject(action.getSelectTable());
+
+        action.setProvideAnIdTag(_provideAnIdTag.isSelected());
     }
 
     /** {@inheritDoc} */

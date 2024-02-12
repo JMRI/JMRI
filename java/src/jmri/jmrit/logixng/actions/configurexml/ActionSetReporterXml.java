@@ -58,6 +58,8 @@ public class ActionSetReporterXml extends jmri.managers.configurexml.AbstractNam
 
         element.addContent(selectTableXml.store(p.getSelectTable(), "table"));
 
+        element.addContent(new Element("provideAnIdTag").addContent(p.isProvideAnIdTag()? "yes" : "no"));
+
         return element;
     }
 
@@ -135,6 +137,11 @@ public class ActionSetReporterXml extends jmri.managers.configurexml.AbstractNam
         }
 
         selectTableXml.load(shared.getChild("table"), h.getSelectTable());
+
+        Element provideAnIdTagElem = shared.getChild("provideAnIdTag");
+        if (provideAnIdTagElem != null) {
+            h.setProvideAnIdTag("yes".equals(provideAnIdTagElem.getTextTrim()));
+        }
 
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;

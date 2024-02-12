@@ -1678,6 +1678,7 @@ public class CreateLogixNGTreeScaffold {
 
         actionSetReporter = new ActionSetReporter(digitalActionManager.getAutoSystemName(), null);
         actionSetReporter.setComment("A comment");
+        actionSetReporter.setProvideAnIdTag(true);
         actionSetReporter.getSelectNamedBean().setNamedBean(reporter1);
         actionSetReporter.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
         actionSetReporter.getSelectNamedBean().setFormula("\"IT\"+index");
@@ -1693,6 +1694,7 @@ public class CreateLogixNGTreeScaffold {
 
         actionSetReporter = new ActionSetReporter(digitalActionManager.getAutoSystemName(), null);
         actionSetReporter.setComment("A comment");
+        actionSetReporter.setProvideAnIdTag(false);
         actionSetReporter.getSelectNamedBean().setNamedBean(reporter1);
         actionSetReporter.getSelectNamedBean().setAddressing(NamedBeanAddressing.Formula);
         actionSetReporter.getSelectNamedBean().setFormula("\"IT\"+index");

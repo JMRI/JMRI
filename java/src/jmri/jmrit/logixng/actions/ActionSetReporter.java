@@ -13,6 +13,7 @@ import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
 import jmri.jmrit.logixng.util.LogixNG_SelectTable;
 import jmri.util.ThreadingUtil;
+import jmri.util.TypeConversionUtil;
 
 /**
  * This action sets the current report of a Reporter.
@@ -28,13 +29,12 @@ public class ActionSetReporter extends AbstractDigitalAction
     private final LogixNG_SelectNamedBean<Memory> _selectOtherMemoryNamedBean =
             new LogixNG_SelectNamedBean<>(
                     this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
-//    private NamedBeanHandle<Memory> _otherMemoryHandle;
     private ReporterOperation _reporterOperation = ReporterOperation.SetToString;
     private String _otherConstantValue = "";
     private String _otherLocalVariable = "";
     private String _otherFormula = "";
     private ExpressionNode _otherExpressionNode;
-    private boolean _listenToMemory = true;
+    private boolean _provideAnIdTag = false;
 
     private final LogixNG_SelectTable _selectTable =
             new LogixNG_SelectTable(this, () -> {return _reporterOperation == ReporterOperation.CopyTableCellToReporter;});
@@ -57,10 +57,9 @@ public class ActionSetReporter extends AbstractDigitalAction
         _selectOtherMemoryNamedBean.copy(copy._selectOtherMemoryNamedBean);
         copy.setMemoryOperation(_reporterOperation);
         copy.setOtherConstantValue(_otherConstantValue);
-//        copy.setOtherTableCell(_otherTableCell);
         copy.setOtherLocalVariable(_otherLocalVariable);
         copy.setOtherFormula(_otherFormula);
-        copy.setListenToMemory(_listenToMemory);
+        copy.setProvideAnIdTag(_provideAnIdTag);
         _selectTable.copy(copy._selectTable);
         return manager.registerAction(copy);
     }
@@ -95,12 +94,12 @@ public class ActionSetReporter extends AbstractDigitalAction
         return _selectTable;
     }
 
-    public void setListenToMemory(boolean listenToMemory) {
-        this._listenToMemory = listenToMemory;
+    public void setProvideAnIdTag(boolean createAnIdTag) {
+        this._provideAnIdTag = createAnIdTag;
     }
 
-    public boolean getListenToMemory() {
-        return _listenToMemory;
+    public boolean isProvideAnIdTag() {
+        return _provideAnIdTag;
     }
 
     // Variable tab
@@ -156,47 +155,49 @@ public class ActionSetReporter extends AbstractDigitalAction
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
 
+            Object report;
+
             switch (_reporterOperation) {
                 case SetToNull:
-                    reporter.setReport(null);
+                    report = null;
                     break;
 
                 case SetToString:
-                    reporter.setReport(_otherConstantValue);
+                    report = _otherConstantValue;
                     break;
 
                 case CopyTableCellToReporter:
-                    Object value = _selectTable.evaluateTableData(conditionalNG);
-                    reporter.setReport(value);
+                    report = _selectTable.evaluateTableData(conditionalNG);
                     break;
 
                 case CopyVariableToReporter:
-                    Object variableValue = conditionalNG
-                                    .getSymbolTable().getValue(_otherLocalVariable);
-                    reporter.setReport(variableValue);
+                    report = conditionalNG.getSymbolTable()
+                            .getValue(_otherLocalVariable);
                     break;
 
                 case CopyMemoryToReporter:
                     Memory otherMemory = _selectOtherMemoryNamedBean.evaluateNamedBean(conditionalNG);
                     if (otherMemory != null) {
-                        reporter.setReport(otherMemory.getValue());
+                        report = otherMemory.getValue();
                     } else {
                         log.warn("setReporter should copy memory to reporter but memory is null");
+                        return;
                     }
                     break;
 
                 case CalculateFormula:
                     if (_otherFormula.isEmpty()) {
-                        reporter.setReport(null);
+                        report = null;
                     } else {
                         try {
                             if (_otherExpressionNode == null) {
                                 return;
                             }
-                            reporter.setReport(_otherExpressionNode.calculate(
-                                    conditionalNG.getSymbolTable()));
+                            report = _otherExpressionNode.calculate(
+                                    conditionalNG.getSymbolTable());
                         } catch (JmriException e) {
                             ref.set(e);
+                            return;
                         }
                     }
                     break;
@@ -204,6 +205,19 @@ public class ActionSetReporter extends AbstractDigitalAction
                 default:
                     throw new IllegalArgumentException("_reporterOperation has invalid value: {}" + _reporterOperation.name());
             }
+
+            if (_provideAnIdTag) {
+                if (report == null) {
+                    throw new IllegalArgumentException("report is null. Can't provide an IdTag");
+                }
+                // Provide the report as an IdTag if it's not an IdTag already
+                if (! (report instanceof IdTag)) {
+                    String name = TypeConversionUtil.convertToString(report, false);
+                    report = InstanceManager.getDefault(IdTagManager.class).provideIdTag(name);
+                }
+            }
+
+            reporter.setReport(report);
         });
 
         if (ref.get() != null) throw ref.get();
@@ -261,10 +275,8 @@ public class ActionSetReporter extends AbstractDigitalAction
     @Override
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
-            if (_listenToMemory) {
-                _selectOtherMemoryNamedBean.addPropertyChangeListener("value", this);
-            }
             _selectNamedBean.registerListeners();
+            _selectOtherMemoryNamedBean.addPropertyChangeListener("value", this);
             _listenersAreRegistered = true;
         }
     }
@@ -272,11 +284,11 @@ public class ActionSetReporter extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
-        if (_listenersAreRegistered && _listenToMemory) {
+        if (_listenersAreRegistered) {
+            _selectNamedBean.unregisterListeners();
             _selectOtherMemoryNamedBean.removePropertyChangeListener("value", this);
+            _listenersAreRegistered = false;
         }
-        _selectNamedBean.unregisterListeners();
-        _listenersAreRegistered = false;
     }
 
     /** {@inheritDoc} */
