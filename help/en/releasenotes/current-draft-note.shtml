@@ -534,7 +534,7 @@
 
         <h4>Signal Masts</h4>
             <ul>
-                <li></li>
+                <li>Clicks on Signal Mast icons in Editor panels can activate Sensors.</li>
             </ul>
 
         <h4>Signal Groups</h4>
