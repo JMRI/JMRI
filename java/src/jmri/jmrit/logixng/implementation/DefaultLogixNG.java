@@ -174,12 +174,7 @@ public class DefaultLogixNG extends AbstractNamedBean
     public void setEnabled(boolean enable) {
         boolean old = _enabled;
         _enabled = enable;
-        if (isActive()) {
-            registerListeners();
-            execute(true);
-        } else {
-            unregisterListeners();
-        }
+        checkIfActiveAndEnabled();
         firePropertyChange(PROPERTY_ENABLED, old, _enabled);
     }
 
@@ -187,12 +182,23 @@ public class DefaultLogixNG extends AbstractNamedBean
     @Override
     public void activate() {
         _isActive = true;
+        checkIfActiveAndEnabled();
     }
 
     /** {@inheritDoc} */
     @Override
     public void deactivate() {
         _isActive = false;
+        checkIfActiveAndEnabled();
+    }
+
+    private void checkIfActiveAndEnabled() {
+        if (isActive()) {
+            registerListeners();
+            execute(true);
+        } else {
+            unregisterListeners();
+        }
     }
 
     /** {@inheritDoc} */
