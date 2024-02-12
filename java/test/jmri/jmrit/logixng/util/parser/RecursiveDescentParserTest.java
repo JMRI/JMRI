@@ -887,7 +887,7 @@ public class RecursiveDescentParserTest {
         Assert.assertTrue("calculate is probably correct", (result instanceof Double) && (((Double)result) >= 0.0) && (((Double)result) <= 1.0));
         exprNode = t.parseExpression("int(23.56)");
         Assert.assertTrue("expression matches", "Function:int(FloatNumber:23.56)".equals(exprNode.getDefinitionString()));
-        Assert.assertTrue("calculate is correct", ((Integer)23).equals(exprNode.calculate(symbolTable)));
+        Assert.assertTrue("calculate is correct", ((Long)23L).equals(exprNode.calculate(symbolTable)));
         exprNode = t.parseExpression("sin(180,\"deg\")");
         Assert.assertEquals("expression matches", "Function:sin(IntNumber:180,String:\"deg\")", exprNode.getDefinitionString());
         Assert.assertEquals("calculate is correct", 0, (Double)exprNode.calculate(symbolTable), 1e-15);

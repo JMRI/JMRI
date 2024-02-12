@@ -107,6 +107,10 @@ public class StoreAndLoadTest {
                     if (type == SymbolTable.InitialValueType.Map) continue;
                     JUnitAppender.assertWarnMessage(String.format("Variable %s could not be initialized", "TestVariable_"+type.name()));
                     JUnitAppender.assertWarnMessage(String.format("Variable %s could not be initialized", "TestVariable_"+type.name()+"_2"));
+
+                    if (type == SymbolTable.InitialValueType.LogixNG_Table) {
+                            JUnitAppender.assertWarnMessage(String.format("Variable %s could not be initialized", "TestVariable_"+type.name()+"_3"));
+                    }
                 }
 
                 stringWriter = new StringWriter();

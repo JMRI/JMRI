@@ -424,6 +424,32 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li>Conversion to boolean has changed. Before JMRI 5.7.5,
+              conversion from a string to boolean returned
+              <strong>True</strong> if the string was not empty, and
+              <strong>False</strong> if the string was empty. With JMRI 5.7.5,
+              this has changed so that a string that's <strong>true</strong>
+              (case insensitive) returns a boolean <strong>True</strong>
+              and a string that's <strong>false</strong> (case insensitive)
+              returns a boolean <strong>False</strong>. All other string
+              values throw an exception. The earlier behaviour was not
+              documented so it's unlikely that this affects users.<br>
+              The old behaviour was based on how Jython converts a string
+              to boolean. If you want the old behaviour, you can use the
+              LogixNG formula function <strong>boolJython()</strong>.</li>
+          <li>Local variables and Global variables can now be initialized
+              to boolean values as well. True or false. Case insensitive.</li>
+          <li>The action <strong>Log local variables</strong> now has the
+              option <strong>Show class name</strong>.If it is selected,
+              the name of the class will be shown after the value. This
+              is useful for debugging, when you want to know the type of
+              the value.</li>
+          <li>The LogixNG function <strong>int()</strong> previously returned a Java
+              <strong>Integer</strong> instead of a Java <strong>Long</strong>.
+              This bug is now corrected. It shouldn't affect any existing
+              LogixNGs. The difference between <strong>Integer</strong> and
+              <strong>Long</strong> is that <strong>Long</strong> can handle
+              much bigger integer values than <strong>Integer</strong>.</li>
           <li></li>
         </ul>
 

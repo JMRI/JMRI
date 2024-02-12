@@ -215,6 +215,40 @@ public class CreateLogixNGTreeScaffold {
                     .createGlobalVariable("TestVariable_"+type.name()+"_2");
             globalVariable.setInitialValueType(type);
             globalVariable.setInitialValueData("");
+
+            globalVariable = globalVariables_Manager
+                    .createGlobalVariable("TestVariable_"+type.name()+"_3");
+            globalVariable.setInitialValueType(type);
+            switch (type) {
+                case None:
+                    globalVariable.setInitialValueData("");
+                    break;
+                case Boolean:
+                    globalVariable.setInitialValueData("true");
+                    break;
+                case Integer:
+                    globalVariable.setInitialValueData("12");
+                    break;
+                case FloatingNumber:
+                    globalVariable.setInitialValueData("32.12");
+                    break;
+                case String:
+                    globalVariable.setInitialValueData("Hello");
+                    break;
+                case Array:
+                case Map:
+                case LocalVariable:
+                case Memory:
+                case Reference:
+                case Formula:
+                case ScriptExpression:
+                case ScriptFile:
+                case LogixNG_Table:
+                    globalVariable.setInitialValueData("");
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown type: " + type.name());
+            }
         }
 
 
@@ -2657,6 +2691,8 @@ public class CreateLogixNGTreeScaffold {
         callModule.getSelectNamedBean().setNamedBean("IQM1");
         callModule.addParameter("Abc", InitialValueType.FloatingNumber, "12.32", Module.ReturnValueType.LocalVariable, "SomeVar");
         callModule.addParameter("Def", InitialValueType.Formula, "12 + 32", Module.ReturnValueType.Memory, "M1");
+        callModule.addParameter("Fed", InitialValueType.Boolean, "True", Module.ReturnValueType.None, null);
+        callModule.addParameter("Efd", InitialValueType.Boolean, "False", Module.ReturnValueType.None, null);
         callModule.addParameter("Ghi", InitialValueType.Integer, "21", Module.ReturnValueType.None, null);
         callModule.addParameter("Jkl", InitialValueType.LocalVariable, "MyVar", Module.ReturnValueType.Memory, "M34");
         callModule.addParameter("Mno", InitialValueType.Memory, "M2", Module.ReturnValueType.LocalVariable, "SomeVar");
@@ -3072,6 +3108,7 @@ public class CreateLogixNGTreeScaffold {
         logLocalVariables.setComment("A comment");
         logLocalVariables.setIncludeGlobalVariables(true);
         logLocalVariables.setExpandArraysAndMaps(false);
+        logLocalVariables.setShowClassName(false);
         maleSocket = digitalActionManager.registerAction(logLocalVariables);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -3079,6 +3116,15 @@ public class CreateLogixNGTreeScaffold {
         logLocalVariables.setComment("A comment");
         logLocalVariables.setIncludeGlobalVariables(false);
         logLocalVariables.setExpandArraysAndMaps(true);
+        logLocalVariables.setShowClassName(false);
+        maleSocket = digitalActionManager.registerAction(logLocalVariables);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        logLocalVariables = new LogLocalVariables(digitalActionManager.getAutoSystemName(), null);
+        logLocalVariables.setComment("A comment");
+        logLocalVariables.setIncludeGlobalVariables(false);
+        logLocalVariables.setExpandArraysAndMaps(true);
+        logLocalVariables.setShowClassName(true);
         maleSocket = digitalActionManager.registerAction(logLocalVariables);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -3538,6 +3584,8 @@ public class CreateLogixNGTreeScaffold {
         expressionCallModule.getSelectNamedBean().setNamedBean("IQM1");
         expressionCallModule.addParameter("Abc", InitialValueType.FloatingNumber, "12.32", Module.ReturnValueType.LocalVariable, "SomeVar");
         expressionCallModule.addParameter("Def", InitialValueType.Formula, "12 + 32", Module.ReturnValueType.Memory, "M1");
+        expressionCallModule.addParameter("Fed", InitialValueType.Boolean, "True", Module.ReturnValueType.None, null);
+        expressionCallModule.addParameter("Efd", InitialValueType.Boolean, "False", Module.ReturnValueType.None, null);
         expressionCallModule.addParameter("Ghi", InitialValueType.Integer, "21", Module.ReturnValueType.None, null);
         expressionCallModule.addParameter("Jkl", InitialValueType.LocalVariable, "MyVar", Module.ReturnValueType.Memory, "M34");
         expressionCallModule.addParameter("Mno", InitialValueType.Memory, "M2", Module.ReturnValueType.LocalVariable, "SomeVar");
@@ -5446,6 +5494,7 @@ public class CreateLogixNGTreeScaffold {
 
     private static final String[] initValues = new String[]{
         "",             // None
+        "False",        // Boolean
         "32",           // Integer
         "41.429",       // FloatingNumber
         "My string",    // String
