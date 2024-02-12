@@ -1177,8 +1177,11 @@
       <xs:attribute name="degrees" type="xs:string"></xs:attribute>
       <xs:attribute name="scale" type="xs:string"></xs:attribute>
       <xs:attribute name="clickmode" type="xs:string"></xs:attribute>
+      <xs:attribute name="controlclickmode" type="xs:string"></xs:attribute>
       <xs:attribute name="litmode" type="xs:string"></xs:attribute>
       <xs:attribute name="imageset" type="xs:string"></xs:attribute>
+      <xs:attribute name="clicksensor" type="xs:string"></xs:attribute>
+      <xs:attribute name="controlclicksensor" type="xs:string"></xs:attribute>
 
     </xs:complexType>
 
