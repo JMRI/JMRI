@@ -2,24 +2,20 @@ package jmri.jmrit.display;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.swing.AbstractAction;
-import javax.swing.ButtonGroup;
-import javax.swing.JMenu;
-import javax.swing.JPopupMenu;
-import javax.swing.JRadioButtonMenuItem;
+import javax.swing.*;
 
-import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
-import jmri.SignalMast;
-import jmri.Transit;
+import jmri.*;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.SignalMastItemPanel;
 import jmri.jmrit.picker.PickListModel;
-import jmri.util.swing.JmriJOptionPane;
-import jmri.util.swing.JmriMouseEvent;
+import jmri.swing.NamedBeanComboBox;
+import jmri.util.swing.*;
 
 /**
  * An icon to display a status of a {@link jmri.SignalMast}.
@@ -40,6 +36,8 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     }
 
     private NamedBeanHandle<SignalMast> namedMast;
+    private NamedBeanHandle<Sensor> namedClickSensor;
+    private NamedBeanHandle<Sensor> namedControlClickSensor;
 
     public void setShowAutoText(boolean state) {
         _text = state;
@@ -56,6 +54,9 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         pos.setSignalMast(getNamedSignalMast());
         pos._iconMap = cloneMap(_iconMap, pos);
         pos.setClickMode(getClickMode());
+        pos.setControlClickMode(getControlClickMode());
+        pos.setClickSensor( namedClickSensor == null ? "" : namedClickSensor.getBean().getDisplayName() );
+        pos.setControlClickSensor( namedControlClickSensor == null ? "" : namedControlClickSensor.getBean().getDisplayName() );
         pos.setLitMode(getLitMode());
         pos.useIconSet(useIconSet());
         return super.finishClone(pos);
@@ -85,11 +86,11 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
      * @param pName Used as a system/user name to lookup the SignalMast object
      */
     public void setSignalMast(String pName) {
-        SignalMast mMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(pName);
+        SignalMast mMast = InstanceManager.getDefault(SignalMastManager.class).getNamedBean(pName);
         if (mMast == null) {
             log.warn("did not find a SignalMast named {}", pName);
         } else {
-            setSignalMast(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, mMast));
+            setSignalMast(InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(pName, mMast));
         }
     }
 
@@ -103,8 +104,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         }
         if (error) {
             JmriJOptionPane.showMessageDialog(_editor.getTargetFrame(),
-                    java.text.MessageFormat.format(Bundle.getMessage("SignalMastIconLoadError"),
-                            new Object[]{getSignalMast().getDisplayName()}),
+                    Bundle.getMessage("SignalMastIconLoadError", getSignalMast().getDisplayName() ),
                     Bundle.getMessage("SignalMastIconLoadErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
         }
         //Add in specific appearances for dark and held
@@ -128,8 +128,8 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
             NamedIcon n;
             try {
                 n = new NamedIcon(s, s);
-            } catch (java.lang.NullPointerException e) {
-                JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("SignalMastIconLoadError2", new Object[]{aspect, s, getNameString()}),
+            } catch ( NullPointerException e ) {
+                JmriJOptionPane.showMessageDialog(_editor.getTargetFrame(), Bundle.getMessage("SignalMastIconLoadError2", new Object[]{aspect, s, getNameString()}),
                     Bundle.getMessage("SignalMastIconLoadErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                 log.error("{} : Cannot load Icon", Bundle.getMessage("SignalMastIconLoadError2", aspect, s, getNameString()));
                 return true;
@@ -157,7 +157,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     }
 
     @Override
-    public jmri.NamedBean getNamedBean() {
+    public NamedBean getNamedBean() {
         return getSignalMast();
     }
 
@@ -174,7 +174,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         }
     }
 
-    // update icon as state of turnout changes
+    // update icon as state of SignalMast changes
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         log.debug("property change: {} current state: {}", e.getPropertyName(), mastState());
@@ -188,7 +188,6 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         return Bundle.getMessage("PositionableType_SignalMastIcon");
     }
 
-//    public String getPName() { return namedMast.getName(); }
     @Override
     public String getNameString() {
         String name;
@@ -200,123 +199,161 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         return name;
     }
 
-    ButtonGroup litButtonGroup = null;
-
     /**
-     * Pop-up just displays the name
+     * {@inheritDoc }
+     * Handles Control (right) clicks
      */
     @Override
     public boolean showPopUp(JPopupMenu popup) {
         if (isEditable()) {
-
-            JMenu clickMenu = new JMenu(Bundle.getMessage("WhenClicked"));
-            ButtonGroup clickButtonGroup = new ButtonGroup();
-            JRadioButtonMenuItem r;
-            r = new JRadioButtonMenuItem(Bundle.getMessage("ChangeAspect"));
-            r.addActionListener(e -> setClickMode(0));
-            clickButtonGroup.add(r);
-            if (clickMode == 0) {
-                r.setSelected(true);
-            } else {
-                r.setSelected(false);
-            }
-            clickMenu.add(r);
-
-            r = new JRadioButtonMenuItem(Bundle.getMessage("AlternateLit"));
-            r.addActionListener(e -> setClickMode(1));
-            clickButtonGroup.add(r);
-            if (clickMode == 1) {
-                r.setSelected(true);
-            } else {
-                r.setSelected(false);
-            }
-            clickMenu.add(r);
-            r = new JRadioButtonMenuItem(Bundle.getMessage("AlternateHeld"));
-            r.addActionListener(e -> setClickMode(2));
-            clickButtonGroup.add(r);
-            if (clickMode == 2) {
-                r.setSelected(true);
-            } else {
-                r.setSelected(false);
-            }
-            clickMenu.add(r);
-            popup.add(clickMenu);
-
-            // add menu to select handling of lit parameter
-            JMenu litMenu = new JMenu(Bundle.getMessage("WhenNotLit"));
-            litButtonGroup = new ButtonGroup();
-            r = new JRadioButtonMenuItem(Bundle.getMessage("ShowAppearance"));
-            r.setIconTextGap(10);
-            r.addActionListener(e -> {
-                setLitMode(false);
-                displayState(mastState());
-            });
-            litButtonGroup.add(r);
-            if (!litMode) {
-                r.setSelected(true);
-            } else {
-                r.setSelected(false);
-            }
-            litMenu.add(r);
-            r = new JRadioButtonMenuItem(Bundle.getMessage("ShowDarkIcon"));
-            r.setIconTextGap(10);
-            r.addActionListener(e -> {
-                setLitMode(true);
-                displayState(mastState());
-            });
-            litButtonGroup.add(r);
-            if (litMode) {
-                r.setSelected(true);
-            } else {
-                r.setSelected(false);
-            }
-            litMenu.add(r);
-            popup.add(litMenu);
-
-            if (namedMast != null) {
-                java.util.Enumeration<String> en = getSignalMast().getSignalSystem().getImageTypeList();
-                if (en.hasMoreElements()) {
-                    JMenu iconSetMenu = new JMenu(Bundle.getMessage("SignalMastIconSet"));
-                    ButtonGroup iconTypeGroup = new ButtonGroup();
-                    setImageTypeList(iconTypeGroup, iconSetMenu, "default");
-                    while (en.hasMoreElements()) {
-                        setImageTypeList(iconTypeGroup, iconSetMenu, en.nextElement());
-                    }
-                    popup.add(iconSetMenu);
-                }
-                popup.add(new jmri.jmrit.signalling.SignallingSourceAction(Bundle.getMessage("SignalMastLogic"), getSignalMast()));
-                JMenu aspect = new JMenu(Bundle.getMessage("ChangeAspect"));
-                final java.util.Vector<String> aspects = getSignalMast().getValidAspects();
-                for (int i = 0; i < aspects.size(); i++) {
-                    final int index = i;
-                    aspect.add(new AbstractAction(aspects.elementAt(index)) {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            getSignalMast().setAspect(aspects.elementAt(index));
-                        }
-                    });
-                }
-                popup.add(aspect);
-            }
-            addTransitPopup(popup);
+            addToEditingPopUp(popup);
         } else {
+            return performControlClickNonEditAction(popup);
+        }
+        return true;
+    }
+
+    private void addToEditingPopUp(JPopupMenu popup) {
+        JMenu clickMenu = new JMenu(Bundle.getMessage("WhenClicked"));
+        ButtonGroup clickButtonGroup = new ButtonGroup();
+        JRadioButtonMenuItem r;
+        r = new JRadioButtonMenuItem(Bundle.getMessage("ChangeAspect"));
+        r.addActionListener(e -> setClickMode(0));
+        clickButtonGroup.add(r);
+        r.setSelected(clickMode == 0);
+        clickMenu.add(r);
+
+        r = new JRadioButtonMenuItem(Bundle.getMessage("AlternateLit"));
+        r.addActionListener(e -> setClickMode(1));
+        clickButtonGroup.add(r);
+        r.setSelected(clickMode == 1);
+        clickMenu.add(r);
+
+        r = new JRadioButtonMenuItem(Bundle.getMessage("AlternateHeld"));
+        r.addActionListener(e -> setClickMode(2));
+        clickButtonGroup.add(r);
+        r.setSelected(clickMode == 2);
+        clickMenu.add(r);
+
+        r = new JRadioButtonMenuItem(Bundle.getMessage("ActivateSensor", 
+            getDisplaySensorName(getClickSensor())));
+        r.addActionListener(e -> {
+            String str = getSensorFromDialog( popup, getClickSensor() );
+            if ( ! str.isEmpty() ) {
+                setClickSensor(str);
+                setClickMode(3);
+            }
+        });
+        clickButtonGroup.add(r);
+        clickMenu.add(r);
+        r.setSelected(clickMode == 3);
+
+        popup.add(clickMenu);
+
+        JMenu rightClickMenu = new JMenu(Bundle.getMessage("WhenRightClick"));
+        ButtonGroup rightClickButtonGroup = new ButtonGroup();
+        r = new JRadioButtonMenuItem(Bundle.getMessage("SelectAspect"));
+        r.addActionListener(e -> setControlClickMode(0));
+        rightClickButtonGroup.add(r);
+        r.setSelected(controlClickMode == 0);
+        rightClickMenu.add(r);
+
+        r = new JRadioButtonMenuItem(Bundle.getMessage("ActivateSensor", 
+            getDisplaySensorName(getControlClickSensor())));
+        r.addActionListener(e ->  {
+            String str = getSensorFromDialog( popup, getControlClickSensor() );
+            if ( ! str.isEmpty() ) {
+                setControlClickSensor(str);
+                setControlClickMode(1);
+            }
+        });
+        rightClickButtonGroup.add(r);
+        rightClickMenu.add(r);
+        r.setSelected(controlClickMode == 1);
+
+        popup.add(rightClickMenu);
+
+        // add menu to select handling of lit parameter
+        JMenu litMenu = new JMenu(Bundle.getMessage("WhenNotLit"));
+        ButtonGroup litButtonGroup = new ButtonGroup();
+        r = new JRadioButtonMenuItem(Bundle.getMessage("ShowAppearance"));
+        r.setIconTextGap(10);
+        r.addActionListener(e -> {
+            setLitMode(false);
+            displayState(mastState());
+        });
+        litButtonGroup.add(r);
+        r.setSelected(!litMode);
+        litMenu.add(r);
+
+        r = new JRadioButtonMenuItem(Bundle.getMessage("ShowDarkIcon"));
+        r.setIconTextGap(10);
+        r.addActionListener(e -> {
+            setLitMode(true);
+            displayState(mastState());
+        });
+        litButtonGroup.add(r);
+        r.setSelected(litMode);
+        litMenu.add(r);
+        popup.add(litMenu);
+
+        if (namedMast != null) {
+            java.util.Enumeration<String> en = getSignalMast().getSignalSystem().getImageTypeList();
+            if (en.hasMoreElements()) {
+                JMenu iconSetMenu = new JMenu(Bundle.getMessage("SignalMastIconSet"));
+                ButtonGroup iconTypeGroup = new ButtonGroup();
+                setImageTypeList(iconTypeGroup, iconSetMenu, "default");
+                while (en.hasMoreElements()) {
+                    setImageTypeList(iconTypeGroup, iconSetMenu, en.nextElement());
+                }
+                popup.add(iconSetMenu);
+            }
+            popup.add(new jmri.jmrit.signalling.SignallingSourceAction(Bundle.getMessage("SignalMastLogic"), getSignalMast()));
+            JMenu aspect = new JMenu(Bundle.getMessage("SelectAspect"));
             final java.util.Vector<String> aspects = getSignalMast().getValidAspects();
             for (int i = 0; i < aspects.size(); i++) {
                 final int index = i;
-                popup.add(new AbstractAction(aspects.elementAt(index)) {
+                aspect.add(new AbstractAction(aspects.elementAt(index)) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         getSignalMast().setAspect(aspects.elementAt(index));
                     }
                 });
             }
+            popup.add(aspect);
         }
-        return true;
+        addTransitPopup(popup);
+    }
+
+    private String getDisplaySensorName(Sensor sensorSystemName) {
+        if ( sensorSystemName == null ) {
+            return "";
+        }
+        return ": " + sensorSystemName.getDisplayName();
+    }
+
+    private String getSensorFromDialog(JPopupMenu popup, Sensor clickSensor){
+        NamedBeanComboBox<Sensor> sensorCombo = new NamedBeanComboBox<>(
+            InstanceManager.getDefault(SensorManager.class),  clickSensor,
+            DisplayOptions.USERNAME_SYSTEMNAME);
+        sensorCombo.setAllowNull(false);
+        JComboBoxUtil.setupComboBoxMaxRows(sensorCombo);
+
+        int ok = JmriJOptionPane.showConfirmDialog(popup.getInvoker(), 
+            new Object[]{ new JLabel(Bundle.getMessage("SelectSensActive")) , sensorCombo}, 
+            Bundle.getMessage("SelectSensActive"), JmriJOptionPane.OK_CANCEL_OPTION);
+        if ( ok == JmriJOptionPane.OK_OPTION ) {
+            Sensor ff = sensorCombo.getSelectedItem();
+            if ( ff != null ) {
+                return ff.getDisplayName();
+            }
+        }
+        return "";
     }
 
     private void addTransitPopup(JPopupMenu popup) {
-        if ((InstanceManager.getDefault(jmri.SectionManager.class).getNamedBeanSet().size()) > 0
-                && jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
+        if ((InstanceManager.getDefault(SectionManager.class).getNamedBeanSet().size()) > 0
+                && InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
 
             if (tct == null) {
                 tct = new jmri.jmrit.display.layoutEditor.TransitCreationTool();
@@ -331,8 +368,8 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
                 public void actionPerformed(ActionEvent e) {
                     try {
                         tct.addNamedBean(getSignalMast());
-                    } catch (jmri.JmriException ex) {
-                        JmriJOptionPane.showMessageDialog(null, ex.getMessage(),
+                    } catch (JmriException ex) {
+                        JmriJOptionPane.showMessageDialog(popup.getInvoker(), ex.getMessage(),
                             Bundle.getMessage("TransitErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                     }
                 }
@@ -345,10 +382,10 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
                         try {
                             tct.addNamedBean(getSignalMast());
                             created = tct.createTransit();
-                            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("TransitCreatedMessage", created.getDisplayName()),
+                            JmriJOptionPane.showMessageDialog(popup.getInvoker(), Bundle.getMessage("TransitCreatedMessage", created.getDisplayName()),
                                 Bundle.getMessage("TransitCreatedTitle"), JmriJOptionPane.INFORMATION_MESSAGE);
-                        } catch (jmri.JmriException ex) {
-                            JmriJOptionPane.showMessageDialog(null, ex.getMessage(),
+                        } catch (JmriException ex) {
+                            JmriJOptionPane.showMessageDialog(popup.getInvoker(), ex.getMessage(),
                                 Bundle.getMessage("TransitErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                         }
                     }
@@ -364,6 +401,37 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         }
     }
 
+    private boolean performControlClickNonEditAction(JPopupMenu popup) {
+
+        switch ( controlClickMode ) {
+            case 1:
+                Sensor s = getControlClickSensor();
+                if ( s == null ) {
+                    log.error("{} : No Sensor set for Control Click action.", getSignalMast().getDisplayName());
+                    return false; // do not display popup
+                }
+                try {
+                    s.setKnownState(Sensor.ACTIVE);
+                } catch ( JmriException ex ) {
+                    log.warn("Could not set Mast Click Sensor Active: {}", ex.getMessage());
+                }
+                return false; // do not display popup
+            case 0:
+            default:
+                final java.util.Vector<String> aspects = getSignalMast().getValidAspects();
+                for (int i = 0; i < aspects.size(); i++) {
+                    final int index = i;
+                    popup.add(new AbstractAction(aspects.elementAt(index)) {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            getSignalMast().setAspect(aspects.elementAt(index));
+                        }
+                    });
+                }
+                return true; // display popup
+        }
+    }
+
     static volatile jmri.jmrit.display.layoutEditor.TransitCreationTool tct;
 
     private void setImageTypeList(ButtonGroup iconTypeGroup, JMenu iconSetMenu, final String item) {
@@ -371,11 +439,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         im = new JRadioButtonMenuItem(item);
         im.addActionListener(e -> useIconSet(item));
         iconTypeGroup.add(im);
-        if (useIconSet.equals(item)) {
-            im.setSelected(true);
-        } else {
-            im.setSelected(false);
-        }
+        im.setSelected(useIconSet.equals(item));
         iconSetMenu.add(im);
 
     }
@@ -389,8 +453,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
 
     @Override
     public boolean setEditItemMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameSignalMast"));
-        popup.add(new AbstractAction(txt) {
+        popup.add(new AbstractAction(Bundle.getMessage("EditItem", Bundle.getMessage("BeanNameSignalMast"))) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 editItem();
@@ -400,7 +463,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     }
 
     protected void editItem() {
-        _paletteFrame = makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"),
+        _paletteFrame = makePaletteFrame(Bundle.getMessage("EditItem",
                 Bundle.getMessage("BeanNameSignalMast")));
         _itemPanel = new SignalMastItemPanel(_paletteFrame, "SignalMast", getFamily(),
                 PickListModel.signalMastPickModelInstance());
@@ -439,24 +502,37 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         if (e.isMetaDown() || e.isAltDown()) {
             return;
         }
-        if (getSignalMast() == null) {
-            log.error("No turnout connection, can't process click");
+        SignalMast mast = getSignalMast();
+        if ( mast == null) {
+            log.error("No SignalMast connection, can't process click");
             return;
         }
         switch (clickMode) {
             case 0:
-                java.util.Vector<String> aspects = getSignalMast().getValidAspects();
-                int idx = aspects.indexOf(getSignalMast().getAspect()) + 1;
+                java.util.Vector<String> aspects = mast.getValidAspects();
+                int idx = aspects.indexOf(mast.getAspect()) + 1;
                 if (idx >= aspects.size()) {
                     idx = 0;
                 }
-                getSignalMast().setAspect(aspects.elementAt(idx));
+                mast.setAspect(aspects.elementAt(idx));
                 return;
             case 1:
-                getSignalMast().setLit(!getSignalMast().getLit());
+                mast.setLit(!mast.getLit());
                 return;
             case 2:
-                getSignalMast().setHeld(!getSignalMast().getHeld());
+                mast.setHeld(!mast.getHeld());
+                return;
+            case 3:
+                Sensor s = getClickSensor();
+                if ( s == null ) {
+                    log.error("{} : No Sensor set for Click action.", mast.getDisplayName());
+                    return;
+                }
+                try {
+                    s.setKnownState(Sensor.ACTIVE);
+                } catch ( JmriException ex ) {
+                    log.error("Could not set Mast Click Sensor Active: {}", ex.getMessage());
+                }
                 return;
             default:
                 log.error("Click in mode {}", clickMode);
@@ -522,7 +598,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         if (isIcon()) {
             if ((state != null) && (getSignalMast() != null)) {
                 String s = getSignalMast().getAppearanceMap().getImageLink(state, useIconSet);
-                if ((getSignalMast().getHeld()) && (getSignalMast().getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD) != null)) {
+                if ((getSignalMast().getHeld()) && (getSignalMast().getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.HELD) != null)) {
                     s = getSignalMast().getAppearanceMap().getImageLink("$held", useIconSet);
                 } else if (getLitMode() && !getSignalMast().getLit() && (getSignalMast().getAppearanceMap().getImageLink("$dark", useIconSet) != null)) {
                     s = getSignalMast().getAppearanceMap().getImageLink("$dark", useIconSet);
@@ -549,7 +625,6 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         } else {
             super.setIcon(null);
         }
-        return;
     }
 
     @Override
@@ -588,12 +663,50 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
      */
     protected int clickMode = 0;
 
+    private int controlClickMode = 0;
+
+    /**
+     * Set the Click Mode.
+     * 0 - Sequence through aspects. (Default)
+     * 1 - Alternate the "lit" aspect.
+     * 2 - Alternate the {@link jmri.SignalAppearanceMap#HELD} aspect.
+     * 3 - Set Sensor Active.
+     * @param mode new mode.
+     */
     public void setClickMode(int mode) {
         clickMode = mode;
+        if ( mode != 3 ) {
+            setClickSensor("");
+        }
     }
 
+    /**
+     * Set the Control ( right ) Click Mode when not in edit mode.
+     * 0 - Select Aspect to display. (Default)
+     * 1 - Set Sensor Active.
+     * @param mode new mode.
+     */
+    public void setControlClickMode(int mode) {
+        controlClickMode = mode;
+        if ( mode != 1 ) {
+            setControlClickSensor("");
+        }
+    }
+
+    /**
+     * Get the Click Mode.
+     * @return current click mode.
+     */
     public int getClickMode() {
         return clickMode;
+    }
+
+    /**
+     * Get the Control ( right ) Click Mode.
+     * @return the current Control Click Mode.
+     */
+    public int getControlClickMode() {
+        return controlClickMode;
     }
 
     /**
@@ -610,6 +723,91 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
 
     public boolean getLitMode() {
         return litMode;
+    }
+
+    /**
+     * Set the Name of the Click Sensor.
+     * @param newSensor Name of the Sensor. Can be empty String to clear value.
+     */
+    public void setClickSensor(@Nonnull String newSensor){
+        if ( newSensor.isBlank() ){
+            namedClickSensor = null;
+            return;
+        }
+        Sensor s = InstanceManager.getDefault(SensorManager.class).getNamedBean(newSensor);
+        if (s == null) {
+            log.warn("did not find a Click Sensor named {}", newSensor);
+        } else {
+            namedClickSensor = InstanceManager.getDefault(
+                NamedBeanHandleManager.class).getNamedBeanHandle(newSensor, s);
+        }
+    }
+
+    /**
+     * Set the Name of the Control ( Right ) Click Sensor.
+     * @param newSensor Name of the Sensor. Can be empty String to clear value.
+     */
+    public void setControlClickSensor(@Nonnull String newSensor){
+        if ( newSensor.isBlank() ){
+            namedControlClickSensor = null;
+            return;
+        }
+        Sensor s = InstanceManager.getDefault(SensorManager.class).getNamedBean(newSensor);
+        if (s == null) {
+            log.warn("did not find a ControlClick Sensor named {}", newSensor);
+        } else {
+            namedControlClickSensor = InstanceManager.getDefault(
+                NamedBeanHandleManager.class).getNamedBeanHandle(newSensor, s);
+        }
+    }
+
+    /**
+     * Get the Click Sensor
+     * @return the Sensor.
+     */
+    @CheckForNull
+    public Sensor getClickSensor() {
+        if ( namedClickSensor == null ) {
+            return null;
+        }
+        return namedClickSensor.getBean();
+    }
+
+    /**
+     * Get the Control ( right ) Click Sensor
+     * @return the Sensor.
+     */
+    @CheckForNull
+    public Sensor getControlClickSensor() {
+        if ( namedControlClickSensor == null ) {
+            return null;
+        }
+        return namedControlClickSensor.getBean();
+    }
+
+    @CheckForNull
+    public NamedBeanHandle<Sensor> getNamedClickSensor(){
+        return namedClickSensor;
+    }
+
+    @CheckForNull
+    public NamedBeanHandle<Sensor> getNamedControlClickSensor(){
+        return namedControlClickSensor;
+    }
+
+    @Nonnull
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            // SensorManager sm = InstanceManager.getDefault(SensorManager.class);
+            if (bean.equals(getClickSensor())) {
+                report.add(new NamedBeanUsageReport("ClickSensor", "Active when SignalMast Clicked"));
+            }
+            if (bean.equals(getControlClickSensor())) {
+                report.add(new NamedBeanUsageReport("ControlClickSensor", "Active when SignalMast Control Clicked"));
+            }
+        }
+        return report;
     }
 
     @Override
