@@ -10,6 +10,7 @@ import jmri.NamedBean;
  */
 public interface LogixNG extends Base, NamedBean {
 
+    String PROPERTY_ENABLED = "Enabled";
     String PROPERTY_INLINE = "IsInline";
 
     /**

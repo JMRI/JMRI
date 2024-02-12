@@ -172,6 +172,7 @@ public class DefaultLogixNG extends AbstractNamedBean
     /** {@inheritDoc} */
     @Override
     public void setEnabled(boolean enable) {
+        boolean old = _enabled;
         _enabled = enable;
         if (isActive()) {
             registerListeners();
@@ -179,6 +180,7 @@ public class DefaultLogixNG extends AbstractNamedBean
         } else {
             unregisterListeners();
         }
+        firePropertyChange(PROPERTY_ENABLED, old, _enabled);
     }
 
     /** {@inheritDoc} */
