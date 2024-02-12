@@ -105,7 +105,7 @@ public class SignalMastIconTest extends PositionableIconTest {
 
         JPopupMenu popup = new JPopupMenu();
         Assertions.assertTrue(to.showPopUp(popup));
-        ThreadingUtil.runOnGUI( () -> popup.show( (Component)to, 0, 0 ) );
+        ThreadingUtil.runOnGUI( () -> popup.show( to, 0, 0 ) );
 
         Thread selectSensor = JemmyUtil.createModalDialogOperatorThread(
             Bundle.getMessage("SelectSensActive"), 
@@ -159,7 +159,7 @@ public class SignalMastIconTest extends PositionableIconTest {
 
         JPopupMenu popup = new JPopupMenu();
         to.showPopUp(popup);
-        ThreadingUtil.runOnGUI( () -> popup.show( (Component)to, 0, 0 ) );
+        ThreadingUtil.runOnGUI( () -> popup.show( to, 0, 0 ) );
 
         Thread selectSensor = new Thread(() -> {
             JDialogOperator jdo = new JDialogOperator( Bundle.getMessage("SelectSensActive") );
@@ -188,7 +188,7 @@ public class SignalMastIconTest extends PositionableIconTest {
         Assertions.assertEquals("IS1", cs.getDisplayName());
         Assertions.assertNotEquals(Sensor.ACTIVE, s1.getCommandedState());
 
-        JmriMouseEvent e = new JmriMouseEvent((Component)to,
+        JmriMouseEvent e = new JmriMouseEvent(to,
                     JmriMouseEvent.MOUSE_CLICKED,
                     0, // time
                     0, // modifiers
@@ -267,7 +267,7 @@ public class SignalMastIconTest extends PositionableIconTest {
 
         JPopupMenu popup = new JPopupMenu();
         Assertions.assertTrue(to.setEditItemMenu(popup));
-        ThreadingUtil.runOnGUI( () -> popup.show( (Component)to, 0, 0 ) );
+        ThreadingUtil.runOnGUI( () -> popup.show( to, 0, 0 ) );
 
         JPopupMenuOperator jpo = new JPopupMenuOperator();
         Assertions.assertNotNull(jpo);
