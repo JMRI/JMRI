@@ -182,13 +182,12 @@ public class DefaultLogixNG extends AbstractNamedBean
     @Override
     public void activate() {
         _isActive = true;
-        checkIfActiveAndEnabled();
     }
 
     /** {@inheritDoc} */
     @Override
-    public void deactivate() {
-        _isActive = false;
+    public void setActive(boolean active) {
+        _isActive = active;
         checkIfActiveAndEnabled();
     }
 
