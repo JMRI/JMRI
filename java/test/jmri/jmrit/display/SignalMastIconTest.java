@@ -1,7 +1,5 @@
 package jmri.jmrit.display;
 
-import java.awt.Component;
-
 import javax.swing.*;
 
 import jmri.*;
