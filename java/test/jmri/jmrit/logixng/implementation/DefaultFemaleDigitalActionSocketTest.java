@@ -104,6 +104,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.logixng.actions.ActionReporter.class);
         classes.add(jmri.jmrit.logixng.actions.ActionScript.class);
         classes.add(jmri.jmrit.logixng.actions.ActionSensor.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionSetReporter.class);
         classes.add(jmri.jmrit.logixng.actions.ActionSignalHead.class);
         classes.add(jmri.jmrit.logixng.actions.ActionSignalMast.class);
         classes.add(jmri.jmrit.logixng.actions.ActionSound.class);
@@ -114,6 +115,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.logixng.actions.ActionTurnoutLock.class);
         classes.add(jmri.jmrit.logixng.actions.ActionWarrant.class);
         classes.add(jmri.jmrit.logixng.actions.EnableLogix.class);
+        classes.add(jmri.jmrit.logixng.actions.EnableLogixNG.class);
         classes.add(jmri.jmrit.logixng.actions.ProgramOnMain.class);
         classes.add(jmri.jmrit.logixng.actions.TriggerRoute.class);
         map.put(Category.ITEM, classes);

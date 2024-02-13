@@ -25,32 +25,53 @@
             "
         >
 
-    <xs:complexType name="LogixNG_DigitalAction_LogLocalVariablesType">
+    <xs:complexType name="LogixNG_DigitalAction_ActionSetReporterType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a LogLocalVariables class.
+          Define the XML stucture for storing the contents of a ActionMemory class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.LogLocalVariablesXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ActionSetReporterXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
-        
+
             <xs:sequence>
+
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
 
-              <xs:element name="includeGlobalVariables" type="yesNoType" minOccurs="0" maxOccurs="1"/>
-              <xs:element name="expandArraysAndMaps" type="yesNoType" minOccurs="0" maxOccurs="1"/>
-              <xs:element name="showClassName" type="yesNoType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="namedBean" type="LogixNG_SelectNamedBeanType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="otherMemoryNamedBean" type="LogixNG_SelectNamedBeanType" minOccurs="0" maxOccurs="1" />
 
+              <xs:element name="reporterOperation" minOccurs="0" maxOccurs="1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:token">
+                    <xs:enumeration value="SetToNull"/>
+                    <xs:enumeration value="SetToString"/>
+                    <xs:enumeration value="CopyVariableToReporter"/>
+                    <xs:enumeration value="CopyMemoryToReporter"/>
+                    <xs:enumeration value="CopyTableCellToReporter"/>
+                    <xs:enumeration value="CalculateFormula"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
+              <xs:element name="otherConstant" type="xs:string" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="otherTableCell" type="xs:string" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="otherVariable" type="xs:string" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="otherFormula" type="xs:string" minOccurs="0" maxOccurs="1"/>
+
+              <xs:element name="table" type="LogixNG_SelectTableType" minOccurs="0" maxOccurs="1"/>
+
+              <xs:element name="provideAnIdTag" type="yesNoType" minOccurs="0" maxOccurs="1"/>
+              
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>
 
-<!--            <xs:attribute name="enabled" type="yesNoType" /> -->
             <xs:attribute name="class" type="classType" use="required"/>
-        
+
     </xs:complexType>
 
 </xs:schema>
