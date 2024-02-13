@@ -42,8 +42,10 @@ public class BiDiBOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgra
     public void testWriteCVNullListener() throws jmri.ProgrammerException {
         super.testWriteCVNullListener();
         // test may require further setup?
-        JUnitAppender.suppressWarnMessageStartsWith(
-            "The node is no longer registered. Skip send message to node:");
+        //JUnitAppender.suppressWarnMessageStartsWith(
+        //    "The node is no longer registered. Skip send message to node:");
+        JUnitAppender.suppressErrorMessageStartsWith(
+            "writePom async failed on node:"); //since jbidibc 2.0.18
     }
 
     @Override
