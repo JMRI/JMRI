@@ -67,8 +67,14 @@ public class EnableLogixNGSwing extends AbstractDigitalActionSwing {
         for (JComponent c : componentList) innerPanel.add(c);
 
         panel.add(innerPanel);
-        panel.add(new JLabel(Bundle.getMessage("EnableLogixNG_Info1")));
-        panel.add(new JLabel(Bundle.getMessage("EnableLogixNG_Info2")));
+
+        JPanel infoPanel1 = new JPanel();
+        infoPanel1.add(new JLabel(Bundle.getMessage("EnableLogixNG_Info1")));
+        panel.add(infoPanel1);
+
+        JPanel infoPanel2 = new JPanel();
+        infoPanel2.add(new JLabel(Bundle.getMessage("EnableLogixNG_Info2")));
+        panel.add(infoPanel2);
     }
 
     /** {@inheritDoc} */
