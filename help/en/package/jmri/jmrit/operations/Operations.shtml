@@ -337,7 +337,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
                 <li><a href="#ModifyTrainsByCarType">Modify Trains by Car Type</a></li>
 
-                <li><a href="#SetCars">Set Cars</a></li>
+                <li><a href="#SetCars">Set Cars (Modify Multiple Cars)</a></li>
               </ul></li>
           </ul></li>
 
@@ -4090,7 +4090,8 @@ Some lucky folks have more locomotives and cars than track on their layout and w
 
       <h4>Train</h4>
       The last field is the train assignment. You can manually decide which train to use before or
-      after building your trains.
+      after building your trains. The "Auto" checkbox when selected will only show trains that can
+      service this car.
 
       <h3 id="CarsTools">Cars Tools</h3>
       The cars window "Tools" menu allows you to perform some useful functions to your car roster.
@@ -4157,7 +4158,7 @@ The "Reset move count all cars" will zero out all of the cars move counts. In no
       car type to your roster. See <a href="#ModifyTrainsByCarType">Modify Trains by Car Type</a>
       for more info.
 
-      <h4 id="SetCars">Set Cars</h4>
+      <h4 id="SetCars">Set Cars (Modify Multiple Cars)</h4>
       If you want to change the status, location, return when empty, return when loaded, home
       division, load, kernel, destinations or train assignment for a group of cars use the "Set
       Cars" tool found under "Tools" in the <a href="#Cars">Cars</a> window. The tool works the same
@@ -4166,7 +4167,7 @@ The "Reset move count all cars" will zero out all of the cars move counts. In no
       select "Set Cars". Note that you can use the "Control" or "Ctrl" key on your keyboard to
       select individual cars in the table, and the "Shift" key allows you to select a range of cars.
       Use "Ctrl A" to select all of the cars in the table. The first car in the table becomes the
-      default, and if you press the "Apply" button, all of the other selected cars will have the
+      default, and when you press the "Apply" button, all of the other selected cars will have the
       same settings as the default car.
 
       <p>When using the "Set Cars" tool, all cars selected in the Cars window will have the same
