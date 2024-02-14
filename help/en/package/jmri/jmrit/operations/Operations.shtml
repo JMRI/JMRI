@@ -3788,7 +3788,9 @@ Some lucky folks have more locomotives and cars than track on their layout and w
 
       <h4>Location and Track</h4>
       Now set the car's location on the layout. If the car is off the layout, set the location to
-      none (blank space).
+      none (blank space). The "Auto" checkbox when selected, filters the track selection to only show
+      tracks that have enough space for the car, and are also configured to service the car's type, load, 
+      and road.
 
       <h4>Color</h4>
       You have the option to set the car's color. Useful if you provide it on your Manifests or
@@ -3914,10 +3916,15 @@ Some lucky folks have more locomotives and cars than track on their layout and w
       <h3 id="EditCarLoads">Edit Car Loads</h3>
       To add a custom load or edit a car's load, press the Load "Edit" button in the <a
         href="#CarsEdit">Edit Car</a> or <a href="#CarsSet">Set Car</a> windows. Each car type will
-      have it's own set of custom loads. Note that <a href="#Spurs">spurs</a> normally require a <a
+      have it's own set of custom loads. Select the car type to add, delete or replace a car's load.
+      The "All" checkbox allows you to create loads for all of your car types.  For example you could
+      create a custom empty load for all of your car types if needed.
+      
+      <p>Note that <a href="#Spurs">spurs</a> normally require a <a
         href="#Schedules">schedule</a> to service cars with custom loads. See car <a href="#CarLoad">Load</a>
       and <a href="#SchedulesAndLoads">Purposely Moving Cars Using Schedules and Loads</a> for more
       information.
+      </p>
       <p>
         <img src="images/EditCarLoads.png" alt="">
       </p>
@@ -3930,7 +3937,7 @@ Some lucky folks have more locomotives and cars than track on their layout and w
 
       <h4>Add Car Load Name</h4>
       Enter in the text box the custom load name you want to add, then press the "Add" button. After
-      creating the new custom load name you can change the load's type, priority, is hazardous, and
+      creating the new custom load name you can change the load's type, priority, hazardous, and
       optional messages. Press the "Save" button after making the changes.
 
       <h4>Delete Car Load Name</h4>
@@ -3962,6 +3969,10 @@ Some lucky folks have more locomotives and cars than track on their layout and w
       messages can be useful if you have visible car loads that need to be added or removed by your
       crew. You must select the "PickUp Msg" and "SetOut Msg" <a href="#MessageFormats">car
         attributes</a> if you want these messages on your Manifests and switch lists.
+        
+        <h4>Save</h4>
+        Press the save button after making changes to a car load's type, priority, hazardous, or messages. 
+        If the "All" checkbox is selected, all car types with the selected load name will be updated.
 
       <h3 id="CarsSet">Set Car</h3>
       After creating a car, you can set the car's location, and optionally the car's destination and
@@ -4943,6 +4954,10 @@ The "Reset move count all cars" will zero out all of the cars move counts. In no
         the maximums you specified in the route. You could of course reduce the train lengths in
         your route if you find that the program is consistently adding one or two locos to the
         train, and also exceeding the maximum train lengths.</p>
+        
+        <p>Note that the program will attempt to assign locos to your train if this option is enabled,
+        and the HPT value is greater than zero, even if the requested number of locos in the 
+        <a href="#TrainEdit">Edit Train</a> window is also zero.</p>
 
       <h4>Train Owners</h4>
       You can decide which rolling stock the train will service by owner name. Select which owners
