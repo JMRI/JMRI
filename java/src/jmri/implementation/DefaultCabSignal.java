@@ -261,10 +261,11 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
 
     /**
      * Get Block List to the end of Path or Signal Mast Stop, whichever first.
-     * The first Block in the list ( is any ), will be the current Block.
+     * The first Block in the list ( if any ), will be the current Block.
      * @return list of Blocks that the loco address is expected to traverse.
      */
     @Nonnull
+    @Override
     public List<Block> getBlockList() {
         java.util.ArrayList<Block> blockList = new java.util.ArrayList<>();
         SignalMast mast = null;

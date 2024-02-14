@@ -1,5 +1,9 @@
 package jmri;
 
+import java.util.List;
+
+import javax.annotation.Nonnull;
+
 /**
  * Interface for a Cab Signal Object, describing the state of the track ahead
  * relative to a locomotive with a given address.  This is effectively a mobile
@@ -60,6 +64,16 @@ public interface CabSignal {
      * @return The next Block position
      */
     Block getNextBlock();
+
+    /**
+     * Get Block List for the CabSignal.
+     * List of Blocks up to the end of Path or a Signal Mast displaying
+     * a Stop condition, whichever comes first.
+     * The first Block in the list ( if any ), will be the current Block.
+     * @return list of Blocks that the loco address is expected to traverse.
+     */
+    @Nonnull
+    List<Block> getBlockList();
 
     /**
      * Get the Next Signal Mast the locomotive is expected to pass.
