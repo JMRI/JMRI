@@ -293,8 +293,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
             }
         } else {
             // control type
-            var aliasAsHex = "000"+Integer.toHexString(header & 0xFFF).toUpperCase();
-            String alias = "0x" + (aliasAsHex).substring(aliasAsHex.length()-3,aliasAsHex.length());
+            String alias = String.format("0x%03X", header & 0xFFF);
             if ((header & 0x07000000) == 0x00000000) {
                 int[] data = new int[len];
                 System.arraycopy(content, 0, data, 0, len);
