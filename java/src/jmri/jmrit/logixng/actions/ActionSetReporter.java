@@ -213,7 +213,9 @@ public class ActionSetReporter extends AbstractDigitalAction
                 // Provide the report as an IdTag if it's not an IdTag already
                 if (! (report instanceof IdTag)) {
                     String name = TypeConversionUtil.convertToString(report, false);
-                    report = InstanceManager.getDefault(IdTagManager.class).provideIdTag(name);
+                    IdTag idTag = InstanceManager.getDefault(IdTagManager.class).provideIdTag(name);
+                    idTag.setWhereLastSeen(reporter);
+                    report = idTag;
                 }
             }
 
