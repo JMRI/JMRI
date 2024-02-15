@@ -621,44 +621,44 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         groupRow.setLine3("");
         groupRow.setLine4("");
 
-        if (longLine.length() < 64) {
+        if (longLine.length() < 65) {
             groupRow.setLine1(longLine);
             log.debug("row 1: {}", groupRow.getLine1());
             return;
         } else {
-            groupRow.setLine1(longLine.substring(0, 63));
+            groupRow.setLine1(longLine.substring(0, 64));
             log.debug("row 1: {}", groupRow.getLine1());
-            longLine = longLine.substring(63);
+            longLine = longLine.substring(64);
         }
 
-        if (longLine.length() < 64) {
+        if (longLine.length() < 65) {
             groupRow.setLine2(longLine);
             log.debug("row 2: {}", groupRow.getLine2());
             return;
         } else {
-            groupRow.setLine2(longLine.substring(0, 63));
+            groupRow.setLine2(longLine.substring(0, 64));
             log.debug("row 2: {}", groupRow.getLine2());
-            longLine = longLine.substring(63);
+            longLine = longLine.substring(64);
         }
 
-        if (longLine.length() < 64) {
+        if (longLine.length() < 65) {
             groupRow.setLine3(longLine);
             log.debug("row 3: {}", groupRow.getLine3());
             return;
         } else {
-            groupRow.setLine3(longLine.substring(0, 63));
+            groupRow.setLine3(longLine.substring(0, 64));
             log.debug("row 3: {}", groupRow.getLine3());
-            longLine = longLine.substring(63);
+            longLine = longLine.substring(64);
         }
 
-        if (longLine.length() < 64) {
+        if (longLine.length() < 65) {
             groupRow.setLine4(longLine);
             log.debug("row 4: {}", groupRow.getLine4());
             return;
         } else {
-            groupRow.setLine4(longLine.substring(0, 63));
+            groupRow.setLine4(longLine.substring(0, 64));
             log.debug("row 4: {}", groupRow.getLine4());
-            longLine = longLine.substring(63);
+            longLine = longLine.substring(64);
         }
 
         JmriJOptionPane.showMessageDialog(null,
@@ -1127,6 +1127,12 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             entry.setValue(row.getLine3());
             entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(GROUP_LINE, i, 4));
             entry.setValue(row.getLine4());
+
+            log.info("{}", row.getName());
+            log.info("{}", row.getLine1());
+            log.info("{}", row.getLine2());
+            log.info("{}", row.getLine3());
+            log.info("{}", row.getLine4());
         }
     }
 
@@ -1761,6 +1767,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         String getEventTrue() {
+            if (_eventTrue.length() == 0) return "00.00.00.00.00.00.00.00";
             return _eventTrue;
         }
 
@@ -1772,6 +1779,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         String getEventFalse() {
+            if (_eventFalse.length() == 0) return "00.00.00.00.00.00.00.00";
             return _eventFalse;
         }
 
@@ -1806,6 +1814,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         String getEventTrue() {
+            if (_eventTrue.length() == 0) return "00.00.00.00.00.00.00.00";
             return _eventTrue;
         }
 
@@ -1817,6 +1826,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         String getEventFalse() {
+            if (_eventFalse.length() == 0) return "00.00.00.00.00.00.00.00";
             return _eventFalse;
         }
 
@@ -1849,6 +1859,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         String getEventId() {
+            if (_eventid.length() == 0) return "00.00.00.00.00.00.00.00";
             return _eventid;
         }
 
@@ -1881,6 +1892,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         String getEventId() {
+            if (_eventid.length() == 0) return "00.00.00.00.00.00.00.00";
             return _eventid;
         }
 
