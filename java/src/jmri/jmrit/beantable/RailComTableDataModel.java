@@ -44,8 +44,10 @@ public class RailComTableDataModel extends BeanTableDataModel<IdTag> {
     public static final int WATERCOL = FUELCOL + 1;
     public static final int LOCATIONCOL = WATERCOL + 1;
     public static final int ROUTINGCOL = LOCATIONCOL + 1;
+    @SuppressWarnings("hiding")     // Field has same name as a field in the super class
     static public final int DELETECOL = ROUTINGCOL + 1;
 
+    @SuppressWarnings("hiding")     // Field has same name as a field in the super class
     static public final int NUMCOLUMN = DELETECOL + 1;
 
     @Override
