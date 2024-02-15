@@ -31,7 +31,8 @@ public class RailComTableDataModel extends BeanTableDataModel<IdTag> {
         super();
         setManager(mgr);
     }
-    
+
+    @SuppressWarnings("hiding")     // Field has same name as a field in the super class
     static public final int VALUECOL = 0;
     public static final int WHERECOL = VALUECOL + 1;
     public static final int WHENCOL = WHERECOL + 1;
@@ -55,9 +56,9 @@ public class RailComTableDataModel extends BeanTableDataModel<IdTag> {
         }
         return tag.getTagID();
     }
-    
+
     private RailComManager manager;
-    
+
     @Override
     public final void setManager(Manager<IdTag> mgr){
         if (mgr instanceof RailComManager){
@@ -241,7 +242,7 @@ public class RailComTableDataModel extends BeanTableDataModel<IdTag> {
     protected String getBeanType() {
         return "ID Tag";
     }
-    
+
     private static final Logger log = LoggerFactory.getLogger(RailComTableDataModel.class);
 
 }
