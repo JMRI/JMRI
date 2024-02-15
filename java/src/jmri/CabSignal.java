@@ -69,7 +69,11 @@ public interface CabSignal {
      * Get Block List for the CabSignal.
      * List of Blocks up to the end of Path or a Signal Mast displaying
      * a Stop condition, whichever comes first.
-     * The first Block in the list ( if any ), will be the current Block.
+     * <p>
+     * The first Block in the list ( if any ), is the current Block.
+     * <p>
+     * This list does NOT guarantee that the Blocks will be unoccupied,
+     * a SignalMast may be displaying a call-on aspect.
      * @return list of Blocks that the loco address is expected to traverse.
      */
     @Nonnull
