@@ -205,6 +205,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
      */
     @Override
     public boolean showPopUp(JPopupMenu popup) {
+        log.info("showPopup");
         if (isEditable()) {
             addToEditingPopUp(popup);
         } else {
@@ -402,7 +403,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     }
 
     private boolean performControlClickNonEditAction(JPopupMenu popup) {
-
+        log.info("performing right click action ", new Exception("Trace"));
         switch ( controlClickMode ) {
             case 1:
                 Sensor s = getControlClickSensor();

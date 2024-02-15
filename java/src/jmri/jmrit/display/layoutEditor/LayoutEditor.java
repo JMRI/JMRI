@@ -3511,6 +3511,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         // if alt modifier is down invert the snap to grid behaviour
         snapToGridInvert = event.isAltDown();
+        
+        log.info("mouseReleased {}", event);
 
         if (isEditable()) {
             leToolBarPanel.setLocationText(dLoc);
@@ -3673,7 +3675,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             LayoutTurntable t = (LayoutTurntable) selectedObject;
             t.setPosition(selectedHitPointType.turntableTrackIndex());
         } else if ((event.isPopupTrigger() || delayedPopupTrigger) && (!isDragging)) {
-            // requesting marker popup out of edit mode
+            log.info("requesting marker popup out of edit mode");
             LocoIcon lo = checkMarkerPopUps(dLoc);
             if (lo != null) {
                 showPopUp(lo, event);
@@ -3709,6 +3711,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 } else {
                     SignalMastIcon sm = checkSignalMastIconPopUps(dLoc);
                     if (sm != null) {
+                        log.info("SignalMast found from checkSignalMastIconPopUps");
                         showPopUp(sm, event);
                     } else {
                         PositionableLabel im = checkLabelImagePopUps(dLoc);
@@ -3892,6 +3895,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      */
     public void showPopUp(@Nonnull Positionable p, @Nonnull JmriMouseEvent event) {
         assert p != null;
+
+
+        log.info("showPopUp for {}", p.getNamedBean());
 
         if (!((Component) p).isVisible()) {
             return; // component must be showing on the screen to determine its location
