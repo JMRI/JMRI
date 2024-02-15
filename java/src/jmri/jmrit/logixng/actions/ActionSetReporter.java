@@ -212,7 +212,7 @@ public class ActionSetReporter extends AbstractDigitalAction
                 }
                 IdTag idTag;
                 if (report instanceof IdTag) {
-                    idTag = (IdTag)reporter;
+                    idTag = (IdTag)report;
                 } else {
                     String name = TypeConversionUtil.convertToString(report, false);
                     idTag = InstanceManager.getDefault(IdTagManager.class).provideIdTag(name);
