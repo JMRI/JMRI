@@ -500,8 +500,10 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
         @Override
         public void handleProtocolIdentificationRequest(ProtocolIdentificationRequestMessage msg, Connection sender) {
-            long flags = 0x00041000000000L;  // PC, SNIP protocols
-            getInterface().getOutputConnection().put(new ProtocolIdentificationReplyMessage(nodeID, msg.getSourceNodeID(), flags), this);
+            if (msg.getDestNodeID().equals(nodeID)) {
+                long flags = 0x00041000000000L;  // PC, SNIP protocols
+                getInterface().getOutputConnection().put(new ProtocolIdentificationReplyMessage(nodeID, msg.getSourceNodeID(), flags), this);
+            }
         }
 
     }
