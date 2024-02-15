@@ -268,18 +268,19 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
     @Override
     public List<Block> getBlockList() {
         java.util.ArrayList<Block> blockList = new java.util.ArrayList<>();
-        SignalMast mast = null;
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         Block thisBlock = getBlock();
-        if ( thisBlock != null ) {
-            blockList.add(thisBlock);
-            Block nextBlock = getNextBlock();
-            while( okToProceedAfterMast(mast) && nextBlock !=null ) {
-                blockList.add(nextBlock);
-                mast = lbm.getFacingSignalMast(thisBlock, nextBlock);
-                thisBlock = nextBlock;
-                nextBlock = nextBlockOnPath(thisBlock); 
-            }
+        if ( thisBlock == null ) {
+            return blockList;
+        }
+        blockList.add(thisBlock);
+        Block nextBlock = nextBlockOnPath(thisBlock); 
+        SignalMast mast = ( nextBlock == null ? null : lbm.getFacingSignalMast(thisBlock, nextBlock));
+        while ( okToProceedAfterMast(mast) && nextBlock !=null ) {
+            blockList.add(nextBlock);
+            mast = lbm.getFacingSignalMast(thisBlock, nextBlock);
+            thisBlock = nextBlock;
+            nextBlock = nextBlockOnPath(thisBlock); 
         }
         return blockList;
     }
