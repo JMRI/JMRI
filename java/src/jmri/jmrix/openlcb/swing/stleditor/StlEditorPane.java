@@ -817,14 +817,30 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
     }
 
+    public class EntryListener implements PropertyChangeListener {
+        public void propertyChange(PropertyChangeEvent e) {
+            String propertyName = e.getPropertyName();
+            log.info("Event = {}", propertyName);
+        }
+    }
+
+    EntryListener _eventListener = new EntryListener();
+
     private void loadDone() {
-        loadCdiData();
+//         loadCdiData();
         // Example for reading and writing a CDI entry
-//         var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey("Node ID.Your name and description for this node.Node Name");
-//         log.info("d = {}", entry);
-//         var val = entry.getValue();
-//         log.info("val = {}", val);
-//         entry.setValue(val + "xyz");
+        var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey("NODE ID.Your name and description for this node.Node Name");
+//                                                                             NODE ID.Your name and description for this node.Node Name
+        log.info("d = {}", entry);
+        var val = entry.getValue();
+        log.info("val = {}", val);
+        entry.addPropertyChangeListener(_eventListener);
+        log.info("Update entry");
+        entry.setValue(val + "xyz");
+//         entry.removePropertyChangeListener(_eventListener);
+        waitForPropertyChange(entry, ConfigRepresentation.UPDATE_WRITE_COMPLETE);
+//         log.info("update done");
+
     }
 
     private void newNodeInList(MimicNodeStore.NodeMemo nodeMemo) {
@@ -960,6 +976,47 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             //log.warning("dispose of " + nodeMemo.getNodeID().toString());
             nodeMemo.removePropertyChangeListener(this);
         }
+    }
+
+
+    static void waitForPropertyChange(PropertyListenerSupport tgt, final String propertyName) {
+        class Monitor {
+            private boolean cond = false;
+
+            public synchronized void doNotify() {
+                log.info("doNotify:  write complete event");
+                cond = true;
+                this.notify();
+            }
+
+            public synchronized void doWait() {
+                try {
+                    while (!cond) {
+                        this.wait();
+                    }
+                } catch (InterruptedException e) {
+                    log.error("Interrupted while waiting for property "
+                            + "notification {0} on object of class {1}",
+                            new Object[]{propertyName, tgt.getClass().getName()});
+                }
+            }
+        }
+        final Monitor monitor = new Monitor();
+
+        PropertyChangeListener l = new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+                if (propertyChangeEvent.getPropertyName().equals(propertyName)) {
+                    monitor.doNotify();
+                }
+            }
+        };
+
+        tgt.addPropertyChangeListener(l);
+
+        monitor.doWait();
+
+        tgt.removePropertyChangeListener(l);
     }
 
     // --------------  load lists from CDI---------
