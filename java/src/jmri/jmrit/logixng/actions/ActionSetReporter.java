@@ -210,11 +210,15 @@ public class ActionSetReporter extends AbstractDigitalAction
                 if (report == null) {
                     throw new IllegalArgumentException("report is null. Can't provide an IdTag");
                 }
-                // Provide the report as an IdTag if it's not an IdTag already
-                if (! (report instanceof IdTag)) {
+                IdTag idTag;
+                if (report instanceof IdTag) {
+                    idTag = (IdTag)report;
+                } else {
                     String name = TypeConversionUtil.convertToString(report, false);
-                    report = InstanceManager.getDefault(IdTagManager.class).provideIdTag(name);
+                    idTag = InstanceManager.getDefault(IdTagManager.class).provideIdTag(name);
+                    report = idTag;
                 }
+                idTag.setWhereLastSeen(reporter);
             }
 
             reporter.setReport(report);

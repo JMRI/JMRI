@@ -126,7 +126,14 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Updated the OpenLCB_Java library with improvements:
+                    <ul>
+                        <li>Better display of frames with leading zeros on their aliases
+                        <li>Better handling of unexpected alias collisions.  These shouldn't
+                            actually happen if all goes well, but just in case it doesn't...
+                        <li>Adds support for the Verify Node Addressed message
+                    </ul>
+                </li>
             </ul>
 
         <h4>Powerline</h4>
@@ -466,7 +473,7 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>New feature allows users to quickly create a custom load for all car types.</li>
         </ul>
 
    <h3>Panel Editor</h3>

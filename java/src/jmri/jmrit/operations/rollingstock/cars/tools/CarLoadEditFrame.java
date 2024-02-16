@@ -42,7 +42,10 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
     JComboBox<String> priorityComboBox = carLoads.getPriorityComboBox();
     JComboBox<String> hazardousComboBox = carLoads.getHazardousComboBox();
     JComboBox<String> loadTypeComboBox = carLoads.getLoadTypesComboBox();
-
+    
+    // check boxes
+    JCheckBox allTypesCheckBox = new JCheckBox(Bundle.getMessage("All"));
+    
     // text boxes
     JTextField addTextBox = new JTextField(10);
     JTextField pickupCommentTextField = new JTextField(35);
@@ -74,9 +77,12 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 
         // car type panel
         JPanel pType = new JPanel();
-        pType.setLayout(new BoxLayout(pType, BoxLayout.Y_AXIS));
+        pType.setLayout(new GridBagLayout());
         pType.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Type")));
         addItem(pType, typeComboBox, 0, 0);
+        addItem(pType, allTypesCheckBox, 1, 0);
+        
+        allTypesCheckBox.setToolTipText(Bundle.getMessage("TipCarLoadAll"));
 
         // load panel
         JPanel pLoad = new JPanel();
@@ -154,6 +160,8 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 
         addComboBoxAction(typeComboBox);
         addComboBoxAction(loadComboBox);
+        
+        addCheckBoxAction(allTypesCheckBox);
 
         updateCarCommentFields();
 
@@ -196,97 +204,16 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
             }
         }
         if (ae.getSource() == addButton) {
-            carLoads.addName(_type, loadName);
+            addLoadName(loadName);
         }
         if (ae.getSource() == deleteButton) {
-            String deleteLoad = (String) loadComboBox.getSelectedItem();
-            if (deleteLoad.equals(carLoads.getDefaultEmptyName()) || deleteLoad.equals(carLoads.getDefaultLoadName())) {
-                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("carLoadDefault"), Bundle
-                        .getMessage("canNotDelete", Bundle.getMessage("Load")),
-                        JmriJOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            replaceLoad(_type, deleteLoad, null);
-            carLoads.deleteName(_type, deleteLoad);
+            deleteLoadName();
         }
         if (ae.getSource() == replaceButton) {
-            String oldLoadName = (String) loadComboBox.getSelectedItem();
-            if (oldLoadName.equals(carLoads.getDefaultEmptyName())) {
-                if (JmriJOptionPane.showConfirmDialog(this,
-                        Bundle.getMessage("replaceDefaultEmpty",
-                                oldLoadName, loadName),
-                        Bundle.getMessage("replaceAll"),
-                        JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
-                    return;
-                }
-                // don't allow the default names for load and empty to be the
-                // same
-                if (loadName.equals(carLoads.getDefaultEmptyName()) || loadName.equals(carLoads.getDefaultLoadName())) {
-                    JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("carDefault"), Bundle
-                            .getMessage("canNotReplace", Bundle.getMessage("Load")),
-                            JmriJOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                carLoads.setDefaultEmptyName(loadName);
-                replaceAllLoads(oldLoadName, loadName);
-                return;
-            }
-            if (oldLoadName.equals(carLoads.getDefaultLoadName())) {
-                if (JmriJOptionPane.showConfirmDialog(this,
-                        Bundle.getMessage("replaceDefaultLoad",
-                                oldLoadName, loadName),
-                        Bundle.getMessage("replaceAll"),
-                        JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
-                    return;
-                }
-                // don't allow the default names for load and empty to be the
-                // same
-                if (loadName.equals(carLoads.getDefaultEmptyName()) || loadName.equals(carLoads.getDefaultLoadName())) {
-                    JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("carDefault"), Bundle
-                            .getMessage("canNotReplace", Bundle.getMessage("Load")),
-                            JmriJOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                carLoads.setDefaultLoadName(loadName);
-                replaceAllLoads(oldLoadName, loadName);
-                return;
-            }
-            if (JmriJOptionPane.showConfirmDialog(this,
-                    Bundle.getMessage("replaceMsg",
-                            oldLoadName, loadName),
-                    Bundle.getMessage("replaceAll"),
-                    JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
-                return;
-            }
-            if (oldLoadName.equals(loadName)) {
-                return; // do nothing
-            }
-            // ComboBoxes get deselected during the addName operation
-            String loadType = carLoads.getLoadType(_type, oldLoadName);
-            String loadPriority = carLoads.getPriority(_type, oldLoadName);
-            boolean isHazardous = carLoads.isHazardous(_type, oldLoadName);
-            String pickupComment = carLoads.getPickupComment(_type, oldLoadName);
-            String dropComment = carLoads.getDropComment(_type, oldLoadName);
-
-            carLoads.addName(_type, loadName);
-            carLoads.setLoadType(_type, loadName, loadType);
-            carLoads.setPriority(_type, loadName, loadPriority);
-            carLoads.setHazardous(_type, loadName, isHazardous);
-            carLoads.setPickupComment(_type, loadName, pickupComment);
-            carLoads.setDropComment(_type, loadName, dropComment);
-            replaceLoad(_type, oldLoadName, loadName);
-            carLoads.deleteName(_type, oldLoadName);
+            replaceLoadName(loadName);
         }
         if (ae.getSource() == saveButton) {
-            carLoads.setLoadType(_type, (String) loadComboBox.getSelectedItem(), (String) loadTypeComboBox
-                    .getSelectedItem());
-            carLoads.setPriority(_type, (String) loadComboBox.getSelectedItem(),
-                    (String) priorityComboBox.getSelectedItem());
-            carLoads.setHazardous(_type, (String) loadComboBox.getSelectedItem(),
-                    hazardousComboBox.getSelectedItem().equals(Bundle.getMessage("ButtonYes")));
-            carLoads.setPickupComment(_type, (String) loadComboBox.getSelectedItem(), pickupCommentTextField.getText());
-            carLoads.setDropComment(_type, (String) loadComboBox.getSelectedItem(), dropCommentTextField.getText());
-
+            saveLoadName();
             OperationsXml.save(); // save all files that have been modified;
             if (Setup.isCloseWindowOnSaveEnabled()) {
                 dispose();
@@ -308,8 +235,145 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         updateHazardous();
         updateCarCommentFields();
     }
+    
+    @Override
+    protected void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
+        typeComboBox.setEnabled(!allTypesCheckBox.isSelected());
+    }
+    
+    private void addLoadName(String loadName) {
+        if (allTypesCheckBox.isSelected()) {
+            for (String type : carTypes.getNames()) {
+                carLoads.addName(type, loadName);
+            }
+        } else {
+            carLoads.addName(_type, loadName);
+        }
+    }
+    
+    private void deleteLoadName() {
+        String deleteLoad = (String) loadComboBox.getSelectedItem();
+        if (deleteLoad.equals(carLoads.getDefaultEmptyName()) || deleteLoad.equals(carLoads.getDefaultLoadName())) {
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("carLoadDefault"), Bundle
+                    .getMessage("canNotDelete", Bundle.getMessage("Load")),
+                    JmriJOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (allTypesCheckBox.isSelected()) {
+            for (String type : carTypes.getNames()) {
+                replaceLoad(type, deleteLoad, null);
+                carLoads.deleteName(type, deleteLoad);
+            }
+        } else {
+            replaceLoad(_type, deleteLoad, null);
+            carLoads.deleteName(_type, deleteLoad);
+        }
+    }
+    
+    private void replaceLoadName(String loadName) {
+        String oldLoadName = (String) loadComboBox.getSelectedItem();
+        if (oldLoadName.equals(carLoads.getDefaultEmptyName())) {
+            if (JmriJOptionPane.showConfirmDialog(this,
+                    Bundle.getMessage("replaceDefaultEmpty",
+                            oldLoadName, loadName),
+                    Bundle.getMessage("replaceAll"),
+                    JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
+                return;
+            }
+            // don't allow the default names for load and empty to be the
+            // same
+            if (loadName.equals(carLoads.getDefaultEmptyName()) || loadName.equals(carLoads.getDefaultLoadName())) {
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("carDefault"), Bundle
+                        .getMessage("canNotReplace", Bundle.getMessage("Load")),
+                        JmriJOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            carLoads.setDefaultEmptyName(loadName);
+            replaceAllLoads(oldLoadName, loadName);
+            return;
+        }
+        if (oldLoadName.equals(carLoads.getDefaultLoadName())) {
+            if (JmriJOptionPane.showConfirmDialog(this,
+                    Bundle.getMessage("replaceDefaultLoad",
+                            oldLoadName, loadName),
+                    Bundle.getMessage("replaceAll"),
+                    JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
+                return;
+            }
+            // don't allow the default names for load and empty to be the
+            // same
+            if (loadName.equals(carLoads.getDefaultEmptyName()) || loadName.equals(carLoads.getDefaultLoadName())) {
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("carDefault"), Bundle
+                        .getMessage("canNotReplace", Bundle.getMessage("Load")),
+                        JmriJOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            carLoads.setDefaultLoadName(loadName);
+            replaceAllLoads(oldLoadName, loadName);
+            return;
+        }
+        if (JmriJOptionPane.showConfirmDialog(this,
+                Bundle.getMessage("replaceMsg",
+                        oldLoadName, loadName),
+                Bundle.getMessage("replaceAll"),
+                JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
+            return;
+        }
+        if (oldLoadName.equals(loadName)) {
+            return; // do nothing
+        }
+        // ComboBoxes get deselected during the addName operation
+        String loadType = carLoads.getLoadType(_type, oldLoadName);
+        String loadPriority = carLoads.getPriority(_type, oldLoadName);
+        boolean isHazardous = carLoads.isHazardous(_type, oldLoadName);
+        String pickupComment = carLoads.getPickupComment(_type, oldLoadName);
+        String dropComment = carLoads.getDropComment(_type, oldLoadName);
+        
+        if (allTypesCheckBox.isSelected()) {
+            for (String type : carTypes.getNames()) {
+                carLoads.addName(type, loadName);
+                carLoads.setLoadType(type, loadName, loadType);
+                carLoads.setPriority(type, loadName, loadPriority);
+                carLoads.setHazardous(type, loadName, isHazardous);
+                carLoads.setPickupComment(type, loadName, pickupComment);
+                carLoads.setDropComment(type, loadName, dropComment);
+                replaceLoad(type, oldLoadName, loadName);
+                carLoads.deleteName(type, oldLoadName);
+            }
+        } else {
+            carLoads.addName(_type, loadName);
+            carLoads.setLoadType(_type, loadName, loadType);
+            carLoads.setPriority(_type, loadName, loadPriority);
+            carLoads.setHazardous(_type, loadName, isHazardous);
+            carLoads.setPickupComment(_type, loadName, pickupComment);
+            carLoads.setDropComment(_type, loadName, dropComment);
+            replaceLoad(_type, oldLoadName, loadName);
+            carLoads.deleteName(_type, oldLoadName);
+        }
+    }
+    
+    private void saveLoadName() {
+        if (allTypesCheckBox.isSelected()) {
+            for (String type : carTypes.getNames()) {
+                saveLoadName(type);
+            }
+        } else {
+            saveLoadName(_type);
+        }
+    }
+        
+    private void saveLoadName(String type) {
+        carLoads.setLoadType(type, (String) loadComboBox.getSelectedItem(), (String) loadTypeComboBox
+                .getSelectedItem());
+        carLoads.setPriority(type, (String) loadComboBox.getSelectedItem(),
+                (String) priorityComboBox.getSelectedItem());
+        carLoads.setHazardous(type, (String) loadComboBox.getSelectedItem(),
+                hazardousComboBox.getSelectedItem().equals(Bundle.getMessage("ButtonYes")));
+        carLoads.setPickupComment(type, (String) loadComboBox.getSelectedItem(), pickupCommentTextField.getText());
+        carLoads.setDropComment(type, (String) loadComboBox.getSelectedItem(), dropCommentTextField.getText());
+    }
 
-    // replace the default empty and load for all car types
+    // replace load name for all car types
     private void replaceAllLoads(String oldLoad, String newLoad) {
         for (String type : carTypes.getNames()) {
             carLoads.addName(type, newLoad);

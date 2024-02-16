@@ -204,6 +204,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
         ignoreKernelCheckBox.setToolTipText(Bundle.getMessage(TIP_IGNORE));
         outOfServiceCheckBox.setToolTipText(Bundle.getMessage("TipCarOutOfService"));
         autoReturnWhenEmptyTrackCheckBox.setToolTipText(Bundle.getMessage("rsTipAutoTrack"));
+        autoReturnWhenLoadedTrackCheckBox.setToolTipText(Bundle.getMessage("rsTipAutoTrack"));
 
         // get notified if combo box gets modified
         carLoads.addPropertyChangeListener(this);
