@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import jmri.BasicRosterEntry;
 import jmri.Block;
 import jmri.BlockManager;
+import jmri.IdTag;
+import jmri.IdTagManager;
 import jmri.Path;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.beantable.BlockTableAction.RestoreRule;
@@ -117,6 +119,12 @@ public class BlockValueFile extends XmlFile {
                                             v = re;
                                         }
                                     }
+                                    if (bl.getAttribute("valueClass").getValue().equals("jmri.IdTag")) {
+                                        var tag = jmri.InstanceManager.getDefault(IdTagManager.class).getIdTag((String) v);
+                                        if (tag != null) {
+                                            v = tag;
+                                        }
+                                    }
                                 }
                                 b.setValue(v);
                                 sets++;
@@ -177,6 +185,9 @@ public class BlockValueFile extends XmlFile {
                         if (o instanceof RosterEntry) {
                             val.setAttribute("value", ((BasicRosterEntry) o).getId());
                             val.setAttribute("valueClass", "jmri.jmrit.roster.RosterEntry");
+                        } else if (o instanceof IdTag) {
+                            val.setAttribute("value", ((IdTag) o).getUserName());
+                            val.setAttribute("valueClass", "jmri.IdTag");
                         } else {
                             val.setAttribute("value", o.toString());
                         }
