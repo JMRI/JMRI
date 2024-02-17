@@ -5465,7 +5465,7 @@ The "Reset move count all cars" will zero out all of the cars move counts. In no
         JMRI/Your_Profile_Name.jmri/operations/csvSwitchList directory. You can configure the name of the Excel program by
         opening the "Switch List by Location" window using the "Switch Lists" button at the bottom
         of the "Trains" window. Then under "Tools" in the "Switch List by Location" window, select
-        "Setup Excel Program (Manifest Creator)". You must also enable the creation of CSV switch
+        "Setup Java or Excel Program (Manifest Creator)". You must also enable the creation of CSV switch
         list files, see <a href="#ManifestOptions">Options</a> "Generate CSV Switch Lists" for more
         information.
       </p>
