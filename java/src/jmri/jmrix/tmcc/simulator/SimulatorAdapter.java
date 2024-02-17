@@ -32,7 +32,6 @@ import org.slf4j.LoggerFactory;
 public class SimulatorAdapter extends SerialPortController implements Runnable {
 
     // private control members
-    private boolean opened = false;
     private Thread sourceThread;
 
     final static int SENSOR_MSG_RATE = 10;
@@ -118,15 +117,6 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
         sourceThread.setName("TMCC Simulator");
         sourceThread.setPriority(Thread.MIN_PRIORITY);
         sourceThread.start();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void connect() throws java.io.IOException {
-        log.debug("connect called");
-        super.connect();
     }
 
     // Base class methods for the SerialPortController simulated interface
