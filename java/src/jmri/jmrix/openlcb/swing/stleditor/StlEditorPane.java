@@ -823,24 +823,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             log.info("Event = {}", propertyName);
         }
     }
-
     EntryListener _eventListener = new EntryListener();
 
     private void loadDone() {
-//         loadCdiData();
-        // Example for reading and writing a CDI entry
-        var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey("NODE ID.Your name and description for this node.Node Name");
-//                                                                             NODE ID.Your name and description for this node.Node Name
-        log.info("d = {}", entry);
-        var val = entry.getValue();
-        log.info("val = {}", val);
-        entry.addPropertyChangeListener(_eventListener);
-        log.info("Update entry");
-        entry.setValue(val + "xyz");
-//         entry.removePropertyChangeListener(_eventListener);
-        waitForPropertyChange(entry, ConfigRepresentation.UPDATE_WRITE_COMPLETE);
-//         log.info("update done");
-
+        loadCdiData();
     }
 
     private void newNodeInList(MimicNodeStore.NodeMemo nodeMemo) {
@@ -1006,22 +992,41 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         PropertyChangeListener l = new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+            String pName = propertyChangeEvent.getPropertyName();
+            log.info("Wait event = {}", pName);
                 if (propertyChangeEvent.getPropertyName().equals(propertyName)) {
                     monitor.doNotify();
                 }
             }
         };
 
+        log.info("Wait add listener");
         tgt.addPropertyChangeListener(l);
 
         monitor.doWait();
 
+        log.info("Wait remove listener");
         tgt.removePropertyChangeListener(l);
     }
 
     // --------------  load lists from CDI---------
 
+    String _nodeName = "";
+    boolean _testMode = true;
+    boolean _eventsDone = false;
+
     private void loadCdiData() {
+        if (_testMode) {
+            // Example for reading and writing a CDI entry
+            var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey("NODE ID.Your name and description for this node.Node Name");
+            _nodeName = entry.getValue();
+            log.info("node name load done: {}", _nodeName);
+
+            _nodeName = _nodeName + "qrs";
+            setDirty(true);
+            return;
+        }
+
         if (isDirty()) {
             int response = JmriJOptionPane.showConfirmDialog(null,
                     Bundle.getMessage("MessageRevert"),
@@ -1156,6 +1161,20 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     private void pushedStoreButton(ActionEvent e) {
+
+        if (_testMode) {
+            // Test writing a CDI entry
+            var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey("NODE ID.Your name and description for this node.Node Name");
+
+            entry.addPropertyChangeListener(_eventListener);
+            log.info("Update entry: {}", _nodeName);
+            entry.setValue(_nodeName);
+    //         entry.removePropertyChangeListener(_eventListener);
+            waitForPropertyChange(entry, ConfigRepresentation.UPDATE_WRITE_COMPLETE);
+    //         log.info("update done");
+            return;
+        }
+
         // Store data
         storeInputs();
         storeOutputs();
