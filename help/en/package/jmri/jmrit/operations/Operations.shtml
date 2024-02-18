@@ -5465,7 +5465,7 @@ The "Reset move count all cars" will zero out all of the cars move counts. In no
         JMRI/Your_Profile_Name.jmri/operations/csvSwitchList directory. You can configure the name of the Excel program by
         opening the "Switch List by Location" window using the "Switch Lists" button at the bottom
         of the "Trains" window. Then under "Tools" in the "Switch List by Location" window, select
-        "Setup Excel Program (Manifest Creator)". You must also enable the creation of CSV switch
+        "Setup Java or Excel Program (Manifest Creator)". You must also enable the creation of CSV switch
         list files, see <a href="#ManifestOptions">Options</a> "Generate CSV Switch Lists" for more
         information.
       </p>
@@ -6212,23 +6212,29 @@ The "Reset move count all cars" will zero out all of the cars move counts. In no
       that are built.
 
       <h3 id="CustomSwitchLists">Custom Switch Lists</h3>
-      You can if you wish create custom switch lists using an Excel program. You can configure where
+      You can if you wish create custom switch lists using an Excel or Java program. You can configure where
       to find the Excel program for custom switch lists from the "Switch Lists by Location" window
       "Tools" menu. Or go to <a href="#SettingsOptions">Options</a> and select the "Generate CSV
       Switch List" to enable this feature. For more information see <a href="#SetupExcelProgram">Setup
         Excel Program (Manifest Creator)</a>.
+        
       <p>When the feature to generate CSV Switch Lists is enabled, the program will create a
         comma separated values file for each of the selected locations. You can find the CSV files
         in the csvSwitchList directory.</p>
 
       <p>Two new buttons will appear at the bottom of the "Switch Lists by Location" window,
         "Run", and "Run Changes". The "Run" button is used to create custom switch lists for all of
-        the selected locations by executing an Excel program. The "Run" button will if needed,
-        create the CSV files needed before asking the Excel program to create and print a custom
+        the selected locations by executing an Excel or Java program. The "Run" button will if needed,
+        create the CSV files needed before asking the Excel or Java program to create and print a custom
         switch list. The "Run Changes" will only create new switch lists for locations that have new
         work.</p>
+        
+        <p>When using a Java program like <a href="https://mrslamf.com/">Model
+        Railroad Switch List and Manifest Formatter</a> to create a custom switch list, you must delete 
+        the excel switch list file name and then press "Save".</p>
 
       <h3 id="TrainMove">Moving Trains</h3>
+      
       After providing your crew with a printed Manifest or location switch list, you must keep the
       program database synchronized with the actual movement of trains on your layout. This is done
       by the train "Move" buttons located on the right side of the <a href="#Trains">Trains</a>
