@@ -35,6 +35,9 @@ public class DmiPanelC extends JPanel {
         super();
         setLayout(null);
 
+        setBackground(DmiPanel.BACKGROUND_COLOUR);
+        setBounds(0, 315, 334, 50);
+
         mainPanel = panel;
 
         c1Panel = new JPanel();

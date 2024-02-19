@@ -28,6 +28,9 @@ public class DmiPanelF extends JPanel {
         super();
         setLayout(null); // Set the layout manager to null
 
+        setBackground(DmiPanel.BACKGROUND_COLOUR);
+        setBounds(580, 15, 60, 450);
+
         main = mainPane;
 
         f1 = new JButton(Bundle.getMessage("ButtonMain"));
