@@ -29,7 +29,6 @@ public class DmiPanelB extends JPanel {
     private final JLabel b7Label;
     private final JLabel b8Label;
     private final DmiSpeedoDialPanel p;
-    private final DmiPanel mainPanel;
 
     private final UnderDialButton b3;
     private final UnderDialButton b4;
@@ -41,9 +40,10 @@ public class DmiPanelB extends JPanel {
     public DmiPanelB(@Nonnull DmiPanel main){
         super();
         setLayout(null);
+        setBackground(DmiPanel.BACKGROUND_COLOUR);
+        setBounds(54, 15, 280, 300);
 
         setOpaque(true);
-        mainPanel = main;
         p = new DmiSpeedoDialPanel();
 
         requireAllocationOrderAccouncements = new java.util.ArrayList<>();
@@ -204,59 +204,59 @@ public class DmiPanelB extends JPanel {
                 break;
             case 1:
                 b7Label.setIcon(ResourceUtil.getImageIcon("MO_01.bmp"));
-                b7Label.setToolTipText("Shunting");
+                b7Label.setToolTipText(Bundle.getMessage("Shunting"));
                 break;
             case 4:
                 b7Label.setIcon(ResourceUtil.getImageIcon("MO_04.bmp"));
-                b7Label.setToolTipText("Trip");
+                b7Label.setToolTipText(Bundle.getMessage("Trip"));
                 break;
             case 6:
                 b7Label.setIcon(ResourceUtil.getImageIcon("MO_06.bmp"));
-                b7Label.setToolTipText("Post trip");
+                b7Label.setToolTipText(Bundle.getMessage("PostTrip"));
                 break;
             case 7:
                 b7Label.setIcon(ResourceUtil.getImageIcon("MO_07.bmp"));
-                b7Label.setToolTipText("On Sight");
+                b7Label.setToolTipText(Bundle.getMessage("OnSight"));
                 break;
             case 9:
                 b7Label.setIcon(ResourceUtil.getImageIcon("MO_09.bmp"));
-                b7Label.setToolTipText("Staff Responsible");
+                b7Label.setToolTipText(Bundle.getMessage("StaffResponsible"));
                 break;
             case 11:
                 b7Label.setIcon(ResourceUtil.getImageIcon("MO_11.bmp"));
-                b7Label.setToolTipText("Full Supervision Mode");
+                b7Label.setToolTipText(Bundle.getMessage("FullSupervision"));
                 break;
             case 12:
                 b7Label.setIcon(ResourceUtil.getImageIcon("MO_12.bmp"));
-                b7Label.setToolTipText("Non-leading");
+                b7Label.setToolTipText(Bundle.getMessage("NonLeading"));
                 break;
             case 13:
                 b7Label.setIcon(ResourceUtil.getImageIcon("MO_13.bmp"));
-                b7Label.setToolTipText("Stand By");
+                b7Label.setToolTipText(Bundle.getMessage("StandBy"));
                 break;
             case 14:
                 b7Label.setIcon(ResourceUtil.getImageIcon("MO_14.bmp"));
-                b7Label.setToolTipText("Reversing");
+                b7Label.setToolTipText(Bundle.getMessage("Reversing"));
                 break;
             case 16:
                 b7Label.setIcon(ResourceUtil.getImageIcon("MO_16.bmp"));
-                b7Label.setToolTipText("Unfitted");
+                b7Label.setToolTipText(Bundle.getMessage("Unfitted"));
                 break;
             case 18:
                 b7Label.setIcon(ResourceUtil.getImageIcon("MO_18.bmp"));
-                b7Label.setToolTipText("System failure");
+                b7Label.setToolTipText(Bundle.getMessage("SystemFailure"));
                 break;
             case 21:
                 b7Label.setIcon(ResourceUtil.getImageIcon("MO_21.bmp"));
-                b7Label.setToolTipText("Limited Supervision");
+                b7Label.setToolTipText(Bundle.getMessage("LimitedSupervision"));
                 break;
             case 23:
                 b7Label.setIcon(ResourceUtil.getImageIcon("MO_23.bmp"));
-                b7Label.setToolTipText("Automatic Driving");
+                b7Label.setToolTipText(Bundle.getMessage("AutomaticDriving"));
                 break;
             case 24:
                 b7Label.setIcon(ResourceUtil.getImageIcon("MO_24.bmp"));
-                b7Label.setToolTipText("Supervised Manoeuvre");
+                b7Label.setToolTipText(Bundle.getMessage("SupervisedManoeuvre"));
                 break;
             default:
                 throw new IllegalArgumentException("Could not set Mode " + newMode);
@@ -267,9 +267,7 @@ public class DmiPanelB extends JPanel {
         b8Label.setVisible(visible);
         if ( visible ) {
             b8Label.setIcon(ResourceUtil.getImageIcon("ATO_20.bmp"));
-            var icon = ResourceUtil.getImageIcon("ATO_20.bmp");
-            log.debug("icon found {}", icon);
-            b8Label.setToolTipText("Coasting");
+            b8Label.setToolTipText(Bundle.getMessage("Coasting"));
         } else {
             b8Label.setIcon(null);
             b8Label.setToolTipText(null);
@@ -278,26 +276,23 @@ public class DmiPanelB extends JPanel {
     }
 
     // -1 reverse, 0 hidden, 1 forwards
-    // supervised manoeuvre mode required
     protected void setSupervisedDirection(int newDirection) {
-        int direction = newDirection;
-        if ( newDirection !=0 && mainPanel.getMode() != 24 ) {
-            log.warn("Supervised Manoeuvre Mode is required for Direction symbol");
-            direction = 0;
-        }
-        switch (direction) {
+        switch (newDirection) {
             case -1:
                 b8Label.setIcon(ResourceUtil.getImageIcon("SM02.bmp"));
+                b8Label.setToolTipText(Bundle.getMessage("Reverse"));
                 break;
             case 1:
                 b8Label.setIcon(ResourceUtil.getImageIcon("SM01.bmp"));
+                b8Label.setToolTipText(Bundle.getMessage("Forward"));
                 break;
             default:
             case 0:
                 b8Label.setIcon(null);
+                b8Label.setToolTipText(null);
                 break;
         }
-        b8Label.setVisible(direction != 0);
+        b8Label.setVisible(newDirection != 0);
     }
 
     private static class UnderDialButton extends JButton {
