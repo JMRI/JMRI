@@ -21,15 +21,15 @@ import org.apiguardian.api.API;
 @API(status=API.Status.EXPERIMENTAL)
 public class DmiPanel extends JPanel {
 
-    protected static final Color WHITE = Color.WHITE;
-    protected static final Color BLACK = Color.BLACK;
-    protected static final Color GREY = new Color(195,195,195);
-    protected static final Color DARK_GREY = new Color (85,85,85);
-    protected static final Color MEDIUM_GREY = new Color(150,150,150);
-    protected static final Color DARK_BLUE = new Color(3,17,34);
-    protected static final Color ORANGE = new Color(234,145,0);
-    protected static final Color RED = new Color(191,0,2);
-    protected static final Color YELLOW = new Color(223,223,0);
+    public static final Color WHITE = Color.WHITE;
+    public static final Color BLACK = Color.BLACK;
+    public static final Color GREY = new Color(195,195,195);
+    public static final Color DARK_GREY = new Color (85,85,85);
+    public static final Color MEDIUM_GREY = new Color(150,150,150);
+    public static final Color DARK_BLUE = new Color(3,17,34);
+    public static final Color ORANGE = new Color(234,145,0);
+    public static final Color RED = new Color(191,0,2);
+    public static final Color YELLOW = new Color(223,223,0);
     protected static final Color BACKGROUND_COLOUR = DARK_BLUE;
 
     protected static final Border BORDER_ACK =  BorderFactory.createLineBorder(DmiPanel.YELLOW , 2);
@@ -137,56 +137,37 @@ public class DmiPanel extends JPanel {
 
     // distance countdown bar
     private DmiPanelA getPanelA() {
-        DmiPanelA p = new DmiPanelA(this);
-        p.setBounds(0, 15, 54, 300);
-        return p;
+        return new DmiPanelA(this);
     }
 
     // speedometer
     private DmiPanelB getPanelB() {
-        DmiPanelB p = new DmiPanelB(this);
-        p.setBackground(BACKGROUND_COLOUR);
-        p.setBounds(54, 15, 280, 300);
-        return p;
+        return new DmiPanelB(this);
     }
 
     // larger icons under speedometer
     private DmiPanelC getPanelC() {
-        DmiPanelC p = new DmiPanelC(this);
-        p.setBackground(BACKGROUND_COLOUR);
-        p.setBounds(0, 315, 334, 50);
-        return p;
+        return new DmiPanelC(this);
     }
 
     // planning area
     private DmiPanelD getPanelD() {
-        DmiPanelD p = new DmiPanelD(this);
-        p.setBounds(334, 15, 246, 300);
-        return p;
+        return new DmiPanelD(this);
     }
 
     // messages
     private DmiPanelE getPanelE() {
-        DmiPanelE p = new DmiPanelE(this);
-        p.setBackground(BACKGROUND_COLOUR);
-        p.setBounds(0, 365, 334, 100);
-        return p;
+        return new DmiPanelE(this);
     }
 
     // right hand side buttons
     private DmiPanelF getPanelF() {
-        DmiPanelF p = new DmiPanelF(this);
-        p.setBackground(BACKGROUND_COLOUR);
-        p.setBounds(580, 15, 60, 450);
-        return p;
+        return new DmiPanelF(this);
     }
 
     // ATO and clock
     private DmiPanelG getPanelG() {
-        DmiPanelG p = new DmiPanelG(this);
-        p.setBackground(BACKGROUND_COLOUR);
-        p.setBounds(334, 315, 246, 150);
-        return p;
+        return new DmiPanelG(this);
     }
 
     // top panel bar spacer
@@ -512,7 +493,6 @@ public class DmiPanel extends JPanel {
 
     /**
      * Set the Direction Symbol and visibility.
-     * Supervised Manoeuvre mode required.
      * @param newDirection -1: Reverse, 0 Hidden, 1 Forwards.
      */
     public void setSupervisedDirection(int newDirection) {
@@ -647,14 +627,26 @@ public class DmiPanel extends JPanel {
 
     /**
      * Play one of the DMI UI Sounds.
-     * 1 - S1_toofast.wav - 2 secs
-     * 2 - S2_warning.wav - 3 secs
-     * 3 - S_info.wav - 1 sec
-     * 4 - click.wav - 1 sec
-     * @param sound which Sound, plays once.
+     * <p>
+     * 1 - S1_toofast.wav - 2 secs, plays once.
+     * <p>
+     * 2 - S2_warning.wav - 3 secs, loops until stopped.
+     * <p>
+     * 3 - S_info.wav - 1 sec, plays once.
+     * <p>
+     * 4 - click.wav - 1 sec, plays once.
+     * @param sound which Sound, 
      */
     public void playDmiSound(int sound) throws IllegalArgumentException {
         ResourceUtil.playDmiSound(sound);
+    }
+
+    /**
+     * Stop playing a DMI Sound.
+     * @param sound the sound to Stop, normally 2 which plays in a loop.
+     */
+    public void stopDmiSound(int sound) {
+        ResourceUtil.stopDmiSound(sound);
     }
 
     /**
