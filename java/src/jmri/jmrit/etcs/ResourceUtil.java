@@ -34,10 +34,10 @@ public class ResourceUtil {
 
     private static boolean soundsInitialised = false;
 
-    private static final Sound sound1 = new Sound(FileUtil.getExternalFilename(SOUNDS_DIR + "S1_toofast.wav"));
-    private static final Sound sound2 = new Sound(FileUtil.getExternalFilename(SOUNDS_DIR + "S2_warning.wav"));
-    private static final Sound sound3 = new Sound(FileUtil.getExternalFilename(SOUNDS_DIR + "S_info.wav"));
-    private static final Sound sound4 = new Sound(FileUtil.getExternalFilename(SOUNDS_DIR + "click.wav"));
+    private static Sound sound1;
+    private static Sound sound2;
+    private static Sound sound3;
+    private static Sound sound4;
 
     /**
      * Get the File for an Image.
@@ -142,6 +142,12 @@ public class ResourceUtil {
 
         if ( !soundsInitialised ) {
             soundsInitialised = true;
+
+            sound1 = new Sound(FileUtil.getExternalFilename(SOUNDS_DIR + "S1_toofast.wav"));
+            sound2 = new Sound(FileUtil.getExternalFilename(SOUNDS_DIR + "S2_warning.wav"));
+            sound3 = new Sound(FileUtil.getExternalFilename(SOUNDS_DIR + "S_info.wav"));
+            sound4 = new Sound(FileUtil.getExternalFilename(SOUNDS_DIR + "click.wav"));
+
             sound1.setAutoClose(false);
             sound2.setAutoClose(false);
             sound3.setAutoClose(false);
