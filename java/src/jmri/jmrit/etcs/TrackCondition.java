@@ -102,7 +102,7 @@ public class TrackCondition {
      * @return if is driver action or informational, along with description.
      */
     public String getDescription(){
-        return ( getIsOrder() ? "Driver Action: " : "Driver Info: ") + descript;
+        return Bundle.getMessage(getIsOrder() ? "DriverAction" : "DriverInfo",descript);
     }
 
     /**
