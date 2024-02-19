@@ -52,7 +52,6 @@ abstract public class PaneProgFrame extends JmriJFrame
     ArrayList<JMenu> extraMenuList = new ArrayList<>();
 
     Programmer mProgrammer;
-    JPanel modePane = null;
 
     JMenuBar menuBar = new JMenuBar();
 
@@ -307,8 +306,8 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     void setProgrammingGui(JPanel bottom) {
         // see if programming mode is available
-        modePane = getModePane();
-        if (modePane != null) {
+        var tempModePane = getModePane();
+        if (tempModePane != null) {
             // if so, configure programming part of GUI
             // add buttons
             JPanel bottomButtons = new JPanel();
@@ -324,7 +323,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             bottom.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
             JPanel temp = new JPanel();
             bottom.add(temp);
-            temp.add(modePane);
+            temp.add(tempModePane);
         } else {
             // set title to Editing
             super.setTitle(Bundle.getMessage("TitleEditPane", _frameEntryId));
@@ -1580,8 +1579,10 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
         writeChangesButton.setEnabled(stat);
         writeAllButton.setEnabled(stat);
-        if (modePane != null) {
-            modePane.setEnabled(stat);
+        
+        var tempModePane = getModePane();
+        if (tempModePane != null) {
+            tempModePane.setEnabled(stat);
         }
     }
 

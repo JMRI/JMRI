@@ -24,7 +24,7 @@
 # Group (macro) checks - we accept the group, then adjust specific subitems
 #
 -err:+hiding
-  # 195 cases of members hiding superclass members
+  # 81 cases of members hiding superclass members
 -err:-fieldHiding
   # thousands of places where parameters are named for members
 -err:-localHiding

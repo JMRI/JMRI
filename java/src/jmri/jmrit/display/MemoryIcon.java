@@ -468,7 +468,9 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
 
     /*As the size of a memory label can change we want to adjust the position of the x,y
      if the width is fixed*/
+    @SuppressWarnings("hiding")  // Overriding value from SwingConstants
     static final int LEFT = 0x00;
+    @SuppressWarnings("hiding")  // Overriding value from SwingConstants
     static final int RIGHT = 0x02;
     static final int CENTRE = 0x04;
 

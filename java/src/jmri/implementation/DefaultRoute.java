@@ -1316,6 +1316,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
 
         private final DefaultRoute r;
 
+        @SuppressWarnings("hiding")     // Field has same name as a field in the super class
         private final static Logger log = LoggerFactory.getLogger(SetRouteThread.class);
     }
 
