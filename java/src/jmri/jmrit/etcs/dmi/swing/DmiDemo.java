@@ -648,10 +648,6 @@ public class DmiDemo {
         dmiPanel.playDmiSound(1);
         waitFor(3000);
 
-        dmiPanel.messageDriver(new CabMessage("Play Sound Warning", 1, false));
-        dmiPanel.playDmiSound(2);
-        waitFor(3000);
-
         dmiPanel.messageDriver(new CabMessage("Play Sound Info", 1, false));
         dmiPanel.playDmiSound(3);
         waitFor(3000);
@@ -659,6 +655,13 @@ public class DmiDemo {
         dmiPanel.messageDriver(new CabMessage("Play Sound Click", 1, false));
         dmiPanel.playDmiSound(4);
         waitFor(3000);
+
+        dmiPanel.messageDriver(new CabMessage("Play Sound Warning", 1, false));
+        dmiPanel.playDmiSound(2);
+        waitFor(3000);
+
+        dmiPanel.messageDriver(new CabMessage("Stop Sound Warning", 1, false));
+        dmiPanel.stopDmiSound(2);
 
         waitFor(1000);
         dmiPanel.messageDriver(new CabMessage("Demo Complete", 1, false));
