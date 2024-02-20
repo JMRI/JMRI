@@ -126,7 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Updated the OpenLCB_Java library with improvements:
+                <li>Updated the OpenLCB_Java library ot version 0.7.35 with improvements:
                     <ul>
                         <li>Better display of frames with leading zeros on their aliases
                         <li>Better handling of unexpected alias collisions.  These shouldn't

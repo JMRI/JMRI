@@ -137,8 +137,7 @@ which checks the dates of the control files to make sure they've been updated wh
 - from https://mvnrepository.com/artifact/org.slf4j/jul-to-slf4j/2.0.7
 
 ##### openlcb.jar
- - 0.7.33 from https://repo.maven.apache.org/maven2/org/openlcb/openlcb/0.7.33/openlcb-0.7.33.jar
-    plus PR 242 through 246 from https://github.com/openlcb/OpenLCB_Java/
+ - 0.7.35 from https://repo.maven.apache.org/maven2/org/openlcb/openlcb/0.7.35/openlcb-0.7.35.jar
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels

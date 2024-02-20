@@ -26,7 +26,7 @@
         <jackson-databind.version>2.13.4.2</jackson-databind.version>
         <jackson-annotations.version>2.13.4</jackson-annotations.version>
         <jogamp.version>2.5.0</jogamp.version>
-        <openlcb.version>0.7.33</openlcb.version>
+        <openlcb.version>0.7.35</openlcb.version>
         <netbeans.version>RELEASE150</netbeans.version>
         <jacoco.version>0.8.11</jacoco.version>
         <jacoco.reportDir>${basedir}/target/</jacoco.reportDir>
@@ -1495,8 +1495,10 @@
             <!-- The next two lines force use of the local lib/openlcb.jar file. -->
             <!-- This is needed when we're using a custom openlcb.jar file -->
             <!-- not yet available on a maven repository. -->
+<!-- 
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/openlcb.jar</systemPath>
+ -->
 
         </dependency>
         <dependency>
