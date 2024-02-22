@@ -14,11 +14,13 @@ import java.beans.PropertyChangeListener;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.AbstractTableModel;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.FileUtil;
 import jmri.util.swing.JComboBoxUtil;
+import jmri.util.swing.JmriJFileChooser;
 import jmri.util.swing.JmriJOptionPane;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -1189,9 +1191,21 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             }
         }
 
+        var fileChooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
+        fileChooser.setApproveButtonText(Bundle.getMessage("LoadCdiButton"));
+        fileChooser.setDialogTitle(Bundle.getMessage("LoadCdiTitle"));
+        var filter = new FileNameExtensionFilter(Bundle.getMessage("LoadCdiFilter"), "txt");
+        fileChooser.addChoosableFileFilter(filter);
+        fileChooser.setFileFilter(filter);
+
+        int response = fileChooser.showOpenDialog(this);
+        if (response == JFileChooser.CANCEL_OPTION) {
+            return;
+        }
+
         List<String> lines = null;
         try {
-            lines = Files.readAllLines(Paths.get(jmri.util.FileUtil.getUserFilesPath() + "stl_import_backup.txt"));
+            lines = Files.readAllLines(Paths.get(fileChooser.getSelectedFile().getAbsolutePath()));
         } catch (IOException e) {
             log.error("Failed to load file.", e);
             return;
@@ -1217,7 +1231,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             }
             if (lines.get(i).startsWith("Conditionals.Logic")) {
                 loadBackupGroups(i, lines);
-                i += 16 * 5;
+                i += 16 * 2;
             }
         }
 
