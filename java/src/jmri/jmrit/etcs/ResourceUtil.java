@@ -10,7 +10,9 @@ import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
+import jmri.jmrit.Sound;
 import jmri.util.FileUtil;
+import jmri.util.ThreadingUtil;
 
 import org.apiguardian.api.API;
 
@@ -29,6 +31,13 @@ public class ResourceUtil {
     private static final String SOUNDS_DIR = "resources" + FileUtil.SEPARATOR + "sounds" + FileUtil.SEPARATOR;
 
     private static final Color BACKGROUND_COLOUR = new Color(3,17,34); // dark blue background
+
+    private static boolean soundsInitialised = false;
+
+    private static Sound sound1;
+    private static Sound sound2;
+    private static Sound sound3;
+    private static Sound sound4;
 
     /**
      * Get the File for an Image.
@@ -89,7 +98,7 @@ public class ResourceUtil {
     }
 
     /**
-     * Convert an image containing the DID Background Colour to a transparent background.
+     * Convert an image containing the DMI Background Colour to a transparent background.
      * @param image the Image to convert.
      * @return converted image, or null.
      */
@@ -130,27 +139,55 @@ public class ResourceUtil {
      * @param sound which Sound, plays once.
      */
     public static void playDmiSound(int sound) throws IllegalArgumentException {
-        String s;
+
+        if ( !soundsInitialised ) {
+            soundsInitialised = true;
+
+            sound1 = new Sound(FileUtil.getExternalFilename(SOUNDS_DIR + "S1_toofast.wav"));
+            sound2 = new Sound(FileUtil.getExternalFilename(SOUNDS_DIR + "S2_warning.wav"));
+            sound3 = new Sound(FileUtil.getExternalFilename(SOUNDS_DIR + "S_info.wav"));
+            sound4 = new Sound(FileUtil.getExternalFilename(SOUNDS_DIR + "click.wav"));
+
+            sound1.setAutoClose(false);
+            sound2.setAutoClose(false);
+            sound3.setAutoClose(false);
+            sound4.setAutoClose(false);
+        }
+
+        Sound s;
         switch (sound) {
             case 1:
-                s = "S1_toofast.wav";
+                s = sound1;
                 break;
             case 2:
-                s = "S2_warning.wav";
-                break;
+                startSound(sound2, true);
+                return;
             case 3:
-                s = "S_info.wav";
+                s = sound3;
                 break;
             case 4:
-                s = "click.wav";
+                s = sound4;
                 break;
             default:
                 throw new IllegalArgumentException("No Sound for slot "+ sound);
         }
-        String path = FileUtil.getExternalFilename(SOUNDS_DIR + s);
-        jmri.jmrit.Sound snd = new jmri.jmrit.Sound(path);
-        snd.play();
+        startSound(s, false);
+    }
 
+    private static void startSound(Sound s, boolean loop) {
+        Thread t = ThreadingUtil.newThread( ( loop ? s::loop : s::play), "DMI Sound " + s );
+        t.setPriority(Thread.MAX_PRIORITY);
+        ThreadingUtil.runOnGUI(t::start);
+    }
+
+    /**
+     * Stop a DMI Sound from playing.
+     * @param sound normally 2, the only sound which plays in a loop.
+     */
+    public static void stopDmiSound(int sound) {
+        if ( sound == 2 ) {
+            sound2.stop();
+        }
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ResourceUtil.class);

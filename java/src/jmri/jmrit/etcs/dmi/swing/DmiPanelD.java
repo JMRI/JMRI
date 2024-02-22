@@ -70,6 +70,7 @@ public class DmiPanelD extends JPanel {
         planningPanel.setLayout(null);
 
         setBackground(DmiPanel.BACKGROUND_COLOUR);
+        setBounds(334, 15, 246, 300);
 
         add(trackAheadFreeQuestion);
         add(planningPanel);
