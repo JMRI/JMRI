@@ -47,16 +47,25 @@ import org.openlcb.cdi.impl.ConfigRepresentation;
  * is a three step process:  Load the CDI, replace the content with the CSV content and then store
  * to the CDI.
  *
+ * A third mode is to load a CDI backup file.  This can then be used with the CSV process for offline work.
+ *
  * TODO
- *    Implement CDI connection
- *    Add error dialogs
- *    Create a real parser
+ *    Implement CDI store listeners
+ *    Add CDI loading status
+ *    Add File menu
+ *    Add Help link
  *
  * @author Dave Sand Copyright (C) 2024
  * @since 5.7.x
  */
 public class StlEditorPane extends jmri.util.swing.JmriPanel
         implements jmri.jmrix.can.swing.CanPanelInterface {
+
+    /**
+     * The STL Editor is dependent on the Tower LCC+Q version
+     */
+    private static int TOWER_LCC_Q_NODE_VERSION = 105;
+    private static String TOWER_LCC_Q_NODE_VERSION_STRING = "v1.05";
 
     private CanSystemConnectionMemo _canMemo;
     private OlcbInterface _iface;
@@ -123,6 +132,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private static Pattern PARSE_TIMERWORD = Pattern.compile("W#[0123]#\\d{1,3}");
     private static Pattern PARSE_TIMERVAR = Pattern.compile("T\\d{1,2}");
     private static Pattern PARSE_HEXPAIR = Pattern.compile("^[0-9a-fA-F]{2}$");
+    private static Pattern PARSE_VERSION = Pattern.compile("^.*(\\d+)\\.(\\d+)$");
 
     public StlEditorPane() {
     }
@@ -777,8 +787,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             return;
         }
 
-        _cdi = _iface.getConfigForNode(node.getNodeID());
-        _cdi.addPropertyChangeListener(new CdiListener());
+        if (isValidNodeVersionNumber(node.getNodeMemo())) {
+            _cdi = _iface.getConfigForNode(node.getNodeID());
+            _cdi.addPropertyChangeListener(new CdiListener());
+        }
     }
 
     public class CdiListener implements PropertyChangeListener {
@@ -804,9 +816,12 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     private void newNodeInList(MimicNodeStore.NodeMemo nodeMemo) {
-        // Add filter for Tower LCC+Q
-
-        log.info("nodeMemo: {}", nodeMemo);
+        // Filter for Tower LCC+Q and JMRI
+        NodeID node = nodeMemo.getNodeID();
+        String id = node.toString();
+        if (!id.startsWith("02.01.12") && !id.startsWith("02.01.57.4")) {
+            return;
+        }
 
         int i = 0;
         if (_nodeModel.getIndexOf(nodeMemo.getNodeID()) >= 0) {
@@ -820,6 +835,32 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
         _nodeModel.insertElementAt(e, i);
 //         _nodeModel.addElement(e);
+    }
+
+    boolean isValidNodeVersionNumber(MimicNodeStore.NodeMemo nodeMemo) {
+        SimpleNodeIdent ident = nodeMemo.getSimpleNodeIdent();
+        String versionString = ident.getSoftwareVersion();
+
+        int version = 0;
+        var match = PARSE_VERSION.matcher(versionString);
+        if (match.find()) {
+            var major = match.group(1);
+            var minor = match.group(2);
+            version = Integer.parseInt(major + minor);
+        }
+
+        if (version < TOWER_LCC_Q_NODE_VERSION) {
+            JmriJOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("MessageVersion",
+                            nodeMemo.getNodeID(),
+                            versionString,
+                            TOWER_LCC_Q_NODE_VERSION_STRING),
+                    Bundle.getMessage("TitleVersion"),
+                    JmriJOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+
+        return true;
     }
 
     // Notifies that the contents of a given entry have changed. This will delete and re-add the
@@ -863,6 +904,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         public NodeID getNodeID() {
             return nodeMemo.getNodeID();
+        }
+
+        MimicNodeStore.NodeMemo getNodeMemo() {
+            return nodeMemo;
         }
 
         private void updateDescription() {
@@ -1191,7 +1236,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             }
         }
 
-        var fileChooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
+        var fileChooser = new JmriJFileChooser(FileUtil.getUserFilesPath());
         fileChooser.setApproveButtonText(Bundle.getMessage("LoadCdiButton"));
         fileChooser.setDialogTitle(Bundle.getMessage("LoadCdiTitle"));
         var filter = new FileNameExtensionFilter(Bundle.getMessage("LoadCdiFilter"), "txt");
