@@ -49,14 +49,8 @@ import org.openlcb.cdi.impl.ConfigRepresentation;
  *
  * A third mode is to load a CDI backup file.  This can then be used with the CSV process for offline work.
  *
- * TODO
- *    Implement CDI store listeners
- *    Add CDI loading status
- *    Add File menu
- *    Add Help link
- *
  * @author Dave Sand Copyright (C) 2024
- * @since 5.7.x
+ * @since 5.7.5
  */
 public class StlEditorPane extends jmri.util.swing.JmriPanel
         implements jmri.jmrix.can.swing.CanPanelInterface {
@@ -112,6 +106,12 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private JButton _exportButton;
     private JButton _importButton;
 
+    private JMenuItem _refreshItem;
+    private JMenuItem _storeItem;
+    private JMenuItem _exportItem;
+    private JMenuItem _importItem;
+    private JMenuItem _loadItem;
+
     // CDI Names
     private static String INPUT_NAME = "Logic Inputs.Group I%s(%s).Input Description";
     private static String INPUT_TRUE = "Logic Inputs.Group I%s(%s).True";
@@ -161,6 +161,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         _importButton = new JButton(Bundle.getMessage("ButtonImport"));
 
         _percentButton.setEnabled(false);
+        _refreshButton.setEnabled(false);
         _storeButton.setEnabled(false);
         _exportButton.setEnabled(false);
 
@@ -781,15 +782,19 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private void nodeSelected(ActionEvent e) {
         NodeEntry node = (NodeEntry) _nodeBox.getSelectedItem();
         log.info("nodeSelected: {}", node);
-        if (node.toString().startsWith("02.01.12")) {
-            log.info("JMRI Node");
-            loadBackupData();     // Load from a node backup file
-            return;
-        }
 
         if (isValidNodeVersionNumber(node.getNodeMemo())) {
             _cdi = _iface.getConfigForNode(node.getNodeID());
-            _cdi.addPropertyChangeListener(new CdiListener());
+            if (_cdi.getRoot() != null) {
+                loadDone();
+            } else {
+                JmriJOptionPane.showMessageDialogNonModal(this,
+                        Bundle.getMessage("MessageCdiLoad", node),
+                        Bundle.getMessage("TitleCdiLoad"),
+                        JmriJOptionPane.INFORMATION_MESSAGE,
+                        null);
+                _cdi.addPropertyChangeListener(new CdiListener());
+            }
         }
     }
 
@@ -797,29 +802,33 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         public void propertyChange(PropertyChangeEvent e) {
             String propertyName = e.getPropertyName();
             log.info("Event = {}", propertyName);
+//             if (propertyName.equals("UPDATE_STATE")) {
+//                 log.debug("UPDATE_STATE: {}", _cdi.getStatus());
+//             }
             if (propertyName.equals("UPDATE_CACHE_COMPLETE")) {
+                Window[] windows = Window.getWindows();
+                for (Window window : windows) {
+                    if (window instanceof JDialog) {
+                        JDialog dialog = (JDialog) window;
+                        if (dialog.getTitle().equals(Bundle.getMessage("TitleCdiLoad"))) {
+                            dialog.dispose();
+                        }
+                    }
+                }
                 loadDone();
             }
         }
     }
-
-//     public class EntryListener implements PropertyChangeListener {
-//         public void propertyChange(PropertyChangeEvent e) {
-//             String propertyName = e.getPropertyName();
-//             log.info("Event = {}", propertyName);
-//         }
-//     }
-//     EntryListener _eventListener = new EntryListener();
 
     private void loadDone() {
         loadCdiData();
     }
 
     private void newNodeInList(MimicNodeStore.NodeMemo nodeMemo) {
-        // Filter for Tower LCC+Q and JMRI
+        // Filter for Tower LCC+Q
         NodeID node = nodeMemo.getNodeID();
         String id = node.toString();
-        if (!id.startsWith("02.01.12") && !id.startsWith("02.01.57.4")) {
+        if (!id.startsWith("02.01.57.4")) {
             return;
         }
 
@@ -1030,6 +1039,12 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         _groupTable.repaint();
 
         _percentButton.setEnabled(true);
+        _exportButton.setEnabled(true);
+        _refreshButton.setEnabled(true);
+        _storeButton.setEnabled(true);
+        _refreshItem.setEnabled(true);
+        _storeItem.setEnabled(true);
+        _exportItem.setEnabled(true);
     }
 
     private void pushedRefreshButton(ActionEvent e) {
@@ -1109,9 +1124,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     // --------------  store data ---------
     private void setDirty(boolean dirty) {
         _dirty = dirty;
-//         _refreshButton.setEnabled(isDirty());
-        _storeButton.setEnabled(isDirty());
-        _exportButton.setEnabled(isDirty());
     }
 
     private boolean isDirty() {
@@ -1225,7 +1237,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     // --------------  Backup Import ---------
 
-    private void loadBackupData() {
+    private void loadBackupData(ActionEvent m) {
         if (isDirty()) {
             int response = JmriJOptionPane.showConfirmDialog(null,
                     Bundle.getMessage("MessageRevert"),
@@ -1288,6 +1300,9 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         setDirty(false);
         _groupTable.setRowSelectionInterval(0, 0);
         _groupTable.repaint();
+
+        _exportButton.setEnabled(true);
+        _exportItem.setEnabled(true);
         _percentButton.setEnabled(true);
     }
 
@@ -1380,7 +1395,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         importCsvData();
         setDirty(false);
+
         _percentButton.setEnabled(true);
+        _exportButton.setEnabled(true);
+        _exportItem.setEnabled(true);
 
         for (var msg : _csvMessages) {
             log.info("CsvImport: {}", msg);
@@ -2580,6 +2598,41 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     // --------------  misc items ---------
     @Override
+    public java.util.List<JMenu> getMenus() {
+        // create a file menu
+        var retval = new ArrayList<JMenu>();
+        var fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
+
+        _refreshItem = new JMenuItem(Bundle.getMessage("MenuRefresh"));
+        _storeItem = new JMenuItem(Bundle.getMessage("MenuStore"));
+        _importItem = new JMenuItem(Bundle.getMessage("MenuImport"));
+        _exportItem = new JMenuItem(Bundle.getMessage("MenuExport"));
+        _loadItem = new JMenuItem(Bundle.getMessage("MenuLoad"));
+
+        _refreshItem.addActionListener(this::pushedRefreshButton);
+        _storeItem.addActionListener(this::pushedStoreButton);
+        _importItem.addActionListener(this::pushedImportButton);
+        _exportItem.addActionListener(this::pushedExportButton);
+        _loadItem.addActionListener(this::loadBackupData);
+
+        fileMenu.add(_refreshItem);
+        fileMenu.add(_storeItem);
+        fileMenu.addSeparator();
+        fileMenu.add(_importItem);
+        fileMenu.add(_exportItem);
+        fileMenu.addSeparator();
+        fileMenu.add(_loadItem);
+
+        _refreshItem.setEnabled(false);
+        _storeItem.setEnabled(false);
+        _exportItem.setEnabled(false);
+
+        retval.add(fileMenu);
+        return retval;
+    }
+
+
+    @Override
     public void dispose() {
         // and complete this
         super.dispose();
@@ -2587,7 +2640,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.openlcb.swing.memtool.MemoryToolPane";
+        return "package.jmri.jmrix.openlcb.swing.stleditor.StlEditorPane";
     }
 
     @Override
