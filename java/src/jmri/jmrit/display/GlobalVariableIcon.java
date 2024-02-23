@@ -358,7 +358,9 @@ public class GlobalVariableIcon extends MemoryOrGVIcon implements java.beans.Pro
 
     /*As the size of a global variable label can change we want to adjust
      the position of the x,y if the width is fixed*/
+    @SuppressWarnings("hiding")  // OVerrides a value in SwingConstants
     static final int LEFT = 0x00;
+    @SuppressWarnings("hiding")  // OVerrides a value in SwingConstants
     static final int RIGHT = 0x02;
     static final int CENTRE = 0x04;
 

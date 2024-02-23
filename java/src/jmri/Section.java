@@ -388,6 +388,7 @@ public interface Section extends NamedBean {
      */
     void suppressNameUpdate(boolean set);
 
+    @SuppressWarnings("hiding")     // Field has same name as a field in the super class
     enum SectionType {
         DYNAMICADHOC,   // Created on an as required basis, not to be saved.
         USERDEFINED,    // Default Save all the information
