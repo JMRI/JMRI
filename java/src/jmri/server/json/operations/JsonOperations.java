@@ -52,11 +52,15 @@ public class JsonOperations {
      */
     public static final String LOCATION_UNKNOWN = "locationUnknown"; // NOI18N
     /**
-     * {@value #TRAIN}
+     * {@value #TRAIN_ID}
      */
     public static final String TRAIN_ID = "trainId"; // NOI18N
     /**
-     * {@value #TRAIN_ID}
+     * {@value #TRAIN_NAME}
+     */
+    public static final String TRAIN_NAME = "trainName"; // NOI18N
+    /**
+     * {@value #TRAIN}
      */
     public static final String TRAIN = "train"; // NOI18N
     /**
