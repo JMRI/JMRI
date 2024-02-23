@@ -4037,6 +4037,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
                 if (lo != null) {
                     showPopUp(lo, event);
+                } else {
+                    SignalMastIcon smi = checkSignalMastIconPopUps(dLoc);
+                    if ( smi != null ) {
+                        showPopUp(smi, event);
+                    }
                 }
             }
         }
