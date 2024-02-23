@@ -15,6 +15,7 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.SignalMastItemPanel;
 import jmri.jmrit.picker.PickListModel;
 import jmri.swing.NamedBeanComboBox;
+import jmri.util.SystemType;
 import jmri.util.swing.*;
 
 /**
@@ -251,7 +252,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
 
         popup.add(clickMenu);
 
-        JMenu rightClickMenu = new JMenu(Bundle.getMessage("WhenRightClick"));
+        JMenu rightClickMenu = new JMenu(getWhenControlClickActionText());
         ButtonGroup rightClickButtonGroup = new ButtonGroup();
         r = new JRadioButtonMenuItem(Bundle.getMessage("SelectAspect"));
         r.addActionListener(e -> setControlClickMode(0));
@@ -794,6 +795,11 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     @CheckForNull
     public NamedBeanHandle<Sensor> getNamedControlClickSensor(){
         return namedControlClickSensor;
+    }
+
+    private static String getWhenControlClickActionText(){
+        return Bundle.getMessage(SystemType.getType() == SystemType.MACOSX
+            ? "WhenCtrlClick" : "WhenRightClick");
     }
 
     @Nonnull
