@@ -39,6 +39,10 @@ public class DmiPanelG extends JPanel {
     public DmiPanelG(@Nonnull DmiPanel mainPanel){
         super();
         setLayout(null);
+
+        setBackground(DmiPanel.BACKGROUND_COLOUR);
+        setBounds(334, 315, 246, 150);
+
         main = mainPanel;
         JToggleButton g12PositionButton = new JToggleButton();
 

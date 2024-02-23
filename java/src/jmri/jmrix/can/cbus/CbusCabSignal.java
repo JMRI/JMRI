@@ -5,6 +5,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.TrafficController;
 import jmri.LocoAddress;
+import jmri.SignalAppearanceMap;
 import jmri.SignalMast;
 
 /**
@@ -49,7 +50,7 @@ public class CbusCabSignal extends DefaultCabSignal {
 
         int locoAddr = locoaddr.getNumber();
         if (locoaddr.getProtocol() == (LocoAddress.Protocol.DCC_LONG)) {
-            locoAddr = locoAddr | 0xC000;
+            locoAddr |= 0xC000;
         }
         // Calculate the two byte loco address value
         int locoD1 = locoAddr / 256;
@@ -91,13 +92,13 @@ public class CbusCabSignal extends DefaultCabSignal {
                     default: {
                         // if no matching speed in the list above, check for
                         // the constant values in the SignalAppearanceMap.
-                        if(aspect.equals(mast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.PERMISSIVE))){
+                        if(aspect.equals(mast.getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.PERMISSIVE))){
                             sendAspect1 = 0x04;
-                        } else if(aspect.equals(mast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER))){
+                        } else if(aspect.equals(mast.getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER))){
                             sendAspect1 = 0x00;
-                        } else if(aspect.equals(mast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD))){
+                        } else if(aspect.equals(mast.getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.HELD))){
                             sendAspect1 = 0x00;
-                        } else if(aspect.equals(mast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK))){
+                        } else if(aspect.equals(mast.getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DARK))){
                             sendAspect1 = 0x00; // show nothing;
                         }
                     }
@@ -126,7 +127,7 @@ public class CbusCabSignal extends DefaultCabSignal {
         LocoAddress locoaddr = getCabSignalAddress();
         int locoAddr = locoaddr.getNumber();
         if (locoaddr.getProtocol()==(LocoAddress.Protocol.DCC_LONG)) {
-            locoAddr = locoAddr | 0xC000;
+            locoAddr |= 0xC000;
         }
         // Calculate the two byte loco address value
         int locoD1 = locoAddr / 256;
