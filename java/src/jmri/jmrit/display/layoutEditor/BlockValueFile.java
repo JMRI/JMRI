@@ -186,7 +186,7 @@ public class BlockValueFile extends XmlFile {
                             val.setAttribute("value", ((BasicRosterEntry) o).getId());
                             val.setAttribute("valueClass", "jmri.jmrit.roster.RosterEntry");
                         } else if (o instanceof IdTag) {
-                            val.setAttribute("value", ((IdTag) o).getUserName());
+                            val.setAttribute("value", ((IdTag) o).getSystemName());
                             val.setAttribute("valueClass", "jmri.IdTag");
                         } else {
                             val.setAttribute("value", o.toString());
