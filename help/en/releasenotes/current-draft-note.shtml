@@ -637,6 +637,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Improve handling of block values that contain IdTags 
+                across shutdown and startup.</li>
         </ul>
 
