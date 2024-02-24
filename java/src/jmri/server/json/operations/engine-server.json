@@ -49,6 +49,13 @@
             ],
             "description": "id of train engine is assigned to, null if not assigned"
         },
+        "trainName": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "name of train engine is assigned to, null if not assigned"
+        },
         "destination": {
             "type": [
                 "object",
