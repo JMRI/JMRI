@@ -373,7 +373,12 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li></li>
+                <li>LIPLDNW1 (N, TT) light bar</li>
+                <li>LIPLDNY1 (N, TT) light bar</li>
+                <li>LIPLDHW1 (H0, TT) light bar</li>
+                <li>LIPLDHY1 (H0, TT) light bar</li>
+                <li>LIPLDGY1 (G, 1, 2) light bar</li>
+                <li>LIPLDGW1 (G, 1, 2) light bar</li>
             </ul>
 
         <h4>Miscellaneous</h4>
