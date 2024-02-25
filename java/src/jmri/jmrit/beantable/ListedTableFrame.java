@@ -361,7 +361,6 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
         JScrollPane dataScroll;
         Box bottomBox;
         int bottomBoxIndex; // index to insert extra stuff
-        static final int bottomStrutWidth = 20;
 
         boolean standardModel;
 

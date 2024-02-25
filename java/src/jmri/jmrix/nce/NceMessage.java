@@ -124,6 +124,8 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     // some constants
     protected static final int NCE_PAGED_CV_TIMEOUT = 20000;
     protected static final int NCE_DIRECT_CV_TIMEOUT = 10000;
+    
+    @SuppressWarnings("hiding")  // redefines value from super class
     protected static final int SHORT_TIMEOUT = 10000; // worst case is when loading the first panel
 
     public static final int REPLY_1 = 1; // reply length of 1 byte

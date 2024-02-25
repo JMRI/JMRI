@@ -126,7 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Updated the OpenLCB_Java library with improvements:
+                <li>Updated the OpenLCB_Java library ot version 0.7.35 with improvements:
                     <ul>
                         <li>Better display of frames with leading zeros on their aliases
                         <li>Better handling of unexpected alias collisions.  These shouldn't
@@ -640,6 +640,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Improve handling of block values that contain IdTags 
+                across shutdown and startup.</li>
         </ul>
 

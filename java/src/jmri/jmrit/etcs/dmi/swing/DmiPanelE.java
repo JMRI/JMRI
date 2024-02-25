@@ -57,6 +57,9 @@ public class DmiPanelE extends JPanel {
 
         setLayout(null); // Set the layout manager to null
 
+        setBackground(DmiPanel.BACKGROUND_COLOUR);
+        setBounds(0, 365, 334, 100);
+
         JPanel e1 = new JPanel();
         JPanel e2 = new JPanel();
         JPanel e3 = new JPanel();
@@ -111,8 +114,8 @@ public class DmiPanelE extends JPanel {
         e11downArrow.setDisabledIcon(ResourceUtil.getImageIcon("NA_16.bmp"));
         e10upArrow.setName("e10upArrow");
         e11downArrow.setName("e11downArrow");
-        e10upArrow.addActionListener( ActionEvent -> { msgScroll--; updateMsgPanel(); });
-        e11downArrow.addActionListener( ActionEvent -> { msgScroll++; updateMsgPanel(); });
+        e10upArrow.addActionListener( (ActionEvent e) -> { msgScroll--; updateMsgPanel(); });
+        e11downArrow.addActionListener( (ActionEvent e) -> { msgScroll++; updateMsgPanel(); });
 
         add(e1);
         add(e2);
@@ -314,12 +317,15 @@ public class DmiPanelE extends JPanel {
         switch (newVal) {
             case 1:
                 labele1.setIcon(ResourceUtil.getImageIcon("ST_03.bmp"));
+                labele1.setToolTipText(Bundle.getMessage("RadioConnectionOK"));
                 break;
             case 0:
                 labele1.setIcon(ResourceUtil.getImageIcon("ST_04.bmp"));
+                labele1.setToolTipText(Bundle.getMessage("RadioConnectionLost"));
                 break;
             default:
                 labele1.setIcon(null);
+                labele1.setToolTipText(null);
                 break;
         }
     }

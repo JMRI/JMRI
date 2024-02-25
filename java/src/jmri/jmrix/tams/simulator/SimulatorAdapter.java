@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
 public class SimulatorAdapter extends TamsPortController implements Runnable {
 
     // private control members
-    private boolean opened = false;
     private Thread sourceThread;
 
     // streams to share with user class
