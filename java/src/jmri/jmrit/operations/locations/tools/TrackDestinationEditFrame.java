@@ -1,7 +1,6 @@
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.*;
-import java.text.MessageFormat;
 import java.util.List;
 
 import javax.swing.*;
@@ -301,33 +300,40 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                         }
                     }
                     noIssues = false;
-                    int response = JmriJOptionPane.showConfirmDialog(this, MessageFormat
-                            .format(Bundle.getMessage("WarningDestinationTrackCarType"), new Object[]{
-                                    destination.getName(), type}), Bundle.getMessage("WarningCarMayNotMove"),
+                    int response = JmriJOptionPane.showConfirmDialog(this,
+                            Bundle.getMessage("WarningDestinationTrackCarType",
+                                    destination.getName(), type),
+                            Bundle.getMessage("WarningCarMayNotMove"),
                             JmriJOptionPane.OK_CANCEL_OPTION);
                     if (response == JmriJOptionPane.OK_OPTION)
                         continue;
                     return false; // done
                 }
                 // now check road names
-                checkRoads: for (String road : InstanceManager.getDefault(CarRoads.class).getNames()) {
-                    if (!_track.isRoadNameAccepted(road)) {
+                for (String type : InstanceManager.getDefault(CarTypes.class).getNames()) {
+                    if (!_track.isTypeNameAccepted(type)) {
                         continue;
                     }
-                    // now determine if there's a track willing to service this road
-                    for (Track track : destination.getTracksList()) {
-                        if (track.isRoadNameAccepted(road)) {
-                            continue checkRoads; // yes there's a track
+                    checkRoads: for (String road : InstanceManager.getDefault(CarRoads.class).getNames(type)) {
+                        if (!_track.isRoadNameAccepted(road)) {
+                            continue;
                         }
+                        // now determine if there's a track willing to service this road
+                        for (Track track : destination.getTracksList()) {
+                            if (track.isRoadNameAccepted(road)) {
+                                continue checkRoads; // yes there's a track
+                            }
+                        }
+                        noIssues = false;
+                        int response = JmriJOptionPane.showConfirmDialog(this,
+                                Bundle.getMessage("WarningDestinationTrackCarRoad",
+                                        destination.getName(), type, road),
+                                Bundle.getMessage("WarningCarMayNotMove"),
+                                JmriJOptionPane.OK_CANCEL_OPTION);
+                        if (response == JmriJOptionPane.OK_OPTION)
+                            continue;
+                        return false; // done
                     }
-                    noIssues = false;
-                    int response = JmriJOptionPane.showConfirmDialog(this, MessageFormat
-                            .format(Bundle.getMessage("WarningDestinationTrackCarRoad"), new Object[]{
-                                    destination.getName(), road}), Bundle.getMessage("WarningCarMayNotMove"),
-                            JmriJOptionPane.OK_CANCEL_OPTION);
-                    if (response == JmriJOptionPane.OK_OPTION)
-                        continue;
-                    return false; // done
                 }
                 // now check load names
                 for (String type : InstanceManager.getDefault(CarTypes.class).getNames()) {
@@ -386,7 +392,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                         if (!_track.isLoadNameAndCarTypeAccepted(load, type)) {
                             continue;
                         }
-                        for (String road : InstanceManager.getDefault(CarRoads.class).getNames()) {
+                        for (String road : InstanceManager.getDefault(CarRoads.class).getNames(type)) {
                             if (!_track.isRoadNameAccepted(road)) {
                                 continue;
                             }
