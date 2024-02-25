@@ -195,7 +195,6 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
 
         actionWaitFor.setReleaseCondition(oldReleaseCondition);
     }
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionListenOnBeans.class);
 
     // The minimal setup for log4J
     @Before
