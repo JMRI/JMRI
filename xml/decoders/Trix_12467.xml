@@ -1,0 +1,732 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2006 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version version="1" author="PB, pierre.bln@me.com" lastUpdated="20130807"/>
+  <!-- 1 2013/07/24 Creation 
+		This is the first decoder template for a series of Minitrix integrated
+		decoders. Those decoders are manufactured by Doehler and Haass (in most
+		cases). However, CVs and functionalities are often different from the 
+		original Doehler and Haass decoders. Therefore, these decoder definitions
+		are not linked to the Doehler and Haass definitions.
+		THIS FILE CONTAINS:
+		Minitrix 12467 (VT 98 "Schienenbus" Diesel Motorized Unit. 1 unit
+		with motor decoder, 1 unit without decoder, 1 unit with sound module).
+		Defines different CVs for the motor car, the sound car, and the different
+		versions of thoses decoders.
+		Based on: http://www.maile.es/PDF/DHS240_Vt98-Snd_Hinweise.pdf
+  -->
+  <decoder>
+    <family name="Minitrix on-board decoders" mfg="Trix Modelleisenbahn">
+      <model model="12467 (Vt98 with sound) v1-8" productID="12467gen1" comment="3-car unit, decoder base Doehler Haass DHS240">
+		<protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+        </protocols>
+      </model>
+      <model model="12467 (Vt98 with sound) v9-10" productID="12467gen2" comment="3-car unit, decoder base Doehler Haass DHS240">
+		<protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+        </protocols>
+      </model>
+      <model model="12467 (Vt98 with sound) v11+" productID="12467gen3" comment="3-car unit, decoder base Doehler Haass DHS240">
+		<protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+        </protocols>
+      </model>
+    </family>
+    <programming direct="yes" paged="no" register="no" ops="yes"/>
+    <variables>
+	<!-- Calls to std NMRA templates -->
+		<xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
+	  	<!-- Standard motor options -->
+	  	<variable label="Vstart" item="Vstart" CV="2" tooltip="CV2 (1-15)" default="2">
+			<decVal min="1" max="15"/>
+			<label>Vstart</label>
+			<label xml:lang="it">Volt Partenza</label>
+			<label xml:lang="fr">V d&#xE9;marr.</label>
+			<label xml:lang="de">Startspannung</label>
+		</variable>
+		<variable label="Vhigh" item="Vhigh" CV="5" tooltip="CV5 (1-7)" default="6">
+			<decVal min="1" max="7"/>
+			<label>Vhigh</label>
+			<label xml:lang="it">Volt Massimo</label>
+			<label xml:lang="fr">Vmax</label>
+			<label xml:lang="de">Höchstgeschwindigkeit (Vmax)</label>
+		</variable>
+	<!-- Motor control panel -->
+		<variable label="Departure delay" item="Motor Option 1" CV="63" tooltip="CV63 (10=0.25s)" default="10">
+			<decVal/>
+			<label xml:lang="fr">Temporisation départ</label>
+			<label xml:lang="de">Anfahrverzögerung</label>
+		</variable>
+		<variable label="Brake on DC sections - inverted poles" item="Motor Option 2" CV="27" default="1" mask="XXXVXXXX" tooltip="27 Bit 4" include="12467gen2,12467gen3">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+			<label xml:lang="fr">Freinage sur voltage DC négatif</label>
+			<label xml:lang="de">Bremsen mit gegenpoliger Gleichspannung</label>
+		  </variable>
+		<variable label="Brake on DC sections - same poles" item="Motor Option 3" CV="27" default="0" mask="XXVXXXXX" tooltip="27 Bit 5" include="12467gen2,12467gen3">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+			<label xml:lang="fr">Freinage sur voltage DC positif</label>
+			<label xml:lang="de">Bremsen mit gleichpoliger Gleichspannung</label>
+		</variable>
+		<variable label="Nbr of breaking sections" CV="59" mask="XXXXXXXV" default="0" item="Motor Option 4" tooltip="CV59 (0:1 section, 1:2 sections)" include="12467gen2,12467gen3">
+			<enumVal>
+		  		<enumChoice choice="1" value="0">
+					<choice>1</choice>
+		  		</enumChoice>
+		  		<enumChoice choice="2" value="1">
+					<choice>2</choice>
+		  		</enumChoice>
+			</enumVal>
+			<label xml:lang="fr">Sections de freinage</label>
+			<label xml:lang="de">Bremsabschnitte</label>
+	  	</variable>
+	  <!-- EMF options -->
+	  	<variable label="Regulation variant" CV="50" default="2" item="Load Control" tooltip="0=very hard, 1=hard, 2=soft, 3=very soft">
+			<label xml:lang="fr">Variante de réglage</label>
+			<label xml:lang="de">Regelvariante</label>
+			<enumVal>
+				<enumChoice choice="Very Hard" value="0" >
+					<choice>Very Hard</choice>
+					<choice xml:lang="fr">Très dur</choice>
+					<choice xml:lang="de">Sehr Hart</choice>
+				</enumChoice>
+				<enumChoice choice="Hard" value="1">
+					<choice>Hard</choice>
+					<choice xml:lang="fr">Dur</choice>
+					<choice xml:lang="de">Hart</choice>
+				</enumChoice>
+				<enumChoice choice="Soft" value="2">
+					<choice>Soft</choice>
+					<choice xml:lang="fr">Souple</choice>
+					<choice xml:lang="de">Weich</choice>
+				</enumChoice>
+				<enumChoice choice="Very soft" value="3">
+					<choice>Very soft</choice>
+					<choice xml:lang="fr">Très souple</choice>
+					<choice xml:lang="de">Sehr weich</choice>
+				</enumChoice>
+			</enumVal>
+		  </variable>
+		  <variable label="Impulse width" CV="49" default="1" item="EMF Option 1" tooltip="0=small, 1=normal, 2=wide, 3=very wide">
+			<decVal  min="0" max="3"/>
+			<label xml:lang="fr">Largeur d'impulsion</label>
+			<label xml:lang="de">Impulsbreite</label>
+		  </variable>
+	<!-- Advanced panel -->
+		<variable label="Allow joint prog. of motor and sound cars" CV="99" item="Advanced Group 1 Option 1" default="0" tooltip="CV99 in Motor car only" include="12467gen2,12467gen3">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label xml:lang="fr">Autoriser prog. simultannée des voitures motorisée et sonorisée</label>
+			<label xml:lang="de">Motor- und Steuerwagen gekuppelt programmieren</label>
+	   </variable>
+		<variable label="Function for interior lights" CV="42" item="Advanced Group 1 Option 7" default="7" tooltip="CV42" include="12467gen3">
+			<label xml:lang="fr">Fonction pour éclairage intérieur</label>
+			<label xml:lang="de">Taste für Innenbeleuchtung</label>
+			<enumVal>
+				<enumChoice choice="FL" value="0"/>
+				<enumChoice choice="F1" value="1"/>
+				<enumChoice choice="F2" value="2"/>
+				<enumChoice choice="F3" value="3"/>
+				<enumChoice choice="F4" value="4"/>
+				<enumChoice choice="F5" value="5"/>
+				<enumChoice choice="F6" value="6"/>
+				<enumChoice choice="F7" value="7"/>
+				<enumChoice choice="F8" value="8"/>
+			</enumVal>
+	   </variable>
+	   <variable label="Horn button for int. lighting in selectrix mode" CV="43" item="Advanced Group 1 Option 8" default="0" tooltip="CV43" include="12467gen3">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+			<label xml:lang="fr">Bouton avertisseur pour écl. intérieur en mode Selectrix</label>
+			<label xml:lang="de">Selextrix Taste Horn zu Innenbeleuchtung</label>
+	   </variable> 
+		<variable label="Invert motor pins" CV="51" mask="XXXXXXXV" item="Advanced Group 2 Option 1">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+			<label xml:lang="fr">Permuter connexion moteur</label>
+			<label xml:lang="de">Motoranschlüsse vertauschen</label>
+	  	</variable>
+	  	<variable label="Invert light pins" CV="51" mask="XXXXXXVX" item="Advanced Group 2 Option 2">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+			<label xml:lang="fr">Permuter connexion feux</label>
+			<label xml:lang="de">Lichtanschlüsse vertauschen</label>
+	  	</variable>
+	  	<variable label="Invert track pins" CV="51" mask="XXXXXVXX" item="Advanced Group 2 Option 3">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+			<label xml:lang="fr">Permuter connexion voie</label>
+			<label xml:lang="de">Gleisanschlüsse vertauschen</label>
+	  	</variable>
+	<!-- Sound panel for sound car decoder only-->
+		<variable label="Manufacturer sound module: " CV="900" readOnly="yes" default="115" item="Sound Option 1" tooltip="CV900">
+    		<decVal/>
+    		<label xml:lang="fr">Constructeur module sonore: </label>
+    		<label xml:lang="de">Hersteller Sound-Modul: </label>
+  		</variable>
+		<variable label="Sound module version: " CV="901" readOnly="yes" item="Sound Option 2" tooltip="CV901">
+    		<decVal/>
+    		<label xml:lang="fr">Version module sonore: </label>
+    		<label xml:lang="de">Sound-Modul Version: </label>
+  		</variable>
+  		<variable label="Automated puffs" CV="920" mask="XXXXXXXV" readOnly="yes" default="1" item="Sound Option 3" tooltip="CV920 bit 0">
+    		<decVal/>
+    		<label xml:lang="fr">Régl. bruit moteur automatique</label>
+    		<label xml:lang="de">Auspuffschlag automatisch</label>
+  		</variable>
+  		<variable label="Pause before repeating horn" CV="920" mask="XXXXXXVX" default="0" item="Sound Option 4" tooltip="CV920 bit 1">
+    		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    		<label xml:lang="fr">Pause avant rép. avertisseur</label>
+    		<label xml:lang="de">Pause vor Wiederholen der Pfeife</label>
+  		</variable>
+  		<variable label="Sound speed memory" CV="920" mask="VXXXXXXX" default="1" item="Sound Option 5" tooltip="CV920 bit 7">
+			<label xml:lang="de">Endstufe</label>
+			<enumVal>
+				<enumChoice choice="Keep (recommended)" value="0">
+					<choice>Keep (recommended)</choice>
+					<choice xml:lang="de">Immer eingeschaltet (empfohlen)</choice>
+				</enumChoice>
+				<enumChoice choice="Off when sound off" value="1">
+					<choice>Off when sound off</choice>
+					<choice xml:lang="de">Abgeschaltet wenn Ton aus</choice>
+				</enumChoice>
+			</enumVal>
+		</variable>
+  		<variable label="Volume" CV="902" default="255" item="Sound Setting 1" tooltip="CV902">
+    		<decVal/>
+    		<label xml:lang="fr">Volume</label>
+    		<label xml:lang="de">Lautstärke</label>
+  		</variable>
+  		<variable label="Speed threshold for break sound" CV="924" default="44" item="Sound Setting 2" tooltip="CV924 (255:no break sound)">
+    		<decVal/>
+    		<label xml:lang="fr">Vitesse de réf. pour bruit freins</label>
+    		<label xml:lang="de">Shwelle für Bremsgeräusch</label>
+  		</variable>
+		<variable label="FL (F0)" CV="903" item="Sound Group 1 Option 1" default="0" tooltip="CV903">
+			<enumVal>
+				<enumChoice choice="-" value="0">
+					<choice>-</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 1 (most models: Bell)" value="1">
+					<choice xml:lang="fr">Son Slot 1 (normalement: Cloche)</choice>
+					<choice xml:lang="de">Sd-Slot 1 (Normalerweise: Glocke)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 2 (most models: Horn)" value="2">
+					<choice xml:lang="fr">Son Slot 2 (normalement: Avertisseur)</choice>
+					<choice xml:lang="de">Sd-Slot 2 (Normalerweise: Pfeife)</choice>
+				</enumChoice>
+				<enumChoice choice="Sound ON/OFF" value="3">
+					<choice xml:lang="fr">Son ON/OFF</choice>
+					<choice xml:lang="de">Stand- / Fahrgeräusch</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 4 (most models: doors)" value="4">
+					<choice xml:lang="fr">Son Slot 4 (normalement: portes)</choice>
+					<choice xml:lang="de">Sd-Slot 4 (Normalerweise: Türen schliessen)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 5 (most models: empty)" value="5">
+					<choice xml:lang="fr">Son Slot 5 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 5 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 6 (most models: empty)" value="6">
+					<choice xml:lang="fr">Son Slot 6 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 6 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 7 (most models: empty)" value="7">
+					<choice xml:lang="fr">Son Slot 7 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 7 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 8 (most models: fader)" value="8">
+					<choice xml:lang="fr">Son Slot 8 (normalement silencieux)</choice>
+					<choice xml:lang="de">Sd-Slot 8 (Normalerweise Fader)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 9 (most models: empty)" value="9">
+					<choice xml:lang="fr">Son Slot 9 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 9 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 10 (most models: empty)" value="10">
+					<choice xml:lang="fr">Son Slot 10 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 10 (Normalerweise leer)</choice>
+				</enumChoice>
+			</enumVal>
+	   </variable> 
+	   <variable label="F1" CV="904" item="Sound Group 1 Option 2" default="3" tooltip="CV904">
+			<enumVal>
+				<enumChoice choice="-" value="0">
+					<choice>-</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 1 (most models: Bell)" value="1">
+					<choice xml:lang="fr">Son Slot 1 (normalement: Cloche)</choice>
+					<choice xml:lang="de">Sd-Slot 1 (Normalerweise: Glocke)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 2 (most models: Horn)" value="2">
+					<choice xml:lang="fr">Son Slot 2 (normalement: Avertisseur)</choice>
+					<choice xml:lang="de">Sd-Slot 2 (Normalerweise: Pfeife)</choice>
+				</enumChoice>
+				<enumChoice choice="Sound ON/OFF" value="3">
+					<choice xml:lang="fr">Son ON/OFF</choice>
+					<choice xml:lang="de">Stand- / Fahrgeräusch</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 4 (most models: doors)" value="4">
+					<choice xml:lang="fr">Son Slot 4 (normalement: portes)</choice>
+					<choice xml:lang="de">Sd-Slot 4 (Normalerweise: Türen schliessen)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 5 (most models: empty)" value="5">
+					<choice xml:lang="fr">Son Slot 5 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 5 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 6 (most models: empty)" value="6">
+					<choice xml:lang="fr">Son Slot 6 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 6 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 7 (most models: empty)" value="7">
+					<choice xml:lang="fr">Son Slot 7 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 7 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 8 (most models: fader)" value="8">
+					<choice xml:lang="fr">Son Slot 8 (normalement silencieux)</choice>
+					<choice xml:lang="de">Sd-Slot 8 (Normalerweise Fader)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 9 (most models: empty)" value="9">
+					<choice xml:lang="fr">Son Slot 9 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 9 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 10 (most models: empty)" value="10">
+					<choice xml:lang="fr">Son Slot 10 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 10 (Normalerweise leer)</choice>
+				</enumChoice>
+			</enumVal>
+	   </variable> 
+	   <variable label="F2" CV="905" item="Sound Group 1 Option 3" default="2" tooltip="CV905">
+			<enumVal>
+				<enumChoice choice="-" value="0">
+					<choice>-</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 1 (most models: Bell)" value="1">
+					<choice xml:lang="fr">Son Slot 1 (normalement: Cloche)</choice>
+					<choice xml:lang="de">Sd-Slot 1 (Normalerweise: Glocke)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 2 (most models: Horn)" value="2">
+					<choice xml:lang="fr">Son Slot 2 (normalement: Avertisseur)</choice>
+					<choice xml:lang="de">Sd-Slot 2 (Normalerweise: Pfeife)</choice>
+				</enumChoice>
+				<enumChoice choice="Sound ON/OFF" value="3">
+					<choice xml:lang="fr">Son ON/OFF</choice>
+					<choice xml:lang="de">Stand- / Fahrgeräusch</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 4 (most models: doors)" value="4">
+					<choice xml:lang="fr">Son Slot 4 (normalement: portes)</choice>
+					<choice xml:lang="de">Sd-Slot 4 (Normalerweise: Türen schliessen)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 5 (most models: empty)" value="5">
+					<choice xml:lang="fr">Son Slot 5 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 5 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 6 (most models: empty)" value="6">
+					<choice xml:lang="fr">Son Slot 6 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 6 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 7 (most models: empty)" value="7">
+					<choice xml:lang="fr">Son Slot 7 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 7 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 8 (most models: fader)" value="8">
+					<choice xml:lang="fr">Son Slot 8 (normalement silencieux)</choice>
+					<choice xml:lang="de">Sd-Slot 8 (Normalerweise Fader)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 9 (most models: empty)" value="9">
+					<choice xml:lang="fr">Son Slot 9 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 9 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 10 (most models: empty)" value="10">
+					<choice xml:lang="fr">Son Slot 10 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 10 (Normalerweise leer)</choice>
+				</enumChoice>
+			</enumVal>
+	   </variable> 
+	   <variable label="F3" CV="906" item="Sound Group 1 Option 4" default="4" tooltip="CV906">
+			<enumVal>
+				<enumChoice choice="-" value="0">
+					<choice>-</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 1 (most models: Bell)" value="1">
+					<choice xml:lang="fr">Son Slot 1 (normalement: Cloche)</choice>
+					<choice xml:lang="de">Sd-Slot 1 (Normalerweise: Glocke)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 2 (most models: Horn)" value="2">
+					<choice xml:lang="fr">Son Slot 2 (normalement: Avertisseur)</choice>
+					<choice xml:lang="de">Sd-Slot 2 (Normalerweise: Pfeife)</choice>
+				</enumChoice>
+				<enumChoice choice="Sound ON/OFF" value="3">
+					<choice xml:lang="fr">Son ON/OFF</choice>
+					<choice xml:lang="de">Stand- / Fahrgeräusch</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 4 (most models: doors)" value="4">
+					<choice xml:lang="fr">Son Slot 4 (normalement: portes)</choice>
+					<choice xml:lang="de">Sd-Slot 4 (Normalerweise: Türen schliessen)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 5 (most models: empty)" value="5">
+					<choice xml:lang="fr">Son Slot 5 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 5 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 6 (most models: empty)" value="6">
+					<choice xml:lang="fr">Son Slot 6 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 6 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 7 (most models: empty)" value="7">
+					<choice xml:lang="fr">Son Slot 7 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 7 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 8 (most models: fader)" value="8">
+					<choice xml:lang="fr">Son Slot 8 (normalement silencieux)</choice>
+					<choice xml:lang="de">Sd-Slot 8 (Normalerweise Fader)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 9 (most models: empty)" value="9">
+					<choice xml:lang="fr">Son Slot 9 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 9 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 10 (most models: empty)" value="10">
+					<choice xml:lang="fr">Son Slot 10 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 10 (Normalerweise leer)</choice>
+				</enumChoice>
+			</enumVal>
+	   </variable> 
+	   <variable label="F4" CV="907" item="Sound Group 1 Option 5" default="1" tooltip="CV907">
+			<enumVal>
+				<enumChoice choice="-" value="0">
+					<choice>-</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 1 (most models: Bell)" value="1">
+					<choice xml:lang="fr">Son Slot 1 (normalement: Cloche)</choice>
+					<choice xml:lang="de">Sd-Slot 1 (Normalerweise: Glocke)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 2 (most models: Horn)" value="2">
+					<choice xml:lang="fr">Son Slot 2 (normalement: Avertisseur)</choice>
+					<choice xml:lang="de">Sd-Slot 2 (Normalerweise: Pfeife)</choice>
+				</enumChoice>
+				<enumChoice choice="Sound ON/OFF" value="3">
+					<choice xml:lang="fr">Son ON/OFF</choice>
+					<choice xml:lang="de">Stand- / Fahrgeräusch</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 4 (most models: doors)" value="4">
+					<choice xml:lang="fr">Son Slot 4 (normalement: portes)</choice>
+					<choice xml:lang="de">Sd-Slot 4 (Normalerweise: Türen schliessen)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 5 (most models: empty)" value="5">
+					<choice xml:lang="fr">Son Slot 5 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 5 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 6 (most models: empty)" value="6">
+					<choice xml:lang="fr">Son Slot 6 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 6 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 7 (most models: empty)" value="7">
+					<choice xml:lang="fr">Son Slot 7 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 7 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 8 (most models: fader)" value="8">
+					<choice xml:lang="fr">Son Slot 8 (normalement silencieux)</choice>
+					<choice xml:lang="de">Sd-Slot 8 (Normalerweise Fader)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 9 (most models: empty)" value="9">
+					<choice xml:lang="fr">Son Slot 9 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 9 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 10 (most models: empty)" value="10">
+					<choice xml:lang="fr">Son Slot 10 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 10 (Normalerweise leer)</choice>
+				</enumChoice>
+			</enumVal>
+	   </variable> 
+	   <variable label="F5" CV="908" item="Sound Group 1 Option 6" default="5" tooltip="CV908">
+			<enumVal>
+				<enumChoice choice="-" value="0">
+					<choice>-</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 1 (most models: Bell)" value="1">
+					<choice xml:lang="fr">Son Slot 1 (normalement: Cloche)</choice>
+					<choice xml:lang="de">Sd-Slot 1 (Normalerweise: Glocke)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 2 (most models: Horn)" value="2">
+					<choice xml:lang="fr">Son Slot 2 (normalement: Avertisseur)</choice>
+					<choice xml:lang="de">Sd-Slot 2 (Normalerweise: Pfeife)</choice>
+				</enumChoice>
+				<enumChoice choice="Sound ON/OFF" value="3">
+					<choice xml:lang="fr">Son ON/OFF</choice>
+					<choice xml:lang="de">Stand- / Fahrgeräusch</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 4 (most models: doors)" value="4">
+					<choice xml:lang="fr">Son Slot 4 (normalement: portes)</choice>
+					<choice xml:lang="de">Sd-Slot 4 (Normalerweise: Türen schliessen)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 5 (most models: empty)" value="5">
+					<choice xml:lang="fr">Son Slot 5 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 5 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 6 (most models: empty)" value="6">
+					<choice xml:lang="fr">Son Slot 6 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 6 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 7 (most models: empty)" value="7">
+					<choice xml:lang="fr">Son Slot 7 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 7 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 8 (most models: fader)" value="8">
+					<choice xml:lang="fr">Son Slot 8 (normalement silencieux)</choice>
+					<choice xml:lang="de">Sd-Slot 8 (Normalerweise Fader)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 9 (most models: empty)" value="9">
+					<choice xml:lang="fr">Son Slot 9 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 9 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 10 (most models: empty)" value="10">
+					<choice xml:lang="fr">Son Slot 10 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 10 (Normalerweise leer)</choice>
+				</enumChoice>
+			</enumVal>
+	   </variable> 
+	   <variable label="F6" CV="909" item="Sound Group 1 Option 7" default="0" tooltip="CV909">
+			<enumVal>
+				<enumChoice choice="-" value="0">
+					<choice>-</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 1 (most models: Bell)" value="1">
+					<choice xml:lang="fr">Son Slot 1 (normalement: Cloche)</choice>
+					<choice xml:lang="de">Sd-Slot 1 (Normalerweise: Glocke)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 2 (most models: Horn)" value="2">
+					<choice xml:lang="fr">Son Slot 2 (normalement: Avertisseur)</choice>
+					<choice xml:lang="de">Sd-Slot 2 (Normalerweise: Pfeife)</choice>
+				</enumChoice>
+				<enumChoice choice="Sound ON/OFF" value="3">
+					<choice xml:lang="fr">Son ON/OFF</choice>
+					<choice xml:lang="de">Stand- / Fahrgeräusch</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 4 (most models: doors)" value="4">
+					<choice xml:lang="fr">Son Slot 4 (normalement: portes)</choice>
+					<choice xml:lang="de">Sd-Slot 4 (Normalerweise: Türen schliessen)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 5 (most models: empty)" value="5">
+					<choice xml:lang="fr">Son Slot 5 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 5 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 6 (most models: empty)" value="6">
+					<choice xml:lang="fr">Son Slot 6 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 6 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 7 (most models: empty)" value="7">
+					<choice xml:lang="fr">Son Slot 7 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 7 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 8 (most models: fader)" value="8">
+					<choice xml:lang="fr">Son Slot 8 (normalement silencieux)</choice>
+					<choice xml:lang="de">Sd-Slot 8 (Normalerweise Fader)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 9 (most models: empty)" value="9">
+					<choice xml:lang="fr">Son Slot 9 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 9 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 10 (most models: empty)" value="10">
+					<choice xml:lang="fr">Son Slot 10 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 10 (Normalerweise leer)</choice>
+				</enumChoice>
+			</enumVal>
+	   </variable> 
+	   <variable label="F7" CV="910" item="Sound Group 1 Option 8" default="0" tooltip="CV910">
+			<enumVal>
+				<enumChoice choice="-" value="0">
+					<choice>-</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 1 (most models: Bell)" value="1">
+					<choice xml:lang="fr">Son Slot 1 (normalement: Cloche)</choice>
+					<choice xml:lang="de">Sd-Slot 1 (Normalerweise: Glocke)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 2 (most models: Horn)" value="2">
+					<choice xml:lang="fr">Son Slot 2 (normalement: Avertisseur)</choice>
+					<choice xml:lang="de">Sd-Slot 2 (Normalerweise: Pfeife)</choice>
+				</enumChoice>
+				<enumChoice choice="Sound ON/OFF" value="3">
+					<choice xml:lang="fr">Son ON/OFF</choice>
+					<choice xml:lang="de">Stand- / Fahrgeräusch</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 4 (most models: doors)" value="4">
+					<choice xml:lang="fr">Son Slot 4 (normalement: portes)</choice>
+					<choice xml:lang="de">Sd-Slot 4 (Normalerweise: Türen schliessen)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 5 (most models: empty)" value="5">
+					<choice xml:lang="fr">Son Slot 5 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 5 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 6 (most models: empty)" value="6">
+					<choice xml:lang="fr">Son Slot 6 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 6 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 7 (most models: empty)" value="7">
+					<choice xml:lang="fr">Son Slot 7 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 7 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 8 (most models: fader)" value="8">
+					<choice xml:lang="fr">Son Slot 8 (normalement silencieux)</choice>
+					<choice xml:lang="de">Sd-Slot 8 (Normalerweise Fader)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 9 (most models: empty)" value="9">
+					<choice xml:lang="fr">Son Slot 9 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 9 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 10 (most models: empty)" value="10">
+					<choice xml:lang="fr">Son Slot 10 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 10 (Normalerweise leer)</choice>
+				</enumChoice>
+			</enumVal>
+	   </variable> 
+	   <variable label="F8" CV="911" item="Sound Group 1 Option 9" default="8" tooltip="CV911">
+			<enumVal>
+				<enumChoice choice="-" value="0">
+					<choice>-</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 1 (most models: Bell)" value="1">
+					<choice xml:lang="fr">Son Slot 1 (normalement: Cloche)</choice>
+					<choice xml:lang="de">Sd-Slot 1 (Normalerweise: Glocke)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 2 (most models: Horn)" value="2">
+					<choice xml:lang="fr">Son Slot 2 (normalement: Avertisseur)</choice>
+					<choice xml:lang="de">Sd-Slot 2 (Normalerweise: Pfeife)</choice>
+				</enumChoice>
+				<enumChoice choice="Sound ON/OFF" value="3">
+					<choice xml:lang="fr">Son ON/OFF</choice>
+					<choice xml:lang="de">Stand- / Fahrgeräusch</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 4 (most models: doors)" value="4">
+					<choice xml:lang="fr">Son Slot 4 (normalement: portes)</choice>
+					<choice xml:lang="de">Sd-Slot 4 (Normalerweise: Türen schliessen)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 5 (most models: empty)" value="5">
+					<choice xml:lang="fr">Son Slot 5 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 5 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 6 (most models: empty)" value="6">
+					<choice xml:lang="fr">Son Slot 6 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 6 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 7 (most models: empty)" value="7">
+					<choice xml:lang="fr">Son Slot 7 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 7 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 8 (most models: fader)" value="8">
+					<choice xml:lang="fr">Son Slot 8 (normalement silencieux)</choice>
+					<choice xml:lang="de">Sd-Slot 8 (Normalerweise Fader)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 9 (most models: empty)" value="9">
+					<choice xml:lang="fr">Son Slot 9 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 9 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 10 (most models: empty)" value="10">
+					<choice xml:lang="fr">Son Slot 10 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 10 (Normalerweise leer)</choice>
+				</enumChoice>
+			</enumVal>
+	   </variable> 
+	   <variable label="Horn button (F9 - Selectrix only)" CV="912" item="Sound Group 1 Option 10" default="0" tooltip="CV912">
+			<enumVal>
+				<enumChoice choice="-" value="0">
+					<choice>-</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 1 (most models: Bell)" value="1">
+					<choice xml:lang="fr">Son Slot 1 (normalement: Cloche)</choice>
+					<choice xml:lang="de">Sd-Slot 1 (Normalerweise: Glocke)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 2 (most models: Horn)" value="2">
+					<choice xml:lang="fr">Son Slot 2 (normalement: Avertisseur)</choice>
+					<choice xml:lang="de">Sd-Slot 2 (Normalerweise: Pfeife)</choice>
+				</enumChoice>
+				<enumChoice choice="Sound ON/OFF" value="3">
+					<choice xml:lang="fr">Son ON/OFF</choice>
+					<choice xml:lang="de">Stand- / Fahrgeräusch</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 4 (most models: doors)" value="4">
+					<choice xml:lang="fr">Son Slot 4 (normalement: portes)</choice>
+					<choice xml:lang="de">Sd-Slot 4 (Normalerweise: Türen schliessen)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 5 (most models: empty)" value="5">
+					<choice xml:lang="fr">Son Slot 5 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 5 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 6 (most models: empty)" value="6">
+					<choice xml:lang="fr">Son Slot 6 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 6 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 7 (most models: empty)" value="7">
+					<choice xml:lang="fr">Son Slot 7 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 7 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 8 (most models: fader)" value="8">
+					<choice xml:lang="fr">Son Slot 8 (normalement silencieux)</choice>
+					<choice xml:lang="de">Sd-Slot 8 (Normalerweise Fader)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 9 (most models: empty)" value="9">
+					<choice xml:lang="fr">Son Slot 9 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 9 (Normalerweise leer)</choice>
+				</enumChoice>
+				<enumChoice choice="Sd-Slot 10 (most models: empty)" value="10">
+					<choice xml:lang="fr">Son Slot 10 (normalement vide)</choice>
+					<choice xml:lang="de">Sd-Slot 10 (Normalerweise leer)</choice>
+				</enumChoice>
+			</enumVal>
+	   </variable> 
+    </variables>
+	<resets>
+      <factReset label="Reset All CVs" CV="8" default="8"/>
+    </resets>
+  </decoder>
+<!-- Start Notes Minitrix 12467 -->
+	<pane name="Comments">
+		<column>	
+				<label label=" "/>
+				<label label="Important notes on Minitrix 12467, 'Schienenbus Vt98'">
+					<label xml:lang="fr">Notes importantes sur le modèle Minitrix 12467, 'Schienenbus Vt98'</label>
+				</label>
+				<label label=" "/>
+			<separator/>
+				<label label=" "/>
+				<label label="Versions">
+					<label xml:lang="fr">Versions.</label>
+					<label xml:lang="de">Versionen</label>
+				</label>
+				<label label=" "/>
+				<label label="Some functions are limited to newer decoder versions.">
+					<label xml:lang="fr">Certaines fonctions uniquement disponibles sur des versions de décodeur récentes</label>
+				</label>
+				<label label="Read CV#7 to check your version (12=v12, otherwise, for example: 86=v8.6)">
+					<label xml:lang="fr">Lisez le CV#7 pour obtenir votre version (12=v12, sinon par exemple: 86=v8.6)</label>
+				</label>
+			<separator/>
+				<label label=" "/>
+				<label label="Programming of motor car and sound car">
+					<label xml:lang="fr">Programmation de la voiture moteur et de la voiture sonorisée</label>
+				</label>
+				<label label=" "/>
+				<label label="For versions below v9: program both vehicules separately, but with the same values.">
+					<label xml:lang="fr">Pour les versions antérieures à la v9: programmer les deux véhicules séparément avec les mêmes valeurs.</label>
+				</label>
+				<label label=" "/>
+				<label label="Except for Sound CVs (900+): they only apply to the sound car.">
+				<label xml:lang="fr">Exception: les CVs sonores (900+) s'appliquent uniquement à la voiture sonorisée</label>
+				</label>
+		</column>
+		<name>Comments</name>
+	</pane>
+<!-- End Notes Minitrix 12467 -->
+</decoder-config>

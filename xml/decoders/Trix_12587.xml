@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2006 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version version="1" author="PB, pierre.bln@me.com" lastUpdated="20130807"/>
+  <!-- 1 2013/07/24 Creation 
+		This is the first decoder template for a series of Minitrix integrated
+		decoders. Those decoders are manufactured by Doehler and Haass (in most
+		cases). However, CVs and functionalities are often different from the 
+		original Doehler and Haass decoders. Therefore, these decoder definitions
+		are not linked to the Doehler and Haass definitions.
+		THIS FILE CONTAINS:
+		Minitrix 12587 (Lint Diesel Motorized Unit).
+		Based on: http://www.maile.es/PDF/DHS240-MTX_LINT_Datenblatt.pdf
+  -->
+  <decoder>
+    <family name="Minitrix on-board decoders" mfg="Trix Modelleisenbahn">
+      <model model="12587 (Lint with sound)" productID="12587" comment="Decoder base Doehler Haass DHS240">
+		<protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+        </protocols>
+      </model>
+    </family>
+    <programming direct="yes" paged="no" register="no" ops="yes"/>
+    <variables>
+	<!-- Calls to std NMRA templates -->
+		<xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+	  	<!-- Standard motor options -->
+		<variable label="Vhigh" item="Vhigh" CV="5" tooltip="CV5 (1-7)" default="7">
+			<decVal min="1" max="7"/>
+			<label>Vhigh</label>
+			<label xml:lang="it">Volt Massimo</label>
+			<label xml:lang="fr">Vmax</label>
+			<label xml:lang="de">Höchstgeschwindigkeit (Vmax)</label>
+		</variable>
+	  <!-- EMF options -->
+	  	<variable label="Regulation variant (do not modify!)" CV="50" default="2" item="Load Control" tooltip="0=very hard, 1=hard, 2=soft, 3=very soft">
+			<label xml:lang="fr">Variante de réglage (ne pas changer!)</label>
+			<label xml:lang="de">Regelvariante (nicht verändern!)</label>
+			<enumVal>
+				<enumChoice choice="Very Hard" value="0" >
+					<choice>Very Hard</choice>
+					<choice xml:lang="fr">Très dur</choice>
+					<choice xml:lang="de">Sehr Hart</choice>
+				</enumChoice>
+				<enumChoice choice="Hard" value="1">
+					<choice>Hard</choice>
+					<choice xml:lang="fr">Dur</choice>
+					<choice xml:lang="de">Hart</choice>
+				</enumChoice>
+				<enumChoice choice="Soft" value="2">
+					<choice>Soft</choice>
+					<choice xml:lang="fr">Souple</choice>
+					<choice xml:lang="de">Weich</choice>
+				</enumChoice>
+				<enumChoice choice="Very soft" value="3">
+					<choice>Very soft</choice>
+					<choice xml:lang="fr">Très souple</choice>
+					<choice xml:lang="de">Sehr weich</choice>
+				</enumChoice>
+			</enumVal>
+		  </variable>
+		  <variable label="Impulse width (do not modify!)" CV="49" default="2" item="EMF Option 1" tooltip="0=small, 1=normal, 2=wide, 3=very wide">
+			<decVal  min="0" max="3"/>
+			<label xml:lang="fr">Largeur d'impulsion (ne pas changer!)</label>
+			<label xml:lang="de">Impulsbreite (nicht verändern!)</label>
+		  </variable>
+	<!-- Advanced panel -->
+		<variable label="Invert motor pins" CV="51" mask="XXXXXXXV" readOnly="yes" item="Advanced Group 1 Option 1">
+			<decVal/>
+			<label xml:lang="fr">Permuter connexion moteur</label>
+			<label xml:lang="de">Motoranschlüsse vertauschen</label>
+	  	</variable>
+	  	<variable label="Invert light pins" CV="51" mask="XXXXXXVX" readOnly="yes" item="Advanced Group 1 Option 2">
+			<decVal/>
+			<label xml:lang="fr">Permuter connexion feux</label>
+			<label xml:lang="de">Lichtanschlüsse vertauschen</label>
+	  	</variable>
+	  	<variable label="Invert track pins" CV="51" mask="XXXXXVXX" readOnly="yes" default="1" item="Advanced Group 1 Option 3">
+			<decVal/>
+			<label xml:lang="fr">Permuter connexion voie</label>
+			<label xml:lang="de">Gleisanschlüsse vertauschen</label>
+	  	</variable>
+	<!-- Sound panel for sound car decoder only-->
+		<variable label="Manufacturer sound module: " CV="900" readOnly="yes" default="115" item="Sound Option 1" tooltip="CV900">
+    		<decVal/>
+    		<label xml:lang="fr">Constructeur module sonore: </label>
+    		<label xml:lang="de">Hersteller Sound-Modul: </label>
+  		</variable>
+		<variable label="Sound module version: " CV="901" readOnly="yes" item="Sound Option 2" tooltip="CV901">
+    		<decVal/>
+    		<label xml:lang="fr">Version module sonore: </label>
+    		<label xml:lang="de">Sound-Modul Version: </label>
+  		</variable>
+  		<variable label="Automated puffs" CV="920" mask="XXXXXXXV" readOnly="yes" default="1" item="Sound Option 3" tooltip="CV920 bit 0">
+    		<decVal/>
+    		<label xml:lang="fr">Régl. bruit moteur automatique</label>
+    		<label xml:lang="de">Auspuffschlag automatisch</label>
+  		</variable>
+  		<variable label="Pause before repeating horn" CV="920" mask="XXXXXXVX" default="0" item="Sound Option 4" tooltip="CV920 bit 1">
+    		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    		<label xml:lang="fr">Pause avant rép. avertisseur</label>
+    		<label xml:lang="de">Pause vor Wiederholen der Pfeife</label>
+  		</variable>
+  		<variable label="Sound speed memory" CV="920" mask="VXXXXXXX" default="1" item="Sound Option 5" tooltip="CV920 bit 7">
+			<label xml:lang="de">Endstufe</label>
+			<enumVal>
+				<enumChoice choice="Keep (recommended)" value="0">
+					<choice>Keep (recommended)</choice>
+					<choice xml:lang="de">Immer eingeschaltet (empfohlen)</choice>
+				</enumChoice>
+				<enumChoice choice="Off when sound off" value="1">
+					<choice>Off when sound off</choice>
+					<choice xml:lang="de">Abgeschaltet wenn Ton aus</choice>
+				</enumChoice>
+			</enumVal>
+		</variable>
+  		<variable label="Volume" CV="902" default="255" item="Sound Setting 1" tooltip="CV902">
+    		<decVal/>
+    		<label xml:lang="fr">Volume</label>
+    		<label xml:lang="de">Lautstärke</label>
+  		</variable>
+  		<variable label="Speed threshold for break sound" CV="924" default="44" item="Sound Setting 2" tooltip="CV924 (255:no break sound)">
+    		<decVal/>
+    		<label xml:lang="fr">Vitesse de réf. pour bruit freins</label>
+    		<label xml:lang="de">Shwelle für Bremsgeräusch</label>
+  		</variable>
+		<variable label="FL (F0)" CV="903" item="Sound Group 1 Option 1" default="0" tooltip="CV903">
+			<enumVal>
+				<enumChoice choice="-" value="0">
+					<choice>-</choice>
+				</enumChoice>
+				<enumChoice choice="Horn" value="2">
+					<choice>Horn</choice>
+					<choice xml:lang="fr">Avertisseur</choice>
+					<choice xml:lang="de">Pfeife</choice>
+				</enumChoice>
+				<enumChoice choice="Sound ON/OFF" value="3">
+					<choice>Sound ON/OFF</choice>
+					<choice xml:lang="fr">Son ON/OFF</choice>
+					<choice xml:lang="de">Stand- / Fahrgeräusch</choice>
+				</enumChoice>
+				<enumChoice choice="Doors" value="4">
+					<choice>Doors</choice>
+					<choice xml:lang="fr">Bruit portes</choice>
+					<choice xml:lang="de">Türen schliessen</choice>
+				</enumChoice>
+				<enumChoice choice="Announcement" value="5">
+					<choice>Announcement</choice>
+					<choice xml:lang="fr">Annonce</choice>
+					<choice xml:lang="de">Ansage</choice>
+				</enumChoice>
+				<enumChoice choice="Sound fader" value="8">
+					<choice>Sound fader</choice>
+					<choice xml:lang="fr">Silencieux</choice>
+					<choice xml:lang="de">Fader</choice>
+				</enumChoice>
+			</enumVal>
+	   </variable> 
+	   <variable label="F1" CV="904" item="Sound Group 1 Option 2" default="3" tooltip="CV904">
+			<enumVal>
+				<enumChoice choice="-" value="0">
+					<choice>-</choice>
+				</enumChoice>
+				<enumChoice choice="Horn" value="2">
+					<choice>Horn</choice>
+					<choice xml:lang="fr">Avertisseur</choice>
+					<choice xml:lang="de">Pfeife</choice>
+				</enumChoice>
+				<enumChoice choice="Sound ON/OFF" value="3">
+					<choice>Sound ON/OFF</choice>
+					<choice xml:lang="fr">Son ON/OFF</choice>
+					<choice xml:lang="de">Stand- / Fahrgeräusch</choice>
+				</enumChoice>
+				<enumChoice choice="Doors" value="4">
+					<choice>Doors</choice>
+					<choice xml:lang="fr">Bruit portes</choice>
+					<choice xml:lang="de">Türen schliessen</choice>
+				</enumChoice>
+				<enumChoice choice="Announcement" value="5">
+					<choice>Announcement</choice>
+					<choice xml:lang="fr">Annonce</choice>
+					<choice xml:lang="de">Ansage</choice>
+				</enumChoice>
+				<enumChoice choice="Sound fader" value="8">
+					<choice>Sound fader</choice>
+					<choice xml:lang="fr">Silencieux</choice>
+					<choice xml:lang="de">Fader</choice>
+				</enumChoice>
+			</enumVal>
+	   </variable> 
+	   <variable label="F2" CV="905" item="Sound Group 1 Option 3" default="2" tooltip="CV905">
+			<enumVal>
+				<enumChoice choice="-" value="0">
+					<choice>-</choice>
+				</enumChoice>
+				<enumChoice choice="Horn" value="2">
+					<choice>Horn</choice>
+					<choice xml:lang="fr">Avertisseur</choice>
+					<choice xml:lang="de">Pfeife</choice>
+				</enumChoice>
+				<enumChoice choice="Sound ON/OFF" value="3">
+					<choice>Sound ON/OFF</choice>
+					<choice xml:lang="fr">Son ON/OFF</choice>
+					<choice xml:lang="de">Stand- / Fahrgeräusch</choice>
+				</enumChoice>
+				<enumChoice choice="Doors" value="4">
+					<choice>Doors</choice>
+					<choice xml:lang="fr">Bruit portes</choice>
+					<choice xml:lang="de">Türen schliessen</choice>
+				</enumChoice>
+				<enumChoice choice="Announcement" value="5">
+					<choice>Announcement</choice>
+					<choice xml:lang="fr">Annonce</choice>
+					<choice xml:lang="de">Ansage</choice>
+				</enumChoice>
+				<enumChoice choice="Sound fader" value="8">
+					<choice>Sound fader</choice>
+					<choice xml:lang="fr">Silencieux</choice>
+					<choice xml:lang="de">Fader</choice>
+				</enumChoice>
+			</enumVal>
+	   </variable> 
+	   <variable label="F3" CV="906" item="Sound Group 1 Option 4" default="4" tooltip="CV906">
+			<enumVal>
+				<enumChoice choice="-" value="0">
+					<choice>-</choice>
+				</enumChoice>
+				<enumChoice choice="Horn" value="2">
+					<choice>Horn</choice>
+					<choice xml:lang="fr">Avertisseur</choice>
+					<choice xml:lang="de">Pfeife</choice>
+				</enumChoice>
+				<enumChoice choice="Sound ON/OFF" value="3">
+					<choice>Sound ON/OFF</choice>
+					<choice xml:lang="fr">Son ON/OFF</choice>
+					<choice xml:lang="de">Stand- / Fahrgeräusch</choice>
+				</enumChoice>
+				<enumChoice choice="Doors" value="4">
+					<choice>Doors</choice>
+					<choice xml:lang="fr">Bruit portes</choice>
+					<choice xml:lang="de">Türen schliessen</choice>
+				</enumChoice>
+				<enumChoice choice="Announcement" value="5">
+					<choice>Announcement</choice>
+					<choice xml:lang="fr">Annonce</choice>
+					<choice xml:lang="de">Ansage</choice>
+				</enumChoice>
+				<enumChoice choice="Sound fader" value="8">
+					<choice>Sound fader</choice>
+					<choice xml:lang="fr">Silencieux</choice>
+					<choice xml:lang="de">Fader</choice>
+				</enumChoice>
+			</enumVal>
+	   </variable> 
+	   <variable label="F4" CV="907" item="Sound Group 1 Option 5" default="5" tooltip="CV907">
+			<enumVal>
+				<enumChoice choice="-" value="0">
+					<choice>-</choice>
+				</enumChoice>
+				<enumChoice choice="Horn" value="2">
+					<choice>Horn</choice>
+					<choice xml:lang="fr">Avertisseur</choice>
+					<choice xml:lang="de">Pfeife</choice>
+				</enumChoice>
+				<enumChoice choice="Sound ON/OFF" value="3">
+					<choice>Sound ON/OFF</choice>
+					<choice xml:lang="fr">Son ON/OFF</choice>
+					<choice xml:lang="de">Stand- / Fahrgeräusch</choice>
+				</enumChoice>
+				<enumChoice choice="Doors" value="4">
+					<choice>Doors</choice>
+					<choice xml:lang="fr">Bruit portes</choice>
+					<choice xml:lang="de">Türen schliessen</choice>
+				</enumChoice>
+				<enumChoice choice="Announcement" value="5">
+					<choice>Announcement</choice>
+					<choice xml:lang="fr">Annonce</choice>
+					<choice xml:lang="de">Ansage</choice>
+				</enumChoice>
+				<enumChoice choice="Sound fader" value="8">
+					<choice>Sound fader</choice>
+					<choice xml:lang="fr">Silencieux</choice>
+					<choice xml:lang="de">Fader</choice>
+				</enumChoice>
+			</enumVal>
+	   </variable> 
+	   <variable label="F5" CV="908" item="Sound Group 1 Option 6" default="0" tooltip="CV908">
+			<enumVal>
+				<enumChoice choice="-" value="0">
+					<choice>-</choice>
+				</enumChoice>
+				<enumChoice choice="Horn" value="2">
+					<choice>Horn</choice>
+					<choice xml:lang="fr">Avertisseur</choice>
+					<choice xml:lang="de">Pfeife</choice>
+				</enumChoice>
+				<enumChoice choice="Sound ON/OFF" value="3">
+					<choice>Sound ON/OFF</choice>
+					<choice xml:lang="fr">Son ON/OFF</choice>
+					<choice xml:lang="de">Stand- / Fahrgeräusch</choice>
+				</enumChoice>
+				<enumChoice choice="Doors" value="4">
+					<choice>Doors</choice>
+					<choice xml:lang="fr">Bruit portes</choice>
+					<choice xml:lang="de">Türen schliessen</choice>
+				</enumChoice>
+				<enumChoice choice="Announcement" value="5">
+					<choice>Announcement</choice>
+					<choice xml:lang="fr">Annonce</choice>
+					<choice xml:lang="de">Ansage</choice>
+				</enumChoice>
+				<enumChoice choice="Sound fader" value="8">
+					<choice>Sound fader</choice>
+					<choice xml:lang="fr">Silencieux</choice>
+					<choice xml:lang="de">Fader</choice>
+				</enumChoice>
+			</enumVal>
+	   </variable> 
+	   <variable label="F6" CV="909" item="Sound Group 1 Option 7" default="0" tooltip="CV909">
+			<enumVal>
+				<enumChoice choice="-" value="0">
+					<choice>-</choice>
+				</enumChoice>
+				<enumChoice choice="Horn" value="2">
+					<choice>Horn</choice>
+					<choice xml:lang="fr">Avertisseur</choice>
+					<choice xml:lang="de">Pfeife</choice>
+				</enumChoice>
+				<enumChoice choice="Sound ON/OFF" value="3">
+					<choice>Sound ON/OFF</choice>
+					<choice xml:lang="fr">Son ON/OFF</choice>
+					<choice xml:lang="de">Stand- / Fahrgeräusch</choice>
+				</enumChoice>
+				<enumChoice choice="Doors" value="4">
+					<choice>Doors</choice>
+					<choice xml:lang="fr">Bruit portes</choice>
+					<choice xml:lang="de">Türen schliessen</choice>
+				</enumChoice>
+				<enumChoice choice="Announcement" value="5">
+					<choice>Announcement</choice>
+					<choice xml:lang="fr">Annonce</choice>
+					<choice xml:lang="de">Ansage</choice>
+				</enumChoice>
+				<enumChoice choice="Sound fader" value="8">
+					<choice>Sound fader</choice>
+					<choice xml:lang="fr">Silencieux</choice>
+					<choice xml:lang="de">Fader</choice>
+				</enumChoice>
+			</enumVal>
+	   </variable> 
+	   <variable label="F7" CV="910" item="Sound Group 1 Option 8" default="0" tooltip="CV910">
+			<enumVal>
+				<enumChoice choice="-" value="0">
+					<choice>-</choice>
+				</enumChoice>
+				<enumChoice choice="Horn" value="2">
+					<choice>Horn</choice>
+					<choice xml:lang="fr">Avertisseur</choice>
+					<choice xml:lang="de">Pfeife</choice>
+				</enumChoice>
+				<enumChoice choice="Sound ON/OFF" value="3">
+					<choice>Sound ON/OFF</choice>
+					<choice xml:lang="fr">Son ON/OFF</choice>
+					<choice xml:lang="de">Stand- / Fahrgeräusch</choice>
+				</enumChoice>
+				<enumChoice choice="Doors" value="4">
+					<choice>Doors</choice>
+					<choice xml:lang="fr">Bruit portes</choice>
+					<choice xml:lang="de">Türen schliessen</choice>
+				</enumChoice>
+				<enumChoice choice="Announcement" value="5">
+					<choice>Announcement</choice>
+					<choice xml:lang="fr">Annonce</choice>
+					<choice xml:lang="de">Ansage</choice>
+				</enumChoice>
+				<enumChoice choice="Sound fader" value="8">
+					<choice>Sound fader</choice>
+					<choice xml:lang="fr">Silencieux</choice>
+					<choice xml:lang="de">Fader</choice>
+				</enumChoice>
+			</enumVal>
+	   </variable> 
+	   <variable label="F8" CV="911" item="Sound Group 1 Option 9" default="8" tooltip="CV911">
+			<enumVal>
+				<enumChoice choice="-" value="0">
+					<choice>-</choice>
+				</enumChoice>
+				<enumChoice choice="Horn" value="2">
+					<choice>Horn</choice>
+					<choice xml:lang="fr">Avertisseur</choice>
+					<choice xml:lang="de">Pfeife</choice>
+				</enumChoice>
+				<enumChoice choice="Sound ON/OFF" value="3">
+					<choice>Sound ON/OFF</choice>
+					<choice xml:lang="fr">Son ON/OFF</choice>
+					<choice xml:lang="de">Stand- / Fahrgeräusch</choice>
+				</enumChoice>
+				<enumChoice choice="Doors" value="4">
+					<choice>Doors</choice>
+					<choice xml:lang="fr">Bruit portes</choice>
+					<choice xml:lang="de">Türen schliessen</choice>
+				</enumChoice>
+				<enumChoice choice="Announcement" value="5">
+					<choice>Announcement</choice>
+					<choice xml:lang="fr">Annonce</choice>
+					<choice xml:lang="de">Ansage</choice>
+				</enumChoice>
+				<enumChoice choice="Sound fader" value="8">
+					<choice>Sound fader</choice>
+					<choice xml:lang="fr">Silencieux</choice>
+					<choice xml:lang="de">Fader</choice>
+				</enumChoice>
+			</enumVal>
+	   </variable> 
+	   <variable label="F9" CV="912" item="Sound Group 1 Option 10" default="0" tooltip="CV912">
+			<enumVal>
+				<enumChoice choice="-" value="0">
+					<choice>-</choice>
+				</enumChoice>
+				<enumChoice choice="Horn" value="2">
+					<choice>Horn</choice>
+					<choice xml:lang="fr">Avertisseur</choice>
+					<choice xml:lang="de">Pfeife</choice>
+				</enumChoice>
+				<enumChoice choice="Sound ON/OFF" value="3">
+					<choice>Sound ON/OFF</choice>
+					<choice xml:lang="fr">Son ON/OFF</choice>
+					<choice xml:lang="de">Stand- / Fahrgeräusch</choice>
+				</enumChoice>
+				<enumChoice choice="Doors" value="4">
+					<choice>Doors</choice>
+					<choice xml:lang="fr">Bruit portes</choice>
+					<choice xml:lang="de">Türen schliessen</choice>
+				</enumChoice>
+				<enumChoice choice="Announcement" value="5">
+					<choice>Announcement</choice>
+					<choice xml:lang="fr">Annonce</choice>
+					<choice xml:lang="de">Ansage</choice>
+				</enumChoice>
+				<enumChoice choice="Sound fader" value="8">
+					<choice>Sound fader</choice>
+					<choice xml:lang="fr">Silencieux</choice>
+					<choice xml:lang="de">Fader</choice>
+				</enumChoice>
+			</enumVal>
+	   </variable>
+	   <variable label="F10" CV="913" item="Sound Group 1 Option 11" default="0" tooltip="CV913">
+			<enumVal>
+				<enumChoice choice="-" value="0">
+					<choice>-</choice>
+				</enumChoice>
+				<enumChoice choice="Horn" value="2">
+					<choice>Horn</choice>
+					<choice xml:lang="fr">Avertisseur</choice>
+					<choice xml:lang="de">Pfeife</choice>
+				</enumChoice>
+				<enumChoice choice="Sound ON/OFF" value="3">
+					<choice>Sound ON/OFF</choice>
+					<choice xml:lang="fr">Son ON/OFF</choice>
+					<choice xml:lang="de">Stand- / Fahrgeräusch</choice>
+				</enumChoice>
+				<enumChoice choice="Doors" value="4">
+					<choice>Doors</choice>
+					<choice xml:lang="fr">Bruit portes</choice>
+					<choice xml:lang="de">Türen schliessen</choice>
+				</enumChoice>
+				<enumChoice choice="Announcement" value="5">
+					<choice>Announcement</choice>
+					<choice xml:lang="fr">Annonce</choice>
+					<choice xml:lang="de">Ansage</choice>
+				</enumChoice>
+				<enumChoice choice="Sound fader" value="8">
+					<choice>Sound fader</choice>
+					<choice xml:lang="fr">Silencieux</choice>
+					<choice xml:lang="de">Fader</choice>
+				</enumChoice>
+			</enumVal>
+	   </variable> 
+	   <variable label="F11" CV="914" item="Sound Group 1 Option 12" default="0" tooltip="CV914">
+			<enumVal>
+				<enumChoice choice="-" value="0">
+					<choice>-</choice>
+				</enumChoice>
+				<enumChoice choice="Horn" value="2">
+					<choice>Horn</choice>
+					<choice xml:lang="fr">Avertisseur</choice>
+					<choice xml:lang="de">Pfeife</choice>
+				</enumChoice>
+				<enumChoice choice="Sound ON/OFF" value="3">
+					<choice>Sound ON/OFF</choice>
+					<choice xml:lang="fr">Son ON/OFF</choice>
+					<choice xml:lang="de">Stand- / Fahrgeräusch</choice>
+				</enumChoice>
+				<enumChoice choice="Doors" value="4">
+					<choice>Doors</choice>
+					<choice xml:lang="fr">Bruit portes</choice>
+					<choice xml:lang="de">Türen schliessen</choice>
+				</enumChoice>
+				<enumChoice choice="Announcement" value="5">
+					<choice>Announcement</choice>
+					<choice xml:lang="fr">Annonce</choice>
+					<choice xml:lang="de">Ansage</choice>
+				</enumChoice>
+				<enumChoice choice="Sound fader" value="8">
+					<choice>Sound fader</choice>
+					<choice xml:lang="fr">Silencieux</choice>
+					<choice xml:lang="de">Fader</choice>
+				</enumChoice>
+			</enumVal>
+	   </variable> 
+	   <variable label="F12" CV="915" item="Sound Group 1 Option 13" default="0" tooltip="CV915">
+			<enumVal>
+				<enumChoice choice="-" value="0">
+					<choice>-</choice>
+				</enumChoice>
+				<enumChoice choice="Horn" value="2">
+					<choice>Horn</choice>
+					<choice xml:lang="fr">Avertisseur</choice>
+					<choice xml:lang="de">Pfeife</choice>
+				</enumChoice>
+				<enumChoice choice="Sound ON/OFF" value="3">
+					<choice>Sound ON/OFF</choice>
+					<choice xml:lang="fr">Son ON/OFF</choice>
+					<choice xml:lang="de">Stand- / Fahrgeräusch</choice>
+				</enumChoice>
+				<enumChoice choice="Doors" value="4">
+					<choice>Doors</choice>
+					<choice xml:lang="fr">Bruit portes</choice>
+					<choice xml:lang="de">Türen schliessen</choice>
+				</enumChoice>
+				<enumChoice choice="Announcement" value="5">
+					<choice>Announcement</choice>
+					<choice xml:lang="fr">Annonce</choice>
+					<choice xml:lang="de">Ansage</choice>
+				</enumChoice>
+				<enumChoice choice="Sound fader" value="8">
+					<choice>Sound fader</choice>
+					<choice xml:lang="fr">Silencieux</choice>
+					<choice xml:lang="de">Fader</choice>
+				</enumChoice>
+			</enumVal>
+	   </variable> 
+    </variables>
+	<resets>
+      <factReset label="Reset All CVs" CV="8" default="8"/>
+    </resets>
+  </decoder>
+</decoder-config>
