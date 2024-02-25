@@ -132,7 +132,6 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
 
         actionWaitFor.setReleaseCondition(() -> { return sensorWait.getState() == Sensor.ACTIVE; });
         sensorWait.setState(Sensor.ACTIVE);
-//        sensorWait.setState(Sensor.INACTIVE);
 
         conditionalNG.setRunDelayed(true);
 
