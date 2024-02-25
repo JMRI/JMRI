@@ -9,6 +9,8 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 
+import net.jcip.annotations.GuardedBy;
+
 /**
  * This action listens on some beans and runs the ConditionalNG on property change.
  *
@@ -27,6 +29,10 @@ public class ActionListenOnBeansLocalVariable extends AbstractDigitalAction
     private final InternalFemaleSocket _internalSocket = new InternalFemaleSocket();
     private String _executeSocketSystemName;
     private final FemaleDigitalActionSocket _executeSocket;
+
+    @GuardedBy("this")
+    private final Deque<PropertyChangeEvent> _eventQueue = new ArrayDeque<>();
+
 
     public ActionListenOnBeansLocalVariable(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -248,7 +254,7 @@ public class ActionListenOnBeansLocalVariable extends AbstractDigitalAction
                         _executeSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
-                        log.error("cannot load analog action {}", socketSystemName);
+                        log.error("cannot load digital action {}", socketSystemName);
                     }
                 }
             } else {
@@ -300,14 +306,14 @@ public class ActionListenOnBeansLocalVariable extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-//        System.out.format("Table: Property: %s, Bean: %s, Listen: %b%n", evt.getPropertyName(), ((NamedBean)evt.getSource()).getDisplayName(), _listenOnAllProperties);
+        boolean isQueueEmpty;
         synchronized(this) {
-            _internalSocket._conditionalNG = getConditionalNG();
-            _internalSocket._lastNamedBean = ((NamedBean)evt.getSource()).getDisplayName();
-            _internalSocket._lastEvent = evt.getPropertyName();
-            _internalSocket._lastNewValue = evt.getNewValue() != null ? evt.getNewValue().toString() : null;
+            isQueueEmpty = _eventQueue.isEmpty();
+            _eventQueue.add(evt);
         }
-        getConditionalNG().execute(_internalSocket);
+        if (isQueueEmpty) {
+            getConditionalNG().execute(_internalSocket);
+        }
     }
 
     /** {@inheritDoc} */
@@ -326,9 +332,6 @@ public class ActionListenOnBeansLocalVariable extends AbstractDigitalAction
 
         private ConditionalNG _conditionalNG;
         private SymbolTable _newSymbolTable;
-        private String _lastNamedBean;
-        private String _lastEvent;
-        private String _lastNewValue;
 
         public InternalFemaleSocket() {
             super(null, new FemaleSocketListener(){
@@ -347,25 +350,46 @@ public class ActionListenOnBeansLocalVariable extends AbstractDigitalAction
         @Override
         public void execute() throws JmriException {
             if (_executeSocket != null) {
+
+                boolean isQueueEmpty;
+
                 synchronized(this) {
                     SymbolTable oldSymbolTable = _conditionalNG.getSymbolTable();
                     _conditionalNG.setSymbolTable(_newSymbolTable);
 
+                    String namedBean;
+                    String event;
+                    String newValue;
+
+                    PropertyChangeEvent evt = _eventQueue.poll();
+                    if (evt != null) {
+                        namedBean = ((NamedBean)evt.getSource()).getDisplayName();
+                        event = evt.getPropertyName();
+                        newValue = evt.getNewValue() != null ? evt.getNewValue().toString() : null;
+                    } else {
+                        namedBean = null;
+                        event = null;
+                        newValue = null;
+                    }
+
                     if (_localVariableNamedBean != null) {
-                        _newSymbolTable.setValue(_localVariableNamedBean, _lastNamedBean);
+                        _newSymbolTable.setValue(_localVariableNamedBean, namedBean);
                     }
                     if (_localVariableEvent != null) {
-                        _newSymbolTable.setValue(_localVariableEvent, _lastEvent);
+                        _newSymbolTable.setValue(_localVariableEvent, event);
                     }
                     if (_localVariableNewValue != null) {
-                        _newSymbolTable.setValue(_localVariableNewValue, _lastNewValue);
+                        _newSymbolTable.setValue(_localVariableNewValue, newValue);
                     }
-                    _lastNamedBean = null;
-                    _lastEvent = null;
-                    _lastNewValue = null;
 
                     _executeSocket.execute();
                     _conditionalNG.setSymbolTable(oldSymbolTable);
+
+                    isQueueEmpty = _eventQueue.isEmpty();
+                }
+
+                if (!isQueueEmpty) {
+                    getConditionalNG().execute(_internalSocket);
                 }
             }
         }

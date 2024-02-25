@@ -290,6 +290,10 @@ public class LogixNG_Thread {
         }
     }
 
+    public boolean isQueueEmpty() {
+        return _eventQueue.isEmpty();
+    }
+
     /**
      * Check if on the LogixNG-operation thread.
      *
