@@ -282,7 +282,7 @@
        <label xml:lang="de">Lrück + Zusatz 2 aus</label>
       </variable>
     </variables>
-    <xi:include href="http://jmri.org/xml/decoders/zimo/factReset-v32.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/zimo/factResetLightboards_v40.xml"/>
   </decoder>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAccelDecel.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSecondAddress.xml"/>
