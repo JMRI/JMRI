@@ -166,6 +166,8 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV100-CV152version30.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV153-CV157version28.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV250-CV253.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CVSwissMapping_v40.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV508-CV512.xml"/>
       <variable CV="64" default="0" item="Secondary Short Address">
         <shortAddressVal/>
         <label>Secondary Short Address</label>
@@ -291,4 +293,5 @@
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneABC.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneDecoderlock.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneLoadCode.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSwissMapping_v40.xml"/>
 </decoder-config>
