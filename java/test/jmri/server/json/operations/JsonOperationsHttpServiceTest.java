@@ -315,7 +315,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertThat(data.path(JsonOperations.TRAIN_ID).isMissingNode()).isFalse();
         assertThat(data.path(JsonOperations.TRAIN_ID).isNull()).isTrue();
         assertThat(data.path(JSON.STATUS).isValueNode()).isTrue();
-        assertThat(data.path(JSON.STATUS).asText()).as("Out of service status").isEqualTo("<O> ");
+        assertThat(data.path(JSON.STATUS).asText()).as("Out of service status").isEqualTo("&lt;O&gt; ");
         assertThat(data.path(JSON.IS_LOCAL).isValueNode()).isTrue();
         assertThat(data.path(JSON.IS_LOCAL).asBoolean()).isFalse();
         // edit a non-existent car
