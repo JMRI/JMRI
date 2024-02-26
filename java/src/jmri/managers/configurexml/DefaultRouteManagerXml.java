@@ -80,6 +80,10 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                     } else {
                         elem.setAttribute("controlTurnoutState", "CLOSED");
                     }
+                    
+                    if (r.getControlTurnoutFeedback()) {
+                        elem.setAttribute("controlTurnoutFeedback", "true");
+                    } // don't write if not set, accept default
                 }
                 if (cLockTurnout != null && !cLockTurnout.equals("")) {
                     elem.setAttribute("controlLockTurnout", cLockTurnout);
@@ -260,6 +264,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
             String userName = getUserName(el);
             String cTurnout = null;
             String cTurnoutState = null;
+            boolean cTurnoutFeedback = false;
             String addedDelayTxt = null;
             String routeLockedTxt = null;
             String cLockTurnout = null;
@@ -271,6 +276,9 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
             }
             if (el.getAttribute("controlTurnoutState") != null) {
                 cTurnoutState = el.getAttribute("controlTurnoutState").getValue();
+            }
+            if (el.getAttribute("controlTurnoutFeedback") != null) {
+                cTurnoutFeedback = el.getAttribute("controlTurnoutFeedback").getValue().equals("true");
             }
             if (el.getAttribute("controlLockTurnout") != null) {
                 cLockTurnout = el.getAttribute("controlLockTurnout").getValue();
@@ -324,6 +332,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                 } else {
                     log.error("cTurnoutState was null!");
                 }
+                r.setControlTurnoutFeedback(cTurnoutFeedback);
             }
             // set added delay
             r.setRouteCommandDelay(addedDelay);

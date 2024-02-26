@@ -42,6 +42,22 @@ public class DefaultGlobalVariableTest {
                 getVariableValue(InitialValueType.Array, "").getClass().getName());
         Assert.assertEquals("java.util.concurrent.ConcurrentHashMap",
                 getVariableValue(InitialValueType.Map, "").getClass().getName());
+        Assert.assertTrue((boolean)getVariableValue(InitialValueType.Formula, "1 == 1"));
+        Assert.assertFalse((boolean)getVariableValue(InitialValueType.Formula, "1 == 2"));
+        Assert.assertTrue((boolean)getVariableValue(InitialValueType.Boolean, "true"));
+        Assert.assertFalse((boolean)getVariableValue(InitialValueType.Boolean, "false"));
+        Assert.assertTrue((boolean)getVariableValue(InitialValueType.Boolean, "True"));
+        Assert.assertFalse((boolean)getVariableValue(InitialValueType.Boolean, "False"));
+
+        Exception exception = Assert.assertThrows(Exception.class, () -> getVariableValue(InitialValueType.Boolean, "trueAaa"));
+        Assert.assertEquals("Value \"trueAaa\" can't be converted to a boolean", exception.getMessage());
+        exception = Assert.assertThrows(Exception.class, () -> getVariableValue(InitialValueType.Boolean, "falseAaa"));
+        Assert.assertEquals("Value \"falseAaa\" can't be converted to a boolean", exception.getMessage());
+        exception = Assert.assertThrows(Exception.class, () -> getVariableValue(InitialValueType.Boolean, ""));
+        Assert.assertEquals("Initial data is empty string for global variable \"MyGlobal\". Can't set value to boolean.", exception.getMessage());
+        exception = Assert.assertThrows(Exception.class, () -> getVariableValue(InitialValueType.Boolean, null));
+        Assert.assertEquals("Initial data is null for global variable \"MyGlobal\". Can't set value to boolean.", exception.getMessage());
+
         Assert.assertEquals(25, (long)getVariableValue(InitialValueType.Formula, "12*2+1"));
         Assert.assertEquals(352, (long)getVariableValue(InitialValueType.Integer, "352"));
         Assert.assertNull(getVariableValue(InitialValueType.None, ""));

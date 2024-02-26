@@ -64,6 +64,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
     protected NamedBeanHandle<Turnout> mControlNamedTurnout = null;
     protected int mControlTurnoutState = jmri.Turnout.THROWN;
     protected int mDelay = 0;
+    protected boolean mTurnoutFeedbackIsCommanded = false;
 
     protected String mLockControlTurnout = "";
     protected NamedBeanHandle<Turnout> mLockControlNamedTurnout = null;
@@ -735,6 +736,18 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
 
     /** {@inheritDoc} */
     @Override
+    public void setControlTurnoutFeedback(boolean turnoutFeedbackIsCommanded) {
+        mTurnoutFeedbackIsCommanded  = turnoutFeedbackIsCommanded;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean getControlTurnoutFeedback() {
+        return mTurnoutFeedbackIsCommanded;
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public void setLockControlTurnoutState(int turnoutState) {
         if ((turnoutState == Route.ONTHROWN)
                 || (turnoutState == Route.ONCLOSED)
@@ -954,7 +967,11 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         Turnout ctl = getCtlTurnout();
         if (ctl != null) {
             mTurnoutListener = (java.beans.PropertyChangeEvent e) -> {
-                if (e.getPropertyName().equals("KnownState")) {
+                String name = "KnownState";
+                if (this.getControlTurnoutFeedback()) {
+                    name = "CommandedState";
+                }
+                if (e.getPropertyName().equals(name)) {
                     int now = ((Integer) e.getNewValue());
                     int then = ((Integer) e.getOldValue());
                     checkTurnout(now, then, (Turnout) e.getSource());
@@ -1299,6 +1316,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
 
         private final DefaultRoute r;
 
+        @SuppressWarnings("hiding")     // Field has same name as a field in the super class
         private final static Logger log = LoggerFactory.getLogger(SetRouteThread.class);
     }
 

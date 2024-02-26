@@ -14,7 +14,7 @@
 <!-- version 1 - new file  -->
 <!-- version 2 - German translations 12/2023 -->
 <!-- Choices for HDD Special Function option -->
-<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
 	<enumChoice>
 		<choice>Normal Output</choice>
 		<choice xml:lang="de">Keine (normaler Ausgang)</choice>

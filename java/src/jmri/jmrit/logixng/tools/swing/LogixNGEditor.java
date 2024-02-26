@@ -980,15 +980,15 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 // Use separate Runnable so window is created on top
                 class WindowMaker implements Runnable {
 
-                    int row;
+                    int theRow;
 
                     WindowMaker(int r) {
-                        row = r;
+                        theRow = r;
                     }
 
                     @Override
                     public void run() {
-                        editConditionalNGPressed(row);
+                        editConditionalNGPressed(theRow);
                     }
                 }
                 WindowMaker t = new WindowMaker(row);
@@ -1003,15 +1003,15 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 // Use separate Runnable so window is created on top
                 class WindowMaker implements Runnable {
 
-                    int row;
+                    int theRow;
 
                     WindowMaker(int r) {
-                        row = r;
+                        theRow = r;
                     }
 
                     @Override
                     public void run() {
-                        debugConditionalNGPressed(row);
+                        debugConditionalNGPressed(theRow);
                     }
                 }
                 WindowMaker t = new WindowMaker(row);

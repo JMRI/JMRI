@@ -7,9 +7,7 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.InstanceManager;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.MaleSocket;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.IfThenElse;
 import jmri.jmrit.logixng.actions.IfThenElse.ExecuteType;
 import jmri.jmrit.logixng.actions.IfThenElse.EvaluateType;
@@ -40,7 +38,12 @@ public class IfThenElseSwing extends AbstractDigitalActionSwing {
         _executeTypeComboBox = new JComboBox<>();
         for (ExecuteType type : ExecuteType.values()) _executeTypeComboBox.addItem(type);
         JComboBoxUtil.setupComboBoxMaxRows(_executeTypeComboBox);
-        if (action != null) _executeTypeComboBox.setSelectedItem(action.getExecuteType());
+        if (action != null) {
+            _executeTypeComboBox.setSelectedItem(action.getExecuteType());
+        } else {
+            LogixNGPreferences prefs = InstanceManager.getDefault(LogixNGPreferences.class);
+            _executeTypeComboBox.setSelectedItem(prefs.getIfThenElseExecuteTypeDefault());
+        }
 
         _evaluateTypeComboBox = new JComboBox<>();
         for (EvaluateType type : EvaluateType.values()) _evaluateTypeComboBox.addItem(type);

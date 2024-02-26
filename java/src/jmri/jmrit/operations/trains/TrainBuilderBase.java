@@ -11,7 +11,6 @@ import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
-import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.router.Router;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
@@ -21,7 +20,7 @@ import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Methods to support the TrainBuilder class.
- * 
+ *
  * @author Daniel Boudreau Copyright (C) 2021
  */
 public class TrainBuilderBase extends TrainCommon {
@@ -64,9 +63,6 @@ public class TrainBuilderBase extends TrainCommon {
     int _warnings = 0; // the number of warnings in the build report
 
     // managers
-    CarManager carManager = InstanceManager.getDefault(CarManager.class);
-    LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
-    EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
     TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
     TrainScheduleManager trainScheduleManager = InstanceManager.getDefault(TrainScheduleManager.class);
     CarLoads carLoads = InstanceManager.getDefault(CarLoads.class);
@@ -334,7 +330,7 @@ public class TrainBuilderBase extends TrainCommon {
      * Show and initialize the train's route. Determines the number of car moves
      * requested for this train. Also adjust the number of car moves if the
      * random car moves option was selected.
-     * 
+     *
      * @throws BuildFailedException if random variable isn't an integer
      */
     protected void showAndInitializeTrainRoute() throws BuildFailedException {
@@ -544,7 +540,7 @@ public class TrainBuilderBase extends TrainCommon {
 
     /**
      * Will also set the termination track if returning to staging
-     * 
+     *
      * @param departStageTrack departure track from staging
      */
     protected void setDepartureTrack(Track departStageTrack) {
@@ -653,7 +649,7 @@ public class TrainBuilderBase extends TrainCommon {
 
     /**
      * Removes the remaining cabooses and cars with FRED from consideration.
-     * 
+     *
      * @throws BuildFailedException code check if car being removed is in
      *                              staging
      */
@@ -690,7 +686,7 @@ public class TrainBuilderBase extends TrainCommon {
     /**
      * Creates the carList. Only cars that can be serviced by this train are in
      * the list.
-     * 
+     *
      * @throws BuildFailedException if car is marked as missing and is in
      *                              staging
      */
@@ -831,7 +827,7 @@ public class TrainBuilderBase extends TrainCommon {
 
             // note that for trains departing staging the engine and car roads,
             // types, owners, and built date were already checked.
-            
+
             // non-lead cars in a kernel are not checked
             if (car.getKernel() == null || car.isLead()) {
                 if (!_train.isCarRoadNameAccepted(car.getRoadName())) {
@@ -938,7 +934,7 @@ public class TrainBuilderBase extends TrainCommon {
 
     /**
      * Adjust car list to only have cars from one staging track
-     * 
+     *
      * @throws BuildFailedException if all cars departing staging can't be used
      */
     protected void adjustCarsInStaging() throws BuildFailedException {
@@ -1001,7 +997,7 @@ public class TrainBuilderBase extends TrainCommon {
     /**
      * List available cars by location. Removes non-lead kernel cars from the
      * car list.
-     * 
+     *
      * @throws BuildFailedException if kernel doesn't have lead or cars aren't
      *                              on the same track.
      */
@@ -1221,7 +1217,7 @@ public class TrainBuilderBase extends TrainCommon {
                         // don't remove caboose or car with FRED already
                         // assigned to train
                         if (car.getTrack() == _departStageTrack && car.getRouteDestination() == null) {
-                            car.setLocation(car.getLocation(), null); 
+                            car.setLocation(car.getLocation(), null);
                         }
                     }
                 } else {
@@ -1283,7 +1279,7 @@ public class TrainBuilderBase extends TrainCommon {
     /**
      * Checks to see if all cars on a staging track have been given a
      * destination. Throws exception if there's a car without a destination.
-     * 
+     *
      * @throws BuildFailedException if car on staging track not assigned to
      *                              train
      */
@@ -1320,7 +1316,7 @@ public class TrainBuilderBase extends TrainCommon {
 
     /**
      * Creates a list of up to 20 cars stuck in staging.
-     * 
+     *
      * @param car      The car to add to the list
      * @param buf      StringBuffer
      * @param carCount how many cars in the list
@@ -1337,7 +1333,7 @@ public class TrainBuilderBase extends TrainCommon {
     /**
      * Used to determine if a car on a staging track doesn't have a destination
      * or train
-     * 
+     *
      * @return true if at least one car doesn't have a destination or train.
      *         false if all cars have a destination.
      */
@@ -1450,7 +1446,7 @@ public class TrainBuilderBase extends TrainCommon {
     /**
      * Determine if rolling stock can be picked up based on train direction at
      * the route location.
-     * 
+     *
      * @param rs The rolling stock
      * @param rl The rolling stock's route location
      * @throws BuildFailedException if coding issue
@@ -1484,7 +1480,7 @@ public class TrainBuilderBase extends TrainCommon {
     /**
      * Used to report a problem picking up the rolling stock due to train
      * direction.
-     * 
+     *
      * @param rl The route location
      * @return true if there isn't a problem
      */
@@ -1622,7 +1618,7 @@ public class TrainBuilderBase extends TrainCommon {
      * Check departure staging track to see if engines and cars are available to
      * a new train. Also confirms that the engine and car type, load, road, etc.
      * are accepted by the train.
-     * 
+     *
      * @param departStageTrack The staging track
      * @return true is there are engines and cars available.
      */
@@ -1688,7 +1684,7 @@ public class TrainBuilderBase extends TrainCommon {
     /**
      * Used to determine if engines on staging track are acceptable to the train
      * being built.
-     * 
+     *
      * @param departStageTrack Depart staging track
      * @return true if engines on staging track meet train requirement
      */
@@ -1763,7 +1759,7 @@ public class TrainBuilderBase extends TrainCommon {
     /**
      * Checks to see if all cars in staging can be serviced by the train being
      * built. Also searches for caboose or car with FRED.
-     * 
+     *
      * @param departStageTrack Departure staging track
      * @return True if okay
      */
@@ -1879,7 +1875,7 @@ public class TrainBuilderBase extends TrainCommon {
      * track from the pool that has cars with the earliest arrival date. In LIFO
      * mode (Last in First out), the program selects a staging track from the
      * pool that has cars with the latest arrival date.
-     * 
+     *
      * @param departStageTrack the track being tested
      * @return true if departure on this staging track is possible
      */
@@ -1942,7 +1938,7 @@ public class TrainBuilderBase extends TrainCommon {
 
     /**
      * Checks to see if staging track can accept train.
-     * 
+     *
      * @param terminateStageTrack the staging track
      * @return true if staging track is empty, not reserved, and accepts car and
      *         engine types, roads, and loads.
@@ -2204,18 +2200,11 @@ public class TrainBuilderBase extends TrainCommon {
             return null;
         }
         if (!si.getRandom().equals(ScheduleItem.NONE)) {
-            try {
-                int value = Integer.parseInt(si.getRandom());
-                double random = 100 * Math.random();
-                log.debug("Selected random {}, created random {}", si.getRandom(), random);
-                if (random > value) {
-                    addLine(_buildReport, SEVEN,
-                            Bundle.getMessage("buildScheduleRandom", track.getLocation().getName(), track.getName(),
-                                    track.getScheduleName(), si.getId(), si.getReceiveLoadName(), value, random));
-                    return null;
-                }
-            } catch (NumberFormatException e) {
-                log.error("Schedule item ({}) random value ({}) isn't a number", si.getId(), si.getRandom());
+            if (!si.doRandom()) {
+                addLine(_buildReport, SEVEN,
+                        Bundle.getMessage("buildScheduleRandom", track.getLocation().getName(), track.getName(),
+                                track.getScheduleName(), si.getId(), si.getReceiveLoadName(), si.getRandom(), si.getCalculatedRandom()));
+                return null;
             }
         }
         log.debug("Found track ({}) schedule item id ({}) for car ({})", track.getName(), si.getId(), car.toString());
@@ -2234,7 +2223,7 @@ public class TrainBuilderBase extends TrainCommon {
      * Returns a list containing two tracks. The 1st track found for the car,
      * the 2nd track is the car's final destination if an alternate track was
      * used for the car. 2nd track can be null.
-     * 
+     *
      * @param car The car needing a destination track
      * @param rld the RouteLocation destination
      * @return List containing up to two tracks. No tracks if none found.
@@ -2332,7 +2321,7 @@ public class TrainBuilderBase extends TrainCommon {
     /**
      * Used to determine if car could be set out at earlier location in the
      * train's route.
-     * 
+     *
      * @param car       The car
      * @param trackTemp The destination track for this car
      * @param rld       Where in the route the destination track was found
@@ -2359,7 +2348,7 @@ public class TrainBuilderBase extends TrainCommon {
 
     /**
      * Checks to see if local move is allowed for this car
-     * 
+     *
      * @param car       the car being moved
      * @param testTrack the destination track for this car
      * @return false if local move not allowed
@@ -2433,7 +2422,7 @@ public class TrainBuilderBase extends TrainCommon {
 
     /**
      * Returns true if car can be picked up later in a train's route
-     * 
+     *
      * @param car the car
      * @param rl  car's route location
      * @param rld car's route location destination
@@ -2474,7 +2463,7 @@ public class TrainBuilderBase extends TrainCommon {
 
     /**
      * Returns true is cars are allowed to travel from origin to terminal
-     * 
+     *
      * @param car             The car
      * @param destinationName Destination name for this car
      * @return true if through cars are allowed. false if not.
@@ -2659,11 +2648,11 @@ public class TrainBuilderBase extends TrainCommon {
                 stageTrack.getLocation().getName(), stageTrack.getName()));
         return false;
     }
-    
+
     /**
      * Checks to see if there are any load restrictions for trains,
      * interchanges, and yards if routing through yards is enabled.
-     * 
+     *
      * @return true if there are load restrictions.
      */
     private boolean isLoadRestrictions() {
@@ -2673,7 +2662,7 @@ public class TrainBuilderBase extends TrainCommon {
         }
         return restrictions;
     }
-    
+
     private boolean isLoadRestrictions(String type) {
         for (Track track : locationManager.getTracks(type)) {
             if (!track.getLoadOption().equals(Track.ALL_LOADS)) {
@@ -2682,7 +2671,7 @@ public class TrainBuilderBase extends TrainCommon {
         }
         return false;
     }
-    
+
     private boolean isLoadRestrictionsTrain() {
         for (Train train : trainManager.getTrainsByIdList()) {
             if (!train.getLoadOption().equals(Train.ALL_LOADS)) {
@@ -2760,7 +2749,7 @@ public class TrainBuilderBase extends TrainCommon {
 
     /**
      * report any cars left at route location
-     * 
+     *
      * @param rl route location
      */
     protected void showCarsNotMoved(RouteLocation rl) {
@@ -2794,7 +2783,7 @@ public class TrainBuilderBase extends TrainCommon {
 
     /**
      * Remove rolling stock from train
-     * 
+     *
      * @param rs the rolling stock to be removed
      */
     protected void removeRollingStockFromTrain(RollingStock rs) {
@@ -2869,7 +2858,7 @@ public class TrainBuilderBase extends TrainCommon {
      * additional weight isn't considered in this method so HP requirements can
      * be lower compared to the original calculation which did include the
      * weight of the engines.
-     * 
+     *
      * @param hpAvailable   the engine hp already assigned to the train for this
      *                      leg
      * @param extraHpNeeded the additional hp needed
@@ -2934,7 +2923,7 @@ public class TrainBuilderBase extends TrainCommon {
 
     /**
      * Adds an engine to the train.
-     * 
+     *
      * @param engine the engine being added to the train
      * @param rl     where in the train's route to pick up the engine
      * @param rld    where in the train's route to set out the engine
@@ -3018,7 +3007,7 @@ public class TrainBuilderBase extends TrainCommon {
 
     /**
      * Used to determine the number of engines requested by the user.
-     * 
+     *
      * @param requestEngines Can be a number, AUTO or AUTO HPT.
      * @return the number of engines requested by user.
      */
@@ -3037,7 +3026,7 @@ public class TrainBuilderBase extends TrainCommon {
 
     /**
      * Sets the destination track for an engine and assigns it to the train.
-     * 
+     *
      * @param engine The engine to be added to train
      * @param rl     Departure route location
      * @param rld    Destination route location
@@ -3201,7 +3190,7 @@ public class TrainBuilderBase extends TrainCommon {
      * engines in a consist, or if the option to build from single locos, builds
      * a consist for the user. When true, engines successfully added to train
      * for the leg requested.
-     * 
+     *
      * @param requestedEngines Requested number of Engines, can be number, AUTO
      *                         or AUTO HPT
      * @param model            Optional model name for the engines
@@ -3374,7 +3363,7 @@ public class TrainBuilderBase extends TrainCommon {
     /**
      * Removes engine from train and attempts to replace it with engine or
      * consist that meets the HP requirements of the train.
-     * 
+     *
      * @param hpNeeded   How much hp is needed
      * @param leadEngine The lead engine for this leg
      * @param model      The engine's model

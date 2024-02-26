@@ -2,7 +2,7 @@
 <!-- modified from the standard Sound Levels pane to cope with more values -->
 <!-- and provide headings suitable for Zimo chips -->
 <!-- version 1.1 - Ronald Kuhn - add german translation -->
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>Zimo Sound Levels</name>
   <name xml:lang="it">Livelli Suono</name>
   <name xml:lang="de">ZIMO Lautstärke-Einstellung</name>

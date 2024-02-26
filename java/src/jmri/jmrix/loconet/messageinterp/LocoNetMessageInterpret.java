@@ -66,7 +66,9 @@ import org.slf4j.LoggerFactory;
  * @author Michael Richardson Copyright (C) 2021
  */
 public class LocoNetMessageInterpret {
-
+    private static final String Ln_Off = Bundle.getMessage("LN_MSG_OFF");
+    private static final String Ln_On  = Bundle.getMessage("LN_MSG_ON");
+    
     /**
      * Format the message into a text string.
      * <p>
@@ -4173,7 +4175,7 @@ public class LocoNetMessageInterpret {
                             * the first data byte being the most significant bits of 
                             * the address. The Configuration variable being addressed 
                             * is the provided 10-bit address plus 1. For example, to 
-                            * address CV1 the 10 bit address is “00 00000000”.
+                            * address CV1 the 10 bit address is "00 00000000".
                             *
                             * The defined values for Instruction type (CC) are:
                             *       GG=00 Reserved for future use
@@ -4955,7 +4957,7 @@ public class LocoNetMessageInterpret {
         /*
          * If its a "Special" slot (Stats etc) use a different routine
          */
-        if (slot > 247 && slot < 252) {
+        if (slot > 247 && slot < 253) {
             return interpretExtendedSlot_StatusData(l,slot);
         }
         int trackStatus = l.getElement(7); // track status
@@ -5002,99 +5004,140 @@ public class LocoNetMessageInterpret {
                         idString(id1, id2)));
     }
 
+    /**
+     * Interprets an Enhanced Slot Report message in the "Query Mode" range of
+     * slot numbers.
+     * 
+     * Only the primary slot numbers are interpreted, not any "aliases".
+     * 
+     * @param l Enhanced Slot report LocoNetMessage to be interpreted
+     * @param slot
+     * @return String showing interpretation.
+     */
     private static String interpretExtendedSlot_StatusData(LocoNetMessage l, int slot) {
        String baseInfo = "";
        String detailInfo = "";
        switch (slot) {
            case 248:
-                // Identifying information
-                baseInfo = interpretExtendedSlot_StatusData_Base_Detail(l,slot);
-                // Flags
-                detailInfo = interpretExtendedSlot_StatusData_Flags(l,slot);
+                
+                baseInfo = interpretExtendedSlot_StatusData_Base_Detail(l, slot); // Basic Identifying information
+                detailInfo = interpretExtendedSlot_Query_Mode_248(l);  // Flags
+
                 break;
            case 249:
-                // electric
-                // Identifying information
-                baseInfo = interpretExtendedSlot_StatusData_Base(l,slot);
-                detailInfo = interpretExtendedSlot_StatusData_Electric(l,slot);
-                break;
-            case 251:
-                // LocoNet stats
-                // Identifying information
-                baseInfo = interpretExtendedSlot_StatusData_Base(l,slot);
-                detailInfo = interpretExtendedSlot_StatusData_LocoNet(l,slot);
+                baseInfo = interpretExtendedSlot_StatusData_Base(l, slot); // Basic Identifying information
+                detailInfo = interpretExtendedSlot_Query_Mode_249(l); // Electrical properties
+
                 break;
             case 250:
-                // Identifying information
-                baseInfo = interpretExtendedSlot_StatusData_Base(l,slot);
-                // Slots info
-                detailInfo = interpretExtendedSlot_StatusData_Slots(l,slot);
+                baseInfo = interpretExtendedSlot_StatusData_Base(l, slot); // Basic Identifying information
+                detailInfo = interpretExtendedSlot_Query_Mode_250(l); // Slots info
+                break;
+            case 251:
+                baseInfo = interpretExtendedSlot_StatusData_Base(l, slot); // Basic Identifying information
+                detailInfo = interpretExtendedSlot_Query_Mode_251(l); // LocoNet events and messages and stats
+                break;
+            case 252:
+                baseInfo = interpretExtendedSlot_StatusData_Base(l, slot); // Basic Identifying information
+                detailInfo = interpretExtendedSlot_Query_Mode_252(l); // DCC track status info
                 break;
             default:
-                baseInfo = "Still working on it";
+                baseInfo = "Wrong Slot # ("+Integer.toString(slot)+")";
         }
-       return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS",
+       return Bundle.getMessage("LN_MSG_OPC_EXP_QUERY_MODE_OVERALL",
                slot, baseInfo, detailInfo);
     }
 
     /**
      * Interpret the base information in bytes 16,18,19
-     * for slots 249,250,251. not 248
-     * @param l loconetmessage
+     * for slots 249,250,251, but not 248.
+     * 
+     * @param l LocoNetMessage to be interpreted
      * @param slot slot number
-     * @return a format message.
+     * @return formatted message
      */
     private static String interpretExtendedSlot_StatusData_Base(LocoNetMessage l, int slot) {
         String hwType = LnConstants.IPL_NAME(l.getElement(16));
         int hwSerial = ((l.getElement(19) & 0x3f) * 128 ) + l.getElement(18);
+        String serNumHex = "0000"+Integer.toHexString(hwSerial).toUpperCase();
+        serNumHex = serNumHex.substring(serNumHex.length()-4);
+        
         return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_BASE",
                 hwType,
-                hwSerial + "(" + Integer.toHexString(hwSerial).toUpperCase() + ")");
+                hwSerial + "(0x" + serNumHex + ")");
     }
 
     /**
-     * Interp slot 248 base details
-     * @param l loconetmessage
+     * Interpret slot 248 base details.
+     * 
+     * @param l LocoNetMessage to be interpreted
      * @param slot slot number
-     * @return formated message
+     * @return formatted message
      */
     private static String interpretExtendedSlot_StatusData_Base_Detail(LocoNetMessage l, int slot) {
-        double hwVersion ;
-        double swVersion ;
-        int hwSerial;
         String hwType = LnConstants.IPL_NAME(l.getElement(14));
         if ((l.getElement(19) & 0x40) == 0x40) {
             hwType = hwType + Bundle.getMessage("LN_MSG_COMMAND_STATION");
         }
-        hwSerial = ((l.getElement(19) & 0x3f) * 128 ) + l.getElement(18);
-        hwVersion = ((double)(l.getElement(17) & 0x78) / 8 ) + ((double)(l.getElement(17) & 0x07) / 10 ) ;
-        swVersion = ((double)(l.getElement(16) & 0x78) / 8 ) + ((double)(l.getElement(16) & 0x07) / 10 ) ;
+        int hwSerial = ((l.getElement(19) & 0x3f) * 128 ) + l.getElement(18);
+        String serNumHex = "0000"+Integer.toHexString(hwSerial).toUpperCase();
+        serNumHex = serNumHex.substring(serNumHex.length()-4);
+        
+        float hwVersion = ((float)(l.getElement(17) & 0x78) / 8 ) + ((float)(l.getElement(17) & 0x07) / 10 ) ;
+        float swVersion = ((float)(l.getElement(16) & 0x78) / 8 ) + ((float)(l.getElement(16) & 0x07) / 10 ) ;
         return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_BASEDETAIL",
                 hwType,
-                hwSerial + "(" + Integer.toHexString(hwSerial).toUpperCase() + ")",
-                hwVersion,
-                swVersion);
+                hwSerial + "(0x" + serNumHex + ")",
+                hwVersion, swVersion);
+    }
+
+    private static String queryOnOff(int val, int bit) {
+        return (((val & 1 << bit) == 1 << bit)?Ln_On:Ln_Off);
+    }
+    
+    /**
+     * Interprets _some_ of the data in Query Mode report of slot 248 (and aliases!)
+     * - "Flags" info.
+     * 
+     * @param l LocoNetMessage to be interpreted
+     * @return formatted message
+     */
+    private static String interpretExtendedSlot_Query_Mode_248(LocoNetMessage l) {
+        
+        int b = l.getElement(4);
+        String lnetVmin = Bundle.getMessage("LNET_QUERY_LNETVMIN", queryOnOff(b, 6));
+        String overTemp = Bundle.getMessage("LNET_QUERY_OVERTEMP", queryOnOff(b, 5));
+        String fuseBad = Bundle.getMessage("LNET_QUERY_FUSEBAD", queryOnOff(b, 4));
+        String rsynMax = Bundle.getMessage("LNET_QUERY_RSYNMAX", queryOnOff(b, 3));
+        String vinHi = Bundle.getMessage("LNET_QUERY_VINHI", queryOnOff(b, 2));
+        String vinLo = Bundle.getMessage("LNET_QUERY_VINLO", queryOnOff(b, 1));
+        String iTrk = Bundle.getMessage("LNET_QUERY_ITRK", queryOnOff(b, 0));
+
+        b = l.getElement(5);
+        String usbLink = Bundle.getMessage("LNET_QUERY_ULINK", queryOnOff(b, 5));
+        String iLim = Bundle.getMessage("LNET_QUERY_ILIM", queryOnOff(b, 3));
+        String PTrkMaxI = Bundle.getMessage("LNET_QUERY_PTRKMAXI", queryOnOff(b, 2));
+        String PtrkIsol = Bundle.getMessage("LNET_QUERY_PTRKISOL", queryOnOff(b, 1));
+
+        return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_FLAGS",
+                rsynMax, usbLink, iTrk, vinLo, vinHi, fuseBad,
+                overTemp, lnetVmin, PtrkIsol, PTrkMaxI, iLim);
     }
 
     /**
-     * Interp slot 249 electric stuff, bytes 4,5,6,7,10,12
-     * @param l loconetmessage
-     * @param slot slot number
-     * @return formated message
+     * Interprets _some_ of the data in Query Mode report of slot 249 (and aliases!)
+     * - "Electrical" info.
+     * 
+     * @param l LocoNetMessage to be interpreted
+     * @return formatted message
      */
-    private static String interpretExtendedSlot_StatusData_Electric(LocoNetMessage l, int slot) {
-        double voltsTrack;
-        double voltsIn;
-        double ampsIn;
-        double ampsLimit;
-        double  voltsRsLoaded;
-        double  voltsRsUnLoaded;
-        voltsTrack = ((double)l.getElement(4)) * 2 / 10 ;
-        voltsIn = ((double)l.getElement(5)) * 2 / 10;
-        ampsIn = ((double)l.getElement(6)) / 10;
-        ampsLimit = ((double)l.getElement(7)) / 10;
-        voltsRsLoaded = ((double)l.getElement(12)) * 2 / 10;
-        voltsRsUnLoaded = ((double)l.getElement(10)) * 2 / 10;
+    private static String interpretExtendedSlot_Query_Mode_249(LocoNetMessage l) {
+        float voltsTrack = ((float)l.getElement(4)) * 2 / 10 ;
+        float voltsIn = ((float)l.getElement(5)) * 2 / 10;
+        float ampsIn = ((float)l.getElement(6)) / 10;
+        float ampsLimit = ((float)l.getElement(7)) / 10;
+        float voltsRsLoaded = ((float)l.getElement(12)) * 2 / 10;
+        float voltsRsUnLoaded = ((float)l.getElement(10)) * 2 / 10;
         return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_ELECTRIC",
                 voltsTrack,
                 voltsIn,
@@ -5105,57 +5148,54 @@ public class LocoNetMessageInterpret {
     }
 
     /**
-     * Interp slot 249 loconet stats, bytes 4 & 5,6 & 7
-     * @param l loconetmessage
-     * @param slot slot number
-     * @return formated message
+     * Interprets _some_ of the data in Query Mode report of slot 250 (and aliases!)
+     * - "Slots" info.
+     * 
+     * @param l LocoNetMessage to be interpreted
+     * @return formatted message
      */
-    private static String interpretExtendedSlot_StatusData_LocoNet(LocoNetMessage l, int slot) {
-        double msgTotal;
-        double msgErrors;
-        msgTotal = (l.getElement(4) + ( l.getElement(5) * 128)) ;
-        msgErrors = (l.getElement(6) + ( l.getElement(7) * 128)) ;
-        return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_LOCONET",
-                msgTotal,
-                msgErrors);
-    }
+    private static String interpretExtendedSlot_Query_Mode_250(LocoNetMessage l) {
+        int msgInUse = (l.getElement(4) + ( l.getElement(5)  * 128)) ;
+        int msgIdle = (l.getElement(6) + ( l.getElement(7) * 128)) ;
+        int msgFree = (l.getElement(8) + ( l.getElement(9) * 128)) ;
+        int ctop =  (l.getElement(10) + ( l.getElement(11) * 128)) ;
+        int cup =  (l.getElement(12) + ( l.getElement(13) * 128)) ;
 
-
-    private static String interpretExtendedSlot_StatusData_Flags(LocoNetMessage l, int slot) {
-        //TODO need more sample data
-        String msgRsyncMax = Bundle.getMessage("LN_MSG_OFF");
-        if ((l.getElement(4) & 0x80) == 0x80) {
-            msgRsyncMax = Bundle.getMessage("LN_MSG_ON");
-        }
-        String msgUSB = Bundle.getMessage("LN_MSG_OFF");
-        if ((l.getElement(5) & 0x20) == 0x20) {
-            msgUSB = Bundle.getMessage("LN_MSG_ON");
-        }
-        return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_FLAGS",
-                msgRsyncMax,
-                msgUSB );
+        return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_SLOTS",
+                msgInUse, msgIdle, msgFree, ctop, cup);
     }
 
     /**
-     * Interp slot 250 slots used/free etc
-     * @param l loconetmessage
-     * @param slot slot number
-     * @return formated message
+     * Interprets _some_ of the data in Query Mode report of slot 251 (and aliases!)
+     * - "LocoNet message" info.
+     * 
+     * @param l LocoNetMessage to be interpreted
+     * @return formatted message
      */
-    private static String interpretExtendedSlot_StatusData_Slots(LocoNetMessage l, int slot) {
-        //TODO there is still more data in this slot.
-        double msgInUse;
-        double msgIdle;
-        double msgFree;
-        msgInUse = (l.getElement(4) + ( (l.getElement(5) & 0x03) * 128)) ;
-        msgIdle = (l.getElement(6) + ( (l.getElement(7) & 0x03) * 128)) ;
-        msgFree = (l.getElement(8) + ( (l.getElement(9) & 0x03) * 128)) ;
-        return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_SLOTS",
-                msgInUse,
-                msgIdle,
-                msgFree);
+    private static String interpretExtendedSlot_Query_Mode_251(LocoNetMessage l) {
+        int msgTotal = (l.getElement(4) + ( l.getElement(5) * 128)) ;
+        int msgErrors = (l.getElement(6) + ( l.getElement(7) * 128)) ;
+        int sleeps = (l.getElement(10) + ( l.getElement(11) * 128));
+        
+        return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_LOCONET",
+                msgTotal, msgErrors, sleeps);
     }
 
+    /**
+     * Interprets _some_ of the data in Query Mode report of slot 252 (and aliases!)
+     * - "DCC status" info.
+     * 
+     * @param l LocoNetMessage to be interpreted
+     * @return formatted message
+     */
+    private static String interpretExtendedSlot_Query_Mode_252(LocoNetMessage l) {
+        int flt = (l.getElement(4) & 0x7f) + ((l.getElement(5) & 0x7f) << 7);
+        int arv = (l.getElement(6) & 0x7f) + ((l.getElement(7) & 0x7f) << 7);
+        int dst = (l.getElement(8) & 0x7f) + ((l.getElement(9) & 0x7f) << 7);
+        return Bundle.getMessage("LN_MSG_OPC_EXP_QUERY_LOCONET_STAT2_LOCONET",
+                flt, arv, dst);
+    }
+    
     private static final String ds54sensors[] = {"AuxA", "SwiA", "AuxB", "SwiB", "AuxC", "SwiC", "AuxD", "SwiD"};    // NOI18N
     private static final String ds64sensors[] = {"A1", "S1", "A2", "S2", "A3", "S3", "A4", "S4"};                    // NOI18N
     private static final String se8csensors[] = {"DS01", "DS02", "DS03", "DS04", "DS05", "DS06", "DS07", "DS08"};    // NOI18N

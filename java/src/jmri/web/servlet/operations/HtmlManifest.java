@@ -2,6 +2,8 @@ package jmri.web.servlet.operations;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map.Entry;
@@ -228,7 +230,17 @@ public class HtmlManifest extends HtmlTrainCommon {
     protected String blockCars(JsonNode cars, RouteLocation location, boolean isManifest) {
         StringBuilder builder = new StringBuilder();
         log.debug("Cars is {}", cars);
-        for (JsonNode car : cars.path(JSON.ADD)) {
+
+        //copy the adds into a sortable arraylist
+        ArrayList<JsonNode> adds = new ArrayList<JsonNode>();
+        cars.path(JSON.ADD).forEach(adds::add);
+            
+        //sort if requested
+        if (adds.size() > 0 && Setup.isSortByTrackNameEnabled()) {
+            adds.sort(Comparator.comparing(o -> o.get("location").get("track").get("userName").asText()));
+        }
+        //format each car for output
+        for (JsonNode car : adds) {
             if (!this.isLocalMove(car)) {
                 // TODO utility format not quite ready, so display each car in
                 // manifest for now.
@@ -319,7 +331,7 @@ public class HtmlManifest extends HtmlTrainCommon {
         for (String attribute : format) {
             if (!attribute.trim().isEmpty()) {
                 attribute = attribute.toLowerCase();
-                log.debug("Adding car with attribute {}", attribute);
+                log.trace("Adding car with attribute {}", attribute);
                 if (attribute.equals(JsonOperations.LOCATION) || attribute.equals(JsonOperations.TRACK)) {
                     attribute = JsonOperations.LOCATION; // treat "track" as "location"
                     builder.append(
@@ -355,7 +367,7 @@ public class HtmlManifest extends HtmlTrainCommon {
         for (String attribute : format) {
             if (!attribute.trim().isEmpty()) {
                 attribute = attribute.toLowerCase();
-                log.debug("Removing car with attribute {}", attribute);
+                log.trace("Removing car with attribute {}", attribute);
                 if (attribute.equals(JsonOperations.DESTINATION) || attribute.equals(JsonOperations.TRACK)) {
                     attribute = JsonOperations.DESTINATION; // treat "track" as "destination"
                     builder.append(

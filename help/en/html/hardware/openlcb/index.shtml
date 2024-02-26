@@ -57,7 +57,7 @@
       corresponds to.<br>
       A Sensor is defined by two Events: The one that sets it ACTIVE, and the one that sets it
       INACTIVE.<br>
-      The Event numbers are essentially arbitrary, and are defined by the OpenLCB Nodes that send
+      The Event numbers are essentially arbitrary, and are defined by the OpenLCB Nodes that produce
       them. Because Events are not intrinsically associated with specific hardware objects, and
       because people can use Event ID's in many ways, the specific Event ID's for a Sensor must be
       supplied.<br>
@@ -111,23 +111,29 @@
 
       <h4>Turnouts</h4>
 
-      <p>The scheme for Turnouts is similar to Sensors above, except JMRI is emitting the OpenLCB
-      frames instead of receiving them, and the type letter is "T" instead of "S", e.g.
+      <p>The scheme for Turnouts is similar to Sensors above, except JMRI is producing the OpenLCB
+      events instead of receiving them, and the type letter is "T" instead of "S", e.g.
       "<code>MT1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9</code>".</p>
+      
+      <p>A Turnout is defined by two Events: The one that it produces for THROWN
+      and the one that it produces for CLOSED respectively.<br>
 
       <p>Turnouts have Authoritative and Always Listen checkboxes that work the same as the
       checkboxes on Sensors.
 
       <p>As a special case, DCC turnouts connected via a bridge to an OpenLCB network
       can be addressed as e.g. MTT123. Note the 2nd T for "Turnout addressing". JMRI will
-      then automatically generate the correct events to throw/close the corresponding
+      then automatically generate the correct well-known events to throw/close the corresponding
       DCC turnout.
 
       <h4>Lights</h4>
 
-      <p>The scheme for Lights is similar to Sensors above, except JMRI is emitting the OpenLCB
-      frames instead of receiving them, and the type letter is "L" instead of "S", e.g.
+      <p>The scheme for Lights is similar to Sensors above, except JMRI is producing the OpenLCB
+      events instead of receiving them, and the type letter is "L" instead of "S", e.g.
       "<code>ML1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9</code>".</p>
+
+      <p>A Light is defined by these two Events: The one that it produces for ON
+      and the one that it produces for OFF respectively.<br>
 
       <p>Lights have Authoritative and Always Listen checkboxes that work the same as the
       checkboxes on Sensors.
@@ -175,12 +181,30 @@
           "Hub Control Pane" width="114" height="28"></a>
         </li>
 
-        <li>The <a href=
-        "../../../package/jmri/jmrix/openlcb/swing/downloader/LoaderFrame.shtml">Firmware
-        Update</a> tool can load new firmware into compatible OpenLCB Nodes<br>
+        <li>The 
+        <a href="../../../package/jmri/jmrix/openlcb/swing/eventtable/EventTablePane.shtml">Event Table</a>
+        lets you see what nodes produce and consume particular events.  It also 
+        allows you to give names to events that will appear in the monitor.
+        </li>
+
+        <li>The 
+        <a href="../../../package/jmri/jmrix/openlcb/swing/downloader/LoaderFrame.shtml">Firmware Update</a>
+        tool can load new firmware into compatible OpenLCB Nodes<br>
           <a href="images/OpenLCBFWDownloader.png"><img src="images/OpenLCBFWDownloader.png" alt=
           "HW Downloader Pane" width="145" height="171"></a>
         </li>
+      
+        <li>The
+        <a href="../../../package/jmri/jmrix/openlcb/swing/memtool/MemoryToolPane.shtml">Memory Tool</a>
+        lets you read from and directly write to a nodes memory.  This can be 
+        useful for diagnostic purposes.
+        </li>
+        
+        <li>The=
+        <a href="../../../package/jmri/jmrix/openlcb/swing/idtool/IdToolPane.shtml">ID Tool</a>
+        helps you find a specific physical node on the layout by flashing its activity lights.
+        </li>
+        
       </ul>
 
       <h2 id="documentation">Documentation</h2>

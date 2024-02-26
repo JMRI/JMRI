@@ -143,6 +143,10 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
         localVariablePanel.add(_localVariable);
         panel.add(localVariablePanel);
 
+        JPanel infoPanel = new JPanel();
+        infoPanel.add(new JLabel(Bundle.getMessage("TableForEachSwing_Info")));
+        panel.add(infoPanel);
+
         if (action != null) {
             _tableRowOrColumnComboBox.setSelectedItem(action.getRowOrColumn());
 
@@ -168,6 +172,8 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
             _rowOrColumnNameComboBox.removeAllItems();
             NamedTable table = _selectNamedBeanSwing.getBean();
             if (table != null) {
+                _rowOrColumnNameComboBox.addItem(Bundle.getMessage("TableForEach_Header"));
+
                 if (_tableRowOrColumnComboBox.getItemAt(_tableRowOrColumnComboBox.getSelectedIndex()) == TableRowOrColumn.Column) {
                     for (int column=0; column <= table.numColumns(); column++) {
                         // If the header is null or empty, treat the row as a comment
@@ -185,7 +191,11 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
                         }
                     }
                 }
-                _rowOrColumnNameComboBox.setSelectedItem(rowOrColumnName);
+                if (rowOrColumnName == null || rowOrColumnName.isEmpty()) {    // Header row or column
+                    _rowOrColumnNameComboBox.setSelectedIndex(0);
+                } else {
+                    _rowOrColumnNameComboBox.setSelectedItem(rowOrColumnName);
+                }
             }
         }
     }
@@ -242,10 +252,10 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
             if (_tabbedRowOrColumnPane.getSelectedComponent() == _panelRowOrColumnName) {
                 action.setRowOrColumnAddressing(NamedBeanAddressing.Direct);
                 if (_selectNamedBeanSwing.getAddressing() == NamedBeanAddressing.Direct) {
-                    if (_rowOrColumnNameComboBox.getSelectedIndex() != -1) {
+                    if (_rowOrColumnNameComboBox.getSelectedIndex() > 0) {
                         action.setRowOrColumnName(_rowOrColumnNameComboBox.getItemAt(_rowOrColumnNameComboBox.getSelectedIndex()));
                     } else {
-                        action.setRowOrColumnName("");
+                        action.setRowOrColumnName("");  // Header row or column
                     }
                 } else {
                     action.setRowOrColumnName(_rowOrColumnNameTextField.getText());

@@ -34,7 +34,6 @@ public class MqttLight extends AbstractVariableLight implements MqttEventListene
     MqttContentParser<Light> parser = new MqttContentParser<Light>() {
         private static final String onText = "ON";
         private static final String offText = "OFF";
-        private final String intensityText = MqttLight.intensityText;
 
         int stateFromString(String payload) {
             if (payload.startsWith(intensityText)) return -1; // means don't change state
@@ -190,6 +189,12 @@ public class MqttLight extends AbstractVariableLight implements MqttEventListene
 
         // handle on/off
         parser.beanFromPayload(this, message, receivedTopic);
+    }
+
+    @Override
+    public void dispose() {
+        mqttAdapter.unsubscribe(rcvTopic,this);
+        super.dispose();
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MqttLight.class);

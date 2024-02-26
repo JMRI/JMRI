@@ -577,6 +577,18 @@ public final class JSON {
      */
     public static final String RETURN_WHEN_EMPTY = "returnWhenEmpty";
     /**
+     * {@value #RETURN_WHEN_LOADED}
+     *
+     * @since 5.4.0
+     */
+    public static final String RETURN_WHEN_LOADED = "returnWhenLoaded";
+    /**
+     * {@value #DIVISION}
+     *
+     * @since 5.4.0
+     */
+    public static final String DIVISION = "division";
+    /**
      * {@value #UTILITY}
      *
      * @since 1.1

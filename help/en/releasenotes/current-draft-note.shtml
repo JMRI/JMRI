@@ -126,7 +126,14 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Updated the OpenLCB_Java library ot version 0.7.35 with improvements:
+                    <ul>
+                        <li>Better display of frames with leading zeros on their aliases
+                        <li>Better handling of unexpected alias collisions.  These shouldn't
+                            actually happen if all goes well, but just in case it doesn't...
+                        <li>Adds support for the Verify Node Addressed message
+                    </ul>
+                </li>
             </ul>
 
         <h4>Powerline</h4>
@@ -256,7 +263,7 @@
 
         <h4>MD Electronics</h4>
              <ul>
-                <li>New decoder definitions DRIVE-S, DRIVE-XS</li>
+                <li></li>
              </ul>
 
         <h4>MGP</h4>
@@ -346,8 +353,7 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li>Small corrections and improvements to the IntelliDrive2 decoder definitions.
-                    New decoder definition Tillig 66036 Decoder</li>
+                <li></li>
             </ul>
 
         <h4>Umelec</h4>
@@ -425,21 +431,37 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-            <li>The LogixNG table now shows whenether the ConditionalNGs
-                of a LogixNG has <strong>Startup</strong> enabled or not.
-                The <strong>Startup</strong> checkbox in the LogixNG
-                table can have three states: Checked, unchecked and
-                partially checked. If the user checks/unchecks the
-                checkbox, all the ConditionalNGs will have the
-                <strong>Startup</strong> enabled/disabled.
-                <br>
-                The column <strong>Startup</strong> is at the far right
-                in the LogixNG table. You might need to resize the table
-                to see the new column.</li>
-                to see the new column.
-                <br>
-                Note: Due to a bug, this feature didn't work as it
-                should in JMRI 5.7.2 but it's now fixed.</li>
+          <li>Conversion to boolean has changed. Before JMRI 5.7.5,
+              conversion from a string to boolean returned
+              <strong>True</strong> if the string was not empty, and
+              <strong>False</strong> if the string was empty. With JMRI 5.7.5,
+              this has changed so that a string that's <strong>true</strong>
+              (case insensitive) returns a boolean <strong>True</strong>
+              and a string that's <strong>false</strong> (case insensitive)
+              returns a boolean <strong>False</strong>. All other string
+              values throw an exception. The earlier behaviour was not
+              documented so it's unlikely that this affects users.<br>
+              The old behaviour was based on how Jython converts a string
+              to boolean. If you want the old behaviour, you can use the
+              LogixNG formula function <strong>boolJython()</strong>.</li>
+          <li>Local variables and Global variables can now be initialized
+              to boolean values as well. True or false. Case insensitive.</li>
+          <li>The action <strong>Log local variables</strong> now has the
+              option <strong>Show class name</strong>.If it is selected,
+              the name of the class will be shown after the value. This
+              is useful for debugging, when you want to know the type of
+              the value.</li>
+          <li>The LogixNG function <strong>int()</strong> previously returned a Java
+              <strong>Integer</strong> instead of a Java <strong>Long</strong>.
+              This bug is now corrected. It shouldn't affect any existing
+              LogixNGs. The difference between <strong>Integer</strong> and
+              <strong>Long</strong> is that <strong>Long</strong> can handle
+              much bigger integer values than <strong>Integer</strong>.</li>
+          <li>The LogixNG action <strong>Enable/Disable LogixNG</strong>
+              has been added.</li>
+          <li>The LogixNG action <strong>Set reporter</strong> has been
+              added.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -451,7 +473,7 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>New feature allows users to quickly create a custom load for all car types.</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -609,13 +631,13 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>Use block values (restored from blockvalues.xml) to get
-            a feasible start block for automatic start.</li>
+            <li></li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Improve handling of block values that contain IdTags 
+                across shutdown and startup.</li>
         </ul>
 

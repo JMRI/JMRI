@@ -67,8 +67,6 @@ public class PrintCarRosterFrame extends OperationsFrame {
 
     JButton okayButton = new JButton(Bundle.getMessage("ButtonOK"));
 
-    static final String NEW_LINE = "\n"; // NOI18N
-
     public PrintCarRosterFrame(boolean isPreview, CarsTableFrame carsTableFrame) {
         super();
         _isPreview = isPreview;

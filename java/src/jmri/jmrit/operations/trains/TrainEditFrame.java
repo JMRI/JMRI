@@ -952,7 +952,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     }
 
     RouteEditFrame ref;
-    protected static final String NEW_LINE = "\n"; // NOI18N
 
     private void editAddRoute() {
         log.debug("Edit/add route");

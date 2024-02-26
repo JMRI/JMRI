@@ -49,6 +49,7 @@ public interface Conditional extends NamedBean {
     ResourceBundle rbxWarrant = ResourceBundle.getBundle("jmri.jmrit.logix.WarrantBundle");
 
     // states
+    @SuppressWarnings("hiding")     // Field has same name as a field in the super class
     enum State {
         UNKNOWN(NamedBean.UNKNOWN, "StateUnknown"),
         FALSE(Conditional.FALSE, "StateFalse"),
@@ -85,6 +86,7 @@ public interface Conditional extends NamedBean {
     public static final int FALSE = 0x02;
     public static final int TRUE = 0x04;
 
+    @SuppressWarnings("hiding")     // Field has same name as a field in the super class
     public enum AntecedentOperator {
         ALL_AND(Conditional.ALL_AND, Bundle.getMessage("LogicAND")),
         ALL_OR(Conditional.ALL_OR, Bundle.getMessage("LogicOR")),

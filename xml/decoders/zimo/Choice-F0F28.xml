@@ -12,7 +12,9 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!-- version 1 - for Unified Software V32+, Mark Waters 26 Jan 2015 -->
-<enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<!-- version 1.1  Extended for "inverted" function labels, by adding 128 to invert the chosen function.   Used in Swiss Mapping  --> 
+<!-- version 1.1     Nigel Cliffe, 21 Jan 2024  --> 
+<enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
       <enumChoice choice="None">
         <choice>None</choice>
         <choice xml:lang="it">Nessuna</choice>
@@ -106,4 +108,96 @@
       <enumChoice choice="F28">
         <choice>F28</choice>
       </enumChoice>
+      
+      
+      <!--  Inverted Function Keys  add 128 to standard value  -->
+      
+      <enumChoice choice="Invert F0" value="157">
+        <choice>Invert F0</choice>
+      </enumChoice>
+      <enumChoice choice="Invert F1" value="129">
+        <choice>Invert F1</choice>
+      </enumChoice>
+      <enumChoice choice="Invert F2">
+        <choice>Invert F2</choice>
+      </enumChoice>
+      <enumChoice choice="Invert F3">
+        <choice>Invert F3</choice>
+      </enumChoice>
+      <enumChoice choice="Invert F4">
+        <choice>Invert F4</choice>
+      </enumChoice>
+      <enumChoice choice="Invert F5">
+        <choice>Invert F5</choice>
+      </enumChoice>
+      <enumChoice choice="Invert F6">
+        <choice>Invert F6</choice>
+      </enumChoice>
+      <enumChoice choice="Invert F7">
+        <choice>Invert F7</choice>
+      </enumChoice>
+      <enumChoice choice="Invert F8">
+        <choice>Invert F8</choice>
+      </enumChoice>
+      <enumChoice choice="Invert F9">
+        <choice>Invert F9</choice>
+      </enumChoice>
+      <enumChoice choice="Invert F10">
+        <choice>Invert F10</choice>
+      </enumChoice>
+      <enumChoice choice="Invert F11">
+        <choice>Invert F11</choice>
+      </enumChoice>
+      <enumChoice choice="Invert F12">
+        <choice>Invert F12</choice>
+      </enumChoice>
+      <enumChoice choice="Invert F13">
+        <choice>Invert F13</choice>
+      </enumChoice>
+      <enumChoice choice="Invert F14">
+        <choice>Invert F14</choice>
+      </enumChoice>
+      <enumChoice choice="Invert F15">
+        <choice>Invert F15</choice>
+      </enumChoice>
+      <enumChoice choice="Invert F16">
+        <choice>Invert F16</choice>
+      </enumChoice>
+      <enumChoice choice="Invert F17">
+        <choice>Invert F17</choice>
+      </enumChoice>
+      <enumChoice choice="Invert F18">
+        <choice>Invert F18</choice>
+      </enumChoice>
+      <enumChoice choice="Invert F19">
+        <choice>Invert F19</choice>
+      </enumChoice>
+      <enumChoice choice="Invert F20">
+        <choice>Invert F20</choice>
+      </enumChoice>
+      <enumChoice choice="Invert F21">
+        <choice>Invert F21</choice>
+      </enumChoice>
+      <enumChoice choice="Invert F22">
+        <choice>Invert F22</choice>
+      </enumChoice>
+      <enumChoice choice="Invert F23">
+        <choice>Invert F23</choice>
+      </enumChoice>
+      <enumChoice choice="Invert F24">
+        <choice>Invert F24</choice>
+      </enumChoice>
+      <enumChoice choice="Invert F25">
+        <choice>Invert F25</choice>
+      </enumChoice>
+      <enumChoice choice="Invert F26">
+        <choice>Invert F26</choice>
+      </enumChoice>
+      <enumChoice choice="Invert F27">
+        <choice>Invert F27</choice>
+      </enumChoice>
+      <enumChoice choice="Invert F28">
+        <choice>Invert F28</choice>
+      </enumChoice>
+      
 </enumChoiceGroup>

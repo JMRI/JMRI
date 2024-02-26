@@ -598,6 +598,9 @@
          who improved the sound support, has provided multiple sound projects,
          and helped with Intellibox development.</li>
 
+        <li>Vincent Kispersky, <!-- vints1 -->
+         who provided an MDE decoder definition.</li>
+
         <li>Scott Kitts, who helped debug the new communications library for Mac OS X</li>
 
         <li>Arco Klippstein, <!-- arthkl -->
@@ -819,7 +822,8 @@
         <li>P&aring;l <!--paoSoft -->
         who worked on the LocoNet refresh algorithm</li>
 
-        <li>Gopal Patnaik helped with Intellibox development and improvements to startup scripts.</li>
+        <li>Gopal Patnaik <!-- patnaik-g -->
+        who helped with Intellibox development and improvements to startup scripts.</li>
 
         <li>Howard G. Penny provided info on the NCE D14SR decoder, then went on to become an
         active developer, including providing the code for indexed CVs (ala QSI), better support of

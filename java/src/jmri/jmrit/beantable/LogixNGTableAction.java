@@ -20,6 +20,7 @@ import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
 import jmri.jmrit.logixng.tools.swing.LogixNGEditor;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.TriStateJCheckBox;
+import jmri.util.swing.XTableColumnModel;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
@@ -309,14 +310,15 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
             table.setDefaultRenderer(TriStateJCheckBox.State.class, new EnablingTriStateCheckboxRenderer());
 
             TriStateJCheckBox startupCheckBox = new TriStateJCheckBox();
-            TableColumn col = table.getColumnModel().getColumn(TableModel.STARTUP_COL);
+            TableColumn col = ((XTableColumnModel)table.getColumnModel())
+                    .getColumnByModelIndex(TableModel.STARTUP_COL);
             col.setCellEditor(new CellEditor(startupCheckBox));
         }
 
         /** {@inheritDoc} */
         @Override
         public int getColumnCount() {
-            return super.getColumnCount() + 1;
+            return STARTUP_COL + 1;
         }
 
         @Override

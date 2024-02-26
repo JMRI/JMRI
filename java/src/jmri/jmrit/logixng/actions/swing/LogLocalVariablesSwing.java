@@ -21,6 +21,7 @@ public class LogLocalVariablesSwing extends AbstractDigitalActionSwing {
 
     private JCheckBox _includeGlobalVariables;
     private JCheckBox _expandArraysAndMaps;
+    private JCheckBox _showClassName;
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
@@ -35,12 +36,17 @@ public class LogLocalVariablesSwing extends AbstractDigitalActionSwing {
         _expandArraysAndMaps = new JCheckBox(Bundle.getMessage("LogLocalVariablesSwing_ExpandArraysAndMaps"));
         panel.add(_expandArraysAndMaps);
 
+        _showClassName = new JCheckBox(Bundle.getMessage("LogLocalVariablesSwing_ShowClassName"));
+        panel.add(_showClassName);
+
         if (action != null) {
             _includeGlobalVariables.setSelected(action.isIncludeGlobalVariables());
             _expandArraysAndMaps.setSelected(action.isExpandArraysAndMaps());
+            _showClassName.setSelected(action.isShowClassName());
         } else {
             _includeGlobalVariables.setSelected(true);
             _expandArraysAndMaps.setSelected(false);
+            _showClassName.setSelected(false);
         }
     }
 
@@ -54,6 +60,7 @@ public class LogLocalVariablesSwing extends AbstractDigitalActionSwing {
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
         LogLocalVariables action = new LogLocalVariables(systemName, userName);
+        updateObject(action);
         return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
     }
 
@@ -68,6 +75,7 @@ public class LogLocalVariablesSwing extends AbstractDigitalActionSwing {
 
         action.setIncludeGlobalVariables(_includeGlobalVariables.isSelected());
         action.setExpandArraysAndMaps(_expandArraysAndMaps.isSelected());
+        action.setShowClassName(_showClassName.isSelected());
     }
 
     /** {@inheritDoc} */

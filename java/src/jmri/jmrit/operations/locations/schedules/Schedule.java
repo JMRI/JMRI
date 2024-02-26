@@ -9,10 +9,7 @@ import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.*;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarLoads;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
@@ -418,13 +415,13 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
                     car.getLoadName());
         }
         // has the car already been assigned a schedule item? Then verify that
-        // its still
-        // okay
+        // its still okay
         if (!car.getScheduleItemId().equals(Track.NONE)) {
             ScheduleItem si = getItemById(car.getScheduleItemId());
             if (si != null) {
                 String status = checkScheduleItem(si, car, track);
                 if (status.equals(Track.OKAY)) {
+                    track.setScheduleItemId(si.getId());
                     return Track.OKAY;
                 }
                 log.debug("Car ({}) with schedule id ({}) failed check, status: {}", car.toString(),
@@ -536,15 +533,8 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
         if (car.getFinalDestinationTrack() != track &&
                 !si.getRandom().equals(ScheduleItem.NONE) &&
                 !car.getScheduleItemId().equals(si.getId())) {
-            try {
-                int value = Integer.parseInt(si.getRandom());
-                double random = 100 * Math.random();
-                log.debug("Selected random {}, created random {}", si.getRandom(), random);
-                if (random > value) {
-                    return Bundle.getMessage("scheduleRandom", Track.SCHEDULE, getName(), si.getId(), value, random);
-                }
-            } catch (NumberFormatException e) {
-                log.error("Random value {} isn't a number", si.getRandom());
+            if (!si.doRandom()) {
+                return Bundle.getMessage("scheduleRandom", Track.SCHEDULE, getName(), si.getId(), si.getRandom(), si.getCalculatedRandom());
             }
         }
         return Track.OKAY;

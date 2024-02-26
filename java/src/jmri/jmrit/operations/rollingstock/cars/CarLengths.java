@@ -19,8 +19,8 @@ public class CarLengths extends RollingStockAttribute implements InstanceManager
     private static final String LENGTHS = Bundle.getMessage("carLengths");
     public static final String CARLENGTHS_CHANGED_PROPERTY = "CarLengths"; // NOI18N
     public static final String CARLENGTHS_NAME_CHANGED_PROPERTY = "CarLengthsName"; // NOI18N
-    
-    protected static final int MIN_NAME_LENGTH = Control.max_len_string_length_name;
+
+    protected static final int CAR_MIN_NAME_LENGTH = Control.max_len_string_length_name;
 
     public CarLengths() {
     }
@@ -54,15 +54,15 @@ public class CarLengths extends RollingStockAttribute implements InstanceManager
         // need to keep old name so location manager can replace properly
         super.deleteName(oldName);
     }
-    
+
     @Override
     public void sort() {
         list.sort(Comparator.comparingInt(Integer::parseInt));
     }
-    
+
     @Override
     protected int getMinNameLength() {
-        return MIN_NAME_LENGTH;
+        return CAR_MIN_NAME_LENGTH;
     }
 
     /**

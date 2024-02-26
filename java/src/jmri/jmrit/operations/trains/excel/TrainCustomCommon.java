@@ -118,7 +118,7 @@ public abstract class TrainCustomCommon {
     public synchronized boolean process() {
 
         // check to see it the Excel program is available
-        if (!excelFileExists()) {
+        if (!excelFileExists() || getFileName().isBlank()) {
             return false;
         }
 

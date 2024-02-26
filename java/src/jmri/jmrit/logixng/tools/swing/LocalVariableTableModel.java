@@ -101,7 +101,11 @@ public class LocalVariableTableModel extends AbstractTableModel {
                 variable._name = (String) value;
                 break;
             case COLUMN_TYPE:
-                variable._initialValueType = (InitialValueType) value;
+                if (value != null) {
+                    variable._initialValueType = (InitialValueType) value;
+                } else {
+                    variable._initialValueType = InitialValueType.None;
+                }
                 break;
             case COLUMN_DATA:
                 variable._initialValueData = (String) value;

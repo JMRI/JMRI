@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <version author="td@teamdigital1.com" version="1.0" lastUpdated="20100422"/>
   <version author="Michael Mosher" version="1.2" lastUpdated="20200109"/>
   <!-- Version 1 initial release -->
@@ -109,24 +109,15 @@
         <label>Mode</label>
       </variable>
       <variable item="Option 1" CV="29" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Option 1</label>
       </variable>
       <variable item="Option 2" CV="29" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Option 2</label>
       </variable>
       <variable item="Option 3" CV="29" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Option 3</label>
       </variable>
       <variable CV="31" mask="XVVVVVVV" item="Short Address" default="1" tooltip="Range 1-99">
@@ -206,10 +197,7 @@
         <label>Servo Behavior</label>
       </variable>
       <variable item="Rev1" CV="71" mask="VXXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="no"/>
-          <enumChoice choice="yes"/>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reverse</label>
       </variable>
       <variable item="Relay" CV="75" mask="XXXXXXVV" default="00">

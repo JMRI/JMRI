@@ -137,8 +137,7 @@ which checks the dates of the control files to make sure they've been updated wh
 - from https://mvnrepository.com/artifact/org.slf4j/jul-to-slf4j/2.0.7
 
 ##### openlcb.jar
- - 0.7.33 from https://repo.maven.apache.org/maven2/org/openlcb/openlcb/0.7.33/openlcb-0.7.33.jar
-    plus PR 242 from https://github.com/openlcb/OpenLCB_Java/
+ - 0.7.35 from https://repo.maven.apache.org/maven2/org/openlcb/openlcb/0.7.35/openlcb-0.7.35.jar
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
@@ -204,16 +203,15 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - unlike jython-2.7.2.jar, includes embedded standard python libs
 - unlike jython-slim-2.7.2.jar, includes embedded Java dependencies
 
-##### jinput (including jinput.jar, three jinput DLLs, and two libjinputs)
-- from <https://jinput.dev.java.net/> jinput_dist_20090401
-- (most recent as of 2010-Jan-02)
-- libjinput-osx.jnilib is a custom version lipo'd from the x86 version above and a custom arm64 build from https://shadowfacts.net/2022/lwjgl-arm64/ and https://github.com/shadowfacts/jinput-arm64
+##### jinput (including jinput-2.0.9.jar and unpacked jinput-2.0.9-natives-all.jar)
+- 2.0.9 from maven central
 
 ##### JavaMail 1.4.1 (used to validate email address formats)
 - mailapi.jar
 
-##### Joal 2.4.0-rc-20210111
-- -javadoc at https://jogamp.org/deployment/archive/rc/v2.5.0-rc-20230507/jar/
+##### Joal 2.4.0-rc-20230507 (Windows x86 and Linux i386 from v2.4.0-rc-20210111)
+- from https://jogamp.org/deployment/archive/rc/v2.5.0-rc-20230507/jar/ (no longer accessible)
+- -javadoc at https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/
 - cross-platform .jar files
     joal.jar
     gluegen-rt.jar
@@ -226,55 +224,61 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
     extracted from gluegen-rt-natives-macosx-universal.jar
       libgluegen_rt.dylib
 
-Windows and Linux libraries from <https://jogamp.org/deployment/archive/rc/v2.4.0-rc-20210111/jar/>
-
-- for Windows x86
-    extracted from joal-natives-windows-i586.jar
-      joal.dll
-      soft_oal.dll
-    extracted from glugen-rt-natives-windows-i586.jar
-      gluegen_rt.dll
-
-- for Windows x64
+- Windows and Linux libraries from v2.5.0-rc-20230507 <https://jogamp.org/deployment/archive/master/gluegen_954-joal_672-jogl_1522-jocl_1160/jar/>
+  for Windows x64
     extracted from joal-natives-windows-amd64.jar
       joal.dll
-      soft_oal.dll
+      OpenAL32.dll
     extracted from glugen-rt-natives-windows-amd64.jar
       gluegen_rt.dll
 
-- for Linux i386
-    extracted from joal-natives-linux-i586.jar
-      libjoal.so
-      libopenal.so
-    extracted from glugen-rt-natives-linux-i586.jar
-      libgluegen_rt.so
+  for Windows x86
+    not provided, see v2.4.0-rc-20210111 below
 
-- for Linux x86_64
+  for Linux x86_64
     extracted from joal-natives-linux-amd64.jar
       libjoal.so
       libopenal.so
     extracted from glugen-rt-natives-linux-amd64.jar
       libgluegen_rt.so
 
-- for Linux armv6l
+  for Linux armv6l
     extracted from joal-natives-linux-armv6hf.jar
       libjoal.so
       libopenal.so
     extracted from glugen-rt-natives-linux-armv6hf.jar
       libgluegen_rt.so
 
-- for Linux armv7l
+  for Linux armv7l
     extracted from joal-natives-linux-armv6hf.jar
       libjoal.so
       libopenal.so
     extracted from glugen-rt-natives-linux-armv6hf.jar
       libgluegen_rt.so
 
-- for Linux aarch64
+  for Linux aarch64
     extracted from joal-natives-linux-aarch64.jar
       libjoal.so
       libopenal.so
     extracted from glugen-rt-natives-linux-aarch64.jar
+      libgluegen_rt.so
+
+  for Linux i386
+    not provided, see v2.4.0-rc-20210111 below
+
+- Windows and Linux libraries from v2.4.0-rc-20210111 <https://jogamp.org/deployment/archive/rc/v2.4.0-rc-20210111/jar/> (no longer accessible)
+  for Windows x86
+    extracted from joal-natives-windows-i586.jar
+      joal.dll
+      soft_oal.dll
+    extracted from glugen-rt-natives-windows-i586.jar
+      gluegen_rt.dll
+
+  for Linux i386
+    extracted from joal-natives-linux-i586.jar
+      libjoal.so
+      libopenal.so
+    extracted from glugen-rt-natives-linux-i586.jar
       libgluegen_rt.so
 
 ##### jmdns.jar
@@ -369,9 +373,6 @@ Windows and Linux libraries from <https://jogamp.org/deployment/archive/rc/v2.4.
 ##### javax.servlet-api-3.1.0.jar
 - version 3.1.0
 - Related to Jetty Web Server
-
-##### jhidrawplugin.jar
-- see jinput.jar
 
 ##### jsoup-1.15.3.jar
 - version 1.15.3
@@ -505,8 +506,8 @@ Windows and Linux libraries from <https://jogamp.org/deployment/archive/rc/v2.4.
 - Used for testing only, not at runtime
 
 
-##### org.jacoco.ant-0.8.5-nodeps.jar
-- version 0.8.5
+##### org.jacoco.ant-0.8.11-nodeps.jar
+- version 0.8.11
 
 ## Older, no longer present:
 

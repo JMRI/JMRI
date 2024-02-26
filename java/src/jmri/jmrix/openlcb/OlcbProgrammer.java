@@ -15,7 +15,7 @@ import org.openlcb.MessageDecoder;
 import org.openlcb.NodeID;
 import org.openlcb.OlcbInterface;
 import org.openlcb.ProducerIdentifiedMessage;
-import org.openlcb.VerifyNodeIDNumberMessage;
+import org.openlcb.VerifyNodeIDNumberGlobalMessage;
 import org.openlcb.implementations.MemoryConfigurationService;
 
 /**
@@ -114,7 +114,7 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
                 public void connectionActive(Connection connection) {
                     // Sends an addressed verify node ID message to ensure that the remote node exists and we have an alias.
                     getInterface().getOutputConnection().put(
-                            new VerifyNodeIDNumberMessage(getInterface().getNodeId(),nid), null);
+                            new VerifyNodeIDNumberGlobalMessage(getInterface().getNodeId(),nid), null);
                 }
             });
         } else {

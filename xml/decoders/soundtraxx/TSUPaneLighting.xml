@@ -15,7 +15,7 @@
 <!-- change 2014-05-18 (Alain LM)
        removed <label/> preventing display of the expected variable label   -->
 <!-- version 2 - Additional items for SoundTraxx Tsunami2                   -->
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <column>
     <row>
       <label>
