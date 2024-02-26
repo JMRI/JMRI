@@ -167,7 +167,7 @@ public class JsonUtil {
             data.set(JSON.RETURN_WHEN_LOADED, null);
         }
         data.put(JSON.DIVISION, car.getDivisionName());
-        data.put(JSON.STATUS, car.getStatus());
+        data.put(JSON.STATUS, car.getStatus().replace("<", "&lt;").replace(">", "&gt;"));
         return data;
     }
 
