@@ -459,6 +459,29 @@
               much bigger integer values than <strong>Integer</strong>.</li>
           <li>The LogixNG action <strong>Enable/Disable LogixNG</strong>
               has been added.</li>
+          <li>LogixNG formulas now supports Java arrays as well, for example
+              if you use the Java method <strong>split()</strong> to split
+              a string. Example:
+              <br>
+              <pre>
+LogixNG: IQ:AUTO:0001
+    ConditionalNG: IQC:AUTO:0001
+        ! A
+            Many
+               ::: Local variable "a_b", init to String "Hello_World"
+               ::: Local variable "a", init to None ""
+               ::: Local variable "b", init to None ""
+               ::: Local variable "a_b_array", init to None ""
+                ! A1
+                    Digital Formula: a_b_array = a_b.split("\_")
+                ! A2
+                    Digital Formula: a = a_b_array[0]
+                ! A3
+                    Digital Formula: b = a_b_array[1]
+                ! A4
+                    Log local variables
+              </pre>
+              </li>
           <li>The LogixNG action <strong>Set reporter</strong> has been
               added.</li>
           <li></li>
