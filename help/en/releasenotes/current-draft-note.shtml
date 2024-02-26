@@ -134,6 +134,7 @@
                         <li>Adds support for the Verify Node Addressed message
                     </ul>
                 </li>
+                <li>Additions for better conformance with OpenLCB standards</li>
             </ul>
 
         <h4>Powerline</h4>
