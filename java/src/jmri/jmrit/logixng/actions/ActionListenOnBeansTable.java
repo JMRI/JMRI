@@ -204,8 +204,6 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
         String event;
         String newValue;
 
-        boolean isQueueEmpty;
-
         synchronized(this) {
             PropertyChangeEvent evt = _eventQueue.poll();
             if (evt != null) {
@@ -230,11 +228,9 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
                 symbolTable.setValue(_localVariableNewValue, newValue);
             }
 
-            isQueueEmpty = _eventQueue.isEmpty();
-        }
-
-        if (!isQueueEmpty) {
-            getConditionalNG().execute();
+            if (!_eventQueue.isEmpty()) {
+                getConditionalNG().execute();
+            }
         }
     }
 

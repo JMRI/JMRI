@@ -351,8 +351,6 @@ public class ActionListenOnBeansLocalVariable extends AbstractDigitalAction
         public void execute() throws JmriException {
             if (_executeSocket != null) {
 
-                boolean isQueueEmpty;
-
                 synchronized(this) {
                     SymbolTable oldSymbolTable = _conditionalNG.getSymbolTable();
                     _conditionalNG.setSymbolTable(_newSymbolTable);
@@ -385,11 +383,9 @@ public class ActionListenOnBeansLocalVariable extends AbstractDigitalAction
                     _executeSocket.execute();
                     _conditionalNG.setSymbolTable(oldSymbolTable);
 
-                    isQueueEmpty = _eventQueue.isEmpty();
-                }
-
-                if (!isQueueEmpty) {
-                    getConditionalNG().execute(_internalSocket);
+                    if (!_eventQueue.isEmpty()) {
+                        getConditionalNG().execute(_internalSocket);
+                    }
                 }
             }
         }

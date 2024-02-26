@@ -169,8 +169,6 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         // changes of the registered beans and execute the ConditionalNG
         // when it happens.
 
-        boolean isQueueEmpty;
-
         synchronized(this) {
             String namedBean;
             String event;
@@ -199,11 +197,9 @@ public class ActionListenOnBeans extends AbstractDigitalAction
                 symbolTable.setValue(_localVariableNewValue, newValue);
             }
 
-            isQueueEmpty = _eventQueue.isEmpty();
-        }
-
-        if (!isQueueEmpty) {
-            getConditionalNG().execute();
+            if (!_eventQueue.isEmpty()) {
+                getConditionalNG().execute();
+            }
         }
     }
 
