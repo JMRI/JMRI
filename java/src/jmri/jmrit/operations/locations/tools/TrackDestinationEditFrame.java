@@ -17,7 +17,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
- * Frame for user edit of track roads
+ * Frame for user edit of track destinations
  *
  * @author Dan Boudreau Copyright (C) 2013
  * 
@@ -151,11 +151,6 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 
         locationManager.addPropertyChangeListener(this);
 
-        // build menu
-        // JMenuBar menuBar = new JMenuBar();
-        // _toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
-        // menuBar.add(_toolMenu);
-        // setJMenuBar(menuBar);
         initMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight500));
     }
 
@@ -244,22 +239,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
         }
     }
 
-    //    JmriJFrame statusFrame;
-    //    JLabel text;
-
     private void checkDestinationsValid() {
-        // create a status frame
-        //      statusFrame = new JmriJFrame(Bundle.getMessage("TitleEditTrackDestinations"));
-        //      JPanel ps = new JPanel();
-        //      ps.setLayout(new BoxLayout(ps, BoxLayout.Y_AXIS));
-        //      text = new JLabel("Start with this");
-        //      ps.add(text);
-        //    
-        //      statusFrame.getContentPane().add(ps);
-        //      statusFrame.pack();
-        //      statusFrame.setSize(Control.panelWidth700, 100);
-        //      statusFrame.setVisible(true);
-
         SwingUtilities.invokeLater(() -> {
             if (checkLocationsLoop())
                 JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("OkayMessage"));
@@ -272,9 +252,6 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
         for (Location destination : locationManager.getLocationsByNameList()) {
             if (_track.isDestinationAccepted(destination)) {
                 log.debug("Track ({}) accepts destination ({})", _track.getName(), destination.getName());
-                //                text.setText("Destination : " + destination.getName());
-                //                statusFrame.revalidate();
-                //                statusFrame.repaint();
                 if (_track.getLocation() == destination) {
                     continue;
                 }

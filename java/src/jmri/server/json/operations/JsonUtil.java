@@ -328,7 +328,6 @@ public class JsonUtil {
         node.put(JsonOperations.LOCATION_UNKNOWN, rs.isLocationUnknown());
         if (rs.getTrack() != null) {
             node.set(JsonOperations.LOCATION, this.getRSLocationAndTrack(rs.getTrack(), rs.getRouteLocation(), locale));
-//            node.put(JsonOperations.LOCATION, rs.getLocationName() + ", " + rs.getTrackName());
         } else if (rs.getLocation() != null) {
             node.set(JsonOperations.LOCATION, this.getRSLocation(rs.getLocation(), rs.getRouteLocation(), locale));
         } else {
