@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.util.parser;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 import jmri.JmriException;
@@ -31,11 +32,13 @@ public class ExpressionNodeArray implements ExpressionNodeWithParameter {
             return ((com.fasterxml.jackson.databind.node.ArrayNode)parameter).get(index);
         }
 
-//        if (!(parameter instanceof List)) return parameter.getClass().getName();
-
-        if (!(parameter instanceof List)) throw new IllegalArgumentException("Parameter is not a List");
-
-        return ((List<Object>)parameter).get(index);
+        if (parameter.getClass().isArray()) {
+            return Array.get(parameter, index);
+        } else if (parameter instanceof List) {
+            return ((List<Object>)parameter).get(index);
+        } else {
+            throw new IllegalArgumentException("Parameter is not a List nor an array");
+        }
     }
 
     /** {@inheritDoc} */
@@ -55,12 +58,17 @@ public class ExpressionNodeArray implements ExpressionNodeWithParameter {
     @SuppressWarnings("unchecked")
     @Override
     public void assignValue(Object parameter, SymbolTable symbolTable, Object value) throws JmriException {
-        if (parameter == null) throw new NullPointerException("Parameter is null");
-        if (!(parameter instanceof List)) throw new IllegalArgumentException("Parameter is not a List");
-
         int index = (int) TypeConversionUtil.convertToLong(_exprNode.calculate(symbolTable));
 
-        ((List<Object>)parameter).set(index, value);
+        if (parameter == null) throw new NullPointerException("Parameter is null");
+
+        if (parameter.getClass().isArray()) {
+            Array.set(parameter, index, value);
+        } else if (parameter instanceof List) {
+            ((List<Object>)parameter).set(index, value);
+        } else {
+            throw new IllegalArgumentException("Parameter is not a List nor an array");
+        }
     }
 
     /** {@inheritDoc} */

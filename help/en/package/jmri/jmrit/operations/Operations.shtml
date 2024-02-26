@@ -6231,7 +6231,7 @@ The "Reset move count all cars" will zero out all of the cars move counts. In no
         
         <p>When using a Java program like <a href="https://mrslamf.com/">Model
         Railroad Switch List and Manifest Formatter</a> to create a custom switch list, you must delete 
-        the excel switch list file name and then press "Save".</p>
+        the Excel switch list file name and then press "Save".</p>
 
       <h3 id="TrainMove">Moving Trains</h3>
       

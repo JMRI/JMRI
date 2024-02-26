@@ -191,15 +191,6 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     /**
-     * No mechanism currently exists to request status updates from all layout
-     * sensors.
-     */
-    @Override
-    public void updateAll() {
-        // no current mechanisim to request status updates from all layout sensors
-    }
-
-    /**
      * Validates to OpenLCB format.
      * {@inheritDoc}
      */

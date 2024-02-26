@@ -548,6 +548,26 @@
       or all connections.  The action depends on whether the connection supports sensor state
       requests.</p>
 
+      <p>As of JMRI 5.7.5, supported connection types include :</p>
+      <ul>
+      <li>BiDiB</li>
+      <li>CBUS</li>
+      <li>C/MRI</li>
+      <li>IPOCS</li>
+      <li>Lenz XpressNet</li>
+      <li>LocoNet<li>
+      <li>OpenLCB</li>
+      <li>Roco Z21 CAN</li>
+      <li>XBee</li>
+      </ul>
+
+      <p>For connections that send individual Sensor status requests,
+      the delay between individual requests uses the connection Output Interval
+      within Additional Connection Settings.</p>
+
+      <p>Some hardware types, eg. Acela and NCE,
+      are constantly polled so this action may have little consequence.</p>
+
       <div style="margin-left: 2em;">
         <a href="images/chapter5/request_sensor_update.png">
         <img src="images/chapter5/request_sensor_update.png" alt="Chapter 5 request sensor update"></a>
@@ -559,6 +579,18 @@
 
       <p>Request the current status of a specific sensor.  The action depends on whether the
       connection supports sensor state requests.</p>
+
+      <p>As of JMRI 5.7.5, supported connection types include :</p>
+      <ul>
+      <li>BiDiB</li>
+      <li>CBUS</li>
+      <li>C/MRI</li>
+      <li>IPOCS</li>
+      <li>Lenz XpressNet</li>
+      <li>OpenLCB</li>
+      <li>Roco Z21 CAN</li>
+      <li>XBee</li>
+      </ul>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter5/request_sensor_state.png">

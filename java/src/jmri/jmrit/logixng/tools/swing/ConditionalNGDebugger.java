@@ -182,14 +182,10 @@ public final class ConditionalNGDebugger extends JmriJFrame implements PropertyC
         actionExpressionInfoScrollPane.setPreferredSize(new Dimension(400, 200));
 
 
-        JPanel symbolPanel = new JPanel();
-        JScrollPane variableScrollPane = new JScrollPane(symbolPanel);
         JTable table = new JTable();
         _symbolTableModel = new DebuggerSymbolTableModel();
         table.setModel(_symbolTableModel);
-        JScrollPane scrollpane = new JScrollPane(table);
-        scrollpane.setPreferredSize(new Dimension(400, 200));
-        symbolPanel.add(scrollpane, BorderLayout.CENTER);
+        JScrollPane variableScrollPane = new JScrollPane(table);
 
 
         JSplitPane variableSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
