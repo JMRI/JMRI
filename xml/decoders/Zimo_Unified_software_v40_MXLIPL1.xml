@@ -162,10 +162,12 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV1-CV99.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV37-CV46.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV33-CV46_Lightboards_v40.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV100-CV152version30.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV153-CV157version28.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV250-CV253.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CVSwissMapping_v40.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV508-CV512.xml"/>
       <variable CV="64" default="0" item="Secondary Short Address">
         <shortAddressVal/>
         <label>Secondary Short Address</label>
@@ -194,7 +196,8 @@
         <comment>Long address (Range 0001-10239)</comment>
         <comment xml:lang="de">Lange Zweitadresse (Bereich 0001-10239)</comment>
       </variable>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV69-CV83_alternative.xml"/>
+      <!--The following causes issues with the function mapping table for light boards, and is deactivated for now/>-->
+      <!--<xi:include href="http://jmri.org/xml/decoders/zimo/CV69-CV83_alternative.xml"/>-->
       <variable CV="109" mask="XXXXVVVV" item="Function F0F option 3">
        <enumVal>
         <enumChoice choice="None">
@@ -280,7 +283,7 @@
        <label xml:lang="de">Lrück + Zusatz 2 aus</label>
       </variable>
     </variables>
-    <xi:include href="http://jmri.org/xml/decoders/zimo/factReset-v32.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/zimo/factResetLightboards_v40.xml"/>
   </decoder>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAccelDecel.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSecondAddress.xml"/>
@@ -291,4 +294,5 @@
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneABC.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneDecoderlock.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneLoadCode.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSwissMapping_v40.xml"/>
 </decoder-config>

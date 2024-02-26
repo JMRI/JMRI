@@ -17,8 +17,9 @@
 <!-- version 1.3 - Ronald Kuhn, disable groups 14 to 17 for non Sounddecoder, 25 April 2019-->
 <!-- version 1.4 - Nigel Cliffe. Added masks to group members (A1 Fwd, A2 Fwd, A1 Rev, A2 Rev) and dimming group selection. Added dimming levels,  14 Feb 2021 -->
 <!-- version 1.5 - Ronald Kuhn, add german translation, 29 November 2021-->
+<!-- version 1.6 - Pierre Billon, updated for light boards (Fns Decoders), excluding Gps 11-17 for some light boards. Added mask on bit 6 of each 1st group CV (Value 64 reserved for 2nd address for function decoders), 26 Feb 2024 -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <variable item="Swiss Mapping Group 1 F-key" CV="430">
+  <variable item="Swiss Mapping Group 1 F-key" CV="430" mask="VXVVVVVV">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
@@ -26,6 +27,12 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 1 Tasto F</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 1 tlačítko F</label>
     <label xml:lang="nl">Zwitserse Mapping Groep 1 F-toets</label>
+  </variable>
+  <variable item="Swiss Mapping Group 1 SecondAddress" CV="430" mask="XVXXXXXX" include="179,184">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>2nd Address</label>
+    <label xml:lang="de">2. Adresse</label>
+    <tooltip>The current group definition should apply only to the 2nd address of the function decoder</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 1 M-key v33" CV="431">
         <qualifier>
@@ -184,7 +191,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 2 F-key" CV="436">
+  <variable item="Swiss Mapping Group 2 F-key" CV="436" mask="VXVVVVVV">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
@@ -192,6 +199,12 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 2 Tasto F</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 2 tlačítko F</label>
     <label xml:lang="nl">Zwitserse Mapping Groep 2 F-toets</label>
+  </variable>
+  <variable item="Swiss Mapping Group 2 SecondAddress" CV="436" mask="XVXXXXXX" include="179,184">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>2nd Address</label>
+    <label xml:lang="de">2. Adresse</label>
+    <tooltip>The current group definition should apply only to the 2nd address of the function decoder</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 2 M-key v33" CV="437">
         <qualifier>
@@ -343,7 +356,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 3 F-key" CV="442">
+  <variable item="Swiss Mapping Group 3 F-key" CV="442" mask="VXVVVVVV">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
@@ -351,6 +364,12 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 3 Tasto F</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 3 tlačítko F</label>
     <label xml:lang="nl">Zwitserse Mapping Groep 3 F-toets</label>
+  </variable>
+  <variable item="Swiss Mapping Group 3 SecondAddress" CV="442" mask="XVXXXXXX" include="179,184">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>2nd Address</label>
+    <label xml:lang="de">2. Adresse</label>
+    <tooltip>The current group definition should apply only to the 2nd address of the function decoder</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 3 M-key v33" CV="443">
         <qualifier>
@@ -500,7 +519,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 4 F-key" CV="448">
+  <variable item="Swiss Mapping Group 4 F-key" CV="448" mask="VXVVVVVV">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
@@ -508,6 +527,12 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 4 Tasto F</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 4 tlačítko F</label>
     <label xml:lang="nl">Zwitserse Mapping Groep 4 F-toets</label>
+  </variable>
+  <variable item="Swiss Mapping Group 4 SecondAddress" CV="448" mask="XVXXXXXX" include="179,184">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>2nd Address</label>
+    <label xml:lang="de">2. Adresse</label>
+    <tooltip>The current group definition should apply only to the 2nd address of the function decoder</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 4 M-key v33" CV="449">
         <qualifier>
@@ -655,7 +680,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 5 F-key" CV="454">
+  <variable item="Swiss Mapping Group 5 F-key" CV="454" mask="VXVVVVVV">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
@@ -663,6 +688,12 @@
      <label xml:lang="it">Mappatura Svizzera Gruppo 5 tasto F</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 5 tlačítko F</label>
     <label xml:lang="nl">Zwitserse Mapping Groep 5 F-toets</label>
+  </variable>
+  <variable item="Swiss Mapping Group 5 SecondAddress" CV="454" mask="XVXXXXXX" include="179,184">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>2nd Address</label>
+    <label xml:lang="de">2. Adresse</label>
+    <tooltip>The current group definition should apply only to the 2nd address of the function decoder</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 5 M-key v33" CV="455">
         <qualifier>
@@ -812,7 +843,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 6 F-key" CV="460">
+  <variable item="Swiss Mapping Group 6 F-key" CV="460" mask="VXVVVVVV">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
@@ -820,6 +851,12 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 6 Tasto F</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 6 tlačítko F</label>
     <label xml:lang="nl">Zwitserse Mapping Groep 6 F-toets</label>
+  </variable>
+  <variable item="Swiss Mapping Group 6 SecondAddress" CV="460" mask="XVXXXXXX" include="179,184">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>2nd Address</label>
+    <label xml:lang="de">2. Adresse</label>
+    <tooltip>The current group definition should apply only to the 2nd address of the function decoder</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 6 M-key v33" CV="461">
         <qualifier>
@@ -969,7 +1006,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 7 F-key" CV="466">
+  <variable item="Swiss Mapping Group 7 F-key" CV="466" mask="VXVVVVVV">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
@@ -977,6 +1014,12 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 7 Tasto F</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 7 tlačítko F</label>
     <label xml:lang="nl">Zwitserse Mapping Groep 7 F-toets</label>
+  </variable>
+  <variable item="Swiss Mapping Group 7 SecondAddress" CV="466" mask="XVXXXXXX" include="179,184">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>2nd Address</label>
+    <label xml:lang="de">2. Adresse</label>
+    <tooltip>The current group definition should apply only to the 2nd address of the function decoder</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 7 M-key v33" CV="467">
         <qualifier>
@@ -1126,7 +1169,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 8 F-key" CV="472">
+  <variable item="Swiss Mapping Group 8 F-key" CV="472" mask="VXVVVVVV">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
@@ -1134,6 +1177,12 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 8 Tasto F</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 8 tlačítko F</label>
     <label xml:lang="nl">Zwitserse Mapping Groep 8 F-toets</label>
+  </variable>
+  <variable item="Swiss Mapping Group 8 SecondAddress" CV="472" mask="XVXXXXXX" include="179,184">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>2nd Address</label>
+    <label xml:lang="de">2. Adresse</label>
+    <tooltip>The current group definition should apply only to the 2nd address of the function decoder</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 8 M-key v33" CV="473">
         <qualifier>
@@ -1283,7 +1332,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 9 F-key" CV="478">
+  <variable item="Swiss Mapping Group 9 F-key" CV="478" mask="VXVVVVVV">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
@@ -1291,6 +1340,12 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 9 Tasto F</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 9 tlačítko F</label>
     <label xml:lang="nl">Zwitserse Mapping Groep 9 F-toets</label>
+  </variable>
+  <variable item="Swiss Mapping Group 9 SecondAddress" CV="478" mask="XVXXXXXX" include="179,184">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>2nd Address</label>
+    <label xml:lang="de">2. Adresse</label>
+    <tooltip>The current group definition should apply only to the 2nd address of the function decoder</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 9 M-key v33" CV="479">
         <qualifier>
@@ -1440,7 +1495,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 10 F-key" CV="484">
+  <variable item="Swiss Mapping Group 10 F-key" CV="484" mask="VXVVVVVV">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
@@ -1448,6 +1503,12 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 10 Tasto F</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 10 tlačítko F</label>
     <label xml:lang="nl">Zwitserse Mapping Groep 10 F-toets</label>
+  </variable>
+  <variable item="Swiss Mapping Group 10 SecondAddress" CV="484" mask="XVXXXXXX" include="179,184">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>2nd Address</label>
+    <label xml:lang="de">2. Adresse</label>
+    <tooltip>The current group definition should apply only to the 2nd address of the function decoder</tooltip>
   </variable>
   <variable item="Swiss Mapping Group 10 M-key v33" CV="485">
         <qualifier>
@@ -1598,7 +1659,7 @@
     </enumVal>
   </variable>
 
-  <variable item="Swiss Mapping Group 11 F-key" CV="490">
+  <variable item="Swiss Mapping Group 11 F-key" CV="490" mask="VXVVVVVV" exclude="184">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
@@ -1607,7 +1668,13 @@
     <label xml:lang="cs">Švýcarské přiřazení skupina 11 tlačítko F</label>
     <label xml:lang="nl">Zwitserse Mapping Groep 11 F-toets</label>
   </variable>
-  <variable item="Swiss Mapping Group 11 M-key" CV="491" mask="XXXVVVVV">
+  <variable item="Swiss Mapping Group 11 SecondAddress" CV="490" mask="XVXXXXXX" include="179">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>2nd Address</label>
+    <label xml:lang="de">2. Adresse</label>
+    <tooltip>The current group definition should apply only to the 2nd address of the function decoder</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 11 M-key" CV="491" mask="XXXVVVVV" exclude="184">
         <qualifier>
           <variableref>Decoder Version</variableref>
           <relation>ge</relation>
@@ -1619,7 +1686,7 @@
     <label>Map to:</label> 
     <label xml:lang="cs">Přiřazeno na:</label>
   </variable>
-  <variable item="Swiss Mapping Group 11 M-key M+F" CV="491" mask="VXXXXXXX">
+  <variable item="Swiss Mapping Group 11 M-key M+F" CV="491" mask="VXXXXXXX" exclude="184">
     <qualifier>
       <variableref>Decoder Version</variableref>
       <relation>ge</relation>
@@ -1632,7 +1699,7 @@
     <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
     <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
   </variable>
-  <variable item="Swiss Mapping Group 11 M-key NotOff" CV="491" mask="XVVXXXXX">
+  <variable item="Swiss Mapping Group 11 M-key NotOff" CV="491" mask="XVVXXXXX" exclude="184">
     <qualifier>
       <variableref>Decoder Version</variableref>
       <relation>ge</relation>
@@ -1666,7 +1733,7 @@
     <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
     <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
   </variable>
-  <variable item="Swiss Mapping Group 11 M-key Hibeam" CV="491" >
+  <variable item="Swiss Mapping Group 11 M-key Hibeam" CV="491" exclude="184">
   <qualifier>
     <variableref>Decoder Version</variableref>
     <relation>ge</relation>
@@ -1688,7 +1755,7 @@
     <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV491)</tooltip>
     <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV491)</tooltip>
   </variable>
-  <variable item="Swiss Mapping Group 11 A1 Fw" CV="492" mask="XXXVVVVV">
+  <variable item="Swiss Mapping Group 11 A1 Fw" CV="492" mask="XXXVVVVV" exclude="184">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -1696,12 +1763,12 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 11 A1 Avanti</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 11 A1 vpřed</label>
   </variable>
-  <variable item="Swiss Mapping Group 11 A1 Fw DG" CV="492" mask="VVVXXXXX">
+  <variable item="Swiss Mapping Group 11 A1 Fw DG" CV="492" mask="VVVXXXXX" exclude="184">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 11 A2 Fw" CV="493" mask="XXXVVVVV">
+  <variable item="Swiss Mapping Group 11 A2 Fw" CV="493" mask="XXXVVVVV" exclude="184">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -1709,12 +1776,12 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 11 A2 Avanti</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 11 A2 vpřed</label>
   </variable>
-  <variable item="Swiss Mapping Group 11 A2 Fw DG" CV="493" mask="VVVXXXXX">
+  <variable item="Swiss Mapping Group 11 A2 Fw DG" CV="493" mask="VVVXXXXX" exclude="184">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 11 A1 Rw" CV="494" mask="XXXVVVVV">
+  <variable item="Swiss Mapping Group 11 A1 Rw" CV="494" mask="XXXVVVVV" exclude="184">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -1722,12 +1789,12 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 11 A1 Retro</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 11 A1 vzad</label>
   </variable>
-  <variable item="Swiss Mapping Group 11 A1 Rw DG" CV="494" mask="VVVXXXXX">
+  <variable item="Swiss Mapping Group 11 A1 Rw DG" CV="494" mask="VVVXXXXX" exclude="184">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 11 A2 Rw" CV="495" mask="XXXVVVVV">
+  <variable item="Swiss Mapping Group 11 A2 Rw" CV="495" mask="XXXVVVVV" exclude="184">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -1735,13 +1802,13 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 11 A2 Retro</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 11 A2 vzad</label>
   </variable>
-  <variable item="Swiss Mapping Group 11 A2 Rw DG" CV="495" mask="VVVXXXXX">
+  <variable item="Swiss Mapping Group 11 A2 Rw DG" CV="495" mask="VVVXXXXX" exclude="184">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
 
-  <variable item="Swiss Mapping Group 12 F-key" CV="496">
+  <variable item="Swiss Mapping Group 12 F-key" CV="496" mask="VXVVVVVV" exclude="184">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
@@ -1750,7 +1817,13 @@
     <label xml:lang="cs">Švýcarské přiřazení skupina 12 tlačítko F</label>
     <label xml:lang="nl">Zwitserse Mapping Groep 12 F-toets</label>
   </variable>
-  <variable item="Swiss Mapping Group 12 M-key" CV="497" mask="XXXVVVVV">
+  <variable item="Swiss Mapping Group 12 SecondAddress" CV="496" mask="XVXXXXXX" include="179">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>2nd Address</label>
+    <label xml:lang="de">2. Adresse</label>
+    <tooltip>The current group definition should apply only to the 2nd address of the function decoder</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 12 M-key" CV="497" mask="XXXVVVVV" exclude="184">
         <qualifier>
           <variableref>Decoder Version</variableref>
           <relation>ge</relation>
@@ -1762,7 +1835,7 @@
     <label>Map to:</label> 
     <label xml:lang="cs">Přiřazeno na:</label>
   </variable>
-  <variable item="Swiss Mapping Group 12 M-key M+F" CV="497" mask="VXXXXXXX">
+  <variable item="Swiss Mapping Group 12 M-key M+F" CV="497" mask="VXXXXXXX" exclude="184">
     <qualifier>
       <variableref>Decoder Version</variableref>
       <relation>ge</relation>
@@ -1775,7 +1848,7 @@
     <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
     <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
   </variable>
-  <variable item="Swiss Mapping Group 12 M-key NotOff" CV="497" mask="XVVXXXXX">
+  <variable item="Swiss Mapping Group 12 M-key NotOff" CV="497" mask="XVVXXXXX" exclude="184">
     <qualifier>
       <variableref>Decoder Version</variableref>
       <relation>ge</relation>
@@ -1809,7 +1882,7 @@
     <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
     <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
   </variable>
-  <variable item="Swiss Mapping Group 12 M-key Hibeam" CV="497" >
+  <variable item="Swiss Mapping Group 12 M-key Hibeam" CV="497" exclude="184">
   <qualifier>
     <variableref>Decoder Version</variableref>
     <relation>ge</relation>
@@ -1831,7 +1904,7 @@
     <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV497)</tooltip>
     <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV497)</tooltip>
   </variable>
-  <variable item="Swiss Mapping Group 12 A1 Fw" CV="498" mask="XXXVVVVV">
+  <variable item="Swiss Mapping Group 12 A1 Fw" CV="498" mask="XXXVVVVV" exclude="184">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -1839,12 +1912,12 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 12 A1 Avanti</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 12 A1 vpřed</label>
   </variable>
-  <variable item="Swiss Mapping Group 12 A1 Fw DG" CV="498" mask="VVVXXXXX">
+  <variable item="Swiss Mapping Group 12 A1 Fw DG" CV="498" mask="VVVXXXXX" exclude="184">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 12 A2 Fw" CV="499" mask="XXXVVVVV">
+  <variable item="Swiss Mapping Group 12 A2 Fw" CV="499" mask="XXXVVVVV" exclude="184">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -1852,12 +1925,12 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 12 A2 Avanti</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 12 A2 vpřed</label>
   </variable>
-  <variable item="Swiss Mapping Group 12 A2 Fw DG" CV="499" mask="VVVXXXXX">
+  <variable item="Swiss Mapping Group 12 A2 Fw DG" CV="499" mask="VVVXXXXX" exclude="184">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 12 A1 Rw" CV="500" mask="XXXVVVVV">
+  <variable item="Swiss Mapping Group 12 A1 Rw" CV="500" mask="XXXVVVVV" exclude="184">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -1865,12 +1938,12 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 12 A1 Retro</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 12 A1 vzad</label>
   </variable>
-  <variable item="Swiss Mapping Group 12 A1 Rw DG" CV="500" mask="VVVXXXXX">
+  <variable item="Swiss Mapping Group 12 A1 Rw DG" CV="500" mask="VVVXXXXX" exclude="184">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 12 A2 Rw" CV="501" mask="XXXVVVVV">
+  <variable item="Swiss Mapping Group 12 A2 Rw" CV="501" mask="XXXVVVVV" exclude="184">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -1878,13 +1951,13 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 12 A2 Retro</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 12 A2 vzad</label>
   </variable>
-  <variable item="Swiss Mapping Group 12 A2 Rw DG" CV="501" mask="VVVXXXXX">
+  <variable item="Swiss Mapping Group 12 A2 Rw DG" CV="501" mask="VVVXXXXX" exclude="184">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
 
-  <variable item="Swiss Mapping Group 13 F-key" CV="502">
+  <variable item="Swiss Mapping Group 13 F-key" CV="502" mask="VXVVVVVV" exclude="184">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
@@ -1893,7 +1966,13 @@
     <label xml:lang="cs">Švýcarské přiřazení skupina 13 tlačítko F</label>
     <label xml:lang="nl">Zwitserse Mapping Groep 13 F-toets</label>
   </variable>
-  <variable item="Swiss Mapping Group 13 M-key" CV="503" mask="XXXVVVVV">
+  <variable item="Swiss Mapping Group 13 SecondAddress" CV="502" mask="XVXXXXXX" include="179">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>2nd Address</label>
+    <label xml:lang="de">2. Adresse</label>
+    <tooltip>The current group definition should apply only to the 2nd address of the function decoder</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 13 M-key" CV="503" mask="XXXVVVVV" exclude="184">
         <qualifier>
           <variableref>Decoder Version</variableref>
           <relation>ge</relation>
@@ -1905,7 +1984,7 @@
     <label>Map to:</label> 
     <label xml:lang="cs">Přiřazeno na:</label>
   </variable>
-  <variable item="Swiss Mapping Group 13 M-key M+F" CV="503" mask="VXXXXXXX">
+  <variable item="Swiss Mapping Group 13 M-key M+F" CV="503" mask="VXXXXXXX" exclude="184">
     <qualifier>
       <variableref>Decoder Version</variableref>
       <relation>ge</relation>
@@ -1918,7 +1997,7 @@
     <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
     <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
   </variable>
-  <variable item="Swiss Mapping Group 13 M-key NotOff" CV="503" mask="XVVXXXXX">
+  <variable item="Swiss Mapping Group 13 M-key NotOff" CV="503" mask="XVVXXXXX" exclude="184">
     <qualifier>
       <variableref>Decoder Version</variableref>
       <relation>ge</relation>
@@ -1952,7 +2031,7 @@
     <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
     <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
   </variable>
-  <variable item="Swiss Mapping Group 13 M-key Hibeam" CV="503" >
+  <variable item="Swiss Mapping Group 13 M-key Hibeam" CV="503" exclude="184">
   <qualifier>
     <variableref>Decoder Version</variableref>
     <relation>ge</relation>
@@ -1974,7 +2053,7 @@
     <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV503)</tooltip>
     <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV503)</tooltip>
   </variable>
-  <variable item="Swiss Mapping Group 13 A1 Fw" CV="504" mask="XXXVVVVV">
+  <variable item="Swiss Mapping Group 13 A1 Fw" CV="504" mask="XXXVVVVV" exclude="184">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -1982,12 +2061,12 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 13 A1 Avanti</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 13 A1 vpřed</label>
   </variable>
-  <variable item="Swiss Mapping Group 13 A1 Fw DG" CV="504" mask="VVVXXXXX">
+  <variable item="Swiss Mapping Group 13 A1 Fw DG" CV="504" mask="VVVXXXXX" exclude="184">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 13 A2 Fw" CV="505" mask="XXXVVVVV">
+  <variable item="Swiss Mapping Group 13 A2 Fw" CV="505" mask="XXXVVVVV" exclude="184">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -1995,12 +2074,12 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 13 A2 Avanti</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 13 A2 vpřed</label>
   </variable>
-  <variable item="Swiss Mapping Group 13 A2 Fw DG" CV="505" mask="VVVXXXXX">
+  <variable item="Swiss Mapping Group 13 A2 Fw DG" CV="505" mask="VVVXXXXX" exclude="184">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 13 A1 Rw" CV="506" mask="XXXVVVVV">
+  <variable item="Swiss Mapping Group 13 A1 Rw" CV="506" mask="XXXVVVVV" exclude="184">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -2008,12 +2087,12 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 13 A1 Retro</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 13 A1 vzad</label>
   </variable>
-  <variable item="Swiss Mapping Group 13 A1 Rw DG" CV="506" mask="VVVXXXXX">
+  <variable item="Swiss Mapping Group 13 A1 Rw DG" CV="506" mask="VVVXXXXX" exclude="184">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 13 A2 Rw" CV="507" mask="XXXVVVVV">
+  <variable item="Swiss Mapping Group 13 A2 Rw" CV="507" mask="XXXVVVVV" exclude="184">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -2021,13 +2100,13 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 13 A2 Retro</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 13 A2 vzad</label>
   </variable>
-  <variable item="Swiss Mapping Group 13 A2 Rw DG" CV="507" mask="VVVXXXXX">
+  <variable item="Swiss Mapping Group 13 A2 Rw DG" CV="507" mask="VVVXXXXX" exclude="184">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
 
-  <variable item="Swiss Mapping Group 14 F-key" CV="800" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 14 F-key" CV="800" mask="VXVVVVVV" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
@@ -2036,7 +2115,13 @@
     <label xml:lang="cs">Švýcarské přiřazení skupina 14 tlačítko F</label>
     <label xml:lang="nl">Zwitserse Mapping Groep 14 F-toets</label>
   </variable>
-  <variable item="Swiss Mapping Group 14 M-key" CV="801" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 14 SecondAddress" CV="800" mask="XVXXXXXX" include="179">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>2nd Address</label>
+    <label xml:lang="de">2. Adresse</label>
+    <tooltip>The current group definition should apply only to the 2nd address of the function decoder</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 14 M-key" CV="801" mask="XXXVVVVV" exclude="184,195,199,201,211,218,240">
         <qualifier>
           <variableref>Decoder Version</variableref>
           <relation>ge</relation>
@@ -2048,7 +2133,7 @@
     <label>Map to:</label> 
     <label xml:lang="cs">Přiřazeno na:</label>
   </variable>
-  <variable item="Swiss Mapping Group 14 M-key M+F" CV="801" mask="VXXXXXXX" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 14 M-key M+F" CV="801" mask="VXXXXXXX" exclude="184,195,199,201,211,218,240">
     <qualifier>
       <variableref>Decoder Version</variableref>
       <relation>ge</relation>
@@ -2061,7 +2146,7 @@
     <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
     <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
   </variable>
-  <variable item="Swiss Mapping Group 14 M-key NotOff" CV="801" mask="XVVXXXXX" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 14 M-key NotOff" CV="801" mask="XVVXXXXX" exclude="184,195,199,201,211,218,240">
     <qualifier>
       <variableref>Decoder Version</variableref>
       <relation>ge</relation>
@@ -2095,7 +2180,7 @@
     <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
     <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
   </variable>
-  <variable item="Swiss Mapping Group 14 M-key Hibeam" CV="801"  exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 14 M-key Hibeam" CV="801"  exclude="184,195,199,201,211,218,240">
   <qualifier>
     <variableref>Decoder Version</variableref>
     <relation>ge</relation>
@@ -2117,7 +2202,7 @@
     <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV801)</tooltip>
     <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV801)</tooltip>
   </variable>
-  <variable item="Swiss Mapping Group 14 A1 Fw" CV="802" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 14 A1 Fw" CV="802" mask="XXXVVVVV" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -2125,12 +2210,12 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 14 A1 Avanti</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 14 A1 vpřed</label>
   </variable>
-  <variable item="Swiss Mapping Group 14 A1 Fw DG" CV="802" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 14 A1 Fw DG" CV="802" mask="VVVXXXXX" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 14 A2 Fw" CV="803" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 14 A2 Fw" CV="803" mask="XXXVVVVV" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -2138,12 +2223,12 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 14 A2 Avanti</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 14 A2 vpřed</label>
   </variable>
-  <variable item="Swiss Mapping Group 14 A2 Fw DG" CV="803" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 14 A2 Fw DG" CV="803" mask="VVVXXXXX" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 14 A1 Rw" CV="804" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 14 A1 Rw" CV="804" mask="XXXVVVVV" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -2151,12 +2236,12 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 14 A1 Retro</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 14 A1 vzad</label>
   </variable>
-  <variable item="Swiss Mapping Group 14 A1 Rw DG" CV="804" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 14 A1 Rw DG" CV="804" mask="VVVXXXXX" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 14 A2 Rw" CV="805" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 14 A2 Rw" CV="805" mask="XXXVVVVV" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -2164,13 +2249,13 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 14 A2 Retro</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 14 A2 vzad</label>
   </variable>
-  <variable item="Swiss Mapping Group 14 A2 Rw DG" CV="805" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 14 A2 Rw DG" CV="805" mask="VVVXXXXX" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
 
- <variable item="Swiss Mapping Group 15 F-key" CV="806" exclude="195,199,201,211,218,240">
+ <variable item="Swiss Mapping Group 15 F-key" CV="806" mask="VXVVVVVV" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
@@ -2179,7 +2264,13 @@
     <label xml:lang="cs">Švýcarské přiřazení skupina 15 tlačítko F</label>
     <label xml:lang="nl">Zwitserse Mapping Groep 15 F-toets</label>
   </variable>
-  <variable item="Swiss Mapping Group 15 M-key" CV="807" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 15 SecondAddress" CV="806" mask="XVXXXXXX" include="179">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>2nd Address</label>
+    <label xml:lang="de">2. Adresse</label>
+    <tooltip>The current group definition should apply only to the 2nd address of the function decoder</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 15 M-key" CV="807" mask="XXXVVVVV" exclude="184,195,199,201,211,218,240">
         <qualifier>
           <variableref>Decoder Version</variableref>
           <relation>ge</relation>
@@ -2191,7 +2282,7 @@
     <label>Map to:</label> 
     <label xml:lang="cs">Přiřazeno na:</label>
   </variable>
-  <variable item="Swiss Mapping Group 15 M-key M+F" CV="807" mask="VXXXXXXX" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 15 M-key M+F" CV="807" mask="VXXXXXXX" exclude="184,195,199,201,211,218,240">
     <qualifier>
       <variableref>Decoder Version</variableref>
       <relation>ge</relation>
@@ -2204,7 +2295,7 @@
     <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
     <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
   </variable>
-  <variable item="Swiss Mapping Group 15 M-key NotOff" CV="807" mask="XVVXXXXX" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 15 M-key NotOff" CV="807" mask="XVVXXXXX" exclude="184,195,199,201,211,218,240">
     <qualifier>
       <variableref>Decoder Version</variableref>
       <relation>ge</relation>
@@ -2238,7 +2329,7 @@
     <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
     <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
   </variable>
-  <variable item="Swiss Mapping Group 15 M-key Hibeam" CV="807"  exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 15 M-key Hibeam" CV="807"  exclude="184,195,199,201,211,218,240">
   <qualifier>
     <variableref>Decoder Version</variableref>
     <relation>ge</relation>
@@ -2260,7 +2351,7 @@
     <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV807)</tooltip>
     <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV807)</tooltip>
   </variable>
-  <variable item="Swiss Mapping Group 15 A1 Fw" CV="808" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 15 A1 Fw" CV="808" mask="XXXVVVVV" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -2268,12 +2359,12 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 15 A1 Avanti</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 15 A1 vpřed</label>
   </variable>
-  <variable item="Swiss Mapping Group 15 A1 Fw DG" CV="808" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 15 A1 Fw DG" CV="808" mask="VVVXXXXX" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 15 A2 Fw" CV="809" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 15 A2 Fw" CV="809" mask="XXXVVVVV" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -2281,12 +2372,12 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 15 A2 Avanti</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 15 A2 vpřed</label>
   </variable>
-  <variable item="Swiss Mapping Group 15 A2 Fw DG" CV="809" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 15 A2 Fw DG" CV="809" mask="VVVXXXXX" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 15 A1 Rw" CV="810" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 15 A1 Rw" CV="810" mask="XXXVVVVV" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -2294,12 +2385,12 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 15 A1 Retro</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 15 A1 vzad</label>
   </variable>
-  <variable item="Swiss Mapping Group 15 A1 Rw DG" CV="810" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 15 A1 Rw DG" CV="810" mask="VVVXXXXX" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 15 A2 Rw" CV="811" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 15 A2 Rw" CV="811" mask="XXXVVVVV" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -2307,13 +2398,13 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 15 A2 Retro</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 15 A2 vzad</label>
   </variable>
-  <variable item="Swiss Mapping Group 15 A2 Rw DG" CV="811" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 15 A2 Rw DG" CV="811" mask="VVVXXXXX" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
 
- <variable item="Swiss Mapping Group 16 F-key" CV="812" exclude="195,199,201,211,218,240">
+ <variable item="Swiss Mapping Group 16 F-key" CV="812" mask="VXVVVVVV" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
@@ -2322,7 +2413,13 @@
     <label xml:lang="cs">Švýcarské přiřazení skupina 16 tlačítko F</label>
     <label xml:lang="nl">Zwitserse Mapping Groep 16 F-toets</label>
   </variable>
-  <variable item="Swiss Mapping Group 16 M-key" CV="813" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 16 SecondAddress" CV="812" mask="XVXXXXXX" include="179">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>2nd Address</label>
+    <label xml:lang="de">2. Adresse</label>
+    <tooltip>The current group definition should apply only to the 2nd address of the function decoder</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 16 M-key" CV="813" mask="XXXVVVVV" exclude="184,195,199,201,211,218,240">
         <qualifier>
           <variableref>Decoder Version</variableref>
           <relation>ge</relation>
@@ -2334,7 +2431,7 @@
     <label>Map to:</label> 
     <label xml:lang="cs">Přiřazeno na:</label>
   </variable>
-  <variable item="Swiss Mapping Group 16 M-key M+F" CV="813" mask="VXXXXXXX" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 16 M-key M+F" CV="813" mask="VXXXXXXX" exclude="184,195,199,201,211,218,240">
     <qualifier>
       <variableref>Decoder Version</variableref>
       <relation>ge</relation>
@@ -2347,7 +2444,7 @@
     <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
     <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
   </variable>
-  <variable item="Swiss Mapping Group 16 M-key NotOff" CV="813" mask="XVVXXXXX" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 16 M-key NotOff" CV="813" mask="XVVXXXXX" exclude="184,195,199,201,211,218,240">
     <qualifier>
       <variableref>Decoder Version</variableref>
       <relation>ge</relation>
@@ -2381,7 +2478,7 @@
     <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
     <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
   </variable>
-  <variable item="Swiss Mapping Group 16 M-key Hibeam" CV="813"  exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 16 M-key Hibeam" CV="813"  exclude="184,195,199,201,211,218,240">
   <qualifier>
     <variableref>Decoder Version</variableref>
     <relation>ge</relation>
@@ -2403,7 +2500,7 @@
     <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV813)</tooltip>
     <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV813)</tooltip>
   </variable>
-  <variable item="Swiss Mapping Group 16 A1 Fw" CV="814" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 16 A1 Fw" CV="814" mask="XXXVVVVV" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -2411,12 +2508,12 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 16 A1 Avanti</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 16 A1 vpřed</label>
   </variable>
-  <variable item="Swiss Mapping Group 16 A1 Fw DG" CV="814" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 16 A1 Fw DG" CV="814" mask="VVVXXXXX" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 16 A2 Fw" CV="815" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 16 A2 Fw" CV="815" mask="XXXVVVVV" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -2424,12 +2521,12 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 16 A2 Avanti</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 16 A2 vpřed</label>
   </variable>
-  <variable item="Swiss Mapping Group 16 A2 Fw DG" CV="815" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 16 A2 Fw DG" CV="815" mask="VVVXXXXX" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 16 A1 Rw" CV="816" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 16 A1 Rw" CV="816" mask="XXXVVVVV" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -2437,12 +2534,12 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 16 A1 Retro</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 16 A1 vzad</label>
   </variable>
-  <variable item="Swiss Mapping Group 16 A1 Rw DG" CV="816" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 16 A1 Rw DG" CV="816" mask="VVVXXXXX" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 16 A2 Rw" CV="817" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 16 A2 Rw" CV="817" mask="XXXVVVVV" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -2450,13 +2547,13 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 16 A2 Retro</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 16 A2 vzad</label>
   </variable>
-  <variable item="Swiss Mapping Group 16 A2 Rw DG" CV="817" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 16 A2 Rw DG" CV="817" mask="VVVXXXXX" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
 
- <variable item="Swiss Mapping Group 17 F-key" CV="818" exclude="195,199,201,211,218,240">
+ <variable item="Swiss Mapping Group 17 F-key" CV="818" mask="VXVVVVVV" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
@@ -2465,7 +2562,13 @@
     <label xml:lang="cs">Švýcarské přiřazení skupina 17 tlačítko F</label>
     <label xml:lang="nl">Zwitserse Mapping Groep 17 F-toets</label>
   </variable>
-  <variable item="Swiss Mapping Group 17 M-key" CV="819" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 17 SecondAddress" CV="818" mask="XVXXXXXX" include="179">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>2nd Address</label>
+    <label xml:lang="de">2. Adresse</label>
+    <tooltip>The current group definition should apply only to the 2nd address of the function decoder</tooltip>
+  </variable>
+  <variable item="Swiss Mapping Group 17 M-key" CV="819" mask="XXXVVVVV" exclude="184,195,199,201,211,218,240">
         <qualifier>
           <variableref>Decoder Version</variableref>
           <relation>ge</relation>
@@ -2477,7 +2580,7 @@
     <label>Map to:</label> 
     <label xml:lang="cs">Přiřazeno na:</label>
   </variable>
-  <variable item="Swiss Mapping Group 17 M-key M+F" CV="819" mask="VXXXXXXX" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 17 M-key M+F" CV="819" mask="VXXXXXXX" exclude="184,195,199,201,211,218,240">
     <qualifier>
       <variableref>Decoder Version</variableref>
       <relation>ge</relation>
@@ -2490,7 +2593,7 @@
     <tooltip xml:lang="de">Die unter A1 und A2 aufgeführten Ausgänge sollten nur dann EIN stehen, wenn sowohl die F- als auch die M-Taste EIN sind.</tooltip>
     <tooltip xml:lang="cs">Výstupy uvedené pod A1 a A2 by se měly zapnout pouze tehdy, pokud jsou obě tlačítka F a M zapnuta.</tooltip>
   </variable>
-  <variable item="Swiss Mapping Group 17 M-key NotOff" CV="819" mask="XVVXXXXX" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 17 M-key NotOff" CV="819" mask="XVVXXXXX" exclude="184,195,199,201,211,218,240">
     <qualifier>
       <variableref>Decoder Version</variableref>
       <relation>ge</relation>
@@ -2524,7 +2627,7 @@
     <tooltip xml:lang="de">M-Tasten-Ausgänge dürfen nicht ausgeschaltet werden, wenn die F-Taste eingeschaltet ist und Fahrtrichtung festgelegt wurde.</tooltip>
     <tooltip xml:lang="cs">Výstupy M-tlačítka nesmí být vypnuty, pokud je F-tlačítko zapnuto a ve směru jízdy.</tooltip>
   </variable>
-  <variable item="Swiss Mapping Group 17 M-key Hibeam" CV="819"  exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 17 M-key Hibeam" CV="819"  exclude="184,195,199,201,211,218,240">
   <qualifier>
     <variableref>Decoder Version</variableref>
     <relation>ge</relation>
@@ -2546,7 +2649,7 @@
     <tooltip xml:lang="de">M-Taste Fernlicht (deaktiviert andere Optionen in CV819)</tooltip>
     <tooltip xml:lang="cs">M-tlačítko Dálkové světlo (skryje ostatní volby v CV819)</tooltip>
   </variable>
-  <variable item="Swiss Mapping Group 17 A1 Fw" CV="820" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 17 A1 Fw" CV="820" mask="XXXVVVVV" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -2554,12 +2657,12 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 17 A1 Avanti</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 17 A1 vpřed</label>
   </variable>
-  <variable item="Swiss Mapping Group 17 A1 Fw DG" CV="820" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 17 A1 Fw DG" CV="820" mask="VVVXXXXX" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 17 A2 Fw" CV="821" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 17 A2 Fw" CV="821" mask="XXXVVVVV" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -2567,12 +2670,12 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 17 A2 Avanti</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 17 A2 vpřed</label>
   </variable>
-  <variable item="Swiss Mapping Group 17 A2 Fw DG" CV="821" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 17 A2 Fw DG" CV="821" mask="VVVXXXXX" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 17 A1 Rw" CV="822" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 17 A1 Rw" CV="822" mask="XXXVVVVV" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -2580,12 +2683,12 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 17 A1 Retro</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 17 A1 vzad</label>
   </variable>
-  <variable item="Swiss Mapping Group 17 A1 Rw DG" CV="822" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 17 A1 Rw DG" CV="822" mask="VVVXXXXX" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
   </variable>
-  <variable item="Swiss Mapping Group 17 A2 Rw" CV="823" mask="XXXVVVVV" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 17 A2 Rw" CV="823" mask="XXXVVVVV" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -2593,7 +2696,7 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 17 A2 Retro</label>
     <label xml:lang="cs">Švýcarské přiřazení skupina 17 A2 vzad</label>
   </variable>
-  <variable item="Swiss Mapping Group 17 A2 Rw DG" CV="823" mask="VVVXXXXX" exclude="195,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 17 A2 Rw DG" CV="823" mask="VVVXXXXX" exclude="184,195,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-DG.xml"/>
     </enumVal>
