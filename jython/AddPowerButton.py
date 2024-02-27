@@ -5,6 +5,9 @@
 # Part of the JMRI distribution
 
 #
+# NOTE: The recommended way to add a script button to JMRI is to
+# use the Startup Items preferences to add that button when the function is available.
+#
 # NOTE: This script does not support DecoderPro. Use the recommended
 # method if you need to add a script to a button in DecoderPro.
 #
