@@ -384,7 +384,7 @@ public class ActionListenOnBeansLocalVariable extends AbstractDigitalAction
                     _conditionalNG.setSymbolTable(oldSymbolTable);
 
                     if (!_eventQueue.isEmpty()) {
-                        getConditionalNG().execute(_internalSocket);
+                        _conditionalNG.execute(_internalSocket);
                     }
                 }
             }
