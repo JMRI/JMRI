@@ -586,7 +586,7 @@
     <tooltip>See CV9=0</tooltip>
     <tooltip xml:lang="de">See CV9=0</tooltip>
    </variable>
-  <variable CV="112" item="Secondary Address Format" mask="XXVXXXXX" default="0" include="228,226,232,235,247,MX689_v30">
+  <variable CV="112" item="Secondary Address Format" mask="XXVXXXXX" default="0" include="179,184,228,226,232,235,247,MX689_v30">
     <enumVal>
       <enumChoice choice="short address">
         <choice>Basisadresse</choice>
