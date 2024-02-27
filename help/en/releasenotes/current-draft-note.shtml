@@ -490,6 +490,9 @@ LogixNG: IQ:AUTO:0001
               </li>
           <li>The LogixNG action <strong>Set reporter</strong> has been
               added.</li>
+          <li>The actions <strong>Listen on Beans ...</strong> have been
+              updated to fix a problem when several beans changes
+              state at the same time.</li>
           <li></li>
         </ul>
 
