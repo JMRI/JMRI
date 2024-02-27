@@ -91,7 +91,7 @@
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV1-CV99.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV33-CV46_Lightboards_v40.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV100-CV152version30.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV100-CV152_v40.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV153-CV157version28.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV250-CV253.xml"/>
       <variable CV="64" default="0" item="Secondary Short Address">
