@@ -48,10 +48,12 @@
     <enumChoice choice="MX675" value = "175"/>
     <enumChoice choice="R72016" value = "176"/>
     <enumChoice choice="MX617" value = "177"/>
+    <enumChoice choice="MXLIPL3" value = "179"/>
     <enumChoice choice="MX688 (2022)" value = "180"/>
     <enumChoice choice="MX618" value = "181"/>
     <enumChoice choice="MX682" value = "182"/>
     <enumChoice choice="MX689" value = "183"/>
+    <enumChoice choice="MXLIPL1" value = "184"/>
     <enumChoice choice="MX685 (2020)" value = "185"/>
     <enumChoice choice="MX605N" value = "186"/>
     <enumChoice choice="MX605FL" value = "187"/>
