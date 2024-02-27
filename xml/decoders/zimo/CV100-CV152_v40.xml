@@ -589,15 +589,20 @@
   <variable CV="112" item="Secondary Address Format" mask="XXVXXXXX" default="0" include="179,184,228,226,232,235,247,MX689_v30">
     <enumVal>
       <enumChoice choice="short address">
-        <choice>Basisadresse</choice>
+        <choice>short address</choice>
+        <choice xml:lang="fr">Adresse courte</choice>
+        <choice xml:lang="de">Basisadresse</choice>
         <choice xml:lang="cs">krátká adresa</choice>
       </enumChoice>
       <enumChoice choice="extended address">
-        <choice>Erweiterte Adresse</choice>
+        <choice>Extended address</choice>
+        <choice xml:lang="fr">Adresse etendue</choice>
+        <choice xml:lang="de">Erweiterte Adresse</choice>
         <choice xml:lang="cs">rozšířená adresa</choice>
       </enumChoice>
     </enumVal>
-    <label>Addressformat Second Address</label>
+    <label>Address format Second Address</label>
+    <label xml:lang="fr">Format seconde adresse</label>
     <label xml:lang="de">Zweitadresse Format</label>
     <label xml:lang="cs">Formát druhé adresy</label>
    </variable>
