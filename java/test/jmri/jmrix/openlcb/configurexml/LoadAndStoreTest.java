@@ -52,7 +52,7 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
     private ArrayList<Message> messages;
 
     @BeforeEach
-    @SuppressWarnings("deprecated") // OlcbInterface(NodeID, Connection)
+    @SuppressWarnings("deprecation") // OlcbInterface(NodeID, Connection)
     @Override
     public void setUp(@TempDir java.io.File tempDir) throws IOException  {
         super.setUp(tempDir);

@@ -44,7 +44,7 @@ public class DuplicateKeyMapTest {
         Assert.assertTrue("size is correct", 6 == t.size());
         Assert.assertFalse("map is not empty", t.isEmpty());
         
-        @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
+//        @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
         DuplicateKeyMap<String,String> t2 = new DuplicateKeyMap<>();
         Assert.assertTrue("size is correct", 0 == t2.size());
         Assert.assertTrue("map is empty", t2.isEmpty());

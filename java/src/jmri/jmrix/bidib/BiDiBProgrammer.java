@@ -33,7 +33,7 @@ public class BiDiBProgrammer extends AbstractProgrammer {
     protected Node progNode; //the BiDiB progNode to sent the MSG_CS_PROG message to
     private boolean isBoosterOn = false;
 
-    @SuppressWarnings("OverridableMethodCallInConstructor")
+//    @SuppressWarnings("OverridableMethodCallInConstructor")
     public BiDiBProgrammer(BiDiBTrafficController tc) {
         this.tc = tc;
         super.SHORT_TIMEOUT = 4000;

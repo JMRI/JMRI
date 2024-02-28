@@ -49,7 +49,7 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
     protected Long rootNodeUid;
     protected boolean useAutoScan = false;
     
-    @SuppressWarnings("OverridableMethodCallInConstructor")
+//    @SuppressWarnings("OverridableMethodCallInConstructor")
     public SerialDriverAdapter() {
         //super(new BiDiBSystemConnectionMemo());
         setManufacturer(jmri.jmrix.bidib.BiDiBConnectionTypeList.BIDIB);
