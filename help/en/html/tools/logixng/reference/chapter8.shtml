@@ -24,14 +24,14 @@
 
       <p>A year passes and you need to count something else. You create a new LogixNG that does the
       new counting and you need a memory, so you decide to use the memory IMCOUNTER. And your new
-      LogixNG works fine. But then you suddenly realise that something else on the layout stops
+      LogixNG works fine. But then you suddenly realize that something else on the layout stops
       working. Why? What has happen? Well, the problem is that you use the same memory IMCOUNTER
       for two different things in two different places. And when that happens, you get into
       trouble.</p>
 
       <p>LogixNG has a simple solution to this problem, <strong>local variables</strong>. A local
       variable is similar to a memory, but it only exists in a very limited context and nothing
-      outside that context can interfer with the variable. The local variable is also transient. It
+      outside that context can interfere with the variable. The local variable is also transient. It
       is only available during the execution of the ConditionalNG and it goes away when the
       execution is finished. This protects the local variable from being changed in an
       unpredictable way.</p>
@@ -77,6 +77,10 @@
       <dl>
         <dt>None</dt>
         <dd>The initial value will be <code>null</code>.</dd>
+
+        <dt>Boolean <span class="since">since 5.7.5</span></dt>
+        <dd>Contains the word <strong>true</strong> or <strong>false</strong>.  The words are case
+        insensitive.  Setting an initial value is recommended.</dd>
 
         <dt>Integer</dt>
         <dd>A whole number such as 123</dd>
@@ -330,7 +334,7 @@ WARN  - Log local variables done [JMRI LogixNGThread]
 
       <p>When an action or expression is executed that defines local variables, these local
       variables are created with an initial value. When you create the local variable, you define
-      what the inital value should be. 'None' means that the value will be 'null'. Reference means
+      what the initial value should be. 'None' means that the value will be 'null'. Reference means
       that the value will be the value that the reference is pointing at. Formula means the result
       of the formula.</p>
       <a id="LogLocalVariables"></a>
@@ -340,19 +344,25 @@ WARN  - Log local variables done [JMRI LogixNGThread]
       but another tool is the action <strong>Log local variables</strong>. Each time it's executed,
       it prints all the local variables and their values to the JMRI Sytem Console.</p>
 
+      <div style="margin-left: 2em;">
+        <a href="images/chapter8/log_variables.png"><img src=
+        "images/chapter8/log_variables.png" alt="Chapter 8 log variables"></a>
+      </div>
+
       <p>Options:</p>
 
       <ul>
         <li><strong>Include global variables</strong> &mdash; The global variables will be
         listed after the local variables.</li>
-        <li><strong>Expand arrays and maps</strong> &mdash; the contents of each array and map
+
+        <li><strong>Expand arrays and maps</strong> &mdash; The contents of each array and map
         will be listed.</li>
+
+        <li><strong>Show class name</strong> &mdash; The name of the Java class will be included
+        for each item.</li>
       </ul>
 
-      <div style="margin-left: 2em;">
-        <a href="images/chapter8/log_variables.png"><img src=
-        "images/chapter8/log_variables.png" alt="Chapter 8 log variables"></a>
-      </div>
+      <p>Example:</p>
 
       <div style="margin-left: 2em;">
         <pre>
