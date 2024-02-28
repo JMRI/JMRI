@@ -237,7 +237,7 @@ public class HtmlManifest extends HtmlTrainCommon {
             
         //sort if requested
         if (adds.size() > 0 && Setup.isSortByTrackNameEnabled()) {
-            adds.sort(Comparator.comparing(o -> o.get("location").get("track").get("userName").asText()));
+            adds.sort(Comparator.comparing(o -> o.path("location").path("track").path("userName").asText()));
         }
         //format each car for output
         for (JsonNode car : adds) {
