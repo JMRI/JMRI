@@ -30,6 +30,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Panel indicators</revremark>
     </revision>    
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2024-02-22</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Small icons</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>CSD-1962-vlozena</aspecttable>
@@ -45,6 +51,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/221_opvolno_po.gif</imagelink>
       <imagelink type="AŽD z">../../../resources/icons/smallschematics/aspects/CSD/AZD/01_g.png</imagelink>
       <imagelink type="ESP z">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_g.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m21_opvolno_3.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -52,6 +59,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/222_opvystraha_po.gif</imagelink>
       <imagelink type="AŽD z">../../../resources/icons/smallschematics/aspects/CSD/AZD/02_g.png</imagelink>
       <imagelink type="ESP z">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_g.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m22_opvystraha_3.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -59,6 +67,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/223_opo40_po.gif</imagelink>
       <imagelink type="AŽD z">../../../resources/icons/smallschematics/aspects/CSD/AZD/01_g.png</imagelink>
       <imagelink type="ESP z">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_g.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m23_opo40_3.gif</imagelink>
     </appearance>
 
   </appearances>
