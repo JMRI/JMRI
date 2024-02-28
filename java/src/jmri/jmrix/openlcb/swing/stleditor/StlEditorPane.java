@@ -1091,6 +1091,8 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     // --------------  store CDI data ---------
 
     private void pushedStoreButton(ActionEvent e) {
+        _csvMessages.clear();
+
         // Store CDI data
         storeInputs();
         storeOutputs();
