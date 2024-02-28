@@ -47,6 +47,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Speed names</revremark>
     </revision>
+    <revision>
+        <revnumber>5</revnumber>
+        <date>2024-02-21</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Small icons</revremark>
+    </revision>    
   </revhistory>
 
   <aspects>
@@ -433,7 +439,7 @@
   <imagetypes>
 	<imagetype type="prototype"/>
 
-        <imagetype type="AŽD z"/>
+	<imagetype type="AŽD z"/>
 	<imagetype type="AŽD zč"/>
 	<imagetype type="AŽD zb"/>
 	<imagetype type="AŽD zbz"/>
@@ -446,7 +452,7 @@
 	<imagetype type="AŽD žb"/>
 	<imagetype type="AŽD žbz"/>
 
-        <imagetype type="ESP z"/>
+	<imagetype type="ESP z"/>
 	<imagetype type="ESP zč"/>
 	<imagetype type="ESP zb"/>
 	<imagetype type="ESP zbz"/>
@@ -462,6 +468,7 @@
 	<imagetype type="JOP hlavní"/>
 	<imagetype type="JOP seřaďovací"/>
 
+	<imagetype type="malé"/>
   </imagetypes>
 
   <appearancefiles>
