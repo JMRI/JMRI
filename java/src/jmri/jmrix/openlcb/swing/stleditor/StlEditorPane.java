@@ -52,6 +52,7 @@ import org.openlcb.cdi.impl.ConfigRepresentation;
  *
  * TODO (phase 2):
  *     Implement CDI write confirmation.
+ *     Provide a store in process dialog - depends on write confirmation
  *     Implement reboot:
  *         rep.getConnection().getDatagramService().sendData(rep.getRemoteNodeID(), new int[] {0x20, 0xA9});
  *         Check compile messages.
@@ -78,7 +79,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private int _groupRow = 0;
     private List<String> _csvMessages = new ArrayList<>();
 
-    private static String FILE_DIRECTORY_PATH = FileUtil.getUserFilesPath() + "stl-csv-data" + FileUtil.SEPARATOR;
+    private String _csvDirectoryPath = "";
 
     private DefaultComboBoxModel<NodeEntry> _nodeModel = new DefaultComboBoxModel<NodeEntry>();
     private JComboBox<NodeEntry> _nodeBox;
@@ -168,7 +169,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         _refreshButton.setEnabled(false);
         _storeButton.setEnabled(false);
-        _exportButton.setEnabled(false);
 
         _addButton.addActionListener(this::pushedAddButton);
         _insertButton.addActionListener(this::pushedInsertButton);
@@ -1343,7 +1343,9 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     private void importCsvData() {
-        FileUtil.createDirectory(FILE_DIRECTORY_PATH);
+        if (!setCsvDirectoryPath(true)) {
+            return;
+        }
 
         importGroupLogic();
         importInputs();
@@ -1507,7 +1509,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         var recordList = new ArrayList<CSVRecord>();
         FileReader fileReader;
         try {
-            fileReader = new FileReader(FILE_DIRECTORY_PATH + fileName);
+            fileReader = new FileReader(_csvDirectoryPath + fileName);
         } catch (FileNotFoundException ex) {
             _csvMessages.add(Bundle.getMessage("ImportFileNotFound", fileName));
             return recordList;
@@ -1549,7 +1551,9 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     private void exportCsvData() {
-        FileUtil.createDirectory(FILE_DIRECTORY_PATH);
+        if (!setCsvDirectoryPath(false)) {
+            return;
+        }
 
         try {
             exportGroupLogic();
@@ -1564,7 +1568,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     private void exportGroupLogic() throws IOException {
-        var fileWriter = new FileWriter(FILE_DIRECTORY_PATH + "group_logic.csv");
+        var fileWriter = new FileWriter(_csvDirectoryPath + "group_logic.csv");
         var bufferedWriter = new BufferedWriter(fileWriter);
         var csvFile = new CSVPrinter(bufferedWriter, CSVFormat.DEFAULT);
 
@@ -1588,7 +1592,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     private void exportInputs() throws IOException {
-        var fileWriter = new FileWriter(FILE_DIRECTORY_PATH + "inputs.csv");
+        var fileWriter = new FileWriter(_csvDirectoryPath + "inputs.csv");
         var bufferedWriter = new BufferedWriter(fileWriter);
         var csvFile = new CSVPrinter(bufferedWriter, CSVFormat.DEFAULT);
 
@@ -1609,7 +1613,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     private void exportOutputs() throws IOException {
-        var fileWriter = new FileWriter(FILE_DIRECTORY_PATH + "outputs.csv");
+        var fileWriter = new FileWriter(_csvDirectoryPath + "outputs.csv");
         var bufferedWriter = new BufferedWriter(fileWriter);
         var csvFile = new CSVPrinter(bufferedWriter, CSVFormat.DEFAULT);
 
@@ -1630,7 +1634,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     private void exportReceivers() throws IOException {
-        var fileWriter = new FileWriter(FILE_DIRECTORY_PATH + "receivers.csv");
+        var fileWriter = new FileWriter(_csvDirectoryPath + "receivers.csv");
         var bufferedWriter = new BufferedWriter(fileWriter);
         var csvFile = new CSVPrinter(bufferedWriter, CSVFormat.DEFAULT);
 
@@ -1649,7 +1653,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     private void exportTransmitters() throws IOException {
-        var fileWriter = new FileWriter(FILE_DIRECTORY_PATH + "transmitters.csv");
+        var fileWriter = new FileWriter(_csvDirectoryPath + "transmitters.csv");
         var bufferedWriter = new BufferedWriter(fileWriter);
         var csvFile = new CSVPrinter(bufferedWriter, CSVFormat.DEFAULT);
 
@@ -1665,6 +1669,31 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         // Flush the write buffer and close the file
         csvFile.flush();
         csvFile.close();
+    }
+
+    /**
+     * Select the directory that will be used for the CSV file set.
+     * @param isOpen - True for CSV Import and false for CSV Export.
+     * @return true if a directory was selected.
+     */
+    private boolean setCsvDirectoryPath(boolean isOpen) {
+        var directoryChooser = new JmriJFileChooser(FileUtil.getUserFilesPath());
+        directoryChooser.setApproveButtonText(Bundle.getMessage("SelectCsvButton"));
+        directoryChooser.setDialogTitle(Bundle.getMessage("SelectCsvTitle"));
+        directoryChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+        int response = 0;
+        if (isOpen) {
+            response = directoryChooser.showOpenDialog(this);
+        } else {
+            response = directoryChooser.showSaveDialog(this);
+        }
+        if (response != JFileChooser.APPROVE_OPTION) {
+            return false;
+        }
+        _csvDirectoryPath = directoryChooser.getSelectedFile().getAbsolutePath() + FileUtil.SEPARATOR;
+
+        return true;
     }
 
     // --------------  Data Utilities ---------
@@ -2073,7 +2102,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         public Object getValueAt(int r, int c) {
             switch (c) {
                 case ROW_COLUMN:
-                    return r;
+                    return r + 1;
                 case NAME_COLUMN:
                     return _groupList.get(r).getName();
                 default:
