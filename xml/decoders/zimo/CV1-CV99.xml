@@ -681,19 +681,19 @@
     <label xml:lang="it">F4 controlla uscita 11</label>
     <label xml:lang="cs">F4 řídí výstup 11</label>
   </variable>
-  <variable item="F5 controls output 4" CV="39" mask="XXXXXXXV" minOut="4" minFn="5" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="F5 controls output 4" CV="39" mask="XXXXXXXV" minOut="4" minFn="5" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5 controls output 4</label>
     <label xml:lang="it">F5 controlla uscita 4</label>
     <label xml:lang="cs">F5 řídí výstup 4</label>
   </variable>
-  <variable item="F5 controls output 5" CV="39" mask="XXXXXXVX" minOut="5" minFn="5" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="F5 controls output 5" CV="39" mask="XXXXXXVX" minOut="5" minFn="5" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5 controls output 5</label>
     <label xml:lang="it">F5 controlla uscita 5</label>
     <label xml:lang="cs">F5 řídí výstup 5</label>
   </variable>
-  <variable item="F5 controls output 6" CV="39" mask="XXXXXVXX" minOut="6" minFn="5" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="F5 controls output 6" CV="39" mask="XXXXXVXX" minOut="6" minFn="5" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5 controls output 6</label>
     <label xml:lang="it">F5 controlla uscita 6</label>
@@ -729,19 +729,19 @@
     <label xml:lang="it">F5 controlla uscita 11</label>
     <label xml:lang="cs">F5 řídí výstup 11</label>
   </variable>
-  <variable item="F6 controls output 4" CV="40" mask="XXXXXXXV" minOut="4" minFn="6" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="F6 controls output 4" CV="40" mask="XXXXXXXV" minOut="4" minFn="6" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6 controls output 4</label>
     <label xml:lang="it">F6 controlla uscita 4</label>
     <label xml:lang="cs">F6 řídí výstup 4</label>
   </variable>
-  <variable item="F6 controls output 5" CV="40" mask="XXXXXXVX" minOut="5" minFn="6" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="F6 controls output 5" CV="40" mask="XXXXXXVX" minOut="5" minFn="6" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6 controls output 5</label>
     <label xml:lang="it">F6 controlla uscita 5</label>
     <label xml:lang="cs">F6 řídí výstup 5</label>
   </variable>
-  <variable item="F6 controls output 6" CV="40" mask="XXXXXVXX" minOut="6" minFn="6" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="F6 controls output 6" CV="40" mask="XXXXXVXX" minOut="6" minFn="6" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6 controls output 6</label>
     <label xml:lang="it">F6 controlla uscita 6</label>
@@ -1066,37 +1066,37 @@
     <label xml:lang="cs">F12 řídí výstup 14</label>
   </variable>
  <!--/group-->
-  <variable item="AltF3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF3 controls output 1</label>
     <label xml:lang="it">AltF3 controlla uscita 1</label>
     <label xml:lang="cs">AltF3 řídí výstup 1</label>
   </variable>
-  <variable item="AltF3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF3 controls output 2</label>
     <label xml:lang="it">AltF3 controlla uscita 2</label>
     <label xml:lang="cs">AltF3 řídí výstup 2</label>
   </variable>
-  <variable item="AltF3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF3 controls output 3</label>
     <label xml:lang="it">AltF3 controlla uscita 3</label>
     <label xml:lang="cs">AltF3 řídí výstup 3</label>
   </variable>
-  <variable item="AltF3 controls output 4" CV="37" mask="XXXXVXXX" minOut="4" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF3 controls output 4" CV="37" mask="XXXXVXXX" minOut="4" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF3 controls output 4</label>
     <label xml:lang="it">AltF3 controlla uscita 4</label>
     <label xml:lang="cs">AltF3 řídí výstup 4</label>
   </variable>
-  <variable item="AltF3 controls output 5" CV="37" mask="XXXVXXXX" minOut="5" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF3 controls output 5" CV="37" mask="XXXVXXXX" minOut="5" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF3 controls output 5</label>
     <label xml:lang="it">AltF3 controlla uscita 5</label>
     <label xml:lang="cs">AltF3 řídí výstup 5</label>
   </variable>
-  <variable item="AltF3 controls output 6" CV="37" mask="XXVXXXXX" minOut="6" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF3 controls output 6" CV="37" mask="XXVXXXXX" minOut="6" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF3 controls output 6</label>
     <label xml:lang="it">AltF3 controlla uscita 6</label>
@@ -1114,37 +1114,37 @@
     <label xml:lang="it">AltF3 controlla uscita 8</label>
     <label xml:lang="cs">AltF3 řídí výstup 8</label>
   </variable>
-  <variable item="AltF4 controls output 1" CV="38" mask="XXXXXXXV" minOut="1" minFn="4" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF4 controls output 1" CV="38" mask="XXXXXXXV" minOut="1" minFn="4" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF4 controls output 1</label>
     <label xml:lang="it">AltF4 controlla uscita 1</label>
     <label xml:lang="cs">AltF4 řídí výstup 1</label>
   </variable>
-  <variable item="AltF4 controls output 2" CV="38" mask="XXXXXXVX" minOut="2" minFn="4" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF4 controls output 2" CV="38" mask="XXXXXXVX" minOut="2" minFn="4" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF4 controls output 2</label>
     <label xml:lang="it">AltF4 controlla uscita 2</label>
     <label xml:lang="cs">AltF4 řídí výstup 2</label>
   </variable>
-  <variable item="AltF4 controls output 3" CV="38" mask="XXXXXVXX" minOut="3" minFn="4" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF4 controls output 3" CV="38" mask="XXXXXVXX" minOut="3" minFn="4" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF4 controls output 3</label>
     <label xml:lang="it">AltF4 controlla uscita 3</label>
     <label xml:lang="cs">AltF4 řídí výstup 3</label>
   </variable>
-  <variable item="AltF4 controls output 4" CV="38" mask="XXXXVXXX" minOut="4" minFn="4" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF4 controls output 4" CV="38" mask="XXXXVXXX" minOut="4" minFn="4" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF4 controls output 4</label>
     <label xml:lang="it">AltF4 controlla uscita 4</label>
     <label xml:lang="cs">AltF4 řídí výstup 4</label>
   </variable>
-  <variable item="AltF4 controls output 5" CV="38" mask="XXXVXXXX" minOut="5" minFn="4" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF4 controls output 5" CV="38" mask="XXXVXXXX" minOut="5" minFn="4" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF4 controls output 5</label>
     <label xml:lang="it">AltF4 controlla uscita 5</label>
     <label xml:lang="cs">AltF4 řídí výstup 5</label>
   </variable>
-  <variable item="AltF4 controls output 6" CV="38" mask="XXVXXXXX" minOut="6" minFn="4" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF4 controls output 6" CV="38" mask="XXVXXXXX" minOut="6" minFn="4" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF4 controls output 6</label>
     <label xml:lang="it">AltF4 controlla uscita 6</label>
@@ -1162,37 +1162,37 @@
     <label xml:lang="it">AltF4 controlla uscita 8</label>
     <label xml:lang="cs">AltF4 řídí výstup 8</label>
   </variable>
-  <variable item="AltF5 controls output 1" CV="39" mask="XXXXXXXV" minOut="1" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF5 controls output 1" CV="39" mask="XXXXXXXV" minOut="1" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF5 controls output 1</label>
     <label xml:lang="it">AltF5 controlla uscita 1</label>
     <label xml:lang="cs">AltF5 řídí výstup 1</label>
   </variable>
-  <variable item="AltF5 controls output 2" CV="39" mask="XXXXXXVX" minOut="2" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF5 controls output 2" CV="39" mask="XXXXXXVX" minOut="2" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF5 controls output 2</label>
     <label xml:lang="it">AltF5 controlla uscita 2</label>
     <label xml:lang="cs">AltF5 řídí výstup 2</label>
   </variable>
-  <variable item="AltF5 controls output 3" CV="39" mask="XXXXXVXX" minOut="3" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF5 controls output 3" CV="39" mask="XXXXXVXX" minOut="3" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF5 controls output 3</label>
     <label xml:lang="it">AltF5 controlla uscita 3</label>
     <label xml:lang="cs">AltF5 řídí výstup 3</label>
   </variable>
-  <variable item="AltF5 controls output 4" CV="39" mask="XXXXVXXX" minOut="4" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF5 controls output 4" CV="39" mask="XXXXVXXX" minOut="4" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF5 controls output 4</label>
     <label xml:lang="it">AltF5 controlla uscita 4</label>
     <label xml:lang="cs">AltF5 řídí výstup 4</label>
   </variable>
-  <variable item="AltF5 controls output 5" CV="39" mask="XXXVXXXX" minOut="5" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF5 controls output 5" CV="39" mask="XXXVXXXX" minOut="5" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF5 controls output 5</label>
     <label xml:lang="it">AltF5 controlla uscita 5</label>
     <label xml:lang="cs">AltF5 řídí výstup 5</label>
   </variable>
-  <variable item="AltF5 controls output 6" CV="39" mask="XXVXXXXX" minOut="6" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF5 controls output 6" CV="39" mask="XXVXXXXX" minOut="6" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF5 controls output 6</label>
     <label xml:lang="it">AltF5 controlla uscita 6</label>
@@ -1210,37 +1210,37 @@
     <label xml:lang="it">AltF5 controlla uscita 8</label>
     <label xml:lang="cs">AltF5 řídí výstup 8</label>
   </variable>
-  <variable item="AltF6 controls output 1" CV="40" mask="XXXXXXXV" minOut="1" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF6 controls output 1" CV="40" mask="XXXXXXXV" minOut="1" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF6 controls output 1</label>
     <label xml:lang="it">AltF6 controlla uscita 1</label>
     <label xml:lang="cs">AltF6 řídí výstup 1</label>
   </variable>
-  <variable item="AltF6 controls output 2" CV="40" mask="XXXXXXVX" minOut="2" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF6 controls output 2" CV="40" mask="XXXXXXVX" minOut="2" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF6 controls output 2</label>
     <label xml:lang="it">AltF6 controlla uscita 2</label>
     <label xml:lang="cs">AltF6 řídí výstup 2</label>
   </variable>
-  <variable item="AltF6 controls output 3" CV="40" mask="XXXXXVXX" minOut="3" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF6 controls output 3" CV="40" mask="XXXXXVXX" minOut="3" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF6 controls output 3</label>
     <label xml:lang="it">AltF6 controlla uscita 3</label>
     <label xml:lang="cs">AltF6 řídí výstup 3</label>
   </variable>
-  <variable item="AltF6 controls output 4" CV="40" mask="XXXXVXXX" minOut="4" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF6 controls output 4" CV="40" mask="XXXXVXXX" minOut="4" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF6 controls output 4</label>
     <label xml:lang="it">AltF6 controlla uscita 4</label>
     <label xml:lang="cs">AltF6 řídí výstup 4</label>
   </variable>
-  <variable item="AltF6 controls output 5" CV="40" mask="XXXVXXXX" minOut="5" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF6 controls output 5" CV="40" mask="XXXVXXXX" minOut="5" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF6 controls output 5</label>
     <label xml:lang="it">AltF6 controlla uscita 5</label>
     <label xml:lang="cs">AltF6 řídí výstup 5</label>
   </variable>
-  <variable item="AltF6 controls output 6" CV="40" mask="XXVXXXXX" minOut="6" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF6 controls output 6" CV="40" mask="XXVXXXXX" minOut="6" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF6 controls output 6</label>
     <label xml:lang="it">AltF6 controlla uscita 6</label>
@@ -1258,37 +1258,37 @@
     <label xml:lang="it">AltF6 controlla uscita 8</label>
     <label xml:lang="cs">AltF6 řídí výstup 8</label>
   </variable>
-  <variable item="AltF7 controls output 1" CV="41" mask="XXXXXXXV" minOut="1" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF7 controls output 1" CV="41" mask="XXXXXXXV" minOut="1" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF7 controls output 1</label>
     <label xml:lang="it">AltF7 controlla uscita 1</label>
     <label xml:lang="cs">AltF7 řídí výstup 1</label>
   </variable>
-  <variable item="AltF7 controls output 2" CV="41" mask="XXXXXXVX" minOut="2" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF7 controls output 2" CV="41" mask="XXXXXXVX" minOut="2" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF7 controls output 2</label>
     <label xml:lang="it">AltF7 controlla uscita 2</label>
     <label xml:lang="cs">AltF7 řídí výstup 2</label>
   </variable>
-  <variable item="AltF7 controls output 3" CV="41" mask="XXXXXVXX" minOut="3" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF7 controls output 3" CV="41" mask="XXXXXVXX" minOut="3" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF7 controls output 3</label>
     <label xml:lang="it">AltF7 controlla uscita 3</label>
     <label xml:lang="cs">AltF7 řídí výstup 3</label>
   </variable>
-  <variable item="AltF7 controls output 4" CV="41" mask="XXXXVXXX" minOut="4" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF7 controls output 4" CV="41" mask="XXXXVXXX" minOut="4" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF7 controls output 4</label>
     <label xml:lang="it">AltF7 controlla uscita 4</label>
     <label xml:lang="cs">AltF7 řídí výstup 4</label>
   </variable>
-  <variable item="AltF7 controls output 5" CV="41" mask="XXXVXXXX" minOut="5" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF7 controls output 5" CV="41" mask="XXXVXXXX" minOut="5" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF7 controls output 5</label>
     <label xml:lang="it">AltF7 controlla uscita 5</label>
     <label xml:lang="cs">AltF7 řídí výstup 5</label>
   </variable>
-  <variable item="AltF7 controls output 6" CV="41" mask="XXVXXXXX" minOut="6" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF7 controls output 6" CV="41" mask="XXVXXXXX" minOut="6" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF7 controls output 6</label>
     <label xml:lang="it">AltF7 controlla uscita 6</label>
@@ -1306,241 +1306,241 @@
     <label xml:lang="it">AltF7 controlla uscita 8</label>
     <label xml:lang="cs">AltF7 řídí výstup 8</label>
   </variable>
-  <variable item="AltF8 controls output 1" CV="42" mask="XXXXXXXV" minOut="1" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF8 controls output 1" CV="42" mask="XXXXXXXV" minOut="1" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF8 controls output 1</label>
     <label xml:lang="it">AltF8 controlla uscita 1</label>
     <label xml:lang="cs">AltF8 řídí výstup 1</label>
   </variable>
-  <variable item="AltF8 controls output 2" CV="42" mask="XXXXXXVX" minOut="2" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF8 controls output 2" CV="42" mask="XXXXXXVX" minOut="2" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF8 controls output 2</label>
     <label xml:lang="it">AltF8 controlla uscita 2</label>
     <label xml:lang="cs">AltF8 řídí výstup 2</label>
   </variable>
-  <variable item="AltF8 controls output 3" CV="42" mask="XXXXXVXX" minOut="3" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF8 controls output 3" CV="42" mask="XXXXXVXX" minOut="3" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF8 controls output 3</label>
     <label xml:lang="it">AltF8 controlla uscita 3</label>
     <label xml:lang="cs">AltF8 řídí výstup 3</label>
   </variable>
-  <variable item="AltF8 controls output 4" CV="42" mask="XXXXVXXX" minOut="4" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF8 controls output 4" CV="42" mask="XXXXVXXX" minOut="4" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF8 controls output 4</label>
     <label xml:lang="it">AltF8 controlla uscita 4</label>
     <label xml:lang="cs">AltF8 řídí výstup 4</label>
   </variable>
-  <variable item="AltF8 controls output 5" CV="42" mask="XXXVXXXX" minOut="5" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF8 controls output 5" CV="42" mask="XXXVXXXX" minOut="5" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF8 controls output 5</label>
     <label xml:lang="it">AltF8 controlla uscita 5</label>
     <label xml:lang="cs">AltF8 řídí výstup 5</label>
   </variable>
-  <variable item="AltF8 controls output 6" CV="42" mask="XXVXXXXX" minOut="6" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF8 controls output 6" CV="42" mask="XXVXXXXX" minOut="6" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF8 controls output 6</label>
     <label xml:lang="it">AltF8 controlla uscita 6</label>
     <label xml:lang="cs">AltF8 řídí výstup 6</label>
   </variable>
-  <variable item="AltF8 controls output 7" CV="42" mask="XVXXXXXX" minOut="7" minFn="3" exclude="179,184,228,226,232,235,247,253,MX689_v30">
+  <variable item="AltF8 controls output 7" CV="42" mask="XVXXXXXX" minOut="7" minFn="3" exclude="228,226,232,235,247,253,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF8 controls output 7</label>
     <label xml:lang="it">AltF8 controlla uscita 7</label>
     <label xml:lang="cs">AltF8 řídí výstup 7</label>
   </variable>
-  <variable item="AltF8 controls output 8" CV="42" mask="VXXXXXXX" minOut="8" minFn="3" exclude="179,184,228,226,232,235,247,253,MX689_v30">
+  <variable item="AltF8 controls output 8" CV="42" mask="VXXXXXXX" minOut="8" minFn="3" exclude="228,226,232,235,247,253,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF8 controls output 8</label>
     <label xml:lang="it">AltF8 controlla uscita 8</label>
     <label xml:lang="cs">AltF8 řídí výstup 8</label>
   </variable>
-  <variable item="AltF9 controls output 1" CV="43" mask="XXXXXXXV" minOut="1" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF9 controls output 1" CV="43" mask="XXXXXXXV" minOut="1" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF9 controls output 1</label>
     <label xml:lang="it">AltF9 controlla uscita 1</label>
     <label xml:lang="cs">AltF9 řídí výstup 1</label>
   </variable>
-  <variable item="AltF9 controls output 2" CV="43" mask="XXXXXXVX" minOut="2" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF9 controls output 2" CV="43" mask="XXXXXXVX" minOut="2" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF9 controls output 2</label>
     <label xml:lang="it">AltF9 controlla uscita 2</label>
     <label xml:lang="cs">AltF9 řídí výstup 2</label>
   </variable>
-  <variable item="AltF9 controls output 3" CV="43" mask="XXXXXVXX" minOut="3" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF9 controls output 3" CV="43" mask="XXXXXVXX" minOut="3" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF9 controls output 3</label>
     <label xml:lang="it">AltF9 controlla uscita 3</label>
     <label xml:lang="cs">AltF9 řídí výstup 3</label>
   </variable>
-  <variable item="AltF9 controls output 4" CV="43" mask="XXXXVXXX" minOut="4" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF9 controls output 4" CV="43" mask="XXXXVXXX" minOut="4" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF9 controls output 4</label>
     <label xml:lang="it">AltF9 controlla uscita 4</label>
     <label xml:lang="cs">AltF9 řídí výstup 4</label>
   </variable>
-  <variable item="AltF9 controls output 5" CV="43" mask="XXXVXXXX" minOut="5" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF9 controls output 5" CV="43" mask="XXXVXXXX" minOut="5" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF9 controls output 5</label>
     <label xml:lang="it">AltF9 controlla uscita 5</label>
     <label xml:lang="cs">AltF9 řídí výstup 5</label>
   </variable>
-  <variable item="AltF9 controls output 6" CV="43" mask="XXVXXXXX" minOut="6" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF9 controls output 6" CV="43" mask="XXVXXXXX" minOut="6" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF9 controls output 6</label>
     <label xml:lang="it">AltF9 controlla uscita 6</label>
     <label xml:lang="cs">AltF9 řídí výstup 6</label>
   </variable>
-  <variable item="AltF9 controls output 7" CV="43" mask="XVXXXXXX" minOut="7" minFn="3" exclude="179,184,228,226,232,235,247,253,MX689_v30">
+  <variable item="AltF9 controls output 7" CV="43" mask="XVXXXXXX" minOut="7" minFn="3" exclude="228,226,232,235,247,253,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF9 controls output 7</label>
     <label xml:lang="it">AltF9 controlla uscita 7</label>
     <label xml:lang="cs">AltF9 řídí výstup 7</label>
   </variable>
-  <variable item="AltF9 controls output 8" CV="43" mask="VXXXXXXX" minOut="8" minFn="3" exclude="179,184,228,226,232,235,247,253,MX689_v30">
+  <variable item="AltF9 controls output 8" CV="43" mask="VXXXXXXX" minOut="8" minFn="3" exclude="228,226,232,235,247,253,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF9 controls output 8</label>
     <label xml:lang="it">AltF9 controlla uscita 8</label>
     <label xml:lang="cs">AltF9 řídí výstup 8</label>
   </variable>
-  <variable item="AltF10 controls output 1" CV="44" mask="XXXXXXXV" minOut="1" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF10 controls output 1" CV="44" mask="XXXXXXXV" minOut="1" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF10 controls output 1</label>
     <label xml:lang="it">AltF10 controlla uscita 1</label>
     <label xml:lang="cs">AltF10 řídí výstup 1</label>
   </variable>
-  <variable item="AltF10 controls output 2" CV="44" mask="XXXXXXVX" minOut="2" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF10 controls output 2" CV="44" mask="XXXXXXVX" minOut="2" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF10 controls output 2</label>
     <label xml:lang="it">AltF10 controlla uscita 2</label>
     <label xml:lang="cs">AltF10 řídí výstup 2</label>
   </variable>
-  <variable item="AltF10 controls output 3" CV="44" mask="XXXXXVXX" minOut="3" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF10 controls output 3" CV="44" mask="XXXXXVXX" minOut="3" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF10 controls output 3</label>
     <label xml:lang="it">AltF10 controlla uscita 3</label>
     <label xml:lang="cs">AltF10 řídí výstup 3</label>
   </variable>
-  <variable item="AltF10 controls output 4" CV="44" mask="XXXXVXXX" minOut="4" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF10 controls output 4" CV="44" mask="XXXXVXXX" minOut="4" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF10 controls output 4</label>
     <label xml:lang="it">AltF10 controlla uscita 4</label>
     <label xml:lang="cs">AltF10 řídí výstup 4</label>
   </variable>
-  <variable item="AltF10 controls output 5" CV="44" mask="XXXVXXXX" minOut="5" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF10 controls output 5" CV="44" mask="XXXVXXXX" minOut="5" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF10 controls output 5</label>
     <label xml:lang="it">AltF10 controlla uscita 5</label>
     <label xml:lang="cs">AltF10 řídí výstup 5</label>
   </variable>
-  <variable item="AltF10 controls output 6" CV="44" mask="XXVXXXXX" minOut="6" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF10 controls output 6" CV="44" mask="XXVXXXXX" minOut="6" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF10 controls output 6</label>
     <label xml:lang="it">AltF10 controlla uscita 6</label>
     <label xml:lang="cs">AltF10 řídí výstup 6</label>
   </variable>
-  <variable item="AltF10 controls output 7" CV="44" mask="XVXXXXXX" minOut="7" minFn="3" exclude="179,184,228,226,232,235,247,253,MX689_v30">
+  <variable item="AltF10 controls output 7" CV="44" mask="XVXXXXXX" minOut="7" minFn="3" exclude="228,226,232,235,247,253,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF10 controls output 7</label>
     <label xml:lang="it">AltF10 controlla uscita 7</label>
     <label xml:lang="cs">AltF10 řídí výstup 7</label>
   </variable>
-  <variable item="AltF10 controls output 8" CV="44" mask="VXXXXXXX" minOut="8" minFn="3" exclude="179,184,228,226,232,235,247,253,MX689_v30">
+  <variable item="AltF10 controls output 8" CV="44" mask="VXXXXXXX" minOut="8" minFn="3" exclude="228,226,232,235,247,253,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF10 controls output 8</label>
     <label xml:lang="it">AltF10 controlla uscita 8</label>
     <label xml:lang="cs">AltF10 řídí výstup 8</label>
   </variable>
-  <variable item="AltF11 controls output 1" CV="45" mask="XXXXXXXV" minOut="1" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF11 controls output 1" CV="45" mask="XXXXXXXV" minOut="1" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF11 controls output 1</label>
     <label xml:lang="it">AltF11 controlla uscita 1</label>
     <label xml:lang="cs">AltF11 řídí výstup 1</label>
   </variable>
-  <variable item="AltF11 controls output 2" CV="45" mask="XXXXXXVX" minOut="2" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF11 controls output 2" CV="45" mask="XXXXXXVX" minOut="2" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF11 controls output 2</label>
     <label xml:lang="it">AltF11 controlla uscita 2</label>
     <label xml:lang="cs">AltF11 řídí výstup 2</label>
   </variable>
-  <variable item="AltF11 controls output 3" CV="45" mask="XXXXXVXX" minOut="3" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF11 controls output 3" CV="45" mask="XXXXXVXX" minOut="3" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF11 controls output 3</label>
     <label xml:lang="it">AltF11 controlla uscita 3</label>
     <label xml:lang="cs">AltF11 řídí výstup 3</label>
   </variable>
-  <variable item="AltF11 controls output 4" CV="45" mask="XXXXVXXX" minOut="4" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF11 controls output 4" CV="45" mask="XXXXVXXX" minOut="4" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF11 controls output 4</label>
     <label xml:lang="it">AltF11 controlla uscita 4</label>
     <label xml:lang="cs">AltF11 řídí výstup 4</label>
   </variable>
-  <variable item="AltF11 controls output 5" CV="45" mask="XXXVXXXX" minOut="5" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF11 controls output 5" CV="45" mask="XXXVXXXX" minOut="5" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF11 controls output 5</label>
     <label xml:lang="it">AltF11 controlla uscita 5</label>
     <label xml:lang="cs">AltF11 řídí výstup 5</label>
   </variable>
-  <variable item="AltF11 controls output 6" CV="45" mask="XXVXXXXX" minOut="6" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF11 controls output 6" CV="45" mask="XXVXXXXX" minOut="6" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF11 controls output 6</label>
     <label xml:lang="it">AltF11 controlla uscita 6</label>
     <label xml:lang="cs">AltF11 řídí výstup 6</label>
   </variable>
-  <variable item="AltF11 controls output 7" CV="45" mask="XVXXXXXX" minOut="7" minFn="3" exclude="179,184,228,226,232,235,247,253,MX689_v30">
+  <variable item="AltF11 controls output 7" CV="45" mask="XVXXXXXX" minOut="7" minFn="3" exclude="228,226,232,235,247,253,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF11 controls output 7</label>
     <label xml:lang="it">AltF11 controlla uscita 7</label>
     <label xml:lang="cs">AltF11 řídí výstup 7</label>
   </variable>
-  <variable item="AltF11 controls output 8" CV="45" mask="VXXXXXXX" minOut="8" minFn="3" exclude="179,184,228,226,232,235,247,253,MX689_v30">
+  <variable item="AltF11 controls output 8" CV="45" mask="VXXXXXXX" minOut="8" minFn="3" exclude="228,226,232,235,247,253,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF11 controls output 8</label>
     <label xml:lang="it">AltF11 controlla uscita 8</label>
     <label xml:lang="cs">AltF11 řídí výstup 8</label>
   </variable>
-  <variable item="AltF12 controls output 1" CV="46" mask="XXXXXXXV" minOut="1" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF12 controls output 1" CV="46" mask="XXXXXXXV" minOut="1" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF12 controls output 1</label>
     <label xml:lang="it">AltF12 controlla uscita 1</label>
     <label xml:lang="cs">AltF12 řídí výstup 1</label>
   </variable>
-  <variable item="AltF12 controls output 2" CV="46" mask="XXXXXXVX" minOut="2" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF12 controls output 2" CV="46" mask="XXXXXXVX" minOut="2" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF12 controls output 2</label>
     <label xml:lang="it">AltF12 controlla uscita 2</label>
     <label xml:lang="cs">AltF12 řídí výstup 2</label>
   </variable>
-  <variable item="AltF12 controls output 3" CV="46" mask="XXXXXVXX" minOut="3" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF12 controls output 3" CV="46" mask="XXXXXVXX" minOut="3" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF12 controls output 3</label>
     <label xml:lang="it">AltF12 controlla uscita 3</label>
     <label xml:lang="cs">AltF12 řídí výstup 3</label>
   </variable>
-  <variable item="AltF12 controls output 4" CV="46" mask="XXXXVXXX" minOut="4" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF12 controls output 4" CV="46" mask="XXXXVXXX" minOut="4" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF12 controls output 4</label>
     <label xml:lang="it">AltF12 controlla uscita 4</label>
     <label xml:lang="cs">AltF12 řídí výstup 4</label>
   </variable>
-  <variable item="AltF12 controls output 5" CV="46" mask="XXXVXXXX" minOut="5" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF12 controls output 5" CV="46" mask="XXXVXXXX" minOut="5" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF12 controls output 5</label>
     <label xml:lang="it">AltF12 controlla uscita 5</label>
     <label xml:lang="cs">AltF12 řídí výstup 5</label>
   </variable>
-  <variable item="AltF12 controls output 6" CV="46" mask="XXVXXXXX" minOut="6" minFn="3" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable item="AltF12 controls output 6" CV="46" mask="XXVXXXXX" minOut="6" minFn="3" exclude="228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF12 controls output 6</label>
     <label xml:lang="it">AltF12 controlla uscita 6</label>
     <label xml:lang="cs">AltF12 řídí výstup 6</label>
   </variable>
-  <variable item="AltF12 controls output 7" CV="46" mask="XVXXXXXX" minOut="7" minFn="3" exclude="179,184,228,226,232,235,247,253,MX689_v30">
+  <variable item="AltF12 controls output 7" CV="46" mask="XVXXXXXX" minOut="7" minFn="3" exclude="228,226,232,235,247,253,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF12 controls output 7</label>
     <label xml:lang="it">AltF12 controlla uscita 7</label>
     <label xml:lang="cs">AltF12 řídí výstup 7</label>
   </variable>
-  <variable item="AltF12 controls output 8" CV="46" mask="VXXXXXXX" minOut="8" minFn="3" exclude="179,184,228,226,232,235,247,253,MX689_v30">
+  <variable item="AltF12 controls output 8" CV="46" mask="VXXXXXXX" minOut="8" minFn="3" exclude="228,226,232,235,247,253,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AltF12 controls output 8</label>
     <label xml:lang="it">AltF12 controlla uscita 8</label>
