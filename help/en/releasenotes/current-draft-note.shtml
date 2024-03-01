@@ -557,7 +557,18 @@ LogixNG: IQ:AUTO:0001
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Added three sample scripts
+                <ul>
+                    <li>AddPowerButton.py - shows how to add a button to the main
+                            PanelPro window. In this case, the button turns power on and off.
+                    <li>MainWindowToBack.py - moves the main PanelPro window to the back.
+                            Useful when you want PanelPro to start up with a panel
+                            at the front of the screen.
+                    <li>MenuItemDisable.py - shows how to disable menu items so they
+                            can't be used.  Sample disables LocoNet ability to reset slots,
+                            and ability to start the WiThrottle server.  Meant for e.g.
+                            club use.
+            </li>
         </ul>
 
     <h3>Signals</h3>
