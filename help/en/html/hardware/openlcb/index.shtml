@@ -114,7 +114,7 @@
       <p>The scheme for Turnouts is similar to Sensors above, except JMRI is producing the OpenLCB
       events instead of receiving them, and the type letter is "T" instead of "S", e.g.
       "<code>MT1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9</code>".</p>
-      
+
       <p>A Turnout is defined by two Events: The one that it produces for THROWN
       and the one that it produces for CLOSED respectively.<br>
 
@@ -152,7 +152,8 @@
 
       <h2 id="tools">JMRI OpenLCB Tools</h2>
       <img src="images/OpenLCBmenu.png" width="172" height="126" class="floatRight" alt="Menu">
-      <p>When JMRI is connected to a layout via this system, an <strong>OpenLCB</strong> menu is
+      <p>When JMRI is connected to a layout via this system, an <strong>OpenLCB</strong>
+      or <strong>LCC</strong> menu is
       shown:</p>
 
       <ul>
@@ -181,30 +182,35 @@
           "Hub Control Pane" width="114" height="28"></a>
         </li>
 
-        <li>The 
+        <li>The
         <a href="../../../package/jmri/jmrix/openlcb/swing/eventtable/EventTablePane.shtml">Event Table</a>
-        lets you see what nodes produce and consume particular events.  It also 
+        lets you see what nodes produce and consume particular events.  It also
         allows you to give names to events that will appear in the monitor.
         </li>
 
-        <li>The 
+        <li>The
         <a href="../../../package/jmri/jmrix/openlcb/swing/downloader/LoaderFrame.shtml">Firmware Update</a>
         tool can load new firmware into compatible OpenLCB Nodes<br>
           <a href="images/OpenLCBFWDownloader.png"><img src="images/OpenLCBFWDownloader.png" alt=
           "HW Downloader Pane" width="145" height="171"></a>
         </li>
-      
+
         <li>The
         <a href="../../../package/jmri/jmrix/openlcb/swing/memtool/MemoryToolPane.shtml">Memory Tool</a>
-        lets you read from and directly write to a nodes memory.  This can be 
+        lets you read from and directly write to a nodes memory.  This can be
         useful for diagnostic purposes.
         </li>
-        
-        <li>The=
+
+        <li>The
         <a href="../../../package/jmri/jmrix/openlcb/swing/idtool/IdToolPane.shtml">ID Tool</a>
         helps you find a specific physical node on the layout by flashing its activity lights.
         </li>
-        
+
+        <li>The
+        <a href="../../../package/jmri/jmrix/openlcb/swing/stleditor/StlEditorPane.shtml">STL Editor</a>
+        is a uesr friendly front end for the Tower LCC+Q logic. <span class="since">since 5.7.5</span>
+        </li>
+
       </ul>
 
       <h2 id="documentation">Documentation</h2>
