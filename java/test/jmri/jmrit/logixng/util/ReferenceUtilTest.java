@@ -242,7 +242,7 @@ public class ReferenceUtilTest {
     }
 
     @Test
-    @SuppressWarnings("ResultOfMethodCallIgnored")  // This method test thrown exceptions
+//    @SuppressWarnings("ResultOfMethodCallIgnored")  // This method test thrown exceptions
     public void testExceptions() {
 
         SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
@@ -273,7 +273,7 @@ public class ReferenceUtilTest {
     }
 
     @Test
-    @SuppressWarnings("ResultOfMethodCallIgnored")  // This method test thrown exceptions
+//    @SuppressWarnings("ResultOfMethodCallIgnored")  // This method test thrown exceptions
     public void testExceptions2() {
 
         ReferenceUtil.IntRef endRef = new ReferenceUtil.IntRef();
@@ -312,7 +312,7 @@ public class ReferenceUtilTest {
     }
 
     @Test
-    @SuppressWarnings("ResultOfMethodCallIgnored")  // This method test thrown exceptions
+//    @SuppressWarnings("ResultOfMethodCallIgnored")  // This method test thrown exceptions
     public void testSpecialCharacters() {
 
         Memory m91 = _memoryManager.newMemory("IM91", "Memory , abc");

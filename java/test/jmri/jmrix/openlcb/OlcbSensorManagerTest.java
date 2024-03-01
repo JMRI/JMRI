@@ -102,7 +102,7 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     }
 
     @BeforeAll
-    @SuppressWarnings("deprecated") // OlcbInterface(NodeID, Connection)
+    @SuppressWarnings("deprecation") // OlcbInterface(NodeID, Connection)
     static public void preClassInit() {
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();

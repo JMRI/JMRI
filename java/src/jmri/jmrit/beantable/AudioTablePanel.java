@@ -55,7 +55,7 @@ public class AudioTablePanel extends JPanel {
 
     private static final ResourceBundle rba = ResourceBundle.getBundle("jmri.jmrit.audio.swing.AudioTableBundle");
 
-    @SuppressWarnings("OverridableMethodCallInConstructor")
+//    @SuppressWarnings("OverridableMethodCallInConstructor")
     public AudioTablePanel(AudioTableDataModel listenerModel,
             AudioTableDataModel bufferModel,
             AudioTableDataModel sourceModel,

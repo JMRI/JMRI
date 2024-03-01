@@ -210,7 +210,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      *
      * @return the port names in the form they can later be used to open the port
      */
-    @SuppressWarnings("UseOfObsoleteCollectionType") // historical interface
+//    @SuppressWarnings("UseOfObsoleteCollectionType") // historical interface
     public static Vector<String> getActualPortNames() {
         // first, check that the comm package can be opened and ports seen
         var portNameVector = new Vector<String>();
