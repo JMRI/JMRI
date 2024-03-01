@@ -187,11 +187,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         _editButtons.add(_moveUpButton);
         _editButtons.add(_moveDownButton);
         _editButtons.add(_deleteButton);
+        _editButtons.add(_percentButton);
         footer.add(_editButtons, BorderLayout.WEST);
 
         var dataButtons = new JPanel();
-        dataButtons.add(_percentButton);
-        dataButtons.add(new JLabel(" | "));
         dataButtons.add(_importButton);
         dataButtons.add(_exportButton);
         dataButtons.add(new JLabel(" | "));
@@ -1327,6 +1326,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             return;
         }
 
+        if (!setCsvDirectoryPath(true)) {
+            return;
+        }
+
         _csvMessages.clear();
         importCsvData();
         setDirty(false);
@@ -1343,10 +1346,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     private void importCsvData() {
-        if (!setCsvDirectoryPath(true)) {
-            return;
-        }
-
         importGroupLogic();
         importInputs();
         importOutputs();
@@ -1535,6 +1534,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     // --------------  CSV Export ---------
 
     private void pushedExportButton(ActionEvent e) {
+        if (!setCsvDirectoryPath(false)) {
+            return;
+        }
+
         _csvMessages.clear();
         exportCsvData();
         setDirty(false);
@@ -1551,10 +1554,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     private void exportCsvData() {
-        if (!setCsvDirectoryPath(false)) {
-            return;
-        }
-
         try {
             exportGroupLogic();
             exportInputs();
