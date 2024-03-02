@@ -89,11 +89,13 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV1-CV99.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV37-CV46.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/zimo/CV100-CV152version30.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV1-CV99_Lightboards_v40.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV33-CV46_Lightboards_v40.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV100-CV152_v40.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV153-CV157version28.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV250-CV253.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CVSwissMapping_v40.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV508-CV512.xml"/>
       <variable CV="64" default="0" item="Secondary Short Address">
         <shortAddressVal/>
         <label>Secondary Short Address</label>
@@ -208,7 +210,7 @@
        <label xml:lang="de">Lrück + Zusatz 2 aus</label>
       </variable>
     </variables>
-    <xi:include href="http://jmri.org/xml/decoders/zimo/factReset-v32.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/zimo/factResetLightboards_v40.xml"/>
   </decoder>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAccelDecel.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSecondAddress.xml"/>
