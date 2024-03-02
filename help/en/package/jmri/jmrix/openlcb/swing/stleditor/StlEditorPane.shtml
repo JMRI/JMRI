@@ -112,7 +112,6 @@ etc.
       thrown turnouts and active sensors are true.  From a logic point of view, think of "is it
       thrown?" and "is it occupied?".</p>
 
-      <
       <div style="margin-left: 2em">
         <a href="images/input_tab.png"><img src=
         "images/input_tab.png" alt="stl input tab"></a>
