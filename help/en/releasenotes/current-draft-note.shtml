@@ -135,6 +135,9 @@
                     </ul>
                 </li>
                 <li>Additions for better conformance with OpenLCB standards</li>
+                <li>Add the <strong>STL Editor</strong> tool to the OpenLCB/LCC menu.  The
+                tool is used to generate the STL logic for the RR-CirKits Tower LCC+Q.  The
+                Tower LCC+Q uses a subset of the Siemens Structured List PLC language.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -680,7 +683,7 @@ LogixNG: IQ:AUTO:0001
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Improve handling of block values that contain IdTags 
+            <li>Improve handling of block values that contain IdTags
                 across shutdown and startup.</li>
         </ul>
 
