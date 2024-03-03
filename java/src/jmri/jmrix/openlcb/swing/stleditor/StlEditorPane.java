@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.io.*;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
 import java.nio.file.*;
 
@@ -50,12 +51,13 @@ import org.openlcb.cdi.impl.ConfigRepresentation;
  *
  * A third mode is to load a CDI backup file.  This can then be used with the CSV process for offline work.
  *
- * TODO (phase 2):
- *     Implement CDI write confirmation.
- *     Provide a store in process dialog - depends on write confirmation
- *     Implement reboot:
- *         rep.getConnection().getDatagramService().sendData(rep.getRemoteNodeID(), new int[] {0x20, 0xA9});
- *         Check compile messages.
+ * The reboot process has several steps.
+ * <ul>
+ *   <li>The Yes option is selected in compile needed dialog.  This sends the reboot command.</li>
+ *   <li>The RebootListener detects that the reboot is done and does getCompileMessage.</li>
+ *   <li>getCompileMessage does a reload for the first syntax message.</li>
+ *   <li>EntryListener gets the reload done event and calls displayCompileMessage.
+ * </ul>
  *
  * @author Dave Sand Copyright (C) 2024
  * @since 5.7.5
@@ -78,6 +80,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private int _logicRow = -1;     // The last selected row, -1 for none
     private int _groupRow = 0;
     private List<String> _csvMessages = new ArrayList<>();
+    private AtomicInteger _storeQueueLength = new AtomicInteger(0);
+    private boolean _compileNeeded = false;
+    private boolean _compileInProgress = false;
+    PropertyChangeListener _entryListener = new EntryListener();
 
     private String _csvDirectoryPath = "";
 
@@ -132,6 +138,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private static String TRANSMITTER_EVENT = "Track Transmitters.Tx Circuit(%s).Link Address";
     private static String GROUP_NAME = "Conditionals.Logic(%s).Group Description";
     private static String GROUP_MULTI_LINE = "Conditionals.Logic(%s).MultiLine";
+    private static String SYNTAX_MESSAGE = "Syntax Messages.Syntax Messages.Message 1";
 
     // Regex Patterns
     private static Pattern PARSE_VARIABLE = Pattern.compile("[IQYZM](\\d+)\\.(\\d+)");
@@ -768,16 +775,17 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
     }
 
-    // --------------  node selector ---------
+    // --------------  node methods ---------
 
     private void nodeSelected(ActionEvent e) {
         NodeEntry node = (NodeEntry) _nodeBox.getSelectedItem();
+        node.getNodeMemo().addPropertyChangeListener(new RebootListener());
         log.debug("nodeSelected: {}", node);
 
         if (isValidNodeVersionNumber(node.getNodeMemo())) {
             _cdi = _iface.getConfigForNode(node.getNodeID());
             if (_cdi.getRoot() != null) {
-                loadDone();
+                loadCdiData();
             } else {
                 JmriJOptionPane.showMessageDialogNonModal(this,
                         Bundle.getMessage("MessageCdiLoad", node),
@@ -785,6 +793,21 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                         JmriJOptionPane.INFORMATION_MESSAGE,
                         null);
                 _cdi.addPropertyChangeListener(new CdiListener());
+            }
+        }
+    }
+
+    /**
+     * Listens for a property change that implies a node has been rebooted.
+     * This occurs when the user has selected that the editor should do the reboot to compile the updated logic.
+     * When the updateSimpleNodeIdent event occurs and the compile is in progress it starts the message display process.
+     */
+    public class RebootListener implements PropertyChangeListener {
+        public void propertyChange(PropertyChangeEvent e) {
+            String propertyName = e.getPropertyName();
+            if (_compileInProgress && propertyName.equals("updateSimpleNodeIdent")) {
+                log.debug("The reboot appears to be done");
+                getCompileMessage();
             }
         }
     }
@@ -804,13 +827,9 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                         }
                     }
                 }
-                loadDone();
+                loadCdiData();
             }
         }
-    }
-
-    private void loadDone() {
-        loadCdiData();
     }
 
     private void newNodeInList(MimicNodeStore.NodeMemo nodeMemo) {
@@ -859,6 +878,85 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         return true;
+    }
+
+    public class EntryListener implements PropertyChangeListener {
+        public void propertyChange(PropertyChangeEvent e) {
+            String propertyName = e.getPropertyName();
+            log.info("EntryListener event = {}", propertyName);
+
+            if (propertyName.equals("PENDING_WRITE_COMPLETE")) {
+                int currentLength = _storeQueueLength.decrementAndGet();
+                log.info("Listener: queue length = {}, source = {}", currentLength, e.getSource());
+
+                var entry = (ConfigRepresentation.CdiEntry) e.getSource();
+                entry.removePropertyChangeListener(_entryListener);
+
+                if (currentLength < 1) {
+                    log.info("The queue is back to zero which implies the updates are done");
+                    displayStoreDone();
+                }
+            }
+
+            if (_compileInProgress && propertyName.equals("UPDATE_ENTRY_DATA")) {
+                // The refresh of the first syntax message has completed.
+                var entry = (ConfigRepresentation.StringEntry) e.getSource();
+                entry.removePropertyChangeListener(_entryListener);
+                displayCompileMessage(entry.getValue());
+            }
+        }
+    }
+
+    private void displayStoreDone() {
+        _csvMessages.add(Bundle.getMessage("StoreDone"));
+        var msgType = JmriJOptionPane.ERROR_MESSAGE;
+        if (_csvMessages.size() == 1) {
+            msgType = JmriJOptionPane.INFORMATION_MESSAGE;
+        }
+        JmriJOptionPane.showMessageDialog(this,
+                String.join("\n", _csvMessages),
+                Bundle.getMessage("TitleCdiStore"),
+                msgType);
+
+        if (_compileNeeded) {
+            log.info("Display compile needed message");
+
+            int response = JmriJOptionPane.showConfirmDialog(this,
+                    Bundle.getMessage("MessageCdiReboot"),
+                    Bundle.getMessage("TitleCdiReboot"),
+                    JmriJOptionPane.YES_NO_OPTION,
+                    JmriJOptionPane.QUESTION_MESSAGE);
+
+            if (response == JmriJOptionPane.YES_OPTION) {
+                // Set the compile in process and request the reboot.  The completion will be
+                // handed by the RebootListener.
+                _compileInProgress = true;
+                _cdi.getConnection().getDatagramService().
+                        sendData(_cdi.getRemoteNodeID(), new int[] {0x20, 0xA9});
+            }
+        }
+    }
+
+    /**
+     * Get the first syntax message entry, add the entry listener and request a reload (refresh).
+     * The EntryListener will handle the reload event.
+     */
+    private void getCompileMessage() {
+            var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(SYNTAX_MESSAGE);
+            entry.addPropertyChangeListener(_entryListener);
+            entry.reload();
+    }
+
+    /**
+     * Turn off the compile in progress and display the syntax message.
+     * @param message The first syntax message.
+     */
+    private void displayCompileMessage(String message) {
+        _compileInProgress = false;
+        JmriJOptionPane.showMessageDialog(this,
+                Bundle.getMessage("MessageCompile", message),
+                Bundle.getMessage("TitleCompile"),
+                JmriJOptionPane.INFORMATION_MESSAGE);
     }
 
     // Notifies that the contents of a given entry have changed. This will delete and re-add the
@@ -970,6 +1068,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         @Override
         public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
             //log.warning("Received model entry update for " + nodeMemo.getNodeID());
+            log.info("NodeEntry event = {}", propertyChangeEvent.getPropertyName());
             if (propertyChangeEvent.getPropertyName().equals(UPDATE_PROP_SIMPLE_NODE_IDENT)) {
                 updateDescription();
             }
@@ -1091,6 +1190,8 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     private void pushedStoreButton(ActionEvent e) {
         _csvMessages.clear();
+        _compileNeeded = false;
+        _storeQueueLength.set(0);
 
         // Store CDI data
         storeInputs();
@@ -1100,20 +1201,12 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         storeGroups();
 
         setDirty(false);
-
-        _csvMessages.add(Bundle.getMessage("StoreDone"));
-        var msgType = JmriJOptionPane.ERROR_MESSAGE;
-        if (_csvMessages.size() == 1) {
-            msgType = JmriJOptionPane.INFORMATION_MESSAGE;
-        }
-        JmriJOptionPane.showMessageDialog(this,
-                String.join("\n", _csvMessages),
-                Bundle.getMessage("TitleCdiStore"),
-                msgType);
     }
 
     private void storeGroups() {
         // store the group data
+        int currentCount = 0;
+
         for (int i = 0; i < 16; i++) {
             var row = _groupList.get(i);
 
@@ -1121,64 +1214,123 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             encode(row);
 
             var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(GROUP_NAME, i));
-            entry.setValue(row.getName());
-            entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(GROUP_MULTI_LINE, i));
-            entry.setValue(row.getMultiLine());
+            if (!row.getName().equals(entry.getValue())) {
+                entry.addPropertyChangeListener(_entryListener);
+                entry.setValue(row.getName());
+                currentCount = _storeQueueLength.incrementAndGet();
+            }
 
+            entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(GROUP_MULTI_LINE, i));
+            if (!row.getMultiLine().equals(entry.getValue())) {
+                entry.addPropertyChangeListener(_entryListener);
+                entry.setValue(row.getMultiLine());
+                currentCount = _storeQueueLength.incrementAndGet();
+                _compileNeeded = true;
+            }
+
+//             log.info("Update for group: {}, queue = {}, compile = {}", row.getName(), _storeQueueLength, _compileNeeded);
             log.debug("Group: {}", row.getName());
             log.debug("Logic: {}", row.getMultiLine());
         }
+//         log.info("Groups done: queue = {}, compile needed = {}", _storeQueueLength, _compileNeeded);
     }
 
     private void storeInputs() {
+        int currentCount = 0;
+
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 8; j++) {
                 var row = _inputList.get((i * 8) + j);
 
                 var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(INPUT_NAME, i, j));
-                entry.setValue(row.getName());
+                if (!row.getName().equals(entry.getValue())) {
+                    entry.addPropertyChangeListener(_entryListener);
+                    entry.setValue(row.getName());
+                    currentCount = _storeQueueLength.incrementAndGet();
+                }
+
                 var event = (ConfigRepresentation.EventEntry) _cdi.getVariableForKey(String.format(INPUT_TRUE, i, j));
-                event.setValue(new EventID(row.getEventTrue()));
+                if (!row.getEventTrue().equals(event.getValue().toShortString())) {
+                    event.addPropertyChangeListener(_entryListener);
+                    event.setValue(new EventID(row.getEventTrue()));
+                    currentCount = _storeQueueLength.incrementAndGet();
+                }
+
                 event = (ConfigRepresentation.EventEntry) _cdi.getVariableForKey(String.format(INPUT_FALSE, i, j));
-                event.setValue(new EventID(row.getEventFalse()));
+                if (!row.getEventFalse().equals(event.getValue().toShortString())) {
+                    event.addPropertyChangeListener(_entryListener);
+                    event.setValue(new EventID(row.getEventFalse()));
+                    currentCount = _storeQueueLength.incrementAndGet();
+                }
             }
         }
     }
 
     private void storeOutputs() {
+        int currentCount = 0;
+
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 8; j++) {
                 var row = _outputList.get((i * 8) + j);
 
                 var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(OUTPUT_NAME, i, j));
-                entry.setValue(row.getName());
+                if (!row.getName().equals(entry.getValue())) {
+                    entry.addPropertyChangeListener(_entryListener);
+                    entry.setValue(row.getName());
+                    currentCount = _storeQueueLength.incrementAndGet();
+                }
+
                 var event = (ConfigRepresentation.EventEntry) _cdi.getVariableForKey(String.format(OUTPUT_TRUE, i, j));
-                event.setValue(new EventID(row.getEventTrue()));
+                if (!row.getEventTrue().equals(event.getValue().toShortString())) {
+                    event.addPropertyChangeListener(_entryListener);
+                    event.setValue(new EventID(row.getEventTrue()));
+                    currentCount = _storeQueueLength.incrementAndGet();
+                }
+
                 event = (ConfigRepresentation.EventEntry) _cdi.getVariableForKey(String.format(OUTPUT_FALSE, i, j));
-                event.setValue(new EventID(row.getEventFalse()));
+                if (!row.getEventFalse().equals(event.getValue().toShortString())) {
+                    event.addPropertyChangeListener(_entryListener);
+                    event.setValue(new EventID(row.getEventFalse()));
+                    currentCount = _storeQueueLength.incrementAndGet();
+                }
             }
         }
     }
 
     private void storeReceivers() {
+        int currentCount = 0;
+
         for (int i = 0; i < 16; i++) {
             var row = _receiverList.get(i);
 
             var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(RECEIVER_NAME, i));
-            entry.setValue(row.getName());
+            if (!row.getName().equals(entry.getValue())) {
+                entry.addPropertyChangeListener(_entryListener);
+                entry.setValue(row.getName());
+                currentCount = _storeQueueLength.incrementAndGet();
+            }
+
             var event = (ConfigRepresentation.EventEntry) _cdi.getVariableForKey(String.format(RECEIVER_EVENT, i));
-            event.setValue(new EventID(row.getEventId()));
+            if (!row.getEventId().equals(event.getValue().toShortString())) {
+                event.addPropertyChangeListener(_entryListener);
+                event.setValue(new EventID(row.getEventId()));
+                currentCount = _storeQueueLength.incrementAndGet();
+            }
         }
     }
 
     private void storeTransmitters() {
+        int currentCount = 0;
+
         for (int i = 0; i < 16; i++) {
             var row = _transmitterList.get(i);
 
             var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(TRANSMITTER_NAME, i));
-            entry.setValue(row.getName());
-            var event = (ConfigRepresentation.EventEntry) _cdi.getVariableForKey(String.format(TRANSMITTER_EVENT, i));
-            event.setValue(new EventID(row.getEventId()));
+            if (!row.getName().equals(entry.getValue())) {
+                entry.addPropertyChangeListener(_entryListener);
+                entry.setValue(row.getName());
+                currentCount = _storeQueueLength.incrementAndGet();
+            }
         }
     }
 
