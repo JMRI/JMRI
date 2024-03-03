@@ -319,7 +319,7 @@
         <li><strong>Enable:</strong> Enable the selected LogixNG. The setting will be retained when
         a tables and panels store occurs.</li>
 
-        <li><strong>Disable:</strong> Disable the select logix. The setting will be retained when a
+        <li><strong>Disable:</strong> Disable the select LogixNG. The setting will be retained when a
         tables and panels store occurs.</li>
 
         <li><strong>Activate:</strong> Activate the selected LogixNG. The change only persists during

@@ -79,8 +79,10 @@
         <dd>The initial value will be <code>null</code>.</dd>
 
         <dt>Boolean <span class="since">since 5.7.5</span></dt>
-        <dd>Contains the word <strong>true</strong> or <strong>false</strong>.  The words are case
-        insensitive.  Setting an initial value is recommended.</dd>
+        <dd>Contains the boolean value <strong>true</strong> or <strong>false</strong>.  The state
+        is set or referenced by using the words <strong><em>true</em></strong> and
+        <strong><em>false</em></strong>. The words are case insensitive.  Setting an initial value
+        is recommended.</dd>
 
         <dt>Integer</dt>
         <dd>A whole number such as 123</dd>
@@ -359,7 +361,7 @@ WARN  - Log local variables done [JMRI LogixNGThread]
         will be listed.</li>
 
         <li><strong>Show class name</strong> &mdash; The name of the Java class will be included
-        for each item.</li>
+        for each item.  Sometimes it is useful for debugging to know the actual type of the value.</li>
       </ul>
 
       <p>Example:</p>

@@ -312,7 +312,7 @@
       <h5>Java Arrays<span class="since">since 5.7.5</span></h5>
 
       <p>Some Java methods return a Java Array instead of a List.  The LogixNG Formula has been
-      enhanced to translate a Java Array result into a LogixNG Array, which is actually a List.</p>
+      enhanced to work with a Java Array.</p>
 
       <p>Here is an example using the Java array created by the String <strong>split</strong> method.</p>
 
