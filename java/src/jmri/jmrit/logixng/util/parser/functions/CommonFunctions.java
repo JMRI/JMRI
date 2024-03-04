@@ -80,7 +80,7 @@ public class CommonFunctions implements FunctionFactory {
                 return ((Map)parameter).size();
             }
 
-            throw new IllegalArgumentException("Parameter is not a String, Array or a List, Set or Map: "+parameter.getClass().getName());
+            throw new IllegalArgumentException("Parameter is not a String, Array, List, Set or Map: "+parameter.getClass().getName());
         }
 
         @Override
