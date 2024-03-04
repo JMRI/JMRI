@@ -70,6 +70,7 @@ public class ExpressionNodeMethod implements ExpressionNodeWithParameter {
         return true;
     }
 
+    @SuppressWarnings("rawtypes")   // We don't know the generic types of Map.Entry in this method
     private Object callMethod(Method method, Object obj, Object[] params)
             throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 
