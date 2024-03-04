@@ -238,7 +238,7 @@
           <p>Strict variable typing can be selected for global and/or local variables.  The default
           is that strict variable typing is not enabled for either.</p>
 
-          <p>When strict typing is enabled, variables that are are assigned the
+          <p>When strict typing is enabled, variables that are are assigned the <strong>Boolean</strong>,
           <strong>String</strong>, <strong>Integer</strong> or <strong>Floating number</strong> type
           cannot be set to a value of another type. LogixNG will try to convert the new value to the
           desired type, for example a local variable of type floating number will be assigned the
@@ -281,7 +281,7 @@
       processing of LogixNG ConditionalNG definitions. When LogixNG is <strong>active</strong> ,
       then the <strong>enabled</strong> LogixNGs will run its ConditionalNGs.
       <strong>Note:</strong> The execution of currently running ConditionalNGs doesn't stop
-      immediately when "Stop LogixNG" is selected. The ConditonalNGs will continue to run until
+      immediately when "Stop LogixNG" is selected. The ConditionalNGs will continue to run until
       they are finished, but they will not be restarted after "Stop LogixNG" is selected.</p>
 
       <p>The LogixNGs included in the <a href=

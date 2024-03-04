@@ -301,6 +301,38 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h4>Enable/Disable LogixNG<span class="since">since 5.7.5</span></h4>
+
+      <p>A LogixNG has to be both <strong>enabled</strong> and <strong>activated</strong> before it
+      will execute.</p>
+
+      <p><strong>Enable/Disable</strong> are intended to be persistent changes.
+      <strong>Activate/Deactivate</strong> are temporary changes.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/action_item_enable_disable_logixng.png"><img class="image-border"
+        src="images/chapter5/action_item_enable_disable_logixng.png"
+        alt="Chapter 5 enable disable logixng"></a>
+      </div>
+
+      <ul>
+        <li><strong>Enable:</strong> Enable the selected LogixNG. The setting will be retained when
+        a tables and panels store occurs.</li>
+
+        <li><strong>Disable:</strong> Disable the select LogixNG. The setting will be retained when a
+        tables and panels store occurs.</li>
+
+        <li><strong>Activate:</strong> Activate the selected LogixNG. The change only persists during
+        the PanelPro session.</li>
+
+        <li><strong>Deactivate:</strong> Deactivate the selected LogixNG. The change only persists
+        during the PanelPro session.</li>
+
+      </ul>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+
       <h4 id="EntryExitActions">Entry/Exit</h4>
 
       <p>Manage an Entry/Exit pair.  The last three items are implemented in JMRI 5.5.7.</p>
@@ -555,7 +587,7 @@
       <li>C/MRI</li>
       <li>IPOCS</li>
       <li>Lenz XpressNet</li>
-      <li>LocoNet<li>
+      <li>LocoNet</li>
       <li>OpenLCB</li>
       <li>Roco Z21 CAN</li>
       <li>XBee</li>
@@ -642,6 +674,21 @@
 
         <li><strong>Inconsistent:</strong> Set the selected sensor state to inconsistent.</li>
       </ul>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Set reporter<span class="since">since 5.7.5</span></h4>
+
+      <p>Set a value for the selected Reporter.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/action_item_set_reporter.png">
+        <img src="images/chapter5/action_item_set_reporter.png"
+        alt="Chapter 5 set reporter"></a>
+      </div>
+
+      <p>The <strong>Set reporter as an IdTag</strong> option is used to  provide the report as an
+      IdTag if it's not an IdTag already.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
