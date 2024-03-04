@@ -123,6 +123,8 @@ public class ExpressionNodeMethod implements ExpressionNodeWithParameter {
         try {
             return method.invoke(obj, newParams);
         } catch (IllegalAccessException ex) {
+            // https://stackoverflow.com/questions/50306093/java-9-calling-map-entrygetvalue-via-reflection#comment87628501_50306192
+            // https://stackoverflow.com/a/12038265
             if (obj instanceof Map.Entry && newParams.length == 0) {
                 switch (method.getName()) {
                     case "toString": return obj.toString();
