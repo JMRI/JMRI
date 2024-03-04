@@ -1204,8 +1204,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     private void storeGroups() {
         // store the group data
-        int currentCount = 0;
-
         for (int i = 0; i < 16; i++) {
             var row = _groupList.get(i);
 
@@ -1227,16 +1225,12 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 _compileNeeded = true;
             }
 
-//             log.info("Update for group: {}, queue = {}, compile = {}", row.getName(), _storeQueueLength, _compileNeeded);
             log.debug("Group: {}", row.getName());
             log.debug("Logic: {}", row.getMultiLine());
         }
-//         log.info("Groups done: queue = {}, compile needed = {}", _storeQueueLength, _compileNeeded);
     }
 
     private void storeInputs() {
-        int currentCount = 0;
-
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 8; j++) {
                 var row = _inputList.get((i * 8) + j);
@@ -1266,8 +1260,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     private void storeOutputs() {
-        int currentCount = 0;
-
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 8; j++) {
                 var row = _outputList.get((i * 8) + j);
@@ -1297,8 +1289,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     private void storeReceivers() {
-        int currentCount = 0;
-
         for (int i = 0; i < 16; i++) {
             var row = _receiverList.get(i);
 
@@ -1319,8 +1309,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     private void storeTransmitters() {
-        int currentCount = 0;
-
         for (int i = 0; i < 16; i++) {
             var row = _transmitterList.get(i);
 
