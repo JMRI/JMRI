@@ -998,7 +998,7 @@ class TimeListener(java.beans.PropertyChangeListener):
         # if fast_clock_running_at_operational_speed:
         #     pass
             self.process_operations_trains(event)    # schedules trains
-            print "attempting to send timetable via mqtt"
+            # print "attempting to send timetable via mqtt"
             try:
                 self.send_timetable_and_clock_via_mqtt(event)
             except:
@@ -1115,7 +1115,7 @@ class TimeListener(java.beans.PropertyChangeListener):
         TrainManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
         train_list = TrainManager.getTrainsByTimeList()
         # if schedule_trains_hourly:
-        print ("schedule_trains_hourly", schedule_trains_hourly)
+        # print ("schedule_trains_hourly", schedule_trains_hourly)
         if schedule_trains_hourly:
             if self.logLevel > 0: print "A5"
             tts = [train for train in train_list
@@ -1187,14 +1187,14 @@ class TimeListener(java.beans.PropertyChangeListener):
 
         # add time_to_station to station_departure time
         # station_departure_time is in form hh:mm
-        print "time_to_station", time_to_station  , "should be mins"
+        # print "time_to_station", time_to_station  , "should be mins"
         [hours, mins] = station_departure_time.split(":")
-        print "hours", hours, "mins", mins
+        # print "hours", hours, "mins", mins
         hour = int(hours) + int(time_to_station) // 60
         min = int(mins) + int(time_to_station) % 60
-        print "hour", hour, "min", min
+        # print "hour", hour, "min", min
         station_departure_time_new = str(hour) + ":" + str(min)
-        print "station_departure_time_new", station_departure_time_new
+        # print "station_departure_time_new", station_departure_time_new
         return station_departure_time_new
 
 
@@ -1207,7 +1207,7 @@ class TimeListener(java.beans.PropertyChangeListener):
         global start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, scheduling_margin_gbl, scheduling_in_operation_gbl
         global scheduled
         global trains_to_be_scheduled
-        if self.logLevel > -1: print "A1"
+        if self.logLevel > 0: print "A1"
         if 'schedule_trains_hourly' not in globals():
             schedule_trains_hourly = False
         if self.logLevel > 0: print "in process_operations_trains", "schedule_trains_hourly", schedule_trains_hourly
@@ -1270,7 +1270,7 @@ class TimeListener(java.beans.PropertyChangeListener):
                 train_mins = str(int(train.getDepartTimeMinutes()) % 60)
                 train_hour = str(hour)
                 if self.logLevel > 0: print "train_mins", train_mins
-                train.setDepartureTime(train_hour, train_mins)
+                # train.setDepartureTime(train_hour, train_mins)
                 if self.logLevel > 0: print "hour", train.getDepartTimeMinutes() // 60
                 trains_to_start.append(train)
 
@@ -1301,10 +1301,11 @@ class TimeListener(java.beans.PropertyChangeListener):
                 trains_to_be_scheduled.append(train)
             scheduled[train] = False
         if self.logLevel > 0: print "trains_to_be_scheduled", trains_to_be_scheduled
+        if self.logLevel > 0: print "scheduled", scheduled
         if self.logLevel > 0: print "trains_to_be_scheduled", trains_to_be_scheduled
         # if self.logLevel > 0: print "End of process_operations_trains", "trains_to_be_scheduled",trains_to_be_scheduled,\
         #     "scheduled",scheduled
-        if self.logLevel > -1: print "A10"
+        # if self.logLevel > -1: print "A10"
 
     def speed_not_operational_gbl__is_defined(self):
         global start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, scheduling_margin_gbl, scheduling_in_operation_gbl
