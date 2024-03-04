@@ -53,10 +53,10 @@ import org.openlcb.cdi.impl.ConfigRepresentation;
  *
  * The reboot process has several steps.
  * <ul>
- *   <li>The Yes option is selected in compile needed dialog.  This sends the reboot command.</li>
+ *   <li>The Yes option is selected in the compile needed dialog. This sends the reboot command.</li>
  *   <li>The RebootListener detects that the reboot is done and does getCompileMessage.</li>
  *   <li>getCompileMessage does a reload for the first syntax message.</li>
- *   <li>EntryListener gets the reload done event and calls displayCompileMessage.
+ *   <li>EntryListener gets the reload done event and calls displayCompileMessage.</li>
  * </ul>
  *
  * @author Dave Sand Copyright (C) 2024
@@ -797,25 +797,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
     }
 
-    /**
-     * Listens for a property change that implies a node has been rebooted.
-     * This occurs when the user has selected that the editor should do the reboot to compile the updated logic.
-     * When the updateSimpleNodeIdent event occurs and the compile is in progress it starts the message display process.
-     */
-    public class RebootListener implements PropertyChangeListener {
-        public void propertyChange(PropertyChangeEvent e) {
-            String propertyName = e.getPropertyName();
-            if (_compileInProgress && propertyName.equals("updateSimpleNodeIdent")) {
-                log.debug("The reboot appears to be done");
-                getCompileMessage();
-            }
-        }
-    }
-
     public class CdiListener implements PropertyChangeListener {
         public void propertyChange(PropertyChangeEvent e) {
             String propertyName = e.getPropertyName();
-            log.debug("Event = {}", propertyName);
+            log.debug("CdiListener event = {}", propertyName);
 
             if (propertyName.equals("UPDATE_CACHE_COMPLETE")) {
                 Window[] windows = Window.getWindows();
@@ -828,6 +813,21 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                     }
                 }
                 loadCdiData();
+            }
+        }
+    }
+
+    /**
+     * Listens for a property change that implies a node has been rebooted.
+     * This occurs when the user has selected that the editor should do the reboot to compile the updated logic.
+     * When the updateSimpleNodeIdent event occurs and the compile is in progress it starts the message display process.
+     */
+    public class RebootListener implements PropertyChangeListener {
+        public void propertyChange(PropertyChangeEvent e) {
+            String propertyName = e.getPropertyName();
+            if (_compileInProgress && propertyName.equals("updateSimpleNodeIdent")) {
+                log.debug("The reboot appears to be done");
+                getCompileMessage();
             }
         }
     }
@@ -883,17 +883,17 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     public class EntryListener implements PropertyChangeListener {
         public void propertyChange(PropertyChangeEvent e) {
             String propertyName = e.getPropertyName();
-            log.info("EntryListener event = {}", propertyName);
+            log.debug("EntryListener event = {}", propertyName);
 
             if (propertyName.equals("PENDING_WRITE_COMPLETE")) {
                 int currentLength = _storeQueueLength.decrementAndGet();
-                log.info("Listener: queue length = {}, source = {}", currentLength, e.getSource());
+                log.debug("Listener: queue length = {}, source = {}", currentLength, e.getSource());
 
                 var entry = (ConfigRepresentation.CdiEntry) e.getSource();
                 entry.removePropertyChangeListener(_entryListener);
 
                 if (currentLength < 1) {
-                    log.info("The queue is back to zero which implies the updates are done");
+                    log.debug("The queue is back to zero which implies the updates are done");
                     displayStoreDone();
                 }
             }
@@ -1068,7 +1068,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         @Override
         public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
             //log.warning("Received model entry update for " + nodeMemo.getNodeID());
-            log.info("NodeEntry event = {}", propertyChangeEvent.getPropertyName());
             if (propertyChangeEvent.getPropertyName().equals(UPDATE_PROP_SIMPLE_NODE_IDENT)) {
                 updateDescription();
             }
