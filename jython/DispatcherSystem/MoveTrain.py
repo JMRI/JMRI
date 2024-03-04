@@ -384,7 +384,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                 # i += 1
                 # if i == 1:
                 #     if self.train_name == "shunter": print "     ",
-                #     if self.logLevel > -1: print "waiting for route", filename, "to be clear"
+                #     if self.logLevel > 0: print "waiting for route", filename, "to be clear"
                 # self.waitMsec(2000)
         # mark as allocating
         t = trains[self.train_name]   #train is train_name
@@ -518,7 +518,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             OptionDialog().displayMessage(msg)
         self.trainInfo.setSpeedFactor(float(speedFactor))
         if self.logLevel > 0: print "self.forward_stopping_sensor_exists(self.trainInfo)",self.forward_stopping_sensor_exists(self.trainInfo)
-        print "sensors.getSensor('stopAtStopSensor').getKnownState()", sensors.getSensor("stopAtStopSensor").getKnownState(), ACTIVE
+        # print "sensors.getSensor('stopAtStopSensor').getKnownState()", sensors.getSensor("stopAtStopSensor").getKnownState(), ACTIVE
 
     def set_whether_to_stop_at_sensor(self, DF):
         transit_name = self.trainInfo.getTransitName()
@@ -793,7 +793,8 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         if self.new_train_sensor is None:
             return False
         self.new_train_sensor.setKnownState(INACTIVE)
-        trains_allocated = []
+        if 'trains_allocated' not in globals():
+            trains_allocated = []
         self.od = OptionDialog()
         return True
 
@@ -860,7 +861,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
                                         self.set_length(new_train_name)
                                         self.set_speed_factor(new_train_name)
                 else:
-                    if self.logLevel > 1 : print "!!!!5"
+                    if self.logLevel > 0 : print "!!!!5"
                     trains_to_choose = self.get_non_allocated_trains()
                     msg = "In " + station_block_name + " Select train roster"
                     new_train_name = modifiableJComboBox(trains_to_choose,msg).return_val()

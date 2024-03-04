@@ -63,7 +63,8 @@ from org.jgrapht.graph import DirectedWeightedMultigraph
 #
 
 logLevel = 0          # for debugging
-trains = {}           # dictionary of trains shared over classes
+if 'trains' not in globals():
+    trains = {}           # dictionary of trains shared over classes
 global instanceList       # instance list of threads shared over classes
 global g
 g = None              # graph shared over classes
@@ -357,9 +358,14 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def setup(self):
         self.stop_master_sensor = sensors.getSensor("stopMasterSensor")
-        if self.stop_master_sensor is None:
-            return False
-        self.stop_master_sensor.setKnownState(INACTIVE)
+        # if self.stop_master_sensor is None:
+        #     return False
+        # self.stop_master_sensor.setKnownState(INACTIVE)
+
+        self.modify_master_sensor = sensors.getSensor("modifyMasterSensor")
+        # if self.modify_master_sensor is None:
+        #     return False
+        # self.modify_master_sensor.setKnownState(INACTIVE)
 
         self.start_scheduler = sensors.getSensor("startSchedulerSensor")
         self.start_scheduler.setKnownState(INACTIVE)
@@ -367,46 +373,104 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def handle(self):
         global timebase
-        self.waitSensorActive(self.stop_master_sensor)
-        #stop all threads
-        if self.logLevel > 0: print "instancelist", instanceList
-        msg = "modify or stop"
-        title = "Transits"
-        opt1 = "modify"
-        opt2 = "stop"
-        opd = OptionDialog()
-        requested_action = opd.customQuestionMessage2str(msg, title, opt1, opt2)
-        if opd.CLOSED_OPTION == True:
-            self.stop_master_sensor.setKnownState(INACTIVE)
-            return True
-        if requested_action == opt1:
+        self.stop_modify_sensors = [sensors.getSensor(sensorName) for sensorName in ["stopMasterSensor", "modifyMasterSensor"]]
+        button_sensors_to_watch_JavaList = java.util.Arrays.asList(self.stop_modify_sensors)
+        sensor_active = [sensor.getUserName() for sensor in self.stop_modify_sensors if sensor.getKnownState() == ACTIVE]
+        self.waitSensorState(button_sensors_to_watch_JavaList, ACTIVE)
+        sensor_that_went_active = [sensor for sensor in self.stop_modify_sensors if sensor.getKnownState() == ACTIVE][0]
+        sensor_that_went_active1 = [sensor.getUserName() for sensor in self.stop_modify_sensors if sensor.getKnownState() == ACTIVE]
+        # start_sensor = sensors.getSensor("startDispatcherSensor")
+        stop_sensor =  sensors.getSensor("stopMasterSensor")
+        modify_sensor = sensors.getSensor("modifyMasterSensor")
+
+        if sensor_that_went_active == modify_sensor:
             self.stop_via_table()
-            self.stop_master_sensor.setKnownState(INACTIVE)
+            # modify_sensor.setKnownState(INACTIVE)
+            modify_sensor.setKnownState(INACTIVE)
             return True
-        else:
+        elif sensor_that_went_active == stop_sensor:
             self.remove_timebase_listener()
+            self.optionally_reset_all_trains()
+            stop_sensor.setKnownState(INACTIVE)
+            return
+
+    def optionally_reset_all_trains(self):
+        opt1= "keep as is"
+        opt2 = "reset sall trains"
+        res = OptionDialog().customQuestionMessage2str("reset positions of trains?", "", opt1, opt2)
+
+        if res == opt2:
+            self.stop_route_threads()
+            self.remove_train_values()
+            self.delete_active_transits()
+            # self.stop_all_threads()
+        else:
             self.delete_active_transits()
             self.stop_all_threads()
-            return
-            msg = "Delete all active Transits?\n"+"\nCaution this may disrupt running trains\n"
-            title = "Transits"
-            opt1 = "stop route threads"
-            opt2 = "stop all threads"
-            opt3 = "stop threads and delete transits"
-            requested_action = OptionDialog().customQuestionMessage3str(msg, title, opt1, opt2, opt3)
-            if requested_action == "stop route threads":
-                self.stop_route_threads()
-                self.stop_sensor = sensors.getSensor("stopMasterSensor")
-                self.stop_sensor.setKnownState(INACTIVE)
-                return True
-            elif requested_action == "stop all threads":
-                self.remove_timebase_listener()
-                self.stop_all_threads()
-            else:  #stop all threads and delete transits
-                self.remove_timebase_listener()
-                self.delete_active_transits()
-                self.stop_all_threads()
-            if self.logLevel > 0: print "finished"
+
+            # msg = "Delete all active Transits?\n"+"\nCaution this may disrupt running trains\n"
+            # title = "Transits"
+            # opt1 = "stop route threads"
+            # opt2 = "stop all threads"
+            # opt3 = "stop threads and delete transits"
+            # requested_action = OptionDialog().customQuestionMessage3str(msg, title, opt1, opt2, opt3)
+            # if requested_action == "stop route threads":
+            #     self.stop_route_threads()
+            #     self.stop_sensor = sensors.getSensor("stopMasterSensor")
+            #     self.stop_sensor.setKnownState(INACTIVE)
+            #     return True
+            # elif requested_action == "stop all threads":
+            #     self.remove_timebase_listener()
+            #     self.stop_all_threads()
+            # else:  #stop all threads and delete transits
+            #     self.remove_timebase_listener()
+            #     self.delete_active_transits()
+            #     self.stop_all_threads()
+            # if self.logLevel > 0: print "finished"
+
+
+# ***************************************************************************
+
+        # self.waitSensorActive(self.stop_master_sensor)
+        # #stop all threads
+        # if self.logLevel > 0: print "instancelist", instanceList
+        # msg = "modify or stop"
+        # title = "Transits"
+        # opt1 = "modify"
+        # opt2 = "stop"
+        # opd = OptionDialog()
+        # requested_action = opd.customQuestionMessage2str(msg, title, opt1, opt2)
+        # if opd.CLOSED_OPTION == True:
+        #     self.stop_master_sensor.setKnownState(INACTIVE)
+        #     return True
+        # if requested_action == opt1:
+        #     self.stop_via_table()
+        #     self.stop_master_sensor.setKnownState(INACTIVE)
+        #     return True
+        # else:
+        #     self.remove_timebase_listener()
+        #     self.delete_active_transits()
+        #     self.stop_all_threads()
+        #     return
+        #     msg = "Delete all active Transits?\n"+"\nCaution this may disrupt running trains\n"
+        #     title = "Transits"
+        #     opt1 = "stop route threads"
+        #     opt2 = "stop all threads"
+        #     opt3 = "stop threads and delete transits"
+        #     requested_action = OptionDialog().customQuestionMessage3str(msg, title, opt1, opt2, opt3)
+        #     if requested_action == "stop route threads":
+        #         self.stop_route_threads()
+        #         self.stop_sensor = sensors.getSensor("stopMasterSensor")
+        #         self.stop_sensor.setKnownState(INACTIVE)
+        #         return True
+        #     elif requested_action == "stop all threads":
+        #         self.remove_timebase_listener()
+        #         self.stop_all_threads()
+        #     else:  #stop all threads and delete transits
+        #         self.remove_timebase_listener()
+        #         self.delete_active_transits()
+        #         self.stop_all_threads()
+        #     if self.logLevel > 0: print "finished"
 
 
     def stop_via_table(self):
@@ -414,12 +478,14 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
 
 
     def remove_timebase_listener(self):
+        global timebase
+        global tListener
         self.new_train_sensor = sensors.getSensor("startDispatcherSensor")
         self.new_train_sensor.setKnownState(INACTIVE)
         try:
             #stop the scheduler timebase listener
             if self.logLevel > 0: print "removing listener"
-            timebase.removeMinuteChangeListener(TimeListener())
+            timebase.removeMinuteChangeListener(tListener)
             return False
         except NameError:
             if self.logLevel > 0: print "Name error"
@@ -434,7 +500,6 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
         # opt1 = "just remove the route threads (stops trains at end of current transit)"
         # opt2 = "delete transits as well (stops trains immediately)"
         # requested_delete_transits = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
-        # self.remove_train_from_transit
 
         instance_list = java.util.concurrent.CopyOnWriteArrayList()
         for train in instanceList:
@@ -446,7 +511,7 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
                 #determine the train nme
                 train_name = self.determine_train_name(thread_name,thread)
                 #remove the train from the transit
-                # delete_transits:
+                #self.delete_transits()
                 #remove the train from the list of trains
                 self.remove_train_name(train_name)
                 if thread is not None:
@@ -493,28 +558,20 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
                 trains_dispatched.remove(train)
 
     def stop_all_threads(self):
-        #stop all
-        # activeThreadList = java.util.concurrent.CopyOnWriteArrayList()
-        # for thread in instanceList:
-        #     activeThreadList.add(thread)
-        #
-        # for thread in activeThreadList:
-        #     if thread is not None:
-        #         if thread.isRunning():
-        #             if self.logLevel > 0: print 'Stop "{}" thread'.format(thread.getName())
-        #             thread.stop()
-        #         else:
-        #             #need this for scheduler in wait state
-        #             thread.stop()
 
         # stop all thresds even if there are duplications
         summary = jmri.jmrit.automat.AutomatSummary.instance()
         automatsList = java.util.concurrent.CopyOnWriteArrayList()
+
         for automat in summary.getAutomats():
             automatsList.add(automat)
-
+        # print "automatsList", automatsList
         for automat in automatsList:
-            automat.stop()
+            # print "automat", automat
+            if "StopMaster" not in str(automat): automat.stop()
+            # print automat, "stopped"
+        # print "automatsList2", automatsList
+        # print "end stop_all_threads"
 
 
 
@@ -571,6 +628,11 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
             if block.getValue() == train_name:
                 block.setValue(None)
 
+    def remove_train_values(self):
+        for block in blocks.getNamedBeanSet():
+            if block.getValue() != None:
+                block.setValue(None)
+
 # End of class StopMaster
 
 class OffActionMaster(jmri.jmrit.automat.AbstractAutomaton):
@@ -595,6 +657,7 @@ class OffActionMaster(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 0: print "sensor_that_went_inactive" , sensor_that_went_inactive
         start_sensor = sensors.getSensor("startDispatcherSensor")
         stop_sensor =  sensors.getSensor("stopMasterSensor")
+        modify_sensor =  sensors.getSensor("modifyMasterSensor")
         if self.logLevel > 0: print "start_sensor" , start_sensor
         if self.logLevel > 0: print "stop_sensor" , stop_sensor
         if sensor_that_went_inactive in self.run_stop_sensors:
@@ -605,6 +668,7 @@ class OffActionMaster(jmri.jmrit.automat.AbstractAutomaton):
                 if self.logLevel > 0: print "start sensor went inactive"
                 if self.logLevel > 0: print "setting stop sensor active"
                 stop_sensor.setKnownState(ACTIVE)
+                # modify_sensor.setKnownState(ACTIVE)
                 # self.waitMsec(5000)
                 # if self.logLevel > 0: print "setting start sensor active"
                 # start_sensor.setKnownState(ACTICE)
@@ -642,11 +706,13 @@ class OffActionMaster(jmri.jmrit.automat.AbstractAutomaton):
             if self.logLevel > 0: print "run stop sensor went inactive"
             start_sensor = sensors.getSensor("startDispatcherSensor")
             stop_sensor =  sensors.getSensor("stopMasterSensor")
+            modify_sensor =  sensors.getSensor("modifyMasterSensor")
             if sensor_that_went_inactive == start_sensor:
                 self.sensor_to_look_for = stop_sensor
                 if self.logLevel > 0: print "start sensor went inactive"
                 if self.logLevel > 0: print "setting stop sensor active"
                 stop_sensor.setKnownState(ACTIVE)
+                # modify_sensor.setKnownState(ACTIVE)
                 # self.waitMsec(5000)
                 # if self.logLevel > 0: print "setting start sensor active"
                 # start_sensor.setKnownState(ACTICE)
@@ -691,10 +757,10 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         global trains_dispatched
         trains_dispatched = []
         #initialise all block_value variables
-        for block in blocks.getNamedBeanSet():
-            LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
-            if LayoutBlockManager.getLayoutBlock(block) != None:
-                block.setValue(None)
+        # for block in blocks.getNamedBeanSet():
+        #     LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
+        #     if LayoutBlockManager.getLayoutBlock(block) != None:
+        #         block.setValue(None)
 
     def init(self):
         if self.logLevel > 0: print 'Create DispatchMaster Thread'
@@ -871,11 +937,14 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                       msg += " and actions " + ", ".join(selected_actions) + "\n"
                 msg += "Have you more stations on route?"
                 title = "Continue selecting stations"
-                transit_name = self.get_transit_name(prev_station, last_station)
-                if self.forward_stopping_sensor_exists(transit_name):
-                    s = self.od.customQuestionMessage4str(msg,title, opt1, opt2, opt3, opt4)
-                else:
+                if prev_station == last_station:   # start of route
                     s = self.od.customQuestionMessage3str(msg,title, opt1, opt2, opt3)
+                else:
+                    transit_name = self.get_transit_name(prev_station, last_station)
+                    if self.forward_stopping_sensor_exists(transit_name):
+                        s = self.od.customQuestionMessage4str(msg,title, opt1, opt2, opt3, opt4)
+                    else:
+                        s = self.od.customQuestionMessage3str(msg,title, opt1, opt2, opt3)
 
             if self.od.CLOSED_OPTION == True:
                 sensor_changed.setKnownState(INACTIVE)
@@ -896,8 +965,9 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                 stop_mode = None
             elif s == opt2:
                 complete = True
-            if s == opt3:
+            elif s == opt3:
                 selected_actions = self.add_actions(route,LocationManager, button_station_name, no_stations_chosen, selected_actions)
+                complete = False
             elif s == opt4:
                 stop_mode = self.get_stop_mode()
                 routeLocation = route.getLastLocationByName(button_station_name)
@@ -1032,7 +1102,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                     if option == opt1:
                         selected_actions.append(python_file)
                         self.add_python_file_to_route(python_file, route, LocationManager)
-                    if option == opt2:
+                    elif option == opt2:
                         select_action_file = False
                 iteration += 1
             # what_to_do = self.check_whether_select_another_station(button_station_name, selected_actions, no_stations_chosen)

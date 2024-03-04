@@ -39,6 +39,7 @@ class RunDispatcherMaster():
         global g
         global le
         g = StationGraph()
+
         new_train_master = NewTrainMaster()
         instanceList.append(new_train_master)
         if new_train_master.setup():
@@ -83,7 +84,6 @@ class RunDispatcherMaster():
 
         off_action_master = OffActionMaster()
         instanceList.append(off_action_master)
-
         if off_action_master.setup():
             off_action_master.setName('Off-Action Master')
             off_action_master.start()
@@ -91,6 +91,7 @@ class RunDispatcherMaster():
             if self.logLevel > 0: print("Off-Action Master not started")
 
         #set default valus of buttons
+
         sensors.getSensor("Express").setKnownState(ACTIVE)
         sensors.getSensor("simulateSensor").setKnownState(INACTIVE)
         sensors.getSensor("setDispatchSensor").setKnownState(ACTIVE)
@@ -101,4 +102,5 @@ class RunDispatcherMaster():
 
 
 if __name__ == '__builtin__':
+    # sensors.getSensor("startDispatcherSensor").setKnownState(INACTIVE)
     RunDispatcherMaster()

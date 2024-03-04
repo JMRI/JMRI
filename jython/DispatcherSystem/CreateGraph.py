@@ -459,6 +459,7 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
         if not os.path.exists(path):
             os.makedirs(path)
         return path + java.io.File.separator
+
     def write_list(self, a_list):
         # store list in binary file so 'wb' mode
         file = self.directory() + "blockDirections.txt"
@@ -472,9 +473,8 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                     if i == 0: fp.write(",")
                     i+=1
                 fp.write('\n')
-                    #fp.write('\n'.join(item))
-                    #fp.write(items)
-
+                #fp.write('\n'.join(item))
+                #fp.write(items)
 
 
     # Read list to memory

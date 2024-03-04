@@ -294,13 +294,13 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
         current_section_list = [allocatedSection.getSection() for allocatedSection in allocatedSectionList \
                                  if self.block_list[self.end_position] in allocatedSection.getSection().getBlockList()]
         if current_section_list == []:
-            print "******* current_section list is empty in Simulate Instance +++****"
-            print "active train", self.activeTrain
-            print "allocatedSectionList", allocatedSectionList
-            print "allocatedSectionList", [allocatedSection.getSection().getUserName() for allocatedSection in allocatedSectionList]
-            print "current_section_list", [section.getUserName() for section in current_section_list]
-            print "self.block_list[self.end_position]", self.block_list[self.end_position].getUserName()
-            print "******* current_section ****"
+            # print "******* current_section list is empty in Simulate Instance +++****"
+            # print "active train", self.activeTrain
+            # print "allocatedSectionList", allocatedSectionList
+            # print "allocatedSectionList", [allocatedSection.getSection().getUserName() for allocatedSection in allocatedSectionList]
+            # print "current_section_list", [section.getUserName() for section in current_section_list]
+            # print "self.block_list[self.end_position]", self.block_list[self.end_position].getUserName()
+            # print "******* current_section ****"
             return
         current_section = current_section_list[0]
         return current_section

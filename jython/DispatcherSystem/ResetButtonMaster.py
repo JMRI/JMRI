@@ -325,8 +325,11 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             #optionbox
             title = "Station Directions"
             msg = "modify station directions?"
-            list_items1 = self.dm.read_list()
-            list_items = [ "from " + l[1] + " to " + l[0] for l in list_items1]
+            try:
+                list_items1 = self.dm.read_list()
+                list_items = [ "from " + l[1] + " to " + l[0] for l in list_items1]
+            except:
+                pass
             if list_items == []:
                 list_items = ["no inhibited directions"]
             opt1 = "Reset direction restrictions"

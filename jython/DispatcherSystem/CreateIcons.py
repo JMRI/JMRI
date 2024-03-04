@@ -32,6 +32,7 @@ from javax.swing import JOptionPane
 class processPanels(jmri.jmrit.automat.AbstractAutomaton):
 
     logLevel = 0
+    version_no = 0.2    #used to delete DispatcherPanel for new versions if the number of controlsensors/icons has changed
 
     list_of_stopping_points = []
     blockPoints = {}   # Block center points used by direct access process
@@ -41,7 +42,8 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     i = 1
     controlSensors = []
     controlSensors.append([i, 'startDispatcherSensor', 'Run Dispatcher System', 0, 0]); i += 1
-    controlSensors.append([i, 'stopMasterSensor', 'Stop/Modify Dispatcher System', 0, 0]); i += 1
+    controlSensors.append([i, 'stopMasterSensor', 'Stop Dispatcher System', 0, 0]); i += 1
+    controlSensors.append([i, 'modifyMasterSensor', 'Modify Dispatcher System', 0, 0]); i += 1
 
     controlSensors.append([i, 'Express', 'Express Train (no stopping)', 10, 5]); i += 1
     controlSensors.append([i, 'newTrainSensor', 'Setup Train in Section', 10, 5]); i += 1
@@ -91,8 +93,27 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             self.tryme(self.addLogix, "Cannot generate startup Logix: Contact Developer")
             self.addIcons()
             self.tryme(self.retrieveForwardStoppingSensors, "Cannot retrieve Stopping Sensors: Contact Developer")
+            self.setVersionNo()
             self.stop_all_threads()
             self.end_show_progress()
+
+    def setVersionNo(self):
+        memory = memories.provideMemory('IS:ISMEM:' + "versionNo")
+        if memory is not None:
+            memory.setValue(self.version_no)
+
+    def version_number_changed(self):
+        memory = memories.getMemory('IMIS:ISMEM:' + "versionNo")
+        # print "memory", memory, type(memory)
+        if memory is None:
+            # print "version_no changed", "memory:", "version", self.version_no
+            return True
+        elif memory.getValue() != self.version_no:
+            # print "version_no changed", "memory:", memory.getValue(), "version", self.version_no
+            return True
+        else:
+            print "version_no not changed", "memory:", memory.getValue(), "version", self.version_no
+            return False
 
     def __str__(self):
         return self.result      # allow return value from calling processPanels()
@@ -397,13 +418,21 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     # **************************************************
     # remove icons and labels from panels
     # **************************************************
+
     def removeIconsAndLabels(self):
+
         for panel in self.editorManager.getAll(jmri.jmrit.display.layoutEditor.LayoutEditor):
             if panel.getTitle() == 'Dispatcher System':
+                if self.version_number_changed():
+                    print "removing panel, version number changed"
+                    self.editorManager.remove(panel)
+                    panel.dispose()
+                    # msg = "should have removed panel"
+                    # Query().displayMessage(msg,"")
                 # Skip the Dispatcher System control panel if it exists
                 continue
 
-            self.removeBlockContentIcons(panel)
+            # self.removeBlockContentIcons(panel)
             self.removeLabels(panel)
             self.removeSensorIcons(panel)
 
@@ -709,8 +738,11 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     # control sensor icons and label
     # **************************************************
     def addControlIconsAndLabels(self):
-        if self.editorManager.get("Dispatcher System") is not None:
+
+        if not self.version_number_changed():
+            if self.logLevel > 0: print "not adding control Icons and labels"
             return
+
         # Create the Dispatcher System control panel
         panel = jmri.jmrit.display.layoutEditor.LayoutEditor("Dispatcher System")
         self.editorManager.add(panel)
@@ -724,7 +756,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
                 x += 20
                 self.addTextLabel(panel, control[2], x, y)
 
-        panel.setSize(300, 540)
+        panel.setSize(300, 560)
         panel.setAllEditable(False)
         panel.setVisible(True)
 
