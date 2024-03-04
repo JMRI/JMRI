@@ -31,7 +31,7 @@
 # also starts class scheduler and class simulation which are in different files
 #
 # class MonitorTrack
-# looks at the allocated trains and ensurs that if the blocks are occupied
+# looks at the allocated trains and ensures that if the blocks are occupied
 # the name of the engine is displayed
 #
 ###############################################################################
@@ -400,6 +400,7 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
         res = OptionDialog().customQuestionMessage2str("reset positions of trains?", "", opt1, opt2)
 
         if res == opt2:
+
             self.stop_route_threads()
             self.remove_train_values()
             self.delete_active_transits()
@@ -559,6 +560,11 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def stop_all_threads(self):
 
+        # perform actions required before stopping threads
+        global scheduler_master      #global so cas be referenced before killing threads
+        # scheduler_master = SchedulerMaster()   this has been set in RunDispatchMaster
+        scheduler_master.exit()
+
         # stop all thresds even if there are duplications
         summary = jmri.jmrit.automat.AutomatSummary.instance()
         automatsList = java.util.concurrent.CopyOnWriteArrayList()
@@ -572,8 +578,6 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
             # print automat, "stopped"
         # print "automatsList2", automatsList
         # print "end stop_all_threads"
-
-
 
     def remove_listener(self):
         try:

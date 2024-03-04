@@ -33,6 +33,12 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def __init__(self):
         self.logLevel = 0
+        self.frame = None
+        self.f = None
+
+    def exit(self):       # called explicitly when scheduler thread is killed to stop multiple frames being visible
+        self.frame.setVisible(False)
+        self.f.setVisible(False)
 
     def setup(self):
         global schedule_trains_hourly
@@ -192,275 +198,278 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         #
         # return my_return
 
+
+
     def set_period_trains_will_run(self):
         global start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, scheduling_margin_gbl, scheduling_in_operation_gbl
+        if self.frame == None:
+            print "frame is None"
+            self.frame = jmri.util.JmriJFrame('Scedule Trains Hourly');
 
-        frame = jmri.util.JmriJFrame('Scedule Trains Hourly');
+            panel = JPanel()
+            panel.setLayout(BoxLayout(panel, BoxLayout.Y_AXIS))
+            self.frame.add(panel)
 
-        panel = JPanel()
-        panel.setLayout(BoxLayout(panel, BoxLayout.Y_AXIS))
-        frame.add(panel)
-
-        row0 = JPanel()
-        row0.setLayout(BoxLayout(row0, BoxLayout.X_AXIS))
-        txt = JTextField(140)
-        txt.setMaximumSize( txt.getPreferredSize() );
-        txt.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(Color.red),
-            txt.getBorder()));
-        label_panel_location = JLabel()
-        # btnpanelLocation = JButton("Set Panel Location", actionPerformed = btnpanelLocation_action)
-        btnpanelLocation = JButton("Set Panel Location")
-        row0.add(Box.createVerticalGlue())
-        row0.add(Box.createRigidArea(Dimension(20, 0)))
-        row0.add(btnpanelLocation)
-        row0.add(Box.createRigidArea(Dimension(20, 0)))
-        row0.add(label_panel_location)
-        row0.add(Box.createRigidArea(Dimension(20, 0)))
-
-
-        rowTitle_22 = JPanel()
-        rowTitle_22.setLayout(BoxLayout(rowTitle_22, BoxLayout.X_AXIS))
-        rowTitle_23 = JPanel()
-        rowTitle_23.setLayout(BoxLayout(rowTitle_23, BoxLayout.X_AXIS))
-        rowStage1Title_1 = JLabel("Sets Up Syatem to run hourly trains ")
-        rowStage1Title_1.setFont(rowTitle_22.getFont().deriveFont(Font.BOLD, 13));
-        # get_start_filename()
-        # get_backup_filename()
-        # rowStage1Title_1 = JLabel("    Modifies: " + start_filename + "  Creates backup: " + backup_filename)
-        # rowStage1Title_1.add(Box.createHorizontalGlue());
-        # rowStage1Title_1.setAlignmentX(rowStage1Title_1.LEFT_ALIGNMENT)
-        # rowStage1Title_2 = JLabel("Run Scheduled Trains")
-        # rowStage1Title_3 = JLabel("    Read Help to see how system works")     #start_filename + "_icons"
-
-        rowTitle_22.add(Box.createVerticalGlue())
-        rowTitle_22.add(Box.createRigidArea(Dimension(20, 0)))
-        rowTitle_22.add(rowStage1Title_1)
-        # rowTitle_22.add(Box.createRigidArea(Dimension(20, 0)))
-        # rowTitle_22.add(rowStage1Title_2)
-
-        # rowTitle_22.add(Box.createVerticalGlue())
-        # rowTitle_22.add(Box.createRigidArea(Dimension(20, 0)))
-        # rowTitle_22.add(JLabel(""))
-        # rowTitle_23.add(rowStage1Title_3)
-
-        rowTitle_33 = JPanel()
-        rowTitle_33.setLayout(BoxLayout(rowTitle_33, BoxLayout.X_AXIS))
-        # rowStage1Title_1 = JLabel("Sets Up Syatem to run hourly trains ")
-        # rowStage1Title_1.setFont(rowTitle_33.getFont().deriveFont(Font.BOLD, 13));
-        rowTitle_33.add(Box.createVerticalGlue())
-        rowTitle_33.add(Box.createRigidArea(Dimension(30, 0)))
-        rowTitle_33.add(rowStage1Title_1)
-
-        #buttons
-
-        # Separators
-        rowStage2Separator = JPanel()
-        rowStage2Separator.setLayout(BoxLayout(rowStage2Separator, BoxLayout.X_AXIS))
-        rowStage2Separator_1 = JLabel("*******************************************************************")
-        rowStage2Separator_1.add(Box.createHorizontalGlue());
-        rowStage2Separator_1.setAlignmentX(rowStage2Separator_1.LEFT_ALIGNMENT)
-        rowStage2Separator_2 = JLabel("")
-
-        rowStage2Separator.add(Box.createVerticalGlue())
-        rowStage2Separator.add(Box.createRigidArea(Dimension(20, 0)))
-        rowStage2Separator.add(rowStage2Separator_1)
-        rowStage2Separator.add(Box.createRigidArea(Dimension(20, 0)))
-        rowStage2Separator.add(rowStage2Separator_2)
-
-        rowStage1Separator = JPanel()
-        rowStage1Separator.setLayout(BoxLayout(rowStage1Separator, BoxLayout.X_AXIS))
-        rowStage1Separator_1 = JLabel("*******************************************************************")
-        rowStage1Separator_1.add(Box.createHorizontalGlue());
-        rowStage1Separator_1.setAlignmentX(rowStage1Separator_1.LEFT_ALIGNMENT)
-        rowStage1Separator_2 = JLabel("")
-
-        rowStage1Separator.add(Box.createVerticalGlue())
-        rowStage1Separator.add(Box.createRigidArea(Dimension(20, 0)))
-        rowStage1Separator.add(rowStage1Separator_1)
-        rowStage1Separator.add(Box.createRigidArea(Dimension(20, 0)))
-        rowStage1Separator.add(rowStage1Separator_2)
-
-        rowStage3Separator = JPanel()
-        rowStage3Separator.setLayout(BoxLayout(rowStage3Separator, BoxLayout.X_AXIS))
-        rowStage3Separator_1 = JLabel("*******************************************************************")
-        rowStage3Separator_1.add(Box.createHorizontalGlue());
-        rowStage3Separator_1.setAlignmentX(rowStage3Separator_1.LEFT_ALIGNMENT)
-        rowStage3Separator_3 = JLabel("")
-    
-        rowStage3Separator.add(Box.createVerticalGlue())
-        rowStage3Separator.add(Box.createRigidArea(Dimension(30, 0)))
-        rowStage3Separator.add(rowStage3Separator_1)
-        rowStage3Separator.add(Box.createRigidArea(Dimension(30, 0)))
-        rowStage3Separator.add(rowStage3Separator_3)
-
-        # buttons
-
-        rowStage1Button = JPanel()
-        rowStage1Button.setLayout(BoxLayout(rowStage1Button, BoxLayout.X_AXIS))
-
-        global rowAStage1Button_1,  rowBStage1Button_1, rowCStage1Button_1, rowDStage1Button_1, rowEStage1Button_1, rowFStage1Button_1
-        rowAStage1Button = JPanel()
-        rowAStage1Button.setLayout(BoxLayout(rowAStage1Button, BoxLayout.X_AXIS))
-
-        rowBStage1Button = JPanel()
-        rowBStage1Button.setLayout(BoxLayout(rowBStage1Button, BoxLayout.X_AXIS))
-
-        rowCStage1Button = JPanel()
-        rowCStage1Button.setLayout(BoxLayout(rowCStage1Button, BoxLayout.X_AXIS))
-        
-        rowDStage1Button = JPanel()
-        rowDStage1Button.setLayout(BoxLayout(rowDStage1Button, BoxLayout.X_AXIS))
-
-        rowEStage1Button = JPanel()
-        rowEStage1Button.setLayout(BoxLayout(rowEStage1Button, BoxLayout.X_AXIS))
-
-        rowFStage1Button = JPanel()
-        rowFStage1Button.setLayout(BoxLayout(rowFStage1Button, BoxLayout.X_AXIS))
-        
-        rowrowStage1Button_1 = JLabel("Change parameters to run trains")
-        rowrowStage1Button_1.setFont(rowTitle_22.getFont().deriveFont(Font.BOLD, 13));
-        rowrowStage1Button_1.add(Box.createHorizontalGlue());
-        rowrowStage1Button_1.setAlignmentX(rowrowStage1Button_1.LEFT_ALIGNMENT)
-
-        stringToDisplay = "start hour: " + str(start_hour_gbl)
-        rowAStage1Button_1 = JLabel(stringToDisplay)
-        rowAStage1Button_1.setFont(rowTitle_22.getFont().deriveFont(Font.BOLD, 13));
-        rowAStage1Button_1.add(Box.createHorizontalGlue());
-        rowAStage1Button_1.setAlignmentX(rowAStage1Button_1.LEFT_ALIGNMENT)
-
-        stringToDisplay = "end hour: " + str(end_hour_gbl)
-        rowBStage1Button_1 = JLabel(stringToDisplay)
-        rowBStage1Button_1.setFont(rowTitle_22.getFont().deriveFont(Font.BOLD, 13));
-        rowBStage1Button_1.add(Box.createHorizontalGlue());
-        rowBStage1Button_1.setAlignmentX(rowBStage1Button_1.LEFT_ALIGNMENT)
-
-        stringToDisplay = "fast clock (when scheduling trains): x " + str(fast_clock_rate)
-        rowCStage1Button_1 = JLabel(stringToDisplay)
-        rowCStage1Button_1.setFont(rowTitle_22.getFont().deriveFont(Font.BOLD, 13));
-        rowCStage1Button_1.add(Box.createHorizontalGlue());
-        rowCStage1Button_1.setAlignmentX(rowCStage1Button_1.LEFT_ALIGNMENT)
-
-        stringToDisplay = "fast clock (outside running times): x " + str(speed_not_operational_gbl)
-        rowDStage1Button_1 = JLabel(stringToDisplay)
-        rowDStage1Button_1.setFont(rowTitle_22.getFont().deriveFont(Font.BOLD, 13));
-        rowDStage1Button_1.add(Box.createHorizontalGlue());
-        rowDStage1Button_1.setAlignmentX(rowDStage1Button_1.LEFT_ALIGNMENT)
-
-        stringToDisplay = "scheduling margin: " + str(scheduling_margin_gbl) + " fast mins"
-        rowEStage1Button_1 = JLabel(stringToDisplay)
-        rowEStage1Button_1.setFont(rowTitle_22.getFont().deriveFont(Font.BOLD, 13));
-        rowEStage1Button_1.add(Box.createHorizontalGlue());
-        rowEStage1Button_1.setAlignmentX(rowEStage1Button_1.LEFT_ALIGNMENT)
-
-        stringToDisplay = "scheduling in operation: " + str(scheduling_in_operation_gbl)
-        rowFStage1Button_1 = JLabel(stringToDisplay)
-        rowFStage1Button_1.setFont(rowTitle_22.getFont().deriveFont(Font.BOLD, 13));
-        rowFStage1Button_1.add(Box.createHorizontalGlue());
-        rowFStage1Button_1.setAlignmentX(rowFStage1Button_1.LEFT_ALIGNMENT)
-        
-        rowStage1Button_1 = JButton("Stage1", actionPerformed = self.CheckHourlyParameters_action)
-        stage1Button = rowStage1Button_1
-        
-        
-
-        rowStage2Button = JPanel()
-        rowStage2Button.setLayout(BoxLayout(rowStage2Button, BoxLayout.X_AXIS))
-        rowrowStage2Button_2 = JLabel("Start Scheduling Trains")
-        rowrowStage2Button_2.setFont(rowTitle_22.getFont().deriveFont(Font.BOLD, 13));
-
-        rowrowStage2Button_2.add(Box.createHorizontalGlue());
-        rowrowStage2Button_2.setAlignmentX(rowrowStage2Button_2.LEFT_ALIGNMENT)
-        rowStage2Button_2 = JButton("Stage2", actionPerformed = self.StartSchedulingTrains_action)
-        stage2Button = rowStage2Button_2
-
-        rowStage3Button = JPanel()
-        rowStage3Button.setLayout(BoxLayout(rowStage3Button, BoxLayout.X_AXIS))
-        rowrowStage3Button_3 = JLabel("Stop Scheduling Trains")
-        rowrowStage3Button_3.setFont(rowTitle_33.getFont().deriveFont(Font.BOLD, 13));
-
-        rowrowStage3Button_3.add(Box.createHorizontalGlue());
-        rowrowStage3Button_3.setAlignmentX(rowrowStage3Button_3.LEFT_ALIGNMENT)
-        rowStage3Button_3 = JButton("Stage3", actionPerformed = self.StopSchedulingtrains_action)
-        stage3Button = rowStage3Button_3
+            row0 = JPanel()
+            row0.setLayout(BoxLayout(row0, BoxLayout.X_AXIS))
+            txt = JTextField(140)
+            txt.setMaximumSize( txt.getPreferredSize() );
+            txt.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.red),
+                txt.getBorder()));
+            label_panel_location = JLabel()
+            # btnpanelLocation = JButton("Set Panel Location", actionPerformed = btnpanelLocation_action)
+            btnpanelLocation = JButton("Set Panel Location")
+            row0.add(Box.createVerticalGlue())
+            row0.add(Box.createRigidArea(Dimension(20, 0)))
+            row0.add(btnpanelLocation)
+            row0.add(Box.createRigidArea(Dimension(20, 0)))
+            row0.add(label_panel_location)
+            row0.add(Box.createRigidArea(Dimension(20, 0)))
 
 
-        rowStage1Button.add(Box.createVerticalGlue())
-        rowStage1Button.add(Box.createRigidArea(Dimension(20, 0)))
-        rowStage1Button.add(rowStage1Button_1)
-        rowStage1Button.add(Box.createRigidArea(Dimension(20, 0)))
-        rowStage1Button.add(rowrowStage1Button_1)
-        # rowStage1Button.add(Box.createVerticalGlue())
-        # rowStage1Button.add(rowAStage1Button_1)
+            rowTitle_22 = JPanel()
+            rowTitle_22.setLayout(BoxLayout(rowTitle_22, BoxLayout.X_AXIS))
+            rowTitle_23 = JPanel()
+            rowTitle_23.setLayout(BoxLayout(rowTitle_23, BoxLayout.X_AXIS))
+            rowStage1Title_1 = JLabel("Sets Up Syatem to run hourly trains ")
+            rowStage1Title_1.setFont(rowTitle_22.getFont().deriveFont(Font.BOLD, 13));
+            # get_start_filename()
+            # get_backup_filename()
+            # rowStage1Title_1 = JLabel("    Modifies: " + start_filename + "  Creates backup: " + backup_filename)
+            # rowStage1Title_1.add(Box.createHorizontalGlue());
+            # rowStage1Title_1.setAlignmentX(rowStage1Title_1.LEFT_ALIGNMENT)
+            # rowStage1Title_2 = JLabel("Run Scheduled Trains")
+            # rowStage1Title_3 = JLabel("    Read Help to see how system works")     #start_filename + "_icons"
 
-        rowAStage1Button.add(Box.createVerticalGlue())
-        rowAStage1Button.add(Box.createRigidArea(Dimension(120, 0)))
-        rowAStage1Button.add(rowAStage1Button_1)
-    
-        rowBStage1Button.add(Box.createVerticalGlue())
-        rowBStage1Button.add(Box.createRigidArea(Dimension(120, 0)))
-        rowBStage1Button.add(rowBStage1Button_1)
-    
-        rowCStage1Button.add(Box.createVerticalGlue())
-        rowCStage1Button.add(Box.createRigidArea(Dimension(120, 0)))
-        rowCStage1Button.add(rowCStage1Button_1)
+            rowTitle_22.add(Box.createVerticalGlue())
+            rowTitle_22.add(Box.createRigidArea(Dimension(20, 0)))
+            rowTitle_22.add(rowStage1Title_1)
+            # rowTitle_22.add(Box.createRigidArea(Dimension(20, 0)))
+            # rowTitle_22.add(rowStage1Title_2)
 
-        rowDStage1Button.add(Box.createVerticalGlue())
-        rowDStage1Button.add(Box.createRigidArea(Dimension(120, 0)))
-        rowDStage1Button.add(rowDStage1Button_1)
+            # rowTitle_22.add(Box.createVerticalGlue())
+            # rowTitle_22.add(Box.createRigidArea(Dimension(20, 0)))
+            # rowTitle_22.add(JLabel(""))
+            # rowTitle_23.add(rowStage1Title_3)
 
-        rowEStage1Button.add(Box.createVerticalGlue())
-        rowEStage1Button.add(Box.createRigidArea(Dimension(120, 0)))
-        rowEStage1Button.add(rowEStage1Button_1)
+            rowTitle_33 = JPanel()
+            rowTitle_33.setLayout(BoxLayout(rowTitle_33, BoxLayout.X_AXIS))
+            # rowStage1Title_1 = JLabel("Sets Up Syatem to run hourly trains ")
+            # rowStage1Title_1.setFont(rowTitle_33.getFont().deriveFont(Font.BOLD, 13));
+            rowTitle_33.add(Box.createVerticalGlue())
+            rowTitle_33.add(Box.createRigidArea(Dimension(30, 0)))
+            rowTitle_33.add(rowStage1Title_1)
 
-        rowFStage1Button.add(Box.createVerticalGlue())
-        rowFStage1Button.add(Box.createRigidArea(Dimension(120, 0)))
-        rowFStage1Button.add(rowFStage1Button_1)      
-        
-        # rowDStage1Button.add(Box.createRigidArea(Dimension(20, 0)))
-        # rowStage1Button.add(rowDStage1Button_1)
+            #buttons
+
+            # Separators
+            rowStage2Separator = JPanel()
+            rowStage2Separator.setLayout(BoxLayout(rowStage2Separator, BoxLayout.X_AXIS))
+            rowStage2Separator_1 = JLabel("*******************************************************************")
+            rowStage2Separator_1.add(Box.createHorizontalGlue());
+            rowStage2Separator_1.setAlignmentX(rowStage2Separator_1.LEFT_ALIGNMENT)
+            rowStage2Separator_2 = JLabel("")
+
+            rowStage2Separator.add(Box.createVerticalGlue())
+            rowStage2Separator.add(Box.createRigidArea(Dimension(20, 0)))
+            rowStage2Separator.add(rowStage2Separator_1)
+            rowStage2Separator.add(Box.createRigidArea(Dimension(20, 0)))
+            rowStage2Separator.add(rowStage2Separator_2)
+
+            rowStage1Separator = JPanel()
+            rowStage1Separator.setLayout(BoxLayout(rowStage1Separator, BoxLayout.X_AXIS))
+            rowStage1Separator_1 = JLabel("*******************************************************************")
+            rowStage1Separator_1.add(Box.createHorizontalGlue());
+            rowStage1Separator_1.setAlignmentX(rowStage1Separator_1.LEFT_ALIGNMENT)
+            rowStage1Separator_2 = JLabel("")
+
+            rowStage1Separator.add(Box.createVerticalGlue())
+            rowStage1Separator.add(Box.createRigidArea(Dimension(20, 0)))
+            rowStage1Separator.add(rowStage1Separator_1)
+            rowStage1Separator.add(Box.createRigidArea(Dimension(20, 0)))
+            rowStage1Separator.add(rowStage1Separator_2)
+
+            rowStage3Separator = JPanel()
+            rowStage3Separator.setLayout(BoxLayout(rowStage3Separator, BoxLayout.X_AXIS))
+            rowStage3Separator_1 = JLabel("*******************************************************************")
+            rowStage3Separator_1.add(Box.createHorizontalGlue());
+            rowStage3Separator_1.setAlignmentX(rowStage3Separator_1.LEFT_ALIGNMENT)
+            rowStage3Separator_3 = JLabel("")
+
+            rowStage3Separator.add(Box.createVerticalGlue())
+            rowStage3Separator.add(Box.createRigidArea(Dimension(30, 0)))
+            rowStage3Separator.add(rowStage3Separator_1)
+            rowStage3Separator.add(Box.createRigidArea(Dimension(30, 0)))
+            rowStage3Separator.add(rowStage3Separator_3)
+
+            # buttons
+
+            rowStage1Button = JPanel()
+            rowStage1Button.setLayout(BoxLayout(rowStage1Button, BoxLayout.X_AXIS))
+
+            global rowAStage1Button_1,  rowBStage1Button_1, rowCStage1Button_1, rowDStage1Button_1, rowEStage1Button_1, rowFStage1Button_1
+            rowAStage1Button = JPanel()
+            rowAStage1Button.setLayout(BoxLayout(rowAStage1Button, BoxLayout.X_AXIS))
+
+            rowBStage1Button = JPanel()
+            rowBStage1Button.setLayout(BoxLayout(rowBStage1Button, BoxLayout.X_AXIS))
+
+            rowCStage1Button = JPanel()
+            rowCStage1Button.setLayout(BoxLayout(rowCStage1Button, BoxLayout.X_AXIS))
+
+            rowDStage1Button = JPanel()
+            rowDStage1Button.setLayout(BoxLayout(rowDStage1Button, BoxLayout.X_AXIS))
+
+            rowEStage1Button = JPanel()
+            rowEStage1Button.setLayout(BoxLayout(rowEStage1Button, BoxLayout.X_AXIS))
+
+            rowFStage1Button = JPanel()
+            rowFStage1Button.setLayout(BoxLayout(rowFStage1Button, BoxLayout.X_AXIS))
+
+            rowrowStage1Button_1 = JLabel("Change parameters to run trains")
+            rowrowStage1Button_1.setFont(rowTitle_22.getFont().deriveFont(Font.BOLD, 13));
+            rowrowStage1Button_1.add(Box.createHorizontalGlue());
+            rowrowStage1Button_1.setAlignmentX(rowrowStage1Button_1.LEFT_ALIGNMENT)
+
+            stringToDisplay = "start hour: " + str(start_hour_gbl)
+            rowAStage1Button_1 = JLabel(stringToDisplay)
+            rowAStage1Button_1.setFont(rowTitle_22.getFont().deriveFont(Font.BOLD, 13));
+            rowAStage1Button_1.add(Box.createHorizontalGlue());
+            rowAStage1Button_1.setAlignmentX(rowAStage1Button_1.LEFT_ALIGNMENT)
+
+            stringToDisplay = "end hour: " + str(end_hour_gbl)
+            rowBStage1Button_1 = JLabel(stringToDisplay)
+            rowBStage1Button_1.setFont(rowTitle_22.getFont().deriveFont(Font.BOLD, 13));
+            rowBStage1Button_1.add(Box.createHorizontalGlue());
+            rowBStage1Button_1.setAlignmentX(rowBStage1Button_1.LEFT_ALIGNMENT)
+
+            stringToDisplay = "fast clock (when scheduling trains): x " + str(fast_clock_rate)
+            rowCStage1Button_1 = JLabel(stringToDisplay)
+            rowCStage1Button_1.setFont(rowTitle_22.getFont().deriveFont(Font.BOLD, 13));
+            rowCStage1Button_1.add(Box.createHorizontalGlue());
+            rowCStage1Button_1.setAlignmentX(rowCStage1Button_1.LEFT_ALIGNMENT)
+
+            stringToDisplay = "fast clock (outside running times): x " + str(speed_not_operational_gbl)
+            rowDStage1Button_1 = JLabel(stringToDisplay)
+            rowDStage1Button_1.setFont(rowTitle_22.getFont().deriveFont(Font.BOLD, 13));
+            rowDStage1Button_1.add(Box.createHorizontalGlue());
+            rowDStage1Button_1.setAlignmentX(rowDStage1Button_1.LEFT_ALIGNMENT)
+
+            stringToDisplay = "scheduling margin: " + str(scheduling_margin_gbl) + " fast mins"
+            rowEStage1Button_1 = JLabel(stringToDisplay)
+            rowEStage1Button_1.setFont(rowTitle_22.getFont().deriveFont(Font.BOLD, 13));
+            rowEStage1Button_1.add(Box.createHorizontalGlue());
+            rowEStage1Button_1.setAlignmentX(rowEStage1Button_1.LEFT_ALIGNMENT)
+
+            stringToDisplay = "scheduling in operation: " + str(scheduling_in_operation_gbl)
+            rowFStage1Button_1 = JLabel(stringToDisplay)
+            rowFStage1Button_1.setFont(rowTitle_22.getFont().deriveFont(Font.BOLD, 13));
+            rowFStage1Button_1.add(Box.createHorizontalGlue());
+            rowFStage1Button_1.setAlignmentX(rowFStage1Button_1.LEFT_ALIGNMENT)
+
+            rowStage1Button_1 = JButton("Stage1", actionPerformed = self.CheckHourlyParameters_action)
+            stage1Button = rowStage1Button_1
 
 
 
-        rowStage2Button.add(Box.createVerticalGlue())
-        rowStage2Button.add(Box.createRigidArea(Dimension(20, 0)))
-        rowStage2Button.add(rowStage2Button_2)
-        rowStage2Button.add(Box.createRigidArea(Dimension(20, 0)))
-        rowStage2Button.add(rowrowStage2Button_2)
+            rowStage2Button = JPanel()
+            rowStage2Button.setLayout(BoxLayout(rowStage2Button, BoxLayout.X_AXIS))
+            rowrowStage2Button_2 = JLabel("Start Scheduling Trains")
+            rowrowStage2Button_2.setFont(rowTitle_22.getFont().deriveFont(Font.BOLD, 13));
 
-        rowStage3Button.add(Box.createVerticalGlue())
-        rowStage3Button.add(Box.createRigidArea(Dimension(20, 0)))
-        rowStage3Button.add(rowStage3Button_3)
-        rowStage3Button.add(Box.createRigidArea(Dimension(20, 0)))
-        rowStage3Button.add(rowrowStage3Button_3)
+            rowrowStage2Button_2.add(Box.createHorizontalGlue());
+            rowrowStage2Button_2.setAlignmentX(rowrowStage2Button_2.LEFT_ALIGNMENT)
+            rowStage2Button_2 = JButton("Stage2", actionPerformed = self.StartSchedulingTrains_action)
+            stage2Button = rowStage2Button_2
 
-        #Title
-        # panel.add(self.leftJustify(rowTitle_2))
-        panel.add(self.leftJustify(rowTitle_22))
-        # panel.add(self.leftJustify(rowTitle_23))
-        # panel.add(self.leftJustify(row_Title_3))
-        panel.add(self.leftJustify(rowStage1Separator))
+            rowStage3Button = JPanel()
+            rowStage3Button.setLayout(BoxLayout(rowStage3Button, BoxLayout.X_AXIS))
+            rowrowStage3Button_3 = JLabel("Stop Scheduling Trains")
+            rowrowStage3Button_3.setFont(rowTitle_33.getFont().deriveFont(Font.BOLD, 13));
 
-        #stage1
-        panel.add(self.leftJustify(rowStage1Button))
-        panel.add(self.leftJustify(rowAStage1Button))
-        panel.add(self.leftJustify(rowBStage1Button))
-        panel.add(self.leftJustify(rowCStage1Button))
-        panel.add(self.leftJustify(rowDStage1Button))
-        panel.add(self.leftJustify(rowEStage1Button))
-        panel.add(self.leftJustify(rowStage1Separator))
+            rowrowStage3Button_3.add(Box.createHorizontalGlue());
+            rowrowStage3Button_3.setAlignmentX(rowrowStage3Button_3.LEFT_ALIGNMENT)
+            rowStage3Button_3 = JButton("Stage3", actionPerformed = self.StopSchedulingtrains_action)
+            stage3Button = rowStage3Button_3
 
-        #stage2
-        panel.add(self.leftJustify(rowStage2Button))
-        # panel.add(self.leftJustify(rowStage2Separator))
 
-        panel.add(self.leftJustify(rowStage3Button))
-        panel.add(self.leftJustify(rowFStage1Button))
-        panel.add(self.leftJustify(rowStage3Separator))
+            rowStage1Button.add(Box.createVerticalGlue())
+            rowStage1Button.add(Box.createRigidArea(Dimension(20, 0)))
+            rowStage1Button.add(rowStage1Button_1)
+            rowStage1Button.add(Box.createRigidArea(Dimension(20, 0)))
+            rowStage1Button.add(rowrowStage1Button_1)
+            # rowStage1Button.add(Box.createVerticalGlue())
+            # rowStage1Button.add(rowAStage1Button_1)
 
-        frame.pack()
-        frame.setVisible(True)
-        frame.setSize(430, 250);
+            rowAStage1Button.add(Box.createVerticalGlue())
+            rowAStage1Button.add(Box.createRigidArea(Dimension(120, 0)))
+            rowAStage1Button.add(rowAStage1Button_1)
+
+            rowBStage1Button.add(Box.createVerticalGlue())
+            rowBStage1Button.add(Box.createRigidArea(Dimension(120, 0)))
+            rowBStage1Button.add(rowBStage1Button_1)
+
+            rowCStage1Button.add(Box.createVerticalGlue())
+            rowCStage1Button.add(Box.createRigidArea(Dimension(120, 0)))
+            rowCStage1Button.add(rowCStage1Button_1)
+
+            rowDStage1Button.add(Box.createVerticalGlue())
+            rowDStage1Button.add(Box.createRigidArea(Dimension(120, 0)))
+            rowDStage1Button.add(rowDStage1Button_1)
+
+            rowEStage1Button.add(Box.createVerticalGlue())
+            rowEStage1Button.add(Box.createRigidArea(Dimension(120, 0)))
+            rowEStage1Button.add(rowEStage1Button_1)
+
+            rowFStage1Button.add(Box.createVerticalGlue())
+            rowFStage1Button.add(Box.createRigidArea(Dimension(120, 0)))
+            rowFStage1Button.add(rowFStage1Button_1)
+
+            # rowDStage1Button.add(Box.createRigidArea(Dimension(20, 0)))
+            # rowStage1Button.add(rowDStage1Button_1)
+
+
+
+            rowStage2Button.add(Box.createVerticalGlue())
+            rowStage2Button.add(Box.createRigidArea(Dimension(20, 0)))
+            rowStage2Button.add(rowStage2Button_2)
+            rowStage2Button.add(Box.createRigidArea(Dimension(20, 0)))
+            rowStage2Button.add(rowrowStage2Button_2)
+
+            rowStage3Button.add(Box.createVerticalGlue())
+            rowStage3Button.add(Box.createRigidArea(Dimension(20, 0)))
+            rowStage3Button.add(rowStage3Button_3)
+            rowStage3Button.add(Box.createRigidArea(Dimension(20, 0)))
+            rowStage3Button.add(rowrowStage3Button_3)
+
+            #Title
+            # panel.add(self.leftJustify(rowTitle_2))
+            panel.add(self.leftJustify(rowTitle_22))
+            # panel.add(self.leftJustify(rowTitle_23))
+            # panel.add(self.leftJustify(row_Title_3))
+            panel.add(self.leftJustify(rowStage1Separator))
+
+            #stage1
+            panel.add(self.leftJustify(rowStage1Button))
+            panel.add(self.leftJustify(rowAStage1Button))
+            panel.add(self.leftJustify(rowBStage1Button))
+            panel.add(self.leftJustify(rowCStage1Button))
+            panel.add(self.leftJustify(rowDStage1Button))
+            panel.add(self.leftJustify(rowEStage1Button))
+            panel.add(self.leftJustify(rowStage1Separator))
+
+            #stage2
+            panel.add(self.leftJustify(rowStage2Button))
+            # panel.add(self.leftJustify(rowStage2Separator))
+
+            panel.add(self.leftJustify(rowStage3Button))
+            panel.add(self.leftJustify(rowFStage1Button))
+            panel.add(self.leftJustify(rowStage3Separator))
+
+        self.frame.pack()
+        self.frame.setVisible(True)
+        self.frame.setSize(430, 250);
 
     def leftJustify(self, panel):
         b = Box.createHorizontalBox()
@@ -990,7 +999,10 @@ class TimeListener(java.beans.PropertyChangeListener):
         #     pass
             self.process_operations_trains(event)    # schedules trains
             print "attempting to send timetable via mqtt"
-            self.send_timetable_via_mqtt(event)
+            try:
+                self.send_timetable_and_clock_via_mqtt(event)
+            except:
+                pass
         minutes_old2 = minutes
 
         # if self.scheduler_master_sensor.getKnownState() == ACTIVE:
@@ -1039,24 +1051,32 @@ class TimeListener(java.beans.PropertyChangeListener):
                         fast_clock_running_at_operational_speed = False
                     if self.logLevel > 0: print "set_fast_clock_rate fqst:", "fcr", fcr
 
-    def send_timetable_via_mqtt(self, event):
+    def send_timetable_and_clock_via_mqtt(self, event):
         hour = int(timebase.getTime().getHours())
         minutes = event.newValue
 
+        self.send_clock_message(hour, minutes)
         # get list of origins, destinations and times at intermediate stations
         timetable = self.get_timetable(hour, minutes)
         # print "timetable", timetable
 
         # send mqtt message
         self.send_timetable_messages(timetable)
-        # try:
-        #     print "sending message 2"
-        #     self.send_mqtt_messages(timetable)
-        #     print "message sent"
-        # except:
-        #     print "mqtt not set up: cannot publish timetable"
-
+        
     def send_timetable_messages(self,timetable):
+        msg = "["
+        for [station_name, station_departure_time, last_station, last_station_arrival_time, via] in timetable:
+            msg += '{"type" : "' + "schedule" + '", ' + \
+                   '"station_name" : "' + str(station_name) + '", ' + \
+                   '"station_departure_hour" : "' + str(station_departure_time) + '", ' + \
+                   '"last_station" : "' + str(last_station) + '", ' + \
+                   '"last_station_arrival_time" : "' + str(last_station_arrival_time) + '", ' + \
+                   '"via" : "' + str(via) + '"},'
+        msg = msg[:-1]
+        msg += "]"
+        self.send_mqtt_message(msg)
+
+    def send_timetable_messages_old(self,timetable):
 
         for [station_name, station_departure_time, last_station, last_station_arrival_time, via] in timetable:
             msg = '{"station_name" : "' + str(station_name) + '", ' + \
@@ -1078,6 +1098,12 @@ class TimeListener(java.beans.PropertyChangeListener):
         # send
         mqttAdapter.publish(topic, payload)
 
+    def send_clock_message(self, hour, minutes):
+
+        msg = '[{"type" : "' + "clock" + '", ' + \
+              '"time" : "' + str(hour) + ":" + str(minutes) + '"}]'
+        self.send_mqtt_message(msg)
+
     def get_timetable(self, hour, minutes):
 
         global schedule_trains_hourly
@@ -1085,15 +1111,6 @@ class TimeListener(java.beans.PropertyChangeListener):
         self.curr_time = minutes + hour * 60
 
         timetable = []
-
-        mqttAdapter = jmri.InstanceManager.getDefault( jmri.jmrix.mqtt.MqttSystemConnectionMemo ).getMqttAdapter()
-        # iterate through the trains scheduled in the xurrent and nex hour
-        # if schedule_trains_hourly:
-        #     if int(start_hour_gbl) <= hour <= int(end_hour_gbl):
-        #         pass    # need to process trains
-        #     else:
-        #         if self.logLevel > 0: print "returning in process_operational_trains"
-        #         return  # outside operational time
 
         TrainManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
         train_list = TrainManager.getTrainsByTimeList()
@@ -1114,16 +1131,30 @@ class TimeListener(java.beans.PropertyChangeListener):
                         train_hour = str(hour+1)
                 else:
                     train_hour = start_hour_gbl   # (beginning of following day)
-                train_route_start_time = train_hour + ":" + train_mins
+                train_route_start_time = train_hour + ":" + str(train_mins)
                 train_route = train.getRoute()
                 # location.getComment() will be set to the departure timed if the routine to do this has been run
                 last_location = train_route.getTerminatesRouteLocation()
-                [last_station, last_station_arrival_time] = [str(last_location.getName()), str(last_location.getComment())]
-                via = train_route.getLocationsBySequenceList()
+                
+                [last_station, last_station_arrival_time] = \
+                    [str(last_location.getName()), str(last_location.getComment())]
+                locations1 = train_route.getLocationsBySequenceList()
+                locations = [str(loc) for loc in locations1]
 
                 for i, location in enumerate(train_route.getLocationsBySequenceList()):
                     timetable_entry_names = ["station_name", "station_departure_time", "last_station",
                                              "last_station_arrival_time", "via"]
+                    # remove items from start of via list, and the destination
+                    via = locations[i+1:-1]
+                    if via == []:
+                        via = ["Terminates Here"]
+                    via = str(via).replace('[','').replace(']','').replace("'", "")
+                # [last_station, last_station_arrival_time] = [str(last_location.getName()), str(last_location.getComment())]
+                # via = train_route.getLocationsBySequenceList()
+
+                # for i, location in enumerate(train_route.getLocationsBySequenceList()):
+                    # timetable_entry_names = ["station_name", "station_departure_time", "last_station",
+                                             # "last_station_arrival_time", "via"]
                     # timetable.append(timetable_entry_names)
                     if i == 0:
                         station_departure_time = train_route_start_time
@@ -1134,7 +1165,7 @@ class TimeListener(java.beans.PropertyChangeListener):
                             time_to_station = 10   # just a botch for now
                         else:
                             time_to_station = location.getComment()
-                            print "time_to_station", time_to_station
+                            # print "time_to_station", time_to_station
 
                     station_name = str(location.getName())
                     station_departure_time = self.calc_time(station_departure_time, time_to_station)
@@ -1146,7 +1177,7 @@ class TimeListener(java.beans.PropertyChangeListener):
                                        last_station_arrival_time,
                                        via]
 
-                    print "timetable_entry", timetable_entry
+                    # print "timetable_entry", timetable_entry
                     timetable.append(timetable_entry)
         else:
             timetable = [["a", "b", "c", "d", "e"]]

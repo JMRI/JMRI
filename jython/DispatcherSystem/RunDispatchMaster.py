@@ -70,6 +70,7 @@ class RunDispatcherMaster():
             simulation_master.setName('Simulation Master')
             simulation_master.start()
 
+        global scheduler_master      #global so cas be referenced before killing threads
         scheduler_master = SchedulerMaster()
         instanceList.append(scheduler_master)
         if scheduler_master.setup():
