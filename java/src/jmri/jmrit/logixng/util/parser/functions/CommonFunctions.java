@@ -58,6 +58,7 @@ public class CommonFunctions implements FunctionFactory {
             return "length";
         }
 
+        @SuppressWarnings("rawtypes")   // We don't know the generic types of Collection and Map in this method
         @Override
         public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
                 throws CalculateException, JmriException {
