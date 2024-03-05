@@ -919,13 +919,17 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 msgType);
 
         if (_compileNeeded) {
-            log.info("Display compile needed message");
+            log.debug("Display compile needed message");
 
-            int response = JmriJOptionPane.showConfirmDialog(this,
+            String[] options = {Bundle.getMessage("EditorReboot"), Bundle.getMessage("CdiReboot")};
+            int response = JmriJOptionPane.showOptionDialog(this,
                     Bundle.getMessage("MessageCdiReboot"),
                     Bundle.getMessage("TitleCdiReboot"),
                     JmriJOptionPane.YES_NO_OPTION,
-                    JmriJOptionPane.QUESTION_MESSAGE);
+                    JmriJOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[0]);
 
             if (response == JmriJOptionPane.YES_OPTION) {
                 // Set the compile in process and request the reboot.  The completion will be

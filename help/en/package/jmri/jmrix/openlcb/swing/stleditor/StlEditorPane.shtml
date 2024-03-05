@@ -250,15 +250,16 @@ etc.
             "images/compile_required.png" alt="stl compile required"></a>
           </div>
 
-          <p>If <strong>No</strong> is selected, use <strong>Configure Nodes &rArr; Open
-          Configuration dialog</strong> to reboot the node.  The reboot invokes the PLC compiler.
-          The <strong>Syntax Messsage</strong> segment has to be checked for compile errors.  Click
-          on the Refresh button for <strong>Message 1</strong>.  If it shows "<em>Success, no syntax
-          errors found</em>" then the compile was good.  If it has an error, also check the other
-          messages.</p>
+          <p>If <strong>Use the CDI Configuration dialog to do the reboot</strong> is selected, use
+          <strong>Configure Nodes &rArr; Open Configuration dialog</strong> to reboot the node.  The
+          reboot invokes the PLC compiler. The <strong>Syntax Messsage</strong> segment has to be
+          checked for compile errors.  Click on the Refresh button for <strong>Message 1</strong>.
+          If it shows "<em>Success, no syntax errors found</em>" then the compile was good.  If it
+          has an error, also check the other messages.</p>
 
-          <p>If <strong>Yes</strong> is selected, the node will be rebooted.  When the reboot and compile finish, the
-          first syntax message will be displayed.  Here is a good result.</p>
+          <p>If <strong>Have the STL Editor do the reboot</strong> is selected, the node will be
+          rebooted.  When the reboot and compile finish, the first syntax message will be displayed.
+          Here is a good result.</p>
 
           <div style="margin-left: 2em">
             <a href="images/compile_good.png"><img src=
