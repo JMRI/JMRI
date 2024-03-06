@@ -21,6 +21,10 @@ import java
 from org.python.core.util import StringUtil
 
 
+CreateSchedulerPanel = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/SchedulerPanel.py')
+execfile(CreateSchedulerPanel)
+
+
 # fast_clock_rate = 12
 
 trains_to_be_scheduled = []
@@ -37,8 +41,11 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         self.f = None
 
     def exit(self):       # called explicitly when scheduler thread is killed to stop multiple frames being visible
-        self.frame.setVisible(False)
-        self.f.setVisible(False)
+        try:
+            self.frame.setVisible(False)
+            self.f.setVisible(False)
+        except:
+            pass
 
     def setup(self):
         global schedule_trains_hourly
@@ -941,8 +948,15 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
 
     def show_operations_trains(self):
+        # show Operations form
         a = jmri.jmrit.operations.trains.TrainsTableAction()
         a.actionPerformed(None)
+        # picker()
+        # TimePickerExample()
+
+        # show dispatcher system form
+        CreateAndShowGUI4(self)
+
 
 
 from java.util.concurrent import TimeUnit
@@ -953,7 +967,10 @@ class TimeListener(java.beans.PropertyChangeListener):
         self.scheduler_master_sensor = sensors.getSensor("SchedulerSensor3")
         self.logLevel = 0
         self.prev_time = 0
-        self.inhibit_fast_clock_error_message()
+        try:
+            self.inhibit_fast_clock_error_message()
+        except:
+            pass
 
     def inhibit_fast_clock_error_message(self):
         global timebase
@@ -1197,10 +1214,6 @@ class TimeListener(java.beans.PropertyChangeListener):
         # print "station_departure_time_new", station_departure_time_new
         return station_departure_time_new
 
-
-
-
-
     def process_operations_trains(self, event ):
         global timebase
         global schedule_trains_hourly
@@ -1211,7 +1224,6 @@ class TimeListener(java.beans.PropertyChangeListener):
         if 'schedule_trains_hourly' not in globals():
             schedule_trains_hourly = False
         if self.logLevel > 0: print "in process_operations_trains", "schedule_trains_hourly", schedule_trains_hourly
-
 
         hour = int(timebase.getTime().getHours())
         if self.logLevel > 0: print "type hour" , type(hour)
@@ -1228,17 +1240,6 @@ class TimeListener(java.beans.PropertyChangeListener):
             else:
                 if self.logLevel > 0: print "returning in process_operational_trains"
                 return  # outside operational time
-
-        # self.set_fast_clock_rate(timebase, hour)
-
-        # if self.speed_not_operational_gbl__is_defined():
-        #     if schedule_trains_hourly:
-        #         fast_clock_multiplier = speed_not_operational_gbl
-        #         if hour >= int(start_hour_gbl) and hour <= int(end_hour_gbl):
-        #             fcr = fast_clock_rate * fast_clock_multiplier
-        #             timebase.setRate(fcr)
-        #         else:
-        #             timebase.setRate(fast_clock_rate)
 
         if self.logLevel > 0: print "A2"
         if self.logLevel > 1: print "TimeListener: process_operations_trains"
@@ -1273,17 +1274,6 @@ class TimeListener(java.beans.PropertyChangeListener):
                 # train.setDepartureTime(train_hour, train_mins)
                 if self.logLevel > 0: print "hour", train.getDepartTimeMinutes() // 60
                 trains_to_start.append(train)
-
-            # print "trains_to_start", trains_to_start
-            # # need to set the time of a copy of the trains_to_start to the current hour (if within the desired running range)
-            # copy_trains_to_start = copy.deepcopy(trains_to_start)
-            # for train in trains_to_start:
-            #     if self.logLevel > 0: print "hour_before", train.getDepartTimeMinutes() // 60
-            #     train_mins = str(int(train.getDepartTimeMinutes()) % 60)
-            #     train_hour = str(hour)
-            #     if self.logLevel > 0: print "train_mins", train_mins
-            #     train.setDepartureTime(train_hour, train_mins)
-            #     if self.logLevel > 0: print "hour", train.getDepartTimeMinutes() // 60
         else:
             trains_to_start = [train for train in train_list
                                if (self.prev_time < int(train.getDepartTimeMinutes()) <= self.curr_time) and
@@ -1419,6 +1409,7 @@ class RunTrain(jmri.jmrit.automat.AbstractAutomaton):
                         train_dispatched = True
 
                     else:
+                        myframe = None
                         for i in range(int(scheduling_margin_gbl)):
 
                             fast_minute = 1000/int(fast_clock_rate)
@@ -1436,13 +1427,8 @@ class RunTrain(jmri.jmrit.automat.AbstractAutomaton):
                             msg = "No train in block for scheduled train starting from " + station_from
                             msg2 = "Trying again for " + str(scheduling_margin_gbl) + " fast mins: minute" + str(i)
 
-                            try:    myframeold = myframe     # myframe may not be fefined at this point
-                            except: pass
-
-                            myframe = self.show_custom_message_box(msg, msg2)
-
-                            try:    myframeold.dispose()     # myframeold may not be fefined
-                            except: pass
+                            if myframe == None:
+                                myframe = self.show_custom_message_box(msg, msg2)
 
                             fast_minute = 1000/int(fast_clock_rate)
                             self.waitMsec(fast_minute)

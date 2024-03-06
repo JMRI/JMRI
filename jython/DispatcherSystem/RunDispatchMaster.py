@@ -23,6 +23,9 @@ execfile(FileMoveTrain)
 CreateScheduler = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/Scheduler.py')
 execfile(CreateScheduler)
 
+CreateSchedulerPanel = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/SchedulerPanel.py')
+execfile(CreateSchedulerPanel)
+
 CreateSimulation = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/Simulation.py')
 execfile(CreateSimulation)
 
