@@ -491,11 +491,21 @@ LogixNG: IQ:AUTO:0001
                     Log local variables
               </pre>
               </li>
+          <li>The LogixNG action <strong>For each</strong> now supports
+              Java arrays as well, for example the result of the expression
+              <strong>a_b.split("\_")</strong>.</li>
           <li>The LogixNG action <strong>Set reporter</strong> has been
               added.</li>
           <li>The actions <strong>Listen on Beans ...</strong> have been
               updated to fix a problem when several beans changes
               state at the same time.</li>
+          <li>Fixes a bug so that the methods <strong>toString()</strong>,
+              <strong>getKey()</strong> and <strong>getValue()</strong>
+              can be used for an item when using the action <strong>For each</strong>
+              on a Map.</li>
+          <li>Adds the LogixNG functions <strong>strlen()</strong> in module
+              <strong>String</strong> and <strong>length()</strong> in module
+              <strong>Common</strong>.</li>
           <li></li>
         </ul>
 
