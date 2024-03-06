@@ -208,7 +208,7 @@
 
         <li>The
         <a href="../../../package/jmri/jmrix/openlcb/swing/stleditor/StlEditorPane.shtml">STL Editor</a>
-        is a uesr friendly front end for the Tower LCC+Q logic. <span class="since">since 5.7.5</span>
+        is a user friendly front end for the Tower LCC+Q logic. <span class="since">since 5.7.5</span>
         </li>
 
       </ul>

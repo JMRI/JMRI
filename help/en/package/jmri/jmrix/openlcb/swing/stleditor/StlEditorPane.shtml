@@ -62,6 +62,13 @@ etc.
       select the node which loads the old data.  Do the import to overwrite the old data and then do
       the store and compile.</p>
 
+      <p>The <strong>STL Editor</strong> has been added to the OpenLCB/LCC menu.</p>
+
+       <div style="margin-left: 2em">
+        <a href="images/lcc_menu.png"><img src=
+        "images/lcc_menu.png" alt="stl openLCB/lcc menu"></a>
+      </div>
+
       <h3>Node Selector</h3>
 
       <p>The node selector lists the available Tower LCC+Q boards.  Other LCC nodes are not shown.
@@ -189,44 +196,85 @@ etc.
 
       <dl>
         <dt>Import</dt>
-        <dd>Import a CSV file set from a directory in the user files location.
-          If the current data has changed, a warning dialog will request
-          confirmation to revert the data.
+        <dd>
+          <p>Import a CSV file set from a directory in the user files location. If the current data
+          has changed, a warning dialog will request confirmation to revert the data.</p>
 
           <div style="margin-left: 2em">
             <a href="images/select_import_directory.png"><img src=
             "images/select_import_directory.png" alt="stl select import directory"></a>
           </div>
-          Select the directory and click on <strong>Select</strong>.  Double clicking on the folder
-          opens folder instead of selecting it.
+
+          <p>Select the directory and click on <strong>Select</strong>.  Double clicking on the
+          folder opens folder instead of selecting it.</p>
         </dd>
 
         <dt>Export</dt>
-        <dd>Export a CSV file set to a directory in the user files location.
+        <dd>
+          <p>Export a CSV file set to a directory in the user files location.</p>
+
           <div style="margin-left: 2em">
             <a href="images/select_export_directory.png"><img src=
             "images/select_export_directory.png" alt="stl select export directory"></a>
           </div>
-          Select the directory and click on <strong>Save</strong>.  Double clicking on the folder
-          opens folder instead of selecting it.<br>
-          If a new folder is created, it is necessary to back up one level and re-select the new
-          folder.
+
+          <p>Select the directory and click on <strong>Save</strong>.  Double clicking on the folder
+          opens folder instead of selecting it.</p>
+
+          <p>If a new folder is created, it is necessary to back up one level and re-select the new
+          folder.</p>
         </dd>
 
         <dt>Refresh</dt>
-        <dd>Reload the current data from the current node. If the current data has changed, a
-        warning dialog will request confirmation to revert the data.</dd>
+        <dd>
+          <p>Reload the current data from the current node. If the current data has changed, a
+          warning dialog will request confirmation to revert the data.</p>
+        </dd>
 
         <dt id="storeButton">Store</dt>
-        <dd>Update the data on the current node.  The current editor table content is converted to
-        the PLC format using an encoding process.  If the resulting PLC code is greater than 255
-        bytes, the encoding error dialog is shown (See the percent button).  After the data has been
-        updated, use <strong>Configure Nodes &rArr; Open Configuration dialog</strong> to reboot the
-        node.  The reboot invokes the PLC compiler. The <strong>Syntax Messsage</strong> segment has
-        to be checked for compile errors.  Click on the Refresh button for <strong>Message 1</strong>.
-        If it shows "<em>Success, no syntax errors found</em>" then the compile was good.  If it has
-        an error, also check the other messages.  Note:  The store completed dialog occurs before
-        all the changes have been written to the node.  Wait for node activity to finish.
+        <dd>
+          <p>Update the data on the current node.  The current editor table content is converted to
+          the PLC format using an encoding process.  If the resulting PLC code is greater than 255
+          bytes, the encoding error dialog is shown (See the percent button).  Only changed data is
+          stored.  The store complete dialog will be displayed when done.</p>
+
+          <div style="margin-left: 2em">
+            <a href="images/store_done.png"><img src=
+            "images/store_done.png" alt="stl store done"></a>
+          </div>
+
+          <p>If there are changes that require compiling the STL logic, another dialog will be displayed.</p>
+
+          <div style="margin-left: 2em">
+            <a href="images/compile_required.png"><img src=
+            "images/compile_required.png" alt="stl compile required"></a>
+          </div>
+
+          <p>If <strong>Use the CDI Configuration dialog to do the reboot</strong> is selected, use
+          <strong>Configure Nodes &rArr; Open Configuration dialog</strong> to reboot the node.  The
+          reboot invokes the PLC compiler. The <strong>Syntax Messsage</strong> segment has to be
+          checked for compile errors.  Click on the Refresh button for <strong>Message 1</strong>.
+          If it shows "<em>Success, no syntax errors found</em>" then the compile was good.  If it
+          has an error, also check the other messages.</p>
+
+          <p>If <strong>Have the STL Editor do the reboot</strong> is selected, the node will be
+          rebooted.  When the reboot and compile finish, the first syntax message will be displayed.
+          Here is a good result.</p>
+
+          <div style="margin-left: 2em">
+            <a href="images/compile_good.png"><img src=
+            "images/compile_good.png" alt="stl compile good"></a>
+          </div>
+
+          <p>Here is a result with an error.</p>
+
+          <div style="margin-left: 2em">
+            <a href="images/compile_error.png"><img src=
+            "images/compile_error.png" alt="stl compile error"></a>
+          </div>
+
+          <p>If it shows "<em>Success, no syntax errors found</em>" then the compile was good.  If
+          it has an error, also check the other messages using the CDI configuration dialog.</p>
         </dd>
       </dl>
 
@@ -267,23 +315,19 @@ etc.
         </dd>
       </dl>
 
-
-
-
       <h3>File Menu</h3>
 
       <p>The File menu has menu items that are the same as the tool bar file buttons.</p>
 
-       <div style="margin-left: 2em">
+      <div style="margin-left: 2em">
         <a href="images/file_menu.png"><img src=
         "images/file_menu.png" alt="stl file menu"></a>
       </div>
 
-  <p>The file
-      menu also has a <strong>Load a CDI Backup file</strong> item.  This extracts the STL data
-      from a CDI backup file.</p>
+      <p>The file menu also has a <strong>Load a CDI Backup file</strong> item.  This extracts the
+      STL data from a CDI backup file.</p>
 
-       <div style="margin-left: 2em">
+      <div style="margin-left: 2em">
         <a href="images/load_backup.png"><img src=
         "images/load_backup.png" alt="stl load backup"></a>
       </div>
