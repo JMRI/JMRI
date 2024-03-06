@@ -405,7 +405,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Add an option to Ramp up and down using the speed profile such that the speed change takes place over the length of the section.</li>
         </ul>
 
     <h3>Dispatcher System</h3>

@@ -75,6 +75,7 @@ public class AutoActiveTrain implements ThrottleListener {
     public static final int RAMP_MEDIUM = 0x02;  // Medium ramping
     public static final int RAMP_MED_SLOW = 0x03;  // Medium/slow ramping
     public static final int RAMP_SLOW = 0x04;  // Slow ramping
+    public static final int RAMP_SPEEDPROFILE = 0x05; // use speed profile and section distance
 
     /* Stop tasks codes
      */
@@ -1568,7 +1569,12 @@ public class AutoActiveTrain implements ThrottleListener {
         _autoEngineer.slowToStop(false);
         if (speedState > STOP_SPEED) {
             cancelStopInCurrentSection();
-            setTargetSpeed(applyMaxThrottleAndFactor(_speedRatio[speedState]));
+            if (_currentRampRate == RAMP_SPEEDPROFILE && _useSpeedProfile) {
+                // we are going to ramp up  / down using section length and speed profile
+                _autoEngineer.setTargetSpeed(_currentAllocatedSection.getSection().getActualLength() * _stopBySpeedProfileAdjust, speedState);
+            } else {
+                setTargetSpeed(applyMaxThrottleAndFactor(_speedRatio[speedState]));
+            }
         } else if (stopBySpeedProfile) {
             // we are going to stop by profile
             _stoppingUsingSpeedProfile = true;
@@ -1587,10 +1593,13 @@ public class AutoActiveTrain implements ThrottleListener {
                         _activeTrain.getTrainName(),
                         throttleSetting,
                         speedState);
-                if (throttleSetting > 0.009) {
+                if (throttleSetting > 0.009 && _currentRampRate != RAMP_SPEEDPROFILE && _useSpeedProfile) {
                     cancelStopInCurrentSection();
                     setTargetSpeed(applyMaxThrottleAndFactor(throttleSetting)); // apply speed factor and max
-                 } else if (useSpeedProfile && _stopBySpeedProfile) {
+                } else if (throttleSetting > 0.009) {
+                    cancelStopInCurrentSection();
+                    _autoEngineer.setTargetSpeed(_currentAllocatedSection.getSection().getActualLength(), throttleSetting);
+                } else if (useSpeedProfile && _stopBySpeedProfile) {
                     setTargetSpeed(0.0f);
                     _stoppingUsingSpeedProfile = true;
                     _autoEngineer.setTargetSpeed(_currentAllocatedSection.getSection().getActualLength(), 0.0f);
@@ -1908,7 +1917,7 @@ public class AutoActiveTrain implements ThrottleListener {
             log.debug("Set TargetSpeed[{}]",speed);
             stopAllTimers();
             targetSpeed = speed;
-            if (ramping == RAMP_NONE) {
+            if (ramping == RAMP_NONE || ramping == RAMP_SPEEDPROFILE ) {
                 throttle.setSpeedSetting(speed);
             } else {
                 rampToTarget();
@@ -2105,6 +2114,8 @@ public class AutoActiveTrain implements ThrottleListener {
             return RAMP_MED_SLOW;
         } else if (rampRate.equals(Bundle.getMessage("RAMP_SLOW"))) {
             return RAMP_SLOW;
+        } else if (rampRate.equals(Bundle.getMessage("RAMP_SPEEDPROFILE"))) {
+            return RAMP_SPEEDPROFILE;
         }
         return RAMP_NONE;
     }
