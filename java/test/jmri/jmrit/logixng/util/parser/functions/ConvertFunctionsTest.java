@@ -395,7 +395,6 @@ public class ConvertFunctionsTest {
     public void testHex2DecFunction() throws Exception {
         Function hex2DecFunction = InstanceManager.getDefault(FunctionManager.class).get("hex2dec");
         Assert.assertEquals("strings matches", "hex2dec", hex2DecFunction.getName());
-        Assert.assertEquals("strings matches", "hex2dec", new ConvertFunctions.Hex2DecFunction().getName());
 
         AtomicBoolean hasThrown = new AtomicBoolean(false);
 
