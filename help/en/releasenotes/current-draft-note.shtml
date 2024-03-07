@@ -506,6 +506,11 @@ LogixNG: IQ:AUTO:0001
           <li>Adds the LogixNG functions <strong>strlen()</strong> in module
               <strong>String</strong> and <strong>length()</strong> in module
               <strong>Common</strong>.</li>
+          <li>Bug fix: The LogixNG function <strong>boolJython()</strong>
+              now return false if the value is an empty array. It returns
+              true if the value is a non empty array.</li>
+          <li>Bug fix: The LogixNG function <strong>evaluateMemory()</strong>
+              didn't behaved as documented. It's now fixed.</li>
           <li></li>
         </ul>
 

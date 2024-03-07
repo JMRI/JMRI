@@ -1,24 +1,14 @@
 package jmri.jmrit.logixng.util.parser.functions;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import jmri.InstanceManager;
 import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
-import jmri.jmrit.logixng.util.parser.ExpressionNode;
-import jmri.jmrit.logixng.util.parser.ExpressionNodeIntegerNumber;
-import jmri.jmrit.logixng.util.parser.ExpressionNodeFalse;
-import jmri.jmrit.logixng.util.parser.ExpressionNodeFloatingNumber;
-import jmri.jmrit.logixng.util.parser.ExpressionNodeString;
-import jmri.jmrit.logixng.util.parser.ExpressionNodeTrue;
-import jmri.jmrit.logixng.util.parser.Token;
-import jmri.jmrit.logixng.util.parser.TokenType;
-import jmri.jmrit.logixng.util.parser.WrongNumberOfParametersException;
+import jmri.jmrit.logixng.util.parser.*;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -78,9 +68,8 @@ public class ConvertFunctionsTest {
 
     @Test
     public void testIsIntFunction() throws Exception {
-        ConvertFunctions.IsIntFunction isIntFunction = new ConvertFunctions.IsIntFunction();
+        Function isIntFunction = InstanceManager.getDefault(FunctionManager.class).get("isInt");
         Assert.assertEquals("strings matches", "isInt", isIntFunction.getName());
-        Assert.assertEquals("strings matches", "isInt", new ConvertFunctions.IsIntFunction().getName());
 
         AtomicBoolean hasThrown = new AtomicBoolean(false);
 
@@ -131,9 +120,8 @@ public class ConvertFunctionsTest {
 
     @Test
     public void testIsFloatFunction() throws Exception {
-        ConvertFunctions.IsFloatFunction isFloatFunction = new ConvertFunctions.IsFloatFunction();
+        Function isFloatFunction = InstanceManager.getDefault(FunctionManager.class).get("isFloat");
         Assert.assertEquals("strings matches", "isFloat", isFloatFunction.getName());
-        Assert.assertEquals("strings matches", "isFloat", new ConvertFunctions.IsFloatFunction().getName());
 
         AtomicBoolean hasThrown = new AtomicBoolean(false);
 
@@ -182,9 +170,8 @@ public class ConvertFunctionsTest {
 
     @Test
     public void testBoolFunction() throws Exception {
-        ConvertFunctions.BoolFunction boolFunction = new ConvertFunctions.BoolFunction();
+        Function boolFunction = InstanceManager.getDefault(FunctionManager.class).get("bool");
         Assert.assertEquals("strings matches", "bool", boolFunction.getName());
-        Assert.assertEquals("strings matches", "bool", new ConvertFunctions.BoolFunction().getName());
 
         AtomicBoolean hasThrown = new AtomicBoolean(false);
 
@@ -213,13 +200,82 @@ public class ConvertFunctionsTest {
         } catch (WrongNumberOfParametersException e) {
             hasThrown.set(true);
         }
+
+        // Test array
+        hasThrown.set(false);
+        try {
+            boolFunction.calculate(symbolTable, getParameterList(
+                    new ExpressionNodeConstantScaffold(new String[]{"Red", "Green"})));
+        } catch (IllegalArgumentException e) {
+            hasThrown.set(true);
+        }
+        Assert.assertTrue("exception is thrown", hasThrown.get());
+    }
+
+    @Test
+    public void testBoolJythonFunction() throws Exception {
+        Function boolJythonFunction = InstanceManager.getDefault(FunctionManager.class).get("boolJython");
+        Assert.assertEquals("strings matches", "boolJython", boolJythonFunction.getName());
+
+        AtomicBoolean hasThrown = new AtomicBoolean(false);
+
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+
+        // Test unsupported token type
+        hasThrown.set(false);
+        try {
+            boolJythonFunction.calculate(symbolTable, getParameterList());
+        } catch (WrongNumberOfParametersException e) {
+            hasThrown.set(true);
+        }
+        Assert.assertTrue("exception is thrown", hasThrown.get());
+
+        Assert.assertTrue("result is true", (boolean)boolJythonFunction.calculate(symbolTable, getParameterList(expr12)));
+        Assert.assertTrue("result is true", (boolean)boolJythonFunction.calculate(symbolTable, getParameterList(expr12_34)));
+        Assert.assertFalse("result is false", (boolean)boolJythonFunction.calculate(symbolTable, getParameterList(expr0)));
+        Assert.assertFalse("result is false", (boolean)boolJythonFunction.calculate(symbolTable, getParameterList(expr0_34)));
+        Assert.assertTrue("result is true", (boolean)boolJythonFunction.calculate(symbolTable, getParameterList(exprTrue)));
+        Assert.assertFalse("result is false", (boolean)boolJythonFunction.calculate(symbolTable, getParameterList(exprFalse)));
+
+        Assert.assertFalse("result is false", (boolean)boolJythonFunction.calculate(symbolTable, getParameterList(
+                new ExpressionNodeConstantScaffold(new String[]{}))));
+        Assert.assertTrue("result is true", (boolean)boolJythonFunction.calculate(symbolTable, getParameterList(
+                new ExpressionNodeConstantScaffold(new String[]{"Red", "Green"}))));
+
+        List<String> list = new ArrayList<>();
+        Assert.assertFalse("result is false", (boolean)boolJythonFunction.calculate(symbolTable, getParameterList(
+                new ExpressionNodeConstantScaffold(list))));
+        list.add("Blue");
+        Assert.assertTrue("result is true", (boolean)boolJythonFunction.calculate(symbolTable, getParameterList(
+                new ExpressionNodeConstantScaffold(list))));
+
+        Set<String> set = new HashSet<>();
+        Assert.assertFalse("result is false", (boolean)boolJythonFunction.calculate(symbolTable, getParameterList(
+                new ExpressionNodeConstantScaffold(set))));
+        set.add("Green");
+        Assert.assertTrue("result is true", (boolean)boolJythonFunction.calculate(symbolTable, getParameterList(
+                new ExpressionNodeConstantScaffold(set))));
+
+        Map<String, Integer> map = new HashMap<>();
+        Assert.assertFalse("result is false", (boolean)boolJythonFunction.calculate(symbolTable, getParameterList(
+                new ExpressionNodeConstantScaffold(map))));
+        map.put("Red", 2);
+        Assert.assertTrue("result is true", (boolean)boolJythonFunction.calculate(symbolTable, getParameterList(
+                new ExpressionNodeConstantScaffold(map))));
+
+        // Test unsupported token type
+        hasThrown.set(false);
+        try {
+            boolJythonFunction.calculate(symbolTable, getParameterList(expr12_34, expr25_46));
+        } catch (WrongNumberOfParametersException e) {
+            hasThrown.set(true);
+        }
     }
 
     @Test
     public void testIntFunction() throws Exception {
-        ConvertFunctions.IntFunction intFunction = new ConvertFunctions.IntFunction();
+        Function intFunction = InstanceManager.getDefault(FunctionManager.class).get("int");
         Assert.assertEquals("strings matches", "int", intFunction.getName());
-        Assert.assertEquals("strings matches", "int", new ConvertFunctions.IntFunction().getName());
 
         AtomicBoolean hasThrown = new AtomicBoolean(false);
 
@@ -246,8 +302,98 @@ public class ConvertFunctionsTest {
     }
 
     @Test
+    public void testFloatFunction() throws Exception {
+        Function floatFunction = InstanceManager.getDefault(FunctionManager.class).get("float");
+        Assert.assertEquals("strings matches", "float", floatFunction.getName());
+
+        AtomicBoolean hasThrown = new AtomicBoolean(false);
+
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+
+        // Test unsupported token type
+        hasThrown.set(false);
+        try {
+            floatFunction.calculate(symbolTable, getParameterList());
+        } catch (WrongNumberOfParametersException e) {
+            hasThrown.set(true);
+        }
+        Assert.assertTrue("exception is thrown", hasThrown.get());
+
+        Assert.assertEquals("numbers are equal", 12.34, floatFunction.calculate(symbolTable, getParameterList(expr12_34)));
+
+        // Test unsupported token type
+        hasThrown.set(false);
+        try {
+            floatFunction.calculate(symbolTable, getParameterList(expr12_34, expr25_46));
+        } catch (WrongNumberOfParametersException e) {
+            hasThrown.set(true);
+        }
+    }
+
+    @Test
+    public void testStrFunction() throws Exception {
+        Function strFunction = InstanceManager.getDefault(FunctionManager.class).get("str");
+        Assert.assertEquals("strings matches", "str", strFunction.getName());
+
+        AtomicBoolean hasThrown = new AtomicBoolean(false);
+
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+
+        // Test unsupported token type
+        hasThrown.set(false);
+        try {
+            strFunction.calculate(symbolTable, getParameterList());
+        } catch (WrongNumberOfParametersException e) {
+            hasThrown.set(true);
+        }
+        Assert.assertTrue("exception is thrown", hasThrown.get());
+
+        Assert.assertEquals("strings are equal", "12", strFunction.calculate(symbolTable, getParameterList(expr12)));
+        Assert.assertEquals("strings are equal", "12.34", strFunction.calculate(symbolTable, getParameterList(expr12_34)));
+
+        Assert.assertEquals("Strings are equal", "Blue",
+                strFunction.calculate(symbolTable, getParameterList(new ExpressionNodeConstantScaffold("Blue"))));
+        Assert.assertTrue(((String)strFunction.calculate(symbolTable, getParameterList(
+                new ExpressionNodeConstantScaffold(new String[0])))).startsWith("[Ljava.lang.String;@"));
+        Assert.assertTrue(((String)strFunction.calculate(symbolTable, getParameterList(
+                new ExpressionNodeConstantScaffold(new String[]{"Blue", "Red"})))).startsWith("[Ljava.lang.String;@"));
+
+        List<String> list = new ArrayList<>();
+        Assert.assertEquals("Strings are equal", "[]", strFunction.calculate(symbolTable, getParameterList(
+                new ExpressionNodeConstantScaffold(list))));
+        list.add("Blue");
+        list.add("Green");
+        Assert.assertEquals("Strings are equal", "[Blue, Green]", strFunction.calculate(symbolTable, getParameterList(
+                new ExpressionNodeConstantScaffold(list))));
+
+        Set<String> set = new HashSet<>();
+        Assert.assertEquals("Strings are equal", "[]", strFunction.calculate(symbolTable, getParameterList(
+                new ExpressionNodeConstantScaffold(set))));
+        set.add("Green");
+        set.add("Yellow");
+        Assert.assertEquals("Strings are equal", "[Yellow, Green]", strFunction.calculate(symbolTable, getParameterList(
+                new ExpressionNodeConstantScaffold(set))));
+
+        Map<String, Integer> map = new HashMap<>();
+        Assert.assertEquals("Strings are equal", "{}", strFunction.calculate(symbolTable, getParameterList(
+                new ExpressionNodeConstantScaffold(map))));
+        map.put("Red", 2);
+        map.put("Green", 4);
+        Assert.assertEquals("Strings are equal", "{Red=2, Green=4}", strFunction.calculate(symbolTable, getParameterList(
+                new ExpressionNodeConstantScaffold(map))));
+
+        // Test unsupported token type
+        hasThrown.set(false);
+        try {
+            strFunction.calculate(symbolTable, getParameterList(expr12_34, expr25_46));
+        } catch (WrongNumberOfParametersException e) {
+            hasThrown.set(true);
+        }
+    }
+
+    @Test
     public void testHex2DecFunction() throws Exception {
-        ConvertFunctions.Hex2DecFunction hex2DecFunction = new ConvertFunctions.Hex2DecFunction();
+        Function hex2DecFunction = InstanceManager.getDefault(FunctionManager.class).get("hex2dec");
         Assert.assertEquals("strings matches", "hex2dec", hex2DecFunction.getName());
         Assert.assertEquals("strings matches", "hex2dec", new ConvertFunctions.Hex2DecFunction().getName());
 
@@ -287,6 +433,7 @@ public class ConvertFunctionsTest {
     @AfterEach
     public void tearDown() {
         LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
