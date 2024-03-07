@@ -234,7 +234,6 @@ public class MathFunctions implements FunctionFactory {
                     double param0 = TypeConversionUtil.convertToDouble(
                             parameterList.get(0).calculate(symbolTable), false);
                     Object param1 = parameterList.get(1).calculate(symbolTable);
-                    double result;
                     if (param1 instanceof String) {
                         switch ((String)param1) {
                             case "rad":
