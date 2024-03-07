@@ -3,17 +3,12 @@ package jmri.jmrit.logixng.util.parser.functions;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import jmri.InstanceManager;
 import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
-import jmri.jmrit.logixng.util.parser.ExpressionNode;
-import jmri.jmrit.logixng.util.parser.ExpressionNodeFloatingNumber;
-import jmri.jmrit.logixng.util.parser.ExpressionNodeIntegerNumber;
-import jmri.jmrit.logixng.util.parser.ExpressionNodeString;
-import jmri.jmrit.logixng.util.parser.Token;
-import jmri.jmrit.logixng.util.parser.TokenType;
-import jmri.jmrit.logixng.util.parser.WrongNumberOfParametersException;
+import jmri.jmrit.logixng.util.parser.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -41,7 +36,7 @@ public class StringFunctionsTest {
 
     @Test
     public void testFormatFunction() throws Exception {
-        StringFunctions.FormatFunction formatFunction = new StringFunctions.FormatFunction();
+        Function formatFunction = InstanceManager.getDefault(FunctionManager.class).get("format");
         Assert.assertEquals("strings matches", "format", formatFunction.getName());
 
         AtomicBoolean hasThrown = new AtomicBoolean(false);
@@ -74,7 +69,7 @@ public class StringFunctionsTest {
 
     @Test
     public void testStrLenFunction() throws Exception {
-        StringFunctions.StrLenFunction strlenFunction = new StringFunctions.StrLenFunction();
+        Function strlenFunction = InstanceManager.getDefault(FunctionManager.class).get("strlen");
         Assert.assertEquals("strings matches", "strlen", strlenFunction.getName());
 
         AtomicBoolean hasThrown = new AtomicBoolean(false);
@@ -104,6 +99,7 @@ public class StringFunctionsTest {
     @After
     public void tearDown() {
         LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

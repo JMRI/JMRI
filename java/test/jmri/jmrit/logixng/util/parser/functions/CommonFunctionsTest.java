@@ -3,15 +3,12 @@ package jmri.jmrit.logixng.util.parser.functions;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import jmri.InstanceManager;
 import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
-import jmri.jmrit.logixng.util.parser.ExpressionNode;
-import jmri.jmrit.logixng.util.parser.ExpressionNodeString;
-import jmri.jmrit.logixng.util.parser.Token;
-import jmri.jmrit.logixng.util.parser.TokenType;
-import jmri.jmrit.logixng.util.parser.WrongNumberOfParametersException;
+import jmri.jmrit.logixng.util.parser.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -35,7 +32,7 @@ public class CommonFunctionsTest {
 
     @Test
     public void testLengthFunction() throws Exception {
-        CommonFunctions.LengthFunction lengthFunction = new CommonFunctions.LengthFunction();
+        Function lengthFunction = InstanceManager.getDefault(FunctionManager.class).get("length");
         Assert.assertEquals("strings matches", "length", lengthFunction.getName());
 
         AtomicBoolean hasThrown = new AtomicBoolean(false);
@@ -56,8 +53,7 @@ public class CommonFunctionsTest {
                         new ExpressionNodeString(new Token(TokenType.NONE, "A string", 0)))));
 
         Assert.assertEquals("Strings are equal", 4,
-                (int)lengthFunction.calculate(symbolTable, getParameterList(
-                        new ExpressionNodeConstant(
+                (int)lengthFunction.calculate(symbolTable, getParameterList(new ExpressionNodeConstantScaffold(
                                 new String[]{"Red", "Green", "Blue", "Yellow"}))));
 
         List<String> list = new ArrayList<>();
@@ -69,8 +65,7 @@ public class CommonFunctionsTest {
         list.add("H");
         list.add("III");
         Assert.assertEquals("Strings are equal", 7,
-                (int)lengthFunction.calculate(symbolTable, getParameterList(
-                        new ExpressionNodeConstant(list))));
+                (int)lengthFunction.calculate(symbolTable, getParameterList(new ExpressionNodeConstantScaffold(list))));
 
         Set<String> set = new HashSet<>();
         set.add("A");
@@ -84,15 +79,13 @@ public class CommonFunctionsTest {
         set.add("H");
         set.add("III");
         Assert.assertEquals("Strings are equal", 10,
-                (int)lengthFunction.calculate(symbolTable, getParameterList(
-                        new ExpressionNodeConstant(set))));
+                (int)lengthFunction.calculate(symbolTable, getParameterList(new ExpressionNodeConstantScaffold(set))));
 
         Map<String, Integer> map = new HashMap<>();
         map.put("Hello",72);
         map.put("Something", 33);
         Assert.assertEquals("Strings are equal", 2,
-                (int)lengthFunction.calculate(symbolTable, getParameterList(
-                        new ExpressionNodeConstant(map))));
+                (int)lengthFunction.calculate(symbolTable, getParameterList(new ExpressionNodeConstantScaffold(map))));
     }
 
     // The minimal setup for log4J
@@ -104,29 +97,8 @@ public class CommonFunctionsTest {
     @After
     public void tearDown() {
         LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
-    }
-
-
-    public static class ExpressionNodeConstant implements ExpressionNode {
-
-        private final Object _value;
-
-        public ExpressionNodeConstant(Object value) {
-            _value = value;
-        }
-
-        @Override
-        public Object calculate(SymbolTable symbolTable) {
-            return _value;
-        }
-
-        /** {@inheritDoc} */
-        @Override
-        public String getDefinitionString() {
-            return null;    // This value is never used
-        }
-
     }
 
 }

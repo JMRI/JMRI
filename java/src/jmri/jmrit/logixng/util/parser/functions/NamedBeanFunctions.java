@@ -149,9 +149,8 @@ public class NamedBeanFunctions implements FunctionFactory {
      * Reads the value of a memory if the memory exists and then evaluates that
      * value.
      * If the value is a reference, it evaluates that reference. Else it
-     * evaluates the value as a formula.
-     * Return null if the memory does not exists or if the parameter cannot
-     * be evaluated to a String.
+     * evaluates the value.
+     * Return null if the memory does not exists.
      */
     public static class EvaluateMemoryFunction implements Function {
 
@@ -192,12 +191,7 @@ public class NamedBeanFunctions implements FunctionFactory {
                 return ReferenceUtil.getReference(symbolTable, (String)value);
             }
 
-            s = TypeConversionUtil.convertToString(value, false);
-
-            Map<String, Variable> variables = new HashMap<>();
-            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            ExpressionNode expressionNode = parser.parseExpression(s);
-            return expressionNode.calculate(symbolTable);
+            return value;
         }
 
         @Override
