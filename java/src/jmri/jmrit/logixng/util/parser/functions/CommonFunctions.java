@@ -24,7 +24,9 @@ public class CommonFunctions implements FunctionFactory {
     @Override
     public Set<Function> getFunctions() {
         Set<Function> functionClasses = new HashSet<>();
-        functionClasses.add(new LengthFunction());
+
+        addLengthFunction(functionClasses);
+
         return functionClasses;
     }
 
@@ -39,55 +41,33 @@ public class CommonFunctions implements FunctionFactory {
         return null;
     }
 
+    private void addLengthFunction(Set<Function> functionClasses) {
+        functionClasses.add(new AbstractFunction(this, "length", Bundle.getMessage("Common.length_Descr")) {
+            @SuppressWarnings("rawtypes")   // We don't know the generic types of Collection and Map in this method
+            @Override
+            public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                    throws CalculateException, JmriException {
+                if (parameterList.size() != 1) {
+                    throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName(), 1));
+                }
 
+                Object parameter = parameterList.get(0).calculate(symbolTable);
 
-    public static class LengthFunction implements Function {
+                if (parameter == null) {
+                    throw new NullPointerException("Parameter is null");
+                } else if (parameter instanceof String) {
+                    return ((String)parameter).length();
+                } else if (parameter.getClass().isArray()) {
+                    return ((Object[])parameter).length;
+                } else if (parameter instanceof Collection) {
+                    return ((Collection)parameter).size();
+                } else if (parameter instanceof Map) {
+                    return ((Map)parameter).size();
+                }
 
-        @Override
-        public String getModule() {
-            return new CommonFunctions().getModule();
-        }
-
-        @Override
-        public String getConstantDescriptions() {
-            return new CommonFunctions().getConstantDescription();
-        }
-
-        @Override
-        public String getName() {
-            return "length";
-        }
-
-        @SuppressWarnings("rawtypes")   // We don't know the generic types of Collection and Map in this method
-        @Override
-        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
-                throws CalculateException, JmriException {
-            if (parameterList.size() != 1) {
-                throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName(), 1));
+                throw new IllegalArgumentException("Parameter is not a String, Array, List, Set or Map: "+parameter.getClass().getName());
             }
-
-            Object parameter = parameterList.get(0).calculate(symbolTable);
-
-            if (parameter == null) {
-                throw new NullPointerException("Parameter is null");
-            } else if (parameter instanceof String) {
-                return ((String)parameter).length();
-            } else if (parameter.getClass().isArray()) {
-                return ((Object[])parameter).length;
-            } else if (parameter instanceof Collection) {
-                return ((Collection)parameter).size();
-            } else if (parameter instanceof Map) {
-                return ((Map)parameter).size();
-            }
-
-            throw new IllegalArgumentException("Parameter is not a String, Array, List, Set or Map: "+parameter.getClass().getName());
-        }
-
-        @Override
-        public String getDescription() {
-            return Bundle.getMessage("Common.length_Descr");
-        }
-
+        });
     }
 
 }

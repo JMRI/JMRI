@@ -30,10 +30,12 @@ public class NamedBeanFunctions implements FunctionFactory {
     @Override
     public Set<Function> getFunctions() {
         Set<Function> functionClasses = new HashSet<>();
-        functionClasses.add(new GetLogixNGTableFunction());
-        functionClasses.add(new ReadMemoryFunction());
-        functionClasses.add(new EvaluateMemoryFunction());
-        functionClasses.add(new WriteMemoryFunction());
+
+        addGetLogixNGTableFunction(functionClasses);
+        addReadMemoryFunction(functionClasses);
+        addEvaluateMemoryFunction(functionClasses);
+        addWriteMemoryFunction(functionClasses);
+
         return functionClasses;
     }
 
@@ -48,211 +50,104 @@ public class NamedBeanFunctions implements FunctionFactory {
         return null;
     }
 
+    private void addGetLogixNGTableFunction(Set<Function> functionClasses) {
+        functionClasses.add(new AbstractFunction(this, "getLogixNGTable", Bundle.getMessage("NamedBean.getLogixNGTable_Descr")) {
+            @Override
+            public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                    throws JmriException {
 
+                if (parameterList.size() != 1) {
+                    throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+                }
 
-    /**
-     * Reads the value of a memory if the memory exists.
-     * Return null if the memory does not exists or if the parameter cannot
-     * be evaluated to a String.
-     */
-    public static class GetLogixNGTableFunction implements Function {
+                Object value = parameterList.get(0).calculate(symbolTable);
+                if (value == null) return null;
 
-        @Override
-        public String getModule() {
-            return new NamedBeanFunctions().getModule();
-        }
+                String s = TypeConversionUtil.convertToString(value, false);
+                if (s.isEmpty()) return null;
 
-        @Override
-        public String getConstantDescriptions() {
-            return new NamedBeanFunctions().getConstantDescription();
-        }
-
-        @Override
-        public String getName() {
-            return "getLogixNGTable";
-        }
-
-        @Override
-        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
-                throws JmriException {
-
-            if (parameterList.size() != 1) {
-                throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+                return InstanceManager.getDefault(NamedTableManager.class).getNamedBean(s);
             }
-
-            Object value = parameterList.get(0).calculate(symbolTable);
-            if (value == null) return null;
-
-            String s = TypeConversionUtil.convertToString(value, false);
-            if (s.isEmpty()) return null;
-
-            return InstanceManager.getDefault(NamedTableManager.class).getNamedBean(s);
-        }
-
-        @Override
-        public String getDescription() {
-            return Bundle.getMessage("NamedBean.getLogixNGTable_Descr");
-        }
-
+        });
     }
 
+    private void addReadMemoryFunction(Set<Function> functionClasses) {
+        functionClasses.add(new AbstractFunction(this, "readMemory", Bundle.getMessage("NamedBean.readMemory_Descr")) {
+            @Override
+            public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                    throws JmriException {
 
-    /**
-     * Reads the value of a memory if the memory exists.
-     * Return null if the memory does not exists or if the parameter cannot
-     * be evaluated to a String.
-     */
-    public static class ReadMemoryFunction implements Function {
+                if (parameterList.size() != 1) {
+                    throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+                }
 
-        @Override
-        public String getModule() {
-            return new NamedBeanFunctions().getModule();
-        }
+                Object value = parameterList.get(0).calculate(symbolTable);
+                if (value == null) return null;
 
-        @Override
-        public String getConstantDescriptions() {
-            return new NamedBeanFunctions().getConstantDescription();
-        }
+                String s = TypeConversionUtil.convertToString(value, false);
+                if (s.isEmpty()) return null;
 
-        @Override
-        public String getName() {
-            return "readMemory";
-        }
-
-        @Override
-        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
-                throws JmriException {
-
-            if (parameterList.size() != 1) {
-                throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+                Memory m = InstanceManager.getDefault(MemoryManager.class).getNamedBean(s);
+                if (m == null) return null;
+                return m.getValue();
             }
-
-            Object value = parameterList.get(0).calculate(symbolTable);
-            if (value == null) return null;
-
-            String s = TypeConversionUtil.convertToString(value, false);
-            if (s.isEmpty()) return null;
-
-            Memory m = InstanceManager.getDefault(MemoryManager.class).getNamedBean(s);
-            if (m == null) return null;
-            return m.getValue();
-        }
-
-        @Override
-        public String getDescription() {
-            return Bundle.getMessage("NamedBean.readMemory_Descr");
-        }
-
+        });
     }
 
-    /**
-     * Reads the value of a memory if the memory exists and then evaluates that
-     * value.
-     * If the value is a reference, it evaluates that reference. Else it
-     * evaluates the value.
-     * Return null if the memory does not exists.
-     */
-    public static class EvaluateMemoryFunction implements Function {
+    private void addEvaluateMemoryFunction(Set<Function> functionClasses) {
+        functionClasses.add(new AbstractFunction(this, "evaluateMemory", Bundle.getMessage("NamedBean.evaluateMemory_Descr")) {
+            @Override
+            public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                    throws JmriException {
 
-        @Override
-        public String getModule() {
-            return new NamedBeanFunctions().getModule();
-        }
+                if (parameterList.size() != 1) {
+                    throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+                }
 
-        @Override
-        public String getConstantDescriptions() {
-            return new NamedBeanFunctions().getConstantDescription();
-        }
+                Object value = parameterList.get(0).calculate(symbolTable);
+                if (value == null) return null;
 
-        @Override
-        public String getName() {
-            return "evaluateMemory";
-        }
+                String s = TypeConversionUtil.convertToString(value, false);
+                if (s.isEmpty()) return null;
 
-        @Override
-        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
-                throws JmriException {
+                Memory m = InstanceManager.getDefault(MemoryManager.class).getNamedBean(s);
+                if (m == null) return null;
+                value = m.getValue();
 
-            if (parameterList.size() != 1) {
-                throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+                if ((value instanceof String) && ReferenceUtil.isReference((String)value)) {
+                    return ReferenceUtil.getReference(symbolTable, (String)value);
+                }
+
+                return value;
             }
-
-            Object value = parameterList.get(0).calculate(symbolTable);
-            if (value == null) return null;
-
-            String s = TypeConversionUtil.convertToString(value, false);
-            if (s.isEmpty()) return null;
-
-            Memory m = InstanceManager.getDefault(MemoryManager.class).getNamedBean(s);
-            if (m == null) return null;
-            value = m.getValue();
-
-            if ((value instanceof String) && ReferenceUtil.isReference((String)value)) {
-                return ReferenceUtil.getReference(symbolTable, (String)value);
-            }
-
-            return value;
-        }
-
-        @Override
-        public String getDescription() {
-            return Bundle.getMessage("NamedBean.evaluateMemory_Descr");
-        }
-
+        });
     }
 
+    private void addWriteMemoryFunction(Set<Function> functionClasses) {
+        functionClasses.add(new AbstractFunction(this, "writeMemory", Bundle.getMessage("NamedBean.writeMemory_Descr")) {
+            @Override
+            public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                    throws JmriException {
 
-    /**
-     * Writes a value to a memory if the memory exists.
-     * Does nothing if the memory does not exists or if the parameter cannot
-     * be evaluated to a String.
-     * Return the value.
-     */
-    public static class WriteMemoryFunction implements Function {
+                if (parameterList.size() != 2) {
+                    throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+                }
 
-        @Override
-        public String getModule() {
-            return new NamedBeanFunctions().getModule();
-        }
+                Object memoryName = parameterList.get(0).calculate(symbolTable);
+                if (memoryName == null) return null;
 
-        @Override
-        public String getConstantDescriptions() {
-            return new NamedBeanFunctions().getConstantDescription();
-        }
+                String s = TypeConversionUtil.convertToString(memoryName, false);
+                if (s.isEmpty()) return null;
 
-        @Override
-        public String getName() {
-            return "writeMemory";
-        }
+                Memory m = InstanceManager.getDefault(MemoryManager.class).getNamedBean(s);
+                if (m == null) return null;
 
-        @Override
-        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
-                throws JmriException {
+                Object value = parameterList.get(1).calculate(symbolTable);
+                m.setValue(value);
 
-            if (parameterList.size() != 2) {
-                throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+                return value;
             }
-
-            Object memoryName = parameterList.get(0).calculate(symbolTable);
-            if (memoryName == null) return null;
-
-            String s = TypeConversionUtil.convertToString(memoryName, false);
-            if (s.isEmpty()) return null;
-
-            Memory m = InstanceManager.getDefault(MemoryManager.class).getNamedBean(s);
-            if (m == null) return null;
-
-            Object value = parameterList.get(1).calculate(symbolTable);
-            m.setValue(value);
-
-            return value;
-        }
-
-        @Override
-        public String getDescription() {
-            return Bundle.getMessage("NamedBean.writeMemory_Descr");
-        }
-
+        });
     }
 
 }
