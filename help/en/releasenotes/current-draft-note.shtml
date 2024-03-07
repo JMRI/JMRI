@@ -511,6 +511,10 @@ LogixNG: IQ:AUTO:0001
               true if the value is a non empty array.</li>
           <li>Bug fix: The LogixNG function <strong>evaluateMemory()</strong>
               didn't behaved as documented. It's now fixed.</li>
+          <li>The LogixNG functions <strong>cos()</strong>, <strong>tan()</strong>,
+              <strong>atan()</strong>, <strong>sqr()</strong> and
+              <strong>sqrt()</strong> has been added to the <strong>Math</strong>
+              module.</li>
           <li></li>
         </ul>
 
