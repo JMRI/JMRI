@@ -469,6 +469,54 @@ LogixNG: Test Script Function
       <p>See the later chapter on threads (may not exist yet) for more information of LogixNG
       threads.</p>
 
+      <h3>Developer Note: Adding a new function</h3>
+
+      <p>Select a suitable module for the new function. Each module has its own class and most
+      module classes reside in the <em>jmri.jmrit.logixng.util.parser.functions</em> package,
+      although it's possible to put a module in another Java package if desired. If a module is
+      aimed for an particular part of JMRI, for example LocoNet, it might be better to put it in the
+      <em>jmri.jmrix.loconet.logixng</em> package.</p>
+
+      <p>The module has a <strong>getFunctions()</strong> method which tells the
+      <strong>FunctionManager</strong> which functions each module provides. This method returns a
+      set of functions. To create a new function, add a new anonymous class to this set. Have the
+      new class extend the <strong>AbstractFunction</strong> class.</p>
+
+      <p>The <strong>AbstractFunction</strong> constructor takes three parameters. The module, the name of the
+      function and the description of the function. The anonymous class then needs to implement the
+      <strong>calculate()</strong> method which has the actual implementation of the new function.</p>
+
+      <p>The <strong>calculate()</strong> method takes two parameters, the symbol table and the
+      parameters to the function. It then does the desired calculation for the function and then
+      returns the value. <strong>parameterList.size()</strong> gives the number of parameters for
+      the function. <strong>parameterList.get(index).calculate(symbolTable)</strong> returns the
+      value of parameter index.</p>
+
+      <p>The <em>jmri.util.TypeConversionUtil</em> class has some useful utility methods to convert
+      the parameters to some types, for example String, long and double.</p>
+
+      <p>Example: The <strong>sqrt()</strong> function in the Math module. The
+      a<strong>ddSqrtFunction()</strong> method is called from the MathFunctions.getFunctions()
+      method.</p>
+
+<pre>
+     private void addSqrtFunction(Set&lt;Function&gt; functionClasses) {
+         functionClasses.add(new AbstractFunction(this, "sqrt", Bundle.getMessage("Math.sqrt_Descr")) {
+             @Override
+             public Object calculate(SymbolTable symbolTable, List&lt;ExpressionNode&gt; parameterList)
+                     throws JmriException {
+
+                 if (parameterList.size() == 1) {
+                     double param = TypeConversionUtil.convertToDouble(parameterList.get(0).calculate(symbolTable), false);
+                     return Math.sqrt(param);
+                 } else {
+                     throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName()));
+                 }
+             }
+         });
+     }
+</pre>
+
       <hr>
 
       <p><a href="chapter10.shtml">Chapter 10 - Modules</a>
@@ -476,6 +524,7 @@ LogixNG: Test Script Function
 
       <p><a href="index.shtml">Return to the Reference TOC</a>
       </p>
+
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
