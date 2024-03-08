@@ -2066,7 +2066,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
 
     public static void load(Element e) {
         if (e.getChild(Xml.OPERATIONS) == null) {
-            log.debug("operation setup values missing");
+            log.warn("OperationsPro settings values not found");
             return;
         }
         Element operations = e.getChild(Xml.OPERATIONS);

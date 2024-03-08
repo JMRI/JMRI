@@ -2554,10 +2554,14 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
       <h5>Random</h5>
       The first option is the "Random" value, which allows you to create some randomness to the
       schedule. If you select a value of 15, it means that the item has a 15 percent chance of being
-      selected if all of the other criteria for the schedule item was met, and there was track space
+      used if all of the other criteria for the schedule item was met, and there was track space
       available for the car. This feature is useful for a RIP track where you would want cars to be
-      randomly sent to the repair facility. For example, a random value of 2 would mean that roughly
-      1 in 50 cars could be sent the to RIP track.
+      randomly sent to the repair facility. For example, a random value of 2 would mean that a car
+      of a given type would have 1 in 50 chance of being sent the to RIP track. Note that if there
+      are several cars of a given type available to the train during the build process, that the
+      odds of a car being sent to the spur improve. For example if there were 10 boxcars available
+      to go the spur with a random value of 2, the odds of one of the boxcars being sent to the spur
+      would improve to roughly 1 in 5 if all 10 boxcars were tried by the program.
 
       <h5>Delivery</h5>
       Select from the "Delivery" pull down menu the train schedule (day) when you want the car
