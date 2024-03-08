@@ -496,7 +496,7 @@ LogixNG: Test Script Function
       the parameters to some types, for example String, long and double.</p>
 
       <p>Example: The <strong>sqrt()</strong> function in the Math module. The
-      a<strong>ddSqrtFunction()</strong> method is called from the MathFunctions.getFunctions()
+      <strong>addSqrtFunction()</strong> method is called from the MathFunctions.getFunctions()
       method.</p>
 
 <pre>
