@@ -31,6 +31,11 @@ public class MathFunctions implements FunctionFactory {
         addRandomFunction(functionClasses);
         addAbsFunction(functionClasses);
         addSinFunction(functionClasses);
+        addCosFunction(functionClasses);
+        addTanFunction(functionClasses);
+        addArctanFunction(functionClasses);
+        addSqrFunction(functionClasses);
+        addSqrtFunction(functionClasses);
 
         return functionClasses;
     }
@@ -159,6 +164,187 @@ public class MathFunctions implements FunctionFactory {
                     }
                 }
                 throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName()));
+            }
+        });
+    }
+
+    private void addCosFunction(Set<Function> functionClasses) {
+        functionClasses.add(new AbstractFunction(this, "cos", Bundle.getMessage("Math.cos_Descr")) {
+            @Override
+            public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                    throws JmriException {
+
+                if (parameterList.size() == 1) {
+                    double param = TypeConversionUtil.convertToDouble(
+                            parameterList.get(0).calculate(symbolTable), false);
+                    return Math.cos(param);
+                } else if (parameterList.size() >= 2) {
+                    double param0 = TypeConversionUtil.convertToDouble(
+                            parameterList.get(0).calculate(symbolTable), false);
+                    Object param1 = parameterList.get(1).calculate(symbolTable);
+                    double result;
+                    if (param1 instanceof String) {
+                        switch ((String)param1) {
+                            case "rad":
+                                result = Math.cos(param0);
+                                break;
+                            case "deg":
+                                result = Math.cos(Math.toRadians(param0));
+                                break;
+                            default:
+                                throw new CalculateException(Bundle.getMessage("IllegalParameter", 2, param1, getName()));
+                        }
+                    } else if (param1 instanceof Number) {
+                        double p1 = TypeConversionUtil.convertToDouble(param1, false);
+                        double angle = param0 / p1 * 2.0 * Math.PI;
+                        result = Math.cos(angle);
+                    } else {
+                        throw new CalculateException(Bundle.getMessage("IllegalParameter", 2, param1, getName()));
+                    }
+
+                    switch (parameterList.size()) {
+                        case 2:
+                            return result;
+                        case 4:
+                            double min = TypeConversionUtil.convertToDouble(
+                                    parameterList.get(2).calculate(symbolTable), false);
+                            double max = TypeConversionUtil.convertToDouble(
+                                    parameterList.get(3).calculate(symbolTable), false);
+                            return (result+1.0)/2.0 * (max-min) + min;
+                        default:
+                            throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName()));
+                    }
+                }
+                throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName()));
+            }
+        });
+    }
+
+    private void addTanFunction(Set<Function> functionClasses) {
+        functionClasses.add(new AbstractFunction(this, "tan", Bundle.getMessage("Math.tan_Descr")) {
+            @Override
+            public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                    throws JmriException {
+
+                if (parameterList.size() == 1) {
+                    double param = TypeConversionUtil.convertToDouble(
+                            parameterList.get(0).calculate(symbolTable), false);
+                    return Math.tan(param);
+                } else if (parameterList.size() == 2) {
+                    double param0 = TypeConversionUtil.convertToDouble(
+                            parameterList.get(0).calculate(symbolTable), false);
+                    Object param1 = parameterList.get(1).calculate(symbolTable);
+                    if (param1 instanceof String) {
+                        switch ((String)param1) {
+                            case "rad":
+                                return Math.tan(param0);
+                            case "deg":
+                                return Math.tan(Math.toRadians(param0));
+                            default:
+                                throw new CalculateException(Bundle.getMessage("IllegalParameter", 2, param1, getName()));
+                        }
+                    } else if (param1 instanceof Number) {
+                        double p1 = TypeConversionUtil.convertToDouble(param1, false);
+                        double angle = param0 / p1 * 2.0 * Math.PI;
+                        return Math.tan(angle);
+                    } else {
+                        throw new CalculateException(Bundle.getMessage("IllegalParameter", 2, param1, getName()));
+                    }
+                }
+                throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName()));
+            }
+        });
+    }
+
+    private void addArctanFunction(Set<Function> functionClasses) {
+        functionClasses.add(new AbstractFunction(this, "atan", Bundle.getMessage("Math.atan_Descr")) {
+            @Override
+            public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                    throws JmriException {
+
+                if (parameterList.size() == 1) {
+                    double param = TypeConversionUtil.convertToDouble(
+                            parameterList.get(0).calculate(symbolTable), false);
+                    return Math.atan(param);
+                } else if (parameterList.size() == 2) {
+                    double param0 = TypeConversionUtil.convertToDouble(
+                            parameterList.get(0).calculate(symbolTable), false);
+                    Object param1 = parameterList.get(1).calculate(symbolTable);
+                    if (param1 instanceof String) {
+                        switch ((String)param1) {
+                            case "rad":
+                                return Math.atan(param0);
+                            case "deg":
+                                return Math.toDegrees(Math.atan(param0));
+                            default:
+                                throw new CalculateException(Bundle.getMessage("IllegalParameter", 2, param1, getName()));
+                        }
+                    } else if (param1 instanceof Number) {
+                        double p1 = TypeConversionUtil.convertToDouble(param1, false);
+                        double angle = Math.atan(param0);
+                        return angle * p1 / 2.0 / Math.PI;
+                    } else {
+                        throw new CalculateException(Bundle.getMessage("IllegalParameter", 2, param1, getName()));
+                    }
+                }
+                throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName()));
+            }
+        });
+    }
+
+    private void addSqrFunction(Set<Function> functionClasses) {
+        functionClasses.add(new AbstractFunction(this, "sqr", Bundle.getMessage("Math.sqr_Descr")) {
+            @Override
+            public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                    throws CalculateException, JmriException {
+
+                switch (parameterList.size()) {
+                    case 1:
+                        Object value = parameterList.get(0).calculate(symbolTable);
+                        if ((value instanceof java.util.concurrent.atomic.AtomicInteger)
+                                || (value instanceof java.util.concurrent.atomic.AtomicLong)
+                                || (value instanceof java.math.BigInteger)
+                                || (value instanceof Byte)
+                                || (value instanceof Short)
+                                || (value instanceof Integer)
+                                || (value instanceof Long)
+                                || (value instanceof java.util.concurrent.atomic.LongAccumulator)
+                                || (value instanceof java.util.concurrent.atomic.LongAdder)) {
+
+                            long val = ((Number)value).longValue();
+                            return val * val;
+                        }
+                        if ((value instanceof java.math.BigDecimal)
+                                || (value instanceof Float)
+                                || (value instanceof Double)
+                                || (value instanceof java.util.concurrent.atomic.DoubleAccumulator)
+                                || (value instanceof java.util.concurrent.atomic.DoubleAdder)) {
+
+                            double val = ((Number)value).doubleValue();
+                            return val * val;
+                        }
+                        double val = TypeConversionUtil.convertToDouble(value, false);
+                        return val * val;
+                    default:
+                        throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName()));
+                }
+            }
+        });
+    }
+
+    private void addSqrtFunction(Set<Function> functionClasses) {
+        functionClasses.add(new AbstractFunction(this, "sqrt", Bundle.getMessage("Math.sqrt_Descr")) {
+            @Override
+            public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                    throws JmriException {
+
+                if (parameterList.size() == 1) {
+                    double param = TypeConversionUtil.convertToDouble(
+                            parameterList.get(0).calculate(symbolTable), false);
+                    return Math.sqrt(param);
+                } else {
+                    throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName()));
+                }
             }
         });
     }
