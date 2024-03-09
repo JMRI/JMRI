@@ -1,17 +1,17 @@
 SPDXVersion: SPDX-2.2
 DataLicense: CC0-1.0
 SPDXID: SPDXRef-DOCUMENT
-DocumentName: JMRI-5.7.4-SNAPSHOT
-DocumentNamespace: http://spdx.org/spdxpackages/JMRI-5.7.4-SNAPSHOT-b4ef8bd9-dbb9-41b8-b383-c9c20b73429f
+DocumentName: JMRI-5.7.5-SNAPSHOT
+DocumentNamespace: http://spdx.org/spdxpackages/JMRI-5.7.5-SNAPSHOT-73d45e4c-4aaa-4a88-a0a7-9a4e420dc53a
 Creator: Tool: spdx-sbom-generator-source-code
-Created: 2024-02-09T17:47:31Z
+Created: 2024-03-09T21:24:38Z
 
 
 ##### Package representing the JMRI
 
 PackageName: JMRI
 SPDXID: SPDXRef-Package-JMRI
-PackageVersion: 5.7.4-SNAPSHOT
+PackageVersion: 5.7.5-SNAPSHOT
 PackageSupplier: Organization: JMRI
 PackageDownloadLocation: https://mvnrepository.com/artifact/org.jmri
 FilesAnalyzed: false
@@ -810,10 +810,10 @@ PackageComment: NOASSERTION
 ##### Package representing the openlcb
 
 PackageName: openlcb
-SPDXID: SPDXRef-Package-openlcb-0.7.33
-PackageVersion: 0.7.33
+SPDXID: SPDXRef-Package-openlcb-0.7.35
+PackageVersion: 0.7.35
 PackageSupplier: Organization: openlcb
-PackageDownloadLocation: https://mvnrepository.com/artifact/org.openlcb/openlcb/0.7.33
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.openlcb/openlcb/0.7.35
 FilesAnalyzed: false
 PackageChecksum: SHA1: 58b20934687ca66b075ec46609e00993342fdcd9
 PackageHomePage: NOASSERTION
@@ -1274,10 +1274,10 @@ PackageComment: NOASSERTION
 ##### Package representing the jbidibc-core
 
 PackageName: jbidibc-core
-SPDXID: SPDXRef-Package-jbidibc-core-2.0.16
-PackageVersion: 2.0.16
+SPDXID: SPDXRef-Package-jbidibc-core-2.0.18
+PackageVersion: 2.0.18
 PackageSupplier: Organization: jbidibc-core
-PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/jbidibc-core/2.0.16
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/jbidibc-core/2.0.18
 FilesAnalyzed: false
 PackageChecksum: SHA1: ab1e13fc94b0381383418f7731519548d03a0eb6
 PackageHomePage: NOASSERTION
@@ -1290,10 +1290,10 @@ PackageComment: NOASSERTION
 ##### Package representing the jbidibc-serial
 
 PackageName: jbidibc-serial
-SPDXID: SPDXRef-Package-jbidibc-serial-2.0.16
-PackageVersion: 2.0.16
+SPDXID: SPDXRef-Package-jbidibc-serial-2.0.18
+PackageVersion: 2.0.18
 PackageSupplier: Organization: jbidibc-serial
-PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/jbidibc-serial/2.0.16
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/jbidibc-serial/2.0.18
 FilesAnalyzed: false
 PackageChecksum: SHA1: 49554e7d825feef2dd2d43d8ce88c168b31f2dac
 PackageHomePage: NOASSERTION
@@ -1306,10 +1306,10 @@ PackageComment: NOASSERTION
 ##### Package representing the jbidibc-simulation
 
 PackageName: jbidibc-simulation
-SPDXID: SPDXRef-Package-jbidibc-simulation-2.0.16
-PackageVersion: 2.0.16
+SPDXID: SPDXRef-Package-jbidibc-simulation-2.0.18
+PackageVersion: 2.0.18
 PackageSupplier: Organization: jbidibc-simulation
-PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/jbidibc-simulation/2.0.16
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/jbidibc-simulation/2.0.18
 FilesAnalyzed: false
 PackageChecksum: SHA1: 1bac6b2faea6bf6a7fd3b5cc4588437d1e048008
 PackageHomePage: NOASSERTION
@@ -1322,10 +1322,10 @@ PackageComment: NOASSERTION
 ##### Package representing the jbidibc-purejavacomm
 
 PackageName: jbidibc-purejavacomm
-SPDXID: SPDXRef-Package-jbidibc-purejavacomm-2.0.16
-PackageVersion: 2.0.16
+SPDXID: SPDXRef-Package-jbidibc-purejavacomm-2.0.18
+PackageVersion: 2.0.18
 PackageSupplier: Organization: jbidibc-purejavacomm
-PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/jbidibc-purejavacomm/2.0.16
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/jbidibc-purejavacomm/2.0.18
 FilesAnalyzed: false
 PackageChecksum: SHA1: 2bfdd1db3ea09f69f3bfe69f4efffc8372d746ea
 PackageHomePage: NOASSERTION
@@ -1338,10 +1338,10 @@ PackageComment: NOASSERTION
 ##### Package representing the jbidibc-messages
 
 PackageName: jbidibc-messages
-SPDXID: SPDXRef-Package-jbidibc-messages-2.0.16
-PackageVersion: 2.0.16
+SPDXID: SPDXRef-Package-jbidibc-messages-2.0.18
+PackageVersion: 2.0.18
 PackageSupplier: Organization: jbidibc-messages
-PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/jbidibc-messages/2.0.16
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/jbidibc-messages/2.0.18
 FilesAnalyzed: false
 PackageChecksum: SHA1: f6d859a4f53ecea27991190474cb1977dad370d1
 PackageHomePage: NOASSERTION
@@ -1354,10 +1354,10 @@ PackageComment: NOASSERTION
 ##### Package representing the jbidibc-net-serial-over-tcp
 
 PackageName: jbidibc-net-serial-over-tcp
-SPDXID: SPDXRef-Package-jbidibc-net-serial-over-tcp-2.0.16
-PackageVersion: 2.0.16
+SPDXID: SPDXRef-Package-jbidibc-net-serial-over-tcp-2.0.18
+PackageVersion: 2.0.18
 PackageSupplier: Organization: jbidibc-net-serial-over-tcp
-PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/jbidibc-net-serial-over-tcp/2.0.16
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/jbidibc-net-serial-over-tcp/2.0.18
 FilesAnalyzed: false
 PackageChecksum: SHA1: 17cfee598ba1472134508bd456618135d235c87b
 PackageHomePage: NOASSERTION
@@ -1370,10 +1370,10 @@ PackageComment: NOASSERTION
 ##### Package representing the bidibwizard-common
 
 PackageName: bidibwizard-common
-SPDXID: SPDXRef-Package-bidibwizard-common-2.0.16
-PackageVersion: 2.0.16
+SPDXID: SPDXRef-Package-bidibwizard-common-2.0.18
+PackageVersion: 2.0.18
 PackageSupplier: Organization: bidibwizard-common
-PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/bidibwizard-common/2.0.16
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/bidibwizard-common/2.0.18
 FilesAnalyzed: false
 PackageChecksum: SHA1: b3702ea3f41796008028dcc00957cf11ccf06133
 PackageHomePage: NOASSERTION
@@ -1386,10 +1386,10 @@ PackageComment: NOASSERTION
 ##### Package representing the bidibwizard-model
 
 PackageName: bidibwizard-model
-SPDXID: SPDXRef-Package-bidibwizard-model-2.0.16
-PackageVersion: 2.0.16
+SPDXID: SPDXRef-Package-bidibwizard-model-2.0.18
+PackageVersion: 2.0.18
 PackageSupplier: Organization: bidibwizard-model
-PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/bidibwizard-model/2.0.16
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/bidibwizard-model/2.0.18
 FilesAnalyzed: false
 PackageChecksum: SHA1: e27035ab873d62130384a81823254f8493018e4e
 PackageHomePage: NOASSERTION
@@ -1402,10 +1402,10 @@ PackageComment: NOASSERTION
 ##### Package representing the bidibwizard-simulation
 
 PackageName: bidibwizard-simulation
-SPDXID: SPDXRef-Package-bidibwizard-simulation-2.0.16
-PackageVersion: 2.0.16
+SPDXID: SPDXRef-Package-bidibwizard-simulation-2.0.18
+PackageVersion: 2.0.18
 PackageSupplier: Organization: bidibwizard-simulation
-PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/bidibwizard-simulation/2.0.16
+PackageDownloadLocation: https://mvnrepository.com/artifact/org.bidib.jbidib/bidibwizard-simulation/2.0.18
 FilesAnalyzed: false
 PackageChecksum: SHA1: fc04f0099a7800a1f104889d203788e7eb8b4097
 PackageHomePage: NOASSERTION
@@ -1655,15 +1655,15 @@ PackageCopyrightText: NOASSERTION
 PackageLicenseComments: NOASSERTION
 PackageComment: NOASSERTION
 
-##### Package representing the Could-not-resolve-dependencies-for-project-org.jmri
+##### Package representing the jqassistant-maven-plugin
 
-PackageName: Could-not-resolve-dependencies-for-project-org.jmri
-SPDXID: SPDXRef-Package-Could-not-resolve-dependencies-for-project-org.jmri-jar
-PackageVersion: jar
-PackageSupplier: Organization: Could-not-resolve-dependencies-for-project-org.jmri
-PackageDownloadLocation: https://mvnrepository.com/artifact/Failed to execute goal on project jmri/Could-not-resolve-dependencies-for-project-org.jmri/jar
+PackageName: jqassistant-maven-plugin
+SPDXID: SPDXRef-Package-jqassistant-maven-plugin- Plugin com.buschmais.jqassistant
+PackageVersion:  Plugin com.buschmais.jqassistant
+PackageSupplier: Organization: jqassistant-maven-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/Failed to retrieve plugin descriptor for com.buschmais.jqassistant/jqassistant-maven-plugin/ Plugin com.buschmais.jqassistant
 FilesAnalyzed: false
-PackageChecksum: SHA1: ab0c319a0c7cc93d0c818bef66f388bbc30c1b12
+PackageChecksum: SHA1: 55b4afd2e1aaa951fb70be5083f1508235ca964c
 PackageHomePage: NOASSERTION
 PackageLicenseConcluded: NOASSERTION
 PackageLicenseDeclared: NOASSERTION
@@ -1671,15 +1671,527 @@ PackageCopyrightText: NOASSERTION
 PackageLicenseComments: NOASSERTION
 PackageComment: NOASSERTION
 
-##### Package representing the 2024-02-09T12
+##### Package representing the spotbugs-maven-plugin
 
-PackageName: 2024-02-09T12
-SPDXID: SPDXRef-Package-2024-02-09T12-13-05
-PackageVersion: 13-05
-PackageSupplier: Organization: 2024-02-09T12
-PackageDownloadLocation: https://mvnrepository.com/artifact/Finished at/2024-02-09T12/13-05
+PackageName: spotbugs-maven-plugin
+SPDXID: SPDXRef-Package-spotbugs-maven-plugin- Plugin com.github.spotbugs
+PackageVersion:  Plugin com.github.spotbugs
+PackageSupplier: Organization: spotbugs-maven-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/Failed to retrieve plugin descriptor for com.github.spotbugs/spotbugs-maven-plugin/ Plugin com.github.spotbugs
 FilesAnalyzed: false
-PackageChecksum: SHA1: a84939e74874f4c42f2e90932d741dfe25bb9631
+PackageChecksum: SHA1: 3ca47af8a36b9919b33c83767e7bd8e94c14d387
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the maven-antrun-plugin
+
+PackageName: maven-antrun-plugin
+SPDXID: SPDXRef-Package-maven-antrun-plugin- Plugin org.apache.maven.plugins
+PackageVersion:  Plugin org.apache.maven.plugins
+PackageSupplier: Organization: maven-antrun-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/Failed to retrieve plugin descriptor for org.apache.maven.plugins/maven-antrun-plugin/ Plugin org.apache.maven.plugins
+FilesAnalyzed: false
+PackageChecksum: SHA1: b8ae7e26f7fca23ed28a3e7a39b4e33fc32919a5
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the maven-assembly-plugin
+
+PackageName: maven-assembly-plugin
+SPDXID: SPDXRef-Package-maven-assembly-plugin- Plugin org.apache.maven.plugins
+PackageVersion:  Plugin org.apache.maven.plugins
+PackageSupplier: Organization: maven-assembly-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/Failed to retrieve plugin descriptor for org.apache.maven.plugins/maven-assembly-plugin/ Plugin org.apache.maven.plugins
+FilesAnalyzed: false
+PackageChecksum: SHA1: 6381595cb9f1c465cec19ae14ce7b1785b6acdfd
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the maven-checkstyle-plugin
+
+PackageName: maven-checkstyle-plugin
+SPDXID: SPDXRef-Package-maven-checkstyle-plugin- Plugin org.apache.maven.plugins
+PackageVersion:  Plugin org.apache.maven.plugins
+PackageSupplier: Organization: maven-checkstyle-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/Failed to retrieve plugin descriptor for org.apache.maven.plugins/maven-checkstyle-plugin/ Plugin org.apache.maven.plugins
+FilesAnalyzed: false
+PackageChecksum: SHA1: 085be3dc30e34ea81f0c4ae3d13576a42bac7a9a
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the maven-dependency-plugin
+
+PackageName: maven-dependency-plugin
+SPDXID: SPDXRef-Package-maven-dependency-plugin- Plugin org.apache.maven.plugins
+PackageVersion:  Plugin org.apache.maven.plugins
+PackageSupplier: Organization: maven-dependency-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/Failed to retrieve plugin descriptor for org.apache.maven.plugins/maven-dependency-plugin/ Plugin org.apache.maven.plugins
+FilesAnalyzed: false
+PackageChecksum: SHA1: 454728243c5e9d592dd26e4ef4626a78a51b041f
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the maven-deploy-plugin
+
+PackageName: maven-deploy-plugin
+SPDXID: SPDXRef-Package-maven-deploy-plugin- Plugin org.apache.maven.plugins
+PackageVersion:  Plugin org.apache.maven.plugins
+PackageSupplier: Organization: maven-deploy-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/Failed to retrieve plugin descriptor for org.apache.maven.plugins/maven-deploy-plugin/ Plugin org.apache.maven.plugins
+FilesAnalyzed: false
+PackageChecksum: SHA1: 18ec4df04bd88eaa8efd5a9da841881cefc50fb7
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the maven-gpg-plugin
+
+PackageName: maven-gpg-plugin
+SPDXID: SPDXRef-Package-maven-gpg-plugin- Plugin org.apache.maven.plugins
+PackageVersion:  Plugin org.apache.maven.plugins
+PackageSupplier: Organization: maven-gpg-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/Failed to retrieve plugin descriptor for org.apache.maven.plugins/maven-gpg-plugin/ Plugin org.apache.maven.plugins
+FilesAnalyzed: false
+PackageChecksum: SHA1: d5c511088a26df61eb06401bc9a087109917f13e
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the maven-install-plugin
+
+PackageName: maven-install-plugin
+SPDXID: SPDXRef-Package-maven-install-plugin- Plugin org.apache.maven.plugins
+PackageVersion:  Plugin org.apache.maven.plugins
+PackageSupplier: Organization: maven-install-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/Failed to retrieve plugin descriptor for org.apache.maven.plugins/maven-install-plugin/ Plugin org.apache.maven.plugins
+FilesAnalyzed: false
+PackageChecksum: SHA1: bf69d776115b0bbfda6cf8fc95e046581527377c
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the maven-jar-plugin
+
+PackageName: maven-jar-plugin
+SPDXID: SPDXRef-Package-maven-jar-plugin- Plugin org.apache.maven.plugins
+PackageVersion:  Plugin org.apache.maven.plugins
+PackageSupplier: Organization: maven-jar-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/Failed to retrieve plugin descriptor for org.apache.maven.plugins/maven-jar-plugin/ Plugin org.apache.maven.plugins
+FilesAnalyzed: false
+PackageChecksum: SHA1: 58a31cf79dee7603f8fcaa3d2406f52ad9cb7a89
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the maven-javadoc-plugin
+
+PackageName: maven-javadoc-plugin
+SPDXID: SPDXRef-Package-maven-javadoc-plugin- Plugin org.apache.maven.plugins
+PackageVersion:  Plugin org.apache.maven.plugins
+PackageSupplier: Organization: maven-javadoc-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/Failed to retrieve plugin descriptor for org.apache.maven.plugins/maven-javadoc-plugin/ Plugin org.apache.maven.plugins
+FilesAnalyzed: false
+PackageChecksum: SHA1: 0f8d09f3310a4bd1b51c93286aec750b2b8231d6
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the maven-release-plugin
+
+PackageName: maven-release-plugin
+SPDXID: SPDXRef-Package-maven-release-plugin- Plugin org.apache.maven.plugins
+PackageVersion:  Plugin org.apache.maven.plugins
+PackageSupplier: Organization: maven-release-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/Failed to retrieve plugin descriptor for org.apache.maven.plugins/maven-release-plugin/ Plugin org.apache.maven.plugins
+FilesAnalyzed: false
+PackageChecksum: SHA1: fd7254958a4a2baf03d756cc819ec6e7892ab64c
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the maven-resources-plugin
+
+PackageName: maven-resources-plugin
+SPDXID: SPDXRef-Package-maven-resources-plugin- Plugin org.apache.maven.plugins
+PackageVersion:  Plugin org.apache.maven.plugins
+PackageSupplier: Organization: maven-resources-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/Failed to retrieve plugin descriptor for org.apache.maven.plugins/maven-resources-plugin/ Plugin org.apache.maven.plugins
+FilesAnalyzed: false
+PackageChecksum: SHA1: c1dc5055f3583cfd04e110d0ab5c91448f8043af
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the maven-site-plugin
+
+PackageName: maven-site-plugin
+SPDXID: SPDXRef-Package-maven-site-plugin- Plugin org.apache.maven.plugins
+PackageVersion:  Plugin org.apache.maven.plugins
+PackageSupplier: Organization: maven-site-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/Failed to retrieve plugin descriptor for org.apache.maven.plugins/maven-site-plugin/ Plugin org.apache.maven.plugins
+FilesAnalyzed: false
+PackageChecksum: SHA1: 0a660974fe3e81de94e0f70dcc798b0a4f18601e
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the lifecycle-mapping
+
+PackageName: lifecycle-mapping
+SPDXID: SPDXRef-Package-lifecycle-mapping- Plugin org.eclipse.m2e
+PackageVersion:  Plugin org.eclipse.m2e
+PackageSupplier: Organization: lifecycle-mapping
+PackageDownloadLocation: https://mvnrepository.com/artifact/Failed to retrieve plugin descriptor for org.eclipse.m2e/lifecycle-mapping/ Plugin org.eclipse.m2e
+FilesAnalyzed: false
+PackageChecksum: SHA1: 84b8a3f259bbc1e69e54539e764863cecb3001d4
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the ossindex-maven-plugin
+
+PackageName: ossindex-maven-plugin
+SPDXID: SPDXRef-Package-ossindex-maven-plugin- Plugin org.sonatype.ossindex.maven
+PackageVersion:  Plugin org.sonatype.ossindex.maven
+PackageSupplier: Organization: ossindex-maven-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/Failed to retrieve plugin descriptor for org.sonatype.ossindex.maven/ossindex-maven-plugin/ Plugin org.sonatype.ossindex.maven
+FilesAnalyzed: false
+PackageChecksum: SHA1: 821b23ca74c1f3dad706aeb9a9c130b8dcdcd8a8
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the nexus-staging-maven-plugin
+
+PackageName: nexus-staging-maven-plugin
+SPDXID: SPDXRef-Package-nexus-staging-maven-plugin- Plugin org.sonatype.plugins
+PackageVersion:  Plugin org.sonatype.plugins
+PackageSupplier: Organization: nexus-staging-maven-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/Failed to retrieve plugin descriptor for org.sonatype.plugins/nexus-staging-maven-plugin/ Plugin org.sonatype.plugins
+FilesAnalyzed: false
+PackageChecksum: SHA1: c5ebf1f486c0b2e4f5c41af7e70fb457c279e4b1
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the 2024-03-09T16
+
+PackageName: 2024-03-09T16
+SPDXID: SPDXRef-Package-2024-03-09T16-18-05
+PackageVersion: 18-05
+PackageSupplier: Organization: 2024-03-09T16
+PackageDownloadLocation: https://mvnrepository.com/artifact/Finished at/2024-03-09T16/18-05
+FilesAnalyzed: false
+PackageChecksum: SHA1: 135dc8567204810f0be11457d23062b537f607fa
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the jqassistant-maven-plugin
+
+PackageName: jqassistant-maven-plugin
+SPDXID: SPDXRef-Package-jqassistant-maven-plugin-1.6.0 is missing, no dependency information available
+PackageVersion: 1.6.0 is missing, no dependency information available
+PackageSupplier: Organization: jqassistant-maven-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/The POM for com.buschmais.jqassistant/jqassistant-maven-plugin/1.6.0 is missing, no dependency information available
+FilesAnalyzed: false
+PackageChecksum: SHA1: 55b4afd2e1aaa951fb70be5083f1508235ca964c
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the spotbugs-maven-plugin
+
+PackageName: spotbugs-maven-plugin
+SPDXID: SPDXRef-Package-spotbugs-maven-plugin-4.7.3.0 is missing, no dependency information available
+PackageVersion: 4.7.3.0 is missing, no dependency information available
+PackageSupplier: Organization: spotbugs-maven-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/The POM for com.github.spotbugs/spotbugs-maven-plugin/4.7.3.0 is missing, no dependency information available
+FilesAnalyzed: false
+PackageChecksum: SHA1: 3ca47af8a36b9919b33c83767e7bd8e94c14d387
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the maven-antrun-plugin
+
+PackageName: maven-antrun-plugin
+SPDXID: SPDXRef-Package-maven-antrun-plugin-1.3 is missing, no dependency information available
+PackageVersion: 1.3 is missing, no dependency information available
+PackageSupplier: Organization: maven-antrun-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/The POM for org.apache.maven.plugins/maven-antrun-plugin/1.3 is missing, no dependency information available
+FilesAnalyzed: false
+PackageChecksum: SHA1: b8ae7e26f7fca23ed28a3e7a39b4e33fc32919a5
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the maven-assembly-plugin
+
+PackageName: maven-assembly-plugin
+SPDXID: SPDXRef-Package-maven-assembly-plugin-2.2-beta-5 is missing, no dependency information available
+PackageVersion: 2.2-beta-5 is missing, no dependency information available
+PackageSupplier: Organization: maven-assembly-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/The POM for org.apache.maven.plugins/maven-assembly-plugin/2.2-beta-5 is missing, no dependency information available
+FilesAnalyzed: false
+PackageChecksum: SHA1: 6381595cb9f1c465cec19ae14ce7b1785b6acdfd
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the maven-checkstyle-plugin
+
+PackageName: maven-checkstyle-plugin
+SPDXID: SPDXRef-Package-maven-checkstyle-plugin-3.1.0 is missing, no dependency information available
+PackageVersion: 3.1.0 is missing, no dependency information available
+PackageSupplier: Organization: maven-checkstyle-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/The POM for org.apache.maven.plugins/maven-checkstyle-plugin/3.1.0 is missing, no dependency information available
+FilesAnalyzed: false
+PackageChecksum: SHA1: 085be3dc30e34ea81f0c4ae3d13576a42bac7a9a
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the maven-dependency-plugin
+
+PackageName: maven-dependency-plugin
+SPDXID: SPDXRef-Package-maven-dependency-plugin-2.8 is missing, no dependency information available
+PackageVersion: 2.8 is missing, no dependency information available
+PackageSupplier: Organization: maven-dependency-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/The POM for org.apache.maven.plugins/maven-dependency-plugin/2.8 is missing, no dependency information available
+FilesAnalyzed: false
+PackageChecksum: SHA1: 454728243c5e9d592dd26e4ef4626a78a51b041f
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the maven-deploy-plugin
+
+PackageName: maven-deploy-plugin
+SPDXID: SPDXRef-Package-maven-deploy-plugin-2.7 is missing, no dependency information available
+PackageVersion: 2.7 is missing, no dependency information available
+PackageSupplier: Organization: maven-deploy-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/The POM for org.apache.maven.plugins/maven-deploy-plugin/2.7 is missing, no dependency information available
+FilesAnalyzed: false
+PackageChecksum: SHA1: 18ec4df04bd88eaa8efd5a9da841881cefc50fb7
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the maven-gpg-plugin
+
+PackageName: maven-gpg-plugin
+SPDXID: SPDXRef-Package-maven-gpg-plugin-1.6 is missing, no dependency information available
+PackageVersion: 1.6 is missing, no dependency information available
+PackageSupplier: Organization: maven-gpg-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/The POM for org.apache.maven.plugins/maven-gpg-plugin/1.6 is missing, no dependency information available
+FilesAnalyzed: false
+PackageChecksum: SHA1: d5c511088a26df61eb06401bc9a087109917f13e
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the maven-install-plugin
+
+PackageName: maven-install-plugin
+SPDXID: SPDXRef-Package-maven-install-plugin-2.4 is missing, no dependency information available
+PackageVersion: 2.4 is missing, no dependency information available
+PackageSupplier: Organization: maven-install-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/The POM for org.apache.maven.plugins/maven-install-plugin/2.4 is missing, no dependency information available
+FilesAnalyzed: false
+PackageChecksum: SHA1: bf69d776115b0bbfda6cf8fc95e046581527377c
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the maven-jar-plugin
+
+PackageName: maven-jar-plugin
+SPDXID: SPDXRef-Package-maven-jar-plugin-2.4 is missing, no dependency information available
+PackageVersion: 2.4 is missing, no dependency information available
+PackageSupplier: Organization: maven-jar-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/The POM for org.apache.maven.plugins/maven-jar-plugin/2.4 is missing, no dependency information available
+FilesAnalyzed: false
+PackageChecksum: SHA1: 58a31cf79dee7603f8fcaa3d2406f52ad9cb7a89
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the maven-javadoc-plugin
+
+PackageName: maven-javadoc-plugin
+SPDXID: SPDXRef-Package-maven-javadoc-plugin-3.1.0 is missing, no dependency information available
+PackageVersion: 3.1.0 is missing, no dependency information available
+PackageSupplier: Organization: maven-javadoc-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/The POM for org.apache.maven.plugins/maven-javadoc-plugin/3.1.0 is missing, no dependency information available
+FilesAnalyzed: false
+PackageChecksum: SHA1: 0f8d09f3310a4bd1b51c93286aec750b2b8231d6
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the maven-release-plugin
+
+PackageName: maven-release-plugin
+SPDXID: SPDXRef-Package-maven-release-plugin-2.5.3 is missing, no dependency information available
+PackageVersion: 2.5.3 is missing, no dependency information available
+PackageSupplier: Organization: maven-release-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/The POM for org.apache.maven.plugins/maven-release-plugin/2.5.3 is missing, no dependency information available
+FilesAnalyzed: false
+PackageChecksum: SHA1: fd7254958a4a2baf03d756cc819ec6e7892ab64c
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the maven-resources-plugin
+
+PackageName: maven-resources-plugin
+SPDXID: SPDXRef-Package-maven-resources-plugin-2.6 is missing, no dependency information available
+PackageVersion: 2.6 is missing, no dependency information available
+PackageSupplier: Organization: maven-resources-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/The POM for org.apache.maven.plugins/maven-resources-plugin/2.6 is missing, no dependency information available
+FilesAnalyzed: false
+PackageChecksum: SHA1: c1dc5055f3583cfd04e110d0ab5c91448f8043af
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the maven-site-plugin
+
+PackageName: maven-site-plugin
+SPDXID: SPDXRef-Package-maven-site-plugin-3.3 is missing, no dependency information available
+PackageVersion: 3.3 is missing, no dependency information available
+PackageSupplier: Organization: maven-site-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/The POM for org.apache.maven.plugins/maven-site-plugin/3.3 is missing, no dependency information available
+FilesAnalyzed: false
+PackageChecksum: SHA1: 0a660974fe3e81de94e0f70dcc798b0a4f18601e
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the lifecycle-mapping
+
+PackageName: lifecycle-mapping
+SPDXID: SPDXRef-Package-lifecycle-mapping-1.0.0 is missing, no dependency information available
+PackageVersion: 1.0.0 is missing, no dependency information available
+PackageSupplier: Organization: lifecycle-mapping
+PackageDownloadLocation: https://mvnrepository.com/artifact/The POM for org.eclipse.m2e/lifecycle-mapping/1.0.0 is missing, no dependency information available
+FilesAnalyzed: false
+PackageChecksum: SHA1: 84b8a3f259bbc1e69e54539e764863cecb3001d4
+PackageHomePage: NOASSERTION
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: NOASSERTION
+PackageCopyrightText: NOASSERTION
+PackageLicenseComments: NOASSERTION
+PackageComment: NOASSERTION
+
+##### Package representing the ossindex-maven-plugin
+
+PackageName: ossindex-maven-plugin
+SPDXID: SPDXRef-Package-ossindex-maven-plugin-3.0.4 is missing, no dependency information available
+PackageVersion: 3.0.4 is missing, no dependency information available
+PackageSupplier: Organization: ossindex-maven-plugin
+PackageDownloadLocation: https://mvnrepository.com/artifact/The POM for org.sonatype.ossindex.maven/ossindex-maven-plugin/3.0.4 is missing, no dependency information available
+FilesAnalyzed: false
+PackageChecksum: SHA1: 821b23ca74c1f3dad706aeb9a9c130b8dcdcd8a8
 PackageHomePage: NOASSERTION
 PackageLicenseConcluded: NOASSERTION
 PackageLicenseDeclared: NOASSERTION
@@ -1688,107 +2200,118 @@ PackageLicenseComments: NOASSERTION
 PackageComment: NOASSERTION
 
 Relationship: SPDXRef-DOCUMENT DESCRIBES SPDXRef-Package-JMRI
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-cucumber-picocontainer-4.3.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-log4j-api-2.20.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jackson-annotations-2.13.4
 Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-xercesImpl-2.12.2
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-mockito-junit-jupiter-3.5.11
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-transcoder-1.17
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-javax.mail-api-1.5.4
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-jupiter-5.9.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-maven-failsafe-plugin-2.22.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-maven-checkstyle-plugin-3.1.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jbidibc-serial-2.0.16
 Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-javax.activation-api-1.2.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-webdrivermanager-4.2.2
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-org-openide-util-lookup-RELEASE150
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-org.eclipse.paho.client.mqttv3-1.2.5
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-nexus-staging-maven-plugin-1.6.7
 Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-properties-maven-plugin-1.0.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-platform-runner-1.9.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-archunit-junit5-1.0.0-rc1
 Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-selenium-java-3.141.59
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jul-to-slf4j-2.0.7
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jackson-databind-2.13.4.2
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-websocket-server-9.4.28.v20200408
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jython-standalone-2.7.2
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-openlcb-0.7.33
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jdom2-2.0.6
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-cucumber-junit-4.3.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jSerialComm-2.10.4
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-Could-not-resolve-dependencies-for-project-org.jmri-jar
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-javahelp-2.0.05
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jetty-servlet-9.4.28.v20200408
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jcip-annotations-1.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-xbee-java-library-1.3.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jemmy-2.3.1.1-RELEASE125
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-apiguardian-api-1.1.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-jupiter-engine-5.9.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-jupiter-api-5.9.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-collections4-4.4
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-lifecycle-mapping-1.0.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-beansbinding-1.2.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jna-platform-5.13.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-lifecycle-mapping-1.0.0 is missing, no dependency information available
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jinput-2.0.6
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-pi4j-core-1.2
 Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jsr305-3.0.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-byte-buddy-agent-1.10.14
 Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-net-3.9.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jbidibc-simulation-2.0.16
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-bidibwizard-model-2.0.16
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-vecmath-1.5.2
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-lang3-3.7
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jsoup-1.15.3
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-webdrivermanager-4.2.2
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-openlcb-0.7.35
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jbidibc-messages-2.0.18
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jaxb-impl-2.3.2
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-maven-checkstyle-plugin-3.1.0 is missing, no dependency information available
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-websocket-server-9.4.28.v20200408
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-websocket-servlet-9.4.28.v20200408
 Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-json-schema-validator-1.0.28
 Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-webcam-capture-0.3.12
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jaxb-api-2.3.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-io-2.11.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-text-1.2
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-pi4j-core-1.2
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-bidibwizard-simulation-2.0.18
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-maven-dependency-plugin-2.8 is missing, no dependency information available
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-jupiter-api-5.9.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-bidibwizard-model-2.0.18
 Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-mockito-inline-3.5.11
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-byte-buddy-1.10.14
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-logging-1.2
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-bidibwizard-common-2.0.16
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jgoodies-binding-2.13.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-assertj-swing-junit-3.9.2
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-websocket-api-9.4.28.v20200408
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-2024-02-09T12-13-05
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-gluegen-rt-main-2.5.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-pi4j-gpio-extension-1.2
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-byte-buddy-agent-1.10.14
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-slf4j-api-2.0.7
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-log4j-core-2.20.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jbidibc-messages-2.0.16
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-eventbus-1.4
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-spotbugs-annotations-4.7.3
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jython-standalone-2.7.2
 Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jsplitbutton-1.3.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-joal-main-2.5.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-thumbnailator-0.4.8
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jgoodies-common-1.8.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-vintage-engine-5.9.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-assertj-core-3.12.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-usb4java-javax-1.3.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-websocket-servlet-9.4.28.v20200408
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jna-5.13.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jbidibc-purejavacomm-2.0.16
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-bidibwizard-simulation-2.0.16
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-pi4j-device-1.2
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-spring-web-5.1.14.RELEASE
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jaxb-core-2.3.0.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jaxb-impl-2.3.2
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-purejavacomm-1.0.5
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-mockito-core-3.5.11
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jmdns-3.5.5
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jbidibc-core-2.0.16
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-maven-gpg-plugin-1.6
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jqassistant-maven-plugin-1.6.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-maven-resources-plugin-2.6 is missing, no dependency information available
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jackson-databind-2.13.4.2
 Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-cucumber-java8-4.3.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jackson-core-2.13.4
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-hid4java-0.5.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jinputvalidator-0.8.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jbidibc-net-serial-over-tcp-2.0.16
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-cucumber-java-4.3.1
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-log4j-slf4j2-impl-2.20.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-bluecove-2.1.0
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jinput-2.0.6
-Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-csv-1.9.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-lang3-3.7
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-org-openide-util-lookup-RELEASE150
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-maven-jar-plugin-2.4 is missing, no dependency information available
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-archunit-junit5-1.0.0-rc1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jul-to-slf4j-2.0.7
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jSerialComm-2.10.4
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-maven-failsafe-plugin-2.22.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-assertj-core-3.12.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-joal-main-2.5.0
 Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-spring-test-5.1.14.RELEASE
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-cucumber-picocontainer-4.3.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jackson-core-2.13.4
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jmdns-3.5.5
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-batik-transcoder-1.17
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jbidibc-net-serial-over-tcp-2.0.18
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-eventbus-1.4
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jgoodies-common-1.8.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-javahelp-2.0.05
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-spotbugs-annotations-4.7.3
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-maven-javadoc-plugin-3.1.0 is missing, no dependency information available
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-csv-1.9.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-mockito-junit-jupiter-3.5.11
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jinputvalidator-0.8.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-maven-gpg-plugin-1.6 is missing, no dependency information available
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-byte-buddy-1.10.14
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-io-2.11.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-pi4j-device-1.2
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-xbee-java-library-1.3.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jbidibc-core-2.0.18
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jbidibc-purejavacomm-2.0.18
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-maven-antrun-plugin-1.3 is missing, no dependency information available
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-jupiter-engine-5.9.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-pi4j-gpio-extension-1.2
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-org.eclipse.paho.client.mqttv3-1.2.5
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-nexus-staging-maven-plugin- Plugin org.sonatype.plugins
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jdom2-2.0.6
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-maven-install-plugin-2.4 is missing, no dependency information available
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-gluegen-rt-main-2.5.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-platform-runner-1.9.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-jupiter-5.9.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-slf4j-api-2.0.7
 Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-platform-commons-1.9.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-log4j-api-2.20.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-text-1.2
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-bluecove-2.1.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jgoodies-binding-2.13.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jqassistant-maven-plugin-1.6.0 is missing, no dependency information available
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-spotbugs-maven-plugin-4.7.3.0 is missing, no dependency information available
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-assertj-swing-junit-3.9.2
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-maven-release-plugin-2.5.3 is missing, no dependency information available
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-apiguardian-api-1.1.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jbidibc-serial-2.0.18
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-cucumber-junit-4.3.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-mockito-core-3.5.11
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jemmy-2.3.1.1-RELEASE125
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jaxb-core-2.3.0.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-maven-assembly-plugin-2.2-beta-5 is missing, no dependency information available
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-vintage-engine-5.9.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-log4j-core-2.20.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jbidibc-simulation-2.0.18
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-bidibwizard-common-2.0.18
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-vecmath-1.5.2
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-hid4java-0.5.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jna-5.13.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-thumbnailator-0.4.8
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jaxb-api-2.3.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-ossindex-maven-plugin-3.0.4 is missing, no dependency information available
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jackson-annotations-2.13.4
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-usb4java-javax-1.3.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-maven-deploy-plugin-2.7 is missing, no dependency information available
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-javax.mail-api-1.5.4
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-maven-site-plugin-3.3 is missing, no dependency information available
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-2024-03-09T16-18-05
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jcip-annotations-1.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-cucumber-java-4.3.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-beansbinding-1.2.1
 Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-junit-platform-launcher-1.9.1
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-purejavacomm-1.0.5
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-websocket-api-9.4.28.v20200408
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-collections4-4.4
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jsoup-1.15.3
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jetty-servlet-9.4.28.v20200408
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-jna-platform-5.13.0
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-spring-web-5.1.14.RELEASE
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-commons-logging-1.2
+Relationship: SPDXRef-Package-JMRI DEPENDS_ON SPDXRef-Package-log4j-slf4j2-impl-2.20.0
