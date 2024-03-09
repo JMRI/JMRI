@@ -126,18 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Updated the OpenLCB_Java library ot version 0.7.35 with improvements:
-                    <ul>
-                        <li>Better display of frames with leading zeros on their aliases
-                        <li>Better handling of unexpected alias collisions.  These shouldn't
-                            actually happen if all goes well, but just in case it doesn't...
-                        <li>Adds support for the Verify Node Addressed message
-                    </ul>
-                </li>
-                <li>Additions for better conformance with OpenLCB standards</li>
-                <li>Add the <strong>STL Editor</strong> tool to the OpenLCB/LCC menu.  The
-                tool is used to generate the STL logic for the RR-CirKits Tower LCC+Q.  The
-                Tower LCC+Q uses a subset of the Siemens Structured List PLC language.</li>
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -377,12 +366,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li>LIPLDNW1 (N, TT) light bar</li>
-                <li>LIPLDNY1 (N, TT) light bar</li>
-                <li>LIPLDHW1 (H0, TT) light bar</li>
-                <li>LIPLDHY1 (H0, TT) light bar</li>
-                <li>LIPLDGY1 (G, 1, 2) light bar</li>
-                <li>LIPLDGW1 (G, 1, 2) light bar</li>
+                <li></li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -405,7 +389,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>Add an option to Ramp up and down using the speed profile such that the speed change takes place over the length of the section.</li>
+             <li></li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -440,81 +424,6 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>Conversion to boolean has changed. Before JMRI 5.7.5,
-              conversion from a string to boolean returned
-              <strong>True</strong> if the string was not empty, and
-              <strong>False</strong> if the string was empty. With JMRI 5.7.5,
-              this has changed so that a string that's <strong>true</strong>
-              (case insensitive) returns a boolean <strong>True</strong>
-              and a string that's <strong>false</strong> (case insensitive)
-              returns a boolean <strong>False</strong>. All other string
-              values throw an exception. The earlier behaviour was not
-              documented so it's unlikely that this affects users.<br>
-              The old behaviour was based on how Jython converts a string
-              to boolean. If you want the old behaviour, you can use the
-              LogixNG formula function <strong>boolJython()</strong>.</li>
-          <li>Local variables and Global variables can now be initialized
-              to boolean values as well. True or false. Case insensitive.</li>
-          <li>The action <strong>Log local variables</strong> now has the
-              option <strong>Show class name</strong>.If it is selected,
-              the name of the class will be shown after the value. This
-              is useful for debugging, when you want to know the type of
-              the value.</li>
-          <li>The LogixNG function <strong>int()</strong> previously returned a Java
-              <strong>Integer</strong> instead of a Java <strong>Long</strong>.
-              This bug is now corrected. It shouldn't affect any existing
-              LogixNGs. The difference between <strong>Integer</strong> and
-              <strong>Long</strong> is that <strong>Long</strong> can handle
-              much bigger integer values than <strong>Integer</strong>.</li>
-          <li>The LogixNG action <strong>Enable/Disable LogixNG</strong>
-              has been added.</li>
-          <li>LogixNG formulas now supports Java arrays as well, for example
-              if you use the Java method <strong>split()</strong> to split
-              a string. Example:
-              <br>
-              <pre>
-LogixNG: IQ:AUTO:0001
-    ConditionalNG: IQC:AUTO:0001
-        ! A
-            Many
-               ::: Local variable "a_b", init to String "Hello_World"
-               ::: Local variable "a", init to None ""
-               ::: Local variable "b", init to None ""
-               ::: Local variable "a_b_array", init to None ""
-                ! A1
-                    Digital Formula: a_b_array = a_b.split("\_")
-                ! A2
-                    Digital Formula: a = a_b_array[0]
-                ! A3
-                    Digital Formula: b = a_b_array[1]
-                ! A4
-                    Log local variables
-              </pre>
-              </li>
-          <li>The LogixNG action <strong>For each</strong> now supports
-              Java arrays as well, for example the result of the expression
-              <strong>a_b.split("\_")</strong>.</li>
-          <li>The LogixNG action <strong>Set reporter</strong> has been
-              added.</li>
-          <li>The actions <strong>Listen on Beans ...</strong> have been
-              updated to fix a problem when several beans changes
-              state at the same time.</li>
-          <li>Fixes a bug so that the methods <strong>toString()</strong>,
-              <strong>getKey()</strong> and <strong>getValue()</strong>
-              can be used for an item when using the action <strong>For each</strong>
-              on a Map.</li>
-          <li>Adds the LogixNG functions <strong>strlen()</strong> in module
-              <strong>String</strong> and <strong>length()</strong> in module
-              <strong>Common</strong>.</li>
-          <li>Bug fix: The LogixNG function <strong>boolJython()</strong>
-              now return false if the value is an empty array. It returns
-              true if the value is a non empty array.</li>
-          <li>Bug fix: The LogixNG function <strong>evaluateMemory()</strong>
-              didn't behaved as documented. It's now fixed.</li>
-          <li>The LogixNG functions <strong>cos()</strong>, <strong>tan()</strong>,
-              <strong>atan()</strong>, <strong>sqr()</strong> and
-              <strong>sqrt()</strong> has been added to the <strong>Math</strong>
-              module.</li>
           <li></li>
         </ul>
 
@@ -527,7 +436,7 @@ LogixNG: IQ:AUTO:0001
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>New feature allows users to quickly create a custom load for all car types.</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -579,18 +488,7 @@ LogixNG: IQ:AUTO:0001
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Added three sample scripts
-                <ul>
-                    <li>AddPowerButton.py - shows how to add a button to the main
-                            PanelPro window. In this case, the button turns power on and off.
-                    <li>MainWindowToBack.py - moves the main PanelPro window to the back.
-                            Useful when you want PanelPro to start up with a panel
-                            at the front of the screen.
-                    <li>MenuItemDisable.py - shows how to disable menu items so they
-                            can't be used.  Sample disables LocoNet ability to reset slots,
-                            and ability to start the WiThrottle server.  Meant for e.g.
-                            club use.
-            </li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -702,7 +600,6 @@ LogixNG: IQ:AUTO:0001
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Improve handling of block values that contain IdTags
-                across shutdown and startup.</li>
+            <li></li>
         </ul>
 
