@@ -95,6 +95,11 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
             log.debug("{} file could not be read", name);
             return;
         }
+        
+        if (!root.getName().equals("operations-config")) {
+            log.warn("OperationsPro train file corrupted");
+            return;
+        }
 
         InstanceManager.getDefault(TrainManager.class).load(root);
         InstanceManager.getDefault(TrainScheduleManager.class).load(root);
