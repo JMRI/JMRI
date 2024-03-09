@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.7.3plus+jake+20240209T1733Z+R31b62499f94 on Fri Feb 09 12:34:23 EST 2024-->
-  <decoderIndex version="579">
+  <!--Written by JMRI version 5.7.4plus+jake+20240309T2109Z+R4d3610214b9 on Sat Mar 09 16:09:48 EST 2024-->
+  <decoderIndex version="581">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -37868,6 +37868,80 @@
           <output name="1" label="Front Light (MX605SL)" />
           <output name="2" label="Rear Light (MX605SL)" />
           <output name="3" label="FO 1 (MX605FL)" />
+        </model>
+      </family>
+      <family name="Zimo Light Boards" mfg="Zimo" file="Zimo_Unified_software_v40_MXLIPL1.xml">
+        <model model="LIPLDNW1 version 40+" lowVersionID="40" highVersionID="40" productID="184" numOuts="10" numFns="14">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="LED Gp1" />
+          <output name="5" label="LED Gp2" />
+          <output name="6" label="LED Gp3" />
+          <output name="7" label="LED Gp4" />
+          <output name="8" label="LED Gp5" />
+          <output name="9" label="LED Gp6" />
+          <output name="10" label="LED Gp7" />
+        </model>
+        <model model="LIPLDNY1 version 40+" lowVersionID="40" highVersionID="40" productID="184" numOuts="10" numFns="14">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="LED Gp1" />
+          <output name="5" label="LED Gp2" />
+          <output name="6" label="LED Gp3" />
+          <output name="7" label="LED Gp4" />
+          <output name="8" label="LED Gp5" />
+          <output name="9" label="LED Gp6" />
+          <output name="10" label="LED Gp7" />
+        </model>
+        <model model="LIPLDHW1 version 40+" lowVersionID="40" highVersionID="40" productID="184" numOuts="10" numFns="14">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="LED Gp1" />
+          <output name="5" label="LED Gp2" />
+          <output name="6" label="LED Gp3" />
+          <output name="7" label="LED Gp4" />
+          <output name="8" label="LED Gp5" />
+          <output name="9" label="LED Gp6" />
+          <output name="10" label="LED Gp7" />
+        </model>
+        <model model="LIPLDHY1 version 40+" lowVersionID="40" highVersionID="40" productID="184" numOuts="10" numFns="14">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="LED Gp1" />
+          <output name="5" label="LED Gp2" />
+          <output name="6" label="LED Gp3" />
+          <output name="7" label="LED Gp4" />
+          <output name="8" label="LED Gp5" />
+          <output name="9" label="LED Gp6" />
+          <output name="10" label="LED Gp7" />
+        </model>
+      </family>
+      <family name="Zimo Light Boards" mfg="Zimo" file="Zimo_Unified_software_v40_MXLIPL3.xml">
+        <model model="LIPLDGW1 version 40+" lowVersionID="40" highVersionID="40" productID="179" numOuts="9" numFns="14">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="LED Gp1" />
+          <output name="5" label="LED Gp2" />
+          <output name="6" label="LED Gp3" />
+          <output name="7" label="LED Gp4" />
+          <output name="8" label="LED Gp5" />
+          <output name="9" label="FO 10" />
+        </model>
+        <model model="LIPLDGY1 version 40+" lowVersionID="40" highVersionID="40" productID="179" numOuts="9" numFns="14">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="LED Gp1" />
+          <output name="5" label="LED Gp2" />
+          <output name="6" label="LED Gp3" />
+          <output name="7" label="LED Gp4" />
+          <output name="8" label="LED Gp5" />
+          <output name="9" label="FO 10" />
         </model>
       </family>
     </familyList>
