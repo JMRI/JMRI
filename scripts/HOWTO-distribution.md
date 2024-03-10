@@ -260,17 +260,19 @@ For each, if it doesn't have the right milestone set, add the current milestone.
 ```
         git checkout master
         git pull
-        sed -i .bak s/5.7.3-SNAPSHOT/5.7.5-SNAPSHOT/g pom.xml
-        git commit -m"5.7.5 until next release" pom.xml
+        sed -i .bak s/5.7.4-SNAPSHOT/5.7.5-SNAPSHOT/g pom.xml
 ```
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field now, so check the numbers in the following line)
 ```
-        sed -i .bak s/release.build=3/release.build=4/g release.properties
-        git commit -m"5.7.5 until next release" release.properties
+        sed -i .bak s/release.build=4/release.build=5/g release.properties
 ```
  - Check that both those edits left 5.7.5 defined in the two files
  
+```
+        git commit -m"5.7.5 until next release" release.properties pom.xml
+```
+
  - Recreate the Software BOM. For instructions on how to install `spdx-sbom-generator` see the [project page](https://github.com/opensbom-generator/spdx-sbom-generator). Note that a large number of changes from the previous version of the `lib/bom-Java-Maven.spdx` file are expected:  The bill of materials is processed in parallel, and the output order depends on which Maven repository respond quickest.
 ```
         spdx-sbom-generator -o lib
@@ -499,9 +501,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.7.5+Ra0db67d301.dmg](https://github.com/JMRI/JMRI/releases/download/v5.7.5/JMRI.5.7.5+Ra0db67d301.dmg) | 35450c0dc7f2452bcc6318fa0be8101f6013508a9fd3d5224d9bd56dedf59ee5
-[JMRI.5.7.5+Ra0db67d301.exe](https://github.com/JMRI/JMRI/releases/download/v5.7.5/JMRI.5.7.5+Ra0db67d301.exe) | 0609b1bf4e54a399263e42c56cdcc61bd66e06cbed5704dd137276dd25972b79
-[JMRI.5.7.5+Ra0db67d301.tgz](https://github.com/JMRI/JMRI/releases/download/v5.7.5/JMRI.5.7.5+Ra0db67d301.tgz) | 123663ea4f502a289de1a77ead6f8ee1a0fff2a25008f1bb6a2ec17c0cd7fbed
+[JMRI.5.7.5+R4933de1fc8.dmg](https://github.com/JMRI/JMRI/releases/download/v5.7.5/JMRI.5.7.5+R4933de1fc8.dmg) | 3ff5b2ea54d29748bb52ec257e3b63a2c66cef906e5d86eaf6d4284e1a635512
+[JMRI.5.7.5+R4933de1fc8.exe](https://github.com/JMRI/JMRI/releases/download/v5.7.5/JMRI.5.7.5+R4933de1fc8.exe) | 459488dd41c694b7f5da1a7ca2c6013c6e5f338a1960dce7f87340857520ca77
+[JMRI.5.7.5+R4933de1fc8.tgz](https://github.com/JMRI/JMRI/releases/download/v5.7.5/JMRI.5.7.5+R4933de1fc8.tgz) | 2e86250879ffb639d99c4a4ae5b651d1a42ca08f6e09d3301816d1f5ebbbbbed
 ```
 
 - Attach files by selecting them or dragging them in from the release/ subdirectory. Make sure that the Linux one is .tgz, not .tar.
