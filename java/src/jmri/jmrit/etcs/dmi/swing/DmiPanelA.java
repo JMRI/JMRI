@@ -20,10 +20,14 @@ public class DmiPanelA extends JPanel {
     private String speedString = "";
     private int distanceToTarget = -10;
 
+    private static final BufferedImage supervisionImage = ResourceUtil.readFile(ResourceUtil.getImageFile("LS_01.bmp"));
+    private static final ImageIcon adhesionIcon =  ResourceUtil.getImageIcon("ST_02.bmp");
+
     public DmiPanelA(@Nonnull DmiPanel mainPanel){
         super();
         setLayout(null);
         setBackground(DmiPanel.BACKGROUND_COLOUR);
+        setBounds(0, 15, 54, 300);
 
         JPanel a1 = getSupervisionImagePanel();
         a2Label = new JLabel();
@@ -141,14 +145,6 @@ public class DmiPanelA extends JPanel {
                 hints.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 g2.setRenderingHints(hints);
 
-                // try filename ERTMS < 4 
-                var inputFile = ResourceUtil.LIMITED_SUPERVISION36;
-                if (!inputFile.canRead()){
-                    // use filename ERTMS 4
-                    inputFile = ResourceUtil.getImageFile("LS_01.bmp");
-                }
-                BufferedImage image = ResourceUtil.readFile(inputFile);
-
                 Font font = new Font(DmiPanel.FONT_NAME, Font.PLAIN, 18);
                 g2.setFont(font);
                 g2.setColor(DmiPanel.GREY);
@@ -157,7 +153,7 @@ public class DmiPanelA extends JPanel {
                 int textWidth = fm.stringWidth(speedString);
                 int centerX =  ((getWidth()-textWidth) / 2);
 
-                g2.drawImage(image, 2, 2, 50, 
+                g2.drawImage(supervisionImage, 2, 2, 50, 
                         50, this);
                 g2.drawString(speedString, centerX, 33);
             }
@@ -174,7 +170,8 @@ public class DmiPanelA extends JPanel {
     }
 
     protected void setAdhesionFactorOn(boolean newVal) {
-        a4Label.setIcon(newVal ? ResourceUtil.getImageIcon("ST_02.bmp") : null);
+        a4Label.setIcon(newVal ? adhesionIcon : null);
+        a4Label.setToolTipText(newVal ?  Bundle.getMessage("AdhesionFactorOn") : null);
     }
 
     protected void setDistanceToTarget(int distance) {

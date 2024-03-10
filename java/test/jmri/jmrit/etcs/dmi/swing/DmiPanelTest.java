@@ -2,6 +2,9 @@ package jmri.jmrit.etcs.dmi.swing;
 
 import java.util.ArrayList;
 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.LineUnavailableException;
+
 import jmri.jmrit.etcs.*;
 import jmri.util.JUnitUtil;
 
@@ -146,21 +149,41 @@ public class DmiPanelTest {
 
     @Test
     public void testSounds(){
-        DmiPanel p = new DmiPanel();
-        
+
+        try {
+            AudioSystem.getClip();
+        } catch (IllegalArgumentException | LineUnavailableException ex) {
+            Assumptions.assumeFalse(true, "Unable to initialize AudioSystem");
+        }
+
+        DmiFrame df = new DmiFrame("DmiPanelTest testSounds");
+        DmiPanel p = df.getDmiPanel();
+        Assertions.assertNotNull(p);
+        df.setVisible(true);
+        JFrameOperator jfo = new JFrameOperator(df.getTitle());
+
+        p.setLevel(-1);
+        p.setMode(11);
         p.playDmiSound(4);
         // JUnitUtil.waitFor(2500);
         
+        p.setMode(DmiPanel.MODE_POST_TRIP);
         p.playDmiSound(3);
         // JUnitUtil.waitFor(2500);
         
+        p.setMode(DmiPanel.MODE_REVERSING);
         p.playDmiSound(1);
         // JUnitUtil.waitFor(2500);
         
+        p.setMode(DmiPanel.MODE_NON_LEADING);
         p.playDmiSound(2);
-        // JUnitUtil.waitFor(2500);
-        
-        p.dispose();
+        // JUnitUtil.waitFor(10000);
+
+        p.stopDmiSound(2);
+
+        jfo.requestClose();
+        jfo.waitClosed();
+
     }
 
     @Test
@@ -290,7 +313,6 @@ public class DmiPanelTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.jmrit.etcs.ResourceUtil.setInTest(true);
     }
 
     @AfterEach

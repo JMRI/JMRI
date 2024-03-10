@@ -70,6 +70,7 @@ public class ExpressionNodeMethod implements ExpressionNodeWithParameter {
         return true;
     }
 
+    @SuppressWarnings("rawtypes")   // We don't know the generic types of Map.Entry in this method
     private Object callMethod(Method method, Object obj, Object[] params)
             throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 
@@ -119,7 +120,21 @@ public class ExpressionNodeMethod implements ExpressionNodeWithParameter {
 
             newParams[i] = newParam;
         }
-        return method.invoke(obj, newParams);
+        try {
+            return method.invoke(obj, newParams);
+        } catch (IllegalAccessException ex) {
+            // https://stackoverflow.com/questions/50306093/java-9-calling-map-entrygetvalue-via-reflection#comment87628501_50306192
+            // https://stackoverflow.com/a/12038265
+            if (obj instanceof Map.Entry && newParams.length == 0) {
+                switch (method.getName()) {
+                    case "toString": return obj.toString();
+                    case "getKey": return ((Map.Entry)obj).getKey();
+                    case "getValue": return ((Map.Entry)obj).getValue();
+                    default: throw ex;
+                }
+            }
+            throw ex;
+        }
     }
 
     @Override

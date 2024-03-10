@@ -113,7 +113,7 @@ public class DetectionPanel extends JPanel {
         return panel;
     }
 
-    @SuppressWarnings("raw")
+//    @SuppressWarnings("raw")
     void openPickList() {
         _pickFrame = new JFrame();
         JPanel content = new JPanel();

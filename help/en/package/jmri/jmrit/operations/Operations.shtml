@@ -337,7 +337,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
                 <li><a href="#ModifyTrainsByCarType">Modify Trains by Car Type</a></li>
 
-                <li><a href="#SetCars">Set Cars</a></li>
+                <li><a href="#SetCars">Set Cars (Modify Multiple Cars)</a></li>
               </ul></li>
           </ul></li>
 
@@ -2554,10 +2554,14 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
       <h5>Random</h5>
       The first option is the "Random" value, which allows you to create some randomness to the
       schedule. If you select a value of 15, it means that the item has a 15 percent chance of being
-      selected if all of the other criteria for the schedule item was met, and there was track space
+      used if all of the other criteria for the schedule item was met, and there was track space
       available for the car. This feature is useful for a RIP track where you would want cars to be
-      randomly sent to the repair facility. For example, a random value of 2 would mean that roughly
-      1 in 50 cars could be sent the to RIP track.
+      randomly sent to the repair facility. For example, a random value of 2 would mean that a car
+      of a given type would have 1 in 50 chance of being sent the to RIP track. Note that if there
+      are several cars of a given type available to the train during the build process, that the
+      odds of a car being sent to the spur improve. For example if there were 10 boxcars available
+      to go the spur with a random value of 2, the odds of one of the boxcars being sent to the spur
+      would improve to roughly 1 in 5 if all 10 boxcars were tried by the program.
 
       <h5>Delivery</h5>
       Select from the "Delivery" pull down menu the train schedule (day) when you want the car
@@ -3788,7 +3792,9 @@ Some lucky folks have more locomotives and cars than track on their layout and w
 
       <h4>Location and Track</h4>
       Now set the car's location on the layout. If the car is off the layout, set the location to
-      none (blank space).
+      none (blank space). The "Auto" checkbox when selected, filters the track selection to only show
+      tracks that have enough space for the car, and are also configured to service the car's type, load, 
+      and road.
 
       <h4>Color</h4>
       You have the option to set the car's color. Useful if you provide it on your Manifests or
@@ -3914,10 +3920,15 @@ Some lucky folks have more locomotives and cars than track on their layout and w
       <h3 id="EditCarLoads">Edit Car Loads</h3>
       To add a custom load or edit a car's load, press the Load "Edit" button in the <a
         href="#CarsEdit">Edit Car</a> or <a href="#CarsSet">Set Car</a> windows. Each car type will
-      have it's own set of custom loads. Note that <a href="#Spurs">spurs</a> normally require a <a
+      have it's own set of custom loads. Select the car type to add, delete or replace a car's load.
+      The "All" checkbox allows you to create loads for all of your car types.  For example you could
+      create a custom empty load for all of your car types if needed.
+      
+      <p>Note that <a href="#Spurs">spurs</a> normally require a <a
         href="#Schedules">schedule</a> to service cars with custom loads. See car <a href="#CarLoad">Load</a>
       and <a href="#SchedulesAndLoads">Purposely Moving Cars Using Schedules and Loads</a> for more
       information.
+      </p>
       <p>
         <img src="images/EditCarLoads.png" alt="">
       </p>
@@ -3930,7 +3941,7 @@ Some lucky folks have more locomotives and cars than track on their layout and w
 
       <h4>Add Car Load Name</h4>
       Enter in the text box the custom load name you want to add, then press the "Add" button. After
-      creating the new custom load name you can change the load's type, priority, is hazardous, and
+      creating the new custom load name you can change the load's type, priority, hazardous, and
       optional messages. Press the "Save" button after making the changes.
 
       <h4>Delete Car Load Name</h4>
@@ -3962,6 +3973,10 @@ Some lucky folks have more locomotives and cars than track on their layout and w
       messages can be useful if you have visible car loads that need to be added or removed by your
       crew. You must select the "PickUp Msg" and "SetOut Msg" <a href="#MessageFormats">car
         attributes</a> if you want these messages on your Manifests and switch lists.
+        
+        <h4>Save</h4>
+        Press the save button after making changes to a car load's type, priority, hazardous, or messages. 
+        If the "All" checkbox is selected, all car types with the selected load name will be updated.
 
       <h3 id="CarsSet">Set Car</h3>
       After creating a car, you can set the car's location, and optionally the car's destination and
@@ -4079,7 +4094,8 @@ Some lucky folks have more locomotives and cars than track on their layout and w
 
       <h4>Train</h4>
       The last field is the train assignment. You can manually decide which train to use before or
-      after building your trains.
+      after building your trains. The "Auto" checkbox when selected will only show trains that can
+      service this car.
 
       <h3 id="CarsTools">Cars Tools</h3>
       The cars window "Tools" menu allows you to perform some useful functions to your car roster.
@@ -4146,7 +4162,7 @@ The "Reset move count all cars" will zero out all of the cars move counts. In no
       car type to your roster. See <a href="#ModifyTrainsByCarType">Modify Trains by Car Type</a>
       for more info.
 
-      <h4 id="SetCars">Set Cars</h4>
+      <h4 id="SetCars">Set Cars (Modify Multiple Cars)</h4>
       If you want to change the status, location, return when empty, return when loaded, home
       division, load, kernel, destinations or train assignment for a group of cars use the "Set
       Cars" tool found under "Tools" in the <a href="#Cars">Cars</a> window. The tool works the same
@@ -4155,7 +4171,7 @@ The "Reset move count all cars" will zero out all of the cars move counts. In no
       select "Set Cars". Note that you can use the "Control" or "Ctrl" key on your keyboard to
       select individual cars in the table, and the "Shift" key allows you to select a range of cars.
       Use "Ctrl A" to select all of the cars in the table. The first car in the table becomes the
-      default, and if you press the "Apply" button, all of the other selected cars will have the
+      default, and when you press the "Apply" button, all of the other selected cars will have the
       same settings as the default car.
 
       <p>When using the "Set Cars" tool, all cars selected in the Cars window will have the same
@@ -4943,6 +4959,10 @@ The "Reset move count all cars" will zero out all of the cars move counts. In no
         the maximums you specified in the route. You could of course reduce the train lengths in
         your route if you find that the program is consistently adding one or two locos to the
         train, and also exceeding the maximum train lengths.</p>
+        
+        <p>Note that the program will attempt to assign locos to your train if this option is enabled,
+        and the HPT value is greater than zero, even if the requested number of locos in the 
+        <a href="#TrainEdit">Edit Train</a> window is also zero.</p>
 
       <h4>Train Owners</h4>
       You can decide which rolling stock the train will service by owner name. Select which owners
@@ -5449,7 +5469,7 @@ The "Reset move count all cars" will zero out all of the cars move counts. In no
         JMRI/Your_Profile_Name.jmri/operations/csvSwitchList directory. You can configure the name of the Excel program by
         opening the "Switch List by Location" window using the "Switch Lists" button at the bottom
         of the "Trains" window. Then under "Tools" in the "Switch List by Location" window, select
-        "Setup Excel Program (Manifest Creator)". You must also enable the creation of CSV switch
+        "Setup Java or Excel Program (Manifest Creator)". You must also enable the creation of CSV switch
         list files, see <a href="#ManifestOptions">Options</a> "Generate CSV Switch Lists" for more
         information.
       </p>
@@ -6196,23 +6216,29 @@ The "Reset move count all cars" will zero out all of the cars move counts. In no
       that are built.
 
       <h3 id="CustomSwitchLists">Custom Switch Lists</h3>
-      You can if you wish create custom switch lists using an Excel program. You can configure where
+      You can if you wish create custom switch lists using an Excel or Java program. You can configure where
       to find the Excel program for custom switch lists from the "Switch Lists by Location" window
       "Tools" menu. Or go to <a href="#SettingsOptions">Options</a> and select the "Generate CSV
       Switch List" to enable this feature. For more information see <a href="#SetupExcelProgram">Setup
         Excel Program (Manifest Creator)</a>.
+        
       <p>When the feature to generate CSV Switch Lists is enabled, the program will create a
         comma separated values file for each of the selected locations. You can find the CSV files
         in the csvSwitchList directory.</p>
 
       <p>Two new buttons will appear at the bottom of the "Switch Lists by Location" window,
         "Run", and "Run Changes". The "Run" button is used to create custom switch lists for all of
-        the selected locations by executing an Excel program. The "Run" button will if needed,
-        create the CSV files needed before asking the Excel program to create and print a custom
+        the selected locations by executing an Excel or Java program. The "Run" button will if needed,
+        create the CSV files needed before asking the Excel or Java program to create and print a custom
         switch list. The "Run Changes" will only create new switch lists for locations that have new
         work.</p>
+        
+        <p>When using a Java program like <a href="https://mrslamf.com/">Model
+        Railroad Switch List and Manifest Formatter</a> to create a custom switch list, you must delete 
+        the Excel switch list file name and then press "Save".</p>
 
       <h3 id="TrainMove">Moving Trains</h3>
+      
       After providing your crew with a printed Manifest or location switch list, you must keep the
       program database synchronized with the actual movement of trains on your layout. This is done
       by the train "Move" buttons located on the right side of the <a href="#Trains">Trains</a>

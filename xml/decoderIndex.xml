@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.7.2plus+jake+20240112T1529Z+Reb8c83d1bda on Fri Jan 12 10:29:11 EST 2024-->
-  <decoderIndex version="577">
+  <!--Written by JMRI version 5.7.4plus+jake+20240309T2109Z+R4d3610214b9 on Sat Mar 09 16:09:48 EST 2024-->
+  <decoderIndex version="581">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -10190,6 +10190,18 @@
           <output name="4" label=". A2 ." />
         </model>
       </family>
+      <family name="mXion" mfg="MD Electronics" file="MDE_mXion_Drive_L.xml">
+        <model model="Drive-L" numOuts="8" numFns="68" lowVersionID="15" highVersionID="15">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+          <output name="5" label=". A3 ." />
+          <output name="6" label=". A4 ." />
+          <output name="7" label=". A5 ." />
+          <output name="8" label=". A6 ." />
+        </model>
+      </family>
       <family name="MERG decoders" mfg="MERG" lowVersionID="104" file="MERG_10.xml">
         <model model="MERG 10" numOuts="5" numFns="3">
           <output name="01" label="White" />
@@ -16754,24 +16766,33 @@
         <model model="TSU-GN2208 F7 2" numOuts="8" numFns="30" productID="6270" />
         <model model="TSU-GN2208 F7 6" numOuts="8" numFns="30" productID="6271" />
         <model model="TSU-GN2208 F7 7" numOuts="8" numFns="30" productID="6272" />
+        <model model="TSU-GN2208 F7 8" numOuts="8" numFns="30" productID="6411" />
+        <model model="TSU-GN2208 F7 12" numOuts="8" numFns="30" productID="6329" />
         <model model="TSU-GN2208 F7 21" numOuts="8" numFns="30" productID="6367" />
         <model model="TSU-GN2208 F7 15" numOuts="8" numFns="30" productID="6320" />
         <model model="TSU-GN2208 F7 16" numOuts="8" numFns="30" productID="6365" />
         <model model="TSU-GN2208 F7 17" numOuts="8" numFns="30" productID="6366" />
+        <model model="TSU-GN2208 F7/GP7 10" numOuts="8" numFns="30" productID="6331" />
+        <model model="TSU-GN2208 F7/GP9 9" numOuts="8" numFns="30" productID="6328" />
         <model model="TSU-GN2208 FP7" numOuts="8" numFns="30" productID="6330" />
         <model model="TSU-GN2200 GP7" numOuts="6" numFns="30" productID="6146" />
         <model model="TSU-GN2208 GP7" numOuts="8" numFns="30" productID="6292" />
         <model model="TSU-GN2208 GP7 13" numOuts="8" numFns="30" productID="6333" />
         <model model="TSU-GN2208 GP7 19" numOuts="8" numFns="30" productID="6351" />
         <model model="TSU-GN2208 GP7 20" numOuts="8" numFns="30" productID="6357" />
+        <model model="TSU-GN2208 GP7 20a" numOuts="8" numFns="30" productID="6336" />
+        <model model="TSU-GN2208 GP7 27" numOuts="8" numFns="30" productID="6426" />
         <model model="TSU-GN2200 GP7 w/DB" numOuts="6" numFns="30" productID="6147" />
         <model model="TSU-GN2208 GP7A/B" numOuts="8" numFns="30" productID="6356" />
         <model model="TSU-GN2208 GP7R" numOuts="8" numFns="30" productID="6247" />
         <model model="TSU-GN2208 GP7u" numOuts="8" numFns="30" productID="6246" />
         <model model="TSU-GN2200 GP7/GP9" numOuts="6" numFns="30" productID="6169" />
         <model model="TSU-GN2208 GP7/GP9" numOuts="6" numFns="30" productID="6236" />
+        <model model="TSU-GN2208 GP7/GP9 11" numOuts="6" numFns="30" productID="6332" />
         <model model="TSU-GN2208 GP7/GP9 22" numOuts="6" numFns="30" productID="6291" />
+        <model model="TSU-GN2208 GP7/GP9 23" numOuts="6" numFns="30" productID="6355" />
         <model model="TSU-GN2208 GP7/GP9/GP18" numOuts="8" numFns="30" productID="6290" />
+        <model model="TSU-GN2208 GP7/GP9/GP18 14" numOuts="8" numFns="30" productID="6335" />
         <model model="TSU-GN2200 GP7/GP9 w/beacon" numOuts="6" numFns="30" productID="6200" />
         <model model="TSU-GN2200 GP7/GP9 w/mars" numOuts="6" numFns="30" productID="6164" />
         <model model="TSU-GN2208 GP9" numOuts="8" numFns="30" productID="6234" />
@@ -16788,13 +16809,17 @@
         <model model="TSU-GN2200 GP9 w/mars" numOuts="6" numFns="30" productID="6163" />
         <model model="TSU-GN2208 GP9B" numOuts="8" numFns="30" productID="6237" />
         <model model="TSU-GN2208 GP18" numOuts="8" numFns="30" productID="6354" />
+        <model model="TSU-GN2208 GP18 23" numOuts="8" numFns="30" productID="6447" />
         <model model="TSU-GN2208 GP18 25" numOuts="8" numFns="30" productID="6350" />
+        <model model="TSU-GN2208 GP15-1 19" numOuts="8" numFns="30" productID="6361" />
+        <model model="TSU-GN2208 GP15-1 22" numOuts="8" numFns="30" productID="6363" />
         <model model="TSU-GN2208 GP15-1 27" numOuts="8" numFns="30" productID="6465" />
         <model model="TSU-GN2208 GP15-1 28" numOuts="8" numFns="30" productID="6466" />
         <model model="TSU-GN2200 GP15-1 w/beacon" numOuts="6" numFns="30" productID="6174" />
         <model model="TSU-GN2208 GP15-1 w/beacon" numOuts="8" numFns="30" productID="6362" />
         <model model="TSU-GN2200 GP15-1 w/beacon2" numOuts="6" numFns="30" productID="6175" />
         <model model="TSU-GN2200 GP15-1 w/ditch" numOuts="6" numFns="30" productID="6176" />
+        <model model="TSU-GN2208 GP15-1/GP38-2 18" numOuts="8" numFns="30" productID="6360" />
         <model model="TSU-GN2200 GP15T" numOuts="6" numFns="30" productID="6173" />
         <model model="TSU-GN2208 GP15T 5" numOuts="8" numFns="30" productID="6461" />
         <model model="TSU-GN2208 GP15T 6" numOuts="8" numFns="30" productID="6462" />
@@ -16802,10 +16827,20 @@
         <model model="TSU-GN2208 GP15T 8" numOuts="8" numFns="30" productID="6464" />
         <model model="TSU-GN2200 GP38-2" numOuts="6" numFns="30" productID="6152" />
         <model model="TSU-GN2200 GP38-2 2" numOuts="6" numFns="30" productID="6220" />
+        <model model="TSU-GN2208 GP38-2 3" numOuts="8" numFns="30" productID="6368" />
         <model model="TSU-GN2208 GP38-2 4" numOuts="8" numFns="30" productID="6306" />
+        <model model="TSU-GN2208 GP38-2 5" numOuts="8" numFns="30" productID="6434" />
         <model model="TSU-GN2208 GP38-2 7" numOuts="8" numFns="30" productID="6307" />
         <model model="TSU-GN2208 GP38-2 13" numOuts="8" numFns="30" productID="6308" />
         <model model="TSU-GN2208 GP38-2 14" numOuts="8" numFns="30" productID="6309" />
+        <model model="TSU-GN2208 GP38-2 15" numOuts="8" numFns="30" productID="6369" />
+        <model model="TSU-GN2208 GP38-2 16" numOuts="8" numFns="30" productID="6370" />
+        <model model="TSU-GN2208 GP38-2 17" numOuts="8" numFns="30" productID="6371" />
+        <model model="TSU-GN2208 GP38-2 21" numOuts="8" numFns="30" productID="6372" />
+        <model model="TSU-GN2208 GP38-2 23" numOuts="8" numFns="30" productID="6373" />
+        <model model="TSU-GN2208 GP38-2 24" numOuts="8" numFns="30" productID="6374" />
+        <model model="TSU-GN2208 GP38-2 25" numOuts="8" numFns="30" productID="6435" />
+        <model model="TSU-GN2208 GP38-2 26" numOuts="8" numFns="30" productID="6436" />
         <model model="TSU-GN2200 GP38-2 w/ beacon/strobe" numOuts="6" numFns="30" productID="6153" />
         <model model="TSU-GN2200 GP38-2 w/DB" numOuts="6" numFns="30" productID="6216" />
         <model model="TSU-GN2200 GP38-2 w/DB2" numOuts="6" numFns="30" productID="6218" />
@@ -16820,15 +16855,20 @@
         <model model="TSU-GN2200 GP39-2" numOuts="6" numFns="30" productID="6204" />
         <model model="TSU-GN2208 GP39-2 1" numOuts="8" numFns="30" productID="6316" />
         <model model="TSU-GN2208 GP39-2 2" numOuts="8" numFns="30" productID="6317" />
+        <model model="TSU-GN2208 GP39-2 3" numOuts="8" numFns="30" productID="6375" />
         <model model="TSU-GN2208 GP39-2 4" numOuts="8" numFns="30" productID="6376" />
         <model model="TSU-GN2200 GP39-2 w/ beacon/strobe1" numOuts="6" numFns="30" productID="6205" />
         <model model="TSU-GN2200 GP39-2 w/ beacon/strobe2" numOuts="6" numFns="30" productID="6206" />
         <model model="TSU-GN2200 GP39-2 w/ beacon/strobe3" numOuts="6" numFns="30" productID="6207" />
         <model model="TSU-GN2200 GP39-2 w/ strobe" numOuts="6" numFns="30" productID="6208" />
         <model model="TSU-GN2208 GP39X/GP49" numOuts="8" numFns="30" productID="6305" />
+        <model model="TSU-GN2208 GP40-2 1" numOuts="8" numFns="30" productID="6407" />
         <model model="TSU-GN2208 GP40-2 2" numOuts="8" numFns="30" productID="6345" />
         <model model="TSU-GN2208 GP40-2 5" numOuts="8" numFns="30" productID="6346" />
         <model model="TSU-GN2208 GP40-2 6" numOuts="8" numFns="30" productID="6300" />
+        <model model="TSU-GN2208 GP40-2 11" numOuts="8" numFns="30" productID="6337" />
+        <model model="TSU-GN2208 GP40-2 12" numOuts="8" numFns="30" productID="6338" />
+        <model model="TSU-GN2208 GP40-2 13" numOuts="8" numFns="30" productID="6408" />
         <model model="TSU-GN2200 GP40-2 w/DB" numOuts="6" numFns="30" productID="6225" />
         <model model="TSU-GN2200 GP40-2 w/DB,beacon" numOuts="6" numFns="30" productID="6224" />
         <model model="TSU-GN2200 GP40-2 w/DB,strobe" numOuts="6" numFns="30" productID="6223" />
@@ -16850,7 +16890,11 @@
         <model model="TSU-GN2208 GP50 7" numOuts="8" numFns="30" productID="6266" />
         <model model="TSU-GN2208 GP50 8" numOuts="8" numFns="30" productID="6267" />
         <model model="TSU-GN2208 GP50 9" numOuts="8" numFns="30" productID="6268" />
+        <model model="TSU-21PNEM8 MP15AC/SW1500 1" numOuts="8" numFns="30" productID="6421" />
+        <model model="TSU-21PNEM8 MP15AC 2" numOuts="8" numFns="30" productID="6422" />
         <model model="TSU-21PNEM8 MP15AC 3" numOuts="8" numFns="30" productID="6423" />
+        <model model="TSU-21PNEM8 MP15AC 4" numOuts="8" numFns="30" productID="6424" />
+        <model model="TSU-21PNEM8 MP15AC 5" numOuts="8" numFns="30" productID="6425" />
         <model model="TSU-21PNEM8 SD40T-2" numOuts="8" numFns="30" productID="6453" />
         <model model="TSU-GN2200 SDP40F w/gyra" numOuts="6" numFns="30" productID="6189" />
         <model model="TSU-GN2208 SDP40F w/gyra" numOuts="8" numFns="30" productID="6229" />
@@ -16862,9 +16906,11 @@
         <model model="TSU-GN2208 SDP45/SD45-2/F45/FP45 1" numOuts="8" numFns="30" productID="6287" />
         <model model="TSU-GN2208 SDP45/SD45-2/F45/FP45 4" numOuts="8" numFns="30" productID="6289" />
         <model model="TSU-GN2208 SDP45/SD45-2/F45/FP45 5" numOuts="8" numFns="30" productID="6406" />
+        <model model="TSU-GN2208 SDP45/SD45-2/F45/FP45 8" numOuts="8" numFns="30" productID="6323" />
         <model model="TSU-GN2208 SDP45/SD45-2/F45/FP45 9" numOuts="8" numFns="30" productID="6403" />
         <model model="TSU-GN2208 SDP45/SD45-2/F45/FP45 10" numOuts="8" numFns="30" productID="6404" />
         <model model="TSU-GN2208 SDP45/SD45-2/F45/FP45 11" numOuts="8" numFns="30" productID="6405" />
+        <model model="TSU-GN2208 SD32ECO/SD59M-2 1" numOuts="8" numFns="30" productID="6437" />
         <model model="TSU-GN2208 SD60E" numOuts="8" numFns="30" productID="6211" />
         <model model="TSU-GN2208 SD60E 2" numOuts="8" numFns="30" productID="6260" />
         <model model="TSU-GN2200 SD60I" numOuts="6" numFns="30" productID="6180" />
@@ -16876,12 +16922,15 @@
         <model model="TSU-GN2200 SD60M 8" numOuts="8" numFns="30" productID="6314" />
         <model model="TSU-GN2200 SD60M 9" numOuts="8" numFns="30" productID="6349" />
         <model model="TSU-GN2200 SD60M 10" numOuts="8" numFns="30" productID="6313" />
+        <model model="TSU-GN2208 SD60M 11" numOuts="8" numFns="30" productID="6438" />
+        <model model="TSU-GN2208 SD60M 12" numOuts="8" numFns="30" productID="6439" />
         <model model="TSU-GN2200 SD70ACe" numOuts="6" numFns="30" productID="6167" />
         <model model="TSU-GN2200 SD70ACe w/LED" numOuts="6" numFns="30" productID="6212" />
         <model model="TSU-GN2208 SD70ACe w/LED 2" numOuts="8" numFns="30" productID="6248" />
         <model model="TSU-GN2208 SD70ACe w/LED" numOuts="8" numFns="30" productID="6283" />
         <model model="TSU-GN2200 SD70ACe w/ditch" numOuts="6" numFns="30" productID="6168" />
         <model model="TSU-GN2208 SD70ACe w/ditch" numOuts="8" numFns="30" productID="6249" />
+        <model model="TSU-GN2208 SD70M-2 4" numOuts="8" numFns="30" productID="6402" />
         <model model="TSU-GN2208 SD70ACU" numOuts="8" numFns="30" productID="6390" />
         <model model="TSU-GN2208 SD70ACU 13" numOuts="8" numFns="30" productID="6391" />
         <model model="TSU-GN2208 SD70 1" numOuts="8" numFns="30" productID="6352" />
@@ -16913,6 +16962,7 @@
         <model model="TSU-GN2208 ES40DC w/ditch" numOuts="8" numFns="30" productID="6297" />
         <model model="TSU-GN2208 ES44AC" numOuts="8" numFns="30" productID="6231" />
         <model model="TSU-GN2208 ES44AC 2" numOuts="8" numFns="30" productID="6232" />
+        <model model="TSU-GN2208 ES44AC 5" numOuts="8" numFns="30" productID="6344" />
         <model model="TSU-GN2200 ES44DC" numOuts="6" numFns="30" productID="6191" />
         <model model="TSU-GN2200 ES44DC w/ditch" numOuts="6" numFns="30" productID="6193" />
         <model model="TSU-GN2208 ES44DC w/ditch" numOuts="8" numFns="30" productID="6298" />
@@ -37818,6 +37868,80 @@
           <output name="1" label="Front Light (MX605SL)" />
           <output name="2" label="Rear Light (MX605SL)" />
           <output name="3" label="FO 1 (MX605FL)" />
+        </model>
+      </family>
+      <family name="Zimo Light Boards" mfg="Zimo" file="Zimo_Unified_software_v40_MXLIPL1.xml">
+        <model model="LIPLDNW1 version 40+" lowVersionID="40" highVersionID="40" productID="184" numOuts="10" numFns="14">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="LED Gp1" />
+          <output name="5" label="LED Gp2" />
+          <output name="6" label="LED Gp3" />
+          <output name="7" label="LED Gp4" />
+          <output name="8" label="LED Gp5" />
+          <output name="9" label="LED Gp6" />
+          <output name="10" label="LED Gp7" />
+        </model>
+        <model model="LIPLDNY1 version 40+" lowVersionID="40" highVersionID="40" productID="184" numOuts="10" numFns="14">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="LED Gp1" />
+          <output name="5" label="LED Gp2" />
+          <output name="6" label="LED Gp3" />
+          <output name="7" label="LED Gp4" />
+          <output name="8" label="LED Gp5" />
+          <output name="9" label="LED Gp6" />
+          <output name="10" label="LED Gp7" />
+        </model>
+        <model model="LIPLDHW1 version 40+" lowVersionID="40" highVersionID="40" productID="184" numOuts="10" numFns="14">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="LED Gp1" />
+          <output name="5" label="LED Gp2" />
+          <output name="6" label="LED Gp3" />
+          <output name="7" label="LED Gp4" />
+          <output name="8" label="LED Gp5" />
+          <output name="9" label="LED Gp6" />
+          <output name="10" label="LED Gp7" />
+        </model>
+        <model model="LIPLDHY1 version 40+" lowVersionID="40" highVersionID="40" productID="184" numOuts="10" numFns="14">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="LED Gp1" />
+          <output name="5" label="LED Gp2" />
+          <output name="6" label="LED Gp3" />
+          <output name="7" label="LED Gp4" />
+          <output name="8" label="LED Gp5" />
+          <output name="9" label="LED Gp6" />
+          <output name="10" label="LED Gp7" />
+        </model>
+      </family>
+      <family name="Zimo Light Boards" mfg="Zimo" file="Zimo_Unified_software_v40_MXLIPL3.xml">
+        <model model="LIPLDGW1 version 40+" lowVersionID="40" highVersionID="40" productID="179" numOuts="9" numFns="14">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="LED Gp1" />
+          <output name="5" label="LED Gp2" />
+          <output name="6" label="LED Gp3" />
+          <output name="7" label="LED Gp4" />
+          <output name="8" label="LED Gp5" />
+          <output name="9" label="FO 10" />
+        </model>
+        <model model="LIPLDGY1 version 40+" lowVersionID="40" highVersionID="40" productID="179" numOuts="9" numFns="14">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="LED Gp1" />
+          <output name="5" label="LED Gp2" />
+          <output name="6" label="LED Gp3" />
+          <output name="7" label="LED Gp4" />
+          <output name="8" label="LED Gp5" />
+          <output name="9" label="FO 10" />
         </model>
       </family>
     </familyList>

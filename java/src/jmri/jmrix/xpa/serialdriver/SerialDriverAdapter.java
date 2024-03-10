@@ -1,16 +1,15 @@
 package jmri.jmrix.xpa.serialdriver;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import jmri.InstanceManager;
 import jmri.jmrix.xpa.XpaPortController;
 import jmri.jmrix.xpa.XpaSystemConnectionMemo;
 import jmri.jmrix.xpa.XpaTrafficController;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import purejavacomm.CommPortIdentifier;
 import purejavacomm.NoSuchPortException;
 import purejavacomm.PortInUseException;
@@ -70,11 +69,8 @@ public class SerialDriverAdapter extends XpaPortController {
             // activeSerialPort.enableReceiveTimeout(1000);
             log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(), activeSerialPort.isReceiveTimeoutEnabled());
 
-            // get and save stream
-            serialStream = activeSerialPort.getInputStream();
-
             // purge contents, if any
-            purgeStream(serialStream);
+            purgeStream(activeSerialPort.getInputStream());
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -119,29 +115,6 @@ public class SerialDriverAdapter extends XpaPortController {
 
     private Thread sinkThread;
 
-    // base class methods for the XpaPortController interface
-    @Override
-    public DataInputStream getInputStream() {
-        if (!opened) {
-            log.error("getInputStream called before load(), stream not available");
-            return null;
-        }
-        return new DataInputStream(serialStream);
-    }
-
-    @Override
-    public DataOutputStream getOutputStream() {
-        if (!opened) {
-            log.error("getOutputStream called before load(), stream not available");
-        }
-        try {
-            return new DataOutputStream(activeSerialPort.getOutputStream());
-        } catch (java.io.IOException e) {
-            log.error("getOutputStream exception", e);
-        }
-        return null;
-    }
-
     @Override
     public boolean status() {
         return opened;
@@ -168,9 +141,6 @@ public class SerialDriverAdapter extends XpaPortController {
     public int defaultBaudIndex() {
         return 0;
     }
-
-    private boolean opened = false;
-    InputStream serialStream = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 

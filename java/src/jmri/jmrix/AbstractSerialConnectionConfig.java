@@ -158,13 +158,13 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         return JmrixConfigPane.NONE;
     }
 
-    @SuppressWarnings("UseOfObsoleteCollectionType")
+//    @SuppressWarnings("UseOfObsoleteCollectionType")
     Vector<String> v;
-    @SuppressWarnings("UseOfObsoleteCollectionType")
+//    @SuppressWarnings("UseOfObsoleteCollectionType")
     Vector<String> originalList;
     String invalidPort = null;
 
-    @SuppressWarnings("UseOfObsoleteCollectionType")
+//    @SuppressWarnings("UseOfObsoleteCollectionType")
     public void refreshPortBox() {
         if (!init) {
             v = getPortNames();
@@ -256,7 +256,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
      * {@inheritDoc}
      */
     @Override
-    @SuppressWarnings("UseOfObsoleteCollectionType")
+//    @SuppressWarnings("UseOfObsoleteCollectionType")
     public void loadDetails(final JPanel details) {
         _details = details;
         setInstance();
@@ -595,7 +595,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
      * @param portCombo The combo box that's displaying the available ports
      * @param portList The list of valid (unfriendly) port names
      */
-    @SuppressWarnings("UseOfObsoleteCollectionType")
+//    @SuppressWarnings("UseOfObsoleteCollectionType")
     protected synchronized static void updateSerialPortNames(String portName, JComboBox<String> portCombo, Vector<String> portList) {
         for (Map.Entry<String, SerialPortFriendlyName> en : PortNameMapper.getPortNameMap().entrySet()) {
             en.getValue().setValidPort(false);
@@ -621,7 +621,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
      * that e.g. do loopback or use a custom port-access library.
      * @return Valid port names in the form used to select them later.
      */
-    @SuppressWarnings("UseOfObsoleteCollectionType") // historical interface
+//    @SuppressWarnings("UseOfObsoleteCollectionType") // historical interface
     protected Vector<String> getPortNames() {
         return AbstractSerialPortController.getActualPortNames();
     }

@@ -45,6 +45,13 @@
             ],
             "description": "null to remove engine from its train"
         },
+        "trainName": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "name of train engine is assigned to, null if not assigned"
+        },
         "destination": {
             "type": [
                 "object",

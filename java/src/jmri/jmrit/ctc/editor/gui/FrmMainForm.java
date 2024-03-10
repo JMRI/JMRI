@@ -59,7 +59,7 @@ public class FrmMainForm extends JFrame {
     private boolean _mAnySubFormOpen = false;   // For any BUT FrmTRL_Rules
     boolean _mTRL_RulesFormOpen = false; // for ONLY FrmTRL_Rules
 
-    @SuppressWarnings("LeakingThisInConstructor")   // NOI18N   Lazy, since this is NOT a multi-threaded program.
+//    @SuppressWarnings("LeakingThisInConstructor")   // NOI18N   Lazy, since this is NOT a multi-threaded program.
     public FrmMainForm() {
         super();
         InstanceManager.setDefault(jmri.jmrit.ctc.editor.gui.FrmMainForm.class, this);

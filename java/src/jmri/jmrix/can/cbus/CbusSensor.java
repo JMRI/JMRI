@@ -68,6 +68,8 @@ public class CbusSensor extends AbstractSensor implements CanListener, CbusEvent
 
     /**
      * Request an update on status by sending CBUS request message to active address.
+     * Sends a query message using the active Sensor address.
+     * e.g. for a CBUS address "-7;+5", the query will go to event 7.
      * {@inheritDoc}
      */
     @Override

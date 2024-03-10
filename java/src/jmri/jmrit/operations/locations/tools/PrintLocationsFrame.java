@@ -35,7 +35,6 @@ import jmri.util.davidflanagan.HardcopyWriter;
  */
 public class PrintLocationsFrame extends OperationsFrame {
 
-    static final String NEW_LINE = "\n"; // NOI18N
     static final String FORM_FEED = "\f"; // NOI18N
     static final String TAB = "\t"; // NOI18N
     static final int TAB_LENGTH = 10;

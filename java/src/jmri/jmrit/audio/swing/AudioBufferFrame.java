@@ -66,7 +66,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
 
     private final static String PREFIX = "IAB";
 
-    @SuppressWarnings("OverridableMethodCallInConstructor")
+//    @SuppressWarnings("OverridableMethodCallInConstructor")
     public AudioBufferFrame(String title, AudioTableDataModel model) {
         super(title, model);
         layoutFrame();

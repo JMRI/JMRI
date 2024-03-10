@@ -36,6 +36,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Panel indicators JOP, Speed map</revremark>
     </revision>    
+    <revision>
+        <revnumber>4</revnumber>
+        <date>2024-02-21</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Small icons</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>CSD-1962-zakladni</aspecttable>
@@ -51,6 +57,7 @@
       <imagelink type="AŽD zč">../../../resources/icons/smallschematics/aspects/CSD/AZD/00_gr.png</imagelink>
       <imagelink type="ESP zč">../../../resources/icons/smallschematics/aspects/CSD/ESP/00_gr.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_grey.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m00_stuj_2.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -59,6 +66,7 @@
       <imagelink type="AŽD zč">../../../resources/icons/smallschematics/aspects/CSD/AZD/01_gr.png</imagelink>
       <imagelink type="ESP zč">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_gr.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m01_volno_2.gif</imagelink>
     </appearance>
 
   </appearances>

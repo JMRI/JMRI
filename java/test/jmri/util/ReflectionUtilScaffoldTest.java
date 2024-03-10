@@ -20,7 +20,7 @@ public class ReflectionUtilScaffoldTest {
     }
 
     @Test
-    @SuppressWarnings("AccessingNonPublicFieldOfAnotherObject")
+//    @SuppressWarnings("AccessingNonPublicFieldOfAnotherObject")
     public void testReflection() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         MyClass mc = new MyClass();
         Assertions.assertEquals( "Hello World", mc.myField, "Test");
@@ -29,7 +29,7 @@ public class ReflectionUtilScaffoldTest {
     }
 
     @Test
-    @SuppressWarnings("AccessingNonPublicFieldOfAnotherObject")
+//    @SuppressWarnings("AccessingNonPublicFieldOfAnotherObject")
     public void testReflectionStatic() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         MyStaticClass mc = new MyStaticClass();
         Assertions.assertEquals( "Hello World in Static Class", mc.myField, "Private field read");

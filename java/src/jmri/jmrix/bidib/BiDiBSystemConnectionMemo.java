@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  */
 public class BiDiBSystemConnectionMemo extends DefaultSystemConnectionMemo /* implements ConfiguringSystemConnectionMemo */  {
 
-    @SuppressWarnings("OverridableMethodCallInConstructor")
+//    @SuppressWarnings("OverridableMethodCallInConstructor")
     public BiDiBSystemConnectionMemo(@Nonnull BiDiBTrafficController tc) {
         super("B", "BiDiB");
         log.trace("**** ctor 1 BiDiBSystemConnectionMemo");
@@ -53,7 +53,7 @@ public class BiDiBSystemConnectionMemo extends DefaultSystemConnectionMemo /* im
         log.debug("Created BiDiBSystemConnectionMemo");
     }
 
-    @SuppressWarnings("OverridableMethodCallInConstructor")
+//    @SuppressWarnings("OverridableMethodCallInConstructor")
     public BiDiBSystemConnectionMemo() {
         super("B", "BiDiB");
         log.trace("**** ctor 2 BiDiBSystemConnectionMemo");

@@ -40,6 +40,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Test set</revremark>
     </revision>
+    <revision>
+        <revnumber>4</revnumber>
+        <date>2024-02-22</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Small icons</revremark>
+    </revision>    
   </revhistory>
 
   <aspects>
@@ -336,13 +342,14 @@
 	<imagetype type="prototype"/>
 
 	<imagetype type="AŽD žzčb"/>
-        <imagetype type="AŽD z"/>
-        <imagetype type="AŽD b"/>
+	<imagetype type="AŽD z"/>
+	<imagetype type="AŽD b"/>
 
 	<imagetype type="ESP žzčb"/>
-        <imagetype type="ESP z"/>
-        <imagetype type="ESP b"/>
+	<imagetype type="ESP z"/>
+	<imagetype type="ESP b"/>
 
+	<imagetype type="malé"/>
   </imagetypes>
 
   <appearancefiles>

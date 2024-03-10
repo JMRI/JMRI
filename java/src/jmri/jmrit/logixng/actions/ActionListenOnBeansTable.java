@@ -10,6 +10,8 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
+import net.jcip.annotations.GuardedBy;
+
 /**
  * This action listens on some beans and runs the ConditionalNG on property change.
  *
@@ -30,9 +32,9 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
     private String _localVariableNamedBean;
     private String _localVariableEvent;
     private String _localVariableNewValue;
-    private String _lastNamedBean;
-    private String _lastEvent;
-    private String _lastNewValue;
+
+    @GuardedBy("this")
+    private final Deque<PropertyChangeEvent> _eventQueue = new ArrayDeque<>();
 
     public ActionListenOnBeansTable(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -198,20 +200,37 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
         // of the registered beans and execute the ConditionalNG when it
         // happens.
 
+        String namedBean;
+        String event;
+        String newValue;
+
         synchronized(this) {
+            PropertyChangeEvent evt = _eventQueue.poll();
+            if (evt != null) {
+                namedBean = ((NamedBean)evt.getSource()).getDisplayName();
+                event = evt.getPropertyName();
+                newValue = evt.getNewValue() != null ? evt.getNewValue().toString() : null;
+            } else {
+                namedBean = null;
+                event = null;
+                newValue = null;
+            }
+
             SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+
             if (_localVariableNamedBean != null) {
-                symbolTable.setValue(_localVariableNamedBean, _lastNamedBean);
+                symbolTable.setValue(_localVariableNamedBean, namedBean);
             }
             if (_localVariableEvent != null) {
-                symbolTable.setValue(_localVariableEvent, _lastEvent);
+                symbolTable.setValue(_localVariableEvent, event);
             }
             if (_localVariableNewValue != null) {
-                symbolTable.setValue(_localVariableNewValue, _lastNewValue);
+                symbolTable.setValue(_localVariableNewValue, newValue);
             }
-            _lastNamedBean = null;
-            _lastEvent = null;
-            _lastNewValue = null;
+
+            if (!_eventQueue.isEmpty()) {
+                getConditionalNG().execute();
+            }
         }
     }
 
@@ -341,13 +360,14 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-//        System.out.format("Table: Property: %s, Bean: %s, Listen: %b%n", evt.getPropertyName(), ((NamedBean)evt.getSource()).getDisplayName(), _listenOnAllProperties);
+        boolean isQueueEmpty;
         synchronized(this) {
-            _lastNamedBean = ((NamedBean)evt.getSource()).getDisplayName();
-            _lastEvent = evt.getPropertyName();
-            _lastNewValue = evt.getNewValue() != null ? evt.getNewValue().toString() : null;
+            isQueueEmpty = _eventQueue.isEmpty();
+            _eventQueue.add(evt);
         }
-        getConditionalNG().execute();
+        if (isQueueEmpty) {
+            getConditionalNG().execute();
+        }
     }
 
     /** {@inheritDoc} */

@@ -27,21 +27,23 @@ public class LayoutFunctions implements FunctionFactory {
     @Override
     public Set<Function> getFunctions() {
         Set<Function> functionClasses = new HashSet<>();
-        functionClasses.add(new TurnoutExistsFunction());
-        functionClasses.add(new GetTurnoutStateFunction());
-        functionClasses.add(new SetTurnoutStateFunction());
-        functionClasses.add(new SensorExistsFunction());
-        functionClasses.add(new GetSensorStateFunction());
-        functionClasses.add(new SetSensorStateFunction());
-        functionClasses.add(new LightExistsFunction());
-        functionClasses.add(new GetLightStateFunction());
-        functionClasses.add(new SetLightStateFunction());
-        functionClasses.add(new SignalHeadExistsFunction());
-        functionClasses.add(new GetSignalHeadAppearanceFunction());
-        functionClasses.add(new SetSignalHeadAppearanceFunction());
-        functionClasses.add(new SignalMastExistsFunction());
-        functionClasses.add(new GetSignalMastAspectFunction());
-        functionClasses.add(new SetSignalMastAspectFunction());
+
+        addTurnoutExistsFunction(functionClasses);
+        addGetTurnoutStateFunction(functionClasses);
+        addSetTurnoutStateFunction(functionClasses);
+        addSensorExistsFunction(functionClasses);
+        addGetSensorStateFunction(functionClasses);
+        addSetSensorStateFunction(functionClasses);
+        addLightExistsFunction(functionClasses);
+        addGetLightStateFunction(functionClasses);
+        addSetLightStateFunction(functionClasses);
+        addSignalHeadExistsFunction(functionClasses);
+        addGetSignalHeadAppearanceFunction(functionClasses);
+        addSetSignalHeadAppearanceFunction(functionClasses);
+        addSignalMastExistsFunction(functionClasses);
+        addGetSignalMastAspectFunction(functionClasses);
+        addSetSignalMastAspectFunction(functionClasses);
+
         return functionClasses;
     }
 
@@ -107,619 +109,299 @@ public class LayoutFunctions implements FunctionFactory {
         return Bundle.getMessage("Layout.ConstantDescriptions");
     }
 
+    private void addTurnoutExistsFunction(Set<Function> functionClasses) {
+        functionClasses.add(new AbstractFunction(this, "turnoutExists", Bundle.getMessage("LayoutFunctions.turnoutExists_Descr")) {
+            @Override
+            public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                    throws CalculateException, JmriException {
+                if (parameterList.isEmpty()) {
+                    throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+                }
 
+                String name = TypeConversionUtil.convertToString(
+                        parameterList.get(0).calculate(symbolTable), false);
 
-    public static class TurnoutExistsFunction implements Function {
-
-        @Override
-        public String getModule() {
-            return new LayoutFunctions().getModule();
-        }
-
-        @Override
-        public String getName() {
-            return "turnoutExists";
-        }
-
-        @Override
-        public String getConstantDescriptions() {
-            return new LayoutFunctions().getConstantDescription();
-        }
-
-        @Override
-        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
-                throws CalculateException, JmriException {
-            if (parameterList.isEmpty()) {
-                throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+                Turnout t = InstanceManager.getDefault(TurnoutManager.class).getNamedBean(name);
+                return t != null;
             }
-
-            String name = TypeConversionUtil.convertToString(
-                    parameterList.get(0).calculate(symbolTable), false);
-
-            Turnout t = InstanceManager.getDefault(TurnoutManager.class).getNamedBean(name);
-            return t != null;
-        }
-
-        @Override
-        public String getDescription() {
-            return Bundle.getMessage("LayoutFunctions.turnoutExists_Descr");
-        }
-
+        });
     }
 
+    private void addGetTurnoutStateFunction(Set<Function> functionClasses) {
+        functionClasses.add(new AbstractFunction(this, "getTurnoutState", Bundle.getMessage("LayoutFunctions.getTurnoutState_Descr")) {
+            @Override
+            public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                    throws CalculateException, JmriException {
+                if (parameterList.isEmpty()) {
+                    throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+                }
 
-    public static class GetTurnoutStateFunction implements Function {
+                String name = TypeConversionUtil.convertToString(
+                        parameterList.get(0).calculate(symbolTable), false);
 
-        @Override
-        public String getModule() {
-            return new LayoutFunctions().getModule();
-        }
-
-        @Override
-        public String getName() {
-            return "getTurnoutState";
-        }
-
-        @Override
-        public String getConstantDescriptions() {
-            return new LayoutFunctions().getConstantDescription();
-        }
-
-        @Override
-        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
-                throws CalculateException, JmriException {
-            if (parameterList.isEmpty()) {
-                throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+                Turnout t = InstanceManager.getDefault(TurnoutManager.class).getNamedBean(name);
+                if (t == null) throw new CalculateException(Bundle.getMessage("LayoutFunctions_GetTurnoutState_TurnoutNotFound", name));
+                return t.getKnownState();
             }
-
-            String name = TypeConversionUtil.convertToString(
-                    parameterList.get(0).calculate(symbolTable), false);
-
-            Turnout t = InstanceManager.getDefault(TurnoutManager.class).getNamedBean(name);
-            if (t == null) throw new CalculateException(Bundle.getMessage("LayoutFunctions_GetTurnoutState_TurnoutNotFound", name));
-            return t.getKnownState();
-        }
-
-        @Override
-        public String getDescription() {
-            return Bundle.getMessage("LayoutFunctions.getTurnoutState_Descr");
-        }
-
+        });
     }
 
+    private void addSetTurnoutStateFunction(Set<Function> functionClasses) {
+        functionClasses.add(new AbstractFunction(this, "setTurnoutState", Bundle.getMessage("LayoutFunctions.setTurnoutState_Descr")) {
+            @Override
+            public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                    throws CalculateException, JmriException {
+                if (parameterList.isEmpty()) {
+                    throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 2));
+                }
 
-    public static class SetTurnoutStateFunction implements Function {
+                String name = TypeConversionUtil.convertToString(
+                        parameterList.get(0).calculate(symbolTable), false);
+                int value = (int) TypeConversionUtil.convertToLong(
+                        parameterList.get(1).calculate(symbolTable));
 
-        @Override
-        public String getModule() {
-            return new LayoutFunctions().getModule();
-        }
-
-        @Override
-        public String getConstantDescriptions() {
-            return new LayoutFunctions().getConstantDescription();
-        }
-
-        @Override
-        public String getName() {
-            return "setTurnoutState";
-        }
-
-        @Override
-        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
-                throws CalculateException, JmriException {
-            if (parameterList.isEmpty()) {
-                throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 2));
+                Turnout t = InstanceManager.getDefault(TurnoutManager.class).getNamedBean(name);
+                if (t == null) throw new CalculateException(Bundle.getMessage("LayoutFunctions_SetTurnoutState_TurnoutNotFound", name));
+                t.setState(value);
+                return t.getKnownState();
             }
-
-            String name = TypeConversionUtil.convertToString(
-                    parameterList.get(0).calculate(symbolTable), false);
-            int value = (int) TypeConversionUtil.convertToLong(
-                    parameterList.get(1).calculate(symbolTable));
-
-            Turnout t = InstanceManager.getDefault(TurnoutManager.class).getNamedBean(name);
-            if (t == null) throw new CalculateException(Bundle.getMessage("LayoutFunctions_SetTurnoutState_TurnoutNotFound", name));
-            t.setState(value);
-            return t.getKnownState();
-        }
-
-        @Override
-        public String getDescription() {
-            return Bundle.getMessage("LayoutFunctions.setTurnoutState_Descr");
-        }
-
+        });
     }
 
+    private void addSensorExistsFunction(Set<Function> functionClasses) {
+        functionClasses.add(new AbstractFunction(this, "sensorExists", Bundle.getMessage("LayoutFunctions.sensorExists_Descr")) {
+            @Override
+            public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                    throws CalculateException, JmriException {
+                if (parameterList.isEmpty()) {
+                    throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+                }
 
+                String name = TypeConversionUtil.convertToString(
+                        parameterList.get(0).calculate(symbolTable), false);
 
-    public static class SensorExistsFunction implements Function {
-
-        @Override
-        public String getModule() {
-            return new LayoutFunctions().getModule();
-        }
-
-        @Override
-        public String getName() {
-            return "sensorExists";
-        }
-
-        @Override
-        public String getConstantDescriptions() {
-            return new LayoutFunctions().getConstantDescription();
-        }
-
-        @Override
-        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
-                throws CalculateException, JmriException {
-            if (parameterList.isEmpty()) {
-                throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+                Sensor s = InstanceManager.getDefault(SensorManager.class).getNamedBean(name);
+                return s != null;
             }
-
-            String name = TypeConversionUtil.convertToString(
-                    parameterList.get(0).calculate(symbolTable), false);
-
-            Sensor s = InstanceManager.getDefault(SensorManager.class).getNamedBean(name);
-            return s != null;
-        }
-
-        @Override
-        public String getDescription() {
-            return Bundle.getMessage("LayoutFunctions.sensorExists_Descr");
-        }
-
+        });
     }
 
+    private void addGetSensorStateFunction(Set<Function> functionClasses) {
+        functionClasses.add(new AbstractFunction(this, "getSensorState", Bundle.getMessage("LayoutFunctions.getSensorState_Descr")) {
+            @Override
+            public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                    throws CalculateException, JmriException {
+                if (parameterList.isEmpty()) {
+                    throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+                }
 
-    public static class GetSensorStateFunction implements Function {
+                String name = TypeConversionUtil.convertToString(
+                        parameterList.get(0).calculate(symbolTable), false);
 
-        @Override
-        public String getModule() {
-            return new LayoutFunctions().getModule();
-        }
-
-        @Override
-        public String getConstantDescriptions() {
-            return new LayoutFunctions().getConstantDescription();
-        }
-
-        @Override
-        public String getName() {
-            return "getSensorState";
-        }
-
-        @Override
-        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
-                throws CalculateException, JmriException {
-            if (parameterList.isEmpty()) {
-                throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+                Sensor s = InstanceManager.getDefault(SensorManager.class).getNamedBean(name);
+                if (s == null) throw new CalculateException(Bundle.getMessage("LayoutFunctions_GetSensorState_SensorNotFound", name));
+                return s.getKnownState();
             }
-
-            String name = TypeConversionUtil.convertToString(
-                    parameterList.get(0).calculate(symbolTable), false);
-
-            Sensor s = InstanceManager.getDefault(SensorManager.class).getNamedBean(name);
-            if (s == null) throw new CalculateException(Bundle.getMessage("LayoutFunctions_GetSensorState_SensorNotFound", name));
-            return s.getKnownState();
-        }
-
-        @Override
-        public String getDescription() {
-            return Bundle.getMessage("LayoutFunctions.getSensorState_Descr");
-        }
-
+        });
     }
 
+    private void addSetSensorStateFunction(Set<Function> functionClasses) {
+        functionClasses.add(new AbstractFunction(this, "setSensorState", Bundle.getMessage("LayoutFunctions.setSensorState_Descr")) {
+            @Override
+            public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                    throws CalculateException, JmriException {
+                if (parameterList.isEmpty()) {
+                    throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 2));
+                }
 
-    public static class SetSensorStateFunction implements Function {
+                String name = TypeConversionUtil.convertToString(
+                        parameterList.get(0).calculate(symbolTable), false);
+                int value = (int) TypeConversionUtil.convertToLong(
+                        parameterList.get(1).calculate(symbolTable));
 
-        @Override
-        public String getModule() {
-            return new LayoutFunctions().getModule();
-        }
-
-        @Override
-        public String getConstantDescriptions() {
-            return new LayoutFunctions().getConstantDescription();
-        }
-
-        @Override
-        public String getName() {
-            return "setSensorState";
-        }
-
-        @Override
-        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
-                throws CalculateException, JmriException {
-            if (parameterList.isEmpty()) {
-                throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 2));
+                Sensor s = InstanceManager.getDefault(SensorManager.class).getNamedBean(name);
+                if (s == null) throw new CalculateException(Bundle.getMessage("LayoutFunctions_SetSensorState_SensorNotFound", name));
+                s.setState(value);
+                return s.getKnownState();
             }
-
-            String name = TypeConversionUtil.convertToString(
-                    parameterList.get(0).calculate(symbolTable), false);
-            int value = (int) TypeConversionUtil.convertToLong(
-                    parameterList.get(1).calculate(symbolTable));
-
-            Sensor s = InstanceManager.getDefault(SensorManager.class).getNamedBean(name);
-            if (s == null) throw new CalculateException(Bundle.getMessage("LayoutFunctions_SetSensorState_SensorNotFound", name));
-            s.setState(value);
-            return s.getKnownState();
-        }
-
-        @Override
-        public String getDescription() {
-            return Bundle.getMessage("LayoutFunctions.setSensorState_Descr");
-        }
-
+        });
     }
 
+    private void addLightExistsFunction(Set<Function> functionClasses) {
+        functionClasses.add(new AbstractFunction(this, "lightExists", Bundle.getMessage("LayoutFunctions.lightExists_Descr")) {
+            @Override
+            public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                    throws CalculateException, JmriException {
+                if (parameterList.isEmpty()) {
+                    throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+                }
 
+                String name = TypeConversionUtil.convertToString(
+                        parameterList.get(0).calculate(symbolTable), false);
 
-    public static class LightExistsFunction implements Function {
-
-        @Override
-        public String getModule() {
-            return new LayoutFunctions().getModule();
-        }
-
-        @Override
-        public String getName() {
-            return "lightExists";
-        }
-
-        @Override
-        public String getConstantDescriptions() {
-            return new LayoutFunctions().getConstantDescription();
-        }
-
-        @Override
-        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
-                throws CalculateException, JmriException {
-            if (parameterList.isEmpty()) {
-                throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+                Light l = InstanceManager.getDefault(LightManager.class).getNamedBean(name);
+                return l != null;
             }
-
-            String name = TypeConversionUtil.convertToString(
-                    parameterList.get(0).calculate(symbolTable), false);
-
-            Light l = InstanceManager.getDefault(LightManager.class).getNamedBean(name);
-            return l != null;
-        }
-
-        @Override
-        public String getDescription() {
-            return Bundle.getMessage("LayoutFunctions.lightExists_Descr");
-        }
-
+        });
     }
 
+    private void addGetLightStateFunction(Set<Function> functionClasses) {
+        functionClasses.add(new AbstractFunction(this, "getLightState", Bundle.getMessage("LayoutFunctions.getLightState_Descr")) {
+            @Override
+            public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                    throws CalculateException, JmriException {
+                if (parameterList.isEmpty()) {
+                    throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+                }
 
-    public static class GetLightStateFunction implements Function {
+                String name = TypeConversionUtil.convertToString(
+                        parameterList.get(0).calculate(symbolTable), false);
 
-        @Override
-        public String getModule() {
-            return new LayoutFunctions().getModule();
-        }
-
-        @Override
-        public String getConstantDescriptions() {
-            return new LayoutFunctions().getConstantDescription();
-        }
-
-        @Override
-        public String getName() {
-            return "getLightState";
-        }
-
-        @Override
-        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
-                throws CalculateException, JmriException {
-            if (parameterList.isEmpty()) {
-                throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+                Light l = InstanceManager.getDefault(LightManager.class).getNamedBean(name);
+                if (l == null) throw new CalculateException(Bundle.getMessage("LayoutFunctions_GetLightState_LightNotFound", name));
+                return l.getKnownState();
             }
-
-            String name = TypeConversionUtil.convertToString(
-                    parameterList.get(0).calculate(symbolTable), false);
-
-            Light l = InstanceManager.getDefault(LightManager.class).getNamedBean(name);
-            if (l == null) throw new CalculateException(Bundle.getMessage("LayoutFunctions_GetLightState_LightNotFound", name));
-            return l.getKnownState();
-        }
-
-        @Override
-        public String getDescription() {
-            return Bundle.getMessage("LayoutFunctions.getLightState_Descr");
-        }
-
+        });
     }
 
+    private void addSetLightStateFunction(Set<Function> functionClasses) {
+        functionClasses.add(new AbstractFunction(this, "setLightState", Bundle.getMessage("LayoutFunctions.setLightState_Descr")) {
+            @Override
+            public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                    throws CalculateException, JmriException {
+                if (parameterList.isEmpty()) {
+                    throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 2));
+                }
 
-    public static class SetLightStateFunction implements Function {
+                String name = TypeConversionUtil.convertToString(
+                        parameterList.get(0).calculate(symbolTable), false);
+                int value = (int) TypeConversionUtil.convertToLong(
+                        parameterList.get(1).calculate(symbolTable));
 
-        @Override
-        public String getModule() {
-            return new LayoutFunctions().getModule();
-        }
-
-        @Override
-        public String getConstantDescriptions() {
-            return new LayoutFunctions().getConstantDescription();
-        }
-
-        @Override
-        public String getName() {
-            return "setLightState";
-        }
-
-        @Override
-        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
-                throws CalculateException, JmriException {
-            if (parameterList.isEmpty()) {
-                throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 2));
+                Light l = InstanceManager.getDefault(LightManager.class).getNamedBean(name);
+                if (l == null) throw new CalculateException(Bundle.getMessage("LayoutFunctions_SetLightState_LightNotFound", name));
+                l.setState(value);
+                return l.getKnownState();
             }
-
-            String name = TypeConversionUtil.convertToString(
-                    parameterList.get(0).calculate(symbolTable), false);
-            int value = (int) TypeConversionUtil.convertToLong(
-                    parameterList.get(1).calculate(symbolTable));
-
-            Light l = InstanceManager.getDefault(LightManager.class).getNamedBean(name);
-            if (l == null) throw new CalculateException(Bundle.getMessage("LayoutFunctions_SetLightState_LightNotFound", name));
-            l.setState(value);
-            return l.getKnownState();
-        }
-
-        @Override
-        public String getDescription() {
-            return Bundle.getMessage("LayoutFunctions.setLightState_Descr");
-        }
-
+        });
     }
 
+    private void addSignalHeadExistsFunction(Set<Function> functionClasses) {
+        functionClasses.add(new AbstractFunction(this, "signalHeadExists", Bundle.getMessage("LayoutFunctions.signalHeadExists_Descr")) {
+            @Override
+            public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                    throws CalculateException, JmriException {
+                if (parameterList.isEmpty()) {
+                    throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+                }
 
+                String name = TypeConversionUtil.convertToString(
+                        parameterList.get(0).calculate(symbolTable), false);
 
-    public static class SignalHeadExistsFunction implements Function {
-
-        @Override
-        public String getModule() {
-            return new LayoutFunctions().getModule();
-        }
-
-        @Override
-        public String getName() {
-            return "signalHeadExists";
-        }
-
-        @Override
-        public String getConstantDescriptions() {
-            return new LayoutFunctions().getConstantDescription();
-        }
-
-        @Override
-        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
-                throws CalculateException, JmriException {
-            if (parameterList.isEmpty()) {
-                throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+                SignalHead sh = InstanceManager.getDefault(SignalHeadManager.class).getNamedBean(name);
+                return sh != null;
             }
-
-            String name = TypeConversionUtil.convertToString(
-                    parameterList.get(0).calculate(symbolTable), false);
-
-            SignalHead sh = InstanceManager.getDefault(SignalHeadManager.class).getNamedBean(name);
-            return sh != null;
-        }
-
-        @Override
-        public String getDescription() {
-            return Bundle.getMessage("LayoutFunctions.signalHeadExists_Descr");
-        }
-
+        });
     }
 
+    private void addGetSignalHeadAppearanceFunction(Set<Function> functionClasses) {
+        functionClasses.add(new AbstractFunction(this, "getSignalHeadAppearance", Bundle.getMessage("LayoutFunctions.getSignalHeadAppearance_Descr")) {
+            @Override
+            public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                    throws CalculateException, JmriException {
+                if (parameterList.isEmpty()) {
+                    throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+                }
 
-    public static class GetSignalHeadAppearanceFunction implements Function {
+                String name = TypeConversionUtil.convertToString(
+                        parameterList.get(0).calculate(symbolTable), false);
 
-        @Override
-        public String getModule() {
-            return new LayoutFunctions().getModule();
-        }
-
-        @Override
-        public String getConstantDescriptions() {
-            return new LayoutFunctions().getConstantDescription();
-        }
-
-        @Override
-        public String getName() {
-            return "getSignalHeadAppearance";
-        }
-
-        @Override
-        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
-                throws CalculateException, JmriException {
-            if (parameterList.isEmpty()) {
-                throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+                SignalHead sh = InstanceManager.getDefault(SignalHeadManager.class).getNamedBean(name);
+                if (sh == null) throw new CalculateException(Bundle.getMessage("LayoutFunctions_GetSignalHeadAppearance_SignalHeadNotFound", name));
+                return sh.getAppearance();
             }
-
-            String name = TypeConversionUtil.convertToString(
-                    parameterList.get(0).calculate(symbolTable), false);
-
-            SignalHead sh = InstanceManager.getDefault(SignalHeadManager.class).getNamedBean(name);
-            if (sh == null) throw new CalculateException(Bundle.getMessage("LayoutFunctions_GetSignalHeadAppearance_SignalHeadNotFound", name));
-            return sh.getAppearance();
-        }
-
-        @Override
-        public String getDescription() {
-            return Bundle.getMessage("LayoutFunctions.getSignalHeadAppearance_Descr");
-        }
-
+        });
     }
 
+    private void addSetSignalHeadAppearanceFunction(Set<Function> functionClasses) {
+        functionClasses.add(new AbstractFunction(this, "setSignalHeadAppearance", Bundle.getMessage("LayoutFunctions.setSignalHeadAppearance_Descr")) {
+            @Override
+            public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                    throws CalculateException, JmriException {
+                if (parameterList.isEmpty()) {
+                    throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 2));
+                }
 
-    public static class SetSignalHeadAppearanceFunction implements Function {
+                String name = TypeConversionUtil.convertToString(
+                        parameterList.get(0).calculate(symbolTable), false);
+                int aspect = (int) TypeConversionUtil.convertToLong(
+                        parameterList.get(1).calculate(symbolTable));
 
-        @Override
-        public String getModule() {
-            return new LayoutFunctions().getModule();
-        }
-
-        @Override
-        public String getConstantDescriptions() {
-            return new LayoutFunctions().getConstantDescription();
-        }
-
-        @Override
-        public String getName() {
-            return "setSignalHeadAppearance";
-        }
-
-        @Override
-        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
-                throws CalculateException, JmriException {
-            if (parameterList.isEmpty()) {
-                throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 2));
+                SignalHead sh = InstanceManager.getDefault(SignalHeadManager.class).getNamedBean(name);
+                if (sh == null) throw new CalculateException(Bundle.getMessage("LayoutFunctions_SetSignalHeadAppearance_SignalHeadNotFound", name));
+                sh.setAppearance(aspect);
+                return sh.getAppearance();
             }
-
-            String name = TypeConversionUtil.convertToString(
-                    parameterList.get(0).calculate(symbolTable), false);
-            int aspect = (int) TypeConversionUtil.convertToLong(
-                    parameterList.get(1).calculate(symbolTable));
-
-            SignalHead sh = InstanceManager.getDefault(SignalHeadManager.class).getNamedBean(name);
-            if (sh == null) throw new CalculateException(Bundle.getMessage("LayoutFunctions_SetSignalHeadAppearance_SignalHeadNotFound", name));
-            sh.setAppearance(aspect);
-            return sh.getAppearance();
-        }
-
-        @Override
-        public String getDescription() {
-            return Bundle.getMessage("LayoutFunctions.setSignalHeadAppearance_Descr");
-        }
-
+        });
     }
 
+    private void addSignalMastExistsFunction(Set<Function> functionClasses) {
+        functionClasses.add(new AbstractFunction(this, "signalMastExists", Bundle.getMessage("LayoutFunctions.signalMastExists_Descr")) {
+            @Override
+            public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                    throws CalculateException, JmriException {
+                if (parameterList.isEmpty()) {
+                    throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+                }
 
+                String name = TypeConversionUtil.convertToString(
+                        parameterList.get(0).calculate(symbolTable), false);
 
-    public static class SignalMastExistsFunction implements Function {
-
-        @Override
-        public String getModule() {
-            return new LayoutFunctions().getModule();
-        }
-
-        @Override
-        public String getName() {
-            return "signalMastExists";
-        }
-
-        @Override
-        public String getConstantDescriptions() {
-            return new LayoutFunctions().getConstantDescription();
-        }
-
-        @Override
-        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
-                throws CalculateException, JmriException {
-            if (parameterList.isEmpty()) {
-                throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+                SignalMast sh = InstanceManager.getDefault(SignalMastManager.class).getNamedBean(name);
+                return sh != null;
             }
-
-            String name = TypeConversionUtil.convertToString(
-                    parameterList.get(0).calculate(symbolTable), false);
-
-            SignalMast sh = InstanceManager.getDefault(SignalMastManager.class).getNamedBean(name);
-            return sh != null;
-        }
-
-        @Override
-        public String getDescription() {
-            return Bundle.getMessage("LayoutFunctions.signalMastExists_Descr");
-        }
-
+        });
     }
 
+    private void addGetSignalMastAspectFunction(Set<Function> functionClasses) {
+        functionClasses.add(new AbstractFunction(this, "getSignalMastAspect", Bundle.getMessage("LayoutFunctions.getSignalMastAspect_Descr")) {
+            @Override
+            public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                    throws CalculateException, JmriException {
+                if (parameterList.isEmpty()) {
+                    throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+                }
 
-    public static class GetSignalMastAspectFunction implements Function {
+                String name = TypeConversionUtil.convertToString(
+                        parameterList.get(0).calculate(symbolTable), false);
 
-        @Override
-        public String getModule() {
-            return new LayoutFunctions().getModule();
-        }
-
-        @Override
-        public String getConstantDescriptions() {
-            return new LayoutFunctions().getConstantDescription();
-        }
-
-        @Override
-        public String getName() {
-            return "getSignalMastAspect";
-        }
-
-        @Override
-        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
-                throws CalculateException, JmriException {
-            if (parameterList.isEmpty()) {
-                throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+                SignalMast sm = InstanceManager.getDefault(SignalMastManager.class).getNamedBean(name);
+                if (sm == null) throw new CalculateException(Bundle.getMessage("LayoutFunctions_GetSignalMastAspect_SignalMastNotFound", name));
+                return sm.getAspect();
             }
-
-            String name = TypeConversionUtil.convertToString(
-                    parameterList.get(0).calculate(symbolTable), false);
-
-            SignalMast sm = InstanceManager.getDefault(SignalMastManager.class).getNamedBean(name);
-            if (sm == null) throw new CalculateException(Bundle.getMessage("LayoutFunctions_GetSignalMastAspect_SignalMastNotFound", name));
-            return sm.getAspect();
-        }
-
-        @Override
-        public String getDescription() {
-            return Bundle.getMessage("LayoutFunctions.getSignalMastAspect_Descr");
-        }
-
+        });
     }
 
+    private void addSetSignalMastAspectFunction(Set<Function> functionClasses) {
+        functionClasses.add(new AbstractFunction(this, "setSignalMastAspect", Bundle.getMessage("LayoutFunctions.setSignalMastAspect_Descr")) {
+            @Override
+            public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                    throws CalculateException, JmriException {
+                if (parameterList.isEmpty()) {
+                    throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 2));
+                }
 
-    public static class SetSignalMastAspectFunction implements Function {
+                String name = TypeConversionUtil.convertToString(
+                        parameterList.get(0).calculate(symbolTable), false);
+                String aspect = TypeConversionUtil.convertToString(
+                        parameterList.get(1).calculate(symbolTable), false);
 
-        @Override
-        public String getModule() {
-            return new LayoutFunctions().getModule();
-        }
-
-        @Override
-        public String getConstantDescriptions() {
-            return new LayoutFunctions().getConstantDescription();
-        }
-
-        @Override
-        public String getName() {
-            return "setSignalMastAspect";
-        }
-
-        @Override
-        public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
-                throws CalculateException, JmriException {
-            if (parameterList.isEmpty()) {
-                throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 2));
+                SignalMast sm = InstanceManager.getDefault(SignalMastManager.class).getNamedBean(name);
+                if (sm == null) throw new CalculateException(Bundle.getMessage("LayoutFunctions_SetSignalMastAspect_SignalMastNotFound", name));
+                sm.setAspect(aspect);
+                return sm.getAspect();
             }
-
-            String name = TypeConversionUtil.convertToString(
-                    parameterList.get(0).calculate(symbolTable), false);
-            String aspect = TypeConversionUtil.convertToString(
-                    parameterList.get(1).calculate(symbolTable), false);
-
-            SignalMast sm = InstanceManager.getDefault(SignalMastManager.class).getNamedBean(name);
-            if (sm == null) throw new CalculateException(Bundle.getMessage("LayoutFunctions_SetSignalMastAspect_SignalMastNotFound", name));
-            sm.setAspect(aspect);
-            return sm.getAspect();
-        }
-
-        @Override
-        public String getDescription() {
-            return Bundle.getMessage("LayoutFunctions.setSignalMastAspect_Descr");
-        }
-
+        });
     }
 
 }

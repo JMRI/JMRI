@@ -270,6 +270,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                     car.getFinalDestinationName(), trackName, _train.getServiceStatus()));
             if (!car.getTrack().isStaging() &&
                     !_train.isServiceAllCarsWithFinalDestinationsEnabled()) {
+                _status = MessageFormat.format(STATUS_NOT_THIS_TRAIN, new Object[]{_train.getName()});
                 return true; // temporary issue with train moves, length, or destination track length
             }
         }

@@ -28,6 +28,9 @@ public class DmiPanelF extends JPanel {
         super();
         setLayout(null); // Set the layout manager to null
 
+        setBackground(DmiPanel.BACKGROUND_COLOUR);
+        setBounds(580, 15, 60, 450);
+
         main = mainPane;
 
         f1 = new JButton(Bundle.getMessage("ButtonMain"));
@@ -76,14 +79,7 @@ public class DmiPanelF extends JPanel {
         f2.setFont(new Font(DmiPanel.FONT_NAME, Font.PLAIN, 17));
         f3.setFont(new Font(DmiPanel.FONT_NAME, Font.PLAIN, 17));
         f4.setFont(new Font(DmiPanel.FONT_NAME, Font.PLAIN, 17));
-        f5.setFont(new Font(DmiPanel.FONT_NAME, Font.PLAIN, 17));
-
-        Icon settingsIcon = ResourceUtil.getImageIcon( "SE_04.bmp");
-        f5.setIcon(settingsIcon);
-        if ( settingsIcon == null ) {
-            f5.setForeground(DmiPanel.GREY);
-            f5.setText("Tools");
-        }
+        f5.setIcon(ResourceUtil.getImageIcon( "SE_04.bmp"));
 
         add(f1);
         add(f2);

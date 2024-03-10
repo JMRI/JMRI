@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<!-- Copyright Dave Sand 2024 -->
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: OpenLCB STL Editor</title>
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="JMRI help Tower LCC structured text editor">
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+    <h1>OpenLCB: RR-CirKits Tower LCC+Q STL Editor</h1>
+
+      <p>The <strong>Tower LCC+Q</strong> node from RR-CirKits has the same I/O capabilities as the
+      original Tower LCC. The logic Conditionals have been replaced by a subset of the PLC
+      (programmable logic controller) language from Siemens.  The Siemens statement line language
+      (STL) is a high performance language with a small memory requirement.</p>
+
+      <p>Here is the logic to set the aspect for a single head mast.</p>
+
+      <pre style="margin-left: 2em">
+CLR // Signal mast B
+= Q0.0
+= Q0.1
+= Q0.2
+O I0.4
+O I0.5
+O I1.1
+= Q0.2
+JC E1
+A Y0.0
+= Q0.1
+JC E1
+SET
+= Q0.0
+E1: CLR // Signal mast C
+etc.
+      </pre>
+
+      <p>The STL logic is based  on item states instead of item change events. LCC events are
+      collected
+      in the input table (I) variables. The logic is processed every 20 ms with the true/false
+      results set in the output table (Q) variables.  At the end of the cycle, the LCC events for
+      <strong><em>changed</em></strong> output variables are sent to the LCC network.</p>
+
+      <p>The <strong>STL Editor</strong> consists of a LCC node selector, five data tabs, a number
+      of toolbar buttons and a <strong>File</strong> menu. The basic mode is to select a LCC node
+      which loads the logic data.  The node selector only shows Tower LCC+Q nodes.  When changes
+      have been made, they can be stored using the <a href="#storeButton">Store button</a>.</p>
+
+      <p>Offline work is supported by exporting and importing the content using a CSV file set. This
+      is a set of five files stored in a selected directory in the user files location.  Each
+      Tower LCC+Q node will need its own directory.</p>
+
+      <p>The online and offline modes can be used together.  For example, select the node which
+      loads the data.  After making changes, export to CSV for a backup.  Then do a store and
+      compile.  Later some offline changes are made and exported.  To get them back to the node,
+      select the node which loads the old data.  Do the import to overwrite the old data and then do
+      the store and compile.</p>
+
+      <p>The <strong>STL Editor</strong> has been added to the OpenLCB/LCC menu.</p>
+
+       <div style="margin-left: 2em">
+        <a href="images/lcc_menu.png"><img src=
+        "images/lcc_menu.png" alt="stl openLCB/lcc menu"></a>
+      </div>
+
+      <h3>Node Selector</h3>
+
+      <p>The node selector lists the available Tower LCC+Q boards.  Other LCC nodes are not shown.
+      When a node is selected, the logic content will be loaded.  If this is the first time the node
+      has been selected during the PanelPro session, the load takes a long time.  A dialog is shown
+      while the load process is working.</p>
+
+       <div style="margin-left: 2em">
+        <a href="images/cdi_loading.png"><img src=
+        "images/cdi_loading.png" alt="stl cdi loading"></a>
+      </div>
+
+      <p>When the load finishes, the dialog will close.  If the node had been previously loaded,
+      such as doing CDI configuration, the load is very fast and the dialog is not shown.</p>
+
+      <h3>STL Editor</h3>
+      <p>The STL Editor provides an alternative method for editing the STL code.  It translates the
+      code into a table that has 4 columns.  The <strong>Label</strong> column has the jump labels.
+      These are one to four character words and a colon (:).  The <strong>Operator</strong>
+      column contains a drop down with all of the PLC operators.  The <strong>Name</strong> column
+      contains names.  This will have the user friendly name if one was defined in the IQYZ (input,
+      output, receiver, transmitter) tables. Other "names" include labels for jump operators, timer
+      definitions, Mn.n memory variables, etc. The <strong>Comment</strong> column is for comments.
+      Note:  Comments take up a lot of room.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/editor_tab.png"><img src=
+        "images/editor_tab.png" alt="stl editor tab"></a>
+      </div>
+
+      <p>The program code is stored in the node. There are 16 logic groups.  Each group has a 255
+      byte space. The percent button is used to calculate the current space utilization.</p>
+
+      <p>The Label data is validated to make sure that it has the proper format.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/label_format_error.png"><img src=
+        "images/label_format_error.png" alt="stl label error"></a>
+      </div>
+
+      <h3>Logic Inputs (I)</h3>
+
+      <p>The Logic Inputs table has 128 entries.  They are numbered from 0.0 to 15.7 (16x8).  If
+      names have been assigned to the rows, then the editor will translate between the
+      <strong>In.n</strong> variable name and the user friendly name.  Each row has two event ids.
+      The first one is the event that the logic treats as true and the second for the event that is
+      treated as false.  The user has to decide what is true and what is false.  In the image,
+      thrown turnouts and active sensors are true.  From a logic point of view, think of "is it
+      thrown?" and "is it occupied?".</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/input_tab.png"><img src=
+        "images/input_tab.png" alt="stl input tab"></a>
+      </div>
+
+      <p>The event id format is validated for the IQYZ tables.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/event_format_error.png"><img src=
+        "images/event_format_error.png" alt="stl event error"></a>
+      </div>
+
+      <h3>Logic Outputs (Q)</h3>
+
+      <p>The Logic Output table has 128 entries.  They are numbered from 0.0 to 15.7 (16x8).  If
+      names have been assigned to the rows, then the editor will translate between the
+      <strong>Qn.n</strong> variable name and the user friendly name.  Each row has two event ids.
+      The first one is the event that the will be sent when the variable has changed to true and the
+      second for the event that will be sent when the variable has changed to false. The output
+      events are only sent when the variable state changes between true and false.</p>
+
+      <p>In this image, the output events are signal aspects.  The aspect will be sent when the
+      variable changes to true. The sample PLC code at the beginning of this page shows 3 aspects
+      being set to false.  The subsequent logic will set one of them true. The net result is that
+      <strong><em>at most</em></strong> one aspect will change from true to false and one will
+      change from false to true.  Most of the time, one variable will be set to false and then back
+      to true.  Only an occupancy change, turnout change or destination mast change (link speed)
+      will result in two variables changing. The aspect false events use a zeros event with the
+      aspect id in the last two bytes.</p>
+
+       <div style="margin-left: 2em">
+        <a href="images/output_tab.png"><img src=
+        "images/output_tab.png" alt="stl output tab"></a>
+      </div>
+
+      <h3>Track Receivers (Y)</h3>
+
+      <p>The Track Receivers table has 16 entries. The Signal LCC <strong>Rule to Aspect</strong> has
+      a <strong>Link Address</strong> for each mast, such as 02.01.57.10.01.6B.01.80. The link
+      address is a node specific value and cannot be changed. The link address has to be copied and
+      pasted from the Signal LCC.</p>
+
+      <p>In the Signal LCC, each mast <strong>Rule</strong> is assigned a track speed value.  The
+      default is Stop (0).  These values translate to a number from 0 through 7.  This number
+      replaces the last digit of the link address when the aspect changes.</p>
+
+      <p>The actual receiver variable names consist of the row number and the speed number, such as
+      <strong>Y0.7</strong>.  That is the "Clear" speed for the first circuit.  For the STL Editor,
+      the <strong>Yn.n</strong> names are converted to the friendly name with a tilde and the speed
+      number, such as <em>Right-EB-Circuit~7</em>.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/receivers_tab.png"><img src=
+        "images/receivers_tab.png" alt="stl receivers tab"></a>
+      </div>
+
+      <h3>Track Transmitters (Z)</h3>
+
+      <p>The Track Transmitters table has 16 entries.  Each entry will contain the link event id.
+      The link event ids are node specific and cannot be changed.</p>
+
+      <p>Each Track Transmitter maps to 8 aspect/speed settings.  These are 0 through 7.  This
+      results in <strong>Zn.n</strong> variable names.  To represent this as a user friendly name,
+      the STL editor name is <strong>name~n</strong>.  The tilde character is the separator
+      between the row name and the aspect/speed number.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/transmitters_tab.png"><img src=
+        "images/transmitters_tab.png" alt="stl transmitters tab"></a>
+      </div>
+
+      <h3>Tool Bar Buttons</h3>
+
+      <h4>File Buttons</h4>
+
+      <dl>
+        <dt>Import</dt>
+        <dd>
+          <p>Import a CSV file set from a directory in the user files location. If the current data
+          has changed, a warning dialog will request confirmation to revert the data.</p>
+
+          <div style="margin-left: 2em">
+            <a href="images/select_import_directory.png"><img src=
+            "images/select_import_directory.png" alt="stl select import directory"></a>
+          </div>
+
+          <p>Select the directory and click on <strong>Select</strong>.  Double clicking on the
+          folder opens folder instead of selecting it.</p>
+        </dd>
+
+        <dt>Export</dt>
+        <dd>
+          <p>Export a CSV file set to a directory in the user files location.</p>
+
+          <div style="margin-left: 2em">
+            <a href="images/select_export_directory.png"><img src=
+            "images/select_export_directory.png" alt="stl select export directory"></a>
+          </div>
+
+          <p>Select the directory and click on <strong>Save</strong>.  Double clicking on the folder
+          opens folder instead of selecting it.</p>
+
+          <p>If a new folder is created, it is necessary to back up one level and re-select the new
+          folder.</p>
+        </dd>
+
+        <dt>Refresh</dt>
+        <dd>
+          <p>Reload the current data from the current node. If the current data has changed, a
+          warning dialog will request confirmation to revert the data.</p>
+        </dd>
+
+        <dt id="storeButton">Store</dt>
+        <dd>
+          <p>Update the data on the current node.  The current editor table content is converted to
+          the PLC format using an encoding process.  If the resulting PLC code is greater than 255
+          bytes, the encoding error dialog is shown (See the percent button).  Only changed data is
+          stored.  The store complete dialog will be displayed when done.</p>
+
+          <div style="margin-left: 2em">
+            <a href="images/store_done.png"><img src=
+            "images/store_done.png" alt="stl store done"></a>
+          </div>
+
+          <p>If there are changes that require compiling the STL logic, another dialog will be displayed.</p>
+
+          <div style="margin-left: 2em">
+            <a href="images/compile_required.png"><img src=
+            "images/compile_required.png" alt="stl compile required"></a>
+          </div>
+
+          <p>If <strong>Use the CDI Configuration dialog to do the reboot</strong> is selected, use
+          <strong>Configure Nodes &rArr; Open Configuration dialog</strong> to reboot the node.  The
+          reboot invokes the PLC compiler. The <strong>Syntax Messsage</strong> segment has to be
+          checked for compile errors.  Click on the Refresh button for <strong>Message 1</strong>.
+          If it shows "<em>Success, no syntax errors found</em>" then the compile was good.  If it
+          has an error, also check the other messages.</p>
+
+          <p>If <strong>Have the STL Editor do the reboot</strong> is selected, the node will be
+          rebooted.  When the reboot and compile finish, the first syntax message will be displayed.
+          Here is a good result.</p>
+
+          <div style="margin-left: 2em">
+            <a href="images/compile_good.png"><img src=
+            "images/compile_good.png" alt="stl compile good"></a>
+          </div>
+
+          <p>Here is a result with an error.</p>
+
+          <div style="margin-left: 2em">
+            <a href="images/compile_error.png"><img src=
+            "images/compile_error.png" alt="stl compile error"></a>
+          </div>
+
+          <p>If it shows "<em>Success, no syntax errors found</em>" then the compile was good.  If
+          it has an error, also check the other messages using the CDI configuration dialog.</p>
+        </dd>
+      </dl>
+
+      <p>The Import, Refresh, node selection and backup imports check for unsaved changes. A
+      confirmation dialog is displayed if necessary.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/revert_warning.png"><img src=
+        "images/revert_warning.png" alt="stl revert warning"></a>
+      </div>
+
+      <h4>Editor Buttons</h4>
+
+      <dl>
+        <dt>Add</dt>
+        <dd>Add a blank row to the end of the list.</dd>
+
+        <dt>Insert</dt>
+        <dd>Add a blank row <strong>above</strong> the selected row.</dd>
+
+        <dt>Move Up</dt>
+        <dd>Move the selected row up.</dd>
+
+        <dt>Move Down</dt>
+        <dd>Move the selected row down.</dd>
+
+        <dt>Delete</dt>
+        <dd>Delete the selected row.</dd>
+
+        <dt>Percent</dt>
+        <dd>Do the PLC encode process and calculate the utilization.  If the resulting code is more
+        that 255 bytes, a dialog is displayed.  It shows the data that would be truncated during a
+        store.
+        <div style="margin-left: 2em">
+          <a href="images/encode_overflow.png"><img src=
+          "images/encode_overflow.png" alt="stl encode overflow"></a>
+        </div>
+        </dd>
+      </dl>
+
+      <h3>File Menu</h3>
+
+      <p>The File menu has menu items that are the same as the tool bar file buttons.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/file_menu.png"><img src=
+        "images/file_menu.png" alt="stl file menu"></a>
+      </div>
+
+      <p>The file menu also has a <strong>Load a CDI Backup file</strong> item.  This extracts the
+      STL data from a CDI backup file.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/load_backup.png"><img src=
+        "images/load_backup.png" alt="stl load backup"></a>
+      </div>
+
+
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
+    </div>
+  </div>
+  <!-- close #mBody -->
+  <script src="/js/help.js"></script>
+</body>
+</html>

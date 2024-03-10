@@ -48,11 +48,11 @@ public class DccSignalMast extends AbstractSignalMast {
 
     public DccSignalMast(String sys, String user, String mastSubType) {
         super(sys, user);
-        mastType = mastSubType;
+        theMastType = mastSubType;
         configureFromName(sys);
     }
 
-    private String mastType = "F$dsm";
+    private String theMastType = "F$dsm";
     private boolean useAddressOffSet = false;
 
     protected void configureFromName(String systemName) {
@@ -62,8 +62,8 @@ public class DccSignalMast extends AbstractSignalMast {
             log.error("SignalMast system name needs at least three parts: {}", systemName);
             throw new IllegalArgumentException("System name needs at least three parts: " + systemName);
         }
-        if (!parts[0].endsWith(mastType)) {
-            log.warn("First part of SignalMast system name is incorrect {} : {}", systemName, mastType);
+        if (!parts[0].endsWith(theMastType)) {
+            log.warn("First part of SignalMast system name is incorrect {} : {}", systemName, theMastType);
         } else {
             String commandStationPrefix = parts[0].substring(0, parts[0].indexOf("$") - 1);
             java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);

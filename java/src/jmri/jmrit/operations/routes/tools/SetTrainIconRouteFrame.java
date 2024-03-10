@@ -253,7 +253,7 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
         // disable or enable previous and next buttons
         previousButton.setEnabled(_routeIndex != 0);
         nextButton.setEnabled(_routeIndex != _routeList.size() - 1);
-        
+
         setTrainIconNameAndColor();
     }
 

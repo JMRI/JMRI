@@ -58,7 +58,7 @@ public class TcpServer {
     
     public TcpServer(BiDiBSystemConnectionMemo memo) {
         this.memo = memo;
-        log.debug("BiDiB TcpServer started for {}", memo.getUserName());
+        log.debug("BiDiB TcpServer created for {}", memo.getUserName());
     }
 
 //    public void setStateListner(ServerListner l) {
@@ -97,6 +97,7 @@ public class TcpServer {
     public void saveSettings() {
         // we can't use the store capabilities of java.util.Properties, as
         // they are not present in Java 1.1.8
+        // TODO: Use preferences like some other code do. But more important: Provide a GUI !
         String settingsFileName = FileUtil.getUserFilesPath() + SETTINGS_FILE_NAME;
         log.debug("TcpServer: saving settings file {}", settingsFileName);
 

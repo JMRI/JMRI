@@ -345,7 +345,7 @@ public class Sound {
 
     public class StreamingSound implements Runnable {
 
-        private final URL url;
+        private final URL localUrl;
         private AudioInputStream stream = null;
         private AudioFormat format = null;
         private SourceDataLine line = null;
@@ -372,7 +372,7 @@ public class Sound {
          * @param count the number of times to loop
          */
         public StreamingSound(URL url, int count) {
-            this.url = url;
+            this.localUrl = url;
             this.count = count;
         }
 
@@ -384,7 +384,7 @@ public class Sound {
             // Set up the audio input stream from the sound file
             try {
                 // link an audio stream to the sampled sound's file
-                stream = AudioSystem.getAudioInputStream(url);
+                stream = AudioSystem.getAudioInputStream(localUrl);
                 format = stream.getFormat();
                 log.debug("Audio format: {}", format);
                 // convert ULAW/ALAW formats to PCM format
@@ -464,7 +464,7 @@ public class Sound {
                     } else {
                         stream.close();
                         try {
-                            stream = AudioSystem.getAudioInputStream(url);
+                            stream = AudioSystem.getAudioInputStream(localUrl);
                         } catch (UnsupportedAudioFileException e) {
                             log.error("AudioFileException {}", e.getMessage());
                             closeLine();

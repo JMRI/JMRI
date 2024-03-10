@@ -71,7 +71,7 @@ public class SignalEditFrame extends JmriJFrame {
 
     private boolean _newSignal;
 
-    @SuppressWarnings("OverridableMethodCallInConstructor")
+//    @SuppressWarnings("OverridableMethodCallInConstructor")
     public SignalEditFrame(@Nonnull String title,
                            @CheckForNull NamedBean signal,
                            @CheckForNull SignalTableModel.SignalRow sr,

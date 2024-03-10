@@ -301,6 +301,38 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h4>Enable/Disable LogixNG<span class="since">since 5.7.5</span></h4>
+
+      <p>A LogixNG has to be both <strong>enabled</strong> and <strong>activated</strong> before it
+      will execute.</p>
+
+      <p><strong>Enable/Disable</strong> are intended to be persistent changes.
+      <strong>Activate/Deactivate</strong> are temporary changes.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/action_item_enable_disable_logixng.png"><img class="image-border"
+        src="images/chapter5/action_item_enable_disable_logixng.png"
+        alt="Chapter 5 enable disable logixng"></a>
+      </div>
+
+      <ul>
+        <li><strong>Enable:</strong> Enable the selected LogixNG. The setting will be retained when
+        a tables and panels store occurs.</li>
+
+        <li><strong>Disable:</strong> Disable the selected LogixNG. The setting will be retained when a
+        tables and panels store occurs.</li>
+
+        <li><strong>Activate:</strong> Activate the selected LogixNG. The change only persists during
+        the PanelPro session.</li>
+
+        <li><strong>Deactivate:</strong> Deactivate the selected LogixNG. The change only persists
+        during the PanelPro session.</li>
+
+      </ul>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+
       <h4 id="EntryExitActions">Entry/Exit</h4>
 
       <p>Manage an Entry/Exit pair.  The last three items are implemented in JMRI 5.5.7.</p>
@@ -403,8 +435,15 @@
         <li><strong>Null:</strong> Select the <strong>Null</strong> tab to set the selected local
         variable to the null value.</li>
 
-        <li><strong>Constant:</strong> Select the <strong>Constant</strong> tab and enter a string
-        value for the selected local variable.</li>
+        <li><strong>Constant:</strong> Select the <strong>Constant</strong> tab, select the value <strong>Type</strong>
+        and enter a value for the selected local variable.
+          <ul>
+            <li>String</li>
+            <li>Integer</li>
+            <li>Floating number</li>
+            <li>Boolean (True/False)</li>
+          </ul>
+        </li>
 
         <li><strong>Memory:</strong> Select the <strong>Memory</strong> tab and select the memory
         which will provide the value for the selected local variable.</li>
@@ -498,6 +537,22 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h4>Program On Main<span class="since">since 5.7.3</span></h4>
+
+      <p>The Program on Main action provides the ability to change CV settings.  This is similar to
+      the <strong>Single CV Programmer</strong>.
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/prog_on_main.png"><img class="image-border" src=
+        "images/chapter5/prog_on_main.png" alt="Chapter 5 program on main"></a>
+      </div>
+
+      <p>The roster is not used or updated.</p>
+
+      <p>A local variable can be assigned which will contain the results of the operation.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h4>Reporter</h4>
 
       <p>The Reporter action is used to copy the report content to a memory variable or a LogixNG
@@ -525,9 +580,53 @@
       or all connections.  The action depends on whether the connection supports sensor state
       requests.</p>
 
+      <p>As of JMRI 5.7.5, supported connection types include :</p>
+      <ul>
+      <li>BiDiB</li>
+      <li>CBUS</li>
+      <li>C/MRI</li>
+      <li>IPOCS</li>
+      <li>Lenz XpressNet</li>
+      <li>LocoNet</li>
+      <li>OpenLCB</li>
+      <li>Roco Z21 CAN</li>
+      <li>XBee</li>
+      </ul>
+
+      <p>For connections that send individual Sensor status requests,
+      the delay between individual requests uses the connection Output Interval
+      within Additional Connection Settings.</p>
+
+      <p>Some hardware types, eg. Acela and NCE,
+      are constantly polled so this action may have little consequence.</p>
+
       <div style="margin-left: 2em;">
         <a href="images/chapter5/request_sensor_update.png">
         <img src="images/chapter5/request_sensor_update.png" alt="Chapter 5 request sensor update"></a>
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Request update of sensor<span class="since">since 5.7.4</span></h4>
+
+      <p>Request the current status of a specific sensor.  The action depends on whether the
+      connection supports sensor state requests.</p>
+
+      <p>As of JMRI 5.7.5, supported connection types include :</p>
+      <ul>
+      <li>BiDiB</li>
+      <li>CBUS</li>
+      <li>C/MRI</li>
+      <li>IPOCS</li>
+      <li>Lenz XpressNet</li>
+      <li>OpenLCB</li>
+      <li>Roco Z21 CAN</li>
+      <li>XBee</li>
+      </ul>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/request_sensor_state.png">
+        <img src="images/chapter5/request_sensor_state.png" alt="Chapter 5 request sensor state"></a>
       </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -575,6 +674,21 @@
 
         <li><strong>Inconsistent:</strong> Set the selected sensor state to inconsistent.</li>
       </ul>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Set reporter<span class="since">since 5.7.5</span></h4>
+
+      <p>Set a value for the selected Reporter.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/action_item_set_reporter.png">
+        <img src="images/chapter5/action_item_set_reporter.png"
+        alt="Chapter 5 set reporter"></a>
+      </div>
+
+      <p>The <strong>Set reporter as an IdTag</strong> option is used to  provide the report as an
+      IdTag if it's not an IdTag already.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -633,6 +747,20 @@
       field provided. Click the file selection button to bring up a file selection dialog to aid in
       finding the file. Navigate to your sound file, then click your sound file's name in the
       dialog and the name will be copied to the field.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Table<span class="since">since 5.7.4</span></h4>
+
+      <p>Replace the content of the specified table cell.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/table_action.png">
+        <img src="images/chapter5/table_action.png" alt="Chapter 5 table action"></a>
+      </div>
+
+      <p class="noted">Note: Since tables are created from CSV files during PanelPro startup, the content
+      changes are temporary.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -1061,6 +1189,8 @@
         is executed, regardless of whether the expression has changed value.</dd>
       </dl>
 
+      <p class="noted">The default execution setting can be change using
+      <strong>Preferences &rArr; LogixNG</strong>.</p>
 
       <p><u>How is the If expression evaluated</u><span class="since">since 5.1.6</span></p>
 
@@ -1287,6 +1417,21 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h4>Window to front<span class="since">since 5.7.4</span></h4>
+
+      <p>The selected window will be moved in front of the other windows.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/window_to_front.png"><img src=
+        "images/chapter5/window_to_front.png" alt="Chapter 5 window to front action"></a>
+      </div>
+
+      <p>A simple implementation of this can done using the LogixNG icon with an inline LogixNG.
+      See <a href="../../../../package/jmri/jmrit/logixng/InlineLogixNG.shtml">
+      Inline LogixNG and LogixNG icon</a>.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h2 id="digital_action_mqtt">Digital action :: MQTT <span class="since">since 4.99.7</span></h2>
 
       <div style="margin-left: 2em;">
@@ -1360,6 +1505,61 @@
       <h4>Create beans from table<span class="since">since 5.1.6</span></h4>
 
       <p>See <a href="chapter11.shtml#TableActions">Chapter 11 - Table Actions</a> for details.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Decode JSON<span class="since">since 5.7.4</span></h4>
+
+      <p>A JSON string in the first variable is decoded as a JsonNode tree and placed in the second
+      variable.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/decode_json.png">
+        <img src="images/chapter5/decode_json.png"
+        alt="Chapter 5 decode json"></a>
+      </div>
+
+      <p>The decoding process translates the JSON string into a nested set of LogixNG
+      <strong>Maps</strong> and <strong>Arrays</strong>.  Use a LogixNG formula to access a particular
+      node.</p>
+
+      <p>Here is a sample JSON structure.</p>
+
+<pre style="border: 2px solid #778899; margin: 1em; padding: 0.1em;">
+{"menu": {
+  "id": "file",
+  "value": "File",
+  "popup": {
+    "menuitem": [
+      {"value": "New", "onclick": "CreateNewDoc()"},
+      {"value": "Open", "onclick": "OpenDoc()"},
+      {"value": "Close", "onclick": "CloseDoc()"}
+    ]
+  }
+}}
+</pre>
+
+      <p>Here is a LogixNG that gets the second menuitem value and prints it to the JMRI system
+      console.  In this example, <strong>node value = Open</strong> is printed </p>
+
+<pre style="border: 2px solid #778899; margin: 1em; padding: 0.1em;">
+       1:  LogixNG: test read
+       2:      ConditionalNG: IQC:AUTO:0002
+       3:          ! A
+       4:              Many
+       5:                 ::: Local variable "node", init to String ""
+       6:                  ! A1
+       7:                      Set variable node to the result of formula "str(jsondecoded{"menu"}{"popup"}{"menuitem"}[1]{"value"})"
+       8:                  ! A2
+       9:                      Log data: String.format: node value = %s
+</pre>
+
+      <p><strong>jsondecoded</strong> is the global variable that has the result of the Decode JSON
+      action.  The items in the JSON tree are delimited by braces.  The JSON list rows are referenced
+      by row number in brackets.  Note:  The first row is zero.  In this example, all of the node
+      values are strings, so the formula is enclosed with a str() command.  Node values can also be
+      other data types such as integer and float.  LogixNG has int() and float() commands to handle
+      those data types.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 

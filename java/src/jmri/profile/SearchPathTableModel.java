@@ -18,7 +18,7 @@ class SearchPathTableModel extends AbstractTableModel implements PropertyChangeL
 
     private static final Logger log = LoggerFactory.getLogger(SearchPathTableModel.class);
 
-    @SuppressWarnings("LeakingThisInConstructor")
+//    @SuppressWarnings("LeakingThisInConstructor")
     public SearchPathTableModel() {
         ProfileManager.getDefault().addPropertyChangeListener(this);
     }

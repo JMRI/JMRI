@@ -238,16 +238,16 @@ public class ProgramOnMain extends AbstractDigitalAction
     public String getLongDescription(Locale locale) {
         if (_memo != null) {
             return Bundle.getMessage(locale, "ProgramOnMain_LongConnection",
-                    _selectAddress.getDescription(locale),
-                    _selectCV.getDescription(locale),
-                    _selectValue.getDescription(locale),
+                    _selectAddress.getDescription(locale, false),
+                    _selectCV.getDescription(locale, false),
+                    _selectValue.getDescription(locale, false),
                     _selectProgrammingMode.getDescription(locale),
                     _memo.getUserName());
         } else {
             return Bundle.getMessage(locale, "ProgramOnMain_Long",
-                    _selectAddress.getDescription(locale),
-                    _selectCV.getDescription(locale),
-                    _selectValue.getDescription(locale),
+                    _selectAddress.getDescription(locale, false),
+                    _selectCV.getDescription(locale, false),
+                    _selectValue.getDescription(locale, false),
                     _selectProgrammingMode.getDescription(locale));
         }
     }

@@ -1857,6 +1857,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         rampRateBox.addItem(Bundle.getMessage("RAMP_MEDIUM"));
         rampRateBox.addItem(Bundle.getMessage("RAMP_MED_SLOW"));
         rampRateBox.addItem(Bundle.getMessage("RAMP_SLOW"));
+        rampRateBox.addItem(Bundle.getMessage("RAMP_SPEEDPROFILE"));
         // Note: the order above must correspond to the numbers in AutoActiveTrain.java
     }
 

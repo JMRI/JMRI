@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>5.7.3-SNAPSHOT</version>
+    <version>5.7.5-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -25,8 +25,8 @@
         <jackson-core.version>2.13.4</jackson-core.version>
         <jackson-databind.version>2.13.4.2</jackson-databind.version>
         <jackson-annotations.version>2.13.4</jackson-annotations.version>
-        <jogamp.version>2.3.2</jogamp.version>
-        <openlcb.version>0.7.33</openlcb.version>
+        <jogamp.version>2.5.0</jogamp.version>
+        <openlcb.version>0.7.35</openlcb.version>
         <netbeans.version>RELEASE150</netbeans.version>
         <jacoco.version>0.8.11</jacoco.version>
         <jacoco.reportDir>${basedir}/target/</jacoco.reportDir>
@@ -1492,11 +1492,14 @@
                     <artifactId>xml-apis</artifactId>
                 </exclusion>
             </exclusions>
-            <!-- the next two lines force use of the local lib/openlcb.jar file -->
+            <!-- The next two lines force use of the local lib/openlcb.jar file. -->
+            <!-- This is needed when we're using a custom openlcb.jar file -->
+            <!-- not yet available on a maven repository. -->
 <!-- 
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/openlcb.jar</systemPath>
  -->
+
         </dependency>
         <dependency>
             <groupId>org.usb4java</groupId>
@@ -1690,26 +1693,26 @@
             </exclusions>
         </dependency>
 		<!-- //BiDiB client library -->
-		<!-- jbidibc 2.0.16 -->
+		<!-- jbidibc 2.0.18 -->
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>jbidibc-core</artifactId>
-            <version>2.0.16</version>
+            <version>2.0.18</version>
         </dependency>
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>jbidibc-serial</artifactId>
-            <version>2.0.16</version>
+            <version>2.0.18</version>
         </dependency>
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>jbidibc-simulation</artifactId>
-            <version>2.0.16</version>
+            <version>2.0.18</version>
         </dependency>
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>jbidibc-purejavacomm</artifactId>
-            <version>2.0.16</version>
+            <version>2.0.18</version>
             <exclusions>
 				<!-- don't use special purejavacomm mentioned in jbidibc-purejavacomm -->
                 <exclusion>
@@ -1721,28 +1724,28 @@
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>jbidibc-messages</artifactId>
-            <version>2.0.16</version>
+            <version>2.0.18</version>
         </dependency>
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>jbidibc-net-serial-over-tcp</artifactId>
-            <version>2.0.16</version>
+            <version>2.0.18</version>
         </dependency>
-		<!-- BiDiB Wizard Simulation 2.0.16 -->
+		<!-- BiDiB Wizard Simulation 2.0.18 -->
        <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>bidibwizard-common</artifactId>
-            <version>2.0.16</version>
+            <version>2.0.18</version>
         </dependency>
        <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>bidibwizard-model</artifactId>
-            <version>2.0.16</version>
+            <version>2.0.18</version>
         </dependency>
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
             <artifactId>bidibwizard-simulation</artifactId>
-            <version>2.0.16</version>
+            <version>2.0.18</version>
         </dependency>
         <!--  dependencies from jbidibc and bidibwizard -->
         <dependency>
@@ -1802,6 +1805,12 @@
         <repository>
             <id>mvnrepository.com</id>
             <url>https://repo1.maven.org/maven2/</url>
+        </repository>
+        <repository>
+            <id>jogamp-remote</id>
+            <name>jogamp test mirror</name>
+            <url>https://www.jogamp.org/deployment/maven/</url>
+            <layout>default</layout>
         </repository>
         <!--
         Local "repository" hosting libraries not available through maven.org

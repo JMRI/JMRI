@@ -46,6 +46,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Image types</revremark>
     </revision>
+    <revision>
+        <revnumber>5</revnumber>
+        <date>2024-02-22</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Small icons</revremark>
+    </revision>    
   </revhistory>
 
   <aspects>
@@ -220,10 +226,11 @@
 	<imagetype type="uzávěry"/>
 	<imagetype type="vyčkávací"/>
 
-        <imagetype type="AŽD b"/>
+	<imagetype type="AŽD b"/>
 
-        <imagetype type="ESP b"/>
+	<imagetype type="ESP b"/>
 
+	<imagetype type="malé"/>
   </imagetypes>
 
   <appearancefiles>

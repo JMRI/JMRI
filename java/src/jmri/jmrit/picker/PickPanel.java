@@ -32,7 +32,7 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
 
     private int ROW_HEIGHT;
 
-    @SuppressWarnings("raw")
+//    @SuppressWarnings("raw")
     List<PickListModel<NamedBean>> _models;
 
     JTabbedPane _tabPane;

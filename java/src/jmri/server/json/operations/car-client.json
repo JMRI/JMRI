@@ -115,6 +115,13 @@
             ],
             "description": "null to remove car from its train"
         },
+        "trainName": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "name of train car is assigned to, null if not assigned"
+        },
         "destination": {
             "type": [
                 "object",
@@ -135,6 +142,17 @@
                 "null"
             ],
             "description": "The location to return the car to when empty or null"
+        },
+        "returnWhenLoaded": {
+            "type": [
+                "object",
+                "null"
+            ],
+            "description": "The location to return the car to when loaded or null"
+        },
+        "division": {
+            "type":"string",
+            "description": "division name for the car"
         },
         "status": {
             "type": "string",
