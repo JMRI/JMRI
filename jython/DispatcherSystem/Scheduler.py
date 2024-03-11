@@ -957,6 +957,13 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         # show dispatcher system form
         CreateAndShowGUI4(self)
 
+    def get_train_list(self):
+        TrainManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
+        train_list = TrainManager.getTrainsByTimeList()
+        return train_list
+
+
+
 
 
 from java.util.concurrent import TimeUnit
