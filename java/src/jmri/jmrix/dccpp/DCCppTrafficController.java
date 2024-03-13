@@ -24,22 +24,24 @@ import org.slf4j.LoggerFactory;
 public abstract class DCCppTrafficController extends AbstractMRTrafficController implements DCCppInterface {
     
     public int startUpDelay = 1500; //in ms, will be overridden by config option
-    public boolean anyReceived = false;  //will be turned on as soon as any incoming traffic seen
+    public volatile boolean anyReceived = false;  //will be turned on as soon as any incoming traffic seen
     
     @Override
     protected void transmitLoop() {
         int totalDelay = 0;
         int loopDelay = 100;
-        log.debug("Don't start sending for up to {}ms to avoid Arduino restart", startUpDelay);
+        log.debug("Transmit loop paused for up to {}ms to avoid Arduino restart", startUpDelay);
         while (!anyReceived && (totalDelay <= startUpDelay)) {
             try {
                 Thread.sleep(loopDelay);
             } catch (InterruptedException ignore) {
+                log.debug("Transmit loop pause interrupted");
                 Thread.currentThread().interrupt();
+                break; // Breaks the while loop
             }
             totalDelay += loopDelay;
         }
-        log.debug("Starting send from queue after {}ms", totalDelay);
+        log.debug("Transmit loop resumed after {}ms", totalDelay);
         super.transmitLoop();
     }
 
