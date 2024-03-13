@@ -45,23 +45,23 @@ class CreateAndShowGUI4(TableModelListener):
         self.buttonPane.add(button_add);
         self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
 
-        button_populate = JButton("Populate", actionPerformed = self.populate_action)
-        self.buttonPane.add(button_populate);
-        self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
+        # button_populate = JButton("Populate", actionPerformed = self.populate_action)
+        # self.buttonPane.add(button_populate);
+        # self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
 
-        button_tidy = JButton("Tidy", actionPerformed = self.tidy_action)
-        self.buttonPane.add(button_tidy);
-        self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
-
-        button_apply = JButton("Save", actionPerformed = self.save_action)
-        self.buttonPane.add(button_apply)
-        self.buttonPane.add(Box.createHorizontalGlue());
+        # button_tidy = JButton("Tidy", actionPerformed = self.tidy_action)
+        # self.buttonPane.add(button_tidy);
+        # self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
+        #
+        # button_apply = JButton("Save", actionPerformed = self.save_action)
+        # self.buttonPane.add(button_apply)
+        # self.buttonPane.add(Box.createHorizontalGlue());
 
         button_close = JButton("Close", actionPerformed = self.close_action)
         self.buttonPane.add(button_close)
         self.buttonPane.add(Box.createHorizontalGlue());
 
-        button_task = JButton("Repeat?", actionPerformed = self.task_action)
+        button_task = JButton("Repeat", actionPerformed = self.task_action)
         self.buttonPane.add(button_task)
         self.buttonPane.add(Box.createHorizontalGlue());
 
@@ -132,7 +132,7 @@ class CreateAndShowGUI4(TableModelListener):
         pass
     def self_table(self):
 
-        #table.setPreferredScrollableViewportSize(Dimension(500, 70));
+        self.table.setPreferredScrollableViewportSize(Dimension(700, 300));
         #table.setFillsViewportHeight(True)
         #self.table.getModel().addtableModelListener(self)
         self.table.setFillsViewportHeight(True);
@@ -142,9 +142,11 @@ class CreateAndShowGUI4(TableModelListener):
         columnModel = self.table.getColumnModel();
 
         [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, delete_col] = [0, 1, 2, 3, 4, 5]
-        columnModel.getColumn(route_col).setPreferredWidth(200);
-        columnModel.getColumn(repeat_col).setPreferredWidth(150);
+        columnModel.getColumn(route_col).setPreferredWidth(300);
+        columnModel.getColumn(repeat_col).setPreferredWidth(210);
+        columnModel.getColumn(dont_schedule_col).setPreferredWidth(150);
         columnModel.getColumn(train_name_col).setPreferredWidth(100);
+        columnModel.getColumn(delete_col).setPreferredWidth(130);
 
         # first column is the trains
         # self.trainColumn = self.table.getColumnModel().getColumn(time_col);
@@ -588,7 +590,7 @@ class MyModelListener4(TableModelListener):
             class_CreateAndShowGUI4.completeTablePanel()
             pass
 
-        # class_CreateAndShowGUI4.save()    # save everything when the table is chabged
+        class_CreateAndShowGUI4.save()    # save everything when the table is chabged
         
     def delete_row(self, row):
         self.model.data.pop(row)
@@ -618,7 +620,7 @@ class ComboBoxCellRenderer4 (TableCellRenderer):
 
 class MyTableModel4 (DefaultTableModel):
 
-    columnNames = ["Time", "Route", "Repeat?", "Don't Schedule", "Train Name", "Delete Row"]
+    columnNames = ["Time", "Route", "Repeat", "Don't Schedule", "Train Name", "Delete Row"]
 
     def __init__(self):
         l1 = ["", "", False, "stop at end of route", 10, 0]

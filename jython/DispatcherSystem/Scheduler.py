@@ -1328,13 +1328,13 @@ class TimeListener(java.beans.PropertyChangeListener):
                 # print "hour - 1" , hour-1, "%2", (hour-1) % 2
                 # print "hour" , hour, "%2", (hour) % 2
                 # print "int(train.getDepartureTimeHour()) % 2", int(train.getDepartureTimeHour()) % 2
-                if (minutes-1 < (int(train.getDepartTimeMinutes()) % 60) <= minutes):
-                    # print "minutes OK"
-                    # print "hour - 1" , hour-1, "%2", (hour-1) % 2
-                    # print "hour" , hour, "%2", (hour) % 2
-                    # print "int(train.getDepartureTimeHour()) % 2", int(train.getDepartureTimeHour()) % 2
-                    if ((hour-1) % 2 <  int(train.getDepartureTimeHour()) % 2 <= hour % 2):
-                        # print "hours ok"
+                # if (minutes-1 < (int(train.getDepartTimeMinutes()) % 60) <= minutes):
+                #     # print "minutes OK"
+                #     # print "hour - 1" , hour-1, "%2", (hour-1) % 2
+                #     # print "hour" , hour, "%2", (hour) % 2
+                #     # print "int(train.getDepartureTimeHour()) % 2", int(train.getDepartureTimeHour()) % 2
+                #     if ((hour-1) % 2 <  int(train.getDepartureTimeHour()) % 2 <= hour % 2):
+                #         # print "hours ok"
                 if (minutes-1 < (int(train.getDepartTimeMinutes()) % 60) <= minutes) and \
                     ((hour-1) % 2 <  int(train.getDepartureTimeHour()) % 2 <= hour % 2):
                     if train not in trains_to_start:
