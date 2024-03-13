@@ -91,8 +91,12 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             if self.logLevel > 0:  print("checking valid operations trains")
             if self.logLevel > 0: print "train_scheduler_setup",self.train_scheduler_setup
 
-            # check whether can/want to schedule trains every hour
-            schedule_trains_hourly = self.check_whether_schedule_trains_every_hour()
+            # # check whether can/want to schedule trains every hour
+            # schedule_trains_hourly = self.check_whether_schedule_trains_every_hour()
+
+            self.set_default_scheduling_values()
+            self.set_period_trains_will_run()
+
             # set ttme to midnight
             if self.logLevel > 0: print "set minute time listener"
             self.setup_minute_time_listener_to_schedule_trains()   # this
@@ -131,29 +135,30 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         # print "end 1"
         return True
 
-    def check_whether_schedule_trains_every_hour(self):
-        global timebase
-        if self.all_trains_in_schedule_within_one_hour_period():
-            # ask whether want to schedule each hour
-            title = "want to schedule every hour?"
-            msg = "you can schedule every hour if you want, as all schedules are within 1 hour period"
-            opt1 = "schedule every hour"
-            opt2 = "just schedule at given times"
-            reply = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
-            if reply == opt2:
-                self.set_default_scheduling__non_hourly_values()
-                self.set_period_trains_will_run()
-                return False
-            elif reply == opt1:
-                # timebase.setRun(False)
-                self.set_default_scheduling_hourly_values()
-                # set period over which trains will run
-                self.set_period_trains_will_run()
-                return True
-        else:
-            self.set_default_scheduling__non_hourly_values()
-            self.set_period_trains_will_run()
-            return False
+    # def check_whether_schedule_trains_every_hour(self):
+    #     global timebase
+    #     # if self.all_trains_in_schedule_within_one_hour_period():
+    #     #     # ask whether want to schedule each hour
+    #     #     title = "want to schedule every hour?"
+    #     #     msg = "you can schedule every hour if you want, as all schedules are within 1 hour period"
+    #     #     opt1 = "schedule every hour"
+    #     #     opt2 = "just schedule at given times"
+    #     #     reply = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
+    #     #     if reply == opt2:
+    #     #         self.set_default_scheduling__non_hourly_values()
+    #     #         self.set_period_trains_will_run()
+    #     #         return False
+    #     #     elif reply == opt1:
+    #     #         # timebase.setRun(False)
+    #     #         self.set_default_scheduling_hourly_values()
+    #     #         # set period over which trains will run
+    #     #         self.set_period_trains_will_run()
+    #     #         return True
+    #     # else:
+    #     self.set_default_scheduling_values()
+    #     self.set_period_trains_will_run()
+    #     return False
+
     def start_and_end_time_scheduling(self):
         TrainManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
         train_list = TrainManager.getTrainsByTimeList()
@@ -171,46 +176,21 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                 pass
         # print "[start_time_hour, end_time_hour]", [start_time_hour, end_time_hour]
         return [start_time_hour, end_time_hour]
-    def all_trains_in_schedule_within_one_hour_period(self):
-        [start_time_hour, end_time_hour] = self.start_and_end_time_scheduling()
-        # print "end_time_hour - start_time_hour < 1", end_time_hour - start_time_hour < 1
-        if end_time_hour - start_time_hour < 1:
-            if self.logLevel > 0: print "all_trains_in_schedule_within_one_hour_period"
-            return True
-        else:
-            if self.logLevel > 0: print "all_trains_in_schedule more than one_hour_period"
-            return False
 
-        # TrainManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
-        # train_list = TrainManager.getTrainsByTimeList()
-        #
-        # my_return = True
-        # hour = "fred"
-        # if train_list == []:
-        #     return False
-        # for i, train in enumerate(train_list):
-        #     if self.logLevel > 1: print "*******************"
-        #     if self.logLevel > 1: print ("train list: departure time: ", str(train.getDepartureTime()), str(train.getName()))
-        #     if self.logLevel > 1: print "prev_time", self.prev_time, "curr_time", self.curr_time, \
-        #         "train.getDepartTimeMinutes()", train.getDepartTimeMinutes()
-        #
-        #     # if i == 0:
-        #     #     hour = train.getDepartTimeMinutes() // 60
-        #     #     if self.logLevel > 0: print "hour", hour
-        #     # else:
-        #     #     if self.logLevel > 0: print "hour2", hour
-        #     #     if hour != train.getDepartTimeMinutes() // 60:    train not in the same hour as first train
-        #     #         my_return = False
-        #     #     pass
-        #
-        # return my_return
-
-
+    # def all_trains_in_schedule_within_one_hour_period(self):
+    #     [start_time_hour, end_time_hour] = self.start_and_end_time_scheduling()
+    #     # print "end_time_hour - start_time_hour < 1", end_time_hour - start_time_hour < 1
+    #     if end_time_hour - start_time_hour < 1:
+    #         if self.logLevel > 0: print "all_trains_in_schedule_within_one_hour_period"
+    #         return True
+    #     else:
+    #         if self.logLevel > 0: print "all_trains_in_schedule more than one_hour_period"
+    #         return False
 
     def set_period_trains_will_run(self):
         global start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, scheduling_margin_gbl, scheduling_in_operation_gbl
         if self.frame == None:
-            print "frame is None"
+            # print "frame is None"
             self.frame = jmri.util.JmriJFrame('Scedule Trains Hourly');
 
             panel = JPanel()
@@ -382,7 +362,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
             rowStage2Button = JPanel()
             rowStage2Button.setLayout(BoxLayout(rowStage2Button, BoxLayout.X_AXIS))
-            rowrowStage2Button_2 = JLabel("Start Scheduling Trains")
+            rowrowStage2Button_2 = JLabel("Set Clock to Session Start")
             rowrowStage2Button_2.setFont(rowTitle_22.getFont().deriveFont(Font.BOLD, 13));
 
             rowrowStage2Button_2.add(Box.createHorizontalGlue());
@@ -392,12 +372,12 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
             rowStage3Button = JPanel()
             rowStage3Button.setLayout(BoxLayout(rowStage3Button, BoxLayout.X_AXIS))
-            rowrowStage3Button_3 = JLabel("Stop Scheduling Trains")
+            rowrowStage3Button_3 = JLabel("Toggle Scheduling Trains")
             rowrowStage3Button_3.setFont(rowTitle_33.getFont().deriveFont(Font.BOLD, 13));
 
             rowrowStage3Button_3.add(Box.createHorizontalGlue());
             rowrowStage3Button_3.setAlignmentX(rowrowStage3Button_3.LEFT_ALIGNMENT)
-            rowStage3Button_3 = JButton("Stage3", actionPerformed = self.StopSchedulingtrains_action)
+            rowStage3Button_3 = JButton("Toggle", actionPerformed = self.StopSchedulingtrains_action)
             stage3Button = rowStage3Button_3
 
 
@@ -496,6 +476,26 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         win = SwingUtilities.getWindowAncestor(comp);
         win.dispose();
     def StartSchedulingTrains_action(self, event):
+        #set clock to beginning of session
+        self.set_timebase_start_hour(int(start_hour_gbl)-1, 55)
+        # self.set_timebase_start_hour(0, 0)
+
+        #start scheduler
+        schedule_trains_master = ScheduleTrains()
+        schedule_trains_master.setName('Schedule Trains Master')
+
+        list_existing_schedule_trains = [iL.getName() for iL in instanceList if iL.getName() == 'Schedule Trains Master']
+        # print "list_existing_schedule_trains", list_existing_schedule_trains
+
+        if list_existing_schedule_trains == []:
+            # print "appending instance list"
+            instanceList.append(schedule_trains_master)
+            if schedule_trains_master.setup():
+                # print "setting name"
+                schedule_trains_master.setName('Schedule Trains Master')
+                schedule_trains_master.start()
+
+    def StartScedulingTrains_action_old(self, event):
         global instanceList
         global schedule_trains_glb
         global scheduling_in_operation_gbl
@@ -542,6 +542,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         scheduling_in_operation_gbl = "True"
         stringToDisplay = "scheduling in operation: " + str(scheduling_in_operation_gbl)
         rowFStage1Button_1.setText(stringToDisplay) # Update the label
+
     def StopSchedulingtrains_action(self, event):
         global schedule_trains_glb
         global scheduling_in_operation_gbl
@@ -550,8 +551,35 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
         #stop Scheduler
         self.stop_schedule_trains_threads()
+        if scheduling_in_operation_gbl == "False":
+            self.setup_values_for_running()
+            scheduling_in_operation_gbl = "True"
+        else:
+            scheduling_in_operation_gbl = "False"
+        stringToDisplay = "scheduling in operation: " + str(scheduling_in_operation_gbl)
+        rowFStage1Button_1.setText(stringToDisplay) # Update the label
 
-        scheduling_in_operation_gbl = "False"
+    def setup_values_for_running(self):
+
+        global instanceList
+
+        # start scheduler
+
+        schedule_trains_master = ScheduleTrains()
+        schedule_trains_master.setName('Schedule Trains Master')
+
+        list_existing_schedule_trains = [iL.getName() for iL in instanceList if iL.getName() == 'Schedule Trains Master']
+        # print "list_existing_schedule_trains", list_existing_schedule_trains
+
+        if list_existing_schedule_trains == []:
+            # print "appending instance list"
+            instanceList.append(schedule_trains_master)
+            if schedule_trains_master.setup():
+                # print "setting name"
+                schedule_trains_master.setName('Schedule Trains Master')
+                schedule_trains_master.start()
+
+        scheduling_in_operation_gbl = "True"
         stringToDisplay = "scheduling in operation: " + str(scheduling_in_operation_gbl)
         rowFStage1Button_1.setText(stringToDisplay) # Update the label
 
@@ -584,12 +612,11 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
         instanceList = [iL for iL in instanceList if str(iL.getName()) != 'Schedule Trains Master']
 
-
-    def set_default_scheduling_hourly_values(self):
+    def set_default_scheduling_values(self):
 
         self.show_analog_clock()      # show the analog clock
 
-        print "set_default_scheduling_hourly_values"
+        # print "set_default_scheduling_hourly_values"
 
         global start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
             scheduling_margin_gbl, scheduling_in_operation_gbl
@@ -608,38 +635,38 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         self.write_list([start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
                          scheduling_margin_gbl, scheduling_in_operation_gbl])
 
-        print "[start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
-                         scheduling_margin_gbl, scheduling_in_operation_gbl]", [start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
-                                                                                scheduling_margin_gbl, scheduling_in_operation_gbl]
+        # print "[start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
+        #                  scheduling_margin_gbl, scheduling_in_operation_gbl]", [start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
+        #                                                                         scheduling_margin_gbl, scheduling_in_operation_gbl]
 
-    def set_default_scheduling__non_hourly_values(self):
-
-        self.show_analog_clock()      # show the analog clock
-
-        print "set_default_scheduling__non_hourly_values"
-
-        global start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
-            scheduling_margin_gbl, scheduling_in_operation_gbl
-        # read parameters
-        [start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
-         scheduling_margin_gbl, scheduling_in_operation_gbl] = self.read_list()
-
-        if start_hour_gbl == "":
-            fast_clock_rate = "10"
-            speed_not_operational_gbl = "100"
-            scheduling_margin_gbl = "10"
-            scheduling_in_operation_gbl = "False"
-
-        [start_hour_gbl, end_hour_gbl] = self.start_and_end_time_scheduling()
-        end_hour_gbl += 1
-
-        self.write_list([start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
-                         scheduling_margin_gbl, scheduling_in_operation_gbl])
-
-        print "[start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
-                         scheduling_margin_gbl, scheduling_in_operation_gbl]", \
-            [start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
-                scheduling_margin_gbl, scheduling_in_operation_gbl]
+    # def set_default_scheduling__non_hourly_values(self):
+    #
+    #     self.show_analog_clock()      # show the analog clock
+    #
+    #     print "set_default_scheduling__non_hourly_values"
+    #
+    #     global start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
+    #         scheduling_margin_gbl, scheduling_in_operation_gbl
+    #     # read parameters
+    #     [start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
+    #      scheduling_margin_gbl, scheduling_in_operation_gbl] = self.read_list()
+    #
+    #     if start_hour_gbl == "":
+    #         fast_clock_rate = "10"
+    #         speed_not_operational_gbl = "100"
+    #         scheduling_margin_gbl = "10"
+    #         scheduling_in_operation_gbl = "False"
+    #
+    #     [start_hour_gbl, end_hour_gbl] = self.start_and_end_time_scheduling()
+    #     end_hour_gbl += 1
+    #
+    #     self.write_list([start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
+    #                      scheduling_margin_gbl, scheduling_in_operation_gbl])
+    #
+    #     print "[start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
+    #                      scheduling_margin_gbl, scheduling_in_operation_gbl]", \
+    #         [start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
+    #             scheduling_margin_gbl, scheduling_in_operation_gbl]
 
     def CheckHourlyParameters_action(self, event):
         global rowAStage1Button_1,  rowBStage1Button_1, rowCStage1Button_1, rowDStage1Button_1, rowEStage1Button_1, rowFStage1Button_1
@@ -863,13 +890,13 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
         # set up timebase and start at midnight
         if self.logLevel > 0: print "******************************************set timebase hour"
-        if schedule_trains_hourly:
-            self.set_timebase_start_hour(int(start_hour_gbl)-1, 45)
-            timebase.setRun(False)
-            timebase.setRate(float(speed_not_operational_gbl))
-        else:
-            self.set_timebase_start_hour(4, 0)
-            timebase.setRate(float(fast_clock_rate))
+        # if schedule_trains_hourly:
+        #     self.set_timebase_start_hour(int(start_hour_gbl)-1, 45)
+        #     timebase.setRun(False)
+        #     timebase.setRate(float(speed_not_operational_gbl))
+        # else:
+        #     self.set_timebase_start_hour(4, 0)
+        #     timebase.setRate(float(fast_clock_rate))
         if self.logLevel > 0: print "***********************************************finished timebase hour"
 
 
@@ -878,10 +905,17 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         # timebase.setRate(fast_clock_rate)
         # time = timebase.getTime()
 
-        if schedule_trains_hourly:
-            self.set_default_scheduling_hourly_values()
-        else:
-            self.set_default_scheduling__non_hourly_values()
+        # if schedule_trains_hourly:
+        #     self.set_default_scheduling_hourly_values()
+        # else:
+        #     self.set_default_scheduling__non_hourly_values()
+        self.set_default_scheduling_values()
+
+        self.set_timebase_start_hour(int(start_hour_gbl)-1, 45)
+        self.set_timebase_start_hour(0, 0)
+
+        timebase.setRun(False)
+        timebase.setRate(float(speed_not_operational_gbl))
 
         # attach a listener to the timebase.
         tListener = TimeListener()
@@ -946,7 +980,6 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         a = jmri.jmrit.operations.routes.RoutesTableAction()
         a.actionPerformed(None)
 
-
     def show_operations_trains(self):
         # show Operations form
         a = jmri.jmrit.operations.trains.TrainsTableAction()
@@ -961,10 +994,6 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         TrainManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
         train_list = TrainManager.getTrainsByTimeList()
         return train_list
-
-
-
-
 
 from java.util.concurrent import TimeUnit
 
@@ -1049,7 +1078,8 @@ class TimeListener(java.beans.PropertyChangeListener):
         if self.speed_not_operational_gbl__is_defined():
             if self.logLevel > 0: print "set_fast_clock_rate: 2", speed_not_operational_gbl
 
-            if schedule_trains_hourly:
+            # if schedule_trains_hourly:
+            if True:
                 pass
                 hour = int(timebase.getTime().getHours())
                 rate = timebase.getRate()
@@ -1140,7 +1170,8 @@ class TimeListener(java.beans.PropertyChangeListener):
         train_list = TrainManager.getTrainsByTimeList()
         # if schedule_trains_hourly:
         # print ("schedule_trains_hourly", schedule_trains_hourly)
-        if schedule_trains_hourly:
+        # if schedule_trains_hourly:
+        if True:
             if self.logLevel > 0: print "A5"
             tts = [train for train in train_list
                    if "skip" not in train.getDescription()]    #if skip in description of scheduled Train do not run the train
@@ -1241,12 +1272,12 @@ class TimeListener(java.beans.PropertyChangeListener):
         self.prev_time = self.curr_time -1
         if self.logLevel > 0: print "prev_time", self.prev_time
 
-        if schedule_trains_hourly:
-            if int(start_hour_gbl) <= hour <= int(end_hour_gbl):
-                pass    # need to process trains
-            else:
-                if self.logLevel > 0: print "returning in process_operational_trains"
-                return  # outside operational time
+        # only schedule within stat_hour and end_hour
+        if int(start_hour_gbl) <= hour <= int(end_hour_gbl):
+            pass    # need to process trains
+        else:
+            if self.logLevel > 0: print "returning in process_operational_trains"
+            return  # outside operational time
 
         if self.logLevel > 0: print "A2"
         if self.logLevel > 1: print "TimeListener: process_operations_trains"
@@ -1266,37 +1297,104 @@ class TimeListener(java.beans.PropertyChangeListener):
 
         if self.logLevel > 0: print "A4"
 
-        # if schedule_trains_hourly:
-        if schedule_trains_hourly:
-            if self.logLevel > 0: print "A5"
-            tts = [train for train in train_list
-                               if (minutes-1 < (int(train.getDepartTimeMinutes()) % 60) <= minutes) and
-                               "skip" not in train.getDescription()]    #if skip in description of scheduled Train do not run the train
-            trains_to_start = []
-            for train in tts:
-                if self.logLevel > 0: print "hour_before", train.getDepartTimeMinutes() // 60
-                train_mins = str(int(train.getDepartTimeMinutes()) % 60)
-                train_hour = str(hour)
-                if self.logLevel > 0: print "train_mins", train_mins
-                # train.setDepartureTime(train_hour, train_mins)
-                if self.logLevel > 0: print "hour", train.getDepartTimeMinutes() // 60
-                trains_to_start.append(train)
-        else:
-            trains_to_start = [train for train in train_list
-                               if (self.prev_time < int(train.getDepartTimeMinutes()) <= self.curr_time) and
-                               "skip" not in train.getDescription()]    #if skip in description of scheduled Train do not run the train
-            # copy_trains_to_start = trains_to_start  #just renames trains_to_start
-            if self.logLevel > 0: print "A7"
+        # schedule the train taking account of the repeat command
+        trains_to_start = []
+        for train in train_list:
+            comment = train.getComment()
+            repeat_command = MyTableModel4().find_between(comment, "[repeat-", "-repeat]")
+            # print "repeat1", repeat_command
+            if repeat_command == "Once":
+                if self.prev_time < int(train.getDepartTimeMinutes()) <= self.curr_time and \
+                "skip" not in train.getDescription():   # if skip in description of scheduled Train do not run the train
+                    if train not in trains_to_start:
+                        trains_to_start.append(train)
+                        scheduled[train] = False
+            elif repeat_command == "Repeat every 20 mins":
+                if ((minutes-1) % 20 < (int(train.getDepartTimeMinutes()) % 20) <= minutes % 20):
+                    if train not in trains_to_start:
+                        trains_to_start.append(train)
+                        scheduled[train] = False
+            elif repeat_command == "Repeat every 30 mins":
+                if ((minutes-1) % 30 < (int(train.getDepartTimeMinutes()) % 30) <= minutes % 30):
+                    if train not in trains_to_start:
+                        trains_to_start.append(train)
+                        scheduled[train] = False
+            elif repeat_command == "Repeat every Hour":
+                if (minutes-1 < (int(train.getDepartTimeMinutes()) % 60) <= minutes):
+                    if train not in trains_to_start:
+                        trains_to_start.append(train)
+                        scheduled[train] = False
+            elif repeat_command == "Repeat every 2 Hours":
+                # print "hour - 1" , hour-1, "%2", (hour-1) % 2
+                # print "hour" , hour, "%2", (hour) % 2
+                # print "int(train.getDepartureTimeHour()) % 2", int(train.getDepartureTimeHour()) % 2
+                if (minutes-1 < (int(train.getDepartTimeMinutes()) % 60) <= minutes):
+                    # print "minutes OK"
+                    # print "hour - 1" , hour-1, "%2", (hour-1) % 2
+                    # print "hour" , hour, "%2", (hour) % 2
+                    # print "int(train.getDepartureTimeHour()) % 2", int(train.getDepartureTimeHour()) % 2
+                    if ((hour-1) % 2 <  int(train.getDepartureTimeHour()) % 2 <= hour % 2):
+                        # print "hours ok"
+                if (minutes-1 < (int(train.getDepartTimeMinutes()) % 60) <= minutes) and \
+                    ((hour-1) % 2 <  int(train.getDepartureTimeHour()) % 2 <= hour % 2):
+                    if train not in trains_to_start:
+                        trains_to_start.append(train)
+                        scheduled[train] = False
+            else:
+                print "incorrect repeat command", repeat_command
+                # assume set to once
+                if self.prev_time < int(train.getDepartTimeMinutes()) <= self.curr_time and \
+                        "skip" not in train.getDescription():   # if skip in description of scheduled Train do not run the train
+                    if train not in trains_to_start:
+                        trains_to_start.append(train)
+                        scheduled[train] = False
 
-        if self.logLevel > 0: print "trains to start " , trains_to_start
-        #self.run_trains(trains_to_start)
+            # print "trains_to_start", trains_to_start
+        # print "scheduled[train]", scheduled
 
-        if self.logLevel > 0: print "A8"
+        # if self.logLevel > -1: print "A8"
         for train in trains_to_start:
             if train not in trains_to_be_scheduled:
-                if self.logLevel > 0: print "A9"
+                # if self.logLevel > -1: print "A9"
                 trains_to_be_scheduled.append(train)
             scheduled[train] = False
+
+        # print "trains_to_be_scheduled", trains_to_be_scheduled
+
+
+
+        # # if schedule_trains_hourly:
+        # if schedule_trains_hourly:
+        #     if self.logLevel > 0: print "A5"
+        #     tts = [train for train in train_list
+        #                        if (minutes-1 < (int(train.getDepartTimeMinutes()) % 60) <= minutes) and
+        #                        "skip" not in train.getDescription()]    #if skip in description of scheduled Train do not run the train
+        #     trains_to_start = []
+        #     for train in tts:
+        #         if self.logLevel > 0: print "hour_before", train.getDepartTimeMinutes() // 60
+        #         train_mins = str(int(train.getDepartTimeMinutes()) % 60)
+        #         train_hour = str(hour)
+        #         if self.logLevel > 0: print "train_mins", train_mins
+        #         # train.setDepartureTime(train_hour, train_mins)
+        #         if self.logLevel > 0: print "hour", train.getDepartTimeMinutes() // 60
+        #         trains_to_start.append(train)
+        # else:
+        #     trains_to_start = [train for train in train_list
+        #                        if (self.prev_time < int(train.getDepartTimeMinutes()) <= self.curr_time) and
+        #                        "skip" not in train.getDescription()]    #if skip in description of scheduled Train do not run the train
+        #     # copy_trains_to_start = trains_to_start  #just renames trains_to_start
+        #     if self.logLevel > 0: print "A7"
+        #
+        # if self.logLevel > 0: print "trains to start " , trains_to_start
+        # #self.run_trains(trains_to_start)
+
+        # if self.logLevel > 0: print "A8"
+        # for train in trains_to_start:
+        #     if train not in trains_to_be_scheduled:
+        #         if self.logLevel > 0: print "A9"
+        #         trains_to_be_scheduled.append(train)
+        #     scheduled[train] = False
+
         if self.logLevel > 0: print "trains_to_be_scheduled", trains_to_be_scheduled
         if self.logLevel > 0: print "scheduled", scheduled
         if self.logLevel > 0: print "trains_to_be_scheduled", trains_to_be_scheduled
@@ -1317,7 +1415,7 @@ class TimeListener(java.beans.PropertyChangeListener):
 class RunTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def __init__(self, train, graph):
-        self.logLevel = 0
+        self.logLevel = 1
         if train == None:
             if self.logLevel > 0: print "RunTrain: train == None"
         else:
@@ -1833,14 +1931,19 @@ class ScheduleTrains(jmri.jmrit.automat.AbstractAutomaton):
                 fast_clock_running_at_operational_speed = True
             if self.logLevel > 0 : print "run trains started: loop: scheduled trains", trains_to_be_scheduled, \
                 "fast_clock_running_at_operational_speed", fast_clock_running_at_operational_speed
+            # print "scheduled", scheduled
+            # print "run_train_dict", run_train_dict
             if fast_clock_running_at_operational_speed:
                 for train in trains_to_be_scheduled:
+                    # print "train", train
                     if scheduled[train] == False:
                         if self.logLevel > 0: print "train",train,"scheduled[train]",scheduled[train]
 
                         if "stopping" in train.getDescription():
+                            print "running train %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
                             run_train_dict[train] = RunTrain(train, g.g_stopping)
                         else:
+                            print "running train %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
                             run_train_dict[train] = RunTrain(train, g.g_express)
                         run_train_dict[train].setName("schedule_" + train.getName())
                         run_train_dict[train].start()

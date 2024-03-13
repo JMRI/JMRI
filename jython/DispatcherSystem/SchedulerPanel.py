@@ -10,8 +10,6 @@ from javax.swing.filechooser import FileNameExtensionFilter
 from org.apache.commons.io import FilenameUtils
 from java.io import File
 
-
-
 class CreateAndShowGUI4(TableModelListener):
 
     def __init__(self, class_ResetButtonMaster):
@@ -27,7 +25,6 @@ class CreateAndShowGUI4(TableModelListener):
         # print "about to populate"
         self.populate_action(None)
         self.cancel = False
-
 
     def completeTablePanel(self):
 
@@ -147,6 +144,7 @@ class CreateAndShowGUI4(TableModelListener):
         [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, delete_col] = [0, 1, 2, 3, 4, 5]
         columnModel.getColumn(route_col).setPreferredWidth(200);
         columnModel.getColumn(repeat_col).setPreferredWidth(150);
+        columnModel.getColumn(train_name_col).setPreferredWidth(100);
 
         # first column is the trains
         # self.trainColumn = self.table.getColumnModel().getColumn(time_col);
@@ -412,6 +410,9 @@ class CreateAndShowGUI4(TableModelListener):
 
 
     def save_action(self, event):
+        self.save()
+
+    def save(self):
         [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, delete_col] = [0, 1, 2, 3, 4, 5]
         print "save_action"
         self.clear_everything()
@@ -586,6 +587,8 @@ class MyModelListener4(TableModelListener):
             self.delete_row(row)
             class_CreateAndShowGUI4.completeTablePanel()
             pass
+
+        # class_CreateAndShowGUI4.save()    # save everything when the table is chabged
         
     def delete_row(self, row):
         self.model.data.pop(row)
@@ -615,7 +618,7 @@ class ComboBoxCellRenderer4 (TableCellRenderer):
 
 class MyTableModel4 (DefaultTableModel):
 
-    columnNames = ["Time", "Route", "Repeat?", "Don't Schedule", "Train Name (Optional)", "Delete Row"]
+    columnNames = ["Time", "Route", "Repeat?", "Don't Schedule", "Train Name", "Delete Row"]
 
     def __init__(self):
         l1 = ["", "", False, "stop at end of route", 10, 0]
@@ -629,10 +632,20 @@ class MyTableModel4 (DefaultTableModel):
                 self.data.pop(row)
 
     def add_row(self):
-        # print "addidn row"
-        # if row < len(self.data):
-        # print "add"
-        self.data.append(["00:00", "", "Once", False, "None", False])
+        # TrainManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
+        # train_list = TrainManager.getTrainsByTimeList()
+        [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, delete_col] = [0, 1, 2, 3, 4, 5]
+        # for row in reversed(range(len(self.data))):
+
+        # indices = [int(train.getName().split("Train",1)[1]) for train in train_list if train.getName().startswith("Train")]
+        indices = [int(self.data[row][train_name_col].split("Train",1)[1]) for row in reversed(range(len(self.data)))
+                   if self.data[row][train_name_col].startswith("Train")]
+        if indices == []:
+            index = 1
+        else:
+            index = max(indices) + 1
+        train_name = "Train" + str(index)
+        self.data.append(["00:00", "", "Once", False, train_name, False])
         # print self.data
         # print "added"
 
@@ -727,36 +740,9 @@ class MyTableModel4 (DefaultTableModel):
 
         return my_match
 
-    # def isValidTimeFormat(self, entry):
-    #     import re
-    #     # Regular expression to match xx:xx format
-    #     regex = re.compile(r'^\d{2}:\d{2}$')
-    #
-    #     # Check if the entry matches the pattern
-    #     it_matches = str(entry).matches(regex)
-    #     print "matches", it_matches, "value", entry
 
 
-from javax.swing import JFrame, JButton, JOptionPane
-from java.awt.event import ActionListener
 
-class TimePickerExample:
-    def __init__(self):
-        # self.frame = JFrame("Time Picker Example")
-        # self.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
-        # self.frame.setSize(300, 200)
-        #
-        # self.pick_time_button = JButton("Pick Time", actionPerformed=self.show_time_picker)
-        # self.frame.add(self.pick_time_button)
-        #
-        # self.frame.setVisible(True)
-        self.show_time_picker()
-
-    def show_time_picker(self):
-        # Show a simple JOptionPane input dialog for time selection
-        selected_time = JOptionPane.showInputDialog(self.frame, "Select a time (HH:mm):")
-        if selected_time:
-            print("Selected time:", selected_time)
 
 
 
