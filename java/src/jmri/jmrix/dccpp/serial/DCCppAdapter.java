@@ -17,8 +17,8 @@ public class DCCppAdapter extends DCCppSerialPortController {
 
     public DCCppAdapter() {
         super();
-        //option1Name = "FlowControl";
-        //options.put(option1Name, new Option("DCC++ connection uses : ", validOption1));
+        option1Name = "StartUpDelay";
+        options.put(option1Name, new Option("Wait at startup : ", validStartupDelays));
         this.manufacturerName = jmri.jmrix.dccpp.DCCppConnectionTypeList.DCCPP;
     }
 
@@ -55,6 +55,11 @@ public class DCCppAdapter extends DCCppSerialPortController {
     public void configure() {
         // connect to a packetizing traffic controller
         DCCppTrafficController packets = new SerialDCCppPacketizer(new DCCppCommandStation());
+        if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[0])) {
+            packets.startUpDelay = 1500;
+        } else {
+            packets.startUpDelay = 10000;
+        }        
         packets.connectPort(this);
 
         // start operation
@@ -103,9 +108,8 @@ public class DCCppAdapter extends DCCppSerialPortController {
         return 0;
     }
 
-    // meanings are assigned to these above, so make sure the order is consistent
-    // protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHw"), Bundle.getMessage("FlowOptionNo")};
-    protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionNo")};
+    protected String[] validStartupDelays = new String[]{"1.5 seconds", "10 seconds"};
+//    protected int[] validStartupDelayValues = new int[]{1500, 5000, 10000};
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DCCppAdapter.class);
 
