@@ -31,7 +31,7 @@ public class DCCppAdapter extends DCCppSerialPortController {
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
         log.info("Connecting DCC++ to {} {}", portName, currentSerialPort);
-        
+
         // try to set it for communication via SerialDriver
         // find the baud rate value, configure comm options
         int baud = currentBaudNumber(mBaudRate);
@@ -55,11 +55,15 @@ public class DCCppAdapter extends DCCppSerialPortController {
     public void configure() {
         // connect to a packetizing traffic controller
         DCCppTrafficController packets = new SerialDCCppPacketizer(new DCCppCommandStation());
-        if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[0])) {
-            packets.startUpDelay = 1500;
-        } else {
-            packets.startUpDelay = 10000;
-        }        
+
+        String selectedStartupDelay = getOptionState(option1Name);
+        packets.startUpDelay = validStartupDelayValues[0];  // Default to the first option
+        for (int i=0; i < validStartupDelayValues.length; i++) {
+            if (selectedStartupDelay.equals(validStartupDelays[i])) {
+                packets.startUpDelay = validStartupDelayValues[i];
+            }
+        }
+
         packets.connectPort(this);
 
         // start operation
@@ -108,8 +112,9 @@ public class DCCppAdapter extends DCCppSerialPortController {
         return 0;
     }
 
-    protected String[] validStartupDelays = new String[]{"1.5 seconds", "10 seconds"};
-//    protected int[] validStartupDelayValues = new int[]{1500, 5000, 10000};
+    // These two arrays works together so they must be consistent with eachother
+    protected String[] validStartupDelays = new String[]{"1.5 seconds", "5 seconds", "10 seconds", "20 seconds", "30 seconds"};
+    protected int[] validStartupDelayValues = new int[]{1500, 5000, 10000, 20000, 30000};
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DCCppAdapter.class);
 
