@@ -296,21 +296,24 @@ public class SpjFile {
      * @throws java.io.IOException on file error.
      */
     public void writeSubFiles() throws IOException {
+        writeSubFiles("");
+    }
+    public void writeSubFiles(String directory) throws IOException {
         // write data from WAV headers into separate files
         int n = numHeaders();
         for (int i = 1; i < n; i++) {
             if (headers[i].isWAV()) {
-                writeSubFile(i, "" + i + ".wav"); // NOI18N
+                writeSubFile(i, directory, "" + i + ".wav"); // NOI18N
             } else if (headers[i].isSDF()) {
-                writeSubFile(i, "" + i + ".sdf"); // NOI18N
+                writeSubFile(i, directory, "" + i + ".sdf"); // NOI18N
             } else if (headers[i].getType() == 3) {
-                writeSubFile(i, "" + i + ".cv"); // NOI18N
+                writeSubFile(i, directory, "" + i + ".cv"); // NOI18N
             } else if (headers[i].getType() == 4) {
-                writeSubFile(i, "" + i + ".txt"); // NOI18N
+                writeSubFile(i, directory, "" + i + ".txt"); // NOI18N
             } else if (headers[i].isMap()) {
-                writeSubFile(i, "" + i + ".map"); // NOI18N
+                writeSubFile(i, directory, "" + i + ".map"); // NOI18N
             } else if (headers[i].getType() == 6) {
-                writeSubFile(i, "" + i + ".uwav"); // NOI18N
+                writeSubFile(i, directory, "" + i + ".uwav"); // NOI18N
             }
         }
     }
@@ -319,16 +322,28 @@ public class SpjFile {
      * Write the content from a specific header as a new "subfile".
      *
      * @param i    index of the specific header
+     * @param directory name
      * @param name filename
      * @throws IOException based on underlying activity
      */
-    void writeSubFile(int i, String name) throws IOException {
-        File outfile = new File(name);
+    void writeSubFile(int i, String directory, String name) throws IOException {
+        String fName = directory + headers[i].getName().replace(" ","_");
+        if (! headers[i].isWAV() ) {
+            fName = directory + name;
+        }
+        File outfile = new File(fName);
         OutputStream ostream = new FileOutputStream(outfile);
         try {
             ostream.write(headers[i].getByteArray());
         } finally {
             ostream.close();
+        }
+    }
+    void writeSubFile(int i, String name) throws IOException { 
+        try {
+            writeSubFile(i,"", name);
+        } finally {
+            log.error("Invalid File");
         }
     }
 
