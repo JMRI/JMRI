@@ -127,7 +127,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Improved new Turnout address validation.</li>
             </ul>
 
         <h4>Powerline</h4>
