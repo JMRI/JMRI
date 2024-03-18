@@ -31,6 +31,7 @@ import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.Transit;
 import jmri.TransitManager;
+import jmri.jmrit.dispatcher.ActiveTrain.TrainDetection;
 import jmri.jmrit.dispatcher.DispatcherFrame.TrainsFrom;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
@@ -375,7 +376,13 @@ public class ActivateTrainFrame extends JmriJFrame {
             p4.add(new JLabel(Bundle.getMessage("DestinationBlockBoxLabel") + ":"));
             p4.add(destinationBlockBox);
             destinationBlockBox.setToolTipText(Bundle.getMessage("DestinationBlockBoxHint"));
+            JPanel p4a = new JPanel();
             initiatePane.add(p4);
+            p4a.add(trainDetectionLabel);
+            initializeTrainDetectionBox();
+            p4a.add(trainDetectionComboBox);
+            trainDetectionComboBox.setToolTipText(Bundle.getMessage("TrainDetectionBoxHint"));
+            initiatePane.add(p4a);
             JPanel p4b = new JPanel();
             p4b.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("AllocateMethodLabel")));
             p4b.setLayout(new FlowLayout());
@@ -703,6 +710,12 @@ public class ActivateTrainFrame extends JmriJFrame {
         // NOTE: The above must correspond in order and name to definitions in ActiveTrain.java.
     }
 
+    private void initializeTrainDetectionBox() {
+        trainDetectionComboBox.addItem(new TrainDetectionItem(Bundle.getMessage("TrainDetectionWholeTrain"),TrainDetection.TRAINDETECTION_WHOLETRAIN));
+        trainDetectionComboBox.addItem(new TrainDetectionItem(Bundle.getMessage("TrainDetectionHeadAndTail"),TrainDetection.TRAINDETECTION_HEADANDTAIL));
+        trainDetectionComboBox.addItem(new TrainDetectionItem(Bundle.getMessage("TrainDetectionHeadOnly"),TrainDetection.TRAINDETECTION_HEADONLY));
+    }
+
     private void handleTransitSelectionChanged(ActionEvent e) {
         int index = transitSelectBox.getSelectedIndex();
         if (index < 0) {
@@ -936,6 +949,11 @@ public class ActivateTrainFrame extends JmriJFrame {
         }
         boolean resetWhenDone = resetWhenDoneBox.isSelected();
         boolean reverseAtEnd = reverseAtEndBox.isSelected();
+        index = trainDetectionComboBox.getSelectedIndex();
+        if (index < 0) {
+            return;
+        }
+        TrainDetection trainDetection = ((TrainDetectionItem)trainDetectionComboBox.getSelectedItem()).value;
         int allocateMethod = 3;
         if (allocateAllTheWayRadioButton.isSelected()) {
             allocateMethod = ActiveTrain.ALLOCATE_AS_FAR_AS_IT_CAN;
@@ -1058,6 +1076,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         if (tSource == ActiveTrain.ROSTER) {
             at.setRosterEntry((RosterEntry)rosterComboBox.getSelectedItem());
         }
+        at.setTrainDetection(trainDetection);
         at.setAllocateMethod(allocateMethod);
         at.setDelayedStart(delayedStart);
         at.setDelayedRestart(delayedReStart);
@@ -1404,6 +1423,7 @@ public class ActivateTrainFrame extends JmriJFrame {
             default:
                 radioTrainsFromSetLater.setSelected(true);
         }
+        trainDetectionComboBox.setSelectedItemByValue(info.getTrainDetection());
         inTransitBox.setSelected(info.getTrainInTransit());
         initializeStartingBlockCombo();
         initializeDestinationBlockCombo();
@@ -1500,6 +1520,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         }
         info.setTrainsFrom(_TrainsFrom);
         info.setPriority((Integer) prioritySpinner.getValue());
+        info.setTrainDetection(((TrainDetectionItem)trainDetectionComboBox.getSelectedItem()).value);
         info.setResetWhenDone(resetWhenDoneBox.isSelected());
         info.setReverseAtEnd(reverseAtEndBox.isSelected());
         info.setDelayedStart(delayModeFromBox(delayedStartBox));
@@ -1659,14 +1680,26 @@ public class ActivateTrainFrame extends JmriJFrame {
     private final JCheckBox soundDecoderBox = new JCheckBox(Bundle.getMessage("SoundDecoder"));
     private final JCheckBox runInReverseBox = new JCheckBox(Bundle.getMessage("RunInReverse"));
     private final JPanel pa4 = new JPanel();
-    private final JCheckBox resistanceWheelsBox = new JCheckBox(Bundle.getMessage("ResistanceWheels"));
+    protected class TrainDetectionJCombo extends JComboBox<TrainDetectionItem> {
+        public void setSelectedItemByValue(TrainDetection var) {
+            for ( int ix = 0; ix < getItemCount() ; ix ++ ) {
+                if (getItemAt(ix).value == var) {
+                    this.setSelectedIndex(ix);
+                    break;
+                }
+            }
+        }
+    }
+    public final TrainDetectionJCombo trainDetectionComboBox
+                = new TrainDetectionJCombo();
+    private final JLabel trainDetectionLabel = new JLabel(Bundle.getMessage("TrainDetection"));
     private final JLabel trainLengthLabel = new JLabel(Bundle.getMessage("MaxTrainLengthLabel"));
     private final JSpinner maxTrainLengthSpinner = new JSpinner(); // initialized later
     // auto run variables
     float _speedFactor = 1.0f;
     float _maxSpeed = 0.6f;
     int _rampRate = AutoActiveTrain.RAMP_NONE;
-    boolean _resistanceWheels = true;
+    TrainDetection _trainDetection = TrainDetection.TRAINDETECTION_HEADONLY;
     boolean _runInReverse = false;
     boolean _soundDecoder = false;
     float _maxTrainLength = 200.0f;
@@ -1679,7 +1712,6 @@ public class ActivateTrainFrame extends JmriJFrame {
         _speedFactor = 1.0f;
         _maxSpeed = 0.6f;
         _rampRate = AutoActiveTrain.RAMP_NONE;
-        _resistanceWheels = true;
         _runInReverse = false;
         _soundDecoder = false;
         _maxTrainLength = 100.0f;
@@ -1731,9 +1763,6 @@ public class ActivateTrainFrame extends JmriJFrame {
         runInReverseBox.setToolTipText(Bundle.getMessage("RunInReverseBoxHint"));
         initiatePane.add(pa3);
         pa4.setLayout(new FlowLayout());
-        pa4.add(resistanceWheelsBox);
-        resistanceWheelsBox.setToolTipText(Bundle.getMessage("ResistanceWheelsBoxHint"));
-        pa4.add(new JLabel("   "));
         pa4.add(trainLengthLabel);
         maxTrainLengthSpinner.setModel(new SpinnerNumberModel(Float.valueOf(18.0f), Float.valueOf(0.0f), Float.valueOf(10000.0f), Float.valueOf(0.5f)));
         maxTrainLengthSpinner.setEditor(new JSpinner.NumberEditor(maxTrainLengthSpinner, "###0.0"));
@@ -1750,7 +1779,6 @@ public class ActivateTrainFrame extends JmriJFrame {
         speedFactorSpinner.setValue(_speedFactor);
         maxSpeedSpinner.setValue(_maxSpeed);
         rampRateBox.setSelectedIndex(_rampRate);
-        resistanceWheelsBox.setSelected(_resistanceWheels);
         soundDecoderBox.setSelected(_soundDecoder);
         runInReverseBox.setSelected(_runInReverse);
         useSpeedProfileCheckBox.setSelected(_useSpeedProfile);
@@ -1780,7 +1808,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         speedFactorSpinner.setValue(info.getSpeedFactor());
         maxSpeedSpinner.setValue(info.getMaxSpeed());
         setComboBox(rampRateBox, info.getRampRate());
-        resistanceWheelsBox.setSelected(info.getResistanceWheels());
+        trainDetectionComboBox.setSelectedItemByValue(info.getTrainDetection());
         runInReverseBox.setSelected(info.getRunInReverse());
         soundDecoderBox.setSelected(info.getSoundDecoder());
         maxTrainLengthSpinner.setValue(info.getMaxTrainLength());
@@ -1799,7 +1827,6 @@ public class ActivateTrainFrame extends JmriJFrame {
         info.setSpeedFactor((float) speedFactorSpinner.getValue());
         info.setMaxSpeed((float) maxSpeedSpinner.getValue());
         info.setRampRate((String) rampRateBox.getSelectedItem());
-        info.setResistanceWheels(resistanceWheelsBox.isSelected());
         info.setRunInReverse(runInReverseBox.isSelected());
         info.setSoundDecoder(soundDecoderBox.isSelected());
         info.setMaxTrainLength((float) maxTrainLengthSpinner.getValue());
@@ -1820,7 +1847,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         _speedFactor = (float) speedFactorSpinner.getValue();
         _maxSpeed = (float) maxSpeedSpinner.getValue();
         _rampRate = rampRateBox.getSelectedIndex();
-        _resistanceWheels = resistanceWheelsBox.isSelected();
+        _trainDetection = ((TrainDetectionItem)trainDetectionComboBox.getSelectedItem()).value;
         _runInReverse = runInReverseBox.isSelected();
         _soundDecoder = soundDecoderBox.isSelected();
         _maxTrainLength = (float) maxTrainLengthSpinner.getValue();
@@ -1841,7 +1868,6 @@ public class ActivateTrainFrame extends JmriJFrame {
         aaf.setSpeedFactor(_speedFactor);
         aaf.setMaxSpeed(_maxSpeed);
         aaf.setRampRate(_rampRate);
-        aaf.setResistanceWheels(_resistanceWheels);
         aaf.setRunInReverse(_runInReverse);
         aaf.setSoundDecoder(_soundDecoder);
         aaf.setMaxTrainLength(_maxTrainLength);
@@ -1881,6 +1907,31 @@ public class ActivateTrainFrame extends JmriJFrame {
                 allocateNumberOfBlocks.setSelected(true);
                 allocateCustomSpinner.setVisible(true);
                 allocateCustomSpinner.setValue(value);
+        }
+    }
+
+    /*
+     * ComboBox item.
+     */
+    protected static class TrainDetectionItem {
+        private String key;
+        private TrainDetection value;
+        public TrainDetectionItem(String text, TrainDetection trainDetection ) {
+            this.key = text;
+            this.value = trainDetection;
+        }
+        @Override
+        public String toString()
+        {
+            return key;
+        }
+        public String getKey()
+        {
+            return key;
+        }
+        public TrainDetection getValue()
+        {
+            return value;
         }
     }
 

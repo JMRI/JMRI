@@ -38,6 +38,7 @@ import jmri.Transit;
 import jmri.TransitManager;
 import jmri.TransitSection;
 import jmri.jmrit.dispatcher.TaskAllocateRelease.TaskAction;
+import jmri.jmrit.dispatcher.ActiveTrain.TrainDetection;
 import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
@@ -279,6 +280,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     return -1;
                 }
             }
+            at.setTrainDetection(info.getTrainDetection());
             at.setAllocateMethod(info.getAllocationMethod());
             at.setDelayedStart(info.getDelayedStart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
             at.setDepartureTimeHr(info.getDepartureTimeHr()); // hour of day (fast-clock) to start this train
@@ -306,7 +308,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 aat.setSpeedFactor(info.getSpeedFactor());
                 aat.setMaxSpeed(info.getMaxSpeed());
                 aat.setRampRate(AutoActiveTrain.getRampRateFromName(info.getRampRate()));
-                aat.setResistanceWheels(info.getResistanceWheels());
                 aat.setRunInReverse(info.getRunInReverse());
                 aat.setSoundDecoder(info.getSoundDecoder());
                 aat.setMaxTrainLength(info.getMaxTrainLength());
@@ -2275,6 +2276,21 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
                 for (Block b : bls) {
                     if (blas.contains(b)) {
+                        if (as.getActiveTrain().getTrainDetection() == TrainDetection.TRAINDETECTION_HEADONLY) {
+                            // no clue where the tail is some must assume this block still in use.
+                            return as.getSection();
+                        }
+                        if (as.getActiveTrain().getTrainDetection() == TrainDetection.TRAINDETECTION_HEADANDTAIL) {
+                            // if this is in the oldest section then we treat as whole train..
+                            // if there is a section that exited but occupied the tail is there
+                            for (AllocatedSection tas : allocatedSections) {
+                                if (tas.getActiveTrain() == as.getActiveTrain() && tas.getExited() && tas.getSection().getOccupancy() == Section.OCCUPIED ) {
+                                    return as.getSection();
+                                }
+                            }
+                        } else if (as.getActiveTrain().getTrainDetection() != TrainDetection.TRAINDETECTION_WHOLETRAIN) {
+                            return as.getSection();
+                        }
                         if (as.getSection().getOccupancy() == Block.OCCUPIED) {
                             //The next check looks to see if the block has already been passed or not and therefore ready for allocation.
                             if (as.getSection().getState() == Section.FORWARD) {

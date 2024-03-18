@@ -9,6 +9,7 @@ import javax.annotation.CheckForNull;
 
 import jmri.*;
 import jmri.implementation.SignalSpeedMap;
+import jmri.jmrit.dispatcher.ActiveTrain.TrainDetection;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -100,7 +101,7 @@ public class AutoActiveTrain implements ThrottleListener {
     private int _rampRate = RAMP_NONE; // default Ramp Rate
     private float _speedFactor = 1.0f; // default speed factor
     private float _maxSpeed = 0.6f;    // default maximum train speed
-    private boolean _resistanceWheels = true; // true if all train cars show occupancy
+    //private TrainDetection _trainDetection = TrainDetection.TRAINDETECTION_NONE; // true if all train cars show occupancy
     private boolean _runInReverse = false;    // true if the locomotive should run through Transit in reverse
     private boolean _soundDecoder = false;    // true if locomotive has a sound decoder
     private volatile float _maxTrainLength = 200.0f; // default train length (scale feet/meters)
@@ -187,12 +188,17 @@ public class AutoActiveTrain implements ThrottleListener {
         _maxSpeed = speed;
     }
 
-    public boolean getResistanceWheels() {
-        return _resistanceWheels;
-    }
-
+/**
+ * @deprecated Use {@code ActiveTrain.setTrainDetection(TrainDetection value } insteadUse 
+ * @param set True if entire train is detectable
+ */
+    @Deprecated (since="5.7.6",forRemoval=true)
     public void setResistanceWheels(boolean set) {
-        _resistanceWheels = set;
+        if (set) {
+           _activeTrain.setTrainDetection(TrainDetection.TRAINDETECTION_WHOLETRAIN);
+        } else {
+            _activeTrain.setTrainDetection(TrainDetection.TRAINDETECTION_HEADONLY);
+        }
     }
 
     public boolean getRunInReverse() {
@@ -1255,7 +1261,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     _maxTrainLength, _stopBySpeedProfile);
             // train will not fit comfortably in the Section, stop it immediately
             setStopNow();
-        } else if (_resistanceWheels) {
+        } else if (_activeTrain.getTrainDetection() == TrainDetection.TRAINDETECTION_WHOLETRAIN) {
             log.debug("{}: train will fit in [{}] ({}>={}), stop when prev block clears.", _activeTrain.getTrainName(),
                     _currentAllocatedSection.getSection().getDisplayName(USERSYS), _currentAllocatedSection.getLength(), _maxTrainLength);
             // train will fit in current allocated Section and has resistance wheels
