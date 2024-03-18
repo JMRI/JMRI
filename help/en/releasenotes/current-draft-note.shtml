@@ -36,7 +36,8 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>New connection setting to extend the transmit startup delay</li>
+                <li>Transmit startup pause now resumes when incoming message received</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -126,7 +127,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Improved new Turnout address validation.</li>
             </ul>
 
         <h4>Powerline</h4>
