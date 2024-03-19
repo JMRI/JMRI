@@ -1680,7 +1680,7 @@ public class ActivateTrainFrame extends JmriJFrame {
     private final JCheckBox soundDecoderBox = new JCheckBox(Bundle.getMessage("SoundDecoder"));
     private final JCheckBox runInReverseBox = new JCheckBox(Bundle.getMessage("RunInReverse"));
     private final JPanel pa4 = new JPanel();
-    protected class TrainDetectionJCombo extends JComboBox<TrainDetectionItem> {
+    protected static class TrainDetectionJCombo extends JComboBox<TrainDetectionItem> {
         public void setSelectedItemByValue(TrainDetection var) {
             for ( int ix = 0; ix < getItemCount() ; ix ++ ) {
                 if (getItemAt(ix).value == var) {
