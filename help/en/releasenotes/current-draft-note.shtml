@@ -132,7 +132,7 @@
 
         <h4>Powerline</h4>
             <ul>
-                <li></li>
+                <li>Fix a problem what would cause the DMX512 connection to loop on startup.</li>
             </ul>
 
         <h4>RFID</h4>
