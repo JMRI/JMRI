@@ -535,19 +535,23 @@ public class TrainInfo {
     }
 
     /**
-     *
-     * @param b {@link:ActiveTrain.TrainDetection}
+     * Set the detection get
+     * @param b {@link ActiveTrain.TrainDetection}
      */
     public void setTrainDetection(TrainDetection b) {
         trainDetection = b;
     }
 
+    /**
+     * Get the detection type
+     * @return  {@link ActiveTrain.TrainDetection}
+     */
     public TrainDetection getTrainDetection() {
         return trainDetection;
     }
 
     /**
-     * @depriciated use {@link:setTrainDetection()}
+     * @deprecated use {@link #setTrainDetection}
      * @param b true or false
      */
     @Deprecated (since="5.7.6",forRemoval=true)
@@ -559,11 +563,11 @@ public class TrainInfo {
         }
     }
 
-        /**
-         * @depriciated use {@link:getTrainDetection()}
-         * @return true or false
-         */
-        @Deprecated (since="5.7.6",forRemoval=true)
+    /**
+     * @deprecated use {@link #getTrainDetection}
+     * @return true or false
+     */
+    @Deprecated (since="5.7.6",forRemoval=true)
     public boolean getResistanceWheels() {
         if (trainDetection == TrainDetection.TRAINDETECTION_WHOLETRAIN) {
             return true;
