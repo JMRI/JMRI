@@ -19,7 +19,7 @@ import jmri.util.swing.JmriJOptionPane;
 /**
  * Frame for user edit of track destinations
  *
- * @author Dan Boudreau Copyright (C) 2013
+ * @author Dan Boudreau Copyright (C) 2013, 2024
  * 
  */
 public class TrackDestinationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -297,6 +297,9 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                         }
                         // now determine if there's a track willing to service this road
                         for (Track track : destination.getTracksList()) {
+                            if (!track.isTypeNameAccepted(type)) {
+                                continue;
+                            }
                             if (track.isRoadNameAccepted(road)) {
                                 continue checkRoads; // yes there's a track
                             }
@@ -393,8 +396,12 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                             
                             // does the destination accept this car?
                             // this checks tracks that have schedules
-                            String testDest = "";
+                            String testDest = "NO_TYPE";
                             for (Track track : destination.getTracksList()) {
+                                if (!track.isTypeNameAccepted(type)) {
+                                    // already reported if type not accepted
+                                    continue; 
+                                }
                                 if (track.getScheduleMode() == Track.SEQUENTIAL) {
                                     // must test in match mode
                                     track.setScheduleMode(Track.MATCH);
@@ -408,6 +415,10 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                                 if (testDest.equals(Track.OKAY)) {
                                     break; // done
                                 }
+                            }
+                            
+                            if (testDest.equals("NO_TYPE")) {
+                                continue;
                             }
                             
                             if (!testDest.equals(Track.OKAY)) {
