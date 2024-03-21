@@ -11,6 +11,7 @@ import jmri.jmrit.logixng.LogixNGPreferences;
 import jmri.JmriException;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorManager;
+import jmri.jmrit.logixng.LogixNG_Manager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,16 +68,20 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
                     log.error("Failed to get default configure manager");  // NOI18N
                 } else {
                     results = cm.load(file);
+
+                    // If LogixNGs aren't setup, the actions and expressions will not
+                    // be stored if the user stores the tables and panels. So we need
+                    // to try to setup LogixNGs even if the loading failed.
+                    LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
+                    logixNG_Manager.setupAllLogixNGs();
+
                     if (results) {
                         // insure logix etc fire up
                         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
                         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
 
-                        jmri.jmrit.logixng.LogixNG_Manager logixNG_Manager =
-                                InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
-                        logixNG_Manager.setupAllLogixNGs();
                         if (InstanceManager.getDefault(LogixNGPreferences.class).getStartLogixNGOnStartup()
-                                && InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class).isStartLogixNGsOnLoad()) {
+                                && logixNG_Manager.isStartLogixNGsOnLoad()) {
                             logixNG_Manager.activateAllLogixNGs();
                         }
                     }
