@@ -38,7 +38,7 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
     public void setCodeButtonHandler(CodeButtonHandler codeButtonHandler) { _mCodeButtonHandler = codeButtonHandler; }
 
     private LinkedList<SignalHeadPropertyChangeListenerMaintainer> _mSignalHeadPropertyChangeListenerLinkedList = new LinkedList<>();
-    @SuppressWarnings("LeakingThisInConstructor")   // NOI18N
+//    @SuppressWarnings("LeakingThisInConstructor")   // NOI18N
     private class SignalHeadPropertyChangeListenerMaintainer {
         private final NBHSignal _mSignal;
         private final PropertyChangeListener _mPropertyChangeListener = (PropertyChangeEvent e) -> { handleSignalChange(e); };

@@ -118,12 +118,12 @@ public class MarklinTurnout extends AbstractTurnout
         return true;
     }
 
-    final static int UNKNOWN = MarklinConstants.PROTOCOL_UNKNOWN;
+    final static int PROTOCOL_UNKNOWN = MarklinConstants.PROTOCOL_UNKNOWN;
     final static int DCC = MarklinConstants.PROTOCOL_DCC;
     final static int MM2 = MarklinConstants.PROTOCOL_MM2;
     final static int SFX = MarklinConstants.PROTOCOL_SX;
 
-    int protocol = UNKNOWN;
+    int protocol = PROTOCOL_UNKNOWN;
 
     /**
      * Tell the layout to go to new state.
@@ -161,7 +161,7 @@ public class MarklinTurnout extends AbstractTurnout
     @Override
     public void reply(MarklinReply m) {
         if (m.getPriority() == MarklinConstants.PRIO_1 && m.getCommand() >= MarklinConstants.ACCCOMMANDSTART && m.getCommand() <= MarklinConstants.ACCCOMMANDEND) {
-            if (protocol == UNKNOWN) {
+            if (protocol == PROTOCOL_UNKNOWN) {
                 if (m.getAddress() == _number + MarklinConstants.MM1ACCSTART - 1) {
                     protocol = MM2;
                 } else if (m.getAddress() == _number + MarklinConstants.DCCACCSTART - 1) {

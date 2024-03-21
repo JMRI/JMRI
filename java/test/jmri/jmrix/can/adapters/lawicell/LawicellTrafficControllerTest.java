@@ -17,7 +17,7 @@ import org.junit.jupiter.api.*;
 public class LawicellTrafficControllerTest extends jmri.jmrix.can.TrafficControllerTest {
    
     @Test
-    @SuppressWarnings("AssertEqualsBetweenInconvertibleTypes") // CanReply and CanMessage can be tested via Equals
+//    @SuppressWarnings("AssertEqualsBetweenInconvertibleTypes") // CanReply and CanMessage can be tested via Equals
     public void sendRtrAsCanReplyCanMessageTest() throws IOException {
         LawicellTrafficController ltc = (LawicellTrafficController)tc;
 

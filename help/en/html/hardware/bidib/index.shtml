@@ -34,7 +34,7 @@
         <li><a href="#documentation">Documentation</a></li>
       </ul>
       
-      <img src="images/bidib_logo.png" class="floatRight" alt="BiDiB logo" height="48">
+      <img src="images/bidib_logo.png" class="floatRight" alt="BiDiB logo" height="48" width="150">
       
       <a name="summary" id="summary"></a>
       <h2>Summary</h2>
@@ -101,7 +101,7 @@
       
       <h4>Simulator</h4>
       
-      <p>A BiDiB simulator is provided. This connection type has field for a XML file with the simulated configuration. The location for this file is the profile directory.</p>
+      <p>A BiDiB simulator is provided. This connection type has a field for a XML file with the simulated configuration. The location for this file is the profile directory.</p>
       
       <h3>Settings</h3>
       
@@ -145,7 +145,7 @@
         <tr>
           <td>a</td>
           <td>(non-DCC) accessory address</td>
-          <td>turnouts and sensors if node is not a command station and the node supports BiDiB accessories</td>
+          <td>turnouts if node is not a command station and the node supports BiDiB accessories</td>
         </tr>
         <tr>
           <td>f</td>

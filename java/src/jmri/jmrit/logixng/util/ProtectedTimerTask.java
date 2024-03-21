@@ -43,7 +43,7 @@ public abstract class ProtectedTimerTask extends TimerTask {
      * This code ensures that we don't return from this method until the timer
      * task is cancelled and that it's not running any more.
      */
-    @SuppressWarnings(value = "SleepWhileInLoop")
+//    @SuppressWarnings(value = "SleepWhileInLoop")
     public void stopTimer() {
         synchronized (_lock) {
             _stopTimer = true;

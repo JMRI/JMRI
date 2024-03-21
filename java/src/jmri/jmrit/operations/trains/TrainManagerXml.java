@@ -95,6 +95,11 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
             log.debug("{} file could not be read", name);
             return;
         }
+        
+        if (!root.getName().equals("operations-config")) {
+            log.warn("OperationsPro train file corrupted");
+            return;
+        }
 
         InstanceManager.getDefault(TrainManager.class).load(root);
         InstanceManager.getDefault(TrainScheduleManager.class).load(root);
@@ -382,7 +387,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
             if (file == null) {
                 log.debug("No ({}) manifest file to backup", name);
             } else if (file.canWrite()) {
-                String lastModified = new SimpleDateFormat("yyyyMMdd-HHmmss").format(file.lastModified()); // NOI18N
+                String lastModified = new SimpleDateFormat("yyyyMMdd-HHmmssSSS").format(file.lastModified()); // NOI18N
                 String backupName = getBackupManifestFileName(name, lastModified); // NOI18N
                 if (file.renameTo(new File(backupName))) {
                     log.debug("created new manifest backup file {}", backupName);
@@ -409,7 +414,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
             if (file == null) {
                 log.debug("No ({}) switch list file to backup", name);
             } else if (file.canRead()) {
-                String lastModified = new SimpleDateFormat("yyyyMMdd-HHmmss").format(file.lastModified()); // NOI18N
+                String lastModified = new SimpleDateFormat("yyyyMMdd-HHmmssSSS").format(file.lastModified()); // NOI18N
                 String backupName = getBackupSwitchListFileName(name, lastModified); // NOI18N
                 File backupCopy = new File(backupName);
                 try {
@@ -439,7 +444,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
             if (file == null) {
                 log.debug("No ({}) train build status file to backup", name);
             } else if (file.canRead()) {
-                String lastModified = new SimpleDateFormat("yyyyMMdd-HHmmss").format(file.lastModified()); // NOI18N
+                String lastModified = new SimpleDateFormat("yyyyMMdd-HHmmssSSS").format(file.lastModified()); // NOI18N
                 String backupName = getBackupBuildStatusFileName(name, lastModified); // NOI18N
                 File backupCopy = new File(backupName);
                 try {

@@ -7,35 +7,43 @@ import jmri.jmrit.logixng.SymbolTable;
 
 /**
  * A parsed expression
- * 
+ *
  * @author Daniel Bergqvist 2021
  */
 public class ExpressionNodeMap implements ExpressionNodeWithParameter {
 
     private final ExpressionNode _exprNode;
-    
+
     public ExpressionNodeMap(ExpressionNode exprNode) throws FunctionNotExistsException {
         _exprNode = exprNode;
     }
-    
+
     @SuppressWarnings("unchecked")
     @Override
     public Object calculate(Object parameter, SymbolTable symbolTable) throws JmriException {
         if (parameter == null) throw new NullPointerException("Parameter is null");
-        if (!(parameter instanceof Map)) throw new IllegalArgumentException("Parameter is not a Map");
-        
+
         Object index = _exprNode.calculate(symbolTable);
-        
+
+        // JSON map node
+        if (parameter instanceof com.fasterxml.jackson.databind.node.ObjectNode) {
+            return ((com.fasterxml.jackson.databind.node.ObjectNode)parameter).findValue(index.toString());
+        }
+
+//        if (!(parameter instanceof Map)) return parameter.getClass().getName();
+
+        if (!(parameter instanceof Map)) throw new IllegalArgumentException("Parameter is not a Map");
+
         return ((Map<Object,Object>)parameter).get(index);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean canBeAssigned() {
         // We don't know so we assume that it is.
         return true;
     }
-    
+
     /**
      * Assign a value to this expression from a parameter.
      * @param parameter the parameter
@@ -48,12 +56,12 @@ public class ExpressionNodeMap implements ExpressionNodeWithParameter {
     public void assignValue(Object parameter, SymbolTable symbolTable, Object value) throws JmriException {
         if (parameter == null) throw new NullPointerException("Parameter is null");
         if (!(parameter instanceof Map)) throw new IllegalArgumentException("Parameter is not a Map");
-        
+
         Object index = _exprNode.calculate(symbolTable);
-        
+
         ((Map<Object,Object>)parameter).put(index, value);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public String getDefinitionString() {
@@ -63,5 +71,5 @@ public class ExpressionNodeMap implements ExpressionNodeWithParameter {
         str.append("}");
         return str.toString();
     }
-    
+
 }

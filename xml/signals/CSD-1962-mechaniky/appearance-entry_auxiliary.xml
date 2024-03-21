@@ -30,6 +30,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Image types</revremark>
     </revision>    
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2024-02-22</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Small icons</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>CSD-1962-mechaniky</aspecttable>
@@ -43,6 +49,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/400_stuj_2pv.gif</imagelink>
       <imagelink type="prototype-night">../../../resources/icons/largeschematics/aspects/CSD-1962/400_stuj_2pv_n.gif</imagelink>
       <imagelink type="hlavní-2RP">../../../resources/icons/largeschematics/aspects/CSD-1962/400_stuj_2pv.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/x00_stuj_2.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -50,6 +57,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/401_volno_2pv.gif</imagelink>
       <imagelink type="prototype-night">../../../resources/icons/largeschematics/aspects/CSD-1962/401_volno_2pv_n.gif</imagelink>
       <imagelink type="hlavní-2RP">../../../resources/icons/largeschematics/aspects/CSD-1962/401_volno_2pv.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/x01_volno_2.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -57,6 +65,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/402_vystraha_2pv.gif</imagelink>
       <imagelink type="prototype-night">../../../resources/icons/largeschematics/aspects/CSD-1962/402_vystraha_2pv_n.gif</imagelink>
       <imagelink type="hlavní-2RP">../../../resources/icons/largeschematics/aspects/CSD-1962/402_vystraha_2pv.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/x02_vystraha_3.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -64,6 +73,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/407_vo_2pv.gif</imagelink>
       <imagelink type="prototype-night">../../../resources/icons/largeschematics/aspects/CSD-1962/407_vo_2pv_n.gif</imagelink>
       <imagelink type="hlavní-2RP">../../../resources/icons/largeschematics/aspects/CSD-1962/407_vo_2pv.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/x07_vo_3.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -71,6 +81,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/431_opn_2pv.gif</imagelink>
       <imagelink type="prototype-night">../../../resources/icons/largeschematics/aspects/CSD-1962/431_opn_2pv_n.gif</imagelink>
       <imagelink type="hlavní-2RP">../../../resources/icons/largeschematics/aspects/CSD-1962/431_opn_2pv.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/x31_opn_2.gif</imagelink>
     </appearance>
 
   </appearances>

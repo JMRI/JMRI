@@ -1,15 +1,10 @@
-# Read a CSV (comma-separated variable) file containing a LCC node backup and convert 
+# Read a CSV (comma-separated variable) file containing a LCC node backup and convert
 # row-by-row to a LCC backup file.
 #
 # Author: Bob Jacobsen, copyright 2023
 # Part of the JMRI distribution
 
-import jmri
-
 import java
-import java.io
-
-import javax
 from javax.swing import JFileChooser
 
 import org.apache.commons.csv
@@ -25,10 +20,10 @@ retOut = fcOut.showSaveDialog(None)
 
 if retIn == JFileChooser.APPROVE_OPTION and retOut == JFileChooser.APPROVE_OPTION :
     # We've got valid filenames
-    
+
     inFileName = fcIn.getSelectedFile().toString()
     infile = java.io.FileReader(java.io.File(inFileName))
-    
+
     outFileName = fcOut.getSelectedFile().toString()
     outfile = open(outFileName, "w")
 

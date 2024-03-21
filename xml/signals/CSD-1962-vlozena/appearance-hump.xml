@@ -24,6 +24,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Initial version</revremark>
     </revision>    
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2024-02-22</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Small icons</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>CSD-1962-vlozena</aspecttable>
@@ -35,21 +41,25 @@
     <appearance>
       <aspectname>Sunout zakázáno</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/216_su_zakazano_sp.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/s16_suz_4.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Sunout pomalu</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/217_su_pomalu_sp.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/s17_supo_4.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Sunout rychleji</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/218_su_rychle_sp.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/s18_sury_4.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Zpět</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/219_su_zpet_sp.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/s19_zp_4.gif</imagelink>
     </appearance>
 
   </appearances>

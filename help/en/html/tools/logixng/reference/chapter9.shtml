@@ -193,9 +193,9 @@
       <h3>Functions</h3>
 
       <p>Formula supports functions, like sin(x) and random(). Some functions takes one or several
-      parameters. A function has an identifier, for example "sin", followed by a left parantheses,
+      parameters. A function has an identifier, for example "sin", followed by a left parentheses,
       optional one or several parameters separated by comma, and then closed by a right
-      parantheses.</p>
+      parentheses.</p>
 
       <p>The dialog boxes for editing an action or expression, and the dialog box for editing
       variables, has a button "Formula functions". If you click on that button, you get a new
@@ -220,6 +220,12 @@
           <div style="margin-left: 2em;">
             <a href="images/chapter9/functions_clock.png"><img src=
             "images/chapter9/functions_clock.png" alt="Chapter 9 clock functions"></a>
+          </div>
+        </li>
+        <li>Common
+          <div style="margin-left: 2em;">
+            <a href="images/chapter9/functions_common.png"><img src=
+            "images/chapter9/functions_common.png" alt="Chapter 9 common functions"></a>
           </div>
         </li>
         <li>Convert
@@ -303,6 +309,40 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h3>Access to Java Methods</h3>
+
+      <p>Sometimes it is possible to access Java methods.  For example, for most of the JMRI beans
+      it is possible to access the public methods in the bean's Interface.  This can also apply to
+      some of the main Java classes, such as String.</p>
+
+      <h5>Java Arrays<span class="since">since 5.7.5</span></h5>
+
+      <p>Some Java methods return a Java Array instead of a List.  The LogixNG Formula has been
+      enhanced to work with a Java Array.</p>
+
+      <p>Here is an example using the Java array created by the String <strong>split</strong> method.</p>
+
+      <pre style="border: 2px solid #778899; margin: 1em; padding: 0.1em;">
+LogixNG: IQ:AUTO:0001
+    ConditionalNG: IQC:AUTO:0001
+        ! A
+            Many
+               ::: Local variable "a_b", init to String "Hello_World"
+               ::: Local variable "a", init to None ""
+               ::: Local variable "b", init to None ""
+               ::: Local variable "a_b_array", init to None ""
+                ! A1
+                    Digital Formula: a_b_array = a_b.split("\_")
+                ! A2
+                    Digital Formula: a = a_b_array[0]
+                ! A3
+                    Digital Formula: b = a_b_array[1]
+                ! A4
+                    Log local variables
+      </pre>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h3 id="jythonFunction">Advanced: Add new function with Jython</h3>
 
       <p>It's possible to create a new function using Jython to be used by a formula. The code below
@@ -347,8 +387,7 @@
       <p>Example Jython script that defines the <strong>getBlockValue</strong> function that takes
       the name of a block as its parameter:</p>
 
-      <div style="margin-left: 2em">
-        <pre>
+      <pre style="border: 2px solid #778899; margin: 1em; padding: 0.1em;">
 import jmri
 
 class BlockValue(jmri.jmrit.logixng.util.parser.Function):
@@ -373,12 +412,11 @@ class BlockValue(jmri.jmrit.logixng.util.parser.Function):
     return None if block is None else block.getValue()
 
 jmri.InstanceManager.getDefault(jmri.jmrit.logixng.util.parser.FunctionManager).put("getBlockValue", BlockValue())
-        </pre>
-      </div>
+      </pre>
 
       <h6>Sample LogixNG conditional</h6>
-      <div style="margin-left: 2em">
-        <pre>
+
+      <pre style="border: 2px solid #778899; margin: 1em; padding: 0.1em;">
 LogixNG: Test Script Function
     ConditionalNG: Get Block Value
         ! A
@@ -391,7 +429,6 @@ LogixNG: Test Script Function
                 ! A2
                     Log local variables
         </pre>
-      </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -432,6 +469,54 @@ LogixNG: Test Script Function
       <p>See the later chapter on threads (may not exist yet) for more information of LogixNG
       threads.</p>
 
+      <h3>Developer Note: Adding a new function</h3>
+
+      <p>Select a suitable module for the new function. Each module has its own class and most
+      module classes reside in the <em>jmri.jmrit.logixng.util.parser.functions</em> package,
+      although it's possible to put a module in another Java package if desired. If a module is
+      aimed for an particular part of JMRI, for example LocoNet, it might be better to put it in the
+      <em>jmri.jmrix.loconet.logixng</em> package.</p>
+
+      <p>The module has a <strong>getFunctions()</strong> method which tells the
+      <strong>FunctionManager</strong> which functions each module provides. This method returns a
+      set of functions. To create a new function, add a new anonymous class to this set. Have the
+      new class extend the <strong>AbstractFunction</strong> class.</p>
+
+      <p>The <strong>AbstractFunction</strong> constructor takes three parameters. The module, the name of the
+      function and the description of the function. The anonymous class then needs to implement the
+      <strong>calculate()</strong> method which has the actual implementation of the new function.</p>
+
+      <p>The <strong>calculate()</strong> method takes two parameters, the symbol table and the
+      parameters to the function. It then does the desired calculation for the function and then
+      returns the value. <strong>parameterList.size()</strong> gives the number of parameters for
+      the function. <strong>parameterList.get(index).calculate(symbolTable)</strong> returns the
+      value of parameter index.</p>
+
+      <p>The <em>jmri.util.TypeConversionUtil</em> class has some useful utility methods to convert
+      the parameters to some types, for example String, long and double.</p>
+
+      <p>Example: The <strong>sqrt()</strong> function in the Math module. The
+      <strong>addSqrtFunction()</strong> method is called from the MathFunctions.getFunctions()
+      method.</p>
+
+<pre>
+     private void addSqrtFunction(Set&lt;Function&gt; functionClasses) {
+         functionClasses.add(new AbstractFunction(this, "sqrt", Bundle.getMessage("Math.sqrt_Descr")) {
+             @Override
+             public Object calculate(SymbolTable symbolTable, List&lt;ExpressionNode&gt; parameterList)
+                     throws JmriException {
+
+                 if (parameterList.size() == 1) {
+                     double param = TypeConversionUtil.convertToDouble(parameterList.get(0).calculate(symbolTable), false);
+                     return Math.sqrt(param);
+                 } else {
+                     throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName()));
+                 }
+             }
+         });
+     }
+</pre>
+
       <hr>
 
       <p><a href="chapter10.shtml">Chapter 10 - Modules</a>
@@ -439,6 +524,7 @@ LogixNG: Test Script Function
 
       <p><a href="index.shtml">Return to the Reference TOC</a>
       </p>
+
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

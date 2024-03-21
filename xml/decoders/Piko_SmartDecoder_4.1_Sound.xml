@@ -19,6 +19,8 @@
 	<!-- Version 3 - Add CVs for Extended Function Mapping Shift Bank 1 & 2 -->
 	<version author="Ulrich Gerlach" version="4" lastUpdated="2023-12-03"/>
 	<!-- Version 4 - Add English translations -->
+	<version author="Ulrich Gerlach" version="5" lastUpdated="2024-02-02"/>
+	<!-- Version 5 - Add CVs for PWM modulations -->
 	<!-- WARNING: output names fully linked to function mapping include file - do not change independently       -->
 	<decoder>
 		<family name="PIKO SmartDecoder 4.1" mfg="PIKO" lowVersionID="30" highVersionID="35" comment="Decoders not sorted (necessarily) in numerical order">
@@ -1135,19 +1137,7 @@
 				<tooltip xml:lang="cs">Maximální délka doby trvání je v krocích po 100 μs (min = CV53)</tooltip>
 			</variable>
 			<!--extended function mapping on Piko Smartdecoder (Sound) 4.1, includes cv 31-32 bank switches-->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv257-512_v4.1.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv321-336_v4.1.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv337-352_v4.1.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv353-368_v4.1.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv369-384_v4.1.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv385-400_v4.1.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv401-416_v4.1.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv417-432_v4.1.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv433-448_v4.1.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv449-464_v4.1.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv465-480_v4.1.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv481-496_v4.1.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv497-512_v4.1.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/piko/cv257.512extendedmap_bank1-4.xml"/>
 			<!--Sound CVs -->
 			<xi:include href="http://jmri.org/xml/decoders/piko/cv900-1024_v4.1.xml"/>
 			<!-- CV 900.1021=4-931.1021=4 Piko Info: Volume 0-255 of the single sounds -->

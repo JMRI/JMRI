@@ -598,6 +598,9 @@
          who improved the sound support, has provided multiple sound projects,
          and helped with Intellibox development.</li>
 
+        <li>Vincent Kispersky, <!-- vints1 -->
+         who provided an MDE decoder definition.</li>
+
         <li>Scott Kitts, who helped debug the new communications library for Mac OS X</li>
 
         <li>Arco Klippstein, <!-- arthkl -->

@@ -604,7 +604,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             TripleMemo empty = null;    // an existing empty cell                       // TODO: switch to int index for handle update below
             TripleMemo bestEmpty = null;// an existing empty cell with matching consumer// TODO: switch to int index for handle update below
             TripleMemo sameNodeID = null;// cell with matching consumer                 // TODO: switch to int index for handle update below
-            for (int i = 1; i < memos.size(); i++) {
+            for (int i = 0; i < memos.size(); i++) {
                 var memo = memos.get(i);
                 if (memo.eventID.equals(eventID) ) {
                     // if nodeID matches, already present; ignore
@@ -707,7 +707,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             TripleMemo empty = null;    // an existing empty cell                       // TODO: switch to int index for handle update below
             TripleMemo bestEmpty = null;// an existing empty cell with matching producer// TODO: switch to int index for handle update below
             TripleMemo sameNodeID = null;// cell with matching consumer                 // TODO: switch to int index for handle update below
-            for (int i = 1; i < memos.size(); i++) {
+            for (int i = 0; i < memos.size(); i++) {
                 var memo = memos.get(i);
                 if (memo.eventID.equals(eventID) ) {
                     // if nodeID matches, already present; ignore
@@ -715,6 +715,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                         // might be 2nd EventTablePane to process the data,
                         // hence memos would already have been processed. To
                         // handle that, always fire a change to the table.
+                        log.trace("    nodeDI == memo.consumer");
                         handleTableUpdate(i, i);
                         return;
                     }
@@ -765,6 +766,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             }
 
             // have to make a new one
+            log.trace("    make a new one");
             var memo = new TripleMemo(
                             eventID,
                             null,

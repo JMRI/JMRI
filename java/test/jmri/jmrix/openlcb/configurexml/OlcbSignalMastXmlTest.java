@@ -65,7 +65,7 @@ public class OlcbSignalMastXmlTest {
     }
 
     @BeforeAll
-    @SuppressWarnings("deprecated") // OlcbInterface(NodeID, Connection)
+    @SuppressWarnings("deprecation") // OlcbInterface(NodeID, Connection)
     static public void preClassInit() {
         JUnitUtil.setUp();
        // this test is run separately because it leaves a lot of threads behind

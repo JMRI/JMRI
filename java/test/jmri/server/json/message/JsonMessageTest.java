@@ -46,7 +46,7 @@ public class JsonMessageTest {
         Assert.assertNotNull(message);
         JsonNode data = message.path(JSON.DATA);
         Assert.assertNotNull(data);
-        Assert.assertEquals(JsonMessage.INFO, data.path(JSON.TYPE).asText());
+        Assert.assertEquals(JsonMessage.TYPE.INFO.toString(), data.path(JSON.TYPE).asText());
         Assert.assertEquals("testSend1", data.path(JsonMessage.MESSAGE).asText());
         Assert.assertTrue(data.path(JsonMessage.CONTEXT).isNull());
         // send to client "1" with default (null) context
@@ -55,7 +55,7 @@ public class JsonMessageTest {
         Assert.assertNotNull(message);
         data = message.path(JSON.DATA);
         Assert.assertNotNull(data);
-        Assert.assertEquals(JsonMessage.INFO, data.path(JSON.TYPE).asText());
+        Assert.assertEquals(JsonMessage.TYPE.INFO.toString(), data.path(JSON.TYPE).asText());
         Assert.assertEquals("testSend2", data.path(JsonMessage.MESSAGE).asText());
         Assert.assertTrue(data.path(JsonMessage.CONTEXT).isNull());
         // send to non-existent client "2"
@@ -64,7 +64,7 @@ public class JsonMessageTest {
         Assert.assertNotNull(message);
         data = message.path(JSON.DATA);
         Assert.assertNotNull(data);
-        Assert.assertEquals(JsonMessage.INFO, data.path(JSON.TYPE).asText());
+        Assert.assertEquals(JsonMessage.TYPE.INFO.toString(), data.path(JSON.TYPE).asText());
         Assert.assertEquals("testSend2", data.path(JsonMessage.MESSAGE).asText());
         Assert.assertTrue(data.path(JsonMessage.CONTEXT).isNull());
         // send to client "1" with non-null context
@@ -73,7 +73,7 @@ public class JsonMessageTest {
         Assert.assertNotNull(message);
         data = message.path(JSON.DATA);
         Assert.assertNotNull(data);
-        Assert.assertEquals(JsonMessage.SUCCESS, data.path(JSON.TYPE).asText());
+        Assert.assertEquals(JsonMessage.TYPE.SUCCESS.toString(), data.path(JSON.TYPE).asText());
         Assert.assertEquals("testSend4", data.path(JsonMessage.MESSAGE).asText());
         Assert.assertFalse(data.path(JsonMessage.CONTEXT).isNull());
         Assert.assertEquals(JSON.ASPECT_UNKNOWN, data.path(JsonMessage.CONTEXT).path(JSON.ASPECT).asText());
@@ -105,11 +105,11 @@ public class JsonMessageTest {
 
     @Test
     public void testGetType() {
-        Assert.assertEquals(JsonMessage.INFO, new JsonMessage("testGetType", locale).getType());
-        Assert.assertEquals(JsonMessage.INFO, new JsonMessage(JsonMessage.TYPE.INFO, "testGetType", locale).getType());
-        Assert.assertEquals(JsonMessage.SUCCESS, new JsonMessage(JsonMessage.TYPE.SUCCESS, "testGetType", locale).getType());
-        Assert.assertEquals(JsonMessage.WARNING, new JsonMessage(JsonMessage.TYPE.WARNING, "testGetType", locale).getType());
-        Assert.assertEquals(JsonMessage.ERROR, new JsonMessage(JsonMessage.TYPE.ERROR, "testGetType", locale).getType());
+        Assert.assertEquals(JsonMessage.TYPE.INFO.toString(), new JsonMessage("testGetType", locale).getType());
+        Assert.assertEquals(JsonMessage.TYPE.INFO.toString(), new JsonMessage(JsonMessage.TYPE.INFO, "testGetType", locale).getType());
+        Assert.assertEquals(JsonMessage.TYPE.SUCCESS.toString(), new JsonMessage(JsonMessage.TYPE.SUCCESS, "testGetType", locale).getType());
+        Assert.assertEquals(JsonMessage.TYPE.WARNING.toString(), new JsonMessage(JsonMessage.TYPE.WARNING, "testGetType", locale).getType());
+        Assert.assertEquals(JsonMessage.TYPE.ERROR.toString(), new JsonMessage(JsonMessage.TYPE.ERROR, "testGetType", locale).getType());
     }
 
 }

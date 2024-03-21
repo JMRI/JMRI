@@ -205,9 +205,9 @@ public class BiDiBSignalMast extends AbstractSignalMast implements BiDiBNamedBea
             return;
         }
         if (newLit) {
-            var aspect = getAspect();
-            if (aspect != null) {
-                setAspect(aspect);
+            String a = getAspect();
+            if (a != null) {
+                setAspect(a);
             }
             super.setLit(newLit);
         } else {

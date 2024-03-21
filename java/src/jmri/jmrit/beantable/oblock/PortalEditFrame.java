@@ -44,7 +44,7 @@ public class PortalEditFrame extends JmriJFrame {
     private Portal _portal;
     private boolean _newPortal = false;
 
-    @SuppressWarnings("OverridableMethodCallInConstructor")
+//    @SuppressWarnings("OverridableMethodCallInConstructor")
     public PortalEditFrame(@Nonnull String title, Portal portal, PortalTableModel model) {
         super(title, true, true);
         this.model = model;
