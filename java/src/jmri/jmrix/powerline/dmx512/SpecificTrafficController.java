@@ -88,7 +88,7 @@ public class SpecificTrafficController extends SerialTrafficController {
                         //log.info("Start Break");
                         activePort.setBreak();
                         try {
-                            wait(10);
+                            Thread.sleep(10);
                         } catch (InterruptedException e) {
                             log.warn("transmitLoop did not expected to be interrupted");
                             break;
