@@ -237,7 +237,7 @@ public class AutomationItem extends PropertyChangeSupport implements java.beans.
     }
     
     public TrainSchedule getTrainSchedule() {
-        if (getAction() != null && getAction().isOtherMenuEnabled()) {
+        if (getAction() != null && getAction().getCode() == ActionCodes.ACTIVATE_TRAIN_SCHEDULE) {
             return InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(_trainScheduleId);
         }
         return null;

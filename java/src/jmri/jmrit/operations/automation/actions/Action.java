@@ -79,10 +79,6 @@ public abstract class Action extends PropertyChangeSupport {
         return (getCode() & ActionCodes.ENABLE_GOTO) == ActionCodes.ENABLE_GOTO;
     }
 
-    public boolean isOtherMenuEnabled() {
-        return (getCode() & ActionCodes.ENABLE_OTHER) == ActionCodes.ENABLE_OTHER;
-    }
-
     /**
      * Used to determine if this action can run concurrently with other actions.
      *
