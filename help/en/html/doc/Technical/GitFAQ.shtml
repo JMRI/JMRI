@@ -492,11 +492,11 @@
             <li>Bill can then get that by pulling it from Arnie's repository.
 
               <pre style="font-family: monospace;">
- git remote add https://github.com/arnie/JMRI.git arnie
+ git remote add arnie https://github.com/arnie/JMRI.git
 
  git fetch arnie arnie-great-tool
  git checkout arnie-great-tool
-</pre>where the 1st part of the "remote add" is the URL for Arnie's repository, and you just have
+</pre>where the 2nd part of the "remote add" is the URL for Arnie's repository, and you just have
 to do that command once to define "arnie" as an alias you can use in "git fetch".
             </li>
 
