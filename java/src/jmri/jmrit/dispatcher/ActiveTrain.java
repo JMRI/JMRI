@@ -178,6 +178,15 @@ public class ActiveTrain implements PropertyChangeProvider {
      */
     public static final int ALLOCATE_BY_SAFE_SECTIONS = 0;
 
+    /**
+     * How much of the train can be detected
+     */
+    public enum TrainDetection {
+        TRAINDETECTION_WHOLETRAIN,
+        TRAINDETECTION_HEADONLY,
+        TRAINDETECTION_HEADANDTAIL
+    }
+
     // instance variables
     private Transit mTransit = null;
     private String mTrainName = "";
@@ -210,6 +219,7 @@ public class ActiveTrain implements PropertyChangeProvider {
     public final static int NODELAY = 0x00;
     public final static int TIMEDDELAY = 0x01;
     public final static int SENSORDELAY = 0x02;
+    private TrainDetection trainDetection = TrainDetection.TRAINDETECTION_HEADONLY;
 
     private int mDelayedRestart = NODELAY;
     private int mDelayedStart = NODELAY;
@@ -336,6 +346,22 @@ public class ActiveTrain implements PropertyChangeProvider {
             return Bundle.getMessage("DONE");
         }
         return ("");
+    }
+
+    /**
+     * sets the train detection type
+     * @param value {@link ActiveTrain.TrainDetection}
+     */
+    public void setTrainDetection(TrainDetection value) {
+        trainDetection = value;
+    }
+
+    /**
+     * Gets the train detection type
+     * @return {@link ActiveTrain.TrainDetection}
+     */
+    public TrainDetection getTrainDetection() {
+        return trainDetection;
     }
 
     public boolean isTransitReversed() {

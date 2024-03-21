@@ -390,7 +390,11 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Replace boolean ResistanceWheelSet with TrainDetection, which supports...</li>
+             <li>Whole Train - the entire train is detected.</li>
+             <li>Head Only - only the front of the train can be detected.</li>
+             <li>Head and Tail - the front and rear are detected but not any bits in between.</li>
+             <li>Any TrainInfo files that are edited will be saved in the updated way and cannot be read by older versions.</li>
         </ul>
 
     <h3>Dispatcher System</h3>

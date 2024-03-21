@@ -3,6 +3,7 @@ package jmri.jmrit.dispatcher;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.jmrit.dispatcher.ActiveTrain.TrainDetection;
 import jmri.jmrit.dispatcher.DispatcherFrame.TrainsFrom;
 
 /**
@@ -71,7 +72,7 @@ public class TrainInfo {
     private float speedFactor = 1.0f;
     private float maxSpeed = 0.6f;
     private String rampRate = Bundle.getMessage("RAMP_NONE");
-    private boolean resistanceWheels = true;
+    private TrainDetection trainDetection = TrainDetection.TRAINDETECTION_HEADONLY;
     private boolean runInReverse = false;
     private boolean soundDecoder = false;
     private float maxTrainLength = 200.0f;
@@ -533,12 +534,45 @@ public class TrainInfo {
         return rampRate;
     }
 
-    public void setResistanceWheels(boolean b) {
-        resistanceWheels = b;
+    /**
+     * Set the detection get
+     * @param b {@link ActiveTrain.TrainDetection}
+     */
+    public void setTrainDetection(TrainDetection b) {
+        trainDetection = b;
     }
 
+    /**
+     * Get the detection type
+     * @return  {@link ActiveTrain.TrainDetection}
+     */
+    public TrainDetection getTrainDetection() {
+        return trainDetection;
+    }
+
+    /**
+     * @deprecated use {@link #setTrainDetection}
+     * @param b true or false
+     */
+    @Deprecated (since="5.7.6",forRemoval=true)
+    public void setResistanceWheels(boolean b) {
+        if (b) {
+            trainDetection = TrainDetection.TRAINDETECTION_WHOLETRAIN;
+        } else {
+            trainDetection = TrainDetection.TRAINDETECTION_HEADONLY;
+        }
+    }
+
+    /**
+     * @deprecated use {@link #getTrainDetection}
+     * @return true or false
+     */
+    @Deprecated (since="5.7.6",forRemoval=true)
     public boolean getResistanceWheels() {
-        return resistanceWheels;
+        if (trainDetection == TrainDetection.TRAINDETECTION_WHOLETRAIN) {
+            return true;
+        }
+        return false;
     }
 
     public void setRunInReverse(boolean b) {
