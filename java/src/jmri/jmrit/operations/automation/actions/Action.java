@@ -99,6 +99,19 @@ public abstract class Action extends PropertyChangeSupport {
     public String getActionString() {
         return getFormatedMessage("{0}{1}{2}{3}{4}{5}"); // NOI18N
     }
+    
+    public String getStatus() {
+        if (getAutomationItem() != null) {
+            if (getAutomationItem().isActionRunning()) {
+                return Bundle.getMessage("Running");
+            }
+            if (!getAutomationItem().isActionRan()) {
+                return AutomationItem.NONE;
+            }
+            return getAutomationItem().isActionSuccessful() ? getActionSuccessfulString() : getActionFailedString();
+        }
+        return "unknown"; // NOI18N
+    }
 
     public String getActionSuccessfulString() {
         return Bundle.getMessage("ButtonOK");

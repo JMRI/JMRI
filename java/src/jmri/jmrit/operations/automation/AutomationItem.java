@@ -320,14 +320,10 @@ public class AutomationItem extends PropertyChangeSupport implements java.beans.
     }
 
     public String getStatus() {
-        if (isActionRunning())
-            return Bundle.getMessage("Running");
-        if (!isActionRan())
-            return NONE;
-        if (getAction() != null)
-            return isActionSuccessful() ? getAction().getActionSuccessfulString() : getAction().getActionFailedString();
-        else
-            return "unknown"; // NOI18N
+        if (getAction() != null) {
+            return getAction().getStatus();
+        }
+        return "unknown"; // NOI18N
     }
     
     public void reset() {
