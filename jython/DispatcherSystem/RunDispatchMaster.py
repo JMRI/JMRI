@@ -103,6 +103,10 @@ class RunDispatcherMaster():
         sensors.getSensor("checkRouteSensor").setKnownState(ACTIVE)
         sensors.getSensor("soundSensor").setKnownState(INACTIVE)
         sensors.getSensor("stopAtStopSensor").setKnownState(ACTIVE)
+        global stored_simulate
+        if 'stored_simulate' in globals():
+            if stored_simulate == ACTIVE:
+                sensors.getSensor("simulateSensor").setKnownState(ACTIVE)
 
 
 if __name__ == '__builtin__':

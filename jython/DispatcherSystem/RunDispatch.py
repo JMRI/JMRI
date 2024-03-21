@@ -398,19 +398,27 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
             return
 
     def optionally_reset_all_trains(self):
+        global stored_simulate
         opt1= "keep as is"
-        opt2 = "reset sall trains"
+        opt2 = "reset all trains"
         res = OptionDialog().customQuestionMessage2str("reset positions of trains?", "", opt1, opt2)
-
+        # store the state of the simulate button
+        stored_simulate = sensors.getSensor("simulateSensor").getKnownState()
         if res == opt2:
 
             self.stop_route_threads()
+            print "self.stop_route_threads()"
             self.remove_train_values()
+            print "self.remove_train_values()"
             self.delete_active_transits()
-            # self.stop_all_threads()
+            print "self.delete_active_transits()"
+            self.stop_all_threads()
+            print "self.stop_all_threads()"
         else:
             self.delete_active_transits()
+            print "self.delete_active_transits()"
             self.stop_all_threads()
+            print "self.stop_all_threads()"
 
             # msg = "Delete all active Transits?\n"+"\nCaution this may disrupt running trains\n"
             # title = "Transits"

@@ -19,10 +19,20 @@ import copy
 import jmri
 import java
 from org.python.core.util import StringUtil
+from threading import Thread
 
 
 CreateSchedulerPanel = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/SchedulerPanel.py')
 execfile(CreateSchedulerPanel)
+
+CreateRoutesPanel = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/RoutesPanel.py')
+execfile(CreateRoutesPanel)
+
+CreateEditRoutePanel = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/EditRoutePanel.py')
+execfile(CreateEditRoutePanel)
+
+CreateEditRoutePanel = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/Timetable.py')
+execfile(CreateEditRoutePanel)
 
 
 # fast_clock_rate = 12
@@ -36,6 +46,7 @@ tListener = None
 class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def __init__(self):
+        print "class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):"
         self.logLevel = 0
         self.frame = None
         self.f = None
@@ -51,7 +62,9 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         global schedule_trains_hourly
         global schedule_trains_glb
 
-        schedule_trains_glb = True        # do not schedule trains initially
+        # schedule trains initially
+        schedule_trains_glb = False
+        self.StopSchedulingtrains_action(None)      # Toggle schedule_trains_glb
 
         if 'schedule_trains_hourly' not in globals():
             schedule_trains_hourly = False
@@ -191,7 +204,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         global start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, scheduling_margin_gbl, scheduling_in_operation_gbl
         if self.frame == None:
             # print "frame is None"
-            self.frame = jmri.util.JmriJFrame('Scedule Trains Hourly');
+            self.frame = jmri.util.JmriJFrame('Schedule Trains Hourly');
 
             panel = JPanel()
             panel.setLayout(BoxLayout(panel, BoxLayout.Y_AXIS))
@@ -495,73 +508,80 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                 schedule_trains_master.setName('Schedule Trains Master')
                 schedule_trains_master.start()
 
-    def StartScedulingTrains_action_old(self, event):
-        global instanceList
-        global schedule_trains_glb
-        global scheduling_in_operation_gbl
-
-        if self.logLevel > 0: print "StartSchedulingTrains_action"
-        # self.close_this_panel(event)
-        if self.logLevel > 0: print "B"
-        global start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, scheduling_margin_gbl, scheduling_in_operation_gbl
-
-        # read parameters
-        [self.start_hour, self.end_hour, fast_clock_rate, self.speed_not_operational, \
-         self.scheduling_margin, self.scheduling_in_operation_1] = self.read_list()
-        if self.logLevel > 0: print "read list" , [self.start_hour, self.end_hour, self.speed_not_operational]
-        if self.start_hour == "":
-            self.start_hour = "04"
-            self.end_hour = "22"
-            fast_clock_rate = "10"
-            self.speed_not_operational = "100"
-            self.scheduling_margin = "10"
-        start_hour_gbl = self.start_hour
-        end_hour_gbl = self.end_hour
-        speed_not_operational_gbl = self.speed_not_operational
-        scheduling_margin_gbl = self.scheduling_margin
-
-        if self.logLevel > 0: print "%%%%%%%%%%%%%%%%%%%%%%%%%  speed_not_operational_gbl has been set %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", speed_not_operational_gbl
-        if self.logLevel > 0: print "speed_not_operational_gbl defined ", TimeListener().speed_not_operational_gbl__is_defined()
-
-        #start scheduler
-
-        schedule_trains_master = ScheduleTrains()
-        schedule_trains_master.setName('Schedule Trains Master')
-
-        list_existing_schedule_trains = [iL.getName() for iL in instanceList if iL.getName() == 'Schedule Trains Master']
-        # print "list_existing_schedule_trains", list_existing_schedule_trains
-
-        if list_existing_schedule_trains == []:
-            # print "appending instance list"
-            instanceList.append(schedule_trains_master)
-            if schedule_trains_master.setup():
-                # print "setting name"
-                schedule_trains_master.setName('Schedule Trains Master')
-                schedule_trains_master.start()
-
-        scheduling_in_operation_gbl = "True"
-        stringToDisplay = "scheduling in operation: " + str(scheduling_in_operation_gbl)
-        rowFStage1Button_1.setText(stringToDisplay) # Update the label
+    # def StartScedulingTrains_action_old(self, event):
+    #     global instanceList
+    #     global schedule_trains_glb
+    #     global scheduling_in_operation_gbl
+    #
+    #     if self.logLevel > 0: print "StartSchedulingTrains_action"
+    #     # self.close_this_panel(event)
+    #     if self.logLevel > 0: print "B"
+    #     global start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, scheduling_margin_gbl, scheduling_in_operation_gbl
+    #
+    #     # read parameters
+    #     [self.start_hour, self.end_hour, fast_clock_rate, self.speed_not_operational, \
+    #      self.scheduling_margin, self.scheduling_in_operation_1] = self.read_list()
+    #     if self.logLevel > 0: print "read list" , [self.start_hour, self.end_hour, self.speed_not_operational]
+    #     if self.start_hour == "":
+    #         self.start_hour = "04"
+    #         self.end_hour = "22"
+    #         fast_clock_rate = "10"
+    #         self.speed_not_operational = "100"
+    #         self.scheduling_margin = "10"
+    #     start_hour_gbl = self.start_hour
+    #     end_hour_gbl = self.end_hour
+    #     speed_not_operational_gbl = self.speed_not_operational
+    #     scheduling_margin_gbl = self.scheduling_margin
+    #
+    #     if self.logLevel > 0: print "%%%%%%%%%%%%%%%%%%%%%%%%%  speed_not_operational_gbl has been set %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", speed_not_operational_gbl
+    #     if self.logLevel > 0: print "speed_not_operational_gbl defined ", TimeListener().speed_not_operational_gbl__is_defined()
+    #
+    #     #start scheduler
+    #
+    #     schedule_trains_master = ScheduleTrains()
+    #     schedule_trains_master.setName('Schedule Trains Master')
+    #
+    #     list_existing_schedule_trains = [iL.getName() for iL in instanceList if iL.getName() == 'Schedule Trains Master']
+    #     # print "list_existing_schedule_trains", list_existing_schedule_trains
+    #
+    #     if list_existing_schedule_trains == []:
+    #         # print "appending instance list"
+    #         instanceList.append(schedule_trains_master)
+    #         if schedule_trains_master.setup():
+    #             # print "setting name"
+    #             schedule_trains_master.setName('Schedule Trains Master')
+    #             schedule_trains_master.start()
+    #
+    #     scheduling_in_operation_gbl = "True"
+    #     stringToDisplay = "scheduling in operation: " + str(scheduling_in_operation_gbl)
+    #     rowFStage1Button_1.setText(stringToDisplay) # Update the label
 
     def StopSchedulingtrains_action(self, event):
         global schedule_trains_glb
         global scheduling_in_operation_gbl
+        global rowFStage1Button_1
 
         schedule_trains_glb = False
-
         #stop Scheduler
         self.stop_schedule_trains_threads()
+        if 'scheduling_in_operation_gbl' not in globals():
+            scheduling_in_operation_gbl = False
         if scheduling_in_operation_gbl == "False":
             self.setup_values_for_running()
             scheduling_in_operation_gbl = "True"
         else:
             scheduling_in_operation_gbl = "False"
+            print "scheduling_in_operation_gbl", scheduling_in_operation_gbl
+
         stringToDisplay = "scheduling in operation: " + str(scheduling_in_operation_gbl)
-        rowFStage1Button_1.setText(stringToDisplay) # Update the label
+
+        if 'rowFStage1Button_1' in globals():
+            rowFStage1Button_1.setText(stringToDisplay) # Update the label
 
     def setup_values_for_running(self):
 
         global instanceList
+        global rowFStage1Button_1
 
         # start scheduler
 
@@ -581,7 +601,9 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
         scheduling_in_operation_gbl = "True"
         stringToDisplay = "scheduling in operation: " + str(scheduling_in_operation_gbl)
-        rowFStage1Button_1.setText(stringToDisplay) # Update the label
+
+        if 'rowFStage1Button_1' in globals():
+            rowFStage1Button_1.setText(stringToDisplay) # Update the label
 
     def stop_schedule_trains_threads(self):
         global instanceList
@@ -885,7 +907,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             scheduling_margin_gbl, scheduling_in_operation_gbl
         global schedule_trains_hourly
 
-        if self.logLevel > 0: print "Setting up Time Scheduler"
+        if self.logLevel > -1: print "Setting up Time Scheduler"
         timebase = jmri.InstanceManager.getDefault(jmri.Timebase)
 
         # set up timebase and start at midnight
@@ -979,13 +1001,12 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
     def show_routes(self):
         a = jmri.jmrit.operations.routes.RoutesTableAction()
         a.actionPerformed(None)
+        CreateAndShowGUI6(self)
 
     def show_operations_trains(self):
         # show Operations form
-        a = jmri.jmrit.operations.trains.TrainsTableAction()
-        a.actionPerformed(None)
-        # picker()
-        # TimePickerExample()
+        # a = jmri.jmrit.operations.trains.TrainsTableAction()
+        # a.actionPerformed(None)
 
         # show dispatcher system form
         CreateAndShowGUI4(self)
@@ -1000,9 +1021,11 @@ from java.util.concurrent import TimeUnit
 class TimeListener(java.beans.PropertyChangeListener):
     # This is called every minute since it has been attached as timebase.addMinuteChangeListener(tListener)
     def __init__(self):
+        print "set up TimeListener"
         self.scheduler_master_sensor = sensors.getSensor("SchedulerSensor3")
         self.logLevel = 0
         self.prev_time = 0
+        self.timetable = None
         try:
             self.inhibit_fast_clock_error_message()
         except:
@@ -1015,6 +1038,7 @@ class TimeListener(java.beans.PropertyChangeListener):
 
     def propertyChange(self, event):
 
+        print "property change"
         global fast_clock_running_at_operational_speed
         if 'fast_clock_running_at_at_operational_speed' not in globals():
             fast_clock_running_at_operational_speed = True
@@ -1026,17 +1050,18 @@ class TimeListener(java.beans.PropertyChangeListener):
         # print "TimeListener: change",event.propertyName, "from", event.oldValue, "to", event.newValue
         minutes_old = int(event.getOldValue())
         minutes = int(event.getNewValue())
-        try:
-            if self.logLevel > 0: print "1 minutes_old", minutes_old, "minutes", minutes, "minutes_old2", minutes_old2, \
-                "(minutes - minutes_old2) % 60 ", (minutes - minutes_old2) % 60
-        except:
-            minutes_old2 = -1    # default value for minutes_old2
-            if self.logLevel > 0: print "2 minutes_old", minutes_old, "minutes", minutes, "minutes_old2", minutes_old2, \
-                "(minutes - minutes_old2) % 60 ", (minutes - minutes_old2) % 60
+        # try:
+        #     if self.logLevel > 0: print "1 minutes_old", minutes_old, "minutes", minutes, "minutes_old2", minutes_old2, \
+        #         "(minutes - minutes_old2) % 60 ", (minutes - minutes_old2) % 60
+        # except:
+        #     minutes_old2 = -1    # default value for minutes_old2
+        #     if self.logLevel > 0: print "2 minutes_old", minutes_old, "minutes", minutes, "minutes_old2", minutes_old2, \
+        #         "(minutes - minutes_old2) % 60 ", (minutes - minutes_old2) % 60
 
         if self.logLevel > 0: print "property change", event.newValue
-        if (minutes - minutes_old2) % 60 == 1:      # when we set the fast clock in the event timer it triggers a new event at the same time
+        if (minutes - minutes_old) % 60 == 1:      # when we set the fast clock in the event timer it triggers a new event at the same time
                                                     # we then get into a recursion. This ignores the second call at the same time
+            # print "x"
             if self.logLevel > 0: print "3 minutes_old", minutes_old, "minutes", minutes, "minutes_old2", minutes_old2, \
                 "(minutes - minutes_old2) % 60 ", (minutes - minutes_old2) % 60
 
@@ -1050,10 +1075,15 @@ class TimeListener(java.beans.PropertyChangeListener):
 
         # if fast_clock_running_at_operational_speed:
         #     pass
+        #     print "call process_operations_trains"
             self.process_operations_trains(event)    # schedules trains
             # print "attempting to send timetable via mqtt"
             try:
-                self.send_timetable_and_clock_via_mqtt(event)
+                # self.send_timetable_and_clock_via_mqtt(event)    # put this function in a separate thread
+                thread = Thread(target=self.send_timetable_and_clock_via_mqtt, args=(event,))
+                thread.start()
+                thread.join()
+
             except:
                 pass
         minutes_old2 = minutes
@@ -1106,17 +1136,38 @@ class TimeListener(java.beans.PropertyChangeListener):
                     if self.logLevel > 0: print "set_fast_clock_rate fqst:", "fcr", fcr
 
     def send_timetable_and_clock_via_mqtt(self, event):
+        global timebase
+        print "send_timetable_and_clock_via_mqtt"
         hour = int(timebase.getTime().getHours())
         minutes = event.newValue
+        time = str(hour).zfill(2) + ":" + str(minutes).zfill(2)
 
         self.send_clock_message(hour, minutes)
         # get list of origins, destinations and times at intermediate stations
         timetable = self.get_timetable(hour, minutes)
         # print "timetable", timetable
-
+        station = "Wolden"
+        self.generate_local_timetable(station, time, timetable)
         # send mqtt message
         self.send_timetable_messages(timetable)
-        
+
+    def generate_local_timetable(self, station, time, timetable):
+        print "generating timetable"
+        if self.timetable == None:
+            print "****** call Timetable"
+            self.timetable = Timetable(station)
+        else:
+            print "update"
+            # update the Timetable
+            # self.timetable.update(["jim1", "fred"])
+            # self.timetable.update_time(time)
+            print "timetable", timetable
+
+            self.timetable.update_timetable(time, timetable)
+
+        # print "generated timetable"
+
+
     def send_timetable_messages(self,timetable):
         msg = "["
         for [station_name, station_departure_time, last_station, last_station_arrival_time, via] in timetable:
@@ -1415,7 +1466,7 @@ class TimeListener(java.beans.PropertyChangeListener):
 class RunTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def __init__(self, train, graph):
-        self.logLevel = 1
+        self.logLevel = 0
         if train == None:
             if self.logLevel > 0: print "RunTrain: train == None"
         else:

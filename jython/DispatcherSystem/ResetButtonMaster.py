@@ -1508,6 +1508,7 @@ class createandshowGUI2(TableModelListener):
 
 
     def run_route(self, row, model, class_createandshowGUI2, class_ResetButtonMaster):
+        return
         [train_col, route_col, run_route_col, task_col, delay_col, repetition_col] = [0, 1, 2, 3, 4, 5]
         route_name = str(model.getValueAt(row, route_col))
         if route_name == None:
