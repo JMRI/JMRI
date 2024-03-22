@@ -24,6 +24,7 @@
 #         Trains can be loaded and started by setting a memory variable to a train file name.
 # v3.1 -- The wait for seconds command has support for random wait times:  Wait for <n> [to <n>] seconds.
 #         The function key limit has been changed to 68.
+# v3.2 -- Misc bug fixes, code improvements.
 #
 # Author:  Dave Sand copyright (c) 2018 - 2023
 
@@ -63,6 +64,19 @@ except IOError:
         file.write("masterSensor = ''           # Optional sensor to stop all threads\n")
         file.write("statusSensor = ''           # Optional sensor to notify JMRI if any threads are active\n")
         file.write("yaatMemory = ''             # Optional memory variable that contains a filename for starting a train\n")
+
+# Set optional objects, will be None if not found
+yaatMaster = sensors.getSensor(masterSensor)
+yaatRunning = sensors.getSensor(statusSensor)
+trainMemory = memories.getMemory(yaatMemory)
+
+def setYaatMaster(state):
+    if yaatMaster is not None:
+        yaatMaster.setKnownState(state)
+
+def setYaatRunnning(state):
+    if yaatRunning is not None:
+        yaatRunning.setKnownState(state)
 
 class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
     threadCount = 0
@@ -131,20 +145,19 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
             self.displayMessage("\n".join(self.compileMessages))
             YetAnotherAutoTrain.threadCount -= 1
             if YetAnotherAutoTrain.threadCount < 1:
-                statSensor = sensors.getSensor(statusSensor)
-                if statSensor is not None:
-                    statSensor.setKnownState(INACTIVE)
+                setYaatRunnning(INACTIVE)
             return False
         if len(self.actionTokens) == 0:
             self.displayMessage('{} - The action list is empty, terminating'.format(self.threadName))
             return False
+
+        setYaatRunnning(ACTIVE)
 
         return True
 
     def handle(self):
         if logLevel > 0: print '{} - Start YAAT Program'.format(self.threadName)
         while True:
-            if logLevel > 2: print '\nprogAddr = {}'.format(self.progAddr)
             if self.progAddr >= len(self.actionTokens):
                 self.progAddr = 0
                 continue
@@ -155,7 +168,7 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
                 self.displayMessage('Empty Action row')
                 continue
 
-            if logLevel > 2: print '{} - Action: {}'.format(self.threadName, action)
+            if logLevel > 2: print '{:3d} :: {} - Action: {}'.format(self.progAddr, self.threadName, action)
             actionKey = action[0]
 
             if actionKey == 'Assign':
@@ -221,9 +234,7 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
                     if logLevel > 0: print '>> Stop YAAT for {} <<'.format(self.threadName)
                     YetAnotherAutoTrain.threadCount -= 1
                     if YetAnotherAutoTrain.threadCount == 0:
-                        statSensor = sensors.getSensor(statusSensor)
-                        if statSensor is not None:
-                            statSensor.setKnownState(INACTIVE)
+                        setYaatRunnning(INACTIVE)
                     break;
             elif actionKey == 'Sub':
                 self.progAddr = 0
@@ -1529,14 +1540,13 @@ class YAATMaster(jmri.jmrit.automat.AbstractAutomaton):
         if logLevel > 0: print 'Create Master Thread'
 
     def setup(self):
-        self.mSensor = sensors.getSensor(masterSensor)
-        if self.mSensor is None:
+        if yaatMaster is None:
             return False
-        self.mSensor.setKnownState(INACTIVE)
+        setYaatMaster(INACTIVE)
         return True
 
     def handle(self):
-        self.waitSensorActive(self.mSensor)
+        self.waitSensorActive(yaatMaster)
         for thread in instanceList:
             if thread is not None:
                 if thread.isRunning():
@@ -1545,6 +1555,13 @@ class YAATMaster(jmri.jmrit.automat.AbstractAutomaton):
                         thread.throttle.setSpeedSetting(0.0)
                         thread.throttle.release(None)
                     thread.stop()
+
+        setYaatRunnning(INACTIVE)
+        setYaatMaster(INACTIVE)
+
+        if memoryListener is not None:
+            memoryListener.removeListener()
+
         return False;
 
 # End of class YAATMaster
@@ -1552,17 +1569,22 @@ class YAATMaster(jmri.jmrit.automat.AbstractAutomaton):
 # Compile and run a train when the memory variable contains a train file name.
 class YAATMemoryListener(java.beans.PropertyChangeListener):
     def __init__(self):
-        self.memory = memories.getMemory(yaatMemory)
-        if self.memory is None:
-            return
-        self.memory.setValue('')    # Clear any residual values
-        self.memory.removePropertyChangeListener(self)
-        self.memory.addPropertyChangeListener(self)
+        if trainMemory is None:
+            return None
+        trainMemory.setValue('')    # Clear any residual values
+        trainMemory.removePropertyChangeListener(self)
+        trainMemory.addPropertyChangeListener(self)
+        return
 
     def propertyChange(self, event):
         if event.getPropertyName() == 'value':
             fileName = str(event.getNewValue())
-            startTrain(fileName)
+            if fileName is not None and len(fileName) > 4:
+                startTrain(fileName.strip())
+
+    def removeListener(self):
+        if trainMemory is not None:
+            trainMemory.removePropertyChangeListener(self)
 
 # End of class YAATMemoryListener
 
@@ -1612,22 +1634,23 @@ def startTrain(fileName):
     if instanceList[idx].setup(trainLines, compileNeeded, pickleName):   # Compile the train actions
         instanceList[idx].start()                       # Compile was successful
 
-print 'YAAT v3.1'
+print 'YAAT v3.2'
 startTime = time()
 
 try:
     with open(yaatLocation + 'LoadTrains.txt') as file:
         for line in file:
-            startTrain(line.strip())
+            if len(line) > 4:
+                startTrain(line.strip())
 except IOError, e:
     pass    # Ignore file errors since this file is optional
 
 endTime = time()
-if logLevel > 1: print "\nTiming"
-if logLevel > 1: print ("  Load duration: {}").format(endTime - startTime)
+if logLevel > 1: print '\nTiming'
+if logLevel > 1: print ('  Load duration: {}').format(endTime - startTime)
 
 # Start YAAT memory listener
-YAATMemoryListener()
+memoryListener = YAATMemoryListener()
 
 # Keep last -- create the master thread
 master = YAATMaster()
