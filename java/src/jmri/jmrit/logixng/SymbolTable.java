@@ -289,7 +289,7 @@ public interface SymbolTable {
         }
     }
 
-    private static Object runScriptExpression(String initialData) {
+    private static Object runScriptExpression(SymbolTable symbolTable, String initialData) {
         String script =
                 "import jmri\n" +
                 "variable.set(" + initialData + ")";
@@ -302,6 +302,8 @@ public interface SymbolTable {
         var variable = new Reference<Object>();
         bindings.put("variable", variable);
 
+        bindings.put("symbolTable", symbolTable);    // Give the script access to the local variables in the symbol table
+
         try {
             String theScript = String.format("import jmri%n") + script;
             scriptEngineManager.getEngineByName(JmriScriptEngineManager.JYTHON)
@@ -313,7 +315,7 @@ public interface SymbolTable {
         return variable.get();
     }
 
-    private static Object runScriptFile(String initialData) {
+    private static Object runScriptFile(SymbolTable symbolTable, String initialData) {
 
         JmriScriptEngineManager scriptEngineManager = jmri.script.JmriScriptEngineManager.getDefault();
 
@@ -322,6 +324,8 @@ public interface SymbolTable {
 
         var variable = new Reference<Object>();
         bindings.put("variable", variable);
+
+        bindings.put("symbolTable", symbolTable);    // Give the script access to the local variables in the symbol table
 
         try (InputStreamReader reader = new InputStreamReader(
                 new FileInputStream(jmri.util.FileUtil.getExternalFilename(initialData)),
@@ -482,11 +486,11 @@ public interface SymbolTable {
 
             case ScriptExpression:
                 validateValue(type, name, initialData, "from script expression");
-                return runScriptExpression(initialData);
+                return runScriptExpression(symbolTable, initialData);
 
             case ScriptFile:
                 validateValue(type, name, initialData, "from script file");
-                return runScriptFile(initialData);
+                return runScriptFile(symbolTable, initialData);
 
             case LogixNG_Table:
                 validateValue(type, name, initialData, "from logixng table");
