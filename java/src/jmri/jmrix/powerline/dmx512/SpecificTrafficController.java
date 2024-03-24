@@ -99,8 +99,14 @@ public class SpecificTrafficController extends SerialTrafficController {
                     /**
                      * send the buffer of data
                      */
-                    ostream.write(dmxArray);
-
+                    try {
+                        ostream.write(dmxArray);
+                    } catch (com.fazecast.jSerialComm.SerialPortTimeoutException ex) {
+                        if (!threadStopRequest) {
+                            log.warn("DMX512 write operation ended early");
+                        }
+                        return;
+                    }
                     /**
                      * wait 25 mSec, then repeat
                      */
