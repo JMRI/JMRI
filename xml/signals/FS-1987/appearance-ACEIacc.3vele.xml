@@ -353,6 +353,12 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
     </aspectMapping>
 
     <aspectMapping>
+      <advancedAspect>Giallo Lampeggiante</advancedAspect>
+      <ourAspect>Verde</ourAspect>
+      <ourAspect>Rosso-Verde</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
       <advancedAspect>Verde</advancedAspect>
       <ourAspect>Verde</ourAspect>
       <ourAspect>Rosso-Verde</ourAspect>
