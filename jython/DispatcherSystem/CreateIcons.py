@@ -66,10 +66,11 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     controlSensors.append([i, 'schedulerStartTimeSensor', 'Set Scheduler Start Time', 10, 5]); i += 1
     controlSensors.append([i, 'showClockSensor', 'Show Analog Clock', 10, 5]); i += 1
     controlSensors.append([i, 'startSchedulerSensor', 'Start Scheduler', 10, 5]); i += 1
+    controlSensors.append([i, 'timetableSensor', 'Show Timetable', 10, 5]); i += 1
     controlSensors.append([i, 'helpSensor', 'Help', 0, 5]); i += 1
 
 
-    def __init__(self):
+    def __str__(self):
         self.result = "Success"    #value is returned in __str__ and set to "Failure" in self.tryme()
         self.define_DisplayProgress_global()
         if self.perform_initial_checks():
@@ -97,6 +98,10 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             self.stop_all_threads()
             self.end_show_progress()
 
+        else:
+            self.result = "Failure"
+        return self.result
+
     def setVersionNo(self):
         memory = memories.provideMemory('IS:ISMEM:' + "versionNo")
         if memory is not None:
@@ -115,8 +120,6 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             print "version_no not changed", "memory:", memory.getValue(), "version", self.version_no
             return False
 
-    def __str__(self):
-        return self.result      # allow return value from calling processPanels()
 
     def stop_all_threads(self):
         summary = jmri.jmrit.automat.AutomatSummary.instance()
@@ -158,6 +161,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         block_sensors_OK = False
         stops_OK = False
         lengths_OK = False
+        speed_profiles_OK = False
 
         #JOptionPane.showMessageDialog(None, "Performing some preliminary checks to ensure the trains run correctly\nAll errors will need to be fixed for Dispatcher to run correctly\nSome errors will cause the panel to be set up incorrectly in this stage", 'Checks', JOptionPane.WARNING_MESSAGE)
 
@@ -200,8 +204,6 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             elif myAnswer == JOptionPane.CLOSED_OPTION:
                 if self.logLevel > 0: print "You closed the window. How rude!"
         else:
-
-            if self.logLevel > 0: print(2)
             block_sensors_OK  = True
 
         if self.check_sufficient_number_of_blocks() == False:
@@ -222,9 +224,6 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             elif myAnswer == JOptionPane.CLOSED_OPTION:
                 if self.logLevel > 0: print "You closed the window. How rude!"
         else:
-            if self.logLevel > 0: print("4a")
-
-            if self.logLevel > 0: print(4)
             stops_OK = True
 
         if self.check_all_blocks_have_lengths() == False:
@@ -245,11 +244,28 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             elif myAnswer == JOptionPane.CLOSED_OPTION:
                 if self.logLevel > 0: print "You closed the window. How rude!"
         else:
-            if self.logLevel > 0: print("4a")
-            #Message = "All blocks have lengths\n OK to continue \nNote that trains should also be set up with a speed profile to stop correctly"
-            #JOptionPane.showMessageDialog(None, Message, 'Message', JOptionPane.INFORMATION_MESSAGE)
-            if self.logLevel > 0: print(4)
             lengths_OK = True
+
+        if self.check_engines_with_speed_profiles_exist() == False:
+            self.msg5 = "There are no engines with speed profiles\n" + self.msg5 + "\n***********************\n To continue either set up speed profiles for a train, \nor for a quick examination of Dispatcher System you can install the speed profiles stored in the Dispatcher System Folder\n*********Do you wish to continue?**************"
+            if self.logLevel > 0: print(3)
+            myAnswer = JOptionPane.showConfirmDialog(None, self.msg5)
+            if myAnswer == JOptionPane.YES_OPTION:
+                JOptionPane.showMessageDialog(None, 'Please install some of the speed profiles provided', "Look in the speed profile folder in the Dispatcher System Folder", JOptionPane.WARNING_MESSAGE)
+                return False
+            elif myAnswer == JOptionPane.NO_OPTION:
+                msg = 'Stopping'
+                JOptionPane.showMessageDialog(None, "Please run your trains over a suitable track with 3 blocks - see help" , "Install speed profiles" , JOptionPane.WARNING_MESSAGE)
+                return False
+            elif myAnswer == JOptionPane.CANCEL_OPTION:
+                msg = 'Stopping'
+                JOptionPane.showMessageDialog(None, 'Stopping', "Have a cup of Tea", JOptionPane.WARNING_MESSAGE)
+                return False
+            elif myAnswer == JOptionPane.CLOSED_OPTION:
+                if self.logLevel > 0: print "You closed the window. How rude!"
+
+        else:
+            speed_profiles_OK = True
 
         msg =  ""
         some_checks_OK = False
@@ -264,6 +280,9 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             some_checks_OK = True
         if lengths_OK:
             msg = msg + "All blocks have lengths\n"
+            some_checks_OK = True
+        if speed_profiles_OK:
+            msg = msg + "You have engine(s) with speed profile\n"
             some_checks_OK = True
 
         if some_checks_OK:
@@ -282,7 +301,12 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
                 if lengths_OK:
                     Message = "All blocks have lengths\n OK to continue \nNote that trains should also be set up with a speed profile to stop correctly"
                     JOptionPane.showMessageDialog(None, Message, 'Message', JOptionPane.INFORMATION_MESSAGE)
-
+                if speed_profiles_OK:
+                    msg = ""
+                    for engine in self.get_all_roster_entries_with_speed_profile():
+                        msg += "\n" + str(engine)
+                    Message = "You have the following trains with speed profiles" + msg
+                    JOptionPane.showMessageDialog(None, Message, 'Message', JOptionPane.INFORMATION_MESSAGE)
         return True
 
     def check_all_blocks_have_sensors(self):
@@ -406,6 +430,24 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         self.msg5 = self.msg5 + '\n - '.join(list_of_errors)
 
         return success
+
+    def check_engines_with_speed_profiles_exist(self):
+        roster_entries_with_speed_profile = self.get_all_roster_entries_with_speed_profile()
+        if roster_entries_with_speed_profile == []:
+            return False
+        else:
+            return True
+            # return True
+
+    def get_all_roster_entries_with_speed_profile(self):
+        roster_entries_with_speed_profile = []
+        r = jmri.jmrit.roster.Roster.getDefault()
+        for roster_entry in jmri.jmrit.roster.Roster.getAllEntries(r):
+            if self.logLevel > 0: print "roster_entry.getSpeedProfile()",roster_entry,roster_entry.getSpeedProfile()
+            if roster_entry.getSpeedProfile() != None:
+                roster_entries_with_speed_profile.append(roster_entry.getId())
+                if self.logLevel > 0: print "roster_entry.getId()",roster_entry.getId()
+        return roster_entries_with_speed_profile
 
     def updatePanels(self):
         for panel in self.editorManager.getAll(jmri.jmrit.display.layoutEditor.LayoutEditor):

@@ -47,7 +47,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def __init__(self):
         print "class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):"
-        self.logLevel = 0
+        self.logLevel = 1
         self.frame = None
         self.f = None
 
@@ -77,6 +77,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         self.scheduler_edit_routes = sensors.getSensor("editRoutesSensor")
         self.scheduler_start_time_sensor = sensors.getSensor("schedulerStartTimeSensor")
         self.scheduler_show_clock_sensor = sensors.getSensor("showClockSensor")
+        self.timetable_sensor = sensors.getSensor("timetableSensor")
         self.help_sensor = sensors.getSensor("helpSensor")
 
 
@@ -85,6 +86,9 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         return True
 
     def init(self):
+        global run_timetable_gbl
+        if "run_timetable_gbl" not in globals():
+            run_timetable_gbl = False
         self.train_scheduler_setup = False
 
         pass
@@ -94,10 +98,37 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
     def handle(self):
         global schedule_trains_hourly
         global schedule_trains_glb
+        global run_timetable_gbl
+        global station_name_gbl
+        global timetable_triggered_gbl
+        print "start handle"
         self.button_sensors_to_watch = self.set_button_sensors_to_watch()
         button_sensors_to_watch_JavaList = java.util.Arrays.asList(self.button_sensors_to_watch)
 
         self.waitSensorState(button_sensors_to_watch_JavaList, ACTIVE)
+
+        if self.timetable_sensor.getKnownState() == ACTIVE:
+            print "timetable_sensor active"
+            if run_timetable_gbl == True:
+                run_timetable_gbl = False
+                OptionDialog().displayMessage("turned timetabling off")
+                # timetable_gbl = None
+            else:
+                run_timetable_gbl = True
+                OptionDialog().displayMessage("turned timetabling on\n Select the station you wish to display")
+                msg = "show timetable of what station?"
+                LocationsManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.locations.LocationManager)
+                locations_list = LocationsManager.getLocationsByNameList()
+                station_list = [str(location.getName()) for location in locations_list \
+                                if ".py" not in location.getName()]
+                print "station list", station_list
+                if "station_name_gbl" not in globals():
+                    station_name_gbl = ""
+                station_name_gbl = modifiableJComboBox(station_list,msg, station_name_gbl).return_val()
+                print "station_name_gbl", station_name_gbl
+                if 'timetable_triggered_gbl' not in globals():
+                    OptionDialog().displayMessage("You need to schedule trains before the timetable appears")
+            self.timetable_sensor.setKnownState(INACTIVE)
 
         if self.scheduler_master_sensor.getKnownState() == ACTIVE:   # pause processing if we turn the sensor off
 
@@ -145,7 +176,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             self.help_sensor.setKnownState(INACTIVE)
 
         self.waitMsec(500)
-        # print "end 1"
+        print "end handle"
         return True
 
     # def check_whether_schedule_trains_every_hour(self):
@@ -565,13 +596,14 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         #stop Scheduler
         self.stop_schedule_trains_threads()
         if 'scheduling_in_operation_gbl' not in globals():
-            scheduling_in_operation_gbl = False
+            scheduling_in_operation_gbl = True
+        scheduling_in_operation_gbl = True
         if scheduling_in_operation_gbl == "False":
             self.setup_values_for_running()
             scheduling_in_operation_gbl = "True"
         else:
             scheduling_in_operation_gbl = "False"
-            print "scheduling_in_operation_gbl", scheduling_in_operation_gbl
+            # print "scheduling_in_operation_gbl", scheduling_in_operation_gbl
 
         stringToDisplay = "scheduling in operation: " + str(scheduling_in_operation_gbl)
 
@@ -656,42 +688,10 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
         self.write_list([start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
                          scheduling_margin_gbl, scheduling_in_operation_gbl])
-
-        # print "[start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
-        #                  scheduling_margin_gbl, scheduling_in_operation_gbl]", [start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
-        #                                                                         scheduling_margin_gbl, scheduling_in_operation_gbl]
-
-    # def set_default_scheduling__non_hourly_values(self):
-    #
-    #     self.show_analog_clock()      # show the analog clock
-    #
-    #     print "set_default_scheduling__non_hourly_values"
-    #
-    #     global start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
-    #         scheduling_margin_gbl, scheduling_in_operation_gbl
-    #     # read parameters
-    #     [start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
-    #      scheduling_margin_gbl, scheduling_in_operation_gbl] = self.read_list()
-    #
-    #     if start_hour_gbl == "":
-    #         fast_clock_rate = "10"
-    #         speed_not_operational_gbl = "100"
-    #         scheduling_margin_gbl = "10"
-    #         scheduling_in_operation_gbl = "False"
-    #
-    #     [start_hour_gbl, end_hour_gbl] = self.start_and_end_time_scheduling()
-    #     end_hour_gbl += 1
-    #
-    #     self.write_list([start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
-    #                      scheduling_margin_gbl, scheduling_in_operation_gbl])
-    #
-    #     print "[start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
-    #                      scheduling_margin_gbl, scheduling_in_operation_gbl]", \
-    #         [start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
-    #             scheduling_margin_gbl, scheduling_in_operation_gbl]
-
     def CheckHourlyParameters_action(self, event):
         global rowAStage1Button_1,  rowBStage1Button_1, rowCStage1Button_1, rowDStage1Button_1, rowEStage1Button_1, rowFStage1Button_1
+        global start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
+            scheduling_margin_gbl, scheduling_in_operation_gbl
         # read parameters
         [self.start_hour, self.end_hour, fast_clock_rate, self.speed_not_operational, \
          self.scheduling_margin, self.scheduling_in_operation] = self.read_list()
@@ -813,9 +813,6 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         #     self.scheduling_in_operation = bool(reply)
         # if self.logLevel > 0: print "scheduling_in_operation", self.scheduling_in_operation
 
-        global start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
-            scheduling_margin_gbl, scheduling_in_operation_gbl
-
         items = [str(item) for item in [self.start_hour,self.end_hour, fast_clock_rate, \
                                         self.speed_not_operational,\
                                         self.scheduling_margin, scheduling_in_operation_gbl]]
@@ -891,13 +888,16 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         try:
             time.strptime(input, '%H:%M')
             return True
+        except IndexError:
+            print "a"
         except ValueError:
             return False
+
 
     def set_button_sensors_to_watch(self):
         button_sensors_to_watch = [self.scheduler_master_sensor, self.scheduler_view_scheduled_trains, \
                                    self.scheduler_edit_routes, self.scheduler_start_time_sensor, \
-                                   self.scheduler_show_clock_sensor, self.help_sensor]
+                                   self.scheduler_show_clock_sensor, self.timetable_sensor, self.help_sensor]
         return button_sensors_to_watch
 
     def setup_minute_time_listener_to_schedule_trains(self):
@@ -999,8 +999,8 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         self.set_timebase_start_hour(start_hour -1, 55)
 
     def show_routes(self):
-        a = jmri.jmrit.operations.routes.RoutesTableAction()
-        a.actionPerformed(None)
+        # a = jmri.jmrit.operations.routes.RoutesTableAction()
+        # a.actionPerformed(None)
         CreateAndShowGUI6(self)
 
     def show_operations_trains(self):
@@ -1021,15 +1021,20 @@ from java.util.concurrent import TimeUnit
 class TimeListener(java.beans.PropertyChangeListener):
     # This is called every minute since it has been attached as timebase.addMinuteChangeListener(tListener)
     def __init__(self):
+        global timetable_gbl
         print "set up TimeListener"
-        self.scheduler_master_sensor = sensors.getSensor("SchedulerSensor3")
+        # self.scheduler_master_sensor = sensors.getSensor("SchedulerSensor3")
         self.logLevel = 0
         self.prev_time = 0
-        self.timetable = None
+        timetable_gbl = None
         try:
+            print "inhibit fast clock message"
             self.inhibit_fast_clock_error_message()
+        except IndexError:
+            print "IndexError B"
         except:
-            pass
+            print "error time listener"
+        print "end TimeListener"
 
     def inhibit_fast_clock_error_message(self):
         global timebase
@@ -1038,28 +1043,26 @@ class TimeListener(java.beans.PropertyChangeListener):
 
     def propertyChange(self, event):
 
-        print "property change"
+        # print "property change"
         global fast_clock_running_at_operational_speed
         if 'fast_clock_running_at_at_operational_speed' not in globals():
             fast_clock_running_at_operational_speed = True
         global minutes_old2, minutes_old3
         global schedule_trains_hourly
-        if 'minutes_old2' not in globals():
-            minutes_old2 = -1
-        # if self.logLevel > 0: print "TimeListener: change",event.propertyName, "from", event.oldValue, "to", event.newValue
-        # print "TimeListener: change",event.propertyName, "from", event.oldValue, "to", event.newValue
+        global timetable_gbl, run_timetable_gbl
+
         minutes_old = int(event.getOldValue())
         minutes = int(event.getNewValue())
-        # try:
-        #     if self.logLevel > 0: print "1 minutes_old", minutes_old, "minutes", minutes, "minutes_old2", minutes_old2, \
-        #         "(minutes - minutes_old2) % 60 ", (minutes - minutes_old2) % 60
-        # except:
-        #     minutes_old2 = -1    # default value for minutes_old2
-        #     if self.logLevel > 0: print "2 minutes_old", minutes_old, "minutes", minutes, "minutes_old2", minutes_old2, \
-        #         "(minutes - minutes_old2) % 60 ", (minutes - minutes_old2) % 60
+
+        if 'minutes_old2' not in globals():
+            minutes_old2 = minutes_old
+
+        if self.logLevel > 0: print "minutes_old", minutes_old, "minutes", minutes, "minutes_old2", minutes_old2, \
+            "(minutes - minutes_old2) % 60 ", (minutes - minutes_old2) % 60, \
+            "(minutes_old - minutes_old2) % 60 == 0", (minutes_old - minutes_old2) % 60 == 0
 
         if self.logLevel > 0: print "property change", event.newValue
-        if (minutes - minutes_old) % 60 == 1:      # when we set the fast clock in the event timer it triggers a new event at the same time
+        if (minutes_old - minutes_old2) % 60 == 0:      # when we set the fast clock in the event timer it triggers a new event at the same time
                                                     # we then get into a recursion. This ignores the second call at the same time
             # print "x"
             if self.logLevel > 0: print "3 minutes_old", minutes_old, "minutes", minutes, "minutes_old2", minutes_old2, \
@@ -1069,28 +1072,28 @@ class TimeListener(java.beans.PropertyChangeListener):
                                                 # don't just check at 0 minutes in case train us started not on the hour
 
                 if self.logLevel > 0: print "minutes", int(minutes), "int(minutes) % 10", int(minutes) % 10, "minutes", minutes
-                minutes_old2 += 1
+                minutes_old2 = minutes
                 self.set_fast_clock_rate()      # sets global fast_clock_at_operational_speed
 
-
-        # if fast_clock_running_at_operational_speed:
-        #     pass
-        #     print "call process_operations_trains"
             self.process_operations_trains(event)    # schedules trains
             # print "attempting to send timetable via mqtt"
-            try:
-                # self.send_timetable_and_clock_via_mqtt(event)    # put this function in a separate thread
-                thread = Thread(target=self.send_timetable_and_clock_via_mqtt, args=(event,))
-                thread.start()
-                thread.join()
 
-            except:
-                pass
-        minutes_old2 = minutes
+            # if show
+            send_mqtt_messages_gbl = True
+            if 'send_mqtt_messages_gbl' not in globals():
+                send_mqtt_messages_gbl = False
+            if 'run_timetable_gbl' not in globals():
+                run_timetable_gbl = False
+            if run_timetable_gbl or send_mqtt_messages_gbl:
+                Trigger_Timetable(minutes)
+            else:
+                if 'timetable_gbl' not in globals():
+                    timetable_gbl = None
+                if timetable_gbl != None:
+                    timetable_gbl.hideWindow()
 
-        # if self.scheduler_master_sensor.getKnownState() == ACTIVE:
-        # self.process_operations_trains(event)
-        #return
+        minutes_old2 = minutes    # use minutes_old2 to prevent recursion
+        # print "end property change"
 
     def stop(self):
         tListener.cancel()
@@ -1134,174 +1137,6 @@ class TimeListener(java.beans.PropertyChangeListener):
                         timebase.setRate(float(fcr))
                         fast_clock_running_at_operational_speed = False
                     if self.logLevel > 0: print "set_fast_clock_rate fqst:", "fcr", fcr
-
-    def send_timetable_and_clock_via_mqtt(self, event):
-        global timebase
-        print "send_timetable_and_clock_via_mqtt"
-        hour = int(timebase.getTime().getHours())
-        minutes = event.newValue
-        time = str(hour).zfill(2) + ":" + str(minutes).zfill(2)
-
-        self.send_clock_message(hour, minutes)
-        # get list of origins, destinations and times at intermediate stations
-        timetable = self.get_timetable(hour, minutes)
-        # print "timetable", timetable
-        station = "Wolden"
-        self.generate_local_timetable(station, time, timetable)
-        # send mqtt message
-        self.send_timetable_messages(timetable)
-
-    def generate_local_timetable(self, station, time, timetable):
-        print "generating timetable"
-        if self.timetable == None:
-            print "****** call Timetable"
-            self.timetable = Timetable(station)
-        else:
-            print "update"
-            # update the Timetable
-            # self.timetable.update(["jim1", "fred"])
-            # self.timetable.update_time(time)
-            print "timetable", timetable
-
-            self.timetable.update_timetable(time, timetable)
-
-        # print "generated timetable"
-
-
-    def send_timetable_messages(self,timetable):
-        msg = "["
-        for [station_name, station_departure_time, last_station, last_station_arrival_time, via] in timetable:
-            msg += '{"type" : "' + "schedule" + '", ' + \
-                   '"station_name" : "' + str(station_name) + '", ' + \
-                   '"station_departure_hour" : "' + str(station_departure_time) + '", ' + \
-                   '"last_station" : "' + str(last_station) + '", ' + \
-                   '"last_station_arrival_time" : "' + str(last_station_arrival_time) + '", ' + \
-                   '"via" : "' + str(via) + '"},'
-        msg = msg[:-1]
-        msg += "]"
-        self.send_mqtt_message(msg)
-
-    def send_timetable_messages_old(self,timetable):
-
-        for [station_name, station_departure_time, last_station, last_station_arrival_time, via] in timetable:
-            msg = '{"station_name" : "' + str(station_name) + '", ' + \
-                   '"station_departure_hour" : "' + str(station_departure_time) + '", ' + \
-                   '"last_station" : "' + str(last_station) + '", ' + \
-                   '"last_station_arrival_time" : "' + str(last_station_arrival_time) + '", ' + \
-                   '"via" : "' + str(via) + '"}'
-            self.send_mqtt_message(msg)
-
-    def send_mqtt_message(self, msg):
-
-        # Find the MqttAdapter
-        mqttAdapter = jmri.InstanceManager.getDefault( jmri.jmrix.mqtt.MqttSystemConnectionMemo ).getMqttAdapter()
-
-        # create content to send "/jmri/timetable message content"
-        topic = "jmri/timetable"
-        payload = msg
-
-        # send
-        mqttAdapter.publish(topic, payload)
-
-    def send_clock_message(self, hour, minutes):
-
-        msg = '[{"type" : "' + "clock" + '", ' + \
-              '"time" : "' + str(hour) + ":" + str(minutes) + '"}]'
-        self.send_mqtt_message(msg)
-
-    def get_timetable(self, hour, minutes):
-
-        global schedule_trains_hourly
-
-        self.curr_time = minutes + hour * 60
-
-        timetable = []
-
-        TrainManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
-        train_list = TrainManager.getTrainsByTimeList()
-        # if schedule_trains_hourly:
-        # print ("schedule_trains_hourly", schedule_trains_hourly)
-        # if schedule_trains_hourly:
-        if True:
-            if self.logLevel > 0: print "A5"
-            tts = [train for train in train_list
-                   if "skip" not in train.getDescription()]    #if skip in description of scheduled Train do not run the train
-            trains_to_start = []
-            for train in tts:
-                if self.logLevel > 0: print "hour_before", train.getDepartTimeMinutes() // 60
-                train_mins = str(int(train.getDepartTimeMinutes()) % 60)
-                if int(start_hour_gbl) <= hour <= int(end_hour_gbl):
-                    if train_mins > minutes:
-                        train_hour = str(hour)
-                    else:
-                        train_hour = str(hour+1)
-                else:
-                    train_hour = start_hour_gbl   # (beginning of following day)
-                train_route_start_time = train_hour + ":" + str(train_mins)
-                train_route = train.getRoute()
-                # location.getComment() will be set to the departure timed if the routine to do this has been run
-                last_location = train_route.getTerminatesRouteLocation()
-                
-                [last_station, last_station_arrival_time] = \
-                    [str(last_location.getName()), str(last_location.getComment())]
-                locations1 = train_route.getLocationsBySequenceList()
-                locations = [str(loc) for loc in locations1]
-
-                for i, location in enumerate(train_route.getLocationsBySequenceList()):
-                    timetable_entry_names = ["station_name", "station_departure_time", "last_station",
-                                             "last_station_arrival_time", "via"]
-                    # remove items from start of via list, and the destination
-                    via = locations[i+1:-1]
-                    if via == []:
-                        via = ["Terminates Here"]
-                    via = str(via).replace('[','').replace(']','').replace("'", "")
-                # [last_station, last_station_arrival_time] = [str(last_location.getName()), str(last_location.getComment())]
-                # via = train_route.getLocationsBySequenceList()
-
-                # for i, location in enumerate(train_route.getLocationsBySequenceList()):
-                    # timetable_entry_names = ["station_name", "station_departure_time", "last_station",
-                                             # "last_station_arrival_time", "via"]
-                    # timetable.append(timetable_entry_names)
-                    if i == 0:
-                        station_departure_time = train_route_start_time
-                        time_to_station = 0
-                    else:
-                        # if location.getComment() == "" or location.getComment() == None:
-                        if True:
-                            time_to_station = 10   # just a botch for now
-                        else:
-                            time_to_station = location.getComment()
-                            # print "time_to_station", time_to_station
-
-                    station_name = str(location.getName())
-                    station_departure_time = self.calc_time(station_departure_time, time_to_station)
-                    location.setComment(str(time_to_station))
-                    # timetable_entry = [station_name, station_departure_time, last_station, last_station_arrival_time, via]
-                    timetable_entry = [station_name , \
-                                       station_departure_time, \
-                                       last_station, \
-                                       last_station_arrival_time,
-                                       via]
-
-                    # print "timetable_entry", timetable_entry
-                    timetable.append(timetable_entry)
-        else:
-            timetable = [["a", "b", "c", "d", "e"]]
-        return timetable
-
-    def calc_time(self, station_departure_time, time_to_station):
-
-        # add time_to_station to station_departure time
-        # station_departure_time is in form hh:mm
-        # print "time_to_station", time_to_station  , "should be mins"
-        [hours, mins] = station_departure_time.split(":")
-        # print "hours", hours, "mins", mins
-        hour = int(hours) + int(time_to_station) // 60
-        min = int(mins) + int(time_to_station) % 60
-        # print "hour", hour, "min", min
-        station_departure_time_new = str(hour) + ":" + str(min)
-        # print "station_departure_time_new", station_departure_time_new
-        return station_departure_time_new
 
     def process_operations_trains(self, event ):
         global timebase
@@ -1352,11 +1187,11 @@ class TimeListener(java.beans.PropertyChangeListener):
         trains_to_start = []
         for train in train_list:
             comment = train.getComment()
-            repeat_command = MyTableModel4().find_between(comment, "[repeat-", "-repeat]")
+            repeat_command = self.find_between(comment, "[repeat-", "-repeat]")
             # print "repeat1", repeat_command
             if repeat_command == "Once":
                 if self.prev_time < int(train.getDepartTimeMinutes()) <= self.curr_time and \
-                "skip" not in train.getDescription():   # if skip in description of scheduled Train do not run the train
+                        "skip" not in train.getDescription():   # if skip in description of scheduled Train do not run the train
                     if train not in trains_to_start:
                         trains_to_start.append(train)
                         scheduled[train] = False
@@ -1387,7 +1222,7 @@ class TimeListener(java.beans.PropertyChangeListener):
                 #     if ((hour-1) % 2 <  int(train.getDepartureTimeHour()) % 2 <= hour % 2):
                 #         # print "hours ok"
                 if (minutes-1 < (int(train.getDepartTimeMinutes()) % 60) <= minutes) and \
-                    ((hour-1) % 2 <  int(train.getDepartureTimeHour()) % 2 <= hour % 2):
+                        ((hour-1) % 2 <  int(train.getDepartureTimeHour()) % 2 <= hour % 2):
                     if train not in trains_to_start:
                         trains_to_start.append(train)
                         scheduled[train] = False
@@ -1410,48 +1245,9 @@ class TimeListener(java.beans.PropertyChangeListener):
                 trains_to_be_scheduled.append(train)
             scheduled[train] = False
 
-        # print "trains_to_be_scheduled", trains_to_be_scheduled
-
-
-
-        # # if schedule_trains_hourly:
-        # if schedule_trains_hourly:
-        #     if self.logLevel > 0: print "A5"
-        #     tts = [train for train in train_list
-        #                        if (minutes-1 < (int(train.getDepartTimeMinutes()) % 60) <= minutes) and
-        #                        "skip" not in train.getDescription()]    #if skip in description of scheduled Train do not run the train
-        #     trains_to_start = []
-        #     for train in tts:
-        #         if self.logLevel > 0: print "hour_before", train.getDepartTimeMinutes() // 60
-        #         train_mins = str(int(train.getDepartTimeMinutes()) % 60)
-        #         train_hour = str(hour)
-        #         if self.logLevel > 0: print "train_mins", train_mins
-        #         # train.setDepartureTime(train_hour, train_mins)
-        #         if self.logLevel > 0: print "hour", train.getDepartTimeMinutes() // 60
-        #         trains_to_start.append(train)
-        # else:
-        #     trains_to_start = [train for train in train_list
-        #                        if (self.prev_time < int(train.getDepartTimeMinutes()) <= self.curr_time) and
-        #                        "skip" not in train.getDescription()]    #if skip in description of scheduled Train do not run the train
-        #     # copy_trains_to_start = trains_to_start  #just renames trains_to_start
-        #     if self.logLevel > 0: print "A7"
-        #
-        # if self.logLevel > 0: print "trains to start " , trains_to_start
-        # #self.run_trains(trains_to_start)
-
-        # if self.logLevel > 0: print "A8"
-        # for train in trains_to_start:
-        #     if train not in trains_to_be_scheduled:
-        #         if self.logLevel > 0: print "A9"
-        #         trains_to_be_scheduled.append(train)
-        #     scheduled[train] = False
-
         if self.logLevel > 0: print "trains_to_be_scheduled", trains_to_be_scheduled
         if self.logLevel > 0: print "scheduled", scheduled
         if self.logLevel > 0: print "trains_to_be_scheduled", trains_to_be_scheduled
-        # if self.logLevel > 0: print "End of process_operations_trains", "trains_to_be_scheduled",trains_to_be_scheduled,\
-        #     "scheduled",scheduled
-        # if self.logLevel > -1: print "A10"
 
     def speed_not_operational_gbl__is_defined(self):
         global start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, scheduling_margin_gbl, scheduling_in_operation_gbl
@@ -1463,6 +1259,262 @@ class TimeListener(java.beans.PropertyChangeListener):
         else:
             if self.logLevel > 0: print("sure, it was defined.")
             return True
+
+    def find_between(self, s, first, last):
+        try:
+            start = s.index(first) + len(first)
+            end = s.index(last, start)
+            return s[start:end]
+        except IndexError:
+            print "D"
+        except ValueError:
+            return ""
+
+class Trigger_Timetable:
+    def __init__(self, minutes):
+        global timetable_triggered_gbl
+        if minutes == None: return
+        self.run(minutes)
+        timetable_triggered_gbl = True
+
+    def run(self, minutes):
+        t1 = Thread(target=self.send_timetable_and_clock_via_mqtt, args=(minutes,))
+        t1.start()
+        t1.join()
+
+    def send_timetable_and_clock_via_mqtt(self, minutes):
+        global station_name_gbl, run_timetable_gbl
+        self.logLevel = 0
+        global timebase
+        # print "start send_timetable_and_clock_via_mqtt"
+        hour = int(timebase.getTime().getHours())
+        time = str(hour).zfill(2) + ":" + str(minutes).zfill(2)
+
+        self.send_clock_message(hour, minutes)
+        # get list of origins, destinations and times at intermediate stations
+        timetable = self.get_timetable(hour, minutes)
+        # print "timetable", timetable
+        if 'station_name_gbl' in globals():
+            station = station_name_gbl
+        else:
+            station = 'Not Set'
+        if run_timetable_gbl:
+            if timetable_gbl != None:
+                timetable_gbl.showWindow()
+            self.generate_local_timetable(station, time, timetable)
+        else:
+            if timetable_gbl != None:
+                timetable_gbl.hideWindow()
+        # send mqtt message
+        self.send_timetable_messages(timetable)
+        # print "end send_timetable_and_clock_via_mqtt"
+
+    def find_between(self, s, first, last):
+        try:
+            start = s.index(first) + len(first)
+            end = s.index(last, start)
+            return str(s[start:end])
+        except ValueError:
+            return ""
+        except IndexError:
+            print "index error find_between", "first", first, "last", last
+    def get_timetable(self, hour, minutes1):
+        # timetable_entry = [ \
+        #     "station_name" , \
+        #     "station_departure_time", \
+        #     "last_station", \
+        #     "last_station_arrival_time",
+        #     "via"]
+        # return None
+        global schedule_trains_hourly
+        global start_hour_gbl, end_hour_gbl
+        self.curr_time = minutes1 + hour * 60
+        timetable = []
+
+        TrainManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
+        train_list = TrainManager.getTrainsByTimeList()
+
+        if self.logLevel > 0: print "A5"
+        for train in train_list:
+            if "skip" not in train.getDescription():    #if skip in description of scheduled Train do not run the train
+                comment = train.getComment()
+                repeat = self.find_between(comment, "[repeat-", "-repeat]")
+                # arrival_time = self.find_between(comment, "[arrival_time-", "-arrival_time]"   # only set if routine to set has been run (not written yet)
+                departure_time_minutes = train.getDepartTimeMinutes()
+                departure_time_hour = train.getDepartureTimeHour()
+                train_name = train.getName()
+
+                if repeat == "Once":
+                    minutes = [departure_time_minutes]
+                elif repeat == "Repeat every 20 mins":
+                    minutes = [minutes for minutes in range(0,59) if (minutes % 20) == (int(departure_time_minutes) % 20)]
+                elif repeat == "Repeat every 30 mins":
+                    minutes = [minutes for minutes in range(0,59) if (minutes % 30) == (int(departure_time_minutes) % 30)]
+                elif repeat == "Repeat every Hour":
+                    minutes = [departure_time_minutes]
+                elif repeat == "Repeat every 2 Hours":
+                    minutes = [departure_time_minutes]
+                else:
+                    minutes = [0]
+
+                if repeat == "Once":
+                    hours = [departure_time_hour]
+                else:
+                    if hour < int(end_hour_gbl):
+                        start_hour = max(hour, int(start_hour_gbl))
+                        end_hour = max(hour + 3, int(start_hour_gbl))
+                    else:
+                        start_hour = int(start_hour_gbl)
+                        end_hour = int(start_hour_gbl) + 3
+                    hours = [hour1 for hour1 in range(start_hour, end_hour)]
+                    if repeat == "Repeat every 2 Hours": #update hours if 2 hourly
+                        hours = [hour1 for hour1 in hours if (int(train.getDepartureTimeHour()) % 2 == hour1 % 2)]
+
+                for train_mins in minutes:
+                    for train_hour in hours:
+                        depart_time = int(str(train_mins)) + int(str(train_hour)) * 60
+                        my_break = False
+                        print "train_hour", train_hour, "self.curr_time", self.curr_time, "depart_time", depart_time
+                        # if train_hour < int(end_hour_gbl):
+                        #     if self.curr_time > depart_time:
+                        #         my_break = True
+                        # if my_break:
+                        #     break
+                        train_route_start_time = str(train_hour).zfill(2) + ":" + str(train_mins).zfill(2)
+                        train_route = train.getRoute()
+                        # location.getComment() will be set to the departure timed if the routine to do this has been run
+
+                        last_location = train_route.getTerminatesRouteLocation()
+                        last_station = str(last_location.getName())
+                        comments = [location.getComment() for location in train_route.getLocationsBySequenceList() \
+                                    if ".py" not in location.getName()]
+                        journey_duration = 0
+                        for comment in comments:
+                            duration = self.find_between(comment, "[duration-", "-duration]")
+                            # print "duration", duration
+                            if duration != "":
+                                journey_duration += int(duration)
+                        last_station_arrival_time = self.calc_time(train_route_start_time, journey_duration)
+
+                        for i, location in enumerate(train_route.getLocationsBySequenceList()):
+                            station_name = str(location.getName())
+                            if ".py" in station_name:   # exclude actions
+                                break
+                            # timetable_entry_names = ["train_name", "station_name", "station_departure_time", "last_station",
+                            #                          "last_station_arrival_time", "via"]
+                            timetable_entry_names = ["station_name", "station_departure_time", "last_station",
+                                                     "last_station_arrival_time", "via"]
+                            # remove items from start of via list, and the destination
+                            locations1 = train_route.getLocationsBySequenceList()
+                            locations = [str(loc) for loc in locations1]
+
+                            via = locations[i+1:-1]
+                            via = [location2 for location2 in via if ".py" not in location2]
+                            if via == []:
+                                via = ["Terminates Here"]
+                            via = str(via).replace('[','').replace(']','').replace("'", "")
+                            # [last_station, last_station_arrival_time] = [str(last_location.getName()), str(last_location.getComment())]
+                            # via = train_route.getLocationsBySequenceList()
+
+                            # for i, location in enumerate(train_route.getLocationsBySequenceList()):
+                            # timetable_entry_names = ["station_name", "station_departure_time", "last_station",
+                            # "last_station_arrival_time", "via"]
+                            # timetable.append(timetable_entry_names)
+                            if i == 0:
+                                station_departure_time = train_route_start_time
+                                time_to_station = 0
+                            else:
+                                # if location.getComment() == "" or location.getComment() == None:
+                                if True:
+                                    time_to_station = 10   # just a botch for now
+                                else:
+                                    time_to_station = location.getComment()
+                                    # print "time_to_station", time_to_station
+                            station_departure_time = self.calc_time(station_departure_time, time_to_station)
+                            location.setComment(str(time_to_station))
+                            # timetable_entry = [station_name, station_departure_time, last_station, last_station_arrival_time, via]
+                            # timetable_entry = [train_name, \
+                            #                    station_name , \
+                            #                    station_departure_time, \
+                            #                    last_station, \
+                            #                    last_station_arrival_time,
+                            #                    via]
+                            timetable_entry = [ \
+                                station_name , \
+                                station_departure_time, \
+                                last_station, \
+                                last_station_arrival_time,
+                                via]
+                            # print "timetable_entry", timetable_entry
+
+                            # print "timetable_entry", timetable_entry
+                            timetable.append(timetable_entry)
+        #sort timetable by time
+        timetable.sort(key = lambda row: row[1])
+        return timetable
+
+    def generate_local_timetable(self, station, time, timetable):
+        global timetable_gbl
+        print "generating timetable"
+        if timetable_gbl == None:
+            # print "****** call Timetable"
+            timetable_gbl = Timetable(station)
+        else:
+            # print "update"
+            # update the Timetable
+            # timetable_gbl.update(["jim1", "fred"])
+            # timetable_gbl.update_time(time)
+            # print "timetable", timetable
+            timetable_gbl.update_timetable(station, time, timetable)
+
+        print "generated timetable"
+
+
+    def send_timetable_messages(self,timetable):
+        msg = "["
+        for [station_name, station_departure_time, last_station, last_station_arrival_time, via] in timetable:
+            msg += '{"type" : "' + "schedule" + '", ' + \
+                   '"station_name" : "' + str(station_name) + '", ' + \
+                   '"station_departure_hour" : "' + str(station_departure_time) + '", ' + \
+                   '"last_station" : "' + str(last_station) + '", ' + \
+                   '"last_station_arrival_time" : "' + str(last_station_arrival_time) + '", ' + \
+                   '"via" : "' + str(via) + '"},'
+        msg = msg[:-1]
+        msg += "]"
+        self.send_mqtt_message(msg)
+
+    def send_mqtt_message(self, msg):
+
+        # Find the MqttAdapter
+        mqttAdapter = jmri.InstanceManager.getDefault( jmri.jmrix.mqtt.MqttSystemConnectionMemo ).getMqttAdapter()
+
+        # create content to send "/jmri/timetable message content"
+        topic = "jmri/timetable"
+        payload = msg
+
+        # send
+        mqttAdapter.publish(topic, payload)
+
+    def send_clock_message(self, hour, minutes):
+
+        msg = '[{"type" : "' + "clock" + '", ' + \
+              '"time" : "' + str(hour) + ":" + str(minutes) + '"}]'
+        self.send_mqtt_message(msg)
+
+    def calc_time(self, station_departure_time, time_to_station):
+
+        # add time_to_station to station_departure time
+        # station_departure_time is in form hh:mm
+        # print "time_to_station", time_to_station  , "should be mins"
+        [hours, mins] = station_departure_time.split(":")
+        # print "hours", hours, "mins", mins
+        hour = int(hours) + int(time_to_station) // 60
+        min = int(mins) + int(time_to_station) % 60
+        # print "hour", hour, "min", min
+        station_departure_time_new = str(hour).zfill(2) + ":" + str(min).zfill(2)
+        # print "station_departure_time_new", station_departure_time_new
+        return station_departure_time_new
+
 class RunTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def __init__(self, train, graph):
@@ -1480,7 +1532,9 @@ class RunTrain(jmri.jmrit.automat.AbstractAutomaton):
             self.train = train
 
     def handle(self):    # Need to overload handle
+        print "start run train"
         self.run_train()
+        print "end run train"
         if "repeat" in self.train.getDescription():
             return True
         else:
@@ -1619,6 +1673,8 @@ class RunTrain(jmri.jmrit.automat.AbstractAutomaton):
             else:
                 self.waitMsec(4000)
             if self.logLevel > 0:  print "!     finished run_train"
+        except IndexError:
+            print "Index Error E"
         except:
             self.waitMsec(4000)
 
@@ -1964,8 +2020,10 @@ class ScheduleTrains(jmri.jmrit.automat.AbstractAutomaton):
         return True
 
     def handle(self):
+        # print "run trains"
         self.run_trains()    #schedule trains if schedule_trains_glb is set True external to this routine
         # continue scheduling trains
+        # print "end run trains"
         return True
 
     def run_trains(self):
@@ -1991,10 +2049,10 @@ class ScheduleTrains(jmri.jmrit.automat.AbstractAutomaton):
                         if self.logLevel > 0: print "train",train,"scheduled[train]",scheduled[train]
 
                         if "stopping" in train.getDescription():
-                            print "running train %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+                            # print "running train %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
                             run_train_dict[train] = RunTrain(train, g.g_stopping)
                         else:
-                            print "running train %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+                            # print "running train %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
                             run_train_dict[train] = RunTrain(train, g.g_express)
                         run_train_dict[train].setName("schedule_" + train.getName())
                         run_train_dict[train].start()
@@ -2002,10 +2060,12 @@ class ScheduleTrains(jmri.jmrit.automat.AbstractAutomaton):
                         if self.logLevel > 0: print "scheduled train ", train
                 if self.logLevel > 0:  print "!!!!!!!!!!!!!!!!!!!!!run_trains finished"
                 if self.logLevel > 0:  print "trains_to_be_scheduled ", trains_to_be_scheduled
-                if self.logLevel > 0:  print "timebase.getRate()",timebase.getRate()
+                if 'timebase' in globals():
+                    if self.logLevel > 0:  print "timebase.getRate()",timebase.getRate()
 
-        noMsec = int(1000/timebase.getRate())
-        self.waitMsec(noMsec)  # every fast minute
+        if 'timebase' in globals():
+            noMsec = int(1000/timebase.getRate())
+            self.waitMsec(noMsec)  # every fast minute
 
 
 

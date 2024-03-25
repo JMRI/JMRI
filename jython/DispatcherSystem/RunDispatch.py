@@ -339,11 +339,11 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
 
 class modifiableJComboBox:
 
-    def __init__(self,list, msg):
+    def __init__(self,list, msg, default = ""):
         #list = self.get_all_roster_entries_with_speed_profile()
         jcb = JComboBox(list)
         jcb.setMaximumRowCount(30);
-
+        jcb.setSelectedItem(default);
         jcb.setEditable(True)
         JOptionPane.showMessageDialog( None, jcb, msg, JOptionPane.QUESTION_MESSAGE)
         self.ans = str(jcb.getSelectedItem())
@@ -812,7 +812,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         global trains_dispatched
 
         #only one button is active. We will keep it that way
-
+        print "dispatch master"
         if self.logLevel > 0: print "**********************"
         if self.logLevel > 0: print "handle DispatchMaster1"
         #if self.logLevel > 0: print "buttons to watch",[str(sensor.getUserName()) for sensor in self.button_sensors_to_watch]
@@ -901,6 +901,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
 
         if self.logLevel > 0: print "end handle"
         self.waitMsec(1000)
+        print "end dispatch master"
         return True
 
     def reset_buttons(self, button_sensors_to_watch_JavaList):

@@ -582,17 +582,12 @@ class MyModelListener6(TableModelListener):
         [route_col, edit_col, delete_col] = [0, 1, 2]
         # print "a"
         if column == edit_col:     #trains
-            return
-        #     print "b"
-        #     train_data = self.model.getValueAt(row, column)
-        #     msg = "msg"
-        #     title = "title"
-        #     default_value = train_data
-        #     time = OptionDialog().input(msg, title, default_value)
-        #     if time != train_data:
-        #         self.model.setValueAt(time, row, column)
-        # elif column == 1:       # sections
-        #     pass
+            if self.model.getValueAt(row, edit_col) == True:
+                print "starting edit"
+                route_data = str(self.model.getValueAt(row, route_col))
+                scheduled_start = "00:00"
+                CreateAndShowGUI5(self, route_data, scheduled_start)
+                self.model.setValueAt(False, row, edit_col)
         elif column == delete_col:
             # class_CreateAndShowGUI6.run_route(row, model, class_CreateAndShowGUI6, class_SchedulerPanel)
             # delete thr Opreations route

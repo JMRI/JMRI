@@ -90,6 +90,7 @@ class CreateAndShowGUI4(TableModelListener):
         self.frame.pack();
         self.frame.setVisible(True)
 
+
         return
 
 
@@ -196,6 +197,7 @@ class CreateAndShowGUI4(TableModelListener):
         count = self.model.getRowCount()
         colcount = self.model.getColumnCount()
         self.model.add_row()
+        self.save()
         self.completeTablePanel()
 
     def get_route_list(self):
@@ -379,8 +381,9 @@ class CreateAndShowGUI4(TableModelListener):
         #     }
         #
         #     break
+        self.save()
         self.completeTablePanel()
-        print "fered"
+
     def new_val(self, old_val):
         if old_val < 3:
             new_val = 3
@@ -605,7 +608,7 @@ class MyModelListener4(TableModelListener):
         
     def delete_row(self, row):
         self.model.data.pop(row)
-
+        class_CreateAndShowGUI4.save()
 
     def show_time_picker(self):
         # Show a simple JOptionPane input dialog for time selection
@@ -701,6 +704,8 @@ class MyTableModel4 (DefaultTableModel):
             return s[start:end]
         except ValueError:
             return ""
+        except IndexError:
+            return "Index Error H"
 
     def getColumnCount(self) :
         return len(self.columnNames)

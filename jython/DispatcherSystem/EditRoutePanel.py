@@ -132,8 +132,10 @@ class CreateAndShowGUI5(TableModelListener):
         # we are not using journey_time_col, wait_time_col at moment
         # these a re planned for use when setting the departure times
         # by running an emgine along a acheduled route
-        columnModel.getColumn(journey_time_col).setPreferredWidth(0)
-        columnModel.getColumn(wait_time_col).setPreferredWidth(0)
+        columnModel.getColumn(journey_time_col).setMaxWidth(0)
+        columnModel.getColumn(journey_time_col).setMinWidth(0)
+        columnModel.getColumn(wait_time_col).setMaxWidth(0)
+        columnModel.getColumn(wait_time_col).setMinWidth(0)
 
         # first column is the trains
         # self.trainColumn = self.table.getColumnModel().getColumn(time_col);
