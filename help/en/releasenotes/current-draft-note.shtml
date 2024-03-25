@@ -503,7 +503,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li></li>
+                <li>Improved the FS-1987 signal system.</li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -605,6 +605,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Improved the Italian translation around file locations and turnout states.</li>
         </ul>
 
