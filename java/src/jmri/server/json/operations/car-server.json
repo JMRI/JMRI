@@ -41,6 +41,20 @@
             ],
             "description": "RFID tag attached to car; null if none"
         },
+        "whereLastSeen": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "The location of the last reported sighting of the tag"
+        },
+        "whenLastSeen": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "The timestamp of the last reported sighting of the tag"
+        },
         "kernel": {
             "type": [
                 "string",

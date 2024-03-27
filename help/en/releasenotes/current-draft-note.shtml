@@ -593,7 +593,9 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>json: add whereLastSeen and whenLastSeen elements to type "car"</li>
+            <li>help: restore examples showing json syntax</li>
+            <li>home: don't hide /json and /simple links
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
