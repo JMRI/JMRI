@@ -527,6 +527,9 @@
       <p>Select the type of script. The supported script types are <strong>Jython Files</strong>
       and <strong>ECMAScript Files</strong>.</p>
 
+      <p>For details on accessing LogixNG objects from a script see <a href="chapter13.shtml">
+      Chapter 13 - Jython Scripting Support</a>.</p>
+
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h5>Section<span class="since">since 5.3.5</span></h5>
