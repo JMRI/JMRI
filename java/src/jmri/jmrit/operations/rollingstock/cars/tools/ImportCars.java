@@ -380,8 +380,10 @@ public class ImportCars extends ImportRollingStock {
 
                     // is there a load name?
                     if (comma && inputLine.length > base + CAR_LOAD) {
-                        carLoadName = inputLine[CAR_LOAD].trim();
-                        log.debug("Car ({} {}) has load ({})", carRoad, carNumber, carLoadName);
+                        if (!inputLine[CAR_LOAD].isBlank()) {
+                            carLoadName = inputLine[CAR_LOAD].trim();
+                            log.debug("Car ({} {}) has load ({})", carRoad, carNumber, carLoadName);
+                        }
                     }
                     // is there a kernel name?
                     if (comma && inputLine.length > base + CAR_KERNEL) {
