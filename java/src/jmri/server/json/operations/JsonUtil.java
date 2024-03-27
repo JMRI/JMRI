@@ -307,9 +307,17 @@ public class JsonUtil {
         // second half of string can be anything
         String[] type = rs.getTypeName().split(TrainCommon.HYPHEN, 2);
         node.put(JSON.RFID, rs.getRfid());
-        node.put(JSON.WHERELASTSEEN, rs.getWhereLastSeenName() +
+        if (!rs.getWhereLastSeenName().equals(Car.NONE)) {
+            node.put(JSON.WHERELASTSEEN, rs.getWhereLastSeenName() +
                     (rs.getTrackLastSeenName().equals(Car.NONE) ? "" : " (" + rs.getTrackLastSeenName() + ")"));
-        node.put(JSON.WHENLASTSEEN, rs.getWhenLastSeenDate());        
+        } else {
+            node.set(JSON.WHERELASTSEEN, null);        
+        }
+        if (rs.getWhenLastSeenDate() != Car.NONE) {
+            node.put(JSON.WHENLASTSEEN, rs.getWhenLastSeenDate());
+        } else {
+            node.set(JSON.WHENLASTSEEN, null);            
+        }
         node.put(JsonOperations.CAR_TYPE, type[0]);
         node.put(JsonOperations.CAR_SUB_TYPE, type.length == 2 ? type[1] : "");
         node.put(JSON.LENGTH, rs.getLengthInteger());
