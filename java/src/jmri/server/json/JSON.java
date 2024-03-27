@@ -908,6 +908,18 @@ public final class JSON {
      */
     public static final String RFID = "rfid"; // NOI18N
     /**
+     * {@value #WHERELASTSEEN}
+     *
+     * @since 5.7.6
+     */
+    public static final String WHERELASTSEEN = "whereLastSeen"; // NOI18N
+    /**
+     * {@value #WHENLASTSEEN}
+     *
+     * @since 5.7.6
+     */
+    public static final String WHENLASTSEEN = "whenLastSeen"; // NOI18N
+    /**
      * {@value #TIME}
      *
      * @since 5.0.0
