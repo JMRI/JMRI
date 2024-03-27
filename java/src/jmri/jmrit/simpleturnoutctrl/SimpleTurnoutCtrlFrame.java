@@ -180,14 +180,12 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
                     adrTextField.getText());
 
             turnout.addPropertyChangeListener(this);
-            updateTurnoutStatusFields();
-            if (turnout.getCommandedState() == Turnout.CLOSED) {
-                nowStateLabel.setText(InstanceManager
-                        .turnoutManagerInstance().getClosedText());
-            }
+
             log.debug("about to command CLOSED");
             // and set commanded state to CLOSED
             turnout.setCommandedState(Turnout.CLOSED);
+
+            updateTurnoutStatusFields();
 
         } catch (IllegalArgumentException ex1) {
             invalidTurnout(adrTextField.getText(), ex1);
@@ -212,14 +210,13 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
                     adrTextField.getText());
 
             turnout.addPropertyChangeListener(this);
-            updateTurnoutStatusFields();
-            if (turnout.getCommandedState() == Turnout.THROWN) {
-                nowStateLabel.setText(InstanceManager
-                        .turnoutManagerInstance().getThrownText());
-            }
+
             log.debug("about to command THROWN");
             // and set commanded state to THROWN
             turnout.setCommandedState(Turnout.THROWN);
+            
+            updateTurnoutStatusFields();
+            
         } catch (IllegalArgumentException ex1) {
             invalidTurnout(adrTextField.getText(), ex1);
         } catch (Exception ex2) {
