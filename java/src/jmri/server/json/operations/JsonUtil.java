@@ -313,7 +313,7 @@ public class JsonUtil {
         } else {
             node.set(JSON.WHERELASTSEEN, null);        
         }
-        if (rs.getWhenLastSeenDate() != Car.NONE) {
+        if (!rs.getWhenLastSeenDate().equals(Car.NONE)) {
             node.put(JSON.WHENLASTSEEN, rs.getWhenLastSeenDate());
         } else {
             node.set(JSON.WHENLASTSEEN, null);            
