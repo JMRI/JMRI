@@ -751,9 +751,9 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
 
         public static final int SNAME_COLUMN = 0;
         public static final int UNAME_COLUMN = SNAME_COLUMN + 1;
-        public static final int ENABLED_COLUMN = UNAME_COLUMN + 1;
-        public static final int THREAD_COLUMN = ENABLED_COLUMN + 1;
-        public static final int STARTUP_COLUMN = THREAD_COLUMN + 1;
+        public static final int THREAD_COLUMN = UNAME_COLUMN + 1;
+        public static final int ENABLED_COLUMN = THREAD_COLUMN + 1;
+        public static final int STARTUP_COLUMN = ENABLED_COLUMN + 1;
         public static final int BUTTON_COLUMN = STARTUP_COLUMN + 1;
         public static final int BUTTON_DEBUG_COLUMN = BUTTON_COLUMN + 1;
         public static final int BUTTON_DELETE_COLUMN = BUTTON_DEBUG_COLUMN + 1;
