@@ -657,6 +657,9 @@
         <img src="images/chapter5/digital_action_script.png" alt="Chapter 5 digital action script"></a>
       </div>
 
+      <p>For details on accessing LogixNG objects from a script see <a href="chapter13.shtml">
+      Chapter 13 - Jython Scripting Support</a>.</p>
+
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h4>Sensor</h4>
@@ -1159,7 +1162,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h4>If Then Else</h4>
+      <h4 id="if-then-else">If Then Else</h4>
 
       <p>Reads a digital child expression and if the answer is <strong>true</strong> it executes
       the <strong>then</strong> child action, else it executes the <strong>else</strong> child

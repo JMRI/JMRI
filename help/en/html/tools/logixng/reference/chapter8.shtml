@@ -116,14 +116,16 @@
         <dt>Script expression</dt>
         <dd>Use a one line script command to set the value of the variable.  For example:
         <code>sensors.getSensor("BlinkSensor")</code>.  This gets a sensor object which can then
-        be set active or inactive.</dd>
+        be set active or inactive.  For details on accessing LogixNG objects from a script see
+        <a href="chapter13.shtml">Chapter 13 - Jython Scripting Support</a>.</dd>
 
         <dt>Script file</dt>
         <dd>For more complex logic, a script file can be used to set the value.  There are sample
         scripts at the <strong>jython/LogixNG</strong> directory within the JMRI install location.
         Note:  The results of the script are passed back to LogixNG using
         <code>variable.set(<em>some_python_variable</em>)</code>.  This is a Python global variable
-        that is added by the LogixNG scripting support.</dd>
+        that is added by the LogixNG scripting support.  For details on accessing LogixNG objects
+        from a script see <a href="chapter13.shtml">Chapter 13 - Jython Scripting Support</a>.</dd>
 
         <dt>LogixNG Table</dt>
         <dd>Load the contents of a specified LogixNG table into a variable.  The table name is
