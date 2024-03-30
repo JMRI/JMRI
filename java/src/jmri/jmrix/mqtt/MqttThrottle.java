@@ -105,11 +105,6 @@ import java.util.regex.*;
 
         this.isForward = true; //loco should default to forward
 
-        // Listen to state topics
-        mqttAdapter.subscribe(this.rcvThrottleTopic.replaceFirst("\\{0\\}", String.valueOf(address)), this);
-        mqttAdapter.subscribe(this.rcvDirectionTopic.replaceFirst("\\{0\\}", String.valueOf(address)), this);
-        mqttAdapter.subscribe(this.rcvFunctionTopic.replaceFirst("\\{0\\}", String.valueOf(address)), this);
-
         log.debug("MqttThrottle constructor called for address {}", address);
     }
 
