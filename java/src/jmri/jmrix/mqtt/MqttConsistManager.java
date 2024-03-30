@@ -12,8 +12,8 @@ import jmri.DccLocoAddress;
 import jmri.implementation.AbstractConsistManager;
 import javax.annotation.Nonnull;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 
 public class MqttConsistManager extends AbstractConsistManager {
@@ -119,6 +119,6 @@ public class MqttConsistManager extends AbstractConsistManager {
 
 
 
-    private final static Logger log = LoggerFactory.getLogger(MqttConsistManager.class);
+//    private final static Logger log = LoggerFactory.getLogger(MqttConsistManager.class);
 
 }
