@@ -86,7 +86,7 @@ public class MqttThrottleManager extends AbstractThrottleManager {
     }
 
     /**
-     * MQTT based systems DO NOT use the Dispatch Function
+     * MQTT based systems DO use the Dispatch Function
      */
     @Override
     public boolean hasDispatchFunction() {
