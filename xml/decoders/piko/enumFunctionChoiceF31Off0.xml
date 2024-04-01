@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- 																		-->
+<!-- Version 1 - Include file for Piko SmartDecoder 4.1 and XP5.1 (11/2022) -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+	<enumChoice choice="Off" value="0">
+		<choice>Off</choice>
+		<choice xml:lang="de">Aus</choice>
+		<choice xml:lang="nl">Uit</choice>
+		<choice xml:lang="cs">Vypnuto</choice>
+	</enumChoice>
+	<enumChoice choice="F1">
+		<choice>F1</choice>
+	</enumChoice>
+	<enumChoice choice="F2">
+		<choice>F2</choice>
+	</enumChoice>
+	<enumChoice choice="F3">
+		<choice>F3</choice>
+	</enumChoice>
+	<enumChoice choice="F4">
+		<choice>F4</choice>
+	</enumChoice>
+	<enumChoice choice="F5">
+		<choice>F5</choice>
+	</enumChoice>
+	<enumChoice choice="F6">
+		<choice>F6</choice>
+	</enumChoice>
+	<enumChoice choice="F7">
+		<choice>F7</choice>
+	</enumChoice>
+	<enumChoice choice="F8">
+		<choice>F8</choice>
+	</enumChoice>
+	<enumChoice choice="F9">
+		<choice>F9</choice>
+	</enumChoice>
+	<enumChoice choice="F10">
+		<choice>F10</choice>
+	</enumChoice>
+	<enumChoice choice="F11">
+		<choice>F11</choice>
+	</enumChoice>
+	<enumChoice choice="F12">
+		<choice>F12</choice>
+	</enumChoice>
+	<enumChoice choice="F13">
+		<choice>F13</choice>
+	</enumChoice>
+	<enumChoice choice="F14">
+		<choice>F14</choice>
+	</enumChoice>
+	<enumChoice choice="F15">
+		<choice>F15</choice>
+	</enumChoice>
+	<enumChoice choice="F16">
+		<choice>F16</choice>
+	</enumChoice>
+	<enumChoice choice="F17">
+		<choice>F17</choice>
+	</enumChoice>
+	<enumChoice choice="F18">
+		<choice>F18</choice>
+	</enumChoice>
+	<enumChoice choice="F19">
+		<choice>F19</choice>
+	</enumChoice>
+	<enumChoice choice="F20">
+		<choice>F20</choice>
+	</enumChoice>
+	<enumChoice choice="F21">
+		<choice>F21</choice>
+	</enumChoice>
+	<enumChoice choice="F22">
+		<choice>F22</choice>
+	</enumChoice>
+	<enumChoice choice="F23">
+		<choice>F23</choice>
+	</enumChoice>
+	<enumChoice choice="F24">
+		<choice>F24</choice>
+	</enumChoice>
+	<enumChoice choice="F25">
+		<choice>F25</choice>
+	</enumChoice>
+	<enumChoice choice="F26">
+		<choice>F26</choice>
+	</enumChoice>
+	<enumChoice choice="F27">
+		<choice>F27</choice>
+	</enumChoice>
+	<enumChoice choice="F28">
+		<choice>F28</choice>
+	</enumChoice>
+	<enumChoice choice="F29">
+		<choice>F29</choice>
+	</enumChoice>
+	<enumChoice choice="F30">
+		<choice>F30</choice>
+	</enumChoice>
+	<enumChoice choice="F31">
+		<choice>F31</choice>
+	</enumChoice>
+</enumVal>
+
+
