@@ -130,6 +130,8 @@
                 <li>Improved new Turnout address validation.</li>
                 <li>Updated the openlcb.jar file with 
                     <a href="https://github.com/openlcb/OpenLCB_Java/pulls?q=is%3Apr+is%3Aclosed">PRs through 256</a>.
+                <li>Protected against an error that could occur on startup
+                    if JMRI has trouble reaching the network interface on Windows.</li>
             </ul>
 
         <h4>Powerline</h4>
