@@ -107,7 +107,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>Fixed issue with consists not being activated if created after the controlling throttle was created.</li>
             </ul>
 
         <h4>MRC</h4>
@@ -128,6 +128,8 @@
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
                 <li>Improved new Turnout address validation.</li>
+                <li>Protected against an error that could occur on startup
+                    if JMRI has trouble reaching the network interface on Windows.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -347,7 +349,7 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li></li>
+                <li>Small error corrections Uhlenbrock decoder file</li>
             </ul>
 
         <h4>Umelec</h4>
@@ -430,6 +432,10 @@
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
           <li>ConditionalNGs can now be enabled/disabled by editing a LogixNG.</li>
+          <li>Scripts invoked by a ConditionalNG or Module can access <strong>current</strong> local
+          variables.  This makes it possible to use local variables as parameters for Jython scripts.
+          See <a href="https://www.jmri.org/help/en/html/tools/logixng/reference/chapter13.shtml">
+          LogixNG Reference Chapter 13</a> for details.</li>
           <li></li>
         </ul>
 
@@ -594,7 +600,9 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>json: add whereLastSeen and whenLastSeen elements to type "car"</li>
+            <li>help: restore examples showing json syntax</li>
+            <li>home: don't hide /json and /simple links
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
