@@ -108,6 +108,7 @@
         <h4>MQTT</h4>
             <ul>
                 <li>Fixed issue with consists not being activated if created after the controlling throttle was created.</li>
+                <li>Fixed issue where JRMI may generate a non-unique client id when connecting to the MQTT broker - see Warnings.</li>
             </ul>
 
         <h4>MRC</h4>
