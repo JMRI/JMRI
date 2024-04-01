@@ -128,6 +128,8 @@
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
                 <li>Improved new Turnout address validation.</li>
+                <li>Protected against an error that could occur on startup
+                    if JMRI has trouble reaching the network interface on Windows.</li>
             </ul>
 
         <h4>Powerline</h4>
