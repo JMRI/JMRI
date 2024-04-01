@@ -128,6 +128,8 @@
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
                 <li>Improved new Turnout address validation.</li>
+                <li>Updated the openlcb.jar file with 
+                    <a href="https://github.com/openlcb/OpenLCB_Java/pulls?q=is%3Apr+is%3Aclosed">PRs through 256</a>.
             </ul>
 
         <h4>Powerline</h4>
