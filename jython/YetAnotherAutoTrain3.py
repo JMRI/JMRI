@@ -24,7 +24,7 @@
 #         Trains can be loaded and started by setting a memory variable to a train file name.
 # v3.1 -- The wait for seconds command has support for random wait times:  Wait for <n> [to <n>] seconds.
 #         The function key limit has been changed to 68.
-# v3.2 -- Misc bug fixes, code improvements.
+# v3.2 -- Add hold and release signal heads and masts, misc bug fixes, code improvements.
 #
 # Author:  Dave Sand copyright (c) 2018 - 2023
 
@@ -191,6 +191,10 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
                 break    # Direct execution
             elif actionKey == 'IfBlock':
                 self.doIfBlock(action)
+            elif actionKey == 'HoldHead':
+                self.doHoldSignalHead(action)
+            elif actionKey == 'HoldMast':
+                self.doHoldSignalMast(action)
             elif actionKey == 'IfSensor':
                 self.doIfSensor(action)
             elif actionKey == 'IfHead':
@@ -203,6 +207,10 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
                 continue
             elif actionKey == 'Print':
                 self.doPrint(action)
+            elif actionKey == 'ReleaseHead':
+                self.doReleaseSignalHead(action)
+            elif actionKey == 'ReleaseMast':
+                self.doReleaseSignalMast(action)
             elif actionKey == 'ReleaseThrottle':
                 self.doReleaseThrottle(action)
             elif actionKey == 'Repeat':
@@ -297,6 +305,22 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
     def doEndSub(self, action):
         returnAddress = self.subStack.pop()
         self.progAddr = returnAddress
+
+    def doHoldSignalHead(self, action):
+        act, headName = action
+        head = signals.getSignalHead(headName)
+        if head is None:
+            self.displayMessage('{} - Signal head {} not found'.format(self.threadName, headName))
+            return
+        head.setHeld(True)
+
+    def doHoldSignalMast(self, action):
+        act, mastName = action
+        mast = masts.getSignalMast(mastName)
+        if mast is None:
+            self.displayMessage('{} - Signal mast {} not found'.format(self.threadName, mastName))
+            return
+        mast.setHeld(True)
 
     def doIfBlock(self, action):
         act, blockName, blockState = action
@@ -405,6 +429,22 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
     def doPrint(self, action):
         act, printText = action
         print '{} - {}'.format(self.threadName, printText)
+
+    def doReleaseSignalHead(self, action):
+        act, headName = action
+        head = signals.getSignalHead(headName)
+        if head is None:
+            self.displayMessage('{} - Signal head {} not found'.format(self.threadName, headName))
+            return
+        head.setHeld(False)
+
+    def doReleaseSignalMast(self, action):
+        act, mastName = action
+        mast = masts.getSignalMast(mastName)
+        if mast is None:
+            self.displayMessage('{} - Signal mast {} not found'.format(self.threadName, mastName))
+            return
+        mast.setHeld(False)
 
     def doReleaseThrottle(self, action):
         if self.throttle is not None:
@@ -737,6 +777,10 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
                 self.compileEndSub(line)
             elif words[0] == 'Halt':
                 self.actionTokens.append(['Halt'])
+            elif words[0] == 'Hold' and words[1] == 'signal' and words[2] == 'head':
+                self.compileHoldSignalHead(line)
+            elif words[0] == 'Hold' and words[1] == 'signal' and words[2] == 'mast':
+                self.compileHoldSignalMast(line)
             elif words[0] == 'If' and words[1] == 'block':
                 self.compileIfBlock(line)
             elif words[0] == 'If' and words[1] == 'sensor':
@@ -753,6 +797,10 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
                 self.compilePrint(line)
             elif words[0] == 'Repeat':
                 self.compileRepeat(line)
+            elif words[0] == 'Release' and words[1] == 'signal' and words[2] == 'head':
+                self.compileReleaseSignalHead(line)
+            elif words[0] == 'Release' and words[1] == 'signal' and words[2] == 'mast':
+                self.compileReleaseSignalMast(line)
             elif words[0] == 'Release':
                 self.compileReleaseThrottle(line)
             elif words[0] == 'Set' and words[1] == 'block':
@@ -924,6 +972,40 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
             return
         self.actionTokens.append(['EndSub', result[0]])
 
+    def compileHoldSignalHead(self, line):
+        # Hold signal head <headName>
+        if logLevel > 2: print '  {} - {}'.format(self.threadName, line)
+        pattern = re.compile('\s*Hold\s+signal\s+head\s+(.+\S)')
+        result = re.findall(pattern, line)
+        if logLevel > 3: print '    {} - result = {}'.format(self.threadName, result)
+        if len(result) != 1:
+            self.compileMessages.append('{} - Syntax error at line {}: {}'.format(self.threadName, self.lineNumber, line))
+            return
+        headName = result[0]
+        head = signals.getSignalHead(headName)
+        if head is None:
+            self.compileMessages.append('{} - Hold signal head error at line {}: head "{}" not found'.format(self.threadName, self.lineNumber, headName))
+            return
+        if logLevel > 2: print 'HoldHead', headName
+        self.actionTokens.append(['HoldHead', headName])
+
+    def compileHoldSignalMast(self, line):
+        # Hold signal mast <mastName>
+        if logLevel > 2: print '  {} - {}'.format(self.threadName, line)
+        pattern = re.compile('\s*Hold\s+signal\s+mast\s+(.+\S)')
+        result = re.findall(pattern, line)
+        if logLevel > 3: print '    {} - result = {}'.format(self.threadName, result)
+        if len(result) != 1:
+            self.compileMessages.append('{} - Syntax error at line {}: {}'.format(self.threadName, self.lineNumber, line))
+            return
+        mastName = result[0]
+        mast = masts.getSignalMast(mastName)
+        if mast is None:
+            self.compileMessages.append('{} - Hold signal mast error at line {}: head "{}" not found'.format(self.threadName, self.lineNumber, mastName))
+            return
+        if logLevel > 2: print 'HoldMast', mastName
+        self.actionTokens.append(['HoldMast', mastName])
+
     def compileIfBlock(self, line):
         # If block <block name> is <occupied | unoccupied | reserved | free>
         if logLevel > 2: print '  {} - {}'.format(self.threadName, line)
@@ -1080,6 +1162,41 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
             self.compileMessages.append('{} - Syntax error at line {}: {}'.format(self.threadName, self.lineNumber, line))
             return
         self.actionTokens.append(['Print', result[0]])
+
+    def compileReleaseSignalHead(self, line):
+        # Release signal head <headName>
+        if logLevel > 2: print '  {} - {}'.format(self.threadName, line)
+        pattern = re.compile('\s*Release\s+signal\s+head\s+(.+\S)')
+        result = re.findall(pattern, line)
+        if logLevel > 3: print '    {} - result = {}'.format(self.threadName, result)
+        if len(result) != 1:
+            self.compileMessages.append('{} - Syntax error at line {}: {}'.format(self.threadName, self.lineNumber, line))
+            return
+        headName = result[0]
+        head = signals.getSignalHead(headName)
+        if head is None:
+            self.compileMessages.append('{} - Release signal head error at line {}: head "{}" not found'.format(self.threadName, self.lineNumber, headName))
+            return
+        if logLevel > 2: print 'ReleaseHead', headName
+        self.actionTokens.append(['ReleaseHead', headName])
+
+    def compileReleaseSignalMast(self, line):
+        # Release signal mast <mastName>
+        if logLevel > 2: print '  {} - {}'.format(self.threadName, line)
+        pattern = re.compile('\s*Release\s+signal\s+mast\s+(.+\S)')
+        result = re.findall(pattern, line)
+        if logLevel > 2: print '    {} - result = {}'.format(self.threadName, result)
+#         print '---- {} :: {}'.format(len(result), len(result[0]))
+        if len(result) != 1:
+            self.compileMessages.append('{} - Syntax error at line {}: {}'.format(self.threadName, self.lineNumber, line))
+            return
+        mastName = result[0]
+        mast = masts.getSignalMast(mastName)
+        if mast is None:
+            self.compileMessages.append('{} - Release signal mast error at line {}: head "{}" not found'.format(self.threadName, self.lineNumber, mastName))
+            return
+        if logLevel > 2: print 'ReleaseMast', mastName
+        self.actionTokens.append(['ReleaseMast', mastName])
 
     def compileReleaseThrottle(self, line):
         # Release throttle

@@ -186,6 +186,14 @@
         the throttle speed should be set to zero and the throttle should be released.  This is
         generally used when starting another train using the <strong>Set memory</strong> action.</dd>
 
+        <dt>Hold signal head &lt;name&gt;<span class="since">since YAAT 3.2</span></dt>
+
+        <dd>Enable the <strong>Held</strong> state for the signal head table entry.</dd>
+
+        <dt>Hold signal mast &lt;name&gt;<span class="since">since YAAT 3.2</span></dt>
+
+        <dd>Enable the <strong>Held</strong> state for the signal mast table entry.</dd>
+
         <dt>Loop</dt>
 
         <dd>Marks the end of the one time start up actions, such as the throttle assignment,
@@ -195,6 +203,14 @@
 
         <dd>Display a message in the script output window or the system console log. Useful for
         debugging.</dd>
+
+        <dt>Release signal head &lt;name&gt;<span class="since">since YAAT 3.2</span></dt>
+
+        <dd>Disable the <strong>Held</strong> state for the signal head table entry.</dd>
+
+        <dt>Release signal mast &lt;name&gt;<span class="since">since YAAT 3.2</span></dt>
+
+        <dd>Disable the <strong>Held</strong> state for the signal mast table entry.</dd>
 
         <dt>Release throttle<span class="since">since YAAT 3.0</span></dt>
 
