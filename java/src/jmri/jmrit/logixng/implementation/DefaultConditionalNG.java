@@ -132,10 +132,8 @@ public class DefaultConditionalNG extends AbstractBase
     /** {@inheritDoc} */
     @Override
     public void execute(boolean allowRunDelayed) {
-        if (_executeAtStartup || !getLogixNG().isStartup()) {
-            if (_executeLock.once()) {
-                runOnLogixNG_Thread(new ExecuteTask(this, _executeLock, null), allowRunDelayed);
-            }
+        if (_executeLock.once()) {
+            runOnLogixNG_Thread(new ExecuteTask(this, _executeLock, null), allowRunDelayed);
         }
     }
 
@@ -369,7 +367,9 @@ public class DefaultConditionalNG extends AbstractBase
             LogixNG logixNG = getLogixNG();
             if ((logixNG != null) && logixNG.isActive()) {
                 registerListeners();
-                execute();
+                if (_executeAtStartup) {
+                    execute();
+                }
             }
         } else {
             unregisterListeners();
