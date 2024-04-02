@@ -7533,13 +7533,13 @@
 	<!-- end of Line 22 -->
 	<!-- Mapping Line 23 CV353 - 368 -->
 	<!-- Line 23 Mapping conditions On -->
-	<variable item="Z23 Direction Fw" CV="353.31=8.32=0" mask="VXXXXXXX" default="0">
+	<variable item="Z23 Direction Fw" CV="353.31=8.32=1" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Forward</label>
 		<label xml:lang="de">Vorwärts</label>
 		<label xml:lang="cs">Vpřed</label>
 	</variable>
-	<variable item="Z23 Moving Yes" CV="353.31=8.32=0" mask="XVXXXXXX" default="0">
+	<variable item="Z23 Moving Yes" CV="353.31=8.32=1" mask="XVXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Moving</label>
 		<label xml:lang="de">Fahrend</label>
@@ -7870,7 +7870,7 @@
 	<!-- end of Line 23 -->
 	<!-- Mapping Line 24 CV369 - 384 -->
 	<!-- Line 24 Mapping conditions On -->
-	<variable item="Z24 Direction Fw" CV="369.31=8.32=0" mask="VXXXXXXX" default="0">
+	<variable item="Z24 Direction Fw" CV="369.31=8.32=1" mask="VXXXXXXX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Forward</label>
 		<label xml:lang="de">Vorwärts</label>
