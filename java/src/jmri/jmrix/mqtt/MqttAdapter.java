@@ -162,15 +162,19 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
             }
 
             // generate a unique client ID based on the network ID and the system prefix of the MQTT connection.
-            String clientID = jmri.util.node.NodeIdentity.networkIdentity();
-            
+            String clientID = jmri.InstanceManager.getDefault(jmri.web.server.WebServerPreferences.class).getRailroadName();
+
             // ensure that only guaranteed valid characters are included in the client ID
             clientID = clientID.replaceAll("[^A-Za-z0-9]", "");
 
-            // ensure the length of the client ID doesn't exceed the guaranteed acceptable length of 23
-            if (clientID.length() > 23) {
-                clientID = clientID.substring(0, 23);
-            }
+            String clientIDsuffix = "JMRI" + Integer.toHexString(jmri.util.node.NodeIdentity.networkIdentity().hashCode()) .toUpperCase() + getSystemPrefix();
+
+            // Trim railroad name to fit within MQTT client id 23 character limit.
+            if (clientID.length() > 23 - clientIDsuffix.length())
+                clientID = clientID.substring(0,23 - clientIDsuffix.length());
+
+            clientID = clientID + clientIDsuffix;
+
             log.info("Connection {} is using a clientID of \"{}\"", getSystemPrefix(), clientID);
             
             String tempdirName = jmri.util.FileUtil.getExternalFilename(jmri.util.FileUtil.PROFILE);
