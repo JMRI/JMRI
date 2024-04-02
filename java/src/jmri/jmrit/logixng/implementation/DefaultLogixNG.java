@@ -328,6 +328,12 @@ public class DefaultLogixNG extends AbstractNamedBean
 
     /** {@inheritDoc} */
     @Override
+    public boolean isActivated() {
+        return _isActive;
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public void execute() {
         for (ConditionalNG_Entry entry : _conditionalNG_Entries) {
             entry._conditionalNG.execute();

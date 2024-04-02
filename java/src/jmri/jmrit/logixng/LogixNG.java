@@ -172,6 +172,15 @@ public interface LogixNG extends Base, NamedBean {
     void deleteConditionalNG(ConditionalNG conditionalNG);
 
     /**
+     * Is this item active?
+     * This method returns true if the the LogixNG is active but not enabled,
+     * while the method {@link #isActive() } only returns true if the LogixNG
+     * is both active and enabled.
+     * @return true if active, false otherwise.
+     */
+    boolean isActivated();
+
+    /**
      * Execute all ConditionalNGs if the LogixNG is enabled and activated.
      */
     void execute();
