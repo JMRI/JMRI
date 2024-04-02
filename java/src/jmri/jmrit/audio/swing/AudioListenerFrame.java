@@ -141,7 +141,7 @@ public class AudioListenerFrame extends AbstractAudioFrame {
             return;
         }
         String user = userName.getText();
-        if (user.equals("")) {
+        if (user.isEmpty()) {
             user = null;
         }
         AudioListener l;

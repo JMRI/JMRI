@@ -819,7 +819,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
                     }
                     for (jmri.ConditionalVariable var : cdl.getStateVariableList()) {
                         if (var.getBean() == dPair.dp) {
-                            String refName = (cdlUserName.equals("")) ? cdlName : cdlName + "  ( " + cdlUserName + " )";
+                            String refName = (cdlUserName.isEmpty()) ? cdlName : cdlName + "  ( " + cdlUserName + " )";
                             if (!conditionalReferences.contains(refName)) {
                                 conditionalReferences.add(refName);
                             }
@@ -827,7 +827,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
                     }
                     for (jmri.ConditionalAction act : cdl.getActionList()) {
                         if (act.getBean() == dPair.dp) {
-                            String refName = (cdlUserName.equals("")) ? cdlName : cdlName + "  ( " + cdlUserName + " )";
+                            String refName = (cdlUserName.isEmpty()) ? cdlName : cdlName + "  ( " + cdlUserName + " )";
                             if (!conditionalReferences.contains(refName)) {
                                 conditionalReferences.add(refName);
                             }

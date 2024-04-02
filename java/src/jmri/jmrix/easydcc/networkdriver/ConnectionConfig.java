@@ -41,7 +41,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     @Override
     public String getInfo() {
         String t = adapter.getHostName();
-        if (t != null && !t.equals("")) {
+        if (t != null && !t.isEmpty()) {
             return t;
         } else {
             return JmrixConfigPane.NONE;

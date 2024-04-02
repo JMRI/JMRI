@@ -174,7 +174,7 @@ public class DefaultConditionalNGManagerXml extends jmri.managers.configurexml.A
                 }
 
                 // set enabled/disabled if attribute was present
-                if ((enabled != null) && (!enabled.equals(""))) {
+                if ((enabled != null) && (!enabled.isEmpty())) {
                     if (enabled.equals("yes")) {  // NOI18N
                         conditionalNG.setEnabled(true);
                     } else if (enabled.equals("no")) {  // NOI18N
@@ -187,7 +187,7 @@ public class DefaultConditionalNGManagerXml extends jmri.managers.configurexml.A
                     executeAtStartup = conditionalNG_Element.getAttribute("executeAtStartup").getValue();  // NOI18N
                 }
                 // set enabled/disabled if attribute was present
-                if ((executeAtStartup != null) && (!executeAtStartup.equals(""))) {
+                if ((executeAtStartup != null) && (!executeAtStartup.isEmpty())) {
                     if (executeAtStartup.equals("yes")) {  // NOI18N
                         conditionalNG.setExecuteAtStartup(true);
                     } else if (executeAtStartup.equals("no")) {  // NOI18N

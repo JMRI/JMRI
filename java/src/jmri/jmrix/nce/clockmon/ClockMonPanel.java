@@ -1112,7 +1112,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
         }
         if (log.isTraceEnabled()) {
             Date now = internalClock.getTime();
-            StringBuilder txt = new StringBuilder("");
+            StringBuilder txt = new StringBuilder();
             for (int i = 0; i < priorOffsetErrors.size(); i++) {
                 txt.append(" ").append(priorOffsetErrors.get(i).doubleValue());
             }
@@ -1155,7 +1155,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
             syncInterval = 40;
         }
         if (log.isTraceEnabled()) {
-            StringBuilder txt = new StringBuilder("");
+            StringBuilder txt = new StringBuilder();
             for (int i = 0; i < priorDiffs.size(); i++) {
                 txt.append(" ").append(priorDiffs.get(i));
             }
@@ -1216,12 +1216,12 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceL
             }
         }
         if (log.isTraceEnabled()) {
-            StringBuilder txt = new StringBuilder("");
+            StringBuilder txt = new StringBuilder();
             for (int i = priorDiffs.size() - 1; i >= 0; i--) {
                 txt.append(" ").append(threeDigits.format(priorDiffs.get(i)));
             }
             log.trace("priorDiffs: {}", txt);
-            txt = new StringBuilder("");
+            txt = new StringBuilder();
             for (int i = priorCorrections.size() - 1; i >= 0; i--) {
                 txt.append(" ").append(threeDigits.format(priorCorrections.get(i)));
             }

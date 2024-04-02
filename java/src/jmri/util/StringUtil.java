@@ -396,7 +396,7 @@ public class StringUtil {
     @CheckReturnValue
     @CheckForNull
     public static String parenQuote(@CheckForNull String in) {
-        if (in == null || in.equals("")) {
+        if (in == null || in.isEmpty()) {
             return in;
         }
         StringBuilder result = new StringBuilder();
@@ -434,7 +434,7 @@ public class StringUtil {
     @CheckReturnValue
     @CheckForNull
     static String parenUnQuote(@CheckForNull String in) {
-        if (in == null || in.equals("")) {
+        if (in == null || in.isEmpty()) {
             return in;
         }
         StringBuilder result = new StringBuilder();
@@ -457,7 +457,7 @@ public class StringUtil {
     @Nonnull
     public static java.util.List<String> splitParens(@CheckForNull String in) {
         java.util.ArrayList<String> result = new java.util.ArrayList<>();
-        if (in == null || in.equals("")) {
+        if (in == null || in.isEmpty()) {
             return result;
         }
         int level = 0;

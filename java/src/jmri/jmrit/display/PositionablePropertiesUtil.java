@@ -227,7 +227,7 @@ public class PositionablePropertiesUtil {
         @Override
         public void focusLost(FocusEvent e) {
             JTextField tmp = (JTextField) e.getSource();
-            if (tmp.getText().equals("")) {
+            if (tmp.getText().isEmpty()) {
                 tmp.setText("0");
                 preview();
             }
@@ -246,7 +246,7 @@ public class PositionablePropertiesUtil {
         @Override
         public void keyReleased(KeyEvent E) {
             JTextField tmp = (JTextField) E.getSource();
-            if (!tmp.getText().equals("")) {
+            if (!tmp.getText().isEmpty()) {
                 preview();
             }
         }

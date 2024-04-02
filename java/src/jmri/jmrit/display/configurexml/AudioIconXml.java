@@ -172,12 +172,12 @@ public class AudioIconXml extends PositionableLabelXml {
         l.setOnClickOperation(AudioIcon.OnClickOperation.valueOf(onClickOperation));
 
         String yesno = element.getAttribute("playSoundWhenJmriPlays").getValue();
-        if ((yesno != null) && (!yesno.equals(""))) {
+        if ((yesno != null) && (!yesno.isEmpty())) {
             l.setPlaySoundWhenJmriPlays(yesno.equals("yes"));
         }
 
         yesno = element.getAttribute("stopSoundWhenJmriStops").getValue();
-        if ((yesno != null) && (!yesno.equals(""))) {
+        if ((yesno != null) && (!yesno.isEmpty())) {
             l.setStopSoundWhenJmriStops(yesno.equals("yes"));
         }
 

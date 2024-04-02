@@ -158,7 +158,7 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
                           for (DecoderFile d : l) {
                               // we do not check for LNCV programmingMode support since we do not expect replies from non-LNCV devices
                               // (and there is currently no access to supported modes in the DecoderIndexFile)
-                              if (d.getModel().equals("")) {
+                              if (d.getModel().isEmpty()) {
                                   log.warn("Empty model(name) in decoderfile {}", d.getFileName());
                                   continue;
                               }

@@ -893,7 +893,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             DecoderFile d = l.get(0);
             loadDecoderFile(d, r);
         } else {
-            if (decoderModel.equals("")) {
+            if (decoderModel.isEmpty()) {
                 log.debug("blank decoderModel requested, so nothing loaded");
             } else {
                 log.warn("no matching \"{}\" decoder found for loco, no decoder info loaded", decoderModel);
@@ -1105,7 +1105,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                 return; // without doing anything
             }
         }
-        if(maxFnNumDirty && !maxFnNumOld.equals("")){
+        if(maxFnNumDirty && !maxFnNumOld.isEmpty()){
             _rosterEntry.setMaxFnNum(maxFnNumOld);
         }
         // Check for a "<new loco>" roster entry; if found, remove it
@@ -1413,7 +1413,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             protected void doPrimary() {
                 // short address mode
                 longMode = false;
-                if (primaryAddr != null && !primaryAddr.getValueString().equals("")) {
+                if (primaryAddr != null && !primaryAddr.getValueString().isEmpty()) {
                     newAddr = primaryAddr.getValueString();
                 }
             }
@@ -1421,7 +1421,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             @Override
             protected void doExtended() {
                 // long address
-                if (extendAddr != null && !extendAddr.getValueString().equals("")) {
+                if (extendAddr != null && !extendAddr.getValueString().isEmpty()) {
                     longMode = true;
                     newAddr = extendAddr.getValueString();
                 }
@@ -1858,7 +1858,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         _rMPane.update(_rosterEntry);
 
         // id has to be set!
-        if (_rosterEntry.getId().equals("") || _rosterEntry.getId().equals(Bundle.getMessage("LabelNewDecoder"))) {
+        if (_rosterEntry.getId().isEmpty() || _rosterEntry.getId().equals(Bundle.getMessage("LabelNewDecoder"))) {
             log.debug("storeFile without a filename; issued dialog");
             JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("PromptFillInID"));
             return false;

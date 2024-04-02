@@ -301,7 +301,7 @@ public class ConditionalVariable {
 
     public void setDataString(String data) {
         _dataString = data;
-        if (data != null && !data.equals("")
+        if (data != null && !data.isEmpty()
                 && _type.getItemType() == Conditional.ItemType.MEMORY) {
             NamedBean bean = InstanceManager.memoryManagerInstance().getMemory(data);
             if (bean != null) {

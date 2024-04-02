@@ -148,7 +148,7 @@ public class ThrottleFramePropertyEditor extends JDialog {
      * TItle field has been changed. If it has text, make sure that's displayed.
      */
     protected void titleFieldChanged() {
-        if (titleField.getText().equals("")) {
+        if (titleField.getText().isEmpty()) {
             return;
         }
         if (titleType.getSelectedValue().equals(Bundle.getMessage("SelectTitleTypeADDRESS"))) {

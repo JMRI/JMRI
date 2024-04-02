@@ -63,7 +63,7 @@ public class DefaultGlobalVariableManager extends AbstractManager<GlobalVariable
 
         // Check that GlobalVariable does not already exist
         GlobalVariable x;
-        if (userName != null && !userName.equals("")) {
+        if (userName != null && !userName.isEmpty()) {
             x = getByUserName(userName);
             if (x != null) {
                 return null;

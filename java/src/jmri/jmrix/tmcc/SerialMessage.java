@@ -68,7 +68,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
 
     @Override
     public String toString() {
-        StringBuilder s = new StringBuilder("");
+        StringBuilder s = new StringBuilder();
         for (int i = 0; i < getNumDataElements(); i++) {
             if (i != 0) {
                 s.append(" ");

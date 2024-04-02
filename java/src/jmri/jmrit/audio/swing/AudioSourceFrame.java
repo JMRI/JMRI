@@ -359,7 +359,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
             return false;
         }
         String user = userName.getText();
-        if (user.equals("")) {
+        if (user.isEmpty()) {
             user = null;
         }
         AudioSource s;

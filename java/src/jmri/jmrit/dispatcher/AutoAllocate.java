@@ -645,7 +645,7 @@ public class AutoAllocate implements Runnable {
      */
     private boolean stopAllocateSensorSet(ActiveTrain at, TransitSection lastAllocatedTransitSection) {
         if (lastAllocatedTransitSection.getStopAllocatingSensor() != null &&
-                !lastAllocatedTransitSection.getStopAllocatingSensor().equals("")) {
+                !lastAllocatedTransitSection.getStopAllocatingSensor().isEmpty()) {
             String sensorName = lastAllocatedTransitSection.getStopAllocatingSensor();
             Sensor sensor;
             try {

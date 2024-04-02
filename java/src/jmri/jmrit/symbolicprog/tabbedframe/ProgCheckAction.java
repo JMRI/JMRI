@@ -87,7 +87,7 @@ public class ProgCheckAction extends AbstractAction {
      */
     void warnMissingNames(File file) {
         String result = checkMissingNames(file);
-        if (result.equals("")) {
+        if (result.isEmpty()) {
             JmriJOptionPane.showMessageDialog(_who, "OK, all variables in file are known");
         } else {
             JmriJOptionPane.showMessageDialog(_who, result);
@@ -112,7 +112,7 @@ public class ProgCheckAction extends AbstractAction {
             log.debug("found {} display elements", varList.size());
             NameFile nfile = InstanceManager.getDefault(NameFile.class);
 
-            StringBuilder warnings = new StringBuilder("");
+            StringBuilder warnings = new StringBuilder();
 
             for (int i = 0; i < varList.size(); i++) {
                 Element varElement = (varList.get(i));
@@ -145,7 +145,7 @@ public class ProgCheckAction extends AbstractAction {
      */
     void warnIncompleteComprehensive(File file) {
         String result = checkIncompleteComprehensive(file);
-        if (result.equals("")) {
+        if (result.isEmpty()) {
             JmriJOptionPane.showMessageDialog(_who, "OK, Comprehensive.xml is complete");
         } else {
             JmriJOptionPane.showMessageDialog(_who, result);
@@ -175,7 +175,7 @@ public class ProgCheckAction extends AbstractAction {
             }
             NameFile nfile = InstanceManager.getDefault(NameFile.class);
 
-            StringBuilder warnings = new StringBuilder("");
+            StringBuilder warnings = new StringBuilder();
 
             // for each item in names, see if found in this file
             nfile.names().stream().filter((s) -> !(functionMapName(s))).forEachOrdered((s) -> {

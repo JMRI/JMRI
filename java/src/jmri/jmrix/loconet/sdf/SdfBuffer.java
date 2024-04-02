@@ -107,7 +107,7 @@ public class SdfBuffer {
 
     @Override
     public String toString() {
-        StringBuilder out = new StringBuilder("");
+        StringBuilder out = new StringBuilder();
         for (int i = 0; i < ops.size(); i++) {
             SdfMacro m = ops.get(i);
 

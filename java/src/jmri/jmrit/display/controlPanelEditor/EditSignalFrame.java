@@ -677,13 +677,13 @@ public class EditSignalFrame extends EditFrame {
         SignalAppearanceMap appMap = mast.getAppearanceMap();
         Enumeration<String> e = mast.getAppearanceMap().getAspects();
         String s = appMap.getImageLink("Clear", family);
-        if ( s == null || s.equals("")) {
+        if ( s == null || s.isEmpty()) {
             s = appMap.getImageLink("Stop", family);
         }
-        if ( s == null || s.equals("")) {
+        if ( s == null || s.isEmpty()) {
             s = appMap.getImageLink(e.nextElement(), family);
         }
-        if (s !=null && !s.equals("")) {
+        if (s !=null && !s.isEmpty()) {
             if (!s.contains("preference:")) {
                 s = s.substring(s.indexOf("resources"));
             }

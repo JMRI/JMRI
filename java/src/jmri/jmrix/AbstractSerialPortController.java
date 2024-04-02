@@ -523,7 +523,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
                     break; // break on first space char encountered after at least 1 digit was found
                 }
             }
-            if (baudNumber.toString().equals("")) { // no number found in indexString e.g. "(automatic)"
+            if (baudNumber.toString().isEmpty()) { // no number found in indexString e.g. "(automatic)"
                 baudNum = 0;
             } else {
                 try {

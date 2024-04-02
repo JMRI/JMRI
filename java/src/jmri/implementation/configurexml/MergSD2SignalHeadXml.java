@@ -108,7 +108,7 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
         if (shared.getAttribute("feather") != null) {
             yesno = shared.getAttribute("feather").getValue();
         }
-        if ((yesno != null) && (!yesno.equals(""))) {
+        if ((yesno != null) && (!yesno.isEmpty())) {
             if (yesno.equals("yes")) {
                 feather = true;
             } else if (yesno.equals("no")) {
@@ -119,7 +119,7 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
         if (shared.getAttribute("home") != null) {
             yesno = shared.getAttribute("home").getValue();
         }
-        if ((yesno != null) && (!yesno.equals(""))) {
+        if ((yesno != null) && (!yesno.isEmpty())) {
             if (yesno.equals("yes")) {
                 home = true;
             } else if (yesno.equals("no")) {
@@ -183,7 +183,7 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
             String name = e.getAttribute("systemName").getValue();
             Turnout t;
             if (e.getAttribute("userName") != null
-                    && !e.getAttribute("userName").getValue().equals("")) {
+                    && !e.getAttribute("userName").getValue().isEmpty()) {
                 name = e.getAttribute("userName").getValue();
                 t = InstanceManager.turnoutManagerInstance().getTurnout(name);
             } else {

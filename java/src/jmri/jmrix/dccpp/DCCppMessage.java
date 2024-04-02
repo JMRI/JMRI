@@ -378,7 +378,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             case DCCppConstants.FORGET_CAB_CMD:
                 text = "Forget Cab: ";
                 if (isForgetCabMessage()) {
-                    text += "CAB: " + (getForgetCabString().equals("")?"[ALL]":getForgetCabString());
+                    text += "CAB: " + (getForgetCabString().isEmpty()?"[ALL]":getForgetCabString());
                     text += ", (No Reply Expected)";
                 } else {
                     text += "Invalid syntax: '" + toString() + "'";

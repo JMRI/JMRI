@@ -779,7 +779,7 @@ public class ActivateTrainFrame extends JmriJFrame {
                 // enable profile boxes
                 setSpeedProfileOptions(true);
             }
-            if (r.getAttribute("DispatcherTrainType") != null && !r.getAttribute("DispatcherTrainType").equals("")) {
+            if (r.getAttribute("DispatcherTrainType") != null && !r.getAttribute("DispatcherTrainType").isEmpty()) {
                 trainTypeBox.setSelectedItem(r.getAttribute("DispatcherTrainType"));
             }
         } else {
@@ -1034,7 +1034,7 @@ public class ActivateTrainFrame extends JmriJFrame {
                 break;
             case TRAINSFROMUSER:
                 trainName = trainNameField.getText();
-                if ((trainName == null) || trainName.equals("")) {
+                if ((trainName == null) || trainName.isEmpty()) {
                     // no train name entered
                     JmriJOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage("Error14"),
                             Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
@@ -1295,7 +1295,7 @@ public class ActivateTrainFrame extends JmriJFrame {
             Object selName = JmriJOptionPane.showInputDialog(initiateFrame,
                     Bundle.getMessage("LoadTrainChoice"), Bundle.getMessage("LoadTrainTitle"),
                     JmriJOptionPane.QUESTION_MESSAGE, null, names, names[0]);
-            if ((selName == null) || (((String) selName).equals(""))) {
+            if ((selName == null) || (((String) selName).isEmpty())) {
                 return;
             }
             //read xml data from selected filename and move it into the new train dialog box
@@ -1378,7 +1378,7 @@ public class ActivateTrainFrame extends JmriJFrame {
             Object selName = JmriJOptionPane.showInputDialog(initiateFrame,
                     Bundle.getMessage("DeleteTrainChoice"), Bundle.getMessage("DeleteTrainTitle"),
                     JmriJOptionPane.QUESTION_MESSAGE, null, names, names[0]);
-            if ((selName == null) || (((String) selName).equals(""))) {
+            if ((selName == null) || (((String) selName).isEmpty())) {
                 return;
             }
             _tiFile.deleteTrainInfoFile((String) selName);

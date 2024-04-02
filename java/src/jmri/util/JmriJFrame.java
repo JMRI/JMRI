@@ -325,7 +325,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
      */
     public void generateWindowRef() {
         String initref = this.getClass().getName();
-        if ((this.getTitle() != null) && (!this.getTitle().equals(""))) {
+        if ((this.getTitle() != null) && (!this.getTitle().isEmpty())) {
             if (initref.equals(JmriJFrame.class.getName())) {
                 initref = this.getTitle();
             } else {

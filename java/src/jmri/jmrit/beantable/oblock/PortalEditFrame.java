@@ -171,7 +171,7 @@ public class PortalEditFrame extends JmriJFrame {
 
     private void applyPressed(ActionEvent e) {
         String user = portalUserName.getText().trim();
-        if (user.equals("")) {
+        if (user.isEmpty()) {
             // warn/help bar red
             status(Bundle.getMessage("WarningSysNameEmpty"), true);
             portalUserName.setBackground(Color.red);

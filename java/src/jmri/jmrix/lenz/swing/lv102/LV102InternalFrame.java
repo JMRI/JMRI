@@ -285,7 +285,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
     // Write the voltage setting
     void writeVoltSetting(Programmer opsProg) {
-        if (!(voltBox.getSelectedItem().equals(""))
+        if (!(voltBox.getSelectedItem().isEmpty())
                 && voltBox.getSelectedItem() != null) {
 
             log.debug("Selected Voltage: {}", voltBox.getSelectedItem());
@@ -333,7 +333,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
     // Write the E-Line setting
     void writeELineSetting(Programmer opsProg) {
-        if (!(eLineBox.getSelectedItem().equals(""))
+        if (!(eLineBox.getSelectedItem().isEmpty())
                 && eLineBox.getSelectedItem() != null) {
 
             log.debug("E-Line Setting: {}", eLineBox.getSelectedItem());
@@ -383,7 +383,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
     // Write the RailCom setting
     void writeRailComSetting(Programmer opsProg) {
-        if (!(railComBox.getSelectedItem().equals(""))
+        if (!(railComBox.getSelectedItem().isEmpty())
                 && railComBox.getSelectedItem() != null) {
 
             log.debug("RailCom Setting: {}", railComBox.getSelectedItem());
@@ -432,7 +432,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
     // Write the RailCom Mode setting
     void writeRailComModeSetting(Programmer opsProg) {
-        if (!(railComModeBox.getSelectedItem().equals(""))
+        if (!(railComModeBox.getSelectedItem().isEmpty())
                 && railComModeBox.getSelectedItem() != null) {
 
             log.debug("RailCom Setting: {}", railComModeBox.getSelectedItem());
@@ -481,7 +481,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
     // Write the RailCom Mode setting
     void writeRailComTimingSetting(Programmer opsProg) {
-        if (!(railComTimingBox.getSelectedItem().equals(""))
+        if (!(railComTimingBox.getSelectedItem().isEmpty())
                 && railComTimingBox.getSelectedItem() != null) {
 
             log.debug("RailCom Timing Setting: {}", railComTimingBox.getSelectedItem());

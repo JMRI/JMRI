@@ -221,7 +221,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
 
     private void selectInputFile() {
         String name = inputFileName.getText();
-        if (name.equals("")) {
+        if (name.isEmpty()) {
             name = FileUtil.getUserFilesPath();
         }
         if (chooser == null) {
@@ -276,7 +276,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "SLF4J_FORMAT_SHOULD_BE_CONST",
         justification = "Passing I18N exception text through to log")
     protected void doRead(JFileChooser chooser) {
-        if (inputFileName.getText().equals("")) {
+        if (inputFileName.getText().isEmpty()) {
             JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorNoInputFile"),
                     Bundle.getMessage("ErrorTitle"),
                     JmriJOptionPane.ERROR_MESSAGE);
@@ -470,7 +470,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
         boolean allIsOk = true;
         jtf.setForeground(Color.black);
         text = jtf.getText();
-        if (text.equals("")) {
+        if (text.isEmpty()) {
             jtf.setText("0");
             jtf.setForeground(Color.red);
             allIsOk = false;

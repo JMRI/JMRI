@@ -349,11 +349,11 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
      */
     @Override
     public void addWhereUsed(String target, String reference) {
-        if (target == null || target.equals("")) {
+        if (target == null || target.isEmpty()) {
             log.error("Invalid target name for addWhereUsed");
             return;
         }
-        if (reference == null || reference.equals("")) {
+        if (reference == null || reference.isEmpty()) {
             log.error("Invalid reference name for addWhereUsed");
             return;
         }
@@ -379,7 +379,7 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
      */
     @Override
     public ArrayList<String> getWhereUsed(String target) {
-        if (target == null || target.equals("")) {
+        if (target == null || target.isEmpty()) {
             log.error("Invalid target name for getWhereUsed");
             return null;
         }
@@ -394,11 +394,11 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
      */
     @Override
     public void removeWhereUsed(String target, String reference) {
-        if (target == null || target.equals("")) {
+        if (target == null || target.isEmpty()) {
             log.error("Invalid target name for removeWhereUsed");
             return;
         }
-        if (reference == null || reference.equals("")) {
+        if (reference == null || reference.isEmpty()) {
             log.error("Invalid reference name for removeWhereUsed");
             return;
         }

@@ -51,7 +51,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     @Override
     protected void extendElement(Element e) {
          // Create a polling list from the configured nodes
-        StringBuilder polllist = new StringBuilder("");
+        StringBuilder polllist = new StringBuilder();
         SerialTrafficController tcPL = ((CMRISystemConnectionMemo) adapter.getSystemConnectionMemo()).getTrafficController();
         SerialNode plNode = (SerialNode) tcPL.getNode(0);
         int index = 1;
@@ -83,12 +83,12 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
             n.addContent(makeParameter("transmissiondelay", "" + node.getTransmissionDelay()));
             n.addContent(makeParameter("num2lsearchlights", "" + node.getNum2LSearchLights()));
             n.addContent(makeParameter("pulsewidth", "" + node.getPulseWidth()));
-            StringBuilder value = new StringBuilder("");
+            StringBuilder value = new StringBuilder();
             for (int i = 0; i < node.getLocSearchLightBits().length; i++) {
                 value.append(Integer.toHexString(node.getLocSearchLightBits()[i] & 0xF));
             }
             n.addContent(makeParameter("locsearchlightbits", value.toString()));
-            value = new StringBuilder("");
+            value = new StringBuilder();
             for (int i = 0; i < node.getCardTypeLocation().length; i++) {
                 value.append(Integer.toHexString(node.getCardTypeLocation()[i] & 0xF));
             }
@@ -96,7 +96,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
             log.debug("Node {} Card Type Written = {}", node.nodeAddress, value);
 
             // CMRInet Options
-            value = new StringBuilder("");
+            value = new StringBuilder();
             for (int i = 0; i < SerialNode.NUMCMRINETOPTS; i++) {
                 value.append(Integer.toHexString((node.getCMRInetOpts(i) & 0xF)));
             }

@@ -113,7 +113,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         }
         if (shared.getAttribute("disabled") != null) { // NOI18N
             String yesno = shared.getAttribute("disabled").getValue(); // NOI18N
-            if ((yesno != null) && (!yesno.equals(""))) {
+            if ((yesno != null) && (!yesno.isEmpty())) {
                 if (yesno.equals("no")) { // NOI18N
                     adapter.setDisabled(false);
                 } else if (yesno.equals("yes")) { // NOI18N

@@ -1451,7 +1451,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     }
 
     boolean checkConditionalUserName(String uName, Logix logix) {
-        if ((uName != null) && (!(uName.equals("")))) {
+        if ((uName != null) && (!(uName.isEmpty()))) {
             Conditional p = _conditionalManager.getByUserName(logix, uName);
             if (p != null) {
                 // Conditional with this user name already exists
@@ -1473,7 +1473,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
      * @return false if sName is empty string or null
      */
     boolean checkConditionalSystemName(String sName) {
-        if ((sName != null) && (!(sName.equals("")))) {
+        if ((sName != null) && (!(sName.isEmpty()))) {
             Conditional p = _conditionalManager.getBySystemName(sName);
             if (p != null) {
                 return false;
@@ -1871,7 +1871,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             showSystemName = curConditional.getSystemName();
 
             // If no user name for a conditional, create one using C + row number
-            if (showCondName.equals("")) {
+            if (showCondName.isEmpty()) {
                 showCondName = "C" + (rx + 1);
             }
             condText.append("\n  " + showSystemName + "  " + showCondName + "   \n");

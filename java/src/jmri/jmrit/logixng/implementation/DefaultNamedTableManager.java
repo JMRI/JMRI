@@ -75,7 +75,7 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
 
         // Check that NamedTable does not already exist
         NamedTable x;
-        if (userName != null && !userName.equals("")) {
+        if (userName != null && !userName.isEmpty()) {
             x = getByUserName(userName);
             if (x != null) {
                 return null;
@@ -116,7 +116,7 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
 
         // Check that NamedTable does not already exist
         NamedTable x;
-        if (userName != null && !userName.equals("")) {
+        if (userName != null && !userName.isEmpty()) {
             x = getByUserName(userName);
             if (x != null) {
                 return null;

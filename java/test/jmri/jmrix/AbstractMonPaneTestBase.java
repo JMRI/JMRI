@@ -91,7 +91,7 @@ public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelT
         ThreadingUtil.runOnGUI( () -> pane.clearButtonActionPerformed(null));
 
         JUnitUtil.waitFor(() -> {
-            return getFrameTextONGUIThread().equals("");
+            return getFrameTextONGUIThread().isEmpty();
         }, "frame text");
         assertThat("").isEqualTo(getFrameTextONGUIThread());
     }

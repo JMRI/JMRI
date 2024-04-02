@@ -183,7 +183,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
 
         // Copy and pasted from the info button
-        StringBuilder nodesstring = new StringBuilder("");
+        StringBuilder nodesstring = new StringBuilder();
         int tempnumnodes = _memo.getTrafficController().getNumNodes();
         for (int i = 0; i < tempnumnodes; i++) {
             AcelaNode tempnode;
@@ -1232,7 +1232,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     public void infoButtonActionPerformed() {
 
         // lookup the nodes
-        StringBuilder nodesstring = new StringBuilder("");
+        StringBuilder nodesstring = new StringBuilder();
         int tempnumnodes = _memo.getTrafficController().getNumNodes();
         for (int i = 0; i < tempnumnodes; i++) {
             AcelaNode tempnode;
@@ -1559,7 +1559,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         curNode = null;
 
         // lookup the nodes
-        StringBuilder nodesstring = new StringBuilder("");
+        StringBuilder nodesstring = new StringBuilder();
         int tempnumnodes = _memo.getTrafficController().getNumNodes();
         for (int i = 0; i < tempnumnodes; i++) {
             AcelaNode tempnode;

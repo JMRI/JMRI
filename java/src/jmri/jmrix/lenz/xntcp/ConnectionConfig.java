@@ -79,7 +79,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         }
         String t = adapter.getHostName();
         int p = adapter.getPort();
-        if (t != null && !t.equals("")) {
+        if (t != null && !t.isEmpty()) {
             if (p != 0) {
                 return x + t + ":" + p;
             }

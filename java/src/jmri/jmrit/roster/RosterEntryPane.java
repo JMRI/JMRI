@@ -65,7 +65,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
         maxSpeedSpinner.setEditor(new JSpinner.NumberEditor(maxSpeedSpinner, "# %"));
         id.setText(r.getId());
 
-        if (r.getDccAddress().equals("")) {
+        if (r.getDccAddress().isEmpty()) {
             // null address, so clear selector
             addrSel.reset();
         } else {
@@ -358,7 +358,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
         }
         DccLocoAddress a = addrSel.getAddress();
         if (a == null) {
-            return !r.getDccAddress().equals("");
+            return !r.getDccAddress().isEmpty();
         } else {
             if (r.getProtocol() != a.getProtocol()) {
                 return true;

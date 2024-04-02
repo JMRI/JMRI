@@ -96,7 +96,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
 
         // Check that LogixNG does not already exist
         LogixNG x;
-        if (userName != null && !userName.equals("")) {
+        if (userName != null && !userName.isEmpty()) {
             x = getByUserName(userName);
             if (x != null) {
                 return null;

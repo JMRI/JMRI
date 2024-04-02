@@ -232,7 +232,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     }
 
     public void setAspectDisabled(String aspect) {
-        if (aspect == null || aspect.equals("")) {
+        if (aspect == null || aspect.isEmpty()) {
             return;
         }
         if (!map.checkAspect(aspect)) {
@@ -246,7 +246,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     }
 
     public void setAspectEnabled(String aspect) {
-        if (aspect == null || aspect.equals("")) {
+        if (aspect == null || aspect.isEmpty()) {
             return;
         }
         if (!map.checkAspect(aspect)) {

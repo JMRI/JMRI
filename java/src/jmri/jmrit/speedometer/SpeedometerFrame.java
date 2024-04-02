@@ -560,7 +560,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         }
 
         // Check distance1 has been defined
-        if (distance1.getText().equals("")) {
+        if (distance1.getText().isEmpty()) {
             log.error("Distance 1 has not been defined");
             if (warn) {
                 JmriJOptionPane.showMessageDialog(
@@ -576,7 +576,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         verify = 1;
 
         // Check stop sensor2 if either sensor 2 and/or distance 2 defined
-        if (!stopSensor2.getText().equals("") || !distance2.getText().equals("")) {
+        if (!stopSensor2.getText().isEmpty() || !distance2.getText().isEmpty()) {
             try {
                 s = InstanceManager.sensorManagerInstance().
                         provideSensor(stopSensor2.getText());
@@ -597,7 +597,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
             }
 
             // Check distance2 has been defined
-            if (distance2.getText().equals("")) {
+            if (distance2.getText().isEmpty()) {
                 log.error("Distance 2 has not been defined");
                 enableConfiguration(true);
                 if (warn) {

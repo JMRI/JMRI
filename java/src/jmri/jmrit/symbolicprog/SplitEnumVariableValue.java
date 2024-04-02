@@ -117,7 +117,7 @@ public class SplitEnumVariableValue extends VariableValue
             }
             cvList.add(new CvItem(_cvNum, tMask));
 
-            if (pSecondCV != null && !pSecondCV.equals("")) {
+            if (pSecondCV != null && !pSecondCV.isEmpty()) {
                 cvList.add(new CvItem(pSecondCV, _uppermask));
             }
         } else {
@@ -338,7 +338,7 @@ public class SplitEnumVariableValue extends VariableValue
      */
     @Override
     public String getMask() {
-        if (mSecondCV != null && !mSecondCV.equals("")) {
+        if (mSecondCV != null && !mSecondCV.isEmpty()) {
             return _uppermask + _mask;
         } else {
             return _mask; // a list of 1-n masks, separated by spaces
@@ -560,7 +560,7 @@ public class SplitEnumVariableValue extends VariableValue
             if (log.isDebugEnabled()) {
                 log.debug("Variable = {} start action event cmd={}", label(), e.getActionCommand());
             }
-            if (!(e.getActionCommand().equals(""))) {
+            if (!(e.getActionCommand().isEmpty())) {
                 // is from alternate rep
                 log.debug("{} action event {} was from alternate rep", label(), e.getActionCommand());
                 _value.setSelectedItem(e.getActionCommand());

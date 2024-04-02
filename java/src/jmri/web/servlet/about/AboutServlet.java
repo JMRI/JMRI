@@ -32,7 +32,7 @@ public class AboutServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         //retrieve the list of JMRI connections as a string
-        StringBuilder connList = new StringBuilder("");
+        StringBuilder connList = new StringBuilder();
         String comma = "";
         for (ConnectionConfig conn : InstanceManager.getDefault(ConnectionConfigManager.class)) {
             if (!conn.getDisabled()) {

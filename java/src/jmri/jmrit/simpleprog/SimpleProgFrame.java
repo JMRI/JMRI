@@ -214,7 +214,7 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
     // provide simple data conversion if dec or hex button changed
     public void decHexButtonChanged(java.awt.event.ActionEvent e) {
         resultsField.setText(SymbolicProgBundle.getMessage("StateOK"));
-        if (valField.getText().equals("")) {
+        if (valField.getText().isEmpty()) {
             return;
         }
         int value = 0;

@@ -150,7 +150,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
      */
     private void getNextEntry() {
         int address = 0;
-        if (!adrTextField.getText().equals("")) {
+        if (!adrTextField.getText().isEmpty()) {
             address = Integer.parseInt(adrTextField.getText());
         }
         XNetMessage msg = XNetMessage.getNextAddressOnStackMsg(address, true);
@@ -170,7 +170,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
      */
     private void getPreviousEntry() {
         int address = 0;
-        if (!adrTextField.getText().equals("")) {
+        if (!adrTextField.getText().isEmpty()) {
             address = Integer.parseInt(adrTextField.getText());
         }
         XNetMessage msg = XNetMessage.getNextAddressOnStackMsg(address, false);
@@ -182,7 +182,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
      */
     private void deleteEntry() {
         int address;
-        if (!adrTextField.getText().equals("")) {
+        if (!adrTextField.getText().isEmpty()) {
             address = Integer.parseInt(adrTextField.getText());
             XNetMessage msg = XNetMessage.getDeleteAddressOnStackMsg(address);
             tc.sendXNetMessage(msg, this);
@@ -196,7 +196,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
         justification = "This is part of work in progress code to allow display of all information about the locomotives in the stack.")
     private void requestStatus() {
         int address;
-        if (!adrTextField.getText().equals("")) {
+        if (!adrTextField.getText().isEmpty()) {
             address = Integer.parseInt(adrTextField.getText());
             XNetMessage msg = XNetMessage.getLocomotiveInfoRequestMsg(address);
             tc.sendXNetMessage(msg, this);
@@ -211,7 +211,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
             justification = "This is part of work in progress code to allow display of all information about the locomotives in the stack.")
     private void requestFunctionStatus() {
         int address;
-        if (!adrTextField.getText().equals("")) {
+        if (!adrTextField.getText().isEmpty()) {
             address = Integer.parseInt(adrTextField.getText());
             XNetMessage msg = XNetMessage.getLocomotiveFunctionStatusMsg(address);
             tc.sendXNetMessage(msg, this);

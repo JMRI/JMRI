@@ -131,7 +131,7 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
             } else {
               reportString = currentReport.toString();
             }
-            if (currentReport.equals("")) {
+            if (currentReport.isEmpty()) {
                 setText(Bundle.getMessage("Blank"));
             } else {
                 setText(reportString);

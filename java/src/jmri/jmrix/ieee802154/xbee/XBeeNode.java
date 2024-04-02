@@ -273,7 +273,7 @@ public class XBeeNode extends IEEE802154Node {
          broadcast address. Otherwise return the 64 bit GUID.
      */
     public String getPreferedName() {
-        if (!identifier.equals("")) {
+        if (!identifier.isEmpty()) {
             return identifier;
         } else if (!(getXBeeAddress16().equals(XBee16BitAddress.BROADCAST_ADDRESS))
                 && !(getXBeeAddress16().equals(XBee16BitAddress.UNKNOWN_ADDRESS))) {

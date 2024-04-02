@@ -87,7 +87,7 @@ public class LocoDataPane extends jmri.jmrix.tams.swing.TamsPanel {
     }
 
     void addLoco() {
-        if (addr.getText() == null || addr.getText().equals("")) {
+        if (addr.getText() == null || addr.getText().isEmpty()) {
             log.error("Require an address to be entered");
             JmriJOptionPane.showMessageDialog(addr, Bundle.getMessage("ErrorNullAddress"), Bundle.getMessage("ErrorTitle"),
                     JmriJOptionPane.ERROR_MESSAGE);

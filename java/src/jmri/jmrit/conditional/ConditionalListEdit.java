@@ -557,7 +557,7 @@ public class ConditionalListEdit extends ConditionalList {
     }
 
     boolean checkConditionalUserName(String uName) {
-        if ((uName != null) && (!(uName.equals("")))) {
+        if ((uName != null) && (!(uName.isEmpty()))) {
             Conditional p = _conditionalManager.getByUserName(_curLogix, uName);
             if (p != null) {
                 // Conditional with this user name already exists

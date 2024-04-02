@@ -145,7 +145,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
 
     void selectInputFile() {
         String name = inputFileName.getText();
-        if (name.equals("")) {
+        if (name.isEmpty()) {
             name = FileUtil.getUserFilesPath();
         }
         if (chooser == null) {
@@ -166,7 +166,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
     }
 
     void doRead() {
-        if (inputFileName.getText().equals("")) {
+        if (inputFileName.getText().isEmpty()) {
             JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorNoInputFile"),
                     Bundle.getMessage("ErrorTitle"),
                     JmriJOptionPane.ERROR_MESSAGE);

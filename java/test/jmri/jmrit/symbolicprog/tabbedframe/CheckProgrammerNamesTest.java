@@ -78,14 +78,14 @@ public class CheckProgrammerNamesTest {
     // utilities
     public void checkAgainstNames(File file) {
         String result = ProgCheckAction.checkMissingNames(file);
-        if (!result.equals("")) {
+        if (!result.isEmpty()) {
             Assert.fail(result);
         }
     }
 
     public void checkComplete(File file) {
         String result = ProgCheckAction.checkIncompleteComprehensive(file);
-        if (!result.equals("")) {
+        if (!result.isEmpty()) {
             Assert.fail(result);
         }
     }

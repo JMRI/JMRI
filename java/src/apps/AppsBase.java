@@ -357,7 +357,7 @@ public abstract class AppsBase {
             return;
         }
         // save the configuration filename if present on the command line
-        if (args.length >= 1 && args[0] != null && !args[0].equals("") && !args[0].contains("=")) {
+        if (args.length >= 1 && args[0] != null && !args[0].isEmpty() && !args[0].contains("=")) {
             def = args[0];
             log.debug("Config file was specified as: {}", args[0]);
         }

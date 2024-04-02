@@ -62,7 +62,7 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
 
     @Override
     public String toString() {
-        StringBuilder s = new StringBuilder("");
+        StringBuilder s = new StringBuilder();
         for (int i = 0; i < _nDataChars; i++) {
             s.append((char) _dataChars[i]);
         }

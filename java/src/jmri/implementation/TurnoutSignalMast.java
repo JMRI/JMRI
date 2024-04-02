@@ -229,7 +229,7 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         int state;
 
         TurnoutAspect(String turnoutName, int turnoutState) {
-            if (turnoutName != null && !turnoutName.equals("")) {
+            if (turnoutName != null && !turnoutName.isEmpty()) {
                 state = turnoutState;
                 Turnout turn = jmri.InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
                 if (turn == null) {

@@ -384,7 +384,7 @@ public class ConsistToolFrame extends JmriJFrame implements ConsistListener, Con
             adrSelector.setEnabled(false);
             recallConsist();
         } else if (consistComboBox.getSelectedIndex() == -1
-                || consistComboBox.getSelectedItem().equals("") 
+                || consistComboBox.getSelectedItem().isEmpty() 
                 || consistComboBox.getSelectedItem().equals(Bundle.getMessage("NoConsistSelected"))) {
             log.debug("Null Consist Selected");
             adrSelector.reset();

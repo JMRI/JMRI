@@ -213,7 +213,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
         if (name == null) {
             return null;
         }
-        if (name.equals("")) {
+        if (name.isEmpty()) {
             return null;
         }
         T nb = m.getNamedBean(name);
@@ -241,7 +241,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
         if (name == null) {
             return null;
         }
-        if (name.equals("")) {
+        if (name.isEmpty()) {
             return null;
         }
         T nb = m.getNamedBean(name);
@@ -270,7 +270,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
         if (name == null) {
             return null;
         }
-        if (name.equals("")) {
+        if (name.isEmpty()) {
             return null;
         }
         NamedBean nb = m.getNamedBean(name);
@@ -395,7 +395,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
                 // Pre-JMRI 4.3, keys in NamedBean parameters could be Objects
                 // constructed from Strings, similar to the value code below.
                 if (!(e.getChild("key").getAttributeValue("class") == null
-                        || e.getChild("key").getAttributeValue("class").equals("")
+                        || e.getChild("key").getAttributeValue("class").isEmpty()
                         || e.getChild("key").getAttributeValue("class").equals("java.lang.String"))) {
 
                     log.warn("NamedBean {} property key of invalid non-String type {} not supported",

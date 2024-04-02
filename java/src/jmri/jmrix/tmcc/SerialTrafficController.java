@@ -225,7 +225,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         try {
             if (ostream != null) {
                 if (log.isDebugEnabled()) {
-                    StringBuilder f = new StringBuilder("");
+                    StringBuilder f = new StringBuilder();
                     for (int i = 0; i < msg.length; i++) {
                         f.append(Integer.toHexString(0xFF & msg[i])).append(" ");
                     }

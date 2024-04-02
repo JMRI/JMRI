@@ -621,7 +621,7 @@ public class EcosLocoAddressManager extends AbstractManager<NamedBean> implement
 
                 if (replyType.equals("queryObjects")) {
                     if (ecosObjectId == 10) {
-                        if (headerDetails.size() == 0 || (headerDetails.size() == 1 && headerDetails.get(0).equals(""))) {
+                        if (headerDetails.size() == 0 || (headerDetails.size() == 1 && headerDetails.get(0).isEmpty())) {
                             checkLocoList(msgDetails);
                         } else {
                             processLocoToRosterQueue = false;

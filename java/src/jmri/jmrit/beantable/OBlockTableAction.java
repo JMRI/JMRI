@@ -371,7 +371,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
         // initial check for empty entries
         if (autoSystemNameBox.isSelected()) {
             startAddress.setBackground(Color.white);
-        } else if (sName.equals("")) {
+        } else if (sName.isEmpty()) {
             status(Bundle.getMessage("WarningSysNameEmpty"), true);
             startAddress.setBackground(Color.red);
             return;

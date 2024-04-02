@@ -330,7 +330,7 @@ public class DefaultConditionalExecute {
 
     void playSound(@Nonnull ConditionalAction action, String actionStr, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         String path = actionStr;
-        if (!path.equals("")) {
+        if (!path.isEmpty()) {
             Sound sound = action.getSound();
             if (sound == null) {
                 try {
@@ -347,7 +347,7 @@ public class DefaultConditionalExecute {
     }
 
     void runScript(@Nonnull ConditionalAction action, String actionStr, @Nonnull Reference<Integer> actionCount) {
-        if (!(actionStr.equals(""))) {
+        if (!(actionStr.isEmpty())) {
             JmriScriptEngineManager.getDefault().runScript(new File(jmri.util.FileUtil.getExternalFilename(actionStr)));
             increaseCounter(actionCount);
         }

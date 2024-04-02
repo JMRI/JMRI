@@ -108,7 +108,7 @@ public class PrintRosterEntry implements PaneContainer {
         if (l.size() > 0) {
             decoderFile = l.get(0);
         } else {
-            if (decoderModel.equals("")) {
+            if (decoderModel.isEmpty()) {
                 log.debug("blank decoderModel requested, so nothing loaded");
             } else {
                 log.warn("no matching \"{}\" decoder found for loco, no decoder info loaded", decoderModel);

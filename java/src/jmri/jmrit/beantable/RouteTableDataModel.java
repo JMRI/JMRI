@@ -112,7 +112,7 @@ public class RouteTableDataModel extends BeanTableDataModel<Route> {
             case USERNAMECOL:
                 // Directly changing the username should only be possible if the username was previously null or ""
                 // check to see if user name already exists
-                if (value.equals("")) {
+                if (value.isEmpty()) {
                     value = null;
                 } else {
                     Route nB = getByUserName((String) value);

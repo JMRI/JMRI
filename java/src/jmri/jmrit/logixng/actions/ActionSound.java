@@ -159,7 +159,7 @@ public class ActionSound extends AbstractDigitalAction
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
             switch (operation) {
                 case Play:
-                    if (!path.equals("")) {
+                    if (!path.isEmpty()) {
                         try {
                             new Sound(path).play();
                         } catch (NullPointerException ex) {

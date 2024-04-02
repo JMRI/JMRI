@@ -95,7 +95,7 @@ public class PaneSet {
             DecoderFile d = l.get(0);
             loadDecoderFile(d, r);
         } else {
-            if (decoderModel.equals("")) {
+            if (decoderModel.isEmpty()) {
                 log.debug("blank decoderModel requested, so nothing loaded");
             } else {
                 log.warn("no matching \"{}\" decoder found for loco, no decoder info loaded", decoderModel);

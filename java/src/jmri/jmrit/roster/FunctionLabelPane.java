@@ -173,7 +173,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
         if (labels != null) {
             for (int i = 0; i < labels.length; i++) {
                 if (labels[i] != null) {
-                    if (r.getFunctionLabel(i) == null && !labels[i].getText().equals("")) {
+                    if (r.getFunctionLabel(i) == null && !labels[i].getText().isEmpty()) {
                         return true;
                     }
                     if (r.getFunctionLabel(i) != null && !r.getFunctionLabel(i).equals(labels[i].getText())) {
@@ -255,12 +255,12 @@ public class FunctionLabelPane extends javax.swing.JPanel {
         if (labels != null) {
             String shunFn = "";
             for (int i = 0; i < labels.length; i++) {
-                if (labels[i] != null && !labels[i].getText().equals("")) {
+                if (labels[i] != null && !labels[i].getText().isEmpty()) {
                     r.setFunctionLabel(i, labels[i].getText());
                     r.setFunctionLockable(i, lockable[i].isSelected());
                     r.setFunctionImage(i, _imageFilePath[i].getImagePath());
                     r.setFunctionSelectedImage(i, _imagePressedFilePath[i].getImagePath());
-                } else if (labels[i] != null && labels[i].getText().equals("")) {
+                } else if (labels[i] != null && labels[i].getText().isEmpty()) {
                     if (r.getFunctionLabel(i) != null) {
                         r.setFunctionLabel(i, null);
                         r.setFunctionImage(i, null);

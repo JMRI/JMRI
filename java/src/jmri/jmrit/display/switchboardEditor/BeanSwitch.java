@@ -467,7 +467,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     }
 
     private String getSwitchButtonLabel(String label) {
-        if ((showUserName == SwitchBoardLabelDisplays.SYSTEM_NAME) || (_uLabel.equals(""))) {
+        if ((showUserName == SwitchBoardLabelDisplays.SYSTEM_NAME) || (_uLabel.isEmpty())) {
             String subLabel = label.substring(0, (Math.min(label.length(), 35))); // reasonable max. to display 2 lines on tile
             return "<html><center>" + subLabel + "</center></html>"; // lines of text
         } else if (showUserName == SwitchBoardLabelDisplays.USER_NAME) {
@@ -480,7 +480,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     }
 
     private String getSwitchButtonToolTip(String label) {
-        if ((showUserName == SwitchBoardLabelDisplays.SYSTEM_NAME) || (_uLabel.equals(""))) {
+        if ((showUserName == SwitchBoardLabelDisplays.SYSTEM_NAME) || (_uLabel.isEmpty())) {
             return label;
         } else if (showUserName == SwitchBoardLabelDisplays.USER_NAME) {
             return label;
@@ -585,7 +585,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             if (showToolTip) {
                 newUserName = ((String) e.getNewValue());
                 _uLabel = (newUserName == null ? "" : newUserName); // store for display on icon
-                if (newUserName == null || newUserName.equals("")) {
+                if (newUserName == null || newUserName.isEmpty()) {
                     newUserName = Bundle.getMessage("NoUserName"); // longer for tooltip
                 }
                 setToolTipText(_switchSysName + " (" + newUserName + ")");
@@ -731,7 +731,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             }
         }
         _bname.setUserName(newUserName);
-        if (oldName == null || oldName.equals("")) {
+        if (oldName == null || oldName.isEmpty()) {
             if (!nbhm.inUse(_switchSysName, _bname)) {
                 return; // no problem, so stop
             }
@@ -924,7 +924,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     protected void okAddPressed(ActionEvent e) {
         NamedBean nb;
         String user = userName.getText();
-        if (user.trim().equals("")) {
+        if (user.trim().isEmpty()) {
             user = null;
         }
         // systemName can't be changed, fixed

@@ -48,7 +48,7 @@ public class WindowMenu extends JMenu implements javax.swing.event.MenuListener 
         for (int i = 0; i < framesNumber; i++) {
             JmriJFrame iFrame = framesList.get(i);
             windowName = iFrame.getTitle();
-            if (windowName.equals("")) {
+            if (windowName.isEmpty()) {
                 windowName = "Untitled";
             }
             JCheckBoxMenuItem newItem = new JCheckBoxMenuItem(new AbstractAction(windowName) {

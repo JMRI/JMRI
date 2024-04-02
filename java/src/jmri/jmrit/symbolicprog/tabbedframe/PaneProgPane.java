@@ -1788,13 +1788,13 @@ public class PaneProgPane extends javax.swing.JPanel
             }
             if (attribName.equals(LAST_GRIDX)) { // we must be at end of original list, restore last gridx
                 attribName = "gridx";
-                if (attribRawValue.equals("")) { // don't process blank (unused)
+                if (attribRawValue.isEmpty()) { // don't process blank (unused)
                     continue;
                 }
             }
             if (attribName.equals(LAST_GRIDY)) { // we must be at end of original list, restore last gridy
                 attribName = "gridy";
-                if (attribRawValue.equals("")) { // don't process blank (unused)
+                if (attribRawValue.isEmpty()) { // don't process blank (unused)
                     continue;
                 }
             }
@@ -2009,7 +2009,7 @@ public class PaneProgPane extends javax.swing.JPanel
      */
     protected void makeLabel(Element e, JPanel c, GridBagLayout g, GridBagConstraints cs) {
         String text = LocaleSelector.getAttribute(e, "text");
-        if (text == null || text.equals("")) {
+        if (text == null || text.isEmpty()) {
             text = LocaleSelector.getAttribute(e, "label"); // label subelement not since 3.7.5
         }
         final JLabel l = new JLabel(text);

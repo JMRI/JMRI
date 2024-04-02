@@ -430,7 +430,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
         scaleList.setToolTipText(Bundle.getMessage("SelectScaleToolTip"));
         String lastSelectedScale = prefs.getComboBoxLastSelection(selectedScalePref);
-        if (lastSelectedScale != null && !lastSelectedScale.equals("")) {
+        if (lastSelectedScale != null && !lastSelectedScale.isEmpty()) {
             try {
                 scaleList.setSelectedItem(lastSelectedScale);
             } catch (ArrayIndexOutOfBoundsException e) {

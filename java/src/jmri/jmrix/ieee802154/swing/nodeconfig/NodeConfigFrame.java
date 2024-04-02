@@ -249,7 +249,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     public void editButtonActionPerformed() {
         // Find IEEE802154 Node address
         String nodeAddress = readNodeAddress();
-        if (nodeAddress.equals("")) {
+        if (nodeAddress.isEmpty()) {
             return;
         }
         // get the IEEE802154Node corresponding to this node address
@@ -280,7 +280,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     public void deleteButtonActionPerformed() {
         // Find IEEE802154 Node address
         String nodeAddress = readNodeAddress();
-        if (nodeAddress.equals("")) {
+        if (nodeAddress.isEmpty()) {
             return;
         }
         // get the IEEE802154Node corresponding to this node address

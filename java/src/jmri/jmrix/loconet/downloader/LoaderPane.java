@@ -1069,7 +1069,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         temp = true;
         eestart.setForeground(Color.black);
         text = eestart.getText();
-        if (text.equals("")) {
+        if (text.isEmpty()) {
             eestart.setText("0");
             eestart.setForeground(Color.red);
             temp = false;

@@ -578,7 +578,7 @@ public class SwitchboardEditor extends Editor {
         }
         String prefix = memo.getSystemPrefix();
         // TODO handling of non-numeric system names such as MERG, C/MRI using validator textField
-        // if (!startAddress.equals("")) { // use as start address, spinners are only for the number of items
+        // if (!startAddress.isEmpty()) { // use as start address, spinners are only for the number of items
         log.debug("createSwitchRange - _manuprefix={} beanType={}", prefix, beanType);
         // use validated bean names
         for (int i = min; i <= max; i++) {

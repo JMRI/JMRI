@@ -34,7 +34,7 @@ public class JmriJFrameAction extends AbstractAction {
         String name = getName();
         JmriJFrame j = null;
 
-        if (!name.equals("")) {
+        if (!name.isEmpty()) {
             try {
                 j = (JmriJFrame) Class.forName(name).getDeclaredConstructor().newInstance();
                 j.initComponents();

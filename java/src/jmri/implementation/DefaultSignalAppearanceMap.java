@@ -263,7 +263,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
 
     @Override
     public String getImageLink(String aspect, String type) {
-        if (type == null || type.equals("")) {
+        if (type == null || type.isEmpty()) {
             type = "default";
         }
         String value;

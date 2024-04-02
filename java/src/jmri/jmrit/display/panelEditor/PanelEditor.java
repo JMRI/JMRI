@@ -256,7 +256,7 @@ public class PanelEditor extends Editor implements ItemListener {
             nextLabel.addKeyListener(new KeyAdapter() {
                 @Override
                 public void keyReleased(KeyEvent a) {
-                    if (nextLabel.getText().equals("")) {
+                    if (nextLabel.getText().isEmpty()) {
                         labelAdd.setEnabled(false);
                         labelAdd.setToolTipText(Bundle.getMessage("ToolTipWillActivate"));
                     } else {

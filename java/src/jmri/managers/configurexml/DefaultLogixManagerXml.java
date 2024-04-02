@@ -161,7 +161,7 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
                 loadCommon(x, elem);
 
                 // set enabled/disabled if attribute was present
-                if ((yesno != null) && (!yesno.equals(""))) {
+                if ((yesno != null) && (!yesno.isEmpty())) {
                     if (yesno.equals("yes")) {  // NOI18N
                         x.setEnabled(true);
                     } else if (yesno.equals("no")) {  // NOI18N

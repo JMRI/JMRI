@@ -45,7 +45,7 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
         if (adapter.getMdnsConfigure()) {
             // if we are using mDNS for configuration, only save
             // the hostname if it was specified.
-            if (adapter.getHostName() != null && !adapter.getHostName().equals("")) {
+            if (adapter.getHostName() != null && !adapter.getHostName().isEmpty()) {
                 e.setAttribute("address", adapter.getHostName());
             }
 

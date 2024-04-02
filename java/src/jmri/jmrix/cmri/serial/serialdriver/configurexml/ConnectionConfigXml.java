@@ -43,7 +43,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     @Override
     protected void extendElement(Element e) {
         // Create a polling list from the configured nodes
-        StringBuilder polllist = new StringBuilder("");
+        StringBuilder polllist = new StringBuilder();
         SerialTrafficController tcPL = ((CMRISystemConnectionMemo) adapter.getSystemConnectionMemo()).getTrafficController();
         SerialNode plNode = (SerialNode) tcPL.getNode(0);
         int index = 1;
@@ -89,7 +89,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             log.debug("Node {} Card Type Written = {}", node.nodeAddress, value);
 
             // CMRInet Options
-            value = new StringBuilder("");
+            value = new StringBuilder();
             for (int i = 0; i < SerialNode.NUMCMRINETOPTS; i++) {
                 value.append(Integer.toHexString((node.getCMRInetOpts(i) & 0xF)));
             }

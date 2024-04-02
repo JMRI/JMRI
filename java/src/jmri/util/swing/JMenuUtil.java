@@ -62,7 +62,7 @@ public class JMenuUtil extends GuiUtilBase {
         }
         name = LocaleSelector.getAttribute(main, "name");
         //Next statement left in if the xml file hasn't been converted
-        if ((name == null) || (name.equals(""))) {
+        if ((name == null) || (name.isEmpty())) {
             if (main.getChild("name") != null) {
                 name = main.getChild("name").getText();
             }
@@ -127,7 +127,7 @@ public class JMenuUtil extends GuiUtilBase {
         }
         name = LocaleSelector.getAttribute(main, "name");
         //Next statement left in if the xml file hasn't been converted
-        if ((name == null) || (name.equals(""))) {
+        if ((name == null) || (name.isEmpty())) {
             if (main.getChild("name") != null) {
                 name = main.getChild("name").getText();
             }

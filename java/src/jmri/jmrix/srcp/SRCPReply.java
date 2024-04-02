@@ -50,7 +50,7 @@ public class SRCPReply extends jmri.jmrix.AbstractMRReply {
             try {
                 b = new StringBuilder((String) n.jjtGetValue());
             } catch (java.lang.NullPointerException npe) {
-                b = new StringBuilder("");
+                b = new StringBuilder();
             }
         }
         return b.toString();

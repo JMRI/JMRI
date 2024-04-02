@@ -455,7 +455,7 @@ public class AutoTrainAction {
                 // drop out of automated mode and allow manual throttle control
                 log.trace("Goto Manual Section:[{}]",tsa.getTargetTransitSection().getSectionName());
                 _autoActiveTrain.initiateWorking();
-                if ((tsa.getStringWhat() != null) && (!tsa.getStringWhat().equals(""))) {
+                if ((tsa.getStringWhat() != null) && (!tsa.getStringWhat().isEmpty())) {
                     // optional Done sensor was provided, listen to it
                     listenToDoneSensor(tsa);
                 }
@@ -542,7 +542,7 @@ public class AutoTrainAction {
                     } catch (jmri.JmriException reason) {
                         log.error("Exception when setting Sensor {} Active", tsa.getStringWhat(), reason);
                     }
-                } else if ((tsa.getStringWhat() != null) && (!tsa.getStringWhat().equals(""))) {
+                } else if ((tsa.getStringWhat() != null) && (!tsa.getStringWhat().isEmpty())) {
                     log.error("Could not find Sensor {}", tsa.getStringWhat());
                 } else {
                     log.error("Sensor not specified for Action");
@@ -565,7 +565,7 @@ public class AutoTrainAction {
                     } catch (jmri.JmriException reason) {
                         log.error("Exception when setting Sensor {} Inactive", tsa.getStringWhat(), reason);
                     }
-                } else if ((tsa.getStringWhat() != null) && (!tsa.getStringWhat().equals(""))) {
+                } else if ((tsa.getStringWhat() != null) && (!tsa.getStringWhat().isEmpty())) {
                     log.error("Could not find Sensor {}", tsa.getStringWhat());
                 } else {
                     log.error("Sensor not specified for Action");

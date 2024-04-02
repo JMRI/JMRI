@@ -92,7 +92,7 @@ public class Region {
 
     @Override
     public String toString() {
-        StringBuilder retval = new StringBuilder("");
+        StringBuilder retval = new StringBuilder();
         for (int i = 0; i < points.length; i++) {
             retval.append(String.format("(%f,%f,%f)", points[i].x, points[i].y, points[i].z));
             if (i != points.length - 1) {

@@ -243,7 +243,7 @@ public class BlockOrder {
             }
         } else { //  if signal is configured, ignore block
             speedType = bo._block.getBlockSpeed();
-            if (speedType.equals("")) {
+            if (speedType.isEmpty()) {
                 speedType = null;
             }
             if (log.isDebugEnabled()) {

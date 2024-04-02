@@ -110,7 +110,7 @@ public class SE8cSignalHeadXml extends jmri.managers.configurexml.AbstractNamedB
             String name = e.getAttribute("systemName").getValue();
             Turnout t;
             if (e.getAttribute("userName") != null
-                    && !e.getAttribute("userName").getValue().equals("")) {
+                    && !e.getAttribute("userName").getValue().isEmpty()) {
                 name = e.getAttribute("userName").getValue();
                 t = InstanceManager.turnoutManagerInstance().getTurnout(name);
             } else {

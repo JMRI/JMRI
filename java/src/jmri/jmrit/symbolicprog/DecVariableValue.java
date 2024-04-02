@@ -111,7 +111,7 @@ public class DecVariableValue extends VariableValue
             return;
         }
         // what to do for the case where _value != null?
-        if (!_value.getText().equals("")) {
+        if (!_value.getText().isEmpty()) {
             // there may be a lost focus event left in the queue when disposed, so protect
             if (!oldContents.equals(_value.getText())) {
                 try {

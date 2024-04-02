@@ -192,7 +192,7 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
      */
     public void setImagePath(String s) {
         String old = _imagePath;
-        if (s != null && !s.equals("")) {
+        if (s != null && !s.isEmpty()) {
             _imagePath = s;
         } else {
             _imagePath = null;

@@ -144,7 +144,7 @@ public class InlineLogixNGsTableModel extends AbstractTableModel {
     @Override
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
         if (columnIndex == COLUMN_USER_NAME) {
-            if (value.equals("")) value = null;
+            if (value.isEmpty()) value = null;
 
             LogixNG logixNG = _logixNGs.get(rowIndex);
             if (value == null && logixNG.getUserName() == null) return;

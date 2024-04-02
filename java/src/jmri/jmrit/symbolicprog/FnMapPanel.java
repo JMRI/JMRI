@@ -188,7 +188,7 @@ public class FnMapPanel extends JPanel {
                 boolean rowIsUsed = false;
                 for (int iOut = 0; iOut < numOut; iOut++) {
                     // if column is not suppressed by blank headers
-                    if (!outName[iOut].equals("") || !outLabel[iOut].equals("")) {
+                    if (!outName[iOut].isEmpty() || !outLabel[iOut].isEmpty()) {
                         // find the variable using the output number or label
                         // include an (alt) variant to enable Tsunami function exchange definitions
                         String searchNameBase = fnNameString + " controls output ";
@@ -234,12 +234,12 @@ public class FnMapPanel extends JPanel {
                 if (rowIsUsed) {
                     if (fnNameBase.matches("F\\d+")) {
                         fnNameString = Bundle.getMessage("FnMap_F") + " " + fnNameBase.substring(1);
-                        if (!fnDirVariant.equals("")) {
+                        if (!fnDirVariant.isEmpty()) {
                             fnNameString = fnNameString + Bundle.getMessage("FnMap_" + fnDirVariant);
                         }
                     } else if (fnNameBase.matches("S\\d+")) {
                         fnNameString = Bundle.getMessage("FnMap_S") + " " + fnNameBase.substring(1);
-                        if (!fnDirVariant.equals("")) {
+                        if (!fnDirVariant.isEmpty()) {
                             fnNameString = fnNameString + Bundle.getMessage("FnMap_" + fnDirVariant);
                         }
                     } else {
@@ -248,7 +248,7 @@ public class FnMapPanel extends JPanel {
                         } catch (java.util.MissingResourceException e) {
                             try {  // Else see if we have a match for fnNameBase
                                 fnNameString = Bundle.getMessage("FnMap_" + fnNameBase);
-                                if (!fnDirVariant.equals("")) { // Add variant
+                                if (!fnDirVariant.isEmpty()) { // Add variant
                                     fnNameString = fnNameString + Bundle.getMessage("FnMap_" + fnDirVariant);
                                 }
                             } catch (java.util.MissingResourceException e1) {

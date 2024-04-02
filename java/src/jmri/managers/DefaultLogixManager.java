@@ -61,7 +61,7 @@ public class DefaultLogixManager extends AbstractManager<Logix>
     public Logix createNewLogix(String systemName, String userName) {
         // Check that Logix does not already exist
         Logix x;
-        if (userName != null && !userName.equals("")) {
+        if (userName != null && !userName.isEmpty()) {
             x = getByUserName(userName);
             if (x != null) {
                 return null;

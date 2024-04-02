@@ -168,7 +168,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
         if (log.isDebugEnabled()) {
             log.debug("{} start action event: {}", label(), e);
         }
-        if (!(e.getActionCommand().equals(""))) {
+        if (!(e.getActionCommand().isEmpty())) {
             // is from alternate rep
             _value.setSelectedItem(e.getActionCommand());
             if (log.isDebugEnabled()) {

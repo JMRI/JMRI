@@ -194,7 +194,7 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
                 loadCommon(logixNG, logixNGList.get(i));
 
                 // set enabled/disabled if attribute was present
-                if ((enabled != null) && (!enabled.equals(""))) {
+                if ((enabled != null) && (!enabled.isEmpty())) {
                     if (enabled.equals("yes")) {  // NOI18N
                         logixNG.setEnabled(true);
                     } else if (enabled.equals("no")) {  // NOI18N

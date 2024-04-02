@@ -278,7 +278,7 @@ public class BiDiBSignalMastAddPane extends SignalMastAddPane {
                 currentMast.setAspectEnabled(entry.getKey());
             }
         }
-        if (!username.equals("")) {
+        if (!username.isEmpty()) {
             currentMast.setUserName(username);
         }
 
@@ -312,7 +312,7 @@ public class BiDiBSignalMastAddPane extends SignalMastAddPane {
      * @return true if valid
      */
     private boolean validateBiDiBAddress() {
-        if (bidibAccesoryAddressField.getText().equals("")) {
+        if (bidibAccesoryAddressField.getText().isEmpty()) {
             JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("BiDiBMastAddressBlank"));
             return false;
         }
@@ -368,7 +368,7 @@ public class BiDiBSignalMastAddPane extends SignalMastAddPane {
                 public void actionPerformed(ActionEvent e) {
                     JComboBox<String> eb = (JComboBox<String>) e.getSource();
                     String sourceMast = (String) eb.getSelectedItem();
-                    if (sourceMast != null && !sourceMast.equals("")) {
+                    if (sourceMast != null && !sourceMast.isEmpty()) {
                         copyFromAnotherBiDiBMastAspect(sourceMast);
                     }
                 }
@@ -468,7 +468,7 @@ public class BiDiBSignalMastAddPane extends SignalMastAddPane {
                 aspectId.addFocusListener(new FocusListener() {
                     @Override
                     public void focusLost(FocusEvent e) {
-                        if (aspectId.getText().equals("")) {
+                        if (aspectId.getText().isEmpty()) {
                             return;
                         }
                         if (!validateAspectId(aspectId.getText())) {

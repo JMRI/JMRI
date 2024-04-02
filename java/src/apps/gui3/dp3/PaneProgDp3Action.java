@@ -528,7 +528,7 @@ public class PaneProgDp3Action extends JmriAbstractAction implements ProgListene
             @Override
             protected void doPrimary() {
                 longMode = false;
-                if (primaryAddr != null && !primaryAddr.getValueString().equals("")) {
+                if (primaryAddr != null && !primaryAddr.getValueString().isEmpty()) {
                     newAddr = primaryAddr.getValueString();
                 }
             }
@@ -536,7 +536,7 @@ public class PaneProgDp3Action extends JmriAbstractAction implements ProgListene
             @Override
             protected void doExtended() {
                 // long address
-                if (!extendAddr.getValueString().equals("")) {
+                if (!extendAddr.getValueString().isEmpty()) {
                     longMode = true;
                     newAddr = extendAddr.getValueString();
                 }

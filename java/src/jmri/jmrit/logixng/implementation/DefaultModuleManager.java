@@ -62,7 +62,7 @@ public class DefaultModuleManager extends AbstractManager<Module>
         
         // Check that Module does not already exist
         Module x;
-        if (userName != null && !userName.equals("")) {
+        if (userName != null && !userName.isEmpty()) {
             x = getByUserName(userName);
             if (x != null) {
                 return null;

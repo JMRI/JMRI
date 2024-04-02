@@ -580,7 +580,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     }
 
     public String getCurrentAddressString() {
-        StringBuilder s = new StringBuilder("");
+        StringBuilder s = new StringBuilder();
         if (throttleController != null) {
             s.append(throttleController.getCurrentAddressString());
             s.append(" ");
@@ -609,7 +609,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
      * @return roster ID string.
      */
     public String getCurrentRosterIdString() {
-        StringBuilder s = new StringBuilder("");
+        StringBuilder s = new StringBuilder();
         if (throttleController != null) {
             s.append(throttleController.getCurrentRosterIdString());
             s.append(" ");

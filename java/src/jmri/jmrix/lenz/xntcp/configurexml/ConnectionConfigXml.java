@@ -104,7 +104,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
             if (shared.getAttribute("disabled") != null) {
                 String yesno = shared.getAttribute("disabled").getValue();
-                if ((yesno != null) && (!yesno.equals(""))) {
+                if ((yesno != null) && (!yesno.isEmpty())) {
                     if (yesno.equals("no")) {
                         adapter.setDisabled(false);
                     } else if (yesno.equals("yes")) {

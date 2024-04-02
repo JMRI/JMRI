@@ -27,7 +27,7 @@ abstract public class AbstractNetworkConnectionConfigXmlTestBase extends Abstrac
           Assert.assertEquals("mdnsConfigure", "true", e.getAttribute("mdnsConfigure").getValue());
           Assert.assertEquals("advertisementName", npc.getAdvertisementName(), e.getAttribute("advertisementName").getValue());
           Assert.assertEquals("serviceType", npc.getServiceType(), e.getAttribute("serviceType").getValue());
-          if(npc.getHostName()!=null && !npc.getHostName().equals("")) {
+          if(npc.getHostName()!=null && !npc.getHostName().isEmpty()) {
              Assert.assertEquals("address", npc.getHostName(), e.getAttribute("address").getValue());
           }
        } else {

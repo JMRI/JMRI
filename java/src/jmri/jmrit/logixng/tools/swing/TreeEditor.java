@@ -1075,7 +1075,7 @@ public class TreeEditor extends TreeViewer {
                             () -> {
 
                         String username = _usernameField.getText();
-                        if (username.equals("")) username = null;
+                        if (username.isEmpty()) username = null;
 
                         // Only change user name if it's changed
                         if (((username == null) && (maleSocket.getUserName() != null))

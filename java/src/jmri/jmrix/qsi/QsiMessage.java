@@ -174,7 +174,7 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
         if (_dataChars == null) {
             return "<none>";
         }
-        StringBuilder s = new StringBuilder("");
+        StringBuilder s = new StringBuilder();
         if (controller == null || controller.isSIIBootMode()) {
             for (int i = 0; i < _nDataChars; i++) {
                 s.append(StringUtil.twoHexFromInt(_dataChars[i])).append(" ");

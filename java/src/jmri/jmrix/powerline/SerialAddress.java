@@ -203,7 +203,7 @@ public class SerialAddress {
             // This is a PLaxx address
             nName = hCodes.group(1) + hCodes.group(2) + hCodes.group(3) + Integer.toString(Integer.parseInt(hCodes.group(4)));
         }
-        if (nName.equals("")) {
+        if (nName.isEmpty()) {
             // check for the presence of a char to differentiate the two address formats
             if (iMatch && iCount == 5) {
                 // This is a PLaa.bb.cc Insteon address

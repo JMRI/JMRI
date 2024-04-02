@@ -121,12 +121,12 @@ public class InlineLogixNGsFrame extends JmriJFrame {
                     ? logixNG.getInlineLogixNG().getEditorName() : "";
             String typeName = logixNG.getInlineLogixNG() != null
                     ? logixNG.getInlineLogixNG().getTypeName() : "";
-            if (!filterOnPanelValue.equals("")) {
+            if (!filterOnPanelValue.isEmpty()) {
                 if (editorName == null || !filterOnPanelValue.equals(editorName)) {
                     return false;
                 }
             }
-            if (!filterOnIconValue.equals("")) {
+            if (!filterOnIconValue.isEmpty()) {
                 if (typeName == null || !filterOnIconValue.equals(typeName)) {
                     return false;
                 }

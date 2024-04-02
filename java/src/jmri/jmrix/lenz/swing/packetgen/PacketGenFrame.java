@@ -35,7 +35,7 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
     }
 
     XNetMessage createPacket(String s) {
-        if (s.equals("")) {
+        if (s.isEmpty()) {
             return null; // message cannot be empty
         }
         return new XNetMessage(s);

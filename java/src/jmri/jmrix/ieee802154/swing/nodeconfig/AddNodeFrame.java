@@ -103,7 +103,7 @@ public class AddNodeFrame extends jmri.util.JmriJFrame {
     public void addButtonActionPerformed() {
         // Check that a node with this address does not exist
         String nodeAddress = readNodeAddress();
-        if (nodeAddress.equals("")) {
+        if (nodeAddress.isEmpty()) {
             return;
         }
         // get a IEEE802154 Node corresponding to this node address if one exists
@@ -150,7 +150,7 @@ public class AddNodeFrame extends jmri.util.JmriJFrame {
      */
     private String readNodeAddress() {
         String addr = nodeAddrField.getText();
-        if (addr.equals("FF FF ") || addr.equals("FF FE ") || addr.equals("")) {
+        if (addr.equals("FF FF ") || addr.equals("FF FE ") || addr.isEmpty()) {
             addr = nodeAddr64Field.getText();
         }
         return (addr);

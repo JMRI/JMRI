@@ -65,7 +65,7 @@ public class UsbNode extends DefaultMutableTreeNode {
         this.val = val;
         // if attached, set value
         try {
-            if ((attachedSensor != null) && (!attachedSensor.equals(""))) {
+            if ((attachedSensor != null) && (!attachedSensor.isEmpty())) {
                 InstanceManager.sensorManagerInstance()
                         .provideSensor(attachedSensor).setKnownState(
                         val > 0.0 ? Sensor.ACTIVE : Sensor.INACTIVE);
@@ -74,7 +74,7 @@ public class UsbNode extends DefaultMutableTreeNode {
             log.error("Can't set sensor", e1);
         }
         try {
-            if ((attachedMemory != null) && (!attachedMemory.equals(""))) {
+            if ((attachedMemory != null) && (!attachedMemory.isEmpty())) {
                 InstanceManager.memoryManagerInstance()
                         .provideMemory(attachedMemory).setValue("" + val);
             }

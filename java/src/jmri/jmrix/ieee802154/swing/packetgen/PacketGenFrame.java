@@ -33,7 +33,7 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
     }
 
     IEEE802154Message createPacket(String s) {
-        if (s.equals("")) {
+        if (s.isEmpty()) {
             return null; // message cannot be empty
         }
         IEEE802154Message m = new IEEE802154Message(s, s.length());

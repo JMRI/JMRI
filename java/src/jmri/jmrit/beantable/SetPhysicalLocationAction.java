@@ -195,7 +195,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
         public void saveButtonActionPerformed(ActionEvent ae) {
             // check to see if a location has been selected
             if (reporterBox.getSelectedItem() == null
-                    || reporterBox.getSelectedItem().equals("")) {
+                    || reporterBox.getSelectedItem().isEmpty()) {
                 JmriJOptionPane.showMessageDialog(this,
                         rb.getString("SelectLocationToEdit"),
                         rb.getString("NoLocationSelected"),
@@ -229,7 +229,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
         @Override
         public void comboBoxActionPerformed(ActionEvent ae) {
             if (reporterBox.getSelectedItem() != null) {
-                if (reporterBox.getSelectedItem().equals("") || reporterBox.getSelectedItem().equals(emptyReporterString)) {
+                if (reporterBox.getSelectedItem().isEmpty() || reporterBox.getSelectedItem().equals(emptyReporterString)) {
                     resetSpinners();
                 } else {
                     Reporter l = getReporterFromList();

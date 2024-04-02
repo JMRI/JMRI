@@ -397,7 +397,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
         // now print each row of data
         // create a base string the width of the column
-        StringBuilder spaces = new StringBuilder("");
+        StringBuilder spaces = new StringBuilder();
         for (int i = 0; i < columnSize; i++) {
             spaces.append(" ");
         }
@@ -423,9 +423,9 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
     protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize) {
         String columnString = "";
-        StringBuilder lineString = new StringBuilder("");
+        StringBuilder lineString = new StringBuilder();
         // create a base string the width of the column
-        StringBuilder spaces = new StringBuilder("");
+        StringBuilder spaces = new StringBuilder();
         for (int i = 0; i < columnSize; i++) {
             spaces.append(" ");
         }
@@ -471,7 +471,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
                     w.write(w.getCurrentLineNumber(), i, w.getCurrentLineNumber() + 1, i);
                 }
                 w.write("\n"); // NOI18N
-                lineString = new StringBuilder("");
+                lineString = new StringBuilder();
             } catch (IOException e) {
                 log.warn("error during printing:", e);
             }

@@ -206,7 +206,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
         String encoderAddress = addressFromSystemName(prefix + typeLetter() + curAddress);
         int input = pinFromSystemName(prefix + typeLetter() + curAddress);
 
-        if (encoderAddress.equals("")) {
+        if (encoderAddress.isEmpty()) {
             throw new JmriException("I unable to determine hardware address");
         }
         return prefix + typeLetter() + encoderAddress + ":" + input;

@@ -253,7 +253,7 @@ public class OlcbAddress {
 
         for (int i = 0; i < pStrings.length; i++) {
             // check validity of each
-            if (pStrings[i].equals("")) {
+            if (pStrings[i].isEmpty()) {
                 return null;
             }
 

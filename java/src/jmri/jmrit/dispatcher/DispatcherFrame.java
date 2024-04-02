@@ -1231,7 +1231,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             log.error("Transit '{}' not IDLE, cannot create an Active Train", transitID);
             return null;
         }
-        if ((trainID == null) || trainID.equals("")) {
+        if ((trainID == null) || trainID.isEmpty()) {
             if (showErrorMessages) {
                 JmriJOptionPane.showMessageDialog(frame, Bundle.getMessage("Error3"),
                         Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
@@ -1321,7 +1321,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             log.error("Incompatible Transit set up and request to Reset When Done when attempting to create an Active Train");
             return null;
         }
-        if (autoRun && ((dccAddress == null) || dccAddress.equals(""))) {
+        if (autoRun && ((dccAddress == null) || dccAddress.isEmpty())) {
             if (showErrorMessages) {
                 JmriJOptionPane.showMessageDialog(frame, Bundle.getMessage("Error10"),
                         Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
@@ -3508,7 +3508,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         for (int i = 0; i < tcm.getColumnCount(false); i++) {
             TableColumn tc = tcm.getColumnByModelIndex(i);
             String columnName = table.getModel().getColumnName(i);
-            if (columnName != null && !columnName.equals("")) {
+            if (columnName != null && !columnName.isEmpty()) {
                 JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem(table.getModel().getColumnName(i), tcm.isColumnVisible(tc));
                 menuItem.addActionListener(new HeaderActionListener(tc, tcm));
                 popupMenu.add(menuItem);

@@ -221,7 +221,7 @@ public class ExtraMenuTableModel extends AbstractTableModel implements ActionLis
             List<ProgrammingMode> modes = mProgrammer.getSupportedModes();
             List<String> validModes = modeVector.get(row);
 
-            StringBuilder programmerModeListBuffer = new StringBuilder("");
+            StringBuilder programmerModeListBuffer = new StringBuilder();
             modes.forEach((m) -> {
                 programmerModeListBuffer.append(",").append(m.toString());
             });
@@ -232,7 +232,7 @@ public class ExtraMenuTableModel extends AbstractTableModel implements ActionLis
                 programmerModeList = programmerModeList.substring(1);
             }
 
-            StringBuilder resetModeBuilder = new StringBuilder("");
+            StringBuilder resetModeBuilder = new StringBuilder();
             validModes.forEach((mode) -> {
                 resetModeBuilder.append(",").append(new ProgrammingMode(mode).toString());
             });

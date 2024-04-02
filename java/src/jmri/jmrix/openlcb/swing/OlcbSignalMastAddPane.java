@@ -361,7 +361,7 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
             name += "($" + (paddedNumber.format(OlcbSignalMast.getLastRef() + 1)) + ")";
             log.debug("Creating mast: {}", name);
             currentMast = new OlcbSignalMast(name);
-            if (!username.equals("")) {
+            if (!username.isEmpty()) {
                 currentMast.setUserName(username);
             }
             currentMast.setMastType(type);

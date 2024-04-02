@@ -109,7 +109,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
         //if(!p.getDefaultEcosProtocol().equals("DCC128")) ecosPrefElem.setAttribute("defaultCSProtocol", p.getDefaultEcosProtocol());
         if (p.getEcosLocoDescription() != null) {
-            if (!p.getEcosLocoDescription().equals("")) {
+            if (!p.getEcosLocoDescription().isEmpty()) {
                 ecosPrefElem.setAttribute("defaultCSLocoDescription", p.getEcosLocoDescription());
             }
         }
@@ -133,7 +133,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
         for (Element element : ecosPref) {
             if (element.getAttribute("addTurnoutToCS") != null) {
                 String yesno = element.getAttribute("addTurnoutToCS").getValue();
-                if ((yesno != null) && (!yesno.equals(""))) {
+                if ((yesno != null) && (!yesno.isEmpty())) {
                     if (yesno.equals("yes")) {
                         p.setAddTurnoutsToEcos(0x02);
                     } else if (yesno.equals("no")) {
@@ -143,7 +143,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
             }
             if (element.getAttribute("removeTurnoutFromCS") != null) {
                 String yesno = element.getAttribute("removeTurnoutFromCS").getValue();
-                if ((yesno != null) && (!yesno.equals(""))) {
+                if ((yesno != null) && (!yesno.isEmpty())) {
                     if (yesno.equals("yes")) {
                         p.setRemoveTurnoutsFromEcos(0x02);
                     } else if (yesno.equals("no")) {
@@ -154,7 +154,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
             if (element.getAttribute("addTurnoutToJMRI") != null) {
                 String yesno = element.getAttribute("addTurnoutToJMRI").getValue();
-                if ((yesno != null) && (!yesno.equals(""))) {
+                if ((yesno != null) && (!yesno.isEmpty())) {
                     if (yesno.equals("yes")) {
                         p.setAddTurnoutsToJMRI(0x02);
                     } else if (yesno.equals("no")) {
@@ -165,7 +165,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
             if (element.getAttribute("removeTurnoutFromJMRI") != null) {
                 String yesno = element.getAttribute("removeTurnoutFromJMRI").getValue();
-                if ((yesno != null) && (!yesno.equals(""))) {
+                if ((yesno != null) && (!yesno.isEmpty())) {
                     if (yesno.equals("yes")) {
                         p.setRemoveTurnoutsFromJMRI(0x02);
                     } else if (yesno.equals("no")) {
@@ -176,7 +176,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
             if (element.getAttribute("addLocoToCS") != null) {
                 String yesno = element.getAttribute("addLocoToCS").getValue();
-                if ((yesno != null) && (!yesno.equals(""))) {
+                if ((yesno != null) && (!yesno.isEmpty())) {
                     if (yesno.equals("yes")) {
                         p.setAddLocoToEcos(0x02);
                     } else if (yesno.equals("no")) {
@@ -187,7 +187,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
             if (element.getAttribute("removeLocoFromCS") != null) {
                 String yesno = element.getAttribute("removeLocoFromCS").getValue();
-                if ((yesno != null) && (!yesno.equals(""))) {
+                if ((yesno != null) && (!yesno.isEmpty())) {
                     if (yesno.equals("yes")) {
                         p.setRemoveLocoFromEcos(0x02);
                     } else if (yesno.equals("no")) {
@@ -198,7 +198,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
             if (element.getAttribute("addLocoToJMRI") != null) {
                 String yesno = element.getAttribute("addLocoToJMRI").getValue();
-                if ((yesno != null) && (!yesno.equals(""))) {
+                if ((yesno != null) && (!yesno.isEmpty())) {
                     if (yesno.equals("yes")) {
                         p.setAddLocoToJMRI(0x02);
                     } else if (yesno.equals("no")) {
@@ -209,7 +209,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
             if (element.getAttribute("removeLocoFromJMRI") != null) {
                 String yesno = element.getAttribute("removeLocoFromJMRI").getValue();
-                if ((yesno != null) && (!yesno.equals(""))) {
+                if ((yesno != null) && (!yesno.isEmpty())) {
                     if (yesno.equals("yes")) {
                         p.setRemoveLocoFromJMRI(0x02);
                     } else if (yesno.equals("no")) {
@@ -220,7 +220,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
             if (element.getAttribute("removeLocoFromJMRI") != null) {
                 String yesno = element.getAttribute("removeLocoFromJMRI").getValue();
-                if ((yesno != null) && (!yesno.equals(""))) {
+                if ((yesno != null) && (!yesno.isEmpty())) {
                     if (yesno.equals("yes")) {
                         p.setRemoveLocoFromJMRI(0x02);
                     } else if (yesno.equals("no")) {
@@ -235,7 +235,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
             if (element.getAttribute("removeAdhocLocoFromCS") != null) {
                 String yesno = element.getAttribute("removeAdhocLocoFromCS").getValue();
-                if ((yesno != null) && (!yesno.equals(""))) {
+                if ((yesno != null) && (!yesno.isEmpty())) {
                     if (yesno.equals("yes")) {
                         p.setAdhocLocoFromEcos(0x02);
                     } else if (yesno.equals("no")) {

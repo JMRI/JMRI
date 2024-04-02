@@ -50,7 +50,7 @@ public class DccLocoAddressXml extends jmri.configurexml.AbstractXmlAdapter {
     }
 
     public DccLocoAddress getAddress(Element element) {
-        if (element.getAttribute("number").getValue().equals("")) {
+        if (element.getAttribute("number").getValue().isEmpty()) {
             return null;
         }
         int number = Integer.parseInt(element.getAttribute("number").getValue());

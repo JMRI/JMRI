@@ -123,7 +123,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             }
             bitNum = bitNum + 1;
             String conflict = getMemo().isOutputBitFree(nAddress, bitNum);
-            if (!conflict.equals("")) {
+            if (!conflict.isEmpty()) {
                 log.error("Assignment conflict with {}. Turnout not created.", conflict);
                 notifySecondBitConflict(conflict, bitNum);
                 return 0;

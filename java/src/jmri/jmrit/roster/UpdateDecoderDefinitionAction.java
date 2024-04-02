@@ -716,11 +716,11 @@ public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
         }
         log.trace("cV7Value = {}, cV8Value = {}", cV7Value, cV8Value);
         for (String theFamily : replacementFamilyString.split(QRY_SEPARATOR)) {
-            if (theFamily != null && theFamily.equals("")) {
+            if (theFamily != null && theFamily.isEmpty()) {
                 theFamily = null;
             }
             for (String theModel : replacementModelString.split(QRY_SEPARATOR)) {
-                if (theModel != null && theModel.equals("")) {
+                if (theModel != null && theModel.isEmpty()) {
                     theModel = null;
                 }
                 log.trace("theFamily = {}, theModel = {}", theFamily, theModel);

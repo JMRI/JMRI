@@ -108,7 +108,7 @@ public class Mx1MonPanel extends jmri.jmrix.AbstractMonPane implements Mx1Listen
     }
 
     private void logMessage(Date timestamp, Mx1Message m, String src) { // receive a Mrc message and log it
-        StringBuilder raw = new StringBuilder("");
+        StringBuilder raw = new StringBuilder();
         for (int i = 0; i < m.getNumDataElements(); i++) {
             if (i > 0) {
                 raw.append(" ");

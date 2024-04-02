@@ -181,7 +181,7 @@ public class SensorIconXml extends PositionableLabelXml {
         _icon = true;
         if (element.getAttribute("icon") != null) {
             String yesno = element.getAttribute("icon").getValue();
-            if ((yesno != null) && (!yesno.equals(""))) {
+            if ((yesno != null) && (!yesno.isEmpty())) {
                 if (yesno.equals("yes")) {
                     _icon = true;
                 } else if (yesno.equals("no")) {
@@ -258,7 +258,7 @@ public class SensorIconXml extends PositionableLabelXml {
             // old config files may define icons as attributes
             String iconName;
             if (element.getAttribute(state) != null
-                    && !(iconName = element.getAttribute(state).getValue()).equals("")) {
+                    && !(iconName = element.getAttribute(state).getValue()).isEmpty()) {
 
                 icon = NamedIcon.getIconByName(iconName);
                 if (icon == null) {

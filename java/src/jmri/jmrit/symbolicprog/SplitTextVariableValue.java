@@ -96,7 +96,7 @@ public class SplitTextVariableValue extends SplitVariableValue {
     }
 
     boolean isMatched(String s) {
-        if (matchRegex != null && !matchRegex.equals("")) {
+        if (matchRegex != null && !matchRegex.isEmpty()) {
             return s.matches(matchRegex);
         } else {
             return true;

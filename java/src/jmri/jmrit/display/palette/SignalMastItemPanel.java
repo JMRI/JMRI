@@ -67,7 +67,7 @@ public class SignalMastItemPanel extends TableItemPanel<SignalMast> {
         while (e.hasMoreElements()) {
             String aspect = e.nextElement();
             String s = appMap.getImageLink(aspect, _family);
-            if (s !=null && !s.equals("")) {
+            if (s !=null && !s.isEmpty()) {
                 if (!s.contains("preference:")) {
                     s = s.substring(s.indexOf("resources"));
                 }

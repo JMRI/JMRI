@@ -134,7 +134,7 @@ public class HtmlConductor extends HtmlTrainCommon {
             } else if (routeLocation == train.getTrainDepartsRouteLocation()) {
                 builder.append(String.format(locale, strings.getProperty("WorkDepartureTime"), routeLocationName, train  // NOI18N
                         .getFormatedDepartureTime())); // NOI18N
-            } else if (!routeLocation.getDepartureTime().equals("")) {
+            } else if (!routeLocation.getDepartureTime().isEmpty()) {
                 builder.append(String.format(locale, strings.getProperty("WorkDepartureTime"), routeLocationName,  // NOI18N
                         routeLocation.getFormatedDepartureTime())); // NOI18N
             } else if (Setup.isUseDepartureTimeEnabled()
@@ -149,7 +149,7 @@ public class HtmlConductor extends HtmlTrainCommon {
                 builder.append(String.format(locale, strings.getProperty("ScheduledWorkAt"), routeLocationName)); // NOI18N
             }
             // add route comment
-            if (!routeLocation.getComment().trim().equals("")) {
+            if (!routeLocation.getComment().trim().isEmpty()) {
                 builder.append(String.format(locale, strings.getProperty("RouteLocationComment"), StringEscapeUtils  // NOI18N
                         .escapeHtml4(routeLocation.getComment())));
             }

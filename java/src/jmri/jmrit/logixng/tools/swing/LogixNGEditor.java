@@ -706,7 +706,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
     }
 
     boolean checkConditionalNGUserName(String uName, LogixNG logixNG) {
-        if ((uName != null) && (!(uName.equals("")))) {
+        if ((uName != null) && (!(uName.isEmpty()))) {
             for (int i=0; i < logixNG.getNumConditionalNGs(); i++) {
                 ConditionalNG p = logixNG.getConditionalNG(i);
                 if (uName.equals(p.getUserName())) {
@@ -730,7 +730,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
      * @return false if sName is empty string or null
      */
     boolean checkConditionalNGSystemName(String sName) {
-        if ((sName != null) && (!(sName.equals("")))) {
+        if ((sName != null) && (!(sName.isEmpty()))) {
             ConditionalNG p = _curLogixNG.getConditionalNG(sName);
             if (p != null) {
                 return false;

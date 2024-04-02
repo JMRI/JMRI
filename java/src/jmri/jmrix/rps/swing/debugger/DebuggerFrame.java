@@ -275,7 +275,7 @@ public class DebuggerFrame extends jmri.util.JmriJFrame
         // parse input
         for (int i = 0; i <= NUMSENSORS; i++) {
             values[i] = 0.;
-            if ((timep.times[i] != null) && !timep.times[i].getText().equals("")) {
+            if ((timep.times[i] != null) && !timep.times[i].getText().isEmpty()) {
                 values[i] = Double.valueOf(timep.times[i].getText());
             }
         }

@@ -149,7 +149,7 @@ public class ProfileTest {
         FileUtil.copy(instance.getPath(), profileFolder3);
         Profile instance3 = new Profile(profileFolder3);
         Assert.assertNotNull(instance);
-        Assert.assertFalse(instance.equals(""));
+        Assert.assertFalse(instance.isEmpty());
         Assert.assertFalse(instance.equals(instance2));
         Assert.assertTrue(instance.equals(instance3));
     }

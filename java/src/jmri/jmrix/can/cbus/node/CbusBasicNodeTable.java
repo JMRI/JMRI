@@ -208,7 +208,7 @@ public class CbusBasicNodeTable extends javax.swing.table.AbstractTableModel {
                 DecoderFile decoderFile = InstanceManager.getDefault(DecoderIndexFile.class).fileFromTitle(title);
                 String userName = _mainArray.get(row).getUserName();
                 String nodeNumber = "CBUS_Node_" + Integer.toString(_mainArray.get(row).getNodeNumber());
-                if (!userName.equals("")) {
+                if (!userName.isEmpty()) {
                     nodeNumber = nodeNumber.concat("_" + userName);
                 }
                 if ((decoderFile != null) && (progMan != null)) {

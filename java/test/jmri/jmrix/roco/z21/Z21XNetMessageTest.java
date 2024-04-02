@@ -32,7 +32,7 @@ public class Z21XNetMessageTest extends jmri.jmrix.lenz.XNetMessageTest {
     public void testStringCtorEmptyString() {
         msg= new Z21XNetMessage("");
         Assert.assertEquals("length", 0, msg.getNumDataElements());
-        Assert.assertTrue("empty reply",msg.toString().equals(""));
+        Assert.assertTrue("empty reply",msg.toString().isEmpty());
     }
 
     @Test

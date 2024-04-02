@@ -272,7 +272,7 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
             return;
         }
         String retValue;
-        if (thisRow.getTempLocation().equals("")) {
+        if (thisRow.getTempLocation().isEmpty()) {
             // removing location from this car
 
             retValue = car.setLocation(null, null);
@@ -483,7 +483,7 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
     }
 
     private void locationItemUpdated(TagCarItem thisRow, String newvalue) {
-        if (newvalue.equals("")) {
+        if (newvalue.isEmpty()) {
             if (thisRow.getLocationValue() == null) {
                 return;
             }

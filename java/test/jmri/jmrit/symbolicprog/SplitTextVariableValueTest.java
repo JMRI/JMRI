@@ -33,7 +33,7 @@ public class SplitTextVariableValueTest extends AbstractVariableValueTestBase {
             String highCV, int pFactor, int pOffset, String uppermask, String extra1, String extra2, String extra3, String extra4) {
         ProgDebugger p = new ProgDebugger();
 
-        if (!cvNum.equals("")) { // some variables have no CV per se
+        if (!cvNum.isEmpty()) { // some variables have no CV per se
             List<String> cvList = CvUtil.expandCvList(cvNum);
             if (cvList.isEmpty()) {
                 CvValue cvNext = new CvValue(cvNum, p);
@@ -47,7 +47,7 @@ public class SplitTextVariableValueTest extends AbstractVariableValueTestBase {
                 }
             }
         }
-        if (highCV != null && !highCV.equals("")) {
+        if (highCV != null && !highCV.isEmpty()) {
             CvValue cvNext = new CvValue(highCV, p);
             cvNext.setValue(0);
             v.put(highCV, cvNext);
@@ -461,7 +461,7 @@ public class SplitTextVariableValueTest extends AbstractVariableValueTestBase {
         log.debug("checkResults with beforeStr='{}', testStr='{}', resultStr='{}'", beforeStr, testStr, resultStr);
 
         // check if match parameter applies and modify expectations accordingly
-        if (match != null && !match.equals("") && !testStr.matches(match)) {
+        if (match != null && !match.isEmpty() && !testStr.matches(match)) {
             log.debug("Match Failed with beforeStr='{}', testStr='{}', resultStr='{}'", beforeStr, testStr, resultStr);
             if (!testStr.equals(beforeStr)) {
                 Assert.assertNotEquals("Match failed, contents of result string should not match", testStr, resultStr);
@@ -488,11 +488,11 @@ public class SplitTextVariableValueTest extends AbstractVariableValueTestBase {
             Assert.assertEquals("set CV" + cv[i].number(), testStr.charAt(i), (cv[i].getValue()));
         }
         // check string terminator byte if applicable
-        if ((resultStr.length() < cv.length) && !termByteStr.equals("")) {
+        if ((resultStr.length() < cv.length) && !termByteStr.isEmpty()) {
             Assert.assertEquals("check string terminator byte", (byte) Integer.parseUnsignedInt(termByteStr), (cv[resultStr.length()].getValue()));
         }
         // check string terminator byte if applicable
-        if ((resultStr.length() < cv.length - 1) && !padByteStr.equals("")) {
+        if ((resultStr.length() < cv.length - 1) && !padByteStr.isEmpty()) {
             for (int i = cv.length + 1; i < cv.length; i++) {
                 Assert.assertEquals("check string pad byte at " + i, (byte) Integer.parseUnsignedInt(padByteStr) + 1, (cv[resultStr.length()].getValue()));
             }

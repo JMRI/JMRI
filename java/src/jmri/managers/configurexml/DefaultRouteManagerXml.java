@@ -59,14 +59,14 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                 // As a work-around for backward compatibility, store systemName and userName as attribute.
                 // TODO Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
                 String uName = r.getUserName();
-                if (uName != null && !uName.equals("")) {
+                if (uName != null && !uName.isEmpty()) {
                     elem.setAttribute("userName", uName);
                 }
 
                 // store common parts
                 storeCommon(r, elem);
 
-                if (cTurnout != null && !cTurnout.equals("")) {
+                if (cTurnout != null && !cTurnout.isEmpty()) {
                     elem.setAttribute("controlTurnout", cTurnout);
                     int state = r.getControlTurnoutState();
                     if (state == Route.ONTHROWN) {
@@ -85,7 +85,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                         elem.setAttribute("controlTurnoutFeedback", "true");
                     } // don't write if not set, accept default
                 }
-                if (cLockTurnout != null && !cLockTurnout.equals("")) {
+                if (cLockTurnout != null && !cLockTurnout.isEmpty()) {
                     elem.setAttribute("controlLockTurnout", cLockTurnout);
                     int state = r.getLockControlTurnoutState();
                     if (state == Route.ONTHROWN) {
@@ -168,7 +168,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                     index++;
                 }
                 // add sound and script file elements if needed
-                if (r.getOutputSoundName() != null && !r.getOutputSoundName().equals("")) {
+                if (r.getOutputSoundName() != null && !r.getOutputSoundName().isEmpty()) {
                     Element rsElem = new Element("routeSoundFile")
                             .setAttribute("name",
                                     jmri.util.FileUtil.getPortableFilename(
@@ -176,7 +176,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                             );
                     elem.addContent(rsElem);
                 }
-                if (r.getOutputScriptName() != null && !r.getOutputScriptName().equals("")) {
+                if (r.getOutputScriptName() != null && !r.getOutputScriptName().isEmpty()) {
                     Element rsElem = new Element("routeScriptFile")
                             .setAttribute("name",
                                     jmri.util.FileUtil.getPortableFilename(
@@ -186,7 +186,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                 }
 
                 // add turnouts aligned sensor if there is one
-                if (!r.getTurnoutsAlignedSensor().equals("")) {
+                if (!r.getTurnoutsAlignedSensor().isEmpty()) {
                     Element rsElem = new Element("turnoutsAlignedSensor")
                             .setAttribute("name", r.getTurnoutsAlignedSensor());
                     elem.addContent(rsElem);

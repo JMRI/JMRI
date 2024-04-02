@@ -189,7 +189,7 @@ public class EcosLocoTableAction extends AbstractTableAction<NamedBean> {
                         return;
                     } else if (value instanceof RosterEntry) {
                         re = (RosterEntry) value;
-                        if ((re.getAttribute(getRosterAttribute()) != null && !re.getAttribute(getRosterAttribute()).equals(""))) {
+                        if ((re.getAttribute(getRosterAttribute()) != null && !re.getAttribute(getRosterAttribute()).isEmpty())) {
                             JmriJOptionPane.showMessageDialog(f,
                                     Bundle.getMessage("EcosEditAssignedDialog", ecosObjectNo));
                             log.error("{} This roster entry already has an ECoS loco assigned to it", ecosObjectNo);
@@ -375,7 +375,7 @@ public class EcosLocoTableAction extends AbstractTableAction<NamedBean> {
                         return true;
                     case ADDTOROSTERCOL:
                         jmri.jmrix.ecos.EcosLocoAddress b = getByEcosObject(ecosObjectIdList.get(row));
-                        if (b.getRosterId() == null || b.getRosterId().equals("")) {
+                        if (b.getRosterId() == null || b.getRosterId().isEmpty()) {
                             return true;
                         } else {
                             return false;
@@ -544,7 +544,7 @@ public class EcosLocoTableAction extends AbstractTableAction<NamedBean> {
                         return (b != null) ? b.getECOSProtocol() : null;
                     case ADDTOROSTERCOL:  //
                         b = getByEcosObject(ecosObjectIdList.get(row));
-                        if (b.getRosterId() == null || b.getRosterId().equals("")) {
+                        if (b.getRosterId() == null || b.getRosterId().isEmpty()) {
                             return Bundle.getMessage("ButtonAddRoster");
                         } else {
                             return " ";

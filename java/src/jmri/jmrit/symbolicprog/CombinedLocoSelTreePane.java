@@ -309,14 +309,14 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
      * @return the combined formatted string.
      */
     String getHoverText(String verString, String comment) {
-        if (comment == null || comment.equals("")) {
-            if (!verString.equals("")) {
+        if (comment == null || comment.isEmpty()) {
+            if (!verString.isEmpty()) {
                 return "CV7=" + verString;
             } else {
                 return "";
             }
         } else {
-            if (verString.equals("")) {
+            if (verString.isEmpty()) {
                 return comment;
             } else {
                 return StringUtil.concatTextHtmlAware(comment, " (CV7=" + verString + ")");

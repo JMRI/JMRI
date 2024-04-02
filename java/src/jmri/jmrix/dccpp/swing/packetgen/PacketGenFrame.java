@@ -53,7 +53,7 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
     }
 
     DCCppMessage createPacket(String s) {
-        if (s.equals("")) {
+        if (s.isEmpty()) {
             log.debug("Empty Packet...");
             return null; // message cannot be empty
         }

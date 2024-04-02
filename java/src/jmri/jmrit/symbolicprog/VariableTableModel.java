@@ -304,7 +304,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             log.error("CvModel reference is null; cannot add variables");
             return;
         }
-        if (!CV.equals("")) { // some variables have no CV per se
+        if (!CV.isEmpty()) { // some variables have no CV per se
             List<String> cvList = CvUtil.expandCvList(CV);
             if (cvList.isEmpty()) {
                 _cvModel.addCV(CV, readOnly, infoOnly, writeOnly);
@@ -1064,7 +1064,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         log.debug("Starting to setConstant \"{}\"", stdname);
 
         String name = LocaleSelector.getAttribute(e, "label");
-        if (name == null || name.equals("")) {
+        if (name == null || name.isEmpty()) {
             name = stdname;
         }
 

@@ -142,7 +142,7 @@ public class NamedBeanHandleManager extends AbstractManager<NamedBean> implement
         String userName = bean.getUserName();
         String systemName = bean.getSystemName();
 
-        if ((userName == null) || (userName.equals(""))) {
+        if ((userName == null) || (userName.isEmpty())) {
             log.error("UserName is empty, can not update items to use UserName");
             throw new JmriException("UserName is empty, can not update items to use UserName");
         }

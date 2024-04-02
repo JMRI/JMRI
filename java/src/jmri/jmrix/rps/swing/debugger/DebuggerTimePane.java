@@ -82,7 +82,7 @@ public class DebuggerTimePane extends JPanel
     }
 
     void setResidual(int i, Measurement m) {
-        if (times[i].getText().equals("")) {
+        if (times[i].getText().isEmpty()) {
             residuals[i].setText(""); // just blank out
             return;
         }

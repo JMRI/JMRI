@@ -527,7 +527,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
                 } else if (getLitMode() && !getSignalMast().getLit() && (getSignalMast().getAppearanceMap().getImageLink("$dark", useIconSet) != null)) {
                     s = getSignalMast().getAppearanceMap().getImageLink("$dark", useIconSet);
                 }
-                if (s.equals("")) {
+                if (s.isEmpty()) {
                     /*We have no appearance to set, therefore we will exit at this point.
                      This can be considered normal if we are requesting an appearance
                      that is not support or configured, such as dark or held */

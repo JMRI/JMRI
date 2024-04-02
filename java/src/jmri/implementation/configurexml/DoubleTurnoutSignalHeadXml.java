@@ -113,7 +113,7 @@ public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
             String name = e.getAttribute("systemName").getValue();
             Turnout t;
             if (e.getAttribute("userName") != null
-                    && !e.getAttribute("userName").getValue().equals("")) {
+                    && !e.getAttribute("userName").getValue().isEmpty()) {
                 name = e.getAttribute("userName").getValue();
                 t = InstanceManager.turnoutManagerInstance().getTurnout(name);
             } else {

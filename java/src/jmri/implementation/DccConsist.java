@@ -417,7 +417,7 @@ public class DccConsist implements Consist, ProgListener {
         }
         RosterEntry entry = Roster.getDefault().getEntryForId(getRosterId(address));
 
-        if(entry==null || entry.getFileName()==null || entry.getFileName().equals("")){
+        if(entry==null || entry.getFileName()==null || entry.getFileName().isEmpty()){
            // roster entry unknown.
            log.trace("No file name available for RosterID {},address {}, in consist {}.  Skipping CV19 update.",getRosterId(address),address,consistAddress);
            return;
@@ -461,7 +461,7 @@ public class DccConsist implements Consist, ProgListener {
             DecoderFile d = l.get(0);
             loadDecoderFile(d, r, varTable);
         } else {
-            if (decoderModel.equals("")) {
+            if (decoderModel.isEmpty()) {
                 log.debug("blank decoderModel requested, so nothing loaded");
             } else {
                 log.warn("no matching \"{}\" decoder found for loco, no decoder info loaded",decoderModel );

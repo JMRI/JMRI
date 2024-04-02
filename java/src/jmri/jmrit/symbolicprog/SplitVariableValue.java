@@ -104,7 +104,7 @@ public class SplitVariableValue extends VariableValue
             }
             cvList.add(new CvItem(_cvNum, tMask));
 
-            if (pSecondCV != null && !pSecondCV.equals("")) {
+            if (pSecondCV != null && !pSecondCV.isEmpty()) {
                 cvList.add(new CvItem(pSecondCV, _uppermask));
             }
         } else {
@@ -223,7 +223,7 @@ public class SplitVariableValue extends VariableValue
      */
     @Override
     public String getMask() {
-        if (mSecondCV != null && !mSecondCV.equals("")) {
+        if (mSecondCV != null && !mSecondCV.isEmpty()) {
             return _uppermask + _mask;
         } else {
             return _mask; // a list of 1-n masks, separated by spaces

@@ -298,7 +298,7 @@ public class ReportPanel extends JPanel {
             // if current file is a directory, call recursively
             if (file.isDirectory()) {
                 // Only include certain sub-directories
-                if (!directory.equals("") || Arrays.asList(profDirs).contains(file.getName().toLowerCase())) {
+                if (!directory.isEmpty() || Arrays.asList(profDirs).contains(file.getName().toLowerCase())) {
                     try {
                         out.putNextEntry(new ZipEntry(directory + file.getName() + "/"));
                     } catch (IOException ex) {
@@ -313,7 +313,7 @@ public class ReportPanel extends JPanel {
             // Got here - add file
             try {
                 // Only include certain files
-                if (!directory.equals("") || file.getName().toLowerCase().matches(".*(config\\.xml|\\.properties)")) {
+                if (!directory.isEmpty() || file.getName().toLowerCase().matches(".*(config\\.xml|\\.properties)")) {
                     log.debug("Add file: {}{}", directory, file.getName());
                     byte[] buffer = new byte[1024];
                     try (FileInputStream in = new FileInputStream(file)) {

@@ -255,8 +255,8 @@ public class BlockPathEditFrame extends JmriJFrame {
 
     protected void okPressed(ActionEvent e) {
         String user = pathUserName.getText().trim();
-        if (user.equals("") || (_newPath && _block.getPathByName(user) != null)) { // check existing names before creating
-            status(user.equals("") ? Bundle.getMessage("WarningSysNameEmpty") : Bundle.getMessage("DuplPathName", user), true);
+        if (user.isEmpty() || (_newPath && _block.getPathByName(user) != null)) { // check existing names before creating
+            status(user.isEmpty() ? Bundle.getMessage("WarningSysNameEmpty") : Bundle.getMessage("DuplPathName", user), true);
             pathUserName.setBackground(Color.red);
             log.debug("username empty");
             return;

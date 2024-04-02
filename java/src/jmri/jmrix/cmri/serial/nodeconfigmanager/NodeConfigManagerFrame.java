@@ -689,7 +689,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 
         protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize[]) {
             String columnString = "";
-            StringBuilder lineString = new StringBuilder("");
+            StringBuilder lineString = new StringBuilder();
             String[] spaces = new String[NUM_COLUMNS];
             // create base strings the width of each of the columns
             for (int k = 0; k < NUM_COLUMNS; k++) {
@@ -753,7 +753,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                         }
                     }
                     w.write("\n");
-                    lineString = new StringBuilder("");
+                    lineString = new StringBuilder();
                 } catch (IOException e) {
                     log.warn("error during printing: ", e);
                 }

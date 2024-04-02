@@ -522,7 +522,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
 
         protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize[]) {
             String columnString = "";
-            StringBuilder lineString = new StringBuilder("");
+            StringBuilder lineString = new StringBuilder();
             String[] spaces = new String[MAX_COLS];
             // create base strings the width of each of the columns
             for (int k = 0; k < MAX_COLS; k++) {
@@ -580,7 +580,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
                         }
                     }
                     w.write("\n");
-                    lineString = new StringBuilder("");
+                    lineString = new StringBuilder();
                 } catch (IOException e) {
                     log.warn("error during printing", e);
                 }

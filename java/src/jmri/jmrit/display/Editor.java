@@ -1687,7 +1687,7 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
         }
         // try getting road number, else use DCC address
         String rn = entry.getRoadNumber();
-        if ((rn == null) || rn.equals("")) {
+        if ((rn == null) || rn.isEmpty()) {
             rn = entry.getDccAddress();
         }
         if (rn != null) {
@@ -1714,7 +1714,7 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
         okay.setText(Bundle.getMessage("ButtonOK"));
         okay.addActionListener(e -> {
             String nameID = locoId.getText();
-            if ((nameID != null) && !(nameID.trim().equals(""))) {
+            if ((nameID != null) && !(nameID.trim().isEmpty())) {
                 addLocoIcon(nameID.trim());
             } else {
                 JmriJOptionPane.showMessageDialog(locoFrame, Bundle.getMessage("ErrorEnterLocoID"),
@@ -2817,7 +2817,7 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
         if (ancestor instanceof JFrame) {
             name = ((JFrame) ancestor).getTitle();
         }
-        if (name == null || name.equals("")) {
+        if (name == null || name.isEmpty()) {
             super.setTitle(Bundle.getMessage("LabelEditor"));
         } else {
             super.setTitle(name + " " + Bundle.getMessage("LabelEditor"));

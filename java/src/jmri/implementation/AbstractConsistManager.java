@@ -64,7 +64,7 @@ public abstract class AbstractConsistManager implements ConsistManager {
 
     @Override
     public String decodeErrorCode(int errorCode) {
-        StringBuilder buffer = new StringBuilder("");
+        StringBuilder buffer = new StringBuilder();
         if ((errorCode & ConsistListener.NotImplemented) != 0) {
             buffer.append("Not Implemented ");
         }
@@ -97,7 +97,7 @@ public abstract class AbstractConsistManager implements ConsistManager {
         }
 
         String retval = buffer.toString();
-        if (retval.equals("")) {
+        if (retval.isEmpty()) {
             return "Unknown Status Code: " + errorCode;
         } else {
             return retval;

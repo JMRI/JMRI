@@ -258,7 +258,7 @@ public class CompositeVariableValue extends EnumVariableValue {
     public void actionPerformed(ActionEvent e) {
         // see if this is from _value itself, or from an alternate rep.
         // if from an alternate rep, it will contain the value to select
-        if (!(e.getActionCommand().equals(""))) {
+        if (!(e.getActionCommand().isEmpty())) {
             // is from alternate rep
             _value.setSelectedItem(e.getActionCommand());
         }

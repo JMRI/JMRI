@@ -486,7 +486,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
             // avoid method calls unless debugging
             log.debug("setToRead({}) with overrides {},{},{} sets {}", state, getInfoOnly(), getWriteOnly(), !getAvailable(), newState);
         }
-        if (getCvNum() == null || getCvNum().equals("")) {
+        if (getCvNum() == null || getCvNum().isEmpty()) {
             log.debug("no CV defined for value {}. setToRead skipped", _item);
             return;
         }

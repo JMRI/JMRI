@@ -73,7 +73,7 @@ public class OperationsServlet extends HttpServlet {
         }
         String[] pathInfo = request.getPathInfo().substring(1).split("/");
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
-        if (pathInfo[0].equals("") || (pathInfo[0].equals(JsonOperations.TRAINS) && pathInfo.length == 1)) {
+        if (pathInfo[0].isEmpty() || (pathInfo[0].equals(JsonOperations.TRAINS) && pathInfo.length == 1)) {
             this.processTrains(request, response);
         } else {
             if (pathInfo.length == 1) {
@@ -193,7 +193,7 @@ public class OperationsServlet extends HttpServlet {
                             )
                     ),
                     InstanceManager.getDefault(ServletUtil.class).getNavBar(request.getLocale(), request.getContextPath()),
-                    !train.getRailroadName().equals("") ? train.getRailroadName() : InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
+                    !train.getRailroadName().isEmpty() ? train.getRailroadName() : InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
                     InstanceManager.getDefault(ServletUtil.class).getFooter(request.getLocale(), request.getContextPath()),
                     train.getId()
             ));
@@ -239,7 +239,7 @@ public class OperationsServlet extends HttpServlet {
                             )
                     ),
                     InstanceManager.getDefault(ServletUtil.class).getNavBar(request.getLocale(), request.getContextPath()),
-                    !train.getRailroadName().equals("") ? train.getRailroadName() : InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
+                    !train.getRailroadName().isEmpty() ? train.getRailroadName() : InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
                     InstanceManager.getDefault(ServletUtil.class).getFooter(request.getLocale(), request.getContextPath()),
                     train.getId()
             ));

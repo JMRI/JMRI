@@ -339,7 +339,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         articleField.setEditable(false);
         addressField.setEditable(false);
         art = -1;
-        if (!articleField.getText().equals("")) {
+        if (!articleField.getText().isEmpty()) {
             try {
                 art = inDomain(articleField.getText(), 9999);
             } catch (NumberFormatException e) {
@@ -382,13 +382,13 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
             statusText1.setText(Bundle.getMessage("FeedBackDirectRunning"));
             return;
         }
-        if (articleField.getText().equals("")) {
+        if (articleField.getText().isEmpty()) {
             statusText1.setText(Bundle.getMessage("FeedBackEnterArticle"));
             articleField.setBackground(Color.RED);
             modProgButton.setSelected(false);
             return;
         }
-        if (addressField.getText().equals("")) {
+        if (addressField.getText().isEmpty()) {
             statusText1.setText(Bundle.getMessage("FeedBackEnterAddress"));
             addressField.setBackground(Color.RED);
             modProgButton.setSelected(false);
@@ -414,7 +414,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
             }
             return;
         }
-        if ((!articleField.getText().equals("")) && (!addressField.getText().equals(""))) {
+        if ((!articleField.getText().isEmpty()) && (!addressField.getText().isEmpty())) {
             try {
                 art = inDomain(articleField.getText(), 9999);
                 adr = inDomain(addressField.getText(), 65535); // goes in d5-d6 as module address

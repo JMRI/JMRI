@@ -337,7 +337,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
 
     public void setRosterAttribute(String att) {
         //If no suffix is passed then we just use the default.
-        if ((att == null) || (att.equals(""))) {
+        if ((att == null) || (att.isEmpty())) {
             _rosterAttribute = "EcosObject";
         } else if (att.startsWith("EcosObject")) {
             _rosterAttribute = att;

@@ -34,7 +34,7 @@ public class Z21XNetReplyTest extends jmri.jmrix.lenz.XNetReplyTest {
     public void testStringCtorEmptyString() {
         msg = new Z21XNetReply("");
         Assert.assertEquals("length", 0, msg.getNumDataElements());
-        Assert.assertTrue("empty reply", msg.toString().equals(""));
+        Assert.assertTrue("empty reply", msg.toString().isEmpty());
     }
 
     // Test the copy constructor.

@@ -81,7 +81,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     public void setHostName(String s) {
         log.trace("setHostName({})", s, new Exception("traceback only"));
         m_HostName = s;
-        if ((s == null || s.equals("")) && !getMdnsConfigure()) {
+        if ((s == null || s.isEmpty()) && !getMdnsConfigure()) {
             m_HostName = JmrixConfigPane.NONE;
         }
     }
@@ -101,7 +101,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     protected void setHostAddress(String s) {
         log.trace("setHostAddress({})", s);
         m_HostAddress = s;
-        if (s == null || s.equals("")) {
+        if (s == null || s.isEmpty()) {
             m_HostAddress = m_HostName;
         }
     }
@@ -150,7 +150,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
             t = getHostName();
         }
         int p = getPort();
-        if (t != null && !t.equals("")) {
+        if (t != null && !t.isEmpty()) {
             if (p != 0) {
                 return t + ":" + p;
             }

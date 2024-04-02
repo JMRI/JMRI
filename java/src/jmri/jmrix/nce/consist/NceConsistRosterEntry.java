@@ -375,10 +375,10 @@ public class NceConsistRosterEntry {
                 }
             }
         }
-        if (_loco1DccAddress.equals("")) {
+        if (_loco1DccAddress.isEmpty()) {
             log.warn("no lead loco attribute in consist element when reading ConsistRoster"); // NOI18N
         }
-        if (_loco2DccAddress.equals("")) {
+        if (_loco2DccAddress.isEmpty()) {
             log.warn("no rear loco attribute in consist element when reading ConsistRoster"); // NOI18N
         }
     }

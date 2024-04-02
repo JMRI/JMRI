@@ -32,7 +32,7 @@ public class SplitDateTimeVariableValueTest extends AbstractVariableValueTestBas
             String highCV, int pFactor, int pOffset, String uppermask, String extra1, String extra2, String extra3, String extra4) {
         ProgDebugger p = new ProgDebugger();
 
-        if (!cvNum.equals("")) { // some variables have no CV per se
+        if (!cvNum.isEmpty()) { // some variables have no CV per se
             List<String> cvList = CvUtil.expandCvList(cvNum);
             if (cvList.isEmpty()) {
                 CvValue cvNext = new CvValue(cvNum, p);
@@ -46,7 +46,7 @@ public class SplitDateTimeVariableValueTest extends AbstractVariableValueTestBas
                 }
             }
         }
-        if (highCV != null && !highCV.equals("")) {
+        if (highCV != null && !highCV.isEmpty()) {
             CvValue cvNext = new CvValue(highCV, p);
             cvNext.setValue(0);
             v.put(highCV, cvNext);

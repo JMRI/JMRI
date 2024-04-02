@@ -251,7 +251,7 @@ public class TreePanel extends JPanel {
             }
 
             String attachedMemory = currentNode.getAttachedMemory();
-            if ((attachedMemory != null) && (!attachedMemory.equals(""))) {
+            if ((attachedMemory != null) && (!attachedMemory.isEmpty())) {
                 memoryName.setText(attachedMemory);
                 memoryName.setEditable(false);
                 memoryBox.setSelected(true);

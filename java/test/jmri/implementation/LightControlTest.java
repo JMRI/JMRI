@@ -42,7 +42,7 @@ public class LightControlTest {
 
         Assert.assertFalse(l1.equals(null));
         Assert.assertTrue(l1.equals(l1));
-        Assert.assertFalse(l1.equals(""));
+        Assert.assertFalse(l1.isEmpty());
 
         LightControl l2 = new DefaultLightControl(o);
         Assert.assertTrue(l1.equals(l2));

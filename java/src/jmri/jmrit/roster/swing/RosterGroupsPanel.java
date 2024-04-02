@@ -231,7 +231,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
 
     private void setSelectionToGroup(String group) {
         _tree.removeTreeSelectionListener(_TSL);
-        if (group == null || group.equals(Roster.ALLENTRIES) || group.equals("")) {
+        if (group == null || group.equals(Roster.ALLENTRIES) || group.isEmpty()) {
             _tree.setSelectionPath(new TreePath(_model.getPathToRoot(_groups.getFirstChild())));
         } else {
             for (TreeNode n : new IterableEnumeration<TreeNode>(_groups.children())) {

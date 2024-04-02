@@ -94,7 +94,7 @@ public class OPathTest {
         op2.setBlock(null);
         
         Assert.assertFalse("not equals null", op1.equals(null));
-        Assert.assertFalse("not equals string", op1.equals(""));
+        Assert.assertFalse("not equals string", op1.isEmpty());
         
         assertThat(op1.equals(op1)).withFailMessage("equals self").isTrue();
         assertThat(op1.equals(op2)).withFailMessage("on contents").isTrue();

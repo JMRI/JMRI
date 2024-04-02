@@ -365,7 +365,7 @@ public final class FnMapPanelESU extends JPanel {
                 // block loop
                 do {
                     // if column is not suppressed by blank headers
-                    if (!itemName[item][0].equals("")) {
+                    if (!itemName[item][0].isEmpty()) {
                         // set up the variable using the output label
                         String name = "ESU Function Row " + Integer.toString(iRow + 1) + " Item " + Integer.toString(item + 1);
                         int iCV = outBlockStartCv[outBlockNum] + (((outBlockCvModulus[outBlockNum] * iRow) + (nextFreeBit / BIT_MODULUS)) % CV_PAGE_MODULUS);
@@ -397,10 +397,10 @@ public final class FnMapPanelESU extends JPanel {
                             // set up choices
                             String defChoice1 = "On";
                             String defChoice2 = "Off";
-                            if (!itemName[item][1].equals("")) {
+                            if (!itemName[item][1].isEmpty()) {
                                 defChoice1 = itemName[item][1];
                             }
-                            if (!itemName[item][2].equals("")) {
+                            if (!itemName[item][2].isEmpty()) {
                                 defChoice2 = itemName[item][2];
                             }
 
@@ -487,7 +487,7 @@ public final class FnMapPanelESU extends JPanel {
 
                             // generate a fullItemName
                             String fullItemName = itemName[item][0];
-                            if (!itemLabel[item].equals("")) {
+                            if (!itemLabel[item].isEmpty()) {
                                 fullItemName = fullItemName + (": " + itemLabel[item]);
                             }
 
@@ -714,7 +714,7 @@ public final class FnMapPanelESU extends JPanel {
      * @param block the block to update
      */
     void updateSummaryLine(int row, int block) {
-        StringBuilder retString = new StringBuilder("");
+        StringBuilder retString = new StringBuilder();
         AbstractValue.ValueState retState = AbstractValue.ValueState.SAME;
 
         for (int item = outBlockStartCol[block]; item < (outBlockStartCol[block] + outBlockLength[block]); item++) {
@@ -726,7 +726,7 @@ public final class FnMapPanelESU extends JPanel {
                 }
                 if (value > 0) {
                     if (outBlockItemBits[block] == 1) {
-                        if (itemLabel[item].equals("")) {
+                        if (itemLabel[item].isEmpty()) {
                             retString.append(",").append(itemName[item][0]);
                         } else {
                             retString.append(",").append(itemLabel[item]);
@@ -734,7 +734,7 @@ public final class FnMapPanelESU extends JPanel {
                     } else if (outBlockItemBits[block] == 2) {
                         if (value > 2) {
                             retString.append(",").append("reserved value ").append(value);
-                        } else if (itemName[item][value].equals("")) {
+                        } else if (itemName[item][value].isEmpty()) {
                             if (value == 1) {
                                 retString.append(",").append(itemName[item][0]);
                             } else {
