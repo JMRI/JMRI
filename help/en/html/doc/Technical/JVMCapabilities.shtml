@@ -840,6 +840,10 @@
             number of "access violation" messages.  These are just advisory
             with Java 17, but will become mandatory failures in some later
             version of Java (Java 21?)
+        <li>There's been a problem reported where OpenLCB/LCC network GridConnect
+            connections can't get networking information to create their 
+            local Node ID under Java 21.
+            The workaround is to manually enter a node ID in the connection preferences.
         <li>(Development only) Improved error checking in the Javadoc
             process generates hundreds of warnings that can hide real problems.
             These will need to be cleaned up.
