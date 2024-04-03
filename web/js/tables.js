@@ -10,7 +10,10 @@
  */
 
 var jmri = null;
-
+//convert page parms into array to use for filtering rows
+const urlSearchParams = new URLSearchParams(window.location.search);
+const params = Object.fromEntries(urlSearchParams.entries());
+            
 //handle an error message returned via the websocket from the server
 //  parms: html error code, message is the message text
 function showError(code, message) {
@@ -41,23 +44,39 @@ function rebuildTable(data) {
         //build header row from first row of data
         var thead = '<tr>';
         $.each(Object.keys(data[0].data), function (index, value) {
-            thead += '<th>' + value + '</th>';
+            thead += "<th class='" + value + "'>" + value + "</th>";
         });
         thead += '</tr>';
         $("table#jmri-data thead").html(thead);
         //build all data rows for table body
         var tbody = '';
-        data.forEach(function (item) {
-            jmri.socket.send(item.type, { name: item.data.name }); //request updates from server
-            tbody += "<tr data-name='" + item.data.name + "'>";
-            tbody += buildRow(item.data) + '</tr>';
+        var rows = 0;
+        data.forEach(function (item) { //loop thru rows in json
+            var keep = true;
+            $.each(params, function (index, value) { //compare against filter parms, skipping unless all match
+                if (displayCellValue(item.type, index, item.data[index]) != value) {
+                    keep = false;
+                    jmri.log("no match for " +index+"="+value+" != " + item.data[index])
+                    return false;
+                }                                
+            });
+            if (keep) {
+                jmri.socket.send(item.type, { name: item.data.name }); //request updates from server
+                tbody += "<tr data-name='" + item.data.name + "'>";
+                tbody += buildRow(item.data) + '</tr>';
+                rows++;
+            }
         });
-        $("table#jmri-data tbody").html(tbody);
-        $("table#jmri-data").removeClass("hidden").addClass("show");
-        var newTableObject = document.getElementById("jmri-data");
-        sorttable.makeSortable(newTableObject);
-        hideEmptyColumns("table#jmri-data tr th");
-        sortByFirstColumn();
+        if (rows) {
+            $("table#jmri-data tbody").html(tbody);
+            $("table#jmri-data").removeClass("hidden").addClass("show");
+            var newTableObject = document.getElementById("jmri-data");
+            sorttable.makeSortable(newTableObject);
+            hideEmptyColumns("table#jmri-data tr th");
+            sortByFirstColumn();
+        } else {
+            $("#warning-no-data").removeClass("hidden").addClass("show");            
+        }
     } else {
         $("#warning-no-data").removeClass("hidden").addClass("show");
     }
@@ -240,6 +259,11 @@ $(document).ready(function () {
     // add table type to heading and title
     $("#table-type").text($("html").data("table-type"));
     document.title = $("h1.title").text();
+    
+    //show filter if used
+    if (!$.isEmptyObject(params)) { 
+        $('#filter-text').text("Filter: " + urlSearchParams.toString().replace("&",", "));
+    }
 
     jmri = $.JMRI({
         // when we get the hello message, send a websocket list request which
