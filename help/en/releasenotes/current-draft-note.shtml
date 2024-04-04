@@ -436,9 +436,12 @@
         <ul>
           <li>ConditionalNGs can now be enabled/disabled by editing a LogixNG.</li>
           <li>Scripts invoked by a ConditionalNG or Module can access <strong>current</strong> local
-          variables.  This makes it possible to use local variables as parameters for Jython scripts.
-          See <a href="https://www.jmri.org/help/en/html/tools/logixng/reference/chapter13.shtml">
-          LogixNG Reference Chapter 13</a> for details.</li>
+              variables.  This makes it possible to use local variables as parameters for Jython scripts.
+              See <a href="https://www.jmri.org/help/en/html/tools/logixng/reference/chapter13.shtml">
+              LogixNG Reference Chapter 13</a> for details.</li>
+          <li>The action <strong>Window to front</strong> has been improved. It can now
+              show/hide a window, maximize/normalize/minimize a window and move the window
+              to front or back.</li>
           <li></li>
         </ul>
 
