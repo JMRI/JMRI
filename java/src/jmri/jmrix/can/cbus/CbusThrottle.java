@@ -251,8 +251,8 @@ public class CbusThrottle extends AbstractThrottle {
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     @Override
-    public synchronized void setSpeedSetting(float speed) {
-        log.debug("setSpeedSetting({}) ", speed);
+    public synchronized void setSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
+        log.debug("setSpeedSetting({}) dup:{} dupOnStop:{}", speed);
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
         if (speed < 0) {
@@ -261,7 +261,7 @@ public class CbusThrottle extends AbstractThrottle {
 
         setDispatchActive(this.speedSetting > 0);
 
-        if ( oldCbusSpeed != getCbusSpeedDirection() ) {
+        if ( oldCbusSpeed != getCbusSpeedDirection() || allowDuplicates || ( speed==0 && allowDuplicatesOnStop ) ) {
             sendToLayout();
             firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
             record(this.speedSetting); // float
@@ -330,7 +330,7 @@ public class CbusThrottle extends AbstractThrottle {
 
         setDispatchActive(this.speedSetting > 0);
 
-        if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
+        if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) { // an increment FROM CBUS will always be > 0.00793
             firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
             record(this.speedSetting); // float
         }
