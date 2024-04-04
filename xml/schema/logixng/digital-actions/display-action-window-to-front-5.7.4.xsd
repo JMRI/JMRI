@@ -47,6 +47,10 @@
               <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
 
+              <xs:element name="hideOrShow" type="LogixNG_SelectEnumType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="maximizeMinimizeNormalize" type="LogixNG_SelectEnumType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="bringToFrontOrBack" type="LogixNG_SelectEnumType" minOccurs="0" maxOccurs="1" />
+
 <!--              <xs:element name="enabled" type="yesNoType" /> -->
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>

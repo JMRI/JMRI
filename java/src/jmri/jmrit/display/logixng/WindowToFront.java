@@ -2,7 +2,8 @@ package jmri.jmrit.display.logixng;
 
 // import java.beans.PropertyChangeEvent;
 // import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
+import java.awt.Frame;
+import java.beans.*;
 import java.util.*;
 
 import javax.annotation.CheckForNull;
@@ -11,6 +12,7 @@ import javax.annotation.Nonnull;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.AbstractDigitalAction;
+import jmri.jmrit.logixng.util.LogixNG_SelectEnum;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
@@ -24,7 +26,8 @@ import jmri.util.TypeConversionUtil;
  *
  * @author Daniel Bergqvist Copyright 2024
  */
-public class WindowToFront extends AbstractDigitalAction implements VetoableChangeListener {
+public class WindowToFront extends AbstractDigitalAction
+        implements PropertyChangeListener, VetoableChangeListener {
 
     private String _jmriJFrameTitle;
     private JmriJFrame _jmriJFrame;
@@ -33,6 +36,16 @@ public class WindowToFront extends AbstractDigitalAction implements VetoableChan
     private String _localVariable = "";
     private String _formula = "";
     private ExpressionNode _expressionNode;
+
+    private final LogixNG_SelectEnum<HideOrShow> _selectEnumHideOrShow =
+            new LogixNG_SelectEnum<>(this, HideOrShow.values(), HideOrShow.DoNothing, this);
+
+    private final LogixNG_SelectEnum<MaximizeMinimizeNormalize> _selectEnumMaximizeMinimizeNormalize =
+            new LogixNG_SelectEnum<>(this, MaximizeMinimizeNormalize.values(), MaximizeMinimizeNormalize.DoNothing, this);
+
+    private final LogixNG_SelectEnum<BringToFrontOrBack> _selectEnumBringToFrontOrBack =
+            new LogixNG_SelectEnum<>(this, BringToFrontOrBack.values(), BringToFrontOrBack.Front, this);
+
 
     public WindowToFront(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -52,7 +65,22 @@ public class WindowToFront extends AbstractDigitalAction implements VetoableChan
         copy.setFormula(_formula);
         copy.setLocalVariable(_localVariable);
         copy.setReference(_reference);
+        _selectEnumHideOrShow.copy(copy._selectEnumHideOrShow);
+        _selectEnumMaximizeMinimizeNormalize.copy(copy._selectEnumMaximizeMinimizeNormalize);
+        _selectEnumBringToFrontOrBack.copy(copy._selectEnumBringToFrontOrBack);
         return manager.registerAction(copy);
+    }
+
+    public LogixNG_SelectEnum<HideOrShow> getSelectEnumHideOrShow() {
+        return _selectEnumHideOrShow;
+    }
+
+    public LogixNG_SelectEnum<MaximizeMinimizeNormalize> getSelectEnumMaximizeMinimizeNormalize() {
+        return _selectEnumMaximizeMinimizeNormalize;
+    }
+
+    public LogixNG_SelectEnum<BringToFrontOrBack> getSelectEnumBringToFrontOrBack() {
+        return _selectEnumBringToFrontOrBack;
     }
 
     public void setJmriJFrame(@CheckForNull String jmriJFrameTitle) {
@@ -152,7 +180,7 @@ public class WindowToFront extends AbstractDigitalAction implements VetoableChan
     }
 
     private void throwErrorJmriJFrameDoesNotExists() throws JmriException {
-        var lng = getConditionalNG();
+        var lng = getLogixNG();
         var cng = getConditionalNG();
         var m = getModule();
         String errorMessage;
@@ -172,6 +200,8 @@ public class WindowToFront extends AbstractDigitalAction implements VetoableChan
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
+        ConditionalNG conditionalNG = getConditionalNG();
+
         JmriJFrame jmriJFrame;
 
 //        System.out.format("WindowToFront.execute: %s%n", getLongDescription());
@@ -190,12 +220,12 @@ public class WindowToFront extends AbstractDigitalAction implements VetoableChan
 
             case Reference:
                 String ref = ReferenceUtil.getReference(
-                        getConditionalNG().getSymbolTable(), _reference);
+                        conditionalNG.getSymbolTable(), _reference);
                 jmriJFrame = JmriJFrame.getFrame(ref);
                 break;
 
             case LocalVariable:
-                SymbolTable symbolTable = getConditionalNG().getSymbolTable();
+                SymbolTable symbolTable = conditionalNG.getSymbolTable();
                 jmriJFrame = JmriJFrame.getFrame(TypeConversionUtil
                                 .convertToString(symbolTable.getValue(_localVariable), false));
                 break;
@@ -204,7 +234,7 @@ public class WindowToFront extends AbstractDigitalAction implements VetoableChan
                 jmriJFrame = _expressionNode != null ?
                         JmriJFrame.getFrame(TypeConversionUtil
                                         .convertToString(_expressionNode.calculate(
-                                                getConditionalNG().getSymbolTable()), false))
+                                                conditionalNG.getSymbolTable()), false))
                         : null;
                 break;
 
@@ -219,9 +249,19 @@ public class WindowToFront extends AbstractDigitalAction implements VetoableChan
             return;
         }
 
+        HideOrShow hideOrShow =
+                _selectEnumHideOrShow.evaluateEnum(conditionalNG);
+        MaximizeMinimizeNormalize maximizeMinimizeNormalize =
+                _selectEnumMaximizeMinimizeNormalize.evaluateEnum(conditionalNG);
+        BringToFrontOrBack bringToFrontOrBack =
+                _selectEnumBringToFrontOrBack.evaluateEnum(conditionalNG);
+
         JmriJFrame frame = jmriJFrame;
+
         ThreadingUtil.runOnGUI(() -> {
-            frame.toFront();
+            hideOrShow.run(frame);
+            maximizeMinimizeNormalize.run(frame);
+            bringToFrontOrBack.run(frame);
         });
     }
 
@@ -270,7 +310,20 @@ public class WindowToFront extends AbstractDigitalAction implements VetoableChan
                 throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
 
-        return Bundle.getMessage(locale, "WindowToFront_Long", jmriJFrameName);
+        List<Object> strings = new ArrayList<>();
+        strings.add(jmriJFrameName);
+        if (!_selectEnumHideOrShow.isEnum(HideOrShow.DoNothing)) {
+            strings.add(_selectEnumHideOrShow.getDescription(locale));
+        }
+        if (!_selectEnumMaximizeMinimizeNormalize.isEnum(MaximizeMinimizeNormalize.DoNothing)) {
+            strings.add(_selectEnumMaximizeMinimizeNormalize.getDescription(locale));
+        }
+        if (!_selectEnumBringToFrontOrBack.isEnum(BringToFrontOrBack.DoNothing)) {
+            strings.add(_selectEnumBringToFrontOrBack.getDescription(locale));
+        }
+
+        return Bundle.getMessage(locale, "WindowToFront_Long_"+Integer.toString(strings.size()),
+                strings.toArray());
     }
 
     /** {@inheritDoc} */
@@ -279,6 +332,12 @@ public class WindowToFront extends AbstractDigitalAction implements VetoableChan
         if ((_jmriJFrameTitle != null) && (_jmriJFrame == null)) {
             setJmriJFrame(_jmriJFrameTitle);
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        getConditionalNG().execute();
     }
 
     /** {@inheritDoc} */
@@ -294,6 +353,83 @@ public class WindowToFront extends AbstractDigitalAction implements VetoableChan
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
+    }
+
+    private interface FrameAction {
+        void run(JmriJFrame f);
+    }
+
+    public enum HideOrShow {
+        Show(Bundle.getMessage("WindowToFront_HideOrShow_Show"), (f) -> { f.setVisible(true); }),
+        Hide(Bundle.getMessage("WindowToFront_HideOrShow_Hide"), (f) -> { f.setVisible(false); }),
+        DoNothing(Bundle.getMessage("WindowToFront_HideOrShow_DoNothing"), (f) -> {});
+
+        private final String _text;
+        private final FrameAction _action;
+
+        private HideOrShow(String text, FrameAction action) {
+            this._text = text;
+            this._action = action;
+        }
+
+        public void run(JmriJFrame f) {
+            _action.run(f);
+        }
+
+        @Override
+        public String toString() {
+            return _text;
+        }
+
+    }
+
+    public enum MaximizeMinimizeNormalize {
+        Minimize(Bundle.getMessage("WindowToFront_MaximizeMinimizeNormalize_Minimize"), (f) -> { f.setExtendedState​(Frame.ICONIFIED); }),
+        Normalize(Bundle.getMessage("WindowToFront_MaximizeMinimizeNormalize_Normalize"), (f) -> { f.setExtendedState​(Frame.NORMAL); }),
+        Maximize(Bundle.getMessage("WindowToFront_MaximizeMinimizeNormalize_Maximize"), (f) -> { f.setExtendedState​(Frame.MAXIMIZED_BOTH); }),
+        DoNothing(Bundle.getMessage("WindowToFront_MaximizeMinimizeNormalize_DoNothing"), (f) -> {});
+
+        private final String _text;
+        private final FrameAction _action;
+
+        private MaximizeMinimizeNormalize(String text, FrameAction action) {
+            this._text = text;
+            this._action = action;
+        }
+
+        public void run(JmriJFrame f) {
+            _action.run(f);
+        }
+
+        @Override
+        public String toString() {
+            return _text;
+        }
+
+    }
+
+    public enum BringToFrontOrBack {
+        Front(Bundle.getMessage("WindowToFront_BringToFrontOrBack_Front"), (f) -> { f.toFront(); }),
+        Back(Bundle.getMessage("WindowToFront_BringToFrontOrBack_Back"), (f) -> { f.toBack(); }),
+        DoNothing(Bundle.getMessage("WindowToFront_BringToFrontOrBack_DoNothing"), (f) -> {});
+
+        private final String _text;
+        private final FrameAction _action;
+
+        private BringToFrontOrBack(String text, FrameAction action) {
+            this._text = text;
+            this._action = action;
+        }
+
+        public void run(JmriJFrame f) {
+            _action.run(f);
+        }
+
+        @Override
+        public String toString() {
+            return _text;
+        }
+
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WindowToFront.class);
