@@ -252,7 +252,7 @@ public class CbusThrottle extends AbstractThrottle {
      */
     @Override
     public synchronized void setSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
-        log.debug("setSpeedSetting({}) dup:{} dupOnStop:{}", speed);
+        log.debug("setSpeedSetting({})", speed);
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
         if (speed < 0) {
