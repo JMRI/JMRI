@@ -384,9 +384,9 @@ public class WindowToFront extends AbstractDigitalAction
     }
 
     public enum MaximizeMinimizeNormalize {
-        Minimize(Bundle.getMessage("WindowToFront_MaximizeMinimizeNormalize_Minimize"), (f) -> { f.setExtendedState​(Frame.ICONIFIED); }),
-        Normalize(Bundle.getMessage("WindowToFront_MaximizeMinimizeNormalize_Normalize"), (f) -> { f.setExtendedState​(Frame.NORMAL); }),
-        Maximize(Bundle.getMessage("WindowToFront_MaximizeMinimizeNormalize_Maximize"), (f) -> { f.setExtendedState​(Frame.MAXIMIZED_BOTH); }),
+        Minimize(Bundle.getMessage("WindowToFront_MaximizeMinimizeNormalize_Minimize"), (f) -> { f.setExtendedState(Frame.ICONIFIED); }),
+        Normalize(Bundle.getMessage("WindowToFront_MaximizeMinimizeNormalize_Normalize"), (f) -> { f.setExtendedState(Frame.NORMAL); }),
+        Maximize(Bundle.getMessage("WindowToFront_MaximizeMinimizeNormalize_Maximize"), (f) -> { f.setExtendedState(Frame.MAXIMIZED_BOTH); }),
         DoNothing(Bundle.getMessage("WindowToFront_MaximizeMinimizeNormalize_DoNothing"), (f) -> {});
 
         private final String _text;
