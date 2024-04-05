@@ -3,6 +3,12 @@ package jmri.jmrix;
 
 import java.io.*;
 import java.util.Vector;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 import jmri.SystemConnectionMemo;
 import jmri.jmrix.fakeport.FakeInputStream;
@@ -81,6 +87,10 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      */
     @Override
     public void connect() throws java.io.IOException {
+        if (mPort.startsWith("pipe:")) {
+            // do nothing here its done when getting datastreams
+            return;
+        }
         openPort(mPort, "JMRI app");
     }
 
@@ -390,6 +400,15 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     // identical implementations in the subclasses - but note simulators are now overriding
     @Override
     public DataInputStream getInputStream() {
+        if (mPort.startsWith("pipe:")   ) {
+                try {
+                    return  new DataInputStream(new FileInputStream(mPort.substring(5)));
+                } catch (FileNotFoundException fnf) {
+                    log.error("getOutputStream exception: {}", fnf.getMessage());
+                }
+                return null;
+            }
+
         if (!opened) {
             log.error("getInputStream called before open, stream not available");
             return null;
@@ -402,6 +421,14 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     // identical implementations in the subclasses - but note simulators are now overriding
     @Override
     public DataOutputStream getOutputStream() {
+        if (mPort.startsWith("pipe:")   ) {
+            try {
+                return  new DataOutputStream(new FileOutputStream(mPort.substring(5)));
+            } catch (FileNotFoundException fnf) {
+                log.error("getOutputStream exception: {}", fnf.getMessage());
+                return null;
+            }
+        }
         if (!opened) {
             log.error("getOutputStream called before open, stream not available");
         }
