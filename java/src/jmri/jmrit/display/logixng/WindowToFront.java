@@ -44,7 +44,7 @@ public class WindowToFront extends AbstractDigitalAction
             new LogixNG_SelectEnum<>(this, MaximizeMinimizeNormalize.values(), MaximizeMinimizeNormalize.DoNothing, this);
 
     private final LogixNG_SelectEnum<BringToFrontOrBack> _selectEnumBringToFrontOrBack =
-            new LogixNG_SelectEnum<>(this, BringToFrontOrBack.values(), BringToFrontOrBack.Front, this);
+            new LogixNG_SelectEnum<>(this, BringToFrontOrBack.values(), BringToFrontOrBack.DoNothing, this);
 
 
     public WindowToFront(String sys, String user)
