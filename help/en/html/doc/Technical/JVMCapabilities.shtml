@@ -348,7 +348,7 @@
 
         <tr>
           <td>
-            Various elements of the Thread and Locale APIs are marked for deletion, 
+            Various elements of the Thread and Locale APIs are marked for deletion,
             resulting in about 50 compilation warnings.
           </td>
           <td>20</td>
@@ -491,8 +491,8 @@
       update standards. For those, Java 8 has increasing become a liability.
 
       <p>Java 11 JDK from Oracle only runs on 64-bit Windows versions (no 32-bit). <a href=
-      "https://adoptopenjdk.net/">AdoptOpenJDK</a> continues to make 32 and 64-bit JREs and JDKs
-      available. Light red indicates unable to run Java 8 or later; darker red means able to
+      "https://adoptium.net">Adoptium (formerly AdoptOpenJDK)</a> provides 32 bit x86 versions up to Java 19. As of 2024, they continue to provide 64-bit JREs and JDKs.
+      Light red indicates unable to run Java 8 or later; darker red means able to
       run Java 8, but not Java 11.</p>
 
       <table border="1">
@@ -525,6 +525,14 @@
         <tr>
           <td>Win 11 (64-bit)</td>
           <td>11+</td>
+        </tr>
+        <tr>
+          <td>Win 10 (64-bit)</td>
+          <td>22+</td>
+        </tr>
+        <tr>
+          <td>Win 10 (32-bit)</td>
+          <td>19 (Adoptium)</td>
         </tr>
 
         <tr>
@@ -812,34 +820,38 @@
           </tr>
         </tbody>
       </table>
-      
+
       <a id="jdk17">
       <h2>Running JMRI 5 on Java 17 or later</h2>
-      There are some known problems when running JMRI 
+      There are some known problems when running JMRI
       on Java versions later than the recommended Java 11.
       Specifically, for JMRI 5 on Java 17 these include:
-      
+
       <ol>
         <li>There is no JavaScript (ECMAscript) interpreter available
-            so .js scripts can't be run within JMRI.  Note that this 
+            so .js scripts can't be run within JMRI.  Note that this
             does not affect JavaScript run on a web browser, so that
             JMRI's webserver capability will still work OK.
-        <li>The module system prevents LibUSB (ch.ntb.usb) from accessing the hardware. 
-            This is used in a few scripts. Not clear if its developers will 
-            be issuing an update or not; possibly JMRI will have to 
+        <li>The module system prevents LibUSB (ch.ntb.usb) from accessing the hardware.
+            This is used in a few scripts. Not clear if its developers will
+            be issuing an update or not; possibly JMRI will have to
             switch to a different library.
         <li>The Java module system will in certain circumstances emit a large
             number of "access violation" messages.  These are just advisory
             with Java 17, but will become mandatory failures in some later
             version of Java (Java 21?)
+        <li>There's been a problem reported where OpenLCB/LCC network GridConnect
+            connections can't get networking information to create their 
+            local Node ID under Java 21.
+            The workaround is to manually enter a node ID in the connection preferences.
         <li>(Development only) Improved error checking in the Javadoc
             process generates hundreds of warnings that can hide real problems.
             These will need to be cleaned up.
-        <li>(Development only) Deprecations that are marked for removal 
+        <li>(Development only) Deprecations that are marked for removal
             generate un-suppressible warning messages.
             These will need to be cleaned up.
       </ol>
-      
+
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

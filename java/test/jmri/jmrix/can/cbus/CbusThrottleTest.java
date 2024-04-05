@@ -3,12 +3,14 @@ package jmri.jmrix.can.cbus;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Arrays;
+import java.util.ArrayList;
 
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottleManager;
+import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
@@ -1200,6 +1202,43 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // 47 - change spd dir, 64 - session 100, 0F - speed reverse 14
 
     }
+
+    @Test
+    public void testFramesSentWithSmallIncrements(){
+
+        float increments = 100000;
+        for ( int i=0; i<=increments; i++ ) {
+            instance.setSpeedSetting(i/increments);
+            // System.out.println("setspd to " + ( i/increments ));
+        }
+
+        // System.out.println("Increment size " + ( 1/increments ));
+        Assertions.assertEquals(1, instance.getSpeedSetting(),0.00000000000001);
+
+        // remove Keep-Alive messages from outgoing CanMessage test queue
+        ArrayList<CanMessage> sent = stripKeepAlivesFromList(new ArrayList<>(tc.outbound));
+
+        CanMessage msg = sent.get(0); // Check the very 1st message speed 0.
+        assertEquals("[78] 47 64 80", msg.toString());
+        // 78 Header 47 DSPD 64 loco 80 fowards speed 0
+
+        assertEquals(127, sent.size(), "Wrong number Frames sent on mini increments, found " + sent);
+
+        msg = sent.get(sent.size()-1); // last Frame sent
+        assertEquals("[78] 47 64 FF", msg.toString());
+        // 78 Header 47 DSPD 64 loco FF fowards speed 126
+
+    }
+
+    private static ArrayList<CanMessage> stripKeepAlivesFromList( ArrayList<CanMessage> list ){
+        ArrayList<CanMessage> newList = new ArrayList<>(list.size());
+        for ( CanMessage msg : list ) {
+            if ( msg.getOpCode() != CbusConstants.CBUS_DKEEP ) {
+                newList.add(msg);
+            }
+        }
+        return newList;
+    } 
 
     private TrafficControllerScaffold tc;
     private CanSystemConnectionMemo memo;

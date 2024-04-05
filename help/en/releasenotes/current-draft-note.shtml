@@ -42,7 +42,7 @@
 
         <h4>DCC4pc</h4>
             <ul>
-                <li></li>
+                <li>Improved how traffic is displayed in the monitor window.</li>
             </ul>
 
         <h4>Direct</h4>
@@ -298,6 +298,11 @@
         <h4>Public Domain and DIY decoders</h4>
             <ul>
                 <li></li>
+            </ul>
+
+        <h4>Piko</h4>
+            <ul>
+                <li>New decoder file for Piko H0 KM ML4000 loco with special light decoder</li>
             </ul>
 
         <h4>QSI</h4>
