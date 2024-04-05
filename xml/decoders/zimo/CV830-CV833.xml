@@ -4,27 +4,28 @@
 <!-- Ronald Kuhn, 28th Feb 2018 -->
 <!-- CV's 830-833 control adjustment for constant stopping distance -->
 <!-- see Zimo manual for small decoders, -->
+<!-- version 2 05 April 2024 Ronald Kuhn - exclude CVs for Decoder without 1K EEPROM -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <!-- include this CV to adjustment for constant stopping distance -->
-  <variable CV="830" item="stopping distance fwd high">
+  <variable CV="830" item="stopping distance fwd high" exclude="199,211,218">
     <decVal/>
     <label>stopping distance forward high byte</label>
     <label xml:lang="de">Bremsweg Vorwärts High</label>
     <label xml:lang="cs">Brzdná dráha vpřed horní byte</label>
   </variable>
-  <variable CV="831" item="stopping distance fwd low">
+  <variable CV="831" item="stopping distance fwd low" exclude="199,211,218">
     <decVal/>
     <label>stopping distance forward low byte</label>
     <label xml:lang="de">Bremsweg Vorwärts Low</label>
     <label xml:lang="cs">Brzdná dráha vpřed dolní byte</label>
   </variable>
-  <variable CV="832" item="stopping distance rev high">
+  <variable CV="832" item="stopping distance rev high" exclude="199,211,218">
     <decVal/>
     <label>stopping distance reverse high byte</label>
     <label xml:lang="de">Bremsweg Rückwärts High</label>
     <label xml:lang="cs">Brzdná dráha vzad horní byte</label>
   </variable>
-  <variable CV="833" item="stopping distance rev low">
+  <variable CV="833" item="stopping distance rev low" exclude="199,211,218">
     <decVal/>
     <label>stopping distance reverse low byte</label>
     <label xml:lang="de">Bremsweg Rückwärts Low</label>

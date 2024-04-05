@@ -242,7 +242,7 @@
 
         <h4>Kuehn</h4>
             <ul>
-                <li></li>
+                <li>Added function decoder F060</li>
             </ul>
 
         <h4>LaisDCC</h4>
@@ -377,7 +377,10 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li></li>
+                <li>MX decoder versions with new hardware added</li>
+                <li>CV's for new hardware versions added</li>
+                <li>Settings for shunting speed corrected (CV124 Bit0-1)</li>
+                <li>minor corrections</li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -624,4 +627,3 @@
         <ul>
             <li>Improved the Italian translation around file locations and turnout states.</li>
         </ul>
-

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- version  author="Ronald Kuhn ronald@wirkuhns.de" version="1" lastUpdated="2024-04-05" -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+  <name>Second effect level</name>
+  <name xml:lang="de">Zweite Effekt-Ebene</name>
+  <column>
+    <label>
+      <text> </text>
+    </label>
+    <display item="New Output 1 effect generated"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="New Output 2 effect generated"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="New Output 3 effect generated"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="New Output 4 effect generated"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="New Output 5 effect generated"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="New Output 6 effect generated"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="New Output 7 effect generated"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="New Output 8 effect generated"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="New Output 9 effect generated"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="New Output 10 effect generated"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="New Output 11 effect generated"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="New Output 12 effect generated"/>
+  </column>
+</pane>
