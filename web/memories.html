@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>JSON Memory List Demonstration</title>
+        <style>
+            html {background-color:#eeeeee}
+            body {
+                background-color:#ccffcc;
+                font-family:Tahoma,Arial,Helvetica,sans-serif;
+                font-size:12px;
+                margin-left:15%;
+                margin-right:15%;
+                border:3px groove #006600;
+                padding:15px
+            }
+            h1   {
+                text-align:left;
+                font-size:1.5em;
+                font-weight:bold
+            }
+        </style>
+        <!-- include the jquery.jmri library and its dependencies -->
+        <script src="/js/jquery-2.2.4.min.js"></script>
+        <script src="/js/json2.js"></script>
+        <script src="/js/jquery.websocket.js"></script>
+        <script src="/js/logger.js"></script>
+        <script src="/js/jquery.jmri.js"></script>
+        <script type="text/javascript">
+            var jmri = null;
+            $(document).ready(function () {
+                // once the document is loaded, assign a $.JMRI object to
+                // the jmri variable and overload the function turnout(name, state, data)
+                jmri = $.JMRI({
+                    // when the JMRI websocket has completed initialization, call this
+                    hello: function (data) {
+                        jmri.log("in hello: data=" + JSON.stringify(data).substr(0, 180) + "...");
+                        jmri.getList("memories");
+                    },
+                    // when the JMRI object receives an array of memories, call this
+                    memories: function (data) {
+                        jmri.log("in memories: data=" + JSON.stringify(data).substr(0, 180) + "...");
+                        if ($.isArray(data)) {
+                            data.forEach(el => {
+                                jmri.log("Requesting update listener for " + el.type +" '" + el.data.name +"'");
+                                jmri.getObject(el.type, el.data.name);
+                            });
+                        }
+                    },
+                    // when the JMRI object receives a memory update, call this
+                    memory: function (name, state, data) {
+                        jmri.log("in memory: name='" + name + "', state='" + state + "'.");
+                    },
+                    // all messages call console(), so use it for debugging
+                    console: function (originalData) {
+                        var data = JSON.parse(originalData);
+                        jmri.log("in console: data=" + JSON.stringify(data).substr(0, 180) + "...");
+                    }                    
+                });
+                
+                // trigger the initial connection to the JMRI server
+                jmri.connect();
+                
+            });
+        </script>
+
+    </head>
+    <body>
+        <h1>JSON Memory List Demonstration</h1>
+        <hr />
+        <p>This sample page requests the array of memories defined in JMRI, via the JMRI JSON WebSocket server. 
+        The server responds with the array, and enables listeners that will resend the array if memories are added
+        or deleted. This page adds/updates a table with these entries. It also requests each memory individually, 
+        for which the server sets up an update listener and sends any changes for that memory.</p>
+        <p>The IMCURRENTTIME memory is updated each fast-time minute, so these changes will show automatically 
+        as the clock changes. You can also test by adding or deleting memory values in JMRI, and by changing the 
+        value of memories.</p>
+        <p>NOTE: this page contains considerable logging, so it is advised to run it while watching the javascript
+        console, using Chrome's DevTools or similar.</p>
+    </body>
+</html>
