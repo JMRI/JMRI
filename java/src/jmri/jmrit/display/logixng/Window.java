@@ -360,9 +360,9 @@ public class Window extends AbstractDigitalAction
     }
 
     public enum HideOrShow {
+        DoNothing(Bundle.getMessage("Window_HideOrShow_DoNothing"), (f) -> {}),
         Show(Bundle.getMessage("Window_HideOrShow_Show"), (f) -> { f.setVisible(true); }),
-        Hide(Bundle.getMessage("Window_HideOrShow_Hide"), (f) -> { f.setVisible(false); }),
-        DoNothing(Bundle.getMessage("Window_HideOrShow_DoNothing"), (f) -> {});
+        Hide(Bundle.getMessage("Window_HideOrShow_Hide"), (f) -> { f.setVisible(false); });
 
         private final String _text;
         private final FrameAction _action;
@@ -384,10 +384,10 @@ public class Window extends AbstractDigitalAction
     }
 
     public enum MaximizeMinimizeNormalize {
+        DoNothing(Bundle.getMessage("Window_MaximizeMinimizeNormalize_DoNothing"), (f) -> {}),
         Minimize(Bundle.getMessage("Window_MaximizeMinimizeNormalize_Minimize"), (f) -> { f.setExtendedState(Frame.ICONIFIED); }),
         Normalize(Bundle.getMessage("Window_MaximizeMinimizeNormalize_Normalize"), (f) -> { f.setExtendedState(Frame.NORMAL); }),
-        Maximize(Bundle.getMessage("Window_MaximizeMinimizeNormalize_Maximize"), (f) -> { f.setExtendedState(Frame.MAXIMIZED_BOTH); }),
-        DoNothing(Bundle.getMessage("Window_MaximizeMinimizeNormalize_DoNothing"), (f) -> {});
+        Maximize(Bundle.getMessage("Window_MaximizeMinimizeNormalize_Maximize"), (f) -> { f.setExtendedState(Frame.MAXIMIZED_BOTH); });
 
         private final String _text;
         private final FrameAction _action;
@@ -409,9 +409,9 @@ public class Window extends AbstractDigitalAction
     }
 
     public enum BringToFrontOrBack {
+        DoNothing(Bundle.getMessage("Window_BringToFrontOrBack_DoNothing"), (f) -> {}),
         Front(Bundle.getMessage("Window_BringToFrontOrBack_Front"), (f) -> { f.toFront(); }),
-        Back(Bundle.getMessage("Window_BringToFrontOrBack_Back"), (f) -> { f.toBack(); }),
-        DoNothing(Bundle.getMessage("Window_BringToFrontOrBack_DoNothing"), (f) -> {});
+        Back(Bundle.getMessage("Window_BringToFrontOrBack_Back"), (f) -> { f.toBack(); });
 
         private final String _text;
         private final FrameAction _action;
