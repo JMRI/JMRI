@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
+<!-- version 1.1 - Ronald Kuhn - ronald@wirkuhns.de - exclude F060 -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>Shunt/Uncouple</name>
   <name xml:lang="it">Manovra/sgancio</name>
@@ -13,10 +14,12 @@
       <text> </text>
       </label>
      <separator/>
+    <group exclude="F060">  <!-- F060 are a function only decoders --> 
      <label>
        <text>Rangierlicht konfigurieren </text>
        <text xml:lang="cs">Konfigurace světla posun </text>
      </label>
+   </group>
      <separator/>
      <display item="Shuntkey controls output 1"/>
      <display item="Shuntkey controls output 2"/>
@@ -33,10 +36,12 @@
      <row>
      <column>
       <separator/>
+    <group exclude="F060">  <!-- F060 are a function only decoders --> 
       <label>
        <text>Rangiergang konfigurieren </text>
        <text xml:lang="cs">Konfigurace chodu posun </text>
       </label>
+   </group>
       <separator/>
       <display item="F1 controls output 7"/>
       <display item="F2 controls output 7"/>
@@ -96,6 +101,7 @@
         <label>
           <text> </text>
         </label>
+    <group exclude="F060">  <!-- F060 are a function only decoders --> 
         <label>
           <text>A value of 9 is a Move Away Time of 4,5 sec.</text>
           <text xml:lang="de">Der Wert 9 entspricht einer Abrückzeit von 4,5 Sec.</text>
@@ -112,6 +118,7 @@
           <text xml:lang="de">Ein Wert von 2 entspricht etwa 0,8 % der max. Motorspannung.</text>
           <text xml:lang="cs">Hodnota 2 odpovídá 0,8 % maximálního napětí.</text>
         </label>
+   </group>
         <label>
           <text> </text>
         </label>
