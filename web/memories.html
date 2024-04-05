@@ -28,6 +28,21 @@
         <script src="/js/jquery.jmri.js"></script>
         <script type="text/javascript">
             var jmri = null;
+
+            //append a new row to the table, or replace an existing row, based on name
+            function setRow(name, data){
+              var tbody = $("table#memories tbody").html(); //get current table body
+              var tds = "<td>" + data.name + "</td><td>" + data.userName + "</td><td>" //build cells
+                  + data.value + "</td><td>" + data.comment + "</td>";  
+              var tr = "<tr data-name='" + data.name + "'>" + tds + "</tr>"; //build row with key
+              var row = $("table#memories tr[data-name='" + name + "']"); //look for row by key
+              if ($(row).length) {
+                  row.html(tds); //if found, replace cells
+              } else {
+                  $("table#memories tbody").html(tbody + tr); //if not found, append row to table body
+              }
+            };
+
             $(document).ready(function () {
                 // once the document is loaded, assign a $.JMRI object to
                 // the jmri variable and overload the function turnout(name, state, data)
@@ -40,16 +55,18 @@
                     // when the JMRI object receives an array of memories, call this
                     memories: function (data) {
                         jmri.log("in memories: data=" + JSON.stringify(data).substr(0, 180) + "...");
-                        if ($.isArray(data)) {
-                            data.forEach(el => {
-                                jmri.log("Requesting update listener for " + el.type +" '" + el.data.name +"'");
-                                jmri.getObject(el.type, el.data.name);
-                            });
-                        }
+                        data.forEach(el => {
+                            jmri.log("Requesting update listener for " + el.type +" '" + el.data.name +"'");
+                            jmri.getObject(el.type, el.data.name);
+                        });
+                        //empty the body of the table                        
+                        $("table#memories tbody").html(""); 
                     },
                     // when the JMRI object receives a memory update, call this
                     memory: function (name, state, data) {
-                        jmri.log("in memory: name='" + name + "', state='" + state + "'.");
+                        jmri.log("in memory: name='" + name + "', state='" + state + "', data=" 
+                            + JSON.stringify(data).substr(0, 180) + "...");
+                        setRow(name, data); // add or update the row
                     },
                     // all messages call console(), so use it for debugging
                     console: function (originalData) {
@@ -70,12 +87,26 @@
         <hr />
         <p>This sample page requests the array of memories defined in JMRI, via the JMRI JSON WebSocket server. 
         The server responds with the array, and enables listeners that will resend the array if memories are added
-        or deleted. This page adds/updates a table with these entries. It also requests each memory individually, 
+        or deleted. This page adds/updates table rows for these entries. It also requests each memory individually, 
         for which the server sets up an update listener and sends any changes for that memory.</p>
         <p>The IMCURRENTTIME memory is updated each fast-time minute, so these changes will show automatically 
         as the clock changes. You can also test by adding or deleting memory values in JMRI, and by changing the 
         value of memories.</p>
         <p>NOTE: this page contains considerable logging, so it is advised to run it while watching the javascript
         console, using Chrome's DevTools or similar.</p>
+
+        <div class="container">
+            <table id="memories" class="table-striped table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th>System Name</th><th>User Name</th><th>Value</th><th>Comment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <td>S</td><td>U</td><td>V</td><td>C</td> <!-- this will be cleared and replaced -->
+                </tbody>
+            </table>
+        </div><!-- /container -->
+        
     </body>
 </html>
