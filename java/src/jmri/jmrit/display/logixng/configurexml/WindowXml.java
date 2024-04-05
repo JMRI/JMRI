@@ -4,7 +4,7 @@ import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.NamedBeanAddressing;
-import jmri.jmrit.display.logixng.WindowToFront;
+import jmri.jmrit.display.logixng.Window;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectEnumXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
@@ -16,9 +16,9 @@ import org.jdom2.Element;
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
  * @author Daniel Bergqvist Copyright (C) 2024
  */
-public class WindowToFrontXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
+public class WindowXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
-    public WindowToFrontXml() {
+    public WindowXml() {
     }
 
     /**
@@ -29,13 +29,13 @@ public class WindowToFrontXml extends jmri.managers.configurexml.AbstractNamedBe
      */
     @Override
     public Element store(Object o) {
-        WindowToFront p = (WindowToFront) o;
+        Window p = (Window) o;
 
-        var selectEnumHideOrShowXml = new LogixNG_SelectEnumXml<WindowToFront.HideOrShow>();
-        var selectEnumMaximizeMinimizeNormalizeXml = new LogixNG_SelectEnumXml<WindowToFront.MaximizeMinimizeNormalize>();
-        var selectEnumBringToFrontOrBackXml = new LogixNG_SelectEnumXml<WindowToFront.BringToFrontOrBack>();
+        var selectEnumHideOrShowXml = new LogixNG_SelectEnumXml<Window.HideOrShow>();
+        var selectEnumMaximizeMinimizeNormalizeXml = new LogixNG_SelectEnumXml<Window.MaximizeMinimizeNormalize>();
+        var selectEnumBringToFrontOrBackXml = new LogixNG_SelectEnumXml<Window.BringToFrontOrBack>();
 
-        Element element = new Element("DisplayActionWindowToFront");
+        Element element = new Element("DisplayActionWindow");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
@@ -67,11 +67,11 @@ public class WindowToFrontXml extends jmri.managers.configurexml.AbstractNamedBe
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {     // Test class that inherits this class throws exception
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        WindowToFront h = new WindowToFront(sys, uname);
+        Window h = new Window(sys, uname);
 
-        var selectEnumHideOrShowXml = new LogixNG_SelectEnumXml<WindowToFront.HideOrShow>();
-        var selectEnumMaximizeMinimizeNormalizeXml = new LogixNG_SelectEnumXml<WindowToFront.MaximizeMinimizeNormalize>();
-        var selectEnumBringToFrontOrBackXml = new LogixNG_SelectEnumXml<WindowToFront.BringToFrontOrBack>();
+        var selectEnumHideOrShowXml = new LogixNG_SelectEnumXml<Window.HideOrShow>();
+        var selectEnumMaximizeMinimizeNormalizeXml = new LogixNG_SelectEnumXml<Window.MaximizeMinimizeNormalize>();
+        var selectEnumBringToFrontOrBackXml = new LogixNG_SelectEnumXml<Window.BringToFrontOrBack>();
 
         loadCommon(h, shared);
 

@@ -10,10 +10,10 @@ import javax.swing.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.display.logixng.WindowToFront;
-import jmri.jmrit.display.logixng.WindowToFront.HideOrShow;
-import jmri.jmrit.display.logixng.WindowToFront.MaximizeMinimizeNormalize;
-import jmri.jmrit.display.logixng.WindowToFront.BringToFrontOrBack;
+import jmri.jmrit.display.logixng.Window;
+import jmri.jmrit.display.logixng.Window.HideOrShow;
+import jmri.jmrit.display.logixng.Window.MaximizeMinimizeNormalize;
+import jmri.jmrit.display.logixng.Window.BringToFrontOrBack;
 import jmri.jmrit.logixng.actions.swing.AbstractDigitalActionSwing;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectEnumSwing;
@@ -25,7 +25,7 @@ import jmri.util.swing.JComboBoxUtil;
  *
  * @author Daniel Bergqvist Copyright (C) 2024
  */
-public class WindowToFrontSwing extends AbstractDigitalActionSwing {
+public class WindowSwing extends AbstractDigitalActionSwing {
 
     private JComboBox<JmriJFrameItem> _jmriJFrameComboBox;
     private JTabbedPane _tabbedPaneJmriJFrame;
@@ -44,7 +44,7 @@ public class WindowToFrontSwing extends AbstractDigitalActionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
-        WindowToFront action = (WindowToFront)object;
+        Window action = (Window)object;
 
         _selectEnumHideOrShowSwing = new LogixNG_SelectEnumSwing<>(getJDialog(), this);
         _selectEnumMaximizeMinimizeNormalizeSwing = new LogixNG_SelectEnumSwing<>(getJDialog(), this);
@@ -155,7 +155,7 @@ public class WindowToFrontSwing extends AbstractDigitalActionSwing {
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
         // Create a temporary action to test formula
-        WindowToFront action = new WindowToFront("IQDA1", null);
+        Window action = new Window("IQDA1", null);
 
         try {
             if (_tabbedPaneJmriJFrame.getSelectedComponent() == _panelJmriJFrameReference) {
@@ -193,7 +193,7 @@ public class WindowToFrontSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
-        WindowToFront action = new WindowToFront(systemName, userName);
+        Window action = new Window(systemName, userName);
         updateObject(action);
         return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
     }
@@ -201,10 +201,10 @@ public class WindowToFrontSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public void updateObject(@Nonnull Base object) {
-        if (! (object instanceof WindowToFront)) {
+        if (! (object instanceof Window)) {
             throw new IllegalArgumentException("object must be an WindowToFront but is a: "+object.getClass().getName());
         }
-        WindowToFront action = (WindowToFront)object;
+        Window action = (Window)object;
         if (_tabbedPaneJmriJFrame.getSelectedComponent() == _panelJmriJFrameDirect) {
             if (_jmriJFrameComboBox.getSelectedIndex() != -1) {
                 action.setJmriJFrame(_jmriJFrameComboBox.getItemAt(_jmriJFrameComboBox.getSelectedIndex())._frame);
@@ -241,7 +241,7 @@ public class WindowToFrontSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("WindowToFront_Short");
+        return Bundle.getMessage("Window_Short");
     }
 
     @Override

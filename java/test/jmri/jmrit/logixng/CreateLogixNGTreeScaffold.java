@@ -6,7 +6,7 @@ import java.util.*;
 
 import jmri.*;
 import jmri.implementation.VirtualSignalHead;
-import jmri.jmrit.display.logixng.WindowToFront;
+import jmri.jmrit.display.logixng.Window;
 import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logix.BlockOrder;
@@ -2678,26 +2678,26 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
-        jmri.jmrit.display.logixng.WindowToFront windowToFront =
-                new jmri.jmrit.display.logixng.WindowToFront(digitalActionManager.getAutoSystemName(), null);
+        jmri.jmrit.display.logixng.Window windowToFront =
+                new jmri.jmrit.display.logixng.Window(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(windowToFront);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         windowToFront =
-                new jmri.jmrit.display.logixng.WindowToFront(digitalActionManager.getAutoSystemName(), null);
-        windowToFront.getSelectEnumHideOrShow().setEnum(WindowToFront.HideOrShow.Show);
-        windowToFront.getSelectEnumMaximizeMinimizeNormalize().setEnum(WindowToFront.MaximizeMinimizeNormalize.Maximize);
-        windowToFront.getSelectEnumBringToFrontOrBack().setEnum(WindowToFront.BringToFrontOrBack.Front);
+                new jmri.jmrit.display.logixng.Window(digitalActionManager.getAutoSystemName(), null);
+        windowToFront.getSelectEnumHideOrShow().setEnum(Window.HideOrShow.Show);
+        windowToFront.getSelectEnumMaximizeMinimizeNormalize().setEnum(Window.MaximizeMinimizeNormalize.Maximize);
+        windowToFront.getSelectEnumBringToFrontOrBack().setEnum(Window.BringToFrontOrBack.Front);
         maleSocket = digitalActionManager.registerAction(windowToFront);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         windowToFront =
-                new jmri.jmrit.display.logixng.WindowToFront(digitalActionManager.getAutoSystemName(), null);
-        windowToFront.getSelectEnumHideOrShow().setEnum(WindowToFront.HideOrShow.Hide);
-        windowToFront.getSelectEnumMaximizeMinimizeNormalize().setEnum(WindowToFront.MaximizeMinimizeNormalize.Normalize);
-        windowToFront.getSelectEnumBringToFrontOrBack().setEnum(WindowToFront.BringToFrontOrBack.Back);
+                new jmri.jmrit.display.logixng.Window(digitalActionManager.getAutoSystemName(), null);
+        windowToFront.getSelectEnumHideOrShow().setEnum(Window.HideOrShow.Hide);
+        windowToFront.getSelectEnumMaximizeMinimizeNormalize().setEnum(Window.MaximizeMinimizeNormalize.Normalize);
+        windowToFront.getSelectEnumBringToFrontOrBack().setEnum(Window.BringToFrontOrBack.Back);
         maleSocket = digitalActionManager.registerAction(windowToFront);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);

@@ -149,7 +149,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.display.logixng.ActionLayoutTurnout.class);
         classes.add(jmri.jmrit.display.logixng.ActionPositionable.class);
         classes.add(jmri.jmrit.display.logixng.ActionPositionableByClass.class);
-        classes.add(jmri.jmrit.display.logixng.WindowToFront.class);
+        classes.add(jmri.jmrit.display.logixng.Window.class);
         map.put(CategoryDisplay.DISPLAY, classes);
 
         classes = new ArrayList<>();

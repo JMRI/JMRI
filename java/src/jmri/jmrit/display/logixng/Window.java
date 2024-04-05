@@ -22,11 +22,11 @@ import jmri.util.ThreadingUtil;
 import jmri.util.TypeConversionUtil;
 
 /**
- * This action brings a JFrame to front.
+ * This action acts on a Window.
  *
  * @author Daniel Bergqvist Copyright 2024
  */
-public class WindowToFront extends AbstractDigitalAction
+public class Window extends AbstractDigitalAction
         implements PropertyChangeListener, VetoableChangeListener {
 
     private String _jmriJFrameTitle;
@@ -47,7 +47,7 @@ public class WindowToFront extends AbstractDigitalAction
             new LogixNG_SelectEnum<>(this, BringToFrontOrBack.values(), BringToFrontOrBack.DoNothing, this);
 
 
-    public WindowToFront(String sys, String user)
+    public Window(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
@@ -58,7 +58,7 @@ public class WindowToFront extends AbstractDigitalAction
         String sysName = systemNames.get(getSystemName());
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
-        WindowToFront copy = new WindowToFront(sysName, userName);
+        Window copy = new Window(sysName, userName);
         copy.setComment(getComment());
         copy.setJmriJFrame(_jmriJFrameTitle);
         copy.setAddressing(_addressing);
@@ -186,15 +186,15 @@ public class WindowToFront extends AbstractDigitalAction
         String errorMessage;
         if (m != null) {
             errorMessage = Bundle.getMessage(
-                    "WindowToFront_ErrorNoJmriJFrame_Module",
+                    "Window_ErrorNoJmriJFrame_Module",
                     getLongDescription(), m.getDisplayName(), getSystemName());
         } else {
             errorMessage = Bundle.getMessage(
-                    "WindowToFront_ErrorNoJmriJFrame_LogixNG",
+                    "Window_ErrorNoJmriJFrame_LogixNG",
                     getLongDescription(), lng.getDisplayName(), cng.getDisplayName(), getSystemName());
         }
         List<String> list = Arrays.asList(errorMessage.split("\n"));
-        throw new JmriException(Bundle.getMessage("WindowToFront_ErrorNoJmriJFrame"), list);
+        throw new JmriException(Bundle.getMessage("Window_ErrorNoJmriJFrame"), list);
     }
 
     /** {@inheritDoc} */
@@ -277,7 +277,7 @@ public class WindowToFront extends AbstractDigitalAction
 
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "WindowToFront_Short");
+        return Bundle.getMessage(locale, "Window_Short");
     }
 
     @Override
@@ -322,7 +322,7 @@ public class WindowToFront extends AbstractDigitalAction
             strings.add(_selectEnumBringToFrontOrBack.getDescription(locale));
         }
 
-        return Bundle.getMessage(locale, "WindowToFront_Long_"+Integer.toString(strings.size()),
+        return Bundle.getMessage(locale, "Window_Long_"+Integer.toString(strings.size()),
                 strings.toArray());
     }
 
@@ -360,9 +360,9 @@ public class WindowToFront extends AbstractDigitalAction
     }
 
     public enum HideOrShow {
-        Show(Bundle.getMessage("WindowToFront_HideOrShow_Show"), (f) -> { f.setVisible(true); }),
-        Hide(Bundle.getMessage("WindowToFront_HideOrShow_Hide"), (f) -> { f.setVisible(false); }),
-        DoNothing(Bundle.getMessage("WindowToFront_HideOrShow_DoNothing"), (f) -> {});
+        Show(Bundle.getMessage("Window_HideOrShow_Show"), (f) -> { f.setVisible(true); }),
+        Hide(Bundle.getMessage("Window_HideOrShow_Hide"), (f) -> { f.setVisible(false); }),
+        DoNothing(Bundle.getMessage("Window_HideOrShow_DoNothing"), (f) -> {});
 
         private final String _text;
         private final FrameAction _action;
@@ -384,10 +384,10 @@ public class WindowToFront extends AbstractDigitalAction
     }
 
     public enum MaximizeMinimizeNormalize {
-        Minimize(Bundle.getMessage("WindowToFront_MaximizeMinimizeNormalize_Minimize"), (f) -> { f.setExtendedState(Frame.ICONIFIED); }),
-        Normalize(Bundle.getMessage("WindowToFront_MaximizeMinimizeNormalize_Normalize"), (f) -> { f.setExtendedState(Frame.NORMAL); }),
-        Maximize(Bundle.getMessage("WindowToFront_MaximizeMinimizeNormalize_Maximize"), (f) -> { f.setExtendedState(Frame.MAXIMIZED_BOTH); }),
-        DoNothing(Bundle.getMessage("WindowToFront_MaximizeMinimizeNormalize_DoNothing"), (f) -> {});
+        Minimize(Bundle.getMessage("Window_MaximizeMinimizeNormalize_Minimize"), (f) -> { f.setExtendedState(Frame.ICONIFIED); }),
+        Normalize(Bundle.getMessage("Window_MaximizeMinimizeNormalize_Normalize"), (f) -> { f.setExtendedState(Frame.NORMAL); }),
+        Maximize(Bundle.getMessage("Window_MaximizeMinimizeNormalize_Maximize"), (f) -> { f.setExtendedState(Frame.MAXIMIZED_BOTH); }),
+        DoNothing(Bundle.getMessage("Window_MaximizeMinimizeNormalize_DoNothing"), (f) -> {});
 
         private final String _text;
         private final FrameAction _action;
@@ -409,9 +409,9 @@ public class WindowToFront extends AbstractDigitalAction
     }
 
     public enum BringToFrontOrBack {
-        Front(Bundle.getMessage("WindowToFront_BringToFrontOrBack_Front"), (f) -> { f.toFront(); }),
-        Back(Bundle.getMessage("WindowToFront_BringToFrontOrBack_Back"), (f) -> { f.toBack(); }),
-        DoNothing(Bundle.getMessage("WindowToFront_BringToFrontOrBack_DoNothing"), (f) -> {});
+        Front(Bundle.getMessage("Window_BringToFrontOrBack_Front"), (f) -> { f.toFront(); }),
+        Back(Bundle.getMessage("Window_BringToFrontOrBack_Back"), (f) -> { f.toBack(); }),
+        DoNothing(Bundle.getMessage("Window_BringToFrontOrBack_DoNothing"), (f) -> {});
 
         private final String _text;
         private final FrameAction _action;
@@ -432,6 +432,6 @@ public class WindowToFront extends AbstractDigitalAction
 
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WindowToFront.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Window.class);
 
 }

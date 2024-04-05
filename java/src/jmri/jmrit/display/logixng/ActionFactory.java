@@ -31,7 +31,7 @@ public class ActionFactory implements DigitalActionFactory {
                         new AbstractMap.SimpleEntry<>(CategoryDisplay.DISPLAY, ActionLayoutTurnout.class),
                         new AbstractMap.SimpleEntry<>(CategoryDisplay.DISPLAY, ActionPositionable.class),
                         new AbstractMap.SimpleEntry<>(CategoryDisplay.DISPLAY, ActionPositionableByClass.class),
-                        new AbstractMap.SimpleEntry<>(CategoryDisplay.DISPLAY, WindowToFront.class)
+                        new AbstractMap.SimpleEntry<>(CategoryDisplay.DISPLAY, Window.class)
                 );
 
         return actionClasses;
