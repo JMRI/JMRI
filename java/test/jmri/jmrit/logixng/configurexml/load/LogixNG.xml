@@ -85,7 +85,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="12:17 AM">
+    <memory value="5:58 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -176,7 +176,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sat Apr 06 00:16:59 CEST 2024" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sat Apr 06 05:58:07 CEST 2024" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <LogixNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <Thread>
       <id>0</id>
@@ -38413,7 +38413,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </AbstractMaleSocket>
       </MaleSocket>
     </DisplayActionPositionableByClass>
-    <DisplayActionWindow class="jmri.jmrit.display.logixng.configurexml.WindowXml">
+    <DisplayActionWindowManagement class="jmri.jmrit.display.logixng.configurexml.WindowManagementXml">
       <systemName>IQDA:AUTO:0217</systemName>
       <addressing>Direct</addressing>
       <reference />
@@ -38510,8 +38510,8 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
           </LocalVariable>
         </AbstractMaleSocket>
       </MaleSocket>
-    </DisplayActionWindow>
-    <DisplayActionWindow class="jmri.jmrit.display.logixng.configurexml.WindowXml">
+    </DisplayActionWindowManagement>
+    <DisplayActionWindowManagement class="jmri.jmrit.display.logixng.configurexml.WindowManagementXml">
       <systemName>IQDA:AUTO:0218</systemName>
       <addressing>Direct</addressing>
       <reference />
@@ -38608,8 +38608,8 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
           </LocalVariable>
         </AbstractMaleSocket>
       </MaleSocket>
-    </DisplayActionWindow>
-    <DisplayActionWindow class="jmri.jmrit.display.logixng.configurexml.WindowXml">
+    </DisplayActionWindowManagement>
+    <DisplayActionWindowManagement class="jmri.jmrit.display.logixng.configurexml.WindowManagementXml">
       <systemName>IQDA:AUTO:0219</systemName>
       <addressing>Direct</addressing>
       <reference />
@@ -38706,7 +38706,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
           </LocalVariable>
         </AbstractMaleSocket>
       </MaleSocket>
-    </DisplayActionWindow>
+    </DisplayActionWindowManagement>
     <DisplayActionAudioIcon class="jmri.jmrit.display.logixng.configurexml.ActionAudioIconXml">
       <systemName>IQDA:AUTO:0220</systemName>
       <addressing>Direct</addressing>
@@ -54234,9 +54234,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Sat Apr 06 00:17:03 CEST 2024</date>
+      <date>Sat Apr 06 05:58:11 CEST 2024</date>
       <filename>/home/daniel/Dokument/GitHub/JMRI/temp/temp/LogixNG_temp.xml</filename>
     </operation>
   </filehistory>
-  <!--Written by JMRI version 5.7.5plus+daniel+2024-04-05T22:16:55Z+RUNKNOWN on Sat Apr 06 00:17:03 CEST 2024-->
+  <!--Written by JMRI version 5.7.5plus+daniel+2024-04-06T03:58:03Z+RUNKNOWN on Sat Apr 06 05:58:11 CEST 2024-->
 </layout-config>

@@ -25,7 +25,7 @@
             "
         >
 
-    <xs:complexType name="LogixNG_DigitalAction_DisplayActionWindowType">
+    <xs:complexType name="LogixNG_DigitalAction_DisplayActionWindowManagementType">
       <xs:annotation>
         <xs:documentation>
           Define the XML stucture for storing the contents of a WindowToFront class.
