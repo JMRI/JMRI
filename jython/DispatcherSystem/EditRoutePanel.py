@@ -32,7 +32,7 @@ class CreateAndShowGUI5(TableModelListener):
         #Create and set up the window.
 
         self.initialise_model(class_ResetButtonMaster)
-        self.frame = JFrame("Train Route")
+        self.frame = JFrame("Train Route: " + route_name)
         self.frame.setSize(600, 600)
 
         config = self.frame.getGraphicsConfiguration()
@@ -43,14 +43,10 @@ class CreateAndShowGUI5(TableModelListener):
         y = bounds.y + insets.top + 100
         self.frame.setLocation(x, y)
 
-        # scrollPane.getViewport().setViewPosition(Point(0,0));
-
         self.completeTablePanel()
-        print "about to populate"
+        # print "about to populate"
         self.populate_action(None)
         self.cancel = False
-
-
 
     def completeTablePanel(self):
 
@@ -66,7 +62,6 @@ class CreateAndShowGUI5(TableModelListener):
         self.buttonPane = JPanel();
         self.buttonPane.setLayout(BoxLayout(self.buttonPane, BoxLayout.LINE_AXIS))
         self.buttonPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10))
-
 
         button_close = JButton("Close", actionPerformed = self.close_action)
         self.buttonPane.add(button_close)
@@ -194,11 +189,11 @@ class CreateAndShowGUI5(TableModelListener):
         return my_list
 
     def populate_action(self, event):
-        print "populating"
+        # print "populating"
         items_to_put_in_dropdown = self.get_station_list()
         print "items_to_put_in_dropdown", items_to_put_in_dropdown
         self.model.populate(items_to_put_in_dropdown)
-        print "populated"
+        # print "populated"
         self.completeTablePanel()
         pass
 
@@ -407,7 +402,7 @@ class CreateAndShowGUI5(TableModelListener):
     def save(self):
         [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5]
         print "save_action"
-        self.clear_everything()
+        # self.clear_everything()
         # print "apply action"
         for row in reversed(range(len(self.model.data))):
             locations_name = str(self.model.data[row][locations_col])
@@ -444,35 +439,52 @@ class CreateAndShowGUI5(TableModelListener):
     def set_value_in_comment(self, routeLocation, value, duration_string):
         # print "in set_duration"
         comment = routeLocation.getComment()    #Null
+        comment = ""
+        if comment == None:
+            comment = ""
+        # print "a"
         delim_start = "[" + duration_string + "-"
         delim_end = "-" + duration_string + "]"
-        value_current = MyTableModel5().find_between(comment, delim_start, delim_end)   # empty string
-        # print "value_current",duration_string, value_current, "value", value
-        if value_current != value:
-            self.delete_between(comment, delim_start, delim_end)
-        comment = ""
+        # print "b"
+        # print "comment1", comment
+        # ensure we have a delim_start followed by a delim_end with nothing in between
+        if delim_start in comment:
+            # print "c"
+            value_current = MyTableModel5().find_between(comment, delim_start, delim_end)   # empty string
+            # print "value_current",duration_string, value_current, "value", value
+            if value_current != value:
+                self.delete_between(comment, delim_start, delim_end)
+            # else:
+            #     print "d"
+        else:
+            # print "d1"
+            comment += delim_start + delim_end
+            print "comment2", comment
+        # print "e"
         comment = self.insert_between(comment, delim_start, delim_end, value)
+        # print "comment3", comment
         routeLocation.setComment(comment)
 
-    def delete_between(self, string, delim1, delim2):
+    def delete_between(self, string, delim1, delim):
         first, _, rest = string.partition(delim1)
         _, _, rest = rest.partition(delim2)
         cleaned_text = ' '.join([first.strip(), rest.strip()])
         return cleaned_text
-    
-    def insert_between(self, string, delim1, delim2, value):
-        #inserts value between delim1 and delim2 and adds all to end of string
-        to_be_added = " " + delim1 + value + delim2
-        # print "to_be_added", to_be_added
-        ans = string + to_be_added
-        # print "ans", ans
-        return ans
 
-    def clear_everything(self):
-        TrainManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
-        train_list = TrainManager.getTrainsByTimeList()
-        for train in train_list:
-            TrainManager.deregister(train)
+    def insert_between(self, string, delim1, delim2, value):
+        first, _, rest = string.partition(delim1)
+        _, _, rest = rest.partition(delim2)
+        print "string", string, "first.strip()", first.strip(), "rest.strip()", rest.strip()
+        new_val = delim1 + value + delim2
+        modified_text = new_val.join([first.strip(), rest.strip()])
+        print "modified_text",modified_text
+        return modified_text
+        # #inserts value between delim1 and delim2 and adds all to end of string
+        # to_be_added = " " + delim1 + value + delim2
+        # # print "to_be_added", to_be_added
+        # ans = string + to_be_added
+        # # print "ans", ans
+        # return ans
 
 
     def directory(self):
@@ -577,7 +589,7 @@ class MyModelListener5(TableModelListener):
             # b) touch the durations later
             next_row = self.model.find_row_next_location(row)
             print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&row", row, "next_row", next_row
-            if next_row != None:
+            if next_row != row:  #if we are not at end of list
                 try:
                     print "# b) touch the next duration","next_row", next_row
                     value = self.model.getValueAt(next_row, duration_col)
@@ -707,7 +719,7 @@ class MyTableModel5 (DefaultTableModel):
 
     def populate(self, items_to_put_in_dropdown):
         global scheduled_start
-        print "in populate"
+        # print "in populate"
         for row in reversed(range(len(self.data))):
             self.data.pop(row)
         print "cleared everything"
@@ -743,7 +755,7 @@ class MyTableModel5 (DefaultTableModel):
                 wait_time = None
 
             self.data.append([location, journey_time, wait_time, duration, departure_time, False])
-        print "populated"
+        # print "populated"
 
         # now update the first location which is a station with the time of the schedule start
 
@@ -809,7 +821,7 @@ class MyTableModel5 (DefaultTableModel):
             [routelocation, row] = routelocationsSequenceNumber_list[current_index + 1]
             # row = routelocationsSequenceNumber_list[currentIndex + 1]
         except:
-            row = None
+            return row   # next location will be current location  if at end of list
         print "row", row
         return row - 1  # row number starts from 0
 

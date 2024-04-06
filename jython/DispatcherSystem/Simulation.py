@@ -137,9 +137,9 @@ class SimulationMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def blockOccupied(self, block):
         if block.getState() == ACTIVE:
-            state = "ACTIVE"
+            state = True
         else:
-            state ="INACTIVE"
+            state = False
         return state
 
 
@@ -240,10 +240,10 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
         return (self.end_position - self.start_position) +1
 
     def blockOccupied(self, block):
-        if block.getSensor().getKnownState() == ACTIVE:
-            state = "ACTIVE"
+        if block.getState() == ACTIVE:
+            state = True
         else:
-            state ="INACTIVE"
+            state = False
         return state
 
     def make_first_block_unoccupied(self, block_list):

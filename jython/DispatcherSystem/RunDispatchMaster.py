@@ -48,44 +48,48 @@ class RunDispatcherMaster():
         if new_train_master.setup():
             new_train_master.setName('New Train Master')
             new_train_master.start()
-
+        # print "A"
         stop_master = StopMaster()
         if stop_master.setup():
             stop_master.setName('Stop Master')
             stop_master.start()
-
+        # print "B"
         reset_button_master = ResetButtonMaster()
         instanceList.append(reset_button_master)
         if reset_button_master.setup():
             pass
             reset_button_master.setName('Reset Button Master')
             reset_button_master.start()
-
+        # print "C"
         dispatch_master = DispatchMaster()
         instanceList.append(dispatch_master)
         if dispatch_master.setup():
             dispatch_master.setName('Dispatch Master')
             dispatch_master.start()
-
+        # print "D"
         simulation_master = SimulationMaster()
         instanceList.append(simulation_master)
         if simulation_master.setup():
             simulation_master.setName('Simulation Master')
             simulation_master.start()
-
+        # print "E"
         global scheduler_master      #global so cas be referenced before killing threads
         scheduler_master = SchedulerMaster()
         instanceList.append(scheduler_master)
+        # print "E0"
         if scheduler_master.setup():
+            # print "E1"
             scheduler_master.setName('Scheduler Master')
+            # print "E2"
             scheduler_master.start()
-
+            # print "E3"
+        # print "F"
         monitorTrack_master = MonitorTrackMaster()
         instanceList.append(monitorTrack_master)
         if monitorTrack_master.setup():
             monitorTrack_master.setName('Monitor Track Master')
             monitorTrack_master.start()
-
+        # print "G"
         off_action_master = OffActionMaster()
         instanceList.append(off_action_master)
         if off_action_master.setup():
@@ -110,5 +114,5 @@ class RunDispatcherMaster():
 
 
 if __name__ == '__builtin__':
-    # sensors.getSensor("startDispatcherSensor").setKnownState(INACTIVE)
+    sensors.getSensor("startDispatcherSensor").setKnownState(ACTIVE)
     RunDispatcherMaster()

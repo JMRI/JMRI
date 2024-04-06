@@ -407,87 +407,21 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
         if res == opt2:
 
             self.stop_route_threads()
-            print "self.stop_route_threads()"
+            # print "self.stop_route_threads()"
             self.remove_train_values()
-            print "self.remove_train_values()"
+            # print "self.remove_train_values()"
             self.delete_active_transits()
-            print "self.delete_active_transits()"
+            # print "self.delete_active_transits()"
             self.stop_all_threads()
-            print "self.stop_all_threads()"
+            # print "self.stop_all_threads()"
         else:
             self.delete_active_transits()
-            print "self.delete_active_transits()"
+            # print "self.delete_active_transits()"
             self.stop_all_threads()
-            print "self.stop_all_threads()"
-
-            # msg = "Delete all active Transits?\n"+"\nCaution this may disrupt running trains\n"
-            # title = "Transits"
-            # opt1 = "stop route threads"
-            # opt2 = "stop all threads"
-            # opt3 = "stop threads and delete transits"
-            # requested_action = OptionDialog().customQuestionMessage3str(msg, title, opt1, opt2, opt3)
-            # if requested_action == "stop route threads":
-            #     self.stop_route_threads()
-            #     self.stop_sensor = sensors.getSensor("stopMasterSensor")
-            #     self.stop_sensor.setKnownState(INACTIVE)
-            #     return True
-            # elif requested_action == "stop all threads":
-            #     self.remove_timebase_listener()
-            #     self.stop_all_threads()
-            # else:  #stop all threads and delete transits
-            #     self.remove_timebase_listener()
-            #     self.delete_active_transits()
-            #     self.stop_all_threads()
-            # if self.logLevel > 0: print "finished"
-
-
-# ***************************************************************************
-
-        # self.waitSensorActive(self.stop_master_sensor)
-        # #stop all threads
-        # if self.logLevel > 0: print "instancelist", instanceList
-        # msg = "modify or stop"
-        # title = "Transits"
-        # opt1 = "modify"
-        # opt2 = "stop"
-        # opd = OptionDialog()
-        # requested_action = opd.customQuestionMessage2str(msg, title, opt1, opt2)
-        # if opd.CLOSED_OPTION == True:
-        #     self.stop_master_sensor.setKnownState(INACTIVE)
-        #     return True
-        # if requested_action == opt1:
-        #     self.stop_via_table()
-        #     self.stop_master_sensor.setKnownState(INACTIVE)
-        #     return True
-        # else:
-        #     self.remove_timebase_listener()
-        #     self.delete_active_transits()
-        #     self.stop_all_threads()
-        #     return
-        #     msg = "Delete all active Transits?\n"+"\nCaution this may disrupt running trains\n"
-        #     title = "Transits"
-        #     opt1 = "stop route threads"
-        #     opt2 = "stop all threads"
-        #     opt3 = "stop threads and delete transits"
-        #     requested_action = OptionDialog().customQuestionMessage3str(msg, title, opt1, opt2, opt3)
-        #     if requested_action == "stop route threads":
-        #         self.stop_route_threads()
-        #         self.stop_sensor = sensors.getSensor("stopMasterSensor")
-        #         self.stop_sensor.setKnownState(INACTIVE)
-        #         return True
-        #     elif requested_action == "stop all threads":
-        #         self.remove_timebase_listener()
-        #         self.stop_all_threads()
-        #     else:  #stop all threads and delete transits
-        #         self.remove_timebase_listener()
-        #         self.delete_active_transits()
-        #         self.stop_all_threads()
-        #     if self.logLevel > 0: print "finished"
-
+            # print "self.stop_all_threads()"
 
     def stop_via_table(self):
         createandshowGUI3(self)
-
 
     def remove_timebase_listener(self):
         global timebase
@@ -812,7 +746,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         global trains_dispatched
 
         #only one button is active. We will keep it that way
-        print "dispatch master"
+        # print "dispatch master"
         if self.logLevel > 0: print "**********************"
         if self.logLevel > 0: print "handle DispatchMaster1"
         #if self.logLevel > 0: print "buttons to watch",[str(sensor.getUserName()) for sensor in self.button_sensors_to_watch]
@@ -901,7 +835,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
 
         if self.logLevel > 0: print "end handle"
         self.waitMsec(1000)
-        print "end dispatch master"
+        # print "end dispatch master"
         return True
 
     def reset_buttons(self, button_sensors_to_watch_JavaList):

@@ -17,21 +17,6 @@ class Timetable:
         # print "creating window"
         self.createWindow(station)
 
-    # def update(self, parameters):
-    #     print "start update"
-    #     if self.html_content == None:
-    #         print "error html_content is None"
-    #     # html_content = self.edit_html(parameters)
-    #
-    # def update_time(self, time):
-    #
-    #     # time is of the form "HH:MM"
-    #     # print "about to edit html", time
-    #     html_content2 = self.edit_html_time(time)
-    #     # print "about to load html"
-    #     self.load_html(html_content2)
-    #     # print "LOADAD"
-
     def update_timetable(self, required_station, time, timetable):
 
         # print "update timetable"
@@ -39,7 +24,7 @@ class Timetable:
 
         # print "html_table", html_table
         html_content2 = self.html_content.replace("$time$", time).replace("$table$", html_table)
-        # html_content2 = html_table
+
         # print "html_content2", html_content2
         # print "about to load html", html_content2
         self.load_html(html_content2)
@@ -54,20 +39,11 @@ class Timetable:
 
         string = '''<tr>
             <th>$station_departure_time$</th>
-            <th>$last_station$</t"h$>
+            <th>$train$</th>
+            <th>$last_station$</th>
             <th>$via$</th$>
             </tr>
             '''
-        # print "string_orig", string
-        # html_table = "<table>\n"
-        # html_table = '''<table class="class9">
-        # <colgroup>
-        # <col span="1" style="width: 20%;">
-        # <col span="1" style="width: 30%;">
-        # <col span="1" style="width: 50%;">
-        # </colgroup>
-        # '''
-        # print "timetable", timetable
         html_table1 = '''
         <table>
             <tr>
@@ -76,6 +52,7 @@ class Timetable:
             </tr>
             <tr>
                 <th class="it">Time</th>
+                <th class="it">Train</th>
                 <th class="it">Destination</th>
                 <th class="it">Via</th>
             </tr>
@@ -85,11 +62,12 @@ class Timetable:
         for timetable_entry in timetable:
             # ['SidingMiddlleLHS', '7:1',             # ['SidingMiddlleLHS', '7:1', 'SidingMiddlleLHS', '10', 'SidingTopRHS']'SidingMiddlleLHS', '10', 'SidingTopRHS']
             # print "timetable_entry", timetable_entry
-            [station_name, station_departure_time, last_station, last_station_arrival_time, via] = timetable_entry
+            [train, station_name, station_departure_time, last_station, last_station_arrival_time, via] = timetable_entry
             # print "[station_name, station_departure_time, last_station, last_station_arrival_time, via]", [station_name, station_departure_time, last_station, last_station_arrival_time, via]
             if str(station_name) == required_station:
                 html_table_entry = string.replace("$station_name$", station_name) \
                     .replace("$station_departure_time$", station_departure_time) \
+                    .replace("$train$", train) \
                     .replace("$last_station$", last_station) \
                     .replace("$via$", via)
                 # print "html_table_entry", html_table_entry
@@ -102,8 +80,10 @@ class Timetable:
         return html_table
 
     def createWindow(self, station):
+        global timetable_frame_gbl
         # print "create window start"
-        self.frame = MyFrame("Timetable")    #based on JFrame see definition below
+        timetable_frame_gbl = MyFrame("Timetable")    #based on JFrame see definition below
+        self.frame = timetable_frame_gbl
         # Set the default close operation
         # self.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE)
         #
@@ -127,10 +107,12 @@ class Timetable:
     def createUI(self, station):
         # print "in createUI"
         self.panel = JPanel()
-        layout = FlowLayout()
+        # self.panel.setLayout(BorderLayout())   #allow resizing of window by using BorderLayout
+        layout = BorderLayout()
         self.panel.setLayout(layout)
 
         self.jEditorPane = JEditorPane()
+
         self.jEditorPane.setEditable(False)
         # print "about to get_html", "html_content", self.html_content
         # if self.html_content == "unset":
@@ -158,7 +140,7 @@ class Timetable:
         return html_content
 
     def load_html(self, html_content):
-        print "in load_html"
+        # print "in load_html"
         # print "type html_edit", type(html_content)
         # print "html_content", html_content
         # Set the content type to HTML
@@ -217,7 +199,10 @@ class Timetable:
 
 class MyFrame(JFrame):
 
-    def __init__(self, Title):
+    def __init__(self, title):
+
+        self.setTitle(title)
+
         # Set the default close operation
         self.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE)
 
@@ -229,7 +214,7 @@ class MyWindowAdapter(WindowAdapter):
 
     def windowClosing(self, e):
         global run_timetable_gbl
-        print("Window is closing")
+        # print("Window is closing")
         # we need to hide the frame
         frame = e.getSource()
         frame.setVisible(False)

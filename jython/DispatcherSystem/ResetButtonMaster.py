@@ -1811,7 +1811,7 @@ class MonitorTrackMaster(jmri.jmrit.automat.AbstractAutomaton):
                     if edge != None:
                         self.old_train_edge[train_name] = edge
 
-        self.waitMsec(500)
+        self.waitMsec(2000)
         return True
 
     def set_mem_variable(self, block_name, train_name, block_occupancy):

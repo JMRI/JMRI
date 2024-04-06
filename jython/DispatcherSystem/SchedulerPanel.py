@@ -13,12 +13,14 @@ from java.io import File
 class CreateAndShowGUI4(TableModelListener):
 
     def __init__(self, class_ResetButtonMaster):
+        global CreateAndShowGUI4_frame
         self.logLevel = 0
         self.class_ResetButtonMaster = class_ResetButtonMaster
         #Create and set up the window.
 
         self.initialise_model(class_ResetButtonMaster)
-        self.frame = JFrame("Scheduled Trains")
+        CreateAndShowGUI4_frame = JFrame("Scheduled Trains")
+        self.frame = CreateAndShowGUI4_frame
         self.frame.setSize(600, 600);
 
         self.completeTablePanel()
@@ -53,9 +55,9 @@ class CreateAndShowGUI4(TableModelListener):
         # self.buttonPane.add(button_tidy);
         # self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
         #
-        # button_apply = JButton("Save", actionPerformed = self.save_action)
-        # self.buttonPane.add(button_apply)
-        # self.buttonPane.add(Box.createHorizontalGlue());
+        button_apply = JButton("Save", actionPerformed = self.save_action)
+        self.buttonPane.add(button_apply)
+        self.buttonPane.add(Box.createHorizontalGlue());
 
         button_close = JButton("Close", actionPerformed = self.close_action)
         self.buttonPane.add(button_close)
@@ -197,7 +199,7 @@ class CreateAndShowGUI4(TableModelListener):
         count = self.model.getRowCount()
         colcount = self.model.getColumnCount()
         self.model.add_row()
-        self.save()
+        # self.save()
         self.completeTablePanel()
 
     def get_route_list(self):
@@ -207,13 +209,12 @@ class CreateAndShowGUI4(TableModelListener):
         return my_list
 
     def populate_action(self, event):
-        print "populating"
+        # print "populating"
         items_to_put_in_dropdown = self.get_route_list()
         print "items_to_put_in_dropdown", items_to_put_in_dropdown
         self.model.populate(items_to_put_in_dropdown)
-        print "populated"
+        # print "populated"
         self.completeTablePanel()
-        pass
 
     def tidy_action(self,e):
         self.model.remove_not_set_row()
@@ -337,9 +338,12 @@ class CreateAndShowGUI4(TableModelListener):
             #     if self.model.data[row][route_col] not in routes:
             #         self.model.data.pop(row)
 
-            self.completeTablePanel()
+        self.completeTablePanel()
+        self.save()
 
     def close_action(self, event):
+        # self.completeTablePanel()
+        # self.save()
         self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING));
 
     def delay_action(self, event):
@@ -438,6 +442,7 @@ class CreateAndShowGUI4(TableModelListener):
             route_name = str(self.model.data[row][route_col])
             train_name = str(self.model.data[row][train_name_col])
             repeat_name = str(self.model.data[row][repeat_col])
+            print "repeat_name", repeat_name
             dont_schedule_name = str(self.model.data[row][dont_schedule_col])
             # if time_name != "" and route_name != "" and train_name_val != "":
             if train_name != "":
@@ -447,7 +452,7 @@ class CreateAndShowGUI4(TableModelListener):
             else:
                 msg = "Cannot save row: " + str(row) + " train name, route or delay is not set"
                 OptionDialog().displayMessage(msg,"")
-        self.completeTablePanel()
+        # self.completeTablePanel()
         if self.model.getRowCount() == 0:
             self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING))
 
@@ -465,7 +470,6 @@ class CreateAndShowGUI4(TableModelListener):
 
         self.set_skip(train, dont_schedule_name)   # do this first
         self.set_repeat(train, repeat_name)
-
 
         train.setName(train_name)
 
@@ -599,15 +603,16 @@ class MyModelListener4(TableModelListener):
                 CreateAndShowGUI5(self, route_data, scheduled_start)
                 self.model.setValueAt(False, row, edit_col)
         elif column == delete_col:
-            # class_CreateAndShowGUI4.run_route(row, model, class_CreateAndShowGUI4, class_ResetButtonMaster)
-            self.delete_row(row)
-            pass
-
-        class_CreateAndShowGUI4.completeTablePanel()
+            self.delete_row(row, class_CreateAndShowGUI4)
         class_CreateAndShowGUI4.save()                      # save everything when the table is chabged
-        
-    def delete_row(self, row):
+        # class_CreateAndShowGUI4.completeTablePanel()      # don't need to refresh hence commented out
+
+    def save_route(self, class_CreateAndShowGUI4):
+        class_CreateAndShowGUI4.save()
+
+    def delete_row(self, row, class_CreateAndShowGUI4):
         self.model.data.pop(row)
+        class_CreateAndShowGUI4.save()
         class_CreateAndShowGUI4.save()
 
     def show_time_picker(self):
@@ -668,7 +673,7 @@ class MyTableModel4 (DefaultTableModel):
         # print "added"
 
     def populate(self, items_to_put_in_dropdown):
-        print "in populate"
+        # print "in populate"
         for row in reversed(range(len(self.data))):
             self.data.pop(row)
         print "cleared everything"
@@ -691,7 +696,7 @@ class MyTableModel4 (DefaultTableModel):
             #         train_present = True
             # if train_present == False:
             self.data.append([time, route, repeat, skip, train, False, False])
-        print "populated"
+        # print "populated"
         # delete rows with no trains
         # for row in reversed(range(len(self.data))):
         #     if self.data[row][time_col] == None or self.data[row][dont_schedule_col] == "":

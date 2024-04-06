@@ -250,9 +250,9 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def blockOccupied(self, block):
         if block.getState() == ACTIVE:
-            state = "ACTIVE"
+            state = True
         else:
-            state ="INACTIVE"
+            state = False
         return state
 
     def get_time_to_stop_in_station(self, edge, direction):

@@ -206,11 +206,11 @@ class CreateAndShowGUI6(TableModelListener):
         return my_list
 
     def populate_action(self, event):
-        print "populating"
+        # print "populating"
         items_to_put_in_dropdown = self.get_route_list()
         print "items_to_put_in_dropdown", items_to_put_in_dropdown
         self.model.populate(items_to_put_in_dropdown)
-        print "populated"
+        # print "populated"
         self.completeTablePanel()
         pass
 
@@ -663,7 +663,7 @@ class MyTableModel6 (DefaultTableModel):
         # print "added"
 
     def populate(self, items_to_put_in_dropdown):
-        print "in populate"
+        # print "in populate"
         for row in reversed(range(len(self.data))):
             self.data.pop(row)
         print "cleared everything"
@@ -686,7 +686,7 @@ class MyTableModel6 (DefaultTableModel):
             # #         train_present = True
             # # if train_present == False:
             self.data.append([route, False, False])
-        print "populated"
+        # print "populated"
         # delete rows with no trains
         # for row in reversed(range(len(self.data))):
         #     if self.data[row][time_col] == None or self.data[row][dont_schedule_col] == "":
