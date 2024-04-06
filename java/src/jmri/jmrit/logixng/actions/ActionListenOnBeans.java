@@ -1,5 +1,8 @@
 package jmri.jmrit.logixng.actions;
 
+import jmri.jmrit.logixng.NamedBeanType;
+import jmri.jmrit.logixng.NamedBeanReference;
+
 import java.beans.*;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -16,7 +19,7 @@ import net.jcip.annotations.GuardedBy;
  * @author Daniel Bergqvist Copyright 2019
  */
 public class ActionListenOnBeans extends AbstractDigitalAction
-        implements PropertyChangeListener, VetoableChangeListener {
+        implements ReplaceNamedBean, PropertyChangeListener, VetoableChangeListener {
 
     private final Map<String, NamedBeanReference> _namedBeanReferences = new DuplicateKeyMap<>();
     private String _localVariableNamedBean;
@@ -85,14 +88,14 @@ public class ActionListenOnBeans extends AbstractDigitalAction
 
     public void addReference(NamedBeanReference reference) {
         assertListenersAreNotRegistered(log, "addReference");
-        _namedBeanReferences.put(reference._name, reference);
-        reference._type.getManager().addVetoableChangeListener(this);
+        _namedBeanReferences.put(reference.getName(), reference);
+        reference.getType().getManager().addVetoableChangeListener(this);
     }
 
     public void removeReference(NamedBeanReference reference) {
         assertListenersAreNotRegistered(log, "removeReference");
-        _namedBeanReferences.remove(reference._name, reference);
-        reference._type.getManager().removeVetoableChangeListener(this);
+        _namedBeanReferences.remove(reference.getName(), reference);
+        reference.getType().getManager().removeVetoableChangeListener(this);
     }
 
     public Collection<NamedBeanReference> getReferences() {
@@ -143,13 +146,13 @@ public class ActionListenOnBeans extends AbstractDigitalAction
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         var tempNamedBeanReferences = new ArrayList<NamedBeanReference>(_namedBeanReferences.values());
         for (NamedBeanReference reference : tempNamedBeanReferences) {
-            if (reference._type.getClazz().isAssignableFrom(evt.getOldValue().getClass())) {
-                if ((reference._handle != null) && evt.getOldValue().equals(reference._handle.getBean())) {
+            if (reference.getType().getClazz().isAssignableFrom(evt.getOldValue().getClass())) {
+                if ((reference.getHandle() != null) && evt.getOldValue().equals(reference.getHandle().getBean())) {
                     if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
                         PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
                         throw new PropertyVetoException(getDisplayName(), e);
                     } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
-                        _namedBeanReferences.remove(reference._name, reference);
+                        _namedBeanReferences.remove(reference.getName(), reference);
                     }
                 }
             }
@@ -235,13 +238,13 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         if (_listenersAreRegistered) return;
 
         for (NamedBeanReference namedBeanReference : _namedBeanReferences.values()) {
-            if (namedBeanReference._handle != null) {
-                if (!namedBeanReference._listenOnAllProperties
-                        && (namedBeanReference._type.getPropertyName() != null)) {
-                    namedBeanReference._handle.getBean()
-                            .addPropertyChangeListener(namedBeanReference._type.getPropertyName(), this);
+            if (namedBeanReference.getHandle() != null) {
+                if (!namedBeanReference.getListenOnAllProperties()
+                        && (namedBeanReference.getType().getPropertyName() != null)) {
+                    namedBeanReference.getHandle().getBean()
+                            .addPropertyChangeListener(namedBeanReference.getType().getPropertyName(), this);
                 } else {
-                    namedBeanReference._handle.getBean()
+                    namedBeanReference.getHandle().getBean()
                             .addPropertyChangeListener(this);
                 }
             }
@@ -255,13 +258,13 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         if (!_listenersAreRegistered) return;
 
         for (NamedBeanReference namedBeanReference : _namedBeanReferences.values()) {
-            if (namedBeanReference._handle != null) {
-                if (!namedBeanReference._listenOnAllProperties
-                        && (namedBeanReference._type.getPropertyName() != null)) {
-                    namedBeanReference._handle.getBean()
-                            .removePropertyChangeListener(namedBeanReference._type.getPropertyName(), this);
+            if (namedBeanReference.getHandle() != null) {
+                if (!namedBeanReference.getListenOnAllProperties()
+                        && (namedBeanReference.getType().getPropertyName() != null)) {
+                    namedBeanReference.getHandle().getBean()
+                            .removePropertyChangeListener(namedBeanReference.getType().getPropertyName(), this);
                 } else {
-                    namedBeanReference._handle.getBean()
+                    namedBeanReference.getHandle().getBean()
                             .removePropertyChangeListener(this);
                 }
             }
@@ -287,12 +290,31 @@ public class ActionListenOnBeans extends AbstractDigitalAction
     public void getUsageDetail(int level, NamedBean bean, List<NamedBeanUsageReport> report, NamedBean cdl) {
         log.debug("getUsageReport :: ActionListenOnBeans: bean = {}, report = {}", cdl, report);
         for (NamedBeanReference namedBeanReference : _namedBeanReferences.values()) {
-            if (namedBeanReference._handle != null) {
-                if (bean.equals(namedBeanReference._handle.getBean())) {
+            if (namedBeanReference.getHandle() != null) {
+                if (bean.equals(namedBeanReference.getHandle().getBean())) {
                     report.add(new NamedBeanUsageReport("LogixNGAction", cdl, getLongDescription()));
                 }
             }
         }
+    }
+
+    @Override
+    public void getNamedBeans(List<NamedBeanReference> list) {
+        for (NamedBeanReference ref : _namedBeanReferences.values()) {
+            list.add(new NamedBeanReference(ref));
+        }
+    }
+
+    @Override
+    public void replaceNamedBean(NamedBeanReference oldRef, NamedBeanReference newRef) {
+        boolean found = false;
+        for (NamedBeanReference ref : _namedBeanReferences.values()) {
+            if (ref.equals(oldRef)) {
+                ref.setName(newRef.getHandle());
+                found = true;
+            }
+        }
+        if (!found) throw new IllegalArgumentException("Can't find old reference");     // Probably a bug in JMRI if this happens.
     }
 
     /** {@inheritDoc} */
@@ -300,114 +322,6 @@ public class ActionListenOnBeans extends AbstractDigitalAction
     public void disposeMe() {
     }
 
-
-    public static class NamedBeanReference {
-
-        private String _name;
-        private NamedBeanType _type;
-        private NamedBeanHandle<? extends NamedBean> _handle;
-        private boolean _listenOnAllProperties = false;
-
-        public NamedBeanReference(NamedBeanReference ref) {
-            this(ref._handle, ref._type, ref._listenOnAllProperties);
-        }
-
-        public NamedBeanReference(String name, NamedBeanType type, boolean all) {
-            _name = name;
-            _type = type;
-            _listenOnAllProperties = all;
-
-            if (_type != null) {
-                NamedBean bean = _type.getManager().getNamedBean(name);
-                if (bean != null) {
-                    _handle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(_name, bean);
-                }
-            }
-        }
-
-        public NamedBeanReference(NamedBeanHandle<? extends NamedBean> handle, NamedBeanType type, boolean all) {
-            _name = handle != null ? handle.getName() : null;
-            _type = type;
-            _listenOnAllProperties = all;
-            _handle = handle;
-        }
-
-        public String getName() {
-            return _name;
-        }
-
-        public void setName(String name) {
-            _name = name;
-            updateHandle();
-        }
-
-        public void setName(NamedBean bean) {
-            if (bean != null) {
-                _handle = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                        .getNamedBeanHandle(bean.getDisplayName(), bean);
-                _name = _handle.getName();
-            } else {
-                _name = null;
-                _handle = null;
-            }
-        }
-
-        public void setName(NamedBeanHandle<? extends NamedBean> handle) {
-            if (handle != null) {
-                _handle = handle;
-                _name = _handle.getName();
-            } else {
-                _name = null;
-                _handle = null;
-            }
-        }
-
-        public NamedBeanType getType() {
-            return _type;
-        }
-
-        public void setType(NamedBeanType type) {
-            if (type == null) {
-                log.warn("type is null");
-                type = NamedBeanType.Turnout;
-            }
-            _type = type;
-            _handle = null;
-        }
-
-        public NamedBeanHandle<? extends NamedBean> getHandle() {
-            return _handle;
-        }
-
-        private void updateHandle() {
-            if (_type != null && _name != null && !_name.isEmpty()) {
-                NamedBean bean = _type.getManager().getNamedBean(_name);
-                if (bean != null) {
-                    _handle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(_name, bean);
-                } else {
-                    log.warn("Cannot find named bean {} in manager for {}", _name, _type.getManager().getBeanTypeHandled());
-                    _handle = null;
-                }
-            } else {
-                _handle = null;
-            }
-        }
-
-        public boolean getListenOnAllProperties() {
-            return _listenOnAllProperties;
-        }
-
-        public void setListenOnAllProperties(boolean listenOnAllProperties) {
-            _listenOnAllProperties = listenOnAllProperties;
-        }
-
-        // This method is used by ListenOnBeansTableModel
-        @Override
-        public String toString() {
-            if (_handle != null) return _handle.getName();
-            else return "";
-        }
-    }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionListenOnBeans.class);
 

@@ -10,8 +10,6 @@ import jmri.jmrit.logixng.actions.ActionListenOnBeans;
 import jmri.jmrit.logixng.actions.DigitalMany;
 import jmri.jmrit.logixng.Module.ReturnValueType;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
-import jmri.jmrit.logixng.actions.ActionListenOnBeans.NamedBeanReference;
-import jmri.jmrit.logixng.actions.NamedBeanType;
 import jmri.jmrit.logixng.expressions.ExpressionLocalVariable;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.util.JUnitUtil;

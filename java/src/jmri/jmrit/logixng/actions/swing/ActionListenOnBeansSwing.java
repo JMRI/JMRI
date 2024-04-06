@@ -12,8 +12,8 @@ import javax.swing.table.TableColumn;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionListenOnBeans;
-import jmri.jmrit.logixng.actions.NamedBeanType;
-import jmri.jmrit.logixng.actions.ActionListenOnBeans.NamedBeanReference;
+import jmri.jmrit.logixng.NamedBeanType;
+import jmri.jmrit.logixng.NamedBeanReference;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -69,8 +69,7 @@ public class ActionListenOnBeansSwing extends AbstractDigitalActionSwing {
                 new ListenOnBeansTableModel.CellRenderer());
         _listenOnBeansTable.setDefaultEditor(NamedBeanType.class,
                 new ListenOnBeansTableModel.NamedBeanTypeCellEditor());
-        _listenOnBeansTable.setDefaultEditor(
-                ActionListenOnBeans.NamedBeanReference.class,
+        _listenOnBeansTable.setDefaultEditor(NamedBeanReference.class,
                 _listenOnBeansTableModel.getNamedBeanCellEditor());
         _listenOnBeansTableModel.setColumnsForComboBoxes(_listenOnBeansTable);
         _listenOnBeansTable.setDefaultRenderer(JButton.class, new ButtonRenderer());

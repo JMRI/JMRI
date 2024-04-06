@@ -12,8 +12,8 @@ import javax.swing.table.TableCellEditor;
 
 import jmri.Manager;
 import jmri.NamedBean;
-import jmri.jmrit.logixng.actions.NamedBeanType;
-import jmri.jmrit.logixng.actions.ActionListenOnBeans.NamedBeanReference;
+import jmri.jmrit.logixng.NamedBeanType;
+import jmri.jmrit.logixng.NamedBeanReference;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.swing.JComboBoxUtil;
 

@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import jmri.jmrit.logixng.NamedBeanType;
+
 import java.io.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
@@ -580,7 +582,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initLogixNGManager();
-        jmri.jmrit.logixng.actions.NamedBeanType.reset();
+        jmri.jmrit.logixng.NamedBeanType.reset();
 
         _category = Category.ITEM;
         _isExternal = true;
