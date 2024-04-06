@@ -36,6 +36,7 @@ public class WindowManagementSwing extends AbstractDigitalActionSwing {
     private JTextField _jmriJFrameReferenceTextField;
     private JTextField _jmriJFrameLocalVariableTextField;
     private JTextField _jmriJFrameFormulaTextField;
+    private JCheckBox _ignoreWindowNotFoundCheckBox;
 
     private LogixNG_SelectEnumSwing<HideOrShow> _selectEnumHideOrShowSwing;
     private LogixNG_SelectEnumSwing<MaximizeMinimizeNormalize> _selectEnumMaximizeMinimizeNormalizeSwing;
@@ -51,7 +52,6 @@ public class WindowManagementSwing extends AbstractDigitalActionSwing {
         _selectEnumBringToFrontOrBackSwing = new LogixNG_SelectEnumSwing<>(getJDialog(), this);
 
         panel = new JPanel();
-//        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         String _selectedJmriJFrameTitle = action != null ? action.getJmriJFrameTitle() : null;
 
@@ -90,6 +90,9 @@ public class WindowManagementSwing extends AbstractDigitalActionSwing {
         _panelJmriJFrameFormula.add(_jmriJFrameFormulaTextField);
 
 
+        _ignoreWindowNotFoundCheckBox = new JCheckBox(Bundle.getMessage("WindowManagement_IgnoreWindowNotFound"));
+
+
         JPanel panelHideOrShow;
         JPanel panelMaximizeMinimizeNormalize;
         JPanel panelBringToFrontOrBack;
@@ -122,6 +125,7 @@ public class WindowManagementSwing extends AbstractDigitalActionSwing {
             _jmriJFrameReferenceTextField.setText(action.getReference());
             _jmriJFrameLocalVariableTextField.setText(action.getLocalVariable());
             _jmriJFrameFormulaTextField.setText(action.getFormula());
+            _ignoreWindowNotFoundCheckBox.setSelected(action.isIgnoreWindowNotFound());
         }
 
         panel.setLayout(new GridBagLayout());
@@ -132,11 +136,11 @@ public class WindowManagementSwing extends AbstractDigitalActionSwing {
         constraint.gridy = 0;
         constraint.anchor = GridBagConstraints.EAST;
         panel.add(new JLabel(Bundle.getMessage("WindowToFrontSwing_Window")), constraint);
-        constraint.gridy = 1;
+        constraint.gridy = 4;
         panel.add(new JLabel(Bundle.getMessage("WindowToFrontSwing_HideOrShow")), constraint);
-        constraint.gridy = 2;
+        constraint.gridy = 5;
         panel.add(new JLabel(Bundle.getMessage("WindowToFrontSwing_MaximizeMinimizeNormalize")), constraint);
-        constraint.gridy = 3;
+        constraint.gridy = 6;
         panel.add(new JLabel(Bundle.getMessage("WindowToFrontSwing_BringToFrontOrBack")), constraint);
 
         constraint.gridx = 1;
@@ -144,10 +148,16 @@ public class WindowManagementSwing extends AbstractDigitalActionSwing {
         constraint.anchor = GridBagConstraints.WEST;
         panel.add(_tabbedPaneJmriJFrame, constraint);
         constraint.gridy = 1;
-        panel.add(panelHideOrShow, constraint);
+        panel.add(Box.createVerticalStrut(3), constraint);
         constraint.gridy = 2;
-        panel.add(panelMaximizeMinimizeNormalize, constraint);
+        panel.add(_ignoreWindowNotFoundCheckBox, constraint);
         constraint.gridy = 3;
+        panel.add(Box.createVerticalStrut(5), constraint);
+        constraint.gridy = 4;
+        panel.add(panelHideOrShow, constraint);
+        constraint.gridy = 5;
+        panel.add(panelMaximizeMinimizeNormalize, constraint);
+        constraint.gridy = 6;
         panel.add(panelBringToFrontOrBack, constraint);
     }
 
@@ -228,6 +238,8 @@ public class WindowManagementSwing extends AbstractDigitalActionSwing {
         } catch (ParserException e) {
             throw new RuntimeException("ParserException: "+e.getMessage(), e);
         }
+
+        action.setIgnoreWindowNotFound(_ignoreWindowNotFoundCheckBox.isSelected());
 
         _selectEnumHideOrShowSwing.updateObject(action.getSelectEnumHideOrShow());
 

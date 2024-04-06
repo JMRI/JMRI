@@ -37,6 +37,8 @@ public class WindowManagement extends AbstractDigitalAction
     private String _formula = "";
     private ExpressionNode _expressionNode;
 
+    private boolean _ignoreWindowNotFound = false;
+
     private final LogixNG_SelectEnum<HideOrShow> _selectEnumHideOrShow =
             new LogixNG_SelectEnum<>(this, HideOrShow.values(), HideOrShow.DoNothing, this);
 
@@ -65,6 +67,7 @@ public class WindowManagement extends AbstractDigitalAction
         copy.setFormula(_formula);
         copy.setLocalVariable(_localVariable);
         copy.setReference(_reference);
+        copy._ignoreWindowNotFound = _ignoreWindowNotFound;
         _selectEnumHideOrShow.copy(copy._selectEnumHideOrShow);
         _selectEnumMaximizeMinimizeNormalize.copy(copy._selectEnumMaximizeMinimizeNormalize);
         _selectEnumBringToFrontOrBack.copy(copy._selectEnumBringToFrontOrBack);
@@ -153,6 +156,14 @@ public class WindowManagement extends AbstractDigitalAction
         }
     }
 
+    public void setIgnoreWindowNotFound(boolean ignoreWindowNotFound) {
+        _ignoreWindowNotFound = ignoreWindowNotFound;
+    }
+
+    public boolean isIgnoreWindowNotFound() {
+        return _ignoreWindowNotFound;
+    }
+
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
 /*
@@ -212,8 +223,12 @@ public class WindowManagement extends AbstractDigitalAction
                 if (jmriJFrame == null && (_jmriJFrameTitle != null && !_jmriJFrameTitle.isBlank())) {
                     jmriJFrame = JmriJFrame.getFrame(_jmriJFrameTitle);
                     if (jmriJFrame == null) {
-                        log.error("ddd");
-                        throwErrorJmriJFrameDoesNotExists();
+                        if (_ignoreWindowNotFound) {
+                            log.debug("Window is not found");
+                            return;
+                        } else {
+                            throwErrorJmriJFrameDoesNotExists();
+                        }
                     }
                 }
                 break;
@@ -245,7 +260,7 @@ public class WindowManagement extends AbstractDigitalAction
 //        System.out.format("WindowToFront.execute: positionable: %s%n", positionable);
 
         if (jmriJFrame == null) {
-            log.error("Frame is null");
+            log.error("Window is null");
             return;
         }
 
@@ -320,6 +335,13 @@ public class WindowManagement extends AbstractDigitalAction
         }
         if (!_selectEnumBringToFrontOrBack.isEnum(BringToFrontOrBack.DoNothing)) {
             strings.add(_selectEnumBringToFrontOrBack.getDescription(locale));
+        }
+
+        if (_ignoreWindowNotFound) {
+            strings.add(Bundle.getMessage("WindowManagement_IgnoreWindowNotFound_Descr",
+                    Bundle.getMessage("WindowManagement_IgnoreWindowNotFound")));
+        } else {
+            strings.add("");
         }
 
         return Bundle.getMessage(locale, "WindowManagement_Long_"+Integer.toString(strings.size()),

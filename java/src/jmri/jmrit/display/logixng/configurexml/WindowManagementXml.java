@@ -51,6 +51,9 @@ public class WindowManagementXml extends jmri.managers.configurexml.AbstractName
         element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
         element.addContent(new Element("formula").addContent(p.getFormula()));
 
+        element.addContent(new Element("ignoreWindowNotFound")
+                .addContent(p.isIgnoreWindowNotFound()? "yes" : "no"));  // NOI18N
+
         element.addContent(selectEnumHideOrShowXml.store(
                 p.getSelectEnumHideOrShow(), "hideOrShow"));
 
@@ -98,6 +101,13 @@ public class WindowManagementXml extends jmri.managers.configurexml.AbstractName
         } catch (ParserException e) {
             throw new JmriConfigureXmlException(e);
         }
+
+        String ignoreWindowNotFound = "no";
+        Element element = shared.getChild("ignoreWindowNotFound");
+        if (element != null) {
+            ignoreWindowNotFound = element.getTextTrim();  // NOI18N
+        }
+        h.setIgnoreWindowNotFound("yes".equals(ignoreWindowNotFound));
 
         selectEnumHideOrShowXml.load(shared.getChild("hideOrShow"),
                 h.getSelectEnumHideOrShow());

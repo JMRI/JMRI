@@ -2686,6 +2686,7 @@ public class CreateLogixNGTreeScaffold {
 
         windowManagement =
                 new jmri.jmrit.display.logixng.WindowManagement(digitalActionManager.getAutoSystemName(), null);
+        windowManagement.setIgnoreWindowNotFound(true);
         windowManagement.getSelectEnumHideOrShow().setEnum(WindowManagement.HideOrShow.Show);
         windowManagement.getSelectEnumMaximizeMinimizeNormalize().setEnum(WindowManagement.MaximizeMinimizeNormalize.Maximize);
         windowManagement.getSelectEnumBringToFrontOrBack().setEnum(WindowManagement.BringToFrontOrBack.Front);
@@ -2695,6 +2696,7 @@ public class CreateLogixNGTreeScaffold {
 
         windowManagement =
                 new jmri.jmrit.display.logixng.WindowManagement(digitalActionManager.getAutoSystemName(), null);
+        windowManagement.setIgnoreWindowNotFound(false);
         windowManagement.getSelectEnumHideOrShow().setEnum(WindowManagement.HideOrShow.Hide);
         windowManagement.getSelectEnumMaximizeMinimizeNormalize().setEnum(WindowManagement.MaximizeMinimizeNormalize.Normalize);
         windowManagement.getSelectEnumBringToFrontOrBack().setEnum(WindowManagement.BringToFrontOrBack.Back);
