@@ -254,7 +254,6 @@ function sortByFirstColumn() {
 
 //-----------------------------------------javascript processing starts here (main) ---------------------------------------------
 $(document).ready(function () {
-    jmri = $.JMRI({});
 
     // add table type to heading and title
     $("#table-type").text($("html").data("table-type"));
