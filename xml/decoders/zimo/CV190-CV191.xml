@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 Ronald Kuhn - add Fade-in and Fade-out time --> 
+<!-- version 1.1 Ronald Kuhn - different default values for sound and non-sound decoder --> 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <variable CV="190" item="Fade-in time" default="0">
+
+ <!-- for Sounddecoder -->
+  <variable CV="190" item="Fade-in time" default="0" include="152,160,189,190,208,210,214,215,216,217,221,222,224,225,227,230,245,246,249,250,253,254">
     <decVal min="0" max="255"/>
     <label>Fade-in time</label>
     <label xml:lang="it">Tempo di dissolvenza</label>
@@ -11,7 +14,27 @@
     <tooltip>Fade-in time for effect "Slow fade in/out", default for Non Sounddecoder = 1</tooltip>
     <tooltip xml:lang="de">Aufblendzeit für den Effekt "Langsames Auf- und Abdimmen", Standard für Nicht-Sounddecoder = 1</tooltip>
   </variable>
-  <variable CV="191" item="Fade-out time" default="0">
+  <variable CV="191" item="Fade-out time" default="0" include="152,160,189,190,208,210,214,215,216,217,221,222,224,225,227,230,245,246,249,250,253,254">
+    <decVal min="0" max="255"/>
+    <label>Fade-out time</label>
+    <label xml:lang="it">Tempo di dissolvenza</label>
+    <label xml:lang="cs">Čas doznívání</label>
+    <label xml:lang="de">Abblendzeit</label>
+    <tooltip>Fade-out time for effect "Slow fade in/out"</tooltip>
+    <tooltip xml:lang="de">Abblendzeit für den Effekt "Langsames Auf- und Abdimmen"</tooltip>
+  </variable>
+  
+ <!-- for Non-Sounddecoder -->
+  <variable CV="190" item="Fade-in time" default="1" include="130,131,132,133,134,135,136,137,138,151,161,166,177,181,186,192,193,194,195,197,199,201,202,203,204,205,206,209,211,212,213,218,219,220,223,229,231,233,234,236,237,240,243">
+    <decVal min="0" max="255"/>
+    <label>Fade-in time</label>
+    <label xml:lang="it">Tempo di dissolvenza</label>
+    <label xml:lang="cs">Čas prolínání</label>
+    <label xml:lang="de">Aufblendzeit</label>
+    <tooltip>Fade-in time for effect "Slow fade in/out", default for Non Sounddecoder = 1</tooltip>
+    <tooltip xml:lang="de">Aufblendzeit für den Effekt "Langsames Auf- und Abdimmen", Standard für Nicht-Sounddecoder = 1</tooltip>
+  </variable>
+  <variable CV="191" item="Fade-out time" default="1" include="130,131,132,133,134,135,136,137,138,151,161,166,177,181,186,192,193,194,195,197,199,201,202,203,204,205,206,209,211,212,213,218,219,220,223,229,231,233,234,236,237,240,243">
     <decVal min="0" max="255"/>
     <label>Fade-out time</label>
     <label xml:lang="it">Tempo di dissolvenza</label>

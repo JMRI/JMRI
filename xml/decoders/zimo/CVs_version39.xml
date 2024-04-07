@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- version 1 02 May 2020 Ronald Kuhn - CVs for firmware v39 and above-->
+<!-- version 1 - 02 May 2020 Ronald Kuhn - CVs for firmware v39 and above -->
+<!-- version 1.1 - 05 April 2024 Ronald Kuhn - exclude some non-sound-decoder -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <variable CV="27" item="Activate Residence Time" default="0" mask="XVXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -29,7 +30,7 @@
     <tooltip xml:lang="de">Bei intensivem Analogbetrieb sollte die UPDATESPERRE eingelegt werden, um Störungen und schlechteres Fahrverhalten zu vermeiden!</tooltip>
     <tooltip xml:lang="cs">Při intenzivním analogovém provozu by měl být aktivován Zámek úprav, aby nedocházelo k rušení a horší manipulaci.!</tooltip>
   </variable>
-  <variable CV="834" item="Turbocharger acceleration" default="0">
+  <variable CV="834" item="Turbocharger acceleration" default="0" exclude="130,131,166,177,195,197,199,201,211,218,240">
     <decVal/>
     <label>reduces acceleration dependency of the turboloader</label>
     <label xml:lang="de">Turbolader: Beschleunigungsabhängigkeit</label>

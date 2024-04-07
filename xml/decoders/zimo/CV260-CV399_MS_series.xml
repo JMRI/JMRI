@@ -2,6 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!--  Version 1.0   24 Nov 2022,  Nigel Cliffe.   Merging various MX and MS-series files to a single unit for MS-Series decoders                        -->
 <!--  Version 1.1   22 Jun 2023,  Ronald Kuhn.    add german translation                        -->
+<!--  Version 1.2   05 Apr 2024,  Ronald Kuhn.    add german translation                        -->
 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <variable item="Load Code 1" CV="260">
@@ -2106,8 +2107,10 @@
     <label xml:lang="de">Lichtblitzen Beschleunigen</label>
     <label xml:lang="cs">Pravděpodobnost jiskření kontroleru</label>
   </variable>
-  <variable item="Likeihood of switchgear sparks (decelerating)" CV="379" default="0" tooltip="CV378">
+  <variable item="Likeihood of switchgear sparks (decelerating)" CV="379" default="0" tooltip="CV379">
     <decVal />
+    <label xml:lang="cs">Pravděpodobnost jiskření kontroleru (zpomalování)</label>
+    <label xml:lang="de">Lichtblitzen Verzögerung</label>
   </variable>  
   <variable item="Electric brake function key" CV="380" default="0" tooltip="CV380">
     <enumVal>
