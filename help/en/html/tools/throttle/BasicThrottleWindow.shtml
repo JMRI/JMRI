@@ -165,7 +165,7 @@
         <li>Font Size - size of text displayed on button, if no icon</li>
         <li>Image Size - size of icon displayed on button, if any</li>
 
-        <li>Lockable - identifies whether the button acts as an "on/off" toggle switch; or as a
+        <li>Latchable - identifies whether the button acts as an "on/off" toggle switch; or as a
         momentary switch</li>
 
         <li>Visible - identifies whether the button is visible in the Function Panel window</li>

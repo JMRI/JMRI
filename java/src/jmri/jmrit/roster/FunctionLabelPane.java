@@ -119,6 +119,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             // add the checkbox
             lockable[i] = new JCheckBox();
             lockable[i].setSelected(re.getFunctionLockable(i));
+            lockable[i].setToolTipText(Bundle.getMessage("FunctionButtonLockableToolTip"));
             add(lockable[i], cL);
             cL.gridx++;
 
