@@ -49,8 +49,8 @@ public class ReplaceNamedBeanInTree {
         return list;
     }
 
-    public List<NamedBeanHandle> getNamedBeans(Base base) {
-        List<NamedBeanHandle> list = new ArrayList<>();
+    public List<NamedBeanHandle<? extends NamedBean>> getNamedBeans(Base base) {
+        List<NamedBeanHandle<? extends NamedBean>> list = new ArrayList<>();
 
         base.forEntireTree((Base b) -> {
 //            getSelectNamedBeans(b, list);
