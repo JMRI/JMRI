@@ -408,6 +408,7 @@
              <li>Head Only - only the front of the train can be detected.</li>
              <li>Head and Tail - the front and rear are detected but not any bits in between.</li>
              <li>Any TrainInfo files that are edited will be saved in the updated way and cannot be read by older versions.</li>
+             <li>ActiveTrain - now fires property change events when Allocated Section are added and removed.  Previously only fired event on add.
         </ul>
 
     <h3>Dispatcher System</h3>
