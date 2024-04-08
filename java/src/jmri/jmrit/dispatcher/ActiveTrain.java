@@ -830,6 +830,8 @@ public class ActiveTrain implements PropertyChangeProvider {
                 }
             }
         }
+        // notify anyone interested
+        pcs.firePropertyChange("sectiondeallocated",as , null);
         refreshPanel();
         if (as.getSection() == mLastAllocatedSection) {
             mLastAllocatedSection = null;
