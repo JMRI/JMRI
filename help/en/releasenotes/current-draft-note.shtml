@@ -409,6 +409,9 @@
              <li>Head and Tail - the front and rear are detected but not any bits in between.</li>
              <li>Any TrainInfo files that are edited will be saved in the updated way and cannot be read by older versions.</li>
         </ul>
+        <ul>
+             <li>When finding no next allocated section, 1st check for end of transit.</li> 
+        </ul>
 
     <h3>Dispatcher System</h3>
         <a id="Dispatcher_System" name="Dispatcher_System"></a>
