@@ -391,7 +391,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Label&Media pane, throttle function button "lock" behaviour was renamed as "latch", as per <a href="https://github.com/JMRI/JMRI/issues/12975">issue #12975</a>. Documentation updated accordingly.</li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -566,7 +566,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Throttle function button "lockable" behaviour was renamed as "latchable", as per <a href="https://github.com/JMRI/JMRI/issues/12975">issue #12975</a>. Documentation updated accordingly.</li>
         </ul>
 
     <h3>Timetable</h3>
