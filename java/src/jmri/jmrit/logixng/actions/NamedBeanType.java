@@ -23,7 +23,12 @@ public enum NamedBeanType {
             Block.class,
             null,
             () -> InstanceManager.getDefault(BlockManager.class),
-            InstanceManager.getDefault(BlockManager.class)::createNewBlock,
+            new CreateBean() {
+                @Override
+                public NamedBean createBean(String systemName, String userName) {
+                    return ((BlockManager)NamedBeanType.Block.getManager()).createNewBlock(systemName, userName);
+                }
+            },
             (NamedBean bean, String property) -> {
                 if (!(bean instanceof Block)) throw new IllegalArgumentException("bean is not a Block");
                 InstanceManager.getDefault(BlockManager.class).deleteBean((Block)bean, property);
@@ -35,7 +40,12 @@ public enum NamedBeanType {
             GlobalVariable.class,
             "value",
             () -> InstanceManager.getDefault(GlobalVariableManager.class),
-            InstanceManager.getDefault(GlobalVariableManager.class)::createGlobalVariable,
+            new CreateBean() {
+                @Override
+                public NamedBean createBean(String systemName, String userName) {
+                    return ((GlobalVariableManager)NamedBeanType.GlobalVariable.getManager()).createGlobalVariable(systemName, userName);
+                }
+            },
             (NamedBean bean, String property) -> {
                 if (!(bean instanceof GlobalVariable)) throw new IllegalArgumentException("bean is not a GlobalVariable");
                 InstanceManager.getDefault(GlobalVariableManager.class).deleteBean((GlobalVariable)bean, property);
@@ -71,7 +81,12 @@ public enum NamedBeanType {
             Memory.class,
             "value",
             () -> InstanceManager.getDefault(MemoryManager.class),
-            InstanceManager.getDefault(MemoryManager.class)::newMemory,
+            new CreateBean() {
+                @Override
+                public NamedBean createBean(String systemName, String userName) {
+                    return ((MemoryManager)NamedBeanType.Memory.getManager()).newMemory(systemName, userName);
+                }
+            },
             (NamedBean bean, String property) -> {
                 if (!(bean instanceof Memory)) throw new IllegalArgumentException("bean is not a Memory");
                 InstanceManager.getDefault(MemoryManager.class).deleteBean((Memory)bean, property);

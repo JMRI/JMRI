@@ -71,10 +71,6 @@ public class NamedBeanTypeTest {
 
             NamedBean namedBean;
             if (jmri.jmrit.logixng.GlobalVariable.class.isAssignableFrom(namedBeanType.getClazz())) {
-
-                // REMOVE THIS!!!
-                if (1==1) return;
-
                 String sysName = InstanceManager.getDefault(GlobalVariableManager.class).getAutoSystemName();
                 System.out.format("Sys: %s, user: %s%n", sysName, namedBeanName);
                 namedBean = namedBeanType.getCreateBean().createBean(sysName,namedBeanName);
@@ -99,7 +95,7 @@ public class NamedBeanTypeTest {
 
 
             try {
-                Assert.assertNotNull(namedBeanName, namedBeanType.getManager().getBySystemName(namedBeanName));
+                Assert.assertNotNull(namedBeanType.name()+": "+namedBeanName, namedBeanType.getManager().getBySystemName(namedBeanName));
                 Assert.assertNotNull(namedBeanType.getManager().getByUserName(namedBeanUserName));
 
 //                deleteBean.deleteBean(namedBean, "CanDelete");
