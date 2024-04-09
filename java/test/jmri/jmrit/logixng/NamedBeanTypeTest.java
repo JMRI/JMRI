@@ -85,14 +85,8 @@ public class NamedBeanTypeTest {
             NamedBean beanBySystemName =  instanceManagerManager.getBySystemName(namedBeanName);
             NamedBean beanByUserName =  instanceManagerManager.getByUserName(namedBeanUserName);
 
-            // REMOVE THIS!!!
-            if (jmri.BlockManager.class.equals(rootManagerClass)
-                    || jmri.MemoryManager.class.equals(rootManagerClass)
-                    || jmri.jmrit.logix.OBlockManager.class.equals(rootManagerClass)) return;
-
-//            Assert.assertNotNull("Manager: "+rootManagerClass.getName(), beanBySystemName);
-//            Assert.assertNotNull("Manager: "+rootManagerClass.getName(), beanByUserName);
-
+            Assert.assertNotNull("Manager: "+rootManagerClass.getName(), beanBySystemName);
+            Assert.assertNotNull("Manager: "+rootManagerClass.getName(), beanByUserName);
 
             try {
                 Assert.assertNotNull(namedBeanType.name()+": "+namedBeanName, namedBeanType.getManager().getBySystemName(namedBeanName));
@@ -153,8 +147,6 @@ public class NamedBeanTypeTest {
             testNamedBeanType(namedBeanType, rootManagerClass);
         }
 
-        // REMOVE THIS!!!
-        if (1==1) return;
 
         // Ensure we have cleared everything
         setUp();
