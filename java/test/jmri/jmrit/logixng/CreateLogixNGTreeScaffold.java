@@ -6,6 +6,7 @@ import java.util.*;
 
 import jmri.*;
 import jmri.implementation.VirtualSignalHead;
+import jmri.jmrit.display.logixng.WindowManagement;
 import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logix.BlockOrder;
@@ -2676,9 +2677,29 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
-        jmri.jmrit.display.logixng.WindowToFront windowToFront =
-                new jmri.jmrit.display.logixng.WindowToFront(digitalActionManager.getAutoSystemName(), null);
-        maleSocket = digitalActionManager.registerAction(windowToFront);
+        jmri.jmrit.display.logixng.WindowManagement windowManagement =
+                new jmri.jmrit.display.logixng.WindowManagement(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(windowManagement);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        windowManagement =
+                new jmri.jmrit.display.logixng.WindowManagement(digitalActionManager.getAutoSystemName(), null);
+        windowManagement.setIgnoreWindowNotFound(true);
+        windowManagement.getSelectEnumHideOrShow().setEnum(WindowManagement.HideOrShow.Show);
+        windowManagement.getSelectEnumMaximizeMinimizeNormalize().setEnum(WindowManagement.MaximizeMinimizeNormalize.Maximize);
+        windowManagement.getSelectEnumBringToFrontOrBack().setEnum(WindowManagement.BringToFrontOrBack.Front);
+        maleSocket = digitalActionManager.registerAction(windowManagement);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        windowManagement =
+                new jmri.jmrit.display.logixng.WindowManagement(digitalActionManager.getAutoSystemName(), null);
+        windowManagement.setIgnoreWindowNotFound(false);
+        windowManagement.getSelectEnumHideOrShow().setEnum(WindowManagement.HideOrShow.Hide);
+        windowManagement.getSelectEnumMaximizeMinimizeNormalize().setEnum(WindowManagement.MaximizeMinimizeNormalize.Normalize);
+        windowManagement.getSelectEnumBringToFrontOrBack().setEnum(WindowManagement.BringToFrontOrBack.Back);
+        maleSocket = digitalActionManager.registerAction(windowManagement);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 

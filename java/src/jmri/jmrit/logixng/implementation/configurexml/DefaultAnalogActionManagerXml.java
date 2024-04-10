@@ -24,7 +24,7 @@ import org.jdom2.Element;
 public class DefaultAnalogActionManagerXml extends AbstractManagerXml {
 
     private final Map<String, Class<?>> xmlClasses = new HashMap<>();
-    
+
     public DefaultAnalogActionManagerXml() {
     }
 
@@ -102,26 +102,27 @@ public class DefaultAnalogActionManagerXml extends AbstractManagerXml {
      * @param actions Element containing the AnalogActionBean elements to load.
      */
     public void loadActions(Element actions) {
-        
+
         List<Element> actionList = actions.getChildren();  // NOI18N
         log.debug("Found {} actions", actionList.size());  // NOI18N
 
         for (int i = 0; i < actionList.size(); i++) {
-            
+
             String className = actionList.get(i).getAttribute("class").getValue();
 //            log.error("className: " + className);
-            
+
             Class<?> clazz = xmlClasses.get(className);
-            
+
             if (clazz == null) {
                 try {
+                    className = jmri.configurexml.ConfigXmlManager.currentClassName(className);
                     clazz = Class.forName(className);
                     xmlClasses.put(className, clazz);
                 } catch (ClassNotFoundException ex) {
                     log.error("cannot load class {}", className, ex);
                 }
             }
-            
+
             if (clazz != null) {
                 Constructor<?> c = null;
                 try {
@@ -129,14 +130,14 @@ public class DefaultAnalogActionManagerXml extends AbstractManagerXml {
                 } catch (NoSuchMethodException | SecurityException ex) {
                     log.error("cannot create constructor", ex);
                 }
-                
+
                 if (c != null) {
                     try {
                         AbstractNamedBeanManagerConfigXML o = (AbstractNamedBeanManagerConfigXML)c.newInstance();
-                        
+
                         MaleSocket oldLastItem = InstanceManager.getDefault(AnalogActionManager.class).getLastRegisteredMaleSocket();
                         o.load(actionList.get(i), null);
-                        
+
                         // Load male socket data if a new bean has been registered
                         MaleSocket newLastItem = InstanceManager.getDefault(AnalogActionManager.class).getLastRegisteredMaleSocket();
                         if (newLastItem != oldLastItem) loadMaleSocket(actionList.get(i), newLastItem);

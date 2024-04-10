@@ -1,10 +1,6 @@
 /**
  * JMRI JSON protocol abstract client.
  *
- * NOTE this library makes assumptions about JSON arrays returned by JMRI that
- * __do not__ match documented JMRI behavior. It is recommended that no methods
- * expecting a data array of a single type be relied upon.
- *
  * This library depends on jQuery 1.9 or newer.
  *
  * To be useful, you need to override one or more of the following functions:
@@ -17,56 +13,56 @@
  * hello(data)
  * goodbye(data)
  * block(name, value, data)
- * blocks(data array)
+ * blocks(array)
  * car(name, data)
- * cars(data array)
+ * cars(array)
  * configProfile(name, data)
- * configProfiles(data array)
+ * configProfiles(array)
  * consist(name, data)
- * consists(data array)
+ * consists(array)
  * engine(name, data)
- * engines(data array)
+ * engines(array)
  * idTag(name, state, data)
- * idTags(data array)
+ * idTags(array)
  * layoutBlock(name, value, data)
- * layoutBlocks(data array)
+ * layoutBlocks(array)
  * light(name, state, data)
- * lights(data array)
+ * lights(array)
  * location(name, data)
- * locations(data array)
+ * locations(array)
  * memory(name, value, data)
- * memories(data array)
- * metadata(data array)
+ * memories(array)
+ * metadata(array)
  * networkService(name, data)
- * networkServices(data array)
+ * networkServices(array)
  * oblock(name, status, data)
- * oblocks(data array)
+ * oblocks(array)
  * panel(name, value, data)
- * panels(data array)
+ * panels(array)
  * power(state)
  * railroad(name)
  * reporter(name, value, data)
- * reporters(data array)
- * roster(data array)
+ * reporters(array)
+ * roster(array)
  * rosterEntry(name, data)
  * rosterGroup(name, data)
- * rosterGroups(data array)
+ * rosterGroups(array)
  * route(name, state, data)
- * routes(data array)
+ * routes(array)
  * sensor(name, state, data)
- * sensors(data array)
+ * sensors(array)
  * signalHead(name, state, data)
- * signalHeads(data array)
+ * signalHeads(array)
  * signalMast(name, state, data)
- * signalMasts(data array)
+ * signalMasts(array)
  * systemConnection(name, data)
- * systemConnections(data array)
+ * systemConnections(array)
  * throttle(name, data)
  * time(time, data)
  * train(name, data)
- * trains(data array)
+ * trains(array)
  * turnout(name, state, data)
- * turnouts(data array)
+ * turnouts(array)
  * version(version)
  * as demonstrated in the power.html demonstration web app
  *
@@ -884,55 +880,55 @@
                     jmri.block(e.data.name, e.data.value, e.data);
                 },
                 blocks: function (e) {
-                    jmri.blocks(e.data);
+                    jmri.blocks(e);
                 },
                 car: function (e) {
                     jmri.car(e.data.name, e.data);
                 },
                 cars: function (e) {
-                    jmri.cars(e.data);
+                    jmri.cars(e);
                 },
                 configProfile: function (e) {
                     jmri.configProfile(e.data.name, e.data);
                 },
                 configProfiles: function (e) {
-                    jmri.configProfiles(e.data);
+                    jmri.configProfiles(e);
                 },
                 consist: function (e) {
                     jmri.consist(e.data.name, e.data);
                 },
                 consists: function (e) {
-                    jmri.consists(e.data);
+                    jmri.consists(e);
                 },
                 engine: function (e) {
                     jmri.engine(e.data.name, e.data);
                 },
                 engines: function (e) {
-                    jmri.engines(e.data);
+                    jmri.engines(e);
                 },
                 idTag: function (e) {
                     jmri.idTag(e.data.name, e.data.state, e.data);
                 },
                 idTags: function (e) {
-                    jmri.idTags(e.data);
+                    jmri.idTags(e);
                 },
                 layoutBlock: function (e) {
                     jmri.layoutBlock(e.data.name, e.data.value, e.data);
                 },
                 layoutBlocks: function (e) {
-                    jmri.layoutBlocks(e.data);
+                    jmri.layoutBlocks(e);
                 },
                 light: function (e) {
                     jmri.light(e.data.name, e.data.state, e.data);
                 },
                 lights: function (e) {
-                    jmri.lights(e.data);
+                    jmri.lights(e);
                 },
                 location: function (e) {
                     jmri.location(e.data.name, e.data);
                 },
                 locations: function (e) {
-                    jmri.locations(e.data);
+                    jmri.locations(e);
                 },
                 logixngicon: function (e) {
                     // Do nothing. We get this event as response when we call jmri.clickLogixNGIcon()
@@ -942,7 +938,7 @@
                     jmri.memory(e.data.name, e.data.value, e.data);
                 },
                 memories: function (e) {
-                    jmri.memories(e.data);
+                    jmri.memories(e);
                 },
                 metadata: function (e) {
                     jmri.metadata(e.data);
@@ -951,19 +947,19 @@
                     jmri.networkService(e.data.name, e.data);
                 },
                 networkServices: function (e) {
-                    jmri.networkServices(e.data);
+                    jmri.networkServices(e);
                 },
                 oblock: function (e) {
                     jmri.oblock(e.data.name, e.data.status, e.data);
                 },
                 oblocks: function (e) {
-                    jmri.oblocks(e.data);
+                    jmri.oblocks(e);
                 },
                 panel: function (e) {
                     jmri.panel(e.data.name, e.data.value, e.data);
                 },
                 panels: function (e) {
-                    jmri.panels(e.data);
+                    jmri.panels(e);
                 },
                 power: function (e) {
                     jmri.power(e.data.state);
@@ -972,7 +968,7 @@
                     jmri.reporter(e.data.name, e.data.value, e.data);
                 },
                 reporters: function (e) {
-                    jmri.reporters(e.data);
+                    jmri.reporters(e);
                 },
                 rosterEntry: function (e) {
                     jmri.rosterEntry(e.data.name, e.data);
@@ -984,37 +980,37 @@
                     jmri.rosterGroup(e.data.name, e.data);
                 },
                 rosterGroups: function (e) {
-                    jmri.rosterGroups(e.data);
+                    jmri.rosterGroups(e);
                 },
                 route: function (e) {
                     jmri.route(e.data.name, e.data.state, e.data);
                 },
                 routes: function (e) {
-                    jmri.routes(e.data);
+                    jmri.routes(e);
                 },
                 sensor: function (e) {
                     jmri.sensor(e.data.name, e.data.state, e.data);
                 },
                 sensors: function (e) {
-                    jmri.sensors(e.data);
+                    jmri.sensors(e);
                 },
                 signalHead: function (e) {
                     jmri.signalHead(e.data.name, e.data.state, e.data);
                 },
                 signalHeads: function (e) {
-                    jmri.signalHeads(e.data);
+                    jmri.signalHeads(e);
                 },
                 signalMast: function (e) {
                     jmri.signalMast(e.data.name, e.data.state, e.data);
                 },
                 signalMasts: function (e) {
-                    jmri.signalMasts(e.data);
+                    jmri.signalMasts(e);
                 },
                 systemConnection: function (e) {
                     jmri.systemConnection(e.data.name, e.data);
                 },
                 systemConnections: function (e) {
-                    jmri.systemConnections(e.data);
+                    jmri.systemConnections(e);
                 },
                 throttle: function (e) {
                     jmri.throttle(e.data.throttle, e.data);
@@ -1026,16 +1022,33 @@
                     jmri.train(e.data.name, e.data);
                 },
                 trains: function (e) {
-                    jmri.trains(e.data);
+                    jmri.trains(e);
                 },
                 turnout: function (e) {
                     jmri.turnout(e.data.name, e.data.state, e.data);
                 },
                 turnouts: function (e) {
-                    jmri.turnouts(e.data);
+                    jmri.turnouts(e);
                 }
             }
-
+            /**
+             * get the name (type) used for list from the name used for a single item
+             *
+             * @param {string} name of item
+             * @returns {string} name for a list of that item
+             */
+            jmri.getListType = function(name) {
+                var lt = name + "s"; //assume simplest case: "sensor" -> "sensors"
+                if (name == "rosterEntry") {  
+                    lt = "roster";
+                } else if (name == "memory") {
+                    lt = "memories";
+                } else if (name == "metadata") { 
+                    lt = "metadata";
+                }
+                return lt;
+            }
+            
             jmri.reconnect = function () {
                 jmri.socket = $.websocket(jmri.url.replace(/^http/, "ws"), {
                     open: function () {
@@ -1053,10 +1066,23 @@
                     },
                     message: function (e) {
                         jmri.console(e.originalEvent.data);
-                        //determine message type and call appropriate event handler
+                        //determine message type and call appropriate event handlers
                         var m = JSON.parse(e.originalEvent.data);
 
                         if ($.isArray(m)) {
+                            // pass arrays to plural array handler AND call individual event handler for each
+                            // (to match previous behavior)
+                            if (m.length == 0) { 
+                                jmri.log("WARN: empty json array received, could not handle");
+                                return;
+                            } else { //pass array to "plural" method
+                                var lt = jmri.getListType(m[0].type);
+                                var lh = jmri.events[lt];
+                                if (lh) {
+                                    lh.call(this, m);
+                                }
+                            }                           
+                            //call individual method for each array element
                             m.forEach(function(o) {
                                 var h = jmri.events[o.type];
                                 if (h) {
@@ -1068,13 +1094,14 @@
                                 }
                             })
                         } else {
+                            // call individual method
                             var h = jmri.events[m.type];
                             if (h) {
                                 h.call(this, m);
                             } else if (!m.type) {
                                 log.error("ERROR: missing type property in " + m);
                             } else if (!h) {
-                                    jmri.log("Ignoring JSON type '" + m.type + "'");
+                                jmri.log("Ignoring JSON type '" + m.type + "'");
                             }
                         }
                     }
