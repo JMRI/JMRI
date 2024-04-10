@@ -115,6 +115,7 @@ public class ReplaceNamedBeanInTreeTest {
                                         + CreateLogixNGTreeScaffold.getRandomString(20);
                                 NamedBean oldBean = logixNG_SelectNamedBean.getBean();
                                 Assert.assertNotNull(oldBean);
+                                Assert.assertNotNull(newBeansMap);
                                 NamedBean bean = newBeansMap.get(oldBean);
                                 if (bean == null) {
                                     if (jmri.jmrit.logixng.GlobalVariable.class.isAssignableFrom(clazz)) {
