@@ -82,25 +82,25 @@ public class NamedBeanTypeTest {
             }
             Assert.assertNotNull("Manager: "+rootManagerClass.getName(), namedBean);
 
-            NamedBean beanBySystemName =  instanceManagerManager.getBySystemName(namedBeanName);
-            NamedBean beanByUserName =  instanceManagerManager.getByUserName(namedBeanUserName);
-
-            Assert.assertNotNull("Manager: "+rootManagerClass.getName(), beanBySystemName);
-            Assert.assertNotNull("Manager: "+rootManagerClass.getName(), beanByUserName);
-
             try {
-                Assert.assertNotNull(namedBeanType.name()+": "+namedBeanName, namedBeanType.getManager().getBySystemName(namedBeanName));
+                Assert.assertNotNull(namedBeanType.getManager().getBySystemName(namedBeanName));
                 Assert.assertNotNull(namedBeanType.getManager().getByUserName(namedBeanUserName));
+                Assert.assertNotNull(instanceManagerManager.getBySystemName(namedBeanName));
+                Assert.assertNotNull(instanceManagerManager.getByUserName(namedBeanUserName));
 
 //                deleteBean.deleteBean(namedBean, "CanDelete");
 
                 Assert.assertNotNull(namedBeanType.getManager().getBySystemName(namedBeanName));
                 Assert.assertNotNull(namedBeanType.getManager().getByUserName(namedBeanUserName));
+                Assert.assertNotNull(instanceManagerManager.getBySystemName(namedBeanName));
+                Assert.assertNotNull(instanceManagerManager.getByUserName(namedBeanUserName));
 
                 deleteBean.deleteBean(namedBean, "DoDelete");
 
                 Assert.assertNull(namedBeanType.getManager().getBySystemName(namedBeanName));
                 Assert.assertNull(namedBeanType.getManager().getByUserName(namedBeanUserName));
+                Assert.assertNull(instanceManagerManager.getBySystemName(namedBeanName));
+                Assert.assertNull(instanceManagerManager.getByUserName(namedBeanUserName));
             } catch (PropertyVetoException e) {
                 Assert.fail("No exception expected: "+e.toString()+", "+namedBeanType.getManager().getClass().getName());
             }
