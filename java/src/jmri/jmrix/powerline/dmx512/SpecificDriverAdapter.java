@@ -25,7 +25,7 @@ public class SpecificDriverAdapter extends SerialPortController {
     public String openPort(String portName, String appName) {
 
         // get and open the primary port
-        currentSerialPort = activatePort(portName, log);
+        currentSerialPort = activatePort(portName, log, 2);
         if (currentSerialPort == null) {
             log.error("failed to connect DMX512 to {}", portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
