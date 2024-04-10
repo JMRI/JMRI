@@ -100,10 +100,6 @@ public class ReplaceNamedBeanInTreeTest {
                             if (jmri.jmrit.logix.OBlock.class.isAssignableFrom(clazz)) {
                                 continue;
                             }
-                            // Fix this!!!
-                            if (jmri.jmrit.entryexit.DestinationPoints.class.isAssignableFrom(clazz)) {
-                                continue;
-                            }
 
                             if (namedBeanType.getClazz().isAssignableFrom(clazz)) {
                                 if (!logixNG_SelectNamedBean.isDirectAddressing()
