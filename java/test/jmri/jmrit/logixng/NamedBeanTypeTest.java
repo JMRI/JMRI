@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import jmri.*;
-import jmri.jmrit.logixng.actions.NamedBeanType;
 import jmri.util.JUnitUtil;
 
 import org.junit.*;

@@ -1,4 +1,4 @@
-package jmri.jmrit.logixng.actions;
+package jmri.jmrit.logixng;
 
 import jmri.*;
 import jmri.jmrit.entryexit.DestinationPoints;
@@ -7,8 +7,6 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
-import jmri.jmrit.logixng.GlobalVariable;
-import jmri.jmrit.logixng.GlobalVariableManager;
 
 /**
  * Defines types of NamedBeans, for example Turnout and Light.

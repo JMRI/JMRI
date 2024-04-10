@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import jmri.jmrit.logixng.NamedBeanType;
+
 import java.beans.*;
 import java.util.*;
 import java.util.stream.Collectors;
