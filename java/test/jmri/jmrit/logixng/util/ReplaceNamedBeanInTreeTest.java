@@ -185,7 +185,7 @@ public class ReplaceNamedBeanInTreeTest {
 
     @After
     public void tearDown() {
-//        JUnitAppender.clearBacklog();    // REMOVE THIS!!!
+//        jmri.util.JUnitAppender.clearBacklog();    // REMOVE THIS!!!
         createLogixNGTreeScaffold.tearDown();
     }
 

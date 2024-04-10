@@ -5860,7 +5860,7 @@ public class CreateLogixNGTreeScaffold {
 
         TransitScaffold.initTransits();
 
-//        JUnitUtil.initLogixNGManager();
+        JUnitUtil.initLogixNGManager();
 
         CreateLogixNGTreeScaffold.setUpCalled(true);
     }
