@@ -54,6 +54,7 @@ public class NamedBeanTypeTest {
         return superManagerClass;
     }
 
+    @SuppressWarnings("unchecked")  // Unchecked cast due to type erasure
     private void testNamedBeanType(NamedBeanType namedBeanType, Class<?> rootManagerClass) {
 
         Manager<? extends NamedBean> instanceManagerManager =
@@ -110,6 +111,7 @@ public class NamedBeanTypeTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")  // Static analysis complains despite checked by Assert
     public void testNamedBeanType() {
         Map<NamedBeanType, Class<?>> rootManagerClassMap = new HashMap<>();
 
