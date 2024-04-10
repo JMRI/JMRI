@@ -450,6 +450,8 @@
           <li>The action <strong>Window to front</strong> has been improved and renamed to
               <strong>Window management</strong>. It can now show/hide a window,
               maximize/normalize/minimize a window and move the window to front or back.</li>
+          <li>The class <strong>jmri.jmrit.logixng.actions.NamedBeanType</strong> has been moved to
+              <strong>jmri.jmrit.logixng.NamedBeanType</strong>. It should only affect JMRI developers.</li>
           <li></li>
         </ul>
 
