@@ -1433,7 +1433,7 @@
 
         <dt>Maximize/Normalize/Minimize</dt>
         <dd>Minimize and normalize use the OS process to move the window to and from the task bar or
-        dock.  Normalize returns the window to the same location and size.  Maximise fits the
+        dock.  Normalize returns the window to the same location and size.  Maximize fits the
         window to the screen size.  Normalize will return the window to the orignal location and
         size.  <strong><em>There is one exception</em></strong>. If the window location or size has
         changed while maximized, that becomes the new location and size and normalize will not
