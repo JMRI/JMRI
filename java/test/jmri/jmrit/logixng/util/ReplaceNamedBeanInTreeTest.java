@@ -114,6 +114,7 @@ public class ReplaceNamedBeanInTreeTest {
                                         .getSystemNamePrefix()
                                         + CreateLogixNGTreeScaffold.getRandomString(20);
                                 NamedBean oldBean = logixNG_SelectNamedBean.getBean();
+                                Assert.assertNotNull(oldBean);
                                 NamedBean bean = newBeansMap.get(oldBean);
                                 if (bean == null) {
                                     if (jmri.jmrit.logixng.GlobalVariable.class.isAssignableFrom(clazz)) {
@@ -151,6 +152,7 @@ public class ReplaceNamedBeanInTreeTest {
 
                     // Fix this!!!
                     // ActionListenOnBeans is not handled yet!!!!
+//                    if (1==0)
                     for (var entry : newBeansMap.entrySet()) {
                         if (entry.getKey().getSystemName().equals("IM2")) {
                             newTree = newTree.replaceAll(
