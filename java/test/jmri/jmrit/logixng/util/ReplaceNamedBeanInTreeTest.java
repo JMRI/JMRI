@@ -112,33 +112,22 @@ public class ReplaceNamedBeanInTreeTest {
                                 }
 
                                 NamedBeanType.CreateBean createBean = namedBeanType.getCreateBean();
-                                if (createBean == null) continue;
+                                if (createBean != null) {
+                                    String systemName = namedBeanType.getManager()
+                                            .getSystemNamePrefix()
+                                            + CreateLogixNGTreeScaffold.getRandomString(20);
+                                    NamedBean oldBean = logixNG_SelectNamedBean.getBean();
+                                    Assert.assertNotNull(oldBean);
 
-                                String namedBeanName = namedBeanType.getManager()
-                                        .getSystemNamePrefix()
-                                        + CreateLogixNGTreeScaffold.getRandomString(20);
-                                NamedBean oldBean = logixNG_SelectNamedBean.getBean();
-                                Assert.assertNotNull(oldBean);
-
-                                NamedBean bean = newBeansMap.get(oldBean);
-                                if (bean == null) {
-                                    if (jmri.jmrit.logixng.GlobalVariable.class.isAssignableFrom(clazz)) {
-                                        bean = namedBeanType.getCreateBean().createBean(
-                                                InstanceManager.getDefault(
-                                                        GlobalVariableManager.class).getAutoSystemName(),
-                                                        namedBeanName);
-                                    } else {
-                                        try {
-                                        bean = createBean.createBean(namedBeanName, null);
-                                        } catch (Exception e) {
-                                            log.error(e.getMessage());
-                                            continue;
-                                        }
+                                    NamedBean bean = newBeansMap.get(oldBean);
+                                    if (bean == null) {
+                                        String userName = CreateLogixNGTreeScaffold.getRandomString(20);
+                                        bean = createBean.createBean(systemName, userName);
+                                        newBeansMap.put(oldBean, bean);
+    //                                    System.out.format("Old: %s, new: %s%n", oldBean, bean);
                                     }
-                                    newBeansMap.put(oldBean, bean);
-//                                    System.out.format("Old: %s, new: %s%n", oldBean, bean);
+                                    logixNG_SelectNamedBean.setNamedBean(bean.getSystemName());
                                 }
-                                logixNG_SelectNamedBean.setNamedBean(bean.getSystemName());
                             }
                         }
                     }
