@@ -124,17 +124,15 @@ public class NamedBeanTypeTest {
         for (NamedBeanType namedBeanType : NamedBeanType.values()) {
             map.put(namedBeanType, namedBeanType.getManager());
 
-//            Manager<? extends NamedBean> manager = namedBeanType.getManager();
-
             Class<?> rootManagerClass = getRootManagerClass(namedBeanType.getManager());
             Assert.assertNotNull(rootManagerClass);
 
             rootManagerClassMap.put(namedBeanType, rootManagerClass);
 
-            System.out.format("Type: %s, Manager: %s, Super manager: %s%n",
-                    namedBeanType.name(),
-                    namedBeanType.getManager(),
-                    rootManagerClass.getName());
+//            System.out.format("Type: %s, Manager: %s, Super manager: %s%n",
+//                    namedBeanType.name(),
+//                    namedBeanType.getManager(),
+//                    rootManagerClass.getName());
 
             Object instanceManagerManagerObj = InstanceManager.getDefault(rootManagerClass);
             Assert.assertNotNull(instanceManagerManagerObj);
@@ -153,13 +151,6 @@ public class NamedBeanTypeTest {
         setUp();
 
         for (NamedBeanType namedBeanType : NamedBeanType.values()) {
-//            if (!NamedBeanType.Memory.equals(namedBeanType)) continue;
-
-//            System.out.println();
-
-//            NamedBean namedBean = InstanceManager.getDefault(namedBeanType.);
-
-
             Manager<? extends NamedBean> instanceManagerManager =
                     instanceManagerManagerMap.get(namedBeanType);
 
