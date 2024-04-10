@@ -2,8 +2,7 @@ package jmri.jmrit.logixng.util;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
@@ -57,6 +56,15 @@ public class ReplaceNamedBeanInTree {
         });
 
         return list;
+    }
+
+    public void replaceNamedBeans(
+            List<LogixNG_SelectNamedBean<? extends NamedBean>> selectNamedBeans,
+            List<NamedBeanHandle<? extends NamedBean>> namedBeanHandles,
+            Map<NamedBean, NamedBean> replacements) {
+
+//                                    logixNG_SelectNamedBean.setNamedBean(bean.getSystemName());
+
     }
 
 //    void getNamedBeans(List<NamedBeanReference> list);

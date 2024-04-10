@@ -44,6 +44,9 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
 
 
     public LogixNG_SelectNamedBean(AbstractBase base, Class<E> clazz, Manager<E> manager, PropertyChangeListener listener) {
+        if (NamedBeanType.getTypeFromClass(clazz) == null) {
+            log.error("Class {} has no NamedBeanType", clazz.getName());
+        }
         _base = base;
         _inUse = () -> true;
         _class = clazz;

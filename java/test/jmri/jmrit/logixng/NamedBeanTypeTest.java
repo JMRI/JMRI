@@ -54,7 +54,8 @@ public class NamedBeanTypeTest {
     }
 
     @SuppressWarnings("unchecked")  // Unchecked cast due to type erasure
-    private void testNamedBeanType(NamedBeanType namedBeanType, Class<?> rootManagerClass) {
+    private void testNamedBeanType(NamedBeanType namedBeanType, Class<?> rootManagerClass)
+            throws JmriException {
 
         Manager<? extends NamedBean> instanceManagerManager =
                 (Manager<? extends NamedBean>)InstanceManager.getDefault(rootManagerClass);
@@ -63,23 +64,19 @@ public class NamedBeanTypeTest {
         NamedBeanType.DeleteBean deleteBean = namedBeanType.getDeleteBean();
 
         if (createBean != null) {
-            String namedBeanName = namedBeanType.getManager()
-                    .getSystemNamePrefix()
+            String prefix = namedBeanType.getManager().getSystemNamePrefix();
+            if (NamedBeanType.Audio.equals(namedBeanType)) {
+                prefix += Audio.BUFFER;
+            } else if (NamedBeanType.GlobalVariable.equals(namedBeanType)) {
+                prefix = ((GlobalVariableManager)namedBeanType.getManager()).getSubSystemNamePrefix()
+                        + "$";  // System names with dollar sign allow any characters in the name
+            }
+            String namedBeanName = prefix
                     + CreateLogixNGTreeScaffold.getRandomString(20);
 
-            String namedBeanUserName = "UserName: " + CreateLogixNGTreeScaffold.getRandomString(20);
+            String namedBeanUserName = "UserName__" + CreateLogixNGTreeScaffold.getRandomString(20);
 
-            NamedBean namedBean;
-            if (jmri.jmrit.logixng.GlobalVariable.class.isAssignableFrom(namedBeanType.getClazz())) {
-                String sysName = InstanceManager.getDefault(GlobalVariableManager.class).getAutoSystemName();
-                System.out.format("Sys: %s, user: %s%n", sysName, namedBeanName);
-                namedBean = namedBeanType.getCreateBean().createBean(sysName,namedBeanName);
-                namedBeanUserName = namedBeanName;
-                namedBeanName = sysName;
-                System.out.format("Sys: %s, user: %s, bean: %s%n", sysName, namedBeanUserName, namedBean);
-             } else {
-                namedBean = createBean.createBean(namedBeanName, namedBeanUserName);
-            }
+            NamedBean namedBean = createBean.createBean(namedBeanName, namedBeanUserName);
             Assert.assertNotNull("Manager: "+rootManagerClass.getName(), namedBean);
 
             try {
@@ -111,7 +108,7 @@ public class NamedBeanTypeTest {
 
     @Test
     @SuppressWarnings("unchecked")  // Static analysis complains despite checked by Assert
-    public void testNamedBeanType() {
+    public void testNamedBeanType() throws JmriException {
         Map<NamedBeanType, Class<?>> rootManagerClassMap = new HashMap<>();
 
         Map<NamedBeanType, Manager<? extends NamedBean>> map = new HashMap<>();
@@ -177,6 +174,8 @@ public class NamedBeanTypeTest {
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        InstanceManager.getDefault(AudioManager.class).cleanup();
+//        jmri.util.JUnitAppender.clearBacklog(); // REMOVE THIS!!!
         JUnitUtil.tearDown();
     }
 

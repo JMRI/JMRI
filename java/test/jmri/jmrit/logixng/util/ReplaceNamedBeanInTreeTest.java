@@ -46,8 +46,6 @@ public class ReplaceNamedBeanInTreeTest {
         log.error("XXX"+newTree+"XXX");
         log.error("--------------------------------------------");
 
-//        log.error(conditionalNGManager.getBySystemName(originalTree).getChild(0).getConnectedSocket().getSystemName());
-
         String[] originalTreeLines = originalTree.split(System.lineSeparator());
         String[] newTreeLines = newTree.split(System.lineSeparator());
         int line=0;
@@ -81,6 +79,8 @@ public class ReplaceNamedBeanInTreeTest {
 
         for (NamedBeanType namedBeanType : NamedBeanType.values()) {
 
+//            log.error(namedBeanType.name());
+
             boolean done = false;
             while (!done) {
                 for (LogixNG logixng : logixNG_Manager.getNamedBeanSet()) {
@@ -92,16 +92,13 @@ public class ReplaceNamedBeanInTreeTest {
                     for (int i=0; i < logixng.getNumConditionalNGs(); i++) {
                         ConditionalNG cng = logixng.getConditionalNG(i);
 
-                        var list = replaceNamedBeanInTree.getSelectNamedBeans(cng);
-                        for (var logixNG_SelectNamedBean : list) {
-                            var clazz = logixNG_SelectNamedBean.getClazz();
+                        Map<NamedBean, NamedBean> replacements = new HashMap<>();
 
-                            // Fix this!!!
-                            if (jmri.jmrit.logix.OBlock.class.isAssignableFrom(clazz)) {
-                                continue;
-                            }
+                        var selectNamedBeans = replaceNamedBeanInTree.getSelectNamedBeans(cng);
+                        for (var logixNG_SelectNamedBean : selectNamedBeans) {
+                            NamedBeanType selectNamedBeanType = NamedBeanType.getTypeFromClass(logixNG_SelectNamedBean.getClazz());
 
-                            if (namedBeanType.getClazz().isAssignableFrom(clazz)) {
+                            if (namedBeanType.equals(selectNamedBeanType)) {
                                 if (!logixNG_SelectNamedBean.isDirectAddressing()
                                         || logixNG_SelectNamedBean.getNamedBean() == null) {
                                     continue;
@@ -120,12 +117,23 @@ public class ReplaceNamedBeanInTreeTest {
                                         String userName = CreateLogixNGTreeScaffold.getRandomString(20);
                                         bean = createBean.createBean(systemName, userName);
                                         newBeansMap.put(oldBean, bean);
-    //                                    System.out.format("Old: %s, new: %s%n", oldBean, bean);
                                     }
+
+// FIX THIS!!!!
+//                                    replacements.put(oldBean, bean);
                                     logixNG_SelectNamedBean.setNamedBean(bean.getSystemName());
                                 }
                             }
                         }
+
+
+                        List<NamedBeanHandle<? extends NamedBean>> namedBeanHandles = new ArrayList<>();
+
+
+
+                        replaceNamedBeanInTree.replaceNamedBeans(selectNamedBeans, namedBeanHandles, replacements);
+
+
                     }
 
                     String newTree = this.getPrintTree(logixng, printTreeSettings);
