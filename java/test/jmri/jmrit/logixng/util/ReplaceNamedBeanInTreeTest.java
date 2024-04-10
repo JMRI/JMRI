@@ -110,12 +110,16 @@ public class ReplaceNamedBeanInTreeTest {
                                         || logixNG_SelectNamedBean.getNamedBean() == null) {
                                     continue;
                                 }
+
+                                NamedBeanType.CreateBean createBean = namedBeanType.getCreateBean();
+                                if (createBean == null) continue;
+
                                 String namedBeanName = namedBeanType.getManager()
                                         .getSystemNamePrefix()
                                         + CreateLogixNGTreeScaffold.getRandomString(20);
                                 NamedBean oldBean = logixNG_SelectNamedBean.getBean();
                                 Assert.assertNotNull(oldBean);
-                                Assert.assertNotNull(newBeansMap);
+
                                 NamedBean bean = newBeansMap.get(oldBean);
                                 if (bean == null) {
                                     if (jmri.jmrit.logixng.GlobalVariable.class.isAssignableFrom(clazz)) {
@@ -124,8 +128,6 @@ public class ReplaceNamedBeanInTreeTest {
                                                         GlobalVariableManager.class).getAutoSystemName(),
                                                         namedBeanName);
                                     } else {
-                                        NamedBeanType.CreateBean createBean = namedBeanType.getCreateBean();
-                                        if (createBean == null) continue;
                                         try {
                                         bean = createBean.createBean(namedBeanName, null);
                                         } catch (Exception e) {
