@@ -410,6 +410,9 @@
              <li>Any TrainInfo files that are edited will be saved in the updated way and cannot be read by older versions.</li>
              <li>ActiveTrain - now fires property change events when Allocated Section are added and removed.  Previously only fired event on add.
         </ul>
+        <ul>
+             <li>When finding no next allocated section, 1st check for end of transit.</li> 
+        </ul>
 
     <h3>Dispatcher System</h3>
         <a id="Dispatcher_System" name="Dispatcher_System"></a>
