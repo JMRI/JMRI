@@ -446,6 +446,15 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li><strong>A bug has been fixed in LogixNG when using LogixNG tables:</strong><br>
+              If an action or expression like the action <strong>Set turnout</strong> reads
+              data from a LogixNG table, for example the name of the turnout, and
+              a memory is used for addressing the row or column in the table,
+              the name of the memory was stored in the wrong place. It has now
+              been fixed, but when an existing file is loaded, the memory will
+              not be loaded. There is no way JMRI can detect this so existing
+              LogixNGs using this feature will fail once loaded with the new
+              JMRI version.</li>
           <li>ConditionalNGs can now be enabled/disabled by editing a LogixNG.</li>
           <li>Scripts invoked by a ConditionalNG or Module can access <strong>current</strong> local
               variables.  This makes it possible to use local variables as parameters for Jython scripts.
