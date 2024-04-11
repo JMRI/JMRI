@@ -2414,7 +2414,7 @@ public class CreateLogixNGTreeScaffold {
         actionTurnout.getSelectNamedBean().setAddressing(NamedBeanAddressing.Table);
         actionTurnout.getSelectNamedBean().getSelectTable().setTableNameAddressing(NamedBeanAddressing.Table);
         actionTurnout.getSelectNamedBean().getSelectTable().getSelectTableName().setTableNameAddressing(NamedBeanAddressing.Table);
-        actionTurnout.getSelectNamedBean().getSelectTable().getSelectTableName().setTableNameMemory(memory1);
+        actionTurnout.getSelectNamedBean().getSelectTable().getSelectTableName().getSelectTableName().setTable(csvTable);
         actionTurnout.getSelectNamedBean().getSelectTable().setTableColumnAddressing(NamedBeanAddressing.Memory);
         actionTurnout.getSelectNamedBean().getSelectTable().setTableColumnMemory(memory2);
         actionTurnout.getSelectNamedBean().getSelectTable().setTableRowAddressing(NamedBeanAddressing.Memory);
