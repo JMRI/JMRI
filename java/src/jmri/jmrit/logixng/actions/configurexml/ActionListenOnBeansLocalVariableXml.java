@@ -5,7 +5,7 @@ import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.actions.ActionListenOnBeansLocalVariable;
-import jmri.jmrit.logixng.actions.NamedBeanType;
+import jmri.jmrit.logixng.NamedBeanType;
 
 import org.jdom2.Attribute;
 import org.jdom2.Element;
