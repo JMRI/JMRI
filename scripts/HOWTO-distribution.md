@@ -260,12 +260,12 @@ For each, if it doesn't have the right milestone set, add the current milestone.
 ```
         git checkout master
         git pull
-        sed -i .bak s/5.7.4-SNAPSHOT/5.7.6-SNAPSHOT/g pom.xml
+        sed -i .bak s/5.7.6-SNAPSHOT/5.7.7-SNAPSHOT/g pom.xml
 ```
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field now, so check the numbers in the following line)
 ```
-        sed -i .bak s/release.build=4/release.build=5/g release.properties
+        sed -i .bak s/release.build=6/release.build=7/g release.properties
 ```
  - Check that both those edits left 5.7.6 defined in the two files
  
@@ -341,7 +341,7 @@ If you're developing any additional (post-5.7.6) changes that you want in the JM
 
 - Click "New Item"
 
-- Click "Copy Existing Item". Fill out the new 5.7.6 release name at the top. Enter the 5.5.2 most recent release at the bottom.  Click "OK"
+- Click "Copy Existing Item". Fill out the new 5.7.6 release name at the top. Enter the 5.7.5 most recent release at the bottom.  Click "OK"
 
 - Update
 
@@ -501,9 +501,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.7.6+R4933de1fc8.dmg](https://github.com/JMRI/JMRI/releases/download/v5.7.6/JMRI.5.7.6+R4933de1fc8.dmg) | 3ff5b2ea54d29748bb52ec257e3b63a2c66cef906e5d86eaf6d4284e1a635512
-[JMRI.5.7.6+R4933de1fc8.exe](https://github.com/JMRI/JMRI/releases/download/v5.7.6/JMRI.5.7.6+R4933de1fc8.exe) | 459488dd41c694b7f5da1a7ca2c6013c6e5f338a1960dce7f87340857520ca77
-[JMRI.5.7.6+R4933de1fc8.tgz](https://github.com/JMRI/JMRI/releases/download/v5.7.6/JMRI.5.7.6+R4933de1fc8.tgz) | 2e86250879ffb639d99c4a4ae5b651d1a42ca08f6e09d3301816d1f5ebbbbbed
+[JMRI.5.7.6+R539a39880d.dmg](https://github.com/JMRI/JMRI/releases/download/v5.7.6/JMRI.5.7.6+R539a39880d.dmg) | fbb4391a2589d138e812032e37da31c761ae577a1bd5d8f7405c05c39c4690c1
+[JMRI.5.7.6+R539a39880d.exe](https://github.com/JMRI/JMRI/releases/download/v5.7.6/JMRI.5.7.6+R539a39880d.exe) | 296301bf7ddb75ead01200f9af363fd97fadee032b12db8993676bf9e05fdf88
+[JMRI.5.7.6+R539a39880d.tgz](https://github.com/JMRI/JMRI/releases/download/v5.7.6/JMRI.5.7.6+R539a39880d.tgz) | 9cce572a66e4c8087de39e0983509baca5a73cab25f2eb680ae35f2dd38c5c51
 ```
 
 - Attach files by selecting them or dragging them in from the release/ subdirectory. Make sure that the Linux one is .tgz, not .tar.
