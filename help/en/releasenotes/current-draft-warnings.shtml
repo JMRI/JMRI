@@ -1,5 +1,6 @@
 
     <!-- contains new warnings for the release under development -->
-    <li>Multiple MQTT connections from a single JMRI instance to a single MQTT broker will suffer degraded performance due to clashing client ids.</li>
+    <li>
+    </li>
     <li>
     </li>
