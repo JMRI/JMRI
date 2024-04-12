@@ -130,9 +130,14 @@
             <ul>
                 <li>Improved new Turnout address validation.</li>
                 <li>Updated the openlcb.jar file with 
-                    <a href="https://github.com/openlcb/OpenLCB_Java/pulls?q=is%3Apr+is%3Aclosed">PRs through 256</a>.
+                    <a href="https://github.com/openlcb/OpenLCB_Java/pulls?q=is%3Apr+is%3Aclosed">PRs through 258</a>.
                 <li>Protected against an error that could occur on startup
                     if JMRI has trouble reaching the network interface on Windows.</li>
+                <li>CDI configuration window now displays min and max values in the 
+                    tooltip and enforces max/min values for integer input.
+                    The "Write" button is disabled when an out-of-range input has been entered.
+                <li>Improved how Datagram Acknowledged and Datagram Rejected are
+                    displayed in the Monitor window.
             </ul>
 
         <h4>Powerline</h4>
