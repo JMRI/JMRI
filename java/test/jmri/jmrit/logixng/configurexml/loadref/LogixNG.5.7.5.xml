@@ -36596,12 +36596,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
           <tableName>
             <addressing>Direct</addressing>
             <name>IQT1</name>
-            <memory>IM3</memory>
-            <memory>IM3</memory>
-            <memory>IM3</memory>
           </tableName>
           <row>
             <addressing>Memory</addressing>
+            <memory>IM3</memory>
           </row>
           <column>
             <addressing>Direct</addressing>
@@ -36700,15 +36698,13 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
           <tableName>
             <addressing>Direct</addressing>
             <name>IQT1</name>
-            <memory>Some memory</memory>
-            <memory>Some memory</memory>
-            <memory>Some memory</memory>
           </tableName>
           <row>
             <addressing>Direct</addressing>
           </row>
           <column>
             <addressing>Memory</addressing>
+            <memory>Some memory</memory>
           </column>
         </table>
       </namedBean>
