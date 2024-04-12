@@ -2514,8 +2514,32 @@ public class CreateLogixNGTreeScaffold {
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
+        // Test an action there the turnout is given by a table where the row
+        // is given by indirect addressing of memories.
+        actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
+        actionTurnout.getSelectNamedBean().setAddressing(NamedBeanAddressing.Table);
+        actionTurnout.getSelectNamedBean().getSelectTable().setTableNameAddressing(NamedBeanAddressing.Direct);
+        actionTurnout.getSelectNamedBean().getSelectTable().setTable(csvTable);
+        actionTurnout.getSelectNamedBean().getSelectTable().setTableRowAddressing(NamedBeanAddressing.Memory);
+        actionTurnout.getSelectNamedBean().getSelectTable().setTableRowMemory(memory3);
+        maleSocket = digitalActionManager.registerAction(actionTurnout);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
 
-        ActionTurnoutLock actionTurnoutLock = new ActionTurnoutLock(digitalActionManager.getAutoSystemName(), null);
+        // Test an action there the turnout is given by a table where the column
+        // is given by indirect addressing of memories.
+        actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
+        actionTurnout.getSelectNamedBean().setAddressing(NamedBeanAddressing.Table);
+        actionTurnout.getSelectNamedBean().getSelectTable().setTableNameAddressing(NamedBeanAddressing.Direct);
+        actionTurnout.getSelectNamedBean().getSelectTable().setTable(csvTable);
+        actionTurnout.getSelectNamedBean().getSelectTable().setTableColumnAddressing(NamedBeanAddressing.Memory);
+        actionTurnout.getSelectNamedBean().getSelectTable().setTableColumnMemory(memory2);
+        maleSocket = digitalActionManager.registerAction(actionTurnout);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+           ActionTurnoutLock actionTurnoutLock = new ActionTurnoutLock(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionTurnoutLock);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
