@@ -62,7 +62,7 @@ public class LogixNG_SelectTableXml {
         }
         memory = selectTable.getTableRowMemory();
         if (memory != null) {
-            tableNameElement.addContent(new Element("memory").addContent(memory.getName()));
+            tableRowElement.addContent(new Element("memory").addContent(memory.getName()));
         }
         if (selectTable.getTableRowLocalVariable() != null && !selectTable.getTableRowLocalVariable().isEmpty()) {
             tableRowElement.addContent(new Element("localVariable").addContent(selectTable.getTableRowLocalVariable()));
@@ -85,7 +85,7 @@ public class LogixNG_SelectTableXml {
         }
         memory = selectTable.getTableColumnMemory();
         if (memory != null) {
-            tableNameElement.addContent(new Element("memory").addContent(memory.getName()));
+            tableColumnElement.addContent(new Element("memory").addContent(memory.getName()));
         }
         if (selectTable.getTableColumnLocalVariable() != null && !selectTable.getTableColumnLocalVariable().isEmpty()) {
             tableColumnElement.addContent(new Element("localVariable").addContent(selectTable.getTableColumnLocalVariable()));
@@ -162,7 +162,15 @@ public class LogixNG_SelectTableXml {
                 elem = tableRow.getChild("reference");
                 if (elem != null) selectTable.setTableRowReference(elem.getTextTrim());
 
-                memoryName = tableName.getChild("memory");
+                memoryName = tableRow.getChild("memory");
+                if (memoryName == null
+                        && selectTable.getTableNameAddressing() != NamedBeanAddressing.Memory
+                        && selectTable.getTableRowAddressing() == NamedBeanAddressing.Memory
+                        && selectTable.getTableColumnAddressing() != NamedBeanAddressing.Memory) {
+                    // Handle bug pre JMRI 5.7.6
+                    memoryName = tableName.getChild("memory");
+                    selectTable.removeTableNameMemory();
+                }
                 if (memoryName != null) {
                     Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
                     if (m != null) selectTable.setTableRowMemory(m);
@@ -197,7 +205,15 @@ public class LogixNG_SelectTableXml {
                 elem = tableColumn.getChild("reference");
                 if (elem != null) selectTable.setTableColumnReference(elem.getTextTrim());
 
-                memoryName = tableName.getChild("memory");
+                memoryName = tableColumn.getChild("memory");
+                if (memoryName == null
+                        && selectTable.getTableNameAddressing() != NamedBeanAddressing.Memory
+                        && selectTable.getTableRowAddressing() != NamedBeanAddressing.Memory
+                        && selectTable.getTableColumnAddressing() == NamedBeanAddressing.Memory) {
+                    // Handle bug pre JMRI 5.7.6
+                    memoryName = tableName.getChild("memory");
+                    selectTable.removeTableNameMemory();
+                }
                 if (memoryName != null) {
                     Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
                     if (m != null) selectTable.setTableColumnMemory(m);
