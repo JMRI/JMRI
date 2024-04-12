@@ -2539,7 +2539,7 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
-           ActionTurnoutLock actionTurnoutLock = new ActionTurnoutLock(digitalActionManager.getAutoSystemName(), null);
+        ActionTurnoutLock actionTurnoutLock = new ActionTurnoutLock(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionTurnoutLock);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
