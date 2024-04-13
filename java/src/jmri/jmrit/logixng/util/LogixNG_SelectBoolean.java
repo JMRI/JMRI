@@ -4,9 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.Nonnull;
 
@@ -22,7 +20,8 @@ import jmri.util.TypeConversionUtil;
  *
  * @author Daniel Bergqvist (C) 2023
  */
-public class LogixNG_SelectBoolean implements VetoableChangeListener {
+public class LogixNG_SelectBoolean
+        implements ReplaceableNamedBean, VetoableChangeListener {
 
     private final AbstractBase _base;
     private final InUse _inUse;
@@ -306,6 +305,31 @@ public class LogixNG_SelectBoolean implements VetoableChangeListener {
                 }
             }
         }
+    }
+
+    @Override
+    public void getGetAndReplaceNamedBeans(List<GetAndReplaceNamedBean> list) {
+        if (_memoryHandle != null) {
+            var memoryItem = new GetAndReplaceNamedBean() {
+                @Override
+                public NamedBeanType getType() {
+                    return NamedBeanType.Memory;
+                }
+
+                @Override
+                public NamedBeanHandle<? extends NamedBean> get() {
+                    return LogixNG_SelectBoolean.this._memoryHandle;
+                }
+
+                @Override
+                public void replace(NamedBeanHandle<? extends NamedBean> newBean) {
+                    LogixNG_SelectBoolean.this.setMemory((NamedBeanHandle<Memory>) newBean);
+                }
+            };
+            list.add(memoryItem);
+        }
+
+        _selectTable.getGetAndReplaceNamedBeans(list);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNG_SelectBoolean.class);

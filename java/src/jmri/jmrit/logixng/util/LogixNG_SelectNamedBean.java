@@ -20,7 +20,8 @@ import jmri.util.TypeConversionUtil;
  *
  * @author Daniel Bergqvist (C) 2022
  */
-public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableChangeListener {
+public class LogixNG_SelectNamedBean<E extends NamedBean>
+        implements ReplaceableNamedBean, VetoableChangeListener {
 
     private final AbstractBase _base;
     private final InUse _inUse;
@@ -479,6 +480,51 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
         if (_handle != null && bean.equals(_handle.getBean())) {
             report.add(new NamedBeanUsageReport(type.toString(), cdl, base.getLongDescription()));
         }
+    }
+
+    @Override
+    public void getGetAndReplaceNamedBeans(List<GetAndReplaceNamedBean> list) {
+        if (_handle != null) {
+            var namedBeanItem = new GetAndReplaceNamedBean() {
+                @Override
+                public NamedBeanType getType() {
+                    return NamedBeanType.getTypeFromClass(LogixNG_SelectNamedBean.this._class);
+                }
+
+                @Override
+                public NamedBeanHandle<? extends NamedBean> get() {
+                    return LogixNG_SelectNamedBean.this._handle;
+                }
+
+                @Override
+                public void replace(NamedBeanHandle<? extends NamedBean> newBean) {
+                    LogixNG_SelectNamedBean.this.setNamedBean((NamedBeanHandle<E>) newBean);
+                }
+            };
+            list.add(namedBeanItem);
+        }
+
+        if (_memoryHandle != null) {
+            var memoryItem = new GetAndReplaceNamedBean() {
+                @Override
+                public NamedBeanType getType() {
+                    return NamedBeanType.Memory;
+                }
+
+                @Override
+                public NamedBeanHandle<? extends NamedBean> get() {
+                    return LogixNG_SelectNamedBean.this._memoryHandle;
+                }
+
+                @Override
+                public void replace(NamedBeanHandle<? extends NamedBean> newBean) {
+                    LogixNG_SelectNamedBean.this.setMemory((NamedBeanHandle<Memory>) newBean);
+                }
+            };
+            list.add(memoryItem);
+        }
+
+        _selectTable.getGetAndReplaceNamedBeans(list);
     }
 
     public static enum Type {

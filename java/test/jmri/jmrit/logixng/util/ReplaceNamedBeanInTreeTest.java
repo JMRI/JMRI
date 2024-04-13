@@ -73,96 +73,103 @@ public class ReplaceNamedBeanInTreeTest {
 
         LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
 
-
-
         ReplaceNamedBeanInTree replaceNamedBeanInTree = new ReplaceNamedBeanInTree();
 
-        for (NamedBeanType namedBeanType : NamedBeanType.values()) {
+        boolean done = false;
+        while (!done) {
+            for (LogixNG logixng : logixNG_Manager.getNamedBeanSet()) {
 
-//            log.error(namedBeanType.name());
+                Map<NamedBeanHandle<NamedBean>, NamedBeanHandle<NamedBean>> newBeansMap = new HashMap<>();
 
-            boolean done = false;
-            while (!done) {
-                for (LogixNG logixng : logixNG_Manager.getNamedBeanSet()) {
+                String originalTree = this.getPrintTree(logixng, printTreeSettings);
 
-                    Map<NamedBean, NamedBean> newBeansMap = new HashMap<>();
+                for (int i=0; i < logixng.getNumConditionalNGs(); i++) {
+                    ConditionalNG cng = logixng.getConditionalNG(i);
 
-                    String originalTree = this.getPrintTree(logixng, printTreeSettings);
-
-                    for (int i=0; i < logixng.getNumConditionalNGs(); i++) {
-                        ConditionalNG cng = logixng.getConditionalNG(i);
-
-                        Map<NamedBean, NamedBean> replacements = new HashMap<>();
+                    for (NamedBeanType namedBeanType : NamedBeanType.values()) {
 
                         var selectNamedBeans = replaceNamedBeanInTree.getSelectNamedBeans(cng);
+
                         for (var logixNG_SelectNamedBean : selectNamedBeans) {
-                            NamedBeanType selectNamedBeanType = NamedBeanType.getTypeFromClass(logixNG_SelectNamedBean.getClazz());
+                            NamedBeanType selectNamedBeanType = logixNG_SelectNamedBean.getType();
 
                             if (namedBeanType.equals(selectNamedBeanType)) {
-                                if (!logixNG_SelectNamedBean.isDirectAddressing()
-                                        || logixNG_SelectNamedBean.getNamedBean() == null) {
-                                    continue;
-                                }
 
                                 NamedBeanType.CreateBean createBean = namedBeanType.getCreateBean();
                                 if (createBean != null) {
+
                                     String systemName = namedBeanType.getManager()
                                             .getSystemNamePrefix()
                                             + CreateLogixNGTreeScaffold.getRandomString(20);
-                                    NamedBean oldBean = logixNG_SelectNamedBean.getBean();
+
+                                    NamedBeanHandle<NamedBean> oldBean = (NamedBeanHandle<NamedBean>) logixNG_SelectNamedBean.get();
                                     Assert.assertNotNull(oldBean);
 
-                                    NamedBean bean = newBeansMap.get(oldBean);
-                                    if (bean == null) {
+                                    NamedBeanHandle<NamedBean> beanHandle = newBeansMap.get(oldBean);
+                                    if (beanHandle == null) {
+                                        var tempBean = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                                .getNamedBeanHandle(oldBean.getBean().getSystemName(), oldBean.getBean());
+                                        beanHandle = newBeansMap.get(tempBean);
+                                    }
+                                    if (beanHandle == null) {
                                         String userName = CreateLogixNGTreeScaffold.getRandomString(20);
-                                        bean = createBean.createBean(systemName, userName);
-                                        newBeansMap.put(oldBean, bean);
+                                        NamedBean bean = createBean.createBean(systemName, userName);
+                                        beanHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                                .getNamedBeanHandle(bean.getDisplayName(), bean);
+                                        newBeansMap.put(oldBean, beanHandle);
                                     }
 
-// FIX THIS!!!!
-//                                    replacements.put(oldBean, bean);
-                                    logixNG_SelectNamedBean.setNamedBean(bean.getSystemName());
+                                    Assert.assertNotNull(beanHandle);
+
+                                    logixNG_SelectNamedBean.replace(beanHandle);
                                 }
                             }
                         }
 
-
-                        List<NamedBeanHandle<? extends NamedBean>> namedBeanHandles = new ArrayList<>();
-
-
-
-                        replaceNamedBeanInTree.replaceNamedBeans(selectNamedBeans, namedBeanHandles, replacements);
-
-
                     }
+
 
                     String newTree = this.getPrintTree(logixng, printTreeSettings);
 
                     // The old tree has the old names. Change the old names to
                     // the new ones in the printout of the old tree
-                    for (Map.Entry<NamedBean, NamedBean> entry : newBeansMap.entrySet()) {
-                        originalTree = newTree.replaceAll(
-                                "\\\""+entry.getKey().getDisplayName()+"\\\"",
-                                "\""+entry.getValue().getDisplayName()+"\"");
+                    for (var entry : newBeansMap.entrySet()) {
+//                        log.error("Replace {} with {}", entry.getKey().getBean().getDisplayName(), entry.getValue().getBean().getDisplayName());
+                        originalTree = originalTree.replaceAll(
+                                "\\\""+entry.getKey().getBean().getDisplayName()+"\\\"",
+                                "\""+entry.getValue().getBean().getDisplayName()+"\"");
+
+                        originalTree = originalTree.replaceAll(
+                                " "+entry.getKey().getBean().getDisplayName()+" ",
+                                " "+entry.getValue().getBean().getDisplayName()+" ");
                     }
 
                     // Fix this!!!
                     // ActionListenOnBeans is not handled yet!!!!
 //                    if (1==0)
                     for (var entry : newBeansMap.entrySet()) {
-                        if (entry.getKey().getSystemName().equals("IM2")) {
+                        if (entry.getKey().getBean().getSystemName().equals("IM2")) {
                             newTree = newTree.replaceAll(
                                     "\\\"Some memory\\\"",
-                                    "\""+entry.getValue().getDisplayName()+"\"");
+                                    "\""+entry.getValue().getBean().getDisplayName()+"\"");
                         }
                     }
 
                     // Scripts are not updated so manually fix that here
                     for (var entry : newBeansMap.entrySet()) {
-                        if (entry.getKey().getSystemName().equals("IS1")) {
+                        if (entry.getKey().getBean().getSystemName().equals("IS1")) {
                             newTree = newTree.replaceAll(
                                     "Script result.setValue\\( sensors.provideSensor\\(\\\"IS1\\\"",
-                                    "Script result.setValue( sensors.provideSensor(\""+entry.getValue().getDisplayName()+"\"");
+                                    "Script result.setValue( sensors.provideSensor(\""+entry.getValue().getBean().getDisplayName()+"\"");
+                        }
+                    }
+
+                    // Expression Reference is not updated so manually fix that here
+                    for (var entry : newBeansMap.entrySet()) {
+                        if (entry.getKey().getBean().getSystemName().equals("IL1")) {
+                            newTree = newTree.replaceAll(
+                                    "Reference IL1 is not Light",
+                                    "Reference "+entry.getValue().getBean().getDisplayName()+" is not Light");
                         }
                     }
 

@@ -3,9 +3,7 @@ package jmri.jmrit.logixng.util;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.Nonnull;
 
@@ -20,7 +18,8 @@ import jmri.util.TypeConversionUtil;
  * Select table for LogixNG actions and expressions.
  * @author Daniel Bergqvist (C) 2022
  */
-public class LogixNG_SelectTable implements VetoableChangeListener {
+public class LogixNG_SelectTable
+        implements ReplaceableNamedBean, VetoableChangeListener {
 
     private final AbstractBase _base;
     private final InUse _inUse;
@@ -750,6 +749,99 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
                 throw new IllegalArgumentException("invalid _tableRowAddressing: " + _tableColumnAddressing.name());
         }
         return column;
+    }
+
+    @Override
+    public void getGetAndReplaceNamedBeans(List<GetAndReplaceNamedBean> list) {
+        if (_tableHandle != null) {
+            var tableItem = new GetAndReplaceNamedBean() {
+                @Override
+                public NamedBeanType getType() {
+                    return NamedBeanType.LogixNG_Table;
+                }
+
+                @Override
+                public NamedBeanHandle<? extends NamedBean> get() {
+                    return LogixNG_SelectTable.this._tableHandle;
+                }
+
+                @Override
+                public void replace(NamedBeanHandle<? extends NamedBean> newBean) {
+                    LogixNG_SelectTable.this.setTable((NamedBeanHandle<NamedTable>) newBean);
+                }
+            };
+            list.add(tableItem);
+        }
+
+        if (_tableNameMemoryHandle != null) {
+            var tableNameItem = new GetAndReplaceNamedBean() {
+                @Override
+                public NamedBeanType getType() {
+                    return NamedBeanType.Memory;
+                }
+
+                @Override
+                public NamedBeanHandle<? extends NamedBean> get() {
+                    return LogixNG_SelectTable.this._tableNameMemoryHandle;
+                }
+
+                @Override
+                public void replace(NamedBeanHandle<? extends NamedBean> newBean) {
+                    LogixNG_SelectTable.this.setTableNameMemory((NamedBeanHandle<Memory>) newBean);
+                }
+            };
+            list.add(tableNameItem);
+        }
+
+        if (_tableRowMemoryHandle != null) {
+            var tableRowItem = new GetAndReplaceNamedBean() {
+                @Override
+                public NamedBeanType getType() {
+                    return NamedBeanType.Memory;
+                }
+
+                @Override
+                public NamedBeanHandle<? extends NamedBean> get() {
+                    return LogixNG_SelectTable.this._tableRowMemoryHandle;
+                }
+
+                @Override
+                public void replace(NamedBeanHandle<? extends NamedBean> newBean) {
+                    LogixNG_SelectTable.this.setTableRowMemory((NamedBeanHandle<Memory>) newBean);
+                }
+            };
+            list.add(tableRowItem);
+        }
+
+        if (_tableColumnMemoryHandle != null) {
+            var tableColumnItem = new GetAndReplaceNamedBean() {
+                @Override
+                public NamedBeanType getType() {
+                    return NamedBeanType.Memory;
+                }
+
+                @Override
+                public NamedBeanHandle<? extends NamedBean> get() {
+                    return LogixNG_SelectTable.this._tableColumnMemoryHandle;
+                }
+
+                @Override
+                public void replace(NamedBeanHandle<? extends NamedBean> newBean) {
+                    LogixNG_SelectTable.this.setTableColumnMemory((NamedBeanHandle<Memory>) newBean);
+                }
+            };
+            list.add(tableColumnItem);
+        }
+
+        if (_tableNameSelectTable != null) {
+            _tableNameSelectTable.getGetAndReplaceNamedBeans(list);
+        }
+        if (_tableRowSelectTable != null) {
+            _tableRowSelectTable.getGetAndReplaceNamedBeans(list);
+        }
+        if (_tableColumnSelectTable != null) {
+            _tableColumnSelectTable.getGetAndReplaceNamedBeans(list);
+        }
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNG_SelectTable.class);

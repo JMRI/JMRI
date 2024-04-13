@@ -7,6 +7,7 @@ import java.util.*;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.ReplaceableNamedBean.GetAndReplaceNamedBean;
 
 
 /**
@@ -16,25 +17,32 @@ import jmri.jmrit.logixng.*;
  */
 public class ReplaceNamedBeanInTree {
 
+    private boolean implementsInterface(Class<?> clazz, Class<?> iface) {
+        for (Class<?> c : clazz.getInterfaces()) {
+            if (iface.equals(c)) return true;
+        }
+        return false;
+    }
+
     @SuppressWarnings("unchecked") // Due to type erasure
-    private void getSelectNamedBeans(Base base, List<LogixNG_SelectNamedBean<? extends NamedBean>> list)
+    private void getGetAndReplaceNamedBean(Object object, List<ReplaceableNamedBean.GetAndReplaceNamedBean> list)
             throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 
-//        System.out.format("Class: %s%n", base.getClass().getName());
+        for (Method m : object.getClass().getDeclaredMethods()) {
 
-        for (Method m : base.getClass().getDeclaredMethods()) {
-            if (m.getReturnType().equals(LogixNG_SelectNamedBean.class)) {
-                Object result = m.invoke(base);
-                if (! (result instanceof LogixNG_SelectNamedBean)) {
-                    throw new RuntimeException("result is not a LogixNG_SelectNamedBean");
+            if (implementsInterface(m.getReturnType(), ReplaceableNamedBean.class)) {
+                Object result = m.invoke(object);
+                if (! (result instanceof ReplaceableNamedBean)) {
+                    throw new RuntimeException("result is not a ReplaceableNamedBean");
                 }
-                list.add((LogixNG_SelectNamedBean<? extends NamedBean>) result);
+                // A LogixNG_SelectNamedBean have LogixNG_SelectNamedBean
+                ((ReplaceableNamedBean)result).getGetAndReplaceNamedBeans(list);
             }
         }
     }
 
-    public List<LogixNG_SelectNamedBean<? extends NamedBean>> getSelectNamedBeans(Base base) throws Exception {
-        List<LogixNG_SelectNamedBean<? extends NamedBean>> list = new ArrayList<>();
+    public List<GetAndReplaceNamedBean> getSelectNamedBeans(Base base) throws Exception {
+        List<GetAndReplaceNamedBean> list = new ArrayList<>();
 
         base.forEntireTreeWithException((Base b) -> {
             if (b instanceof FemaleSocket) return;
@@ -42,14 +50,14 @@ public class ReplaceNamedBeanInTree {
             while (object instanceof MaleSocket) {
                 object = ((MaleSocket)object).getObject();
             }
-            getSelectNamedBeans(object, list);
+            getGetAndReplaceNamedBean(object, list);
         });
 
         return list;
     }
 
-    public List<NamedBeanHandle<? extends NamedBean>> getNamedBeans(Base base) {
-        List<NamedBeanHandle<? extends NamedBean>> list = new ArrayList<>();
+    public List<NamedBeanHandle<NamedBean>> getNamedBeans(Base base) {
+        List<NamedBeanHandle<NamedBean>> list = new ArrayList<>();
 
         base.forEntireTree((Base b) -> {
 //            getSelectNamedBeans(b, list);
@@ -59,11 +67,16 @@ public class ReplaceNamedBeanInTree {
     }
 
     public void replaceNamedBeans(
-            List<LogixNG_SelectNamedBean<? extends NamedBean>> selectNamedBeans,
-            List<NamedBeanHandle<? extends NamedBean>> namedBeanHandles,
-            Map<NamedBean, NamedBean> replacements) {
+            List<LogixNG_SelectNamedBean<NamedBean>> selectNamedBeans,
+            Map<NamedBeanHandle<NamedBean>, NamedBeanHandle<NamedBean>> replacements) {
 
-//                                    logixNG_SelectNamedBean.setNamedBean(bean.getSystemName());
+        for (var selectNamedBean : selectNamedBeans) {
+            var oldHandle = selectNamedBean.getNamedBean();
+            if (oldHandle != null) {
+                var newHandle = replacements.get(oldHandle);
+                selectNamedBean.setNamedBean(newHandle);
+            }
+        }
 
     }
 
