@@ -61,6 +61,7 @@ public class ReplaceNamedBeanInTreeTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked") // Due to type erasure
     public void testReplaceNamedBeans() throws PropertyVetoException, Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
