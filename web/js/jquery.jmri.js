@@ -260,81 +260,6 @@
                     });
                 }
             };
-            jmri.getLight = function (name) {
-                if (jmri.socket) {
-                    jmri.socket.send("light", { name: name });
-                } else {
-                    $.getJSON(jmri.url + "light/" + name, function (json) {
-                        jmri.light(json.data.name, json.data.state, json.data);
-                    });
-                }
-            };
-            jmri.setLight = function (name, state) {
-                if (jmri.socket) {
-                    jmri.socket.send("light", { name: name, state: state }, 'post');
-                } else {
-                    $.ajax({
-                        url: jmri.url + "light/" + name,
-                        type: "POST",
-                        data: JSON.stringify({ state: state }),
-                        contentType: "application/json; charset=utf-8",
-                        success: function (json) {
-                            jmri.light(json.data.name, json.data.state, json.data);
-                            jmri.getLight(json.data.name, json.data.state);
-                        }
-                    });
-                }
-            };
-            jmri.getMemory = function (name) {
-                if (jmri.socket) {
-                    jmri.socket.send("memory", { name: name });
-                } else {
-                    $.getJSON(jmri.url + "memory/" + name, function (json) {
-                        jmri.memory(json.data.name, json.data.value, json.data);
-                    });
-                }
-            };
-            jmri.setMemory = function (name, value) {
-                if (jmri.socket) {
-                    jmri.socket.send("memory", { name: name, value: value }, 'post');
-                } else {
-                    $.ajax({
-                        url: jmri.url + "memory/" + name,
-                        type: "POST",
-                        data: JSON.stringify({ value: value }),
-                        contentType: "application/json; charset=utf-8",
-                        success: function (json) {
-                            jmri.memory(json.data.name, json.data.value, json.data);
-                            jmri.getMemory(json.data.name, json.data.value);
-                        }
-                    });
-                }
-            };
-            jmri.getReporter = function (name) {
-                if (jmri.socket) {
-                    jmri.socket.send("reporter", { name: name });
-                } else {
-                    $.getJSON(jmri.url + "reporter/" + name, function (json) {
-                        jmri.reporter(json.data.name, json.data.value, json.data);
-                    });
-                }
-            };
-            jmri.setReporter = function (name, value) {
-                if (jmri.socket) {
-                    jmri.socket.send("reporter", { name: name, value: value }, 'post');
-                } else {
-                    $.ajax({
-                        url: jmri.url + "reporter/" + name,
-                        type: "POST",
-                        data: JSON.stringify({ value: value }),
-                        contentType: "application/json; charset=utf-8",
-                        success: function (json) {
-                            jmri.reporter(json.data.name, json.data.report, json.data);
-                            jmri.getReporter(json.data.name, json.data.report);
-                        }
-                    });
-                }
-            };
             jmri.getBlock = function (name) {
                 if (jmri.socket) {
                     jmri.socket.send("block", { name: name });
@@ -359,6 +284,18 @@
                         }
                     });
                 }
+            };
+            jmri.getCar = function (name) {
+                jmri.socket.send("car", { name: name });
+            };
+            jmri.getConfigProfile = function (name) {
+                jmri.socket.send("configProfile", { name: name });
+            };
+            jmri.getConsist = function (name) {
+                jmri.socket.send("consist", { name: name });
+            };
+            jmri.getEngine = function (name) {
+                jmri.socket.send("engine", { name: name });
             };
             jmri.getIdTag = function (name) {
                 if (jmri.socket) {
@@ -410,6 +347,62 @@
                     });
                 }
             };
+            jmri.getLight = function (name) {
+                if (jmri.socket) {
+                    jmri.socket.send("light", { name: name });
+                } else {
+                    $.getJSON(jmri.url + "light/" + name, function (json) {
+                        jmri.light(json.data.name, json.data.state, json.data);
+                    });
+                }
+            };
+            jmri.setLight = function (name, state) {
+                if (jmri.socket) {
+                    jmri.socket.send("light", { name: name, state: state }, 'post');
+                } else {
+                    $.ajax({
+                        url: jmri.url + "light/" + name,
+                        type: "POST",
+                        data: JSON.stringify({ state: state }),
+                        contentType: "application/json; charset=utf-8",
+                        success: function (json) {
+                            jmri.light(json.data.name, json.data.state, json.data);
+                            jmri.getLight(json.data.name, json.data.state);
+                        }
+                    });
+                }
+            };
+            jmri.getLocation = function (name) {
+                jmri.socket.send("location", { name: name });
+            };
+            jmri.getMemory = function (name) {
+                if (jmri.socket) {
+                    jmri.socket.send("memory", { name: name });
+                } else {
+                    $.getJSON(jmri.url + "memory/" + name, function (json) {
+                        jmri.memory(json.data.name, json.data.value, json.data);
+                    });
+                }
+            };
+            jmri.setMemory = function (name, value) {
+                if (jmri.socket) {
+                    jmri.socket.send("memory", { name: name, value: value }, 'post');
+                } else {
+                    $.ajax({
+                        url: jmri.url + "memory/" + name,
+                        type: "POST",
+                        data: JSON.stringify({ value: value }),
+                        contentType: "application/json; charset=utf-8",
+                        success: function (json) {
+                            jmri.memory(json.data.name, json.data.value, json.data);
+                            jmri.getMemory(json.data.name, json.data.value);
+                        }
+                    });
+                }
+            };
+            jmri.getNetworkService = function (name) {
+                jmri.socket.send("networkService", { name: name });
+            };
             jmri.getOblock = function (name) {
                 if (jmri.socket) {
                     jmri.socket.send("oblock", { name: name });
@@ -435,114 +428,8 @@
                     });
                 }
             };
-
-            /**
-             * Request a json list of the specified list type. Individual
-             * listeners for each instance of the type will need to be set
-             * up by the consuming client by requesting the state of each
-             * item in the returned list individually.
-             * @param {String} type of list (e.g. "sensors")
-             */
-            jmri.getList = function (name) {
-                jmri.socket._send(JSON.stringify({ list: name }));
-            };
-
-            jmri.getObject = function (type, name) {
-                switch (type) {
-                    case "audio":
-                        jmri.getAudio(name);
-                        break;
-                    case "light":
-                        jmri.getLight(name);
-                        break;
-                    case "block":
-                        jmri.getBlock(name);
-                        break;
-                    case "idTag":
-                        jmri.getIdTag(name);
-                        break;
-                    case "layoutBlock":
-                        jmri.getLayoutBlock(name);
-                        break;
-                    case "memory":
-                        jmri.getMemory(name);
-                        break;
-                    case "oblock":
-                        jmri.getOblock(name);
-                        break;
-                    case "reporter":
-                        jmri.getReporter(name);
-                        break;
-                    case "rosterEntry":
-                        jmri.getRosterEntry(name);
-                        break;
-                    case "rosterGroup":
-                        jmri.getRosterGroup(name);
-                        break;
-                    case "route":
-                        jmri.getRoute(name);
-                        break;
-                    case "sensor":
-                        jmri.getSensor(name);
-                        break;
-                    case "signalHead":
-                        jmri.getSignalHead(name);
-                        break;
-                    case "signalMast":
-                        jmri.getSignalMast(name);
-                        break;
-                    case "turnout":
-                        jmri.getTurnout(name);
-                        break;
-                    default:
-                        log.warn("WARN-unknown type of " + type + " encountered by jquery.jmri.js in getObject().");
-
-                }
-            };
-            jmri.setObject = function (type, name, state) {
-                switch (type) {
-                    case "light":
-                        jmri.setLight(name, state, 'post');
-                        break;
-                    case "memory":
-                        jmri.setMemory(name, state, 'post');
-                        break;
-                    case "reporter":
-                        jmri.setReporter(name, report, 'post');
-                        break;
-                    case "block":
-                        jmri.setBlock(name, state, 'post');
-                        break;
-                    case "idTag":
-                        jmri.setIdTag(name, state, 'post');
-                        break;
-                    case "layoutBlock":
-                        jmri.setLayoutBlock(name, state, 'post');
-                        break;
-                    case "oblock":
-                        jmri.setOblock(name, status, 'post');
-                        break;
-                    case "rosterEntry":
-                        jmri.setRosterEntry(name, state, 'post');
-                        break;
-                    case "route":
-                        jmri.setRoute(name, state, 'post');
-                        break;
-                    case "sensor":
-                        jmri.setSensor(name, state, 'post');
-                        break;
-                    case "signalHead":
-                        jmri.setSignalHead(name, state, 'post');
-                        break;
-                    case "signalMast":
-                        jmri.setSignalMast(name, state, 'post');
-                        break;
-                    case "turnout":
-                        jmri.setTurnout(name, state, 'post');
-                        break;
-                    default:
-                        log.log("WARN-unknown type of " + type + " encountered by jquery.jmri.js in setObject().");
-                }
+            jmri.getPanel = function (name) {
+                jmri.socket.send("panel", { name: name });
             };
             jmri.getPower = function () {
                 if (jmri.socket) {
@@ -569,12 +456,31 @@
                     });
                 }
             };
-            jmri.getRosterGroup = function (name) {
+            jmri.getRailroad = function (name) {
+                jmri.socket.send("railroad", { name: name });
+            };
+            jmri.getReporter = function (name) {
                 if (jmri.socket) {
-                    jmri.socket.send("rosterGroup", { name: name });
+                    jmri.socket.send("reporter", { name: name });
                 } else {
-                    $.getJSON(jmri.url + "rosterGroup/" + name, function (json) {
-                        jmri.rosterGroup(json.data.name, json.data);
+                    $.getJSON(jmri.url + "reporter/" + name, function (json) {
+                        jmri.reporter(json.data.name, json.data.value, json.data);
+                    });
+                }
+            };
+            jmri.setReporter = function (name, value) {
+                if (jmri.socket) {
+                    jmri.socket.send("reporter", { name: name, value: value }, 'post');
+                } else {
+                    $.ajax({
+                        url: jmri.url + "reporter/" + name,
+                        type: "POST",
+                        data: JSON.stringify({ value: value }),
+                        contentType: "application/json; charset=utf-8",
+                        success: function (json) {
+                            jmri.reporter(json.data.name, json.data.report, json.data);
+                            jmri.getReporter(json.data.name, json.data.report);
+                        }
                     });
                 }
             };
@@ -584,6 +490,15 @@
                 } else {
                     $.getJSON(jmri.url + "rosterEntry/" + name, function (json) {
                         jmri.rosterEntry(json.data.name, json.data);
+                    });
+                }
+            };
+            jmri.getRosterGroup = function (name) {
+                if (jmri.socket) {
+                    jmri.socket.send("rosterGroup", { name: name });
+                } else {
+                    $.getJSON(jmri.url + "rosterGroup/" + name, function (json) {
+                        jmri.rosterGroup(json.data.name, json.data);
                     });
                 }
             };
@@ -687,6 +602,9 @@
                     });
                 }
             };
+            jmri.getSystemConnection = function (name) {
+                jmri.socket.send("systemConnection", { name: name });
+            };
             /**
              * Get the current status of the throttle
              *
@@ -763,6 +681,145 @@
                             jmri.getTurnout(json.data.name, json.data.state);
                         }
                     });
+                }
+            };
+
+            /**
+             * Request a json list of the specified list type. Individual
+             * listeners for each instance of the type will need to be set
+             * up by the consuming client by requesting the state of each
+             * item in the returned list individually.
+             * @param {String} type of list (e.g. "sensors")
+             */
+            jmri.getList = function (name) {
+                jmri.socket._send(JSON.stringify({ list: name }));
+            };
+
+            jmri.getObject = function (type, name) {
+                switch (type) {
+                    case "audio":
+                        jmri.getAudio(name);
+                        break;
+                    case "block":
+                        jmri.getBlock(name);
+                        break;
+                    case "idTag":
+                        jmri.getIdTag(name);
+                        break;
+                    case "car":
+                        jmri.getCar(name);
+                        break;
+                    case "configProfile":
+                        jmri.getConfigProfile(name);
+                        break;
+                    case "consist":
+                        jmri.getConsist(name);
+                        break;
+                    case "engine":
+                        jmri.getEngine(name);
+                        break;
+                    case "idTag":
+                        jmri.getIdTag(name);
+                        break;
+                    case "layoutBlock":
+                        jmri.getLayoutBlock(name);
+                        break;
+                    case "light":
+                        jmri.getLight(name);
+                        break;
+                    case "light":
+                        jmri.getLight(name);
+                        break;
+                    case "location":
+                        jmri.getLocation(name);
+                        break;
+                    case "memory":
+                        jmri.getMemory(name);
+                        break;
+                    case "panel":
+                        jmri.getPanel(name);
+                        break;
+                    case "oblock":
+                        jmri.getOblock(name);
+                        break;
+                    case "reporter":
+                        jmri.getReporter(name);
+                        break;
+                    case "rosterEntry":
+                        jmri.getRosterEntry(name);
+                        break;
+                    case "rosterGroup":
+                        jmri.getRosterGroup(name);
+                        break;
+                    case "route":
+                        jmri.getRoute(name);
+                        break;
+                    case "sensor":
+                        jmri.getSensor(name);
+                        break;
+                    case "signalHead":
+                        jmri.getSignalHead(name);
+                        break;
+                    case "signalMast":
+                        jmri.getSignalMast(name);
+                        break;
+                    case "systemConnection":
+                        jmri.getSystemConnection(name);
+                        break;
+                    case "train":
+                        jmri.getTrain(name);
+                        break;
+                    case "turnout":
+                        jmri.getTurnout(name);
+                        break;
+                    default:
+                        log.warn("WARN-unknown type of " + type + " encountered by jquery.jmri.js in getObject().");
+
+                }
+            };
+            jmri.setObject = function (type, name, state) {
+                switch (type) {
+                    case "light":
+                        jmri.setLight(name, state, 'post');
+                        break;
+                    case "memory":
+                        jmri.setMemory(name, state, 'post');
+                        break;
+                    case "reporter":
+                        jmri.setReporter(name, report, 'post');
+                        break;
+                    case "block":
+                        jmri.setBlock(name, state, 'post');
+                        break;
+                    case "idTag":
+                        jmri.setIdTag(name, state, 'post');
+                        break;
+                    case "layoutBlock":
+                        jmri.setLayoutBlock(name, state, 'post');
+                        break;
+                    case "oblock":
+                        jmri.setOblock(name, status, 'post');
+                        break;
+                    case "rosterEntry":
+                        jmri.setRosterEntry(name, state, 'post');
+                        break;
+                    case "route":
+                        jmri.setRoute(name, state, 'post');
+                        break;
+                    case "sensor":
+                        jmri.setSensor(name, state, 'post');
+                        break;
+                    case "signalHead":
+                        jmri.setSignalHead(name, state, 'post');
+                        break;
+                    case "signalMast":
+                        jmri.setSignalMast(name, state, 'post');
+                        break;
+                    case "turnout":
+                        jmri.setTurnout(name, state, 'post');
+                        break;
+                    default:
+                        log.log("WARN-unknown type of " + type + " encountered by jquery.jmri.js in setObject().");
                 }
             };
             jmri.clickLogixNGIcon = function (identity) {

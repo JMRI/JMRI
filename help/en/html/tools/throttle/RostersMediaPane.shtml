@@ -80,7 +80,7 @@
       <ul>
         <li><b>fn</b> in the function number</li>
         <li><b>label</b> in the text for that function entry</li>
-        <li><b>lock</b> checked means this is a lockable function</li>
+        <li><b>latch</b> checked means this is a latchable (lockable) function, unchecked means momentary (toggle switch vs momentary switch)</li>
         <li><b>off</b> is the function off icon</li>
         <li><b>on</b> is the function on icon</li>
         <li><b>shunt</b> enabled will switch the <a href="BasicThrottleWindow.shtml">JMRI native throttle slider to continuous mode</a> (from -100 to +100 instead of from 0 to 100) when that function is enabled, to be set on the "Slow" function for shunting</li>

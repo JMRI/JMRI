@@ -892,10 +892,15 @@ public class AutoActiveTrain implements ThrottleListener {
                 setSpeedBySectionsAllocated();
             }
         } else {
-            // This will stop it.
-             stopInCurrentSection(NO_TASK);
-             log.debug("{}:Set Stop",_activeTrain.getActiveTrainName());
-             waitingOnAllocation = true;  // flag setSpeedBySignal reuired when another allocation made.
+            // This might be the last section....
+            if (_currentAllocatedSection.getNextSection() == null) {
+                stopInCurrentSection(END_TRAIN);
+            } else {
+                // This will stop it.
+                stopInCurrentSection(NO_TASK);
+                log.debug("{}:Set Stop",_activeTrain.getActiveTrainName());
+                waitingOnAllocation = true;  // flag setSpeedBySignal reuired when another allocation made.
+            }
         }
     }
 
@@ -1252,7 +1257,7 @@ public class AutoActiveTrain implements ThrottleListener {
             log.debug("{}: Section [{}] Section Length[{}] Max Train Length [{}] StopBySpeedProfile [{}]. setStopNow", _activeTrain.getTrainName(),
                     _currentAllocatedSection.getSection().getDisplayName(USERSYS), _currentAllocatedSection.getLength(), _maxTrainLength, _stopBySpeedProfile);
             // stopping by speed profile uses section length to stop
-            setStopNow(true);
+            setTargetSpeedState(STOP_SPEED,useSpeedProfile);
         } else if (_currentAllocatedSection.getLength()  < _maxTrainLength) {
             log.debug("{}: Section [{}] Section Length[{}] Max Train Length [{}]. setStopNow({})",
                     _activeTrain.getTrainName(),

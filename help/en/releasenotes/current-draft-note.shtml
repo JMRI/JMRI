@@ -36,13 +36,12 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li>New connection setting to extend the transmit startup delay</li>
-                <li>Transmit startup pause now resumes when incoming message received</li>
+                <li></li>
             </ul>
 
         <h4>DCC4pc</h4>
             <ul>
-                <li>Improved how traffic is displayed in the monitor window.</li>
+                <li></li>
             </ul>
 
         <h4>Direct</h4>
@@ -107,8 +106,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li>Fixed issue with consists not being activated if created after the controlling throttle was created.</li>
-                <li>Fixed issue where JRMI may generate a non-unique client id when connecting to the MQTT broker - see Warnings.</li>
+                <li></li>
             </ul>
 
         <h4>MRC</h4>
@@ -128,16 +126,12 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Improved new Turnout address validation.</li>
-                <li>Updated the openlcb.jar file with 
-                    <a href="https://github.com/openlcb/OpenLCB_Java/pulls?q=is%3Apr+is%3Aclosed">PRs through 256</a>.
-                <li>Protected against an error that could occur on startup
-                    if JMRI has trouble reaching the network interface on Windows.</li>
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
             <ul>
-                <li>Fix a problem what would cause the DMX512 connection to loop on startup.</li>
+                <li></li>
             </ul>
 
         <h4>RFID</h4>
@@ -242,7 +236,7 @@
 
         <h4>Kuehn</h4>
             <ul>
-                <li>Added function decoder F060</li>
+                <li></li>
             </ul>
 
         <h4>LaisDCC</h4>
@@ -300,11 +294,6 @@
                 <li></li>
             </ul>
 
-        <h4>Piko</h4>
-            <ul>
-                <li>New decoder file for Piko H0 KM ML4000 loco with special light decoder</li>
-            </ul>
-
         <h4>QSI</h4>
             <ul>
                 <li></li>
@@ -357,7 +346,7 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li>Small error corrections Uhlenbrock decoder file</li>
+                <li></li>
             </ul>
 
         <h4>Umelec</h4>
@@ -377,10 +366,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li>MX decoder versions with new hardware added</li>
-                <li>CV's for new hardware versions added</li>
-                <li>Settings for shunting speed corrected (CV124 Bit0-1)</li>
-                <li>minor corrections</li>
+                <li></li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -403,11 +389,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>Replace boolean ResistanceWheelSet with TrainDetection, which supports...</li>
-             <li>Whole Train - the entire train is detected.</li>
-             <li>Head Only - only the front of the train can be detected.</li>
-             <li>Head and Tail - the front and rear are detected but not any bits in between.</li>
-             <li>Any TrainInfo files that are edited will be saved in the updated way and cannot be read by older versions.</li>
+             <li></li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -442,16 +424,6 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>ConditionalNGs can now be enabled/disabled by editing a LogixNG.</li>
-          <li>Scripts invoked by a ConditionalNG or Module can access <strong>current</strong> local
-              variables.  This makes it possible to use local variables as parameters for Jython scripts.
-              See <a href="https://www.jmri.org/help/en/html/tools/logixng/reference/chapter13.shtml">
-              LogixNG Reference Chapter 13</a> for details.</li>
-          <li>The action <strong>Window to front</strong> has been improved and renamed to
-              <strong>Window management</strong>. It can now show/hide a window,
-              maximize/normalize/minimize a window and move the window to front or back.</li>
-          <li>The class <strong>jmri.jmrit.logixng.actions.NamedBeanType</strong> has been moved to
-              <strong>jmri.jmrit.logixng.NamedBeanType</strong>. It should only affect JMRI developers.</li>
           <li></li>
         </ul>
 
@@ -516,7 +488,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>YAAT 3.2: Add Hold and Release commands for signal heads and signal masts.</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -526,7 +498,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>Improved the FS-1987 signal system.</li>
+                <li></li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -598,7 +570,7 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li>add filter capability to web /tables</li>
+            <li></li>
         </ul>
 
     <h3>Where Used</h3>
@@ -616,9 +588,7 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li>json: add whereLastSeen and whenLastSeen elements to type "car"</li>
-            <li>help: restore examples showing json syntax</li>
-            <li>home: don't hide /json and /simple links
+            <li></li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
@@ -630,5 +600,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Improved the Italian translation around file locations and turnout states.</li>
+            <li></li>
         </ul>
+

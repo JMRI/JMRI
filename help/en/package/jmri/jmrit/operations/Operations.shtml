@@ -32,7 +32,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       car roster includes information about the car, including road, number, type of car, color,
       length, weight, load, date built, and owner. Trains are assigned routes that define locations
       or stations where cars can be picked up or set out. Features include the ability to control
-      what car types, roads, and car loads a location or industry can service, the available track
+      what car types, roads, and car loads a train, location or industry can service, the available track
       space for a location, and the maximum length the train can be between any two locations in the
       train's route.
       <p>
@@ -890,6 +890,12 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
         "Very Detailed". You can also use the <a href="#CarsSet">Set Car</a> tool found in the <a
           href="#Cars">Cars</a> window. You'll need to set the car's final destination to get a
         mini-build routing report.
+      </p>
+
+      <p>
+        If you restrict your <a href="#Interchange">classification/interchange</a> tracks to
+        specific destinations, there's a <a href="#TrackDestinations">Check Destinations</a> button
+        that will confirm that your setup will not strand cars.
       </p>
 
       <p>OperationsPro&trade; will send messages to the system console when there are errors or
@@ -2177,7 +2183,7 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
 
       <h4 id="LocationDivision">Railroad Division</h4>
       The railroad divisions feature allows you to create prototypical car movements for your
-      railroad. Cars with a <a href="#homeDivision">home division</a> are <a href="#CarRouting">routed</a>
+      railroad. Cars with a <a href="#HomeDivision">home division</a> are <a href="#CarRouting">routed</a>
       to their destinations and move with "purpose". To use this feature first create and then
       select at least one division for your railroad by using the "Add" button in the "Division"
       section of the "Edit Location" window. You can assign multiple locations to the same division,

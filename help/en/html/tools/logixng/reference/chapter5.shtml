@@ -1420,18 +1420,49 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h4>Window to front<span class="since">since 5.7.4</span></h4>
+      <h4>Window management<span class="since">since 5.7.6</span></h4>
 
-      <p>The selected window will be moved in front of the other windows.</p>
+      <p>JMRI uses a lot of windows.  Each panel is a window, various tools have windows, tables
+      can be shown in windows, etc.  The <strong>Window management</strong> action provides
+      three tools to help manage the windows.</p>
+
+      <dl>
+        <dt>Show/Hide</dt>
+        <dd>The <strong>visibility</strong> of the window is changed.  The window size and location
+        are not affected.</dd>
+
+        <dt>Maximize/Normalize/Minimize</dt>
+        <dd>Minimize and normalize use the OS process to move the window to and from the task bar or
+        dock.  Normalize returns the window to the same location and size.  Maximize fits the
+        window to the screen size.  Normalize will return the window to the orignal location and
+        size.  <strong><em>There is one exception</em></strong>. If the window location or size has
+        changed while maximized, that becomes the new location and size and normalize will not
+        revert to the previous location and size.</dd>
+
+        <dt>To front/back</dt>
+        <dd><strong>Bring to front</strong> makes the window the top window. <strong>Bring to
+        back</strong> makes the window the bottom window.
+
+      </dl>
+
+      <p>The <strong>Ignore Window not found</strong> option is used to prevent errors when
+      optional windows are not currently open.</p>
 
       <div style="margin-left: 2em;">
-        <a href="images/chapter5/window_to_front.png"><img src=
-        "images/chapter5/window_to_front.png" alt="Chapter 5 window to front action"></a>
+        <a href="images/chapter5/window_management.png"><img src=
+        "images/chapter5/window_management.png" alt="Chapter 5 window management action"></a>
       </div>
 
       <p>A simple implementation of this can done using the LogixNG icon with an inline LogixNG.
       See <a href="../../../../package/jmri/jmrit/logixng/InlineLogixNG.shtml">
       Inline LogixNG and LogixNG icon</a>.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Window to front<span class="since">since 5.7.4</span></h4>
+
+      <p>The <strong>Window to front</strong> action has been replaced by the
+      <strong>Window management</strong> action.  Existing actions will be automatically converted.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
