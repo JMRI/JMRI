@@ -483,6 +483,7 @@ public class LogixNG_SelectNamedBean<E extends NamedBean>
     }
 
     @Override
+    @SuppressWarnings("unchecked") // Due to type erasure
     public void getGetAndReplaceNamedBeans(List<GetAndReplaceNamedBean> list) {
         if (_handle != null) {
             var namedBeanItem = new GetAndReplaceNamedBean() {
@@ -498,6 +499,9 @@ public class LogixNG_SelectNamedBean<E extends NamedBean>
 
                 @Override
                 public void replace(NamedBeanHandle<? extends NamedBean> newBean) {
+                    if (! LogixNG_SelectNamedBean.this._class.isAssignableFrom(newBean.getBean().getClass())) {
+                        throw new IllegalArgumentException("Bean must be of the correct class");
+                    }
                     LogixNG_SelectNamedBean.this.setNamedBean((NamedBeanHandle<E>) newBean);
                 }
             };
@@ -518,6 +522,9 @@ public class LogixNG_SelectNamedBean<E extends NamedBean>
 
                 @Override
                 public void replace(NamedBeanHandle<? extends NamedBean> newBean) {
+                    if (!(newBean.getBean() instanceof Memory)) {
+                        throw new IllegalArgumentException("Bean must be a Memory");
+                    }
                     LogixNG_SelectNamedBean.this.setMemory((NamedBeanHandle<Memory>) newBean);
                 }
             };

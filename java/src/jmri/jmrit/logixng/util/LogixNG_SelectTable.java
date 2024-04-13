@@ -752,6 +752,7 @@ public class LogixNG_SelectTable
     }
 
     @Override
+    @SuppressWarnings("unchecked") // Due to type erasure
     public void getGetAndReplaceNamedBeans(List<GetAndReplaceNamedBean> list) {
         if (_tableHandle != null) {
             var tableItem = new GetAndReplaceNamedBean() {
@@ -767,6 +768,9 @@ public class LogixNG_SelectTable
 
                 @Override
                 public void replace(NamedBeanHandle<? extends NamedBean> newBean) {
+                    if (!(newBean.getBean() instanceof Memory)) {
+                        throw new IllegalArgumentException("Bean must be a Memory");
+                    }
                     LogixNG_SelectTable.this.setTable((NamedBeanHandle<NamedTable>) newBean);
                 }
             };
@@ -787,6 +791,9 @@ public class LogixNG_SelectTable
 
                 @Override
                 public void replace(NamedBeanHandle<? extends NamedBean> newBean) {
+                    if (!(newBean.getBean() instanceof Memory)) {
+                        throw new IllegalArgumentException("Bean must be a Memory");
+                    }
                     LogixNG_SelectTable.this.setTableNameMemory((NamedBeanHandle<Memory>) newBean);
                 }
             };
@@ -807,6 +814,9 @@ public class LogixNG_SelectTable
 
                 @Override
                 public void replace(NamedBeanHandle<? extends NamedBean> newBean) {
+                    if (!(newBean.getBean() instanceof Memory)) {
+                        throw new IllegalArgumentException("Bean must be a Memory");
+                    }
                     LogixNG_SelectTable.this.setTableRowMemory((NamedBeanHandle<Memory>) newBean);
                 }
             };
@@ -827,6 +837,9 @@ public class LogixNG_SelectTable
 
                 @Override
                 public void replace(NamedBeanHandle<? extends NamedBean> newBean) {
+                    if (!(newBean.getBean() instanceof Memory)) {
+                        throw new IllegalArgumentException("Bean must be a Memory");
+                    }
                     LogixNG_SelectTable.this.setTableColumnMemory((NamedBeanHandle<Memory>) newBean);
                 }
             };

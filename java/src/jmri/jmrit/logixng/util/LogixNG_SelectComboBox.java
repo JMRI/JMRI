@@ -341,6 +341,7 @@ public class LogixNG_SelectComboBox
     }
 
     @Override
+    @SuppressWarnings("unchecked") // Due to type erasure
     public void getGetAndReplaceNamedBeans(List<GetAndReplaceNamedBean> list) {
         if (_memoryHandle != null) {
             var memoryItem = new GetAndReplaceNamedBean() {
@@ -356,6 +357,9 @@ public class LogixNG_SelectComboBox
 
                 @Override
                 public void replace(NamedBeanHandle<? extends NamedBean> newBean) {
+                    if (!(newBean.getBean() instanceof Memory)) {
+                        throw new IllegalArgumentException("Bean must be a Memory");
+                    }
                     LogixNG_SelectComboBox.this.setMemory((NamedBeanHandle<Memory>) newBean);
                 }
             };
