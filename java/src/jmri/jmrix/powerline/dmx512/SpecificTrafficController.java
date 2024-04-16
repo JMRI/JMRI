@@ -83,24 +83,37 @@ public class SpecificTrafficController extends SerialTrafficController {
         while (!connectionError && !threadStopRequest) {
             try {
                 if (ostream != null) {
-                    // break should be for 176 mSec 
+                    // break should be for at least 176 uSec 
                     if (activePort != null) {
                         //log.info("Start Break");
                         activePort.setBreak();
                         try {
-                            wait(10);
+                            Thread.sleep(10);
                         } catch (InterruptedException e) {
-                            log.warn("transmitLoop did not expected to be interrupted");
+                            log.warn("transmitLoop did not expected to be interrupted during break");
                             break;
                         }
                         activePort.clearBreak();
                         //log.info("Break Sent");
+                        // wait at least 8 usec (not msec, usec)
+                        try {
+                            Thread.sleep(1);
+                        } catch (InterruptedException e) {
+                            log.warn("transmitLoop did not expected to be interrupted during clear");
+                            break;
+                        }
                     }
                     /**
                      * send the buffer of data
                      */
-                    ostream.write(dmxArray);
-
+                    try {
+                        ostream.write(dmxArray);
+                    } catch (com.fazecast.jSerialComm.SerialPortTimeoutException ex) {
+                        if (!threadStopRequest) {
+                            log.warn("DMX512 write operation ended early");
+                        }
+                        return;
+                    }
                     /**
                      * wait 25 mSec, then repeat
                      */

@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 import javax.annotation.CheckReturnValue;
 
+import jmri.NamedBean.BadSystemNameException;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 
@@ -317,21 +318,45 @@ public class OlcbAddress {
      * @throws jmri.NamedBean.BadSystemNameException if provided name is an invalid format.
      */
     @Nonnull
-    public static String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale, @Nonnull String prefix) throws jmri.NamedBean.BadSystemNameException {
+    public static String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale,
+        @Nonnull String prefix) throws BadSystemNameException {
         String oAddr = name.substring(prefix.length());
         OlcbAddress a = new OlcbAddress(oAddr);
         OlcbAddress[] v = a.split();
         if (v == null) {
-            throw new jmri.NamedBean.BadSystemNameException(locale,"InvalidSystemNameCustom","Did not find usable system name: " + name + " to a valid Olcb address");
+            throw new BadSystemNameException(locale,"InvalidSystemNameCustom","Did not find usable system name: " + name + " to a valid Olcb address");
         }
         switch (v.length) {
             case 1:
             case 2:
                 break;
             default:
-                throw new jmri.NamedBean.BadSystemNameException(locale,"InvalidSystemNameCustom","Wrong number of events in address: " + name);
+                throw new BadSystemNameException(locale,"InvalidSystemNameCustom","Wrong number of events in address: " + name);
         }
         return name;
+    }
+
+    /**
+     * Validates 2 part Hardware Address Strings for OpenLCB format.
+     * @param name   the system name to validate.
+     * @param locale the locale for a localized exception.
+     * @param prefix system prefix, eg. MT for OpenLcb turnout.
+     * @return the unchanged value of the name parameter.
+     * @throws jmri.NamedBean.BadSystemNameException if provided name is an invalid format.
+     */
+    @Nonnull
+    public static String validateSystemNameFormat2Part(@Nonnull String name, @Nonnull java.util.Locale locale,
+        @Nonnull String prefix) throws BadSystemNameException {
+        String oAddr = name.substring(prefix.length());
+        OlcbAddress a = new OlcbAddress(oAddr);
+        OlcbAddress[] v = a.split();
+        if (v == null) {
+            throw new BadSystemNameException(locale,"InvalidSystemNameCustom","Did not find usable system name: " + name + " to a valid Olcb address");
+        }
+        if ( v.length == 2 ) {
+            return name;
+        }
+        throw new BadSystemNameException(locale,"InvalidSystemNameCustom","Address requires 2 Events: " + name);
     }
 
     /**

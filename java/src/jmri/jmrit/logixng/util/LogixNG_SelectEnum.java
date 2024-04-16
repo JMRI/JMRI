@@ -82,6 +82,10 @@ public class LogixNG_SelectEnum<E extends Enum<?>> implements VetoableChangeList
         _enum = e;
     }
 
+    public boolean isEnum(E e) {
+        return _addressing == NamedBeanAddressing.Direct && _enum == e;
+    }
+
     public E getEnum() {
         return _enum;
     }

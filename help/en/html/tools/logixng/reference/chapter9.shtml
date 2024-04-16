@@ -190,7 +190,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h3>Functions</h3>
+      <h3 id="functions">Functions</h3>
 
       <p>Formula supports functions, like sin(x) and random(). Some functions takes one or several
       parameters. A function has an identifier, for example "sin", followed by a left parentheses,
@@ -201,12 +201,6 @@
       variables, has a button "Formula functions". If you click on that button, you get a new
       dialog box that shows the functions that are available and the documentation on each of
       them.</p>
-
-      <p>One may notice that there is several modules with one or two functions in each module. For
-      example, the module Math has the functions random() and sin(). The reason for so many modules
-      for so few functions is that the number of functions is expected to grow. For example, the
-      Math module should have cos(), tan(), atan() and sqrt(), but these are not implemented
-      yet.</p>
 
       <p>For JMRI developers: The functions are defined in the package
       <em>jmri.jmrit.logixng.util.parser.functions</em> and each module has its own Java class.

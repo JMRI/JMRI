@@ -362,6 +362,24 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
     }
 
     @Test
+    public void testAction_GetAndSetLocalVariables() throws Exception {
+
+        ((MaleSocket)ifThenElse.getParent()).addLocalVariable("in", SymbolTable.InitialValueType.Integer, "10");
+        var globalVariable = InstanceManager.getDefault(GlobalVariableManager.class).createGlobalVariable("out");
+
+        actionScript.setScript("symbolTable.setValue(\"out\",symbolTable.getValue(\"in\")*15)");
+
+        // Enable the conditionalNG and all its children.
+        conditionalNG.setEnabled(true);
+        // Set the sensor to execute the conditionalNG
+        sensor.setState(Sensor.ACTIVE);
+
+        // The action should now be executed so the global variable should have the correct value
+        Assert.assertEquals("global variable has the correct value", 150,
+                ((java.math.BigInteger)globalVariable.getValue()).longValue());
+    }
+
+    @Test
     public void testSetScript() {
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);

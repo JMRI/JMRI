@@ -50,10 +50,16 @@
 			<revremark>Add CV Fade-in-out</revremark>
 		</revision>
 		<revision>
-		<revnumber>5</revnumber>
+			<revnumber>5</revnumber>
 			<date>2023-12-03</date>
 			<authorinitials>UG</authorinitials>
 			<revremark>Add English translations</revremark>
+		</revision>
+		<revision>
+			<revnumber>6</revnumber>
+			<date>2024-03-27</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>CVs for PWM2 outputs A1 to A6 and change model naming conventions</revremark>
 		</revision>
 	</revhistory>
 	<!-- Interner Zusatzcontroller CVs -->
@@ -89,7 +95,7 @@
 		<label xml:lang="de">Auswahl CV-Bank</label>
 		<label xml:lang="nl">Selecteer CV-Bank</label>
 		<label xml:lang="cs">Vyberte banku CV</label>
-		<tooltip>Setting that determines which bank 0-3 is programmed. Reset to "Bank 0" when done!</tooltip>
+		<tooltip>Setting that determines which bank 0 - 3 is programmed. Reset to "Bank 0" when done!</tooltip>
 		<tooltip xml:lang="de">Auswahl der zu programmierenden Bank 0 - 3. Zurückstellen nach "Bank 0" wenn fertig!</tooltip>
 		<tooltip xml:lang="cs">Nastavení programování banky 0 - 3. Po dokončení obnovte na Banka 0!</tooltip>
 	</variable>
@@ -792,15 +798,36 @@
 	<variable item="A1_Fade_in" CV="998.1021=0" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>A1 Fade in</label>
-		<label xml:lang="de">Ausgang A1 einblenden</label>
+		<label xml:lang="de">Ausgang 1 einblenden</label>
 		<tooltip xml:lang="de">Effekt Flag A1 "Einblenden"</tooltip>
 	</variable>
 	<variable item="A1_Fade_out" CV="998.1021=0" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>A1 Fade out</label>
-		<label xml:lang="de">Ausgang A1 ausblenden</label>
+		<label xml:lang="de">Ausgang 1 ausblenden</label>
 		<tooltip xml:lang="de">Effekt Flag A1 "Ausblenden"</tooltip>
 	</variable>
+	<!-- ************************ -->
+	<variable item="A1_Effect" CV="998.1021=0" mask="XXXXXVXX" default="0" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO_SUSI_LC">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>A1 Effect</label>
+		<label xml:lang="de">Ausgang 1 Effect</label>
+		<tooltip xml:lang="de">Effekt Flag A1 (Bit 2)</tooltip>
+	</variable>
+	<variable item="A1_PWM2" CV="998.1021=0" mask="XXXXVXXX" default="0" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO_SUSI_LC">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>A1 PWM2</label>
+		<label xml:lang="de">Ausgang 1 PWM2</label>
+		<tooltip xml:lang="de">PWM2 Flag A1 (Bit 3)</tooltip>
+	</variable>
+	<variable item="A1_Number" CV="999.1021=0" default="0" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO_SUSI_LC">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF31Off0.xml"/>
+		<label>A1 Effect / PWM2 Function Number</label>
+		<label xml:lang="de">Ausgang 1 Effekt- / PWM2-Funktions-Nummer</label>
+		<tooltip>F1 - F31</tooltip>
+		<tooltip xml:lang="de">F1 - F31</tooltip>
+	</variable>
+	<!-- ************************ -->
 	<!-- Bank 0 variables CV1021 = 0 -->
 	<!-- Ausgang 2 Funktion vorwärts ein CV1000 - 1003 -->
 	<variable item="A2_F0_fw_On" CV="1000.1021=0" mask="XXXXXXXV" default="0">
@@ -1469,15 +1496,36 @@
 	<variable item="A2_Fade_in" CV="1016.1021=0" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>A2 Fade in</label>
-		<label xml:lang="de">Ausgang A2 einblenden</label>
+		<label xml:lang="de">Ausgang 2 einblenden</label>
 		<tooltip xml:lang="de">Effekt Flag A2 "Einblenden"</tooltip>
 	</variable>
 	<variable item="A2_Fade_out" CV="1016.1021=0" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>A2 Fade out</label>
-		<label xml:lang="de">Ausgang A2 ausblenden</label>
+		<label xml:lang="de">Ausgang 2 ausblenden</label>
 		<tooltip xml:lang="de">Effekt Flag A2 "Ausblenden"</tooltip>
 	</variable>
+	<!-- ************************ -->
+	<variable item="A2_Effect" CV="1016.1021=0" mask="XXXXXVXX" default="0" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO_SUSI_LC">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>A2 Effect</label>
+		<label xml:lang="de">Ausgang 2 Effect</label>
+		<tooltip xml:lang="de">Effekt Flag A2 (Bit 2)</tooltip>
+	</variable>
+	<variable item="A2_PWM2" CV="1016.1021=0" mask="XXXXVXXX" default="0" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO_SUSI_LC">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>A2 PWM2</label>
+		<label xml:lang="de">Ausgang 2 PWM2</label>
+		<tooltip xml:lang="de">PWM2 Flag A2 (Bit 3)</tooltip>
+	</variable>
+	<variable item="A2_Number" CV="1017.1021=0" default="0" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO_SUSI_LC">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF31Off0.xml"/>
+		<label>A2 Effect / PWM2 Function Number</label>
+		<label xml:lang="de">Ausgang 2 Effekt- / PWM2-Funktions-Nummer</label>
+		<tooltip>F1 - F31</tooltip>
+		<tooltip xml:lang="de">F1 - F31</tooltip>
+	</variable>
+	<!-- ************************ -->
 	<!-- Bank 1 variables CV1021 = 1 -->
 	<!-- Ausgang 3 Funktion vorwärts ein CV982 - 985 -->
 	<variable item="A3_F0_fw_On" CV="982.1021=1" mask="XXXXXXXV" default="0">
@@ -2146,15 +2194,36 @@
 	<variable item="A3_Fade_in" CV="998.1021=1" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>A3 Fade in</label>
-		<label xml:lang="de">Ausgang A3 einblenden</label>
+		<label xml:lang="de">Ausgang 3 einblenden</label>
 		<tooltip xml:lang="de">Effekt Flag A3 "Einblenden"</tooltip>
 	</variable>
 	<variable item="A3_Fade_out" CV="998.1021=1" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>A3 Fade out</label>
-		<label xml:lang="de">Ausgang A3 ausblenden</label>
+		<label xml:lang="de">Ausgang 3 ausblenden</label>
 		<tooltip xml:lang="de">Effekt Flag A3 "Ausblenden"</tooltip>
 	</variable>
+	<!-- ************************ -->
+	<variable item="A3_Effect" CV="998.1021=1" mask="XXXXXVXX" default="0" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO_SUSI_LC">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>A3 Effect</label>
+		<label xml:lang="de">Ausgang 3 Effect</label>
+		<tooltip xml:lang="de">Effekt Flag A3 (Bit 2)</tooltip>
+	</variable>
+	<variable item="A3_PWM2" CV="998.1021=1" mask="XXXXVXXX" default="0" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO_SUSI_LC">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>A3 PWM2</label>
+		<label xml:lang="de">Ausgang 3 PWM2</label>
+		<tooltip xml:lang="de">PWM2 Flag A3 (Bit 3)</tooltip>
+	</variable>
+	<variable item="A3_Number" CV="999.1021=1" default="0" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO_SUSI_LC">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF31Off0.xml"/>
+		<label>A3 Effect / PWM2 Function Number</label>
+		<label xml:lang="de">Ausgang 3 Effekt- / PWM2-Funktions-Nummer</label>
+		<tooltip>F1 - F31</tooltip>
+		<tooltip xml:lang="de">F1 - F31</tooltip>
+	</variable>
+	<!-- ************************ -->
 	<!-- Bank 1 variables CV1021 = 1 -->
 	<!-- Ausgang 4 Funktion vorwärts ein CV1000 - 1003 -->
 	<variable item="A4_F0_fw_On" CV="1000.1021=1" mask="XXXXXXXV" default="0">
@@ -2823,15 +2892,36 @@
 	<variable item="A4_Fade_in" CV="1016.1021=1" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>A4 Fade in</label>
-		<label xml:lang="de">Ausgang A4 einblenden</label>
+		<label xml:lang="de">Ausgang 4 einblenden</label>
 		<tooltip xml:lang="de">Effekt Flag A4 "Einblenden"</tooltip>
 	</variable>
 	<variable item="A4_Fade_out" CV="1016.1021=1" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>A4 Fade out</label>
-		<label xml:lang="de">Ausgang A4 ausblenden</label>
+		<label xml:lang="de">Ausgang 4 ausblenden</label>
 		<tooltip xml:lang="de">Effekt Flag A4 "Ausblenden"</tooltip>
 	</variable>
+	<!-- ************************ -->
+	<variable item="A4_Effect" CV="1016.1021=1" mask="XXXXXVXX" default="0" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO_SUSI_LC">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>A4 Effect</label>
+		<label xml:lang="de">Ausgang 4 Effect</label>
+		<tooltip xml:lang="de">Effekt Flag A4 (Bit 2)</tooltip>
+	</variable>
+	<variable item="A4_PWM2" CV="1016.1021=1" mask="XXXXVXXX" default="0" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO_SUSI_LC">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>A4 PWM2</label>
+		<label xml:lang="de">Ausgang 4 PWM2</label>
+		<tooltip xml:lang="de">PWM2 Flag A4 (Bit 3)</tooltip>
+	</variable>
+	<variable item="A4_Number" CV="1017.1021=1" default="0" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO_SUSI_LC">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF31Off0.xml"/>
+		<label>A4 Effect / PWM2 Function Number</label>
+		<label xml:lang="de">Ausgang 4 Effekt- / PWM2-Funktions-Nummer</label>
+		<tooltip>F1 - F31</tooltip>
+		<tooltip xml:lang="de">F1 - F31</tooltip>
+	</variable>
+	<!-- ************************ -->
 	<!-- Bank 2 variables CV1021 = 2 -->
 	<!-- Ausgang 5 Funktion vorwärts ein CV982 - 985 -->
 	<variable item="A5_F0_fw_On" CV="982.1021=2" mask="XXXXXXXV" default="0">
@@ -3500,15 +3590,36 @@
 	<variable item="A5_Fade_in" CV="998.1021=2" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>A5 Fade in</label>
-		<label xml:lang="de">Ausgang A5 einblenden</label>
+		<label xml:lang="de">Ausgang 5 einblenden</label>
 		<tooltip xml:lang="de">Effekt Flag A5 "Einblenden"</tooltip>
 	</variable>
 	<variable item="A5_Fade_out" CV="998.1021=2" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>A5 Fade out</label>
-		<label xml:lang="de">Ausgang A5 ausblenden</label>
+		<label xml:lang="de">Ausgang 5 ausblenden</label>
 		<tooltip xml:lang="de">Effekt Flag A5 "Ausblenden"</tooltip>
 	</variable>
+	<!-- ************************ -->
+	<variable item="A5_Effect" CV="998.1021=2" mask="XXXXXVXX" default="0" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO_SUSI_LC">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>A5 Effect</label>
+		<label xml:lang="de">Ausgang 5 Effect</label>
+		<tooltip xml:lang="de">Effekt Flag A5 (Bit 2)</tooltip>
+	</variable>
+	<variable item="A5_PWM2" CV="998.1021=2" mask="XXXXVXXX" default="0" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO_SUSI_LC">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>A5 PWM2</label>
+		<label xml:lang="de">Ausgang 5 PWM2</label>
+		<tooltip xml:lang="de">PWM2 Flag A5 (Bit 3)</tooltip>
+	</variable>
+	<variable item="A5_Number" CV="999.1021=2" default="0" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO_SUSI_LC">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF31Off0.xml"/>
+		<label>A5 Effect / PWM2 Function Number</label>
+		<label xml:lang="de">Ausgang 5 Effekt- / PWM2-Funktions-Nummer</label>
+		<tooltip>F1 - F31</tooltip>
+		<tooltip xml:lang="de">F1 - F31</tooltip>
+	</variable>
+	<!-- ************************ -->
 	<!-- Bank 2 variables CV1021 = 0 -->
 	<!-- Ausgang 6 Funktion vorwärts ein CV1000 - 1003 -->
 	<variable item="A6_F0_fw_On" CV="1000.1021=2" mask="XXXXXXXV" default="0">
@@ -4177,18 +4288,39 @@
 	<variable item="A6_Fade_in" CV="1016.1021=2" mask="XXXXXXXV" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>A6 Fade in</label>
-		<label xml:lang="de">Ausgang A6 einblenden</label>
+		<label xml:lang="de">Ausgang 6 einblenden</label>
 		<tooltip xml:lang="de">Effekt Flag A6 "Einblenden"</tooltip>
 	</variable>
 	<variable item="A6_Fade_out" CV="1016.1021=2" mask="XXXXXXVX" default="0">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>A6 Fade out</label>
-		<label xml:lang="de">Ausgang A6 ausblenden</label>
+		<label xml:lang="de">Ausgang 6 ausblenden</label>
 		<tooltip xml:lang="de">Effekt Flag A6 "Ausblenden"</tooltip>
 	</variable>
+	<!-- ************************ -->
+	<variable item="A6_Effect" CV="1016.1021=2" mask="XXXXXVXX" default="0" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO_SUSI_LC">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>A6 Effect</label>
+		<label xml:lang="de">Ausgang 6 Effect</label>
+		<tooltip xml:lang="de">Effekt Flag A6 (Bit 2)</tooltip>
+	</variable>
+	<variable item="A6_PWM2" CV="1016.1021=2" mask="XXXXVXXX" default="0" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO_SUSI_LC">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>A6 PWM2</label>
+		<label xml:lang="de">Ausgang 6 PWM2</label>
+		<tooltip xml:lang="de">PWM2 Flag A6 (Bit 3)</tooltip>
+	</variable>
+	<variable item="A6_Number" CV="1017.1021=2" default="0" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO_SUSI_LC">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF31Off0.xml"/>
+		<label>A6 Effect / PWM2 Function Number</label>
+		<label xml:lang="de">Ausgang 6 Effekt- / PWM2-Funktions-Nummer</label>
+		<tooltip>F1 - F31</tooltip>
+		<tooltip xml:lang="de">F1 - F31</tooltip>
+	</variable>
+	<!-- ************************ -->
 	<!--Ausgang 7 Wert = F-Taste - nur Ein - CV1018-->
 	<variable item="A7_F_Key" CV="1018.1021=2" default="0">
-		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF68Off255.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF31Off0.xml"/>
 		<label>Function key to activate A7:</label>
 		<label xml:lang="de">Ausgang 7 Ein </label>
 	</variable>
@@ -4199,10 +4331,22 @@
 		<label xml:lang="de">Dimmung Ausgang 1</label>
 		<tooltip>0 - 255</tooltip>
 	</variable>
+	<variable item="PWM2_A1" CV="983.1021=3" default="0">
+		<decVal/>
+		<label>Dimming 2 output 1</label>
+		<label xml:lang="de">2. Dimmung Ausgang 1</label>
+		<tooltip>0 - 255</tooltip>
+	</variable>
 	<variable item="PWM1_A2" CV="985.1021=3" default="255">
 		<decVal/>
 		<label>Dimming output 2</label>
 		<label xml:lang="de">Dimmung Ausgang 2</label>
+		<tooltip>0 - 255</tooltip>
+	</variable>
+	<variable item="PWM2_A2" CV="986.1021=3" default="0">
+		<decVal/>
+		<label>Dimming 2 output 2</label>
+		<label xml:lang="de">2. Dimmung Ausgang 2</label>
 		<tooltip>0 - 255</tooltip>
 	</variable>
 	<variable item="PWM1_A3" CV="988.1021=3" default="255">
@@ -4211,10 +4355,22 @@
 		<label xml:lang="de">Dimmung Ausgang 3</label>
 		<tooltip>0 - 255</tooltip>
 	</variable>
+	<variable item="PWM2_A3" CV="989.1021=3" default="0">
+		<decVal/>
+		<label>Dimming 2 output 3</label>
+		<label xml:lang="de">2. Dimmung Ausgang 3</label>
+		<tooltip>0 - 255</tooltip>
+	</variable>
 	<variable item="PWM1_A4" CV="991.1021=3" default="255">
 		<decVal/>
 		<label>Dimming output 4</label>
 		<label xml:lang="de">Dimmung Ausgang 4</label>
+		<tooltip>0 - 255</tooltip>
+	</variable>
+	<variable item="PWM2_A4" CV="992.1021=3" default="0">
+		<decVal/>
+		<label>Dimming 2 output 4</label>
+		<label xml:lang="de">2. Dimmung Ausgang 4</label>
 		<tooltip>0 - 255</tooltip>
 	</variable>
 	<variable item="PWM1_A5" CV="994.1021=3" default="255">
@@ -4223,10 +4379,22 @@
 		<label xml:lang="de">Dimmung Ausgang 5</label>
 		<tooltip>0 - 255</tooltip>
 	</variable>
+	<variable item="PWM2_A5" CV="995.1021=3" default="0">
+		<decVal/>
+		<label>Dimming 2 output 5</label>
+		<label xml:lang="de">2. Dimmung Ausgang 5</label>
+		<tooltip>0 - 255</tooltip>
+	</variable>
 	<variable item="PWM1_A6" CV="997.1021=3" default="255">
 		<decVal/>
 		<label>Dimming output 6</label>
 		<label xml:lang="de">Dimmung Ausgang 6</label>
+		<tooltip>0 - 255</tooltip>
+	</variable>
+	<variable item="PWM2_A6" CV="998.1021=3" default="0">
+		<decVal/>
+		<label>Dimming 2 output 6</label>
+		<label xml:lang="de">2. Dimmung Ausgang 6</label>
 		<tooltip>0 - 255</tooltip>
 	</variable>
 	<!-- Ein- und Ausblenddauer alle Ausgänge -->
@@ -4236,14 +4404,14 @@
 		<label xml:lang="de">Zeitstufen zum Ein- und Ausblenden der Ausgänge</label>
 		<tooltip>0 - 255</tooltip>
 	</variable>
-	<variable CV="1012.1021=3" mask="XXXXVVVV" item="Fade_in_time" default="0">
+	<variable item="Fade_in_time" CV="1012.1021=3" mask="XXXXVVVV" default="0">
 		<decVal max="15"/>
 		<label>Fade In  A1 to A6</label>
 		<label xml:lang="de">Einblenden A1 bis A6</label>
 		<tooltip>0 - 15 Time steps</tooltip>
 		<tooltip xml:lang="de">0 - 15 Zeitstufen</tooltip>
 	</variable>
-	<variable CV="1012.1021=3" mask="VVVVXXXX" item="Fade_out_time" default="0">
+	<variable item="Fade_out_time" CV="1012.1021=3" mask="VVVVXXXX" default="0">
 		<decVal max="15"/>
 		<label>Fade Out A1 to A6</label>
 		<label xml:lang="de">Ausblenden A1 bis A6</label>

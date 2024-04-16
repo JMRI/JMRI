@@ -17,7 +17,7 @@ public class ActionCodes {
     
     public static final int ENABLE_AUTOMATION = 0x10;
     public static final int ENABLE_GOTO = 0x20;
-    public static final int ENABLE_OTHER = 0x40;
+    public static final int ENABLE_OTHER = 0x40; // not used, for backwards compatibility
 
     // codes use upper byte   
     public static final int CODE_MASK = 0xFF00; // upper byte only

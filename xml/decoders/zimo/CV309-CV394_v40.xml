@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1.0 - Ronald Kuhn, CVs for Decoder without 1K EEPROM, 05 April 2024 -->
+
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  
+  <variable CV="309" item="Brake Key" default="0" tooltip="CV309, brake key">
+	<enumVal>
+      <enumChoice choice="No key assigned">
+        <choice>No key assigned</choice>
+        <choice xml:lang="it">Nessun Tasto</choice>
+        <choice xml:lang="de">keine Taste</choice>
+        <choice xml:lang="cs">Nepřiřazena žádná klávesa</choice>
+      </enumChoice>
+      <enumChoice choice="F1">
+        <choice>F1</choice>
+      </enumChoice>
+      <enumChoice choice="F2">
+        <choice>F2</choice>
+      </enumChoice>
+      <enumChoice choice="F3">
+        <choice>F3</choice>
+      </enumChoice>
+      <enumChoice choice="F4">
+        <choice>F4</choice>
+      </enumChoice>
+      <enumChoice choice="F5">
+        <choice>F5</choice>
+      </enumChoice>
+      <enumChoice choice="F6">
+        <choice>F6</choice>
+      </enumChoice>
+      <enumChoice choice="F7">
+        <choice>F7</choice>
+      </enumChoice>
+      <enumChoice choice="F8">
+        <choice>F8</choice>
+      </enumChoice>
+      <enumChoice choice="F9">
+        <choice>F9</choice>
+      </enumChoice>
+      <enumChoice choice="F10">
+        <choice>F10</choice>
+      </enumChoice>
+      <enumChoice choice="F11">
+        <choice>F11</choice>
+      </enumChoice>
+      <enumChoice choice="F12">
+        <choice>F12</choice>
+      </enumChoice>
+      <enumChoice choice="F13">
+        <choice>F13</choice>
+      </enumChoice>
+      <enumChoice choice="F14">
+        <choice>F14</choice>
+      </enumChoice>
+      <enumChoice choice="F15">
+        <choice>F15</choice>
+      </enumChoice>
+      <enumChoice choice="F16">
+        <choice>F16</choice>
+      </enumChoice>
+      <enumChoice choice="F17">
+        <choice>F17</choice>
+      </enumChoice>
+      <enumChoice choice="F18">
+        <choice>F18</choice>
+      </enumChoice>
+      <enumChoice choice="F19">
+        <choice>F19</choice>
+      </enumChoice>
+      <enumChoice choice="F20">
+        <choice>F20</choice>
+      </enumChoice>
+      <enumChoice choice="F21">
+        <choice>F21</choice>
+      </enumChoice>
+      <enumChoice choice="F22">
+        <choice>F22</choice>
+      </enumChoice>
+      <enumChoice choice="F23">
+        <choice>F23</choice>
+      </enumChoice>
+      <enumChoice choice="F24">
+        <choice>F24</choice>
+      </enumChoice>
+      <enumChoice choice="F25">
+        <choice>F25</choice>
+      </enumChoice>
+      <enumChoice choice="F26">
+        <choice>F26</choice>
+      </enumChoice>
+      <enumChoice choice="F27">
+        <choice>F27</choice>
+      </enumChoice>
+      <enumChoice choice="F28">
+        <choice>F28</choice>
+      </enumChoice>
+    </enumVal>
+  </variable>
+  <variable CV="349" item="Brake Key Deceleration Rate" default="0" tooltip="CV349, brake key time">
+	<decVal min="0" max="255"/>
+    <label>Brake Key Deceleration Rate</label>
+    <label xml:lang="cs">Klávesa brzdy míra zpomalení</label>
+  </variable>
+  <variable CV="353" item="Automatic Shut-down of Smoke Generator" default="0">
+    <decVal min="0" max="252"/>
+    <label>Automatic Shut-down of Smoke Generator</label>
+    <label xml:lang="it">Spegnimento automatico generatore Fumo</label>
+    <label xml:lang="de">Rauchgenerator Laufzeit</label>
+    <label xml:lang="cs">Automatické vypnutí generátoru kouře</label>
+    <tooltip>0 to 252, 25sec per unit</tooltip>
+    <tooltip xml:lang="de">0 bis 252, 25 sec pro Einheit</tooltip>
+    <tooltip xml:lang="cs">0 až 252, 25 sekund na jednotku</tooltip>
+  </variable>
+  <variable CV="355" item="Fan Speed at Standstill" default="0" tooltip="0 to 255, Supplements CV133">
+    <decVal min="0" max="255"/>
+    <label>Fan Speed at Standstill</label>
+    <label xml:lang="it">Velocità Ventole da fermo</label>
+    <label xml:lang="de">Rauch-Ventilator Drehzahl bei Stillstand</label>
+    <label xml:lang="cs">Rychlost ventilátoru kouře při stání</label>
+  </variable>
+  <variable CV="394" item="Lights flash with switchgear sound" mask="XXXXXXXV" default="0" tooltip="CV394 bit 0">
+    <enumVal>
+        <enumChoice choice="0">
+        <choice>no</choice>
+        <choice xml:lang="de">nein</choice>
+        <choice xml:lang="cs">Ne</choice>
+      </enumChoice>
+      <enumChoice choice="1">
+        <choice>yes</choice>
+        <choice xml:lang="de">ja</choice>
+        <choice xml:lang="cs">Ano</choice>
+      </enumChoice>
+    </enumVal>
+    <label xml:lang="de">Lichtblitze bei Schaltwerksgeräusch</label>
+    <label xml:lang="cs">Blikání světel pri zvuku kontroleru</label>
+  </variable>
+
+</variables>

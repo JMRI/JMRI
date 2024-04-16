@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.*;
@@ -19,7 +20,7 @@ import jmri.util.swing.JmriJOptionPane;
 /**
  * Frame for user edit of track destinations
  *
- * @author Dan Boudreau Copyright (C) 2013
+ * @author Dan Boudreau Copyright (C) 2013, 2024
  * 
  */
 public class TrackDestinationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -249,7 +250,10 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 
     private boolean checkLocationsLoop() {
         boolean noIssues = true;
+        // only report car type not serviced once
+        List<String> ignoreType = new ArrayList<String>();
         for (Location destination : locationManager.getLocationsByNameList()) {
+            ignoreType.clear();
             if (_track.isDestinationAccepted(destination)) {
                 log.debug("Track ({}) accepts destination ({})", _track.getName(), destination.getName());
                 if (_track.getLocation() == destination) {
@@ -266,8 +270,10 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                                 Bundle.getMessage("WarningDestinationCarType", 
                                         destination.getName(), type), Bundle.getMessage("WarningCarMayNotMove"),
                                 JmriJOptionPane.OK_CANCEL_OPTION);
-                        if (response == JmriJOptionPane.OK_OPTION)
+                        if (response == JmriJOptionPane.OK_OPTION) {
+                            ignoreType.add(type);
                             continue;
+                        }
                         return false; // done
                     }
                     // now determine if there's a track willing to service car type
@@ -282,13 +288,15 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                                     destination.getName(), type),
                             Bundle.getMessage("WarningCarMayNotMove"),
                             JmriJOptionPane.OK_CANCEL_OPTION);
-                    if (response == JmriJOptionPane.OK_OPTION)
+                    if (response == JmriJOptionPane.OK_OPTION) {
+                        ignoreType.add(type);
                         continue;
+                    }
                     return false; // done
                 }
                 // now check road names
                 for (String type : InstanceManager.getDefault(CarTypes.class).getNames()) {
-                    if (!_track.isTypeNameAccepted(type)) {
+                    if (!_track.isTypeNameAccepted(type) || ignoreType.contains(type)) {
                         continue;
                     }
                     checkRoads: for (String road : InstanceManager.getDefault(CarRoads.class).getNames(type)) {
@@ -297,6 +305,9 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                         }
                         // now determine if there's a track willing to service this road
                         for (Track track : destination.getTracksList()) {
+                            if (!track.isTypeNameAccepted(type)) {
+                                continue;
+                            }
                             if (track.isRoadNameAccepted(road)) {
                                 continue checkRoads; // yes there's a track
                             }
@@ -307,14 +318,15 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                                         destination.getName(), type, road),
                                 Bundle.getMessage("WarningCarMayNotMove"),
                                 JmriJOptionPane.OK_CANCEL_OPTION);
-                        if (response == JmriJOptionPane.OK_OPTION)
+                        if (response == JmriJOptionPane.OK_OPTION) {
                             continue;
+                        }
                         return false; // done
                     }
                 }
                 // now check load names
                 for (String type : InstanceManager.getDefault(CarTypes.class).getNames()) {
-                    if (!_track.isTypeNameAccepted(type)) {
+                    if (!_track.isTypeNameAccepted(type) || ignoreType.contains(type)) {
                         continue;
                     }
                     List<String> loads = InstanceManager.getDefault(CarLoads.class).getNames(type);
@@ -324,6 +336,9 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                         }
                         // now determine if there's a track willing to service this load
                         for (Track track : destination.getTracksList()) {
+                            if (!track.isTypeNameAccepted(type)) {
+                                continue;
+                            }
                             if (track.isLoadNameAccepted(load)) {
                                 continue checkLoads;
                             }
@@ -332,8 +347,9 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                         int response = JmriJOptionPane.showConfirmDialog(this, Bundle
                                 .getMessage("WarningDestinationTrackCarLoad", destination.getName(),
                                 type, load), Bundle.getMessage("WarningCarMayNotMove"), JmriJOptionPane.OK_CANCEL_OPTION);
-                        if (response == JmriJOptionPane.OK_OPTION)
+                        if (response == JmriJOptionPane.OK_OPTION) {
                             continue;
+                        }
                         return false; // done
                     }
                     // now check car type and load combinations
@@ -351,8 +367,9 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                         int response = JmriJOptionPane.showConfirmDialog(this, Bundle
                                 .getMessage("WarningDestinationTrackCarLoad", destination.getName(),
                                 type, load), Bundle.getMessage("WarningCarMayNotMove"), JmriJOptionPane.OK_CANCEL_OPTION);
-                        if (response == JmriJOptionPane.OK_OPTION)
+                        if (response == JmriJOptionPane.OK_OPTION) {
                             continue;
+                        }
                         return false; // done
                     }
                 }
@@ -393,8 +410,12 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                             
                             // does the destination accept this car?
                             // this checks tracks that have schedules
-                            String testDest = "";
+                            String testDest = "NO_TYPE";
                             for (Track track : destination.getTracksList()) {
+                                if (!track.isTypeNameAccepted(type)) {
+                                    // already reported if type not accepted
+                                    continue; 
+                                }
                                 if (track.getScheduleMode() == Track.SEQUENTIAL) {
                                     // must test in match mode
                                     track.setScheduleMode(Track.MATCH);
@@ -410,14 +431,19 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                                 }
                             }
                             
+                            if (testDest.equals("NO_TYPE")) {
+                                continue;
+                            }
+                            
                             if (!testDest.equals(Track.OKAY)) {
                                 noIssues = false;
                                 int response = JmriJOptionPane.showConfirmDialog(this, Bundle
                                         .getMessage("WarningNoTrack", destination.getName(), type, road, load,
                                         destination.getName()), Bundle.getMessage("WarningCarMayNotMove"),
                                         JmriJOptionPane.OK_CANCEL_OPTION);
-                                if (response == JmriJOptionPane.OK_OPTION)
+                                if (response == JmriJOptionPane.OK_OPTION) {
                                     continue;
+                                }
                                 return false; // done
                             }
                             
@@ -431,8 +457,9 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                                         .getMessage("WarningNoTrain", type, road, load,
                                         destination.getName()), Bundle.getMessage("WarningCarMayNotMove"),
                                         JmriJOptionPane.OK_CANCEL_OPTION);
-                                if (response == JmriJOptionPane.OK_OPTION)
+                                if (response == JmriJOptionPane.OK_OPTION) {
                                     continue;
+                                }
                                 return false; // done
                             }
                             // TODO need to check owners and car built dates

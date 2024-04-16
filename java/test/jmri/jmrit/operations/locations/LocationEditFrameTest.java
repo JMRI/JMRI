@@ -526,10 +526,6 @@ public class LocationEditFrameTest extends OperationsTestCase {
         track.setShipLoadOption(Track.INCLUDE_LOADS);
         Assert.assertEquals("Confirm number of columns", 20, tbl.getColumnCount());
         Assert.assertEquals("Column exists", 14, tbl.findColumn(Bundle.getMessage("Ship")));
-        
-        // remove routed
-        Setup.setCarRoutingViaStagingEnabled(false);
-        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Routed")));
 
         JUnitUtil.dispose(f);
     }

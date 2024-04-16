@@ -444,9 +444,6 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         }
         if (throttle != null) {
             throttle.removePropertyChangeListener(this);
-            if (throttle.getPropertyChangeListeners().length == 0) {
-                    throttle.release(this);
-            }
         }
     }
 
@@ -695,20 +692,16 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
     /**
      * Dispatch the current address for use by other throttles
      */
-    public void dispatchAddress() {
+    public void dispatchAddress() {        
         if (throttle != null) {
             int usageCount  = throttleManager.getThrottleUsageCount(throttle.getLocoAddress()) - 1;
-
             if ( usageCount != 0 ) {
                 JmriJOptionPane.showMessageDialog(mainPanel, Bundle.getMessage("CannotDisptach", usageCount));
                 return;
             }
-            throttleManager.dispatchThrottle(throttle, this);
-            if (consistThrottle != null) {
-                throttleManager.dispatchThrottle(consistThrottle, this);
-                consistThrottle = null;
-            }
             notifyThrottleDisposed();
+            throttleManager.dispatchThrottle(throttle, this);
+            throttle = null;
         }
     }
 
@@ -891,6 +884,8 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
             if (((Boolean) evt.getOldValue()) && (!((Boolean) evt.getNewValue()))) {
                 log.debug("propertyChange: ThrottleConnected to false");
                 notifyThrottleDisposed();
+                throttle = null;
+                consistThrottle = null;
             }
         }
 

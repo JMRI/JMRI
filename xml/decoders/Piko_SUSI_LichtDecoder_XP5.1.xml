@@ -16,15 +16,17 @@
 	<version author="Ulrich Gerlach" version="2" lastUpdated="2023-05-10"/>
 	<version author="Ulrich Gerlach" version="3" lastUpdated="2023-10-10"/>
 	<version author="Ulrich Gerlach" version="4" lastUpdated="2023-10-20"/>
-	<!-- Version 1 - Only for Piko SUSI Decoder BR 83.10 TT and BR 93 TT -->
+	<version author="Ulrich Gerlach" version="5" lastUpdated="2024-03-27"/>
+	<!-- Version 1 - Only for Piko SUSI Light Controller BR 83.10 TT and BR 93 TT -->
 	<!-- Version 2 - Add Decoder Reset and CV1018 for Decoder Test -->
 	<!-- Version 3 - Add Decoder S 499 TT and PWM Programming -->
-	<!-- Version 4 - Add neutral PIKO SUSI Decoder -->
+	<!-- Version 4 - Add neutral PIKO SUSI Light Controller -->
+	<!-- Version 5 - Add Decoder BR 150 TT and change model naming conventions -->
 	<!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
 	<decoder>
 		<family name="PIKO SUSI Lichtdekoder (XP5.1)" mfg="PIKO" lowVersionID="0" highVersionID="15" comment="Decoders not sorted (necessarily) in numerical order">
 			<!-- to be checked by hardware owner -->
-			<model model="PIKO SUSI Decoder" numOuts="7" numFns="31" maxMotorCurrent="1.0A" formFactor="N" connector="SUSI" productID="PIKO_SUSI_Decoder" lowVersionID="0" comment="Piko BR 83 SUSI Lichtdekoder (XP5.1)">
+			<model model="PIKO SUSI LC" numOuts="7" numFns="31" maxMotorCurrent="1.0A" formFactor="N" connector="SUSI" productID="PIKO_SUSI_LC" lowVersionID="0" comment="Piko BR 83 SUSI Lichtdekoder (XP5.1)">
 				<output name="1" label="A1" connection="plug" maxcurrent="50 mA"/>
 				<output name="2" label="A2" connection="plug" maxcurrent="50 mA"/>
 				<output name="3" label="A3" connection="plug" maxcurrent="50 mA"/>
@@ -34,7 +36,7 @@
 				<output name="7" label="A7" connection="plug" maxcurrent="50 mA"/>
 				<size length="1" width="1" height="1" units="mm"/>
 			</model>
-			<model model="PIKO BR 83 SUSI Decoder" numOuts="6" numFns="31" maxMotorCurrent="1.0A" formFactor="N" connector="SUSI" productID="PIKO_BR83_SUSI_Decoder" lowVersionID="0" comment="Piko BR 83 SUSI Lichtdekoder (XP5.1)">
+			<model model="PIKO BR 83 SUSI LC" numOuts="6" numFns="31" maxMotorCurrent="1.0A" formFactor="N" connector="SUSI" productID="PIKO_BR83_SUSI_LC" lowVersionID="0" comment="Piko BR 83 SUSI Lichtdekoder (XP5.1)">
 				<output name="1" label="A1" connection="plug" maxcurrent="50 mA"/>
 				<output name="2" label="A2" connection="plug" maxcurrent="50 mA"/>
 				<output name="3" label="A3" connection="plug" maxcurrent="50 mA"/>
@@ -43,7 +45,7 @@
 				<output name="6" label="A6" connection="plug" maxcurrent="50 mA"/>
 				<size length="1" width="1" height="1" units="mm"/>
 			</model>
-			<model model="PIKO BR 93 SUSI Decoder" numOuts="6" numFns="31" maxMotorCurrent="1.0A" formFactor="N" connector="SUSI" productID="PIKO_BR93_SUSI_Decoder" lowVersionID="0" comment="Piko BR 93 SUSI Lichtdekoder (XP5.1)">
+			<model model="PIKO BR 93 SUSI LC" numOuts="6" numFns="31" maxMotorCurrent="1.0A" formFactor="N" connector="SUSI" productID="PIKO_BR93_SUSI_LC" lowVersionID="0" comment="Piko BR 93 SUSI Lichtdekoder (XP5.1)">
 				<output name="1" label="A1" connection="plug" maxcurrent="50 mA"/>
 				<output name="2" label="A2" connection="plug" maxcurrent="50 mA"/>
 				<output name="3" label="A3" connection="plug" maxcurrent="50 mA"/>
@@ -52,7 +54,16 @@
 				<output name="6" label="A6" connection="plug" maxcurrent="50 mA"/>
 				<size length="1" width="1" height="1" units="mm"/>
 			</model>
-			<model model="PIKO S 499 SUSI Decoder" numOuts="7" numFns="31" maxMotorCurrent="1.0A" formFactor="N" connector="SUSI" productID="PIKO_S499_SUSI_Decoder" lowVersionID="0" comment="Piko S 499 SUSI Lichtdekoder (XP5.1)">
+			<model model="PIKO BR 150 SUSI LC" numOuts="6" numFns="31" maxMotorCurrent="1.0A" formFactor="N" connector="SUSI" productID="PIKO_BR150_SUSI_LC" lowVersionID="0" comment="Piko BR 150 SUSI Lichtdekoder (XP5.1)">
+				<output name="1" label="A1" connection="plug" maxcurrent="50 mA"/>
+				<output name="2" label="A2" connection="plug" maxcurrent="50 mA"/>
+				<output name="3" label="A3" connection="plug" maxcurrent="50 mA"/>
+				<output name="4" label="A4" connection="plug" maxcurrent="50 mA"/>
+				<output name="5" label="A5" connection="plug" maxcurrent="50 mA"/>
+				<output name="6" label="A6" connection="plug" maxcurrent="50 mA"/>
+				<size length="1" width="1" height="1" units="mm"/>
+			</model>
+			<model model="PIKO S 499 SUSI LC" numOuts="7" numFns="31" maxMotorCurrent="1.0A" formFactor="N" connector="SUSI" productID="PIKO_S499_SUSI_LC" lowVersionID="0" comment="Piko S 499 SUSI Lichtdekoder (XP5.1)">
 				<output name="1" label="A1" connection="plug" maxcurrent="50 mA"/>
 				<output name="2" label="A2" connection="plug" maxcurrent="50 mA"/>
 				<output name="3" label="A3" connection="plug" maxcurrent="50 mA"/>

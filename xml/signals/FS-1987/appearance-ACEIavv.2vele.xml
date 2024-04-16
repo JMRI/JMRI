@@ -198,6 +198,12 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
     </aspectMapping>
 
     <aspectMapping>
+      <advancedAspect>Giallo Lampeggiante</advancedAspect>
+      <ourAspect>Verde</ourAspect>
+    </aspectMapping>
+   
+
+    <aspectMapping>
       <advancedAspect>Giallo</advancedAspect>
       <ourAspect>Giallo Lampeggiante</ourAspect>
       <ourAspect>Verde</ourAspect>

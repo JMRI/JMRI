@@ -3,6 +3,8 @@
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 - Ronald Kuhn - add german translation -->
 <!-- version 1.2 - Ronald Kuhn - extend description for Uncoupler  -->
+<!-- version 1.3 - Ronald Kuhn - Supplement / correction for shunting speed  -->
+<!-- version 1.4 - Ronald Kuhn - small visual correction  -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>Shunt/Uncouple</name>
   <name xml:lang="it">Manovra/sgancio</name>
@@ -23,6 +25,12 @@
     </label>
     <row>
     <display item="Shunt Function Key Extension"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+    <display item="Shunting Usage"/>
     </row>
     <label>
       <text> </text>
@@ -49,14 +57,22 @@
       <text> </text>
     </label>
     <separator/>
+    
     <label>
       <text> </text>
     </label>
     <row>
       <column>
         <row>
-          <display item="Uncoupler"/>
-          <display item="Uncoupler gt5"/><!-- these are mutually exclusive -->
+          <column>
+            <display item="Uncoupler"/>
+            <display item="Uncoupler gt5"/><!-- these are mutually exclusive -->
+            </column>
+          <column>
+            <label>
+             <text> </text>
+           </label>
+          </column>
           <column>
             <label>
               <qualifier>
@@ -83,10 +99,25 @@
             </label>
           </column>
         </row>
-        <label><text> </text></label>
+          <label>
+           <text> </text>
+          </label>
         <row>
-          <display item="Auto Uncouple"/>
           <column>  
+            <display item="Auto Uncouple"/>
+          </column>
+            <label>
+             <text> </text>
+           </label>
+          <column>  
+          </column>
+          <column>  
+            <label>
+              <text>Hundreds digit, 1 = Tension Relieve</text>
+              <text xml:lang="it">Centinaia, 1 = Tensione di rilascio</text>
+              <text xml:lang="cs">Stovky, 1 = Odlehčení v tahu</text>
+              <text xml:lang="de">Hunderterstelle: 1 = Andrücken zur Kupplungsentlastung</text>
+            </label>
             <label>
               <text>Tens digit = Move Away time (0-9)</text>
               <text xml:lang="it">Decine = Tempo allontanamento (0-9)</text>
@@ -98,12 +129,6 @@
               <text xml:lang="it">Unità = Step velocità interna x4(0-9)</text>
               <text xml:lang="cs">Jednotky = Interní rychlostní stupeň 4× (0–9)</text>
               <text xml:lang="de">Einerstelle = x 4: interne Fahrstufe für Abrücken (0-9)</text>
-            </label>
-            <label>
-              <text>Hundreds digit, 1 = Tension Relieve</text>
-              <text xml:lang="it">Centinaia, 1 = Tensione di rilascio</text>
-              <text xml:lang="cs">Stovky, 1 = Odlehčení v tahu</text>
-              <text xml:lang="de">Hunderterstelle: 1 = Andrücken zur Kupplungsentlastung</text>
             </label>
           </column>
         </row>

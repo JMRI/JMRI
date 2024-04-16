@@ -84,7 +84,7 @@ function getNetworkServices() {
 }
 
 /*
- * Find a parameter in the URL
+ * Find a parameter in the URL by name
  */
 function getParameterByName(name) {
     var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);

@@ -25,7 +25,7 @@
             "
         >
 
-    <xs:complexType name="LogixNG_DigitalAction_DisplayActionWindowToFrontType">
+    <xs:complexType name="LogixNG_DigitalAction_DisplayActionWindowManagementType">
       <xs:annotation>
         <xs:documentation>
           Define the XML stucture for storing the contents of a WindowToFront class.
@@ -46,6 +46,12 @@
               <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
               <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
+
+              <xs:element name="ignoreWindowNotFound" type="yesNoType" minOccurs="0" maxOccurs="1" />
+
+              <xs:element name="hideOrShow" type="LogixNG_SelectEnumType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="maximizeMinimizeNormalize" type="LogixNG_SelectEnumType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="bringToFrontOrBack" type="LogixNG_SelectEnumType" minOccurs="0" maxOccurs="1" />
 
 <!--              <xs:element name="enabled" type="yesNoType" /> -->
 

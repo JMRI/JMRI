@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2013</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Ronald</firstname>
+        <surname>Kuhn</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>2</revnumber>
+      <date>2016-11-05</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2016-04-21</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>F0-12 for Kuehn</revremark>
+    </revision>
+  </revhistory>
+  <!-- This is not the standard NMRA function map, and therefore requires translation -->
+  <variable CV="57" mask="XXXXXXXV" item="F1 controls output 1" minOut="1" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F1 controls output A</label>
+    <label xml:lang="de">F1 steuert Ausgang A</label>
+    <label xml:lang="cs">F1 vpřed funkční výstup A</label>
+  </variable>
+  <variable CV="57" mask="XXXXXXVX" item="F2 controls output 1" minOut="1" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F2 controls output A</label>
+    <label xml:lang="de">F2 steuert Ausgang A</label>
+    <label xml:lang="cs">F2 vzad funkční výstup A</label>
+  </variable>
+  <variable CV="57" mask="XXXXXVXX" item="F3 controls output 1" minOut="1" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F3 controls output A</label>
+    <label xml:lang="de">F3 steuert Ausgang A</label>
+    <label xml:lang="cs">F3 vpřed funkční výstup A</label>
+  </variable>
+  <variable CV="57" mask="XXXXVXXX" item="F4 controls output 1" minOut="1" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F4 controls output A</label>
+    <label xml:lang="de">F4 steuert Ausgang A</label>
+    <label xml:lang="cs">F4 vpřed funkční výstup A</label>
+  </variable>
+  <variable CV="57" mask="XXXVXXXX" item="F5 controls output 1" minOut="1" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F5 controls output A</label>
+    <label xml:lang="de">F5 steuert Ausgang A</label>
+    <label xml:lang="cs">F5 vpřed funkční výstup A</label>
+  </variable>
+  <variable CV="57" mask="XXVXXXXX" item="F6 controls output 1" minOut="1" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F6 controls output A</label>
+    <label xml:lang="de">F6 steuert Ausgang A</label>
+    <label xml:lang="cs">F6 vpřed funkční výstup A</label>
+  </variable>
+  <variable CV="57" mask="XVXXXXXX" item="F7 controls output 1" minOut="1" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F7 controls output A</label>
+    <label xml:lang="de">F7 steuert Ausgang A</label>
+    <label xml:lang="cs">F7 vpřed funkční výstup A</label>
+  </variable>
+  <variable CV="57" mask="VXXXXXXX" item="F8 controls output 1" minOut="1" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F8 controls output A</label>
+    <label xml:lang="de">F8 steuert Ausgang A</label>
+    <label xml:lang="cs">F8 vpřed funkční výstup A</label>
+  </variable>
+
+  <variable CV="58" mask="XXXXXXXV" item="F1 controls output 2" minOut="2" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F1 controls output B</label>
+    <label xml:lang="de">F1 steuert Ausgang B</label>
+    <label xml:lang="cs">F1 vpřed funkční výstup B</label>
+  </variable>
+  <variable CV="58" mask="XXXXXXVX" item="F2 controls output 2" minOut="2" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F2 controls output B</label>
+    <label xml:lang="de">F2 steuert Ausgang B</label>
+    <label xml:lang="cs">F2 vzad funkční výstup B</label>
+  </variable>
+  <variable CV="58" mask="XXXXXVXX" item="F3 controls output 2" minOut="2" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F3 controls output B</label>
+    <label xml:lang="de">F3 steuert Ausgang B</label>
+    <label xml:lang="cs">F3 vpřed funkční výstup B</label>
+  </variable>
+  <variable CV="58" mask="XXXXVXXX" item="F4 controls output 2" minOut="2" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F4 controls output B</label>
+    <label xml:lang="de">F4 steuert Ausgang B</label>
+    <label xml:lang="cs">F4 vpřed funkční výstup B</label>
+  </variable>
+  <variable CV="58" mask="XXXVXXXX" item="F5 controls output 2" minOut="2" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F5 controls output B</label>
+    <label xml:lang="de">F5 steuert Ausgang B</label>
+    <label xml:lang="cs">F5 vpřed funkční výstup B</label>
+  </variable>
+  <variable CV="58" mask="XXVXXXXX" item="F6 controls output 2" minOut="2" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F6 controls output B</label>
+    <label xml:lang="de">F6 steuert Ausgang B</label>
+    <label xml:lang="cs">F6 vpřed funkční výstup B</label>
+  </variable>
+  <variable CV="58" mask="XVXXXXXX" item="F7 controls output 2" minOut="2" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F7 controls output B</label>
+    <label xml:lang="de">F7 steuert Ausgang B</label>
+    <label xml:lang="cs">F7 vpřed funkční výstup B</label>
+  </variable>
+  <variable CV="58" mask="VXXXXXXX" item="F8 controls output 2" minOut="2" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F8 controls output B</label>
+    <label xml:lang="de">F8 steuert Ausgang B</label>
+    <label xml:lang="cs">F8 vpřed funkční výstup B</label>
+  </variable>
+
+  <variable CV="59" mask="XXXXXXXV" item="F1 controls output 3" default="1" minOut="3" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F1 controls output C</label>
+    <label xml:lang="de">F1 steuert Ausgang C</label>
+    <label xml:lang="cs">F1 vpřed funkční výstup C</label>
+  </variable>
+  <variable CV="59" mask="XXXXXXVX" item="F2 controls output 3" minOut="3" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F2 controls output C</label>
+    <label xml:lang="de">F2 steuert Ausgang C</label>
+    <label xml:lang="cs">F2 vzad funkční výstup C</label>
+  </variable>
+  <variable CV="59" mask="XXXXXVXX" item="F3 controls output 3" minOut="3" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F3 controls output C</label>
+    <label xml:lang="de">F3 steuert Ausgang C</label>
+    <label xml:lang="cs">F3 vpřed funkční výstup C</label>
+  </variable>
+  <variable CV="59" mask="XXXXVXXX" item="F4 controls output 3" minOut="3" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F4 controls output C</label>
+    <label xml:lang="de">F4 steuert Ausgang C</label>
+    <label xml:lang="cs">F4 vpřed funkční výstup C</label>
+  </variable>
+  <variable CV="59" mask="XXXVXXXX" item="F5 controls output 3" minOut="3" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F5 controls output C</label>
+    <label xml:lang="de">F5 steuert Ausgang C</label>
+    <label xml:lang="cs">F5 vpřed funkční výstup C</label>
+  </variable>
+  <variable CV="59" mask="XXVXXXXX" item="F6 controls output 3" minOut="3" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F6 controls output C</label>
+    <label xml:lang="de">F6 steuert Ausgang C</label>
+    <label xml:lang="cs">F6 vpřed funkční výstup C</label>
+  </variable>
+  <variable CV="59" mask="XVXXXXXX" item="F7 controls output 3" minOut="3" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F7 controls output C</label>
+    <label xml:lang="de">F7 steuert Ausgang C</label>
+    <label xml:lang="cs">F7 vpřed funkční výstup C</label>
+  </variable>
+  <variable CV="59" mask="VXXXXXXX" item="F8 controls output 3" minOut="3" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F8 controls output C</label>
+    <label xml:lang="de">F8 steuert Ausgang C</label>
+    <label xml:lang="cs">F8 vpřed funkční výstup C</label>
+  </variable>
+  
+  <variable CV="60" mask="XXXXXXXV" item="F1 controls output 4" minOut="4" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F1 controls output D</label>
+    <label xml:lang="de">F1 steuert Ausgang D</label>
+    <label xml:lang="cs">F1 vpřed funkční výstup D</label>
+  </variable>
+  <variable CV="60" mask="XXXXXXVX" item="F2 controls output 4" default="1" minOut="4" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F2 controls output D</label>
+    <label xml:lang="de">F2 steuert Ausgang D</label>
+    <label xml:lang="cs">F2 vzad funkční výstup D</label>
+  </variable>
+  <variable CV="60" mask="XXXXXVXX" item="F3 controls output 4" minOut="4" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F3 controls output D</label>
+    <label xml:lang="de">F3 steuert Ausgang D</label>
+    <label xml:lang="cs">F3 vpřed funkční výstup D</label>
+  </variable>
+  <variable CV="60" mask="XXXXVXXX" item="F4 controls output 4" minOut="4" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F4 controls output D</label>
+    <label xml:lang="de">F4 steuert Ausgang D</label>
+    <label xml:lang="cs">F4 vpřed funkční výstup D</label>
+  </variable>
+  <variable CV="60" mask="XXXVXXXX" item="F5 controls output 4" minOut="4" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F5 controls output D</label>
+    <label xml:lang="de">F5 steuert Ausgang D</label>
+    <label xml:lang="cs">F5 vpřed funkční výstup D</label>
+  </variable>
+  <variable CV="60" mask="XXVXXXXX" item="F6 controls output 4" minOut="4" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F6 controls output D</label>
+    <label xml:lang="de">F6 steuert Ausgang D</label>
+    <label xml:lang="cs">F6 vpřed funkční výstup D</label>
+  </variable>
+  <variable CV="60" mask="XVXXXXXX" item="F7 controls output 4" minOut="4" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F7 controls output D</label>
+    <label xml:lang="de">F7 steuert Ausgang D</label>
+    <label xml:lang="cs">F7 vpřed funkční výstup D</label>
+  </variable>
+  <variable CV="60" mask="VXXXXXXX" item="F8 controls output 4" minOut="4" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F8 controls output D</label>
+    <label xml:lang="de">F8 steuert Ausgang D</label>
+    <label xml:lang="cs">F8 vpřed funkční výstup D</label>
+  </variable>
+
+  <variable CV="61" mask="XXXXXXXV" item="F1 controls output 5" minOut="5" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F1 controls output E</label>
+    <label xml:lang="de">F1 steuert Ausgang E</label>
+    <label xml:lang="cs">F1 vpřed funkční výstup E</label>
+  </variable>
+  <variable CV="61" mask="XXXXXXVX" item="F2 controls output 5" minOut="5" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F2 controls output E</label>
+    <label xml:lang="de">F2 steuert Ausgang E</label>
+    <label xml:lang="cs">F2 vzad funkční výstup E</label>
+  </variable>
+  <variable CV="61" mask="XXXXXVXX" item="F3 controls output 5" default="1" minOut="5" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F3 controls output E</label>
+    <label xml:lang="de">F3 steuert Ausgang E</label>
+    <label xml:lang="cs">F3 vpřed funkční výstup E</label>
+  </variable>
+  <variable CV="61" mask="XXXXVXXX" item="F4 controls output 5" minOut="5" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F4 controls output E</label>
+    <label xml:lang="de">F4 steuert Ausgang E</label>
+    <label xml:lang="cs">F4 vpřed funkční výstup E</label>
+  </variable>
+  <variable CV="61" mask="XXXVXXXX" item="F5 controls output 5" minOut="5" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F5 controls output E</label>
+    <label xml:lang="de">F5 steuert Ausgang E</label>
+    <label xml:lang="cs">F5 vpřed funkční výstup E</label>
+  </variable>
+  <variable CV="61" mask="XXVXXXXX" item="F6 controls output 5" minOut="5" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F6 controls output E</label>
+    <label xml:lang="de">F6 steuert Ausgang E</label>
+    <label xml:lang="cs">F6 vpřed funkční výstup E</label>
+  </variable>
+  <variable CV="61" mask="XVXXXXXX" item="F7 controls output 5" minOut="5" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F7 controls output E</label>
+    <label xml:lang="de">F7 steuert Ausgang E</label>
+    <label xml:lang="cs">F7 vpřed funkční výstup E</label>
+  </variable>
+  <variable CV="61" mask="VXXXXXXX" item="F8 controls output 5" minOut="5" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F8 controls output E</label>
+    <label xml:lang="de">F8 steuert Ausgang E</label>
+    <label xml:lang="cs">F8 vpřed funkční výstup E</label>
+  </variable>
+
+  <variable CV="62" mask="XXXXXXXV" item="F1 controls output 6" minOut="6" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F1 controls output F</label>
+    <label xml:lang="de">F1 steuert Ausgang F</label>
+    <label xml:lang="cs">F1 vpřed funkční výstup F</label>
+  </variable>
+  <variable CV="62" mask="XXXXXXVX" item="F2 controls output 6" minOut="6" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F2 controls output F</label>
+    <label xml:lang="de">F2 steuert Ausgang F</label>
+    <label xml:lang="cs">F2 vzad funkční výstup F</label>
+  </variable>
+  <variable CV="62" mask="XXXXXVXX" item="F3 controls output 6" minOut="6" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F3 controls output F</label>
+    <label xml:lang="de">F3 steuert Ausgang F</label>
+    <label xml:lang="cs">F3 vpřed funkční výstup F</label>
+  </variable>
+  <variable CV="62" mask="XXXXVXXX" item="F4 controls output 6" default="1" minOut="6" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F4 controls output F</label>
+    <label xml:lang="de">F4 steuert Ausgang F</label>
+    <label xml:lang="cs">F4 vpřed funkční výstup F</label>
+  </variable>
+  <variable CV="62" mask="XXXVXXXX" item="F5 controls output 6" minOut="6" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F5 controls output F</label>
+    <label xml:lang="de">F5 steuert Ausgang F</label>
+    <label xml:lang="cs">F5 vpřed funkční výstup F</label>
+  </variable>
+  <variable CV="62" mask="XXVXXXXX" item="F6 controls output 6" minOut="6" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F6 controls output F</label>
+    <label xml:lang="de">F6 steuert Ausgang F</label>
+    <label xml:lang="cs">F6 vpřed funkční výstup F</label>
+  </variable>
+  <variable CV="62" mask="XVXXXXXX" item="F7 controls output 6" minOut="6" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F7 controls output F</label>
+    <label xml:lang="de">F7 steuert Ausgang F</label>
+    <label xml:lang="cs">F7 vpřed funkční výstup F</label>
+  </variable>
+  <variable CV="62" mask="VXXXXXXX" item="F8 controls output 6" minOut="6" minFn="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F8 controls output F</label>
+    <label xml:lang="de">F8 steuert Ausgang F</label>
+    <label xml:lang="cs">F8 vpřed funkční výstup F</label>
+  </variable>
+
+</variables>

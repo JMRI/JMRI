@@ -11,7 +11,7 @@ import javax.swing.*;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionListenOnBeansLocalVariable;
-import jmri.jmrit.logixng.actions.NamedBeanType;
+import jmri.jmrit.logixng.NamedBeanType;
 import jmri.util.swing.JComboBoxUtil;
 
 /**

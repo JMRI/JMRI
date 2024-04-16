@@ -12,6 +12,10 @@ import jmri.DccLocoAddress;
 import jmri.implementation.AbstractConsistManager;
 import javax.annotation.Nonnull;
 
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
+
+
 public class MqttConsistManager extends AbstractConsistManager {
 
     protected MqttSystemConnectionMemo adapterMemo;
@@ -37,7 +41,7 @@ public class MqttConsistManager extends AbstractConsistManager {
 
 
     /**
-     * This implementation does not support advanced consists, so return true.
+     * This implementation does support advanced consists, so return true.
      *
      */
     @Override
@@ -88,16 +92,14 @@ public class MqttConsistManager extends AbstractConsistManager {
     }
 
     /**
-     * If a consist exists with the given address, the consist is activated on the controller,
-     * otherwise it does nothing.
-     * This is used by a throttle in case it is controlling a consist.
+     * Consist is activated on the controller for the specified LocoAddress
+     * This is used by MqttThrottle to either publish an existing consist or clear
+     * an old one upon opening the new throttle.
      * @param address Consist address to be activated
      */
     public void activateConsist(LocoAddress address) {
 
-        if (!consistTable.containsKey(address)) return;
-
-        ((MqttConsist)consistTable.get(address)).activate();
+        ((MqttConsist)addConsist(address)).activate();
 
     }
 

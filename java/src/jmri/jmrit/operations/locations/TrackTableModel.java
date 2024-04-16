@@ -164,7 +164,7 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
         tcm.setColumnVisible(tcm.getColumnByModelIndex(DESTINATION_COLUMN), _location.hasDestinationRestrictions() &&
                 (_trackType.equals(Track.INTERCHANGE) || _trackType.equals(Track.STAGING)));
         tcm.setColumnVisible(tcm.getColumnByModelIndex(ROUTED_COLUMN), _trackType.equals(Track.INTERCHANGE) ||
-                (_trackType.equals(Track.STAGING) && Setup.isCarRoutingViaStagingEnabled()));
+                _trackType.equals(Track.STAGING));
         tcm.setColumnVisible(tcm.getColumnByModelIndex(HOLD_COLUMN),
                 _location.hasSchedules() && _trackType.equals(Track.SPUR));
         tcm.setColumnVisible(tcm.getColumnByModelIndex(PLANPICKUP_COLUMN), _location.hasPlannedPickups());
@@ -329,8 +329,6 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case ROUTED_COLUMN:
-                Track track = _tracksList.get(row);
-                return !track.isModifyLoadsEnabled();
             case DISABLE_LOAD_CHANGE_COLUMN:
             case HOLD_COLUMN:
             case EDIT_COLUMN:

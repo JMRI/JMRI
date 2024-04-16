@@ -6,6 +6,7 @@ import java.util.*;
 
 import jmri.*;
 import jmri.implementation.VirtualSignalHead;
+import jmri.jmrit.display.logixng.WindowManagement;
 import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logix.BlockOrder;
@@ -2392,6 +2393,38 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        // Test an action there the turnout is given by a table where the table, row and column
+        // are given by indirect addressing of memories.
+        actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
+        actionTurnout.getSelectNamedBean().setAddressing(NamedBeanAddressing.Table);
+        actionTurnout.getSelectNamedBean().getSelectTable().setTableNameAddressing(NamedBeanAddressing.Memory);
+        actionTurnout.getSelectNamedBean().getSelectTable().setTableNameMemory(memory1);
+        actionTurnout.getSelectNamedBean().getSelectTable().setTableColumnAddressing(NamedBeanAddressing.Memory);
+        actionTurnout.getSelectNamedBean().getSelectTable().setTableColumnMemory(memory2);
+        actionTurnout.getSelectNamedBean().getSelectTable().setTableRowAddressing(NamedBeanAddressing.Memory);
+        actionTurnout.getSelectNamedBean().getSelectTable().setTableRowMemory(memory3);
+        maleSocket = digitalActionManager.registerAction(actionTurnout);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        // Test an action there the turnout is given by a table where the row and column
+        // are given by indirect addressing of memories. And there the table name is
+        // given by another table.
+        actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
+        actionTurnout.getSelectNamedBean().setAddressing(NamedBeanAddressing.Table);
+        actionTurnout.getSelectNamedBean().getSelectTable().setTableNameAddressing(NamedBeanAddressing.Table);
+        actionTurnout.getSelectNamedBean().getSelectTable().getSelectTableName().setTableNameAddressing(NamedBeanAddressing.Table);
+        actionTurnout.getSelectNamedBean().getSelectTable().getSelectTableName().getSelectTableName().setTable(csvTable);
+        actionTurnout.getSelectNamedBean().getSelectTable().setTableColumnAddressing(NamedBeanAddressing.Memory);
+        actionTurnout.getSelectNamedBean().getSelectTable().setTableColumnMemory(memory2);
+        actionTurnout.getSelectNamedBean().getSelectTable().setTableRowAddressing(NamedBeanAddressing.Memory);
+        actionTurnout.getSelectNamedBean().getSelectTable().setTableRowMemory(memory3);
+        actionTurnout.getSelectEnum().setEnum(ActionTurnout.TurnoutState.Inconsistent);
+        maleSocket = digitalActionManager.registerAction(actionTurnout);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
         actionTurnout.setComment("A comment");
         actionTurnout.getSelectNamedBean().setNamedBean(turnout1);
@@ -2477,6 +2510,30 @@ public class CreateLogixNGTreeScaffold {
         actionTurnout.getSelectEnum().setEnum(ActionTurnout.TurnoutState.Inconsistent);
         set_LogixNG_SelectTable_Data(csvTable, actionTurnout.getSelectEnum().getSelectTable(),
                 NamedBeanAddressing.Direct);
+        maleSocket = digitalActionManager.registerAction(actionTurnout);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        // Test an action there the turnout is given by a table where the row
+        // is given by indirect addressing of memories.
+        actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
+        actionTurnout.getSelectNamedBean().setAddressing(NamedBeanAddressing.Table);
+        actionTurnout.getSelectNamedBean().getSelectTable().setTableNameAddressing(NamedBeanAddressing.Direct);
+        actionTurnout.getSelectNamedBean().getSelectTable().setTable(csvTable);
+        actionTurnout.getSelectNamedBean().getSelectTable().setTableRowAddressing(NamedBeanAddressing.Memory);
+        actionTurnout.getSelectNamedBean().getSelectTable().setTableRowMemory(memory3);
+        maleSocket = digitalActionManager.registerAction(actionTurnout);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        // Test an action there the turnout is given by a table where the column
+        // is given by indirect addressing of memories.
+        actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
+        actionTurnout.getSelectNamedBean().setAddressing(NamedBeanAddressing.Table);
+        actionTurnout.getSelectNamedBean().getSelectTable().setTableNameAddressing(NamedBeanAddressing.Direct);
+        actionTurnout.getSelectNamedBean().getSelectTable().setTable(csvTable);
+        actionTurnout.getSelectNamedBean().getSelectTable().setTableColumnAddressing(NamedBeanAddressing.Memory);
+        actionTurnout.getSelectNamedBean().getSelectTable().setTableColumnMemory(memory2);
         maleSocket = digitalActionManager.registerAction(actionTurnout);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -2677,9 +2734,29 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
-        jmri.jmrit.display.logixng.WindowToFront windowToFront =
-                new jmri.jmrit.display.logixng.WindowToFront(digitalActionManager.getAutoSystemName(), null);
-        maleSocket = digitalActionManager.registerAction(windowToFront);
+        jmri.jmrit.display.logixng.WindowManagement windowManagement =
+                new jmri.jmrit.display.logixng.WindowManagement(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(windowManagement);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        windowManagement =
+                new jmri.jmrit.display.logixng.WindowManagement(digitalActionManager.getAutoSystemName(), null);
+        windowManagement.setIgnoreWindowNotFound(true);
+        windowManagement.getSelectEnumHideOrShow().setEnum(WindowManagement.HideOrShow.Show);
+        windowManagement.getSelectEnumMaximizeMinimizeNormalize().setEnum(WindowManagement.MaximizeMinimizeNormalize.Maximize);
+        windowManagement.getSelectEnumBringToFrontOrBack().setEnum(WindowManagement.BringToFrontOrBack.Front);
+        maleSocket = digitalActionManager.registerAction(windowManagement);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        windowManagement =
+                new jmri.jmrit.display.logixng.WindowManagement(digitalActionManager.getAutoSystemName(), null);
+        windowManagement.setIgnoreWindowNotFound(false);
+        windowManagement.getSelectEnumHideOrShow().setEnum(WindowManagement.HideOrShow.Hide);
+        windowManagement.getSelectEnumMaximizeMinimizeNormalize().setEnum(WindowManagement.MaximizeMinimizeNormalize.Normalize);
+        windowManagement.getSelectEnumBringToFrontOrBack().setEnum(WindowManagement.BringToFrontOrBack.Back);
+        maleSocket = digitalActionManager.registerAction(windowManagement);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -5694,7 +5771,7 @@ public class CreateLogixNGTreeScaffold {
     private static final PrimitiveIterator.OfInt iterator =
             JUnitUtil.getRandomConstantSeed().ints('a', 'z'+10).iterator();
 
-    private static String getRandomString(int count) {
+    public static String getRandomString(int count) {
         StringBuilder s = new StringBuilder();
         for (int i=0; i < count; i++) {
             int r = iterator.nextInt();
