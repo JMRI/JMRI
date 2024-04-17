@@ -64,7 +64,7 @@ public class StagingEditFrame extends TrackEditFrame {
         addItemLeft(p3, blockCarsCheckBox, 0, 0);
 
         // load tool tips
-        loadCheckBox.setToolTipText(Bundle.getMessage("TipIgnoresAlternate"));
+        //        loadCheckBox.setToolTipText(Bundle.getMessage("TipIgnoresAlternate"));
         blockCarsCheckBox.setToolTipText(Bundle.getMessage("TipBlockByPickUp"));
 
         panelLoad.add(p1);
