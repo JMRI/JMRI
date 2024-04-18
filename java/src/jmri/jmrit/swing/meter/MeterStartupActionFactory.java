@@ -6,7 +6,7 @@ import jmri.util.startup.StartupActionFactory;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * Factory for LCD Clock startup actions.
+ * Factory for meter startup actions.
  * 
  * @author Randall Wood Copyright 2020
  * @author Bob Jacobsen Copyright 2024
