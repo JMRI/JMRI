@@ -75,111 +75,6 @@
 
     <profiles>
         <profile>
-            <id>travis-headless</id>
-            <properties>
-                <spotbugs.skip>true</spotbugs.skip>
-                <java.awt.headless>true</java.awt.headless>
-            </properties>
-        </profile>
-        <profile>
-            <id>travis-coverage</id>
-            <properties>
-                <spotbugs.skip>true</spotbugs.skip>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.eluder.coveralls</groupId>
-                        <artifactId>coveralls-maven-plugin</artifactId>
-                        <version>4.3.0</version>
-                        <configuration>
-                            <sourceDirectories>
-                                <!-- Additional source directories -->
-                                <File>target/generated-sources/javacc</File>
-                                <File>target/generated-sources/jjtree</File>
-                            </sourceDirectories>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>travis-spotbugs</id>
-            <build>
-                <plugins>
-                    <!-- prevent surefire (maven default test harness) from running tests -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>${surefire.version}</version>
-                        <configuration>
-                            <skipTests>true</skipTests>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>com.github.spotbugs</groupId>
-                        <artifactId>spotbugs-maven-plugin</artifactId>
-                        <version>4.7.3.0</version>
-                        <configuration>
-                            <plugins>
-                                <plugin>
-                                    <groupId>jp.skypencil.findbugs.slf4j</groupId>
-                                    <artifactId>bug-pattern</artifactId>
-                                    <version>1.5.0</version>
-                                </plugin>
-                            </plugins>
-                        </configuration>
-                        <!-- configured to fail on Medium priority bugs during test phase (needs to be done two places) -->
-                        <executions>
-                            <execution>
-                                <id>failing-on-high</id>
-                                <phase>test</phase>
-                                <goals>
-                                    <goal>check</goal>
-                                </goals>
-                                <configuration>
-                                    <excludeFilterFile>.spotbugs-check.xml</excludeFilterFile>
-                                    <effort>Max</effort>
-                                    <threshold>Low</threshold>
-                                    <maxHeap>1536</maxHeap>
-                                    <timeout>1200000</timeout><!-- 20 minutes -->
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-checkstyle-plugin</artifactId>
-                        <version>3.1.0</version>
-                        <executions>
-                            <execution>
-                                <phase>test</phase>
-                                <goals>
-                                    <goal>check</goal>
-                                </goals>
-                                <configuration>
-                                    <!-- with exception of violationSeverity should match non-profiled checkstyle config and ant checkstyle config -->
-                                    <failOnViolation>true</failOnViolation>
-                                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                                    <sourceDirectories>
-                                        <sourceDirectory>${basedir}</sourceDirectory>
-                                    </sourceDirectories>
-                                    <includes>java/**/*</includes>
-                                    <excludes>**/*.jpg,**/*.PNG,**/*.jar,**/*.dll,**/*.dylib,**/*.so,**/*.exe,
-                                        **/*.zip,**/*.icns,**/*.bat,**/*.ttf,**/*.vsd,**/*.wav,**/*.spj,
-                                        **/*.pdf,.metadata/.plugins/org.eclipse.core.resources/**,
-                                        help/en/JavaHelpSearch/**,help/fr/JavaHelpSearch/**,
-                                        web/app/node_modules/**,.git/**,target/**</excludes>
-                                    <!-- only show errors, not warnings or infos -->
-                                    <violationSeverity>error</violationSeverity>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
             <id>test-warnings-check</id>
             <build>
                 <plugins>
@@ -209,41 +104,6 @@
                                 <version>3.19.0</version>
                             </dependency>
                         </dependencies>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>travis-scanhelp</id>
-            <build>
-                <plugins>
-                    <!-- prevent surefire (maven default test harness) from running tests -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>${surefire.version}</version>
-                        <configuration>
-                            <skipTests>true</skipTests>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <version>1.6.0</version>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>exec</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <executable>scripts/tidy-check.sh</executable>
-                            <arguments>
-                                <argument>help/en/*/*</argument>
-                                <argument>help/fr/*/*</argument>
-                            </arguments>
-                        </configuration>
                     </plugin>
                 </plugins>
             </build>
@@ -950,7 +810,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <configuration>
-                    <!-- with exception of violationSeverity should match travis-spotbugs profile checkstyle config and ant checkstyle config -->
+                    <!-- with exception of violationSeverity should match ant checkstyle config -->
                     <failOnViolation>true</failOnViolation>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
                     <sourceDirectories>
