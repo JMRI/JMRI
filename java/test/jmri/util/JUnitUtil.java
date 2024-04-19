@@ -423,8 +423,7 @@ public class JUnitUtil {
 
         // Check final status of logging in the test just completed
         JUnitAppender.end();
-//        Level severity = Level.ERROR; // level at or above which we'll complain
-        Level severity = Level.WARN; // level at or above which we'll complain
+        Level severity = Level.ERROR; // level at or above which we'll complain
         boolean unexpectedMessageSeen = JUnitAppender.unexpectedMessageSeen(severity);
         String unexpectedMessageContent = JUnitAppender.unexpectedMessageContent(severity);
         JUnitAppender.verifyNoBacklog();
