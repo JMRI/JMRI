@@ -42,6 +42,7 @@ public class TreePanelTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitAppender.suppressWarnMessage("unable to show help page package.jmri.jmrix.jinput.treemodel.TreeFrame due to:");
         JUnitAppender.suppressWarnMessage("loading of HID System failed");
         JUnitUtil.tearDown();
     }
