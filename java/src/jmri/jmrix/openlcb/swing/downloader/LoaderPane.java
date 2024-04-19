@@ -144,20 +144,36 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     protected void doLoad() {
         super.doLoad();
         
-        // de-cache CDI information so next window opening will reload
-        iface.dropConfigForNode(destNodeID());
-
         // if window referencing this node is open, close it
         var frames = jmri.util.JmriJFrame.getFrames();
         for (var frame : frames) {
             if (frame instanceof NodeSpecificFrame) {
                 if ( ((NodeSpecificFrame)frame).getNodeID() == destNodeID() ) {
                     // This window references the node and should be closed
-                    frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+                    
+                    // Notify the user to handle any prompts before continuing.
+                    jmri.util.swing.JmriJOptionPane.showMessageDialog(this, 
+                        Bundle.getMessage("OpenWindowMessage")
+                    );
+                    
+                    // Depending on the state of the window, and how the user handles
+                    // a prompt to discard changes or cancel, this might be 
+                    // presented multiple times until the user finally
+                    // allows the window to close. See the message in the Bundle.properties
+                    // file for how we handle this.
+
+                    // Close this window - force onto the queue before a possible next modal dialog
+                    jmri.util.ThreadingUtil.runOnGUI(() -> {
+                        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+                    });
+                    
                 }
             }
         }
-        
+
+        // de-cache CDI information so next window opening will reload
+        iface.dropConfigForNode(destNodeID());
+
         // start firmware load operation
         setOperationAborted(false);
         abortButton.setEnabled(false);
