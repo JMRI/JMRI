@@ -601,6 +601,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitAppender.suppressWarnMessage("loading of HID System failed");
         JUnitUtil.tearDown();
     }
 
