@@ -34,24 +34,24 @@ class WaitCars(jmri.jmrit.automat.AbstractAutomaton):
     # the following code checks the values entered
     train = tm.getTrainByName(self.trainName)
     if (train == None):
-        print "Train (", self.trainName, ") does not exist!"
+        print ('Train ({}) does not exist!'.format(self.trainName))
         return False
     if not (train.isBuilt()):
-        print "Train (", self.trainName, ") not built!"
+        print ('Train ({}) not built!'.format(self.trainName))
         return False
 
     # get a list of cars in this train
     carList = cm.getByTrainDestinationList(train)
-    print "Train (", self.trainName,") has ", carList.size(), " cars assigned to it"
+    print ('Train ({}) has {} cars assigned to it'.format(self.trainName, carList.size()))
 
     for car in carList:
-        if (car.getNextWait() == 0):
-            car.setNextWait(self.wait)
-            print "Setting next wait to ", self.wait, " for car ", car.toString()
+        if (car.getWait() == 0):
+            car.setWait(self.wait)
+            print ('Setting wait to {} for car {}'.format( self.wait, car.toString()))
         else:
-            print "Car ",car.toString(), " has next wait value ", car.getNextWait()
+            print ('Car {} has wait value {}'.format(car.toString(), car.getWait()))
 
-    print "Done"
+    print ('Done')
     return False              # all done, don't repeat again
 
 WaitCars().start()          # create one of these, and start it running
