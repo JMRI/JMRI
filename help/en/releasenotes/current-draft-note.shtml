@@ -432,7 +432,9 @@
     <h3>Meters and MeterFrames</h3>
         <a id="Meters" name="Meters"></a>
         <ul>
-            <li></li>
+            <li>Added a start-up action that will open the meters.</li>
+            <li>Add a MeterToMemory.py sample script that copies Meter
+                values to Memory variables</li>
         </ul>
 
     <h3>Operations</h3>
