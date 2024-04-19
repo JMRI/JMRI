@@ -1,6 +1,7 @@
 package jmri.jmrix.jinput.treecontrol;
 
 import jmri.jmrix.jinput.TreeModel;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -41,6 +42,7 @@ public class TreePanelTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitAppender.suppressWarnMessage("loading of HID System failed");
         JUnitUtil.tearDown();
     }
 
