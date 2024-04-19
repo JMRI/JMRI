@@ -6,7 +6,7 @@
 #
 # Use this script after the train has been built.
 #
-# Author: Daniel Boudreau, copyright 2011, 2012
+# Author: Daniel Boudreau, copyright 2011, 2012, 2024
 #
 # To use this script you must assign the train that you want the cars waited,
 # and the wait value.
