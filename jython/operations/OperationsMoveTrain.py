@@ -3,7 +3,7 @@
 #
 # Part of the JMRI distribution
 #
-# Author: Daniel Boudreau copyright 2010
+# Author: Daniel Boudreau copyright 2010, 2024
 #
 
 import jmri
@@ -20,23 +20,23 @@ class moveTrain(jmri.jmrit.automat.AbstractAutomaton) :
     # get the memory
     memTrainId = memories.provideMemory(memSysName)
     if (memTrainId.getValue() == None):
-      print "No train id in memory", trainId
+      print ('No train id in memory {}'.format(memSysName))
       return False              # all done, don't repeat again
     else:
-      print "get train by id:", memTrainId.getValue()
+      print ('get train by id: {}'.format(memTrainId.getValue())) 
 
     # get train by id
     train = self.tm.getTrainById(memTrainId.getValue())
     if (train != None):
       if (train.isBuilt() == True):
-        print "Move train", train.getName(), train.getDescription()
+        print ('Move train {}, {}'.format(train.getName(), train.getDescription()))
         train.move()
-        print "Status:", train.getStatus();
-        print "Current location:", train.getCurrentLocationName()
+        print ('Status: {}'.format(train.getStatus()))
+        print ('Current location: {}'.format(train.getCurrentLocationName()))
       else:
-        print "Train", train.getName(), train.getDescription(), "hasn't been built"
+        print ('Train {}, {}, is not built'.format(train.getName(), train.getDescription()))
     else :
-      print "Train id", memTrainId.getValue(), "does not exist"
+      print ('Train id {} does not exist'.format(memTrainId.getValue()))
 
     return False              # all done, don't repeat again
 
