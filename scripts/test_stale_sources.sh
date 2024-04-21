@@ -10,6 +10,11 @@ fi
 
 echo "{$mvn_output}"
 
+echo ""
+echo "-----------------------------"
+echo ""
+echo "{$mvn_output}" | grep "Stale source detected:"
+
 output=$(echo "{$mvn_output}" | grep "Stale source detected:")
 if [[ $? != 0 ]]; then
     # If here, we have stale java sources.
