@@ -46,4 +46,4 @@ jobs:
         mvn -X test-compile | grep "Stale source detected:"
         
         # Test if stale sources exists
-        ./test_stale.sh
+        ./scripts/test_stale_sources.sh
