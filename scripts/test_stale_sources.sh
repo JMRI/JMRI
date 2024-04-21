@@ -2,7 +2,7 @@
 
 # Test if there are any stale java source files
 
-mvn_output=$(mvn -X test-compile)
+mvn_output=$(mvn -X clean test-compile)
 if [[ $? != 0 ]]; then
     echo "mvn command failed."
     exit 1
