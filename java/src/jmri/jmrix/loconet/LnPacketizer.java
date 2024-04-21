@@ -216,7 +216,7 @@ public class LnPacketizer extends LnTrafficController {
         public void run() {
 
             int opCode;
-            while (!threadStopRequest) {   // loop until asked to stop
+            while (!threadStopRequest && ! Thread.interrupted() ) {   // loop until asked to stop
                 try {
                     // start by looking for command -  skip if bit not set
                     while (((opCode = (readByteProtected(istream) & 0xFF)) & 0x80) == 0) { // the real work is in the loop check
@@ -308,9 +308,8 @@ public class LnPacketizer extends LnTrafficController {
                 } catch (LocoNetMessageException e) {
                     // just let it ride for now
                     log.warn("run: unexpected LocoNetMessageException", e); // NOI18N
-                } catch (java.io.EOFException e) {
+                } catch (java.io.EOFException | com.fazecast.jSerialComm.SerialPortTimeoutException e) {
                     // posted from idle port when enableReceiveTimeout used
-                    log.trace("EOFException, is LocoNet serial I/O using timeouts?"); // NOI18N
                 } catch (java.io.IOException e) {
                     // fired when write-end of HexFile reaches end
                     log.debug("IOException, should only happen with HexFile", e); // NOI18N
@@ -473,13 +472,13 @@ public class LnPacketizer extends LnTrafficController {
     @Override
     public void dispose() {
         if (xmtThread != null) {
-            xmtThread.stop(); // interrupt not sufficient?
+            xmtThread.interrupt();
             try {
                 xmtThread.join();
             } catch (InterruptedException e) { log.warn("unexpected InterruptedException", e);}
         }
         if (rcvThread != null) {
-            rcvThread.stop(); // interrupt not sufficient with the previous serial library. Not known if OK with SerialComm?
+            rcvThread.interrupt();
             try {
                 rcvThread.join();
             } catch (InterruptedException e) { log.warn("unexpected InterruptedException", e);}
