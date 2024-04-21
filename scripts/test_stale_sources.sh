@@ -8,7 +8,7 @@ if [[ $? != 0 ]]; then
     exit 1
 fi
 
-output=$(grep "Stale source detected:" < $mvn_output)
+output=$(echo "{$mvn_output}" | grep "Stale source detected:")
 if [[ $? != 0 ]]; then
     # If here, we have stale java sources.
     # Print the output and return with exit code 1.
