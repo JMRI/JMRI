@@ -41,9 +41,5 @@ jobs:
         mvn antrun:run -Danttarget=checkPropertiesFiles
         #run Architecture tests
         mvn -Dtest=jmri.ArchitectureTest,jmri.TestArchitectureTest,jmri.util.FileLineEndingsCheck test --file=pom.xml
-        
-        # Test if stale sources exists
-        mvn -X test-compile | grep "Stale source detected:"
-        
         # Test if stale sources exists
         ./scripts/test_stale_sources.sh
