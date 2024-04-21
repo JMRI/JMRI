@@ -24,6 +24,8 @@ if [[ $? != 0 ]]; then
     exit 1
 else
     # If here, no stale java sources was found. Exit with 0.
+    echo ""
     echo "No stale sources found"
+    echo ""
     exit 0
 fi
