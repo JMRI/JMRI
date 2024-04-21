@@ -9,7 +9,7 @@ if [[ $? != 0 ]]; then
 fi
 
 output=$(echo "{$mvn_output}" | grep "Stale source detected:")
-if [[ $? != 0 ]]; then
+if [[ output ]]; then
     # If here, we have stale java sources.
     # Print the output and return with exit code 1.
     echo "Error: Stale Java sources found."
