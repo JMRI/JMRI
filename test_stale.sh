@@ -8,6 +8,8 @@ if [[ $? != 0 ]]; then
 elif [[ $files ]]; then
     echo "Some output from maven"
     echo $files
+    exit 1
 else
     echo "No output"
+    exit 0
 fi
