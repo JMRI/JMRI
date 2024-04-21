@@ -13,7 +13,6 @@ echo "{$mvn_output}"
 echo ""
 echo "-----------------------------"
 echo ""
-echo "{$mvn_output}" | grep "Stale source detected:"
 
 output=$(echo "{$mvn_output}" | grep "Stale source detected:")
 if [[ $? != 0 ]]; then
@@ -27,6 +26,7 @@ if [[ $? != 0 ]]; then
     echo "@edu.umd.cs.findbugs.annotations.DefaultAnnotation(value={})"
     echo ""
     echo $output
+    echo ""
     exit 1
 else
     # If here, no stale java sources was found. Exit with 0.
