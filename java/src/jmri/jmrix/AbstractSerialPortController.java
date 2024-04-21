@@ -155,6 +155,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         try {
             serialPort = com.fazecast.jSerialComm.SerialPort.getCommPort(portName);
             serialPort.openPort();
+            serialPort.setComPortTimeouts(com.fazecast.jSerialComm.SerialPort.TIMEOUT_READ_BLOCKING, 0, 0);
             serialPort.setNumDataBits(8);
             serialPort.setNumStopBits(stop_bits_code);
             serialPort.setParity(parity.getValue());
