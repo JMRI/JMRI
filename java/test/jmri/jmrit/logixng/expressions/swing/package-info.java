@@ -1,3 +1,3 @@
-package jmri.jmrit.logixng.actions.swing;
+package jmri.jmrit.logixng.expressions.swing;
 
 // Test
