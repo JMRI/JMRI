@@ -78,6 +78,7 @@ public class LocoBufferAdapter extends LnPortController {
         setBaudRate(currentSerialPort, baud);
         configureLeads(currentSerialPort, true, true);
         setLocalFlowControl();
+        serialPort.setComPortTimeouts(com.fazecast.jSerialComm.SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 100, 0);
 
         // report status
         reportPortStatus(log, portName);
