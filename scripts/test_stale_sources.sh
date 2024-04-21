@@ -2,13 +2,13 @@
 
 # Test if there are any stale java source files
 
-output=$(mvn -X test-compile)
+mvn_output=$(mvn -X test-compile)
 if [[ $? != 0 ]]; then
     echo "mvn command failed."
     exit 1
 fi
 
-output=$(grep "Stale source detected:" < $output)
+output=$(grep "Stale source detected:" < $mvn_output)
 if [[ $? != 0 ]]; then
     # If here, we have stale java sources.
     # Print the output and return with exit code 1.
