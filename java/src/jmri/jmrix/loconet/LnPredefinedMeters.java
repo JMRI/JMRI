@@ -83,7 +83,8 @@ public class LnPredefinedMeters implements LocoNetListener {
     }
 
     public void dispose() {
-        for (Meter m: InstanceManager.getDefault(MeterManager.class).getNamedBeanSet()) {
+        var meters = new java.util.HashSet<>(InstanceManager.getDefault(MeterManager.class).getNamedBeanSet());
+        for (Meter m: meters) {
             if (m.getSystemName().startsWith(sm.getSystemPrefix()+"V")) { // NOI18N
                 updateTask.disable(m);
                 InstanceManager.getDefault(MeterManager.class).deregister(m);
