@@ -169,6 +169,10 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         return serialPort;
     }
 
+    final protected void setComPortTimeouts(com.fazecast.jSerialComm.SerialPort serialPort, Blocking blocking, int timeout) {
+        serialPort.setComPortTimeouts(blocking.getValue(), timeout, 0);
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -313,6 +317,25 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         private final int value;
 
         Parity(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
+
+    /**
+     * Enumerate the possible timeout choices
+     */
+    public enum Blocking {
+        NONBLOCKING(com.fazecast.jSerialComm.SerialPort.TIMEOUT_NONBLOCKING),
+        READ_BLOCKING(com.fazecast.jSerialComm.SerialPort.TIMEOUT_READ_BLOCKING),
+        READ_SEMI_BLOCKING(com.fazecast.jSerialComm.SerialPort.TIMEOUT_READ_SEMI_BLOCKING);
+
+        private final int value;
+
+        Blocking(int value) {
             this.value = value;
         }
 
