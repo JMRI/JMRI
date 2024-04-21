@@ -9,6 +9,13 @@ if [[ $? != 0 ]]; then
 elif [[ $output ]]; then
     # If here, we have stale java sources.
     # Print the output and return with exit code 1.
+    echo "Error: Stale Java sources found."
+    echo "A stale Java source is a java file that doesn't compiles into a class file."
+    echo ""
+    echo "For Java files that doesn't have any code, for example package-info.java, add these two lines:"
+    echo "// include empty DefaultAnnotation to avoid excessive recompilation"
+    echo "@edu.umd.cs.findbugs.annotations.DefaultAnnotation(value={})"
+    echo ""
     echo $output
     exit 1
 else
