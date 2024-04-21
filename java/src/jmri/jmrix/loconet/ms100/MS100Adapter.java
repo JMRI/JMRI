@@ -46,6 +46,7 @@ public class MS100Adapter extends LnPortController {
         setBaudRate(currentSerialPort, 16600);
         configureLeads(currentSerialPort, true, false);  // for MS100 power
         setFlowControl(currentSerialPort, FlowControl.NONE);
+        serialPort.setComPortTimeouts(com.fazecast.jSerialComm.SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 100, 0);
 
         // report status
         reportPortStatus(log, portName);
