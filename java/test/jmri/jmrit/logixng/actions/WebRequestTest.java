@@ -19,11 +19,7 @@ import jmri.jmrit.logixng.util.LineEnding;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.*;
 
-import org.junit.After;
-import org.junit.Assume;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test WebRequest
@@ -208,16 +204,16 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         torontoFirst.setState(Turnout.THROWN);
         Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
         Assert.assertEquals("Turnout TorontoFirst is thrown", _replyVariable.getValue());
-/*
-        JUnitAppender.assertWarnMessageStartsWith("Log local variables:");
-        JUnitAppender.assertWarnMessageStartsWith("Name: turnout, Value: TorontoFirst");
-        JUnitAppender.assertWarnMessageStartsWith("Name: bean, Value: IT3");
-        JUnitAppender.assertWarnMessageStartsWith("Global variables:");
-        JUnitAppender.assertWarnMessageStartsWith("Global Name: responseCode, value: 200");
-        JUnitAppender.assertWarnMessageStartsWith("Global Name: reply, value: Turnout TorontoFirst is thrown");
-        JUnitAppender.assertWarnMessageStartsWith("Global Name: cookies, value: null");
-        JUnitAppender.assertWarnMessageStartsWith("Log local variables done");
-*/
+
+        // Suppress instead of assert these messages since they will not be there if the JMRI web server is down
+        JUnitAppender.suppressWarnMessageStartsWith("Log local variables:");
+        JUnitAppender.suppressWarnMessageStartsWith("Name: turnout, Value: TorontoFirst");
+        JUnitAppender.suppressWarnMessageStartsWith("Name: bean, Value: IT3");
+        JUnitAppender.suppressWarnMessageStartsWith("Global variables:");
+        JUnitAppender.suppressWarnMessageStartsWith("Global Name: responseCode, value: 200");
+        JUnitAppender.suppressWarnMessageStartsWith("Global Name: reply, value: Turnout TorontoFirst is thrown");
+        JUnitAppender.suppressWarnMessageStartsWith("Global Name: cookies, value: null");
+        JUnitAppender.suppressWarnMessageStartsWith("Log local variables done");
     }
 
     private void setupThrowTurnoutsConditionalNG() throws SocketAlreadyConnectedException, ParserException {

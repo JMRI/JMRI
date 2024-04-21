@@ -126,7 +126,9 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>If you enter an value that's outside the acceptable range
+                    in the configuration tool, the background will now turn
+                    blue to indicate that to you.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -407,7 +409,9 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>Fixed the ability to connect turnouts by dragging and dropping. When end points
+            overlap, a track segment is automatically created. This works very nicely for creating
+            yard ladders.  The problem affected panels on Linux and Windows.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -430,7 +434,9 @@
     <h3>Meters and MeterFrames</h3>
         <a id="Meters" name="Meters"></a>
         <ul>
-            <li></li>
+            <li>Added a start-up action that will open the meters.</li>
+            <li>Add a MeterToMemory.py sample script that copies Meter
+                values to Memory variables</li>
         </ul>
 
     <h3>Operations</h3>
@@ -448,7 +454,7 @@
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li></li>
+            <li>Fixed the popup context menu on Linux.</li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>

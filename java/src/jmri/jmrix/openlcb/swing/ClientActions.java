@@ -43,7 +43,7 @@ public class ClientActions {
         final java.util.ArrayList<JButton> sensorButtonList = new java.util.ArrayList<>();
         final java.util.ArrayList<JButton> turnoutButtonList = new java.util.ArrayList<>();
 
-        JmriJFrame f = new JmriJFrame();
+        JmriJFrame f = new NodeSpecificFrame(destNode);
         f.setTitle(Bundle.getMessage("CdiPanelConfigure", description));
         f.setLayout(new javax.swing.BoxLayout(f.getContentPane(), javax.swing.BoxLayout.Y_AXIS));
         f.addHelpMenu("package.jmri.jmrix.openlcb.swing.networktree.NetworkTreePane_CDItool", true);

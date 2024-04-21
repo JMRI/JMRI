@@ -1,27 +1,31 @@
 package jmri.jmrix.openlcb.swing.downloader;
 
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
 import jmri.jmrit.MemoryContents;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.openlcb.swing.NodeSpecificFrame;
 import jmri.util.swing.WrapLayout;
+
 import org.openlcb.Connection;
 import org.openlcb.LoaderClient;
 import org.openlcb.LoaderClient.LoaderStatusReporter;
 import org.openlcb.MimicNodeStore;
 import org.openlcb.NodeID;
+import org.openlcb.OlcbInterface;
 import org.openlcb.implementations.DatagramService;
 import org.openlcb.implementations.MemoryConfigurationService;
 import org.openlcb.swing.NodeSelector;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Pane for downloading firmware files files to OpenLCB devices which support
@@ -45,6 +49,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     JCheckBox lockNode;
     LoaderClient loaderClient;
     NodeID nid;
+    OlcbInterface iface;
 
     public String getTitle(String menuTitle) {
         return Bundle.getMessage("TitleLoader");
@@ -60,6 +65,8 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         this.nodeSelector = new NodeSelector(store, Integer.MAX_VALUE);  // display all ID terms available
         this.loaderClient = memo.get(LoaderClient.class);
         this.nid = memo.get(NodeID.class);
+        this.iface = memo.get(OlcbInterface.class);
+        
         // We can add to GUI here
         loadButton.setText("Load");
         loadButton.setToolTipText("Start Load Process");
@@ -136,6 +143,38 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     @Override
     protected void doLoad() {
         super.doLoad();
+        
+        // if window referencing this node is open, close it
+        var frames = jmri.util.JmriJFrame.getFrames();
+        for (var frame : frames) {
+            if (frame instanceof NodeSpecificFrame) {
+                if ( ((NodeSpecificFrame)frame).getNodeID() == destNodeID() ) {
+                    // This window references the node and should be closed
+                    
+                    // Notify the user to handle any prompts before continuing.
+                    jmri.util.swing.JmriJOptionPane.showMessageDialog(this, 
+                        Bundle.getMessage("OpenWindowMessage")
+                    );
+                    
+                    // Depending on the state of the window, and how the user handles
+                    // a prompt to discard changes or cancel, this might be 
+                    // presented multiple times until the user finally
+                    // allows the window to close. See the message in the Bundle.properties
+                    // file for how we handle this.
+
+                    // Close this window - force onto the queue before a possible next modal dialog
+                    jmri.util.ThreadingUtil.runOnGUI(() -> {
+                        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+                    });
+                    
+                }
+            }
+        }
+
+        // de-cache CDI information so next window opening will reload
+        iface.dropConfigForNode(destNodeID());
+
+        // start firmware load operation
         setOperationAborted(false);
         abortButton.setEnabled(false);
         abortButton.setToolTipText(Bundle.getMessage("TipAbortDisabled"));
@@ -244,5 +283,5 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(LoaderPane.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LoaderPane.class);
 }

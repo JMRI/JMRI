@@ -1,7 +1,7 @@
 # Sample script showing how to build and terminate a train. Used in operations.
 # Allows user to select in a window which train to build and terminate.
 #
-# Author: Daniel Boudreau, copyright 2019
+# Author: Daniel Boudreau, copyright 2019, 2024
 # Part of the JMRI distribution
 
 import jmri
@@ -15,7 +15,7 @@ class buildAndTerminate(jmri.jmrit.automat.AbstractAutomaton) :
   
 class getTrain(javax.swing.JFrame) : 
     def display(self, msg) :
-        print "Create panel"
+        print ('Create panel')
              # create panel to allow user to select which train to build and termionate
         b = javax.swing.JButton("Build")
         bat = javax.swing.JButton("Build and Terminate")
@@ -49,51 +49,51 @@ class getTrain(javax.swing.JFrame) :
         train = self.combobox.getSelectedItem()
         if (train != None):
             trainName = train.getName()
-            print "Build and terminate train", trainName   
+            print ('Build and terminate train ({})'.format(trainName))   
             # Build train
             train.build()
             built = train.isBuilt()
             train.setBuildEnabled(False)    # deselect build option (Checkbox in Trains window)
             if (built == True):
-              print "Train", trainName, "has been built"
+              print ('Train ({}) has been built'.format(trainName))
               
               train.terminate() # now terminate the train
-              print "Train", trainName, "has been terminated"
+              print ('Train ({}) has been terminated'.format(trainName))
             else:
-              print "Train", trainName, "build failed"
+              print ('Train ({}) build failed'.format(trainName))
         else:
-            print "Need to select a train"
+            print ('Need to select a train')
         return False              # all done, don't repeat again
     
     def whenBuildButtonClicked(self, event) :
         train = self.combobox.getSelectedItem()
         if (train != None):
             trainName = train.getName()
-            print "Build train", trainName   
+            print ('Build train ({})'.format(trainName))   
             # Build train
             train.build()
             built = train.isBuilt()
             if (built == True):
-              print "Train", trainName, "has been built"
+              print ('Train ({}) has been built'.format(trainName))
             else:
-              print "Train", trainName, "build failed"
+              print ('Train ({}) build failed'.format(trainName))
         else:
-            print "Need to select a train to build"
+            print ('Need to select a train to build')
         return False              # all done, don't repeat again
     
     def whenTerminateButtonClicked(self, event) :
         train = self.combobox.getSelectedItem()
         if (train != None):
             trainName = train.getName()
-            print "Terminate train", trainName   
+            print ('Terminate train ({})'.format(trainName))
             built = train.isBuilt()
             if (built == True):
               train.terminate() # now terminate the train
-              print "Train", trainName, "has been terminated"
+              print ('Train ({}) has been terminated'.format(trainName))
             else:
-              print "Train", trainName, "not built!"
+              print ('Train ({}) not built!'.format(trainName))
         else:
-            print "Need to select a train to terminate"
+            print ('Need to select a train to terminate')
         return False              # all done, don't repeat again
         
 buildAndTerminate().start()    # create one of these, and start it running
