@@ -8,12 +8,6 @@ if [[ $? != 0 ]]; then
     exit 1
 fi
 
-echo "{$mvn_output}"
-
-echo ""
-echo "-----------------------------"
-echo ""
-
 output=$(echo "{$mvn_output}" | grep "Stale source detected:")
 if [[ $? != 0 ]]; then
     # If here, we have stale java sources.
@@ -30,5 +24,6 @@ if [[ $? != 0 ]]; then
     exit 1
 else
     # If here, no stale java sources was found. Exit with 0.
+    echo "No stale sources found"
     exit 0
 fi
