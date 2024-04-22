@@ -853,9 +853,11 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
 
     public static class SerialPort {
 
-        public static final int LISTENING_EVENT_DATA_AVAILABLE = SerialPort.LISTENING_EVENT_DATA_AVAILABLE;
-        public static final int ONE_STOP_BIT = SerialPort.ONE_STOP_BIT;
-        public static final int NO_PARITY = SerialPort.NO_PARITY;
+        public static final int LISTENING_EVENT_DATA_AVAILABLE =
+                com.fazecast.jSerialComm.SerialPort.LISTENING_EVENT_DATA_AVAILABLE;
+
+        public static final int ONE_STOP_BIT = com.fazecast.jSerialComm.SerialPort.ONE_STOP_BIT;
+        public static final int NO_PARITY = com.fazecast.jSerialComm.SerialPort.NO_PARITY;
 
         private final com.fazecast.jSerialComm.SerialPort serialPort;
 
