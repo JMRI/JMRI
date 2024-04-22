@@ -1,7 +1,7 @@
 
     <h3>Hardware Support</h3>
         <ul>
-          <li></li>
+          <li>Fixed a freeze that could happen when changing the connection preferences.</li>
         </ul>
 
         <h4>Acela CTI</h4>
