@@ -863,8 +863,18 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             this.serialPort = serialPort;
         }
 
-        public void addDataListener(com.fazecast.jSerialComm.SerialPortDataListener listener) {
-            this.serialPort.addDataListener(listener);
+        public void addDataListener(SerialPortDataListener listener) {
+            this.serialPort.addDataListener(new com.fazecast.jSerialComm.SerialPortDataListener() {
+                @Override
+                public int getListeningEvents() {
+                    return listener.getListeningEvents();
+                }
+
+                @Override
+                public void serialEvent(com.fazecast.jSerialComm.SerialPortEvent event) {
+                    listener.serialEvent(new SerialPortEvent(event));
+                }
+            });
         }
 
         public InputStream getInputStream() {
