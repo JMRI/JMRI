@@ -50,7 +50,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
         configureLeads(currentSerialPort,true,true);
 
         // The following are required for the XBee API's input thread.
-        setDataListener(this);
+        setDataListener(currentSerialPort,this);
     }
 
     /**

@@ -412,10 +412,11 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
 
     /**
      * Add a data listener to the specified port
+     * @param serialPort Port to be updated
      * @param serialPortDataListener the listener to add
      */
-    final protected void setDataListener(SerialPortDataListener serialPortDataListener){
-        currentSerialPort.serialPort.addDataListener(new com.fazecast.jSerialComm.SerialPortDataListener() {
+    final protected void setDataListener(SerialPort serialPort, SerialPortDataListener serialPortDataListener){
+        serialPort.serialPort.addDataListener(new com.fazecast.jSerialComm.SerialPortDataListener() {
             @Override
             public int getListeningEvents() {
                 return serialPortDataListener.getListeningEvents();
