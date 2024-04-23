@@ -268,7 +268,8 @@
 
         <h4>Mistral Train Models</h4>
              <ul>
-                <li></li>
+                <li>Updated Lokommander II definitions. Implement CV114, 115 and 116 according to the firmware version. Firmware V3 : treat as binary and only support up to F8 Firmware V6 : treat as decimal and support up to F28
+</li>
              </ul>
 
         <h4>MTH</h4>
