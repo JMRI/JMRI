@@ -36,6 +36,7 @@ public class MathFunctions implements FunctionFactory {
         addArctanFunction(functionClasses);
         addSqrFunction(functionClasses);
         addSqrtFunction(functionClasses);
+        addRoundFunction(functionClasses);
 
         return functionClasses;
     }
@@ -344,6 +345,36 @@ public class MathFunctions implements FunctionFactory {
                     return Math.sqrt(param);
                 } else {
                     throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName()));
+                }
+            }
+        });
+    }
+
+    private void addRoundFunction(Set<Function> functionClasses) {
+        functionClasses.add(new AbstractFunction(this, "round", Bundle.getMessage("Math.round_Descr")) {
+            @Override
+            public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                    throws CalculateException, JmriException {
+
+                double value = TypeConversionUtil.convertToDouble(
+                        parameterList.get(0).calculate(symbolTable), false);
+
+                switch (parameterList.size()) {
+                    case 1:
+                        return (double) Math.round(value);
+                    case 2:
+                        long numDecimals = TypeConversionUtil.convertToLong(
+                                parameterList.get(1).calculate(symbolTable));
+                        double multiply = 1;
+                        for (int i=0; i < Math.abs(numDecimals); i++) {
+                            multiply *= 10;
+                        }
+                        if (numDecimals < 0) {
+                            multiply = 1.0 / multiply;
+                        }
+                        return (double) Math.round(value*multiply) / multiply;
+                    default:
+                        throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName()));
                 }
             }
         });
