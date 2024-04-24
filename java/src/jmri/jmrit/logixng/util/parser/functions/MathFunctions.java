@@ -372,7 +372,7 @@ public class MathFunctions implements FunctionFactory {
                         if (numDecimals < 0) {
                             multiply = 1.0 / multiply;
                         }
-                        return (double) Math.round(value*multiply) / multiply;
+                        return Math.round(value*multiply) / multiply;
                     default:
                         throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName()));
                 }
