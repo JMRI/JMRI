@@ -5,6 +5,8 @@ import jmri.jmrix.powerline.SerialTrafficController;
 
 import java.io.IOException;
 
+import jmri.jmrix.AbstractSerialPortController.SerialPort;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,8 +38,8 @@ public class SpecificTrafficController extends SerialTrafficController {
     private boolean oneTimeLog = true;
     public byte[] dmxArray = new byte[513];
     private int intensitySteps = 255;
-    private com.fazecast.jSerialComm.SerialPort activePort = null;
-    
+    private SerialPort activePort = null;
+
     /**
      * set value in dmxArray
      * @param unitId offset in dmxArray
@@ -51,7 +53,7 @@ public class SpecificTrafficController extends SerialTrafficController {
         }
         return(false);
     }
-     
+
     @Override
     protected void transmitLoop() {
         if (oneTimeLog) {
@@ -83,7 +85,7 @@ public class SpecificTrafficController extends SerialTrafficController {
         while (!connectionError && !threadStopRequest) {
             try {
                 if (ostream != null) {
-                    // break should be for at least 176 uSec 
+                    // break should be for at least 176 uSec
                     if (activePort != null) {
                         //log.info("Start Break");
                         activePort.setBreak();
@@ -143,7 +145,7 @@ public class SpecificTrafficController extends SerialTrafficController {
             Thread.currentThread().interrupt();
         }
     }
-    
+
     /**
      * This system provides 256 dim steps
      */

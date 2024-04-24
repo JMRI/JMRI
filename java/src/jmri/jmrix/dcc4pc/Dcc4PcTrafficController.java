@@ -3,14 +3,15 @@ package jmri.jmrix.dcc4pc;
 import java.io.DataInputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Calendar;
+
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
 import jmri.jmrix.dcc4pc.serialdriver.SerialDriverAdapter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import purejavacomm.SerialPort;
 
 /**
  * Converts Stream-based I/O to/from DCC4PC messages. The "Dcc4PcInterface" side
@@ -198,7 +199,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
             portWarn(e);
         }
     }
-    SerialPort port;
+    purejavacomm.SerialPort port;
 
     @Override
     public void connectPort(jmri.jmrix.AbstractPortController p) {
