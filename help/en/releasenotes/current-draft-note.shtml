@@ -428,7 +428,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The function <strong>random()</strong> has been added to
+          <li>The function <strong>round()</strong> has been added to
               the Math module.</li>
           <li>The constant <strong>oblocks</strong> has been added to
               the Layout module.</li>
