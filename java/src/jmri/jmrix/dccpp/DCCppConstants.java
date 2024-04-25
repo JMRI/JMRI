@@ -124,7 +124,7 @@ public final class DCCppConstants {
     public static final String OUTPUT_DELETE_REGEX = "\\s*Z\\s*(\\d+)\\s*"; // <Z ID>
     public static final String OUTPUT_LIST_REGEX = "\\s*Z\\s*"; // <Z>
     public static final String QUERY_SENSOR_STATES_REGEX = "\\s*Q\\s*"; // <Q>
-    public static final String LOCO_STATE_REGEX = "\\s*l\\s*(\\d+)\\s*(\\d+)\\s*(\\d+)\\s*(\\d+)\\s*"; // <l loco slot speedByte functions>
+    public static final String LOCO_STATE_REGEX = "\\s*l\\s*(\\d+)\\s*([-]*\\d+)\\s*(\\d+)\\s*(\\d+)\\s*"; // <l loco slot speedByte functions>
 
     public static final String WRITE_TO_EEPROM_REGEX = "E";
     public static final String CLEAR_EEPROM_REGEX = "e";
