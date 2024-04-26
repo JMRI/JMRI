@@ -157,8 +157,8 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
             no_rows_to_display = min(40, len(list_items))
             list.setVisibleRowCount(no_rows_to_display)
             dim = list.getPreferredScrollableViewportSize()
-            w = int(dim.getWidth())
-            h = int(dim.getHeight()) + 10  # to leave a bit of space at bottom. Height of row = approx 20
+            w = int(dim.getWidth()) + 20
+            h = int(dim.getHeight()) + 20  # to leave a bit of space at bottom. Height of row = approx 20
             scrollPane.setPreferredSize(Dimension(w,h))
         self.CLOSED_OPTION = False
         s = JOptionPane.showOptionDialog(None,
@@ -414,6 +414,7 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
             # print "self.delete_active_transits()"
             self.stop_all_threads()
             # print "self.stop_all_threads()"
+            self.remove_all_trains_from_trains_allocated()
         else:
             self.delete_active_transits()
             # print "self.delete_active_transits()"
@@ -502,6 +503,21 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
             #print "train in trains_alloceted", train, ": trains_allocated", trains_allocated
             if train == train_name:
                 trains_dispatched.remove(train)
+
+    def remove_all_trains_from_trains_allocated(self):
+        global trains_allocated
+        global trains_dispatched
+        if self.logLevel > 0: print "train to remove", train_name
+        for train in trains_allocated:
+            if self.logLevel > 0: print "train in trains_allocated", train, ": trains_allocated", trains_allocated
+            trains_allocated.remove(train)
+        trains_dispatched_list = java.util.concurrent.CopyOnWriteArrayList()
+        for train in trains_dispatched:
+            trains_dispatched_list.add(train)
+
+        for train in trains_dispatched_list:
+            #print "train in trains_alloceted", train, ": trains_allocated", trains_allocated
+            trains_dispatched.remove(train)
 
     def stop_all_threads(self):
 

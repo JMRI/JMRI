@@ -15,18 +15,21 @@ from java.awt import Toolkit
 
 class CreateAndShowGUI5(TableModelListener):
 
-    def __init__(self, class_ResetButtonMaster, route_name, param_scheduled_start):
+    def __init__(self, class_ResetButtonMaster, route_name, param_scheduled_start, \
+                 journey_time_row_displayed = False, hidden = False):
         global scheduled_start
-        print "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%route_name", route_name
+        # print "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%route_name", route_name
+
+        self.journey_time_row_displayed = journey_time_row_displayed
 
         RouteManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
         self.route = RouteManager.getRouteByName(route_name)
-        print "ROUTE", self.route.getName()
+        # print "ROUTE", self.route.getName()
 
         scheduled_start = param_scheduled_start
-        print "scheduled_start", scheduled_start
+        # print "scheduled_start", scheduled_start
 
-        print "INITIALISING EditRoutePanel"
+        # print "INITIALISING EditRoutePanel"
         self.logLevel = 0
         self.class_ResetButtonMaster = class_ResetButtonMaster
         #Create and set up the window.
@@ -48,6 +51,15 @@ class CreateAndShowGUI5(TableModelListener):
         self.populate_action(None)
         self.cancel = False
 
+        if hidden == False:
+            self.show_frame()
+
+    def show_frame(self):
+        self.frame.setVisible(True)
+
+    def hide_frame(self):
+        self.frame.setVisible(False)
+
     def completeTablePanel(self):
 
         self.topPanel= JPanel();
@@ -66,6 +78,17 @@ class CreateAndShowGUI5(TableModelListener):
         button_close = JButton("Close", actionPerformed = self.close_action)
         self.buttonPane.add(button_close)
         self.buttonPane.add(Box.createHorizontalGlue());
+
+        if self.journey_time_row_displayed == True:
+
+            button_wait_time = JButton("Wait Time", actionPerformed = self.change_wait_time_action)
+            self.buttonPane.add(button_wait_time)
+            self.buttonPane.add(Box.createHorizontalGlue());
+
+
+            button_update_duration = JButton("Update duration and depatture times from journey and wait times", actionPerformed = self.update_duration_action)
+            self.buttonPane.add(button_update_duration)
+            self.buttonPane.add(Box.createHorizontalGlue());
 
         contentPane = self.frame.getContentPane()
 
@@ -121,52 +144,17 @@ class CreateAndShowGUI5(TableModelListener):
         # self.resizeColumnWidth(table)
         columnModel = self.table.getColumnModel();
 
-        [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5]
+        [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_sec_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]]
         columnModel.getColumn(locations_col).setPreferredWidth(300)
 
         # we are not using journey_time_col, wait_time_col at moment
         # these a re planned for use when setting the departure times
         # by running an emgine along a acheduled route
-        columnModel.getColumn(journey_time_col).setMaxWidth(0)
-        columnModel.getColumn(journey_time_col).setMinWidth(0)
-        columnModel.getColumn(wait_time_col).setMaxWidth(0)
-        columnModel.getColumn(wait_time_col).setMinWidth(0)
-
-        # first column is the trains
-        # self.trainColumn = self.table.getColumnModel().getColumn(time_col);
-        # self.combobox0 = JComboBox()
-
-        # for train in self.class_ResetButtonMaster.get_list_of_engines_to_move():
-        #     self.combobox0.addItem(train)
-
-        # self.trainColumn.setCellEditor(DefaultCellEditor(self.combobox0));
-        # renderer0 = ComboBoxCellRenderer5()
-        # self.trainColumn.setCellRenderer(renderer0);
-
-        # second column is the routes
-
-        # # self.locationColumn = self.table.getColumnModel().getColumn(location_col);
-        # # self.combobox1 = JComboBox()
-        #
-        # RouteManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
-        # routes = RouteManager.getRoutesByNameList()
-        # for route in routes:
-        #     self.combobox1.addItem(route)
-        # self.locationColumn.setCellEditor(DefaultCellEditor(self.combobox1));
-        # renderer1 = ComboBoxCellRenderer5()
-        # self.locationColumn.setCellRenderer(renderer1);
-
-        # first column is the trains
-        # self.durationColumn = self.table.getColumnModel().getColumn(duration_col);
-        # self.combobox3 = JComboBox()
-        #
-        # tasks = ["Once", "duration every 20 mins","duration every 30 mins", "duration every Hour", "duration every 2 Hours"]
-        # for task in tasks:
-        #     self.combobox3.addItem(task)
-        #
-        # self.durationColumn.setCellEditor(DefaultCellEditor(self.combobox3));
-        # renderer3 = ComboBoxCellRenderer5()
-        # self.durationColumn.setCellRenderer(renderer3);
+        if self.journey_time_row_displayed == False:
+            columnModel.getColumn(journey_time_col).setMaxWidth(0)
+            columnModel.getColumn(journey_time_col).setMinWidth(0)
+            columnModel.getColumn(wait_time_col).setMaxWidth(0)
+            columnModel.getColumn(wait_time_col).setMinWidth(0)
 
         jpane = JScrollPane(self.table)
         panel = JPanel()
@@ -174,8 +162,28 @@ class CreateAndShowGUI5(TableModelListener):
         result = JScrollPane(panel)
         return self.table
 
+    def update_duration_action(self, e):
+        # model = e.getSource()
+        # we need to update the journey times (with existing values) so that the update can take place
+        # in the TableListener routines
+        [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_sec_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]]
+        for row in range(len(data)):
+            value = self.model.getValueAt(row, duration_col)
+            if value is not None:
+                self.model.setValueAt(value, row, duration_col)
+
+
+    def update_journey_time_action(self, e):
+        # we need to update the journey times (with existing values) so that the update can take place
+        # in the TableListener routines
+        [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_sec_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]]
+        for row in range(len(self.model.data)):
+            value = self.model.getValueAt(row, journey_time_col)
+            if value is not None:
+                self.model.setValueAt(value, row, journey_time_col)
+
     def add_row_action(self, e):
-        model = e.getSource()
+        # model = e.getSource()
         # data = self.model.getValueAt(0, 0)
         count = self.model.getRowCount()
         colcount = self.model.getColumnCount()
@@ -190,139 +198,18 @@ class CreateAndShowGUI5(TableModelListener):
 
     def populate_action(self, event):
         # print "populating"
+        print "a"
         items_to_put_in_dropdown = self.get_station_list()
-        print "items_to_put_in_dropdown", items_to_put_in_dropdown
+        # print "items_to_put_in_dropdown", items_to_put_in_dropdown
+        print "b"
         self.model.populate(items_to_put_in_dropdown)
         # print "populated"
+        print "c"
         self.completeTablePanel()
         pass
-
-    def tidy_action(self,e):
-        self.model.remove_not_set_row()
-        self.completeTablePanel()
-
-    # def savetofile_action(self, event):
-    #
-    #     #Tidy
-    #     self.model.remove_not_set_row()
-    #     self.completeTablePanel()
-    #
-    #     if self.model.getRowCount() == 0:
-    #         msg = "There are no valid rows"
-    #         result = OptionDialog().displayMessage(msg)
-    #         return
-    #
-    #     msg = "Saving Valid rows"
-    #     result = OptionDialog().displayMessage(msg)
-    #
-    #
-    #     dir = self.directory()
-    #     j = JFileChooser(dir);
-    #     j.setAcceptAllFileFilterUsed(False)
-    #     filter = FileNameExtensionFilter("text files txt", ["txt"])
-    #     j.addChoosableFileFilter(filter);
-    #     j.setDialogTitle("Select a .txt file");
-    #
-    #
-    #
-    #     ret = j.showSaveDialog(None);
-    #     if (ret == JFileChooser.APPROVE_OPTION) :
-    #         file = j.getSelectedFile()
-    #         if file == "" or file == None:
-    #             msg = "No file selected"
-    #             result = OptionDialog().displayMessage(msg)
-    #             return
-    #         if FilenameUtils.getExtension(file.getName()).lower() == "txt" :
-    #             #filename is OK as-is
-    #             pass
-    #         else:
-    #             #file = File(file.toString() + ".txt");  # append .txt if "foo.jpg.txt" is OK
-    #             file = File(file.getParentFile(), FilenameUtils.getBaseName(file.getName())+".txt") # ALTERNATIVELY: remove the extension (if any) and replace it with ".xml"
-    #
-    #     else:
-    #         return
-    #     if self.logLevel > 0: print "savetofile action", file
-    #     my_list = []
-    #     [train, route, task, delay, repetitions] = [0, 1, 3, 4, 5]
-    #     for row in range(len(self.model.data)):
-    #         time_name = str(self.model.data[row][train])
-    #         route_name = str(self.model.data[row][route])
-    #         task_name = str(self.model.data[row][task])
-    #         delay_name = str(self.model.data[row][delay])
-    #         repetitions_name = str(self.model.data[row][repetitions])
-    #         row_list = [time_name, route_name, task_name, delay_name, repetitions_name]
-    #         my_list.append(row_list)
-    #     self.write_list(my_list,file)
-
-
-    def loadfromfile_action(self, event):
-        pass
-        # # load the file
-        # dir = self.directory()
-        # j = JFileChooser(dir);
-        # j.setAcceptAllFileFilterUsed(False)
-        # filter = FileNameExtensionFilter("text files txt", ["txt"])
-        # j.setDialogTitle("Select a .txt file");
-        # j.addChoosableFileFilter(filter);
-        # ret = j.showOpenDialog(None);
-        # if (ret == JFileChooser.APPROVE_OPTION) :
-        #     file = j.getSelectedFile()
-        #     if self.logLevel > 0: print "about to read list", file
-        #     my_list = self.read_list(file)
-        #     if self.logLevel > 0: print "my_list", my_list
-        #     for row in reversed(range(len(self.model.data))):
-        #         self.model.data.pop(row)
-        #     i = 0
-        #     [train, route, task, delay, repetitions] = [0, 1, 3, 4, 5]
-        #     for row in my_list:
-        #         [train_val, route_val, task_val, train_name_val, repetitions_val] = row
-        #         self.model.add_row()
-        #         self.model.data[i][train] = train_val.replace('"','')
-        #         self.model.data[i][route] = route_val.replace('"','')
-        #         self.model.data[i][task] = task_val.replace('"','')
-        #         self.model.data[i][delay] = train_name_val.replace('"','')
-        #         self.model.data[i][repetitions] = repetitions_val.replace('"','')
-        #         i += 1
-        #     self.completeTablePanel()
-        #
-        #     msg = "Deleting invalid rows"
-        #     result = OptionDialog().displayMessage(msg)
-        #     if result == JOptionPane.NO_OPTION:
-        #         return
-        #
-        #     # check the loaded contents
-        #     # 1) check that the trains are valid
-        #     # 2) ckeck that the blocks are occupied by valid trains
-        #     # if either of the above are not valic we blank the entries
-        #     # 3) Tidy
-        #
-        #     [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5]
-        #
-        #     # check the trains are valid
-        #
-        #     # trains_to_put_in_dropdown = [t for t in self.class_ResetButtonMaster.get_list_of_engines_to_move()]
-        #     # for row in reversed(range(len(self.model.data))):
-        #     #     if self.model.data[row][time_col] not in trains_to_put_in_dropdown:
-        #     #         self.model.data.pop(row)
-        #     #
-        #     # RouteManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
-        #     # routes = [str(route) for route in RouteManager.getRoutesByNameList()]
-        #     # for row in reversed(range(len(self.model.data))):
-        #     #     if self.model.data[row][route_col] not in routes:
-        #     #         self.model.data.pop(row)
-        #     self.completeTablePanel()
 
     def close_action(self, event):
         self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING));
-
-    # def delay_action(self, event):
-    #     [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5]
-    #     for row in reversed(range(len(self.model.data))):
-    #         old_delay = int(self.model.data[0][train_name_col])
-    #         if old_delay == None: old_delay = 0
-    #         new_delay = self.new_delay(old_delay)
-    #         self.model.data[row][train_name_col] = new_delay
-    #     self.completeTablePanel()
 
     def new_delay(self, old_val):
         if old_val < 3:
@@ -338,48 +225,51 @@ class CreateAndShowGUI5(TableModelListener):
         return new_val
 
     def delete_all_action(self, event):
-        [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5]
+        [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_sec_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]]
         # self.model.getDataVector().removeAllElements();
         for row in reversed(range(len(self.model.data))):
             self.model.data.pop(row)
-        # return
-        # # for rowToRemove in reversed(range(len(self.model.data))):
-        # for rowToRemove in range(len(self.model.data)):
-        #     rowtoremove = self.table.
-        #     self.model.removeRow(rowToRemove);
-        #     if(table.getSelectedRow() != -1) {
-        #     // remove selected row from the model
-        #     model.removeRow(table.getSelectedRow());
-        #     JOptionPane.showMessageDialog(null, "Selected row deleted successfully");
-        #     }
-        #
-        #     break
         self.completeTablePanel()
-        print "fered"
+        # print "fered"
     def new_val(self, old_val):
-        if old_val < 3:
+        print "ooval", old_val
+        old_val = int(old_val)
+        if old_val < 2:
+            new_val = 2
+        elif old_val < 3:
             new_val = 3
+        elif old_val < 5:
+            new_val = 5
         elif old_val < 10:
             new_val = 10
-        elif old_val < 30:
-            new_val = 30
-        elif old_val < 100:
-            new_val = 100
         else:
-            new_val = 1
-        return new_val
+            new_val = 2
+            print "new_val", new_val
+        return str(new_val)
 
-    def task_action(self, event):
-        [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5]
+    def change_wait_time_action(self, event):
+        [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_sec_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]]
+        routeLocationList = self.route.getLocationsBySequenceList()
+        routelocationsSequenceNumber_list = [ [routelocation, routelocation.getSequenceNumber()] \
+                                              for routelocation in self.route.getLocationsBySequenceList() \
+                                              if ".py" not in routelocation.getName()]
         for row in reversed(range(len(self.model.data))):
-            old_val = str(self.model.data[0][duration_col])
-            if old_val == None: old_val = 0
-            new_val = self.new_task(old_val)
-            self.model.data[row][duration_col] = new_val
+            if row in routelocationsSequenceNumber_list:
+                old_val = str(self.model.data[0][wait_time_col])
+                print "old_val", old_val
+                if old_val == None: old_val = 0
+                new_val = self.new_val(old_val)
+                # self.model.data[row][wait_time_col] = new_val
+                self.model.setValueAt(new_val,row,wait_time_col)
+                # save value in operations
+                routeLocation = routeLocationList[row]
+                self.set_value_in_comment(routeLocation, new_val, "wait_time")
+                # generate the duration calc
+
+        # gener
         self.completeTablePanel()
 
     def new_task(self, old_val):
-
 
         if old_val == "Once":
             new_val = "duration every 20 mins"
@@ -400,8 +290,8 @@ class CreateAndShowGUI5(TableModelListener):
         self.save()
 
     def save(self):
-        [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5]
-        print "save_action"
+        [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_sec_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]]
+        # print "save_action"
         # self.clear_everything()
         # print "apply action"
         for row in reversed(range(len(self.model.data))):
@@ -459,7 +349,7 @@ class CreateAndShowGUI5(TableModelListener):
         else:
             # print "d1"
             comment += delim_start + delim_end
-            print "comment2", comment
+            # print "comment2", comment
         # print "e"
         comment = self.insert_between(comment, delim_start, delim_end, value)
         # print "comment3", comment
@@ -474,18 +364,11 @@ class CreateAndShowGUI5(TableModelListener):
     def insert_between(self, string, delim1, delim2, value):
         first, _, rest = string.partition(delim1)
         _, _, rest = rest.partition(delim2)
-        print "string", string, "first.strip()", first.strip(), "rest.strip()", rest.strip()
+        # print "string", string, "first.strip()", first.strip(), "rest.strip()", rest.strip()
         new_val = delim1 + value + delim2
         modified_text = new_val.join([first.strip(), rest.strip()])
-        print "modified_text",modified_text
+        # print "modified_text",modified_text
         return modified_text
-        # #inserts value between delim1 and delim2 and adds all to end of string
-        # to_be_added = " " + delim1 + value + delim2
-        # # print "to_be_added", to_be_added
-        # ans = string + to_be_added
-        # # print "ans", ans
-        # return ans
-
 
     def directory(self):
         path = jmri.util.FileUtil.getUserFilesPath() + "dispatcher" + java.io.File.separator + "schedules"
@@ -548,7 +431,7 @@ class MyModelListener5(TableModelListener):
         self.i = 0
 
     def tableChanged(self, e) :
-        print "INDES", self.i
+        # print "INDES", self.i
         self.i +=1
         # if self.i % 2 == 0: return
         global trains_allocated
@@ -560,8 +443,8 @@ class MyModelListener5(TableModelListener):
         class_CreateAndShowGUI5 = self.class_CreateAndShowGUI5
         class_ResetButtonMaster = self.class_ResetButtonMaster
         tablemodel = class_CreateAndShowGUI5.model
-        [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5]
-        print "a"
+        [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_sec_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]]
+        # print "a"
         if column == duration_col:     #trains
             # when duration is clicked
             # 1) calculate the relevant departure
@@ -576,10 +459,10 @@ class MyModelListener5(TableModelListener):
         elif column == departure_time_col:       # sections
             # when departure is clicked
             # a) calculate the relevant duration
-            print "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%row", row,  \
-                "self.model.find_first_location()", self.model.find_row_first_location()
+            # print "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%row", row,  \
+            #     "self.model.find_first_location()", self.model.find_row_first_location()
             if row != self.model.find_row_first_location():
-                print "# a) calculate the relevant duration"
+                # print "# a) calculate the relevant duration"
                 duration = self.calculate_duration(row)
                 current_duration = self.model.getValueAt(row, duration_col)
                 if duration != current_duration:
@@ -588,14 +471,14 @@ class MyModelListener5(TableModelListener):
 
             # b) touch the durations later
             next_row = self.model.find_row_next_location(row)
-            print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&row", row, "next_row", next_row
+            # print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&row", row, "next_row", next_row
             if next_row != row:  #if we are not at end of list
                 try:
-                    print "# b) touch the next duration","next_row", next_row
+                    # print "# b) touch the next duration","next_row", next_row
                     value = self.model.getValueAt(next_row, duration_col)
-                    print "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%value", value
+                    # print "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%value", value
                     self.model.setValueAt(value, next_row, duration_col)
-                    print "touched"
+                    # print "touched"
                 except:
                     pass
                 # self.update_departure_time_col(row)
@@ -604,16 +487,20 @@ class MyModelListener5(TableModelListener):
             self.delete_row(row)
             class_CreateAndShowGUI5.completeTablePanel()
             pass
+        elif column == journey_time_col or column == wait_time_col:
+            my_duration = self.calc_duration_from_journey_time_and_wait_time(row)
+            print "duration", my_duration
+            self.model.setValueAt(my_duration, row, duration_col)
 
         # class_CreateAndShowGUI5.save()    # save everything when the table is chabged
 
     def update_departure_time_col(self, current_row):
-        [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5]
+        [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_sec_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]]
         routelocations_rows_list = [routelocation.getSequenceNumber()-1 \
                                     for routelocation in self.model.route.getLocationsBySequenceList() \
                                     if ".py" not in routelocation.getName()]
 
-        print "routelocations_rows_list", routelocations_rows_list
+        # print "routelocations_rows_list", routelocations_rows_list
         for row in routelocations_rows_list:
             if row > current_row:
                 # trigger the update command by touching the element
@@ -623,42 +510,78 @@ class MyModelListener5(TableModelListener):
 
 
     def calculate_duration(self, row):
-        print "CALCULATE DURATION", "row", row
+        # print "CALCULATE DURATION", "row", row
         # calculate duration from current and previous departure times
-        [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5]
+        [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_sec_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]]
         current_departure_time = self.model.getValueAt(row, departure_time_col)
         prev_row = self.model.find_row_prev_location(row)
         if prev_row == None:
-            print "prev_row none", "returning"
+            # print "prev_row none", "returning"
             return
-        print "prev_row", prev_row
+        # print "prev_row", prev_row
         previous_departure_time = self.model.getValueAt(prev_row, departure_time_col)
-        print "previous_departure_time", previous_departure_time
+        # print "previous_departure_time", previous_departure_time
         # time and prev_time are in HH:MM
         hh, _, mm = current_departure_time.partition(":")
         hhprev, _, mmprev = previous_departure_time.partition(":")
         duration = int(hh) * 60 - int(hhprev) * 60 + int(mm) - int(mmprev)
-        print "DURATION", duration
+        # print "DURATION", duration
         return str(duration)
 
     def calc_departure_time(self, row):
         # calculate departure time from durastion and prev departure time
-        print "calc departure time", "row", row
-        [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5]
+        # print "calc departure time", "row", row
+        [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_sec_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]]
         current_duration = self.model.getValueAt(row, duration_col)
         print "CURRENT_DURATION", current_duration
         prev_row = self.model.find_row_prev_location(row)
-        print "prev_row", prev_row
+        # print "prev_row", prev_row
         if prev_row == None:
             return
         previous_departure_time = self.model.getValueAt(prev_row, departure_time_col)
-        print "previous_departure_time", previous_departure_time
+        # print "previous_departure_time", previous_departure_time
         hhprev, _, mmprev = previous_departure_time.partition(":")
+        print ""
         departure_time_mins = str((int(mmprev) + int(current_duration)) % 60).zfill(2)
-        departure_time_hours = str((int(mmprev) + int(current_duration)) // 60).zfill(2)
+        departure_time_hours = str(int(hhprev) + (int(mmprev) + int(current_duration)) // 60).zfill(2)
         departure_time = departure_time_hours + ":" + departure_time_mins
-        print "departure time", departure_time
+        # print "departure time", departure_time
         return departure_time
+
+    def calc_duration_from_journey_time_and_wait_time(self, row):
+
+        global fast_clock_rate
+
+        [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_sec_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]]
+        # current_journey_time = int(self.model.getValueAt(row, journey_time_col))    # secs
+        # current_wait_time = int(self.model.getValueAt(row, wait_time_col))          # secs
+        # print "current_journey_time", current_journey_time, "current_wait_time", current_wait_time
+        #
+        # # convert to fast_minutes
+        # current_journey_time = (current_journey_time * int(str(fast_clock_rate))) / 60.0  # fast minutes
+        # current_wait_time = (current_wait_time * int(str(fast_clock_rate)))/ 60.0     # fast minutes
+        # print "current_journey_time", current_journey_time, "current_wait_time", current_wait_time
+        #
+        # current_duration = current_journey_time + current_wait_time
+        # print "current_duration", current_duration
+        try:
+            [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_sec_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]]
+            current_journey_time = int(self.model.getValueAt(row, journey_time_col))    # secs
+            current_wait_time = int(self.model.getValueAt(row, wait_time_col))          # secs
+            print "current_journey_time", current_journey_time, "current_wait_time", current_wait_time
+
+            # convert to fast_minutes
+            current_journey_time = (current_journey_time * int(str(fast_clock_rate))) / 60.0  # fast minutes
+            current_wait_time = (current_wait_time * int(str(fast_clock_rate)))/ 60.0     # fast minutes
+            print "current_journey_time", current_journey_time, "current_wait_time", current_wait_time
+
+            current_duration = current_journey_time + current_wait_time
+            print "current_duration", current_duration
+        except:
+            # use the existing value
+            current_duration = self.model.getValueAt(row, duration_col)
+        return str(int(current_duration))
+
 
     def delete_row(self, row):
         self.model.data.pop(row)
@@ -668,7 +591,7 @@ class MyModelListener5(TableModelListener):
     #     # Show a simple JOptionPane input dialog for time selection
     #     selected_time = JOptionPane.showInputDialog(None, "Select a time (HH:mm):")
     #     if selected_time:
-    #         print("Selected time:", selected_time)
+    #         # print("Selected time:", selected_time)
     #     return selected_time
 
 
@@ -704,7 +627,7 @@ class MyTableModel5 (DefaultTableModel):
 
     def add_row(self):
         pass
-        # [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5]
+        # [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_sec_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]]
         #
         # indices = [int(self.data[row][train_name_col].split("Train",1)[1]) for row in reversed(range(len(self.data)))
         #            if self.data[row][train_name_col].startswith("Train")]
@@ -722,46 +645,72 @@ class MyTableModel5 (DefaultTableModel):
         # print "in populate"
         for row in reversed(range(len(self.data))):
             self.data.pop(row)
-        print "cleared everything"
+        # print "cleared everything"
         # self.data = []
         # append all trains to put in dropdown
-        [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5]
+        [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_sec_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]]
+        i = 0
         for [location, comment] in items_to_put_in_dropdown:
             if ".py" not in location:    # omit actions
-                print "location", location
+                # print "location", location
                 if "skip" in comment:
                     skip = True
                 else:
                     skip = False
-                print "skip", skip
+                # print "skip", skip
 
                 journey_time = self.find_between(comment, "[journey_time-", "-journey_time]")
-                print "journey_time" , journey_time
+                if i == 0:
+                    if journey_time == "": journey_time = ""
+                else:
+                    if journey_time == "": journey_time = "0"
+                # print "journey_time" , journey_time
+
+                # get default wait time
+                memory = memories.getMemory("IM:" + "DS_wait_time")
+                print "memory1", type(memory)
+                default = memory.getValue()
+                print "default", default
+                if default is None:
+                    memory.setValue(3)
+                    default = 3
 
                 wait_time = self.find_between(comment, "[wait_time-", "-wait_time]")
-                print "wait_time" , wait_time
+                if i == 0:
+                    if wait_time == "": wait_time = ""
+                else:
+                    if wait_time == "": wait_time = str(default)
+                # print "wait_time" , wait_time
 
-                duration = self.find_between(comment, "[duration-", "-duration]")
-                if duration == "": duration = "0"
+                duration = str(self.find_between(comment, "[duration-", "-duration]"))
+                print "duration", duration, "locstion", location, type(duration)
+                if i == 0:
+                    if duration == "0": duration = ""
+                else:
+                    if duration == "": duration = "0"
                 print "duration" , duration
 
                 # departure_time = self.find_between(comment, "[departure_time-", "-departure_time]")
                 # print "departure_time" , departure_time
 
                 departure_time = "00:00"     # departure times will be filled in from durations
+
             else:
+                journey_time = None
                 departure_time = None
                 duration = None
                 wait_time = None
 
             self.data.append([location, journey_time, wait_time, duration, departure_time, False])
+            i += 1
         # print "populated"
 
         # now update the first location which is a station with the time of the schedule start
 
-        [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5]
+        [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_sec_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]]
         row = self.find_row_first_location()
         self.setValueAt(scheduled_start, row, departure_time_col)
+        # self.setValueAt(None, row, duration_col)
 
         # delete rows with no trains
         # for row in reversed(range(len(self.data))):
@@ -769,7 +718,7 @@ class MyTableModel5 (DefaultTableModel):
         #         self.data.pop(row)
 
     def find_row_first_location(self):
-        print "find_row_first_location"
+        # print "find_row_first_location"
         # get the row (sequenceNo) of the first location that is not an action (a python file  xx.py)
         routelocationsSequenceNumber_list = [ [routelocation, routelocation.getSequenceNumber()] \
                 for routelocation in self.route.getLocationsBySequenceList() \
@@ -779,21 +728,21 @@ class MyTableModel5 (DefaultTableModel):
 
         # ["foo", "bar", "baz"].index("bar")
 
-        print "routelocationsSequenceNumber_list", routelocationsSequenceNumber_list
+        # print "routelocationsSequenceNumber_list", routelocationsSequenceNumber_list
         current_val = [[routelocation, sequenceNo] \
                          for [routelocation, sequenceNo] in routelocationsSequenceNumber_list \
                          if 1 == sequenceNo][0]
-        print "current_val", current_val
+        # print "current_val", current_val
 
         current_index = routelocationsSequenceNumber_list.index(current_val)
-        print "current_index", current_index
+        # print "current_index", current_index
         # print "routelocations_list", routelocations_list, "index", index
         try:
             [routelocation, row] = routelocationsSequenceNumber_list[current_index]
             # row = routelocationsSequenceNumber_list[currentIndex + 1]
         except:
             row = None
-        print "row", row
+        # print "row", row
         return row - 1    # row number starts from 0
 
         # return 0
@@ -807,14 +756,14 @@ class MyTableModel5 (DefaultTableModel):
                                               for routelocation in self.route.getLocationsBySequenceList() \
                                               if ".py" not in routelocation.getName()]
 
-        print "routelocationsSequenceNumber_list", routelocationsSequenceNumber_list
+        # print "routelocationsSequenceNumber_list", routelocationsSequenceNumber_list
         current_val = [[routelocation, sequenceNo] \
                        for [routelocation, sequenceNo] in routelocationsSequenceNumber_list \
                        if row == sequenceNo-1][0]
-        print "current_val", current_val
+        # print "current_val", current_val
 
         current_index = routelocationsSequenceNumber_list.index(current_val)
-        print "current_index", current_index
+        # print "current_index", current_index
         # print "routelocations_list", routelocations_list, "index", index
         try:
             # if (current_index + 1) < (len(routelocationsSequenceNumber_list) - 1):
@@ -822,7 +771,7 @@ class MyTableModel5 (DefaultTableModel):
             # row = routelocationsSequenceNumber_list[currentIndex + 1]
         except:
             return row   # next location will be current location  if at end of list
-        print "row", row
+        # print "row", row
         return row - 1  # row number starts from 0
 
 
@@ -845,30 +794,30 @@ class MyTableModel5 (DefaultTableModel):
                                               for routelocation in self.route.getLocationsBySequenceList() \
                                               if ".py" not in routelocation.getName()]
 
-        print "routelocationsSequenceNumber_list", routelocationsSequenceNumber_list
+        # print "routelocationsSequenceNumber_list", routelocationsSequenceNumber_list
         fred1_current_val = [[routelocation, sequenceNo] \
                             for [routelocation, sequenceNo] in routelocationsSequenceNumber_list \
                             ]
-        print "fred1_current_val", fred1_current_val
-        print "row", row
+        # print "fred1_current_val", fred1_current_val
+        # print "row", row
         fred_current_val = [[routelocation, sequenceNo] \
                       for [routelocation, sequenceNo] in routelocationsSequenceNumber_list \
                       if row == sequenceNo-1]
-        print "fred_current_val", fred_current_val
+        # print "fred_current_val", fred_current_val
         current_val = [[routelocation, sequenceNo] \
                        for [routelocation, sequenceNo] in routelocationsSequenceNumber_list \
                        if row == sequenceNo-1][0]
-        print "current_val", current_val
+        # print "current_val", current_val
 
         current_index = routelocationsSequenceNumber_list.index(current_val)
-        print "current_index", current_index
+        # print "current_index", current_index
         # print "routelocations_list", routelocations_list, "index", index
         try:
             [routelocation, row] = routelocationsSequenceNumber_list[current_index - 1]
             # row = routelocationsSequenceNumber_list[currentIndex - 1]
         except:
             row = None
-        print "row", row
+        # print "row", row
         return row - 1     # row number starts from 0
 
     def find_between(self, s, first, last):
@@ -897,25 +846,30 @@ class MyTableModel5 (DefaultTableModel):
 
     #only include if table editable
     def isCellEditable(self, row, col) :
-        [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5]
+        [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_sec_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]]
         # do not allow editing of duration in action cols
         routelocations_rows_list = [routelocation.getSequenceNumber()-1 \
                                     for routelocation in self.route.getLocationsBySequenceList() \
                                     if ".py" not in routelocation.getName()]
         if row not in routelocations_rows_list:
-            if col == duration_col or col == departure_time_col:
+            if col == duration_col or col == departure_time_col or col == wait_time_col or col == journey_time_col:
+                return False
+        if row == self.find_row_first_location():
+            if col == duration_col or col == departure_time_col or col == wait_time_col or col == journey_time_col:
                 return False
         return True
 
     # only include if data can change.
     def setValueAt(self, value, row, col) :
-        print "row1", row, "col", col, "value", value
-        [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5]
-        if col == journey_time_col or col == wait_time_col or col == departure_time_col:
-            print "row2", row, "col", col, "value", value
+        # print "row1", row, "col", col, "value", value
+        [locations_col, journey_time_col, wait_time_col, duration_col, departure_time_sec_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]]
+        if col == departure_time_col:
+            # print "row2", row, "col", col, "value", value
             if not self.isValidTimeFormat(value):
                 return
-        if col == duration_col:
+        if col == duration_col or col == journey_time_col or col == wait_time_col:
+            if value == None:
+                return
             if not value.isdigit():
                 return
         self.data[row][col] = value
@@ -925,8 +879,8 @@ class MyTableModel5 (DefaultTableModel):
         import re
         pattern = r"^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$"  # Matches HH.MM format
         my_match = re.match(pattern, input_string) is not None
-        print "m", re.match(pattern, input_string) is not None
-        print "my_match", re.match(pattern, input_string)
+        # print "m", re.match(pattern, input_string) is not None
+        # print "my_match", re.match(pattern, input_string)
 
         return my_match
 

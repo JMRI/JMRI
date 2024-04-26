@@ -61,7 +61,7 @@ class SimulationMaster(jmri.jmrit.automat.AbstractAutomaton):
         self.waitSensorState(self.simulation_master_sensor, ACTIVE)
 
         # get list of dispatched trains
-        if self.logLevel > 0: print("checking dispatched trains")
+        # if self.logLevel > 0: print("checking dispatched trains")
         DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
         #print "DF.getActiveTrainsList()", DF.getActiveTrainsList()
         if DF != None:
@@ -104,11 +104,9 @@ class SimulationMaster(jmri.jmrit.automat.AbstractAutomaton):
                         # startblock is outside the transit DestBlockList contains the blocks in the transit
                         blocklist = []
                         if startBlock not in DestBlockList:
-                            if self.blockOccupied(startBlock):
-                                blocklist.append(startBlock)
+                            blocklist.append(startBlock)
                         for block in reversed(DestBlockList) :
-                            if self.blockOccupied(block):
-                                blocklist.append(block)
+                            blocklist.append(block)
                         for block in blocklist:
                             if self.logLevel > 0: print "occupied blocks", block, block.getUserName(), self.blockOccupied(block)
 
@@ -139,7 +137,7 @@ class SimulationMaster(jmri.jmrit.automat.AbstractAutomaton):
         if block.getState() == ACTIVE:
             state = True
         else:
-            state = False
+            state = True
         return state
 
 

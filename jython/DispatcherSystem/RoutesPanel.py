@@ -491,12 +491,13 @@ class CreateAndShowGUI6(TableModelListener):
         return cleaned_text
     
     def insert_between(self, string, delim1, delim2, value):
-        #inserts value between delim1 and delim2 and adds all to end of string
-        to_be_added = " " + delim1 + value + delim2
-        # print "to_be_added", to_be_added
-        ans = string + to_be_added
-        # print "ans", ans
-        return ans
+        first, _, rest = string.partition(delim1)
+        _, _, rest = rest.partition(delim2)
+        # print "string", string, "first.strip()", first.strip(), "rest.strip()", rest.strip()
+        new_val = delim1 + value + delim2
+        modified_text = new_val.join([first.strip(), rest.strip()])
+        # print "modified_text",modified_text
+        return modified_text
 
     def clear_everything(self):
         TrainManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)

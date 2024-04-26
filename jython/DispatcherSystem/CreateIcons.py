@@ -67,6 +67,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     controlSensors.append([i, 'showClockSensor', 'Show Analog Clock', 10, 5]); i += 1
     controlSensors.append([i, 'startSchedulerSensor', 'Start Scheduler', 10, 5]); i += 1
     controlSensors.append([i, 'timetableSensor', 'Show Timetable', 10, 5]); i += 1
+    controlSensors.append([i, 'departureTimeSensor', 'Setup Departure Times', 10, 5]); i += 1
     controlSensors.append([i, 'helpSensor', 'Help', 0, 5]); i += 1
 
 
