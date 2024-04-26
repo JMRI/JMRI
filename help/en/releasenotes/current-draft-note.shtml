@@ -86,7 +86,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>DCS240+ has transponding built it, so that option is treated as selected.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -218,7 +218,7 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li></li>
+                <li>SFX Series 7 support updated for XF controls.</li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
