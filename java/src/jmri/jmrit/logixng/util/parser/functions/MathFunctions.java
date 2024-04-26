@@ -37,6 +37,8 @@ public class MathFunctions implements FunctionFactory {
         addSqrFunction(functionClasses);
         addSqrtFunction(functionClasses);
         addRoundFunction(functionClasses);
+        addCeilFunction(functionClasses);
+        addFloorFunction(functionClasses);
 
         return functionClasses;
     }
@@ -373,6 +375,66 @@ public class MathFunctions implements FunctionFactory {
                             multiply = 1.0 / multiply;
                         }
                         return Math.round(value*multiply) / multiply;
+                    default:
+                        throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName()));
+                }
+            }
+        });
+    }
+
+    private void addCeilFunction(Set<Function> functionClasses) {
+        functionClasses.add(new AbstractFunction(this, "ceil", Bundle.getMessage("Math.ceil_Descr")) {
+            @Override
+            public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                    throws CalculateException, JmriException {
+
+                double value = TypeConversionUtil.convertToDouble(
+                        parameterList.get(0).calculate(symbolTable), false);
+
+                switch (parameterList.size()) {
+                    case 1:
+                        return (double) Math.ceil(value);
+                    case 2:
+                        long numDecimals = TypeConversionUtil.convertToLong(
+                                parameterList.get(1).calculate(symbolTable));
+                        double multiply = 1;
+                        for (int i=0; i < Math.abs(numDecimals); i++) {
+                            multiply *= 10;
+                        }
+                        if (numDecimals < 0) {
+                            multiply = 1.0 / multiply;
+                        }
+                        return Math.ceil(value*multiply) / multiply;
+                    default:
+                        throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName()));
+                }
+            }
+        });
+    }
+
+    private void addFloorFunction(Set<Function> functionClasses) {
+        functionClasses.add(new AbstractFunction(this, "floor", Bundle.getMessage("Math.floor_Descr")) {
+            @Override
+            public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                    throws CalculateException, JmriException {
+
+                double value = TypeConversionUtil.convertToDouble(
+                        parameterList.get(0).calculate(symbolTable), false);
+
+                switch (parameterList.size()) {
+                    case 1:
+                        return (double) Math.floor(value);
+                    case 2:
+                        long numDecimals = TypeConversionUtil.convertToLong(
+                                parameterList.get(1).calculate(symbolTable));
+                        double multiply = 1;
+                        for (int i=0; i < Math.abs(numDecimals); i++) {
+                            multiply *= 10;
+                        }
+                        if (numDecimals < 0) {
+                            multiply = 1.0 / multiply;
+                        }
+                        return Math.floor(value*multiply) / multiply;
                     default:
                         throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName()));
                 }
