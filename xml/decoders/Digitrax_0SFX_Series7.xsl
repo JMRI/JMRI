@@ -23,6 +23,13 @@
     </variable>
 
     <variable item="XF{$index} Invert" CV="{$CVindex}.230" mask="XVXXXXX" default="0">
+        <qualifier>
+          <variableref>
+            <xsl:value-of select="concat('XF', $index, ' Enable')" />
+          </variableref>
+          <relation>eq</relation>
+          <value>1</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -31,6 +38,13 @@
     </variable>
 
     <variable item="XF{$index} Control" CV="{$CVindex}.230" mask="XXXXVVX" default="0">
+        <qualifier>
+          <variableref>
+            <xsl:value-of select="concat('XF', $index, ' Enable')" />
+          </variableref>
+          <relation>eq</relation>
+          <value>1</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="No"><choice>OR Merge</choice></enumChoice>
           <enumChoice choice="No"><choice>AND</choice></enumChoice>
@@ -40,6 +54,13 @@
     </variable>
 
     <variable item="XF{$index} Op0-wht" CV="{$CVindex}.231" mask="XXXXXXXV" default="0">
+        <qualifier>
+          <variableref>
+            <xsl:value-of select="concat('XF', $index, ' Enable')" />
+          </variableref>
+          <relation>eq</relation>
+          <value>1</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -48,6 +69,13 @@
     </variable>
 
     <variable item="XF{$index} Op1-yel" CV="{$CVindex}.231" mask="XXXXXXVX" default="0">
+        <qualifier>
+          <variableref>
+            <xsl:value-of select="concat('XF', $index, ' Enable')" />
+          </variableref>
+          <relation>eq</relation>
+          <value>1</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -56,6 +84,13 @@
     </variable>
 
     <variable item="XF{$index} Op2-grn" CV="{$CVindex}.231" mask="XXXXXVXX" default="0">
+        <qualifier>
+          <variableref>
+            <xsl:value-of select="concat('XF', $index, ' Enable')" />
+          </variableref>
+          <relation>eq</relation>
+          <value>1</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -64,6 +99,13 @@
     </variable>
 
     <variable item="XF{$index} Op3-viol" CV="{$CVindex}.231" mask="XXXXVXXX" default="0">
+        <qualifier>
+          <variableref>
+            <xsl:value-of select="concat('XF', $index, ' Enable')" />
+          </variableref>
+          <relation>eq</relation>
+          <value>1</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -72,6 +114,13 @@
     </variable>
 
     <variable item="XF{$index} Op4" CV="{$CVindex}.231" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>
+            <xsl:value-of select="concat('XF', $index, ' Enable')" />
+          </variableref>
+          <relation>eq</relation>
+          <value>1</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -80,6 +129,13 @@
     </variable>
 
     <variable item="XF{$index} Op5" CV="{$CVindex}.231" mask="XXVXXXXX" default="0">
+        <qualifier>
+          <variableref>
+            <xsl:value-of select="concat('XF', $index, ' Enable')" />
+          </variableref>
+          <relation>eq</relation>
+          <value>1</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -88,6 +144,13 @@
    </variable>
 
     <variable item="XF{$index} Op6" CV="{$CVindex}.231" mask="XVXXXXXX" default="0">
+        <qualifier>
+          <variableref>
+            <xsl:value-of select="concat('XF', $index, ' Enable')" />
+          </variableref>
+          <relation>eq</relation>
+          <value>1</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -96,6 +159,13 @@
     </variable>
 
     <variable item="XF{$index} Op7" CV="{$CVindex}.231" mask="VXXXXXXX" default="0">
+        <qualifier>
+          <variableref>
+            <xsl:value-of select="concat('XF', $index, ' Enable')" />
+          </variableref>
+          <relation>eq</relation>
+          <value>1</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -104,6 +174,13 @@
     </variable>
 
     <variable item="XF{$index} Op8" CV="{$CVindex}.232" mask="XXXXXXXV" default="0">
+        <qualifier>
+          <variableref>
+            <xsl:value-of select="concat('XF', $index, ' Enable')" />
+          </variableref>
+          <relation>eq</relation>
+          <value>1</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -112,6 +189,13 @@
     </variable>
 
     <variable item="XF{$index} Op9" CV="{$CVindex}.232" mask="XXXXXXVX" default="0">
+        <qualifier>
+          <variableref>
+            <xsl:value-of select="concat('XF', $index, ' Enable')" />
+          </variableref>
+          <relation>eq</relation>
+          <value>1</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -120,6 +204,13 @@
     </variable>
 
     <variable item="XF{$index} Op10" CV="{$CVindex}.232" mask="XXXXXVXX" default="0">
+        <qualifier>
+          <variableref>
+            <xsl:value-of select="concat('XF', $index, ' Enable')" />
+          </variableref>
+          <relation>eq</relation>
+          <value>1</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -128,6 +219,13 @@
     </variable>
 
     <variable item="XF{$index} Op11" CV="{$CVindex}.232" mask="XXXXVXXX" default="0">
+        <qualifier>
+          <variableref>
+            <xsl:value-of select="concat('XF', $index, ' Enable')" />
+          </variableref>
+          <relation>eq</relation>
+          <value>1</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -136,6 +234,13 @@
     </variable>
 
     <variable item="XF{$index} Op12" CV="{$CVindex}.232" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>
+            <xsl:value-of select="concat('XF', $index, ' Enable')" />
+          </variableref>
+          <relation>eq</relation>
+          <value>1</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -144,6 +249,13 @@
     </variable>
 
     <variable item="XF{$index} Op13" CV="{$CVindex}.232" mask="XXVXXXXX" default="0">
+        <qualifier>
+          <variableref>
+            <xsl:value-of select="concat('XF', $index, ' Enable')" />
+          </variableref>
+          <relation>eq</relation>
+          <value>1</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -152,6 +264,13 @@
     </variable>
 
     <variable item="XF{$index} Op14" CV="{$CVindex}.232" mask="XVXXXXXX" default="0">
+        <qualifier>
+          <variableref>
+            <xsl:value-of select="concat('XF', $index, ' Enable')" />
+          </variableref>
+          <relation>eq</relation>
+          <value>1</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -160,6 +279,13 @@
     </variable>
 
     <variable item="XF{$index} Op15" CV="{$CVindex}.232" mask="VXXXXXXX" default="0">
+        <qualifier>
+          <variableref>
+            <xsl:value-of select="concat('XF', $index, ' Enable')" />
+          </variableref>
+          <relation>eq</relation>
+          <value>1</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -168,6 +294,13 @@
     </variable>
 
     <variable item="XF{$index} Snd" CV="{$CVindex}.236" mask="XXVVVVVV" default="0">
+        <qualifier>
+          <variableref>
+            <xsl:value-of select="concat('XF', $index, ' Enable')" />
+          </variableref>
+          <relation>eq</relation>
+          <value>1</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="0"/>
           <enumChoice choice="1"/>
@@ -203,6 +336,13 @@
     </variable>
     
     <variable item="XF{$index} Effect" CV="{$CVindex}.234" mask="XXXXVVVV" default="0">
+        <qualifier>
+          <variableref>
+            <xsl:value-of select="concat('XF', $index, ' Enable')" />
+          </variableref>
+          <relation>eq</relation>
+          <value>1</value>
+        </qualifier>
         <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
           <enumChoice choice="Normal function of lead">
             <choice>Normal function of lead</choice>
@@ -273,6 +413,13 @@
     </variable>
 
     <variable item="XF{$index} Qual" CV="{$CVindex}.235" mask="XXXXVVVV" default="0">
+        <qualifier>
+          <variableref>
+            <xsl:value-of select="concat('XF', $index, ' Enable')" />
+          </variableref>
+          <relation>eq</relation>
+          <value>1</value>
+        </qualifier>
         <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
           <enumChoice choice="Forward direction, ON with function ON, phase A">
             <choice>Forward direction, ON with function ON, phase A</choice>
