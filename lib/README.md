@@ -139,7 +139,7 @@ which checks the dates of the control files to make sure they've been updated wh
 ##### openlcb.jar
  - 0.7.37 from https://repo.maven.apache.org/maven2/org/openlcb/openlcb/0.7.35/openlcb-0.7.37.jar
  - which includes PRs through #260 from https://github.com/openlcb/OpenLCB_Java/pulls?q=is%3Apr+is%3Aclosed
- - and the update for WrapLayout in CdiPanel
+ - plus the update for WrapLayout in CdiPanel in PR #262
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
