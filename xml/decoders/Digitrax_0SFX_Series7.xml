@@ -353,6 +353,8 @@
 
  <!-- version 3 - Add new Function Map Pane "include"
                                     John McMasters (2023-09-29)          -->
+<!-- 
  <xi:include href="http://jmri.org/xml/decoders/digitrax/PaneDigitraxFunctionmapSeries7.xml"/> 
+ -->
 
 </decoder-config>
