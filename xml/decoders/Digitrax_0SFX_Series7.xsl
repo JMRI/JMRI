@@ -14,7 +14,7 @@
     <xsl:param name="CVindex"/>
     <xsl:param name="index"/>
 
-    <variable item="SFX{$index} Enable" CV="{$CVindex}.230" mask="XXXXXXXV" default="0">
+    <variable item="XF{$index} Enable" CV="{$CVindex}.230" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -22,7 +22,7 @@
         <label>      Enable:</label>
     </variable>
 
-    <variable item="SFX{$index} Invert" CV="{$CVindex}.230" mask="XVXXXXX" default="0">
+    <variable item="XF{$index} Invert" CV="{$CVindex}.230" mask="XVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -30,7 +30,7 @@
         <label>      Invert:</label>
     </variable>
 
-    <variable item="SFX{$index} Control" CV="{$CVindex}.230" mask="XXXXVVX" default="0">
+    <variable item="XF{$index} Control" CV="{$CVindex}.230" mask="XXXXVVX" default="0">
         <enumVal>
           <enumChoice choice="No"><choice>OR Merge</choice></enumChoice>
           <enumChoice choice="No"><choice>AND</choice></enumChoice>
@@ -39,7 +39,7 @@
         <label>      Control:</label>
     </variable>
 
-    <variable item="SFX{$index} Op0-wht" CV="{$CVindex}.231" mask="XXXXXXXV" default="0">
+    <variable item="XF{$index} Op0-wht" CV="{$CVindex}.231" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -47,7 +47,7 @@
         <label>Op0-wht</label>
     </variable>
 
-    <variable item="SFX{$index} Op1-yel" CV="{$CVindex}.231" mask="XXXXXXVX" default="0">
+    <variable item="XF{$index} Op1-yel" CV="{$CVindex}.231" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -55,7 +55,7 @@
         <label>Op1-yel</label>
     </variable>
 
-    <variable item="SFX{$index} Op2-grn" CV="{$CVindex}.231" mask="XXXXXVXX" default="0">
+    <variable item="XF{$index} Op2-grn" CV="{$CVindex}.231" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -63,7 +63,7 @@
         <label>Op2-grn</label>
     </variable>
 
-    <variable item="SFX{$index} Op3-viol" CV="{$CVindex}.231" mask="XXXXVXXX" default="0">
+    <variable item="XF{$index} Op3-viol" CV="{$CVindex}.231" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -71,7 +71,7 @@
         <label>Op3-viol</label>
     </variable>
 
-    <variable item="SFX{$index} Op4" CV="{$CVindex}.231" mask="XXXVXXXX" default="0">
+    <variable item="XF{$index} Op4" CV="{$CVindex}.231" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -79,7 +79,7 @@
         <label>Op4</label>
     </variable>
 
-    <variable item="SFX{$index} Op5" CV="{$CVindex}.231" mask="XXVXXXXX" default="0">
+    <variable item="XF{$index} Op5" CV="{$CVindex}.231" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -87,7 +87,7 @@
         <label>Op5</label>
    </variable>
 
-    <variable item="SFX{$index} Op6" CV="{$CVindex}.231" mask="XVXXXXXX" default="0">
+    <variable item="XF{$index} Op6" CV="{$CVindex}.231" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -95,7 +95,7 @@
         <label>Op6</label>
     </variable>
 
-    <variable item="SFX{$index} Op7" CV="{$CVindex}.231" mask="VXXXXXXX" default="0">
+    <variable item="XF{$index} Op7" CV="{$CVindex}.231" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -103,7 +103,7 @@
         <label>Op7</label>
     </variable>
 
-    <variable item="SFX{$index} Op8" CV="{$CVindex}.232" mask="XXXXXXXV" default="0">
+    <variable item="XF{$index} Op8" CV="{$CVindex}.232" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -111,7 +111,7 @@
         <label>Op8</label>
     </variable>
 
-    <variable item="SFX{$index} Op9" CV="{$CVindex}.232" mask="XXXXXXVX" default="0">
+    <variable item="XF{$index} Op9" CV="{$CVindex}.232" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -119,7 +119,7 @@
         <label>Op9</label>
     </variable>
 
-    <variable item="SFX{$index} Op10" CV="{$CVindex}.232" mask="XXXXXVXX" default="0">
+    <variable item="XF{$index} Op10" CV="{$CVindex}.232" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -127,7 +127,7 @@
         <label>Op10</label>
     </variable>
 
-    <variable item="SFX{$index} Op11" CV="{$CVindex}.232" mask="XXXXVXXX" default="0">
+    <variable item="XF{$index} Op11" CV="{$CVindex}.232" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -135,7 +135,7 @@
         <label>Op11</label>
     </variable>
 
-    <variable item="SFX{$index} Op12" CV="{$CVindex}.232" mask="XXXVXXXX" default="0">
+    <variable item="XF{$index} Op12" CV="{$CVindex}.232" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -143,7 +143,7 @@
         <label>Op12</label>
     </variable>
 
-    <variable item="SFX{$index} Op13" CV="{$CVindex}.232" mask="XXVXXXXX" default="0">
+    <variable item="XF{$index} Op13" CV="{$CVindex}.232" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -151,7 +151,7 @@
         <label>Op13</label>
     </variable>
 
-    <variable item="SFX{$index} Op14" CV="{$CVindex}.232" mask="XVXXXXXX" default="0">
+    <variable item="XF{$index} Op14" CV="{$CVindex}.232" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -159,7 +159,7 @@
         <label>Op14</label>
     </variable>
 
-    <variable item="SFX{$index} Op15" CV="{$CVindex}.232" mask="VXXXXXXX" default="0">
+    <variable item="XF{$index} Op15" CV="{$CVindex}.232" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
@@ -167,7 +167,7 @@
         <label>Op15</label>
     </variable>
 
-    <variable item="SFX{$index} Snd" CV="{$CVindex}.236" mask="XXVVVVVV" default="0">
+    <variable item="XF{$index} Snd" CV="{$CVindex}.236" mask="XXVVVVVV" default="0">
         <enumVal>
           <enumChoice choice="0"/>
           <enumChoice choice="1"/>
@@ -202,7 +202,7 @@
         <label>      Remap Sound:</label>
     </variable>
     
-    <variable item="SFX{$index} Effect" CV="{$CVindex}.234" mask="XXXXVVVV" default="0">
+    <variable item="XF{$index} Effect" CV="{$CVindex}.234" mask="XXXXVVVV" default="0">
         <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
           <enumChoice choice="Normal function of lead">
             <choice>Normal function of lead</choice>
@@ -272,7 +272,7 @@
         <label>   Effect:</label>
     </variable>
 
-    <variable item="SFX{$index} Qual" CV="{$CVindex}.235" mask="XXXXVVVV" default="0">
+    <variable item="XF{$index} Qual" CV="{$CVindex}.235" mask="XXXXVVVV" default="0">
         <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
           <enumChoice choice="Forward direction, ON with function ON, phase A">
             <choice>Forward direction, ON with function ON, phase A</choice>
@@ -368,37 +368,37 @@
     <xsl:param name="index"/>
 
       <griditem gridx="0" gridy="NEXT">
-        <label text="SFX {$index}     "/>
+        <label text="XF {$index}     "/>
       </griditem>
       <griditem gridx="1" gridy="CURRENT">
         <column>
           <row>
-            <display item="SFX{$index} Enable" format="checkbox"/>
-            <display item="SFX{$index} Invert" format="checkbox"/>
-            <display item="SFX{$index} Control"/>
-            <display item="SFX{$index} Snd"/>
+            <display item="XF{$index} Enable" format="checkbox"/>
+            <display item="XF{$index} Invert" format="checkbox"/>
+            <display item="XF{$index} Control"/>
+            <display item="XF{$index} Snd"/>
           </row>
           <row>
-            <display item="SFX{$index} Effect"/>
-            <display item="SFX{$index} Qual"/>
+            <display item="XF{$index} Effect"/>
+            <display item="XF{$index} Qual"/>
         </row>
         <row>
-            <display item="SFX{$index} Op0-wht" format="checkbox"/>
-            <display item="SFX{$index} Op1-yel" format="checkbox"/>
-            <display item="SFX{$index} Op2-grn" format="checkbox"/>
-            <display item="SFX{$index} Op3-viol" format="checkbox"/>
-            <display item="SFX{$index} Op4" format="checkbox"/>
-            <display item="SFX{$index} Op5" format="checkbox"/>
-            <display item="SFX{$index} Op6" format="checkbox"/>
-            <display item="SFX{$index} Op7" format="checkbox"/>
-            <display item="SFX{$index} Op8" format="checkbox"/>
-            <display item="SFX{$index} Op9" format="checkbox"/>
-            <display item="SFX{$index} Op10" format="checkbox"/>
-            <display item="SFX{$index} Op11" format="checkbox"/>
-            <display item="SFX{$index} Op12" format="checkbox"/>
-            <display item="SFX{$index} Op13" format="checkbox"/>
-            <display item="SFX{$index} Op14" format="checkbox"/>
-            <display item="SFX{$index} Op15" format="checkbox"/>
+            <display item="XF{$index} Op0-wht" format="checkbox"/>
+            <display item="XF{$index} Op1-yel" format="checkbox"/>
+            <display item="XF{$index} Op2-grn" format="checkbox"/>
+            <display item="XF{$index} Op3-viol" format="checkbox"/>
+            <display item="XF{$index} Op4" format="checkbox"/>
+            <display item="XF{$index} Op5" format="checkbox"/>
+            <display item="XF{$index} Op6" format="checkbox"/>
+            <display item="XF{$index} Op7" format="checkbox"/>
+            <display item="XF{$index} Op8" format="checkbox"/>
+            <display item="XF{$index} Op9" format="checkbox"/>
+            <display item="XF{$index} Op10" format="checkbox"/>
+            <display item="XF{$index} Op11" format="checkbox"/>
+            <display item="XF{$index} Op12" format="checkbox"/>
+            <display item="XF{$index} Op13" format="checkbox"/>
+            <display item="XF{$index} Op14" format="checkbox"/>
+            <display item="XF{$index} Op15" format="checkbox"/>
           </row>
         <separator/>
         </column>
@@ -442,7 +442,7 @@
      <column><grid>
    <xsl:call-template name="AllFunctionPanes"/>
      </grid></column>
-     <name>SFX Functions</name>
+     <name>XF Functions</name>
    </pane>
    </decoder-config>
  </xsl:template>
