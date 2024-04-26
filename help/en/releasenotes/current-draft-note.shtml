@@ -429,6 +429,12 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li>The functions <strong>round()</strong>, <strong>ceil()</strong>
+              and <strong>floor()</strong> has been added to the Math module.
+              All three rounds a floating point value. ceil() rounds up and
+              floor() rounds down.</li>
+          <li>The constant <strong>oblocks</strong> has been added to
+              the Layout module.</li>
           <li></li>
         </ul>
 
