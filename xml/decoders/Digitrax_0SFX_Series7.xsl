@@ -16,8 +16,8 @@
 
     <variable item="XF{$index} Enable" CV="{$CVindex}.230" mask="XXXXXXXV" default="0">
         <enumVal>
-          <enumChoice choice="No"><choice>No</choice></enumChoice>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
+          <enumChoice choice="No"><choice>No</choice></enumChoice>
         </enumVal>
         <label>      Enable:</label>
     </variable>
