@@ -495,6 +495,10 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         activeSerialPort.setRTS(); // not connected in some serial ports and adapters
         activeSerialPort.setDTR(); // pin 1 in DIN8; on main connector, this is DTR
 
+        // get and save stream
+        serialStream = new DataInputStream(activeSerialPort.getInputStream());
+        ostream = activeSerialPort.getOutputStream();
+
         // report status?
         if (log.isInfoEnabled()) {
             log.info("Port {} {} opened at {} baud, sees DTR: {} RTS: {} DSR: {} CTS: {} DCD: {}",
