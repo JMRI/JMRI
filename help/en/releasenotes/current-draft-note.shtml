@@ -129,6 +129,7 @@
                 <li>If you enter an value that's outside the acceptable range
                     in the configuration tool, the background will now turn
                     blue to indicate that to you.</li>
+                <li>Improved how the buttons are laid out at the bottom of the CDI window</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -269,7 +270,7 @@
         <h4>Mistral Train Models</h4>
              <ul>
                 <li>Updated Lokommander II definitions. Implement CV114, 115 and 116 according to the firmware version. Firmware V3 : treat as binary and only support up to F8 Firmware V6 : treat as decimal and support up to F28
-</li>
+                </li>
              </ul>
 
         <h4>MTH</h4>
