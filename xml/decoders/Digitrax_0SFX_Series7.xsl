@@ -439,10 +439,31 @@
    <decoder-config>
    <xsl:apply-templates select="node()"/>
    <pane>
-     <column><grid>
-   <xsl:call-template name="AllFunctionPanes"/>
-     </grid></column>
      <name>XF Functions</name>
+     <column>
+       <row>
+        <label>
+          <qualifier>
+            <variableref>Product Number</variableref><!-- Software Version-->
+            <relation>ge</relation>
+            <value>5</value>
+          </qualifier>
+          <text>&lt;html&gt;&lt;b&gt;XF Decoder Detected&lt;/b&gt;&lt;/html&gt;</text>
+        </label>        
+        <label>
+          <qualifier>
+            <variableref>Product Number</variableref><!-- Software Version-->
+            <relation>lt</relation>
+            <value>5</value>
+          </qualifier>
+          <text>&lt;html&gt;&lt;b&gt;XF Decoder Not Detected, These Entries Not Active&lt;/b&gt;&lt;/html&gt;</text>
+        </label>        
+       </row>
+       <separator/>
+       <grid>
+   <xsl:call-template name="AllFunctionPanes"/>
+       </grid>
+     </column>
    </pane>
    </decoder-config>
  </xsl:template>

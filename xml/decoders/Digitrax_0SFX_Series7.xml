@@ -228,6 +228,11 @@
         <label xml:lang="fr">ID constructeur: </label>
         <label xml:lang="de">Hersteller ID: </label>
       </variable>
+      <variable CV="253" readOnly="yes" item="Product Number" default="4">
+        <!-- default 4 is before XF is available, so a read is needed for top of XF pane-->
+        <decVal/>
+        <label>Software Version</label>
+      </variable>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/motorDriveFreq.xml"/>
 
       <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
