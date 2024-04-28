@@ -328,7 +328,9 @@
   <!-- Disable Feature Settings -->
   
   <!-- Function Map 7 Settings -->
+<!--   This is now replaced by XSLT processing
  <xi:include href="http://jmri.org/xml/decoders/digitrax/functionMapSettings7.xml"/>	
+ -->
 
  <!-- Function Map 7 Settings -->
 
