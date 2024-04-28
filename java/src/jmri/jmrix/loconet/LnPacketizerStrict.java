@@ -181,7 +181,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                 } catch (LocoNetMessageException e) {
                     // just let it ride for now
                     log.warn("run: unexpected LocoNetMessageException", e); // NOI18N
-                } catch (java.io.EOFException e) {
+                } catch (java.io.EOFException | com.fazecast.jSerialComm.SerialPortTimeoutException e) {
                     // posted from idle port when enableReceiveTimeout used
                     log.trace("EOFException, is LocoNet serial I/O using timeouts?"); // NOI18N
                 } catch (java.io.IOException e) {
