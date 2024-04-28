@@ -302,9 +302,6 @@ public class ArchitectureTest {
         .doNotHaveFullyQualifiedName("jmri.jmrix.bachrus.serialdriver.SerialDriverAdapter").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.dcc4pc.Dcc4PcTrafficController").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.dcc4pc.serialdriver.SerialDriverAdapter").and()
-        //.doNotHaveFullyQualifiedName("jmri.jmrix.ieee802154.xbee.XBeeAdapter").and()
-        //.doNotHaveFullyQualifiedName("jmri.jmrix.ieee802154.IEEE802154PortController").and()
-        //.doNotHaveFullyQualifiedName("jmri.jmrix.ieee802154.serialdriver.SerialDriverAdapter").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.pricom.downloader.LoaderPane").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.pricom.downloader.LoaderPane$LocalReader").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.pricom.pockettester.DataSource").and()
@@ -323,13 +320,10 @@ public class ArchitectureTest {
     public static final ArchRule checkJSerialCommAllowedUses = noClasses()
         .that()
 
-        // eventually, we want all the standard serial access confined to here:
+        // all the standard serial access should be confined to here:
         .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController$SerialPort").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController$SerialPortEvent")
-
-        // migrated atypical systems - someday these should be refactored into AbstractSerialPortController
-        .and().doNotHaveFullyQualifiedName("jmri.jmrix.ncemonitor.NcePacketMonitorPanel")       // not the usual PortController structure
 
         .should().accessClassesThat().resideInAPackage("com.fazecast.jSerialComm..");
 
