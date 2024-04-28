@@ -62,14 +62,17 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
 
     /**
      * Standard error handling for the general port-not-found case.
+     * @param systemPrefix the system prefix
      * @param portName port name.
      * @param log system log, passed so logging comes from bottom level class
      * @param ex Underlying Exception that caused this failure
      * @return human readable string with error detail.
      */
-    final public String handlePortNotFound(String portName, org.slf4j.Logger log, Exception ex) {
+    public static String handlePortNotFound(String systemPrefix, String portName, org.slf4j.Logger log, Exception ex) {
         log.error("Serial port {} not found: {}", portName, ex.getMessage());
-        ConnectionStatus.instance().setConnectionState(this.getSystemPrefix(), portName, ConnectionStatus.CONNECTION_DOWN);
+        if (systemPrefix != null) {
+            ConnectionStatus.instance().setConnectionState(systemPrefix, portName, ConnectionStatus.CONNECTION_DOWN);
+        }
         return Bundle.getMessage("SerialPortNotFound", portName);
     }
 
@@ -96,7 +99,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @return the serial port object for later use
      */
     final protected SerialPort activatePort(String portName, org.slf4j.Logger log) {
-        return this.activatePort(portName, log, 1, Parity.NONE);
+        return activatePort(this.getSystemPrefix(), portName, log, 1, Parity.NONE);
     }
 
     /**
@@ -115,7 +118,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @return the serial port object for later use
      */
     final protected SerialPort activatePort(String portName, org.slf4j.Logger log, int stop_bits) {
-        return this.activatePort(portName, log, stop_bits, Parity.NONE);
+        return activatePort(this.getSystemPrefix(), portName, log, stop_bits, Parity.NONE);
     }
 
     /**
@@ -128,14 +131,14 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * This is usually followed by calls to
      * {@link #setBaudRate}, {@link #configureLeads} and {@link #setFlowControl}.
      *
+     * @param systemPrefix the system prefix
      * @param portName local system name for the desired port
      * @param log Logger to use for errors, passed so that errors are logged from low-level class'
      * @param stop_bits The number of stop bits, either 1 or 2
      * @param parity one of the defined parity contants
      * @return the serial port object for later use
      */
-
-    final protected SerialPort activatePort(String portName, org.slf4j.Logger log, int stop_bits, Parity parity) {
+    public static SerialPort activatePort(String systemPrefix, String portName, org.slf4j.Logger log, int stop_bits, Parity parity) {
         com.fazecast.jSerialComm.SerialPort serialPort;
 
         // convert the 1 or 2 stop_bits argument to the proper jSerialComm code value
@@ -162,7 +165,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         } catch (java.io.IOException | com.fazecast.jSerialComm.SerialPortInvalidPortException ex) {
             // IOException includes
             //      com.fazecast.jSerialComm.SerialPortIOException
-            handlePortNotFound(portName, log, ex);
+            handlePortNotFound(systemPrefix, portName, log, ex);
             return null;
         }
         return new SerialPort(serialPort);
@@ -321,6 +324,15 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
 
         public int getValue() {
             return value;
+        }
+
+        public static Parity getParity(int parity) {
+            for (Parity p : Parity.values()) {
+                if (p.value == parity) {
+                    return p;
+                }
+            }
+            throw new IllegalArgumentException("Unknown parity");
         }
     }
 
@@ -888,8 +900,44 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             return this.serialPort.getOutputStream();
         }
 
+        public void setRTS() {
+            this.serialPort.setRTS();
+        }
+
+        public void setBaudRate(int baudrate) {
+            this.serialPort.setBaudRate(baudrate);
+        }
+
+        public int getBaudRate() {
+            return this.serialPort.getBaudRate();
+        }
+
+        public void setNumDataBits(int bits) {
+            this.serialPort.setNumDataBits(bits);
+        }
+
+        public void setDTR() {
+            this.serialPort.setDTR();
+        }
+
+        public boolean getDTR() {
+            return this.serialPort.getDTR();
+        }
+
+        public boolean getRTS() {
+            return this.serialPort.getRTS();
+        }
+
+        public boolean getDSR() {
+            return this.serialPort.getDSR();
+        }
+
         public boolean getCTS() {
             return this.serialPort.getCTS();
+        }
+
+        public boolean getDCD() {
+            return this.serialPort.getDCD();
         }
 
         public void setBreak() {
@@ -902,6 +950,10 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
 
         public void closePort() {
             this.serialPort.closePort();
+        }
+
+        public String getDescriptivePortName() {
+            return this.serialPort.getDescriptivePortName();
         }
 
         @Override
