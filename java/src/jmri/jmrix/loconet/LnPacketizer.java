@@ -181,6 +181,12 @@ public class LnPacketizer extends LnTrafficController {
     protected byte readByteProtected(DataInputStream istream) throws java.io.IOException {
         while (true) { // loop will repeat until character found
             int nchars;
+            
+            // Note: the read() call can block and not respond to the
+            // thread being interrupted.  A join() on this thread will block
+            // permanently.  This needs to be re-written to check for
+            // available content before doing a read() from the stream.
+
             nchars = istream.read(rcvBuffer, 0, 1);
             if (nchars > 0) {
                 return rcvBuffer[0];
@@ -474,13 +480,13 @@ public class LnPacketizer extends LnTrafficController {
         if (xmtThread != null) {
             xmtThread.interrupt();
             try {
-                xmtThread.join();
+                xmtThread.join(150);  // don't wait forever, just give it a good try
             } catch (InterruptedException e) { log.warn("unexpected InterruptedException", e);}
         }
         if (rcvThread != null) {
             rcvThread.interrupt();
             try {
-                rcvThread.join();
+                rcvThread.join(150);  // don't wait forever, just give it a good try
             } catch (InterruptedException e) { log.warn("unexpected InterruptedException", e);}
         }
         super.dispose();
@@ -496,7 +502,7 @@ public class LnPacketizer extends LnTrafficController {
         if (xmtThread != null) {
             xmtThread.interrupt();
             try {
-                xmtThread.join();
+                xmtThread.join(150);  // don't wait forever, just give it a good try
             } catch (InterruptedException ie){
                 // interrupted during cleanup.
             }
@@ -505,7 +511,7 @@ public class LnPacketizer extends LnTrafficController {
         if (rcvThread != null) {
             rcvThread.interrupt();
             try {
-                rcvThread.join();
+                rcvThread.join(150);  // don't wait forever, just give it a good try
             } catch (InterruptedException ie){
                 // interrupted during cleanup.
             }

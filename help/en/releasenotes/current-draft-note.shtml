@@ -86,7 +86,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Improved how a LocoNet connection is shut down.</li>
             </ul>
 
         <h4>Maple</h4>
