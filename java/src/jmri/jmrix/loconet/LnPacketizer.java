@@ -308,7 +308,7 @@ public class LnPacketizer extends LnTrafficController {
                 } catch (LocoNetMessageException e) {
                     // just let it ride for now
                     log.warn("run: unexpected LocoNetMessageException", e); // NOI18N
-                } catch (java.io.EOFException | com.fazecast.jSerialComm.SerialPortTimeoutException e) {
+                } catch (java.io.EOFException | java.io.InterruptedIOException e) {
                     // posted from idle port when enableReceiveTimeout used
                 } catch (java.io.IOException e) {
                     // fired when write-end of HexFile reaches end
