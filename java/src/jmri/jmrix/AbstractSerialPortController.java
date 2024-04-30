@@ -1037,30 +1037,6 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             return _stream.read(b, off, len);
         }
 
-        @Override
-        public byte[] readNBytes​(int len) throws IOException {
-            while (_stream.available() == 0) {
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                    throw new EOFException();
-                }
-            }
-            return _stream.readNBytes​(len);
-        }
-
-        @Override
-        public int readNBytes​(byte[] b, int off, int len) throws IOException {
-            while (_stream.available() == 0) {
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                    throw new EOFException();
-                }
-            }
-            return _stream.readNBytes​(b, off, len);
-        }
-
     }
 
 
