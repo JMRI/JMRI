@@ -899,6 +899,13 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             return new SerialPortInputStream(this.serialPort.getInputStream());
         }
 
+        public InputStream getInputStream(int delay) {
+            // The input stream of jSerialComm blocks on reads and doesn't
+            // respond when the thread is interrupted. Use our own InputStream
+            // class to handle that.
+            return new SerialPortInputStream(this.serialPort.getInputStream(), delay);
+        }
+
         public OutputStream getOutputStream() {
             return this.serialPort.getOutputStream();
         }
@@ -996,16 +1003,23 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     private static class SerialPortInputStream extends InputStream {
 
         private final InputStream _stream;
+        private final int _delay;
 
         private SerialPortInputStream(InputStream stream) {
             this._stream = stream;
+            this._delay = 10;
+        }
+
+        private SerialPortInputStream(InputStream stream, int delay) {
+            this._stream = stream;
+            this._delay = delay;
         }
 
         @Override
         public int read() throws IOException {
             while (_stream.available() == 0) {
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(_delay);
                 } catch (InterruptedException e) {
                     throw new EOFException();
                 }
@@ -1017,7 +1031,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         public int read(byte[] b) throws IOException {
             while (_stream.available() == 0) {
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(_delay);
                 } catch (InterruptedException e) {
                     throw new EOFException();
                 }
@@ -1029,7 +1043,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         public int read(byte[] b, int off, int len) throws IOException {
             while (_stream.available() == 0) {
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(_delay);
                 } catch (InterruptedException e) {
                     throw new EOFException();
                 }
