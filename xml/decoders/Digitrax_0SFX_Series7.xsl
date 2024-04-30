@@ -14,7 +14,7 @@
     <xsl:param name="CVindex"/>
     <xsl:param name="index"/>
 
-    <variable item="XF{$index} Enable" CV="{$CVindex}.230" mask="XXXXXXXV" default="0">
+    <variable item="XF{$index} Enable" CV="{$CVindex}.230" mask="XXXXXXXV" default="1">
         <enumVal>
           <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
           <enumChoice choice="No"><choice>No</choice></enumChoice>
@@ -32,9 +32,9 @@
 
     <variable item="XF{$index} Control" CV="{$CVindex}.230" mask="XXXXVVX" default="0">
         <enumVal>
-          <enumChoice choice="No"><choice>OR Merge</choice></enumChoice>
-          <enumChoice choice="No"><choice>AND</choice></enumChoice>
-          <enumChoice choice="Yes"><choice>Lock</choice></enumChoice>
+          <enumChoice choice="OR Merge"><choice>OR Merge</choice></enumChoice>
+          <enumChoice choice="AND"><choice>AND</choice></enumChoice>
+          <enumChoice choice="Lock"><choice>Lock</choice></enumChoice>
         </enumVal>
         <label>      Control:</label>
     </variable>
