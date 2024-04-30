@@ -970,7 +970,8 @@ public abstract class AbstractMRTrafficController {
      * Read a single byte, protecting against various timeouts, etc.
      * <p>
      * When a port is set to have a receive timeout, some will return
-     * zero bytes or an EOFException at the end of the timeout. In that case, the read
+     * zero bytes, an EOFException or a InterruptedIOException at the end of the timeout. 
+     * In that case, the read()
      * should be repeated to get the next real character.
      *
      * @param istream stream to read
