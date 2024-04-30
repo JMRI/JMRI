@@ -893,7 +893,10 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         }
 
         public InputStream getInputStream() {
-            return this.serialPort.getInputStream();
+            // The input stream of jSerialComm blocks on reads and doesn't
+            // respond when the thread is interrupted. Use our own InputStream
+            // class to handle that.
+            return new SerialPortInputStream(this.serialPort.getInputStream());
         }
 
         public OutputStream getOutputStream() {
@@ -972,6 +975,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
 
     }
 
+
     public static class SerialPortEvent {
 
         private final com.fazecast.jSerialComm.SerialPortEvent event;
@@ -983,6 +987,80 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         public int getEventType() {
             return event.getEventType();
         }
+    }
+
+
+    /**
+     * This class ensures that read doesn't block when the thread is interrupted.
+     */
+    private static class SerialPortInputStream extends InputStream {
+
+        private final InputStream _stream;
+
+        private SerialPortInputStream(InputStream stream) {
+            this._stream = stream;
+        }
+
+        @Override
+        public int read() throws IOException {
+            while (_stream.available() == 0) {
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    throw new EOFException();
+                }
+            }
+            return _stream.read();
+        }
+
+        @Override
+        public int read(byte[] b) throws IOException {
+            while (_stream.available() == 0) {
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    throw new EOFException();
+                }
+            }
+            return _stream.read(b);
+        }
+
+        @Override
+        public int read(byte[] b, int off, int len) throws IOException {
+            while (_stream.available() == 0) {
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    throw new EOFException();
+                }
+            }
+            return _stream.read(b, off, len);
+        }
+
+        @Override
+        public byte[] readNBytes​(int len) throws IOException {
+            while (_stream.available() == 0) {
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    throw new EOFException();
+                }
+            }
+            return _stream.readNBytes​(len);
+        }
+
+        @Override
+        public int readNBytes​(byte[] b, int off, int len) throws IOException {
+            while (_stream.available() == 0) {
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    throw new EOFException();
+                }
+            }
+            return _stream.readNBytes​(b, off, len);
+        }
+
     }
 
 
