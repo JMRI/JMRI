@@ -479,7 +479,7 @@ public class LnPacketizer extends LnTrafficController {
     /**
      * {@inheritDoc}
      */
-    // The join(150) is using a timeout become some receive threads
+    // The join(150) is using a timeout because some receive threads
     // (and maybe some day transmit threads) use calls that block 
     // even when interrupted.  We wait 150 msec and proceed.
     // Threads that do that are responsible for ending cleanly 
@@ -506,7 +506,7 @@ public class LnPacketizer extends LnTrafficController {
      * <p>
      * This is intended to be used only by testing subclasses.
      */
-    // The join(150) is using a timeout become some receive threads
+    // The join(150) is using a timeout because some receive threads
     // (and maybe some day transmit threads) use calls that block 
     // even when interrupted.  We wait 150 msec and proceed.
     // Threads that do that are responsible for ending cleanly 
