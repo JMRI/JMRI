@@ -5,12 +5,14 @@ import java.io.*;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.*;
+import jmri.jmrit.operations.locations.divisions.Division;
+import jmri.jmrit.operations.locations.divisions.DivisionManager;
 import jmri.jmrit.operations.rollingstock.ImportRollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.jmrit.operations.trains.*;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
@@ -19,7 +21,7 @@ import jmri.util.swing.JmriJOptionPane;
  * Owner Built Location - Track. If a CSV file, the import will accept these
  * additional fields: Load Kernel Moves Value Comment Miscellaneous Extensions
  *
- * @author Dan Boudreau Copyright (C) 2008 2010 2011, 2013, 2016, 2021
+ * @author Dan Boudreau Copyright (C) 2008 2010 2011, 2013, 2016, 2021, 2024
  */
 public class ImportCars extends ImportRollingStock {
 
@@ -67,7 +69,30 @@ public class ImportCars extends ImportRollingStock {
     private static final int CAR_COMMENT = 15;
     private static final int CAR_MISCELLANEOUS = 16;
     private static final int CAR_EXTENSIONS = 17;
-    private static final int CAR_RFID_TAG = 37;
+
+    //    private static final int CAR_WAIT = 18;
+    //    private static final int CAR_PICKUP_SCH = 19;
+    //    private static final int CAR_LAST = 20;
+
+    private static final int CAR_RWE_DESTINATION = 21;
+    private static final int CAR_RWE_TRACK = 23;
+    private static final int CAR_RWE_LOAD = 24;
+
+    private static final int CAR_RWL_DESTINATION = 25;
+    private static final int CAR_RWL_TRACK = 27;
+    private static final int CAR_RWL_LOAD = 28;
+
+    private static final int CAR_DIVISION = 29;
+    private static final int CAR_TRAIN = 30;
+
+    private static final int CAR_DESTINATION = 31;
+    private static final int CAR_DEST_TRACK = 33;
+
+    private static final int CAR_FINAL_DESTINATION = 34;
+    private static final int CAR_FINAL_TRACK = 36;
+    private static final int CAR_SCH_ID = 37;
+
+    private static final int CAR_RFID_TAG = 38;
 
     // we use a thread so the status frame will work!
     @Override
@@ -379,19 +404,19 @@ public class ImportCars extends ImportRollingStock {
                     }
 
                     // is there a load name?
-                    if (comma && inputLine.length > base + CAR_LOAD) {
+                    if (comma && inputLine.length > CAR_LOAD) {
                         if (!inputLine[CAR_LOAD].isBlank()) {
                             carLoadName = inputLine[CAR_LOAD].trim();
                             log.debug("Car ({} {}) has load ({})", carRoad, carNumber, carLoadName);
                         }
                     }
                     // is there a kernel name?
-                    if (comma && inputLine.length > base + CAR_KERNEL) {
+                    if (comma && inputLine.length > CAR_KERNEL) {
                         carKernelName = inputLine[CAR_KERNEL].trim();
                         log.debug("Car ({} {}) has kernel name ({})", carRoad, carNumber, carKernelName);
                     }
                     // is there a move count?
-                    if (comma && inputLine.length > base + CAR_MOVES) {
+                    if (comma && inputLine.length > CAR_MOVES) {
                         if (!inputLine[CAR_MOVES].trim().isEmpty()) {
                             try {
                                 carMoves = Integer.parseInt(inputLine[CAR_MOVES].trim());
@@ -402,11 +427,11 @@ public class ImportCars extends ImportRollingStock {
                         }
                     }
                     // is there a car value?
-                    if (comma && inputLine.length > base + CAR_VALUE) {
+                    if (comma && inputLine.length > CAR_VALUE) {
                         carValue = inputLine[CAR_VALUE].trim();
                     }
                     // is there a car comment?
-                    if (comma && inputLine.length > base + CAR_COMMENT) {
+                    if (comma && inputLine.length > CAR_COMMENT) {
                         carComment = inputLine[CAR_COMMENT];
                     }
 
@@ -524,16 +549,18 @@ public class ImportCars extends ImportRollingStock {
                     car.setValue(carValue);
                     car.setComment(carComment);
                     carsAdded++;
-                    // Out of Service?
-                    if (comma && inputLine.length > base + CAR_MISCELLANEOUS) {
-                        car.setOutOfService(inputLine[CAR_MISCELLANEOUS].equals(Bundle.getMessage("OutOfService")));
-                    }
-                    // TODO import RWE and RWL fields
+
                     // if the car's type name is "Caboose" then make it a
                     // caboose
                     car.setCaboose(carType.equals("Caboose"));
+
+                    // Out of Service?
+                    if (comma && inputLine.length > CAR_MISCELLANEOUS) {
+                        car.setOutOfService(inputLine[CAR_MISCELLANEOUS].equals(Bundle.getMessage("OutOfService")));
+                    }
+
                     // determine if there are any car extensions
-                    if (comma && inputLine.length > base + CAR_EXTENSIONS) {
+                    if (comma && inputLine.length > CAR_EXTENSIONS) {
                         String extensions = inputLine[CAR_EXTENSIONS];
                         log.debug("Car ({}) has extension ({})", car.toString(), extensions);
                         String[] ext = extensions.split(Car.EXTENSION_REGEX);
@@ -556,7 +583,83 @@ public class ImportCars extends ImportRollingStock {
                             }
                         }
                     }
-                    if (comma && inputLine.length > base + CAR_RFID_TAG) {
+
+                    // TODO car wait, pick up schedule, last moved
+
+                    // Return When Empty
+                    if (comma && inputLine.length > CAR_RWE_DESTINATION) {
+                        Location rweDestination =
+                                InstanceManager.getDefault(LocationManager.class)
+                                        .getLocationByName(inputLine[CAR_RWE_DESTINATION]);
+
+                        car.setReturnWhenEmptyDestination(rweDestination);
+                        if (rweDestination != null && inputLine.length > CAR_RWE_TRACK) {
+                            Track rweTrack = rweDestination.getTrackByName(inputLine[CAR_RWE_TRACK], null);
+                            car.setReturnWhenEmptyDestTrack(rweTrack);
+                        }
+                    }
+                    if (comma && inputLine.length > CAR_RWE_LOAD) {
+                        car.setReturnWhenEmptyLoadName(inputLine[CAR_RWE_LOAD].trim());
+                    }
+
+                    // Return When Loaded
+                    if (comma && inputLine.length > CAR_RWL_DESTINATION) {
+                        Location rwlDestination =
+                                InstanceManager.getDefault(LocationManager.class)
+                                        .getLocationByName(inputLine[CAR_RWL_DESTINATION]);
+
+                        car.setReturnWhenLoadedDestination(rwlDestination);
+                        if (rwlDestination != null && inputLine.length > CAR_RWL_TRACK) {
+                            Track rweTrack = rwlDestination.getTrackByName(inputLine[CAR_RWL_TRACK], null);
+                            car.setReturnWhenLoadedDestTrack(rweTrack);
+                        }
+                    }
+                    if (comma && inputLine.length > CAR_RWL_LOAD) {
+                        car.setReturnWhenLoadedLoadName(inputLine[CAR_RWL_LOAD].trim());
+                    }
+
+                    if (comma && inputLine.length > CAR_DIVISION) {
+                        Division division = InstanceManager.getDefault(DivisionManager.class)
+                                .getDivisionByName(inputLine[CAR_DIVISION].trim());
+                        car.setDivision(division);
+                    }
+
+                    if (comma && inputLine.length > CAR_TRAIN) {
+                        Train train = InstanceManager.getDefault(TrainManager.class)
+                                .getTrainByName(inputLine[CAR_TRAIN].trim());
+                        car.setTrain(train);
+                    }
+
+                    // Destination
+                    if (comma && inputLine.length > CAR_DESTINATION) {
+                        Location destination =
+                                InstanceManager.getDefault(LocationManager.class)
+                                        .getLocationByName(inputLine[CAR_DESTINATION]);
+                        if (destination != null && inputLine.length > CAR_DEST_TRACK) {
+                            Track destTrack = destination.getTrackByName(inputLine[CAR_DEST_TRACK], null);
+                            car.setDestination(destination, destTrack);
+                        }
+                    }
+
+                    // Final Destination
+                    if (comma && inputLine.length > CAR_FINAL_DESTINATION) {
+                        Location finalDestination =
+                                InstanceManager.getDefault(LocationManager.class)
+                                        .getLocationByName(inputLine[CAR_FINAL_DESTINATION]);
+
+                        car.setFinalDestination(finalDestination);
+                        if (finalDestination != null && inputLine.length > CAR_FINAL_TRACK) {
+                            Track finalTrack = finalDestination.getTrackByName(inputLine[CAR_FINAL_TRACK], null);
+                            car.setFinalDestinationTrack(finalTrack);
+                        }
+                    }
+
+                    // Schedule Id
+                    if (comma && inputLine.length > CAR_SCH_ID) {
+                        car.setScheduleItemId(inputLine[CAR_SCH_ID]);
+                    }
+
+                    if (comma && inputLine.length > CAR_RFID_TAG) {
                         String newTag = inputLine[CAR_RFID_TAG];
                         if (!newTag.trim().isEmpty()) {
                             InstanceManager.getDefault(IdTagManager.class).provideIdTag(newTag);
@@ -564,6 +667,7 @@ public class ImportCars extends ImportRollingStock {
                             car.setRfid(newTag);
                         }
                     }
+
                     // add new roads
                     if (!InstanceManager.getDefault(CarRoads.class).containsName(carRoad)) {
                         if (autoCreateRoads) {
