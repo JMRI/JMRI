@@ -436,6 +436,11 @@
               floor() rounds down.</li>
           <li>The constant <strong>oblocks</strong> has been added to
               the Layout module.</li>
+          <li>Two new preferences have been added. <strong>Log all before</strong>
+              and <strong>Log all after</strong>. If these are selected,
+              LogixNG will log every action that's executed and every
+              expression that's evaluated. For this to work, the LogixNG
+              debugger must be installed (which it is by default).</li>
           <li></li>
         </ul>
 
