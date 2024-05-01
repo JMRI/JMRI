@@ -598,7 +598,7 @@ public class ImportCars extends ImportRollingStock {
                             car.setReturnWhenEmptyDestTrack(rweTrack);
                         }
                     }
-                    if (comma && inputLine.length > CAR_RWE_LOAD) {
+                    if (comma && inputLine.length > CAR_RWE_LOAD && !inputLine[CAR_RWE_LOAD].isBlank()) {
                         car.setReturnWhenEmptyLoadName(inputLine[CAR_RWE_LOAD].trim());
                     }
 
@@ -614,7 +614,7 @@ public class ImportCars extends ImportRollingStock {
                             car.setReturnWhenLoadedDestTrack(rweTrack);
                         }
                     }
-                    if (comma && inputLine.length > CAR_RWL_LOAD) {
+                    if (comma && inputLine.length > CAR_RWL_LOAD && !inputLine[CAR_RWL_LOAD].isBlank()) {
                         car.setReturnWhenLoadedLoadName(inputLine[CAR_RWL_LOAD].trim());
                     }
 
