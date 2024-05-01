@@ -86,7 +86,8 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Improved how threads are shutdown when changing connections
+                    in the settings.</li>
             </ul>
 
         <h4>Maple</h4>
