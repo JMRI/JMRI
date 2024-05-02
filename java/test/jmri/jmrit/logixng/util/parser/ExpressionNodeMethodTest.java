@@ -9,10 +9,7 @@ import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test ExpressionNodeMethod.
@@ -36,7 +33,7 @@ public class ExpressionNodeMethodTest {
         ExpressionNodeMethod t = new ExpressionNodeMethod(method, variables, parameterList);
         Object result = t.calculate(object, symbolTable);
 
-        Assert.assertEquals(expectedResult, result);
+        Assertions.assertEquals(expectedResult, result);
     }
 
     @Test
@@ -51,7 +48,6 @@ public class ExpressionNodeMethodTest {
         Map<String, String> map = new HashMap<>();
         map.put("Hello", "World");
         var entry = map.entrySet().iterator().next();
-        System.out.format("Key: %s, value: %s%n", entry.getKey(), entry.getValue());
         testCall(entry, "getKey", "Hello", new Object[]{});
         testCall(entry, "getValue", "World", new Object[]{});
         testCall(entry, "toString", "Hello=World", new Object[]{});
@@ -217,13 +213,14 @@ public class ExpressionNodeMethodTest {
     }
 
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 
