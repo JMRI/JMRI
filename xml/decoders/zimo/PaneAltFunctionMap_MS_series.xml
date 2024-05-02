@@ -7,6 +7,7 @@
 <!--  version 2.2 - Nigel Cliffe - separated MS-series specific version from MX-series on adding MS950/MS990 decoders. -->
 <!--        Split to avoid future problems as MS-series receives updates  -->  
 <!-- version 2.3 - Ronald Kuhn - added MN series ID numbers to include statements --> 
+<!-- version 2.4 - Ronald Kuhn - added new MN- and MS ID numbers to include statements --> 
 
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>Alt Function Map</name>
@@ -14,8 +15,11 @@
   <name xml:lang="cs">Alternativní přiřazení funkcí</name>
   <name xml:lang="de">Alt. Funktionszuordnung</name>
   <!-- for 6 functions -->
- <group include="1,2,3,5,8,10,123,124,125,126,127">
+ <group include="1,2,3,5,8,10,12,13,14,123,122,124,125,126,127">
   <column>
+   <label>
+    <text>   </text>
+   </label>
     <display item="FO3 + FO4 directional setting"/>
     <label>
       <text> </text>
@@ -1476,6 +1480,9 @@
         </label>
       </column>
     </row>
+   <label>
+    <text>   </text>
+   </label>
   </column>
  </group>
 </pane>

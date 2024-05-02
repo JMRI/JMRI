@@ -2,12 +2,16 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 - Ronald Kuhn - add german translation -->
+<!-- version 1.2 - Ronald Kuhn - small visual improvement -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>Alt Function Map</name>
   <name xml:lang="it">Mappa Funzioni Speciali</name>
   <name xml:lang="cs">Alternativní přiřazení funkcí</name>
   <name xml:lang="de">Alt. Funktionszuordnung</name>
   <column>
+    <label>
+      <text> </text>
+    </label>
     <display item="FO3 + FO4 directional setting"/>
     <label>
       <text> </text>
@@ -522,5 +526,8 @@
         </display>
       </column>
     </row>
+    <label>
+      <text> </text>
+    </label>
   </column>
 </pane>
