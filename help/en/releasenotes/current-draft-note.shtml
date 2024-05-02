@@ -437,6 +437,8 @@
               floor() rounds down.</li>
           <li>The constant <strong>oblocks</strong> has been added to
               the Layout module.</li>
+          <li>Fixes a bug in LogixNG formula when calling a Java method that
+              takes a boolean as parameter, like <strong>setVisible()</strong>.</li>
           <li></li>
         </ul>
 
