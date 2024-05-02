@@ -72,7 +72,7 @@ public class ExpressionNodeMethod implements ExpressionNodeWithParameter {
 
     @SuppressWarnings("rawtypes")   // We don't know the generic types of Map.Entry in this method
     private Object callMethod(Method method, Object obj, Object[] params)
-            throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+            throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, ReflectionException {
 
         Class<?>[] paramTypes = method.getParameterTypes();
         Object[] newParams = new Object[params.length];
@@ -130,8 +130,12 @@ public class ExpressionNodeMethod implements ExpressionNodeWithParameter {
                     case "toString": return obj.toString();
                     case "getKey": return ((Map.Entry)obj).getKey();
                     case "getValue": return ((Map.Entry)obj).getValue();
-                    default: throw ex;
+                    default:
+                        // Do nothing
                 }
+            }
+            if (!Modifier.isPublic(obj.getClass().getModifiers())) {
+                throw new ReflectionException("Can't call methods on object since it's private", ex);
             }
             throw ex;
         }

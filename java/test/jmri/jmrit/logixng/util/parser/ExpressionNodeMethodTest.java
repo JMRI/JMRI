@@ -44,6 +44,19 @@ public class ExpressionNodeMethodTest {
         testCall("Hello", "substring", "ell", new Object[]{1,4});
     }
 
+    @Test
+    public void testMapEntry() throws JmriException {
+        // HashMap.entrySet() returns a set of classes that are private.
+        // We cannot use reflection to call methods on a class that's private.
+        Map<String, String> map = new HashMap<>();
+        map.put("Hello", "World");
+        var entry = map.entrySet().iterator().next();
+        System.out.format("Key: %s, value: %s%n", entry.getKey(), entry.getValue());
+        testCall(entry, "getKey", "Hello", new Object[]{});
+        testCall(entry, "getValue", "World", new Object[]{});
+        testCall(entry, "toString", "Hello=World", new Object[]{});
+    }
+
     /**
      * This method creates the ExpressionNodeMethodPrimTest.java source file.
      * Uncomment the line "@org.junit.Ignore" and run this test to create the file.
