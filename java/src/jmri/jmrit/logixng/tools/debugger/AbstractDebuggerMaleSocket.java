@@ -84,7 +84,7 @@ public abstract class AbstractDebuggerMaleSocket extends AbstractMaleSocket {
             if (!info.isBlank()) {
                 info = " --- " + info;
             }
-            log.warn("LogixNG After: {}, {}: {}{}", cng.getLogixNG().getSystemName(), cng.getSystemName(), getLongDescription(), info);
+            log.warn("LogixNG  After: {}, {}: {}{}", cng.getLogixNG().getSystemName(), cng.getSystemName(), getLongDescription(), info);
         }
     }
 
