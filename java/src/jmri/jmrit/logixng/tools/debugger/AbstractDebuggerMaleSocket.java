@@ -55,11 +55,12 @@ public abstract class AbstractDebuggerMaleSocket extends AbstractMaleSocket {
 
     protected void before() {
         if (isLogAllBefore() || _logBefore) {
+            ConditionalNG cng = getConditionalNG();
             String info = getBeforeInfo();
             if (!info.isBlank()) {
                 info = " --- " + info;
             }
-            log.warn("LogixNG Before: {}{}", getLongDescription(), info);
+            log.warn("LogixNG Before: {}, {}: {}{}", cng.getLogixNG().getSystemName(), cng.getSystemName(), getLongDescription(), info);
         }
         _lastDoBreak = _debugger.getBreak();
         if (isDebuggerActive() && (_debugger.getBreak() || _breakpointBefore)) {
@@ -78,11 +79,12 @@ public abstract class AbstractDebuggerMaleSocket extends AbstractMaleSocket {
             }
         }
         if (isLogAllAfter() || _logAfter) {
+            ConditionalNG cng = getConditionalNG();
             String info = getAfterInfo();
             if (!info.isBlank()) {
                 info = " --- " + info;
             }
-            log.warn("LogixNG After: {}{}", getLongDescription(), info);
+            log.warn("LogixNG After: {}, {}: {}{}", cng.getLogixNG().getSystemName(), cng.getSystemName(), getLongDescription(), info);
         }
     }
 
