@@ -4,12 +4,14 @@ import java.io.*;
 import java.util.*;
 
 import jmri.JmriException;
+import jmri.jmrit.display.layoutEditor.*;
 import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Test ExpressionNodeMethod.
@@ -51,6 +53,21 @@ public class ExpressionNodeMethodTest {
         testCall(entry, "getKey", "Hello", new Object[]{});
         testCall(entry, "getValue", "World", new Object[]{});
         testCall(entry, "toString", "Hello=World", new Object[]{});
+    }
+
+    @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    public void testMethodWithBooleanParameter() throws JmriException {
+        var editor = new jmri.jmrit.display.layoutEditor.LayoutEditor("My layout");
+        var trackSegment = new TrackSegment("Id", "A", HitPointType.TRACK, "B", HitPointType.TRACK, false, editor);
+        var trackSegmentView = new TrackSegmentView(trackSegment, editor);
+        editor.addLayoutTrack(trackSegment, trackSegmentView);
+        var segments = editor.getTrackSegmentViews();
+        var segment = segments.get(0);
+        segment.setHidden(false);
+        Assertions.assertFalse(segment.isHidden());
+        testCall(segment, "setHidden", null, new Object[]{true});
+        Assertions.assertTrue(segment.isHidden());
     }
 
     /**

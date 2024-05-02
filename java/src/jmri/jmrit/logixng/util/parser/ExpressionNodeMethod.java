@@ -26,6 +26,8 @@ public class ExpressionNodeMethod implements ExpressionNodeWithParameter {
         if (param == null) return true;
         if (type.isAssignableFrom(param.getClass())) return true;
 
+        if ((type == Boolean.TYPE) && (param instanceof Boolean)) return true;
+
         if ((type == Byte.TYPE) && (param instanceof Byte)) return true;
         if ((type == Short.TYPE) && (param instanceof Byte)) return true;
         if ((type == Integer.TYPE) && (param instanceof Byte)) return true;
@@ -81,6 +83,8 @@ public class ExpressionNodeMethod implements ExpressionNodeWithParameter {
             if ((params[i] == null) || (paramTypes[i].isAssignableFrom(params[i].getClass()))) {
                 newParam = params[i];
             }
+
+            else if ((paramTypes[i] == Boolean.TYPE) && (params[i] instanceof Boolean)) newParam = params[i];
 
             else if ((paramTypes[i] == Byte.TYPE) && (params[i] instanceof Byte)) newParam = params[i];
             else if ((paramTypes[i] == Short.TYPE) && (params[i] instanceof Byte)) newParam = (short)(byte)params[i];
