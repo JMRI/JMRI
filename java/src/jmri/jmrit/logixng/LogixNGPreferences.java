@@ -146,4 +146,28 @@ public interface LogixNGPreferences {
      */
     IfThenElse.ExecuteType getIfThenElseExecuteTypeDefault();
 
+    /**
+     * Set log all before.
+     * @param value true if log all before, false otherwise
+     */
+    void setLogAllBefore(boolean value);
+
+    /**
+     * Get log all before.
+     * @return true if log all before, false otherwise
+     */
+    boolean getLogAllBefore();
+
+    /**
+     * Set log all after.
+     * @param value true if log all after, false otherwise
+     */
+    void setLogAllAfter(boolean value);
+
+    /**
+     * Get log all after.
+     * @return true if log all after, false otherwise
+     */
+    boolean getLogAllAfter();
+
 }
