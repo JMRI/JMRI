@@ -4,6 +4,7 @@
 <!-- version 1.1 - Ronald Kuhn - add german translation -->
 <!-- version 2 - Ronald Kuhn - merged "Alt Funkction Map's" for v39 -->
 <!-- version 2.1 - Nigel Cliffe - added MS series version numbers to include statements --> 
+<!-- version 2.1 - Ronald Kuhn - small visual improvement -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>Alt Function Map</name>
   <name xml:lang="it">Mappa Funzioni Speciali</name>
@@ -12,6 +13,9 @@
   <!-- for 6 functions -->
  <group include="1,2,3,5,8,10,190,225,246,253">
   <column>
+    <label>
+      <text> </text>
+    </label>
     <display item="FO3 + FO4 directional setting"/>
     <label>
       <text> </text>
@@ -414,11 +418,17 @@
         </display>
       </column>
     </row>
+    <label>
+      <text> </text>
+    </label>
   </column>
  </group>
   <!-- for 8 functions -->
  <group include="222">
   <column>
+    <label>
+      <text> </text>
+    </label>
     <display item="FO3 + FO4 directional setting"/>
     <label>
       <text> </text>
@@ -931,11 +941,17 @@
         </display>
       </column>
     </row>
+    <label>
+      <text> </text>
+    </label>
   </column>
  </group>
   <!-- for 8+ functions -->
  <group include="4,6,221">
   <column>
+    <label>
+      <text> </text>
+    </label>
     <display item="FO3 + FO4 directional setting"/>
     <display item="FO9 directional setting"/>
     <label>
@@ -1472,6 +1488,9 @@
         </label>
       </column>
     </row>
+    <label>
+      <text> </text>
+    </label>
   </column>
  </group>
 </pane>

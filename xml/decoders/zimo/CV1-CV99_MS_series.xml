@@ -6,6 +6,7 @@
 <!-- version 1.1 25 May 2023  Ronald Kuhn - added some german translation and exclude MS490, MS500, MS560, MS590, MN170, MN180 and MN300 from mfx.   -->
 <!-- version 1.2 26 May 2023  Ronald Kuhn - added values specific for MS- an MN-series.   -->
 <!-- version 1.3 22 June 2023  Ronald Kuhn - added german translation.   -->
+<!-- version 1.4 02 May 2024  Ronald Kuhn - new decoder excluded   -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
@@ -85,7 +86,7 @@
       <label>Decoder Operating Mode MM</label>
       <label xml:lang="de">MM Betrieb</label>
   </variable>
-    <variable item="Operating Mode MFX" CV="12" mask="XVXXXXXX" default="1" exclude="1,3,8,10,124,125,127">
+    <variable item="Operating Mode MFX" CV="12" mask="XVXXXXXX" default="1" exclude="1,3,8,10,122,124,125,127">
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Decoder Operating Mode MFX</label>
       <label xml:lang="de">mfx Betrieb</label>

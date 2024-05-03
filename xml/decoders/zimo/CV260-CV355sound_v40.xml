@@ -22,6 +22,7 @@
 <!--  version 1.7, seperate #273, #274, #351 & #352 for Non-Sound-Decoder, Ronald Kuhn, 29 Nov 2021 -->
 <!--  version 1.8, added CV 339 340.  - Nigel Cliffe, 14 Feb 2022 -->
 <!--  version 1.9  add german translation - Ronald Kuhn,  22 Jun 2023 -->
+<!--  version 1.9.1 correcting the default value of CV 313 - Ronald Kuhn,  02 May 2024 -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <variable item="Load Code 1" CV="260">
     <decVal/>
@@ -915,7 +916,7 @@
     <tooltip xml:lang="de">Definieren einer Funktions-Taste, mit welcher das Entwässerungs-Geräusch ausgelöst werden kann</tooltip>
     <tooltip xml:lang="cs">Definuje která klávesa ručně spustí přehrání zvuku odvodňovacího ventilu</tooltip>
   </variable>
-  <variable item="Mute key" CV="313" default="8">
+  <variable item="Mute key" CV="313" default="0">
     <enumVal>
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>
