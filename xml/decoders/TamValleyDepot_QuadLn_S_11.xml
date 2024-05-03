@@ -12,7 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no">
-   <version author="robin@n3ix.com" version="3.02.3" lastUpdated="20220702"/>
+   <version author="robin@n3ix.com" version="3.03.0" lastUpdated="20240301"/>
    <decoder>
         <family name="Quad-LN_S" mfg="Tam Valley Depot" type="stationary" comment="The Quad-LN_S is programmed in OPs mode except for the device address.">
             <model model="Quad-LN_S_v1" comment="4 or 8 Servo Driver with Signaling and Detection options" lowVersionID="6"/>
@@ -23,13 +23,13 @@
         </programming>
       
         <variables>
-            <variable item="Version" CV="4" readOnly="no">
+          <variable item="Version" CV="4" readOnly="yes">
                 <decVal/>
             </variable>
-            <variable item="Major Version" CV="4" mask="VVVVXXXX" readOnly="no" default="1">
+            <variable item="Major Version" CV="4" mask="VVVVXXXX" readOnly="yes" default="1">
                 <decVal/>
             </variable>
-            <variable item="Minor Version" CV="4" mask="XXXXVVVV" readOnly="no" default="0">
+            <variable item="Minor Version" CV="4" mask="XXXXVVVV" readOnly="yes" default="0">
                 <decVal/>
             </variable>
             <variable item="Build Num" CV="5" readOnly="yes" default="0">
@@ -50,8 +50,14 @@
                     <enumChoice choice="Relay"/>
                     <enumChoice choice="Signaling"/>
                     <enumChoice choice="Servo" include="Quad-LN_S_v1" />
-                    <enumChoice choice="Turnout" include="Quad-LN_S_v3" />
+                    <enumChoice choice="Turnout" value="2" include="Quad-LN_S_v3" />
                 </enumVal>
+            </variable>
+            <variable item="ServoExp" CV="11" mask="XXXXXXVX" default="0" include="Quad-LN_S_v3">
+                <decVal/>
+            </variable>
+            <variable item="ServoExp" CV="11" mask="XXXXXXXX" default="0" include="Quad-LN_S_v1">
+                <decVal/>
             </variable>
          
             <variable item="IO Mode" CV="11" mask="XXVVXXXX" default="0" include="Quad-LN_S_v3">
@@ -66,7 +72,7 @@
             <variable item="ServoMain" CV="11" mask="XXVXXXXX" default="0" include="Quad-LN_S_v3">
                 <decVal/>
             </variable>
-            <variable item="ServoAux" CV="11" mask="XXXVXXXX" default="0" include="Quad-LN_S_v3">
+            <variable item="ServoAux" CV="11" mask="XXXVXXXX" default="0" exclude="Quad-LN_S_v1">
                 <decVal/>
             </variable>
             <variable item="ServoMain" CV="11" mask="XXXXXXXX" default="0" include="Quad-LN_S_v1">
@@ -75,25 +81,25 @@
             <variable item="ServoAux" CV="11" mask="XXXXXXXX" default="0" include="Quad-LN_S_v1">
                 <decVal/>
             </variable>
-            <variable item="Servo16" CV="11" mask="XXVVXXVX" default="0" include="Quad-LN_S_v3">
+            <variable item="Servo16" CV="11" mask="XXVVXXVX" default="0" exclude="Quad-LN_S_v1">
                 <decVal/>
             </variable>
             <variable item="Servo16" CV="11" mask="XXXXXXVX" default="0" include="Quad-LN_S_v1">
                 <decVal/>
             </variable>
-            <variable item="Send Output Off" CV="11" mask="XXXVXXXX" default="1" exclude="Quad-LN_S_v3">
+            <variable item="Send Output Off" CV="11" mask="XXXVXXXX" default="1" include="Quad-LN_S_v1">
                 <enumVal>
                     <enumChoice choice="Disable"/>
                     <enumChoice choice="Enable"/>
                 </enumVal>
             </variable>
-            <variable item="Local Actions" CV="11" mask="XXVXXXXX" default="1" exclude="Quad-LN_S_v3">
+            <variable item="Local Actions" CV="11" mask="XXVXXXXX" default="1" include="Quad-LN_S_v1">
                 <enumVal>
                     <enumChoice choice="Perform Internally"/>
                     <enumChoice choice="Visible on Loconet"/>
                 </enumVal>
             </variable>
-             <variable item="IO Mode" CV="11" mask="XXXXXXXX" default="0" exclude="Quad-LN_S_v3">
+             <variable item="IO Mode" CV="11" mask="XXXXXXXX" default="0" include="Quad-LN_S_v1">
                 <enumVal>
                     <enumChoice choice="Both IO"/>
                 </enumVal>
@@ -105,7 +111,7 @@
                     <enumChoice choice="Enable"/>
                 </enumVal>
             </variable>
-            <variable item="Turnout State Memory" CV="11" mask="XXXXXVXX" default="1" include="Quad-LN_S_v3">
+            <variable item="Turnout State Memory" CV="11" mask="XXXXXVXX" default="1" exclude="Quad-LN_S_v1">
                 <enumVal>
                     <enumChoice choice="Disable"/>
                     <enumChoice choice="Enable"/>
@@ -135,7 +141,7 @@
                         <enumChoice choice="Inverted"/>
                     </enumVal>
                 </variable>
-                <variable item="Local Actions" CV="12" mask="XXXXVXXX" default="1" include="Quad-LN_S_v3">
+                <variable item="Local Actions" CV="12" mask="XXXXVXXX" default="1" exclude="Quad-LN_S_v1">
                     <enumVal>
                         <enumChoice choice="Perform Internally"/>
                         <enumChoice choice="Visible on Loconet"/>
@@ -154,13 +160,13 @@
                     <relation>ge</relation>
                     <value>49</value>
                 </qualifier>
-                <variable item="Lock Scope" CV="12" mask="XXXXXXVX" default="0" include="Quad-LN_S_v3">
+                <variable item="Lock Scope" CV="12" mask="XXXXXXVX" default="0">
                     <enumVal>
                         <enumChoice choice="Local IO Only"/>
                         <enumChoice choice="Local and LocoNet"/>
                     </enumVal>
                 </variable>
-                <variable item="CV7 Interrogate" CV="12" mask="VXXXXXXX" default="0" include="Quad-LN_S_v3">
+                <variable item="CV7 Interrogate" CV="12" mask="VXXXXXXX" default="0">
                     <enumVal>
                         <enumChoice choice="Ignore"/>
                         <enumChoice choice="Respond"/>
@@ -184,6 +190,25 @@
                             <enumChoice choice="On Change Only"/>
                         </enumVal>
                     </variable>
+                    <variables>
+                        <qualifier>
+                            <variableref>Version</variableref>
+                            <relation>ge</relation>
+                            <value>51</value>
+                        </qualifier>
+                        <variable item="Lock Span" CV="24" mask="XXXXXVXX" default="0">
+                            <enumVal>
+                                <enumChoice choice="One Turnout"/>
+                                <enumChoice choice="Whole Port"/>
+                            </enumVal>
+                        </variable>
+                        <variable item="Report DCC Change" CV="24" mask="XXXXVXXX" default="0">
+                            <enumVal>
+                                <enumChoice choice="No Report"/>
+                                <enumChoice choice="Sensor Report"/>
+                            </enumVal>
+                        </variable>
+                    </variables>
                 </variables>
             </variables>
             
@@ -219,34 +244,120 @@
                 <longAddressVal/>
             </variable>
 
-            <variable item="Lock Start Address" CV="13,14" mask="VVVVVVVV XXXXXVVV" default="100">
-                <splitVal offset="1" min="1" max="2048" /> 
-            </variable>
-
-            <variable item="Servo Start Address" CV="2,3" mask="VVVVVVVV XXXXXVVV" default="0" include="Quad-LN_S_v1">
-                <splitVal offset="1" min="1" max="2048" />
-            </variable>
-            <variable item="Turnout Start Address" CV="2,3" mask="VVVVVVVV XXXXXVVV" default="0" include="Quad-LN_S_v3">
-                <splitVal offset="1" min="1" max="2048" />
-            </variable>
-
-            <variable item="Main IO Start Address" CV="9,10" mask="VVVVVVVV XXXXVVVV" default="0">
+            <variables>
                 <qualifier>
-                    <variableref>ServoMain</variableref>
-                    <relation>eq</relation>
-                    <value>0</value>
+                    <variableref>Version</variableref>
+                    <relation>lt</relation>
+                    <value>51</value>
                 </qualifier>
-                <splitVal offset="1" min="1" max="4096" /> 
-            </variable>
+                <variable item="Lock Start Address" CV="13,14" mask="VVVVVVVV XXXXXVVV" default="100">
+                    <splitVal offset="1" min="1" max="2045" /> 
+                </variable>
 
-            <variable item="Aux IO Start Address" CV="15,16" mask="VVVVVVVV XXXXVVVV" default="4">
+                <variable item="Servo Start Address" CV="2,3" mask="VVVVVVVV XXXXXVVV" default="0" include="Quad-LN_S_v1">
+                    <splitVal offset="1" min="1" max="2045" />
+                </variable>
+                <variable item="Turnout Start Address" CV="2,3" mask="VVVVVVVV XXXXXVVV" default="0" include="Quad-LN_S_v3">
+                    <splitVal offset="1" min="1" max="2045" />
+                </variable>
+                <variable item="Main IO Start Address" CV="9,10" mask="VVVVVVVV XXXXVVVV" default="0">
+                    <qualifier>
+                        <variableref>ServoMain</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <splitVal offset="1" min="1" max="4093" /> 
+                </variable>
+
+                <variable item="Aux IO Start Address" CV="15,16" mask="VVVVVVVV XXXXVVVV" default="4">
+                    <qualifier>
+                        <variableref>ServoAux</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <splitVal offset="1" min="1" max="4093" /> 
+                </variable>
+            </variables>
+            <variables>
                 <qualifier>
-                    <variableref>ServoAux</variableref>
-                    <relation>eq</relation>
-                    <value>0</value>
+                    <variableref>Version</variableref>
+                    <relation>ge</relation>
+                    <value>51</value>
                 </qualifier>
-                <splitVal offset="1" min="1" max="4096" /> 
-            </variable>
+                <variable item="SERVO Turnout Start Address" CV="33,34" mask="VVVVVVVV XXXXXVVV" default="0">
+                    <splitVal offset="1" min="1" max="2045" />
+                </variable>
+                <variable item="MAIN Turnout Start Address" CV="35,36" mask="VVVVVVVV XXXXXVVV" default="0">
+                    <qualifier>
+                        <variableref>ServoMain</variableref>
+                        <relation>ne</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <splitVal offset="1" min="1" max="2045" />
+                </variable>
+                <variable item="AUX Turnout Start Address" CV="37,38" mask="VVVVVVVV XXXXXVVV" default="0">
+                    <qualifier>
+                        <variableref>ServoAux</variableref>
+                        <relation>ne</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <splitVal offset="1" min="1" max="2045" />
+                </variable>
+                <variable item="EXP Turnout Start Address" CV="39,40" mask="VVVVVVVV XXXXXVVV" default="0">
+                    <qualifier>
+                        <variableref>ServoExp</variableref>
+                        <relation>ne</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <splitVal offset="1" min="1" max="2045" />
+                </variable>
+                <variable item="SERVO Lock Start Address" CV="41,42" mask="VVVVVVVV XXXXXVVV" default="100">
+                    <splitVal offset="1" min="1" max="2045" /> 
+                </variable>
+                <variable item="MAIN Lock Start Address" CV="43,44" mask="VVVVVVVV XXXXXVVV" default="100">
+                    <qualifier>
+                        <variableref>ServoMain</variableref>
+                        <relation>ne</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <splitVal offset="1" min="1" max="2045" /> 
+                </variable>
+                <variable item="AUX Lock Start Address" CV="45,46" mask="VVVVVVVV XXXXXVVV" default="100">
+                    <qualifier>
+                        <variableref>ServoAux</variableref>
+                        <relation>ne</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <splitVal offset="1" min="1" max="2045" /> 
+                </variable>
+                <variable item="EXP Lock Start Address" CV="47,48" mask="VVVVVVVV XXXXXVVV" default="100">
+                    <qualifier>
+                        <variableref>ServoExp</variableref>
+                        <relation>ne</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <splitVal offset="1" min="1" max="2045" /> 
+                </variable>
+                <variable item="MAIN Input Start Address" CV="51,52" mask="VVVVVVVV XXXXVVVV" default="0">
+                    <splitVal offset="1" min="1" max="4093" />
+                </variable>
+                <variable item="AUX Input Start Address" CV="53,54" mask="VVVVVVVV XXXXVVVV" default="0">
+                    <qualifier>
+                        <variableref>ServoAux</variableref>
+                        <relation>eq</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <splitVal offset="1" min="1" max="4093" />
+                </variable>
+                <variable item="DCC Input Sensor Address" CV="57,58" mask="VVVVVVVV XXXXVVVV" default="0">
+                    <qualifier>
+                        <variableref>Report DCC Change</variableref>
+                        <relation>ne</relation>
+                        <value>0</value>
+                    </qualifier>
+                    <splitVal offset="1" min="1" max="4093" />
+                </variable>
+            </variables>
             
             <variable item="One Choice Enum" CV="1" mask="XXXXXXXX">
                 <enumVal>
@@ -292,16 +403,57 @@
                     <display item="Main IO Start Address" tooltip="Address of first Main IO input: 1-4093.">
                         <label>Main IO Start Address</label>
                     </display>
-               <display item="Aux IO Start Address" tooltip="Address of first Aux IO input: 1-4093.">
-                  <label>Aux IO Start Address</label>
-               </display>
-                    <label label=" "/>
-                    <label label=" "/>
-                    <display item="Route Delay" tooltip="time delay for Delayed Route entries.">
-                        <label>Route Delay</label>
+                    <display item="Aux IO Start Address" tooltip="Address of first Aux IO input: 1-4093.">
+                        <label>Aux IO Start Address</label>
+                    </display>
+                    <display item="SERVO Turnout Start Address" tooltip="Address of first turnout on the SERVO port: 1-2045. Recommend not using 1017-1020 for any turnout.">
+                        <label>SERVO Turnout Start Address</label>
+                    </display>
+                    <display item="MAIN Turnout Start Address" tooltip="Address of first turnout on the MAIN port: 1-2045. Recommend not using 1017-1020 for any turnout.">
+                        <label>MAIN Turnout Start Address</label>
+                    </display>
+                    <display item="AUX Turnout Start Address" tooltip="Address of first turnout on the AUX port: 1-2045. Recommend not using 1017-1020 for any turnout.">
+                        <label>AUX Turnout Start Address</label>
+                    </display>
+                    <display item="EXP Turnout Start Address" tooltip="Address of first turnout on the EXP port: 1-2045. Recommend not using 1017-1020 for any turnout.">
+                        <label>EXP Turnout Start Address</label>
+                    </display>
+                    <label label="  "/>
+                    <display item="SERVO Lock Start Address" tooltip="Address of first lock on the SERVO port: 1-2045. Recommend not using 1017-1020 for any lock.">
+                        <label>SERVO Lock Start Address</label>
+                    </display>
+                    <display item="MAIN Lock Start Address" tooltip="Address of first lock on the MAIN port: 1-2045. Recommend not using 1017-1020 for any lock.">
+                        <label>MAIN Lock Start Address</label>
+                    </display>
+                    <display item="AUX Lock Start Address" tooltip="Address of first lock on the AUX port: 1-2045. Recommend not using 1017-1020 for any lock.">
+                        <label>AUX Lock Start Address</label>
+                    </display>
+                    <display item="EXP Lock Start Address" tooltip="Address of first lock on the EXP port: 1-2045. Recommend not using 1017-1020 for any lock.">
+                        <label>EXP Lock Start Address</label>
+                    </display>
+                    <display item="SERVO Lock Address" tooltip="Address of the lock on the SERVO port: 1-2045. Recommend not using 1017-1020 for any lock.">
+                        <label>SERVO Lock Address</label>
+                    </display>
+                    <display item="MAIN Lock Address" tooltip="Address of the lock on the MAIN port: 1-2045. Recommend not using 1017-1020 for any lock.">
+                        <label>MAIN Lock Address</label>
+                    </display>
+                    <display item="AUX Lock Address" tooltip="Address of the lock on the AUX port: 1-2045. Recommend not using 1017-1020 for any lock.">
+                        <label>AUX Lock Address</label>
+                    </display>
+                    <display item="EXP Lock Address" tooltip="Address of the lock on the EXP port: 1-2045. Recommend not using 1017-1020 for any lock.">
+                        <label>EXP Lock Address</label>
                     </display>
                     <label label=" "/>
+                    <display item="MAIN Input Start Address" tooltip="Address of first input on the MAIN port: 1-4093.">
+                        <label>MAIN Input Start Address</label>
+                    </display>
+                    <display item="AUX Input Start Address" tooltip="Address of first input on the AUX port: 1-4093.">
+                        <label>AUX Input Start Address</label>
+                    </display>
                     <label label=" "/>
+                    <display item="DCC Input Sensor Address" tooltip="Address of DCC input: 1-4093.">
+                        <label>DCC Input Address</label>
+                    </display>
                 </column>
                 <column>
                     <label label="           "/>
@@ -320,6 +472,13 @@
                         <display item="IO Mode" format="radiobuttons" tooltip="Specify use of Aux and Main IO Port">
                             <label>Mode</label>
                         </display>
+                        <label label=" "/>
+                        <label label=" "/>
+                        <label label=" "/>
+                        <display item="Route Delay" tooltip="time delay for Delayed Route entries.">
+                            <label>Route Delay</label>
+                        </display>
+                        <label label=" "/>
                         <label label=" "/>
                     </column>
                 <column>
@@ -353,9 +512,6 @@
                     <display item="Lock Indicator" format="checkbox" tooltip="LED blink indicates Unlock state rather than Lock state">
                         <label>Blink indicates Unlock</label>
                     </display>
-                    <display item="Lock Scope" format="checkbox" tooltip="Disable LocoNet turnout command when Locked">
-                        <label>Lock Disables LocoNet Control</label>
-                    </display>
                     <display item="Local Actions" format="checkbox" tooltip="Provide visibililty on Loconet for local actions">
                         <label>Broadcast Local Actions</label>
                     </display>
@@ -370,6 +526,15 @@
                     </display>
                     <display item="Repower Servo" format="checkbox" tooltip="Only repower a servo when a command is received that changes the position">
                         <label>Only Repower Servo On Change</label>
+                    </display>
+                    <display item="Lock Scope" format="checkbox" tooltip="Disable LocoNet turnout command when Locked">
+                        <label>Lock Disables LocoNet Control</label>
+                    </display>
+                    <display item="Lock Span" format="checkbox" tooltip="One Lock per Port instead of one per turnout">
+                        <label>One Lock Per Port</label>
+                    </display>
+                    <display item="Report DCC Change" format="checkbox" tooltip="Send Sensor Report when DCC Power goes on or off">
+                        <label>Report DCC Change</label>
                     </display>
                     <label label=" "/>
                 </column>
@@ -465,7 +630,7 @@
                     </group>
                     <label label=" "/>
                     <label>
-                        <text>Decoder Template File Version: 3.02.3</text>
+                        <text>Decoder Template File Version: 3.03.1</text>
                     </label>
                     <label>
                         <text>Decoder Transform File Version: x.xx.x</text>
