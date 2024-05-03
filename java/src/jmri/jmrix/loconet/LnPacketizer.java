@@ -181,6 +181,13 @@ public class LnPacketizer extends LnTrafficController {
     protected byte readByteProtected(DataInputStream istream) throws java.io.IOException {
         while (true) { // loop will repeat until character found
             int nchars;
+            // The istream should be configured so that the following
+            // read(..) call only blocks for a short time, e.g. 100msec, if no
+            // data is available.  It's OK if it 
+            // throws e.g. java.io.InterruptedIOException
+            // in that case, as the calling loop should just go around
+            // and request input again.  This semi-blocking behavior will
+            // let the terminateThreads() method end this thread cleanly.
             nchars = istream.read(rcvBuffer, 0, 1);
             if (nchars > 0) {
                 return rcvBuffer[0];
@@ -308,18 +315,22 @@ public class LnPacketizer extends LnTrafficController {
                 } catch (LocoNetMessageException e) {
                     // just let it ride for now
                     log.warn("run: unexpected LocoNetMessageException", e); // NOI18N
-                } catch (java.io.EOFException | com.fazecast.jSerialComm.SerialPortTimeoutException e) {
+                    continue;
+                } catch (java.io.EOFException | java.io.InterruptedIOException e) {
                     // posted from idle port when enableReceiveTimeout used
+                    // Normal condition, go around the loop again
+                    continue;
                 } catch (java.io.IOException e) {
                     // fired when write-end of HexFile reaches end
                     log.debug("IOException, should only happen with HexFile", e); // NOI18N
                     log.info("End of file"); // NOI18N
                     disconnectPort(controller);
                     return;
-                } // normally, we don't catch RuntimeException, but in this
-                  // permanently running loop it seems wise.
-                catch (RuntimeException e) {
+                } catch (RuntimeException e) {
+                    // normally, we don't catch RuntimeException, but in this
+                    // permanently running loop it seems wise.
                     log.warn("run: unexpected Exception", e); // NOI18N
+                    continue;
                 }
             } // end of permanent loop
         }
@@ -440,7 +451,7 @@ public class LnPacketizer extends LnTrafficController {
         if (rcvHandler == null) {
             rcvHandler = new RcvHandler(this);
         }
-        rcvThread = new Thread(rcvHandler, "LocoNet receive handler"); // NOI18N
+        rcvThread = jmri.util.ThreadingUtil.newThread(rcvHandler, "LocoNet receive handler"); // NOI18N
         rcvThread.setDaemon(true);
         rcvThread.setPriority(Thread.MAX_PRIORITY);
         rcvThread.start();
@@ -452,7 +463,7 @@ public class LnPacketizer extends LnTrafficController {
         int xmtpriority = (Thread.MAX_PRIORITY - 1 > priority ? Thread.MAX_PRIORITY - 1 : Thread.MAX_PRIORITY);
         // start the XmtHandler in a thread of its own
         if (xmtThread == null) {
-            xmtThread = new Thread(xmtHandler, "LocoNet transmit handler"); // NOI18N
+            xmtThread = jmri.util.ThreadingUtil.newThread(xmtHandler, "LocoNet transmit handler"); // NOI18N
         }
         log.debug("Xmt thread starts at priority {}", xmtpriority); // NOI18N
         xmtThread.setDaemon(true);
@@ -468,19 +479,23 @@ public class LnPacketizer extends LnTrafficController {
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("deprecation") // Thread.stop()
+    // The join(150) is using a timeout because some receive threads
+    // (and maybe some day transmit threads) use calls that block 
+    // even when interrupted.  We wait 150 msec and proceed.
+    // Threads that do that are responsible for ending cleanly 
+    // when the blocked call eventually returns.
     @Override
     public void dispose() {
         if (xmtThread != null) {
             xmtThread.interrupt();
             try {
-                xmtThread.join();
+                xmtThread.join(150);
             } catch (InterruptedException e) { log.warn("unexpected InterruptedException", e);}
         }
         if (rcvThread != null) {
             rcvThread.interrupt();
             try {
-                rcvThread.join();
+                rcvThread.join(150);
             } catch (InterruptedException e) { log.warn("unexpected InterruptedException", e);}
         }
         super.dispose();
@@ -491,12 +506,17 @@ public class LnPacketizer extends LnTrafficController {
      * <p>
      * This is intended to be used only by testing subclasses.
      */
+    // The join(150) is using a timeout because some receive threads
+    // (and maybe some day transmit threads) use calls that block 
+    // even when interrupted.  We wait 150 msec and proceed.
+    // Threads that do that are responsible for ending cleanly 
+    // when the blocked call eventually returns.
     public void terminateThreads() {
         threadStopRequest = true;
         if (xmtThread != null) {
             xmtThread.interrupt();
             try {
-                xmtThread.join();
+                xmtThread.join(150);
             } catch (InterruptedException ie){
                 // interrupted during cleanup.
             }
@@ -505,7 +525,7 @@ public class LnPacketizer extends LnTrafficController {
         if (rcvThread != null) {
             rcvThread.interrupt();
             try {
-                rcvThread.join();
+                rcvThread.join(150);
             } catch (InterruptedException ie){
                 // interrupted during cleanup.
             }

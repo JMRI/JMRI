@@ -101,7 +101,7 @@ public class LnHexFilePort extends LnPortController implements Runnable {
                 // until we are interrupted
                 try {
                     synchronized (this) {
-                        wait(1000);
+                        wait(100);
                     }
                 } catch (InterruptedException e) {
                     log.info("LnHexFilePort.run: woken from sleep"); // NOI18N

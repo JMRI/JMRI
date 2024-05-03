@@ -87,6 +87,8 @@
         <h4>LocoNet</h4>
             <ul>
                 <li>DCS240+ has transponding built it, so that option is treated as selected.</li>
+                <li>Improved how threads are shutdown when changing connections
+                    in the settings.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -436,6 +438,11 @@
               floor() rounds down.</li>
           <li>The constant <strong>oblocks</strong> has been added to
               the Layout module.</li>
+          <li>Two new preferences have been added. <strong>Log all before</strong>
+              and <strong>Log all after</strong>. If these are selected,
+              LogixNG will log every action that's executed and every
+              expression that's evaluated. For this to work, the LogixNG
+              debugger must be installed (which it is by default).</li>
           <li></li>
         </ul>
 

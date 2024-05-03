@@ -126,13 +126,13 @@ public class OptionPanel extends OperationsPreferencesPanel {
 
         addItem(pOpt, buildNormal, 1, 0);
         addItem(pOpt, buildAggressive, 2, 0);
-        addItem(pBuild, pOpt, 1, 0);
+        pBuild.add(pOpt);
 
         JPanel pPasses = new JPanel();
         pPasses.setLayout(new GridBagLayout());
         pPasses.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutNumberPasses")));
         addItem(pPasses, numberPassesComboBox, 0, 0);
-        addItem(pBuild, pPasses, 1, 1);
+        pBuild.add(pPasses);
 
         // Switcher Service
         JPanel pSwitcher = new JPanel();
@@ -142,7 +142,6 @@ public class OptionPanel extends OperationsPreferencesPanel {
         addItemLeft(pSwitcher, localInterchangeCheckBox, 1, 1);
         addItemLeft(pSwitcher, localSpurCheckBox, 1, 2);
         addItemLeft(pSwitcher, localYardCheckBox, 1, 3);
-        addItemLeft(pBuild, pSwitcher, 1, 2);
 
         // Staging
         JPanel pStaging = new JPanel();
@@ -155,7 +154,6 @@ public class OptionPanel extends OperationsPreferencesPanel {
         addItemLeft(pStaging, promptFromTrackStagingCheckBox, 1, 7);
         addItemLeft(pStaging, promptToTrackStagingCheckBox, 1, 8);
         addItemLeft(pStaging, tryNormalStagingCheckBox, 1, 9);
-        addItemLeft(pBuild, pStaging, 1, 3);
 
         // Router panel
         JPanel pRouter = new JPanel();
@@ -199,6 +197,8 @@ public class OptionPanel extends OperationsPreferencesPanel {
         addItem(pControl, saveButton, 3, 9);
 
         panel.add(pBuild);
+        panel.add(pSwitcher);
+        panel.add(pStaging);
         panel.add(pRouter);
         panel.add(pLogger);
         panel.add(pCustom);

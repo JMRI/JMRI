@@ -5,12 +5,14 @@ import java.io.*;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.*;
+import jmri.jmrit.operations.locations.divisions.Division;
+import jmri.jmrit.operations.locations.divisions.DivisionManager;
 import jmri.jmrit.operations.rollingstock.ImportRollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.jmrit.operations.trains.*;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
@@ -19,7 +21,7 @@ import jmri.util.swing.JmriJOptionPane;
  * Owner Built Location - Track. If a CSV file, the import will accept these
  * additional fields: Load Kernel Moves Value Comment Miscellaneous Extensions
  *
- * @author Dan Boudreau Copyright (C) 2008 2010 2011, 2013, 2016, 2021
+ * @author Dan Boudreau Copyright (C) 2008 2010 2011, 2013, 2016, 2021, 2024
  */
 public class ImportCars extends ImportRollingStock {
 
@@ -42,6 +44,7 @@ public class ImportCars extends ImportRollingStock {
     private boolean autoForceCar = false;
 
     private final boolean autoCreateRoads = true;
+    private final boolean autoCreateLoads = true;
     private final boolean autoCreateLengths = true;
     private final boolean autoCreateColors = true;
     private final boolean autoCreateOwners = true;
@@ -67,7 +70,30 @@ public class ImportCars extends ImportRollingStock {
     private static final int CAR_COMMENT = 15;
     private static final int CAR_MISCELLANEOUS = 16;
     private static final int CAR_EXTENSIONS = 17;
-    private static final int CAR_RFID_TAG = 37;
+
+    //    private static final int CAR_WAIT = 18;
+    //    private static final int CAR_PICKUP_SCH = 19;
+    //    private static final int CAR_LAST = 20;
+
+    private static final int CAR_RWE_DESTINATION = 21;
+    private static final int CAR_RWE_TRACK = 23;
+    private static final int CAR_RWE_LOAD = 24;
+
+    private static final int CAR_RWL_DESTINATION = 25;
+    private static final int CAR_RWL_TRACK = 27;
+    private static final int CAR_RWL_LOAD = 28;
+
+    private static final int CAR_DIVISION = 29;
+    private static final int CAR_TRAIN = 30;
+
+    private static final int CAR_DESTINATION = 31;
+    private static final int CAR_DEST_TRACK = 33;
+
+    private static final int CAR_FINAL_DESTINATION = 34;
+    private static final int CAR_FINAL_TRACK = 36;
+    private static final int CAR_SCH_ID = 37;
+
+    private static final int CAR_RFID_TAG = 38;
 
     // we use a thread so the status frame will work!
     @Override
@@ -194,28 +220,28 @@ public class ImportCars extends ImportRollingStock {
 
                 if (carNumber.isEmpty()) {
                     log.info("Import line {} missing car number", lineNum);
-                    JmriJOptionPane.showMessageDialog(null, 
+                    JmriJOptionPane.showMessageDialog(null,
                             Bundle.getMessage("RoadNumberNotSpecified", lineNum),
                             Bundle.getMessage("RoadNumberMissing"), JmriJOptionPane.ERROR_MESSAGE);
                     break;
                 }
                 if (carRoad.isEmpty()) {
                     log.info("Import line {} missing car road", lineNum);
-                    JmriJOptionPane.showMessageDialog(null, 
+                    JmriJOptionPane.showMessageDialog(null,
                             Bundle.getMessage("RoadNameNotSpecified", lineNum),
                             Bundle.getMessage("RoadNameMissing"), JmriJOptionPane.ERROR_MESSAGE);
                     break;
                 }
                 if (carType.isEmpty()) {
                     log.info("Import line {} missing car type", lineNum);
-                    JmriJOptionPane.showMessageDialog(null, 
+                    JmriJOptionPane.showMessageDialog(null,
                             Bundle.getMessage("CarTypeNotSpecified", carRoad, carNumber, lineNum),
                             Bundle.getMessage("CarTypeMissing"), JmriJOptionPane.ERROR_MESSAGE);
                     break;
                 }
                 if (carLength.isEmpty()) {
                     log.info("Import line {} missing car length", lineNum);
-                    JmriJOptionPane.showMessageDialog(null, 
+                    JmriJOptionPane.showMessageDialog(null,
                             Bundle.getMessage("CarLengthNotSpecified", carRoad, carNumber, lineNum),
                             Bundle.getMessage("CarLengthMissing"), JmriJOptionPane.ERROR_MESSAGE);
                     break;
@@ -228,7 +254,7 @@ public class ImportCars extends ImportRollingStock {
                             JmriJOptionPane.ERROR_MESSAGE);
                     break;
                 }
-                if (carRoad.length() > Control.max_len_string_attibute) {
+                if (TrainCommon.splitString(carRoad).length() > Control.max_len_string_attibute) {
                     JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("CarRoadNameTooLong",
                             carRoad, carNumber, carRoad),
                             Bundle.getMessage("carAttribute",
@@ -320,152 +346,180 @@ public class ImportCars extends ImportRollingStock {
                 Car existingCar = carManager.getByRoadAndNumber(carRoad, carNumber);
                 if (existingCar != null) {
                     log.info("Can not add, car number ({}) road ({}) already exists!", carNumber, carRoad); // NOI18N
-                } else {
-                    if (inputLine.length > base + CAR_OWNER) {
-                        carOwner = inputLine[base + CAR_OWNER].trim();
-                        if (carOwner.length() > Control.max_len_string_attibute) {
-                            JmriJOptionPane.showMessageDialog(null, Bundle
-                                    .getMessage("CarOwnerNameTooLong",
-                                    carRoad, carNumber, carOwner),
-                                    Bundle.getMessage("carAttribute",
-                                            Control.max_len_string_attibute),
-                                    JmriJOptionPane.ERROR_MESSAGE);
-                            break;
-                        }
-                    }
-                    if (inputLine.length > base + CAR_BUILT) {
-                        carBuilt = inputLine[base + CAR_BUILT].trim();
-                        if (carBuilt.length() > Control.max_len_string_built_name) {
-                            JmriJOptionPane.showMessageDialog(
-                                    null, Bundle.getMessage("CarBuiltNameTooLong",
-                                            carRoad, carNumber, carBuilt),
-                                    Bundle.getMessage("carAttribute",
-                                            Control.max_len_string_built_name),
-                                    JmriJOptionPane.ERROR_MESSAGE);
-                            break;
-                        }
-                    }
-                    if (inputLine.length > base + CAR_LOCATION) {
-                        carLocationName = inputLine[base + CAR_LOCATION].trim();
-                    }
-                    if (comma && inputLine.length > base + CAR_TRACK) {
-                        carTrackName = inputLine[base + CAR_TRACK].trim();
-                    }
-                    // Location and track name can be one or more words in a
-                    // space delimited file
-                    if (!comma) {
-                        int j = 0;
-                        StringBuffer name = new StringBuffer(carLocationName);
-                        for (int i = base + CAR_LOCATION_TRACK_SEPARATOR; i < inputLine.length; i++) {
-                            if (inputLine[i].equals(LOCATION_TRACK_SEPARATOR)) {
-                                j = i + 1;
-                                break;
-                            } else {
-                                name.append(" " + inputLine[i]);
-                            }
-                        }
-                        carLocationName = name.toString();
-                        log.debug("Car ({} {}) has location ({})", carRoad, carNumber, carLocationName);
-                        // now get the track name
-                        name = new StringBuffer();
-                        if (j != 0 && j < inputLine.length) {
-                            name.append(inputLine[j]);
-                            for (int i = j + 1; i < inputLine.length; i++) {
-                                name.append(" " + inputLine[i]);
-                            }
-                            log.debug("Car ({} {}) has track ({})", carRoad, carNumber, carTrackName);
-                        }
-                        carTrackName = name.toString();
-                    }
-
-                    // is there a load name?
-                    if (comma && inputLine.length > base + CAR_LOAD) {
-                        if (!inputLine[CAR_LOAD].isBlank()) {
-                            carLoadName = inputLine[CAR_LOAD].trim();
-                            log.debug("Car ({} {}) has load ({})", carRoad, carNumber, carLoadName);
-                        }
-                    }
-                    // is there a kernel name?
-                    if (comma && inputLine.length > base + CAR_KERNEL) {
-                        carKernelName = inputLine[CAR_KERNEL].trim();
-                        log.debug("Car ({} {}) has kernel name ({})", carRoad, carNumber, carKernelName);
-                    }
-                    // is there a move count?
-                    if (comma && inputLine.length > base + CAR_MOVES) {
-                        if (!inputLine[CAR_MOVES].trim().isEmpty()) {
-                            try {
-                                carMoves = Integer.parseInt(inputLine[CAR_MOVES].trim());
-                                log.debug("Car ({} {}) has move count ({})", carRoad, carNumber, carMoves);
-                            } catch (NumberFormatException e) {
-                                log.error("Car ({} {}) has move count ({}) not a number", carRoad, carNumber, carMoves);
-                            }
-                        }
-                    }
-                    // is there a car value?
-                    if (comma && inputLine.length > base + CAR_VALUE) {
-                        carValue = inputLine[CAR_VALUE].trim();
-                    }
-                    // is there a car comment?
-                    if (comma && inputLine.length > base + CAR_COMMENT) {
-                        carComment = inputLine[CAR_COMMENT];
-                    }
-
-                    if (carLocationName.length() > Control.max_len_string_location_name) {
-                        JmriJOptionPane.showMessageDialog(
-                                null, Bundle.getMessage("CarLocationNameTooLong",
-                                        carRoad, carNumber, carLocationName),
-                                Bundle.getMessage("carAttribute",
-                                        Control.max_len_string_location_name),
-                                JmriJOptionPane.ERROR_MESSAGE);
-                        break;
-                    }
-                    if (carTrackName.length() > Control.max_len_string_track_name) {
+                    continue;
+                }
+                if (inputLine.length > base + CAR_OWNER) {
+                    carOwner = inputLine[base + CAR_OWNER].trim();
+                    if (carOwner.length() > Control.max_len_string_attibute) {
                         JmriJOptionPane.showMessageDialog(null, Bundle
-                                .getMessage("CarTrackNameTooLong",
-                                carRoad, carNumber, carTrackName),
+                                .getMessage("CarOwnerNameTooLong",
+                                        carRoad, carNumber, carOwner),
                                 Bundle.getMessage("carAttribute",
-                                        Control.max_len_string_track_name),
+                                        Control.max_len_string_attibute),
                                 JmriJOptionPane.ERROR_MESSAGE);
                         break;
                     }
-                    Location location =
-                            InstanceManager.getDefault(LocationManager.class).getLocationByName(carLocationName);
-                    Track track = null;
-                    if (location == null && !carLocationName.isEmpty()) {
-                        if (autoCreateLocations) {
-                            log.debug("Create location ({})", carLocationName);
-                            location = InstanceManager.getDefault(LocationManager.class).newLocation(carLocationName);
+                }
+                if (inputLine.length > base + CAR_BUILT) {
+                    carBuilt = inputLine[base + CAR_BUILT].trim();
+                    if (carBuilt.length() > Control.max_len_string_built_name) {
+                        JmriJOptionPane.showMessageDialog(
+                                null, Bundle.getMessage("CarBuiltNameTooLong",
+                                        carRoad, carNumber, carBuilt),
+                                Bundle.getMessage("carAttribute",
+                                        Control.max_len_string_built_name),
+                                JmriJOptionPane.ERROR_MESSAGE);
+                        break;
+                    }
+                }
+                if (inputLine.length > base + CAR_LOCATION) {
+                    carLocationName = inputLine[base + CAR_LOCATION].trim();
+                }
+                if (comma && inputLine.length > base + CAR_TRACK) {
+                    carTrackName = inputLine[base + CAR_TRACK].trim();
+                }
+                // Location and track name can be one or more words in a
+                // space delimited file
+                if (!comma) {
+                    int j = 0;
+                    StringBuffer name = new StringBuffer(carLocationName);
+                    for (int i = base + CAR_LOCATION_TRACK_SEPARATOR; i < inputLine.length; i++) {
+                        if (inputLine[i].equals(LOCATION_TRACK_SEPARATOR)) {
+                            j = i + 1;
+                            break;
                         } else {
-                            JmriJOptionPane.showMessageDialog(null, Bundle
-                                    .getMessage("CarLocationDoesNotExist",
-                                    carRoad, carNumber, carLocationName),
-                                    Bundle.getMessage("carLocation"), JmriJOptionPane.ERROR_MESSAGE);
-                            int results = JmriJOptionPane.showConfirmDialog(null, Bundle
-                                    .getMessage("DoYouWantToCreateLoc", carLocationName), Bundle
-                                            .getMessage("carLocation"),
-                                    JmriJOptionPane.YES_NO_OPTION);
-                            if (results == JmriJOptionPane.YES_OPTION) {
-                                log.debug("Create location ({})", carLocationName);
-                                location =
-                                        InstanceManager.getDefault(LocationManager.class).newLocation(carLocationName);
-                                if (askAutoCreateLocations) {
-                                    results = JmriJOptionPane.showConfirmDialog(null, Bundle
-                                            .getMessage("DoYouWantToAutoCreateLoc"),
-                                            Bundle.getMessage("OnlyAskedOnce"), JmriJOptionPane.YES_NO_OPTION);
-                                    if (results == JmriJOptionPane.YES_OPTION) {
-                                        autoCreateLocations = true;
-                                    }
-                                }
-                                askAutoCreateLocations = false;
-                            } else {
-                                break;
-                            }
+                            name.append(" " + inputLine[i]);
                         }
                     }
-                    if (location != null && !carTrackName.isEmpty()) {
-                        track = location.getTrackByName(carTrackName, null);
-                        if (track == null) {
-                            if (autoCreateTracks) {
+                    carLocationName = name.toString();
+                    log.debug("Car ({} {}) has location ({})", carRoad, carNumber, carLocationName);
+                    // now get the track name
+                    name = new StringBuffer();
+                    if (j != 0 && j < inputLine.length) {
+                        name.append(inputLine[j]);
+                        for (int i = j + 1; i < inputLine.length; i++) {
+                            name.append(" " + inputLine[i]);
+                        }
+                        log.debug("Car ({} {}) has track ({})", carRoad, carNumber, carTrackName);
+                    }
+                    carTrackName = name.toString();
+                }
+
+                // is there a load name?
+                if (comma && inputLine.length > CAR_LOAD) {
+                    if (!inputLine[CAR_LOAD].isBlank()) {
+                        carLoadName = inputLine[CAR_LOAD].trim();
+                        log.debug("Car ({} {}) has load ({})", carRoad, carNumber, carLoadName);
+                    }
+                    if (carLoadName.length() > Control.max_len_string_attibute) {
+                        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("CarLoadNameTooLong",
+                                carRoad, carNumber, carLoadName),
+                                Bundle.getMessage("carAttribute",
+                                        Control.max_len_string_attibute),
+                                JmriJOptionPane.ERROR_MESSAGE);
+                        break;
+                    }
+                }
+                // is there a kernel name?
+                if (comma && inputLine.length > CAR_KERNEL) {
+                    carKernelName = inputLine[CAR_KERNEL].trim();
+                    log.debug("Car ({} {}) has kernel name ({})", carRoad, carNumber, carKernelName);
+                }
+                // is there a move count?
+                if (comma && inputLine.length > CAR_MOVES) {
+                    if (!inputLine[CAR_MOVES].trim().isEmpty()) {
+                        try {
+                            carMoves = Integer.parseInt(inputLine[CAR_MOVES].trim());
+                            log.debug("Car ({} {}) has move count ({})", carRoad, carNumber, carMoves);
+                        } catch (NumberFormatException e) {
+                            log.error("Car ({} {}) has move count ({}) not a number", carRoad, carNumber, carMoves);
+                        }
+                    }
+                }
+                // is there a car value?
+                if (comma && inputLine.length > CAR_VALUE) {
+                    carValue = inputLine[CAR_VALUE].trim();
+                }
+                // is there a car comment?
+                if (comma && inputLine.length > CAR_COMMENT) {
+                    carComment = inputLine[CAR_COMMENT];
+                }
+
+                if (TrainCommon.splitString(carLocationName).length() > Control.max_len_string_location_name) {
+                    JmriJOptionPane.showMessageDialog(
+                            null, Bundle.getMessage("CarLocationNameTooLong",
+                                    carRoad, carNumber, carLocationName),
+                            Bundle.getMessage("carAttribute",
+                                    Control.max_len_string_location_name),
+                            JmriJOptionPane.ERROR_MESSAGE);
+                    break;
+                }
+                if (TrainCommon.splitString(carTrackName).length() > Control.max_len_string_track_name) {
+                    JmriJOptionPane.showMessageDialog(null, Bundle
+                            .getMessage("CarTrackNameTooLong",
+                                    carRoad, carNumber, carTrackName),
+                            Bundle.getMessage("carAttribute",
+                                    Control.max_len_string_track_name),
+                            JmriJOptionPane.ERROR_MESSAGE);
+                    break;
+                }
+                Location location =
+                        InstanceManager.getDefault(LocationManager.class).getLocationByName(carLocationName);
+                Track track = null;
+                if (location == null && !carLocationName.isEmpty()) {
+                    if (autoCreateLocations) {
+                        log.debug("Create location ({})", carLocationName);
+                        location = InstanceManager.getDefault(LocationManager.class).newLocation(carLocationName);
+                    } else {
+                        JmriJOptionPane.showMessageDialog(null, Bundle
+                                .getMessage("CarLocationDoesNotExist",
+                                        carRoad, carNumber, carLocationName),
+                                Bundle.getMessage("carLocation"), JmriJOptionPane.ERROR_MESSAGE);
+                        int results = JmriJOptionPane.showConfirmDialog(null, Bundle
+                                .getMessage("DoYouWantToCreateLoc", carLocationName),
+                                Bundle
+                                        .getMessage("carLocation"),
+                                JmriJOptionPane.YES_NO_OPTION);
+                        if (results == JmriJOptionPane.YES_OPTION) {
+                            log.debug("Create location ({})", carLocationName);
+                            location =
+                                    InstanceManager.getDefault(LocationManager.class).newLocation(carLocationName);
+                            if (askAutoCreateLocations) {
+                                results = JmriJOptionPane.showConfirmDialog(null, Bundle
+                                        .getMessage("DoYouWantToAutoCreateLoc"),
+                                        Bundle.getMessage("OnlyAskedOnce"), JmriJOptionPane.YES_NO_OPTION);
+                                if (results == JmriJOptionPane.YES_OPTION) {
+                                    autoCreateLocations = true;
+                                }
+                            }
+                            askAutoCreateLocations = false;
+                        } else {
+                            break;
+                        }
+                    }
+                }
+                if (location != null && !carTrackName.isEmpty()) {
+                    track = location.getTrackByName(carTrackName, null);
+                    if (track == null) {
+                        if (autoCreateTracks) {
+                            if (!location.isStaging()) {
+                                log.debug("Create 1000 foot yard track ({})", carTrackName);
+                                track = location.addTrack(carTrackName, Track.YARD);
+                            } else {
+                                log.debug("Create 1000 foot staging track ({})", carTrackName);
+                                track = location.addTrack(carTrackName, Track.STAGING);
+                            }
+                            track.setLength(1000);
+                        } else {
+                            JmriJOptionPane.showMessageDialog(
+                                    null, Bundle.getMessage("CarTrackDoesNotExist",
+                                            carRoad, carNumber, carTrackName, carLocationName),
+                                    Bundle.getMessage("carTrack"), JmriJOptionPane.ERROR_MESSAGE);
+                            int results = JmriJOptionPane.showConfirmDialog(null,
+                                    Bundle.getMessage("DoYouWantToCreateTrack",
+                                            carTrackName, carLocationName),
+                                    Bundle.getMessage("carTrack"), JmriJOptionPane.YES_NO_OPTION);
+                            if (results == JmriJOptionPane.YES_OPTION) {
                                 if (!location.isStaging()) {
                                     log.debug("Create 1000 foot yard track ({})", carTrackName);
                                     track = location.addTrack(carTrackName, Track.YARD);
@@ -474,33 +528,332 @@ public class ImportCars extends ImportRollingStock {
                                     track = location.addTrack(carTrackName, Track.STAGING);
                                 }
                                 track.setLength(1000);
+                                if (askAutoCreateTracks) {
+                                    results = JmriJOptionPane.showConfirmDialog(null,
+                                            Bundle.getMessage("DoYouWantToAutoCreateTrack"),
+                                            Bundle.getMessage("OnlyAskedOnce"),
+                                            JmriJOptionPane.YES_NO_OPTION);
+                                    if (results == JmriJOptionPane.YES_OPTION) {
+                                        autoCreateTracks = true;
+                                    }
+                                    askAutoCreateTracks = false;
+                                }
+                            } else {
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                log.debug("Add car ({} {}) owner ({}) built ({}) location ({}, {})", carRoad, carNumber, carOwner,
+                        carBuilt, carLocationName, carTrackName);
+                Car car = carManager.newRS(carRoad, carNumber);
+                car.setTypeName(carType);
+                car.setLength(carLength);
+                car.setWeight(carWeight);
+                car.setColor(carColor);
+                car.setOwnerName(carOwner);
+                car.setBuilt(carBuilt);
+                car.setLoadName(carLoadName);
+                car.setKernel(InstanceManager.getDefault(KernelManager.class).newKernel(carKernelName));
+                car.setMoves(carMoves);
+                car.setValue(carValue);
+                car.setComment(carComment);
+                carsAdded++;
+
+                // if the car's type name is "Caboose" then make it a
+                // caboose
+                car.setCaboose(carType.equals("Caboose"));
+
+                // Out of Service?
+                if (comma && inputLine.length > CAR_MISCELLANEOUS) {
+                    car.setOutOfService(inputLine[CAR_MISCELLANEOUS].equals(Bundle.getMessage("OutOfService")));
+                }
+
+                // determine if there are any car extensions
+                if (comma && inputLine.length > CAR_EXTENSIONS) {
+                    String extensions = inputLine[CAR_EXTENSIONS];
+                    log.debug("Car ({}) has extension ({})", car.toString(), extensions);
+                    String[] ext = extensions.split(Car.EXTENSION_REGEX);
+                    for (int i = 0; i < ext.length; i++) {
+                        if (ext[i].equals(Car.CABOOSE_EXTENSION)) {
+                            car.setCaboose(true);
+                        }
+                        if (ext[i].equals(Car.FRED_EXTENSION)) {
+                            car.setFred(true);
+                        }
+                        if (ext[i].equals(Car.PASSENGER_EXTENSION)) {
+                            car.setPassenger(true);
+                            car.setBlocking(Integer.parseInt(ext[i + 1]));
+                        }
+                        if (ext[i].equals(Car.UTILITY_EXTENSION)) {
+                            car.setUtility(true);
+                        }
+                        if (ext[i].equals(Car.HAZARDOUS_EXTENSION)) {
+                            car.setCarHazardous(true);
+                        }
+                    }
+                }
+
+                // TODO car wait, pick up schedule, last moved
+
+                // Return When Empty
+                if (comma && inputLine.length > CAR_RWE_DESTINATION) {
+                    Location rweDestination =
+                            InstanceManager.getDefault(LocationManager.class)
+                                    .getLocationByName(inputLine[CAR_RWE_DESTINATION]);
+
+                    car.setReturnWhenEmptyDestination(rweDestination);
+                    if (rweDestination != null && inputLine.length > CAR_RWE_TRACK) {
+                        Track rweTrack = rweDestination.getTrackByName(inputLine[CAR_RWE_TRACK], null);
+                        car.setReturnWhenEmptyDestTrack(rweTrack);
+                    }
+                }
+                if (comma && inputLine.length > CAR_RWE_LOAD && !inputLine[CAR_RWE_LOAD].isBlank()) {
+                    car.setReturnWhenEmptyLoadName(inputLine[CAR_RWE_LOAD].trim());
+                }
+
+                // Return When Loaded
+                if (comma && inputLine.length > CAR_RWL_DESTINATION) {
+                    Location rwlDestination =
+                            InstanceManager.getDefault(LocationManager.class)
+                                    .getLocationByName(inputLine[CAR_RWL_DESTINATION]);
+
+                    car.setReturnWhenLoadedDestination(rwlDestination);
+                    if (rwlDestination != null && inputLine.length > CAR_RWL_TRACK) {
+                        Track rweTrack = rwlDestination.getTrackByName(inputLine[CAR_RWL_TRACK], null);
+                        car.setReturnWhenLoadedDestTrack(rweTrack);
+                    }
+                }
+                if (comma && inputLine.length > CAR_RWL_LOAD && !inputLine[CAR_RWL_LOAD].isBlank()) {
+                    car.setReturnWhenLoadedLoadName(inputLine[CAR_RWL_LOAD].trim());
+                }
+
+                if (comma && inputLine.length > CAR_DIVISION) {
+                    Division division = InstanceManager.getDefault(DivisionManager.class)
+                            .getDivisionByName(inputLine[CAR_DIVISION].trim());
+                    car.setDivision(division);
+                }
+
+                if (comma && inputLine.length > CAR_TRAIN) {
+                    Train train = InstanceManager.getDefault(TrainManager.class)
+                            .getTrainByName(inputLine[CAR_TRAIN].trim());
+                    car.setTrain(train);
+                }
+
+                // Destination
+                if (comma && inputLine.length > CAR_DESTINATION) {
+                    Location destination =
+                            InstanceManager.getDefault(LocationManager.class)
+                                    .getLocationByName(inputLine[CAR_DESTINATION]);
+                    if (destination != null && inputLine.length > CAR_DEST_TRACK) {
+                        Track destTrack = destination.getTrackByName(inputLine[CAR_DEST_TRACK], null);
+                        car.setDestination(destination, destTrack);
+                    }
+                }
+
+                // Final Destination
+                if (comma && inputLine.length > CAR_FINAL_DESTINATION) {
+                    Location finalDestination =
+                            InstanceManager.getDefault(LocationManager.class)
+                                    .getLocationByName(inputLine[CAR_FINAL_DESTINATION]);
+
+                    car.setFinalDestination(finalDestination);
+                    if (finalDestination != null && inputLine.length > CAR_FINAL_TRACK) {
+                        Track finalTrack = finalDestination.getTrackByName(inputLine[CAR_FINAL_TRACK], null);
+                        car.setFinalDestinationTrack(finalTrack);
+                    }
+                }
+
+                // Schedule Id
+                if (comma && inputLine.length > CAR_SCH_ID) {
+                    car.setScheduleItemId(inputLine[CAR_SCH_ID]);
+                }
+
+                if (comma && inputLine.length > CAR_RFID_TAG) {
+                    String newTag = inputLine[CAR_RFID_TAG];
+                    if (!newTag.trim().isEmpty()) {
+                        InstanceManager.getDefault(IdTagManager.class).provideIdTag(newTag);
+                        log.debug("New ID tag added - {}", newTag);
+                        car.setRfid(newTag);
+                    }
+                }
+
+                // add new roads
+                if (!InstanceManager.getDefault(CarRoads.class).containsName(carRoad)) {
+                    if (autoCreateRoads) {
+                        log.debug("add car road {}", carRoad);
+                        InstanceManager.getDefault(CarRoads.class).addName(carRoad);
+                    }
+                }
+
+                // add new loads
+                if (!InstanceManager.getDefault(CarLoads.class).containsName(carLoadName)) {
+                    if (autoCreateLoads) {
+                        log.debug("add car load {}", carLoadName);
+                        InstanceManager.getDefault(CarLoads.class).addName(carType, carLoadName);
+                    }
+                }
+
+                // add new lengths
+                if (!InstanceManager.getDefault(CarLengths.class).containsName(carLength)) {
+                    if (autoCreateLengths) {
+                        log.debug("add car length {}", carLength);
+                        InstanceManager.getDefault(CarLengths.class).addName(carLength);
+                    }
+                }
+
+                // add new colors
+                if (!InstanceManager.getDefault(CarColors.class).containsName(carColor)) {
+                    if (autoCreateColors) {
+                        log.debug("add car color {}", carColor);
+                        InstanceManager.getDefault(CarColors.class).addName(carColor);
+                    }
+                }
+
+                // add new owners
+                if (!InstanceManager.getDefault(CarOwners.class).containsName(carOwner)) {
+                    if (autoCreateOwners) {
+                        log.debug("add car owner {}", carOwner);
+                        InstanceManager.getDefault(CarOwners.class).addName(carOwner);
+                    }
+                }
+
+                if (car.getWeight().isEmpty()) {
+                    log.debug("Car ({}) weight not specified", car.toString());
+                    if (weightResults != JmriJOptionPane.CANCEL_OPTION) {
+                        weightResults = JmriJOptionPane.showOptionDialog(null,
+                                Bundle.getMessage("CarWeightNotFound",
+                                        car.toString()),
+                                Bundle.getMessage("CarWeightMissing"),
+                                JmriJOptionPane.DEFAULT_OPTION, // custom buttons
+                                JmriJOptionPane.INFORMATION_MESSAGE, null,
+                                new Object[]{
+                                        Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
+                                        Bundle.getMessage("ButtonDontShow")},
+                                autoCalculate ? Bundle.getMessage("ButtonYes") : Bundle.getMessage("ButtonNo"));
+                    }
+                    if (weightResults == 1) { // array position 1, ButtonNo
+                        autoCalculate = false;
+                    }
+                    if (weightResults == 0 || // array position 0, ButtonYes
+                            autoCalculate == true && weightResults == 2) { // array position 2 ButtonDontShow
+                        autoCalculate = true;
+                        try {
+                            carWeight = CarManager.calculateCarWeight(carLength);
+                            car.setWeight(carWeight);
+                            int tons = (int) (Double.parseDouble(carWeight) * Setup.getScaleTonRatio());
+                            // adjust weight for caboose
+                            if (car.isCaboose() || car.isPassenger()) {
+                                tons = (int) (Double.parseDouble(car.getLength()) * .9);
+                            }
+                            car.setWeightTons(Integer.toString(tons));
+                        } catch (NumberFormatException e) {
+                            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("carLengthMustBe"), Bundle
+                                    .getMessage("carWeigthCanNot"), JmriJOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                }
+
+                if (location != null && track != null) {
+                    String status = car.setLocation(location, track);
+                    if (!status.equals(Track.OKAY)) {
+                        log.debug("Can't set car's location because of {}", status);
+                        if (status.startsWith(Track.TYPE)) {
+                            if (autoAdjustLocationType) {
+                                location.addTypeName(carType);
+                                track.addTypeName(carType);
+                                status = car.setLocation(location, track);
                             } else {
                                 JmriJOptionPane.showMessageDialog(
-                                        null, Bundle.getMessage("CarTrackDoesNotExist",
-                                                carRoad, carNumber, carTrackName, carLocationName),
-                                        Bundle.getMessage("carTrack"), JmriJOptionPane.ERROR_MESSAGE);
-                                int results = JmriJOptionPane.showConfirmDialog(null,
-                                        Bundle.getMessage("DoYouWantToCreateTrack",
-                                                carTrackName, carLocationName),
-                                        Bundle.getMessage("carTrack"), JmriJOptionPane.YES_NO_OPTION);
+                                        null, Bundle.getMessage("CanNotSetCarAtLocation",
+                                                car.toString(), carType, carLocationName, carTrackName,
+                                                status),
+                                        Bundle.getMessage("rsCanNotLoc"), JmriJOptionPane.ERROR_MESSAGE);
+                                int results = JmriJOptionPane.showConfirmDialog(null, Bundle
+                                        .getMessage("DoYouWantToAllowService",
+                                                carLocationName, carTrackName, car.toString(), carType),
+                                        Bundle.getMessage("ServiceCarType"),
+                                        JmriJOptionPane.YES_NO_OPTION);
                                 if (results == JmriJOptionPane.YES_OPTION) {
-                                    if (!location.isStaging()) {
-                                        log.debug("Create 1000 foot yard track ({})", carTrackName);
-                                        track = location.addTrack(carTrackName, Track.YARD);
-                                    } else {
-                                        log.debug("Create 1000 foot staging track ({})", carTrackName);
-                                        track = location.addTrack(carTrackName, Track.STAGING);
-                                    }
-                                    track.setLength(1000);
-                                    if (askAutoCreateTracks) {
+                                    location.addTypeName(carType);
+                                    track.addTypeName(carType);
+                                    status = car.setLocation(location, track);
+                                    log.debug("Set car's location status: {}", status);
+                                    if (askAutoLocationType) {
                                         results = JmriJOptionPane.showConfirmDialog(null,
-                                                Bundle.getMessage("DoYouWantToAutoCreateTrack"),
+                                                Bundle.getMessage("DoYouWantToAutoAdjustLocations"),
+                                                Bundle.getMessage("OnlyAskedOnce"), JmriJOptionPane.YES_NO_OPTION);
+                                        if (results == JmriJOptionPane.YES_OPTION) {
+                                            autoAdjustLocationType = true;
+                                        }
+                                        askAutoLocationType = false;
+                                    }
+                                } else {
+                                    break;
+                                }
+                            }
+                        }
+                        if (status.startsWith(Track.LENGTH) || status.startsWith(Track.CAPACITY)) {
+                            if (autoAdjustTrackLength) {
+                                track.setLength(track.getLength() + 1000);
+                                status = car.setLocation(location, track);
+                                log.debug("Set track length status: {}", status);
+                            } else {
+                                JmriJOptionPane.showMessageDialog(null, Bundle
+                                        .getMessage("CanNotSetCarAtLocation",
+                                                car.toString(), carType, carLocationName, carTrackName,
+                                                status),
+                                        Bundle.getMessage("rsCanNotLoc"), JmriJOptionPane.ERROR_MESSAGE);
+                                int results = JmriJOptionPane.showConfirmDialog(null, Bundle
+                                        .getMessage("DoYouWantIncreaseLength", carTrackName),
+                                        Bundle
+                                                .getMessage("TrackLength"),
+                                        JmriJOptionPane.YES_NO_OPTION);
+                                if (results == JmriJOptionPane.YES_OPTION) {
+                                    track.setLength(track.getLength() + 1000);
+                                    status = car.setLocation(location, track);
+                                    log.debug("Set track length status: {}", status);
+                                    if (askAutoIncreaseTrackLength) {
+                                        results = JmriJOptionPane.showConfirmDialog(null, Bundle
+                                                .getMessage("DoYouWantToAutoAdjustTrackLength"),
                                                 Bundle.getMessage("OnlyAskedOnce"),
                                                 JmriJOptionPane.YES_NO_OPTION);
                                         if (results == JmriJOptionPane.YES_OPTION) {
-                                            autoCreateTracks = true;
+                                            autoAdjustTrackLength = true;
                                         }
-                                        askAutoCreateTracks = false;
+                                        askAutoIncreaseTrackLength = false;
+                                    }
+                                } else {
+                                    break;
+                                }
+                            }
+                        }
+                        if (!status.equals(Track.OKAY)) {
+                            if (autoForceCar) {
+                                car.setLocation(location, track, RollingStock.FORCE); // force
+                            } else {
+                                JmriJOptionPane.showMessageDialog(null, Bundle
+                                        .getMessage("CanNotSetCarAtLocation",
+                                                car.toString(), carType, carLocationName, carTrackName,
+                                                status),
+                                        Bundle.getMessage("rsCanNotLoc"), JmriJOptionPane.ERROR_MESSAGE);
+                                int results = JmriJOptionPane.showConfirmDialog(null, Bundle
+                                        .getMessage("DoYouWantToForceCar",
+                                                car.toString(), carLocationName, carTrackName),
+                                        Bundle.getMessage("OverRide"),
+                                        JmriJOptionPane.YES_NO_OPTION);
+                                if (results == JmriJOptionPane.YES_OPTION) {
+                                    car.setLocation(location, track, RollingStock.FORCE); // force
+                                    if (askAutoForceCar) {
+                                        results = JmriJOptionPane.showConfirmDialog(null, Bundle
+                                                .getMessage("DoYouWantToAutoForceCar"),
+                                                Bundle.getMessage("OnlyAskedOnce"),
+                                                JmriJOptionPane.YES_NO_OPTION);
+                                        if (results == JmriJOptionPane.YES_OPTION) {
+                                            autoForceCar = true;
+                                        }
+                                        askAutoForceCar = false;
                                     }
                                 } else {
                                     break;
@@ -508,238 +861,9 @@ public class ImportCars extends ImportRollingStock {
                             }
                         }
                     }
-
-                    log.debug("Add car ({} {}) owner ({}) built ({}) location ({}, {})", carRoad, carNumber, carOwner,
-                            carBuilt, carLocationName, carTrackName);
-                    Car car = carManager.newRS(carRoad, carNumber);
-                    car.setTypeName(carType);
-                    car.setLength(carLength);
-                    car.setWeight(carWeight);
-                    car.setColor(carColor);
-                    car.setOwnerName(carOwner);
-                    car.setBuilt(carBuilt);
-                    car.setLoadName(carLoadName);
-                    car.setKernel(InstanceManager.getDefault(KernelManager.class).newKernel(carKernelName));
-                    car.setMoves(carMoves);
-                    car.setValue(carValue);
-                    car.setComment(carComment);
-                    carsAdded++;
-                    // Out of Service?
-                    if (comma && inputLine.length > base + CAR_MISCELLANEOUS) {
-                        car.setOutOfService(inputLine[CAR_MISCELLANEOUS].equals(Bundle.getMessage("OutOfService")));
-                    }
-                    // TODO import RWE and RWL fields
-                    // if the car's type name is "Caboose" then make it a
-                    // caboose
-                    car.setCaboose(carType.equals("Caboose"));
-                    // determine if there are any car extensions
-                    if (comma && inputLine.length > base + CAR_EXTENSIONS) {
-                        String extensions = inputLine[CAR_EXTENSIONS];
-                        log.debug("Car ({}) has extension ({})", car.toString(), extensions);
-                        String[] ext = extensions.split(Car.EXTENSION_REGEX);
-                        for (int i = 0; i < ext.length; i++) {
-                            if (ext[i].equals(Car.CABOOSE_EXTENSION)) {
-                                car.setCaboose(true);
-                            }
-                            if (ext[i].equals(Car.FRED_EXTENSION)) {
-                                car.setFred(true);
-                            }
-                            if (ext[i].equals(Car.PASSENGER_EXTENSION)) {
-                                car.setPassenger(true);
-                                car.setBlocking(Integer.parseInt(ext[i + 1]));
-                            }
-                            if (ext[i].equals(Car.UTILITY_EXTENSION)) {
-                                car.setUtility(true);
-                            }
-                            if (ext[i].equals(Car.HAZARDOUS_EXTENSION)) {
-                                car.setCarHazardous(true);
-                            }
-                        }
-                    }
-                    if (comma && inputLine.length > base + CAR_RFID_TAG) {
-                        String newTag = inputLine[CAR_RFID_TAG];
-                        if (!newTag.trim().isEmpty()) {
-                            InstanceManager.getDefault(IdTagManager.class).provideIdTag(newTag);
-                            log.debug("New ID tag added - {}", newTag);
-                            car.setRfid(newTag);
-                        }
-                    }
-                    // add new roads
-                    if (!InstanceManager.getDefault(CarRoads.class).containsName(carRoad)) {
-                        if (autoCreateRoads) {
-                            log.debug("add car road {}", carRoad);
-                            InstanceManager.getDefault(CarRoads.class).addName(carRoad);
-                        }
-                    }
-
-                    // add new lengths
-                    if (!InstanceManager.getDefault(CarLengths.class).containsName(carLength)) {
-                        if (autoCreateLengths) {
-                            log.debug("add car length {}", carLength);
-                            InstanceManager.getDefault(CarLengths.class).addName(carLength);
-                        }
-                    }
-
-                    // add new colors
-                    if (!InstanceManager.getDefault(CarColors.class).containsName(carColor)) {
-                        if (autoCreateColors) {
-                            log.debug("add car color {}", carColor);
-                            InstanceManager.getDefault(CarColors.class).addName(carColor);
-                        }
-                    }
-
-                    // add new owners
-                    if (!InstanceManager.getDefault(CarOwners.class).containsName(carOwner)) {
-                        if (autoCreateOwners) {
-                            log.debug("add car owner {}", carOwner);
-                            InstanceManager.getDefault(CarOwners.class).addName(carOwner);
-                        }
-                    }
-
-                    if (car.getWeight().isEmpty()) {
-                        log.debug("Car ({}) weight not specified", car.toString());
-                        if (weightResults != JmriJOptionPane.CANCEL_OPTION) {
-                            weightResults = JmriJOptionPane.showOptionDialog(null,
-                                    Bundle.getMessage("CarWeightNotFound",
-                                            car.toString()),
-                                    Bundle.getMessage("CarWeightMissing"),
-                                    JmriJOptionPane.DEFAULT_OPTION, // custom buttons
-                                    JmriJOptionPane.INFORMATION_MESSAGE, null,
-                                    new Object[]{
-                                            Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
-                                            Bundle.getMessage("ButtonDontShow")},
-                                    autoCalculate ? Bundle.getMessage("ButtonYes") : Bundle.getMessage("ButtonNo"));
-                        }
-                        if (weightResults == 1 ) { // array position 1, ButtonNo
-                            autoCalculate = false;
-                        }
-                        if (weightResults == 0 || // array position 0, ButtonYes
-                                autoCalculate == true && weightResults == 2) { // array position 2 ButtonDontShow
-                            autoCalculate = true;
-                            try {
-                                carWeight = CarManager.calculateCarWeight(carLength);
-                                car.setWeight(carWeight);
-                                int tons = (int) (Double.parseDouble(carWeight) * Setup.getScaleTonRatio());
-                                // adjust weight for caboose
-                                if (car.isCaboose() || car.isPassenger()) {
-                                    tons = (int) (Double.parseDouble(car.getLength()) * .9);
-                                }
-                                car.setWeightTons(Integer.toString(tons));
-                            } catch (NumberFormatException e) {
-                                JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("carLengthMustBe"), Bundle
-                                        .getMessage("carWeigthCanNot"), JmriJOptionPane.ERROR_MESSAGE);
-                            }
-                        }
-                    }
-                    if (location != null && track != null) {
-                        String status = car.setLocation(location, track);
-                        if (!status.equals(Track.OKAY)) {
-                            log.debug("Can't set car's location because of {}", status);
-                            if (status.startsWith(Track.TYPE)) {
-                                if (autoAdjustLocationType) {
-                                    location.addTypeName(carType);
-                                    track.addTypeName(carType);
-                                    status = car.setLocation(location, track);
-                                } else {
-                                    JmriJOptionPane.showMessageDialog(
-                                            null, Bundle.getMessage("CanNotSetCarAtLocation",
-                                                    car.toString(), carType, carLocationName, carTrackName,
-                                                            status),
-                                            Bundle.getMessage("rsCanNotLoc"), JmriJOptionPane.ERROR_MESSAGE);
-                                    int results = JmriJOptionPane.showConfirmDialog(null, Bundle
-                                            .getMessage("DoYouWantToAllowService",
-                                            carLocationName, carTrackName, car.toString(), carType),
-                                            Bundle.getMessage("ServiceCarType"),
-                                            JmriJOptionPane.YES_NO_OPTION);
-                                    if (results == JmriJOptionPane.YES_OPTION) {
-                                        location.addTypeName(carType);
-                                        track.addTypeName(carType);
-                                        status = car.setLocation(location, track);
-                                        log.debug("Set car's location status: {}", status);
-                                        if (askAutoLocationType) {
-                                            results = JmriJOptionPane.showConfirmDialog(null,
-                                                    Bundle.getMessage("DoYouWantToAutoAdjustLocations"),
-                                                    Bundle.getMessage("OnlyAskedOnce"), JmriJOptionPane.YES_NO_OPTION);
-                                            if (results == JmriJOptionPane.YES_OPTION) {
-                                                autoAdjustLocationType = true;
-                                            }
-                                            askAutoLocationType = false;
-                                        }
-                                    } else {
-                                        break;
-                                    }
-                                }
-                            }
-                            if (status.startsWith(Track.LENGTH) || status.startsWith(Track.CAPACITY)) {
-                                if (autoAdjustTrackLength) {
-                                    track.setLength(track.getLength() + 1000);
-                                    status = car.setLocation(location, track);
-                                    log.debug("Set track length status: {}", status);
-                                } else {
-                                    JmriJOptionPane.showMessageDialog(null, Bundle
-                                            .getMessage("CanNotSetCarAtLocation",
-                                                    car.toString(), carType, carLocationName, carTrackName,
-                                                    status),
-                                            Bundle.getMessage("rsCanNotLoc"), JmriJOptionPane.ERROR_MESSAGE);
-                                    int results = JmriJOptionPane.showConfirmDialog(null, Bundle
-                                            .getMessage("DoYouWantIncreaseLength", carTrackName), Bundle
-                                                    .getMessage("TrackLength"),
-                                            JmriJOptionPane.YES_NO_OPTION);
-                                    if (results == JmriJOptionPane.YES_OPTION) {
-                                        track.setLength(track.getLength() + 1000);
-                                        status = car.setLocation(location, track);
-                                        log.debug("Set track length status: {}", status);
-                                        if (askAutoIncreaseTrackLength) {
-                                            results = JmriJOptionPane.showConfirmDialog(null, Bundle
-                                                    .getMessage("DoYouWantToAutoAdjustTrackLength"),
-                                                    Bundle.getMessage("OnlyAskedOnce"),
-                                                    JmriJOptionPane.YES_NO_OPTION);
-                                            if (results == JmriJOptionPane.YES_OPTION) {
-                                                autoAdjustTrackLength = true;
-                                            }
-                                            askAutoIncreaseTrackLength = false;
-                                        }
-                                    } else {
-                                        break;
-                                    }
-                                }
-                            }
-                            if (!status.equals(Track.OKAY)) {
-                                if (autoForceCar) {
-                                    car.setLocation(location, track, RollingStock.FORCE); // force
-                                } else {
-                                    JmriJOptionPane.showMessageDialog(null, Bundle
-                                            .getMessage("CanNotSetCarAtLocation",
-                                                    car.toString(), carType, carLocationName, carTrackName,
-                                                    status),
-                                            Bundle.getMessage("rsCanNotLoc"), JmriJOptionPane.ERROR_MESSAGE);
-                                    int results = JmriJOptionPane.showConfirmDialog(null, Bundle
-                                            .getMessage("DoYouWantToForceCar",                                            
-                                                    car.toString(), carLocationName, carTrackName),
-                                            Bundle.getMessage("OverRide"),
-                                            JmriJOptionPane.YES_NO_OPTION);
-                                    if (results == JmriJOptionPane.YES_OPTION) {
-                                        car.setLocation(location, track, RollingStock.FORCE); // force
-                                        if (askAutoForceCar) {
-                                            results = JmriJOptionPane.showConfirmDialog(null, Bundle
-                                                    .getMessage("DoYouWantToAutoForceCar"),
-                                                    Bundle.getMessage("OnlyAskedOnce"),
-                                                    JmriJOptionPane.YES_NO_OPTION);
-                                            if (results == JmriJOptionPane.YES_OPTION) {
-                                                autoForceCar = true;
-                                            }
-                                            askAutoForceCar = false;
-                                        }
-                                    } else {
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                        // log.debug("No location for car ("+carRoad+"
-                        // "+carNumber+")");
-                    }
+                } else {
+                    // log.debug("No location for car ("+carRoad+"
+                    // "+carNumber+")");
                 }
             } else if (importKernel && inputLine.length == base + 3) {
                 carNumber = inputLine[base + 0].trim();

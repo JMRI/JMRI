@@ -825,7 +825,13 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
         You can also view two excellent NMRA YouTube videos by <a
           href="https://www.youtube.com/watch?v=RBF0V6DEu98">Robert J Thomas Introduction to
           JMRI OPs For A Small Layout</a> and <a href="https://www.youtube.com/watch?v=krhyvrhrxv4">Steve
-          Todd - JMRI Operations with No Paper.</a> And finally under the "Tools" item on the menu bar,
+          Todd - JMRI Operations with No Paper.</a> There's also an excellent set of videos <a
+          href="https://www.youtube.com/@dhtrainz4798">
+          https://www.youtube.com/@dhtrainz4798</a> produced by David Hall using the <a href="https://www.auran.com">Trainz
+        Simulator</a> and OperationsPro.
+      </p>
+
+      <p> And finally under the "Tools" item on the menu bar,
         you will find many useful functions, like the ability to print the contents of the window.
       </p>
 
@@ -1239,7 +1245,7 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
       one major drawback to increasing the number of passes, is that your train build reports will
       be longer since each pass by the program is documented.
 
-      <h3 id="AllowLocalCarMovements">Switcher Service Options (Local Car Movement)</h3>
+      <h3 id="AllowLocalCarMovements">Switcher Service Options (Local Car Movement with Default Loads)</h3>
       The next three "Allow Local ..." options control car movements when using a <a
         href="#SwitcherService">switcher</a> to service a location. A switcher only services one
       location. The three options only apply to cars with the default "E" or "L" <a href="#CarLoad">load</a>.

@@ -4,15 +4,10 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
-import javax.swing.BoxLayout;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.csv.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,7 +56,7 @@ public abstract class ImportRollingStock extends Thread {
         ps.setLayout(new BoxLayout(ps, BoxLayout.Y_AXIS));
         fstatus = new jmri.util.JmriJFrame(title);
         fstatus.setLocation(10, 10);
-        fstatus.setSize(Control.panelWidth700, 100);
+        fstatus.setSize(Control.panelWidth1025, 100);
 
         ps.add(lineNumber);
         ps.add(importLine);
