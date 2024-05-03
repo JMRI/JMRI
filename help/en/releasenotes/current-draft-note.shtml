@@ -439,6 +439,11 @@
               the Layout module.</li>
           <li>Fixes a bug in LogixNG formula when calling a Java method that
               takes a boolean as parameter, like <strong>setVisible()</strong>.</li>
+          <li>Two new preferences have been added. <strong>Log all before</strong>
+              and <strong>Log all after</strong>. If these are selected,
+              LogixNG will log every action that's executed and every
+              expression that's evaluated. For this to work, the LogixNG
+              debugger must be installed (which it is by default).</li>
           <li></li>
         </ul>
 
