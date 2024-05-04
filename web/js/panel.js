@@ -2896,8 +2896,8 @@ function $drawTrackSegment($widget) {
         $width = $gPanel.mainlinetrackwidth;
     }
 
-    //set trackcolor based on blockcolor
-    var $color = $gPanel.defaulttrackcolor;
+    var $color = $getTrackColor($widget);
+
     var $blk = $gBlks[$widget.blockname];
     if (isDefined($blk)) {
         $color = $blk.blockcolor;
@@ -3013,6 +3013,18 @@ function $drawTrackSegmentArc($widget) {
     $drawEllipse(x, y, rw, rh, startAngleRAD, stopAngleRAD);
 }
 
+//set trackcolor by default, then main/side, then block
+var $getTrackColor = function(e) {
+    var $color = $gPanel.defaulttrackcolor;
+    if (isDefined($gPanel.mainRailColor) && (e.mainline == "yes")) {
+        $color = $gPanel.mainRailColor;
+    }
+    if (isDefined($gPanel.sideRailColor) && (e.mainline != "yes")) {
+        $color = $gPanel.sideRailColor;
+    }
+    return $color;
+}
+
 function $getEndPoints$($widget) {
     var $ep1 = $gPts[$widget.connect1name + "." + $widget.type1];
     var $ep2 = $gPts[$widget.connect2name + "." + $widget.type2];
@@ -3072,7 +3084,7 @@ function $drawTurntable($widget) {
         var $t1 = [];
         $t1['x'] = $t.x - (($t.x - $txcen) * f);
         $t1['y'] = $t.y - (($t.y - $tycen) * f);
-        $drawLine($t1.x, $t1.y, $t.x, $t.y, $gPanel.defaulttrackcolor, $gPanel.sidelinetrackwidth);
+        $drawLine($t1.x, $t1.y, $t.x, $t.y, $getTrackColor($widget), $gPanel.sidelinetrackwidth);
 
         if (isDefined(item.attributes.turnout) && ($gPanel.controlling == "yes")) {
             // var turnout = item.attributes.turnout.value;
@@ -3100,7 +3112,7 @@ function $drawTurntable($widget) {
             $t2['x'] = $txcen - ($tr * Math.sin($angle));
             $t2['y'] = $tycen + ($tr * Math.cos($angle));
             if (drawFlag) {
-                $drawLine($t1.x, $t1.y, $t2.x, $t2.y, $gPanel.defaulttrackcolor, $gPanel.sidelinetrackwidth);
+                $drawLine($t1.x, $t1.y, $t2.x, $t2.y, $getTrackColor($widget), $gPanel.sidelinetrackwidth);
             } else {
                 $drawLine($t1.x, $t1.y, $t2.x, $t2.y, $gPanel.backgroundcolor, $gPanel.sidelinetrackwidth);
             }
@@ -3108,8 +3120,8 @@ function $drawTurntable($widget) {
     });
 
     var $turntablecirclelinewidth = 2; //matches LayoutTurntableView.java
-    $drawCircle($txcen, $tycen, $tr, $gPanel.defaulttrackcolor, $turntablecirclelinewidth);
-    $drawCircle($txcen, $tycen, $tr / 4, $gPanel.defaulttrackcolor, $turntablecirclelinewidth);
+    $drawCircle($txcen, $tycen, $tr, $getTrackColor($widget), $turntablecirclelinewidth);
+    $drawCircle($txcen, $tycen, $tr / 4, $getTrackColor($widget), $turntablecirclelinewidth);
 }   //$drawTurntable
 
 //draw a LevelXing (pass in widget)
@@ -3153,7 +3165,7 @@ function $drawLevelXing($widget) {
     }
 
     //  set trackcolor and width based on block and connected A and B
-    var $colorAC = $gPanel.defaulttrackcolor;
+    var $colorAC = $getTrackColor($widget);
     var $blkAC = $gBlks[$widget.blocknameac];
     if (isDefined($blkAC)) {
         $colorAC = $blkAC.blockcolor;
@@ -3164,7 +3176,7 @@ function $drawLevelXing($widget) {
             $widthAC = $sideBlockWidth;
     	}
     }
-    var $colorBD = $gPanel.defaulttrackcolor;
+    var $colorBD = $getTrackColor($widget);
     var $blkBD = $gBlks[$widget.blocknamebd];
     if (isDefined($blkBD)) {
         $colorBD = $blkBD.blockcolor;
@@ -3191,90 +3203,107 @@ function $drawLevelXing($widget) {
 
 //draw a Turnout (pass in widget)
 //  see LayoutTurnout.draw()
+// colors and widths based on side vs main then block color, turnout can be all one block, or several blocks
 function $drawTurnout($widget) {
     //if set to hidden, don't draw anything
     if ($widget.hidden == "yes") {
         return;
     }
-
-    //get default widths
+ 
+    //get default widths and colors
     var $sideWidth = $gPanel.sidelinetrackwidth;
     var $mainWidth = $gPanel.mainlinetrackwidth;
+    var $sideColor = $getTrackColor($widget);
+    var $mainColor = $getTrackColor($widget);
+    if (isDefined($gPanel.sideRailColor)) {
+        $sideColor = $gPanel.sideRailColor;
+        $mainColor = $gPanel.mainRailColor;
+    }
     var $sideBlockWidth = $gPanel.sidelineblockwidth;
     var $mainBlockWidth = $gPanel.mainlineblockwidth;
-    //get default colors
     var $eraseColor = $gPanel.backgroundcolor;
-    var $trackColor = $gPanel.defaulttrackcolor;
-    
+ 
     var $widthA = $sideWidth;
+    var $colorA = $sideColor;    
     var $connectA = $gWidgets[$widget.connectaname];
     if (isDefined($connectA)) {
         if ($connectA.mainline == "yes") {
             $widthA = $mainWidth;
+            $colorA = $mainColor;
         }
     }
     var $widthB = $sideWidth;
+    var $colorB = $sideColor;    
     var $connectB = $gWidgets[$widget.connectbname];
     if (isDefined($connectB)) {
         if ($connectB.mainline == "yes") {
             $widthB = $mainWidth;
+            $colorB = $mainColor;
         }
     }
     var $widthC = $sideWidth;
+    var $colorC = $sideColor;    
     var $connectC = $gWidgets[$widget.connectcname];
     if (isDefined($connectC)) {
         if ($connectC.mainline == "yes") {
             $widthC = $mainWidth;
+            $colorC = $mainColor;
         }
     }
     var $widthD = $sideWidth;
+    var $colorD = $sideColor;    
     var $connectD = $gWidgets[$widget.connectdname];
     if (isDefined($connectD)) {
         if ($connectD.mainline == "yes") {
             $widthD = $mainWidth;
+            $colorD = $mainColor;
         }
     }
 
-    //reset track colors and widths based on blocks
-    var $colorA = $trackColor;
-    var $blkA = $gBlks[$widget.blockname];
-    if (isDefined($blkA)) {
-        $colorA = $blkA.blockcolor;
-	    if (isDefined($connectA) && $connectA.mainline=="yes") {	    
-    	    $widthA = $mainBlockWidth;
-	    } else {
-    	    $widthA = $sideBlockWidth;
-    	}
-    }
-    var $colorB = $colorA;
-    var $blkB = $gBlks[$widget.blockbname];
-    if (isDefined($blkB)) {
-        $colorB = $blkB.blockcolor;
-	    if (isDefined($connectB) && $connectB.mainline=="yes") {	    
-    	    $widthB = $mainBlockWidth;
-	    } else {
-    	    $widthB = $sideBlockWidth;
-    	}
-    }
-    var $colorC = $colorA;
-    var $blkC = $gBlks[$widget.blockcname];
-    if (isDefined($blkC)) {
-        $colorC = $blkC.blockcolor;
-	    if (isDefined($connectC) && $connectC.mainline=="yes") {	    
-    	    $widthC = $mainBlockWidth;
-	    } else {
-    	    $widthC = $sideBlockWidth;
-    	}
-    }
-    var $colorD = $colorA;
-    var $blkD = $gBlks[$widget.blockdname];
-    if (isDefined($blkD)) {
-        $colorD = $blkD.blockcolor;
-	    if (isDefined($connectD) && $connectD.mainline=="yes") {	    
-    	    $widthD = $mainBlockWidth;
-	    } else {
-    	    $widthD = $sideBlockWidth;
-    	}
+    //reset track colors and widths based on blocks, if in use (note: if only 1 block assigned, the other values are undefined)
+    if (isDefined($widget.blockname)) {
+        var $blkA = $gBlks[$widget.blockname];
+        if (isDefined($blkA)) {
+            $colorA = $blkA.blockcolor;
+    	    if (isDefined($connectA) && $connectA.mainline=="yes") {	    
+        	    $widthA = $mainBlockWidth;
+    	    } else {
+        	    $widthA = $sideBlockWidth;
+        	}
+        }
+        $colorB = $colorA;
+        $widthB = $widthA;
+        var $blkB = $gBlks[$widget.blockbname];
+        if (isDefined($blkB)) {
+            $colorB = $blkB.blockcolor;
+    	    if (isDefined($connectB) && $connectB.mainline=="yes") {	    
+        	    $widthB = $mainBlockWidth;
+    	    } else {
+        	    $widthB = $sideBlockWidth;
+        	}
+        }
+        $colorC = $colorA;
+        $widthC = $widthA;
+        var $blkC = $gBlks[$widget.blockcname];
+        if (isDefined($blkC)) {
+            $colorC = $blkC.blockcolor;
+    	    if (isDefined($connectC) && $connectC.mainline=="yes") {	    
+        	    $widthC = $mainBlockWidth;
+    	    } else {
+        	    $widthC = $sideBlockWidth;
+        	}
+        }
+        $colorD = $colorA;
+        var $blkD = $gBlks[$widget.blockdname];
+        $widthD = $widthA;
+        if (isDefined($blkD)) {
+            $colorD = $blkD.blockcolor;
+    	    if (isDefined($connectD) && $connectD.mainline=="yes") {	    
+        	    $widthD = $mainBlockWidth;
+    	    } else {
+        	    $widthD = $sideBlockWidth;
+        	}
+        }
     }
 
     var cen = [$widget.xcen * 1, $widget.ycen * 1]
@@ -3295,13 +3324,13 @@ function $drawTurnout($widget) {
             if ($widget.state == $widget.continuing) {
                 $drawLineP(cen, c, $eraseColor, $widthC); //erase center to C (diverging leg)
                 if ($gPanel.turnoutdrawunselectedleg == 'yes') {
-                    $drawLineP(c, $point_midpoint(cen, c), $colorB, $widthC); //C to midC (diverging leg)
+                    $drawLineP(c, $point_midpoint(cen, c), $colorC, $widthC); //C to midC (diverging leg)
                 }
                 $drawLineP(cen, b, $colorB, $widthB); //center to B (straight leg)
             } else {
                     $drawLineP(cen, b, $eraseColor, $widthB); //erase center to B (straight leg)
                 if ($gPanel.turnoutdrawunselectedleg == 'yes') {
-                    $drawLineP(b, $point_midpoint(cen, b), $colorC, $widthB); //B to midB (straight leg)
+                    $drawLineP(b, $point_midpoint(cen, b), $colorB, $widthB); //B to midB (straight leg)
                 }
                 $drawLineP(cen, c, $colorC, $widthC); //center to C (diverging leg)
             }
@@ -3482,7 +3511,7 @@ function $drawSlip($widget) {
     var d = $getPoint($widget.ident + SLIP_D);
 
     var $eraseColor = $gPanel.backgroundcolor;
-    var $trackColor = $gPanel.defaulttrackcolor;
+    var $trackColor = $getTrackColor($widget);
 
     var $blkA = $gBlks[$widget.blockname];
     var $colorA = isDefined($blkA) ? $blkA.blockcolor : $trackColor;
