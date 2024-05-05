@@ -445,6 +445,9 @@
               LogixNG will log every action that's executed and every
               expression that's evaluated. For this to work, the LogixNG
               debugger must be installed (which it is by default).</li>
+          <li>The LogixNG expressions <strong>Local Variable</strong> and
+              <strong>Memory</strong> can now check for either null or empty
+              string.</li>
           <li></li>
         </ul>
 
