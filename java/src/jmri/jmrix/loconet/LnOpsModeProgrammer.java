@@ -233,6 +233,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             memo.getSlotManager().writeCVOpsMode(CV, val, pL, mAddress, mLongAddr);
         } else {
             // DCC ops mode
+            memo.getSlotManager().setAcceptAnyLACK();
             memo.getSlotManager().writeCVOpsMode(CV, val, pL, mAddress, mLongAddr);
         }
     }

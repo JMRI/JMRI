@@ -586,16 +586,48 @@ public class SlotManagerTest {
     }
 
     @Test
-    public void testWriteCVOpsLongAddr() throws jmri.ProgrammerException {
+    public void testWriteCVOpsLongAddrOneLack() throws jmri.ProgrammerException {
         String CV1 = "12";
         int val2 = 34;
-        ProgListener p3 = null;
-        slotmanager.writeCVOpsMode(CV1, val2, p3, 4 * 128 + 0x23, true);
+        slotmanager.setAcceptAnyLACK();
+        slotmanager.writeCVOpsMode(CV1, val2, lstn, 4 * 128 + 0x23, true);
         Assert.assertEquals("one message sent", 1, lnis.outbound.size());
         Assert.assertEquals("initial status", -999, status);
         Assert.assertEquals("write message",
                 "EF 0E 7C 67 00 04 23 00 00 0B 22 7F 7F 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+        Assert.assertEquals("reply status", -999, status);
+        Assert.assertEquals("reply value", -999, value);
+        
+        // provide LONG_ACK: Function not implemented, no reply will follow.
+        slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x7F}));             
+        JUnitUtil.waitFor(releaseTestDelay);
+        Assert.assertEquals("reply status", 0, status);
+        Assert.assertEquals("reply value", -1, value);
+
+    }
+
+    @Test
+    public void testWriteCVOpsLongAddrTwoLacks() throws jmri.ProgrammerException {
+        String CV1 = "12";
+        int val2 = 34;
+        slotmanager.writeCVOpsMode(CV1, val2, lstn, 4 * 128 + 0x23, true);
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("initial status", -999, status);
+        Assert.assertEquals("write message",
+                "EF 0E 7C 67 00 04 23 00 00 0B 22 7F 7F 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+        Assert.assertEquals("reply status", -999, status);
+        Assert.assertEquals("reply value", -999, value);
+        
+        // provide LONG_ACK: Function not implemented, no reply will follow.
+        slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x7F}));             
+        // LONG_ACK: The Slot Write command was accepted blind (no response will be sent).
+        slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x40}));             
+        JUnitUtil.waitFor(releaseTestDelay);
+        Assert.assertEquals("reply status", 0, status);
+        Assert.assertEquals("reply value", -1, value);
+
     }
 
     @Test
@@ -1485,8 +1517,9 @@ public class SlotManagerTest {
     boolean stoppedTimer = false;
 
     ProgListener lstn;
-    int releaseTestDelay = 150; // probably needs to be at least 150, see SlotManager.postProgDelay
-
+    
+    int releaseTestDelay;
+    
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
@@ -1518,6 +1551,8 @@ public class SlotManagerTest {
         value = -999;
         startedShortTimer = false;
         startedLongTimer = false;
+        
+        releaseTestDelay = Math.max(slotmanager.serviceModeReplyDelay, slotmanager.opsModeReplyDelay)+75; 
 
         lstn = new ProgListener(){
             @Override
