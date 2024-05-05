@@ -225,6 +225,20 @@ public class ExpressionMemory extends AbstractDigitalExpression
                 result = memoryValue != null;
                 break;
 
+            case IsNullOrEmpty:
+                result = memoryValue == null || memoryValue.isEmpty();
+                break;
+            case IsNotNullNorEmpty:
+                result = memoryValue != null && !memoryValue.isEmpty();
+                break;
+
+            case IsNullEmptyOrOnlySpaces:
+                result = memoryValue == null || memoryValue.isBlank();
+                break;
+            case IsNotNullNotEmptyNorOnlySpaces:
+                result = memoryValue != null && !memoryValue.isBlank();
+                break;
+
             case MatchRegex:
                 result = matchRegex(memoryValue, _regEx);
                 break;
@@ -315,6 +329,14 @@ public class ExpressionMemory extends AbstractDigitalExpression
             case IsNull:
                 // fall through
             case IsNotNull:
+                // fall through
+            case IsNullOrEmpty:
+                // fall through
+            case IsNotNullNorEmpty:
+                // fall through
+            case IsNullEmptyOrOnlySpaces:
+                // fall through
+            case IsNotNullNotEmptyNorOnlySpaces:
                 return Bundle.getMessage(locale, "Memory_Long_CompareNull", memoryName, _memoryOperation._text);
 
             case MatchRegex:
@@ -381,6 +403,10 @@ public class ExpressionMemory extends AbstractDigitalExpression
         NotEqual(CompareOperation.NotEqual, null, true),
         IsNull(null, Bundle.getMessage("MemoryOperation_IsNull"), false),
         IsNotNull(null, Bundle.getMessage("MemoryOperation_IsNotNull"), false),
+        IsNullOrEmpty(null, Bundle.getMessage("MemoryOperation_IsNullNorEmpty"), false),
+        IsNotNullNorEmpty(null, Bundle.getMessage("MemoryOperation_IsNotNullNorEmpty"), false),
+        IsNullEmptyOrOnlySpaces(null, Bundle.getMessage("MemoryOperation_IsNullNotEmptyNorOnlySpaces"), false),
+        IsNotNullNotEmptyNorOnlySpaces(null, Bundle.getMessage("MemoryOperation_IsNotNullNotEmptyNorOnlySpaces"), false),
         MatchRegex(null, Bundle.getMessage("MemoryOperation_MatchRegEx"), true),
         NotMatchRegex(null, Bundle.getMessage("MemoryOperation_NotMatchRegEx"), true);
 

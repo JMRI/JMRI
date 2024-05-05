@@ -222,6 +222,20 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
                 result = variableValue != null;
                 break;
 
+            case IsNullOrEmpty:
+                result = variableValue == null || variableValue.isEmpty();
+                break;
+            case IsNotNullNorEmpty:
+                result = variableValue != null && !variableValue.isEmpty();
+                break;
+
+            case IsNullEmptyOrOnlySpaces:
+                result = variableValue == null || variableValue.isBlank();
+                break;
+            case IsNotNullNotEmptyNorOnlySpaces:
+                result = variableValue != null && !variableValue.isBlank();
+                break;
+
             case MatchRegex:
                 result = matchRegex(variableValue, _regEx);
                 break;
@@ -317,6 +331,14 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
             case IsNull:
                 // fall through
             case IsNotNull:
+                // fall through
+            case IsNullOrEmpty:
+                // fall through
+            case IsNotNullNorEmpty:
+                // fall through
+            case IsNullEmptyOrOnlySpaces:
+                // fall through
+            case IsNotNullNotEmptyNorOnlySpaces:
                 return Bundle.getMessage(locale, "LocalVariable_Long_CompareNull", variableName, _variableOperation._text);
 
             case MatchRegex:
@@ -376,6 +398,10 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
         NotEqual(CompareOperation.NotEqual, null, true),
         IsNull(null, Bundle.getMessage("LocalVariableOperation_IsNull"), false),
         IsNotNull(null, Bundle.getMessage("LocalVariableOperation_IsNotNull"), false),
+        IsNullOrEmpty(null, Bundle.getMessage("LocalVariableOperation_IsNullNorEmpty"), false),
+        IsNotNullNorEmpty(null, Bundle.getMessage("LocalVariableOperation_IsNotNullNorEmpty"), false),
+        IsNullEmptyOrOnlySpaces(null, Bundle.getMessage("LocalVariableOperation_IsNullNotEmptyNorOnlySpaces"), false),
+        IsNotNullNotEmptyNorOnlySpaces(null, Bundle.getMessage("LocalVariableOperation_IsNotNullNotEmptyNorOnlySpaces"), false),
         MatchRegex(null, Bundle.getMessage("LocalVariableOperation_MatchRegEx"), true),
         NotMatchRegex(null, Bundle.getMessage("LocalVariableOperation_NotMatchRegEx"), true);
 

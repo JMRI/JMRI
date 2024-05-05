@@ -23,6 +23,7 @@ import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.jmrit.logixng.actions.ActionAtomicBoolean;
 import jmri.jmrit.logixng.actions.IfThenElse;
+import jmri.jmrit.logixng.expressions.ExpressionMemory.MemoryOperation;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
@@ -79,7 +80,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
                 "            ! Then%n" +
                 "               Set the atomic boolean to true ::: Use default%n" +
                 "            ! Else%n" +
-                "               Socket not connected%n");
+                "               Set the atomic boolean to false ::: Use default%n");
     }
 
     @Override
@@ -307,6 +308,65 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         Assert.assertTrue("The expression returns true",atomicBoolean.get());
     }
 
+    private void doTestNullExpression(MemoryOperation oper, String value, boolean result) {
+        conditionalNG.setEnabled(false);
+        // Set the memory
+        memory.setValue(value);
+        atomicBoolean.set(!result);
+        expressionMemory.setMemoryOperation(oper);
+        conditionalNG.setEnabled(true);
+        if (result) {
+            Assert.assertTrue("The expression returns true", atomicBoolean.get());
+        } else {
+            Assert.assertFalse("The expression returns false", atomicBoolean.get());
+        }
+    }
+
+    @Test
+    public void testNullExpression() throws SocketAlreadyConnectedException, JmriException {
+        doTestNullExpression(MemoryOperation.IsNull, null, true);
+        doTestNullExpression(MemoryOperation.IsNull, "", false);
+        doTestNullExpression(MemoryOperation.IsNull, "   ", false);
+        doTestNullExpression(MemoryOperation.IsNull, String.format("\t\t"), false);
+        doTestNullExpression(MemoryOperation.IsNull, String.format("\n\n"), false);
+        doTestNullExpression(MemoryOperation.IsNull, "Hello World", false);
+
+        doTestNullExpression(MemoryOperation.IsNotNull, null, false);
+        doTestNullExpression(MemoryOperation.IsNotNull, "", true);
+        doTestNullExpression(MemoryOperation.IsNotNull, "   ", true);
+        doTestNullExpression(MemoryOperation.IsNotNull, String.format("\t\t"), true);
+        doTestNullExpression(MemoryOperation.IsNotNull, String.format("\n\n"), true);
+        doTestNullExpression(MemoryOperation.IsNotNull, "Hello World", true);
+
+        doTestNullExpression(MemoryOperation.IsNullOrEmpty, null, true);
+        doTestNullExpression(MemoryOperation.IsNullOrEmpty, "", true);
+        doTestNullExpression(MemoryOperation.IsNullOrEmpty, "   ", false);
+        doTestNullExpression(MemoryOperation.IsNullOrEmpty, String.format("\t\t"), false);
+        doTestNullExpression(MemoryOperation.IsNullOrEmpty, String.format("\n\n"), false);
+        doTestNullExpression(MemoryOperation.IsNullOrEmpty, "Hello World", false);
+
+        doTestNullExpression(MemoryOperation.IsNotNullNorEmpty, null, false);
+        doTestNullExpression(MemoryOperation.IsNotNullNorEmpty, "", false);
+        doTestNullExpression(MemoryOperation.IsNotNullNorEmpty, "   ", true);
+        doTestNullExpression(MemoryOperation.IsNotNullNorEmpty, String.format("\t\t"), true);
+        doTestNullExpression(MemoryOperation.IsNotNullNorEmpty, String.format("\n\n"), true);
+        doTestNullExpression(MemoryOperation.IsNotNullNorEmpty, "Hello World", true);
+
+        doTestNullExpression(MemoryOperation.IsNullEmptyOrOnlySpaces, null, true);
+        doTestNullExpression(MemoryOperation.IsNullEmptyOrOnlySpaces, "", true);
+        doTestNullExpression(MemoryOperation.IsNullEmptyOrOnlySpaces, "   ", true);
+        doTestNullExpression(MemoryOperation.IsNullEmptyOrOnlySpaces, String.format("\t\t"), true);
+        doTestNullExpression(MemoryOperation.IsNullEmptyOrOnlySpaces, String.format("\n\n"), true);
+        doTestNullExpression(MemoryOperation.IsNullEmptyOrOnlySpaces, "Hello World", false);
+
+        doTestNullExpression(MemoryOperation.IsNotNullNotEmptyNorOnlySpaces, null, false);
+        doTestNullExpression(MemoryOperation.IsNotNullNotEmptyNorOnlySpaces, "", false);
+        doTestNullExpression(MemoryOperation.IsNotNullNotEmptyNorOnlySpaces, "   ", false);
+        doTestNullExpression(MemoryOperation.IsNotNullNotEmptyNorOnlySpaces, String.format("\t\t"), false);
+        doTestNullExpression(MemoryOperation.IsNotNullNotEmptyNorOnlySpaces, String.format("\n\n"), false);
+        doTestNullExpression(MemoryOperation.IsNotNullNotEmptyNorOnlySpaces, "Hello World", true);
+    }
+
     @Test
     public void testSetMemory() {
         expressionMemory.unregisterListeners();
@@ -473,6 +533,10 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         actionAtomicBoolean = new ActionAtomicBoolean(atomicBoolean, true);
         MaleSocket socketAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAtomicBoolean);
         ifThenElse.getChild(1).connect(socketAtomicBoolean);
+
+        ActionAtomicBoolean actionOtherAtomicBoolean = new ActionAtomicBoolean(atomicBoolean, false);
+        MaleSocket socketOtherAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionOtherAtomicBoolean);
+        ifThenElse.getChild(2).connect(socketOtherAtomicBoolean);
 
         memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
         expressionMemory.getSelectNamedBean().setNamedBean(memory);

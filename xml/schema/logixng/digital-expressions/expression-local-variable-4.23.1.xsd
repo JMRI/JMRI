@@ -72,6 +72,10 @@
                     <xs:enumeration value="NotEqual"/>
                     <xs:enumeration value="IsNull"/>
                     <xs:enumeration value="IsNotNull"/>
+                    <xs:enumeration value="IsNullOrEmpty"/>
+                    <xs:enumeration value="IsNotNullNorEmpty"/>
+                    <xs:enumeration value="IsNullEmptyOrOnlySpaces"/>
+                    <xs:enumeration value="IsNotNullNotEmptyNorOnlySpaces"/>
                     <xs:enumeration value="MatchRegex"/>
                     <xs:enumeration value="NotMatchRegex"/>
                   </xs:restriction>

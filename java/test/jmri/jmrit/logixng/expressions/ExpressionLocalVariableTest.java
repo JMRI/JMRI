@@ -7,6 +7,7 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionAtomicBoolean;
 import jmri.jmrit.logixng.actions.IfThenElse;
+import jmri.jmrit.logixng.expressions.ExpressionLocalVariable.VariableOperation;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitUtil;
@@ -64,7 +65,7 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
                 "            ! Then%n" +
                 "               Set the atomic boolean to true ::: Use default%n" +
                 "            ! Else%n" +
-                "               Socket not connected%n");
+                "               Set the atomic boolean to false ::: Use default%n");
     }
 
     @Override
@@ -144,27 +145,35 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
 
     @Test
     public void testVariableOperation() {
-        Assert.assertEquals("String matches", "is less than", ExpressionLocalVariable.VariableOperation.LessThan.toString());
-        Assert.assertEquals("String matches", "is less than or equal", ExpressionLocalVariable.VariableOperation.LessThanOrEqual.toString());
-        Assert.assertEquals("String matches", "is equal to", ExpressionLocalVariable.VariableOperation.Equal.toString());
-        Assert.assertEquals("String matches", "is greater than or equal to", ExpressionLocalVariable.VariableOperation.GreaterThanOrEqual.toString());
-        Assert.assertEquals("String matches", "is greater than", ExpressionLocalVariable.VariableOperation.GreaterThan.toString());
-        Assert.assertEquals("String matches", "is not equal to", ExpressionLocalVariable.VariableOperation.NotEqual.toString());
-        Assert.assertEquals("String matches", "is null", ExpressionLocalVariable.VariableOperation.IsNull.toString());
-        Assert.assertEquals("String matches", "is not null", ExpressionLocalVariable.VariableOperation.IsNotNull.toString());
-        Assert.assertEquals("String matches", "does match regular expression", ExpressionLocalVariable.VariableOperation.MatchRegex.toString());
-        Assert.assertEquals("String matches", "does not match regular expression", ExpressionLocalVariable.VariableOperation.NotMatchRegex.toString());
+        Assert.assertEquals("String matches", "is less than", VariableOperation.LessThan.toString());
+        Assert.assertEquals("String matches", "is less than or equal", VariableOperation.LessThanOrEqual.toString());
+        Assert.assertEquals("String matches", "is equal to", VariableOperation.Equal.toString());
+        Assert.assertEquals("String matches", "is greater than or equal to", VariableOperation.GreaterThanOrEqual.toString());
+        Assert.assertEquals("String matches", "is greater than", VariableOperation.GreaterThan.toString());
+        Assert.assertEquals("String matches", "is not equal to", VariableOperation.NotEqual.toString());
+        Assert.assertEquals("String matches", "is null", VariableOperation.IsNull.toString());
+        Assert.assertEquals("String matches", "is not null", VariableOperation.IsNotNull.toString());
+        Assert.assertEquals("String matches", "is null or empty string", VariableOperation.IsNullOrEmpty.toString());
+        Assert.assertEquals("String matches", "is not null nor empty string", VariableOperation.IsNotNullNorEmpty.toString());
+        Assert.assertEquals("String matches", "is null, empty string or only whitespaces", VariableOperation.IsNullEmptyOrOnlySpaces.toString());
+        Assert.assertEquals("String matches", "is not null, not empty, not only whitespaces", VariableOperation.IsNotNullNotEmptyNorOnlySpaces.toString());
+        Assert.assertEquals("String matches", "does match regular expression", VariableOperation.MatchRegex.toString());
+        Assert.assertEquals("String matches", "does not match regular expression", VariableOperation.NotMatchRegex.toString());
 
-        Assert.assertTrue("operation has extra value", ExpressionLocalVariable.VariableOperation.LessThan.hasExtraValue());
-        Assert.assertTrue("operation has extra value", ExpressionLocalVariable.VariableOperation.LessThanOrEqual.hasExtraValue());
-        Assert.assertTrue("operation has extra value", ExpressionLocalVariable.VariableOperation.Equal.hasExtraValue());
-        Assert.assertTrue("operation has extra value", ExpressionLocalVariable.VariableOperation.GreaterThanOrEqual.hasExtraValue());
-        Assert.assertTrue("operation has extra value", ExpressionLocalVariable.VariableOperation.GreaterThan.hasExtraValue());
-        Assert.assertTrue("operation has extra value", ExpressionLocalVariable.VariableOperation.NotEqual.hasExtraValue());
-        Assert.assertFalse("operation has not extra value", ExpressionLocalVariable.VariableOperation.IsNull.hasExtraValue());
-        Assert.assertFalse("operation has not extra value", ExpressionLocalVariable.VariableOperation.IsNotNull.hasExtraValue());
-        Assert.assertTrue("operation has extra value", ExpressionLocalVariable.VariableOperation.MatchRegex.hasExtraValue());
-        Assert.assertTrue("operation has extra value", ExpressionLocalVariable.VariableOperation.NotMatchRegex.hasExtraValue());
+        Assert.assertTrue("operation has extra value", VariableOperation.LessThan.hasExtraValue());
+        Assert.assertTrue("operation has extra value", VariableOperation.LessThanOrEqual.hasExtraValue());
+        Assert.assertTrue("operation has extra value", VariableOperation.Equal.hasExtraValue());
+        Assert.assertTrue("operation has extra value", VariableOperation.GreaterThanOrEqual.hasExtraValue());
+        Assert.assertTrue("operation has extra value", VariableOperation.GreaterThan.hasExtraValue());
+        Assert.assertTrue("operation has extra value", VariableOperation.NotEqual.hasExtraValue());
+        Assert.assertFalse("operation has not extra value", VariableOperation.IsNull.hasExtraValue());
+        Assert.assertFalse("operation has not extra value", VariableOperation.IsNotNull.hasExtraValue());
+        Assert.assertFalse("operation has not extra value", VariableOperation.IsNullOrEmpty.hasExtraValue());
+        Assert.assertFalse("operation has not extra value", VariableOperation.IsNotNullNorEmpty.hasExtraValue());
+        Assert.assertFalse("operation has not extra value", VariableOperation.IsNullEmptyOrOnlySpaces.hasExtraValue());
+        Assert.assertFalse("operation has not extra value", VariableOperation.IsNullEmptyOrOnlySpaces.hasExtraValue());
+        Assert.assertTrue("operation has extra value", VariableOperation.MatchRegex.hasExtraValue());
+        Assert.assertTrue("operation has extra value", VariableOperation.NotMatchRegex.hasExtraValue());
     }
 
     @Test
@@ -200,7 +209,7 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
         conditionalNG.setEnabled(false);
 
         expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.Value);
-        expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.Equal);
+        expressionLocalVariable.setVariableOperation(VariableOperation.Equal);
         expressionLocalVariable.setConstantValue("New value");
 
         // The action is not yet executed so the atomic boolean should be false
@@ -219,7 +228,7 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
 
         // Test regular expression match
         conditionalNG.setEnabled(false);
-        expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.MatchRegex);
+        expressionLocalVariable.setVariableOperation(VariableOperation.MatchRegex);
         expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.Value);
         expressionLocalVariable.setRegEx("Hello.*");
         // Set the local variable
@@ -262,7 +271,7 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
 
         // Test regular expression not match
         conditionalNG.setEnabled(false);
-        expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.NotMatchRegex);
+        expressionLocalVariable.setVariableOperation(VariableOperation.NotMatchRegex);
         expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.Value);
         expressionLocalVariable.setRegEx("Hello.*");
         // Set the local variable
@@ -301,6 +310,70 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
         Assert.assertFalse("The expression has not executed or returns false",atomicBoolean.get());
         conditionalNG.setEnabled(true);
         Assert.assertTrue("The expression returns true",atomicBoolean.get());
+    }
+
+    private void doTestNullExpression(VariableOperation oper, String value, boolean result) {
+        conditionalNG.setEnabled(false);
+        // Set the local variable
+        localVariableMaleSocket.clearLocalVariables();
+        if (value != null) {
+            localVariableMaleSocket.addLocalVariable("myVar", SymbolTable.InitialValueType.String, value);
+        } else {
+            localVariableMaleSocket.addLocalVariable("myVar", SymbolTable.InitialValueType.None, "");
+        }
+        atomicBoolean.set(!result);
+        expressionLocalVariable.setVariableOperation(oper);
+        conditionalNG.setEnabled(true);
+        if (result) {
+            Assert.assertTrue("The expression returns true", atomicBoolean.get());
+        } else {
+            Assert.assertFalse("The expression returns false", atomicBoolean.get());
+        }
+    }
+
+    @Test
+    public void testNullExpression() throws SocketAlreadyConnectedException, JmriException {
+        doTestNullExpression(VariableOperation.IsNull, null, true);
+        doTestNullExpression(VariableOperation.IsNull, "", false);
+        doTestNullExpression(VariableOperation.IsNull, "   ", false);
+        doTestNullExpression(VariableOperation.IsNull, String.format("\t\t"), false);
+        doTestNullExpression(VariableOperation.IsNull, String.format("\n\n"), false);
+        doTestNullExpression(VariableOperation.IsNull, "Hello World", false);
+
+        doTestNullExpression(VariableOperation.IsNotNull, null, false);
+        doTestNullExpression(VariableOperation.IsNotNull, "", true);
+        doTestNullExpression(VariableOperation.IsNotNull, "   ", true);
+        doTestNullExpression(VariableOperation.IsNotNull, String.format("\t\t"), true);
+        doTestNullExpression(VariableOperation.IsNotNull, String.format("\n\n"), true);
+        doTestNullExpression(VariableOperation.IsNotNull, "Hello World", true);
+
+        doTestNullExpression(VariableOperation.IsNullOrEmpty, null, true);
+        doTestNullExpression(VariableOperation.IsNullOrEmpty, "", true);
+        doTestNullExpression(VariableOperation.IsNullOrEmpty, "   ", false);
+        doTestNullExpression(VariableOperation.IsNullOrEmpty, String.format("\t\t"), false);
+        doTestNullExpression(VariableOperation.IsNullOrEmpty, String.format("\n\n"), false);
+        doTestNullExpression(VariableOperation.IsNullOrEmpty, "Hello World", false);
+
+        doTestNullExpression(VariableOperation.IsNotNullNorEmpty, null, false);
+        doTestNullExpression(VariableOperation.IsNotNullNorEmpty, "", false);
+        doTestNullExpression(VariableOperation.IsNotNullNorEmpty, "   ", true);
+        doTestNullExpression(VariableOperation.IsNotNullNorEmpty, String.format("\t\t"), true);
+        doTestNullExpression(VariableOperation.IsNotNullNorEmpty, String.format("\n\n"), true);
+        doTestNullExpression(VariableOperation.IsNotNullNorEmpty, "Hello World", true);
+
+        doTestNullExpression(VariableOperation.IsNullEmptyOrOnlySpaces, null, true);
+        doTestNullExpression(VariableOperation.IsNullEmptyOrOnlySpaces, "", true);
+        doTestNullExpression(VariableOperation.IsNullEmptyOrOnlySpaces, "   ", true);
+        doTestNullExpression(VariableOperation.IsNullEmptyOrOnlySpaces, String.format("\t\t"), true);
+        doTestNullExpression(VariableOperation.IsNullEmptyOrOnlySpaces, String.format("\n\n"), true);
+        doTestNullExpression(VariableOperation.IsNullEmptyOrOnlySpaces, "Hello World", false);
+
+        doTestNullExpression(VariableOperation.IsNotNullNotEmptyNorOnlySpaces, null, false);
+        doTestNullExpression(VariableOperation.IsNotNullNotEmptyNorOnlySpaces, "", false);
+        doTestNullExpression(VariableOperation.IsNotNullNotEmptyNorOnlySpaces, "   ", false);
+        doTestNullExpression(VariableOperation.IsNotNullNotEmptyNorOnlySpaces, String.format("\t\t"), false);
+        doTestNullExpression(VariableOperation.IsNotNullNotEmptyNorOnlySpaces, String.format("\n\n"), false);
+        doTestNullExpression(VariableOperation.IsNotNullNotEmptyNorOnlySpaces, "Hello World", true);
     }
 /*
     @Test
@@ -480,6 +553,10 @@ public class ExpressionLocalVariableTest extends AbstractDigitalExpressionTestBa
         actionAtomicBoolean = new ActionAtomicBoolean(atomicBoolean, true);
         MaleSocket socketAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAtomicBoolean);
         ifThenElse.getChild(1).connect(socketAtomicBoolean);
+
+        ActionAtomicBoolean actionOtherAtomicBoolean = new ActionAtomicBoolean(atomicBoolean, false);
+        MaleSocket socketOtherAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionOtherAtomicBoolean);
+        ifThenElse.getChild(2).connect(socketOtherAtomicBoolean);
 
         expressionLocalVariable.setLocalVariable("myVar");
 

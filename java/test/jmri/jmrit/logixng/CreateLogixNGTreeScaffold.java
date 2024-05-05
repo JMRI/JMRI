@@ -4407,6 +4407,77 @@ public class CreateLogixNGTreeScaffold {
         maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
         and.getChild(indexExpr++).connect(maleSocket);
 
+        // Test all the operations
+        expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.LessThan);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.LessThanOrEqual);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.Equal);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.GreaterThanOrEqual);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.GreaterThan);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.NotEqual);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.IsNull);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.IsNotNull);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.IsNullOrEmpty);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.IsNotNullNorEmpty);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.IsNullEmptyOrOnlySpaces);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.IsNotNullNotEmptyNorOnlySpaces);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.MatchRegex);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.NotMatchRegex);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
+        and.getChild(indexExpr++).connect(maleSocket);
+
 
         ExpressionMemory expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
         expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.GreaterThan);
@@ -4463,6 +4534,77 @@ public class CreateLogixNGTreeScaffold {
         expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.GreaterThan);
         expressionMemory.setCompareTo(ExpressionMemory.CompareTo.RegEx);
         set_LogixNG_SelectTable_Data(csvTable, expressionMemory.getSelectTable(), NamedBeanAddressing.LocalVariable);
+        maleSocket = digitalExpressionManager.registerExpression(expressionMemory);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        // Test all the operations
+        expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
+        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.LessThan);
+        maleSocket = digitalExpressionManager.registerExpression(expressionMemory);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
+        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.LessThanOrEqual);
+        maleSocket = digitalExpressionManager.registerExpression(expressionMemory);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
+        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.Equal);
+        maleSocket = digitalExpressionManager.registerExpression(expressionMemory);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
+        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.GreaterThanOrEqual);
+        maleSocket = digitalExpressionManager.registerExpression(expressionMemory);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
+        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.GreaterThan);
+        maleSocket = digitalExpressionManager.registerExpression(expressionMemory);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
+        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.NotEqual);
+        maleSocket = digitalExpressionManager.registerExpression(expressionMemory);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
+        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.IsNull);
+        maleSocket = digitalExpressionManager.registerExpression(expressionMemory);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
+        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.IsNotNull);
+        maleSocket = digitalExpressionManager.registerExpression(expressionMemory);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
+        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.IsNullOrEmpty);
+        maleSocket = digitalExpressionManager.registerExpression(expressionMemory);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
+        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.IsNotNullNorEmpty);
+        maleSocket = digitalExpressionManager.registerExpression(expressionMemory);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
+        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.IsNullEmptyOrOnlySpaces);
+        maleSocket = digitalExpressionManager.registerExpression(expressionMemory);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
+        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.IsNotNullNotEmptyNorOnlySpaces);
+        maleSocket = digitalExpressionManager.registerExpression(expressionMemory);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
+        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.MatchRegex);
+        maleSocket = digitalExpressionManager.registerExpression(expressionMemory);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
+        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.NotMatchRegex);
         maleSocket = digitalExpressionManager.registerExpression(expressionMemory);
         and.getChild(indexExpr++).connect(maleSocket);
 
