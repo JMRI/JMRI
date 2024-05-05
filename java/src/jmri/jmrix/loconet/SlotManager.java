@@ -57,9 +57,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     public int slotScanInterval = 50; // this is public to allow changes via script and tests
 
-    public int serviceModeReplyDelay = 20;  // this is public to allow changes via script and tests
+    public int serviceModeReplyDelay = 20;  // this is public to allow changes via script and tests. Adjusted by UsbDcs210PlusAdapter
 
-    public int opsModeReplyDelay = 100;  // this is public to allow changes via script and tests. Adjusted by UsbDcs210PlusAdapter
+    public int opsModeReplyDelay = 200;  // this is public to allow changes via script and tests. 
 
     public boolean pmManagerGotReply = false;  //this is public to allow changes via script and tests
 
