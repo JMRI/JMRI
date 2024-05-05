@@ -840,6 +840,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     /**
      * Handles OPC_LONG_ACK replies to programming slot operations.
      *
+     * LACK 0x6D00 which requests a retransmission is handled
+     * separately in the message(..) method.
+     *
      * @param m LocoNet message being analyzed
      */
     protected void handleLongAck(LocoNetMessage m) {
