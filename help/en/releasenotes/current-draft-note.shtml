@@ -132,6 +132,9 @@
                     in the configuration tool, the background will now turn
                     blue to indicate that to you.</li>
                 <li>Improved how the buttons are laid out at the bottom of the CDI window</li>
+                <li>Improved handling and display of messages that flag Simple protocol</li>
+                <li>Improve AME handling to make throttle connections more reliable in the 
+                    face of command station resets.</li>
 
             </ul>
 
