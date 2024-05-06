@@ -23,7 +23,7 @@
   <version author="John McMasters" version="2" lastUpdated="20230929"/>
    
 <decoder>
-    <family name="SFX Sound Decoders - Series 7" mfg="Digitrax" lowVersionID="203" highVersionID="203">
+    <family name="SFX Sound Decoders - Series 7" mfg="Digitrax" lowVersionID="203" highVersionID="205">
       <model model="SDH167" numOuts="6" numFns="28" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin" productID="SDXH167" comment="H0-Scale Sound Decoder, wired">
         <output name="1" label="White" connection="wire"/>
         <output name="2" label="Yellow" connection="wire"/>
