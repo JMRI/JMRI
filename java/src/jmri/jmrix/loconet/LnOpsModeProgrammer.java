@@ -227,12 +227,9 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             log.debug("  Message {}", m);
             memo.getLnTrafficController().sendLocoNetMessage(m);
             lncvAccessTimer.start();
-        } else if (getMode().equals(LnProgrammerManager.LOCONETOPSBOARD)) {
-            // LOCONETOPSBOARD decoder
-            memo.getSlotManager().setAcceptAnyLACK();
-            memo.getSlotManager().writeCVOpsMode(CV, val, pL, mAddress, mLongAddr);
         } else {
-            // DCC ops mode
+            // LOCONETOPSBOARD decoder i.e. getMode().equals(LnProgrammerManager.LOCONETOPSBOARD)
+            // and the remaining case of DCC ops mode
             memo.getSlotManager().setAcceptAnyLACK();
             memo.getSlotManager().writeCVOpsMode(CV, val, pL, mAddress, mLongAddr);
         }
