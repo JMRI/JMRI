@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 
 public class DispatcherShutDownTask extends AbstractShutDownTask {
 
-
     public DispatcherShutDownTask(String name) {
         super(name);
     }
@@ -17,22 +16,18 @@ public class DispatcherShutDownTask extends AbstractShutDownTask {
      * {@inheritDoc}
      */
     @Override
-    public Boolean call() {
-        DispatcherFrame df = InstanceManager.getDefault(DispatcherFrame.class);
-        var atList = Collections.unmodifiableCollection(df.getActiveTrainsList());
-        for (ActiveTrain at: atList) {
-            if (at.getAutoActiveTrain() != null) {
-                at.getAutoActiveTrain().initiateWorking();
-            }
-        }
-        return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void run() {
+        try {
+            DispatcherFrame df = InstanceManager.getDefault(DispatcherFrame.class);
+            var atList = Collections.unmodifiableCollection(df.getActiveTrainsList());
+            for (ActiveTrain at : atList) {
+                if (at.getAutoActiveTrain() != null) {
+                    at.getAutoActiveTrain().initiateWorking();
+                }
+            }
+        } catch (Exception ex) {
+            log.error("Failed to stop all autotrains", ex);
+        }
     }
 
     private static final Logger log = LoggerFactory.getLogger(DispatcherShutDownTask.class);

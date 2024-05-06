@@ -1,7 +1,9 @@
 package jmri.jmrit.dispatcher;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 import java.awt.GraphicsEnvironment;
+
 import org.junit.Assume;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,4 +27,5 @@ public class DispatcherShutDownTest {
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
+
 }
