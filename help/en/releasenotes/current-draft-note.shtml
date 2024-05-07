@@ -397,7 +397,9 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Update controlling Signal on screen in a timely fashion.</li>
+             <li>Stop train with profile in remaining blocks of a multi block section.</li>
+             <li>Stop autotrains on program exit.</li>
         </ul>
 
     <h3>Dispatcher System</h3>

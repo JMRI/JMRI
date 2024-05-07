@@ -315,6 +315,11 @@ public class ActiveTrain implements PropertyChangeProvider {
             log.error("Invalid ActiveTrain status - {}", status);
         }
     }
+
+    public void setControlingSignal(Object oldSignal, Object newSignal) {
+        firePropertyChange("signal", oldSignal, newSignal);
+    }
+
     public String getStatusText() {
         if (mStatus == RUNNING) {
             return Bundle.getMessage("RUNNING");
