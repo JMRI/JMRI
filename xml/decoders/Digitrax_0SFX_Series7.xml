@@ -15,8 +15,8 @@
   <!-- Version2 revised from version1 of the file -->
   <!-- Cleanup 9/29/23:
 		PaneDigitraxSoundExtSeries7
-		Plane SDH167 decoder
-		Draft PaneDigitraxFunctionmapSerues7
+		Plain SDH167 decoder
+		Draft PaneDigitraxFunctionmapSeries7
 						-->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <version author="John McMasters" version="1" lastUpdated="20230404"/>
