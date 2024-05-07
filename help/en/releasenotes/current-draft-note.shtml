@@ -86,6 +86,8 @@
 
         <h4>LocoNet</h4>
             <ul>
+                <li>DCS240+ has transponding built it, so that option is treated as selected.</li>
+                <li>Improved how LACK responses are handled in ops mode programming; sped up ops mode programming</li>
                 <li>Improved how threads are shutdown when changing connections
                     in the settings.</li>
             </ul>
@@ -225,7 +227,7 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li></li>
+                <li>SFX Series 7 support updated for XF controls.</li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<?transform-xslt href="http://jmri.org/xml/decoders/Digitrax_0SFX_Series7.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2010, 2014 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -15,14 +15,15 @@
   <!-- Version2 revised from version1 of the file -->
   <!-- Cleanup 9/29/23:
 		PaneDigitraxSoundExtSeries7
-		Plane SDH167 decoder
+		Plain SDH167 decoder
+		Draft PaneDigitraxFunctionmapSeries7
 						-->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <version author="John McMasters" version="1" lastUpdated="20230404"/>
   <version author="John McMasters" version="2" lastUpdated="20230929"/>
    
 <decoder>
-    <family name="SFX Sound Decoders - Series 7" mfg="Digitrax" lowVersionID="203" highVersionID="203">
+    <family name="SFX Sound Decoders - Series 7" mfg="Digitrax" lowVersionID="203" highVersionID="205">
       <model model="SDH167" numOuts="6" numFns="28" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin" productID="SDXH167" comment="H0-Scale Sound Decoder, wired">
         <output name="1" label="White" connection="wire"/>
         <output name="2" label="Yellow" connection="wire"/>
@@ -201,7 +202,14 @@
         <functionlabel num="12" lockable="false">Safety Blow off</functionlabel>
       </functionlabels>
     </family>
-    <programming direct="yes" paged="yes" register="yes" ops="yes" transpRead="yes"/>
+    <programming direct="yes" paged="yes" register="yes" ops="yes" transpRead="yes">
+        <capability>
+            <name>Indexed CV access</name>
+            <parameter name="PI">229</parameter>
+            <parameter name="SI">229</parameter>
+            <parameter name="cvFirst">false</parameter>
+        </capability>
+    </programming>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/vStartHighMid.xml"/>
@@ -219,6 +227,11 @@
         <label xml:lang="it">ID Costruttore: </label>
         <label xml:lang="fr">ID constructeur: </label>
         <label xml:lang="de">Hersteller ID: </label>
+      </variable>
+      <variable CV="253" readOnly="yes" item="Product Number" default="4">
+        <!-- default 4 is before XF is available, so a read is needed for top of XF pane-->
+        <decVal/>
+        <label>Software Version</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/motorDriveFreq.xml"/>
 
@@ -314,6 +327,12 @@
  <xi:include href="http://jmri.org/xml/decoders/digitrax/featureSettings7.xml"/>	
   <!-- Disable Feature Settings -->
   
+  <!-- Function Map 7 Settings -->
+<!--   This is now replaced by XSLT processing
+ <xi:include href="http://jmri.org/xml/decoders/digitrax/functionMapSettings7.xml"/>	
+ -->
+
+ <!-- Function Map 7 Settings -->
 
     </variables>
 	      <!-- end family    -->
@@ -328,6 +347,7 @@
       </factReset>
     </resets>
   </decoder>
+
   <xi:include href="http://jmri.org/xml/decoders/digitrax/PaneDigitrax.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/digitrax/PaneDigitraxSoundInfo.xml"/>
        <!-- inline sound levels and disables
@@ -337,4 +357,11 @@
                                     John McMasters (2023-04-4)          -->
  <xi:include href="http://jmri.org/xml/decoders/digitrax/PaneDigitraxSoundFeaturesSeries7.xml"/> 
 <!--                                                                        -->
+
+ <!-- version 3 - Add new Function Map Pane "include"
+                                    John McMasters (2023-09-29)          -->
+<!-- 
+ <xi:include href="http://jmri.org/xml/decoders/digitrax/PaneDigitraxFunctionmapSeries7.xml"/> 
+ -->
+
 </decoder-config>

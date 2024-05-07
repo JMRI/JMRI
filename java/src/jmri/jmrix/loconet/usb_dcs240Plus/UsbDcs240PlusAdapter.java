@@ -24,7 +24,7 @@ public class UsbDcs240PlusAdapter extends LocoBufferAdapter {
 
         options.remove(option2Name);
         options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationOptions(), false));
-
+        setOptionState("TranspondingPresent", "Yes"); // set the default value
     }
 
     @Override
@@ -51,6 +51,7 @@ public class UsbDcs240PlusAdapter extends LocoBufferAdapter {
     public void configure() {
         setCommandStationType(getOptionState(option2Name));
         setTurnoutHandling(getOptionState(option3Name));
+
         if (commandStationType == LnCommandStationType.COMMAND_STATION_USB_DCS240PLUS_ALONE) {
             // DCS240Plus USB in standalone programmer case:
             // connect to a packetizing traffic controller
@@ -65,6 +66,10 @@ public class UsbDcs240PlusAdapter extends LocoBufferAdapter {
 
             // set traffic controller and configure command station and mangers
             this.getSystemConnectionMemo().setLnTrafficController(packets);
+            // DCS204+ has transponding built in
+            setOptionState("TranspondingPresent", "Yes");
+            mTranspondingAvailable = true;
+
             // do the common manager config
             this.getSystemConnectionMemo().configureCommandStation(commandStationType,
                     mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mInterrogateAtStart, mLoconetProtocolAutoDetect);  // never transponding!
@@ -84,8 +89,10 @@ public class UsbDcs240PlusAdapter extends LocoBufferAdapter {
 
         } else {
             // MS100 modes - connecting to a separate command station
-            // get transponding option
+            // set transponding option - DCS240+ has transponding built in
+            setOptionState("TranspondingPresent", "Yes");
             setTranspondingAvailable(getOptionState("TranspondingPresent"));
+            
             setInterrogateOnStart(getOptionState("InterrogateOnStart"));
             setLoconetProtocolAutoDetect(getOptionState("LoconetProtocolAutoDetect"));
             // connect to a packetizing traffic controller
