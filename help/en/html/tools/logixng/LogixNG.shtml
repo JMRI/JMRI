@@ -198,6 +198,25 @@
           LogixNG Debugger</a> for information about the debugger.</p>
         </dd>
 
+        <dt>Log all before</dt>
+
+        <dd>
+          <p>The debugger is extended to display the LogixNG statement that is about to be executed.
+          The statement is displayed on the JMRI system console.
+          See <a href="../../../package/jmri/jmrit/logixng/ConditionalNGDebugger.shtml#logging">
+          LogixNG Debugger</a> for information about debugger logging.</p>
+        </dd>
+
+        <dt>Log all after</dt>
+
+        <dd>
+          <p>The debugger is extended to display the LogixNG statement after it has been executed.
+          For expressions, the true/false result is included. The statement is displayed on the JMRI
+          system console.
+          See <a href="../../../package/jmri/jmrit/logixng/ConditionalNGDebugger.shtml#logging">
+          LogixNG Debugger</a> for information about debugger logging.</p>
+        </dd>
+
         <dt>Show system names and user names</dt>
 
         <dd>

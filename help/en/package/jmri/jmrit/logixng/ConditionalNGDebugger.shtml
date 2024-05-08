@@ -22,7 +22,9 @@
       <p>To use the debugger, it must be enabled. In <strong>Preferences &rArr; LogixNG</strong>,
       the option <strong>Install debugger</strong> must be enabled.</p>
 
-
+      <p>The debugger supports two modes.  The first one is an IDE style debugger which supports
+      single step operation, breakpoints, etc.  The second mode is displaying each statement before
+      and/or after it is executed.  See <a href="#logging">Statement Logging</a>.</p>
 
       <h2>Using the debugger</h2>
 
@@ -110,6 +112,82 @@
       the ConditionalNG to a separate thread when the debugger is used, so that the debugger
       doesn't block the other ConditionalNGs.  See <a href="LogixNGTableEditor.shtml#EditThreads">
       Edit ConditionalNG Threads</a>.</p>
+
+      <h2 id="logging">Statement Logging<span class="since">since 5.7.7</span></h2>
+
+      <p>The <strong>Log all before</strong> and <strong>Log all after</strong> LogixNG preferences
+      are used to control the statement logging process.  When enabled, the expressions and actions
+      will be displayed on the JMRI System Console as they are executed.  The system console
+      is opened using <strong>Help &rArr; System Console</strong>.  Using a startup action for the
+      JMRI System Console is recommended.</p>
+
+      <p>The preferences can be enabled or disabled and saved at any time.  For example, do some
+      preliminary setup.  Enable the preferences, do the process, and then disable the preferences.
+      Then the System Console <strong>Copy to clipboard</strong> button can be used to copy and
+      paste into a text document for further analysis.</p>
+
+      <p>Here is a simple LogixNG.</p>
+
+      <div style="margin-left: 2em;">
+      <pre>
+LogixNG: IQ:AUTO:0001
+    ConditionalNG: IQC:AUTO:0001
+        ! A
+            Many
+                ! A1
+                    If Then Else. Execute on change
+                        ? If
+                            And. Evaluate All
+                                ? E1
+                                    Sensor ISCLOCKRUNNING is Inactive
+                        ! Then
+                            Log data: Only text: Clock is stopped
+                        ! Else
+                            Log data: Only text: Clock is running
+                ! A2
+                    Call module: Module
+      </pre>
+      </div>
+
+      <p>Here are the <strong>Before</strong> and <strong>After</strong> lines with both preferences
+      enabled and the sensor is changed to active.</p>
+
+      <div style="margin-left: 2em;">
+      <pre>
+WARN  - LogixNG Before: IQ:AUTO:0001, IQC:AUTO:0001: Many
+WARN  - LogixNG Before: IQ:AUTO:0001, IQC:AUTO:0001: If Then Else. Execute on change
+WARN  - LogixNG Before: IQ:AUTO:0001, IQC:AUTO:0001: And. Evaluate All
+WARN  - LogixNG Before: IQ:AUTO:0001, IQC:AUTO:0001: Sensor ISCLOCKRUNNING is Inactive
+WARN  - LogixNG  After: IQ:AUTO:0001, IQC:AUTO:0001: Sensor ISCLOCKRUNNING is Inactive --- Return value False
+WARN  - LogixNG  After: IQ:AUTO:0001, IQC:AUTO:0001: And. Evaluate All --- Return value False
+WARN  - LogixNG Before: IQ:AUTO:0001, IQC:AUTO:0001: Log data: Only text: Clock is running
+WARN  - Clock is running
+WARN  - LogixNG  After: IQ:AUTO:0001, IQC:AUTO:0001: Log data: Only text: Clock is running
+WARN  - LogixNG  After: IQ:AUTO:0001, IQC:AUTO:0001: If Then Else. Execute on change
+WARN  - LogixNG Before: IQ:AUTO:0001, IQC:AUTO:0001: Call module: Module
+WARN  - LogixNG Before: IQ:AUTO:0001, IQC:AUTO:0001: Log data: Only text: Module called
+WARN  - Module called
+WARN  - LogixNG  After: IQ:AUTO:0001, IQC:AUTO:0001: Log data: Only text: Module called
+WARN  - LogixNG  After: IQ:AUTO:0001, IQC:AUTO:0001: Call module: Module
+WARN  - LogixNG  After: IQ:AUTO:0001, IQC:AUTO:0001: Many
+      </pre>
+      </div>
+
+      <p>The <strong>Before</strong> lines are by start sequence.  The <strong>After</strong> lines
+      are by completion sequence.  When an item has subordinate items, such as <strong>Many</strong>,
+      <strong>If</strong> and <strong>And</strong> in the example, the <strong>Before</strong> and
+      <strong>After</strong> lines will be separated.</p>
+
+      <p>The <strong>After</strong> line for <strong>Expressions</strong> includes the resulting
+      true/false state.</p>
+
+      <p>The LogixNG and ConditionalNG names identify the source of the log entry.  When a conditional
+      calls a module, the names do not changed since the module is running within the conditional
+      context.  If <strong>Before</strong> is enabled, the <em>Call module</em> action
+      identifies the call to the module.  If <strong>After</strong> is enabled, the <strong>After</strong>
+      <em>Call Module</em> will show the return point. If <strong>After</strong> is not enabled, the
+      return is not visible and has to be deduced by looking at the <strong>Before</strong> lines
+      based on the statement sequence.</p>
 
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
