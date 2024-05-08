@@ -22,9 +22,13 @@
       <p>To use the debugger, it must be enabled. In <strong>Preferences &rArr; LogixNG</strong>,
       the option <strong>Install debugger</strong> must be enabled.</p>
 
-      <p>The debugger supports two modes.  The first one is an IDE style debugger which supports
-      single step operation, breakpoints, etc.  The second mode is displaying each statement before
-      and/or after it is executed.  See <a href="#logging">Statement Logging</a>.</p>
+      <p>The debugger supports two different tools.  The first one is an IDE style debugger which
+      supports single step operation, breakpoints, etc.  This provides a detail look at what happens
+      for a single ConditionalNG.  The second one displays each statement before and/or after it is
+      executed for every active ConditionalNG.  This can provide a history of the actions and
+      expressions.  Since this applies to all ConditionalNGs, it also provides insight into how
+      different ConditionalNGs might interact. See <a href="#logging">Statement Logging</a>.
+      Note: Both tools can be used at the same time.</p>
 
       <h2>Using the debugger</h2>
 
