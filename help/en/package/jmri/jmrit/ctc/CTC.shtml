@@ -11,7 +11,7 @@
   <div id="mainContent" class="no-sidebar">
     <h1>JMRI: CTC</h1>
 
-    <p>CTC (Centralized Traffic Control) is a chiefly North American system for implementing a
+    <p>Union Switch and Signal (US&S) CTC (Centralized Traffic Control) is a chiefly North American system for implementing a
       train dispatcher's workstation. It is a very complex system.
       An understanding of the goals of CTC and how it functions is
       very helpful. While this tool will describe various CTC features, it is not a CTC course.
