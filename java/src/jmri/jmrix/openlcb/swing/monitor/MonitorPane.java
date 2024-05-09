@@ -478,7 +478,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
             String[] filters = filterField.getText().toUpperCase().split(" ");
 
             for (String s : filters) {
-                if (checkRaw.toUpperCase().startsWith(s.toUpperCase())) {
+                if (! s.isEmpty() && checkRaw.toUpperCase().startsWith(s.toUpperCase())) {
                     synchronized (this) {
                         linesBuffer.setLength(0);
                     }
