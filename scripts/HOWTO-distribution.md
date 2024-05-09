@@ -476,8 +476,6 @@ ${EDITOR} ../website/releaselist ../website/releasenotes/jmri5.7.7.shtml scripts
 ====================================================================================
 ## Create GitHub Release and upload files
 
-This puts the right tag on the branch, then removes the branch.
-
 Note: Once a GitHub Release is created it is *not* possible to change it to refer to different contents. *Once this step is done, you need to move on to the next release number.*
 
 - Disable the Jenkins [release-build project](https://builds.jmri.org/jenkins/job/testreleases/job/5.7.7/); this is so it doesn't fail after later steps
@@ -501,9 +499,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.7.7+R539a39880d.dmg](https://github.com/JMRI/JMRI/releases/download/v5.7.7/JMRI.5.7.7+R539a39880d.dmg) | fbb4391a2589d138e812032e37da31c761ae577a1bd5d8f7405c05c39c4690c1
-[JMRI.5.7.7+R539a39880d.exe](https://github.com/JMRI/JMRI/releases/download/v5.7.7/JMRI.5.7.7+R539a39880d.exe) | 296301bf7ddb75ead01200f9af363fd97fadee032b12db8993676bf9e05fdf88
-[JMRI.5.7.7+R539a39880d.tgz](https://github.com/JMRI/JMRI/releases/download/v5.7.7/JMRI.5.7.7+R539a39880d.tgz) | 9cce572a66e4c8087de39e0983509baca5a73cab25f2eb680ae35f2dd38c5c51
+[JMRI.5.7.7+R5cf2ea9d7f.dmg](https://github.com/JMRI/JMRI/releases/download/v5.7.7/JMRI.5.7.7+R5cf2ea9d7f.dmg) | 1ad141e60e4233f1f06795faf74a8f9ef00da66810e1b1371edbba73df80bf68
+[JMRI.5.7.7+R5cf2ea9d7f.exe](https://github.com/JMRI/JMRI/releases/download/v5.7.7/JMRI.5.7.7+R5cf2ea9d7f.exe) | ddba58494cd25b00ad219e12dfb33ffdac27c14054aba863b8a912e3e5a77c7d
+[JMRI.5.7.7+R5cf2ea9d7f.tgz](https://github.com/JMRI/JMRI/releases/download/v5.7.7/JMRI.5.7.7+R5cf2ea9d7f.tgz) | 2e3c44a16378691b1aa83082cbaf4a20c3bfcf971140f70ee8538c0611a4a7e9
 ```
 
 - Attach files by selecting them or dragging them in from the release/ subdirectory. Make sure that the Linux one is .tgz, not .tar.
