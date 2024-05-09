@@ -254,7 +254,7 @@ public class ImportCars extends ImportRollingStock {
                             JmriJOptionPane.ERROR_MESSAGE);
                     break;
                 }
-                if (TrainCommon.splitString(carRoad).length() > Control.max_len_string_attibute) {
+                if (carRoad.split(TrainCommon.HYPHEN)[0].length() > Control.max_len_string_attibute) {
                     JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("CarRoadNameTooLong",
                             carRoad, carNumber, carRoad),
                             Bundle.getMessage("carAttribute",
@@ -262,7 +262,7 @@ public class ImportCars extends ImportRollingStock {
                             JmriJOptionPane.ERROR_MESSAGE);
                     break;
                 }
-                if (TrainCommon.splitString(carType).length() > Control.max_len_string_attibute) {
+                if (carType.split(TrainCommon.HYPHEN)[0].length() > Control.max_len_string_attibute) {
                     JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("CarTypeNameTooLong",
                             carRoad, carNumber, carType),
                             Bundle.getMessage("carAttribute",
