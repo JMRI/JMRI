@@ -36,7 +36,7 @@ public class ActivateTrainFrameTest {
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 
