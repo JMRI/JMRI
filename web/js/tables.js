@@ -1,7 +1,6 @@
 /*
  * TablesServlet specific JavaScript
  *
- * TODO: add filter to tables
  * TODO: add enum descriptions to schema and use them for converting states, and
  *         for calc'ing the "next" state
  * TODO: improve performance when client is sitting on page while lengthy list is loaded into JMRI
