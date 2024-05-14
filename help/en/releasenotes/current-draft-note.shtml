@@ -377,7 +377,8 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Better handling of selected items when roster list is updated</li>
+            <li>Enable/Disable bottom controls depending on selected item</li>
         </ul>
 
     <h3>CTC Tool</h3>
