@@ -23,7 +23,8 @@ function showError(code, message) {
 //append a new row to the table, or replace an existing row, based on name
 function setRow(name, data){
   var tbody = $("table#jmri-data tbody").html(); //get current table body
-  var tds = "<td class='name'>" + data.name + "</td><td>" + data.carType + ", " + data.color + "</td><td class='location'>"; //build cells
+  var carType = data.carType + ", " + data.color;
+  var tds = "<td class='name'>" + data.name + "</td><td class='carType'>" + carType + "</td><td class='location'>"; //build cells
   //format location
   if (data.locationUnknown == true) {  
       tds += "&lt;?&gt;";
@@ -38,7 +39,7 @@ function setRow(name, data){
   //format train name
   tds += "</td><td>" + (data.trainName != null ? data.trainName : "&nbsp;") + "</td>";
     
-  var tr = "<tr data-name='" + data.name + "'>" + tds + "</tr>"; //build row with key
+  var tr = "<tr data-name='" + data.name + "' data-cartype='" + carType + "'>" + tds + "</tr>"; //build row with key
   var row = $("table#jmri-data tr[data-name='" + name + "']"); //look for row by key
   if ($(row).length) {
       row.html(tds); //if found, replace cells
@@ -98,9 +99,9 @@ $(document).ready(function () {
             gSelectString += 'Select New Location</button>';
             gSelectString += '<ul class="dropdown-menu" role="menu">';
             data.forEach(l => {
-                jmri.log("Received " + l.type +" '" + l.data.name +"'");
+//                jmri.log("Received " + l.type +" '" + l.data.name +"'");
                 l.data.track.forEach(t => {
-                    jmri.log("Found track '" + t.name +"'");
+//                    jmri.log("Found track '" + t.name +"'");
                     gSelectString += '<li><a href="#">' + t.userName + '</a></li>';                                     
                 }); //forEach (t)rack
 //                jmri.getObject(el.type, el.data.name);
@@ -125,13 +126,21 @@ $(document).ready(function () {
         });
     });
 
-    //listen for clicks on location cells
+    //listen for clicks on rows
     $('table#jmri-data')
-      .on('click', 'td.location', function (e) {
-        carName = $(this).parent('tr').data('name');
-        currLocation = $(this).text();
-        $(this).html(gSelectString); 
-        jmri.log("clicked '" + carName + "' at '" + currLocation + "'");
+      .on('click', 'tbody tr', function (e) {
+        //copy data from selected column to edit modal
+        carName = $(this).data('name');
+        $('#modal-car-edit-carName').text(carName);
+        carType = $(this).find('td.carType').text();
+        $('#modal-car-edit-carType').text(carType);
+        locationName = $(this).find('td.location').text();
+        $('#modal-car-edit-location').text(locationName);
+//        currLocation = $(this).text();
+//        $(this).html(gSelectString); 
+//        jmri.log("clicked '" + carName + "' at '" + currLocation + "'");
+        $('#modal-car-edit').modal("show");
+
      });
 
 });
