@@ -407,7 +407,9 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>Add the <strong>hidden</strong> attribute to the Layout Editor <strong>Shape</strong>
+            item.  The center popup menu has an option to hide the shape when not editing.  The
+            <strong>setHidden(boolean)</strong> public method can be used by scripts and LogixNG.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
