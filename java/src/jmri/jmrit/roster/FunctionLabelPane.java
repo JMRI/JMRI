@@ -26,6 +26,9 @@ public class FunctionLabelPane extends javax.swing.JPanel {
 
     JCheckBox[] lockable;
     public JCheckBox getLockable(int index) { return lockable[index]; }
+    
+    JCheckBox[] visible;
+    public JCheckBox getVisiblee(int index) { return visible[index]; }
 
     JRadioButton[] shunterMode;
     ButtonGroup shunterModeGroup;
@@ -56,6 +59,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
 
         labels = new JTextField[maxfunction + 1];
         lockable = new JCheckBox[maxfunction + 1];
+        visible = new JCheckBox[maxfunction + 1];
         shunterMode = new JRadioButton[maxfunction + 1];
         shunterModeGroup = new ButtonGroup();
         _imageFilePath = new EditableResizableImagePanel[maxfunction + 1];
@@ -78,6 +82,8 @@ public class FunctionLabelPane extends javax.swing.JPanel {
         cL.gridx++;
         add(new JLabel(Bundle.getMessage("FunctionButtonLockable")), cL);
         cL.gridx++;
+        add(new JLabel(Bundle.getMessage("FunctionButtonVisible")), cL);
+        cL.gridx++;        
         add(new JLabel(Bundle.getMessage("FunctionButtonImageOff")), cL);
         cL.gridx++;
         add(new JLabel(Bundle.getMessage("FunctionButtonImageOn")), cL);
@@ -94,6 +100,8 @@ public class FunctionLabelPane extends javax.swing.JPanel {
         cL.gridx++;
         add(new JLabel(Bundle.getMessage("FunctionButtonLockable")), cL);
         cL.gridx++;
+        add(new JLabel(Bundle.getMessage("FunctionButtonVisible")), cL);
+        cL.gridx++;           
         add(new JLabel(Bundle.getMessage("FunctionButtonImageOff")), cL);
         cL.gridx++;
         add(new JLabel(Bundle.getMessage("FunctionButtonImageOn")), cL);
@@ -116,11 +124,18 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             add(labels[i], cL);
             cL.gridx++;
 
-            // add the checkbox
+            // add the lock/latch checkbox
             lockable[i] = new JCheckBox();
             lockable[i].setSelected(re.getFunctionLockable(i));
             lockable[i].setToolTipText(Bundle.getMessage("FunctionButtonLockableToolTip"));
             add(lockable[i], cL);
+            cL.gridx++;
+            
+            // add the visibility checkbox
+            visible[i] = new JCheckBox();
+            visible[i].setSelected(re.getFunctionVisible(i));
+            visible[i].setToolTipText(Bundle.getMessage("FunctionButtonVisibleToolTip"));
+            add(visible[i], cL);
             cL.gridx++;
 
             // add the function buttons
@@ -149,7 +164,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             }
             shunterMode[i].setToolTipText(Bundle.getMessage("ShuntButtonToolTip"));
             add(shunterMode[i], cL);
-            if (cL.gridx == 5) {
+            if (cL.gridx == 6) {
                 cL.gridx++;
                 // add divider
                 add(new JLabel("|"), cL);
@@ -158,7 +173,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             cL.gridy++;
             if (cL.gridy == ((maxfunction + 2) / 2) + 1) {
                 cL.gridy = 1;  // skip titles
-                nextx = nextx + 7;
+                nextx = nextx + 8;
             }
             cL.gridx = nextx;
         }
@@ -190,6 +205,18 @@ public class FunctionLabelPane extends javax.swing.JPanel {
                         return true;
                     }
                     if (!r.getFunctionLockable(i) && lockable[i].isSelected()) {
+                        return true;
+                    }
+                }
+            }
+        }
+        if (visible != null) {
+            for (int i = 0; i < visible.length; i++) {
+                if (visible[i] != null) {
+                    if (r.getFunctionVisible(i) && !visible[i].isSelected()) {
+                        return true;
+                    }
+                    if (!r.getFunctionVisible(i) && visible[i].isSelected()) {
                         return true;
                     }
                 }
@@ -243,8 +270,20 @@ public class FunctionLabelPane extends javax.swing.JPanel {
              for (int i = 0; i < labels.length; i++) {
                 labels[i].setText(re.getFunctionLabel(i));
                 lockable[i].setSelected(re.getFunctionLockable(i));
+                visible[i].setSelected(re.getFunctionVisible(i));                
              }
         }
+        if (re.getShuntingFunction() != null) {
+            try {
+                int sfn = Integer.parseInt( re.getShuntingFunction().substring(1) );
+                if (sfn<shunterMode.length && shunterMode[sfn]!=null) {
+                    shunterMode[sfn].setSelected(true);
+                }
+            } catch (NumberFormatException e) {
+                // pass
+            }
+        }
+        
     }
 
     /**
@@ -259,6 +298,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
                 if (labels[i] != null && !labels[i].getText().equals("")) {
                     r.setFunctionLabel(i, labels[i].getText());
                     r.setFunctionLockable(i, lockable[i].isSelected());
+                    r.setFunctionVisible(i, visible[i].isSelected());
                     r.setFunctionImage(i, _imageFilePath[i].getImagePath());
                     r.setFunctionSelectedImage(i, _imagePressedFilePath[i].getImagePath());
                 } else if (labels[i] != null && labels[i].getText().equals("")) {
@@ -334,7 +374,10 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             for (int i = 0; i <= maxfunction; i++) {
                 String name = "" + i;
                 if (re.getFunctionLockable(i)) {
-                    name = name + " (locked)";
+                    name = name + " (lockable)";
+                }
+                if (! re.getFunctionVisible(i)) {
+                    name = name + " (not visible)";
                 }
                 String value = re.getFunctionLabel(i);
                 //Skip Blank functions
