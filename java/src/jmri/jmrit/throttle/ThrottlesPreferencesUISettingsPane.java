@@ -76,7 +76,7 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
         cbEnableRosterSearch.setText(Bundle.getMessage("ExThrottleEnableRosterSearch"));
         cbEnableAutoLoad.setText(Bundle.getMessage("ExThrottleEnableAutoSave"));
         cbHideUndefinedButtons.setText(Bundle.getMessage("ExThrottleHideUndefinedFunctionButtons"));
-        cbHideSpeedSelector.setText(Bundle.getMessage("ExThrottlCheckBoxHideSpeedStepSelector"));
+        cbHideSpeedSelector.setText(Bundle.getMessage("ExThrottleCheckBoxHideSpeedStepSelector"));
         cbIgnoreThrottlePosition.setText(Bundle.getMessage("ExThrottleIgnoreThrottlePosition"));
         cbSaveThrottleOnLayoutSave.setText(Bundle.getMessage("ExThrottleSaveThrottleOnLayoutSave"));
         cbSilentSteal.setText(Bundle.getMessage("ExThrottleSilentSteal"));

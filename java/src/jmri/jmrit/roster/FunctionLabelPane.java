@@ -28,7 +28,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     public JCheckBox getLockable(int index) { return lockable[index]; }
     
     JCheckBox[] visible;
-    public JCheckBox getVisiblee(int index) { return visible[index]; }
+    public JCheckBox getVisible(int index) { return visible[index]; }
 
     JRadioButton[] shunterMode;
     ButtonGroup shunterModeGroup;

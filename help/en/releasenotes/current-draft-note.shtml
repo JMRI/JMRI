@@ -541,8 +541,8 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li>A visible property was added to function buttons defined in the label&media panels of decoderpro, this property is used by the throttle UI.</li>
-            <li>A throttle preference was added to show/hidethe speed step selector on the control panel of new UI throttle.</li>
+            <li>A visible property was added to function buttons defined in the label&amp;media panels of decoderpro, this property is used by the throttle UI.</li>
+            <li>A throttle preference was added to show/hide the speed step selector on the control panel of any new UI throttles.</li>
             <li>When a throttle UI layout is saved using the File->Save current throttle menu entry, if it is linked to a roster entry, the user will be proposed to also export function buttons customizations to the roster entry.</li>
         </ul>
 
