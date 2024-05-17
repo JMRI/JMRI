@@ -1003,13 +1003,13 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
             log.debug("notifyAddressReleased() throttle already null, called for loc {}",la);
             return;
         }
+        if (throttle!=null && allThrottlesTableModel.getNumberOfEntriesFor((DccLocoAddress) throttle.getLocoAddress()) == 1 )  {
+            throttleManager.removeListener(throttle.getLocoAddress(), allThrottlesTableModel);
+        }        
         throttle = null;
         setLastUsedSaveFile(null);        
         setFrameTitle();
         throttleWindow.updateGUI(); 
-        if (throttle!=null && allThrottlesTableModel.getNumberOfEntriesFor((DccLocoAddress) throttle.getLocoAddress()) == 1 )  {
-            throttleManager.removeListener(throttle.getLocoAddress(), allThrottlesTableModel);
-        }
         allThrottlesTableModel.fireTableDataChanged();        
     }
 
