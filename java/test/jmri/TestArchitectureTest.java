@@ -95,9 +95,9 @@ public class TestArchitectureTest {
     @ArchTest
     public static final ArchRule minimalJULinJmriTests = noClasses()
         .that().resideInAPackage("jmri..")
-        .and().doNotHaveFullyQualifiedName("jmri.util.TestingLoggerConfiguration")
-        .and().doNotHaveFullyQualifiedName("jmri.util.web.BrowserFactory")
-        .and().doNotHaveFullyQualifiedName("jmri.web.WebServerAcceptanceSteps")
+        .and().doNotHaveFullyQualifiedName("jmri.util.TestingLoggerConfiguration") // tests jul routed to l4j OK
+        .and().doNotHaveFullyQualifiedName("jmri.util.web.BrowserFactory") // 3rd party lib setup
+        .and().doNotHaveFullyQualifiedName("jmri.web.WebServerAcceptanceSteps") // testing output from lib
         .should().dependOnClassesThat().resideInAPackage("java.util.logging");
 
     /**
