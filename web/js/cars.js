@@ -92,23 +92,45 @@ $(document).ready(function () {
 //                + JSON.stringify(data).substr(0, 180) + "...");
             setRow(name, data); // add or update the row
         },       
-        // when the JMRI object receives an array of cars, call this
+        // when the JMRI object receives an array of locations, call this
         locations: function (data) {
             jmri.log("in locations: data=" + JSON.stringify(data).substr(0, 180) + "...");
-            gSelectString  = '<div class="btn-group">';
-            gSelectString += '<button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-            gSelectString += 'Select New Location</button>';
-            gSelectString += '<ul class="dropdown-menu" role="menu">';
-            data.forEach(l => {
-//                jmri.log("Received " + l.type +" '" + l.data.name +"'");
-                l.data.track.forEach(t => {
-//                    jmri.log("Found track '" + t.name +"'");
-                    gSelectString += '<li><a href="#">' + t.userName + '</a></li>';                                     
-                }); //forEach (t)rack
-//                jmri.getObject(el.type, el.data.name);
-            }); //forEach (l)ocation
-            gSelectString += "</ul></div>";
+
+            Locations = data;//JSON.parse(data);
+            // Sort the location by userName
+            Locations.sort(function(a,b) {
+                var at = a.data.userName;
+                var bt = b.data.userName;         
+                return (at > bt)?1:((at < bt)?-1:0); 
+            });
+        
+            var s = '';
+            var t = '';
+            for (var i = 0; i < Locations.length; i++) {
+                // Add the locations to the the dropdown
+                s += '<option value="' + Locations[i].data.name + '">' + Locations[i].data.userName + '</option>';
+                
+                // Sort the tracks within each location by the track userName
+                Locations[i].data.track.sort(function(a,b) {
+                    var at = a.userName;
+                    var bt = b.userName;         
+                    return (at > bt)?1:((at < bt)?-1:0); 
+                });
+                
+                // Add each track to the dropdown with a data- property to enable searching in ddlbLocation_OnChange()
+                for (var j = 0; j < Locations[i].data.track.length; j++){
+                    t += '<option value="' + Locations[i].data.track[j].name + '" data-locationid="' + Locations[i].data.name + '">' + Locations[i].data.track[j].userName + '</option>';
+                }
+            }
+            $('#modal-car-edit-select-location').html(s);
+            $('#modal-car-edit-select-track').html(t);
+
         },
+        error: function(error) {
+            $("#error-alert div").text(error.message);
+            $("#error-alert").addClass("show").removeClass("hidden");
+        },
+        
         // all messages call console(), so use it for debugging
         console: function (originalData) {
 //            var data = JSON.parse(originalData);
@@ -137,11 +159,71 @@ $(document).ready(function () {
         $('#modal-car-edit-carType').text(carType);
         locationName = $(this).find('td.location').text();
         $('#modal-car-edit-location').text(locationName);
-//        currLocation = $(this).text();
-//        $(this).html(gSelectString); 
-//        jmri.log("clicked '" + carName + "' at '" + currLocation + "'");
         $('#modal-car-edit').modal("show");
-
      });
+
+    //setup change listener for location select
+    function Select_Location_OnChange() {
+        // refresh ddlbTrack
+        var locationID = $('#modal-car-edit-select-location').find(":selected").val();
+        var tracks = $('#modal-car-edit-select-track').children();
+        var firstOption = '';
+        $(tracks).each(function() {
+            if($(this).data("locationid") == locationID) {
+                $(this).show();
+                if (firstOption == '') {
+                    firstOption = $(this).val();
+                }
+            } 
+            else {
+                $(this).hide();
+            }
+        });
+        $('#modal-car-edit-select-track').val(firstOption);
+        Select_Track_OnChange();
+//        $('#txtCarNumber').val('');
+    }
+    $("[id=modal-car-edit-select-location]").on('change', Select_Location_OnChange);
+
+    function Select_Track_OnChange() {
+        // Get track details
+        var locationID = $('#modal-car-edit-select-location').find(":selected").val();
+        var trackID = $('#modal-car-edit-select-track').find(":selected").val();
+        var trackLength = 'unknown';
+        var carTypes = 'unknown';
+        Locations.forEach(function(thisLocation) {
+            if (thisLocation.data.name == locationID) {
+                thisLocation.data.track.forEach(function(thisTrack) {
+//                    var breakppoint = 1;
+                    if (thisTrack.name == trackID) {
+                        trackLength = thisTrack.length;
+                        carTypes = thisTrack.carType.join('; ');
+                    }
+                });
+            }
+        });
+        $('#modal-car-edit-trackLength').text(trackLength + 'ft');
+        $('#modal-car-edit-carTypes').text(carTypes);
+        
+//        getCarsOnTrack();
+    }
+    $("[id=modal-car-edit-select-track]").on('change', Select_Track_OnChange);
+
+
+    function Save_OnClick() {
+        cmd = {
+            name: $('#modal-car-edit-carName').text(), 
+            location: {
+                name: $('#modal-car-edit-select-location').find(":selected").val(), 
+                track: {
+                    name: $('#modal-car-edit-select-track').find(":selected").val(), 
+                }
+            }
+        };
+        $('#modal-car-edit').modal("hide");
+        jmri.socket.send('car', cmd, 'post');    
+    }
+    $("[id=modal-car-edit-save]").on('click', Save_OnClick);
+
 
 });

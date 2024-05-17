@@ -2427,6 +2427,7 @@
       <xs:attribute name="linewidth" type="xs:int"></xs:attribute>
       <xs:attribute name="lineColor" type="screenColorType" use="required"></xs:attribute>
       <xs:attribute name="fillColor" type="screenColorType" use="required"></xs:attribute>
+      <xs:attribute name="hidden" type="trueFalseType"></xs:attribute>
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
     </xs:complexType>
 </xs:schema>

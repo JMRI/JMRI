@@ -152,6 +152,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             int functionNumber = functionButton.getIdentity();
             String text = functionButton.getButtonLabel();
             boolean lockable = functionButton.getIsLockable();
+            boolean visible = functionButton.getDisplay();
             String imagePath = functionButton.getIconPath();
             String imageSelectedPath = functionButton.getSelectedIconPath();
             if (functionButton.isDirty()) {
@@ -178,6 +179,9 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                 if (rosterEntry.getFunctionLabel(functionNumber) != null ) {
                     if( lockable != rosterEntry.getFunctionLockable(functionNumber)) {
                         rosterEntry.setFunctionLockable(functionNumber, lockable);
+                    }
+                    if( visible != rosterEntry.getFunctionVisible(functionNumber)) {
+                        rosterEntry.setFunctionVisible(functionNumber, visible);
                     }
                     if ( (!imagePath.isEmpty() && rosterEntry.getFunctionImage(functionNumber) == null )
                             || (rosterEntry.getFunctionImage(functionNumber) != null && imagePath.compareTo(rosterEntry.getFunctionImage(functionNumber)) != 0)) {
@@ -247,7 +251,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             }
             if (re != null) {
                 if (re.getFunctionLabel(i) != null) {
-                    functionButtons[i].setDisplay(true);
+                    functionButtons[i].setDisplay(re.getFunctionVisible(i));
                     functionButtons[i].setButtonLabel(re.getFunctionLabel(i));
                     if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
                         functionButtons[i].setIconPath(re.getFunctionImage(i));
@@ -319,7 +323,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                     }
                     String text = rosterEntry.getFunctionLabel(i);
                     if (text != null) {
-                        functionButtons[i].setDisplay(true);
+                        functionButtons[i].setDisplay(rosterEntry.getFunctionVisible(i));
                         functionButtons[i].setButtonLabel(text);
                         if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
                             functionButtons[i].setIconPath(rosterEntry.getFunctionImage(i));

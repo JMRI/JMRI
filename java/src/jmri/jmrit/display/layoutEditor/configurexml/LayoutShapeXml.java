@@ -21,13 +21,13 @@ public class LayoutShapeXml extends AbstractXmlAdapter {
 
     public LayoutShapeXml() {
     }
-    
+
     // default mapping fine
-    static final EnumIoNames<LayoutShape.LayoutShapeType> sTypeEnumMap 
+    static final EnumIoNames<LayoutShape.LayoutShapeType> sTypeEnumMap
             = new EnumIoNames<>(LayoutShape.LayoutShapeType.class);
-    static final EnumIoNames<LayoutShape.LayoutShapePointType> pTypeEnumMap 
+    static final EnumIoNames<LayoutShape.LayoutShapePointType> pTypeEnumMap
             = new EnumIoNames<>(LayoutShape.LayoutShapePointType.class);
-    
+
     /**
      * Default implementation for storing the contents of a LayoutShape
      *
@@ -49,6 +49,9 @@ public class LayoutShapeXml extends AbstractXmlAdapter {
             element.setAttribute("linewidth", "" + s.getLineWidth());
             element.setAttribute("lineColor", ColorUtil.colorToHexString(s.getLineColor()));
             element.setAttribute("fillColor", ColorUtil.colorToHexString(s.getFillColor()));
+            if (s.isHidden()) {
+                element.setAttribute("hidden", "true");
+            }
 
             Element elementPoints = new Element("points");
             ArrayList<LayoutShape.LayoutShapePoint> shapePoints = s.getPoints();
@@ -137,6 +140,12 @@ public class LayoutShapeXml extends AbstractXmlAdapter {
             }
         }
 
+        a = element.getAttribute("hidden");
+        if (a != null) {
+            // The attribute only exists when true
+            s.setHidden(true);
+        }
+
         Element pointsElement = element.getChild("points");
         if (pointsElement != null) {
             List<Element> elementList = pointsElement.getChildren("point");
@@ -147,7 +156,7 @@ public class LayoutShapeXml extends AbstractXmlAdapter {
 
                         LayoutShape.LayoutShapePointType pointType =
                                 pTypeEnumMap.inputFromAttribute(relem.getAttribute("type"));
-                        
+
                         double x = 0.0;
                         double y = 0.0;
                         try {

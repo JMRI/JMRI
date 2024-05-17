@@ -377,7 +377,8 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Better handling of selected items when roster list is updated</li>
+            <li>Enable/Disable bottom controls depending on selected item</li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -407,7 +408,9 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>Add the <strong>hidden</strong> attribute to the Layout Editor <strong>Shape</strong>
+            item.  The center popup menu has an option to hide the shape when not editing.  The
+            <strong>setHidden(boolean)</strong> public method can be used by scripts and LogixNG.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -540,7 +543,9 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>A visible property was added to function buttons defined in the label&amp;media panels of decoderpro, this property is used by the throttle UI.</li>
+            <li>A throttle preference was added to show/hide the speed step selector on the control panel of any new UI throttles.</li>
+            <li>When a throttle UI layout is saved using the File->Save current throttle menu entry, if it is linked to a roster entry, the user will be proposed to also export function buttons customizations to the roster entry.</li>
         </ul>
 
     <h3>Timetable</h3>
