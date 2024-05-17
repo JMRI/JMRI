@@ -881,26 +881,27 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
      * setFrameTitle - set the frame title based on type, text and address
      */
     public void setFrameTitle() {
-        String addr = Bundle.getMessage("ThrottleTitle");
-        if (addressPanel.getThrottle() != null) {
-            addr = addressPanel.getCurrentAddress().toString();
-        }
-        if (throttleWindow.getTitleTextType().compareTo("address") == 0) {
-            throttleWindow.setTitle(addr);
-        } else if (throttleWindow.getTitleTextType().compareTo("text") == 0) {
-            throttleWindow.setTitle(throttleWindow.getTitleText());
-        } else if (throttleWindow.getTitleTextType().compareTo("addressText") == 0) {
-            throttleWindow.setTitle(addr + " " + throttleWindow.getTitleText());
-        } else if (throttleWindow.getTitleTextType().compareTo("textAddress") == 0) {
-            throttleWindow.setTitle(throttleWindow.getTitleText() + " " + addr);
-        } else if (throttleWindow.getTitleTextType().compareTo("rosterID") == 0) {
-            if ((addressPanel.getRosterEntry() != null) && (addressPanel.getRosterEntry().getId() != null)
-                    && (addressPanel.getRosterEntry().getId().length() > 0)) {
-                throttleWindow.setTitle(addressPanel.getRosterEntry().getId());
-            } else {
-                throttleWindow.setTitle(addr);
+        String winTitle = Bundle.getMessage("ThrottleTitle");
+        if (throttleWindow.getTitleTextType().compareTo("text") == 0) {
+            winTitle = throttleWindow.getTitleText();
+        } else  if ( throttle != null) {
+            String addr  = addressPanel.getCurrentAddress().toString();        
+            if (throttleWindow.getTitleTextType().compareTo("address") == 0) {
+                winTitle = addr;         
+            } else if (throttleWindow.getTitleTextType().compareTo("addressText") == 0) {
+                winTitle = addr + " " + throttleWindow.getTitleText();
+            } else if (throttleWindow.getTitleTextType().compareTo("textAddress") == 0) {
+                winTitle = throttleWindow.getTitleText() + " " + addr;
+            } else if (throttleWindow.getTitleTextType().compareTo("rosterID") == 0) {
+                if ( (addressPanel.getRosterEntry() != null) && (addressPanel.getRosterEntry().getId() != null)
+                        && (addressPanel.getRosterEntry().getId().length() > 0)) {
+                    winTitle = addressPanel.getRosterEntry().getId();
+                } else {
+                    winTitle = addr; // better than nothing in that particular case
+                }
             }
         }
+        throttleWindow.setTitle(winTitle);        
     }
 
     @Override
@@ -1002,14 +1003,14 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
             log.debug("notifyAddressReleased() throttle already null, called for loc {}",la);
             return;
         }
-        setLastUsedSaveFile(null);
+        throttle = null;
+        setLastUsedSaveFile(null);        
         setFrameTitle();
         throttleWindow.updateGUI(); 
         if (throttle!=null && allThrottlesTableModel.getNumberOfEntriesFor((DccLocoAddress) throttle.getLocoAddress()) == 1 )  {
             throttleManager.removeListener(throttle.getLocoAddress(), allThrottlesTableModel);
         }
-        allThrottlesTableModel.fireTableDataChanged();
-        throttle = null;
+        allThrottlesTableModel.fireTableDataChanged();        
     }
 
     @Override
