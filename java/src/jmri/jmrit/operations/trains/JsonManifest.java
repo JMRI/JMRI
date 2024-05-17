@@ -99,10 +99,11 @@ public class JsonManifest extends TrainCommon {
             }
             // add location comment and id
             ObjectNode locationNode = this.mapper.createObjectNode();
-            locationNode.put(JSON.COMMENT, StringEscapeUtils.escapeHtml4(routeLocation.getLocation().getComment()));
+            locationNode.put(JSON.COMMENT,
+                    StringEscapeUtils.escapeHtml4(routeLocation.getLocation().getCommentWithColor()));
             locationNode.put(JSON.NAME, routeLocation.getLocation().getId());
             jsonLocation.set(JsonOperations.LOCATION, locationNode);
-            jsonLocation.put(JSON.COMMENT, StringEscapeUtils.escapeHtml4(routeLocation.getComment()));
+            jsonLocation.put(JSON.COMMENT, StringEscapeUtils.escapeHtml4(routeLocation.getCommentWithColor()));
             // engine change or helper service?
             if (train.getSecondLegOptions() != Train.NO_CABOOSE_OR_FRED) {
                 ArrayNode options = this.mapper.createArrayNode();
@@ -168,8 +169,9 @@ public class JsonManifest extends TrainCommon {
             }
             jsonCars.set(JSON.REMOVE, setouts);
 
+            jsonLocation.set(JsonOperations.TRACK, this.getTrackComments(routeLocation, carList));
+
             if (routeLocation != train.getTrainTerminatesRouteLocation()) {
-                jsonLocation.set(JsonOperations.TRACK, this.getTrackComments(routeLocation, carList));
                 jsonLocation.put(JSON.TRAIN_DIRECTION, routeLocation.getTrainDirection());
                 ObjectNode length = this.mapper.createObjectNode();
                 length.put(JSON.LENGTH, train.getTrainLength(routeLocation));
@@ -218,31 +220,11 @@ public class JsonManifest extends TrainCommon {
             List<Track> tracks = routeLocation.getLocation().getTracksByNameList(null);
             for (Track track : tracks) {
                 ObjectNode jsonTrack = this.mapper.createObjectNode();
-                // any pick ups or set outs to this track?
-                boolean pickup = false;
-                boolean setout = false;
-                for (Car car : cars) {
-                    if (car.getRouteLocation() == routeLocation && car.getTrack() != null && car.getTrack() == track) {
-                        pickup = true;
-                    }
-                    if (car.getRouteDestination() == routeLocation && car.getDestinationTrack() != null
-                            && car.getDestinationTrack() == track) {
-                        setout = true;
-                    }
-                }
-                if (pickup) {
-                    jsonTrack.put(JSON.ADD, StringEscapeUtils.escapeHtml4(track.getCommentPickup()));
-                }
-                if (setout) {
-                    jsonTrack.put(JSON.REMOVE, StringEscapeUtils.escapeHtml4(track.getCommentSetout()));
-                }
-                if (pickup && setout) {
-                    jsonTrack.put(JSON.ADD_AND_REMOVE, StringEscapeUtils.escapeHtml4(track.getCommentBoth()));
-                }
-                if (pickup || setout) {
+                    jsonTrack.put(JSON.ADD, StringEscapeUtils.escapeHtml4(track.getCommentPickupWithColor()));
+                    jsonTrack.put(JSON.REMOVE, StringEscapeUtils.escapeHtml4(track.getCommentSetoutWithColor()));
+                    jsonTrack.put(JSON.ADD_AND_REMOVE, StringEscapeUtils.escapeHtml4(track.getCommentBothWithColor()));
                     jsonTrack.put(JSON.COMMENT, StringEscapeUtils.escapeHtml4(track.getComment()));
                     comments.set(track.getId(), jsonTrack);
-                }
             }
         }
         return comments;
