@@ -58,7 +58,7 @@ public class JsonOperations {
     /**
      * {@value #TRAIN_NAME}
      */
-    public static final String TRAIN_NAME = "trainName"; // NOI18N
+    public static final String TRAIN_ICON_NAME = "trainIconName"; // NOI18N
     /**
      * {@value #TRAIN}
      */

@@ -346,13 +346,10 @@ public class JsonUtil {
         }
         if (rs.getTrain() != null) {
             node.put(JsonOperations.TRAIN_ID, rs.getTrain().getId());
+            node.put(JsonOperations.TRAIN_ICON_NAME, rs.getTrain().getIconName());
         } else {
             node.set(JsonOperations.TRAIN_ID, null);
-        }  
-        if (rs.getTrain() != null) {
-            node.put(JsonOperations.TRAIN_NAME, rs.getTrain().getName());
-        } else {
-            node.set(JsonOperations.TRAIN_NAME, null);
+            node.set(JsonOperations.TRAIN_ICON_NAME, null);
         }  
         if (rs.getDestinationTrack() != null) {
             node.set(JsonOperations.DESTINATION,

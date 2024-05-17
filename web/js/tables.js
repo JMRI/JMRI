@@ -53,7 +53,7 @@ function rebuildTable(data) {
         data.forEach(function (item) { //loop thru rows in json
             var keep = true;
             $.each(params, function (index, value) { //compare against filter parms, skipping unless all match
-                if (displayCellValue(item.type, index, item.data[index]) != value) {
+                if (displayCellValue(item.type, index, item.data[index]).toLowerCase() != value.toLowerCase()) {
                     keep = false;
                     jmri.log("no match for " +index+"="+value+" != " + item.data[index])
                     return false;

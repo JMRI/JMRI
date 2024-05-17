@@ -1,6 +1,8 @@
 /*
  * Cars specific JavaScript
  *
+ * TODO: change json server to send train name that matches Ops (name loco)
+ * TODO: add filter by columns, and change all to use train
  */
 
 var jmri = null;
@@ -13,40 +15,53 @@ const params = Object.fromEntries(urlSearchParams.entries());
 //handle an error message returned via the websocket from the server
 //  parms: html error code, message is the message text
 function showError(code, message) {
-    $("#activity-alert").removeClass("show").addClass("hidden");
-    $("table#jmri-data").removeClass("show").addClass("hidden");
-    $("#warning-no-data").removeClass("show").addClass("hidden");
-    $("#error-message").html("Error " + code + ":" + message);
-    $("#error-message").removeClass("hidden").addClass("show");
+    jmri.log("Error " + code + ":" + message);
+    $("#modal-car-error-message").html("Error " + code + ":" + message);
+    $('#modal-car-error').modal("show");    
 }
 
 //append a new row to the table, or replace an existing row, based on name
 function setRow(name, data){
-  var tbody = $("table#jmri-data tbody").html(); //get current table body
-  var carType = data.carType + ", " + data.color;
-  var tds = "<td class='name'>" + data.name + "</td><td class='carType'>" + carType + "</td><td class='location'>"; //build cells
-  //format location
-  if (data.locationUnknown == true) {  
-      tds += "&lt;?&gt;";
-  } else if (data.location != null) {
-      tds += data.location.userName;
-      if (data.location.track != null) {
-          tds += " (" + data.location.track.userName + ")"; 
-      }
-  } else {
-      tds += "&nbsp;"; 
-  } 
-  //format train name
-  tds += "</td><td>" + (data.trainName != null ? data.trainName : "&nbsp;") + "</td>";
-    
-//  var tr = "<tr data-name='" + data.name + "' data-cartype='" + carType + "'>" + tds + "</tr>"; //build row with key
-  var tr = "<tr data-name='" + data.name + "'>" + tds + "</tr>"; //build row with key
-  var row = $("table#jmri-data tr[data-name='" + name + "']"); //look for row by key
-  if ($(row).length) {
-      row.html(tds); //if found, replace cells
-  } else {
-      $("table#jmri-data tbody").html(tbody + tr); //if not found, append row to table body
-  }
+		  var tbody = $("table#jmri-data tbody").html(); //get current table body
+		  var carType = data.carType + ", " + data.color;
+		  var tds = "<td class='name'>" + data.name 
+		      + "</td><td class='carType'>" + carType 
+		      + "</td><td class='location'>";
+		  //format location
+		  if (data.locationUnknown == true) {  
+		      tds += "&lt;?&gt;";
+		  } else if (data.location != null) {
+		      tds += data.location.userName;
+		      if (data.location.track != null) {
+		          tds += " (" + data.location.track.userName + ")"; 
+		      }
+		  } else {
+		      tds += "&nbsp;"; 
+		  } 
+		  //format train icon name
+//          tds += "</td><td class='trainIconName'>" + (data.trainIconName != null ? data.trainIconName : "&nbsp;") + "</td>"; 
+          tds += "</td><td class='trainIconName'>" + (data.trainIconName ? data.trainIconName : "&nbsp;") + "</td>"; 
+
+		  //add hidden column for trainID (for filter)
+		  tds += "<td class='trainId hidden'>" + (data.trainId ?  data.trainId : "") + "</td>"; 
+		    
+		  var tr = "<tr data-name='" + data.name + "'>" + tds + "</tr>"; //build row with key
+	var keep = true;
+	$.each(params, function (index, value) { //compare against filter parms, skipping unless all match
+		if ($(tr).find('td.'+index).text().toLowerCase() != value.toLowerCase()) {
+			keep = false;
+            return false;
+	    }                                
+	});
+	if (keep) {
+
+		  var row = $("table#jmri-data tr[data-name='" + name + "']"); //look for row by key
+		  if ($(row).length) {
+		      row.html(tds); //if found, replace cells
+		  } else {
+		      $("table#jmri-data tbody").html(tbody + tr); //if not found, append row to table body
+		  }
+	}
 };
 
 //-----------------------------------------javascript processing starts here (main) ---------------------------------------------
@@ -56,9 +71,17 @@ $(document).ready(function () {
     $("#table-type").text($("html").data("table-type"));
     document.title = $("h1.title").text();
 
-    //get train if passed in
-    var gTrainName = getParameterByName("train");
-    $("#searchBox").text(gTrainName);
+    //get searchVal if passed in
+    var searchVal = getParameterByName("searchVal");
+    if (searchVal) {
+        searchVal = searchVal.replace(/%20/g, " "); //unescape spaces
+        $("#searchBox").val(searchVal);
+    }
+
+    //show filter if used
+    if (!$.isEmptyObject(params)) { 
+        $('#filter-text').text("Filter: " + urlSearchParams.toString().replace("&",", "));
+    }
         
     jmri = $.JMRI({
         // when we get the hello message, send a websocket list request which
@@ -91,6 +114,9 @@ $(document).ready(function () {
 //            jmri.log("in car: name='" + name + "', data=" 
 //                + JSON.stringify(data).substr(0, 180) + "...");
             setRow(name, data); // add or update the row
+            if ($('#searchBox').val() != "") {
+                $('#searchBox').trigger('keyup'); //TODO: find more efficient place to do this!
+            }
         },       
         // when the JMRI object receives an array of locations, call this
         locations: function (data) {
@@ -126,10 +152,10 @@ $(document).ready(function () {
             $('#modal-car-edit-select-track').html(t);
 
         },
+        
+        //log error and show to user
         error: function(error) {
-            $("#error-alert div").text(error.message);
-            $("#error-alert").addClass("show").removeClass("hidden");
-        },
+            showError(error.code, error.message);        },
         
         // all messages call console(), so use it for debugging
         console: function (originalData) {
@@ -185,6 +211,7 @@ $(document).ready(function () {
     }
     $("[id=modal-car-edit-select-location]").on('change', Select_Location_OnChange);
 
+    //setup change listener for track select
     function Select_Track_OnChange() {
         // Get track details
         var locationID = $('#modal-car-edit-select-location').find(":selected").val();
@@ -209,7 +236,7 @@ $(document).ready(function () {
     }
     $("[id=modal-car-edit-select-track]").on('change', Select_Track_OnChange);
 
-
+    //handle click on Save button
     function Save_OnClick() {
         cmd = {
             name: $('#modal-car-edit-carName').text(), 
@@ -224,6 +251,5 @@ $(document).ready(function () {
         jmri.socket.send('car', cmd, 'post');    
     }
     $("[id=modal-car-edit-save]").on('click', Save_OnClick);
-
 
 });

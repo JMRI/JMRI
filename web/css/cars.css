@@ -29,9 +29,13 @@ h1.title {
 }
 
 input#searchBox {
-    float: right;
+/*    float: right; */
     font-size: 1.5em;
     line-height: 1.5em;
-    width: 49%;
-    margin-top: 0.5em;
+/*    width: 49%; */
+    margin-top: 0.75em;
+}
+
+span#filter-text {
+    float: right;
 }

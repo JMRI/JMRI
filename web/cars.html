@@ -174,9 +174,17 @@ navigation bar silently attempts a reconnection and does not use this dialog.
 </div>
 
 <!-- Navigation Bar %2$s -->
-        <div class="jumbotron col-md-6">
-            <h1 class="title text-capitalize">JMRI Cars</h1>
-            <input id="searchBox" type="text" placeholder="Cars Search..">
+        <div class="jumbotron">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <h1 class="title text-capitalize">JMRI Cars</h1>
+                    </div>
+                    <div class="col-lg-4">
+                        <input id="searchBox" type="text" placeholder="Cars Search..">
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="container">
             <div id="activity-alert" class="alert alert-info alert-dismissable">Getting data...</div>
@@ -185,7 +193,7 @@ navigation bar silently attempts a reconnection and does not use this dialog.
             <table id="jmri-data" class="cars sortable table table-striped table-hover table-responsive hidden">
                 <thead>
                     <tr>
-                        <th>Name</th><th>Type</th><th>Location</th><th>Train</th>
+                        <th>Name</th><th>Type</th><th>Location</th><th>Train</th><th class='trainId hidden'>TrainId</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -194,7 +202,7 @@ navigation bar silently attempts a reconnection and does not use this dialog.
             </table>
         </div><!-- /container -->
     </div><!-- /wrap -->
-<!-- modal dialog box for editing a car -->
+    <!-- modal dialog box for editing a car -->
 <div class="modal fade" id="modal-car-edit" tabindex="-1" role="dialog" aria-labelledby="modal-car-edit-label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -217,12 +225,27 @@ navigation bar silently attempts a reconnection and does not use this dialog.
         </div>
     </div>
 </div>
+<div class="modal fade" id="modal-car-error" tabindex="-1" role="dialog" aria-labelledby="modal-car-error-label" aria-hidden="true">
+    <div class="modal-dialog text-danger">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="modal-car-error-label">Error!</h4>
+            </div>
+            <div class="modal-body">
+                <p id="modal-car-error-message">message goes here</p>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
     
 <!-- Footer %4$s -->
 <footer>
     <div class="container">
         <div id="no-websockets" class="hidden pull-right alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>WebSockets are disabled.</div>
-        <p class="text-muted">Powered by <a href="https://www.jmri.org">JMRI</a>.</p>
+        <p class="text-muted">Powered by <a href="https://www.jmri.org">JMRI</a>.<span id="filter-text"></span></p>
     </div>
 </footer>
 <!-- Footer %4$s -->
