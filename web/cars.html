@@ -194,20 +194,22 @@ navigation bar silently attempts a reconnection and does not use this dialog.
             </table>
         </div><!-- /container -->
     </div><!-- /wrap -->
-<!-- dialog box for editing a car -->
+<!-- modal dialog box for editing a car -->
 <div class="modal fade" id="modal-car-edit" tabindex="-1" role="dialog" aria-labelledby="modal-car-edit-label" aria-hidden="true">
-    <div class="modal-dialog text-danger">
+    <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">                
+            <div class="modal-header text-primary">                
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                
-                <h4 class="modal-title" id="modal-car-edit-label">Edit <span id="modal-car-edit-carName"></span></h4>
+                <h4 class="modal-title" id="modal-car-edit-label">Edit Car <span id="modal-car-edit-carName"></span></h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body text-secondary">
                 <p id="modal-car-edit-carType"></p>
                 <p id="modal-car-edit-location"></p>
+                <p id="modal-car-edit-select-location"></p>
+                <p id="modal-car-edit-select-track"></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="modal-car-edit-save">Save</button>
+                <button type="button" class="btn btn-primary" id="modal-car-edit-save">Save</button>
 <!--                <button type="button" class="btn btn-primary" id="modal-car-edit-cancel">Cancel</button> -->
             </div>
         </div>

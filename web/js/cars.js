@@ -39,7 +39,8 @@ function setRow(name, data){
   //format train name
   tds += "</td><td>" + (data.trainName != null ? data.trainName : "&nbsp;") + "</td>";
     
-  var tr = "<tr data-name='" + data.name + "' data-cartype='" + carType + "'>" + tds + "</tr>"; //build row with key
+//  var tr = "<tr data-name='" + data.name + "' data-cartype='" + carType + "'>" + tds + "</tr>"; //build row with key
+  var tr = "<tr data-name='" + data.name + "'>" + tds + "</tr>"; //build row with key
   var row = $("table#jmri-data tr[data-name='" + name + "']"); //look for row by key
   if ($(row).length) {
       row.html(tds); //if found, replace cells
