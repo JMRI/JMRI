@@ -287,10 +287,11 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         return dataTable.getSelectionModel().getSelectionMode();
     }
 
-    public void setSelection(RosterEntry... selection) {
+    public boolean setSelection(RosterEntry... selection) {
         //Remove the listener as this change will re-activate it and we end up in a loop!
         dataTable.getSelectionModel().removeListSelectionListener(tableSelectionListener);
         dataTable.clearSelection();
+        boolean foundIt = false;
         if (selection != null) {
             for (RosterEntry entry : selection) {
                 re = entry;
@@ -298,10 +299,11 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
                 for (int i = 0; i < entries; i++) {
                     if (dataModel.getValueAt(sorter.convertRowIndexToModel(i), RosterTableModel.IDCOL).equals(re.getId())) {
                         dataTable.addRowSelectionInterval(i, i);
+                        foundIt = true;
                     }
                 }
             }
-            if (selection.length > 1) {
+            if (selection.length > 1 || !foundIt) {
                 re = null;
             } else {
                 this.moveTableViewToSelected();
@@ -310,6 +312,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
             re = null;
         }
         dataTable.getSelectionModel().addListSelectionListener(tableSelectionListener);
+        return foundIt;
     }
 
     class HeaderActionListener implements ActionListener {
