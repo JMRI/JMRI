@@ -58,6 +58,10 @@ public class JsonOperations {
     /**
      * {@value #TRAIN_NAME}
      */
+    public static final String TRAIN_NAME = "trainName"; // NOI18N
+    /**
+     * {@value #TRAIN_ICON_NAME}
+     */
     public static final String TRAIN_ICON_NAME = "trainIconName"; // NOI18N
     /**
      * {@value #TRAIN}
@@ -66,7 +70,7 @@ public class JsonOperations {
     /**
      * {@value #WEIGHT}
      * <p>
-     * Used for actual weight of rolling stock in onces or a train's weight in tons
+     * Used for actual weight of rolling stock in ounces or a train's weight in tons
      */
     public static final String WEIGHT = "weight"; // NOI18N
     /**
