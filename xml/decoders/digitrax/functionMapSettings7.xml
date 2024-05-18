@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
+<!-- This file is no longer used by an decoder definitions -->
+<!-- Further use of it is deprecated sonce April 2024      -->
+<!-- We're keeping it here for a littie while in case      -->
+<!-- somebody has a local copy of older decoder            -->
+<!-- definitions that uses it.                             -->
+
+
 <!-- Copyright (C) JMRI  2023 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->

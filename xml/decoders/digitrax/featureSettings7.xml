@@ -11,6 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
+<!-- revised - obsolete features           John McMasters (2024-04-23)      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2023</year>
@@ -104,7 +105,7 @@
   </variable>
   <variable item="Feature Disable Group 2-4" CV="186" mask="XXXXVXXX"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Disable Auto Vary Notch</label>
+    <label>Disable Not Used</label>
     <tooltip>Disabled =1, Enabled=0</tooltip>
   </variable>
   <variable item="Feature Disable Group 2-5" CV="186" mask="XXXVXXXX"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
@@ -143,17 +144,17 @@
   </variable>
   <variable item="Feature Disable Group 3-2" CV="187" mask="XXXXXXVX"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Disable DEMO ALL HornS/whistles</label>
+    <label>Disable Not Used</label>
     <tooltip>Disabled =1, Enabled=0</tooltip>
   </variable>
   <variable item="Feature Disable Group 3-3" CV="187" mask="XXXXXVXX"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Disable Bell on Idle Exit</label>
+    <label>Disable Bell</label>
     <tooltip>Disabled =1, Enabled=0</tooltip>
   </variable>
   <variable item="Feature Disable Group 3-4" CV="187" mask="XXXXVXXX"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Disable Motor Lock on BRAKE</label>
+    <label>Disable Motor Lock</label>
     <tooltip>Disabled =1, Enabled=0</tooltip>
   </variable>
   <variable item="Feature Disable Group 3-5" CV="187" mask="XXXVXXXX"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
@@ -163,7 +164,7 @@
   </variable>
   <variable item="Feature Disable Group 3-6" CV="187" mask="XXVXXXXX"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Disable Dynamic BRAKES</label>
+    <label>Disable Dynamic Brakes</label>
     <tooltip>Disabled =1, Enabled=0</tooltip>
     </variable>
   <variable item="Feature Disable Group 3-7" CV="187" mask="XVXXXXXX"    exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
@@ -220,8 +221,8 @@
   </variable>
   <variable item="Feature Disable Group 4-8" CV="188" mask="VXXXXXXX"   exclude="SDH167,SDXH167"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <tooltip>Disable Not Used</tooltip>
-    <label>Disable Not Used</label>
+    <tooltip>DEMO force cold start</tooltip>
+    <label>Force cold start</label>
   </variable>
   <!-- Disable Sound Settings -->
   

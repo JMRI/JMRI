@@ -112,6 +112,40 @@ public class AllocatedSection {
         autoTurnoutsResponse = atr;
     }
 
+    /**
+     * Get the length of the section remaining including current block
+     * @param block block to start totaling block lengths
+     * @return length in millimetres
+     */
+    public float getLengthRemaining(Block block) {
+        float length = 0.0f;
+        if (mSection == null) {
+            return length;
+        }
+        if (mSection.getState() == Section.FORWARD) {
+            for (int ix = 0;ix < mSection.getNumBlocks();ix++) {
+                Block b = (mSection.getBlockBySequenceNumber(ix));
+                if (b != null) {
+                    if (length > 0.0f || b == block) {
+                        length += b.getLengthMm();
+                    }
+                }
+            }
+        }
+        else if (mSection.getState() == Section.REVERSE) {
+            for (int ix =  mSection.getNumBlocks()-1;ix > -1 ;ix--) {
+                Block b = (mSection.getBlockBySequenceNumber(ix));
+                if (b != null) {
+                    if (length > 0.0f || b == block) {
+                        length += b.getLengthMm();
+                    }
+                }
+            }
+        }
+        log.debug("Remaining length in section[{}] is [{}]",mSection.getDisplayName(), length);
+        return length;
+    }
+
     public List<LayoutTrackExpectedState<LayoutTurnout>> getAutoTurnoutsResponse() {
         return autoTurnoutsResponse;
     }

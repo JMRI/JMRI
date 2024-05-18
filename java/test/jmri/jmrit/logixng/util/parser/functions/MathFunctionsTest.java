@@ -33,6 +33,8 @@ public class MathFunctionsTest {
     ExpressionNode expr0_34 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "0.34", 0));
     ExpressionNode expr0_95 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "0.95", 0));
     ExpressionNode expr12_34 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "12.34", 0));
+    ExpressionNode expr12_3456789 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "12.3456789", 0));
+    ExpressionNode expr1234567 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "1234567", 0));
     ExpressionNode expr12 = new ExpressionNodeIntegerNumber(new Token(TokenType.NONE, "12", 0));
     ExpressionNode expr23 = new ExpressionNodeIntegerNumber(new Token(TokenType.NONE, "23", 0));
     ExpressionNode exprNeg0_34 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "-0.34", 0));
@@ -49,6 +51,19 @@ public class MathFunctionsTest {
     ExpressionNode expr180 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "180", 0));
     ExpressionNode expr270 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "270", 0));
     ExpressionNode expr360 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "360", 0));
+
+    ExpressionNode expr1 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "1", 0));
+    ExpressionNode expr2 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "2", 0));
+    ExpressionNode expr3 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "3", 0));
+
+    ExpressionNode exprNeg1 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "-1", 0));
+    ExpressionNode exprNeg2 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "-2", 0));
+    ExpressionNode exprNeg3 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "-3", 0));
+
+
+    private ExpressionNode getExprNode(String value) {
+        return new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, value, 0));
+    }
 
     private List<ExpressionNode> getParameterList(ExpressionNode... exprNodes) {
         List<ExpressionNode> list = new ArrayList<>();
@@ -367,6 +382,126 @@ public class MathFunctionsTest {
         Assert.assertEquals("numbers are equal", Double.NaN, (Double)sqrtFunction.calculate(symbolTable, getParameterList(exprNeg0_34)), 0.0000001d);
         Assert.assertEquals("numbers are equal", Double.NaN, (Double)sqrtFunction.calculate(symbolTable, getParameterList(exprNeg0_95)), 0.0000001d);
         Assert.assertEquals("numbers are equal", Double.NaN, (Double)sqrtFunction.calculate(symbolTable, getParameterList(exprNeg12_34)), 0.0000001d);
+    }
+
+    @Test
+    public void testRoundFunction() throws Exception {
+        Function roundFunction = InstanceManager.getDefault(FunctionManager.class).get("round");
+        Assert.assertEquals("strings matches", "round", roundFunction.getName());
+
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+
+        // Test round(x)
+        Assert.assertEquals("numbers are equal", (Double)0.0, (Double)roundFunction.calculate(symbolTable, getParameterList(expr0_34)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1.0, (Double)roundFunction.calculate(symbolTable, getParameterList(expr0_95)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)12.0, (Double)roundFunction.calculate(symbolTable, getParameterList(expr12_3456789)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1.0, (Double)roundFunction.calculate(symbolTable, getParameterList(getExprNode("1.4"))), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)2.0, (Double)roundFunction.calculate(symbolTable, getParameterList(getExprNode("1.5"))), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)2.0, (Double)roundFunction.calculate(symbolTable, getParameterList(getExprNode("1.6"))), 0.0000001d);
+
+        // Test round(x) with number of decimals
+        Assert.assertEquals("numbers are equal", (Double)12.0, (Double)roundFunction.calculate(symbolTable, getParameterList(expr12_3456789, expr0)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)12.3, (Double)roundFunction.calculate(symbolTable, getParameterList(expr12_3456789, expr1)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)12.35, (Double)roundFunction.calculate(symbolTable, getParameterList(expr12_3456789, expr2)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)12.346, (Double)roundFunction.calculate(symbolTable, getParameterList(expr12_3456789, expr3)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)10.0, (Double)roundFunction.calculate(symbolTable, getParameterList(expr12_3456789, exprNeg1)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)0.0, (Double)roundFunction.calculate(symbolTable, getParameterList(expr12_3456789, exprNeg2)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)0.0, (Double)roundFunction.calculate(symbolTable, getParameterList(expr12_3456789, exprNeg3)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1234567.0, (Double)roundFunction.calculate(symbolTable, getParameterList(expr1234567)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1234567.0, (Double)roundFunction.calculate(symbolTable, getParameterList(expr1234567, expr0)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1234570.0, (Double)roundFunction.calculate(symbolTable, getParameterList(expr1234567, exprNeg1)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1234600.0, (Double)roundFunction.calculate(symbolTable, getParameterList(expr1234567, exprNeg2)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1235000.0, (Double)roundFunction.calculate(symbolTable, getParameterList(expr1234567, exprNeg3)), 0.0000001d);
+
+        Assert.assertEquals("numbers are equal", (Double)1.0, (Double)roundFunction.calculate(symbolTable, getParameterList(getExprNode("1.4"), getExprNode("0"))), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)2.0, (Double)roundFunction.calculate(symbolTable, getParameterList(getExprNode("1.5"), getExprNode("0"))), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)2.0, (Double)roundFunction.calculate(symbolTable, getParameterList(getExprNode("1.6"), getExprNode("0"))), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1.00, (Double)roundFunction.calculate(symbolTable, getParameterList(getExprNode("1.004"), getExprNode("2"))), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1.01, (Double)roundFunction.calculate(symbolTable, getParameterList(getExprNode("1.00500001"), getExprNode("2"))), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1.01, (Double)roundFunction.calculate(symbolTable, getParameterList(getExprNode("1.006"), getExprNode("2"))), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)100.0, (Double)roundFunction.calculate(symbolTable, getParameterList(getExprNode("140"), getExprNode("-2"))), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)200.0, (Double)roundFunction.calculate(symbolTable, getParameterList(getExprNode("150"), getExprNode("-2"))), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)200.0, (Double)roundFunction.calculate(symbolTable, getParameterList(getExprNode("160"), getExprNode("-2"))), 0.0000001d);
+    }
+
+    @Test
+    public void testCeilFunction() throws Exception {
+        Function ceilFunction = InstanceManager.getDefault(FunctionManager.class).get("ceil");
+        Assert.assertEquals("strings matches", "ceil", ceilFunction.getName());
+
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+
+        // Test ceil(x)
+        Assert.assertEquals("numbers are equal", (Double)1.0, (Double)ceilFunction.calculate(symbolTable, getParameterList(expr0_34)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1.0, (Double)ceilFunction.calculate(symbolTable, getParameterList(expr0_95)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)13.0, (Double)ceilFunction.calculate(symbolTable, getParameterList(expr12_3456789)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)2.0, (Double)ceilFunction.calculate(symbolTable, getParameterList(getExprNode("1.4"))), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)2.0, (Double)ceilFunction.calculate(symbolTable, getParameterList(getExprNode("1.5"))), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)2.0, (Double)ceilFunction.calculate(symbolTable, getParameterList(getExprNode("1.6"))), 0.0000001d);
+
+        // Test ceil(x) with number of decimals
+        Assert.assertEquals("numbers are equal", (Double)13.0, (Double)ceilFunction.calculate(symbolTable, getParameterList(expr12_3456789, expr0)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)12.4, (Double)ceilFunction.calculate(symbolTable, getParameterList(expr12_3456789, expr1)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)12.35, (Double)ceilFunction.calculate(symbolTable, getParameterList(expr12_3456789, expr2)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)12.346, (Double)ceilFunction.calculate(symbolTable, getParameterList(expr12_3456789, expr3)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)20.0, (Double)ceilFunction.calculate(symbolTable, getParameterList(expr12_3456789, exprNeg1)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)100.0, (Double)ceilFunction.calculate(symbolTable, getParameterList(expr12_3456789, exprNeg2)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1000.0, (Double)ceilFunction.calculate(symbolTable, getParameterList(expr12_3456789, exprNeg3)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1234567.0, (Double)ceilFunction.calculate(symbolTable, getParameterList(expr1234567)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1234567.0, (Double)ceilFunction.calculate(symbolTable, getParameterList(expr1234567, expr0)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1234570.0, (Double)ceilFunction.calculate(symbolTable, getParameterList(expr1234567, exprNeg1)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1234600.0, (Double)ceilFunction.calculate(symbolTable, getParameterList(expr1234567, exprNeg2)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1235000.0, (Double)ceilFunction.calculate(symbolTable, getParameterList(expr1234567, exprNeg3)), 0.0000001d);
+
+        Assert.assertEquals("numbers are equal", (Double)2.0, (Double)ceilFunction.calculate(symbolTable, getParameterList(getExprNode("1.4"), getExprNode("0"))), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)2.0, (Double)ceilFunction.calculate(symbolTable, getParameterList(getExprNode("1.5"), getExprNode("0"))), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)2.0, (Double)ceilFunction.calculate(symbolTable, getParameterList(getExprNode("1.6"), getExprNode("0"))), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1.01, (Double)ceilFunction.calculate(symbolTable, getParameterList(getExprNode("1.004"), getExprNode("2"))), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1.01, (Double)ceilFunction.calculate(symbolTable, getParameterList(getExprNode("1.00500001"), getExprNode("2"))), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1.01, (Double)ceilFunction.calculate(symbolTable, getParameterList(getExprNode("1.006"), getExprNode("2"))), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)200.0, (Double)ceilFunction.calculate(symbolTable, getParameterList(getExprNode("140"), getExprNode("-2"))), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)200.0, (Double)ceilFunction.calculate(symbolTable, getParameterList(getExprNode("150"), getExprNode("-2"))), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)200.0, (Double)ceilFunction.calculate(symbolTable, getParameterList(getExprNode("160"), getExprNode("-2"))), 0.0000001d);
+    }
+
+    @Test
+    public void testFloorFunction() throws Exception {
+        Function floorFunction = InstanceManager.getDefault(FunctionManager.class).get("floor");
+        Assert.assertEquals("strings matches", "floor", floorFunction.getName());
+
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+
+        // Test floor(x)
+        Assert.assertEquals("numbers are equal", (Double)0.0, (Double)floorFunction.calculate(symbolTable, getParameterList(expr0_34)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)0.0, (Double)floorFunction.calculate(symbolTable, getParameterList(expr0_95)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)12.0, (Double)floorFunction.calculate(symbolTable, getParameterList(expr12_3456789)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1.0, (Double)floorFunction.calculate(symbolTable, getParameterList(getExprNode("1.4"))), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1.0, (Double)floorFunction.calculate(symbolTable, getParameterList(getExprNode("1.5"))), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1.0, (Double)floorFunction.calculate(symbolTable, getParameterList(getExprNode("1.6"))), 0.0000001d);
+
+        // Test floor(x) with number of decimals
+        Assert.assertEquals("numbers are equal", (Double)12.0, (Double)floorFunction.calculate(symbolTable, getParameterList(expr12_3456789, expr0)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)12.3, (Double)floorFunction.calculate(symbolTable, getParameterList(expr12_3456789, expr1)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)12.34, (Double)floorFunction.calculate(symbolTable, getParameterList(expr12_3456789, expr2)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)12.345, (Double)floorFunction.calculate(symbolTable, getParameterList(expr12_3456789, expr3)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)10.0, (Double)floorFunction.calculate(symbolTable, getParameterList(expr12_3456789, exprNeg1)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)0.0, (Double)floorFunction.calculate(symbolTable, getParameterList(expr12_3456789, exprNeg2)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)0.0, (Double)floorFunction.calculate(symbolTable, getParameterList(expr12_3456789, exprNeg3)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1234567.0, (Double)floorFunction.calculate(symbolTable, getParameterList(expr1234567)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1234567.0, (Double)floorFunction.calculate(symbolTable, getParameterList(expr1234567, expr0)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1234560.0, (Double)floorFunction.calculate(symbolTable, getParameterList(expr1234567, exprNeg1)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1234500.0, (Double)floorFunction.calculate(symbolTable, getParameterList(expr1234567, exprNeg2)), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1234000.0, (Double)floorFunction.calculate(symbolTable, getParameterList(expr1234567, exprNeg3)), 0.0000001d);
+
+        Assert.assertEquals("numbers are equal", (Double)1.0, (Double)floorFunction.calculate(symbolTable, getParameterList(getExprNode("1.4"), getExprNode("0"))), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1.0, (Double)floorFunction.calculate(symbolTable, getParameterList(getExprNode("1.5"), getExprNode("0"))), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1.0, (Double)floorFunction.calculate(symbolTable, getParameterList(getExprNode("1.6"), getExprNode("0"))), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1.00, (Double)floorFunction.calculate(symbolTable, getParameterList(getExprNode("1.004"), getExprNode("2"))), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1.00, (Double)floorFunction.calculate(symbolTable, getParameterList(getExprNode("1.00500001"), getExprNode("2"))), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)1.00, (Double)floorFunction.calculate(symbolTable, getParameterList(getExprNode("1.006"), getExprNode("2"))), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)100.0, (Double)floorFunction.calculate(symbolTable, getParameterList(getExprNode("140"), getExprNode("-2"))), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)100.0, (Double)floorFunction.calculate(symbolTable, getParameterList(getExprNode("150"), getExprNode("-2"))), 0.0000001d);
+        Assert.assertEquals("numbers are equal", (Double)100.0, (Double)floorFunction.calculate(symbolTable, getParameterList(getExprNode("160"), getExprNode("-2"))), 0.0000001d);
     }
 
     // The minimal setup for log4J

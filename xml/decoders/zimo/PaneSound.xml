@@ -11,6 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
+<!-- version 1.9 - Ronald Kuhn - small visual improvement -->
 <!-- version 1.8 - Ronald Kuhn - add CVs from v40+ -->
 <!-- version 1.7 - Ronald Kuhn - add CVs from v37+ -->
 <!-- version 1.6 - Ronald Kuhn - add Brake squel suppressed, Quick Select Shift key -->
@@ -21,7 +22,13 @@
 <!-- version 1.1, Nigel Cliffe, added "Steam chuff frequency at speed step 1" -->
 <!-- version 1, Mark Waters - for Unified Software -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <name>Sound</name>
+  <name xml:lang="it">Suono</name>
+  <name xml:lang="cs">Zvuk</name>
   <column>
+    <label>
+      <text> </text>
+    </label>
     <display item="Set sound program"/>
     <label>
       <text> </text>
@@ -67,8 +74,14 @@
       <text> </text>
     </label>
     <display item="Steam Impact Stroke"/>
+    <label>
+      <text> </text>
+    </label>
   </column>
   <column>
+    <label>
+      <text> </text>
+    </label>
     <display item="Virtual cam chuff frequency"/>
     <display item="Slower Steam Strokes"/>
     <display item="Steam chuff frequency at speed step 1"/>
@@ -107,8 +120,14 @@
     <display item="Load change threshold"/>
     <display item="Reaction time to load change"/>
     <display item="Load influence for diesel engines"/>
+    <label>
+      <text> </text>
+    </label>
   </column>
   <column>
+    <label>
+      <text> </text>
+    </label>
     <display item="Acceleration threshold for full load sound"/>
     <display item="Duration of acceleration sound"/>
     <display item="Engine volume at full acceleration"/>
@@ -146,13 +165,8 @@
       <text> </text>
     </label>
     <display item="Switch-over"/>
-  </column>
-  <column>
     <label>
-      <text>      </text>
+      <text> </text>
     </label>
   </column>
-  <name>Sound</name>
-  <name xml:lang="it">Suono</name>
-  <name xml:lang="cs">Zvuk</name>
 </pane>

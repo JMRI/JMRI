@@ -34,6 +34,7 @@ public class ThrottlesPreferences implements jmri.InstanceManagerAutoDefault {
     private boolean _enableRosterSearch = true;
     private boolean _enableAutoLoad = true;
     private boolean _hideUndefinedFunButton = false;
+    private boolean _hideSpeedStepSelector = false;
     private boolean _ignoreThrottlePosition = true;
     private boolean _saveThrottleOnLayoutSave = true;
     private boolean _isSilentSteal = false;
@@ -115,6 +116,9 @@ public class ThrottlesPreferences implements jmri.InstanceManagerAutoDefault {
         if ((a = e.getAttribute("isUsingLargeSpeedSlider")) != null) {
             setUseLargeSpeedSlider(a.getValue().compareTo("true") == 0);
         }
+        if ((a = e.getAttribute("isHidingSpeedStepSelector")) != null) {
+            setHideSpeedStepSelector(a.getValue().compareTo("true") == 0);
+        }        
         if (e.getChild("throttlesControls") != null) {
             this._tpwkc.load(e.getChild("throttlesControls"));
         }
@@ -155,6 +159,7 @@ public class ThrottlesPreferences implements jmri.InstanceManagerAutoDefault {
         e.setAttribute("isIgnoringThrottlePosition", "" + isIgnoringThrottlePosition());
         e.setAttribute("isSilentSteal", "" + isSilentSteal());
         e.setAttribute("isSilentShare", "" + isSilentShare());
+        e.setAttribute("isHidingSpeedStepSelector", "" + isHidingSpeedStepSelector());
         e.setAttribute("isUsingLargeSpeedSlider", "" + isUsingLargeSpeedSlider());
         e.setAttribute("defaultThrottleFilePath", "" + getDefaultThrottleFilePath());
         java.util.ArrayList<Element> children = new java.util.ArrayList<>(1);
@@ -180,6 +185,7 @@ public class ThrottlesPreferences implements jmri.InstanceManagerAutoDefault {
         setUseLargeSpeedSlider(tp.isUsingLargeSpeedSlider());
         setThrottlesKeyboardControls(tp.getThrottlesKeyboardControls());
         setDefaultThrottleFilePath(tp.getDefaultThrottleFilePath());
+        setHideSpeedStepSelector(tp.isHidingSpeedStepSelector());
 
         if (listeners != null) {
             for (int i = 0; i < listeners.size(); i++) {
@@ -344,7 +350,7 @@ public class ThrottlesPreferences implements jmri.InstanceManagerAutoDefault {
     public boolean isSilentShare() {
         return _isSilentShare;
     }
-
+    
     public void setSilentSteal(boolean b) {
         _isSilentSteal = b;
         this.dirty = true;
@@ -372,6 +378,15 @@ public class ThrottlesPreferences implements jmri.InstanceManagerAutoDefault {
 
     public String getDefaultThrottleFilePath() {
         return _defaultThrottleFilePath;
+    }
+       
+    public boolean isHidingSpeedStepSelector() {
+        return _hideSpeedStepSelector;
+    }
+
+    public void setHideSpeedStepSelector(boolean b) {
+        _hideSpeedStepSelector = b;
+        this.dirty = true;
     }
 
     /**

@@ -323,14 +323,14 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
             <li><a href="#CarsTools">Cars Tools</a>
               <ul>
-                <li><a href="#CarsTools">Car Roster</a>
+                <li><a href="#CarRoster">Car Roster</a>
                   <uL>
-                    <li>Import from file</li>
-                    <li>Export to file</li>
-                    <li>Delete all cars</li>
-                    <li>Reset move counts all cars</li>
-                    <li>Print</li>
-                    <li>Preview</li>
+                    <li><a href="#CarRoster">Import from file</a></li>
+                    <li><a href="#CarRoster">Export to file</a></li>
+                    <li><a href="#CarRoster">Delete all cars</a></li>
+                    <li><a href="#CarRoster">Reset car move count</a></li>
+                    <li><a href="#CarRoster">Print</a></li>
+                    <li><a href="#CarRoster">Preview</a></li>
                   </uL></li>
                 <li><a href="#ModifyLocationsByCarType">Modify Locations and Tracks by Car
                     Type</a></li>
@@ -353,14 +353,14 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
               </ul></li>
             <li><a href="#LocomotiveTools">Locomotives Tools</a>
               <ul>
-                <li><a href="#LocomotiveTools">Locomotive Roster</a>
+                <li><a href="#LocomotiveRoster">Locomotive Roster</a>
                   <uL>
-                    <li>Import from file</li>
-                    <li>Export to file</li>
-                    <li>Delete all locomotives</li>
-                    <li>Reset move counts all locomotives</li>
-                    <li>Print</li>
-                    <li>Preview</li>
+                    <li><a href="#LocomotiveRoster">Import from file</a></li>
+                    <li><a href="#LocomotiveRoster">Export to file</a></li>
+                    <li><a href="#LocomotiveRoster">Delete all locomotives</a></li>
+                    <li><a href="#LocomotiveRoster">Reset move counts all locomotives</a></li>
+                    <li><a href="#LocomotiveRoster">Print</a></li>
+                    <li><a href="#LocomotiveRoster">Preview</a></li>
                   </uL></li>
                 <li><a href="#SynchronizeWithNCEConsists">Synchronize with NCE Consists</a></li>
               </ul>
@@ -825,7 +825,13 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
         You can also view two excellent NMRA YouTube videos by <a
           href="https://www.youtube.com/watch?v=RBF0V6DEu98">Robert J Thomas Introduction to
           JMRI OPs For A Small Layout</a> and <a href="https://www.youtube.com/watch?v=krhyvrhrxv4">Steve
-          Todd - JMRI Operations with No Paper.</a> And finally under the "Tools" item on the menu bar,
+          Todd - JMRI Operations with No Paper.</a> There's also an excellent set of videos <a
+          href="https://www.youtube.com/@dhtrainz4798">
+          https://www.youtube.com/@dhtrainz4798</a> produced by David Hall using the <a href="https://www.auran.com">Trainz
+        Simulator</a> and OperationsPro.
+      </p>
+
+      <p> And finally under the "Tools" item on the menu bar,
         you will find many useful functions, like the ability to print the contents of the window.
       </p>
 
@@ -1239,7 +1245,7 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
       one major drawback to increasing the number of passes, is that your train build reports will
       be longer since each pass by the program is documented.
 
-      <h3 id="AllowLocalCarMovements">Switcher Service Options (Local Car Movement)</h3>
+      <h3 id="AllowLocalCarMovements">Switcher Service Options (Local Car Movement with Default Loads)</h3>
       The next three "Allow Local ..." options control car movements when using a <a
         href="#SwitcherService">switcher</a> to service a location. A switcher only services one
       location. The three options only apply to cars with the default "E" or "L" <a href="#CarLoad">load</a>.
@@ -4106,7 +4112,7 @@ Some lucky folks have more locomotives and cars than track on their layout and w
       <h3 id="CarsTools">Cars Tools</h3>
       The cars window "Tools" menu allows you to perform some useful functions to your car roster.
 
-      <h4>Car Roster</h4>
+      <h4 id="CarRoster">Car Roster</h4>
       The "Car Roster" has a sub-menu that allows you to import and export cars, delete cars, reset
       car move counts, and print or preview your car roster.
       
@@ -4124,18 +4130,17 @@ Some lucky folks have more locomotives and cars than track on their layout and w
       You can remove all of the cars in your roster by using the "Delete all cars" option. Note that
       when only viewing cars for a track, the tool changes to "Delete cars on Track track name", and
       will only delete the cars on the track being viewed.
-      
-      <h4>Car Roster&rArr;Reset move count all cars</h4>
-The "Reset move count all cars" will zero out all of the cars move counts. In normal
-        use you should never reset the car move counts. The program uses the move counts to
-        determine which cars have difficulty finding valid destination tracks. Cars with low move
-        counts eventually get higher priority over cars with larger move counts. By servicing the
-        lower move count cars first, the difficult car moves eventually get made by the program.
-        Reseting car moves foils this algorithm. The only valid time for reseting the move counts is
-        when you add new cars to your roster and you don't want your new cars to have priority over
-        your old cars. However in most cases, folks do want to see the new cars riding the first
-        train out of town, so don't reset the car moves if you want to put your new additions
-        immediately to work!
+
+      <h4>Car Roster&rArr;Reset car move count</h4>
+      The "Reset car move count" will zero out the move counts for the cars shown. In normal use you
+      should never reset the car move counts. The program uses the move counts to determine which
+      cars have difficulty finding valid destination tracks. Cars with low move counts eventually
+      get higher priority over cars with larger move counts. By servicing the lower move count cars
+      first, the difficult car moves eventually get made by the program. Reseting car moves foils
+      this algorithm. The only valid time for reseting the move counts is when you add new cars to
+      your roster and you don't want your new cars to have priority over your old cars. However in
+      most cases, folks do want to see the new cars riding the first train out of town, so don't
+      reset the car moves if you want to put your new additions immediately to work!
 
       <h4>Car Roster&rArr;Print and Preview</h4>
       You can also preview and print your car roster. The preview and print features use the same
@@ -4334,7 +4339,7 @@ The "Reset move count all cars" will zero out all of the cars move counts. In no
       The locomotives window "Tools" menu allows you to perform some useful functions to your
       locomotive roster.
       
-      <h4>Locomotive Roster</h4>
+      <h4 id="LocomotiveRoster">Locomotive Roster</h4>
       The "Locomotive Roster" has a sub-menu that allows you to import and export locomotives,
       delete locomotives, reset locomotive move counts, and print or preview your locomotive roster.
       

@@ -18,6 +18,7 @@
 <!-- Covers all the known versions of the Lokommander II decoder with firmware versions 5 & 6 at this time       -->
 
   <version author="lbijlsma@pobox.com" version="1" lastUpdated="20230913"/>
+  <version author="lbijlsma@pobox.com" version="2" lastUpdated="20240422"/>
   <decoder>
     <family name="Lokommander 2 v6" mfg="Tehnologistic (train-O-matic)">
       <model model="Lokommander 2 Micro" numOuts="6" numFns="15" lowVersionID="5" highVersionID="6" connector="Wires/NEM651" productID="2010220,2010221,2010222,2010223,2010227">
@@ -92,6 +93,7 @@
 
       <xi:include href="http://jmri.org/xml/decoders/tOm/commonCVs.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tOm/cv33.47.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/tOm/cv114.116_v6.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tOm/brakeCVs.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tOm/functionOutputsCVs.xml"/>
 

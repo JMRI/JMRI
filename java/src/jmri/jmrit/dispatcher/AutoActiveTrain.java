@@ -413,6 +413,8 @@ public class AutoActiveTrain implements ThrottleListener {
     private volatile AllocatedSection _previousAllocatedSection = null;   // previous Section - part of train could still be in this section
     private SignalHead _controllingSignal = null;
     private SignalMast _controllingSignalMast = null;
+    private SignalHead _controllingSignalPrev = null;
+    private SignalMast _controllingSignalMastPrev = null;
     private PropertyChangeListener _conSignalListener = null;
     private PropertyChangeListener _conSignalMastListener = null;
     private Block _conSignalProtectedBlock = null;
@@ -698,11 +700,13 @@ public class AutoActiveTrain implements ThrottleListener {
             _controllingSignal.removePropertyChangeListener(_conSignalListener);
             _conSignalListener = null;
         }
+        _controllingSignalPrev = _controllingSignal;
         _controllingSignal = null;
         if (_conSignalMastListener != null) {
             _controllingSignalMast.removePropertyChangeListener(_conSignalMastListener);
             _conSignalMastListener = null;
         }
+        _controllingSignalMastPrev = _controllingSignalMast;
         _controllingSignalMast = null;
         _needSetSpeed = false;
     }
@@ -740,6 +744,7 @@ public class AutoActiveTrain implements ThrottleListener {
                         setSpeedBySignal();
                     }
                 });
+                _activeTrain.setControlingSignal(_controllingSignal, _controllingSignalPrev);
                 log.debug("new current signal = {}", sh.getDisplayName(USERSYS));
                 setSpeedBySignal();
             } else {
@@ -780,6 +785,7 @@ public class AutoActiveTrain implements ThrottleListener {
                         setSpeedBySignal();
                     }
                 });
+                _activeTrain.setControlingSignal(_controllingSignalMast, _controllingSignalMastPrev);
                 log.debug("{}: new current signalmast {}({}) for section {}", _activeTrain.getTrainName(), sm.getDisplayName(USERSYS),
                         sm.getAspect(), as.getSection().getDisplayName(USERSYS));
                 if ( weAreAtSpeedChangingMast ) {
@@ -1582,14 +1588,14 @@ public class AutoActiveTrain implements ThrottleListener {
             cancelStopInCurrentSection();
             if (_currentRampRate == RAMP_SPEEDPROFILE && _useSpeedProfile) {
                 // we are going to ramp up  / down using section length and speed profile
-                _autoEngineer.setTargetSpeed(_currentAllocatedSection.getSection().getActualLength() * _stopBySpeedProfileAdjust, speedState);
+                _autoEngineer.setTargetSpeed(_currentAllocatedSection.getLengthRemaining(_currentBlock) * _stopBySpeedProfileAdjust, speedState);
             } else {
                 setTargetSpeed(applyMaxThrottleAndFactor(_speedRatio[speedState]));
             }
         } else if (stopBySpeedProfile) {
             // we are going to stop by profile
             _stoppingUsingSpeedProfile = true;
-            _autoEngineer.setTargetSpeed(_currentAllocatedSection.getSection().getActualLength() * _stopBySpeedProfileAdjust, 0.0f);
+            _autoEngineer.setTargetSpeed(_currentAllocatedSection.getLengthRemaining(_currentBlock) * _stopBySpeedProfileAdjust, 0.0f);
         } else {
             _autoEngineer.setHalt(true);
             setTargetSpeed(0.0f);
@@ -1609,11 +1615,11 @@ public class AutoActiveTrain implements ThrottleListener {
                     setTargetSpeed(applyMaxThrottleAndFactor(throttleSetting)); // apply speed factor and max
                 } else if (throttleSetting > 0.009) {
                     cancelStopInCurrentSection();
-                    _autoEngineer.setTargetSpeed(_currentAllocatedSection.getSection().getActualLength(), throttleSetting);
+                    _autoEngineer.setTargetSpeed(_currentAllocatedSection.getLengthRemaining(_currentBlock)  * _stopBySpeedProfileAdjust , throttleSetting);
                 } else if (useSpeedProfile && _stopBySpeedProfile) {
                     setTargetSpeed(0.0f);
                     _stoppingUsingSpeedProfile = true;
-                    _autoEngineer.setTargetSpeed(_currentAllocatedSection.getSection().getActualLength(), 0.0f);
+                    _autoEngineer.setTargetSpeed(_currentAllocatedSection.getLengthRemaining(_currentBlock)  * _stopBySpeedProfileAdjust, 0.0f);
                 } else {
                     _autoEngineer.slowToStop(false);
                     setTargetSpeed(0.0f);

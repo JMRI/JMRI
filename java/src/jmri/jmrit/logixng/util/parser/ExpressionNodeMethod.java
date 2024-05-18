@@ -26,6 +26,8 @@ public class ExpressionNodeMethod implements ExpressionNodeWithParameter {
         if (param == null) return true;
         if (type.isAssignableFrom(param.getClass())) return true;
 
+        if ((type == Boolean.TYPE) && (param instanceof Boolean)) return true;
+
         if ((type == Byte.TYPE) && (param instanceof Byte)) return true;
         if ((type == Short.TYPE) && (param instanceof Byte)) return true;
         if ((type == Integer.TYPE) && (param instanceof Byte)) return true;
@@ -72,7 +74,7 @@ public class ExpressionNodeMethod implements ExpressionNodeWithParameter {
 
     @SuppressWarnings("rawtypes")   // We don't know the generic types of Map.Entry in this method
     private Object callMethod(Method method, Object obj, Object[] params)
-            throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+            throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, ReflectionException {
 
         Class<?>[] paramTypes = method.getParameterTypes();
         Object[] newParams = new Object[params.length];
@@ -81,6 +83,8 @@ public class ExpressionNodeMethod implements ExpressionNodeWithParameter {
             if ((params[i] == null) || (paramTypes[i].isAssignableFrom(params[i].getClass()))) {
                 newParam = params[i];
             }
+
+            else if ((paramTypes[i] == Boolean.TYPE) && (params[i] instanceof Boolean)) newParam = params[i];
 
             else if ((paramTypes[i] == Byte.TYPE) && (params[i] instanceof Byte)) newParam = params[i];
             else if ((paramTypes[i] == Short.TYPE) && (params[i] instanceof Byte)) newParam = (short)(byte)params[i];
@@ -130,8 +134,12 @@ public class ExpressionNodeMethod implements ExpressionNodeWithParameter {
                     case "toString": return obj.toString();
                     case "getKey": return ((Map.Entry)obj).getKey();
                     case "getValue": return ((Map.Entry)obj).getValue();
-                    default: throw ex;
+                    default:
+                        // Do nothing
                 }
+            }
+            if (!Modifier.isPublic(obj.getClass().getModifiers())) {
+                throw new ReflectionException("Can't call methods on object since it's private", ex);
             }
             throw ex;
         }

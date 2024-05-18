@@ -15,12 +15,79 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
 
   <!--  Initial version, created from copy of MS Sound (version 4+) for the MS-series decoders -->
-  <!-- v1  Ronald Kuhn. 25th May 2023, initial version   -->
+  <!-- v1    Ronald Kuhn. 25 May 2023, initial version   -->
+  <!-- v1.1  Ronald Kuhn. 2 May 2024, add new decoder   -->
 
   <version author="Ronald Kuhn" version="1.0" lastUpdated="2023/05/25"/>
 
   <decoder>
     <family name="MN Non-Sound (version 4+)" mfg="Zimo">
+
+<!-- not available yet (2024-05-02)
+      <model model="MN140E24 version 4+" lowVersionID="4" highVersionID="42" maxInputVolts="24V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" numOuts="8" numFns="14" productID="119">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">Funkční výstup 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">Funkční výstup 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+          <label xml:lang="cs">Funkční výstup 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+          <label xml:lang="cs">Funkční výstup 4</label>
+        </output>
+        <output name="7" label="FO 5">
+          <label xml:lang="de">FA5</label>
+          <label xml:lang="cs">Funkční výstup 5</label>
+        </output>
+        <output name="8" label="FO 6">
+          <label xml:lang="de">FA6</label>
+          <label xml:lang="cs">Funkční výstup 6</label>
+        </output>
+        <size length="14" width="8.7" height="2.3" units="mm"/>
+      </model>
+-->
+      <model model="MN160 version 4+" lowVersionID="4" highVersionID="42" maxInputVolts="24V" maxMotorCurrent="0.5A, peak=1.0A" maxTotalCurrent="0.5A" formFactor="N" numOuts="6" numFns="14" productID="122">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">Funkční výstup 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">Funkční výstup 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+          <label xml:lang="cs">Funkční výstup 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+          <label xml:lang="cs">Funkční výstup 4</label>
+        </output>
+        <size length="13" width="7.5" height="1.6" units="mm"/>
+      </model>
+
       <model model="MN170 version 4+" lowVersionID="4" highVersionID="42" maxInputVolts="24V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" numOuts="8" numFns="14" productID="124">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
@@ -85,6 +152,35 @@
         <size length="13.3" width="9.5" height="2.6" units="mm"/>
       </model>
 
+<!-- not available yet (2024-05-02)
+      <model model="MN250 version 4+" lowVersionID="4" highVersionID="42" maxInputVolts="24V" maxMotorCurrent="0.2A, peak=1.0A" maxTotalCurrent="0.2A" formFactor="N" numOuts="6" numFns="14" productID="120">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">Funkční výstup 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">Funkční výstup 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+          <label xml:lang="cs">Funkční výstup 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+          <label xml:lang="cs">Funkční výstup 4</label>
+        </output>
+        <size length="9.9" width="7.5" height="2.1" units="mm"/>
+      </model>
+-->
       <model model="MN300 version 4+" lowVersionID="4" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.0A, peak=1.5A" maxTotalCurrent="1.0A" formFactor="H0" numOuts="8" numFns="14" productID="125">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
@@ -238,12 +334,79 @@
         <label xml:lang="cs">Verze dekodéru: </label>
       </variable>
 
-      <variable item="Decoder ID 1" CV="250" readOnly="yes" >
+      <variable item="Decoder ID 1" CV="250" default="119" readOnly="yes" include="119">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1:</label>
       </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="119" readOnly="yes" include="119">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
+      <variable item="Decoder ID 1" CV="250" default="120" readOnly="yes" include="120">
+        <decVal/>
+        <label>Decoder ID 1</label>
+        <label xml:lang="it">ID 1 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 1:</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="120" readOnly="yes" include="120">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
+      <variable item="Decoder ID 1" CV="250" default="122" readOnly="yes" include="122">
+        <decVal/>
+        <label>Decoder ID 1</label>
+        <label xml:lang="it">ID 1 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 1:</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="122" readOnly="yes" include="122">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
+      <variable item="Decoder ID 1" CV="250" default="123" readOnly="yes" include="123">
+        <decVal/>
+        <label>Decoder ID 1</label>
+        <label xml:lang="it">ID 1 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 1:</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="123" readOnly="yes" include="123">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
+      <variable item="Decoder ID 1" CV="250" default="124" readOnly="yes" include="124">
+        <decVal/>
+        <label>Decoder ID 1</label>
+        <label xml:lang="it">ID 1 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 1:</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="124" readOnly="yes" include="124">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
+      <variable item="Decoder ID 1" CV="250" default="125" readOnly="yes" include="125">
+        <decVal/>
+        <label>Decoder ID 1</label>
+        <label xml:lang="it">ID 1 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 1:</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="125" readOnly="yes" include="125">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
+      <variable item="Decoder ID 1" CV="250" default="126" readOnly="yes" include="126">
+        <decVal/>
+        <label>Decoder ID 1</label>
+        <label xml:lang="it">ID 1 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 1:</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="126" readOnly="yes" include="126">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
+      <variable item="Decoder ID 1" CV="250" default="127" readOnly="yes" include="127">
+        <decVal/>
+        <label>Decoder ID 1</label>
+        <label xml:lang="it">ID 1 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 1:</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="127" readOnly="yes" include="127">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
+
       <variable item="Decoder ID 2" CV="251" readOnly="yes">
         <decVal/>
         <label>Decoder ID 2</label>

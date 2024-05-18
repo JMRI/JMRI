@@ -124,7 +124,7 @@ public final class DCCppConstants {
     public static final String OUTPUT_DELETE_REGEX = "\\s*Z\\s*(\\d+)\\s*"; // <Z ID>
     public static final String OUTPUT_LIST_REGEX = "\\s*Z\\s*"; // <Z>
     public static final String QUERY_SENSOR_STATES_REGEX = "\\s*Q\\s*"; // <Q>
-    public static final String LOCO_STATE_REGEX = "\\s*l\\s*(\\d+)\\s*(\\d+)\\s*(\\d+)\\s*(\\d+)\\s*"; // <l loco slot speedByte functions>
+    public static final String LOCO_STATE_REGEX = "\\s*l\\s*(\\d+)\\s*([-]*\\d+)\\s*(\\d+)\\s*(\\d+)\\s*"; // <l loco slot speedByte functions>
 
     public static final String WRITE_TO_EEPROM_REGEX = "E";
     public static final String CLEAR_EEPROM_REGEX = "e";
@@ -170,7 +170,7 @@ public final class DCCppConstants {
     public static final String DIAG_REPLY_REGEX        =   "^\\*\\s*([\\S\\s]*)\\*$"; //matches anything between leading and trailing asterisks, left-trimmed
     public static final String CURRENT_REPLY_REGEX =       "\\s*a\\s*(\\d+).*";
     public static final String CURRENT_REPLY_NAMED_REGEX = "\\s*a\\s*(\\w*?[a-zA-Z])\\s*(\\d+).*";
-    public static final String METER_REPLY_REGEX = " *c *(.+) +([\\d\\.]+) +([A-Z]) +(\\w+) +([\\d\\.]+) +([\\d\\.]+) +([\\d\\.]+) +([\\d\\.]+).*";
+    public static final String METER_REPLY_REGEX = " *c *(.+) +([-]*[\\d\\.]+) +([A-Z]) +(\\w+) +([\\d\\.]+) +([\\d\\.]+) +([\\d\\.]+) +([\\d\\.]+).*";
 
     public static final String TRACK_POWER_REPLY_REGEX =       "\\s*p\\s*([0,1])\\s*";
     public static final String TRACK_POWER_REPLY_NAMED_REGEX = "\\s*p\\s*(\\d+)\\s+(\\w+).*";

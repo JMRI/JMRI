@@ -107,6 +107,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             };
             fastClock.addMinuteChangeListener(minuteChangeListener);
         }
+        jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(new DispatcherShutDownTask("Dispatch Shutdown"));
     }
 
     /***

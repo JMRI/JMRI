@@ -208,7 +208,8 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
                     (getDefaultThrottleFolder() + addressPanel.getRosterEntry().getId().trim() + ".xml").compareTo(sfile) == 0) // don't save function buttons labels, they're in roster entry
             {
                 throttleElement.getChild("FunctionPanel").removeChildren("FunctionButton");
-            }
+                saveRosterChanges();
+            } 
 
             root.setContent(throttleElement);
             xf.writeXML(file, doc);

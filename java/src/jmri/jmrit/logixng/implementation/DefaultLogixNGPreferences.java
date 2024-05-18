@@ -25,6 +25,8 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
     private static final String STRICT_TYPING_GLOBAL_VARIABLES = "strictTypingGlobalVariables";
     private static final String STRICT_TYPING_LOCAL_VARIABLES = "strictTypingLocalVariables";
     private static final String IF_THEN_ELSE_EXECUTE_TYPE_DEFAULT = "ifThenElseExecuteTypeDefault";
+    private static final String LOG_ALL_BEFORE = "logAllBefore";
+    private static final String LOG_ALL_AFTER = "logAllAfter";
 
     private boolean _startLogixNGOnLoad = true;
     private boolean _showSystemUserNames = false;
@@ -35,6 +37,8 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
     private boolean _strictTypingGlobalVariables = false;
     private boolean _strictTypingLocalVariables = false;
     private IfThenElse.ExecuteType _ifThenElseExecuteTypeDefault = IfThenElse.ExecuteType.ExecuteOnChange;
+    private boolean _logAllBefore = false;
+    private boolean _logAllAfter = false;
 
 
     public DefaultLogixNGPreferences() {
@@ -57,6 +61,8 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
         _strictTypingLocalVariables = sharedPreferences.getBoolean(STRICT_TYPING_LOCAL_VARIABLES, _strictTypingLocalVariables);
         _ifThenElseExecuteTypeDefault = IfThenElse.ExecuteType.valueOf(
                 sharedPreferences.get(IF_THEN_ELSE_EXECUTE_TYPE_DEFAULT, _ifThenElseExecuteTypeDefault.name()));
+        _logAllBefore = sharedPreferences.getBoolean(LOG_ALL_BEFORE, _logAllBefore);
+        _logAllAfter = sharedPreferences.getBoolean(LOG_ALL_AFTER, _logAllAfter);
 
         setIsDirty(false);
     }
@@ -87,6 +93,12 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
         if (getIfThenElseExecuteTypeDefault() != prefs.getIfThenElseExecuteTypeDefault()) {
             return true;
         }
+        if (getLogAllBefore() != prefs.getLogAllBefore()) {
+            return true;
+        }
+        if (getLogAllAfter() != prefs.getLogAllAfter()) {
+            return true;
+        }
         return (getErrorHandlingType() != prefs.getErrorHandlingType());
     }
 
@@ -101,6 +113,8 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
         setStrictTypingGlobalVariables(prefs.getStrictTypingGlobalVariables());
         setStrictTypingLocalVariables(prefs.getStrictTypingLocalVariables());
         setIfThenElseExecuteTypeDefault(prefs.getIfThenElseExecuteTypeDefault());
+        setLogAllBefore(prefs.getLogAllBefore());
+        setLogAllAfter(prefs.getLogAllAfter());
     }
 
     @Override
@@ -115,6 +129,8 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
         sharedPreferences.putBoolean(STRICT_TYPING_GLOBAL_VARIABLES, this.getStrictTypingGlobalVariables());
         sharedPreferences.putBoolean(STRICT_TYPING_LOCAL_VARIABLES, this.getStrictTypingLocalVariables());
         sharedPreferences.put(IF_THEN_ELSE_EXECUTE_TYPE_DEFAULT, this.getIfThenElseExecuteTypeDefault().name());
+        sharedPreferences.putBoolean(LOG_ALL_BEFORE, this.getLogAllBefore());
+        sharedPreferences.putBoolean(LOG_ALL_AFTER, this.getLogAllAfter());
         setIsDirty(false);
     }
 
@@ -215,6 +231,28 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
     @Override
     public IfThenElse.ExecuteType getIfThenElseExecuteTypeDefault() {
         return _ifThenElseExecuteTypeDefault;
+    }
+
+    @Override
+    public void setLogAllBefore(boolean value) {
+        _logAllBefore = value;
+        setIsDirty(true);
+    }
+
+    @Override
+    public boolean getLogAllBefore() {
+        return _logAllBefore;
+    }
+
+    @Override
+    public void setLogAllAfter(boolean value) {
+        _logAllAfter = value;
+        setIsDirty(true);
+    }
+
+    @Override
+    public boolean getLogAllAfter() {
+        return _logAllAfter;
     }
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGPreferences.class);

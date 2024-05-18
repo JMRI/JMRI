@@ -39,7 +39,7 @@ public class HtmlConductor extends HtmlTrainCommon {
                     FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(locale,"ConductorSnippet.html"))), 
                     train.getIconName(), 
                     StringEscapeUtils.escapeHtml4(train.getDescription()), 
-                    StringEscapeUtils.escapeHtml4(train.getComment().replaceAll("\n", "<br>")), 
+                    StringEscapeUtils.escapeHtml4(train.getComment()).replaceAll("\n", "<br>"),
                     Setup.isPrintRouteCommentsEnabled() ? train.getRoute().getComment() : "", 
                     strings.getProperty("Terminated"), 
                     "", // terminated train has nothing to do // NOI18N
@@ -65,7 +65,7 @@ public class HtmlConductor extends HtmlTrainCommon {
                 FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(locale,"ConductorSnippet.html"))), 
                 train.getIconName(), 
                 StringEscapeUtils.escapeHtml4(train.getDescription()),
-                StringEscapeUtils.escapeHtml4(train.getComment().replaceAll("\n", "<br>")), 
+                StringEscapeUtils.escapeHtml4(train.getComment()).replaceAll("\n", "<br>"),
                 Setup.isPrintRouteCommentsEnabled() ? train.getRoute().getComment() : "", 
                 getCurrentAndNextLocation(),
                 getLocationComments().replaceAll("\n", "<br>"),
@@ -149,7 +149,7 @@ public class HtmlConductor extends HtmlTrainCommon {
                 builder.append(String.format(locale, strings.getProperty("ScheduledWorkAt"), routeLocationName)); // NOI18N
             }
             // add route comment
-            if (!routeLocation.getComment().trim().equals("")) {
+            if (!routeLocation.getComment().isBlank()) {
                 builder.append(String.format(locale, strings.getProperty("RouteLocationComment"), StringEscapeUtils  // NOI18N
                         .escapeHtml4(routeLocation.getComment())));
             }

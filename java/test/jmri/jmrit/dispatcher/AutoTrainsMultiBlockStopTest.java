@@ -873,7 +873,7 @@ public class AutoTrainsMultiBlockStopTest {
 
     @AfterEach
     public void tearDown() throws Exception {
-        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.resetWindows(false,false);
         
         try {
