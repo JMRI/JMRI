@@ -2,12 +2,7 @@ package jmri.jmrit.throttle;
 
 import java.awt.*;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.TableCellRenderer;
 
@@ -163,11 +158,31 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
         }
         // visibility -> selected
         if (tf.isVisible()) {
-            retPanel.setBackground(javax.swing.UIManager.getDefaults().getColor("List.selectionBackground"));
+            Color selBackground = javax.swing.UIManager.getDefaults().getColor("List.selectionBackground");
+            if (selBackground == null) {
+                selBackground = Color.ORANGE;
+            }
+            Color selForeground = javax.swing.UIManager.getDefaults().getColor("List.selectionForeground");
+            if (selForeground == null) {
+                selForeground = Color.BLACK;
+            }
+            retPanel.setBackground(selBackground);
+            setForegroundAllComp( retPanel, selForeground );
             retPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
         } else {
             retPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         }
         return retPanel;
+    }
+    
+    private void setForegroundAllComp(JComponent cmp, Color color) {
+        if (cmp != null) {
+            cmp.setForeground(color);
+            for (Component c : cmp.getComponents()) {
+                if (c instanceof JComponent) {
+                    setForegroundAllComp( (JComponent) c, color);
+                }
+            }
+        }
     }
 }

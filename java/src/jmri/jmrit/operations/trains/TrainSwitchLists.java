@@ -242,7 +242,7 @@ public class TrainSwitchLists extends TrainCommon {
 
                     // add route comment
                     if (Setup.isSwitchListRouteLocationCommentEnabled() && !rl.getComment().trim().isEmpty()) {
-                        newLine(fileOut, rl.getFormatedColorComment());
+                        newLine(fileOut, rl.getCommentWithColor());
                     }
 
                     printTrackComments(fileOut, rl, carList, !IS_MANIFEST);

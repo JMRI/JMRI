@@ -2,7 +2,6 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.geom.Point2D;
 import java.util.List;
-import java.util.logging.*;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
@@ -280,7 +279,7 @@ public class LayoutEditorToolsTest {
         try {
             layoutTurnout.setConnection(types[idx], trackSegment, HitPointType.TRACK);
         } catch (JmriException ex) {
-            Logger.getLogger(LayoutEditorToolsTest.class.getName()).log(Level.SEVERE, null, ex);
+            Assertions.fail("Could not set LayoutTurnout Connection", ex);
         }
 
         //pressing "Done" should throw up a "the next signal... apparently is not yet defined."  (InfoMessage5)
