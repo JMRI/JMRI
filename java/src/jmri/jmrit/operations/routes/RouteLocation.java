@@ -161,7 +161,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         return _commentColor;
     }
 
-    public String getFormatedColorComment() {
+    public String getCommentWithColor() {
         return TrainCommon.formatColorString(getComment(), getCommentColor());
     }
 

@@ -90,6 +90,17 @@ public class TestArchitectureTest {
         .should().dependOnClassesThat().resideInAPackage("org.apache.logging.log4j");
 
     /**
+     * JMRI tests should use org.slf4j.Logger instead of JUL.
+     */
+    @ArchTest
+    public static final ArchRule minimalJULinJmriTests = noClasses()
+        .that().resideInAPackage("jmri..")
+        .and().doNotHaveFullyQualifiedName("jmri.util.TestingLoggerConfiguration") // tests jul routed to l4j OK
+        .and().doNotHaveFullyQualifiedName("jmri.util.web.BrowserFactory") // 3rd party lib setup
+        .and().doNotHaveFullyQualifiedName("jmri.web.WebServerAcceptanceSteps") // testing output from lib
+        .should().dependOnClassesThat().resideInAPackage("java.util.logging");
+
+    /**
      * setUp methods should normally use the org.junit.jupiter.api.BeforeEach annotation.
      */
     @ArchTest
