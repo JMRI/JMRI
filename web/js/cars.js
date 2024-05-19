@@ -24,7 +24,7 @@ function showError(code, message) {
 function setRow(name, data){
 		  var tbody = $("table#jmri-data tbody").html(); //get current table body
 		  var carType = data.carType + ", " + data.color;
-		  var tds = "<td class='name'>" + data.name 
+		  var tds = "<td class='carName'>" + data.name 
 		      + "</td><td class='carType'>" + carType 
 		      + "</td><td class='location'>";
 		  //format location
@@ -39,7 +39,6 @@ function setRow(name, data){
 		      tds += "&nbsp;"; 
 		  } 
 		  //format train icon name
-//          tds += "</td><td class='trainIconName'>" + (data.trainIconName != null ? data.trainIconName : "&nbsp;") + "</td>"; 
           tds += "</td><td class='trainIconName'>" + (data.trainIconName ? data.trainIconName : "&nbsp;") + "</td>"; 
 
 		  //add hidden column for trainID (for filter)
@@ -178,13 +177,18 @@ $(document).ready(function () {
     //listen for clicks on rows
     $('table#jmri-data')
       .on('click', 'tbody tr', function (e) {
-        //copy data from selected column to edit modal
-        carName = $(this).data('name');
+        //copy data from columns to the edit modal
+//        carName = $(this).data('name');
+        carName = $(this).find('td.carName').text();
         $('#modal-car-edit-carName').text(carName);
         carType = $(this).find('td.carType').text();
         $('#modal-car-edit-carType').text(carType);
         locationName = $(this).find('td.location').text();
         $('#modal-car-edit-location').text(locationName);
+        trainId = $(this).find('td.trainId').text();
+        $('#modal-car-edit-trainId').text(trainId);
+        trainIconName = $(this).find('td.trainIconName').text();
+        $('#modal-car-edit-trainIconName').text(trainIconName);
         $('#modal-car-edit').modal("show");
      });
 

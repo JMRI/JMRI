@@ -13,11 +13,11 @@ table.sortable th:hover {
 	cursor: pointer;
 }
 
-.table>tbody>tr>td {
+table>tbody>tr>td {
     vertical-align: middle;
 }
 
-td.location:hover {
+table>tbody>tr:hover {
     cursor: pointer;
     background: #ddd;
     font-weight: bold;
@@ -29,10 +29,8 @@ h1.title {
 }
 
 input#searchBox {
-/*    float: right; */
     font-size: 1.5em;
     line-height: 1.5em;
-/*    width: 49%; */
     margin-top: 0.75em;
 }
 
