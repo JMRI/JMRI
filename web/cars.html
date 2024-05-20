@@ -83,7 +83,6 @@
                         <li><a href="/tables/signalMast">Signal Masts</a></li>
                         <li><a href="/tables/signalHead">Signal Heads</a></li>
                         <li><a href="/tables/location">Locations</a></li>
-                        <li><a href="/tables/car">Cars</a></li>
                         <li><a href="/tables/engine">Engines</a></li>
                         <li><a href="/tables/idTag">ID Tags</a></li>
                         <li class="divider"></li>
@@ -193,7 +192,9 @@ navigation bar silently attempts a reconnection and does not use this dialog.
             <table id="jmri-data" class="cars sortable table table-striped table-hover table-responsive hidden">
                 <thead>
                     <tr>
-                        <th>Name</th><th>Type</th><th>Location</th><th>Train</th><th class='trainId hidden'>TrainId</th>
+                        <th>Name</th><th>Type</th><th>Location</th><th>Train</th>                            
+                            <th class='trainId'>trainId</th><th class='locationId'>locationId</th>
+                            <th class='trackId'>trackId</th><th class='locationUnknown'>locationUnknown</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -213,16 +214,17 @@ navigation bar silently attempts a reconnection and does not use this dialog.
             <div class="modal-body text-secondary">
                 <p id="modal-car-edit-carType"></p>
                 <p id="modal-car-edit-location"></p>
-                <p id="modal-car-edit-trainId"></p>
-                <p id="modal-car-edit-trainIconName"></p>
                 <select class="form-select" id="modal-car-edit-select-location" name="modal-car-edit-select-location"></select>
                 <select class="form-select" id="modal-car-edit-select-track" name="modal-car-edit-select-track"></select>
                 <p id="modal-car-edit-trackLength"></p>
                 <p id="modal-car-edit-carTypes"></p>
+                <p id="modal-car-edit-on-train">On Train <span id="modal-car-edit-trainIconName"></span> (<span id="modal-car-edit-trainId"></span>)</p>
             </div>
             <div class="modal-footer">
+                <span id="modal-car-edit-locationId"></span>
+                <span id="modal-car-edit-trackId"></span>
+                <span id="modal-car-edit-locationUnknown"></span>
                 <button type="button" class="btn btn-primary" id="modal-car-edit-save">Save</button>
-<!--                <button type="button" class="btn btn-primary" id="modal-car-edit-cancel">Cancel</button> -->
             </div>
         </div>
     </div>
