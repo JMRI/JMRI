@@ -18,9 +18,9 @@
 <script src="/js/logger.js"></script>
 <script src="/js/jquery.jmri.js"></script>
 <script src="/js/main.js"></script>
+<script src="/js/sorttable.js"></script>        
 <script src="/js/cars.js"></script>
 <script src="/js/user.js"></script>
-<script src="/js/sorttable.js"></script>        
 </head>
 <body id="cars">
     <!--[if lt IE 7]>
@@ -193,6 +193,7 @@ navigation bar silently attempts a reconnection and does not use this dialog.
                 <thead>
                     <tr>
                         <th>Name</th><th>Type</th><th>Location</th><th>Train</th>                            
+                            <th class='destination'>Destination</th>
                             <th class='trainId'>trainId</th><th class='locationId'>locationId</th>
                             <th class='trackId'>trackId</th><th class='locationUnknown'>locationUnknown</th>
                     </tr>
@@ -216,14 +217,21 @@ navigation bar silently attempts a reconnection and does not use this dialog.
                 <p id="modal-car-edit-location"></p>
                 <select class="form-select" id="modal-car-edit-select-location" name="modal-car-edit-select-location"></select>
                 <select class="form-select" id="modal-car-edit-select-track" name="modal-car-edit-select-track"></select>
-                <p id="modal-car-edit-trackLength"></p>
-                <p id="modal-car-edit-carTypes"></p>
-                <p id="modal-car-edit-on-train">On Train <span id="modal-car-edit-trainIconName"></span> (<span id="modal-car-edit-trainId"></span>)</p>
+                <div id="modal-car-edit-on-train">
+                    <p>On Train <span id="modal-car-edit-trainIconName"></span> (<span id="modal-car-edit-trainId"></span>) 
+                        to <span id="modal-car-edit-destination"></span></p>
+                    <input type="checkbox" id="modal-car-edit-remove-from-train"><span> Remove car from train?</span>
+                </div>
+                <div>
+                    <p><input type="checkbox" id="modal-car-edit-locationUnknown"><span> Mark as Location Unknown?</span></p>
+                    <p><input type="checkbox" id="modal-car-edit-outOfService"><span> Mark as Out of Service?</span></p>
+                </div>
             </div>
             <div class="modal-footer">
-                <span id="modal-car-edit-locationId"></span>
-                <span id="modal-car-edit-trackId"></span>
-                <span id="modal-car-edit-locationUnknown"></span>
+                <div id="modal-car-edit-other-data">
+                    <span id="modal-car-edit-locationId"></span>
+                    <span id="modal-car-edit-trackId"></span>
+                </div>
                 <button type="button" class="btn btn-primary" id="modal-car-edit-save">Save</button>
             </div>
         </div>

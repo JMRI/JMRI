@@ -37,3 +37,9 @@ input#searchBox {
 span#filter-text {
     float: right;
 }
+
+/* hide data-only columns */
+th.trainId, th.locationId, th.trackId, th.locationUnknown, th.outOfService, th.destination,
+td.trainId, td.locationId, td.trackId, td.locationUnknown, td.outOfService, td.destination {
+    display: none;
+}

@@ -1,76 +1,77 @@
 /*
  * Cars specific JavaScript
  *
- * position selects to current car values
- * add checkbox for "remove from train xxx?"
- * add LocationUnknown flag
- * add outOfService flag
- * improve messages returned from server
+ * TODO:
+ * support removing location and track
  * increase select text size
  * improve layout (add boxes, etc.)
+ * do location checks client-side
  * convert to servlet and internationalize
+ * don't remove from train if location change will fail
  *
  */
 
 var jmri = null;
-var gSelectString = "";
 
 //convert page parms into array to use for filtering rows
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
             
 //handle an error message returned via the websocket from the server
-//  parms: html error code, message is the message text
 function showError(code, message) {
-//    jmri.log("Error " + code + ": " + message); //this is logged upstream
-    $("#modal-car-error-message").html("Error " + code + ": " + message);
+    $("#modal-car-error-label").html("Error " + code);
+    $("#modal-car-error-message").html(message);
     $('#modal-car-error').modal("show");    
 }
 
 //append a new row to the table, or replace an existing row, based on name
 function setRow(name, data){
-		  var tbody = $("table#jmri-data tbody").html(); //get current table body
-		  var carType = data.carType + ", " + data.color;
-		  var tds = "<td class='carName'>" + data.name 
-		      + "</td><td class='carType'>" + carType 
-		      + "</td><td class='location'>";
-		  //format location
-		  if (data.locationUnknown == true) {  
-		      tds += "&lt;?&gt;";
-		  } else if (data.location != null) {
-		      tds += data.location.userName;
-		      if (data.location.track != null) {
-		          tds += " (" + data.location.track.userName + ")"; 
-		      }
-		  } else {
-		      tds += "&nbsp;"; 
-		  } 
-		  //format train icon name
-          tds += "</td><td class='trainIconName'>" + (data.trainIconName ? data.trainIconName : "&nbsp;") + "</td>"; 
+    var tbody = $("table#jmri-data tbody").html(); //get current table body
+    var carType = data.carType + ", " + data.color;
+    var tds = "<td class='carName'>" + data.name 
+        + "</td><td class='carType'>" + carType 
+        + "</td><td class='location'>";
+    //format location description column
+    if (data.locationUnknown == true) {  
+        tds += "&lt;?&gt; ";
+    } else if (data.outOfService == true) {
+        tds += "&lt;O&gt; ";
+    }
+    if (data.location != null) {
+        tds += data.location.userName;
+        if (data.location.track != null) {
+            tds += " (" + data.location.track.userName + ")"; 
+        }
+    }
+    //format train icon name
+    tds += "</td><td class='trainIconName'>" + (data.trainIconName ? data.trainIconName : '') + "</td>"; 
 
-		  //add hidden columns (for editing and filtering)
-          tds += "<td class='trainId'>"         + (data.trainId ?  data.trainId : "") + "</td>"; 
-          tds += "<td class='locationId'>"      + ((data.location && data.location.name) ? data.location.name : "") + "</td>"; 
-          tds += "<td class='trackId'>"         + ((data.location && data.location.track) ? data.location.track.name : "") + "</td>"; 
-          tds += "<td class='locationUnknown'>" + data.locationUnknown + "</td>"; 
-		    
-		  var tr = "<tr data-name='" + data.name + "'>" + tds + "</tr>"; //build row with key
-	var keep = true;
-	$.each(params, function (index, value) { //compare against filter parms, skipping unless all match
-		if ($(tr).find('td.'+index).text().toLowerCase() != value.toLowerCase()) {
-			keep = false;
+    //format destination
+    tds += "</td><td class='destination'>" + (data.destination ? data.destination.userName : '') + "</td>"; 
+
+    //add hidden columns (for editing and filtering)
+    tds += "<td class='trainId'>"         + (data.trainId ?  data.trainId : "") + "</td>"; 
+    tds += "<td class='locationId'>"      + ((data.location && data.location.name) ? data.location.name : "") + "</td>"; 
+    tds += "<td class='trackId'>"         + ((data.location && data.location.track) ? data.location.track.name : "") + "</td>"; 
+    tds += "<td class='locationUnknown'>" + data.locationUnknown + "</td>"; 
+    tds += "<td class='outOfService'>"    + data.outOfService + "</td>"; 
+    
+  var tr = "<tr data-name='" + data.name + "'>" + tds + "</tr>"; //build row with key
+    var keep = true;
+    $.each(params, function (index, value) { //compare against filter parms, skipping unless all match
+        if ($(tr).find('td.'+index).text().toLowerCase() != value.toLowerCase()) {
+            keep = false;
             return false;
-	    }                                
-	});
-	if (keep) {
-
-		  var row = $("table#jmri-data tr[data-name='" + name + "']"); //look for row by key
-		  if ($(row).length) {
-		      row.html(tds); //if found, replace cells
-		  } else {
-		      $("table#jmri-data tbody").html(tbody + tr); //if not found, append row to table body
-		  }
-	}
+        }                                
+    });
+    if (keep) {
+        var row = $("table#jmri-data tr[data-name='" + name + "']"); //look for row by key
+        if ($(row).length) {
+            row.html(tds); //if found, replace cells
+        } else {
+            $("table#jmri-data tbody").html(tbody + tr); //if not found, append row to table body
+        }
+    }
 };
 
 //-----------------------------------------javascript processing starts here (main) ---------------------------------------------
@@ -93,9 +94,7 @@ $(document).ready(function () {
     }
         
     jmri = $.JMRI({
-        // when we get the hello message, send a websocket list request which
-        // returns the list and sets up change listeners
-        // note: the functions and parameter names must match exactly those in jquery.jmri.js
+        // when we get the hello message, send websocket list requests for cars and locations
         hello: function (data) {
 //            jmri.log("in hello: data=" + JSON.stringify(data).substr(0, 180) + "...");
             jmri.getList("cars");
@@ -198,19 +197,21 @@ $(document).ready(function () {
         $('#modal-car-edit-location').text($(this).find('td.location').text());
         $('#modal-car-edit-locationId').text($(this).find('td.locationId').text());
         $('#modal-car-edit-trackId').text($(this).find('td.trackId').text());
-        $('#modal-car-edit-locationUnknown').text($(this).find('td.locationUnknown').text());
+        $('#modal-car-edit-locationUnknown').prop("checked",$.parseJSON($(this).find('td.locationUnknown').text()));
+        $('#modal-car-edit-outOfService').prop("checked",$.parseJSON($(this).find('td.outOfService').text()));
                 
         trainId = $(this).find('td.trainId').text();
         if (trainId != "") {
             $('#modal-car-edit-trainId').text(trainId);
-            trainIconName = $(this).find('td.trainIconName').text();
-            $('#modal-car-edit-trainIconName').text(trainIconName);
-            $('#modal-car-edit-on-train').removeClass("hidden").addClass("show");
+            $('#modal-car-edit-trainIconName').text($(this).find('td.trainIconName').text());
+            $('#modal-car-edit-on-train').removeClass("hidden").addClass("show");            
+            $('#modal-car-edit-destination').text($(this).find('td.destination').text());
         } else {
             $('#modal-car-edit-on-train').removeClass("show").addClass("hidden");        
         }
+        $('#modal-car-edit-remove-from-train').prop("checked", false); //always turn this off 
 
-        //set the selects to current values and fire the change listeners
+        //set the selects to current values and fire their change listeners
         $('#modal-car-edit-select-location').val($('#modal-car-edit-locationId').text()).change();
         $('#modal-car-edit-select-track').val($('#modal-car-edit-trackId').text()).change();
         
@@ -230,44 +231,26 @@ $(document).ready(function () {
                 if (firstOption == '') {
                     firstOption = $(this).val();
                 }
-            } 
-            else {
+            } else {
                 $(this).hide();
             }
         });
         $('#modal-car-edit-select-track').val(firstOption);
-        Select_Track_OnChange();
-//        $('#txtCarNumber').val('');
+//        Select_Track_OnChange();
     }
-    $("[id=modal-car-edit-select-location]").on('change', Select_Location_OnChange);
+    $('#modal-car-edit-select-location').on('change', Select_Location_OnChange);
 
     //setup change listener for track select
-    function Select_Track_OnChange() {
+//    function Select_Track_OnChange() {
         // Get track details
-        var locationID = $('#modal-car-edit-select-location').find(":selected").val();
-        var trackID = $('#modal-car-edit-select-track').find(":selected").val();
-        var trackLength = 'unknown';
-        var carTypes = 'unknown';
-        Locations.forEach(function(thisLocation) {
-            if (thisLocation.data.name == locationID) {
-                thisLocation.data.track.forEach(function(thisTrack) {
-//                    var breakppoint = 1;
-                    if (thisTrack.name == trackID) {
-                        trackLength = thisTrack.length;
-                        carTypes = thisTrack.carType.join('; ');
-                    }
-                });
-            }
-        });
-        $('#modal-car-edit-trackLength').text(trackLength + 'ft');
-        $('#modal-car-edit-carTypes').text(carTypes);
-        
-//        getCarsOnTrack();
-    }
-    $("[id=modal-car-edit-select-track]").on('change', Select_Track_OnChange);
+//        var locationID = $('#modal-car-edit-select-location').find(":selected").val();
+//        var trackID = $('#modal-car-edit-select-track').find(":selected").val();
+//    }
+//    $('#modal-car-edit-select-track').on('change', Select_Track_OnChange);
 
-    //handle click on Save button
+    //handle click on Save button, hide the dialog, then send update json to server
     function Save_OnClick() {
+        $('#modal-car-edit').modal("hide");
         cmd = {
             name: $('#modal-car-edit-carName').text(), 
             location: {
@@ -275,9 +258,13 @@ $(document).ready(function () {
                 track: {
                     name: $('#modal-car-edit-select-track').find(":selected").val(), 
                 }
-            }
+            },
+            locationUnknown: $('#modal-car-edit-locationUnknown').is(":checked"),
+            outOfService:    $('#modal-car-edit-outOfService').is(":checked")
         };
-        $('#modal-car-edit').modal("hide");
+        if ($('#modal-car-edit-remove-from-train').is(":checked")) { //if checked, add remove train to cmd
+            cmd.trainId = null;
+        }        
         jmri.socket.send('car', cmd, 'post');    
     }
     $("[id=modal-car-edit-save]").on('click', Save_OnClick);

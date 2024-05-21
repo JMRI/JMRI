@@ -354,7 +354,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertThat(result.path(JSON.METHOD).isMissingNode()).isTrue();
         assertEquals(42, result.path(JSON.ID).asInt());
         JsonNode data = result.path(JSON.DATA);
-        assertEquals("Number of properties in Engine", 24   , data.size());
+        assertEquals("Number of properties in Engine", 24, data.size());
         assertEquals(engine.getId(), data.path(JSON.NAME).asText());
         assertEquals(engine.getRoadName(), data.path(JSON.ROAD).asText());
         assertEquals(engine.getNumber(), data.path(JSON.NUMBER).asText());
