@@ -263,7 +263,7 @@ public class ImportCars extends ImportRollingStock {
                                 JmriJOptionPane.ERROR_MESSAGE);
                         break;
                     }
-                } catch (Exception e) {
+                } catch (ArrayIndexOutOfBoundsException e) {
                     JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("CarRoadNameWrong",
                             carRoad, lineNum),
                             Bundle.getMessage("CarAttributeMissing"),
@@ -280,7 +280,7 @@ public class ImportCars extends ImportRollingStock {
                                 JmriJOptionPane.ERROR_MESSAGE);
                         break;
                     }
-                } catch (Exception e) {
+                } catch (ArrayIndexOutOfBoundsException e) {
                     JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("CarTypeNameWrong",
                             carType, lineNum),
                             Bundle.getMessage("CarAttributeMissing"),
