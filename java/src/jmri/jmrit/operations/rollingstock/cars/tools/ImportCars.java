@@ -254,20 +254,38 @@ public class ImportCars extends ImportRollingStock {
                             JmriJOptionPane.ERROR_MESSAGE);
                     break;
                 }
-                if (carRoad.split(TrainCommon.HYPHEN)[0].length() > Control.max_len_string_attibute) {
-                    JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("CarRoadNameTooLong",
-                            carRoad, carNumber, carRoad),
-                            Bundle.getMessage("carAttribute",
-                                    Control.max_len_string_attibute),
+                try {
+                    if (carRoad.split(TrainCommon.HYPHEN)[0].length() > Control.max_len_string_attibute) {
+                        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("CarRoadNameTooLong",
+                                carRoad, carNumber, carRoad),
+                                Bundle.getMessage("carAttribute",
+                                        Control.max_len_string_attibute),
+                                JmriJOptionPane.ERROR_MESSAGE);
+                        break;
+                    }
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("CarRoadNameWrong",
+                            carRoad, lineNum),
+                            Bundle.getMessage("CarAttributeMissing"),
                             JmriJOptionPane.ERROR_MESSAGE);
+                    log.error("Road ({}) name not valid line {}", carRoad, lineNum);
                     break;
                 }
-                if (carType.split(TrainCommon.HYPHEN)[0].length() > Control.max_len_string_attibute) {
-                    JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("CarTypeNameTooLong",
-                            carRoad, carNumber, carType),
-                            Bundle.getMessage("carAttribute",
-                                    Control.max_len_string_attibute),
+                try {
+                    if (carType.split(TrainCommon.HYPHEN)[0].length() > Control.max_len_string_attibute) {
+                        JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("CarTypeNameTooLong",
+                                carRoad, carNumber, carType),
+                                Bundle.getMessage("carAttribute",
+                                        Control.max_len_string_attibute),
+                                JmriJOptionPane.ERROR_MESSAGE);
+                        break;
+                    }
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("CarTypeNameWrong",
+                            carType, lineNum),
+                            Bundle.getMessage("CarAttributeMissing"),
                             JmriJOptionPane.ERROR_MESSAGE);
+                    log.error("Type ({}) name not valid line {}", carType, lineNum);
                     break;
                 }
                 if (!InstanceManager.getDefault(CarTypes.class).containsName(carType)) {

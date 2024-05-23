@@ -36,7 +36,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>Can use DCCppOverTCPServer to connect DCC-EX native protocol thru JMRI</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -577,7 +577,7 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li></li>
+            <li>new web ui for working with cars</li>
         </ul>
 
     <h3>Where Used</h3>

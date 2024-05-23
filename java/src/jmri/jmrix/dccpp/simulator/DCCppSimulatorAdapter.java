@@ -595,13 +595,13 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             case DCCppConstants.TRACK_POWER_ON:
                 log.debug("TRACK_POWER_ON detected");
                 trackPowerState = true;
-                reply = DCCppReply.parseDCCppReply("p 1");
+                reply = DCCppReply.parseDCCppReply("p1");
                 break;
 
             case DCCppConstants.TRACK_POWER_OFF:
                 log.debug("TRACK_POWER_OFF detected");
                 trackPowerState = false;
-                reply = DCCppReply.parseDCCppReply("p 0");
+                reply = DCCppReply.parseDCCppReply("p0");
                 break;
 
             case DCCppConstants.READ_MAXNUMSLOTS:
@@ -697,7 +697,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
     /* 's'tatus message gets multiple reply messages */
     private void generateReadCSStatusReply() {
-        DCCppReply r = new DCCppReply("p " + (trackPowerState ? "1" : "0"));
+        DCCppReply r = new DCCppReply("p" + (trackPowerState ? "1" : "0"));
         writeReply(r);
         r = DCCppReply.parseDCCppReply("iDCC-EX V-4.0.1 / MEGA / STANDARD_MOTOR_SHIELD G-9db6d36");
         writeReply(r);

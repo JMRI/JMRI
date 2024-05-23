@@ -176,11 +176,11 @@ navigation bar silently attempts a reconnection and does not use this dialog.
         <div class="jumbotron">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-sm-4">
                         <h1 class="title text-capitalize">JMRI Cars</h1>
                     </div>
-                    <div class="col-lg-4">
-                        <input id="searchBox" type="text" placeholder="Cars Search..">
+                    <div class="col-sm-4">
+                        <input id="searchBox" type="text" placeholder="Search..">
                     </div>
                 </div>
             </div>
@@ -213,18 +213,23 @@ navigation bar silently attempts a reconnection and does not use this dialog.
                 <h4 class="modal-title" id="modal-car-edit-label">Edit Car <span id="modal-car-edit-carName"></span></h4>
             </div>
             <div class="modal-body text-secondary">
-                <p id="modal-car-edit-carType"></p>
-                <p id="modal-car-edit-location"></p>
-                <select class="form-select" id="modal-car-edit-select-location" name="modal-car-edit-select-location"></select>
-                <select class="form-select" id="modal-car-edit-select-track" name="modal-car-edit-select-track"></select>
-                <div id="modal-car-edit-on-train">
+                <div class="modal-cars-edit-box">
+                    <p><span id="modal-car-edit-carType"></span><br />
+                    <span id="modal-car-edit-location"></span></p>
+                </div>
+                <div class="modal-cars-edit-box text-danger" id="modal-car-edit-on-train">
                     <p>On Train <span id="modal-car-edit-trainIconName"></span> (<span id="modal-car-edit-trainId"></span>) 
-                        to <span id="modal-car-edit-destination"></span></p>
+                        to <span id="modal-car-edit-destination"></span><br />
                     <input type="checkbox" id="modal-car-edit-remove-from-train"><span> Remove car from train?</span>
                 </div>
-                <div>
-                    <p><input type="checkbox" id="modal-car-edit-locationUnknown"><span> Mark as Location Unknown?</span></p>
-                    <p><input type="checkbox" id="modal-car-edit-outOfService"><span> Mark as Out of Service?</span></p>
+                <div class="modal-cars-edit-box">
+                    <label for "modal-car-edit-select-location">Set new location and track</label><br />
+                    <select class="form-select" id="modal-car-edit-select-location" name="modal-car-edit-select-location"></select>
+                    <select class="form-select" id="modal-car-edit-select-track" name="modal-car-edit-select-track"></select>
+                </div>
+                <div class="modal-cars-edit-box">
+                    <p><input type="checkbox" id="modal-car-edit-locationUnknown"><span> Mark as Location Unknown?</span><br />
+                    <input type="checkbox" id="modal-car-edit-outOfService"><span> Mark as Out of Service?</span></p>
                 </div>
             </div>
             <div class="modal-footer">

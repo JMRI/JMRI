@@ -38,8 +38,14 @@ span#filter-text {
     float: right;
 }
 
-/* hide data-only columns */
+/* hide data-only elements */
 th.trainId, th.locationId, th.trackId, th.locationUnknown, th.outOfService, th.destination,
-td.trainId, td.locationId, td.trackId, td.locationUnknown, td.outOfService, td.destination {
+td.trainId, td.locationId, td.trackId, td.locationUnknown, td.outOfService, td.destination,
+#modal-car-edit-other-data {
     display: none;
+}
+
+.modal-cars-edit-box {
+    border: 1px solid lightgrey;
+    padding: 1em;
 }

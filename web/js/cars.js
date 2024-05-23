@@ -3,9 +3,10 @@
  *
  * TODO:
  * support removing location and track
+ * JMRI doesn't appear to send update when dropped from train
  * increase select text size
  * improve layout (add boxes, etc.)
- * do location checks client-side
+ * do location checks client-side (reducing selections)
  * convert to servlet and internationalize
  * don't remove from train if location change will fail
  *

@@ -1957,7 +1957,7 @@ public class AutoActiveTrain implements ThrottleListener {
         }
 
         public void setTargetSpeed(float distance, float speed) {
-            log.debug("Set Target Speed[{}] with distance{{}]",speed,distance);
+            log.debug("Set Target Speed[{}] with distance{{}] from speed[{}]",speed,distance,throttle.getSpeedSetting());
             stopAllTimers();
             if (rosterEntry != null) {
                 rosterEntry.getSpeedProfile().setExtraInitialDelay(1500f);
