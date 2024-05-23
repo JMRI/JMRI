@@ -439,7 +439,14 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>Simplified the creation and update of switch lists when using MR SLAM</li>
+            <li>Improvements to destination checking button for C/I tracks</li>
+            <li>Added warning messages if operation files have been corrupted</li>
+            <li>Files are now saved to the millisecond, fixes fast Automation actions and loops</li>
+            <li>Improvements to export Trains</li>
+            <li>Significant improvements to Car importing</li>
+            <li>Conductor improvements when sorting by track name</li>
+            <li>Web Manifest and Conductor improvements, Manifest how supports utility cars. Comment colors now supported</li>
         </ul>
 
    <h3>Panel Editor</h3>
