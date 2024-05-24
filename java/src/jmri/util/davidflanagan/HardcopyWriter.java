@@ -22,6 +22,7 @@ import jmri.util.JmriJFrame;
  * alligator on the front.
  *
  * @author David Flanagan
+ * @author Dennis Miller
  */
 public class HardcopyWriter extends Writer {
 
@@ -181,8 +182,6 @@ public class HardcopyWriter extends Writer {
 
     /**
      * Create a print preview toolbar.
-     *
-     * @author Dennis Miller
      */
     protected void toolBarInit() {
         previousButton = new JButton(Bundle.getMessage("ButtonPreviousPage"));
@@ -214,8 +213,6 @@ public class HardcopyWriter extends Writer {
      * Display a page image in the preview pane.
      * <p>
      * Not part of the original HardcopyWriter class.
-     *
-     * @author Dennis Miller
      */
     protected void displayPage() {
         // limit the pages to the actual range
@@ -355,8 +352,6 @@ public class HardcopyWriter extends Writer {
     /**
      * Handle close event of pane. Modified to clean up the added preview
      * capability.
-     *
-     * @author David Flanagan, modified by Dennis Miller
      */
     @Override
     public void close() {
