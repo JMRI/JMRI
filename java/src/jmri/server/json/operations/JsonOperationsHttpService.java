@@ -600,10 +600,11 @@ public class JsonOperationsHttpService extends JsonHttpService {
                     String trackId = node.path(TRACK).path(NAME).asText();
                     Track track = location.getTrackById(trackId);
                     if (trackId.isEmpty() || track != null) {
-                        if (!rs.setLocation(location, track).equals(Track.OKAY)) {
+                        String status = rs.setLocation(location, track);
+                        if (!status.equals(Track.OKAY)) {
                             throw new JsonException(HttpServletResponse.SC_CONFLICT,
                                     Bundle.getMessage(locale, "ErrorMovingCar",
-                                            rs.getId(), LOCATION, location.getId(), trackId), id);
+                                            rs.getId(), LOCATION, location.getId(), trackId, status), id);
                         }
                     } else {
                         throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
@@ -615,10 +616,11 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 }
             } else { 
                 //if new location is null, remove car from current location
-                if (!rs.setLocation(null, null).equals(Track.OKAY)) {
+                String status = rs.setLocation(null, null);
+                if (!status.equals(Track.OKAY)) {
                     throw new JsonException(HttpServletResponse.SC_CONFLICT,
                             Bundle.getMessage(locale, "ErrorMovingCar",
-                                    rs.getId(), LOCATION, null, null), id);
+                                    rs.getId(), LOCATION, null, null, status), id);
                 }                
             }
         }
@@ -641,10 +643,11 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 String trackId = node.path(TRACK).path(NAME).asText();
                 Track track = location.getTrackById(trackId);
                 if (trackId.isEmpty() || track != null) {
-                    if (!rs.setDestination(location, track).equals(Track.OKAY)) {
+                    String status = rs.setDestination(location, track);
+                    if (!status.equals(Track.OKAY)) {
                         throw new JsonException(HttpServletResponse.SC_CONFLICT,
                                 Bundle.getMessage(locale, "ErrorMovingCar", rs.getId(),
-                                        DESTINATION, location.getId(), trackId),
+                                        DESTINATION, location.getId(), trackId, status),
                                 id);
                     }
                 } else {

@@ -1,8 +1,33 @@
-<!--
-Navigation bar fragment for JMRI Servlets 
-Comments containing Java Formatter syntax (http://docs.oracle.com/javase/6/docs/api/java/util/Formatter.html)
-should not be changed. See Javadoc for jmri.web.servlet.ServletHelper#getNavBar(String) for details
--->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>JSON Car List</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/cars.css">
+<link rel="stylesheet" href="/css/user.css">
+<script src="/js/jquery-2.2.4.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+<script src="/js/json2.js"></script>
+<script src="/js/jquery.websocket.js"></script>
+<script src="/js/logger.js"></script>
+<script src="/js/jquery.jmri.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/sorttable.js"></script>        
+<script src="/js/cars.js"></script>
+<script src="/js/user.js"></script>
+</head>
+<body id="cars">
+    <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+    <![endif]-->
+    <div id="wrap">
+<!-- Navigation Bar %2$s -->
 <div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -11,7 +36,7 @@ should not be changed. See Javadoc for jmri.web.servlet.ServletHelper#getNavBar(
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/"><!-- Railroad name %1$s --></a>
+            <a class="navbar-brand" href="/">My JMRI Railroad<!-- Railroad name %1$s --></a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -146,3 +171,101 @@ navigation bar silently attempts a reconnection and does not use this dialog.
         </div>
     </div>
 </div>
+
+<!-- Navigation Bar %2$s -->
+        <div class="jumbotron">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <h1 class="title text-capitalize">JMRI Cars</h1>
+                    </div>
+                    <div class="col-sm-4">
+                        <input id="searchBox" type="text" placeholder="Search..">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div id="activity-alert" class="alert alert-info alert-dismissable">Getting data...</div>
+            <div id="warning-no-data" class="alert alert-warning hidden">No data returned for this table.</div>
+            <div id="error-message" class="alert alert-danger hidden">Error message received.</div>
+            <table id="jmri-data" class="cars sortable table table-striped table-hover table-responsive hidden">
+                <thead>
+                    <tr>
+                        <th>Name</th><th>Type</th><th>Location</th><th>Train</th>                            
+                            <th class='destination'>Destination</th>
+                            <th class='trainId'>trainId</th><th class='locationId'>locationId</th>
+                            <th class='trackId'>trackId</th><th class='locationUnknown'>locationUnknown</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- list of data goes here -->
+                </tbody>
+            </table>
+        </div><!-- /container -->
+    </div><!-- /wrap -->
+    <!-- modal dialog box for editing a car -->
+<div class="modal fade" id="modal-car-edit" tabindex="-1" role="dialog" aria-labelledby="modal-car-edit-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-primary">                
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                
+                <h4 class="modal-title" id="modal-car-edit-label">Edit Car <span id="modal-car-edit-carName"></span></h4>
+            </div>
+            <div class="modal-body text-secondary">
+                <div class="modal-cars-edit-box">
+                    <p><span id="modal-car-edit-carType"></span><br />
+                    <span id="modal-car-edit-location"></span></p>
+                </div>
+                <div class="modal-cars-edit-box text-danger" id="modal-car-edit-on-train">
+                    <p>On Train <span id="modal-car-edit-trainIconName"></span> (<span id="modal-car-edit-trainId"></span>) 
+                        to <span id="modal-car-edit-destination"></span><br />
+                    <input type="checkbox" id="modal-car-edit-remove-from-train"><span> Remove car from train?</span>
+                </div>
+                <div class="modal-cars-edit-box">
+                    <label for "modal-car-edit-select-location">Set new location and track</label><br />
+                    <select class="form-select" id="modal-car-edit-select-location" name="modal-car-edit-select-location"></select>
+                    <select class="form-select" id="modal-car-edit-select-track" name="modal-car-edit-select-track"></select>
+                </div>
+                <div class="modal-cars-edit-box">
+                    <p><input type="checkbox" id="modal-car-edit-locationUnknown"><span> Mark as Location Unknown?</span><br />
+                    <input type="checkbox" id="modal-car-edit-outOfService"><span> Mark as Out of Service?</span></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div id="modal-car-edit-other-data">
+                    <span id="modal-car-edit-locationId"></span>
+                    <span id="modal-car-edit-trackId"></span>
+                </div>
+                <button type="button" class="btn btn-primary" id="modal-car-edit-save">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-car-error" tabindex="-1" role="dialog" aria-labelledby="modal-car-error-label" aria-hidden="true">
+    <div class="modal-dialog text-danger">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="modal-car-error-label">Error!</h4>
+            </div>
+            <div class="modal-body">
+                <p id="modal-car-error-message">message goes here</p>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    
+<!-- Footer %4$s -->
+<footer>
+    <div class="container">
+        <div id="no-websockets" class="hidden pull-right alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>WebSockets are disabled.</div>
+        <p class="text-muted">Powered by <a href="https://www.jmri.org">JMRI</a>.<span id="filter-text"></span></p>
+    </div>
+</footer>
+<!-- Footer %4$s -->
+
+
+</html>

@@ -144,6 +144,10 @@ function getConductor(id, location) {
                 $("#move-train").click(function () {
                     getConductor(id, $("#move-train").data("location"));
                 });
+                // add function to Cars button, navigate to cars list filtered to this trainId
+                $("#show-cars").click(function () {
+                    window.location.href='/web/cars.html?trainId=' + $("html").data("train");
+                });
             }
             $("#activity-alert").removeClass("show").addClass("hidden");
         },
