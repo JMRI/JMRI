@@ -446,7 +446,7 @@
             <li>Improvements to export Trains</li>
             <li>Significant improvements to Car importing</li>
             <li>Conductor improvements when sorting by track name</li>
-            <li>Web Manifest and Conductor improvements, Manifest how supports utility cars. Comment colors now supported</li>
+            <li>Web Manifest and Conductor improvements, Manifest now supports utility cars. Comment colors now supported</li>
         </ul>
 
    <h3>Panel Editor</h3>
