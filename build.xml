@@ -2039,7 +2039,7 @@
                 <include name="jmri/**"/>
             </packageset>
 
-            <arg value="-Xdoclint:all"/><!-- remove -missing to get warnings about missing javadoc tags -->
+            <arg value="-Xdoclint:all,-missing,-html"/>
             <arg value="-Xmaxwarns"/>
             <arg value="100"/><!-- default is 100; keep synced with pom.xml, other javadoc targets -->
 
