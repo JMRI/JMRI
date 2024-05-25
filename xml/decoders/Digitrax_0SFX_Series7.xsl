@@ -272,71 +272,37 @@
         <label>   Effect:</label>
     </variable>
 
-    <variable item="XF{$index} Qual" CV="{$CVindex}.235" mask="XXXXVVVV" default="0">
+    <variable item="XF{$index} Qual" CV="{$CVindex}.235" mask="VVVVXXXX" default="0">
         <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-          <enumChoice choice="Forward direction, ON with function ON, phase A">
-            <choice>Forward direction, ON with function ON, phase A</choice>
-            <choice xml:lang="it">Direzione Avanti, ON con Funz.ON, fase A</choice>
+          <enumChoice value="0">
+            <choice>On/OFF lead, controlled by Function output line maps</choice>
           </enumChoice>
-          <enumChoice choice="Reverse direction, ON with function ON, phase B">
-            <choice>Reverse direction, ON with function ON, phase B</choice>
-            <choice xml:lang="it">Direzione Indietro, ON con Funz.ON, fase B</choice>
+          <enumChoice value="1">
+            <choice>On/OFF lead, controlled by Function output line maps</choice>
           </enumChoice>
-          <enumChoice choice="Non directional, ON with function ON, effect phase A">
-            <choice>Non directional, ON with function ON, effect phase A</choice>
-            <choice xml:lang="it">Non Direzionale, ON con Funz.ON, effetto fase A</choice>
+          <enumChoice value="2">
+            <choice>FWD qualified</choice>
           </enumChoice>
-          <enumChoice choice="Non directional, ON with function ON, effect phase B">
-            <choice>Non directional, ON with function ON, effect phase B</choice>
-            <choice xml:lang="it">Non Direzionale, ON con Funz.ON, effetto fase B</choice>
+          <enumChoice value="3">
+            <choice>REV qualified</choice>
           </enumChoice>
-          <enumChoice choice="Forward direction, ON with F0 on &amp; function ON, phase A">
-            <choice>Forward direction, ON with F0 on &amp; function ON, phase A</choice>
-            <choice xml:lang="it">Direzione Avanti, ON con F0 ON, funzione ON, fase A</choice>
+          <enumChoice value="4">
+            <choice>F0 qualified</choice>
           </enumChoice>
-          <enumChoice choice="Reverse direction, ON with F0 on &amp; function ON, phase B">
-            <choice>Reverse direction, ON with F0 on &amp; function ON, phase B</choice>
-            <choice xml:lang="it">Direzione Indietro, ON con F0 ON, funzione ON, fase B</choice>
+          <enumChoice value="5">
+            <choice>F0 qualified</choice>
           </enumChoice>
-          <enumChoice choice="Special logic for Fwd Ditch Light or Rule 17 dimming">
-            <choice>Special logic for Fwd Ditch Light or Rule 17 dimming</choice>
-            <choice xml:lang="it">Logica Speciale per luci Ditch in direz.Avantio o regolazione a Norma 17</choice>
+          <enumChoice value="6">
+            <choice>F0 and FWD qualified</choice>
           </enumChoice>
-          <enumChoice choice="Special logic for Rev Ditch Light or Rule 17 dimming">
-            <choice>Special logic for Rev Ditch Light or Rule 17 dimming</choice>
-            <choice xml:lang="it">Logica Speciale per luci Ditch in direz.Indietro o regolazione a Norma 17</choice>
+          <enumChoice value="7">
+            <choice>F0 and REV qualified</choice>
           </enumChoice>
-          <enumChoice choice="Reserved (0x8)">
-            <choice>Reserved (0x8)</choice>
-            <choice xml:lang="it">Riservata (0x8)</choice>
+          <enumChoice value="10">
+            <choice>SPD = 0, non directional qualify</choice>
           </enumChoice>
-          <enumChoice choice="Reserved (0x9)">
-            <choice>Reserved (0x9)</choice>
-            <choice xml:lang="it">Riservata (0x9)</choice>
-          </enumChoice>
-          <enumChoice choice="Speed=0, non-directional, phase A, function qualifier">
-            <choice>Speed=0, non-directional, phase A, function qualifier</choice>
-            <choice xml:lang="it">Vel=0, non-direzionale, fase A, qualificatore funzione</choice>
-          </enumChoice>
-          <enumChoice choice="Speed&gt;0, non-directional, phase B, function qualifier">
-            <choice>Speed&gt;0, non-directional, phase B, function qualifier</choice>
-            <choice xml:lang="it">Vel&gt;0, non-direzionale, fase B, qualificatore funzione</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0xC)">
-            <choice>Reserved (0xC)</choice>
-            <choice xml:lang="it">Riservata (0xC)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0xD)">
-            <choice>Reserved (0xD)</choice>
-            <choice xml:lang="it">Riservata (0xD)</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch off phase A - Alternate operation, flash with F2">
-            <choice>Ditch off phase A - Alternate operation, flash with F2</choice>
-            <choice xml:lang="it">Ditch off fase A - Oper.Alternativa, flash con F2</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch off phase B - Alternate operation, flash with F2">
-            <choice>Ditch off phase B - Alternate operation, flash with F2</choice>
-            <choice xml:lang="it">Ditch off fase B - Oper.Alternativa, flash con F2</choice>
+          <enumChoice value="11">
+            <choice>SPD &gt; 0, non directional qualify</choice>
           </enumChoice>
         </enumVal>
         <label>  Qualifier:</label>

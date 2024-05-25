@@ -242,7 +242,7 @@ Log local variables done
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Map<span class="since">since 4.25.8</span></h5>
+      <h5 id="lv_map">Map<span class="since">since 4.25.8</span></h5>
 
       <p>When a <strong>Map</strong> Local Variable is defined, it is empty.  Rows are added as
       shown in the example.</p>

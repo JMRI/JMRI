@@ -427,6 +427,8 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li>Add an <strong>Examples</strong> section to the LogixNG Reference.</li>
+          <li>Add the <strong>Set a yard ladder</strong> example to the Examples section.</li>
           <li>The action <strong>Program On Main</strong> is improved.
               It's now possible to select long or short address. It's
               also possible to select not to wait until programming is
