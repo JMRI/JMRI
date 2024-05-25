@@ -9,6 +9,7 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.jmrit.logixng.util.LogixNG_SelectComboBox;
+import jmri.jmrit.logixng.util.LogixNG_SelectEnum;
 import jmri.jmrit.logixng.util.LogixNG_SelectInteger;
 
 /**
@@ -28,10 +29,13 @@ public class ProgramOnMain extends AbstractDigitalAction
     private AddressedProgrammerManager _programmerManager;
     private ThrottleManager _throttleManager;
     private final LogixNG_SelectComboBox _selectProgrammingMode;
+    private final LogixNG_SelectEnum<LongOrShortAddress> _selectLongOrShortAddress =
+            new LogixNG_SelectEnum<>(this, LongOrShortAddress.values(), LongOrShortAddress.Auto, this);
     private final LogixNG_SelectInteger _selectAddress = new LogixNG_SelectInteger(this, this);
     private final LogixNG_SelectInteger _selectCV = new LogixNG_SelectInteger(this, this);
     private final LogixNG_SelectInteger _selectValue = new LogixNG_SelectInteger(this, this);
     private String _localVariableForStatus = "";
+    private boolean _wait = true;
     private final InternalFemaleSocket _internalSocket = new InternalFemaleSocket();
 
     public ProgramOnMain(String sys, String user) {
@@ -73,6 +77,10 @@ public class ProgramOnMain extends AbstractDigitalAction
         return _selectAddress;
     }
 
+    public LogixNG_SelectEnum<LongOrShortAddress> getSelectLongOrShortAddress() {
+        return _selectLongOrShortAddress;
+    }
+
     public final LogixNG_SelectInteger getSelectCV() {
         return _selectCV;
     }
@@ -87,6 +95,14 @@ public class ProgramOnMain extends AbstractDigitalAction
 
     public String getLocalVariableForStatus() {
         return _localVariableForStatus;
+    }
+
+    public void setWait(boolean wait) {
+        _wait = wait;
+    }
+
+    public boolean getWait() {
+        return _wait;
     }
 
     public final void setMemo(SystemConnectionMemo memo) {
@@ -137,11 +153,30 @@ public class ProgramOnMain extends AbstractDigitalAction
 
     private void doProgrammingOnMain(ConditionalNG conditionalNG,
             DefaultSymbolTable newSymbolTable, ProgrammingMode progMode,
-            int address, int cv, int value)
+            int address, LongOrShortAddress longOrShort, int cv, int value, boolean wait)
             throws JmriException {
         try {
+            boolean longAddress;
+            
+            switch (longOrShort) {
+                case Short:
+                    longAddress = false;
+                    break;
+                    
+                case Long:
+                    longAddress = true;
+                    break;
+                    
+                case Auto:
+                    longAddress = !_throttleManager.canBeShortAddress(address);
+                    break;
+                    
+                default:
+                    throw new IllegalArgumentException("longOrShort has unknown value");
+            }
+            
             AddressedProgrammer programmer = _programmerManager.getAddressedProgrammer(
-                    new DccLocoAddress(address, !_throttleManager.canBeShortAddress(address)));
+                    new DccLocoAddress(address, longAddress));
 
             if (programmer != null) {
                 programmer.setMode(progMode);
@@ -162,12 +197,14 @@ public class ProgramOnMain extends AbstractDigitalAction
                     }
                 });
 
-                try {
-                    while (result.get() == -1) {
-                        Thread.sleep(10);
+                if (wait) {
+                    try {
+                        while (result.get() == -1) {
+                            Thread.sleep(10);
+                        }
+                    } catch (InterruptedException e) {
+                        log.warn("Waiting for programmer to complete was aborted");
                     }
-                } catch (InterruptedException e) {
-                    log.warn("Waiting for programmer to complete was aborted");
                 }
 
             } else {
@@ -188,10 +225,11 @@ public class ProgramOnMain extends AbstractDigitalAction
         ProgrammingMode progMode = new ProgrammingMode(progModeStr);
 
         int address = _selectAddress.evaluateValue(conditionalNG);
+        LongOrShortAddress longOrShort = _selectLongOrShortAddress.evaluateEnum(conditionalNG);
         int cv = _selectCV.evaluateValue(conditionalNG);
         int value = _selectValue.evaluateValue(conditionalNG);
 
-        doProgrammingOnMain(conditionalNG, newSymbolTable, progMode, address, cv, value);
+        doProgrammingOnMain(conditionalNG, newSymbolTable, progMode, address, longOrShort, cv, value, _wait);
     }
 
     @Override
@@ -238,6 +276,7 @@ public class ProgramOnMain extends AbstractDigitalAction
     public String getLongDescription(Locale locale) {
         if (_memo != null) {
             return Bundle.getMessage(locale, "ProgramOnMain_LongConnection",
+                    _selectLongOrShortAddress.getDescription(locale),
                     _selectAddress.getDescription(locale, false),
                     _selectCV.getDescription(locale, false),
                     _selectValue.getDescription(locale, false),
@@ -245,6 +284,7 @@ public class ProgramOnMain extends AbstractDigitalAction
                     _memo.getUserName());
         } else {
             return Bundle.getMessage(locale, "ProgramOnMain_Long",
+                    _selectLongOrShortAddress.getDescription(locale),
                     _selectAddress.getDescription(locale, false),
                     _selectCV.getDescription(locale, false),
                     _selectValue.getDescription(locale, false),
@@ -345,6 +385,25 @@ public class ProgramOnMain extends AbstractDigitalAction
                     maleSocket.handleError(ProgramOnMain.this, Bundle.formatMessage(rbx.getString("ExceptionExecuteAction"), e.getLocalizedMessage()), e, log);
                 }
             }
+        }
+
+    }
+
+
+    public enum LongOrShortAddress {
+        Short(Bundle.getMessage("ProgramOnMain_LongOrShortAddress_Short")),
+        Long(Bundle.getMessage("ProgramOnMain_LongOrShortAddress_Long")),
+        Auto(Bundle.getMessage("ProgramOnMain_LongOrShortAddress_Auto"));
+
+        private final String _text;
+
+        private LongOrShortAddress(String text) {
+            this._text = text;
+        }
+
+        @Override
+        public String toString() {
+            return _text;
         }
 
     }
