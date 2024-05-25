@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
+import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManifestHeaderText;
@@ -215,6 +216,7 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
         for (String name : names) {
             box.addItem(name);
         }
+        OperationsPanel.padComboBox(box, getMaxNameLength() + 1);
     }
 
     /**

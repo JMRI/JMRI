@@ -10,8 +10,10 @@ import org.slf4j.LoggerFactory;
 
 import jmri.*;
 import jmri.beans.PropertyChangeSupport;
+import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 
 /**
@@ -195,6 +197,7 @@ public class RouteManager extends PropertyChangeSupport implements InstanceManag
         for (Route route : routes) {
             box.addItem(route);
         }
+        OperationsPanel.padComboBox(box, Control.max_len_string_route_name);
         return box;
     }
 

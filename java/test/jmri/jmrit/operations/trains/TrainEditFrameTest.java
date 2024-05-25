@@ -10,8 +10,9 @@ import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.routes.*;
 import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
 
@@ -40,6 +41,8 @@ public class TrainEditFrameTest extends OperationsTestCase {
             trainEditFrame.trainNameTextField.setText("Test Train Name");
             trainEditFrame.trainDescriptionTextField.setText("Test Train Description");
             trainEditFrame.commentTextArea.setText("Test Train Comment");
+            trainEditFrame.hourBox.setSelectedItem("15");
+            trainEditFrame.minuteBox.setSelectedItem("45");
         });
         JemmyUtil.enterClickAndLeave(trainEditFrame.addTrainButton);
 
@@ -51,19 +54,13 @@ public class TrainEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("train name", "Test Train Name", train.getName());
         Assert.assertEquals("train description", "Test Train Description", train.getDescription());
         Assert.assertEquals("train comment", "Test Train Comment", train.getCommentWithColor());
-        Assert.assertEquals("train depart time", "00:00", train.getDepartureTime());
+        Assert.assertEquals("train depart time", "15:45", train.getDepartureTime());
         Assert.assertEquals("train route", null, train.getRoute());
         Assert.assertTrue("train accepts car type Boxcar", train.isTypeNameAccepted("Boxcar"));
         Assert.assertEquals("train roads", Train.ALL_ROADS, train.getCarRoadOption());
         Assert.assertEquals("train requirements", Train.NO_CABOOSE_OR_FRED, train.getRequirements());
 
-        // test departure time fields
-        ThreadingUtil.runOnGUI(() -> {
-            trainEditFrame.hourBox.setSelectedItem("15");
-            trainEditFrame.minuteBox.setSelectedItem("45");
-        });
-        // shouldn't change until Save
-        Assert.assertEquals("train departure time", "00:00", train.getDepartureTime());
+        // no route, should cause pop up dialog
         JemmyUtil.enterClickAndLeaveThreadSafe(trainEditFrame.saveTrainButton);
 
         // clear no route dialog box
@@ -75,6 +72,11 @@ public class TrainEditFrameTest extends OperationsTestCase {
         ThreadingUtil.runOnGUI(() -> {
             trainEditFrame.routeBox.setSelectedIndex(3); // the 3rd item should be "Test Route C"
         });
+
+        // save should work now
+        JemmyUtil.enterClickAndLeaveThreadSafe(trainEditFrame.saveTrainButton);
+        Assert.assertEquals("train depart time", "15:45", train.getDepartureTime());
+
         Assert.assertEquals("train route", "Test Route C", train.getRoute().getName());
         // test route edit button
         JemmyUtil.enterClickAndLeave(trainEditFrame.editButton);
@@ -321,9 +323,16 @@ public class TrainEditFrameTest extends OperationsTestCase {
         Train train = tmanager.newTrain("Test Train Save Button");
         Assert.assertNotNull(train);
 
-        // give the train a route
+        // give the train a route with one location
         RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
         Route routeB = rmanager.getRouteByName("Test Route B");
+
+        Location loc = InstanceManager.getDefault(LocationManager.class).getLocationByName("Test_Location 1");
+        Assert.assertNotNull("Confirm location exsists", loc);
+
+        RouteLocation rB = routeB.addLocation(loc);
+        rB.setDepartureTime("10", "12");
+
         train.setRoute(routeB);
 
         train.setDescription("Test Train Save Button Description");
@@ -342,8 +351,8 @@ public class TrainEditFrameTest extends OperationsTestCase {
                 trainEditFrame.trainDescriptionTextField.getText());
         Assert.assertEquals("train comment", "Test Train Save Button Comment",
                 trainEditFrame.commentTextArea.getText());
-        Assert.assertEquals("train depart hour", "00", trainEditFrame.hourBox.getSelectedItem());
-        Assert.assertEquals("train depart minute", "00", trainEditFrame.minuteBox.getSelectedItem());
+        Assert.assertEquals("train depart hour", "10", trainEditFrame.hourBox.getSelectedItem());
+        Assert.assertEquals("train depart minute", "12", trainEditFrame.minuteBox.getSelectedItem());
         Assert.assertEquals("train route", train.getRoute(), trainEditFrame.routeBox.getSelectedItem());
         Assert.assertEquals("number of engines", "2", trainEditFrame.numEnginesBox.getSelectedItem());
         Assert.assertEquals("engine model", "GP40", trainEditFrame.modelEngineBox.getSelectedItem());
@@ -355,21 +364,19 @@ public class TrainEditFrameTest extends OperationsTestCase {
         Assert.assertFalse("FRED selected", trainEditFrame.fredRadioButton.isSelected());
 
         // test departure time fields
-        // ThreadingUtil.runOnGUI(() -> {
-        trainEditFrame.hourBox.setSelectedItem("15");
-        trainEditFrame.minuteBox.setSelectedItem("45");
-        // });
-        // shouldn't change until Save
-        Assert.assertEquals("train departure time", "00:00", train.getDepartureTime());
-        JemmyUtil.enterClickAndLeave(trainEditFrame.saveTrainButton);
-
-        Assert.assertEquals("train depart time", "15:45", train.getDepartureTime());
+        Assert.assertFalse("Confirm hour is disabled", trainEditFrame.hourBox.isEnabled());
+        Assert.assertFalse("Confirm minute is disabled", trainEditFrame.minuteBox.isEnabled());
+        Assert.assertEquals("train departure time", "10:12", train.getDepartureTime());
 
         // test route field, 5 routes and a blank
         Assert.assertEquals("Route Combobox item count", 6, trainEditFrame.routeBox.getItemCount());
-        // ThreadingUtil.runOnGUI(() -> {
+
         trainEditFrame.routeBox.setSelectedIndex(3); // the 3rd item should be "Test Route C"
-        // });
+        Assert.assertTrue("Confirm hour is enabled", trainEditFrame.hourBox.isEnabled());
+        Assert.assertTrue("Confirm minute is enabled", trainEditFrame.minuteBox.isEnabled());
+        Assert.assertEquals("train depart hour", "00", trainEditFrame.hourBox.getSelectedItem());
+        Assert.assertEquals("train depart minute", "00", trainEditFrame.minuteBox.getSelectedItem());
+
         Assert.assertEquals("train route", "Test Route C", train.getRoute().getName());
         // test route edit button
         JemmyUtil.enterClickAndLeave(trainEditFrame.editButton);
@@ -379,10 +386,8 @@ public class TrainEditFrameTest extends OperationsTestCase {
         Assert.assertNotNull("route add frame", ref);
 
         // increase screen size so clear and set buttons are shown
-        // ThreadingUtil.runOnGUI(() -> {
         trainEditFrame.setLocation(10, 0);
         trainEditFrame.setSize(trainEditFrame.getWidth(), trainEditFrame.getHeight() + 200);
-        // });
 
         // test car types using the clear and set buttons
         JemmyUtil.enterClickAndLeave(trainEditFrame.clearButton);
