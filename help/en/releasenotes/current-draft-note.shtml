@@ -433,6 +433,10 @@
               It's now possible to select long or short address. It's
               also possible to select not to wait until programming is
               completed.</li>
+          <li>For most actions and expressions, when selecting indirect addressing
+              of an enum, the button <strong>Show valid names</strong> are added.
+              Pressing this button opens a dialog that shows a list of valid values
+              and their descriptions.</li>
           <li></li>
         </ul>
 
