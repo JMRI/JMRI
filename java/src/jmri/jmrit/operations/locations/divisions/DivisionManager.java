@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.*;
 import jmri.beans.PropertyChangeSupport;
+import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.trains.TrainManifestHeaderText;
 
@@ -187,6 +188,7 @@ public class DivisionManager extends PropertyChangeSupport implements InstanceMa
     public JComboBox<Division> getComboBox() {
         JComboBox<Division> box = new JComboBox<>();
         updateComboBox(box);
+        OperationsPanel.padComboBox(box);
         return box;
     }
 

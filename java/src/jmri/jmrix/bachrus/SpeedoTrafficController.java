@@ -146,8 +146,6 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
      * Respond to an event triggered by RXTX. In this case we are
      * only dealing with DATA_AVAILABLE but the other events are left here for
      * reference.
-     *
-     * @author Andrew Berridge Jan 2010
      */
     @Override
     public void serialEvent(SerialPortEvent event) {
