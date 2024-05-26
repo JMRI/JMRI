@@ -62,9 +62,11 @@ public class ProgramOnMain extends AbstractDigitalAction
         copy.setComment(getComment());
         copy.setMemo(_memo);
         _selectProgrammingMode.copy(copy._selectProgrammingMode);
+        _selectLongOrShortAddress.copy(copy._selectLongOrShortAddress);
         _selectAddress.copy(copy._selectAddress);
         _selectCV.copy(copy._selectCV);
         _selectValue.copy(copy._selectValue);
+        copy._wait = _wait;
         copy.setLocalVariableForStatus(_localVariableForStatus);
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
