@@ -448,6 +448,7 @@
             <li>Significant improvements to Car importing</li>
             <li>Conductor improvements when sorting by track name</li>
             <li>Web Manifest and Conductor improvements, Manifest now supports utility cars. Comment colors now supported</li>
+            <li>Switch lists can now display train's departure time</li>
         </ul>
 
    <h3>Panel Editor</h3>

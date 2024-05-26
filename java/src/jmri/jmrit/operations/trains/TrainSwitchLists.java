@@ -242,21 +242,33 @@ public class TrainSwitchLists extends TrainCommon {
                         new Object[]{train.getName(), train.getDescription()}));
         if (train.isTrainEnRoute()) {
             if (!expectedArrivalTime.equals(Train.ALREADY_SERVICED)) {
+                // Departed {0}, expect to arrive in {1}, arrives {2}bound
                 newLine(fileOut,
                         MessageFormat.format(
                                 messageFormatText = TrainSwitchListText.getStringDepartedExpected(),
                                 new Object[]{splitString(train.getTrainDepartsName()),
-                                        expectedArrivalTime, rl.getTrainDirectionString()}));
+                                        expectedArrivalTime, rl.getTrainDirectionString(),
+                                        train.getCurrentLocationName()}));
             }
         } else if (!train.isLocalSwitcher()) {
+            // train hasn't departed
             if (rl == train.getTrainDepartsRouteLocation()) {
-                newLine(fileOut,
-                        MessageFormat.format(
-                                messageFormatText = TrainSwitchListText.getStringDepartsAt(),
-                                new Object[]{splitString(train.getTrainDepartsName()),
-                                        rl.getTrainDirectionString(),
-                                        train.getFormatedDepartureTime()}));
+                // Departs {0} {1}bound at {2}
+                newLine(fileOut, MessageFormat.format(
+                        messageFormatText = TrainSwitchListText.getStringDepartsAt(),
+                        new Object[]{splitString(train.getTrainDepartsName()),
+                                rl.getTrainDirectionString(),
+                                train.getFormatedDepartureTime()}));
+            } else if (Setup.isUseSwitchListDepartureTimeEnabled() &&
+                    rl != train.getTrainTerminatesRouteLocation()) {
+                // Departs {0} at {1} expected arrival {2}, arrives {3}bound
+                newLine(fileOut, MessageFormat.format(
+                        messageFormatText = TrainSwitchListText.getStringDepartsAtExpectedArrival(),
+                        new Object[]{splitString(rl.getName()),
+                                train.getExpectedDepartureTime(rl), expectedArrivalTime,
+                                rl.getTrainDirectionString()}));
             } else {
+                // Departs {0} at {1} expected arrival {2}, arrives {3}bound
                 newLine(fileOut, MessageFormat.format(
                         messageFormatText = TrainSwitchListText.getStringDepartsAtExpectedArrival(),
                         new Object[]{splitString(train.getTrainDepartsName()),
@@ -280,18 +292,19 @@ public class TrainSwitchLists extends TrainCommon {
             newLine(fileOut);
             if (train.isTrainEnRoute()) {
                 if (expectedArrivalTime.equals(Train.ALREADY_SERVICED)) {
+                    // Visit number {0} for train ({1})
                     newLine(fileOut,
                             MessageFormat.format(
                                     messageFormatText = TrainSwitchListText.getStringVisitNumberDone(),
                                     new Object[]{stops, train.getName(), train.getDescription()}));
                 } else if (rl != train.getTrainTerminatesRouteLocation()) {
+                    // Visit number {0} for train ({1}) expect to arrive in {2}, arrives {3}bound
                     newLine(fileOut, MessageFormat.format(
                             messageFormatText = TrainSwitchListText.getStringVisitNumberDeparted(),
                             new Object[]{stops, train.getName(), expectedArrivalTime,
                                     rl.getTrainDirectionString(), train.getDescription()}));
                 } else {
-                    // message: Visit number {0} for train ({1}) expect to arrive in {2}, terminates
-                    // {3}
+                    // Visit number {0} for train ({1}) expect to arrive in {2}, terminates {3}
                     newLine(fileOut,
                             MessageFormat.format(
                                     messageFormatText = TrainSwitchListText
@@ -302,12 +315,22 @@ public class TrainSwitchLists extends TrainCommon {
             } else {
                 // train hasn't departed
                 if (rl != train.getTrainTerminatesRouteLocation()) {
+                    // Visit number {0} for train ({1}) expected arrival {2}, arrives {3}bound
                     newLine(fileOut,
                             MessageFormat.format(
                                     messageFormatText = TrainSwitchListText.getStringVisitNumber(),
                                     new Object[]{stops, train.getName(), expectedArrivalTime,
                                             rl.getTrainDirectionString(), train.getDescription()}));
+                    if (Setup.isUseSwitchListDepartureTimeEnabled()) {
+                        // Departs {0} {1}bound at {2}
+                        newLine(fileOut, MessageFormat.format(
+                                messageFormatText = TrainSwitchListText.getStringDepartsAt(),
+                                new Object[]{splitString(rl.getName()),
+                                        rl.getTrainDirectionString(),
+                                        train.getExpectedDepartureTime(rl)}));
+                    }
                 } else {
+                    // Visit number {0} for train ({1}) expected arrival {2}, terminates {3}
                     newLine(fileOut, MessageFormat.format(
                             messageFormatText = TrainSwitchListText.getStringVisitNumberTerminates(),
                             new Object[]{stops, train.getName(), expectedArrivalTime,
@@ -321,6 +344,7 @@ public class TrainSwitchLists extends TrainCommon {
         // Does the train reverse direction?
         if (rl.getTrainDirection() != rlPrevious.getTrainDirection() &&
                 !TrainSwitchListText.getStringTrainDirectionChange().isEmpty()) {
+            // Train ({0}) direction change, departs {1}bound
             newLine(fileOut,
                     MessageFormat.format(
                             messageFormatText = TrainSwitchListText.getStringTrainDirectionChange(),
@@ -336,8 +360,7 @@ public class TrainSwitchLists extends TrainCommon {
         String trainDeparts = "";
         if (Setup.isPrintLoadsAndEmptiesEnabled()) {
             int emptyCars = train.getNumberEmptyCarsInTrain(rl);
-            // Message format: Train departs Boston Westbound with 4 loads, 8 empties, 450
-            // feet, 3000 tons
+            // Train departs {0} {1}bound with {2} loads, {3} empties, {4} {5}, {6} tons
             trainDeparts = MessageFormat.format(TrainSwitchListText.getStringTrainDepartsLoads(),
                     new Object[]{rl.getSplitName(),
                             rl.getTrainDirectionString(),
@@ -346,8 +369,7 @@ public class TrainSwitchLists extends TrainCommon {
                             train.getTrainWeight(rl), train.getTrainTerminatesName(),
                             train.getName()});
         } else {
-            // Message format: Train departs Boston Westbound with 12 cars, 450 feet, 3000
-            // tons
+            // Train departs {0} {1}bound with {2} cars, {3} {4}, {5} tons
             trainDeparts = MessageFormat.format(TrainSwitchListText.getStringTrainDepartsCars(),
                     new Object[]{rl.getSplitName(),
                             rl.getTrainDirectionString(), train.getNumberCarsInTrain(rl),
