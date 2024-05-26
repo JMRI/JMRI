@@ -67,6 +67,7 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
 
         // row 6b (train visit)
         pTrainVisit.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Visit")));
+        padComboBox(trainVisitComboBox, 2);
         pTrainVisit.add(trainVisitComboBox);
 
         pRow6.add(pTrainName);
@@ -249,6 +250,7 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
         if (selectedItem != null) {
             trainComboBox.setSelectedItem(selectedItem);
         }
+        padComboBox(trainComboBox);
         trainComboBox.setVisible(true);
     }
 

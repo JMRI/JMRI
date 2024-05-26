@@ -15,6 +15,7 @@ import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.beans.Identifiable;
 import jmri.beans.PropertyChangeSupport;
+import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.locations.divisions.Division;
 import jmri.jmrit.operations.locations.divisions.DivisionManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -1070,6 +1071,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         for (Track track : tracks) {
             box.addItem(track);
         }
+        OperationsPanel.padComboBox(box, InstanceManager.getDefault(LocationManager.class).getMaxTrackNameLength() + 1);
     }
 
     /**
