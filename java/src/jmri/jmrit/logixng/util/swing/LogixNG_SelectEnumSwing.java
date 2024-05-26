@@ -30,7 +30,7 @@ public class LogixNG_SelectEnumSwing<E extends Enum<?>> {
     private final JDialog _dialog;
     private final LogixNG_SelectTableSwing _selectTableSwing;
     
-    private LogixNG_SelectEnumSwing_EnumDialog _enumDialog;
+    private LogixNG_SelectEnumSwing_EnumDialog<E> _enumDialog;
     private E[] _enumArray;
 
     private JTabbedPane _tabbedPane;
