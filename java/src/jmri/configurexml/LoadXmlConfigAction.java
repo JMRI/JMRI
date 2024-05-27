@@ -100,6 +100,7 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
 
     /**
      * Get the File from a given JFileChooser.
+     * @return the selected File.
      * @deprecated use {@link #getFile(JFileChooser fileChooser, Component component)}
      * @param fileChooser the JFileChooser for the file.
      */
@@ -124,6 +125,7 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
     }
 
     /**
+     * @return the selected File.
      * @deprecated use {@link #getFile(JFileChooser fileChooser, Component component)}
      * @param fileChooser the FileChooser to get from.
      */
