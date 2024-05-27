@@ -3430,9 +3430,11 @@ public class CreateLogixNGTreeScaffold {
         programOnMain.setComment("A comment");
         programOnMain.setMemo(_locoNetMemo);
         programOnMain.getSelectProgrammingMode().setValue(ProgrammingMode.OPSBYTEMODE.getStandardName());
+        programOnMain.getSelectLongOrShortAddress().setEnum(ProgramOnMain.LongOrShortAddress.Short);
         programOnMain.getSelectAddress().setValue(10);
         programOnMain.getSelectCV().setValue(20);
         programOnMain.getSelectValue().setValue(30);
+        programOnMain.setWait(true);
         maleSocket = digitalActionManager.registerAction(programOnMain);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -3440,10 +3442,25 @@ public class CreateLogixNGTreeScaffold {
         programOnMain.setComment("A comment");
         programOnMain.setMemo(null);
         programOnMain.getSelectProgrammingMode().setValue(ProgrammingMode.OPSBYTEMODE.getStandardName());
+        programOnMain.getSelectLongOrShortAddress().setEnum(ProgramOnMain.LongOrShortAddress.Long);
         programOnMain.getSelectAddress().setValue(15);
         programOnMain.getSelectCV().setValue(25);
         programOnMain.getSelectValue().setValue(35);
         programOnMain.setLocalVariableForStatus("status");
+        programOnMain.setWait(false);
+        maleSocket = digitalActionManager.registerAction(programOnMain);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        programOnMain = new ProgramOnMain(digitalActionManager.getAutoSystemName(), null);
+        programOnMain.setComment("A comment");
+        programOnMain.setMemo(null);
+        programOnMain.getSelectProgrammingMode().setValue(ProgrammingMode.OPSBYTEMODE.getStandardName());
+        programOnMain.getSelectLongOrShortAddress().setEnum(ProgramOnMain.LongOrShortAddress.Auto);
+        programOnMain.getSelectAddress().setValue(15);
+        programOnMain.getSelectCV().setValue(25);
+        programOnMain.getSelectValue().setValue(35);
+        programOnMain.setLocalVariableForStatus("status");
+        programOnMain.setWait(false);
         maleSocket = digitalActionManager.registerAction(programOnMain);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
