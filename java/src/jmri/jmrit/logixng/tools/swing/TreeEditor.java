@@ -1432,6 +1432,10 @@ public class TreeEditor extends TreeViewer {
                     if (clipboard.getTopItem() == null) {
                         return;
                     }
+                    if (!femaleSocket.isCompatible(clipboard.getTopItem())) {
+                        log.error("Top item on clipboard is not compatible with the female socket");
+                        return;
+                    }
                     femaleSocket.connect(clipboard.fetchTopItem());
                     List<String> errors = new ArrayList<>();
                     if (!femaleSocket.setParentForAllChildren(errors)) {
@@ -1474,6 +1478,13 @@ public class TreeEditor extends TreeViewer {
                 Clipboard clipboard =
                         InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
 
+                if (clipboard.getTopItem() == null) {
+                    return;
+                }
+                if (!femaleSocket.isCompatible(clipboard.getTopItem())) {
+                    log.error("Top item on clipboard is not compatible with the female socket");
+                    return;
+                }
                 Map<String, String> systemNames = new HashMap<>();
                 Map<String, String> userNames = new HashMap<>();
                 MaleSocket maleSocket = null;
