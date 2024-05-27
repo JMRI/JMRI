@@ -617,6 +617,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Improvements to File Selection Dialog boxes when displayed with "Always On Top" window frames present.</li>
         </ul>
 
