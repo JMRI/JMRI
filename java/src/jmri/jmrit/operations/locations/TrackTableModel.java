@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.OperationsTableModel;
+import jmri.jmrit.operations.locations.tools.TrackEditCommentsFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.swing.XTableColumnModel;
@@ -61,7 +62,8 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
     protected static final int ORDER_COLUMN = 24;
     protected static final int TRAIN_DIRECTION_COLUMN = 25;
     protected static final int REPORTER_COLUMN = 26;
-    protected static final int EDIT_COLUMN = 27;
+    protected static final int COMMENT_COLUMN = 27;
+    protected static final int EDIT_COLUMN = 28;
 
     protected static final int HIGHESTCOLUMN = EDIT_COLUMN + 1;
 
@@ -135,8 +137,11 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
                 .setPreferredWidth(Math.max(50, new JLabel(getColumnName(ORDER_COLUMN)).getPreferredSize().width + 10));
         tcm.getColumn(TRAIN_DIRECTION_COLUMN).setPreferredWidth(30);
         tcm.getColumn(REPORTER_COLUMN).setPreferredWidth(70);
+        tcm.getColumn(COMMENT_COLUMN).setPreferredWidth(80);
         tcm.getColumn(EDIT_COLUMN).setPreferredWidth(80);
 
+        tcm.getColumn(COMMENT_COLUMN).setCellRenderer(new ButtonRenderer());
+        tcm.getColumn(COMMENT_COLUMN).setCellEditor(new ButtonEditor(new JButton()));
         tcm.getColumn(EDIT_COLUMN).setCellRenderer(new ButtonRenderer());
         tcm.getColumn(EDIT_COLUMN).setCellEditor(new ButtonEditor(new JButton()));
 
@@ -177,6 +182,7 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
         tcm.setColumnVisible(tcm.getColumnByModelIndex(REPORTER_COLUMN),
                 Setup.isRfidEnabled() && _location.hasReporters());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(MOVES_COLUMN), Setup.isShowTrackMovesEnabled());
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(COMMENT_COLUMN), _location.hasTrackMessages());
     }
 
     /*
@@ -277,9 +283,10 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
                 return Bundle.getMessage("AbbrevationDirection");
             case REPORTER_COLUMN:
                 return Bundle.getMessage("Reporters");
+            case COMMENT_COLUMN:
+                return Bundle.getMessage("Comment");
             case EDIT_COLUMN:
-                return Bundle.getMessage("ButtonEdit"); // titles above all
-                                                        // columns
+                return Bundle.getMessage("ButtonEdit");
             default:
                 return "unknown"; // NOI18N
         }
@@ -314,6 +321,7 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
             case PICKUPS_COLUMN:
             case SETOUT_COLUMN:
                 return Integer.class;
+            case COMMENT_COLUMN:
             case EDIT_COLUMN:
                 return JButton.class;
             case DISABLE_LOAD_CHANGE_COLUMN:
@@ -331,6 +339,7 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
             case ROUTED_COLUMN:
             case DISABLE_LOAD_CHANGE_COLUMN:
             case HOLD_COLUMN:
+            case COMMENT_COLUMN:
             case EDIT_COLUMN:
             case MOVES_COLUMN:
                 return true;
@@ -414,13 +423,14 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
             case ORDER_COLUMN:
                 return track.getServiceOrder();
             case TRAIN_DIRECTION_COLUMN:
-                int trainDirections = track.getLocation().getTrainDirections() & Setup.getTrainDirection();
-                if (trainDirections != (track.getTrainDirections() & trainDirections)) {
-                    return "X";
-                }
-                return "";
+                return getDirection(track);
             case REPORTER_COLUMN:
                 return track.getReporterName();
+            case COMMENT_COLUMN:
+                if (track.hasMessages()) {
+                    return Bundle.getMessage("ButtonEdit");
+                }
+                return Bundle.getMessage("Add");
             case EDIT_COLUMN:
                 return Bundle.getMessage("ButtonEdit");
             default:
@@ -506,6 +516,27 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
                 track.getDestinationOption().equals(Track.INCLUDE_DESTINATIONS));
     }
 
+    private String getDirection(Track track) {
+        int trainDirections = track.getLocation().getTrainDirections() & Setup.getTrainDirection();
+        if (trainDirections != (track.getTrainDirections() & trainDirections)) {
+            switch (track.getTrainDirections()) {
+                case Track.EAST:
+                    return Setup.EAST_DIR;
+                case Track.WEST:
+                    return Setup.WEST_DIR;
+                case Track.SOUTH:
+                    return Setup.SOUTH_DIR;
+                case Track.NORTH:
+                    return Setup.NORTH_DIR;
+                case 0:
+                    return "X_LS";
+                default:
+                    return "X";
+            }
+        }
+        return "";
+    }
+
     @Override
     public void setValueAt(Object value, int row, int col) {
         switch (col) {
@@ -517,6 +548,9 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
                 break;
             case HOLD_COLUMN:
                 setHold(row, value);
+                break;
+            case COMMENT_COLUMN:
+                trackComment(row);
                 break;
             case EDIT_COLUMN:
                 editTrack(row);
@@ -551,6 +585,10 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
     private void setMoves(int row, Object value) {
         Track track = _tracksList.get(row);
         track.setMoves((int) value);
+    }
+
+    private void trackComment(int row) {
+        new TrackEditCommentsFrame(_tracksList.get(row));
     }
 
     private void removePropertyChangeTracks() {
@@ -610,6 +648,7 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
                         e.getPropertyName().equals(Track.SERVICE_ORDER_CHANGED_PROPERTY) ||
                         e.getPropertyName().equals(Track.LOAD_OPTIONS_CHANGED_PROPERTY) ||
                         e.getPropertyName().equals(Track.TRAIN_DIRECTION_CHANGED_PROPERTY) ||
+                        e.getPropertyName().equals(Track.TRACK_COMMENT_CHANGED_PROPERTY) ||
                         e.getPropertyName().equals(Track.TRACK_REPORTER_CHANGED_PROPERTY))) {
             setColumnsVisible();
         }

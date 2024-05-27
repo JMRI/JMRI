@@ -1330,6 +1330,15 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         return false;
     }
 
+    public boolean hasTrackMessages() {
+        for (Track track : getTracksList()) {
+            if (track.hasMessages()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean hasReporters() {
         for (Track track : getTracksList()) {
             if (track.getReporter() != null) {
