@@ -84,7 +84,7 @@ public class JmriJFrameServlet extends HttpServlet {
         int x = xg - c.getLocation().x;
         int y = yg - c.getLocation().y;
         // log.debug("component is {}", c);
-        log.debug("Local click at {},{}", x, y);
+        log.debug("Local click at {},{} in {}", x, y, c.getClass());
 
         if (c.getClass().equals(JButton.class)) {
             ((AbstractButton) c).doClick();
@@ -155,13 +155,18 @@ public class JmriJFrameServlet extends HttpServlet {
              * to adjust the click position for the offset of the Component
              * relative to the frame.
              */
-            // was incorrect for zoomed panels, turned off
-            // Point pc = c.getLocationOnScreen();
-            // Point pf = FrameContentPane.getLocationOnScreen();
-            // x -= (int)(pc.getX() - pf.getX());
-            // y -= (int)(pc.getY() - pf.getY());
+            // There was a comment here that said 
+            //    "was incorrect for zoomed panels, turned off"
+            // and the recalculation of x and y (next four lines) were
+            // commented out.  This resulted in click misses on e.g. the
+            // Turnout table, so these lines were put back into effect.
+            Point pc = c.getLocationOnScreen();
+            Point pf = frameContentPane.getLocationOnScreen();
+            x -= (int)(pc.getX() - pf.getX());
+            y -= (int)(pc.getY() - pf.getY());
+            log.debug("   position recalculated as {},{}", x, y);
             for (MouseListener ml : la) {
-                log.debug("Send click sequence at {},{}", x, y);
+                log.debug("    Send click sequence at {},{}", x, y);
                 sendClickSequence(ml, c, x, y);
             }
         }
@@ -170,7 +175,7 @@ public class JmriJFrameServlet extends HttpServlet {
     private void sendClickSequence(MouseListener m, Component c, int x, int y) {
         /*
          * create the sequence of mouse events needed to click on a control:
-         * MOUSE_ENTERED MOUSE_PRESSED MOUSE_RELEASED MOUSE_CLICKED
+         * MOUSE_ENTERED MOUSE_PRESSED MOUSE_RELEASED MOUSE_CLICKED MOUSE_EXITED
          */
         MouseEvent e = new MouseEvent(c,
                 MouseEvent.MOUSE_ENTERED,
