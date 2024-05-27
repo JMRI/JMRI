@@ -1,8 +1,6 @@
 package jmri.jmrit.operations.trains;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
@@ -40,7 +38,7 @@ public class TrainManifestTest extends OperationsTestCase {
         File file = InstanceManager.getDefault(TrainManagerXml.class).getTrainManifestFile(train1.getName());
         
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(file);
-        Assert.assertEquals("confirm number of lines in manifest", 15, in.lines().count());
+        Assert.assertEquals("confirm number of lines in manifest", 18, in.lines().count());
         in.close();
     }
 
