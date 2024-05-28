@@ -504,7 +504,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         String title = Bundle.getMessage("TitleTrainsTable");
         TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class).getActiveSchedule();
         if (sch != null) {
-            title = title + " (" + sch.getName() + ")";
+            title = title + " " + sch.getName();
         }
         setTitle(title);
     }
