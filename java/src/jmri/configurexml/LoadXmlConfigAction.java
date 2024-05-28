@@ -115,7 +115,8 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
      * If a Component is provided, this helps the JFileChooser to not get stuck
      * behind an Always On Top Window.
      * @param fileChooser the FileChooser to get from.
-     * @param component a Component within a JFrame / Window / Popup Menu.
+     * @param component a Component within a JFrame / Window / Popup Menu,
+     *                  or the JFrame or Window itself.
      * @return the File, may be null if none selected.
      */
     @CheckForNull
@@ -140,7 +141,8 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
      * If a Component is provided, this helps the JFileChooser to not get stuck
      * behind an Always On Top Window.
      * @param fileChooser the FileChooser to get from.
-     * @param component a Component within a JFrame / Window / Popup Menu.
+     * @param component a Component within a JFrame / Window / Popup Menu,
+     *                  or the JFrame or Window itself.
      * @return the File, may be null if none selected.
      */
     @CheckForNull
