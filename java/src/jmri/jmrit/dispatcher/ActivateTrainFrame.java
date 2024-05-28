@@ -658,7 +658,7 @@ public class ActivateTrainFrame extends JmriJFrame {
                 rosterComboBox.setVisible(true);
                 trainSelectBox.setVisible(false);
                 trainFieldLabel.setVisible(false);
-                trainNameField.setVisible(false);
+                trainNameField.setVisible(true);
                 dccAddressFieldLabel.setVisible(false);
                 dccAddressSpinner.setVisible(false);
                 break;
@@ -668,7 +668,7 @@ public class ActivateTrainFrame extends JmriJFrame {
                 trainSelectBox.setVisible(true);
                 rosterComboBox.setVisible(false);
                 trainFieldLabel.setVisible(false);
-                trainNameField.setVisible(false);
+                trainNameField.setVisible(true);
                 dccAddressFieldLabel.setVisible(true);
                 dccAddressSpinner.setVisible(true);
                 setSpeedProfileOptions(false);
@@ -691,7 +691,7 @@ public class ActivateTrainFrame extends JmriJFrame {
                 rosterComboBox.setVisible(false);
                 trainSelectBox.setVisible(false);
                 trainFieldLabel.setVisible(false);
-                trainNameField.setVisible(false);
+                trainNameField.setVisible(true);
                 dccAddressFieldLabel.setVisible(false);
                 dccAddressSpinner.setVisible(false);
         }
@@ -779,6 +779,7 @@ public class ActivateTrainFrame extends JmriJFrame {
                 // enable profile boxes
                 setSpeedProfileOptions(true);
             }
+            trainNameField.setText(r.titleString());
             if (r.getAttribute("DispatcherTrainType") != null && !r.getAttribute("DispatcherTrainType").equals("")) {
                 trainTypeBox.setSelectedItem(r.getAttribute("DispatcherTrainType"));
             }
@@ -998,7 +999,21 @@ public class ActivateTrainFrame extends JmriJFrame {
                 }
                 RosterEntry r = (RosterEntry) rosterComboBox.getSelectedItem();
                 dccAddress = r.getDccAddress();
-                trainName = r.titleString();
+                if (trainNameField.getText().isEmpty()) {
+                    JmriJOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
+                            "Error45", dccAddress), Bundle.getMessage("ErrorTitle"),
+                            JmriJOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                trainName=trainNameField.getText();
+                if (!_dispatcher.isTrainFree(trainName)) {
+                    // train name is already in use by an Active Train
+                    JmriJOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
+                            "Error24", trainName), Bundle.getMessage("ErrorTitle"),
+                            JmriJOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                trainName = trainNameField.getText();
                 if (!isAddressFree(r.getDccLocoAddress().getNumber())) {
                     // DCC address is already in use by an Active Train
                     JmriJOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
@@ -1026,6 +1041,19 @@ public class ActivateTrainFrame extends JmriJFrame {
                             Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                     return;
                 }
+                if (trainNameField.getText().isEmpty()) {
+                    JmriJOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
+                            "Error45", dccAddress), Bundle.getMessage("ErrorTitle"),
+                            JmriJOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                if (!_dispatcher.isTrainFree(trainName)) {
+                    // train name is already in use by an Active Train
+                    JmriJOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
+                            "Error24", trainName), Bundle.getMessage("ErrorTitle"),
+                            JmriJOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 trainName = trainSelectBox.getSelectedItem().toString();
                 dccAddress = getDCCAddressFromSpinner();
                 if (dccAddress == null) {
@@ -1040,7 +1068,13 @@ public class ActivateTrainFrame extends JmriJFrame {
                             Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                if (!isTrainFree(trainName)) {
+                if (trainNameField.getText().isEmpty()) {
+                    JmriJOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
+                            "Error45", dccAddress), Bundle.getMessage("ErrorTitle"),
+                            JmriJOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                if (!_dispatcher.isTrainFree(trainName)) {
                     // train name is already in use by an Active Train
                     JmriJOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage(
                             "Error24", trainName), Bundle.getMessage("ErrorTitle"),
@@ -1169,7 +1203,7 @@ public class ActivateTrainFrame extends JmriJFrame {
                 Train t = trains.get(i);
                 if (t != null) {
                     String tName = t.getName();
-                    if (isTrainFree(tName)) {
+                    if (_dispatcher.isTrainFree(tName)) {
                         trainSelectBox.addItem(t);
                     }
                 }
@@ -1199,15 +1233,6 @@ public class ActivateTrainFrame extends JmriJFrame {
         }
     }
 
-    private boolean isTrainFree(String rName) {
-        for (int j = 0; j < _ActiveTrainsList.size(); j++) {
-            ActiveTrain at = _ActiveTrainsList.get(j);
-            if (rName.equals(at.getTrainName())) {
-                return false;
-            }
-        }
-        return true;
-    }
 
     private boolean isAddressFree(int addr) {
         for (int j = 0; j < _ActiveTrainsList.size(); j++) {
@@ -1398,10 +1423,10 @@ public class ActivateTrainFrame extends JmriJFrame {
         switch (_TrainsFrom) {
             case TRAINSFROMROSTER:
                 radioTrainsFromRoster.setSelected(true);
-                if (!setRosterComboBox(rosterComboBox, info.getTrainName())) {
-                    log.warn("Roster {} from file not in Roster Combo", info.getTrainName());
+                if (!setRosterComboBox(rosterComboBox, info.getRosterID())) {
+                    log.warn("Roster {} from file not in Roster Combo", info.getRosterID());
                     JmriJOptionPane.showMessageDialog(initiateFrame,
-                            Bundle.getMessage("TrainWarn", info.getTrainName()),
+                            Bundle.getMessage("TrainWarn", info.getRosterID()),
                             null, JmriJOptionPane.WARNING_MESSAGE);
                 }
                 break;
@@ -1416,13 +1441,13 @@ public class ActivateTrainFrame extends JmriJFrame {
                 break;
             case TRAINSFROMUSER:
                 radioTrainsFromUser.setSelected(true);
-                 trainNameField.setText(info.getTrainName());
                 dccAddressSpinner.setValue(Integer.parseInt(info.getDccAddress()));
                 break;
             case TRAINSFROMSETLATER:
             default:
                 radioTrainsFromSetLater.setSelected(true);
         }
+        trainNameField.setText(info.getTrainUserName());
         trainDetectionComboBox.setSelectedItemByValue(info.getTrainDetection());
         inTransitBox.setSelected(info.getTrainInTransit());
         initializeStartingBlockCombo();
@@ -1479,21 +1504,20 @@ public class ActivateTrainFrame extends JmriJFrame {
                 if (rosterComboBox.getSelectedIndex() < 1 ) {
                     throw new IllegalArgumentException(Bundle.getMessage("Error41"));
                 }
-                info.setTrainName(((RosterEntry) rosterComboBox.getSelectedItem()).getId());
-                info.setDccAddress(" ");
+                info.setRosterID(((RosterEntry) rosterComboBox.getSelectedItem()).getId());
+                info.setDccAddress(((RosterEntry) rosterComboBox.getSelectedItem()).getDccAddress());
                 break;
             case TRAINSFROMOPS:
                 if (trainSelectBox.getSelectedIndex() < 1) {
                     throw new IllegalArgumentException(Bundle.getMessage("Error42"));
                 }
-                info.setTrainName(((Train) trainSelectBox.getSelectedItem()).getId());
                 info.setDccAddress(String.valueOf(dccAddressSpinner.getValue()));
                 break;
             case TRAINSFROMUSER:
                 if (trainNameField.getText().isEmpty()) {
                     throw new IllegalArgumentException(Bundle.getMessage("Error22"));
                 }
-                info.setTrainName(trainNameField.getText());
+                info.setTrainName(((Train) trainSelectBox.getSelectedItem()).getId());
                 info.setDccAddress(String.valueOf(dccAddressSpinner.getValue()));
                 break;
             case TRAINSFROMSETLATER:
@@ -1501,6 +1525,7 @@ public class ActivateTrainFrame extends JmriJFrame {
                 info.setTrainName("");
                 info.setDccAddress("");
         }
+        info.setTrainUserName(trainNameField.getText());
         info.setTrainInTransit(inTransitBox.isSelected());
         info.setStartBlockName((String) startingBlockBox.getSelectedItem());
         index = startingBlockBox.getSelectedIndex();

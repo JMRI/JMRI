@@ -29,6 +29,8 @@ public class TrainInfo {
     private String transitName = "";
     private String transitId = "";
     private String trainName = "";
+    private String rosterID = "";
+    private String trainUserName = "";
     private String dccAddress = "";
     private boolean trainInTransit = false;
     private String startBlockName = "";
@@ -117,6 +119,22 @@ public class TrainInfo {
 
     public String getTrainName() {
         return trainName;
+    }
+
+    public void setRosterID(String s) {
+        rosterID = s;
+    }
+
+    public String getRosterID() {
+        return rosterID;
+    }
+
+    public void setTrainUserName(String s) {
+        trainUserName = s;
+    }
+
+    public String getTrainUserName() {
+        return trainUserName;
     }
 
     public void setDccAddress(String s) {
