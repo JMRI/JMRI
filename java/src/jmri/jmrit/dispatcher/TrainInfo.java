@@ -121,11 +121,11 @@ public class TrainInfo {
         return trainName;
     }
 
-    public void setRosterID(String s) {
+    public void setRosterId(String s) {
         rosterID = s;
     }
 
-    public String getRosterID() {
+    public String getRosterId() {
         return rosterID;
     }
 

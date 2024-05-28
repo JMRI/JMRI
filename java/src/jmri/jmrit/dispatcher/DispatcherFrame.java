@@ -240,7 +240,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
         String dccAddressToUse = info.getDccAddress();
         String trainNameToUse = info.getTrainUserName();
-        String rosterIDToUse = info.getRosterID();
+        String rosterIDToUse = info.getRosterId();
         //process override
         switch (overRideType) {
             case "":

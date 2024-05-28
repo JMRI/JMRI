@@ -1423,10 +1423,10 @@ public class ActivateTrainFrame extends JmriJFrame {
         switch (_TrainsFrom) {
             case TRAINSFROMROSTER:
                 radioTrainsFromRoster.setSelected(true);
-                if (!setRosterComboBox(rosterComboBox, info.getRosterID())) {
-                    log.warn("Roster {} from file not in Roster Combo", info.getRosterID());
+                if (!setRosterComboBox(rosterComboBox, info.getRosterId())) {
+                    log.warn("Roster {} from file not in Roster Combo", info.getRosterId());
                     JmriJOptionPane.showMessageDialog(initiateFrame,
-                            Bundle.getMessage("TrainWarn", info.getRosterID()),
+                            Bundle.getMessage("TrainWarn", info.getRosterId()),
                             null, JmriJOptionPane.WARNING_MESSAGE);
                 }
                 break;
@@ -1504,20 +1504,20 @@ public class ActivateTrainFrame extends JmriJFrame {
                 if (rosterComboBox.getSelectedIndex() < 1 ) {
                     throw new IllegalArgumentException(Bundle.getMessage("Error41"));
                 }
-                info.setRosterID(((RosterEntry) rosterComboBox.getSelectedItem()).getId());
+                info.setRosterId(((RosterEntry) rosterComboBox.getSelectedItem()).getId());
                 info.setDccAddress(((RosterEntry) rosterComboBox.getSelectedItem()).getDccAddress());
                 break;
             case TRAINSFROMOPS:
                 if (trainSelectBox.getSelectedIndex() < 1) {
                     throw new IllegalArgumentException(Bundle.getMessage("Error42"));
                 }
+                info.setTrainName(((Train) trainSelectBox.getSelectedItem()).getId());
                 info.setDccAddress(String.valueOf(dccAddressSpinner.getValue()));
                 break;
             case TRAINSFROMUSER:
                 if (trainNameField.getText().isEmpty()) {
                     throw new IllegalArgumentException(Bundle.getMessage("Error22"));
                 }
-                info.setTrainName(((Train) trainSelectBox.getSelectedItem()).getId());
                 info.setDccAddress(String.valueOf(dccAddressSpinner.getValue()));
                 break;
             case TRAINSFROMSETLATER:

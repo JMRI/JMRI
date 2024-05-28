@@ -97,17 +97,17 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                     if (version < 6) {
                         if (traininfo.getAttribute("trainname") != null) {
                             tInfo.setTrainName(traininfo.getAttribute("trainname").getValue());
-                            tInfo.setRosterID(traininfo.getAttribute("trainname").getValue());
+                            tInfo.setRosterId(traininfo.getAttribute("trainname").getValue());
                             tInfo.setTrainUserName(traininfo.getAttribute("trainname").getValue());
                         } else {
                             log.error("Train name missing when reading TrainInfoFile {}", name);
                         }
                     } else {
                         if (traininfo.getAttribute("trainname") != null) {
-                            tInfo.setRosterID(traininfo.getAttribute("trainname").getValue());
+                            tInfo.setRosterId(traininfo.getAttribute("trainname").getValue());
                         }
                         if (traininfo.getAttribute("rosterid") != null) {
-                            tInfo.setRosterID(traininfo.getAttribute("rosterid").getValue());
+                            tInfo.setRosterId(traininfo.getAttribute("rosterid").getValue());
                         }
                         if (traininfo.getAttribute("trainusername") != null) {
                             tInfo.setTrainUserName(traininfo.getAttribute("trainusername").getValue());
@@ -488,7 +488,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         traininfo.setAttribute("transitid", tf.getTransitId());
         traininfo.setAttribute("trainname", tf.getTrainName());
         traininfo.setAttribute("trainusername", tf.getTrainUserName());
-        traininfo.setAttribute("rosterid", tf.getRosterID());
+        traininfo.setAttribute("rosterid", tf.getRosterId());
         traininfo.setAttribute("dccaddress", tf.getDccAddress());
         traininfo.setAttribute("trainintransit", "" + (tf.getTrainInTransit() ? "yes" : "no"));
         traininfo.setAttribute("startblockname", tf.getStartBlockName());
