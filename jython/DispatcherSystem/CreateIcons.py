@@ -475,7 +475,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
                 # Skip the Dispatcher System control panel if it exists
                 continue
 
-            # self.removeBlockContentIcons(panel)
+            self.removeBlockContentIcons(panel)
             self.removeLabels(panel)
             self.removeSensorIcons(panel)
 
@@ -846,13 +846,20 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         icn.setIcon("SensorStateInactive", jmri.jmrit.catalog.NamedIcon("resources/icons/markers/loco-red.gif", "inactive"));
         icn.setIcon("BeanStateInconsistent", jmri.jmrit.catalog.NamedIcon("resources/icons/markers/loco-yellow.gif", "incons"));
         icn.setIcon("BeanStateUnknown", jmri.jmrit.catalog.NamedIcon("resources/icons/markers/loco-gray.gif", "unknown"));
+        if len(blockName) > 9:
+            icn.setText(blockName[:11])
+            icn.getPopupUtility().setFontSize(9)
+        else:
+            icn.setText(blockName[:9])
+            icn.getPopupUtility().setFontSize(11)
 
-        icn.setText(blockName[:9])
 
         icn.setTextActive(Color.RED)
         icn.setTextInActive(Color.YELLOW)
         icn.setTextInconsistent(Color.BLACK)
         icn.setTextUnknown(Color.BLUE)
+
+
 
         # Assign the sensor and set the location
         icn.setSensor(sensor.getDisplayName())

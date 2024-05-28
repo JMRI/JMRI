@@ -248,7 +248,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                     return True
         else:
             # print "train_to_move", train_to_move, "not in" , blockName
-            blockName = [block for block in blocks if block.getValue() == train_to_move]
+            blockName = [block for block in blocks.getNamedBeanSet() if block.getValue() == train_to_move]
             if blockName != []:
                 blockName = blockName[0]
             else:

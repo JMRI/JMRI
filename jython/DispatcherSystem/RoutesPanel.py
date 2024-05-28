@@ -25,6 +25,7 @@ class CreateAndShowGUI6(TableModelListener):
         # print "about to populate"
         self.populate_action(None)
         self.cancel = False
+        self.toggle = True
 
     def completeTablePanel(self):
 
@@ -61,9 +62,9 @@ class CreateAndShowGUI6(TableModelListener):
         self.buttonPane.add(button_close)
         self.buttonPane.add(Box.createHorizontalGlue());
 
-        # button_task = JButton("Repeat", actionPerformed = self.task_action)
-        # self.buttonPane.add(button_task)
-        # self.buttonPane.add(Box.createHorizontalGlue());
+        button_task = JButton("Toggle Scheduled Routes", actionPerformed = self.scheduled_routes_action)
+        self.buttonPane.add(button_task)
+        self.buttonPane.add(Box.createHorizontalGlue());
         #
         # button_task = JButton("Delay", actionPerformed = self.delay_action)
         # self.buttonPane.add(button_task)
@@ -202,6 +203,13 @@ class CreateAndShowGUI6(TableModelListener):
         RouteManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
         route_list = RouteManager.getRoutesByNameList()
         my_list = [[route.getName()] for route in route_list]
+
+        return my_list
+
+    def get_scheduled_route_list(self):
+        TrainManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
+        train_list = TrainManager.getTrainsByTimeList()
+        my_list = [[train.getRoute().getName()] for train in train_list]
 
         return my_list
 
@@ -352,6 +360,36 @@ class CreateAndShowGUI6(TableModelListener):
         else:
             new_val = 0
         return new_val
+
+    def scheduled_routes_action(self, event):
+        print "self.toggle 2", self.toggle
+        if self.toggle == True:
+            self.toggle = False
+        else:
+            self.toggle = True
+
+        print "self.toggle 1", self.toggle
+
+        for row in reversed(range(len(self.model.data))):
+            self.model.data.pop(row)
+        #     self.completeTablePanel()
+
+        if self.toggle == True:
+            items_to_put_in_dropdown = self.get_route_list()
+            print "items_to_put_in_dropdown 1", items_to_put_in_dropdown, self.toggle
+            self.frame.setTitle("All Routes")
+        else:
+            items_to_put_in_dropdown = self.get_scheduled_route_list()
+            print "items_to_put_in_dropdown 2", items_to_put_in_dropdown, self.toggle
+            self.frame.setTitle("Scheduled Routes")
+
+        self.model.populate(items_to_put_in_dropdown)
+        self.frame.setSize(self.frame.getPreferredSize().width, self.frame.getPreferredSize().height);
+        self.frame.pack();
+        self.frame.repaint()
+
+
+
 
     def delete_all_action(self, event):
         [route_col, edit_col, delete_col] = [0, 1, 2]

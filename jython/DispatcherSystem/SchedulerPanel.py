@@ -55,9 +55,9 @@ class CreateAndShowGUI4(TableModelListener):
         # self.buttonPane.add(button_tidy);
         # self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
         #
-        button_apply = JButton("Save", actionPerformed = self.save_action)
-        self.buttonPane.add(button_apply)
-        self.buttonPane.add(Box.createHorizontalGlue());
+        # button_apply = JButton("Save", actionPerformed = self.save_action)
+        # self.buttonPane.add(button_apply)
+        # self.buttonPane.add(Box.createHorizontalGlue());
 
         button_close = JButton("Close", actionPerformed = self.close_action)
         self.buttonPane.add(button_close)
@@ -67,9 +67,9 @@ class CreateAndShowGUI4(TableModelListener):
         self.buttonPane.add(button_task)
         self.buttonPane.add(Box.createHorizontalGlue());
 
-        button_task = JButton("Delay", actionPerformed = self.delay_action)
-        self.buttonPane.add(button_task)
-        self.buttonPane.add(Box.createHorizontalGlue());
+        # button_task = JButton("Delay", actionPerformed = self.delay_action)
+        # self.buttonPane.add(button_task)
+        # self.buttonPane.add(Box.createHorizontalGlue());
 
         button_delete = JButton("Delete All Rows", actionPerformed = self.delete_all_action)
         self.buttonPane.add(button_delete)
@@ -100,7 +100,7 @@ class CreateAndShowGUI4(TableModelListener):
 
     def buttonPanel(self):
         row1_1_button = JButton("Add Row", actionPerformed = self.add_row_action)
-        row1_2_button = JButton("Save", actionPerformed = self.save_action)
+        # row1_2_button = JButton("Save", actionPerformed = self.save_action)
 
         row1 = JPanel()
         row1.setLayout(BoxLayout(row1, BoxLayout.X_AXIS))
@@ -408,6 +408,7 @@ class CreateAndShowGUI4(TableModelListener):
             if old_val == None: old_val = 0
             new_val = self.new_task(old_val)
             self.model.data[row][repeat_col] = new_val
+        self.save()
         self.completeTablePanel()
 
     def new_task(self, old_val):
@@ -428,9 +429,9 @@ class CreateAndShowGUI4(TableModelListener):
         return new_val
 
 
-    def save_action(self, event):
-        self.save()
-
+    # def save_action(self, event):
+    #     self.save()
+    #
     def save(self):
         [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, edit_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]
         print "save_action"
@@ -603,6 +604,7 @@ class MyModelListener4(TableModelListener):
                 CreateAndShowGUI5(self, route_data, scheduled_start)
                 self.model.setValueAt(False, row, edit_col)
         elif column == delete_col:
+            print "delete col/row"
             self.delete_row(row, class_CreateAndShowGUI4)
         class_CreateAndShowGUI4.save()                      # save everything when the table is chabged
         # class_CreateAndShowGUI4.completeTablePanel()      # don't need to refresh hence commented out
@@ -613,7 +615,7 @@ class MyModelListener4(TableModelListener):
     def delete_row(self, row, class_CreateAndShowGUI4):
         self.model.data.pop(row)
         class_CreateAndShowGUI4.save()
-        class_CreateAndShowGUI4.save()
+        class_CreateAndShowGUI4.completeTablePanel()
 
     def show_time_picker(self):
         # Show a simple JOptionPane input dialog for time selection

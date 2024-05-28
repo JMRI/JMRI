@@ -176,12 +176,14 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             # schedule_trains_hourly = self.check_whether_schedule_trains_every_hour()
 
             self.set_default_scheduling_values()
-            self.set_period_trains_will_run()
+            self.set_period_trains_will_run_frame()
+            self.show_analog_clock()      # show the analog clock
+
 
             # set ttme to midnight
             if self.logLevel > 0: print "set minute time listener"
             self.setup_minute_time_listener_to_schedule_trains()   # this
-            timebase.setRun(True)
+            timebase.setRun(False)
             self.train_scheduler_setup = True
 
             self.scheduler_master_sensor.setKnownState(INACTIVE)
@@ -395,7 +397,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
     #         if self.logLevel > 0: print "all_trains_in_schedule more than one_hour_period"
     #         return False
 
-    def set_period_trains_will_run(self):
+    def set_period_trains_will_run_frame(self):
         global start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, scheduling_margin_gbl, scheduling_in_operation_gbl
         if self.frame == None:
             # print "frame is None"
@@ -563,7 +565,8 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             rowFStage1Button_1.add(Box.createHorizontalGlue());
             rowFStage1Button_1.setAlignmentX(rowFStage1Button_1.LEFT_ALIGNMENT)
 
-            rowStage1Button_1 = JButton("Stage1", actionPerformed = self.CheckHourlyParameters_action)
+            rowStage1Button_1 = JButton("Initialisation", actionPerformed = self.CheckHourlyParameters_action)
+
             stage1Button = rowStage1Button_1
 
 
@@ -575,18 +578,28 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
             rowrowStage2Button_2.add(Box.createHorizontalGlue());
             rowrowStage2Button_2.setAlignmentX(rowrowStage2Button_2.LEFT_ALIGNMENT)
-            rowStage2Button_2 = JButton("Stage2", actionPerformed = self.StartSchedulingTrains_action)
+            rowStage2Button_2 = JButton("Set Time  ", actionPerformed = self.StartSchedulingTrains_action)
             stage2Button = rowStage2Button_2
 
             rowStage3Button = JPanel()
             rowStage3Button.setLayout(BoxLayout(rowStage3Button, BoxLayout.X_AXIS))
-            rowrowStage3Button_3 = JLabel("Toggle Scheduling Trains")
+            rowrowStage3Button_3 = JLabel("Stop/Start Scheduling Trains")
             rowrowStage3Button_3.setFont(rowTitle_33.getFont().deriveFont(Font.BOLD, 13));
 
             rowrowStage3Button_3.add(Box.createHorizontalGlue());
             rowrowStage3Button_3.setAlignmentX(rowrowStage3Button_3.LEFT_ALIGNMENT)
-            rowStage3Button_3 = JButton("Toggle", actionPerformed = self.ToggleSchedulingtrains_action)
+            rowStage3Button_3 = JButton("Schedule ", actionPerformed = self.ToggleSchedulingtrains_action)
             stage3Button = rowStage3Button_3
+
+            rowStage4Button = JPanel()
+            rowStage4Button.setLayout(BoxLayout(rowStage4Button, BoxLayout.X_AXIS))
+            rowrowStage4Button_4 = JLabel("Stop/Start Clock")
+            rowrowStage4Button_4.setFont(rowTitle_33.getFont().deriveFont(Font.BOLD, 13));
+
+            rowrowStage4Button_4.add(Box.createHorizontalGlue());
+            rowrowStage4Button_4.setAlignmentX(rowrowStage4Button_4.LEFT_ALIGNMENT)
+            rowStage4Button_4 = JButton("Stop/Start", actionPerformed = self.StopStartClock_action)
+            stage4Button = rowStage4Button_4
 
 
             rowStage1Button.add(Box.createVerticalGlue())
@@ -638,6 +651,12 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             rowStage3Button.add(Box.createRigidArea(Dimension(20, 0)))
             rowStage3Button.add(rowrowStage3Button_3)
 
+            rowStage4Button.add(Box.createVerticalGlue())
+            rowStage4Button.add(Box.createRigidArea(Dimension(20, 0)))
+            rowStage4Button.add(rowStage4Button_4)
+            rowStage4Button.add(Box.createRigidArea(Dimension(20, 0)))
+            rowStage4Button.add(rowrowStage4Button_4)
+
             #Title
             # panel.add(self.leftJustify(rowTitle_2))
             panel.add(self.leftJustify(rowTitle_22))
@@ -660,11 +679,14 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
             panel.add(self.leftJustify(rowStage3Button))
             panel.add(self.leftJustify(rowFStage1Button))
+
+            panel.add(self.leftJustify(rowStage4Button))
             panel.add(self.leftJustify(rowStage3Separator))
 
         self.frame.pack()
         self.frame.setVisible(True)
-        self.frame.setSize(430, 250);
+        self.frame.setSize(430, 300)
+        self.frame.setLocation(10,10)
 
     def leftJustify(self, panel):
         b = Box.createHorizontalBox()
@@ -684,9 +706,21 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         win = SwingUtilities.getWindowAncestor(comp);
         win.dispose();
     def StartSchedulingTrains_action(self, event):
+        global fast_clock_running_at_operational_speed
+
+        # store whether timebase running or nor
+        timebase_state = timebase.getRun()
+
+        timebase.setRun(True)
+
+        timebase.setRate(float(speed_not_operational_gbl))
+
         #set clock to beginning of session
         self.set_timebase_start_hour(int(start_hour_gbl)-1, 55)
         # self.set_timebase_start_hour(0, 0)
+
+        #reset timebase to what it was
+        timebase.setRun(timebase_state)
 
         #start scheduler
         schedule_trains_master = ScheduleTrains()
@@ -695,6 +729,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         list_existing_schedule_trains = [iL.getName() for iL in instanceList if iL.getName() == 'Schedule Trains Master']
         # print "list_existing_schedule_trains", list_existing_schedule_trains
 
+
         if list_existing_schedule_trains == []:
             # print "appending instance list"
             instanceList.append(schedule_trains_master)
@@ -702,6 +737,8 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                 # print "setting name"
                 schedule_trains_master.setName('Schedule Trains Master')
                 schedule_trains_master.start()
+
+
 
     # def StartScedulingTrains_action_old(self, event):
     #     global instanceList
@@ -775,6 +812,14 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             rowFStage1Button_1.setText(stringToDisplay) # Update the label
         if self.logLevel > 0: print "ToggleSchedulingtrains_action end", "scheduling_in_operation_gbl", scheduling_in_operation_gbl
 
+    def StopStartClock_action(selfself, event):
+        pass
+        global timebase
+        if timebase.getRun() == True:
+            timebase.setRun(False)
+        else:
+            timebase.setRun(True)
+
     def setup_values_for_running(self):
 
         global instanceList
@@ -835,7 +880,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def set_default_scheduling_values(self):
 
-        self.show_analog_clock()      # show the analog clock
+        # self.show_analog_clock()      # show the analog clock
 
         # print "set_default_scheduling_hourly_values"
 
@@ -850,7 +895,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             end_hour_gbl = "22"
             fast_clock_rate = "10"
             speed_not_operational_gbl = "100"
-            scheduling_margin_gbl = "10"
+            scheduling_margin_gbl = "3"
             scheduling_in_operation_gbl = "False"
 
         self.write_list([start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
@@ -869,7 +914,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             self.end_hour = "22"
             fast_clock_rate = "10"
             self.speed_not_operational = "100"
-            self.scheduling_margin = "10"
+            self.scheduling_margin = "3"
             self.scheduling_in_operation = "False"
 
         # start hour
@@ -955,7 +1000,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             else:
                 repeat = True
                 OptionDialog().displayMessage("wrong format must be integer")
-        if int(reply) >20:
+        if int(reply) > 20:
             self.scheduling_margin = 20
         else:
             self.scheduling_margin = int(reply)
@@ -1133,6 +1178,10 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
     def show_analog_clock(self):
         if self.f == None:
             self.f = jmri.jmrit.analogclock.AnalogClockFrame()
+            self.f.setSize(300, 200)
+            self.f.setLocationRelativeTo(None)
+            if self.frame != None:
+                self.f.setLocation(self.frame.getX() + self.frame.getWidth(), self.frame.getY());
         self.f.setVisible(True)
 
     def set_fast_clock(self):
@@ -1243,7 +1292,7 @@ class TimeListener(java.beans.PropertyChangeListener):
                 minutes_old2 = minutes
                 self.set_fast_clock_rate()      # sets global fast_clock_at_operational_speed
 
-            self.process_operations_trains(event)    # schedules trains
+            self.process_operations_trains(event)    # scheduled trains
             # print "attempting to send timetable via mqtt"
 
             # if show
@@ -1313,7 +1362,7 @@ class TimeListener(java.beans.PropertyChangeListener):
                     if rate != fcr:
                         timebase.setRate(float(fcr))
                         fast_clock_running_at_operational_speed = False
-                    if self.logLevel > 0: print "set_fast_clock_rate fqst:", "fcr", fcr
+                    if self.logLevel > 0: print "set_fast_clock_rate:", "fcr", fcr
         else:
             print "speed_not_operational_gbl__is_defined()", False
 
@@ -1329,13 +1378,13 @@ class TimeListener(java.beans.PropertyChangeListener):
         if self.logLevel > 0: print "in process_operations_trains", "schedule_trains_hourly", schedule_trains_hourly
 
         hour = int(timebase.getTime().getHours())
-        if self.logLevel > 0: print "type hour" , type(hour)
+        if self.logLevel > 1: print "type hour" , type(hour)
         minutes = event.newValue
-        if self.logLevel > 0: print "type minutes", type(minutes)
+        if self.logLevel > 1: print "type minutes", type(minutes)
         self.curr_time = minutes + hour * 60
-        if self.logLevel > 0: print "curr_time", self.curr_time
+        if self.logLevel > 1: print "curr_time", self.curr_time
         self.prev_time = self.curr_time -1
-        if self.logLevel > 0: print "prev_time", self.prev_time
+        if self.logLevel > 1: print "prev_time", self.prev_time
 
         # only schedule within stat_hour and end_hour
         if int(start_hour_gbl) <= hour <= int(end_hour_gbl):
@@ -1369,23 +1418,23 @@ class TimeListener(java.beans.PropertyChangeListener):
             repeat_command = self.find_between(comment, "[repeat-", "-repeat]")
             # print "repeat1", repeat_command
             if repeat_command == "Once":
-                if self.prev_time < int(train.getDepartTimeMinutes()) <= self.curr_time and \
+                if self.prev_time <= int(train.getDepartTimeMinutes()) < self.curr_time and \
                         "skip" not in train.getDescription():   # if skip in description of scheduled Train do not run the train
                     if train not in trains_to_start:
                         trains_to_start.append(train)
                         scheduled[train] = False
             elif repeat_command == "Repeat every 20 mins":
-                if ((minutes-1) % 20 < (int(train.getDepartTimeMinutes()) % 20) <= minutes % 20):
+                if ((minutes-1) % 20 <= (int(train.getDepartTimeMinutes()) % 20) < minutes % 20):
                     if train not in trains_to_start:
                         trains_to_start.append(train)
                         scheduled[train] = False
             elif repeat_command == "Repeat every 30 mins":
-                if ((minutes-1) % 30 < (int(train.getDepartTimeMinutes()) % 30) <= minutes % 30):
+                if ((minutes-1) % 30 <= (int(train.getDepartTimeMinutes()) % 30) < minutes % 30):
                     if train not in trains_to_start:
                         trains_to_start.append(train)
                         scheduled[train] = False
             elif repeat_command == "Repeat every Hour":
-                if (minutes-1 < (int(train.getDepartTimeMinutes()) % 60) <= minutes):
+                if (minutes-1 <= (int(train.getDepartTimeMinutes()) % 60) < minutes):
                     if train not in trains_to_start:
                         trains_to_start.append(train)
                         scheduled[train] = False
@@ -1400,7 +1449,7 @@ class TimeListener(java.beans.PropertyChangeListener):
                 #     # print "int(train.getDepartureTimeHour()) % 2", int(train.getDepartureTimeHour()) % 2
                 #     if ((hour-1) % 2 <  int(train.getDepartureTimeHour()) % 2 <= hour % 2):
                 #         # print "hours ok"
-                if (minutes-1 < (int(train.getDepartTimeMinutes()) % 60) <= minutes) and \
+                if (minutes-1 <= (int(train.getDepartTimeMinutes()) % 60) < minutes) and \
                         ((hour-1) % 2 <  int(train.getDepartureTimeHour()) % 2 <= hour % 2):
                     if train not in trains_to_start:
                         trains_to_start.append(train)
@@ -1711,20 +1760,18 @@ class Trigger_Timetable:
 class RunTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def __init__(self, train, graph, set_departure_times  = False):
-        self.logLevel = 1
+        self.logLevel = 0
         self.set_departure_times = set_departure_times
         if train == None:
+            self.logLevel = 0
             if self.logLevel > 0: print "RunTrain: train == None"
         else:
             if self.logLevel > 0: print "RunTrain: train =", train
-            self.logLevel = 1
             if self.logLevel > 0: print "RunTrain"
             global trains_to_be_scheduled
             if self.logLevel > 0: print "trains_to_be_scheduled", trains_to_be_scheduled
-            self.logLevel = 0
             self.graph = graph
             self.train = train
-            print "end __init__"
 
     def handle(self):    # Need to overload handle
         if self.logLevel > 0: print "start run train"
@@ -1739,6 +1786,7 @@ class RunTrain(jmri.jmrit.automat.AbstractAutomaton):
         global start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
             scheduling_margin_gbl, scheduling_in_operation_gbl
         global set_departure_trains_gbl
+        global timebase
 
         if self.logLevel > 0: print "************************************run train******************"
         if self.logLevel > 0:  "!     start run_train"
@@ -1780,11 +1828,11 @@ class RunTrain(jmri.jmrit.automat.AbstractAutomaton):
         if station_list == []:
             print "station_list", station_list
 
-        print "station_list", station_list
+        # print "station_list", station_list
         for station_index, station in enumerate(self.station_list):
             station_comment = self.station_comment_list[station_index]
             accumulated_duration = accumulated_durations[station_index]
-            print "station", station
+            # print "station", station
 
             if self.station_is_action(station):  #if the station_name is a python_file
                 # some of the python files take an argument of the dispatch
@@ -1818,7 +1866,7 @@ class RunTrain(jmri.jmrit.automat.AbstractAutomaton):
 
                     train_dispatched = False
                     myframe = None
-                    print "scheduling_margin_gbl", scheduling_margin_gbl
+                    # print "scheduling_margin_gbl", scheduling_margin_gbl
                     for j in range(int(scheduling_margin_gbl)):    # try to schedule train for scheduling_margin_gbl fast minutes
                         if train_to_move != None and train_in_block:
 
@@ -1834,13 +1882,13 @@ class RunTrain(jmri.jmrit.automat.AbstractAutomaton):
                             if self.set_departure_times == False:
                                 self.wait_for_scheduled_time(accumulated_duration)
 
-                            print "station_from, station_to, train_to_move, self.graph, station_comment", \
-                                station_from, station_to, train_to_move, self.graph, station_comment
+                            # print "station_from, station_to, train_to_move, self.graph, station_comment", \
+                            #     station_from, station_to, train_to_move, self.graph, station_comment
 
                             if self.set_departure_times:
-                                print "setting previous time"
+                                # print "setting previous time"
                                 previous_time = int(round(time.time()))  # in secs
-                                print "a"
+                                # print "a"
 
                             move_train = MoveTrain(station_from, station_to, train_to_move, self.graph, station_comment)
                             move_train.move_between_stations(station_from, station_to, train_to_move, self.graph)
@@ -1848,11 +1896,11 @@ class RunTrain(jmri.jmrit.automat.AbstractAutomaton):
                             # train has moved, if we are in departure_time_setting mode, store the journey time
 
                             if self.set_departure_times:
-                                print "b"
+                                # print "b"
                                 current_time = int(round(time.time()))  # in secs
                                 journey_time_in_secs = current_time - previous_time
                                 self.store_journey_time(self.route, station_index, str(journey_time_in_secs))
-                                print "C"
+                                # print "C"
 
                             move_train = None
                             if self.logLevel > 0: print "finished move between stations station_from = ", station_from, " station_to = ", station_to
@@ -1865,14 +1913,26 @@ class RunTrain(jmri.jmrit.automat.AbstractAutomaton):
 
                         if train_dispatched: break
 
-                        msg = "No train in block for scheduled train starting from " + station_from
-                        msg2 = "Trying again for " + str(scheduling_margin_gbl) + " fast minutes"
 
-                        if myframe == None:
-                            myframe = self.show_custom_message_box(msg, msg2)
-                        # print "fast_clock_rate", fast_clock_rate
+                        current_date = timebase.getTime() # in secs
+                        minutes = current_date.getMinutes()
+                        print "No train in block for scheduled train", self.train, "starting from " + station_from + " waited: " + str(j) + " fast minutes "
+
+                        # msg = "No train in block for scheduled train starting from " + station_from
+                        # msg2 = "Trying again for " + str(scheduling_margin_gbl) + " fast minutes"
+                        # if myframe == None:
+                        #     myframe = self.show_custom_message_box(msg, msg2)
+
                         fast_minute = 1000*60/int(str(fast_clock_rate))
                         self.waitMsec(fast_minute)
+                        # current_date = timebase.getTime() # in secs
+                        # minutes = current_date.getMinutes()
+                        # print "waited fast minute, time = " + str(minutes), " index " , station_index, "j", j
+
+                        # if we have turned scheduling off stop waiting for train to arrive
+                        if scheduling_in_operation_gbl == False: break
+
+
 
                     try: myframe.dispose()
                     except: pass
@@ -2008,7 +2068,7 @@ class RunTrain(jmri.jmrit.automat.AbstractAutomaton):
         elif repeat_command == "Repeat every 2 Hours":
             current_minutes_mod = current_minutes
         else:
-            print "erroe wrong repeat command"
+            print "error wrong repeat command"
         if self.logLevel > 0: print "d", current_minutes, "current_minutes_mod", current_minutes_mod
         current_hour = int(str(timebase.getTime().getHours()))
         if self.logLevel > 0: print("a"), current_hour
@@ -2071,7 +2131,8 @@ class RunTrain(jmri.jmrit.automat.AbstractAutomaton):
         return wait_time
 
     def show_custom_message_box(self, msg, msg2):
-        frame = JFrame("Custom Message Box")
+        # JDialog dialog = new JDialog(mainFrame, "Non-Modal Dialog", false);
+        frame = JDialog(None, "Custom Message Box", False)
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE)
         frame.setSize(400, 200)
         frame.setLocationRelativeTo(None)
@@ -2343,7 +2404,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
                 return False
         else:
             #print "train_to_move", train_to_move, "not in" , blockName
-            blockName = [block for block in blocks if block.getValue() == train_to_move]
+            blockName = [block for block in blocks.getNamedBeanSet() if block.getValue() == train_to_move]
             if blockName != []:
                 blockName = blockName[0]
             else:

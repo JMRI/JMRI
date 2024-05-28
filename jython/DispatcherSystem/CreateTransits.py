@@ -1430,7 +1430,8 @@ class DisplayProgress:
 
     def __init__(self):
         #labels don't seem to work. This is the only thing I could get to work. Improvements welcome
-        self.frame1 = JFrame('Hello, World!', defaultCloseOperation=JFrame.DISPOSE_ON_CLOSE, size=(500, 50), locationRelativeTo=None)
+        progress = 0
+        self.frame1 = JFrame("creating transits: " + str(progress) + "% complete", defaultCloseOperation=JFrame.DISPOSE_ON_CLOSE, size=(500, 50), locationRelativeTo=None)
 
         self.frame1.setVisible(True)
 

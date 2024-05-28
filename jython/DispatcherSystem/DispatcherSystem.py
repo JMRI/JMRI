@@ -354,6 +354,9 @@ CreateIcons = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherS
 execfile(CreateIcons)
 
 
+# delete previous Dispatch System Frames
+
+for frame in
 
 #*****************
 frame = jmri.util.JmriJFrame('Dispatch System');
@@ -523,6 +526,8 @@ panel.add(leftJustify(rowStage1Separator))
 #stage2
 panel.add(leftJustify(rowStage2))
 panel.add(leftJustify(rowStage2Separator))
+
+frame.setPreferredSize(Dimension(700, 300))
 
 frame.pack()
 frame.setVisible(True)

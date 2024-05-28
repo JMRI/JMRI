@@ -98,7 +98,8 @@ class Timetable:
 
     def hideWindow(self):
         if self.frame != None:
-            self.frame.setVisible(False)
+            # self.frame.setVisible(False)
+            self.frame.dispatchEvent(WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 
     def showWindow(self):
         if self.frame != None:
