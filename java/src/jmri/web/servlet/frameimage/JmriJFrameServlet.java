@@ -39,7 +39,10 @@ import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
+import javax.swing.JTable;
 import javax.swing.JToggleButton;
+import javax.swing.SwingUtilities;
+import javax.swing.table.JTableHeader;
 
 import jmri.InstanceManager;
 import jmri.jmrit.display.Editor;
@@ -155,18 +158,18 @@ public class JmriJFrameServlet extends HttpServlet {
              * to adjust the click position for the offset of the Component
              * relative to the frame.
              */
-            // There was a comment here that said 
-            //    "was incorrect for zoomed panels, turned off"
-            // and the recalculation of x and y (next four lines) were
-            // commented out.  This resulted in click misses on e.g. the
-            // Turnout table, so these lines were put back into effect.
-            Point pc = c.getLocationOnScreen();
-            Point pf = frameContentPane.getLocationOnScreen();
-            x -= (int)(pc.getX() - pf.getX());
-            y -= (int)(pc.getY() - pf.getY());
-            log.debug("   position recalculated as {},{}", x, y);
+            if (c instanceof JTable || c instanceof JTableHeader) {
+                // need to make clicks on a JTable and JTableHeader all relative
+                Rectangle rT = c.getBounds();
+                Rectangle r = SwingUtilities.convertRectangle(c.getParent(), rT, frameContentPane);
+                // need to adjust table click, note that table can scroll
+                x += (int) rT.getX() - (int) r.getX();
+                y += (int) rT.getY() - (int) r.getY();
+                log.debug("New JTable x: {} and y: {}", x, y);
+            }
+
             for (MouseListener ml : la) {
-                log.debug("    Send click sequence at {},{}", x, y);
+                log.trace("Send click sequence at {},{}", x, y);
                 sendClickSequence(ml, c, x, y);
             }
         }
