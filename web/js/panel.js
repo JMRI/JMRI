@@ -21,7 +21,7 @@
  *  TODO: update drawn track on color and width changes (would need to create system objects to reflect these chgs)
  *  TODO: research movement of locoicons ("promote" locoicon to system entity in JMRI?, add panel-level listeners?)
  *  TODO: deal with mouseleave, mouseout, touchout, etc. Slide off Stop button on rb1 for example.
- *  TODO: handle inputs/selection on various memory widgets
+ *  TODO: handle inputs/selection on more memory widgets
  *  TODO: alignment of memoryIcons without fixed width is very different.  Recommended workaround is to use fixed width.
  *  TODO:    ditto for sensorIcons with text
  *  TODO: add support for slipturnouticon (one2beros)
@@ -53,6 +53,8 @@ var $unknownColor = 'gray';
 var $showUserName = 'no';
 var DOWNEVENT = 'touchstart mousedown';  // check both touch and mouse events
 var UPEVENT = 'touchend mouseup';
+var BLUR = 'blur';
+var KEYUP = 'keyup';
 var SIZE = 3;               // default factor for circles
 
 var UNKNOWN = '0';          // constants to match JSON Server state names
@@ -749,15 +751,6 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget["systemName"] = $widget.name;
                             jmri.getMemory($widget["systemName"]);
                             break;
-                        case "memoryicon" :
-                            $widget['name'] = $widget.memory; //normalize name
-                            $widget.jsonType = "memory"; // JSON object type
-                            $widget['text'] = $widget.memory; //use name for initial text
-                            $widget['state'] = $widget.memory; //use name for initial state as well
-                            if (isUndefined($widget["systemName"]))
-                                $widget["systemName"] = $widget.name;
-                            jmri.getMemory($widget["systemName"]);
-                            break;
                         case "reportericon" :
                             $widget['name'] = $widget.reporter; //normalize name
                             $widget.jsonType = "reporter"; // JSON object type
@@ -773,13 +766,15 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['state'] = $widget.name; //use name for initial state as well
                             jmri.getBlock($widget["systemName"]);
                             break;
+                        case "memoryicon" :
                         case "memoryInputIcon" :
                         case "memoryComboIcon" :
                             $widget['name'] = $widget.memory; //normalize name
                             $widget.jsonType = "memory"; // JSON object type
                             $widget['text'] = $widget.memory; //use name for initial text
                             $widget['state'] = $widget.memory; //use name for initial state as well
-                            $widget.styles['border'] = "1px solid black" //add border for looks (temporary)
+                            $widget.classes += " clickable input" //make it clickable;
+//                            $widget.styles['border'] = "1px solid black" //add border for looks (temporary)
                             if (isUndefined($widget["systemName"]))
                                 $widget["systemName"] = $widget.name;
                             jmri.getMemory($widget["systemName"]);
@@ -1361,8 +1356,8 @@ function processPanelXML($returnedData, $success, $xhr) {
 
     //only enable click events if panel is marked to allow control
     if ($gPanel.controlling == "yes") {
-        //hook up mouseup state toggle function to non-momentary clickable widgets, except for multisensor and linkinglabel
-        $('.clickable:not(.momentary):not(.multisensoricon):not(.linkinglabel)').bind(UPEVENT, $handleClick);
+        //hook up mouseup state toggle function to non-momentary clickable widgets, except for multisensor, linkinglabel and input texts
+        $('.clickable:not(.momentary):not(.multisensoricon):not(.linkinglabel):not(.input.text)').bind(UPEVENT, $handleClick);
 
         //hook up mouseup state change function to multisensor (special handling)
         $('.clickable.multisensoricon').bind('click', $handleMultiClick);
@@ -1380,6 +1375,13 @@ function processPanelXML($returnedData, $success, $xhr) {
             e.preventDefault(); //prevent double-firing (touch + click)
             sendElementChange($gWidgets[this.id].jsonType, $gWidgets[this.id].systemName, INACTIVE);  //send inactive on up
         });
+
+        //hook up mouseup function for text memoryicon (special handling)
+        $('.clickable.input.text').bind(UPEVENT, $handleTextMemoryIconClick);
+        //handle update keys for textbox created above (special handling)
+        $('.clickable.input.text').on(KEYUP, 'input', $handleTextMemoryInputKeyUp);
+        //also handle any event leaving the input textbox created above (special handling)
+        $('.clickable.input.text').on(BLUR, 'input', $handleTextMemoryInputBlur);
 
         // Switchboard All Off/All On buttons
         $(".lightswitch#allOff").bind(UPEVENT, $handleClickAllOff); // all Lights Off
@@ -1638,6 +1640,39 @@ function $handleClickAllOff(e) { // click button on Switchboards
             sendElementChange($widget.jsonType, $widget.systemName, THROWN);
         }
     });
+};
+
+//when clicking on a text memoryicon, create a textbox to edit the value
+function $handleTextMemoryIconClick(e) {
+    var t = $(this).text();
+    var $id = $(this).attr('id');
+    var $widget = $gWidgets[$id];
+    $(this).text('').append($('<input />',{'value' : t}));
+    var input = $(this).find('input'); 
+    input.data("oldValue", t); //save the current value if needed
+    input.css($widget.styles); //copy css from text box to input box
+    input.focus();
+};
+
+//update memory or restore the value when certain keystrokes occur
+function $handleTextMemoryInputKeyUp(e) {
+    if (e.keyCode == 13 || e.keyCode == 9) { //on [Enter] or [Tab], send new value to server
+        var newVal = $(this).val();
+        var $id = $(this).parent().attr('id');
+        var $widget = $gWidgets[$id];
+        jmri.setMemory($widget.systemName, newVal);
+    } else if (e.keyCode == 27) { //on [Escape], restore the previous value
+        var oldValue = $(this).data("oldValue")
+        $(this).parent().text(oldValue);        
+    }
+};
+
+//update memory when the focus is lost
+function $handleTextMemoryInputBlur(e) {
+    var newVal = $(this).val();
+    var $id = $(this).parent().attr('id');
+    var $widget = $gWidgets[$id];
+    jmri.setMemory($widget.systemName, newVal);
 };
 
 // End of Click Handling functions
