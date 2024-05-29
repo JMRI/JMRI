@@ -2,9 +2,7 @@ package jmri.jmrit.operations.locations;
 
 import java.awt.Dimension;
 
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
+import javax.swing.*;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.tools.PrintSwitchListAction;
@@ -27,7 +25,6 @@ public class YardmasterFrame extends OperationsFrame {
         super.initComponents();
 
         if (location != null) {
-
             // build menu
             JMenuBar menuBar = new JMenuBar();
             JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
@@ -43,7 +40,7 @@ public class YardmasterFrame extends OperationsFrame {
                 print.setToolTipText(Bundle.getMessage("TipDisabled"));
                 preview.setToolTipText(Bundle.getMessage("TipDisabled"));
             }
-            setTitle(Bundle.getMessage("Yardmaster") + " (" + location.getName() + ")");
+            setTitle(Bundle.getMessage("Yardmaster") + " " + location.getName());
         }
 
         addHelpMenu("package.jmri.jmrit.operations.Operations_Yardmaster", true); // NOI18N
