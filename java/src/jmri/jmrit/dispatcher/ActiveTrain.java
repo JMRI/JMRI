@@ -701,7 +701,6 @@ public class ActiveTrain implements PropertyChangeProvider {
     }
     
     public void forcePassNextSafeSection() {
-        int c = 0; 
         for (AllocatedSection as: mAllocatedSections) {
             if (as.getTransitSection().getSection() == mLastAllocatedSection 
                     && as.getTransitSection().isSafe() 
