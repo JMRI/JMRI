@@ -54,9 +54,22 @@ public class ExecuteAction extends AbstractDigitalAction
         MaleDigitalActionSocket action =
                 _selectNamedBean.evaluateNamedBean(getConditionalNG());
 
-        if (action != null) {
-            action.execute();
+        if (action == null) {
+            log.error("The action is null");
+            return;
         }
+
+        if (getConditionalNG() != action.getConditionalNG()) {
+            // If the action is not in the same ConditionalNG, the action
+            // might be executed concurrent by the other ConditionalNG if
+            // the two ConditionalNGs executes in two different threads.
+            // And LogixNG actions/expressions are not designed to handle
+            // that.
+            log.error("The action is not in the same ConditionalNG as this action.");
+            return;
+        }
+
+        action.execute();
     }
 
     @Override
