@@ -438,6 +438,12 @@
               of an enum, the button <strong>Show valid names</strong> are added.
               Pressing this button opens a dialog that shows a list of valid values
               and their descriptions.</li>
+          <li>The action <strong>Execute action</strong> has been added. It executes
+              another action somewhere else in the ConditionalNG tree. This can be
+              useful if you need to execute a part of the ConditionalNG at several
+              different places, for example if you have several
+              <strong>Listen On Beans - Local variable</strong> in the same
+              ConditionalNG.</li>
           <li></li>
         </ul>
 
