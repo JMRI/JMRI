@@ -2,6 +2,7 @@ package jmri.configurexml;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
+
 import javax.swing.JFileChooser;
 
 import jmri.util.swing.JmriJOptionPane;
@@ -20,7 +21,7 @@ import jmri.util.swing.JmriJOptionPane;
  */
 public class LoadXmlUserAction extends LoadXmlConfigAction {
 
-    static private File currentFile = null;
+    private static File currentFile = null;
 
     public LoadXmlUserAction() {
         this(Bundle.getMessage("MenuItemLoad"));
@@ -38,13 +39,14 @@ public class LoadXmlUserAction extends LoadXmlConfigAction {
         // Cancel button can't be localized like userFileChooser.setCancelButtonText() TODO
         userFileChooser.setDialogTitle(Bundle.getMessage("LoadTitle"));
 
-        boolean results = loadFile(userFileChooser);
+        java.awt.Window window = JmriJOptionPane.findWindowForObject( e == null ? null : e.getSource());
+        boolean results = loadFile(userFileChooser, window);
         if (results) {
             log.debug("load was successful");
             setCurrentFile(userFileChooser.getSelectedFile());
         } else {
             log.debug("load failed");
-            JmriJOptionPane.showMessageDialog(null,
+            JmriJOptionPane.showMessageDialog(window,
                     Bundle.getMessage("LoadHasErrors") + "\n"
                     + Bundle.getMessage("CheckPreferences") + "\n"
                     + Bundle.getMessage("ConsoleWindowHasInfo"),

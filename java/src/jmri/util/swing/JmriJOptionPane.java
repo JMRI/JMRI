@@ -317,14 +317,37 @@ public class JmriJOptionPane {
     }
 
     @CheckForNull
-    private static Window findWindowForComponent(Component component){
+    private static Window findWindowForComponent(@CheckForNull Component component){
         if (component == null) {
             return null;
+        }
+        if (component instanceof JPopupMenu ) {
+            return findWindowForComponent(((JPopupMenu)component).getInvoker());
+        }
+        if (component instanceof JFrame ) {
+            return (JFrame)component;
         }
         if (component instanceof Window) {
             return (Window) component;
         }
         return findWindowForComponent(component.getParent());
+    }
+
+    /**
+     * Find the parent Window, normally from a java.awt.Component .
+     * <p>
+     * If the component is within a JPopupMenu,
+     * the parent Window of the Popup Menu will be returned, not the Frame of
+     * the Popup Menu itself ( which may no longer be visible ).
+     * @param object a child component of the Window.
+     * @return the parent Window, or null if none found.
+     */
+    @CheckForNull
+    public static Window findWindowForObject( @CheckForNull Object object ){
+        if ( object instanceof Component ) {
+            return JmriJOptionPane.findWindowForComponent((Component)object);
+        }
+        return null;
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JmriJOptionPane.class);

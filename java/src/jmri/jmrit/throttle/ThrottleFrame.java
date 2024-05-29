@@ -238,7 +238,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("PromptXmlFileTypes"), "xml");
         fileChooser.setCurrentDirectory(new File(getDefaultThrottleFolder()));
         fileChooser.setDialogType(JFileChooser.OPEN_DIALOG);
-        java.io.File file = LoadXmlConfigAction.getFile(fileChooser);
+        java.io.File file = LoadXmlConfigAction.getFile(fileChooser, this);
         if (file == null) {
             return ;
         }
