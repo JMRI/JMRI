@@ -199,7 +199,7 @@ public class ActiveTrain implements PropertyChangeProvider {
     private AutoActiveTrain mAutoActiveTrain = null;
     private final List<AllocatedSection> mAllocatedSections = new ArrayList<>();
     private jmri.Section mLastAllocatedSection = null;
-    private boolean mLastAllocOverrideSafe = false;
+    private Section mLastAllocOverrideSafe = null;
     private int mLastAllocatedSectionSeqNumber = 0;
     private jmri.Section mSecondAllocatedSection = null;
     private int mNextAllocationNumber = 1;
@@ -703,14 +703,12 @@ public class ActiveTrain implements PropertyChangeProvider {
     public void forcePassNextSafeSection() {
         int c = 0; 
         for (AllocatedSection as: mAllocatedSections) {
-            if (as.getTransitSection().isSafe() && as.getNextSection().getOccupancy() == Section.UNOCCUPIED) {
-                c+=1;
+            if (as.getTransitSection().getSection() == mLastAllocatedSection 
+                    && as.getTransitSection().isSafe() 
+                    && as.getNextSection().getOccupancy() == Section.UNOCCUPIED) {
+                mLastAllocOverrideSafe = mLastAllocatedSection;
             }
         }
-        if ( c != 1 ) {
-            return;
-        }
-	mLastAllocOverrideSafe = true;
     }
 
     public void setMode(int mode) {
@@ -775,7 +773,7 @@ public class ActiveTrain implements PropertyChangeProvider {
             if (as.getSection() == mNextSectionToAllocate) {
                 // this  is the next Section in the Transit, update pointers
                 mLastAllocatedSection = as.getSection();
-		mLastAllocOverrideSafe = false;
+                mLastAllocOverrideSafe = null;
                 mLastAllocatedSectionSeqNumber = mNextSectionSeqNumber;
                 mNextSectionToAllocate = as.getNextSection();
                 mNextSectionSeqNumber = as.getNextSectionSequence();
@@ -855,7 +853,7 @@ public class ActiveTrain implements PropertyChangeProvider {
         refreshPanel();
         if (as.getSection() == mLastAllocatedSection) {
             mLastAllocatedSection = null;
-	    mLastAllocOverrideSafe = false;
+            mLastAllocOverrideSafe = null;
             if (mAllocatedSections.size() > 0) {
                 mLastAllocatedSection = mAllocatedSections.get(
                         mAllocatedSections.size() - 1).getSection();
@@ -986,8 +984,8 @@ public class ActiveTrain implements PropertyChangeProvider {
         return mLastAllocatedSection;
     }
 
-    public boolean getLastAllocOverrideSafe() {
-	return mLastAllocOverrideSafe;
+    public Section getLastAllocOverrideSafe() {
+        return mLastAllocOverrideSafe;
     }
 
     public int getLastAllocatedSectionSeqNumber() {
