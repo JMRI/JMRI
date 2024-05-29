@@ -374,6 +374,10 @@ public class AutoTrainAction {
                 log.trace("Terminate Train Section [[{}]",tsa.getTargetTransitSection().getSectionName());
                 InstanceManager.getDefault(DispatcherFrame.class).terminateActiveTrain(_activeTrain,true,false);
                 break;
+            case TransitSectionAction.FORCEALLOCATEPASSSAFESECTION:
+                log.trace("Force pass next safe Section [[{}]",tsa.getTargetTransitSection().getSectionName());
+                _activeTrain.forcePassNextSafeSection();
+                break;
             case TransitSectionAction.LOADTRAININFO:
                 log.info("Section[[{}] LoadTrain [{}]",tsa.getTargetTransitSection().getSectionName(),tsa.getStringWhat());
                 switch (tsa.getDataWhat2()) {

@@ -227,7 +227,7 @@ public class AutoAllocate implements Runnable {
                                 ar.getSection().getDisplayName());
                         // if the last allocated section is safe but not
                         // occupied short cut out of here
-                        if (arCurrentTransitSection.isSafe() &&
+                        if (!activeTrain.getLastAllocOverrideSafe() && arCurrentTransitSection.isSafe() &&
                                 activeTrain.getLastAllocatedSection().getOccupancy() != Section.OCCUPIED) {
                             log.debug("Allocating Train [{}] has not arrived at Passing Point",
                                     trainName);
