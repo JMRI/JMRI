@@ -390,7 +390,8 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Allow User to enter a train name of their choosing.</li>
+             <li>Add Transit Action to attempt to allocate beyond next safe section.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
