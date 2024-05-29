@@ -443,7 +443,9 @@
               useful if you need to execute a part of the ConditionalNG at several
               different places, for example if you have several
               <strong>Listen On Beans - Local variable</strong> in the same
-              ConditionalNG.</li>
+              ConditionalNG.<br/>
+              Note that the action you want to execute must have
+              a user name. Otherwise the action can't be selected.</li>
           <li></li>
         </ul>
 
