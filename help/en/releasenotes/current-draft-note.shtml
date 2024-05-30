@@ -615,7 +615,8 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>Fixed a problem with clicks ending up in the wrong place
+                on a Table, e.g. Turnout Table, etc, when using the frame server.</li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
