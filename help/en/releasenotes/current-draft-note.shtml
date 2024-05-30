@@ -597,6 +597,7 @@
         <a id="WA" name="WA"></a>
         <ul>
             <li>new web ui for working with cars</li>
+            <li>web panels: add handling for some text memory inputs</li>
         </ul>
 
     <h3>Where Used</h3>
