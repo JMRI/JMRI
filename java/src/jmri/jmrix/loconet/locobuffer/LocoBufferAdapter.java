@@ -79,6 +79,8 @@ public class LocoBufferAdapter extends LnPortController {
         configureLeads(currentSerialPort, true, true);
         setLocalFlowControl();
 
+        setComPortTimeouts(currentSerialPort, Blocking.READ_SEMI_BLOCKING, 100);
+
         // report status
         reportPortStatus(log, portName);
 

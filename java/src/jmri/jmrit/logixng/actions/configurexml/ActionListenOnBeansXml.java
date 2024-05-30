@@ -6,7 +6,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.actions.ActionListenOnBeans;
 import jmri.jmrit.logixng.actions.ActionListenOnBeans.NamedBeanReference;
-import jmri.jmrit.logixng.actions.NamedBeanType;
+import jmri.jmrit.logixng.NamedBeanType;
 
 import org.jdom2.Element;
 

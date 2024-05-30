@@ -64,7 +64,18 @@
           <td>You can fill that out and click "Write" to configure the node. The top few fields are
           used to give it a user-chosen name and description, so you can remember this node later.
           You can set the events that correspond to different inputs and outputs, and even give
-          those user-convenient names. That's all stored permanently in the node.</td>
+          those user-convenient names. That's all stored permanently in the node.
+          <p>
+          As you change values, you'll notice the background on some type of items and tabs
+          change from white to orange.  Orange indicates that you've changed a
+          value and should write it to the node so it's not lost. If you enter
+          an invalid value, such as an integer value that's too large or too
+          small for that particular item, the background will turn to blue.
+          You can see the valid range for each integer value by hovering your
+          mouse cursor over it. A tooltip will pop up showing the 
+          correct range of values. You can also press the Refresh button to 
+          reload the current value from the node.
+          </td>
           <td>
             <a href="FilledOutConfigWindow.png"><img src="FilledOutConfigWindow.png" width="254"
             height="406" alt="Filled-out configuration window"></a>

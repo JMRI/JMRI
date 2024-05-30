@@ -1,4 +1,4 @@
-package jmri.jmrit.logixng.actions;
+package jmri.jmrit.logixng;
 
 import jmri.*;
 import jmri.jmrit.entryexit.DestinationPoints;
@@ -7,8 +7,6 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
-import jmri.jmrit.logixng.GlobalVariable;
-import jmri.jmrit.logixng.GlobalVariableManager;
 
 /**
  * Defines types of NamedBeans, for example Turnout and Light.
@@ -23,10 +21,19 @@ public enum NamedBeanType {
             Block.class,
             null,
             () -> InstanceManager.getDefault(BlockManager.class),
-            InstanceManager.getDefault(BlockManager.class)::createNewBlock,
+            new CreateBean() {
+                @Override
+                public NamedBean createBean(String systemName, String userName) {
+                    return InstanceManager.getDefault(BlockManager.class)
+                            .createNewBlock(systemName, userName);
+                }
+            },
             (NamedBean bean, String property) -> {
-                if (!(bean instanceof Block)) throw new IllegalArgumentException("bean is not a Block");
-                InstanceManager.getDefault(BlockManager.class).deleteBean((Block)bean, property);
+                if (!(bean instanceof Block)) {
+                    throw new IllegalArgumentException("bean is not a Block");
+                }
+                InstanceManager.getDefault(BlockManager.class)
+                        .deleteBean((Block)bean, property);
             }),
 
     GlobalVariable(
@@ -35,10 +42,19 @@ public enum NamedBeanType {
             GlobalVariable.class,
             "value",
             () -> InstanceManager.getDefault(GlobalVariableManager.class),
-            InstanceManager.getDefault(GlobalVariableManager.class)::createGlobalVariable,
+            new CreateBean() {
+                @Override
+                public NamedBean createBean(String systemName, String userName) {
+                    return InstanceManager.getDefault(GlobalVariableManager.class)
+                            .createGlobalVariable(systemName, userName);
+                }
+            },
             (NamedBean bean, String property) -> {
-                if (!(bean instanceof GlobalVariable)) throw new IllegalArgumentException("bean is not a GlobalVariable");
-                InstanceManager.getDefault(GlobalVariableManager.class).deleteBean((GlobalVariable)bean, property);
+                if (!(bean instanceof GlobalVariable)) {
+                    throw new IllegalArgumentException("bean is not a GlobalVariable");
+                }
+                InstanceManager.getDefault(GlobalVariableManager.class)
+                        .deleteBean((GlobalVariable)bean, property);
             }),
 
     EntryExit(
@@ -49,8 +65,11 @@ public enum NamedBeanType {
             () -> InstanceManager.getDefault(EntryExitPairs.class),
             null,
             (NamedBean bean, String property) -> {
-                if (!(bean instanceof DestinationPoints)) throw new IllegalArgumentException("bean is not a DestinationPoints");
-                InstanceManager.getDefault(EntryExitPairs.class).deleteBean((DestinationPoints)bean, property);
+                if (!(bean instanceof DestinationPoints)) {
+                    throw new IllegalArgumentException("bean is not a DestinationPoints");
+                }
+                InstanceManager.getDefault(EntryExitPairs.class)
+                        .deleteBean((DestinationPoints)bean, property);
             }),
 
     Light(
@@ -59,9 +78,17 @@ public enum NamedBeanType {
             Light.class,
             "KnownState",
             () -> InstanceManager.getDefault(LightManager.class),
-            InstanceManager.getDefault(LightManager.class)::newLight,
+            new CreateBean() {
+                @Override
+                public NamedBean createBean(String systemName, String userName) {
+                    return InstanceManager.getDefault(LightManager.class)
+                            .newLight(systemName, userName);
+                }
+            },
             (NamedBean bean, String property) -> {
-                if (!(bean instanceof Light)) throw new IllegalArgumentException("bean is not a Light");
+                if (!(bean instanceof Light)) {
+                    throw new IllegalArgumentException("bean is not a Light");
+                }
                 InstanceManager.getDefault(LightManager.class).deleteBean((Light)bean, property);
             }),
 
@@ -71,10 +98,19 @@ public enum NamedBeanType {
             Memory.class,
             "value",
             () -> InstanceManager.getDefault(MemoryManager.class),
-            InstanceManager.getDefault(MemoryManager.class)::newMemory,
+            new CreateBean() {
+                @Override
+                public NamedBean createBean(String systemName, String userName) {
+                    return InstanceManager.getDefault(MemoryManager.class)
+                            .newMemory(systemName, userName);
+                }
+            },
             (NamedBean bean, String property) -> {
-                if (!(bean instanceof Memory)) throw new IllegalArgumentException("bean is not a Memory");
-                InstanceManager.getDefault(MemoryManager.class).deleteBean((Memory)bean, property);
+                if (!(bean instanceof Memory)) {
+                    throw new IllegalArgumentException("bean is not a Memory");
+                }
+                InstanceManager.getDefault(MemoryManager.class)
+                        .deleteBean((Memory)bean, property);
             }),
 
     OBlock(
@@ -83,10 +119,19 @@ public enum NamedBeanType {
             OBlock.class,
             "state",
             () -> InstanceManager.getDefault(OBlockManager.class),
-            InstanceManager.getDefault(OBlockManager.class)::createNewOBlock,
+            new CreateBean() {
+                @Override
+                public NamedBean createBean(String systemName, String userName) {
+                    return InstanceManager.getDefault(OBlockManager.class)
+                            .createNewOBlock(systemName, userName);
+                }
+            },
             (NamedBean bean, String property) -> {
-                if (!(bean instanceof OBlock)) throw new IllegalArgumentException("bean is not a OBlock");
-                InstanceManager.getDefault(OBlockManager.class).deleteBean((OBlock)bean, property);
+                if (!(bean instanceof OBlock)) {
+                    throw new IllegalArgumentException("bean is not a OBlock");
+                }
+                InstanceManager.getDefault(OBlockManager.class)
+                        .deleteBean((OBlock)bean, property);
             }),
 
     Reporter(
@@ -95,10 +140,19 @@ public enum NamedBeanType {
             Reporter.class,
             "currentReport",
             () -> InstanceManager.getDefault(ReporterManager.class),
-            InstanceManager.getDefault(ReporterManager.class)::newReporter,
+            new CreateBean() {
+                @Override
+                public NamedBean createBean(String systemName, String userName) {
+                    return InstanceManager.getDefault(ReporterManager.class)
+                            .newReporter(systemName, userName);
+                }
+            },
             (NamedBean bean, String property) -> {
-                if (!(bean instanceof Reporter)) throw new IllegalArgumentException("bean is not a Reporter");
-                InstanceManager.getDefault(ReporterManager.class).deleteBean((Reporter)bean, property);
+                if (!(bean instanceof Reporter)) {
+                    throw new IllegalArgumentException("bean is not a Reporter");
+                }
+                InstanceManager.getDefault(ReporterManager.class)
+                        .deleteBean((Reporter)bean, property);
             }),
 
     Sensor(
@@ -107,10 +161,19 @@ public enum NamedBeanType {
             Sensor.class,
             "KnownState",
             () -> InstanceManager.getDefault(SensorManager.class),
-            InstanceManager.getDefault(SensorManager.class)::newSensor,
+            new CreateBean() {
+                @Override
+                public NamedBean createBean(String systemName, String userName) {
+                    return InstanceManager.getDefault(SensorManager.class)
+                            .newSensor(systemName, userName);
+                }
+            },
             (NamedBean bean, String property) -> {
-                if (!(bean instanceof Sensor)) throw new IllegalArgumentException("bean is not a Sensor");
-                InstanceManager.getDefault(SensorManager.class).deleteBean((Sensor)bean, property);
+                if (!(bean instanceof Sensor)) {
+                    throw new IllegalArgumentException("bean is not a Sensor");
+                }
+                InstanceManager.getDefault(SensorManager.class)
+                        .deleteBean((Sensor)bean, property);
             }),
 
     SignalHead(
@@ -121,8 +184,11 @@ public enum NamedBeanType {
             () -> InstanceManager.getDefault(SignalHeadManager.class),
             null,
             (NamedBean bean, String property) -> {
-                if (!(bean instanceof SignalHead)) throw new IllegalArgumentException("bean is not a SignalHead");
-                InstanceManager.getDefault(SignalHeadManager.class).deleteBean((SignalHead)bean, property);
+                if (!(bean instanceof SignalHead)) {
+                    throw new IllegalArgumentException("bean is not a SignalHead");
+                }
+                InstanceManager.getDefault(SignalHeadManager.class)
+                        .deleteBean((SignalHead)bean, property);
             }),
 
     SignalMast(
@@ -133,8 +199,11 @@ public enum NamedBeanType {
             () -> InstanceManager.getDefault(SignalMastManager.class),
             null,
             (NamedBean bean, String property) -> {
-                if (!(bean instanceof SignalMast)) throw new IllegalArgumentException("bean is not a SignalMast");
-                InstanceManager.getDefault(SignalMastManager.class).deleteBean((SignalMast)bean, property);
+                if (!(bean instanceof SignalMast)) {
+                    throw new IllegalArgumentException("bean is not a SignalMast");
+                }
+                InstanceManager.getDefault(SignalMastManager.class)
+                        .deleteBean((SignalMast)bean, property);
             }),
 
     Turnout(
@@ -142,10 +211,19 @@ public enum NamedBeanType {
             Bundle.getMessage("BeanNameTurnouts"),
             Turnout.class, "KnownState",
             () -> InstanceManager.getDefault(TurnoutManager.class),
-            InstanceManager.getDefault(TurnoutManager.class)::newTurnout,
+            new CreateBean() {
+                @Override
+                public NamedBean createBean(String systemName, String userName) {
+                    return InstanceManager.getDefault(TurnoutManager.class)
+                            .newTurnout(systemName, userName);
+                }
+            },
             (NamedBean bean, String property) -> {
-                if (!(bean instanceof Turnout)) throw new IllegalArgumentException("bean is not a Turnout");
-                InstanceManager.getDefault(TurnoutManager.class).deleteBean((Turnout)bean, property);
+                if (!(bean instanceof Turnout)) {
+                    throw new IllegalArgumentException("bean is not a Turnout");
+                }
+                InstanceManager.getDefault(TurnoutManager.class)
+                        .deleteBean((Turnout)bean, property);
             }),
 
     Warrant(
@@ -155,8 +233,11 @@ public enum NamedBeanType {
             () -> InstanceManager.getDefault(WarrantManager.class),
             null,
             (NamedBean bean, String property) -> {
-                if (!(bean instanceof Warrant)) throw new IllegalArgumentException("bean is not a Warrant");
-                InstanceManager.getDefault(WarrantManager.class).deleteBean((Warrant)bean, property);
+                if (!(bean instanceof Warrant)) {
+                    throw new IllegalArgumentException("bean is not a Warrant");
+                }
+                InstanceManager.getDefault(WarrantManager.class)
+                        .deleteBean((Warrant)bean, property);
             });
 
 

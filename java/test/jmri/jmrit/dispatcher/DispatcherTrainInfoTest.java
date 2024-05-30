@@ -1,5 +1,6 @@
 package jmri.jmrit.dispatcher;
 
+import jmri.jmrit.dispatcher.ActiveTrain.TrainDetection;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -37,7 +38,7 @@ public class DispatcherTrainInfoTest {
         ti.setSpeedFactor(0.8f);
         ti.setMaxSpeed(0.6f);
         ti.setRampRate("2");
-        ti.setResistanceWheels(true);
+        ti.setTrainDetection(TrainDetection.TRAINDETECTION_HEADONLY);
         ti.setRunInReverse(false);
         ti.setSoundDecoder(true);
         ti.setMaxTrainLength(225);
@@ -66,7 +67,7 @@ public class DispatcherTrainInfoTest {
         Assert.assertEquals("Speed Factor", ti.getSpeedFactor(), 0.8f, 0.0);
         Assert.assertEquals("Maximum Speed", ti.getMaxSpeed(), 0.6f, 0.0);
         Assert.assertEquals("Ramp Rate", ti.getRampRate(), "2");
-        Assert.assertTrue("Resistance Wheels", ti.getResistanceWheels());
+        Assert.assertEquals("Train Detection", ActiveTrain.TrainDetection.TRAINDETECTION_HEADONLY,ti.getTrainDetection());
         Assert.assertFalse("Run In Reverse", ti.getRunInReverse());
         Assert.assertTrue("Sound Decoder", ti.getSoundDecoder());
         Assert.assertEquals("Allocation Method", ti.getAllocationMethod(),8,0);

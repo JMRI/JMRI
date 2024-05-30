@@ -186,7 +186,7 @@ public class JsonUtil {
         data.put(JSON.USERNAME, location.getName());
         data.put(JSON.NAME, location.getId());
         data.put(JSON.LENGTH, location.getLength());
-        data.put(JSON.COMMENT, location.getComment());
+        data.put(JSON.COMMENT, location.getCommentWithColor());
         Reporter reporter = location.getReporter();
         data.put(REPORTER, reporter != null ? reporter.getSystemName() : "");
         // note type defaults to all in-use rolling stock types
@@ -307,6 +307,17 @@ public class JsonUtil {
         // second half of string can be anything
         String[] type = rs.getTypeName().split(TrainCommon.HYPHEN, 2);
         node.put(JSON.RFID, rs.getRfid());
+        if (!rs.getWhereLastSeenName().equals(Car.NONE)) {
+            node.put(JSON.WHERELASTSEEN, rs.getWhereLastSeenName() +
+                    (rs.getTrackLastSeenName().equals(Car.NONE) ? "" : " (" + rs.getTrackLastSeenName() + ")"));
+        } else {
+            node.set(JSON.WHERELASTSEEN, null);        
+        }
+        if (!rs.getWhenLastSeenDate().equals(Car.NONE)) {
+            node.put(JSON.WHENLASTSEEN, rs.getWhenLastSeenDate());
+        } else {
+            node.set(JSON.WHENLASTSEEN, null);            
+        }
         node.put(JsonOperations.CAR_TYPE, type[0]);
         node.put(JsonOperations.CAR_SUB_TYPE, type.length == 2 ? type[1] : "");
         node.put(JSON.LENGTH, rs.getLengthInteger());
@@ -335,13 +346,12 @@ public class JsonUtil {
         }
         if (rs.getTrain() != null) {
             node.put(JsonOperations.TRAIN_ID, rs.getTrain().getId());
+            node.put(JsonOperations.TRAIN_NAME, rs.getTrain().getName());
+            node.put(JsonOperations.TRAIN_ICON_NAME, rs.getTrain().getIconName());
         } else {
             node.set(JsonOperations.TRAIN_ID, null);
-        }  
-        if (rs.getTrain() != null) {
-            node.put(JsonOperations.TRAIN_NAME, rs.getTrain().getName());
-        } else {
             node.set(JsonOperations.TRAIN_NAME, null);
+            node.set(JsonOperations.TRAIN_ICON_NAME, null);
         }  
         if (rs.getDestinationTrack() != null) {
             node.set(JsonOperations.DESTINATION,
@@ -450,7 +460,7 @@ public class JsonUtil {
             root.put(JSON.NAME, rl.getId());
             root.put(JSON.USERNAME, rl.getName());
             root.put(JSON.TRAIN_DIRECTION, rl.getTrainDirectionString());
-            root.put(JSON.COMMENT, rl.getComment());
+            root.put(JSON.COMMENT, rl.getCommentWithColor());
             root.put(JSON.SEQUENCE, rl.getSequenceNumber());
             root.put(JSON.EXPECTED_ARRIVAL, train.getExpectedArrivalTime(rl));
             root.put(JSON.EXPECTED_DEPARTURE, train.getExpectedDepartureTime(rl));

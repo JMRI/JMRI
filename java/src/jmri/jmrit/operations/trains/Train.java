@@ -390,6 +390,9 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         if (minutes == -1) {
             return ALREADY_SERVICED;
         }
+        if (!routeLocation.getDepartureTime().equals(RouteLocation.NONE)) {
+            return routeLocation.getFormatedDepartureTime();
+        }
         // figure out the work at this location, note that there can be
         // consecutive locations with the same name
         if (getRoute() != null) {

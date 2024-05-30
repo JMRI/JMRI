@@ -5,6 +5,7 @@
 <!-- version 1.2, Ronald Kuhn - add german translation  -->
 <!-- version 1.3, Nigel Cliffe, extended function options in CV155 and 156 to F28 -->
 <!-- version 1.4, Ronald Kuhn - add CV156 bit7 for FW ≥ 40.18  -->
+<!-- version 1.5, Ronald Kuhn - very small correction by CV154 bit0  -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <variable CV="153" item="Packet Time-out Value" default="0">
     <decVal min="0" max="255"/>
@@ -25,9 +26,9 @@
       </enumChoice>
       <enumChoice choice="Pantograph Operation (Zimo/Roco BR110)">
         <choice>Pantograph Operation (Zimo/Roco BR110)</choice>
-        <choice xml:lang="it">Pantografo (Zimo/Roco BR110)(</choice>
+        <choice xml:lang="it">Pantografo (Zimo/Roco BR110)</choice>
         <choice xml:lang="cs">Ovládání sběrače (Zimo/Roco BR110)</choice>
-        <choice xml:lang="de">Pantograph (Zimo/Roco BR110)(</choice>
+        <choice xml:lang="de">Pantograph (Zimo/Roco BR110)</choice>
       </enumChoice>
     </enumVal>
     <label>Special Output Configuration</label>

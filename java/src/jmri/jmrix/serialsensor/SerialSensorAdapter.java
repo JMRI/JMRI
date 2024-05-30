@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 import java.util.TooManyListenersException;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBean;
@@ -16,11 +17,10 @@ import jmri.jmrix.DefaultSystemConnectionMemo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import purejavacomm.CommPortIdentifier;
 import purejavacomm.NoSuchPortException;
 import purejavacomm.PortInUseException;
-import purejavacomm.SerialPort;
-import purejavacomm.SerialPortEvent;
 import purejavacomm.SerialPortEventListener;
 import purejavacomm.UnsupportedCommOperationException;
 
@@ -32,7 +32,7 @@ import purejavacomm.UnsupportedCommOperationException;
  */
 public class SerialSensorAdapter extends AbstractSerialPortController {
 
-    SerialPort activeSerialPort = null;
+    purejavacomm.SerialPort activeSerialPort = null;
 
     public SerialSensorAdapter() {
         super(new DefaultSystemConnectionMemo("S", Bundle.getMessage("TypeSerial")) {
@@ -61,14 +61,17 @@ public class SerialSensorAdapter extends AbstractSerialPortController {
             // get and open the primary port
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
             try {
-                activeSerialPort = (SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
+                activeSerialPort = (purejavacomm.SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
             } catch (PortInUseException p) {
                 return handlePortBusy(p, portName, log);
             }
 
             // try to set it for communication via SerialDriver
             try {
-                activeSerialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+                activeSerialPort.setSerialPortParams(9600,
+                        purejavacomm.SerialPort.DATABITS_8,
+                        purejavacomm.SerialPort.STOPBITS_1,
+                        purejavacomm.SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
@@ -86,18 +89,18 @@ public class SerialSensorAdapter extends AbstractSerialPortController {
             // arrange to notify of sensor changes
             activeSerialPort.addEventListener(new SerialPortEventListener() {
                 @Override
-                public void serialEvent(SerialPortEvent e) {
+                public void serialEvent(purejavacomm.SerialPortEvent e) {
                     int type = e.getEventType();
                     switch (type) {
-                        case SerialPortEvent.DSR:
+                        case purejavacomm.SerialPortEvent.DSR:
                             log.info("SerialEvent: DSR is {}", e.getNewValue());
                             notify("1", e.getNewValue());
                             return;
-                        case SerialPortEvent.CD:
+                        case purejavacomm.SerialPortEvent.CD:
                             log.info("SerialEvent: CD is {}", e.getNewValue());
                             notify("2", e.getNewValue());
                             return;
-                        case SerialPortEvent.CTS:
+                        case purejavacomm.SerialPortEvent.CTS:
                             log.info("SerialEvent: CTS is {}", e.getNewValue());
                             notify("3", e.getNewValue());
                             return;

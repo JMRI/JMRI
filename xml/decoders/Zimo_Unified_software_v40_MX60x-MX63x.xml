@@ -27,9 +27,13 @@
   <!--                                                                                       -->
   <version author="Ronald Kuhn   ronald@wirkuhns.de" version="1.1" lastUpdated="2022/10/30"/>
   <!-- v1.1,  add Fade-in and Fade-out for effect 88,89,90 -->
+  <version author="Ronald Kuhn   ronald@wirkuhns.de" version="1.2" lastUpdated="2024/04/05"/>
+  <!-- v1.2,  seperated Decoder Hardware Versions and added new level CVs-->
+  
+  
   <decoder>
     <family name="Zimo Unified software (version 40+)" mfg="Zimo">
-      <model model="MX600 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="4" numFns="14" productID="166,199">
+      <model model="MX600 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="4" numFns="14" productID="199">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -48,7 +52,7 @@
         </output>
         <size length="25" width="11" height="2" units="mm"/>
       </model>
-      <model model="MX600P12 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="4" numFns="14" productID="166,199">
+      <model model="MX600P12 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="4" numFns="14" productID="199">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -67,7 +71,7 @@
         </output>
         <size length="25" width="11" height="2" units="mm"/>
       </model>
-      <model model="MX600R version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="4" numFns="14" productID="166,199">
+      <model model="MX600R version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="4" numFns="14" productID="199">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -86,6 +90,65 @@
         </output>
         <size length="25" width="11" height="2" units="mm"/>
       </model>
+
+      <model model="MX600 (2021) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="4" numFns="14" productID="166">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <size length="25" width="11" height="2" units="mm"/>
+      </model>
+      <model model="MX600P12 (2021) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="4" numFns="14" productID="166">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <size length="25" width="11" height="2" units="mm"/>
+      </model>
+      <model model="MX600R (2021) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="4" numFns="14" productID="166">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <size length="25" width="11" height="2" units="mm"/>
+      </model>
+
       <model  model="MX605N version 40+"
               lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A"
               formFactor="N" connector="DropIn" numOuts="3" numFns="14" productID="186"
@@ -101,6 +164,7 @@
         </output>
         <size length="27" width="14" height="4" units="mm"/>
       </model>
+
       <model model="MX615 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="24V" maxMotorCurrent="0.5A, peak=1A" maxTotalCurrent="0.5A" formFactor="HO" numOuts="4" numFns="14" productID="194">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
@@ -177,6 +241,84 @@
         </output>
         <size length="8.2" width="5.7" height="2.0" units="mm"/>
       </model>
+
+      <model model="MX615 (2023) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="24V" maxMotorCurrent="0.5A, peak=1A" maxTotalCurrent="0.5A" formFactor="HO" numOuts="4" numFns="14" productID="151">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <size length="8.2" width="5.7" height="2.0" units="mm"/>
+      </model>
+      <model model="MX615F (2023) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="24V" maxMotorCurrent="0.5A, peak=1A" maxTotalCurrent="0.5A" formFactor="HO" numOuts="4" numFns="14" productID="151">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <size length="8.2" width="5.7" height="2.0" units="mm"/>
+      </model>
+      <model model="MX615N (2023) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="24V" maxMotorCurrent="0.5A, peak=1A" maxTotalCurrent="0.5A" formFactor="HO" numOuts="4" numFns="14" productID="151">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <size length="8.2" width="5.7" height="2.0" units="mm"/>
+      </model>
+      <model model="MX615R (2023) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="24V" maxMotorCurrent="0.5A, peak=1A" maxTotalCurrent="0.5A" formFactor="HO" numOuts="4" numFns="14" productID="151">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <size length="8.2" width="5.7" height="2.0" units="mm"/>
+      </model>
+
       <model model="MX616 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="24V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="HO" numOuts="6" numFns="14" productID="195">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
@@ -285,6 +427,116 @@
         </output>
         <size length="8" width="8" height="2.4" units="mm"/>
       </model>
+
+      <model model="MX616 (2023) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="24V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="HO" numOuts="6" numFns="14" productID="161">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <size length="8" width="8" height="2.4" units="mm"/>
+      </model>
+      <model model="MX616F (2023) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="24V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="HO" numOuts="6" numFns="14" productID="161">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <size length="8" width="8" height="2.4" units="mm"/>
+      </model>
+      <model model="MX616N (2023) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="24V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="HO" numOuts="6" numFns="14" productID="161">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <size length="8" width="8" height="2.4" units="mm"/>
+      </model>
+      <model model="MX616R (2023) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="24V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="HO" numOuts="6" numFns="14" productID="161">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <size length="8" width="8" height="2.4" units="mm"/>
+      </model>
+
       <model model="MX617 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="6" numFns="14" productID="177,197">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
@@ -393,6 +645,7 @@
         </output>
         <size length="13" width="9" height="2.5" units="mm"/>
       </model>
+
       <model model="MX618N18 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="8" numFns="14" productID="181,243">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
@@ -428,6 +681,7 @@
         </output>
         <size length="15" width="9.5" height="2.8" units="mm"/>
       </model>
+
       <model model="MX620 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="20V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="6" numFns="14" productID="201">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
@@ -536,7 +790,8 @@
         </output>
         <size length="14" width="9" height="2.5" units="mm"/>
       </model>
-      <model model="MX622 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="6" numFns="14" productID="192,233">
+
+      <model model="MX622 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="6" numFns="14" productID="138">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -563,7 +818,7 @@
         </output>
         <size length="16" width="9" height="2.5" units="mm"/>
       </model>
-      <model model="MX622F version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="192,233">
+      <model model="MX622F version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="138">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -590,7 +845,7 @@
         </output>
         <size length="16" width="9" height="2.5" units="mm"/>
       </model>
-      <model model="MX622N version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="192,233">
+      <model model="MX622N version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="138">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -617,7 +872,7 @@
         </output>
         <size length="16" width="9" height="2.5" units="mm"/>
       </model>
-      <model model="MX622R version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="192,233">
+      <model model="MX622R version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="138">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -644,6 +899,116 @@
         </output>
         <size length="16" width="9" height="2.5" units="mm"/>
       </model>
+
+      <model model="MX622 (2020) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="6" numFns="14" productID="192,233">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3 (+5v)">
+          <label xml:lang="de">FA3 (+5v)</label>
+          <label xml:lang="cs">FV 3 (+5V)</label>
+        </output>
+        <output name="6" label="FO 4 (+5v)">
+          <label xml:lang="de">FA4 (+5v)</label>
+          <label xml:lang="cs">FV 4 (+5V)</label>
+        </output>
+        <size length="16" width="9" height="2.5" units="mm"/>
+      </model>
+      <model model="MX622F (2020) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="192,233">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3 (+5v)">
+          <label xml:lang="de">FA3 (+5v)</label>
+          <label xml:lang="cs">FV 3 (+5V)</label>
+        </output>
+        <output name="6" label="FO 4 (+5v)">
+          <label xml:lang="de">FA4 (+5v)</label>
+          <label xml:lang="cs">FV 4 (+5V)</label>
+        </output>
+        <size length="16" width="9" height="2.5" units="mm"/>
+      </model>
+      <model model="MX622N (2020) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="192,233">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3 (+5v)">
+          <label xml:lang="de">FA3 (+5v)</label>
+          <label xml:lang="cs">FV 3 (+5V)</label>
+        </output>
+        <output name="6" label="FO 4 (+5v)">
+          <label xml:lang="de">FA4 (+5v)</label>
+          <label xml:lang="cs">FV 4 (+5V)</label>
+        </output>
+        <size length="16" width="9" height="2.5" units="mm"/>
+      </model>
+      <model model="MX622R (2020) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="192,233">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3 (+5v)">
+          <label xml:lang="de">FA3 (+5v)</label>
+          <label xml:lang="cs">FV 3 (+5V)</label>
+        </output>
+        <output name="6" label="FO 4 (+5v)">
+          <label xml:lang="de">FA4 (+5v)</label>
+          <label xml:lang="cs">FV 4 (+5V)</label>
+        </output>
+        <size length="16" width="9" height="2.5" units="mm"/>
+      </model>
+
       <model model="MX623 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="24V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="8" numFns="14" productID="234">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
@@ -784,7 +1149,149 @@
         </output>
         <size length="20" width="8.5" height="3.5" units="mm"/>
       </model>
-      <model model="MX630 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" numOuts="8" numFns="14" productID="130,211,218">
+
+      <model model="MX623 (2020) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="24V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="8" numFns="14" productID="132">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3 (+5v)">
+          <label xml:lang="de">FA3 (+5v)</label>
+          <label xml:lang="cs">FV 3 (+5V)</label>
+        </output>
+        <output name="6" label="FO 4 (+5v)">
+          <label xml:lang="de">FA4 (+5v)</label>
+          <label xml:lang="cs">FV 4 (+5V)</label>
+        </output>
+        <output name="7" label="FO 5 (+5v)">
+          <label xml:lang="de">FA5 (+5v)</label>
+          <label xml:lang="cs">FV 5 (+5V)</label>
+        </output>
+        <output name="8" label="FO 6 (+5v)">
+          <label xml:lang="de">FA6 (+5v)</label>
+          <label xml:lang="cs">FV 6 (+5V)</label>
+        </output>
+        <size length="20" width="8.5" height="3.5" units="mm"/>
+      </model>
+      <model model="MX623F (2020) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="24V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="8" numFns="14" productID="132">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3 (+5v)">
+          <label xml:lang="de">FA3 (+5v)</label>
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4 (+5v)">
+          <label xml:lang="de">FA4 (+5v)</label>
+          <label xml:lang="cs">FV 4 (+5V)</label>
+        </output>
+        <output name="7" label="FO 5 (+5v)">
+          <label xml:lang="de">FA5 (+5v)</label>
+          <label xml:lang="cs">FV 5 (+5V)</label>
+        </output>
+        <output name="8" label="FO 6 (+5v)">
+          <label xml:lang="de">FA6 (+5v)</label>
+          <label xml:lang="cs">FV 6 (+5V)</label>
+        </output>
+        <size length="20" width="8.5" height="3.5" units="mm"/>
+      </model>
+      <model model="MX623P12 (2020) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="24V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="8" numFns="14" productID="132">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3 (+5v)">
+          <label xml:lang="de">FA3 (+5v)</label>
+          <label xml:lang="cs">FV 3 (+5V)</label>
+        </output>
+        <output name="6" label="FO 4 (+5v)">
+          <label xml:lang="de">FA4 (+5v)</label>
+          <label xml:lang="cs">FV 4 (+5V)</label>
+        </output>
+        <output name="7" label="FO 5 (+5v)">
+          <label xml:lang="de">FA5 (+5v)</label>
+          <label xml:lang="cs">FV 5 (+5V)</label>
+        </output>
+        <output name="8" label="FO 6 (+5v)">
+          <label xml:lang="de">FA6 (+5v)</label>
+          <label xml:lang="cs">FV 6 (+5V)</label>
+        </output>
+        <size length="20" width="8.5" height="3.5" units="mm"/>
+      </model>
+      <model model="MX623R (2020) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="24V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="N" numOuts="8" numFns="14" productID="132">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3 (+5v)">
+          <label xml:lang="de">FA3 (+5v)</label>
+          <label xml:lang="cs">FV 3 (+5V)</label>
+        </output>
+        <output name="6" label="FO 4 (+5v)">
+          <label xml:lang="de">FA4 (+5v)</label>
+          <label xml:lang="cs">FV 4 (+5V)</label>
+        </output>
+        <output name="7" label="FO 5 (+5v)">
+          <label xml:lang="de">FA5 (+5v)</label>
+          <label xml:lang="cs">FV 5 (+5V)</label>
+        </output>
+        <output name="8" label="FO 6 (+5v)">
+          <label xml:lang="de">FA6 (+5v)</label>
+          <label xml:lang="cs">FV 6 (+5V)</label>
+        </output>
+        <size length="20" width="8.5" height="3.5" units="mm"/>
+      </model>
+
+      <model model="MX630 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" numOuts="8" numFns="14" productID="211,218">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -819,7 +1326,7 @@
         </output>
         <size length="20" width="11" height="3.5" units="mm"/>
       </model>
-      <model model="MX630F version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="130,211,218">
+      <model model="MX630F version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="211,218">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -854,7 +1361,7 @@
         </output>
         <size length="20" width="11" height="3.5" units="mm"/>
       </model>
-      <model model="MX630P16 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" connector="PluX16" numOuts="8" numFns="14" productID="130,211,218">
+      <model model="MX630P16 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" connector="PluX16" numOuts="8" numFns="14" productID="211,218">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -889,7 +1396,7 @@
         </output>
         <size length="20" width="11" height="3.5" units="mm"/>
       </model>
-      <model model="MX630R version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="130,211,218">
+      <model model="MX630R version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="211,218">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -924,7 +1431,149 @@
         </output>
         <size length="20" width="11" height="3.5" units="mm"/>
       </model>
-      <model model="MX631 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="8" numFns="14" productID="213,219">
+
+      <model model="MX630 (2020,2022) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" numOuts="8" numFns="14" productID="130,131">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <output name="7" label="FO 5 (+5v)">
+          <label xml:lang="de">FA5</label>
+          <label xml:lang="cs">FV 5 (+5V)</label>
+        </output>
+        <output name="8" label="FO 6 (+5v)">
+          <label xml:lang="de">FA6</label>
+          <label xml:lang="cs">FV 6 (+5V)</label>
+        </output>
+        <size length="20" width="11" height="3.5" units="mm"/>
+      </model>
+      <model model="MX630F (2020,2022) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="130,131">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <output name="7" label="FO 5 (+5v)">
+          <label xml:lang="de">FA5</label>
+          <label xml:lang="cs">FV 5 (+5V)</label>
+        </output>
+        <output name="8" label="FO 6 (+5v)">
+          <label xml:lang="de">FA6</label>
+          <label xml:lang="cs">FV 6 (+5V)</label>
+        </output>
+        <size length="20" width="11" height="3.5" units="mm"/>
+      </model>
+      <model model="MX630P16 (2020,2022) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" connector="PluX16" numOuts="8" numFns="14" productID="130,131">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <output name="7" label="FO 5 (+5v)">
+          <label xml:lang="de">FA5</label>
+          <label xml:lang="cs">FV 5 (+5V)</label>
+        </output>
+        <output name="8" label="FO 6 (+5v)">
+          <label xml:lang="de">FA6</label>
+          <label xml:lang="cs">FV 6 (+5V)</label>
+        </output>
+        <size length="20" width="11" height="3.5" units="mm"/>
+      </model>
+      <model model="MX630R (2020,2022) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1A, peak=2.5A" maxTotalCurrent="1A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="130,131">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <output name="7" label="FO 5 (+5v)">
+          <label xml:lang="de">FA5</label>
+          <label xml:lang="cs">FV 5 (+5V)</label>
+        </output>
+        <output name="8" label="FO 6 (+5v)">
+          <label xml:lang="de">FA6</label>
+          <label xml:lang="cs">FV 6 (+5V)</label>
+        </output>
+        <size length="20" width="11" height="3.5" units="mm"/>
+      </model>
+
+      <model model="MX631 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="8" numFns="14" productID="213">
         <output name="1" label="Front Light">
           <label xml:lang="cs">Přední světla</label>
         </output>
@@ -951,7 +1600,7 @@
         </output>
         <size length="20.5" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX631R version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="213,219">
+      <model model="MX631R version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="213">
         <output name="1" label="Front Light">
           <label xml:lang="cs">Přední světla</label>
         </output>
@@ -978,7 +1627,7 @@
         </output>
         <size length="20.5" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX631F version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="213,219">
+      <model model="MX631F version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="213">
         <output name="1" label="Front Light">
           <label xml:lang="cs">Přední světla</label>
         </output>
@@ -1005,7 +1654,90 @@
         </output>
         <size length="20" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX632 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" numOuts="10" numFns="14" productID="212,220">
+
+      <model model="MX631 (2011) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="8" numFns="14" productID="219">
+        <output name="1" label="Front Light">
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <output name="7" label="FO 5 (+5v)">
+          <label xml:lang="cs">FV 5 (+5V)</label>
+        </output>
+        <output name="8" label="FO 6 (+5v)">
+          <label xml:lang="cs">FV 6 (+5V)</label>
+        </output>
+        <size length="20.5" width="15.5" height="4" units="mm"/>
+      </model>
+      <model model="MX631R (2011) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="219">
+        <output name="1" label="Front Light">
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <output name="7" label="FO 5 (+5v)">
+          <label xml:lang="cs">FV 5 (+5V)</label>
+        </output>
+        <output name="8" label="FO 6 (+5v)">
+          <label xml:lang="cs">FV 6 (+5V)</label>
+        </output>
+        <size length="20.5" width="15.5" height="4" units="mm"/>
+      </model>
+      <model model="MX631F (2011) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="30V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="219">
+        <output name="1" label="Front Light">
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <output name="7" label="FO 5 (+5v)">
+          <label xml:lang="cs">FV 5 (+5V)</label>
+        </output>
+        <output name="8" label="FO 6 (+5v)">
+          <label xml:lang="cs">FV 6 (+5V)</label>
+        </output>
+        <size length="20" width="15.5" height="4" units="mm"/>
+      </model>
+
+      <model model="MX632 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" numOuts="10" numFns="14" productID="212">
         <output name="1" label="Front Light">
           <label xml:lang="cs">Přední světla</label>
         </output>
@@ -1038,7 +1770,7 @@
         </output>
         <size length="28" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX632R version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="212,220">
+      <model model="MX632R version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="212">
         <output name="1" label="Front Light">
           <label xml:lang="cs">Přední světla</label>
         </output>
@@ -1071,7 +1803,7 @@
         </output>
         <size length="28" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX632D version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212,220">
+      <model model="MX632D version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212">
         <output name="1" label="Front Light">
           <label xml:lang="cs">Přední světla</label>
         </output>
@@ -1104,7 +1836,7 @@
         </output>
         <size length="28" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX632V version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="212,220">
+      <model model="MX632V version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="212">
         <output name="1" label="Front Light">
           <label xml:lang="cs">Přední světla</label>
         </output>
@@ -1137,7 +1869,7 @@
         </output>
         <size length="28" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX632VD version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212,220">
+      <model model="MX632VD version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212">
         <output name="1" label="Front Light">
           <label xml:lang="cs">Přední světla</label>
         </output>
@@ -1170,7 +1902,7 @@
         </output>
         <size length="28" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX632W version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="212,220">
+      <model model="MX632W version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="212">
         <output name="1" label="Front Light">
           <label xml:lang="cs">Přední světla</label>
         </output>
@@ -1203,7 +1935,7 @@
         </output>
         <size length="28" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX632WD version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212,220">
+      <model model="MX632WD version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="212">
         <output name="1" label="Front Light">
           <label xml:lang="cs">Přední světla</label>
         </output>
@@ -1236,7 +1968,240 @@
         </output>
         <size length="28" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX633 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="133,237">
+
+      <model model="MX632 (2011) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" numOuts="10" numFns="14" productID="220">
+        <output name="1" label="Front Light">
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <output name="7" label="FO 5">
+          <label xml:lang="cs">FV 5</label>
+        </output>
+        <output name="8" label="FO 6">
+          <label xml:lang="cs">FV 6</label>
+        </output>
+        <output name="9" label="FO 7">
+          <label xml:lang="cs">FV 7</label>
+        </output>
+        <output name="10" label="FO 8">
+          <label xml:lang="cs">FV 8</label>
+        </output>
+        <size length="28" width="15.5" height="4" units="mm"/>
+      </model>
+      <model model="MX632R (2011) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="220">
+        <output name="1" label="Front Light">
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <output name="7" label="FO 5">
+          <label xml:lang="cs">FV 5</label>
+        </output>
+        <output name="8" label="FO 6">
+          <label xml:lang="cs">FV 6</label>
+        </output>
+        <output name="9" label="FO 7">
+          <label xml:lang="cs">FV 7</label>
+        </output>
+        <output name="10" label="FO 8">
+          <label xml:lang="cs">FV 8</label>
+        </output>
+        <size length="28" width="15.5" height="4" units="mm"/>
+      </model>
+      <model model="MX632D (2011) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="220">
+        <output name="1" label="Front Light">
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <output name="7" label="FO 5">
+          <label xml:lang="cs">FV 5</label>
+        </output>
+        <output name="8" label="FO 6">
+          <label xml:lang="cs">FV 6</label>
+        </output>
+        <output name="9" label="FO 7">
+          <label xml:lang="cs">FV 7</label>
+        </output>
+        <output name="10" label="FO 8">
+          <label xml:lang="cs">FV 8</label>
+        </output>
+        <size length="28" width="15.5" height="4" units="mm"/>
+      </model>
+      <model model="MX632V (2011) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="220">
+        <output name="1" label="Front Light">
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <output name="7" label="FO 5">
+          <label xml:lang="cs">FV 5</label>
+        </output>
+        <output name="8" label="FO 6">
+          <label xml:lang="cs">FV 6</label>
+        </output>
+        <output name="9" label="FO 7">
+          <label xml:lang="cs">FV 7</label>
+        </output>
+        <output name="10" label="FO 8">
+          <label xml:lang="cs">FV 8</label>
+        </output>
+        <size length="28" width="15.5" height="4" units="mm"/>
+      </model>
+      <model model="MX632VD (2011) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="220">
+        <output name="1" label="Front Light">
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <output name="7" label="FO 5">
+          <label xml:lang="cs">FV 5</label>
+        </output>
+        <output name="8" label="FO 6">
+          <label xml:lang="cs">FV 6</label>
+        </output>
+        <output name="9" label="FO 7">
+          <label xml:lang="cs">FV 7</label>
+        </output>
+        <output name="10" label="FO 8">
+          <label xml:lang="cs">FV 8</label>
+        </output>
+        <size length="28" width="15.5" height="4" units="mm"/>
+      </model>
+      <model model="MX632W (2011) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="other" numOuts="10" numFns="14" productID="220">
+        <output name="1" label="Front Light">
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <output name="7" label="FO 5">
+          <label xml:lang="cs">FV 5</label>
+        </output>
+        <output name="8" label="FO 6">
+          <label xml:lang="cs">FV 6</label>
+        </output>
+        <output name="9" label="FO 7">
+          <label xml:lang="cs">FV 7</label>
+        </output>
+        <output name="10" label="FO 8">
+          <label xml:lang="cs">FV 8</label>
+        </output>
+        <size length="28" width="15.5" height="4" units="mm"/>
+      </model>
+      <model model="MX632WD (2011) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="50V" maxMotorCurrent="1.6A, peak=2.5A" maxTotalCurrent="1.6A" formFactor="HO" connector="21MTC" numOuts="10" numFns="14" productID="220">
+        <output name="1" label="Front Light">
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <output name="7" label="FO 5">
+          <label xml:lang="cs">FV 5</label>
+        </output>
+        <output name="8" label="FO 6">
+          <label xml:lang="cs">FV 6</label>
+        </output>
+        <output name="9" label="FO 7">
+          <label xml:lang="cs">FV 7</label>
+        </output>
+        <output name="10" label="FO 8">
+          <label xml:lang="cs">FV 8</label>
+        </output>
+        <size length="28" width="15.5" height="4" units="mm"/>
+      </model>
+
+      <model model="MX633 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="237">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -1279,7 +2244,7 @@
         </output>
         <size length="22" width="15" height="3.5" units="mm"/>
       </model>
-      <model model="MX633F version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2,5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAsmall" numOuts="10" numFns="14" productID="133,237">
+      <model model="MX633F version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2,5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAsmall" numOuts="10" numFns="14" productID="237">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -1322,7 +2287,7 @@
         </output>
         <size length="22" width="15" height="3.5" units="mm"/>
       </model>
-      <model model="MX633P16 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2,5A" maxTotalCurrent="1.2A" formFactor="HO" connector="PluX16" numOuts="10" numFns="14" productID="133,237">
+      <model model="MX633P16 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2,5A" maxTotalCurrent="1.2A" formFactor="HO" connector="PluX16" numOuts="10" numFns="14" productID="237">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -1365,7 +2330,7 @@
         </output>
         <size length="22" width="15" height="3.5" units="mm"/>
       </model>
-      <model model="MX633P22 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2,5A" maxTotalCurrent="1.2A" formFactor="HO" connector="PluX22" numOuts="10" numFns="14" productID="133,237">
+      <model model="MX633P22 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2,5A" maxTotalCurrent="1.2A" formFactor="HO" connector="PluX22" numOuts="10" numFns="14" productID="237">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -1408,7 +2373,7 @@
         </output>
         <size length="22" width="15" height="3.5" units="mm"/>
       </model>
-      <model model="MX633R version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2,5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="133,237">
+      <model model="MX633R version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2,5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="237">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -1451,7 +2416,224 @@
         </output>
         <size length="22" width="15" height="3.5" units="mm"/>
       </model>
-      <model model="MX634 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" numOuts="8" numFns="14" productID="134,240">
+
+      <model model="MX633 (2020) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="133,237">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <output name="7" label="FO 5">
+          <label xml:lang="de">FA5</label>
+          <label xml:lang="cs">FV 5</label>
+        </output>
+        <output name="8" label="FO 6">
+          <label xml:lang="de">FA6</label>
+          <label xml:lang="cs">FV 6</label>
+        </output>
+        <output name="9" label="FO 7">
+          <label xml:lang="de">FA7</label>
+          <label xml:lang="cs">FV 7</label>
+        </output>
+        <output name="10" label="FO 8">
+          <label xml:lang="de">FA8</label>
+          <label xml:lang="cs">FV 8</label>
+        </output>
+        <size length="22" width="15" height="3.5" units="mm"/>
+      </model>
+      <model model="MX633F (2020) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2,5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAsmall" numOuts="10" numFns="14" productID="133">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <output name="7" label="FO 5">
+          <label xml:lang="de">FA5</label>
+          <label xml:lang="cs">FV 5</label>
+        </output>
+        <output name="8" label="FO 6">
+          <label xml:lang="de">FA6</label>
+          <label xml:lang="cs">FV 6</label>
+        </output>
+        <output name="9" label="FO 7">
+          <label xml:lang="de">FA7</label>
+          <label xml:lang="cs">FV 7</label>
+        </output>
+        <output name="10" label="FO 8">
+          <label xml:lang="de">FA8</label>
+          <label xml:lang="cs">FV 8</label>
+        </output>
+        <size length="22" width="15" height="3.5" units="mm"/>
+      </model>
+      <model model="MX633P16 (2020) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2,5A" maxTotalCurrent="1.2A" formFactor="HO" connector="PluX16" numOuts="10" numFns="14" productID="133">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <output name="7" label="FO 5">
+          <label xml:lang="de">FA5</label>
+          <label xml:lang="cs">FV 5</label>
+        </output>
+        <output name="8" label="FO 6">
+          <label xml:lang="de">FA6</label>
+          <label xml:lang="cs">FV 6</label>
+        </output>
+        <output name="9" label="FO 7">
+          <label xml:lang="de">FA7</label>
+          <label xml:lang="cs">FV 7</label>
+        </output>
+        <output name="10" label="FO 8">
+          <label xml:lang="de">FA8</label>
+          <label xml:lang="cs">FV 8</label>
+        </output>
+        <size length="22" width="15" height="3.5" units="mm"/>
+      </model>
+      <model model="MX633P22 (2020) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2,5A" maxTotalCurrent="1.2A" formFactor="HO" connector="PluX22" numOuts="10" numFns="14" productID="133">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <output name="7" label="FO 5">
+          <label xml:lang="de">FA5</label>
+          <label xml:lang="cs">FV 5</label>
+        </output>
+        <output name="8" label="FO 6">
+          <label xml:lang="de">FA6</label>
+          <label xml:lang="cs">FV 6</label>
+        </output>
+        <output name="9" label="FO 7">
+          <label xml:lang="de">FA7</label>
+          <label xml:lang="cs">FV 7</label>
+        </output>
+        <output name="10" label="FO 8">
+          <label xml:lang="de">FA8</label>
+          <label xml:lang="cs">FV 8</label>
+        </output>
+        <size length="22" width="15" height="3.5" units="mm"/>
+      </model>
+      <model model="MX633R (2020) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2,5A" maxTotalCurrent="1.2A" formFactor="HO" connector="NMRAmedium" numOuts="10" numFns="14" productID="133">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <output name="7" label="FO 5">
+          <label xml:lang="de">FA5</label>
+          <label xml:lang="cs">FV 5</label>
+        </output>
+        <output name="8" label="FO 6">
+          <label xml:lang="de">FA6</label>
+          <label xml:lang="cs">FV 6</label>
+        </output>
+        <output name="9" label="FO 7">
+          <label xml:lang="de">FA7</label>
+          <label xml:lang="cs">FV 7</label>
+        </output>
+        <output name="10" label="FO 8">
+          <label xml:lang="de">FA8</label>
+          <label xml:lang="cs">FV 8</label>
+        </output>
+        <size length="22" width="15" height="3.5" units="mm"/>
+      </model>
+
+      <model model="MX634 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" numOuts="8" numFns="14" productID="240">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -1486,7 +2668,7 @@
         </output>
         <size length="20.5" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX634C version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="134,240">
+      <model model="MX634C version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="240">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -1521,7 +2703,7 @@
         </output>
         <size length="20.5" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX634D version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="134,240">
+      <model model="MX634D version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="240">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -1556,7 +2738,7 @@
         </output>
         <size length="20.5" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX634F version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="134,240">
+      <model model="MX634F version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="240">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -1591,7 +2773,7 @@
         </output>
         <size length="20.5" width="15.5" height="4" units="mm"/>
       </model>
-      <model model="MX634R version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="134,240">
+      <model model="MX634R version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="240">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -1626,6 +2808,183 @@
         </output>
         <size length="20.5" width="15.5" height="4" units="mm"/>
       </model>
+
+      <model model="MX634 (2020) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" numOuts="8" numFns="14" productID="134">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <output name="7" label="FO 5 (+5v)">
+          <label xml:lang="de">FA5|(+5v)</label>
+          <label xml:lang="cs">FV 5 (+5V)</label>
+        </output>
+        <output name="8" label="FO 6 (+5v)">
+          <label xml:lang="de">FA6|(+5v)</label>
+          <label xml:lang="cs">FV 6 (+5V)</label>
+        </output>
+        <size length="20.5" width="15.5" height="4" units="mm"/>
+      </model>
+      <model model="MX634C (2020) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="134">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3 (+5v)">
+          <label xml:lang="de">FA3 (+5v)</label>
+          <label xml:lang="cs">FV 3 (+5V)</label>
+        </output>
+        <output name="6" label="FO 4 (+5v)">
+          <label xml:lang="de">FA4 (+5v)</label>
+          <label xml:lang="cs">FV 4 (+5V)</label>
+        </output>
+        <output name="7" label="FO 5 (+5v)">
+          <label xml:lang="de">FA5</label>
+          <label xml:lang="cs">FV 5 (+5V)</label>
+        </output>
+        <output name="8" label="FO 6 (+5v)">
+          <label xml:lang="de">FA6</label>
+          <label xml:lang="cs">FV 6 (+5V)</label>
+        </output>
+        <size length="20.5" width="15.5" height="4" units="mm"/>
+      </model>
+      <model model="MX634D (2020) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="134">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <output name="7" label="FO 5 (+5v)">
+          <label xml:lang="de">FA5</label>
+          <label xml:lang="cs">FV 5 (+5V)</label>
+        </output>
+        <output name="8" label="FO 6 (+5v)">
+          <label xml:lang="de">FA6</label>
+          <label xml:lang="cs">FV 6 (+5V)</label>
+        </output>
+        <size length="20.5" width="15.5" height="4" units="mm"/>
+      </model>
+      <model model="MX634F (2020) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="NMRAsmall" numOuts="8" numFns="14" productID="134">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <output name="7" label="FO 5 (+5v)">
+          <label xml:lang="de">FA5</label>
+          <label xml:lang="cs">FV 5 (+5V)</label>
+        </output>
+        <output name="8" label="FO 6 (+5v)">
+          <label xml:lang="de">FA6</label>
+          <label xml:lang="cs">FV 6 (+5V)</label>
+        </output>
+        <size length="20.5" width="15.5" height="4" units="mm"/>
+      </model>
+      <model model="MX634R (2020) version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="NMRAmedium" numOuts="8" numFns="14" productID="134">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <output name="7" label="FO 5 (+5v)">
+          <label xml:lang="de">FA5|(+5v)</label>
+          <label xml:lang="cs">FV 5 (+5V)</label>
+        </output>
+        <output name="8" label="FO 6 (+5v)">
+          <label xml:lang="de">FA6|(+5v)</label>
+          <label xml:lang="cs">FV 6 (+5V)</label>
+        </output>
+        <size length="20.5" width="15.5" height="4" units="mm"/>
+      </model>
+
       <model model="MX635 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" numOuts="10" numFns="14" productID="135">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
@@ -1841,6 +3200,7 @@
         </output>
         <size length="26" width="15" height="4" units="mm"/>
       </model>
+
       <model model="MX636C version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.8A, peak=2.5A" maxTotalCurrent="1.8A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="136">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
@@ -1981,6 +3341,7 @@
         </output>
         <size length="26" width="15,5" height="4" units="mm"/>
       </model>
+
       <model model="MX637P22 version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2,5A" maxTotalCurrent="1.2A" formFactor="HO" connector="PluX22" numOuts="10" numFns="14" productID="137">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
@@ -2024,6 +3385,7 @@
         </output>
         <size length="22" width="15" height="3.5" units="mm"/>
       </model>
+
       <model model="MX638C version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="1.2A" maxTotalCurrent="2.5A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="193">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
@@ -2094,6 +3456,7 @@
         </output>
         <size length="20.5" width="15.5" height="4" units="mm"/>
       </model>
+
       <model model="MX64D version 40+" lowVersionID="40" highVersionID="41" maxInputVolts="12-24V" maxMotorCurrent="1.2A,  peak=2A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="206">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
@@ -2151,11 +3514,35 @@
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="130" readOnly="yes" include="130">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
+      <variable item="Decoder ID 1" CV="250" default="131" readOnly="yes" include="131">
+        <decVal/>
+        <label>Decoder ID 1</label>
+        <label xml:lang="it">ID 1 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 1</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="131" readOnly="yes" include="131">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
+      <variable item="Decoder ID 1" CV="250" default="132" readOnly="yes" include="132">
+        <decVal/>
+        <label>Decoder ID 1</label>
+        <label xml:lang="it">ID 1 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 1</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="132" readOnly="yes" include="132">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
       <variable item="Decoder ID 1" CV="250" default="133" readOnly="yes" include="133">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="133" readOnly="yes" include="133">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="134" readOnly="yes" include="134">
         <decVal/>
@@ -2163,11 +3550,17 @@
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="134" readOnly="yes" include="134">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
       <variable item="Decoder ID 1" CV="250" default="135" readOnly="yes" include="135">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="135" readOnly="yes" include="135">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="137" readOnly="yes" include="137">
         <decVal/>
@@ -2175,11 +3568,44 @@
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="137" readOnly="yes" include="137">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
+      <variable item="Decoder ID 1" CV="250" default="138" readOnly="yes" include="138">
+        <decVal/>
+        <label>Decoder ID 1</label>
+        <label xml:lang="it">ID 1 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 1</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="138" readOnly="yes" include="138">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
+      <variable item="Decoder ID 1" CV="250" default="151" readOnly="yes" include="151">
+        <decVal/>
+        <label>Decoder ID 1</label>
+        <label xml:lang="it">ID 1 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 1</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="151" readOnly="yes" include="151">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
+      <variable item="Decoder ID 1" CV="250" default="161" readOnly="yes" include="161">
+        <decVal/>
+        <label>Decoder ID 1</label>
+        <label xml:lang="it">ID 1 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 1</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="161" readOnly="yes" include="161">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
       <variable item="Decoder ID 1" CV="250" default="166" readOnly="yes" include="166">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="166" readOnly="yes" include="166">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="177" readOnly="yes" include="177">
         <decVal/>
@@ -2187,11 +3613,17 @@
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="177" readOnly="yes" include="177">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
       <variable item="Decoder ID 1" CV="250" default="181" readOnly="yes" include="181">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="181" readOnly="yes" include="181">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="186" readOnly="yes" include="186">
         <decVal/>
@@ -2208,11 +3640,17 @@
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="192" readOnly="yes" include="192">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
       <variable item="Decoder ID 1" CV="250" default="193" readOnly="yes" include="193">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="193" readOnly="yes" include="193">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="194" readOnly="yes" include="194">
         <decVal/>
@@ -2220,11 +3658,17 @@
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="194" readOnly="yes" include="194">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
       <variable item="Decoder ID 1" CV="250" default="195" readOnly="yes" include="195">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="195" readOnly="yes" include="195">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="197" readOnly="yes" include="197">
         <decVal/>
@@ -2232,11 +3676,17 @@
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="197" readOnly="yes" include="197">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
       <variable item="Decoder ID 1" CV="250" default="199" readOnly="yes" include="199">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="199" readOnly="yes" include="199">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="201" readOnly="yes" include="201">
         <decVal/>
@@ -2244,11 +3694,26 @@
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="201" readOnly="yes" include="201">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
       <variable item="Decoder ID 1" CV="250" default="206" readOnly="yes" include="206">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="206" readOnly="yes" include="206">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
+      <variable item="Decoder ID 1" CV="250" default="211" readOnly="yes" include="211">
+        <decVal/>
+        <label>Decoder ID 1</label>
+        <label xml:lang="it">ID 1 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 1</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="211" readOnly="yes" include="211">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="212" readOnly="yes" include="212">
         <decVal/>
@@ -2256,11 +3721,26 @@
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="212" readOnly="yes" include="212">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
       <variable item="Decoder ID 1" CV="250" default="213" readOnly="yes" include="213">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="213" readOnly="yes" include="213">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
+      <variable item="Decoder ID 1" CV="250" default="218" readOnly="yes" include="218">
+        <decVal/>
+        <label>Decoder ID 1</label>
+        <label xml:lang="it">ID 1 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 1</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="218" readOnly="yes" include="218">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="219" readOnly="yes" include="219">
         <decVal/>
@@ -2268,11 +3748,17 @@
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="219" readOnly="yes" include="219">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
       <variable item="Decoder ID 1" CV="250" default="220" readOnly="yes" include="220">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="220" readOnly="yes" include="220">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="222" readOnly="yes" include="222">
         <decVal/>
@@ -2280,11 +3766,17 @@
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="222" readOnly="yes" include="222">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
       <variable item="Decoder ID 1" CV="250" default="233" readOnly="yes" include="233">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="233" readOnly="yes" include="233">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="234" readOnly="yes" include="234">
         <decVal/>
@@ -2292,11 +3784,17 @@
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="234" readOnly="yes" include="234">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
       <variable item="Decoder ID 1" CV="250" default="237" readOnly="yes" include="237">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="237" readOnly="yes" include="237">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="240" readOnly="yes" include="240">
         <decVal/>
@@ -2304,11 +3802,17 @@
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="240" readOnly="yes" include="240">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
       <variable item="Decoder ID 1" CV="250" default="243" readOnly="yes" include="243">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="243" readOnly="yes" include="243">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
       </variable>
       <variable item="Decoder ID 2" CV="251" readOnly="yes">
         <decVal/>
@@ -2328,18 +3832,21 @@
         <label xml:lang="it">ID 4 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 4</label>
       </variable>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV309-CV394_v40.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV399.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CVSwissMapping_v40.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV508-CV512.xml"/>
       <!-- Begin constant stopping distance variables -->
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV830-CV833.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV835.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV850-CV861_v40.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CVs_version37.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CVs_version39.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CVs_version40.xml"/>
     </variables>
     <xi:include href="http://jmri.org/xml/decoders/zimo/factReset-v32.xml"/>
   </decoder>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSecondEffectLevel.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneConsist.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAccelDecel.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneShuntUncouple.xml"/>

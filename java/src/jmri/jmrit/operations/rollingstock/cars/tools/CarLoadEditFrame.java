@@ -47,7 +47,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
     JCheckBox allTypesCheckBox = new JCheckBox(Bundle.getMessage("All"));
     
     // text boxes
-    JTextField addTextBox = new JTextField(10);
+    JTextField addTextBox = new JTextField(Control.max_len_string_attibute);
     JTextField pickupCommentTextField = new JTextField(35);
     JTextField dropCommentTextField = new JTextField(35);
 

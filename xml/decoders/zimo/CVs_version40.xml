@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 28 November 2021 Ronald Kuhn - CVs for firmware v40 and above-->
+<!-- version 2 05 April 2024 Ronald Kuhn - exclude CVs for Decoder without 1K EEPROM -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <variable CV="28" item="Railcom voltage signal" default="0" mask="VXXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -118,7 +119,7 @@
     <label xml:lang="de">Geschwindigkeit Analog</label>
     <label xml:lang="cs">Analog Maximální napětí</label>
   </variable>
-  <variable CV="273" item="Delayed start after blow-off time" default="0">
+  <variable CV="273" item="Delayed start after blow-off time" default="0" exclude="194,195,199,201,206,209,211,212,213,218,219,220,233,234">
     <decVal min="0" max="255"/>
     <label>Delayed start after blow-off time</label>
     <label xml:lang="it">Ritardo partenza dopo Scarico Vapore</label>
@@ -127,7 +128,7 @@
     <tooltip>0 = no delay, 1 = blow-off on speed step 1, 2+ = 10ths of seconds, INC=1</tooltip>
     <tooltip xml:lang="de">0 = keine Verzögerung, 1 = Entwässern per Fahrregler, 2+ = Anfahrverzögerung in Zehntel-sec, INC=1, Angleichung des Anfahrens im Traktionsbetrieb</tooltip>
   </variable>
-  <variable CV="274" item="Blow-off schedule" default="30">
+  <variable CV="274" item="Blow-off schedule" default="30" exclude="194,195,199,201,206,209,211,212,213,218,219,220,233,234">
     <decVal min="0" max="255"/>
     <label>Blow-off schedule</label>
     <label xml:lang="it">Pianificazione Scarico Vapore</label>
@@ -136,7 +137,7 @@
     <tooltip>Blow-off suppressed by shunting, 10ths of seconds, INC=10</tooltip>
     <tooltip xml:lang="de">Stillstandzeit im Rangierbetrieb, INC=10</tooltip>
   </variable>
-  <variable CV="310" item="On/off key for engine and random sound" default="8" tooltip="Defines the key that turns the engine and random sounds on or off">
+  <variable CV="310" item="On/off key for engine and random sound" default="8" tooltip="Defines the key that turns the engine and random sounds on or off" exclude="194,195,199,201,206,209,211,212,213,218,219,220,233,234">
     <enumVal>
       <enumChoice choice="No key assigned">
         <choice>F0</choice>
@@ -228,7 +229,7 @@
     <label xml:lang="de">Rauch-Ventilator Drehzahl bei Beschleunigung</label>
     <label xml:lang="cs">Rychlost ventilátoru kouře při rozjezdu</label>
   </variable>
-  <variable CV="393" item="Slower Steam Strokes" mask="XVXXXXXX" default="0" exclude="130,177,195,197,199,201,211,218,240">
+  <variable CV="393" item="Slower Steam Strokes" mask="XVXXXXXX" default="0" exclude="130,131,166,177,195,197,199,201,211,218,240">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Slower Steam Strokes</label>
     <label xml:lang="de">Langsamere Dampfschläge</label>

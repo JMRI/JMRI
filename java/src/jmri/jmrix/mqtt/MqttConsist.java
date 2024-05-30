@@ -21,12 +21,13 @@ public class MqttConsist extends jmri.implementation.DccConsist {
     private boolean active = false;
 
     // Initialize a consist for the specific address.
-    // The Default consist type is an controller consist
+    // The Default consist type is controller consist
     public MqttConsist(int address, MqttSystemConnectionMemo memo, String sendTopicPrefix) {
         super(address);
         mqttAdapter = memo.getMqttAdapter();
         this.sendTopicPrefix = sendTopicPrefix;
         consistType = Consist.CS_CONSIST;
+        log.debug("Consist {} created.", this.getConsistAddress());
     }
 
     // Initialize a consist for the specific address.
@@ -36,12 +37,14 @@ public class MqttConsist extends jmri.implementation.DccConsist {
         mqttAdapter = memo.getMqttAdapter();
         this.sendTopicPrefix = sendTopicPrefix;
         consistType = Consist.CS_CONSIST;
+        log.debug("Consist {} created.", this.getConsistAddress());
     }
 
     // Clean Up local storage.
     @Override
     public void dispose() {
         super.dispose();
+        log.debug("Consist {} disposed.", this.getConsistAddress());
     }
 
     // Set the Consist Type.
@@ -119,7 +122,7 @@ public class MqttConsist extends jmri.implementation.DccConsist {
      */
     private synchronized void addToConsistList(DccLocoAddress LocoAddress, boolean directionNormal) {
 
-        log.debug("Add to consist list address {} direction{}", LocoAddress, directionNormal);
+        log.debug("Add to consist list address {} direction {}", LocoAddress, directionNormal);
         Boolean Direction = Boolean.valueOf(directionNormal);
         if (!(consistList.contains(LocoAddress))) {
             consistList.add(LocoAddress);
@@ -147,7 +150,7 @@ public class MqttConsist extends jmri.implementation.DccConsist {
      */
     @Override
     public synchronized void add(DccLocoAddress LocoAddress, boolean directionNormal) {
-        log.debug("Add to consist address {} direction{}", LocoAddress, directionNormal);
+        log.debug("Add to consist address {} direction {}", LocoAddress, directionNormal);
         if (consistType == CS_CONSIST) {
             addToConsistList(LocoAddress, directionNormal);
             if (active) publish();
@@ -168,7 +171,7 @@ public class MqttConsist extends jmri.implementation.DccConsist {
      */
     @Override
     public synchronized void restore(DccLocoAddress LocoAddress, boolean directionNormal) {
-        log.debug("Restore to advanced consist address {} direction {}", LocoAddress, directionNormal);
+        log.debug("Restore to consist address {} direction {}", LocoAddress, directionNormal);
 
         if (consistType == CS_CONSIST) {
             addToConsistList(LocoAddress, directionNormal);
@@ -185,7 +188,7 @@ public class MqttConsist extends jmri.implementation.DccConsist {
      */
     @Override
     public synchronized void remove(DccLocoAddress LocoAddress) {
-        log.debug("Remove from advanced consist address {}", LocoAddress);
+        log.debug("Remove from consist address {}", LocoAddress);
 
         if (consistType == CS_CONSIST) {
             removeFromConsistList(LocoAddress);

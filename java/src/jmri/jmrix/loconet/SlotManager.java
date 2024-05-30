@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
  * service mode and ops mode, or two ops mode) at the same time, but this code
  * definitely can't.
  *
- * @author Bob Jacobsen Copyright (C) 2001, 2003
+ * @author Bob Jacobsen Copyright (C) 2001, 2003, 2024
  * @author B. Milhaupt, Copyright (C) 2018
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
@@ -53,13 +53,13 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * Time to wait after programming operation complete on LocoNet
      * before reporting completion and hence starting next operation
      */
-    static public int postProgDelay = 100; // this is public to allow changes via script
+    static public int postProgDelay = 50; // this is public to allow changes via script
 
     public int slotScanInterval = 50; // this is public to allow changes via script and tests
 
-    public int serviceModeReplyDelay = 20;  // this is public to allow changes via script and tests
+    public int serviceModeReplyDelay = 20;  // this is public to allow changes via script and tests. Adjusted by UsbDcs210PlusAdapter
 
-    public int opsModeReplyDelay = 100;  // this is public to allow changes via script and tests. Adjusted by UsbDcs210PlusAdapter
+    public int opsModeReplyDelay = 100;  // this is public to allow changes via script and tests. 
 
     public boolean pmManagerGotReply = false;  //this is public to allow changes via script and tests
 
@@ -839,6 +839,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     /**
      * Handles OPC_LONG_ACK replies to programming slot operations.
+     *
+     * LACK 0x6D00 which requests a retransmission is handled
+     * separately in the message(..) method.
      *
      * @param m LocoNet message being analyzed
      */

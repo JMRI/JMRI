@@ -376,13 +376,21 @@ public class JmriMouseEvent {
      * On Java 9 on Windows 10, there is no more meta key. Note that this
      * method is called both on mouse button events and mouse move events,
      * and therefore "event.getButton() == JmriMouseEvent.BUTTON3" doesn't work.
-     * event.getButton() always return 0 for MouseMoveEvent.
+     *
+     * As of Java 11, the meta key process has changed.  The getModifiersEx() value will vary
+     * when button 3 is used, depending on the mouse event.
+     *     mousePressed  :: 4096 (button 3)
+     *     mouseDragged  :: 4096
+     *     mouseReleased :: 256  (meta)
+     *     mouseClicked  :: 256
+     * The meta value is simulated by Java for Linux and Windows based on button 3 being active.
      *
      * @return whether or not the Meta modifier is down on this event
      */
     public boolean isMetaDown() {
         if (SystemType.isWindows() || SystemType.isLinux()) {
-            return (event.getModifiersEx() & InputEvent.BUTTON3_DOWN_MASK) != 0;
+            return ((event.getModifiersEx() & InputEvent.BUTTON3_DOWN_MASK) != 0 ||
+                    (event.getModifiersEx() & InputEvent.META_DOWN_MASK) != 0);
         } else {
             return event.isMetaDown();
         }

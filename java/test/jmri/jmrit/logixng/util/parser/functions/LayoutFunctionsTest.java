@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.*;
+import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
@@ -652,10 +653,52 @@ public class LayoutFunctionsTest {
         Assert.assertEquals("SignalMast is set", "Red", sm._lastAspect);
     }
 
+    @Test
+    public void testManagers() {
+        FunctionManager functionManager = InstanceManager.getDefault(FunctionManager.class);
+
+        Assert.assertEquals(functionManager.getConstant("sensors").getValue(), InstanceManager.getDefault(SensorManager.class));
+        Assert.assertEquals(functionManager.getConstant("turnouts").getValue(), InstanceManager.getDefault(TurnoutManager.class));
+        Assert.assertEquals(functionManager.getConstant("lights").getValue(), InstanceManager.getDefault(LightManager.class));
+        Assert.assertEquals(functionManager.getConstant("signals").getValue(), InstanceManager.getDefault(SignalHeadManager.class));
+        Assert.assertEquals(functionManager.getConstant("masts").getValue(), InstanceManager.getDefault(SignalMastManager.class));
+        Assert.assertEquals(functionManager.getConstant("routes").getValue(), InstanceManager.getDefault(RouteManager.class));
+        Assert.assertEquals(functionManager.getConstant("blocks").getValue(), InstanceManager.getDefault(BlockManager.class));
+        Assert.assertEquals(functionManager.getConstant("oblocks").getValue(), InstanceManager.getDefault(OBlockManager.class));
+        Assert.assertEquals(functionManager.getConstant("reporters").getValue(), InstanceManager.getDefault(ReporterManager.class));
+        Assert.assertEquals(functionManager.getConstant("memories").getValue(), InstanceManager.getDefault(MemoryManager.class));
+        Assert.assertEquals(functionManager.getConstant("powermanager").getValue(), InstanceManager.getDefault(PowerManager.class));
+        Assert.assertEquals(functionManager.getConstant("addressedProgrammers").getValue(), InstanceManager.getDefault(AddressedProgrammerManager.class));
+        Assert.assertEquals(functionManager.getConstant("globalProgrammers").getValue(), InstanceManager.getDefault(GlobalProgrammerManager.class));
+        Assert.assertEquals(functionManager.getConstant("dcc").getValue(), InstanceManager.getDefault(CommandStation.class));
+        Assert.assertEquals(functionManager.getConstant("audio").getValue(), InstanceManager.getDefault(AudioManager.class));
+        Assert.assertEquals(functionManager.getConstant("shutdown").getValue(), InstanceManager.getDefault(ShutDownManager.class));
+        Assert.assertEquals(functionManager.getConstant("layoutblocks").getValue(), InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class));
+        Assert.assertEquals(functionManager.getConstant("warrants").getValue(), InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class));
+        Assert.assertEquals(functionManager.getConstant("sections").getValue(), InstanceManager.getDefault(SectionManager.class));
+        Assert.assertEquals(functionManager.getConstant("transits").getValue(), InstanceManager.getDefault(TransitManager.class));
+
+    }
+
     // The minimal setup for log4J
     @BeforeEach
     public void setUp() {
-        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initDebugPowerManager();
+        JUnitUtil.initDebugThrottleManager();
+        JUnitUtil.initDebugProgrammerManager();
+        JUnitUtil.initDebugCommandStation();
+        JUnitUtil.initInternalSignalHeadManager();
+        JUnitUtil.initDefaultSignalMastManager();
+//        JUnitUtil.initSignalMastLogicManager();
+        JUnitUtil.initOBlockManager();
+        JUnitUtil.initSectionManager();
+        JUnitUtil.initWarrantManager();
     }
 
     @AfterEach

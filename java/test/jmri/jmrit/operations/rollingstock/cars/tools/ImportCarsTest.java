@@ -101,6 +101,82 @@ public class ImportCarsTest extends OperationsTestCase {
     }
 
     @Test
+    public void testRWEandRWL() {
+        JUnitOperationsUtil.initOperationsData();
+        // check number of cars in operations data
+        CarManager cm = InstanceManager.getDefault(CarManager.class);
+        Assert.assertEquals("cars", 9, cm.getNumEntries());
+
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+        Location locationNorthEnd = lmanager.getLocationById("1");
+        Track northEndStaging1 = locationNorthEnd.getTrackById("1s1");
+
+        Location locationSouthEnd = lmanager.getLocationById("3");
+        Track southEndStaging1 = locationNorthEnd.getTrackById("3s1");
+
+        Car c1 = cm.getByRoadAndNumber("CP", "X10001");
+        c1.setReturnWhenEmptyDestination(locationSouthEnd);
+        c1.setReturnWhenEmptyDestTrack(southEndStaging1);
+        c1.setReturnWhenEmptyLoadName("RWELoadName");
+        c1.setReturnWhenLoadedDestination(locationNorthEnd);
+        c1.setReturnWhenLoadedDestTrack(northEndStaging1);
+        c1.setReturnWhenLoadedLoadName("RWLLoadName");
+
+        // export cars to create file
+        exportCars();
+
+        // do import
+        importCars(false, null);
+
+        // confirm import successful
+        Assert.assertEquals("cars", 9, cm.getNumEntries());
+        c1 = cm.getByRoadAndNumber("CP", "X10001");
+        Assert.assertEquals("RWE Dest", locationSouthEnd, c1.getReturnWhenEmptyDestination());
+        Assert.assertEquals("RWE track", southEndStaging1, c1.getReturnWhenEmptyDestTrack());
+        Assert.assertEquals("RWE load", "RWELoadName", c1.getReturnWhenEmptyLoadName());
+
+        Assert.assertEquals("RWL Dest", locationNorthEnd, c1.getReturnWhenLoadedDestination());
+        Assert.assertEquals("RWL track", northEndStaging1, c1.getReturnWhenLoadedDestTrack());
+        Assert.assertEquals("RWL load", "RWLLoadName", c1.getReturnWhenLoadedLoadName());
+    }
+
+    @Test
+    public void testDestinations() {
+        JUnitOperationsUtil.initOperationsData();
+        // check number of cars in operations data
+        CarManager cm = InstanceManager.getDefault(CarManager.class);
+        Assert.assertEquals("cars", 9, cm.getNumEntries());
+
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+        Location locationNorthEnd = lmanager.getLocationById("1");
+        Track northEndStaging1 = locationNorthEnd.getTrackById("1s1");
+
+        Location locationSouthEnd = lmanager.getLocationById("3");
+        Track southEndStaging1 = locationNorthEnd.getTrackById("3s1");
+
+        Car c1 = cm.getByRoadAndNumber("CP", "X10001");
+        c1.setFinalDestination(locationSouthEnd);
+        c1.setFinalDestinationTrack(southEndStaging1);
+
+        c1.setDestination(locationNorthEnd, northEndStaging1);
+
+        // export cars to create file
+        exportCars();
+
+        // do import
+        importCars(false, null);
+
+        // confirm import successful
+        Assert.assertEquals("cars", 9, cm.getNumEntries());
+        c1 = cm.getByRoadAndNumber("CP", "X10001");
+        Assert.assertEquals("Final Dest", locationSouthEnd, c1.getFinalDestination());
+        Assert.assertEquals("Final track", southEndStaging1, c1.getFinalDestinationTrack());
+
+        Assert.assertEquals("Dest", locationNorthEnd, c1.getDestination());
+        Assert.assertEquals("Dest track", northEndStaging1, c1.getDestinationTrack());
+    }
+
+    @Test
     public void testReadFileNewTypeNo() {
         JUnitOperationsUtil.initOperationsData();
         // check number of cars in operations data
@@ -635,6 +711,24 @@ public class ImportCarsTest extends OperationsTestCase {
 
         Car car = cm.getByRoadAndNumber("CP", "X10001");
         car.setRoadName("ABCDEFGHIJKLM");
+
+        // export cars to create file
+        exportCars();
+
+        // do import
+        importCars(true, MessageFormat.format(Bundle
+                .getMessage("carAttribute"), new Object[]{Control.max_len_string_attibute}));
+    }
+
+    @Test
+    public void testReadFileErrorCarLoadTooLong() {
+        JUnitOperationsUtil.initOperationsData();
+        // check number of cars in operations data
+        CarManager cm = InstanceManager.getDefault(CarManager.class);
+        Assert.assertEquals("cars", 9, cm.getNumEntries());
+
+        Car car = cm.getByRoadAndNumber("CP", "X10001");
+        car.setLoadName("ABCDEFGHIJKLM");
 
         // export cars to create file
         exportCars();

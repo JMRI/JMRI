@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
 import purejavacomm.NoSuchPortException;
 import purejavacomm.PortInUseException;
-import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
@@ -40,7 +39,7 @@ public class SerialDriverAdapter extends XpaPortController {
         this.manufacturerName = jmri.jmrix.lenz.LenzConnectionTypeList.LENZ;
     }
 
-    SerialPort activeSerialPort = null;
+    purejavacomm.SerialPort activeSerialPort = null;
 
     @Override
     public String openPort(String portName, String appName) {
@@ -49,14 +48,17 @@ public class SerialDriverAdapter extends XpaPortController {
             // get and open the primary port
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
             try {
-                activeSerialPort = (SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
+                activeSerialPort = (purejavacomm.SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
             } catch (PortInUseException p) {
                 return handlePortBusy(p, portName, log);
             }
 
             // try to set it for communication via SerialDriver
             try {
-                activeSerialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+                activeSerialPort.setSerialPortParams(9600,
+                        purejavacomm.SerialPort.DATABITS_8,
+                        purejavacomm.SerialPort.STOPBITS_1,
+                        purejavacomm.SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();

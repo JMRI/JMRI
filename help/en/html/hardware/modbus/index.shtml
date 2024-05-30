@@ -15,6 +15,11 @@
       "145" class="floatRight">
       <h1>Hardware Support: Modbus</h1>
 
+      <b>There is no released JMRI support for anything on this page yet.
+        This was a planned addition that never was ready for release.</b><br/>
+        If you're interested in ModBus support in JMRI, please
+        <a href="https://groups.io/g/jmriusers">contact us on the JMRIusers list</a>. 
+         
       <ul class="snav">
         <!-- TOC -->
 

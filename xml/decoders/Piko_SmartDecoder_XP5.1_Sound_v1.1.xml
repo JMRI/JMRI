@@ -18,17 +18,19 @@
 	<!--             Supported decoder: PIKO56505-22 = PluX22 decoder neutral, PIKO56508-16 = PluX16 decoder neutral -->
 	<version author="Ulrich Gerlach" version="2" lastUpdated="2023-12-03"/>
 	<!-- Version 2 - Add English translations -->
+	<version author="Ulrich Gerlach" version="3" lastUpdated="2024-03-27"/>
+	<!-- Version 3 - Supported decoder: PIKO46548-18 = BR150-TT, remove PluX22 and PluX16 decoder -->
 	<!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
 	<decoder>
 		<family name="PIKO SmartDecoder XP5.1 (version 1.1+)" mfg="PIKO" lowVersionID="1" highVersionID="2" comment="Decoders not sorted (necessarily) in numerical order">
-			<model model="PIKO46505-18 XP5.1 V1.1" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46505-18" comment="Piko SmartDecoder XP5.1 Sound allgemein Next18 (FW 1.1.0)" replacementModel="PIKO46505-18 XP5.1 V1.5" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
+			<model model="PIKO46505-18 XP5.1 V1.1 no LC (SUSI)" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46505-18" comment="Piko SmartDecoder XP5.1 Sound allgemein Next18 (FW 1.1.0)" replacementModel="PIKO46505-18 XP5.1 V1.5 no LC (SUSI)" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
 				<output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
 				<output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
 				<output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
 				<output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
 				<size length="21.5" width="10.5" height="3.7" units="mm"/>
 			</model>
-			<model model="PIKO56505-22 XP5.1 V1.1" numOuts="9" numFns="68" maxMotorCurrent="1.2A" formFactor="N" connector="PluX22" productID="PIKO56505-22" comment="Piko SmartDecoder XP5.1 Sound allgemein PluX22 (FW 1.1.0)" replacementModel="PIKO56505-22 XP5.1 V1.5" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
+			<model model="PIKO56505-22 XP5.1 V1.1 no LC (SUSI)" numOuts="9" numFns="68" maxMotorCurrent="1.2A" formFactor="H0" connector="PluX22" productID="PIKO56505-22" comment="Piko SmartDecoder XP5.1 Sound allgemein PluX22 (FW 1.1.0)" replacementModel="PIKO56505-22 XP5.1 V1.5 no LC (SUSI)" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
 				<output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
 				<output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
 				<output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
@@ -40,7 +42,7 @@
 				<output name="9" label=". A7 ." connection="plug" maxcurrent="400 mA"/>
 				<size length="21.5" width="10.5" height="3.7" units="mm"/>
 			</model>
-			<model model="PIKO56508-16 XP5.1 V1.1" numOuts="6" numFns="68" maxMotorCurrent="1.2A" formFactor="N" connector="PluX16" productID="PIKO56508-16" comment="Piko SmartDecoder XP5.1 Sound allgemein PluX16 (FW 1.1.0)" replacementModel="PIKO56508-16 XP5.1 V1.5" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
+			<model model="PIKO56508-16 XP5.1 V1.1 no LC (SUSI)" numOuts="6" numFns="68" maxMotorCurrent="1.2A" formFactor="H0" connector="PluX16" productID="PIKO56508-16" comment="Piko SmartDecoder XP5.1 Sound allgemein PluX16 (FW 1.1.0)" replacementModel="PIKO56508-16 XP5.1 V1.5 no LC (SUSI)" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
 				<output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
 				<output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
 				<output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
@@ -49,7 +51,21 @@
 				<output name="6" label=". A4 ." connection="plug" maxcurrent="400 mA"/>
 				<size length="21.5" width="10.5" height="3.7" units="mm"/>
 			</model>
-			<model model="PIKO46550-18 BR83-TT V1.1" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46550-18" lowVersionID="5" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 83.10 TT Next18 plug and RailCom(R) (Plus) (FW 1.1.0)" replacementModel="PIKO46550-18 BR83-TT V1.5" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
+			<model model="PIKO46505-18 XP5.1 V1.1 with LC (SUSI)" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46505-18" comment="Piko SmartDecoder XP5.1 Sound allgemein Next18 (FW 1.1.0)" replacementModel="PIKO46505-18 XP5.1 V1.5 with LC (SUSI)" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
+				<output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+				<output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+				<output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+				<output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
+				<size length="21.5" width="10.5" height="3.7" units="mm"/>
+			</model>
+			<model model="PIKO46550-18 BR83-TT V1.1" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46550-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 83.10 TT Next18 (FW 1.1.0)" replacementModel="PIKO46550-18 BR83-TT V1.5" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
+				<output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+				<output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+				<output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+				<output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
+				<size length="21.5" width="10.5" height="3.7" units="mm"/>
+			</model>
+			<model model="PIKO46548-18 BR150-TT V1.1" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46548-18" comment="Piko SmartDecoder XP5.1 Sound E Loco BR 150 TT Next18 (FW 1.1.0)" replacementModel="PIKO46548-18 BR150-TT V1.5" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
 				<output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
 				<output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
 				<output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
@@ -133,8 +149,8 @@
 				<decVal max="255"/>
 				<label>Global volume for mfx control centers (CV 63)</label>
 				<label xml:lang="de">Globale Lautstärke für mfx-Zentralen (CV 63)</label>
-				<tooltip>Auxiliary CV = CV 257 on Bank 17</tooltip>
-				<tooltip xml:lang="de">Hilfs-CV = CV 257 von Bank 17</tooltip>
+				<tooltip>Auxiliary CV = CV 257 on Bank 2</tooltip>
+				<tooltip xml:lang="de">Hilfs-CV = CV 257 von Bank 2</tooltip>
 			</variable>
 			<!-- CV 66 -->
 			<xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim128.xml"/>
@@ -189,7 +205,7 @@
 			<xi:include href="http://jmri.org/xml/decoders/piko/cv257-512_bank18_v5.1.xml"/>
 			-->
 			<!-- Interner Lichtdecoder CV897 - 1024 -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv897-1024_v5.1.xml"/>
+			<!-- <xi:include href="http://jmri.org/xml/decoders/piko/cv897-1024_v5.1.xml"/>-->
 		</variables>
 		<xi:include href="http://jmri.org/xml/decoders/piko/cv8factReset_v5.1.xml"/>
 	</decoder>
@@ -199,7 +215,7 @@
 	<xi:include href="http://jmri.org/xml/decoders/piko/PanePiko1.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/piko/PanePiko2_v5.1.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoMotor.xml"/>
-	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoLichtDecoder_v5.1.xml"/>
+	<!-- <xi:include href="http://jmri.org/xml/decoders/piko/PanePikoLichtDecoder_v5.1.xml"/>-->
 	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoSound_v5.1.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoExtendedFmap_v5.1.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoConfigOutput_v5.1.xml"/>

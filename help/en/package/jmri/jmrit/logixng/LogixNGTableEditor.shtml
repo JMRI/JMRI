@@ -73,7 +73,15 @@
         <strong>Edit threads</strong> button. This is particular useful when using the
         <a href="ConditionalNGDebugger.shtml">LogixNG Debugger</a>.</dd>
 
-        <dt>Startup</dt>
+        <dt>Enabled<span class="since">since 5.7.6</span></dt>
+
+        <dd>When a ConditionalNG is created, it will be <strong>Enabled</strong>.  Uncheck the
+        checkbox to disable the ConditionalNG.  One of the options for error handling is to
+        disable the ConditionalNG.  After fixing the problem, use the checkbox to enable the
+        ConditionalNG.  Sometimes it is helpful to disable a ConditionalNG in order to test
+        alternative approaches.</dd>
+
+        <dt>Startup<span class="since">since 5.5.5</span></dt>
 
         <dd>Enabled LogixNGs start automatically after the layout configuration has been loaded.
         The resulting actions will depend on the current state of the expressions.  Sometimes a

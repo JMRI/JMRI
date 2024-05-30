@@ -16,11 +16,6 @@ public class CounterAction extends Action {
     }
 
     @Override
-    public String getActionSuccessfulString() {
-        return Integer.toString(_counter);
-    }
-
-    @Override
     public void doAction() {
         _counter += 1;
         finishAction(true);
@@ -29,6 +24,10 @@ public class CounterAction extends Action {
     @Override
     public void cancelAction() {
         // no cancel for this action
-
+    }
+    
+    @Override
+    public String getStatus() {
+        return Integer.toString(_counter);
     }
 }

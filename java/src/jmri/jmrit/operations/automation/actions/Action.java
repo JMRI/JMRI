@@ -79,10 +79,6 @@ public abstract class Action extends PropertyChangeSupport {
         return (getCode() & ActionCodes.ENABLE_GOTO) == ActionCodes.ENABLE_GOTO;
     }
 
-    public boolean isOtherMenuEnabled() {
-        return (getCode() & ActionCodes.ENABLE_OTHER) == ActionCodes.ENABLE_OTHER;
-    }
-
     /**
      * Used to determine if this action can run concurrently with other actions.
      *
@@ -102,6 +98,19 @@ public abstract class Action extends PropertyChangeSupport {
 
     public String getActionString() {
         return getFormatedMessage("{0}{1}{2}{3}{4}{5}"); // NOI18N
+    }
+    
+    public String getStatus() {
+        if (getAutomationItem() != null) {
+            if (getAutomationItem().isActionRunning()) {
+                return Bundle.getMessage("Running");
+            }
+            if (!getAutomationItem().isActionRan()) {
+                return AutomationItem.NONE;
+            }
+            return getAutomationItem().isActionSuccessful() ? getActionSuccessfulString() : getActionFailedString();
+        }
+        return "unknown"; // NOI18N
     }
 
     public String getActionSuccessfulString() {

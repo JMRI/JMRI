@@ -1,5 +1,7 @@
 package jmri.jmrit.display.logixng.swing;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.util.*;
 
 import javax.annotation.CheckForNull;
@@ -8,18 +10,22 @@ import javax.swing.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.display.logixng.WindowToFront;
+import jmri.jmrit.display.logixng.WindowManagement;
+import jmri.jmrit.display.logixng.WindowManagement.HideOrShow;
+import jmri.jmrit.display.logixng.WindowManagement.MaximizeMinimizeNormalize;
+import jmri.jmrit.display.logixng.WindowManagement.BringToFrontOrBack;
 import jmri.jmrit.logixng.actions.swing.AbstractDigitalActionSwing;
 import jmri.jmrit.logixng.util.parser.ParserException;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectEnumSwing;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
- * Configures an WindowToFront object with a Swing JPanel.
+ * Configures an WindowManagement object with a Swing JPanel.
  *
  * @author Daniel Bergqvist Copyright (C) 2024
  */
-public class WindowToFrontSwing extends AbstractDigitalActionSwing {
+public class WindowManagementSwing extends AbstractDigitalActionSwing {
 
     private JComboBox<JmriJFrameItem> _jmriJFrameComboBox;
     private JTabbedPane _tabbedPaneJmriJFrame;
@@ -30,11 +36,20 @@ public class WindowToFrontSwing extends AbstractDigitalActionSwing {
     private JTextField _jmriJFrameReferenceTextField;
     private JTextField _jmriJFrameLocalVariableTextField;
     private JTextField _jmriJFrameFormulaTextField;
+    private JCheckBox _ignoreWindowNotFoundCheckBox;
+
+    private LogixNG_SelectEnumSwing<HideOrShow> _selectEnumHideOrShowSwing;
+    private LogixNG_SelectEnumSwing<MaximizeMinimizeNormalize> _selectEnumMaximizeMinimizeNormalizeSwing;
+    private LogixNG_SelectEnumSwing<BringToFrontOrBack> _selectEnumBringToFrontOrBackSwing;
 
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
-        WindowToFront action = (WindowToFront)object;
+        WindowManagement action = (WindowManagement)object;
+
+        _selectEnumHideOrShowSwing = new LogixNG_SelectEnumSwing<>(getJDialog(), this);
+        _selectEnumMaximizeMinimizeNormalizeSwing = new LogixNG_SelectEnumSwing<>(getJDialog(), this);
+        _selectEnumBringToFrontOrBackSwing = new LogixNG_SelectEnumSwing<>(getJDialog(), this);
 
         panel = new JPanel();
 
@@ -75,6 +90,30 @@ public class WindowToFrontSwing extends AbstractDigitalActionSwing {
         _panelJmriJFrameFormula.add(_jmriJFrameFormulaTextField);
 
 
+        _ignoreWindowNotFoundCheckBox = new JCheckBox(Bundle.getMessage("WindowManagement_IgnoreWindowNotFound"));
+
+
+        JPanel panelHideOrShow;
+        JPanel panelMaximizeMinimizeNormalize;
+        JPanel panelBringToFrontOrBack;
+        if (action != null) {
+            panelHideOrShow = _selectEnumHideOrShowSwing.createPanel(
+                    action.getSelectEnumHideOrShow(), HideOrShow.values());
+            panelMaximizeMinimizeNormalize = _selectEnumMaximizeMinimizeNormalizeSwing
+                    .createPanel(action.getSelectEnumMaximizeMinimizeNormalize(),
+                            MaximizeMinimizeNormalize.values());
+            panelBringToFrontOrBack = _selectEnumBringToFrontOrBackSwing
+                    .createPanel(action.getSelectEnumBringToFrontOrBack(),
+                            BringToFrontOrBack.values());
+        } else {
+            panelHideOrShow = _selectEnumHideOrShowSwing
+                    .createPanel(null, HideOrShow.values());
+            panelMaximizeMinimizeNormalize = _selectEnumMaximizeMinimizeNormalizeSwing
+                    .createPanel(null, MaximizeMinimizeNormalize.values());
+            panelBringToFrontOrBack = _selectEnumBringToFrontOrBackSwing
+                    .createPanel(null, BringToFrontOrBack.values());
+        }
+
         if (action != null) {
             switch (action.getAddressing()) {
                 case Direct: _tabbedPaneJmriJFrame.setSelectedComponent(_panelJmriJFrameDirect); break;
@@ -86,16 +125,47 @@ public class WindowToFrontSwing extends AbstractDigitalActionSwing {
             _jmriJFrameReferenceTextField.setText(action.getReference());
             _jmriJFrameLocalVariableTextField.setText(action.getLocalVariable());
             _jmriJFrameFormulaTextField.setText(action.getFormula());
+            _ignoreWindowNotFoundCheckBox.setSelected(action.isIgnoreWindowNotFound());
         }
 
-        panel.add(_tabbedPaneJmriJFrame);
+        panel.setLayout(new GridBagLayout());
+        GridBagConstraints constraint = new GridBagConstraints();
+        constraint.gridwidth = 1;
+        constraint.gridheight = 1;
+        constraint.gridx = 0;
+        constraint.gridy = 0;
+        constraint.anchor = GridBagConstraints.EAST;
+        panel.add(new JLabel(Bundle.getMessage("WindowToFrontSwing_Window")), constraint);
+        constraint.gridy = 4;
+        panel.add(new JLabel(Bundle.getMessage("WindowToFrontSwing_HideOrShow")), constraint);
+        constraint.gridy = 5;
+        panel.add(new JLabel(Bundle.getMessage("WindowToFrontSwing_MaximizeMinimizeNormalize")), constraint);
+        constraint.gridy = 6;
+        panel.add(new JLabel(Bundle.getMessage("WindowToFrontSwing_BringToFrontOrBack")), constraint);
+
+        constraint.gridx = 1;
+        constraint.gridy = 0;
+        constraint.anchor = GridBagConstraints.WEST;
+        panel.add(_tabbedPaneJmriJFrame, constraint);
+        constraint.gridy = 1;
+        panel.add(Box.createVerticalStrut(3), constraint);
+        constraint.gridy = 2;
+        panel.add(_ignoreWindowNotFoundCheckBox, constraint);
+        constraint.gridy = 3;
+        panel.add(Box.createVerticalStrut(5), constraint);
+        constraint.gridy = 4;
+        panel.add(panelHideOrShow, constraint);
+        constraint.gridy = 5;
+        panel.add(panelMaximizeMinimizeNormalize, constraint);
+        constraint.gridy = 6;
+        panel.add(panelBringToFrontOrBack, constraint);
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
         // Create a temporary action to test formula
-        WindowToFront action = new WindowToFront("IQDA1", null);
+        WindowManagement action = new WindowManagement("IQDA1", null);
 
         try {
             if (_tabbedPaneJmriJFrame.getSelectedComponent() == _panelJmriJFrameReference) {
@@ -122,13 +192,18 @@ public class WindowToFrontSwing extends AbstractDigitalActionSwing {
         } catch (ParserException e) {
             errorMessages.add("Cannot parse formula: " + e.getMessage());
         }
-        return true;
+
+        _selectEnumHideOrShowSwing.validate(action.getSelectEnumHideOrShow(), errorMessages);
+        _selectEnumMaximizeMinimizeNormalizeSwing.validate(action.getSelectEnumMaximizeMinimizeNormalize(), errorMessages);
+        _selectEnumBringToFrontOrBackSwing.validate(action.getSelectEnumBringToFrontOrBack(), errorMessages);
+
+        return errorMessages.isEmpty();
     }
 
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
-        WindowToFront action = new WindowToFront(systemName, userName);
+        WindowManagement action = new WindowManagement(systemName, userName);
         updateObject(action);
         return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
     }
@@ -136,10 +211,10 @@ public class WindowToFrontSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public void updateObject(@Nonnull Base object) {
-        if (! (object instanceof WindowToFront)) {
+        if (! (object instanceof WindowManagement)) {
             throw new IllegalArgumentException("object must be an WindowToFront but is a: "+object.getClass().getName());
         }
-        WindowToFront action = (WindowToFront)object;
+        WindowManagement action = (WindowManagement)object;
         if (_tabbedPaneJmriJFrame.getSelectedComponent() == _panelJmriJFrameDirect) {
             if (_jmriJFrameComboBox.getSelectedIndex() != -1) {
                 action.setJmriJFrame(_jmriJFrameComboBox.getItemAt(_jmriJFrameComboBox.getSelectedIndex())._frame);
@@ -163,17 +238,29 @@ public class WindowToFrontSwing extends AbstractDigitalActionSwing {
         } catch (ParserException e) {
             throw new RuntimeException("ParserException: "+e.getMessage(), e);
         }
+
+        action.setIgnoreWindowNotFound(_ignoreWindowNotFoundCheckBox.isSelected());
+
+        _selectEnumHideOrShowSwing.updateObject(action.getSelectEnumHideOrShow());
+
+        _selectEnumMaximizeMinimizeNormalizeSwing.updateObject(
+                action.getSelectEnumMaximizeMinimizeNormalize());
+
+        _selectEnumBringToFrontOrBackSwing.updateObject(
+                action.getSelectEnumBringToFrontOrBack());
     }
 
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("WindowToFront_Short");
+        return Bundle.getMessage("WindowManagement_Short");
     }
 
     @Override
     public void dispose() {
-        // Do nothing
+        _selectEnumHideOrShowSwing.dispose();
+        _selectEnumMaximizeMinimizeNormalizeSwing.dispose();
+        _selectEnumBringToFrontOrBackSwing.dispose();
     }
 
 

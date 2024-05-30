@@ -174,7 +174,15 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
 
     @Override
     protected void execute(@Nonnull LogixNG logixNG) {
-        logixNG.execute();
+        if (!logixNG.isActivated() && !logixNG.isEnabled()) {
+            JOptionPane.showMessageDialog(f, Bundle.getMessage("LogixNG_CantExecuteLogixNG_InactiveAndNotEnabled"), Bundle.getMessage("LogixNG_Error"), JOptionPane.ERROR_MESSAGE);
+        } else if (!logixNG.isActivated()) {
+            JOptionPane.showMessageDialog(f, Bundle.getMessage("LogixNG_CantExecuteLogixNG_Inactive"), Bundle.getMessage("LogixNG_Error"), JOptionPane.ERROR_MESSAGE);
+        } else if (!logixNG.isEnabled()) {
+            JOptionPane.showMessageDialog(f, Bundle.getMessage("LogixNG_CantExecuteLogixNG_NotEnabled"), Bundle.getMessage("LogixNG_Error"), JOptionPane.ERROR_MESSAGE);
+        } else {
+            logixNG.execute();
+        }
     }
 
     @Override

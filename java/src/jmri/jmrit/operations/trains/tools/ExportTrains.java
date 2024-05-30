@@ -67,6 +67,7 @@ public class ExportTrains extends XmlFile {
                     Bundle.getMessage("Route"), Bundle.getMessage("Departs"), Bundle.getMessage("Terminates"),
                     Bundle.getMessage("Status"), Bundle.getMessage("Comment"), Bundle.getMessage("LocoTypes"),
                     Bundle.getMessage("CarTypes"), Bundle.getMessage("RoadOption"), Bundle.getMessage("Roads"),
+                    Bundle.getMessage("RoadOption"), Bundle.getMessage("Roads"),
                     Bundle.getMessage("LoadOption"), Bundle.getMessage("Loads"), Bundle.getMessage("OwnerOption"),
                     Bundle.getMessage("Owners"), Bundle.getMessage("Built"),
                     Bundle.getMessage("NormalModeWhenBuilding"), Bundle.getMessage("AllowCarsToReturn"),
@@ -191,7 +192,6 @@ public class ExportTrains extends XmlFile {
 
     private String getCarRoadOption(Train train) {
         String roadOption = Bundle.getMessage("AcceptAll");
-
         if (train.getCarRoadOption().equals(Train.INCLUDE_ROADS)) {
             roadOption = Bundle.getMessage(
                     "AcceptOnly") + " " + train.getCarRoadNames().length + " " + Bundle.getMessage("Roads");
@@ -212,13 +212,12 @@ public class ExportTrains extends XmlFile {
     
     private String getLocoRoadOption(Train train) {
         String roadOption = Bundle.getMessage("AcceptAll");
-
         if (train.getLocoRoadOption().equals(Train.INCLUDE_ROADS)) {
             roadOption = Bundle.getMessage(
-                    "AcceptOnly") + " " + train.getCarRoadNames().length + " " + Bundle.getMessage("Roads");
+                    "AcceptOnly") + " " + train.getLocoRoadNames().length + " " + Bundle.getMessage("Roads");
         } else if (train.getLocoRoadOption().equals(Train.EXCLUDE_ROADS)) {
             roadOption = Bundle.getMessage(
-                    "Exclude") + " " + train.getCarRoadNames().length + " " + Bundle.getMessage("Roads");
+                    "Exclude") + " " + train.getLocoRoadNames().length + " " + Bundle.getMessage("Roads");
         }
         return roadOption;
     }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import jmri.*;
+import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.util.TypeConversionUtil;
@@ -84,6 +85,7 @@ public class LayoutFunctions implements FunctionFactory {
         constantClasses.add(new Constant(getModule(), "masts", InstanceManager.getNullableDefault(SignalMastManager.class)));
         constantClasses.add(new Constant(getModule(), "routes", InstanceManager.getNullableDefault(RouteManager.class)));
         constantClasses.add(new Constant(getModule(), "blocks", InstanceManager.getNullableDefault(BlockManager.class)));
+        constantClasses.add(new Constant(getModule(), "oblocks", InstanceManager.getNullableDefault(OBlockManager.class)));
         constantClasses.add(new Constant(getModule(), "reporters", InstanceManager.getNullableDefault(ReporterManager.class)));
         constantClasses.add(new Constant(getModule(), "memories", InstanceManager.getNullableDefault(MemoryManager.class)));
         constantClasses.add(new Constant(getModule(), "powermanager", InstanceManager.getNullableDefault(PowerManager.class)));

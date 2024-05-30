@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet;
 
 import jmri.jmrix.loconet.SlotMapEntry.SlotType;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -36,6 +37,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertNotNull("exists", t);
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -297,6 +299,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertEquals("decoder type", LnConstants.DEC_MODE_128, t.decoderType());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -306,6 +309,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertEquals("Slot Status", LnConstants.LOCO_IN_USE, t.slotStatus());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -315,6 +319,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertEquals("Slot Status", 0x00, t.ss2());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -324,6 +329,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertEquals("Consist Status", LnConstants.CONSIST_NO, t.consistStatus());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -333,6 +339,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertTrue("is Forward", t.isForward());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -342,6 +349,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertFalse("is F0", t.isF0());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -351,6 +359,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertFalse("is F1", t.isF1());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -360,6 +369,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertFalse("is F2", t.isF2());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -369,6 +379,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertFalse("is F3", t.isF3());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -378,6 +389,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertFalse("is F4", t.isF4());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -387,6 +399,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertFalse("is F5", t.isF5());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -396,6 +409,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertFalse("is F6", t.isF6());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -405,6 +419,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertFalse("is F7", t.isF7());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -414,6 +429,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertFalse("is F8", t.isF8());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -423,6 +439,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertFalse("is F9", t.isF9());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -432,6 +449,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertFalse("is F10", t.isF10());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -441,6 +459,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertFalse("is F11", t.isF11());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -450,6 +469,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertFalse("is F12", t.isF12());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -459,6 +479,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertFalse("is F13", t.isF13());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -468,6 +489,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertFalse("is F14", t.isF14());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -477,6 +499,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertFalse("is F15", t.isF15());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -486,6 +509,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertFalse("is F16", t.isF16());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -495,6 +519,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertFalse("is F17", t.isF17());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -504,6 +529,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertFalse("is F18", t.isF18());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -513,6 +539,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertFalse("is F19", t.isF19());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -522,6 +549,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertFalse("is F20", t.isF20());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -531,6 +559,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertFalse("is F21", t.isF21());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -540,6 +569,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertFalse("is F22", t.isF22());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -549,6 +579,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertFalse("is F23", t.isF23());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -558,6 +589,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertFalse("is F24", t.isF24());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -567,6 +599,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertFalse("is F25", t.isF25());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -576,6 +609,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertFalse("is F26", t.isF26());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -585,6 +619,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertFalse("is F27", t.isF27());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -594,6 +629,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertFalse("is F28", t.isF28());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -616,6 +652,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertEquals("address", 5544, t.locoAddr());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -625,6 +662,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertEquals("speed", 0, t.speed());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -634,6 +672,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertEquals("directions and Functions", 0x00, t.dirf());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -643,6 +682,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertEquals("snd", 0x00, t.snd());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -652,6 +692,7 @@ public class LocoNetSlotTest {
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         Assert.assertEquals("ID", 0x00, t.id());
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -665,6 +706,7 @@ public class LocoNetSlotTest {
         for (int i = 1; i <= 12; i++) {
             Assert.assertEquals("Element " + i, lm.getElement(i), lm2.getElement(i));
         }
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -678,6 +720,7 @@ public class LocoNetSlotTest {
         for (int i = 1; i <= 19; i++) {
             Assert.assertEquals("Element " + i, lm.getElement(i), lm2.getElement(i));
         }
+        JUnitAppender.assertWarnMessage("Slot [128] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -693,6 +736,7 @@ public class LocoNetSlotTest {
         }
         Assert.assertEquals("Element 11", 0x71, lm2.getElement(11));
         Assert.assertEquals("Element 12", 0x02, lm2.getElement(12));
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -708,6 +752,7 @@ public class LocoNetSlotTest {
         }
         Assert.assertEquals("Element 18",0x71,lm2.getElement(18));
         Assert.assertEquals("Element 19",0x02,lm2.getElement(19));
+        JUnitAppender.assertWarnMessage("Slot [130] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -809,6 +854,7 @@ public class LocoNetSlotTest {
         t.setSlot(lm);
         Assert.assertEquals("Change F0, F4-F1, for consist-sub slot", 0x3F, t.dirf());
 
+        JUnitAppender.assertWarnMessage("Slot [1] not in map but reports loco, check command station type");
     }
 
     @Test
@@ -917,6 +963,7 @@ public class LocoNetSlotTest {
         t.setSlot(lm);
         Assert.assertEquals("Change F0, F4-F3, F1 for consist-sub slot", 0x22, t.dirf());
 
+        JUnitAppender.assertWarnMessage("Slot [130] not in map but reports loco, check command station type");
     }
 
     @Test

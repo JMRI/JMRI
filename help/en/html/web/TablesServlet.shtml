@@ -33,6 +33,15 @@
         toggle the state of that item in JMRI.<br>
         <em>&lt;type&gt;</em> is one of: <em>turnout</em>, <em>sensor</em>, <em>route</em>,
         <em>reporter</em> etc.</dd>
+        
+        <dt>/tables/&lt;type&gt;?&lt;key1&gt;=&lt;value1&gt;&amp;&lt;key2&gt;=&lt;value2&gt;...</dt>
+
+        <dd>Query string of key=value pairs, where the specified column (key) value must match the
+         specified value. For example, <code>/tables/car?trainId=12&location=Lakeview</code> will only 
+         show cars which have trainID of 12 and location of Lakeview. Use <code>?</code> to start the query 
+         string and separate multiple parameters with <code>&amp;</code>. Any columns in the table
+         can be used as a filter. Note: Both key and value are case-sensitive.</dd>
+
       </dl>
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>

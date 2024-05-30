@@ -6,17 +6,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
 import jmri.SystemConnectionMemo;
 import jmri.jmrix.dcc4pc.Dcc4PcConnectionTypeList;
 import jmri.jmrix.dcc4pc.Dcc4PcPortController;
 import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
 import jmri.jmrix.dcc4pc.Dcc4PcTrafficController;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import purejavacomm.CommPortIdentifier;
 import purejavacomm.NoSuchPortException;
 import purejavacomm.PortInUseException;
-import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
@@ -35,7 +37,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController {
         setManufacturer(Dcc4PcConnectionTypeList.DCC4PC);
     }
 
-    SerialPort activeSerialPort = null;
+    purejavacomm.SerialPort activeSerialPort = null;
 
     @Override
     public String openPort(String portName, String appName) {
@@ -43,13 +45,17 @@ public class SerialDriverAdapter extends Dcc4PcPortController {
         try {
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
             try {
-                activeSerialPort = (SerialPort) portID.open(appName, 2000);
+                activeSerialPort = (purejavacomm.SerialPort) portID.open(appName, 2000);
             } catch (PortInUseException p) {
                 return handlePortBusy(p, portName, log);
             }
             try {
-                activeSerialPort.setSerialPortParams(115200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-                configureLeadsAndFlowControl(activeSerialPort, SerialPort.FLOWCONTROL_NONE);
+                activeSerialPort.setSerialPortParams(115200,
+                        purejavacomm.SerialPort.DATABITS_8,
+                        purejavacomm.SerialPort.STOPBITS_1,
+                        purejavacomm.SerialPort.PARITY_NONE);
+                configureLeadsAndFlowControl(activeSerialPort,
+                        purejavacomm.SerialPort.FLOWCONTROL_NONE);
             } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
             }
@@ -83,7 +89,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController {
         }
     }
 
-    public SerialPort getSerialPort() {
+    public purejavacomm.SerialPort getSerialPort() {
         return activeSerialPort;
     }
 
