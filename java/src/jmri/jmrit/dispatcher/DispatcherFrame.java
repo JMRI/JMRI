@@ -1153,6 +1153,12 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     void allocateNextRequested(int index) {
         // set up an Allocation Request
         ActiveTrain at = activeTrainsList.get(index);
+        allocateNextRequestedForTrain(at);
+    }
+
+    // allocate the next section for an ActiveTrain 
+    protected void allocateNextRequestedForTrain(ActiveTrain at) {
+        // set up an Allocation Request
         Section next = at.getNextSectionToAllocate();
         if (next == null) {
             return;
