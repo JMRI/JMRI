@@ -597,6 +597,7 @@
         <a id="WA" name="WA"></a>
         <ul>
             <li>new web ui for working with cars</li>
+            <li>web panels: add handling for some text memory inputs</li>
         </ul>
 
     <h3>Where Used</h3>
@@ -614,7 +615,8 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>Fixed a problem with clicks ending up in the wrong place
+                on a Table, e.g. Turnout Table, etc, when using the frame server.</li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
