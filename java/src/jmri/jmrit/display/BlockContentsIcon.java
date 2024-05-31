@@ -297,6 +297,10 @@ public class BlockContentsIcon extends MemoryIcon {
     @Override
     public void doMouseClicked(JmriMouseEvent e) {
         if (e.getClickCount() == 2) { // double click?
+            if (!getEditor().isEditable() && isValueEditDisabled()) {
+                log.debug("Double click block value edit disabled");
+                return;
+            }
             editBlockValue();
         }
     }
