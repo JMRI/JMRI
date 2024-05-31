@@ -547,7 +547,7 @@
         "images/chapter5/prog_on_main.png" alt="Chapter 5 program on main"></a>
       </div>
 
-      <p>Depending on the command station, selecting a Long address for address less than 129 might
+      <p>Depending on the command station, selecting a Long address for address less than 128 might
       be ignored or create an error.</p>
 
       <p>The roster is not used or updated.</p>
