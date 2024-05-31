@@ -1214,8 +1214,10 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                                        // move car
         }
         if (car.getDestination() == null) {
-            addLine(_buildReport, SEVEN,
-                    Bundle.getMessage("buildNotAbleToSetDestination", car.toString(), router.getStatus()));
+            if (!router.getStatus().equals(Track.OKAY)) {
+                addLine(_buildReport, SEVEN,
+                        Bundle.getMessage("buildNotAbleToSetDestination", car.toString(), router.getStatus()));
+            }
             car.setFinalDestination(null);
             car.setFinalDestinationTrack(null);
             // don't move car if another train can
