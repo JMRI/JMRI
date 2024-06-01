@@ -1520,9 +1520,9 @@
             <variable CV="133" default="0" item="Motor Option 3" >
                 <decVal/>
                 <label>Power to button controlled motor</label>
-                <label xml:lang="cs">Motor řízený tlačítkem napájení</label>
+                <label xml:lang="cs">Napájení motoru řízené tlačítkem</label>
                 <tooltip>&lt;html&gt;If motor button control is enabled.&lt;br&gt;Power level (drive voltage) for button control of the motor circuit (range 0-255)&lt;/html&gt;</tooltip>
-                <tooltip xml:lang="cs">&lt;html&gt;Pokud je povoleno tlačítko řízení motoru.&lt;br&gt;Úroveň napájení (napětí pohonu) pro ovládací tlačítko obvodu motoru (meze 0-255)&lt;/html&gt;</tooltip>
+                <tooltip xml:lang="cs">&lt;html&gt;Pokud je povoleno tlačítko řízení motoru.&lt;br&gt;Tlačítko řídí úroveň napájení (napětí pohonu) v obvodu motoru (meze 0-255)&lt;/html&gt;</tooltip>
             </variable>
             <!-- Function map for virtual outputs -->
             <variable item="FL(f) controls output 9" CV="134" mask="XXXXXXXV" minOut="1">
