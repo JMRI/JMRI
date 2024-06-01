@@ -412,6 +412,11 @@
             <li>Add the <strong>hidden</strong> attribute to the Layout Editor <strong>Shape</strong>
             item.  The center popup menu has an option to hide the shape when not editing.  The
             <strong>setHidden(boolean)</strong> public method can be used by scripts and LogixNG.</li>
+
+            <li>The <strong>Disable value edit popup when not editing</strong> menu item has been
+            added to the context menus for blocks, memories and global variables.  When the panel
+            is not in edit mode and the option is enabled, the pop-up to the edit the value will
+            not occur.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -465,13 +470,19 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+            <li>The <strong>Disable value edit popup when not editing</strong> menu item has been
+            added to the context menus for blocks, memories and global variables.  When the panel
+            is not in edit mode and the option is enabled, the pop-up to the edit the value will
+            not occur. The option does not apply to input and spinner icons.</li>
         </ul>
 
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li></li>
+            <li>The <strong>Disable value edit popup when not editing</strong> menu item has been
+            added to the context menus for memories and global variables.  When the panel
+            is not in edit mode and the option is enabled, the pop-up to the edit the value will
+            not occur. The option does not apply to input, spinner and combo icons.</li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>

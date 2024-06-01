@@ -597,6 +597,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 if (row >= 0 && _table != null) {
                     fireTableRowsUpdated(row, row);
                     int viewRow = _table.convertRowIndexToView(row);
+                    log.debug("Scroll table to row: {}, property: {}", viewRow, e.getPropertyName());
                     _table.scrollRectToVisible(_table.getCellRect(viewRow, 0, true));
                 }
             });

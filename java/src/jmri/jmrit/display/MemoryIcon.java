@@ -577,6 +577,10 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
     @Override
     public void doMouseClicked(JmriMouseEvent e) {
         if (e.getClickCount() == 2) { // double click?
+            if (!getEditor().isEditable() && isValueEditDisabled()) {
+                log.debug("Double click memory value edit is disabled");
+                return;
+            }
             editMemoryValue();
         }
     }

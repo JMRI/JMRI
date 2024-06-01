@@ -3113,6 +3113,69 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
+    /**
+     * Test that routing through staging in the middle of a route should fail
+     */
+    @Test
+    public void testCarRoutingThroughStagingInMiddleOfRoute() {
+        // now load up the managers
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+        Router router = InstanceManager.getDefault(Router.class);
+
+        // create 7 locations
+        JUnitOperationsUtil.createSevenNormalLocations();
+
+        Location acton = lmanager.getLocationByName("Acton");
+        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+
+        Location boston = lmanager.getLocationByName("Boston");
+        Location essex = lmanager.getLocationByName("Essex");
+
+        Location foxboro = lmanager.getLocationByName("Foxboro");
+        Location gulf = lmanager.getLocationByName("Gulf");
+        gulf.getTrackByName("Gulf Yard 1", Track.YARD);
+
+        // create staging tracks
+        Location staging = lmanager.newLocation("Staging MA");
+        Track stagingTrack1 = staging.addTrack("Staging 1", Track.STAGING);
+        stagingTrack1.setLength(500);
+
+        // create car
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("BA", "3", "Boxcar", "40", actonSpur1, 0);
+
+        // create two trains, one terminates into staging, the other departs
+        Train trainActonToStagingTrain = tmanager.newTrain("Train Acton-Boston-Staging");
+        Route routeA = rmanager.newRoute("Route Acton-Boston-Staging");
+        routeA.addLocation(acton);
+        routeA.addLocation(boston);
+        routeA.addLocation(staging); // terminated into staging
+        trainActonToStagingTrain.setRoute(routeA);
+
+        Train trainStagingToFoxboro1 = tmanager.newTrain("Train Staging-Gulf-Essex-Foxboro");
+        Route routeB = rmanager.newRoute("Route Staging-Gulf-Essex-Foxboro");
+        routeB.addLocation(staging);
+        routeB.addLocation(gulf);
+        routeB.addLocation(essex);
+        routeB.addLocation(foxboro);
+        trainStagingToFoxboro1.setRoute(routeB);
+
+        // enable routing through staging
+        Setup.setCarRoutingViaStagingEnabled(true);
+
+        // send car to gulf through staging using 2 trains
+        c3.setFinalDestination(gulf);
+        Assert.assertTrue("Try routing two trains through staging", router.setDestination(c3, null, null));
+        // confirm car's destination
+        Assert.assertEquals("car's destination is staging", staging, c3.getDestination());
+        c3.setDestination(null, null); // clear previous destination
+
+        // now place staging in the middle of the train's route
+        routeA.addLocation(essex);
+        Assert.assertFalse("Try routing two trains through staging", router.setDestination(c3, null, null));
+    }
+
     // Use trains to move cars
     @Test
     public void testRoutingWithTrains() {

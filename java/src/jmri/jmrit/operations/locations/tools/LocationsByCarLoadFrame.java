@@ -331,6 +331,9 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
                             track.addLoadName(loadName);
                         } else if (track.getLoadOption().equals(Track.EXCLUDE_LOADS)) {
                             track.deleteLoadName(loadName);
+                            if (track.getLoadNames().length == 0) {
+                                track.setLoadOption(Track.ALL_LOADS);
+                            }
                             // need to check if load configuration is to exclude all car types using this load
                             if (!track.isLoadNameAccepted(load)) {
                                 JmriJOptionPane.showMessageDialog(this,
@@ -382,6 +385,9 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
                             track.addShipLoadName(loadName);
                         } else if (track.getShipLoadOption().equals(Track.EXCLUDE_LOADS)) {
                             track.deleteShipLoadName(loadName);
+                            if (track.getShipLoadNames().length == 0) {
+                                track.setShipLoadOption(Track.ALL_LOADS);
+                            }
                             // need to check if load configuration is to exclude all car types using this load
                             if (!track.isLoadNameShipped(load)) {
                                 JmriJOptionPane.showMessageDialog(this,
