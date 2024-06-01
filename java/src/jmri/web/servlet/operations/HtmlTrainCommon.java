@@ -100,6 +100,7 @@ public class HtmlTrainCommon extends TrainCommon {
 
     protected String pickUpCar(Car car, int count, String[] format) {
         StringBuilder builder = new StringBuilder();
+        builder.append(Setup.getPickupCarPrefix()).append(" ");
         // count the number of utility cars
         if (count != 0) {
             builder.append(count);
@@ -119,6 +120,11 @@ public class HtmlTrainCommon extends TrainCommon {
 
     protected String dropCar(Car car, int count, String[] format, boolean isLocal) {
         StringBuilder builder = new StringBuilder();
+        if (!isLocal) {
+            builder.append(Setup.getDropCarPrefix()).append(" ");
+        } else {
+            builder.append(Setup.getLocalPrefix()).append(" ");
+        }
         // count the number of utility cars
         if (count != 0) {
             builder.append(count);
@@ -313,13 +319,13 @@ public class HtmlTrainCommon extends TrainCommon {
                 // print the appropriate comment if there's one
                 if (pickup && setout && !track.getCommentBoth().isEmpty()) {
                     builder.append(String.format(locale, strings.getProperty("TrackComments"), StringEscapeUtils
-                            .escapeHtml4(track.getCommentBoth())));
+                            .escapeHtml4(track.getCommentBothWithColor())));
                 } else if (pickup && !setout && !track.getCommentPickup().isEmpty()) {
                     builder.append(String.format(locale, strings.getProperty("TrackComments"), StringEscapeUtils
-                            .escapeHtml4(track.getCommentPickup())));
+                            .escapeHtml4(track.getCommentPickupWithColor())));
                 } else if (!pickup && setout && !track.getCommentSetout().isEmpty()) {
                     builder.append(String.format(locale, strings.getProperty("TrackComments"), StringEscapeUtils
-                            .escapeHtml4(track.getCommentSetout())));
+                            .escapeHtml4(track.getCommentSetoutWithColor())));
                 }
             }
         }
@@ -329,10 +335,26 @@ public class HtmlTrainCommon extends TrainCommon {
     public String getValidity() {
         if (Setup.isPrintTrainScheduleNameEnabled()) {
             return String.format(locale, strings.getProperty("ManifestValidityWithSchedule"), getDate(true),
-                    InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(train.getId()));
+                    InstanceManager.getDefault(TrainScheduleManager.class).getActiveSchedule().getName());
         } else {
             return String.format(locale, strings.getProperty("ManifestValidity"), getDate(true));
         }
     }
 
+    /**
+     * @param text Text with color tags needing conversion. See
+     *             TrainCommon.formatColorString(String text, Color color) Also
+     *             converts line feeds to HTLM
+     * @return HTML text with style color option
+     */
+    public static String convertToHTMLColor(String text) {
+        // convert line feeds
+        text = text.replace("\n", "<br>");
+
+        text = text.replace("&lt;FONT color=&quot;", "<p style=\"color: ");
+        text = text.replace("&quot;&gt;", "\">");
+        text = text.replace("&lt;/FONT&gt;", "");
+
+        return text;
+    }
 }

@@ -50,6 +50,7 @@
               </xs:element>
 
               <xs:element name="programmingMode" type="LogixNG_SelectComboBoxType" minOccurs="1" maxOccurs="1" />
+              <xs:element name="longOrShortAddress" type="LogixNG_SelectEnumType" minOccurs="0" maxOccurs="1" />
               <xs:element name="address" type="LogixNG_SelectIntegerType" minOccurs="1" maxOccurs="1" />
               <xs:element name="cv" type="LogixNG_SelectIntegerType" minOccurs="1" maxOccurs="1" />
               <xs:element name="value" type="LogixNG_SelectIntegerType" minOccurs="1" maxOccurs="1" />
@@ -57,6 +58,7 @@
               <xs:element name="systemConnection" type="xs:string" minOccurs="0" maxOccurs="1"/>
 
               <xs:element name="localVariableForStatus" type="xs:string" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="wait" type="yesNoType" minOccurs="0" maxOccurs="1"/>
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 

@@ -222,7 +222,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * @param info  a completed TrainInfo class.
      * @param overRideType  "NONE", "USER", "ROSTER" or "OPERATIONS"
      * @param overRideValue  "" , dccAddress, RosterEntryName or Operations
-     *            trainname.
+     *            trainName.
      * @return 0 good, -1 failure
      */
     public int loadTrainFromTrainInfo(TrainInfo info, String overRideType, String overRideValue) {
@@ -239,8 +239,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             tSource = ActiveTrain.USER;
         }
         String dccAddressToUse = info.getDccAddress();
-        String trainNameToUse = info.getTrainName();
-
+        String trainNameToUse = info.getTrainUserName();
+        String rosterIDToUse = info.getRosterId();
         //process override
         switch (overRideType) {
             case "":
@@ -250,7 +250,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             case OVERRIDETYPE_DCCADDRESS:
                 tSource = ActiveTrain.USER;
                 dccAddressToUse = overRideValue;
-                trainNameToUse = overRideValue;
+                if (trainNameToUse.isEmpty()) {
+                    trainNameToUse = overRideValue;
+                }
                 break;
             case OVERRIDETYPE_OPERATIONS:
                 tSource = ActiveTrain.OPERATIONS;
@@ -258,12 +260,20 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 break;
             case OVERRIDETYPE_ROSTER:
                 tSource = ActiveTrain.ROSTER;
-                trainNameToUse = overRideValue;
+                rosterIDToUse = overRideValue;
+                if (trainNameToUse.isEmpty()) {
+                    trainNameToUse = overRideValue;
+                }
                 break;
             default:
                 /* just leave as in traininfo */
         }
-
+        if (!isTrainFree(trainNameToUse)) {
+            log.warn("TrainName [{}] already in use",
+                    trainNameToUse);
+            return -1;
+            
+        }
         ActiveTrain at = createActiveTrain(info.getTransitId(), trainNameToUse, tSource,
                 info.getStartBlockId(), info.getStartBlockSeq(), info.getDestinationBlockId(),
                 info.getDestinationBlockSeq(),
@@ -271,7 +281,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 info.getResetWhenDone(), info.getReverseAtEnd(), true, null, info.getAllocationMethod());
         if (at != null) {
             if (tSource == ActiveTrain.ROSTER) {
-                RosterEntry re = Roster.getDefault().getEntryForId(trainNameToUse);
+            RosterEntry re = Roster.getDefault().getEntryForId(rosterIDToUse);
                 if (re != null) {
                     at.setRosterEntry(re);
                     at.setDccAddress(re.getDccAddress());
@@ -816,6 +826,17 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
     }
 
+    /* Check trainName not in use */
+    protected boolean isTrainFree(String rName) {
+        for (int j = 0; j < getActiveTrainsList().size(); j++) {
+            ActiveTrain at = getActiveTrainsList().get(j);
+            if (rName.equals(at.getTrainName())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private void handleATSelectionChanged(ActionEvent e) {
         atSelectedIndex = atSelectBox.getSelectedIndex();
         initializeExtraComboBox();
@@ -1132,6 +1153,12 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     void allocateNextRequested(int index) {
         // set up an Allocation Request
         ActiveTrain at = activeTrainsList.get(index);
+        allocateNextRequestedForTrain(at);
+    }
+
+    // allocate the next section for an ActiveTrain 
+    protected void allocateNextRequestedForTrain(ActiveTrain at) {
+        // set up an Allocation Request
         Section next = at.getNextSectionToAllocate();
         if (next == null) {
             return;

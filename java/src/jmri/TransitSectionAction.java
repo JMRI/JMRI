@@ -70,7 +70,8 @@ public class TransitSectionAction {
     public static final int PRESTARTRESUME = 17; // Resume after prestart
     public static final int TERMINATETRAIN = 18; // terminate train
     public static final int LOADTRAININFO = 19; // terminate train and run traininfo file
-    public static final int NUM_WHATS = 19; // Must correspond to the number of entries above
+    public static final int FORCEALLOCATEPASSSAFESECTION = 20;  // attempt to force allocation to safesection beyond next safe section.
+    public static final int NUM_WHATS = 20; // Must correspond to the number of entries above
     // other action 'whats" may be defined above, increment NUM_WHATS to match
 
     // For loadtraininfo loco address type

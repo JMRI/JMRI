@@ -276,6 +276,14 @@ public class ArchitectureTest {
             .should().dependOnClassesThat().resideInAPackage("org.apache.logging.log4j");
 
     /**
+     * JMRI (but not apps) should use org.slf4j.Logger instead of JUL.
+     */
+    @ArchTest
+    public static final ArchRule noJULinJmri = noClasses()
+        .that().resideInAPackage("jmri..")
+        .should().dependOnClassesThat().resideInAPackage("java.util.logging");
+
+    /**
      * Confine JDOM to configurexml packages.
      */
     @ArchTest

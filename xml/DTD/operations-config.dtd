@@ -205,6 +205,7 @@
 <!ATTLIST switchList pageFormat			CDATA #IMPLIED>
 <!ATTLIST switchList printRouteLocation	(true | false ) "false">
 <!ATTLIST switchList trackSummary		(true | false ) "true">
+<!ATTLIST switchList useDepartureTime	(true | false ) "false">
 
 <!ATTLIST pageOrientation manifest		CDATA #IMPLIED>
 <!ATTLIST pageOrientation switchList	CDATA #IMPLIED>

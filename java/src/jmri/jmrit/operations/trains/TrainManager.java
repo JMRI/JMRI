@@ -12,6 +12,7 @@ import org.jdom2.Element;
 
 import jmri.*;
 import jmri.beans.PropertyChangeSupport;
+import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
@@ -687,6 +688,7 @@ public class TrainManager extends PropertyChangeSupport
     public JComboBox<Train> getTrainComboBox() {
         JComboBox<Train> box = new JComboBox<>();
         updateTrainComboBox(box);
+        OperationsPanel.padComboBox(box);
         return box;
     }
 

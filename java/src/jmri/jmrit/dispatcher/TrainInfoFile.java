@@ -94,11 +94,24 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                     } else {
                         log.error("Transit name missing when reading TrainInfoFile {}", name);
                     }
-                    if (traininfo.getAttribute("trainname") != null) {
-                        // there is a transit name selected
-                        tInfo.setTrainName(traininfo.getAttribute("trainname").getValue());
+                    if (version < 6) {
+                        if (traininfo.getAttribute("trainname") != null) {
+                            tInfo.setTrainName(traininfo.getAttribute("trainname").getValue());
+                            tInfo.setRosterId(traininfo.getAttribute("trainname").getValue());
+                            tInfo.setTrainUserName(traininfo.getAttribute("trainname").getValue());
+                        } else {
+                            log.error("Train name missing when reading TrainInfoFile {}", name);
+                        }
                     } else {
-                        log.error("Train name missing when reading TrainInfoFile {}", name);
+                        if (traininfo.getAttribute("trainname") != null) {
+                            tInfo.setRosterId(traininfo.getAttribute("trainname").getValue());
+                        }
+                        if (traininfo.getAttribute("rosterid") != null) {
+                            tInfo.setRosterId(traininfo.getAttribute("rosterid").getValue());
+                        }
+                        if (traininfo.getAttribute("trainusername") != null) {
+                            tInfo.setTrainUserName(traininfo.getAttribute("trainusername").getValue());
+                        }
                     }
                     if (traininfo.getAttribute("dccaddress") != null) {
                         tInfo.setDccAddress(traininfo.getAttribute("dccaddress").getValue());
@@ -470,10 +483,12 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         // save Dispatcher TrainInfo in xml format
         Element traininfo = new Element("traininfo");
         // write version number
-        traininfo.setAttribute("version", "5");
+        traininfo.setAttribute("version", "6");
         traininfo.setAttribute("transitname", tf.getTransitName());
         traininfo.setAttribute("transitid", tf.getTransitId());
         traininfo.setAttribute("trainname", tf.getTrainName());
+        traininfo.setAttribute("trainusername", tf.getTrainUserName());
+        traininfo.setAttribute("rosterid", tf.getRosterId());
         traininfo.setAttribute("dccaddress", tf.getDccAddress());
         traininfo.setAttribute("trainintransit", "" + (tf.getTrainInTransit() ? "yes" : "no"));
         traininfo.setAttribute("startblockname", tf.getStartBlockName());

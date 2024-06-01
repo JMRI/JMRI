@@ -13,6 +13,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.swing.CanPanelInterface;
 import jmri.jmrix.openlcb.swing.ClientActions;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriPanel;
 
 import org.openlcb.Connection;
 import org.openlcb.MimicNodeStore;
@@ -27,10 +28,18 @@ import org.openlcb.swing.networktree.TreePane;
 
 /**
  * Frame displaying tree of OpenLCB nodes.
+ * <p>
+ * This uses a {@link CanSystemConnectionMemo} for access to various 
+ * org.openlcb.*
+ * OpenLCB context objects from the 
+ * <a href="https://github.com/openlcb/OpenLCB_Java">OpenLCB_Java project</a>.
+ * The {@link org.openlcb.MimicNodeStore} fills out the tree of known nodes.
+ * When requested to configure a node, that node's CDI is loaded
+ * and presented using a {@link org.openlcb.swing.networktree.TreePane}.
  *
- * @author Bob Jacobsen Copyright (C) 2009, 2010, 2012
+ * @author Bob Jacobsen Copyright (C) 2009, 2010, 2012, 2024
  */
-public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanListener, CanPanelInterface {
+public class NetworkTreePane extends JmriPanel implements CanListener, CanPanelInterface {
 
     public NetworkTreePane() {
         super();

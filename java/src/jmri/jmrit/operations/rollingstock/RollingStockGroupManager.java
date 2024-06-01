@@ -5,6 +5,7 @@ import java.util.*;
 import javax.swing.JComboBox;
 
 import jmri.beans.PropertyChangeSupport;
+import jmri.jmrit.operations.OperationsPanel;
 
 /**
  * 
@@ -33,6 +34,7 @@ public abstract class RollingStockGroupManager extends PropertyChangeSupport {
         for (String name : getNameList()) {
             box.addItem(name);
         }
+        OperationsPanel.padComboBox(box);
         return box;
     }
 

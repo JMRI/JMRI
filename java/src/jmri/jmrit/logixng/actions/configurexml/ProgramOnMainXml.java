@@ -8,6 +8,7 @@ import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ProgramOnMain;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectComboBoxXml;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectEnumXml;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectIntegerXml;
 
 import org.jdom2.Element;
@@ -31,6 +32,7 @@ public class ProgramOnMainXml extends jmri.managers.configurexml.AbstractNamedBe
         ProgramOnMain p = (ProgramOnMain) o;
 
         var selectProgrammingModeXml = new LogixNG_SelectComboBoxXml();
+        var selectLongOrShortAddressXml = new LogixNG_SelectEnumXml<ProgramOnMain.LongOrShortAddress>();
         var selectAddressXml = new LogixNG_SelectIntegerXml();
         var selectCVXml = new LogixNG_SelectIntegerXml();
         var selectValueXml = new LogixNG_SelectIntegerXml();
@@ -57,6 +59,7 @@ public class ProgramOnMainXml extends jmri.managers.configurexml.AbstractNamedBe
 
         element.addContent(selectProgrammingModeXml.store(
                 p.getSelectProgrammingMode(), "programmingMode"));
+        element.addContent(selectLongOrShortAddressXml.store(p.getSelectLongOrShortAddress(), "longOrShortAddress"));
         element.addContent(selectAddressXml.store(p.getSelectAddress(), "address"));
         element.addContent(selectCVXml.store(p.getSelectCV(), "cv"));
         element.addContent(selectValueXml.store(p.getSelectValue(), "value"));
@@ -67,6 +70,7 @@ public class ProgramOnMainXml extends jmri.managers.configurexml.AbstractNamedBe
         }
 
         element.addContent(new Element("localVariableForStatus").addContent(p.getLocalVariableForStatus()));
+        element.addContent(new Element("wait").addContent(p.getWait() ? "yes" : "no"));
 
         return element;
     }
@@ -79,6 +83,7 @@ public class ProgramOnMainXml extends jmri.managers.configurexml.AbstractNamedBe
         ProgramOnMain h = new ProgramOnMain(sys, uname);
 
         var selectProgrammingModeXml = new LogixNG_SelectComboBoxXml();
+        var selectLongOrShortAddressXml = new LogixNG_SelectEnumXml<ProgramOnMain.LongOrShortAddress>();
         var selectAddressXml = new LogixNG_SelectIntegerXml();
         var selectCVXml = new LogixNG_SelectIntegerXml();
         var selectValueXml = new LogixNG_SelectIntegerXml();
@@ -103,6 +108,7 @@ public class ProgramOnMainXml extends jmri.managers.configurexml.AbstractNamedBe
         }
 
         selectProgrammingModeXml.load(shared.getChild("programmingMode"), h.getSelectProgrammingMode());
+        selectLongOrShortAddressXml.load(shared.getChild("longOrShortAddress"), h.getSelectLongOrShortAddress());
         selectAddressXml.load(shared.getChild("address"), h.getSelectAddress());
         selectCVXml.load(shared.getChild("cv"), h.getSelectCV());
         selectValueXml.load(shared.getChild("value"), h.getSelectValue());
@@ -123,6 +129,13 @@ public class ProgramOnMainXml extends jmri.managers.configurexml.AbstractNamedBe
 
         Element elem = shared.getChild("localVariableForStatus");  // NOI18N
         h.setLocalVariableForStatus((elem != null) ? elem.getValue() : "");
+
+        Element wait = shared.getChild("wait");
+        if (wait != null) {
+            h.setWait("yes".equals(wait.getTextTrim()));
+        } else {
+            h.setWait(true);
+        }
 
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
