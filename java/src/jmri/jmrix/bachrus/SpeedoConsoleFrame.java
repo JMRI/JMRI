@@ -55,6 +55,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         ProgListener,
         PropertyChangeListener {
 
+    
+    //TODO: TRW - Disable programmer buttons when other programming is happening
+    
     /**
      * TODO: Complete the help file
      */
@@ -79,9 +82,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         READ17,
         READ18,
         READ29,
+        WRITE3,
+        WRITE4,
     }
-
-    static final int SPEEDMATCHWARMUPTIME = 60;
 
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Member Variables">
@@ -277,18 +280,18 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             + "<li>SoundTraxx - Simple CVs or Speed Table, Trim Reverse Speed can be enabled</li>"
             + "</ul>"
             + "It is recommended to enable Warm Up Locomotive if your locomotive isn't already warmed up to help achieve a more accurate result."
-            + "<br/><br/>Momentum is always set, so be sure to read or set the desired momentum values before speed matching."
+            + "<br/><br/>Momentum is always cleared, so be sure to read the momentum values before speed matching."
             + "<br/><br/></p></html>");
 
     //TODO: TRW - I18N
-    //TODO: TRW - Add ability to either read momentum or skip setting it
     protected JLabel basicSpeedMatchAccelerationLabel = new JLabel("Acceleration: ");
     protected JSpinner basicSpeedMatchAccelerationField = new JSpinner(accelerationSM);
     
     protected JLabel basicSpeedMatchDecelerationLabel = new JLabel("Deceleration: ");
     protected JSpinner basicSpeedMatchDecelerationField = new JSpinner(decelerationSM);
     
-    protected JButton basicSpeedMatchReadMomentumButton = new JButton("Read Momentum");    
+    protected JButton basicSpeedMatchReadMomentumButton = new JButton("Read Momentum");   
+    protected JButton basicSpeedMatchSetMomentumButton = new JButton("Set Momentum");
     
     protected JCheckBox basicSpeedMatchReverseCheckbox = new JCheckBox("Trim Reverse Speed");
     protected ButtonGroup basicSpeedMatcherTypeGroup = new ButtonGroup();
@@ -829,6 +832,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         speedMatchMomentumPane.add(basicSpeedMatchDecelerationLabel);
         speedMatchMomentumPane.add(basicSpeedMatchDecelerationField);
         speedMatchMomentumPane.add(basicSpeedMatchReadMomentumButton);
+        speedMatchMomentumPane.add(basicSpeedMatchSetMomentumButton);
         basicSpeedMatchSettingsPane.add(speedMatchMomentumPane);
 
         //Speed Settings
@@ -855,14 +859,10 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             int targetHighSpeed;
             boolean speedMatchReverse;
             boolean warmUpLoco;
-            int acceleration;
-            int deceleration;
-
+            
             if ((speedMatcher == null) && (profileState == ProfileState.IDLE)) {
                 targetStartSpeed = startSpeedSM.getNumber().intValue();
                 targetHighSpeed = highSpeedSM.getNumber().intValue();
-                acceleration = accelerationSM.getNumber().intValue();
-                deceleration = decelerationSM.getNumber().intValue();
                 
                 //TODO: TRW - get complex/simple
                 speedMatchReverse = basicSpeedMatchReverseCheckbox.isSelected();
@@ -878,8 +878,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                         mphButton.isSelected() ? Speed.Unit.MPH : Speed.Unit.KPH,
                         warmUpLoco,
                         speedMatchReverse,
-                        acceleration,
-                        deceleration,
                         pm,
                         log,
                         statusLabel
@@ -900,6 +898,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         
         // Listen to read momentum button
         basicSpeedMatchReadMomentumButton.addActionListener(e -> readMomentum());
+        
+        //Listen to set momentum button
+        basicSpeedMatchSetMomentumButton.addActionListener(e -> setMomentum());
         
         //</editor-fold>
         //</editor-fold>
@@ -1303,7 +1304,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected synchronized void startProfile() {
         if (locomotiveAddress.getNumber() > 0) {
             if (dirFwdButton.isSelected() || dirRevButton.isSelected()) {
-                if ((speedMatcher == null || speedMatcher.IsIdle()) && (profileState == ProfileState.IDLE)) {
+                if ((speedMatcher == null || speedMatcher.IsIdle()) && (profileState == ProfileState.IDLE)) {                    
                     profileTimer = new javax.swing.Timer(4000, e -> profileTimeout());
                     profileTimer.setRepeats(false);
                     profileState = ProfileState.WAIT_FOR_THROTTLE;
@@ -1620,19 +1621,36 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      * using the service mode programmer
      */
     protected void readAddress() {
-        progState = ProgState.READ29;
-        statusLabel.setText(Bundle.getMessage("ProgRd29"));
-        startRead("29");
+        if ((speedMatcher == null || speedMatcher.IsIdle()) && (profileState == ProfileState.IDLE)) {
+            progState = ProgState.READ29;
+            statusLabel.setText(Bundle.getMessage("ProgRd29"));
+            startRead("29");
+        }
     }
     
     /**
-     * Starts reading the momentum CVs (CV 3 and 4) using the service mode programmer
+     * Starts reading the momentum CVs (CV 3 and 4) using the global programmer
      */
     protected void readMomentum() {
-        progState = ProgState.READ3;
-        //TODO: TRW - I18N
-        statusLabel.setText("Read Acceleration");
-        startRead("3");
+        if ((speedMatcher == null || speedMatcher.IsIdle()) && (profileState == ProfileState.IDLE)) {
+            progState = ProgState.READ3;
+            //TODO: TRW - I18N
+            statusLabel.setText("Read Acceleration");
+            startRead("3");
+        }
+    }
+    
+    /**
+     * Starts writing the momentum CVs (CV 3 and 4) using the global programmer
+     */
+    protected void setMomentum() {
+        if ((speedMatcher == null || speedMatcher.IsIdle()) && (profileState == ProfileState.IDLE)) {
+            progState = ProgState.WRITE3;
+            int acceleration = accelerationSM.getNumber().intValue();
+            //TODO: TRW - I18N
+            statusLabel.setText("Set Acceleration (CV 3) to " + acceleration);
+            startWrite("3", acceleration);
+        }
     }
 
     /**
@@ -1642,9 +1660,23 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      */
     protected void startRead(String cv) {
         try {
-            prog.readCV(String.valueOf(cv), this);
+            prog.readCV(cv, this);
         } catch (ProgrammerException e) {
             log.error("Exception reading CV {}", cv, e);
+        }
+    }
+    
+    /**
+     * STarts writing a CV using the global programmer
+     * 
+     * @param cv the CV
+     * @param value the value to write to the CV
+     */
+    protected void startWrite(String cv, int value) {
+        try {
+            prog.writeCV(cv, value, this);
+        } catch (ProgrammerException e) {
+            log.error("Exception setting CV {} to {}", cv, value, e);
         }
     }
 
@@ -1715,6 +1747,18 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                     addrSelector.setAddress(new DccLocoAddress(readAddress, true));
                     changeOfAddress();
                     statusLabel.setText(Bundle.getMessage("ProgRdComplete"));
+                    progState = ProgState.IDLE;
+                    break;
+                    
+                case WRITE3:
+                    progState = ProgState.WRITE4;
+                    int deceleration = decelerationSM.getNumber().intValue();
+                    //TODO: TRW - I18N
+                    statusLabel.setText("Set Deceleration (CV 4) to " + deceleration);
+                    startWrite("4", deceleration);
+                    break;
+                
+                case WRITE4:
                     progState = ProgState.IDLE;
                     break;
 

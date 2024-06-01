@@ -108,8 +108,6 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener{
 
         this.trimReverseSpeed = config.trimReverseSpeed;
         this.warmUpLocomotive = config.warmUpLoco;
-        this.acceleration = config.acceleration;
-        this.deceleration = config.deceleration;
 
         this.logger = config.logger;
         this.statusLabel = config.statusLabel;

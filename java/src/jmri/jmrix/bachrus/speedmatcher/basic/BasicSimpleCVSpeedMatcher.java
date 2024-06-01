@@ -312,22 +312,6 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                 }
                 break;
 
-            case SET_ACCEL:
-                //set acceleration momentum (CV 3)
-                if (programmerState == ProgrammerState.IDLE) {
-                    writeMomentumAccel(acceleration);
-                    setupNextSpeedMatchState(true, 0);
-                }
-                break;
-
-            case SET_DECEL:
-                //set deceleration momentum (CV 4)
-                if (programmerState == ProgrammerState.IDLE) {
-                    writeMomentumDecel(deceleration);
-                    setupNextSpeedMatchState(true, 0);
-                }
-                break;
-
             case CLEAN_UP:
                 //wrap it up
                 if (programmerState == ProgrammerState.IDLE) {
@@ -432,7 +416,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                 if (speedMatcher.trimReverseSpeed) {
                     return SpeedMatcherState.REVERSE_WARM_UP;
                 } else {
-                    return SpeedMatcherState.SET_ACCEL;
+                    return SpeedMatcherState.CLEAN_UP;
                 }
             }
         },
@@ -443,18 +427,6 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
             }
         },
         REVERSE_SPEED_MATCH_TRIM {
-            @Override
-            protected SpeedMatcherState nextState(BasicSimpleCVSpeedMatcher speedMatcher) {
-                return SpeedMatcherState.SET_ACCEL;
-            }
-        },
-        SET_ACCEL {
-            @Override
-            protected SpeedMatcherState nextState(BasicSimpleCVSpeedMatcher speedMatcher) {
-                return SpeedMatcherState.SET_DECEL;
-            }
-        },
-        SET_DECEL {
             @Override
             protected SpeedMatcherState nextState(BasicSimpleCVSpeedMatcher speedMatcher) {
                 return SpeedMatcherState.CLEAN_UP;
@@ -527,8 +499,8 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
 
     //<editor-fold defaultstate="collapsed" desc="Helper Functions">
     private void Abort() {
-        speedMatcherState = SpeedMatcherState.SET_ACCEL;
-        setupNextSpeedMatchState(true, 0);
+        speedMatcherState = SpeedMatcherState.CLEAN_UP;
+        setupSpeedMatchState(true, 0, 1500);
     }
     
     private void setupNextSpeedMatchState(boolean isForward, int speedStep) {

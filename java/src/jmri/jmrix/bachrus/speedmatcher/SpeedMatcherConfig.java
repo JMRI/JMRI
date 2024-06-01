@@ -38,9 +38,6 @@ public class SpeedMatcherConfig {
     public boolean warmUpLoco;
     public boolean trimReverseSpeed;
     
-    public int acceleration;
-    public int deceleration;
-    
     public JLabel statusLabel;
 
     public SpeedMatcherConfig(
@@ -51,9 +48,7 @@ public class SpeedMatcherConfig {
             float targetTopSpeed, 
             Speed.Unit speedUnit, 
             boolean warmUpLoco, 
-            boolean trimReverseSpeed, 
-            int acceleration,
-            int deceleration,
+            boolean trimReverseSpeed,
             PowerManager powerManager, 
             Logger logger, 
             JLabel statusLabel
@@ -66,8 +61,6 @@ public class SpeedMatcherConfig {
         
         this.warmUpLoco = warmUpLoco;
         this.trimReverseSpeed = trimReverseSpeed;
-        this.acceleration = acceleration;
-        this.deceleration = deceleration;
         
         this.dccLocoAddress = address;
         this.powerManager = powerManager;
