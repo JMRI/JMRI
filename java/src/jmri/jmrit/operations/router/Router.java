@@ -739,7 +739,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             }
         } else {
             // add staging if requested
-        	List<Track> stagingTracks =
+            List<Track> stagingTracks =
                     InstanceManager.getDefault(LocationManager.class).getTracksByMoves(Track.STAGING);
             tracks = new ArrayList<Track>();
             for (Track staging : stagingTracks) {
