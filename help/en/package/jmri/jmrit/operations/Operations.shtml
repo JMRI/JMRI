@@ -2875,17 +2875,28 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
       from a terminal. By defining the track as a classification/interchange track, once the branch
       line train delivers the cars, they will remain there until the main line train stops to
       service the classification/interchange track. Same goes for a <a href="#SwitcherService">local
-        switcher</a>, cars dropped off at a location with a C/I track will remain there until the local
-      moves them to the spur tracks. When the local pulls cars for the spur and places them on the
-      C/I track, they will remain there until the main line train pulls them.
+        switcher</a>, cars dropped off at a location with a C/I track will remain there until the
+      local moves them to the spur tracks. When the local pulls cars for the spur and places them on
+      the C/I track, they will remain there until the main line train pulls them.
+
+      <p>OperationsPro allows you sort cars to C/I tracks by any combination of destination,
+        train, route, road, type, load, and <a href="#PickUpCarOrder">arrival order</a></p>
+        
       <p>The car's load status does not change when placed at a classification/interchange
         track.</p>
 
       <p>
-        If you want more control on how your classification/interchange track will operate, you can
-        optionally specify which <a href="#RestrictingTrackToCertainTrains">trains or train
-          routes</a> can pick up or set out cars. If you restrict which trains or routes can pull cars
-        from a classification/interchange track, you must also restrict the track's car types,
+        You can if you wish control which destinations your C/I track can service. You can access <a
+          href="#TrackDestinations">Track Destinations</a> from the "Tools" menu. The track
+        destinations tool also allows you to restrict the C/I track to cars that are being <a
+          href="#CarRouting">routed</a>. The "Routed" checkbox when selected in the "Edit Location"
+        window means only cars that are being routed can use the C/I track.
+      </p>
+
+      <p>
+        You can optionally specify which <a href="#RestrictingTrackToCertainTrains">trains or
+          train routes</a> can pick up or set out cars. If you restrict which trains or routes can pull
+        cars from a classification/interchange track, you must also restrict the track's car types,
         loads, and roads to the same ones that the train services, otherwise you can have cars
         stranded on the classification/interchange track. Once you specify which trains or routes
         can pull cars, all cars that the train can service are available to the train, even cars
@@ -2896,14 +2907,6 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
         be used to capture a set of cars for a specific train. For example if you had a set of cars
         that you only wanted a "turn" to use, you could create a C/I track that can only be accessed
         by the turn.</p>
-
-      <p>
-        You can if you wish control which destinations your C/I track can service. You can access <a
-          href="#TrackDestinations">Track Destinations</a> from the "Tools" menu. The track
-        destinations tool also allows you to restrict the C/I track to cars that are being <a
-          href="#CarRouting">routed</a>. The "Routed" checkbox when selected in the "Edit Location"
-        window means only cars that are being routed can use the C/I track.
-      </p>
 
       <p>
         The <a href="#BuildReports">build report</a> will provide a list of rolling stock on the C/I track
@@ -3016,7 +3019,7 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
       locomotives on one track will be assigned to the train. A location can have multiple staging
       tracks, but can't have any other types of tracks, spurs, yards, etc. Staging tracks can be at
       the start of a route, the end of the route, or both. Staging tracks in the middle of a route
-      are ignored by the program.
+      are ignored by the program, and are regarded as pass-through tracks.
       <p>
         Note if you are running a train to and from the same staging location using the <a
           href="#BuildOptions">normal</a> build mode, you must define two staging tracks for the
