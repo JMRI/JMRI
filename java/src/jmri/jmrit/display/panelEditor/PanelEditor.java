@@ -617,6 +617,7 @@ public class PanelEditor extends Editor implements ItemListener {
                 setDisplayLevelMenu(p, popup);
                 setHiddenMenu(p, popup);
                 setEmptyHiddenMenu(p, popup);
+                setValueEditDisabledMenu(p, popup);
                 setEditIdMenu(p, popup);
                 setEditClassesMenu(p, popup);
                 popup.addSeparator();

@@ -71,6 +71,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     protected boolean _controlling = true;
     protected boolean _hidden = false;
     protected boolean _emptyHidden = false;
+    protected boolean _valueEditDisabled = false;
     protected int _displayLevel;
 
     protected String _unRotatedText;
@@ -242,6 +243,16 @@ public class PositionableLabel extends JLabel implements Positionable {
     @Override
     public boolean isEmptyHidden() {
         return _emptyHidden;
+    }
+
+    @Override
+    public void setValueEditDisabled(boolean isDisabled) {
+        _valueEditDisabled = isDisabled;
+    }
+
+    @Override
+    public boolean isValueEditDisabled() {
+        return _valueEditDisabled;
     }
 
     /**
