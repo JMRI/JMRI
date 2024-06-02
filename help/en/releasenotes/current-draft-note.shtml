@@ -444,6 +444,9 @@
               of an enum, the button <strong>Show valid names</strong> are added.
               Pressing this button opens a dialog that shows a list of valid values
               and their descriptions.</li>
+          <li>The LogixNG table has now the menu item <strong>Browse All LogixNGs</strong>
+              in the <strong>File</strong> menu. It lists all the LogixNGs, Modules, Tables
+              and Global variables.</li>
           <li></li>
         </ul>
 

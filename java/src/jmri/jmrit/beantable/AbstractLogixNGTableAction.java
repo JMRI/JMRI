@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.*;
 import java.util.List;
 
@@ -23,6 +25,8 @@ import jmri.jmrit.logixng.tools.swing.DeleteBean;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriJOptionPane;
+
+import org.apache.commons.lang3.mutable.MutableInt;
 
 /**
  * Swing action to create and register a LogixNG Table.
@@ -135,9 +139,18 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
      */
     @Override
     public void setMenuBar(BeanTableFrame<E> f) {
-        JMenu menu = new JMenu(Bundle.getMessage("MenuOptions"));  // NOI18N
+        JMenuBar menuBar = f.getJMenuBar();
+
+        JMenu menu = menuBar.getMenu(0);   // Menu "File"
+        JMenuItem r2 = new JMenuItem(Bundle.getMessage("BrowseAllLogixNGs"));  // NOI18N
+        r2.addActionListener((ActionEvent e) -> {
+            getPrintTreeSettings();
+            makeBrowserWindow(true);
+        });
+        menu.add(r2);
+
+        menu = new JMenu(Bundle.getMessage("MenuOptions"));  // NOI18N
         menu.setMnemonic(KeyEvent.VK_O);
-        javax.swing.JMenuBar menuBar = f.getJMenuBar();
         int pos = menuBar.getMenuCount() - 1;  // count the number of menus to insert the TableMenus before 'Window' and 'Help'
         int offset = 1;
         log.debug("setMenuBar number of menu items = {}", pos);  // NOI18N
@@ -710,7 +723,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         // bean was found, create the window
         _curNamedBean = getManager().getBySystemName(sName);
         getPrintTreeSettings();
-        makeBrowserWindow();
+        makeBrowserWindow(false);
     }
 
     void getPrintTreeSettings() {
@@ -727,17 +740,25 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     /**
      * Update text in the browser window.
      */
-    void updateBrowserText() {
+    void updateBrowserText(boolean browseAll) {
         if (_textContent != null) {
-            _textContent.setText(getBeanText(_curNamedBean));
+            if (browseAll) {
+                StringWriter writer = new StringWriter();
+                InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class)
+                        .printTree(_printTreeSettings, new PrintWriter(writer), "    ", new MutableInt(0));
+                _textContent.setText(writer.toString());
+            } else {
+                _textContent.setText(getBeanText(_curNamedBean));
+            }
         }
     }
 
     /**
      * Create and initialize the conditionalNGs browser window.
      */
-    void makeBrowserWindow() {
-        JmriJFrame condBrowserFrame = new JmriJFrame(this.getBrowserTitle(), false, true);
+    void makeBrowserWindow(boolean browseAll) {
+        String title = browseAll ? Bundle.getMessage("BrowseAllLogixNGs") : this.getBrowserTitle();
+        JmriJFrame condBrowserFrame = new JmriJFrame(title, false, true);
 
         condBrowserFrame.addWindowListener(new WindowAdapter() {
             @Override
@@ -751,16 +772,28 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
         // bean header information
         JPanel topPanel = new JPanel();
-        String tStr = Bundle.getMessage("BrowserLogixNG") + " " + _curNamedBean.getSystemName() + "    " // NOI18N
-                + _curNamedBean.getUserName() + "    "
-                + (isEnabled(_curNamedBean)
-                        ? Bundle.getMessage("BrowserEnabled") // NOI18N
-                        : Bundle.getMessage("BrowserDisabled"));  // NOI18N
+        String tStr;
+        if (browseAll) {
+            tStr = title;
+        } else {
+            tStr = Bundle.getMessage("BrowserLogixNG") + " " + _curNamedBean.getSystemName() + "    " // NOI18N
+                    + _curNamedBean.getUserName() + "    "
+                    + (isEnabled(_curNamedBean)
+                            ? Bundle.getMessage("BrowserEnabled") // NOI18N
+                            : Bundle.getMessage("BrowserDisabled"));  // NOI18N
+        }
         topPanel.add(new JLabel(tStr));
         contentPane.add(topPanel, BorderLayout.NORTH);
 
         // Build the conditionalNGs listing
-        _textContent = new JTextArea(this.getBeanText(_curNamedBean));
+        if (browseAll) {
+            StringWriter writer = new StringWriter();
+            InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class)
+                    .printTree(_printTreeSettings, new PrintWriter(writer), "    ", new MutableInt(0));
+            _textContent = new JTextArea(writer.toString());
+        } else {
+            _textContent = new JTextArea(this.getBeanText(_curNamedBean));
+        }
         if (browseMonoSpace()) {
             _textContent.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
         }
@@ -778,7 +811,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                     JmriJOptionPane.INFORMATION_MESSAGE);
         });
 
-        JPanel settingsPanel = getSettingsPanel();
+        JPanel settingsPanel = getSettingsPanel(browseAll);
         bottomPanel.add(settingsPanel, BorderLayout.CENTER);
 
         JButton saveBrowse = new JButton(Bundle.getMessage("BrowserSaveButton"));   // NOI18N
@@ -849,7 +882,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         }
     }
 
-    protected JPanel getSettingsPanel() {
+    protected JPanel getSettingsPanel(boolean browseAll) {
         JPanel checkBoxPanel = new JPanel();
 
         JCheckBox printLineNumbers = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintLineNumbers"));
@@ -860,7 +893,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                 InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
                     prefMgr.setSimplePreferenceState(PRINT_LINE_NUMBERS_OPTION, printLineNumbers.isSelected());
                 });
-                updateBrowserText();
+                updateBrowserText(browseAll);
             }
         });
 
@@ -872,7 +905,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                 InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
                     prefMgr.setSimplePreferenceState(PRINT_ERROR_HANDLING_OPTION, printErrorHandling.isSelected());
                 });
-                updateBrowserText();
+                updateBrowserText(browseAll);
             }
         });
 
@@ -881,7 +914,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         printNotConnectedSockets.addChangeListener((event) -> {
             if (_printTreeSettings._printNotConnectedSockets != printNotConnectedSockets.isSelected()) {
                 _printTreeSettings._printNotConnectedSockets = printNotConnectedSockets.isSelected();
-                updateBrowserText();
+                updateBrowserText(browseAll);
                 InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class).ifPresent((prefMgr) -> {
                     prefMgr.setSimplePreferenceState(PRINT_NOT_CONNECTED_OPTION, printNotConnectedSockets.isSelected());
                 });
@@ -893,7 +926,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         printLocalVariables.addChangeListener((event) -> {
             if (_printTreeSettings._printLocalVariables != printLocalVariables.isSelected()) {
                 _printTreeSettings._printLocalVariables = printLocalVariables.isSelected();
-                updateBrowserText();
+                updateBrowserText(browseAll);
                 InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class).ifPresent((prefMgr) -> {
                     prefMgr.setSimplePreferenceState(PRINT_LOCAL_VARIABLES_OPTION, printLocalVariables.isSelected());
                 });
@@ -908,7 +941,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                 InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
                     prefMgr.setSimplePreferenceState(PRINT_SYSTEM_NAMES_OPTION, printSystemNames.isSelected());
                 });
-                updateBrowserText();
+                updateBrowserText(browseAll);
             }
         });
 
