@@ -161,11 +161,11 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
 
             case FORWARD_WARM_UP:
                 //Run 4 minutes at high speed forward
-                statusLabel.setText(Bundle.getMessage("StatForwardWarmUp", 240 - stepDuration));
+                statusLabel.setText(Bundle.getMessage("StatForwardWarmUp", warmUpForwardSeconds - stepDuration));
 
                 if (stepDuration == 0) {
                     setupSpeedMatchState(true, 28, 5000);
-                } else if (stepDuration >= 240) {
+                } else if (stepDuration >= warmUpForwardSeconds) {
                     setupNextSpeedMatchState(true, 28);
                 } else {
                     stepDuration += 5;
@@ -270,11 +270,11 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
 
             case REVERSE_WARM_UP:
                 //Run 2 minutes at high speed in reverse
-                statusLabel.setText(Bundle.getMessage("StatReverseWarmUp", 240 - stepDuration));
+                statusLabel.setText(Bundle.getMessage("StatReverseWarmUp", warmUpReverseSeconds - stepDuration));
 
                 if (stepDuration == 0) {
                     setupSpeedMatchState(false, 28, 5000);
-                } else if (stepDuration >= 120) {
+                } else if (stepDuration >= warmUpReverseSeconds) {
                     setupNextSpeedMatchState(false, 28);
                 } else {
                     stepDuration += 5;
@@ -384,7 +384,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
         INIT_REVERSE_TRIM {
             @Override
             protected SpeedMatcherState nextState(BasicSimpleCVSpeedMatcher speedMatcher) {
-                if (speedMatcher.warmUpLocomotive) {
+                if (speedMatcher.warmUpForwardSeconds > 0) {
                     return SpeedMatcherState.FORWARD_WARM_UP;
                 } else {
                     return SpeedMatcherState.FORWARD_SPEED_MATCH_VHIGH;
@@ -412,9 +412,13 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
         FORWARD_SPEED_MATCH_VSTART {
             @Override
             protected SpeedMatcherState nextState(BasicSimpleCVSpeedMatcher speedMatcher) {
-
                 if (speedMatcher.trimReverseSpeed) {
-                    return SpeedMatcherState.REVERSE_WARM_UP;
+                    if (speedMatcher.warmUpReverseSeconds > 0) {
+                        return SpeedMatcherState.REVERSE_WARM_UP;
+                    } 
+                    else {
+                        return SpeedMatcherState.REVERSE_SPEED_MATCH_TRIM;
+                    }
                 } else {
                     return SpeedMatcherState.CLEAN_UP;
                 }

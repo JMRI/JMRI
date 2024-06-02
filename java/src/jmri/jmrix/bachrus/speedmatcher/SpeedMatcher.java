@@ -79,9 +79,9 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener{
     protected float speedMatchError = 0;
 
     protected boolean trimReverseSpeed;
-    protected boolean warmUpLocomotive;
-    protected int acceleration;
-    protected int deceleration;
+    
+    protected int warmUpForwardSeconds = 240;
+    protected int warmUpReverseSeconds = 120;
 
     protected int stepDuration = 0;
     protected float currentSpeed = 0;
@@ -107,7 +107,9 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener{
         this.powerManager = config.powerManager;
 
         this.trimReverseSpeed = config.trimReverseSpeed;
-        this.warmUpLocomotive = config.warmUpLoco;
+        
+        this.warmUpForwardSeconds = config.warmUpForwardSeconds;
+        this.warmUpReverseSeconds = config.warmUpReverseSeconds;
 
         this.logger = config.logger;
         this.statusLabel = config.statusLabel;

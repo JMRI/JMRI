@@ -112,11 +112,11 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
 
             case FORWARD_WARM_UP:
                 //Run 4 minutes at high speed forward
-                statusLabel.setText(Bundle.getMessage("StatForwardWarmUp", 240 - stepDuration));
+                statusLabel.setText(Bundle.getMessage("StatForwardWarmUp", warmUpForwardSeconds - stepDuration));
 
                 if (stepDuration == 0) {
                     setupSpeedMatchState(true, 28, 5000);
-                } else if (stepDuration >= 240) {
+                } else if (stepDuration >= warmUpForwardSeconds) {
                     setupNextSpeedMatchState(true, 28);
                 } else {
                     stepDuration += 5;
@@ -130,11 +130,11 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
 
             case REVERSE_WARM_UP:
                 //Run 2 minutes at high speed in reverse
-                statusLabel.setText(Bundle.getMessage("StatReverseWarmUp", 240 - stepDuration));
+                statusLabel.setText(Bundle.getMessage("StatReverseWarmUp", warmUpReverseSeconds - stepDuration));
 
                 if (stepDuration == 0) {
                     setupSpeedMatchState(false, 28, 5000);
-                } else if (stepDuration >= 120) {
+                } else if (stepDuration >= warmUpReverseSeconds) {
                     setupNextSpeedMatchState(false, 28);
                 } else {
                     stepDuration += 5;
@@ -169,22 +169,6 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
                             speedMatchStateTimer.setInitialDelay(8000);
                         }
                     }
-                }
-                break;
-
-            case SET_ACCEL:
-                //set acceleration momentum (CV 3)
-                if (programmerState == ProgrammerState.IDLE) {
-                    writeMomentumAccel(acceleration);
-                    setupNextSpeedMatchState(true, 0);
-                }
-                break;
-
-            case SET_DECEL:
-                //set deceleration momentum (CV 4)
-                if (programmerState == ProgrammerState.IDLE) {
-                    writeMomentumDecel(deceleration);
-                    setupNextSpeedMatchState(true, 0);
                 }
                 break;
 
@@ -249,7 +233,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
         INIT_REVERSE_TRIM {
             @Override
             protected SpeedMatcherState nextState(BasicSpeedTableSpeedMatcher speedMatcher) {
-                if (speedMatcher.warmUpLocomotive) {
+                 if (speedMatcher.warmUpForwardSeconds > 0) {
                     return SpeedMatcherState.FORWARD_WARM_UP;
                 } else {
                     return SpeedMatcherState.FORWARD_SPEED_MATCH;
@@ -269,10 +253,14 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
 //                if (currentSpeedTableStep == SpeedTableStep.STEP28) {
 //                    currentSpeedTableStep = SpeedTableStep.STEP1;
 //                    if (speedMatcher.trimReverseSpeed) {
-//                        return SpeedMatcherState.REVERSE_WARM_UP;
-//                    }
-//                    else {
-//                        return SpeedMatcherState.SET_ACCEL;
+//                        if (speedMatcher.warmUpReverseSeconds > 0) {
+//                            return SpeedMatcherState.REVERSE_WARM_UP;
+//                        } 
+//                        else {
+//                            return SpeedMatcherState.REVERSE_SPEED_MATCH_TRIM;
+//                        }
+//                    } else {
+//                        return SpeedMatcherState.CLEAN_UP;
 //                    }
 //                }
                 return this;
@@ -285,18 +273,6 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
             }
         },
         REVERSE_SPEED_MATCH_TRIM {
-            @Override
-            protected SpeedMatcherState nextState(BasicSpeedTableSpeedMatcher speedMatcher) {
-                return SpeedMatcherState.SET_ACCEL;
-            }
-        },
-        SET_ACCEL {
-            @Override
-            protected SpeedMatcherState nextState(BasicSpeedTableSpeedMatcher speedMatcher) {
-                return SpeedMatcherState.SET_DECEL;
-            }
-        },
-        SET_DECEL {
             @Override
             protected SpeedMatcherState nextState(BasicSpeedTableSpeedMatcher speedMatcher) {
                 return SpeedMatcherState.CLEAN_UP;
@@ -352,11 +328,11 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
     //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="Helper Functions">
-    private void Abort() {
-        speedMatcherState = SpeedMatcherState.SET_ACCEL;
-        setupNextSpeedMatchState(true, 0);
+     private void Abort() {
+        speedMatcherState = SpeedMatcherState.CLEAN_UP;
+        setupSpeedMatchState(true, 0, 1500);
     }
-
+    
     private void setupNextSpeedMatchState(boolean isForward, int speedStep) {
         speedMatcherState = speedMatcherState.nextState(this);
         setupSpeedMatchState(isForward, speedStep, 1500);
