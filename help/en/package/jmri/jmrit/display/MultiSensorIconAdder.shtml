@@ -20,7 +20,7 @@
         For example, you could have ten icons representing the positions of a
         thumbwheel switch.</p>
       <p>The user can move to the next or previous icon by
-        clicking on the icon.  This will deactivate the current sensor
+        clicking on the icon as described below.  This will deactivate the current sensor
         and activate the newly-selected one.</p>
        <p>People often use this in concert with
         <a href="../sensorgroup/SensorGroupFrame.shtml">Sensor Groups</a> to make sure that the
@@ -39,10 +39,11 @@
       <img src="images/MultiSensorIcon.png" class="floatRight" alt="add multi sensor icon">
       <p>The icons in the MultiSensor Icon Editor differ only from other Icon Editors
       in that there are several "active"
-      icons. Each corresponds to e.g. a switch or lever position. In the Panel, the positions
-      can be cycled
+      icons. Each corresponds to e.g. a switch or lever position or some other 
+      sequence of icons.
+      On the Panel that's using the icon, the positions can be cycled
       through in sequence in either forward or reverse order.
-      
+            
       <p>A position can be deleted by pressing the <strong>Delete</strong> button
       under the icon. Additional positions can be added by pressing the <strong>Add another
       Icon</strong> button.</p>
@@ -52,10 +53,20 @@
       "undefined". When the sensor row is dropped on the label, it will display the sensor
       name.</p>
 
-      <p>The Up &lt;-&gt; Down and Right &lt;-&gt; Left radio buttons determine where the user clicks to 
-      go to the next or previous sensor icon.  If Up &lt;-&gt; Down is selected, clicking in the 
-      top half will advance the selection.  If Right &lt;-&gt; Left is selected, clicking in the 
-      right half will advance the selection.</p>
+      <p>The 
+      <strong>Up &lt;-&gt; Down</strong>
+      and 
+      <strong>Right &lt;-&gt; Left </strong>
+      radio buttons determine where the user clicks to 
+      go to the next or previous sensor icon.  If 
+      <strong>Up &lt;-&gt; Down</strong>
+      is selected, clicking in the 
+      top half will advance the selection.  If 
+      <strong>Right &lt;-&gt; Left</strong>
+      is selected, clicking in the 
+      right half will advance the selection.
+      Note that this works best when all the images are the same size.
+      It can be difficult to properly click on the icons if they vary in size.</p>
       
       <p>When all the active icons are assigned sensors, the <strong>Add to Panel</strong> button
       will become active and it can be pressed to install the MultiSensor onto the Panel.</p>
