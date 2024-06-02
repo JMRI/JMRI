@@ -398,6 +398,13 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
             MutableInt lineNumber) {
 
         for (LogixNG logixNG : getNamedBeanSet()) {
+            if (logixNG.isInline()) continue;
+            logixNG.printTree(settings, locale, writer, indent, "", lineNumber);
+            writer.println();
+        }
+
+        for (LogixNG logixNG : getNamedBeanSet()) {
+            if (!logixNG.isInline()) continue;
             logixNG.printTree(settings, locale, writer, indent, "", lineNumber);
             writer.println();
         }

@@ -198,6 +198,12 @@ public abstract class AbstractBase
         }
         writer.append(currentIndent);
         writer.append(getLongDescription(locale));
+        if (!isEnabled()) {
+            writer.append(" ::: ").append(Bundle.getMessage("Disabled"));
+        }
+        if ((this instanceof ConditionalNG) && (((ConditionalNG)this).isExecuteAtStartup())) {
+            writer.append(" ::: ").append(Bundle.getMessage("Startup"));
+        }
         writer.println();
     }
 
