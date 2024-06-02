@@ -55,7 +55,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         ProgListener,
         PropertyChangeListener {
 
-    
     //TODO: TRW - Disable programmer buttons when other programming is happening
     
     /**
@@ -216,7 +215,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
     protected float throttleIncrement;
     protected Programmer prog = null;
-    protected AddressedProgrammer ops_mode_prog = null;
     protected CommandStation commandStation = null;
 
     private PowerManager pm = null;
@@ -262,9 +260,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
     protected ProfileState profileState = ProfileState.IDLE;
     //</editor-fold>
-    
-    //<editor-fold defaultstate="collapsed" desc="Speed Matching GUI Elements">
 
+    //<editor-fold defaultstate="collapsed" desc="Speed Matching GUI Elements">
     protected SpinnerNumberModel accelerationSM = new SpinnerNumberModel(0, 0, 255, 1);
     protected SpinnerNumberModel decelerationSM = new SpinnerNumberModel(0, 0, 255, 1);
 
@@ -286,11 +283,11 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     //TODO: TRW - I18N
     protected JLabel basicSpeedMatchAccelerationLabel = new JLabel("Acceleration: ");
     protected JSpinner basicSpeedMatchAccelerationField = new JSpinner(accelerationSM);
-    
+
     protected JLabel basicSpeedMatchDecelerationLabel = new JLabel("Deceleration: ");
     protected JSpinner basicSpeedMatchDecelerationField = new JSpinner(decelerationSM);
-    
-    protected JButton basicSpeedMatchReadMomentumButton = new JButton("Read Momentum");   
+
+    protected JButton basicSpeedMatchReadMomentumButton = new JButton("Read Momentum");
     protected JButton basicSpeedMatchSetMomentumButton = new JButton("Set Momentum");
     
     protected JCheckBox basicSpeedMatchReverseCheckbox = new JCheckBox("Trim Reverse Speed");
@@ -311,14 +308,12 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
     protected JCheckBox basicSpeedMatchWarmUpCheckBox = new JCheckBox("Warm Up Locomotive");
     protected JButton basicSpeedMatchStartStopButton = new JButton("Start Speed Match");
-    
+
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Advanced">
     //TODO: TRW - AdvancedSpeedMatcherPane advancedSpeedMatcherPane;
     //</editor-fold>
-    
     //</editor-fold>
-    
     //<editor-fold defaultstate="collapsed" desc="Speed Matching Member Variables">
     protected SpeedMatcher speedMatcher;
 
@@ -628,7 +623,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         addrPane.add(new JLabel(" "), gConstraints);
         addrPane.add(readAddressButton, gConstraints);
 
-        if (((dccServices & PROG) != PROG) || (mainButton.isSelected())) {
+        if ((dccServices & PROG) != PROG) {
             // No programming facility so user must enter address
             addrSelector.setEnabled(false);
             readAddressButton.setEnabled(false);
@@ -640,13 +635,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         // Listen to read button
         readAddressButton.addActionListener(e -> readAddress());
 
-        // set up top panel of modePanel and addrPane
-        var topLeftPane = new JPanel();
-        topLeftPane.setLayout(new BorderLayout());
-        topLeftPane.add(modePanel, BorderLayout.NORTH);
-        topLeftPane.add(addrPane, BorderLayout.SOUTH);
-
-        profileAndSpeedMatchingPane.add(topLeftPane, BorderLayout.NORTH);
+        profileAndSpeedMatchingPane.add(addrPane, BorderLayout.NORTH);
 
         //</editor-fold>
         //<editor-fold defaultstate="collapsed" desc="Speed Matching and Profiling Panel">
@@ -886,26 +875,24 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
                 if (speedMatcher.StartSpeedMatch()) {
                     //TODO: TRW - I18N
-                     basicSpeedMatchStartStopButton.setText("Stop Speed Match"); 
-                }
-                else {
+                    basicSpeedMatchStartStopButton.setText("Stop Speed Match");
+                } else {
                     speedMatcher = null;
                 }
             } else {
                 stopProfileAndSpeedMatch();
             }
         });
-        
+
         // Listen to read momentum button
         basicSpeedMatchReadMomentumButton.addActionListener(e -> readMomentum());
-        
+
         //Listen to set momentum button
         basicSpeedMatchSetMomentumButton.addActionListener(e -> setMomentum());
         
         //</editor-fold>
         //</editor-fold>
         //<editor-fold defaultstate="collapsed" desc="Advanced Speed Matcher Tab">
-
         //TODO: TRW - add advanced speed matching pane tab
         //</editor-fold>
         profileAndSpeedMatchingPane.add(profileAndSpeedMatchingTabs, BorderLayout.CENTER);
@@ -1304,7 +1291,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected synchronized void startProfile() {
         if (locomotiveAddress.getNumber() > 0) {
             if (dirFwdButton.isSelected() || dirRevButton.isSelected()) {
-                if ((speedMatcher == null || speedMatcher.IsIdle()) && (profileState == ProfileState.IDLE)) {                    
+                if ((speedMatcher == null || speedMatcher.IsIdle()) && (profileState == ProfileState.IDLE)) {
                     profileTimer = new javax.swing.Timer(4000, e -> profileTimeout());
                     profileTimer.setRepeats(false);
                     profileState = ProfileState.WAIT_FOR_THROTTLE;
@@ -1404,7 +1391,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 //      } catch (JmriException e) {
 //          log.error("Exception during power off: "+e.toString());
 //      }
-
         //release throttle
         if (throttle != null) {
             throttle.setSpeedSetting(0.0F);
@@ -1412,17 +1398,11 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             throttle = null;
         }
 
-        //release ops mode programmer
-        if (ops_mode_prog != null) {
-            InstanceManager.getDefault(AddressedProgrammerManager.class).releaseAddressedProgrammer(ops_mode_prog);
-            ops_mode_prog = null;
-        }
-
         //clean up speed matcher
         if (speedMatcher != null) {
             speedMatcher.CleanUp();
         }
-        
+
         resetGraphButton.setEnabled(true);
         progState = ProgState.IDLE;
         profileState = ProfileState.IDLE;
@@ -1596,9 +1576,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         if (currentSpeed < 0.01F) {
             currentSpeed = 0.0F;
         }
-        
+
         showSpeed();
-        
+
         if (speedMatcher != null) {
             speedMatcher.UpdateCurrentSpeed(currentSpeed);
         }
@@ -1627,7 +1607,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             startRead("29");
         }
     }
-    
+
     /**
      * Starts reading the momentum CVs (CV 3 and 4) using the global programmer
      */
@@ -1639,7 +1619,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             startRead("3");
         }
     }
-    
+
     /**
      * Starts writing the momentum CVs (CV 3 and 4) using the global programmer
      */
@@ -1665,11 +1645,11 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             log.error("Exception reading CV {}", cv, e);
         }
     }
-    
+
     /**
      * STarts writing a CV using the global programmer
-     * 
-     * @param cv the CV
+     *
+     * @param cv    the CV
      * @param value the value to write to the CV
      */
     protected void startWrite(String cv, int value) {
@@ -1712,14 +1692,13 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
                 case READ1:
                     readAddress = value;
-                    //TODO: TRW - why is this commented out?
                     //profileAddressField.setText(Integer.toString(profileAddress));
                     //profileAddressField.setBackground(Color.WHITE);
                     addrSelector.setAddress(new DccLocoAddress(readAddress, false));
                     changeOfAddress();
                     progState = ProgState.IDLE;
                     break;
-                    
+
                 case READ3:
                     accelerationSM.setValue(value);
                     progState = ProgState.READ4;
@@ -1749,7 +1728,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                     statusLabel.setText(Bundle.getMessage("ProgRdComplete"));
                     progState = ProgState.IDLE;
                     break;
-                    
+
                 case WRITE3:
                     progState = ProgState.WRITE4;
                     int deceleration = decelerationSM.getNumber().intValue();
@@ -1757,7 +1736,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                     statusLabel.setText("Set Deceleration (CV 4) to " + deceleration);
                     startWrite("4", deceleration);
                     break;
-                
+
                 case WRITE4:
                     progState = ProgState.IDLE;
                     break;
