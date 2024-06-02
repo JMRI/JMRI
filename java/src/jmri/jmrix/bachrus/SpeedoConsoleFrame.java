@@ -95,10 +95,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected JTextField speedTextField = new JTextField(12);
     protected JPanel displayCards = new JPanel();
 
-    protected ButtonGroup modeGroup = new ButtonGroup();
-    protected JRadioButton progButton = new JRadioButton(Bundle.getMessage("ProgTrack"));
-    protected JRadioButton mainButton = new JRadioButton(Bundle.getMessage("OnMain"));
-
     protected ButtonGroup speedGroup = new ButtonGroup();
     protected JRadioButton mphButton = new JRadioButton(Bundle.getMessage("MPH"));
     protected JRadioButton kphButton = new JRadioButton(Bundle.getMessage("KPH"));
