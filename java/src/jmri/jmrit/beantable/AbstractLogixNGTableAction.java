@@ -739,6 +739,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
     /**
      * Update text in the browser window.
+     * @param browseAll true of browse all LogixNGs, false otherwise
      */
     void updateBrowserText(boolean browseAll) {
         if (_textContent != null) {
@@ -755,6 +756,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
     /**
      * Create and initialize the conditionalNGs browser window.
+     * @param browseAll true of browse all LogixNGs, false otherwise
      */
     void makeBrowserWindow(boolean browseAll) {
         String title = browseAll ? Bundle.getMessage("BrowseAllLogixNGs") : this.getBrowserTitle();
