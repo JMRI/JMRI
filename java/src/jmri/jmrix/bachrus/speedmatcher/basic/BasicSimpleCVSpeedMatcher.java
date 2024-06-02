@@ -115,9 +115,6 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                     setupNextSpeedMatchState(true, 0);
                 }
                 break;
-                
-            //TODO: TRW - add case to set speed step mode of decoder to Simple
-            //CVs instead of speed table
 
             case INIT_VSTART:
                 //set vStart to 1 (CV 2)
@@ -176,7 +173,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                 //Use PID Controller logic to adjust vHigh to achieve desired speed
                 if (programmerState == ProgrammerState.IDLE) {
                     if (stepDuration == 0) {
-                        statusLabel.setText(Bundle.getMessage("StatSettingSpeedStep28"));
+                        statusLabel.setText(Bundle.getMessage("StatSettingSpeed", "5 (vHigh)"));
                         setupSpeedMatchState(true, 28, 15000);
                         stepDuration = 1;
                     } else {
@@ -188,8 +185,8 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                             vHigh = getNextSpeedMatchValue(lastVHigh);
 
                             if (((lastVHigh == 1) || (lastVHigh == 255)) && (vHigh == lastVHigh)) {
-                                statusLabel.setText(Bundle.getMessage("StatSetSpeedStep28Fail"));
-                                logger.debug("Unable to achieve desired speed at Speed Step 28");
+                                statusLabel.setText(Bundle.getMessage("StatSetSpeedFail", "5 (vHigh)"));
+                                logger.debug("Unable to achieve desired speed for CV 5 (vHigh)");
                                 Abort();
                                 break;
                             } else {
@@ -206,7 +203,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                 //Use PID Controller logic to adjust vMid to achieve desired speed
                 if (programmerState == ProgrammerState.IDLE) {
                     if (stepDuration == 0) {
-                        statusLabel.setText("Setting VMid");
+                        statusLabel.setText(Bundle.getMessage("StatSettingSpeed", "6 (vMid)"));
                         setupSpeedMatchState(true, 14, 15000);
                         stepDuration = 1;
 
@@ -223,9 +220,8 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                             vMid = getNextSpeedMatchValue(lastVMid);
 
                             if (((lastVMid == vStart) || (lastVMid == vHigh)) && (vMid == lastVMid)) {
-                                //TODO: TRW - ensure this is the right message
-                                statusLabel.setText(Bundle.getMessage("StatSetSpeedStep28Fail"));
-                                logger.debug("Unable to achieve desired speed vMid");
+                                statusLabel.setText(Bundle.getMessage("StatSetSpeedFail", "6 (vMid)"));
+                                logger.debug("Unable to achieve desired speed for CV 6 (vMid)");
                                 Abort();
                                 break;
                             } else {
@@ -242,7 +238,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                 //Use PID Controller to adjust vStart to achieve desired speed
                 if (programmerState == ProgrammerState.IDLE) {
                     if (stepDuration == 0) {
-                        statusLabel.setText(Bundle.getMessage("StatSettingSpeedStep1"));
+                        statusLabel.setText(Bundle.getMessage("StatSettingSpeed", "2 (vStart)"));
                         setupSpeedMatchState(true, 1, 15000);
                         stepDuration = 1;
                     } else {
@@ -254,8 +250,8 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                             vStart = getNextSpeedMatchValue(lastVStart);
 
                             if (((lastVStart == 1) || (lastVStart == 255)) && (vStart == lastVStart)) {
-                                statusLabel.setText(Bundle.getMessage("StatSetSpeedStep1Fail"));
-                                logger.debug("Unable to achieve desired speed at Speed Step 1");
+                                statusLabel.setText(Bundle.getMessage("StatSetSpeedFail", "2 (vStart)"));
+                                logger.debug("Unable to achieve desired speed for CV 2 (vStart)");
                                 Abort();
                                 break;
                             } else {
@@ -455,7 +451,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
      */
     private synchronized void writeVStart(int value) {
         programmerState = ProgrammerState.WRITE2;
-        statusLabel.setText(Bundle.getMessage("ProgSetVStart", value));
+        statusLabel.setText(Bundle.getMessage("ProgSetCV", "2 (vStart)", value));
         startOpsModeWrite("2", value);
     }
 
@@ -465,7 +461,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
      */
     private synchronized void writeVMid(int value) {
         programmerState = ProgrammerState.WRITE6;
-        statusLabel.setText(Bundle.getMessage("ProgSetVMid", value));
+        statusLabel.setText(Bundle.getMessage("ProgSetCV", "6 (vMid)", value));
         startOpsModeWrite("6", value);
     }
 
@@ -475,7 +471,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
      */
     private synchronized void writeVHigh(int value) {
         programmerState = ProgrammerState.WRITE5;
-        statusLabel.setText(Bundle.getMessage("ProgSetVHigh", value));
+        statusLabel.setText(Bundle.getMessage("ProgSetCV", "5 (vHigh)", value));
         startOpsModeWrite("5", value);
     }
     
@@ -512,5 +508,4 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
         setupSpeedMatchState(isForward, speedStep, 1500);
     }
     //</editor-fold>
-
 }

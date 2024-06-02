@@ -276,6 +276,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             + "</ul>"
             + "It is recommended to enable Warm Up Locomotive if your locomotive isn't already warmed up to help achieve a more accurate result."
             + "<br/><br/>Momentum is always cleared, so be sure to read the momentum values before speed matching."
+            + "<br/><br/>Be sure to have you locomotive set to use the desired speed table (CV 29 bit 4)."
             + "<br/><br/></p></html>");
 
     //TODO: TRW - I18N
@@ -1621,8 +1622,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected void readMomentum() {
         if ((speedMatcher == null || speedMatcher.IsIdle()) && (profileState == ProfileState.IDLE)) {
             progState = ProgState.READ3;
-            //TODO: TRW - I18N
-            statusLabel.setText("Read Acceleration");
+            statusLabel.setText(Bundle.getMessage("ProgReadAccel"));
             startRead("3");
         }
     }
@@ -1634,8 +1634,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         if ((speedMatcher == null || speedMatcher.IsIdle()) && (profileState == ProfileState.IDLE)) {
             progState = ProgState.WRITE3;
             int acceleration = accelerationSM.getNumber().intValue();
-            //TODO: TRW - I18N
-            statusLabel.setText("Set Acceleration (CV 3) to " + acceleration);
+            statusLabel.setText(Bundle.getMessage("ProgSetAccel", acceleration));
             startWrite("3", acceleration);
         }
     }
@@ -1709,8 +1708,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 case READ3:
                     accelerationSM.setValue(value);
                     progState = ProgState.READ4;
-                    //TODO: TRW - I18N
-                    statusLabel.setText("Read deceleration");
+                    statusLabel.setText(Bundle.getMessage("ProgReadDecel"));
                     startRead("4");
                     break;
 
@@ -1739,8 +1737,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 case WRITE3:
                     progState = ProgState.WRITE4;
                     int deceleration = decelerationSM.getNumber().intValue();
-                    //TODO: TRW - I18N
-                    statusLabel.setText("Set Deceleration (CV 4) to " + deceleration);
+                    statusLabel.setText(Bundle.getMessage("ProgSetDecel", deceleration));
                     startWrite("4", deceleration);
                     break;
 
