@@ -874,6 +874,7 @@
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="false"/><!-- skip intermittent tests -->
+            <sysproperty key="jmri.skipLinkedWarrantTest" value="false"/><!-- skip LinkedWarrantTest -->
             <sysproperty key="jmri.skipBuildHelpFilesTest" value="false"/><!-- skip BuildHelpFilesTest test -->
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
@@ -912,6 +913,7 @@
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="false"/><!-- skip intermittent tests -->
+            <sysproperty key="jmri.skipLinkedWarrantTest" value="false"/><!-- skip LinkedWarrantTest -->
             <sysproperty key="jmri.skipBuildHelpFilesTest" value="false"/><!-- skip BuildHelpFilesTest test -->
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
@@ -1599,6 +1601,7 @@
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/><!-- skip intermittent tests -->
+            <sysproperty key="jmri.skipLinkedWarrantTest" value="true"/><!-- skip LinkedWarrantTest -->
             <sysproperty key="jmri.skipBuildHelpFilesTest" value="true"/><!-- skip BuildHelpFilesTest test -->
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
@@ -1691,6 +1694,7 @@
                     <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
                     <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
                     <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/>
+                    <sysproperty key="jmri.skipLinkedWarrantTest" value="true"/><!-- skip LinkedWarrantTest -->
                     <sysproperty key="jmri.skipBuildHelpFilesTest" value="true"/><!-- skip BuildHelpFilesTest test -->
                     <sysproperty key="user.language" value="en"/>
                     <sysproperty key="user.country" value="US"/>
@@ -1747,6 +1751,7 @@
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/><!-- skip intermittent tests -->
+            <sysproperty key="jmri.skipLinkedWarrantTest" value="true"/><!-- skip LinkedWarrantTest -->
             <sysproperty key="jmri.skipBuildHelpFilesTest" value="true"/><!-- skip BuildHelpFilesTest test -->
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
