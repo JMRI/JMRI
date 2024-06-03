@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @Timeout(60)
 @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-@DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
+@DisabledIfSystemProperty(named ="jmri.skipLinkedWarrantTest", matches ="true")
 public class LinkedWarrantTest {
 
     private OBlockManager _OBlockMgr;
@@ -31,7 +31,7 @@ public class LinkedWarrantTest {
     private WarrantManager _warrantMgr;
 
     // tests a warrant launching itself. (origin, destination the same to make continuous loop)
-    @Disabled("This test fails on CI")
+//    @Disabled("This test fails on CI")
     @Test
     public void testLoopedWarrant() throws Exception {
         // load and display
@@ -178,7 +178,7 @@ public class LinkedWarrantTest {
 
     // tests a warrant running a train out and launching a return train
     // Both warrants have the same address and origin of each is destination of the other
-    @Disabled("This test fails on CI")
+//    @Disabled("This test fails on CI")
     @Test
     public void testBackAndForth() throws Exception {
         // load and display

@@ -479,9 +479,8 @@ public class TrainManager extends PropertyChangeSupport
     }
 
     /**
-     *
      * @param car         The car looking for a train.
-     * @param buildReport The build report for logging.
+     * @param buildReport The optional build report for logging.
      * @return Train that can service car from its current location to the its
      *         destination.
      */
@@ -490,10 +489,9 @@ public class TrainManager extends PropertyChangeSupport
     }
 
     /**
-     *
-     * @param car          The car looking for a train.
+     * @param car           The car looking for a train.
      * @param excludeTrains The trains not to try.
-     * @param buildReport  The build report for logging.
+     * @param buildReport   The optional build report for logging.
      * @return Train that can service car from its current location to the its
      *         destination.
      */
@@ -502,7 +500,7 @@ public class TrainManager extends PropertyChangeSupport
         addLine(buildReport, Bundle.getMessage("trainFindForCar", car.toString(), car.getLocationName(),
                 car.getTrackName(), car.getDestinationName(), car.getDestinationTrackName()));
 
-        main: for (Train train : getTrainsByIdList()) {
+        main: for (Train train : getTrainsByNameList()) {
             if (excludeTrains.contains(train)) {
                 continue;
             }

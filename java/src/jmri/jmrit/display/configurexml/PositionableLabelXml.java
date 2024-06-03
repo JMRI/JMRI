@@ -183,6 +183,9 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         if (p.isEmptyHidden()) {
             element.setAttribute("emptyHidden", "yes");
         }
+        if (p.isValueEditDisabled()) {
+            element.setAttribute("valueEditDisabled", "yes");
+        }
         element.setAttribute("positionable", p.isPositionable() ? "true" : "false");
         element.setAttribute("showtooltip", p.showToolTip() ? "true" : "false");
         element.setAttribute("editable", p.isEditable() ? "true" : "false");
@@ -538,6 +541,15 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             l.setEmptyHidden(value);
         } catch (DataConversionException e) {
             log.warn("unable to convert positionable label emptyHidden attribute");
+        } catch (NullPointerException e) {
+            // considered normal if the attribute not present
+        }
+
+        try {
+            boolean value = element.getAttribute("valueEditDisabled").getBooleanValue();
+            l.setValueEditDisabled(value);
+        } catch (DataConversionException e) {
+            log.warn("unable to convert positionable label valueEditDisabled attribute");
         } catch (NullPointerException e) {
             // considered normal if the attribute not present
         }
