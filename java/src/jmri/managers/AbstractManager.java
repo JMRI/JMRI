@@ -307,6 +307,18 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     }
 
     /**
+     * Get the outer bean of an encapsulated bean.
+     * Some managers encapsulates the beans and those managers needs to
+     * override this method.
+     * @param  bean the bean
+     * @return the most outer bean or the bean itself if there is no
+     *         outer bean
+     */
+    protected E getOuterBean(E bean) {
+        return bean;
+    }
+
+    /**
      * The PropertyChangeListener interface in this class is intended to keep
      * track of user name changes to individual NamedBeans. It is not completely
      * implemented yet. In particular, listeners are not added to newly
@@ -322,7 +334,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
             String old = (String) e.getOldValue();  // previous user name
             String now = (String) e.getNewValue();  // current user name
             try { // really should always succeed
-                E t = (E) e.getSource();
+                E t = getOuterBean((E) e.getSource());
                 if (old != null) {
                     _tuser.remove(old); // remove old name for this bean
                 }
