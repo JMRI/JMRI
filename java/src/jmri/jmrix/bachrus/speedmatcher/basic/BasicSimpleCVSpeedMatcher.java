@@ -7,7 +7,7 @@ import jmri.jmrix.bachrus.speedmatcher.SpeedMatcherConfig;
 
 /**
  * This is a simple speed matcher which will speed match a locomotive to a given
- * start and top speed using the simple VStart, VMid, and VHigh CVs
+ * start and top speed using the simple VStart, VMid, and VHigh CVs.
  * @author Todd Wegter
  */
 public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
