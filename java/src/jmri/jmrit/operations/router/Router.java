@@ -727,20 +727,21 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
 
         Car testCar = clone(car); // reload
         // build the "next" and "other" location/tracks
-        // start with interchanges
         List<Track> tracks;
-        tracks = InstanceManager.getDefault(LocationManager.class).getTracksByMoves(Track.INTERCHANGE);
-        loadTracksAndTrains(car, testCar, tracks);
-        // next load yards if enabled
-        if (Setup.isCarRoutingViaYardsEnabled()) {
-            tracks = InstanceManager.getDefault(LocationManager.class).getTracksByMoves(Track.YARD);
+        if (!useStaging) {
+            // start with interchanges
+            tracks = InstanceManager.getDefault(LocationManager.class).getTracksByMoves(Track.INTERCHANGE);
             loadTracksAndTrains(car, testCar, tracks);
-        }
-        // add staging if requested
-        if (useStaging) {
+            // next load yards if enabled
+            if (Setup.isCarRoutingViaYardsEnabled()) {
+                tracks = InstanceManager.getDefault(LocationManager.class).getTracksByMoves(Track.YARD);
+                loadTracksAndTrains(car, testCar, tracks);
+            }
+        } else {
+            // add staging if requested
             List<Track> stagingTracks =
                     InstanceManager.getDefault(LocationManager.class).getTracksByMoves(Track.STAGING);
-            tracks.clear();
+            tracks = new ArrayList<Track>();
             for (Track staging : stagingTracks) {
                 if (!staging.isModifyLoadsEnabled()) {
                     tracks.add(staging);

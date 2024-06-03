@@ -21,9 +21,8 @@
  *  TODO: update drawn track on color and width changes (would need to create system objects to reflect these chgs)
  *  TODO: research movement of locoicons ("promote" locoicon to system entity in JMRI?, add panel-level listeners?)
  *  TODO: deal with mouseleave, mouseout, touchout, etc. Slide off Stop button on rb1 for example.
- *  TODO: handle inputs/selection on various memory widgets
- *  TODO: alignment of memoryIcons without fixed width is very different.  Recommended workaround is to use fixed width.
- *  TODO:    ditto for sensorIcons with text
+ *  TODO: handle memoryComboIcon
+ *  TODO: alignment of text sensorIcons without fixed width is very different.  Recommended workaround is to use fixed width.
  *  TODO: add support for slipturnouticon (one2beros)
  *  TODO: handle (and test) disableWhenOccupied for layoutslip
  *  TODO: handle block color and track widths for turntable raytracks
@@ -53,6 +52,8 @@ var $unknownColor = 'gray';
 var $showUserName = 'no';
 var DOWNEVENT = 'touchstart mousedown';  // check both touch and mouse events
 var UPEVENT = 'touchend mouseup';
+var BLUR = 'blur';
+var KEYUP = 'keyup';
 var SIZE = 3;               // default factor for circles
 
 var UNKNOWN = '0';          // constants to match JSON Server state names
@@ -579,7 +580,6 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['name'] = $widget.memory; //normalize name
                             $widget.jsonType = "memory"; // JSON object type
                             $widget['state'] = null; //set initial state to null
-                            $widget['iconnull']="/web/images/transparent_19x16.png"; //transparent image for null value
                             var memorystates = $(this).find('memorystate');
                             memorystates.each(function(i, item) {  //get any memorystates defined
                                 //store icon url in "iconXX" where XX is the state to match
@@ -676,6 +676,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                     break;
 
                 case "text" :
+                case "input" :
                     $widget['styles'] = $getTextCSSFromObj($widget);
                     switch ($widget.widgetType) {
                         case "audioicon" :
@@ -749,15 +750,6 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget["systemName"] = $widget.name;
                             jmri.getMemory($widget["systemName"]);
                             break;
-                        case "memoryicon" :
-                            $widget['name'] = $widget.memory; //normalize name
-                            $widget.jsonType = "memory"; // JSON object type
-                            $widget['text'] = $widget.memory; //use name for initial text
-                            $widget['state'] = $widget.memory; //use name for initial state as well
-                            if (isUndefined($widget["systemName"]))
-                                $widget["systemName"] = $widget.name;
-                            jmri.getMemory($widget["systemName"]);
-                            break;
                         case "reportericon" :
                             $widget['name'] = $widget.reporter; //normalize name
                             $widget.jsonType = "reporter"; // JSON object type
@@ -773,13 +765,25 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['state'] = $widget.name; //use name for initial state as well
                             jmri.getBlock($widget["systemName"]);
                             break;
+                        case "memoryicon" :
                         case "memoryInputIcon" :
                         case "memoryComboIcon" :
+                            if ($widget.class.indexOf("MemorySpinnerIcon") >= 0) {  //fix for JMRI's bad element naming for this one
+                                $widget.widgetType = "memorySpinnerIcon";
+                                $widget.widgetFamily = "input";
+                                $widget.classes = $widget.classes.replace("memoryicon text", "memorySpinnerIcon input"); 
+                            }
                             $widget['name'] = $widget.memory; //normalize name
                             $widget.jsonType = "memory"; // JSON object type
                             $widget['text'] = $widget.memory; //use name for initial text
                             $widget['state'] = $widget.memory; //use name for initial state as well
-                            $widget.styles['border'] = "1px solid black" //add border for looks (temporary)
+                            if (isUndefined($widget.styles.width)) { //set missing width
+                                if (isDefined($widget.colWidth)) { 
+                                    $widget.styles['width'] = $widget.colWidth + "em";
+                                } else {
+                                    $widget.styles['width'] = "5em";
+                                }
+                            }
                             if (isUndefined($widget["systemName"]))
                                 $widget["systemName"] = $widget.name;
                             jmri.getMemory($widget["systemName"]);
@@ -799,9 +803,15 @@ function processPanelXML($returnedData, $success, $xhr) {
                         case "vertical_down" : $widget.degrees = 90;
                     }
                     $gWidgets[$widget.id] = $widget; //store widget in persistent array
-
-                    $("#panel-area").append("<div id=" + $widget.id + " class='" + $widget.classes + "'>" +
-                        $widget.text + "</div>");
+        
+                    if ($widget.widgetFamily=="input") {
+                        var msx = "type='number' min='0' max='100'";
+                        $("#panel-area").append("<input id=" + $widget.id + " class='" + $widget.classes + 
+                            "' value='" + $widget.text + "' " + ($widget.widgetType=="memorySpinnerIcon"? msx :"") +" >");                        
+                    } else {
+                        $("#panel-area").append("<div id=" + $widget.id + " class='" + $widget.classes + "'>" +
+                            $widget.text + "</div>");
+                    }
                     $("#panel-area>#" + $widget.id).css($widget.styles); // apply style array to widget
                     $setWidgetPosition($("#panel-area>#" + $widget.id));
                     break;
@@ -1381,6 +1391,11 @@ function processPanelXML($returnedData, $success, $xhr) {
             sendElementChange($gWidgets[this.id].jsonType, $gWidgets[this.id].systemName, INACTIVE);  //send inactive on up
         });
 
+        //check for update keys and update when needed
+        $('input.input').bind(KEYUP, $handleInputKeyUp);
+        //also update when leaving the input
+        $('input.input').bind(BLUR, $handleInputBlur);
+
         // Switchboard All Off/All On buttons
         $(".lightswitch#allOff").bind(UPEVENT, $handleClickAllOff); // all Lights Off
         $(".lightswitch#allOn").bind(UPEVENT, $handleClickAllOn); // all Lights On
@@ -1638,6 +1653,27 @@ function $handleClickAllOff(e) { // click button on Switchboards
             sendElementChange($widget.jsonType, $widget.systemName, THROWN);
         }
     });
+};
+
+//update memory or restore the value when certain keystrokes occur
+function $handleInputKeyUp(e) {
+    if (e.keyCode == 13 || e.keyCode == 9) { //on [Enter] or [Tab], send new value to server
+        var newVal = $(this).val();
+        var $id = $(this).attr('id');
+        var $widget = $gWidgets[$id];
+        jmri.setMemory($widget.systemName, newVal);
+    } else if (e.keyCode == 27) { //on [Escape], restore the previous value
+        var oldValue = $(this).data("oldValue")
+        $(this).val(oldValue);        
+    }
+};
+
+//update memory when the focus is lost
+function $handleInputBlur(e) {
+    var newVal = $(this).val();
+    var $id = $(this).attr('id');
+    var $widget = $gWidgets[$id];
+    jmri.setMemory($widget.systemName, newVal);
 };
 
 // End of Click Handling functions
@@ -2106,6 +2142,10 @@ var $setWidgetState = function($id, $newState, data) {
                 }
                 $reDrawIcon($widget);
                 break;
+            case "input" :
+                $('input#' + $id).val($newState);      //update the input
+                $('input#' + $id).data("oldValue", $newState); //save the current value if needed for [Escape]
+                break;
             case "text" :
                 if ($widget.jsonType == "memory" || $widget.jsonType == "block" || $widget.jsonType == "reporter" ) {
                     if ($widget.widgetType == "fastclock") {
@@ -2384,12 +2424,15 @@ var $getWidgetFamily = function($widget, $element) {
     switch ($widget.widgetType) {
         case "locoicon" :
         case "trainicon" :
-        case "memoryComboIcon" :
-        case "memoryInputIcon" :
         case "fastclock" :
         case "BlockContentsIcon" :
         case "reportericon" :
             return "text";
+            break;
+        case "memorySpinnerIcon" :
+        case "memoryComboIcon" :
+        case "memoryInputIcon" :
+            return "input";
             break;
         case "positionablelabel" :
         case "audioicon" :

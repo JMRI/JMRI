@@ -390,7 +390,8 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Allow User to enter a train name of their choosing.</li>
+             <li>Add Transit Action to attempt to allocate beyond next safe section.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -411,6 +412,11 @@
             <li>Add the <strong>hidden</strong> attribute to the Layout Editor <strong>Shape</strong>
             item.  The center popup menu has an option to hide the shape when not editing.  The
             <strong>setHidden(boolean)</strong> public method can be used by scripts and LogixNG.</li>
+
+            <li>The <strong>Disable value edit popup when not editing</strong> menu item has been
+            added to the context menus for blocks, memories and global variables.  When the panel
+            is not in edit mode and the option is enabled, the pop-up to the edit the value will
+            not occur.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -472,13 +478,19 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+            <li>The <strong>Disable value edit popup when not editing</strong> menu item has been
+            added to the context menus for blocks, memories and global variables.  When the panel
+            is not in edit mode and the option is enabled, the pop-up to the edit the value will
+            not occur. The option does not apply to input and spinner icons.</li>
         </ul>
 
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li></li>
+            <li>The <strong>Disable value edit popup when not editing</strong> menu item has been
+            added to the context menus for memories and global variables.  When the panel
+            is not in edit mode and the option is enabled, the pop-up to the edit the value will
+            not occur. The option does not apply to input, spinner and combo icons.</li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
@@ -605,6 +617,7 @@
         <a id="WA" name="WA"></a>
         <ul>
             <li>new web ui for working with cars</li>
+            <li>web panels: add handling for some text memory inputs</li>
         </ul>
 
     <h3>Where Used</h3>
@@ -622,7 +635,8 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>Fixed a problem with clicks ending up in the wrong place
+                on a Table, e.g. Turnout Table, etc, when using the frame server.</li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>

@@ -3969,6 +3969,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 if (p.doViemMenu()) {
                     setHiddenMenu(p, popup);
                     setEmptyHiddenMenu(p, popup);
+                    setValueEditDisabledMenu(p, popup);
                     setEditIdMenu(p, popup);
                     setEditClassesMenu(p, popup);
                     popup.addSeparator();

@@ -117,6 +117,7 @@
       <xs:attribute name="forcecontroloff" type="trueFalseType" default="false"></xs:attribute>
       <xs:attribute name="hidden" type="yesNoType" default="no"></xs:attribute>
       <xs:attribute name="emptyHidden" type="yesNoType"></xs:attribute>
+      <xs:attribute name="valueEditDisabled" type="yesNoType"></xs:attribute>
       <xs:attribute name="positionable" type="trueFalseType"></xs:attribute>
       <xs:attribute name="showtooltip" type="trueFalseType" default="true"></xs:attribute>
       <xs:attribute name="editable" type="trueFalseType" default="true"></xs:attribute>
