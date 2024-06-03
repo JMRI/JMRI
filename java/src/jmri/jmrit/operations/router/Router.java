@@ -53,6 +53,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
     private String _status = "";
     private Train _train = null;
     PrintWriter _buildReport = null; // build report
+    Date _startTime; // when routing started
 
     private static final boolean debugFlag = false; // developer debug flag
 
@@ -112,6 +113,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         if (car.getTrack() == null || car.getFinalDestination() == null) {
             return false;
         }
+        _startTime = new Date();
         _status = Track.OKAY;
         _train = train;
         _buildReport = buildReport;
@@ -209,7 +211,8 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         } else if (setCarDestinationMultipleTrains(car, true)) {
             log.debug("Was able to find multiple train route for car ({}) through staging", car);
         } else {
-            log.debug("Wasn't able to set route for car ({})", car);
+            log.debug("Wasn't able to set route for car ({}) took {} mSec", car,
+                    new Date().getTime() - _startTime.getTime());
             _status = STATUS_NOT_ABLE;
             return false; // maybe next time
         }
@@ -907,7 +910,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                             testCar.getLocationName(), testCar.getDestinationName(), testCar.getDestinationTrackName());
                 }
                 for (Track mlt2 : _otherLocationTracks) {
-                    if (mlt2 == mlt1) {
+                    if (_next2ndLocationTracks.contains(mlt2)) {
                         continue;
                     }
                     Train middleTrain3 = getTrainForCar(testCar, mlt1, mlt2, middleTrain2, null);
@@ -974,15 +977,12 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                     continue;
                 }
                 for (Track mlt2 : _next3rdLocationTracks) {
-                    if (mlt2 == mlt1) {
-                        continue;
-                    }
                     Train middleTrain3 = getTrainForCar(testCar, mlt1, mlt2, middleTrain2, null);
                     if (middleTrain3 == null) {
                         continue;
                     }
                     for (Track mlt3 : _otherLocationTracks) {
-                        if (mlt3 == mlt1 || mlt3 == mlt2) {
+                        if (_next2ndLocationTracks.contains(mlt3) || _next3rdLocationTracks.contains(mlt3)) {
                             continue;
                         }
                         Train middleTrain4 = getTrainForCar(testCar, mlt2, mlt3, middleTrain3, null);
@@ -1043,23 +1043,19 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                     continue;
                 }
                 for (Track mlt2 : _next3rdLocationTracks) {
-                    if (mlt2 == mlt1) {
-                        continue;
-                    }
                     Train middleTrain3 = getTrainForCar(testCar, mlt1, mlt2, middleTrain2, null);
                     if (middleTrain3 == null) {
                         continue;
                     }
                     for (Track mlt3 : _next4thLocationTracks) {
-                        if (mlt3 == mlt1 || mlt3 == mlt2) {
-                            continue;
-                        }
                         Train middleTrain4 = getTrainForCar(testCar, mlt2, mlt3, middleTrain3, null);
                         if (middleTrain4 == null) {
                             continue;
                         }
                         for (Track mlt4 : _otherLocationTracks) {
-                            if (mlt4 == mlt1 || mlt4 == mlt2 || mlt4 == mlt3) {
+                            if (_next2ndLocationTracks.contains(mlt4) ||
+                                    _next3rdLocationTracks.contains(mlt4) ||
+                                    _next4thLocationTracks.contains(mlt4)) {
                                 continue;
                             }
                             Train middleTrain5 = getTrainForCar(testCar, mlt3, mlt4, middleTrain4, null);
