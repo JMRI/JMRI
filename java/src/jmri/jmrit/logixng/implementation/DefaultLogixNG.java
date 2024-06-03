@@ -419,7 +419,7 @@ public class DefaultLogixNG extends AbstractNamedBean
         if (isInline()) {
             writer.append(" ::: ").append(Bundle.getMessage("Inline"));
         }
-        if (!isEnabled()) {
+        if (settings._printDisabled && !isEnabled()) {
             writer.append(" ::: ").append(Bundle.getMessage("Disabled"));
         }
         writer.println();

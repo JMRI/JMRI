@@ -57,6 +57,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     static final String PRINT_NOT_CONNECTED_OPTION = "jmri.jmrit.logixng.NotConnectedSockets";
     static final String PRINT_LOCAL_VARIABLES_OPTION = "jmri.jmrit.logixng.LocalVariables";
     static final String PRINT_SYSTEM_NAMES_OPTION = "jmri.jmrit.logixng.SystemNames";
+    static final String PRINT_DISABLED_OPTION = "jmri.jmrit.logixng.Disabled";
 
     JTextArea _textContent;
     DeleteBean<E> deleteBean = new DeleteBean<>(getManager());
@@ -734,6 +735,8 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             _printTreeSettings._printNotConnectedSockets = prefMgr.getSimplePreferenceState(PRINT_NOT_CONNECTED_OPTION);
             _printTreeSettings._printLocalVariables = prefMgr.getSimplePreferenceState(PRINT_LOCAL_VARIABLES_OPTION);
             _printTreeSettings._printSystemNames = prefMgr.getSimplePreferenceState(PRINT_SYSTEM_NAMES_OPTION);
+            _printTreeSettings._printDisabled = prefMgr.getSimplePreferenceState(PRINT_DISABLED_OPTION);
+            _printTreeSettings._printStartup = true;
         });
     }
 
@@ -947,12 +950,25 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
             }
         });
 
+        JCheckBox printDisabled = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintDisabled"));
+        printDisabled.setSelected(_printTreeSettings._printDisabled);
+        printDisabled.addChangeListener((event) -> {
+            if (_printTreeSettings._printDisabled != printDisabled.isSelected()) {
+                _printTreeSettings._printDisabled = printDisabled.isSelected();
+                InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
+                    prefMgr.setSimplePreferenceState(PRINT_DISABLED_OPTION, printDisabled.isSelected());
+                });
+                updateBrowserText(browseAll);
+            }
+        });
+
         if (this instanceof LogixNGTableAction || this instanceof LogixNGModuleTableAction) {
             checkBoxPanel.add(printLineNumbers);
             checkBoxPanel.add(printErrorHandling);
             checkBoxPanel.add(printNotConnectedSockets);
             checkBoxPanel.add(printLocalVariables);
             checkBoxPanel.add(printSystemNames);
+            checkBoxPanel.add(printDisabled);
         }
 
         return checkBoxPanel;
