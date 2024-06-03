@@ -1071,7 +1071,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         for (Track track : tracks) {
             box.addItem(track);
         }
-        OperationsPanel.padComboBox(box, InstanceManager.getDefault(LocationManager.class).getMaxTrackNameLength() + 1);
+        OperationsPanel.padComboBox(box, InstanceManager.getDefault(LocationManager.class).getMaxTrackNameLength());
     }
 
     /**
