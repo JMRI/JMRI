@@ -448,7 +448,8 @@
               in the <strong>File</strong> menu. It lists all the LogixNGs, Modules, Tables
               and Global variables.</li>
           <li>The option <strong>Print disabled</strong> has been added to the LogixNG
-              Browse window.</li>
+              Browse window. It adds "Disabled" to the LogixNGs, ConditionalNGs, actions
+              and expressions which are disabled.</li>
           <li></li>
         </ul>
 
