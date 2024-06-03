@@ -262,6 +262,7 @@ function processPanelXML($returnedData, $success, $xhr) {
             }
             $widget["id"] = "widget-" + $gUnique(); //set id to a unique value (since same element can be in multiple widgets)
             $widget['widgetFamily'] = $getWidgetFamily($widget, this);
+            $widget['extraAttributes'] = ""; //some type-specific attrs
             var $jc = "";
             if (isDefined($widget["class"])) {
                 var $ta = $widget["class"].split('.'); //get last part of java class name for a css class
@@ -278,6 +279,10 @@ function processPanelXML($returnedData, $success, $xhr) {
             if ($widget.hidden == "yes") {
                 $widget.classes += " hidden ";
             }
+            if (isDefined($widget.showtooltip) && $widget.showtooltip == "true") { //set tooltip for custom tooltip
+                var ht = $(this).find('tooltip').text();
+                if (ht != "") $widget['hoverText'] = ht;                } 
+
             // set additional values in this widget
             switch ($widget.widgetFamily) {
                 case "icon" :
@@ -771,7 +776,8 @@ function processPanelXML($returnedData, $success, $xhr) {
                             if ($widget.class.indexOf("MemorySpinnerIcon") >= 0) {  //fix for JMRI's bad element naming for this one
                                 $widget.widgetType = "memorySpinnerIcon";
                                 $widget.widgetFamily = "input";
-                                $widget.classes = $widget.classes.replace("memoryicon text", "memorySpinnerIcon input"); 
+                                $widget.classes = $widget.classes.replace("memoryicon text", "memorySpinnerIcon input");
+                                $widget['extraAttributes'] = "type='number' min='0' max='100'"; 
                             }
                             $widget['name'] = $widget.memory; //normalize name
                             $widget.jsonType = "memory"; // JSON object type
@@ -803,13 +809,17 @@ function processPanelXML($returnedData, $success, $xhr) {
                         case "vertical_down" : $widget.degrees = 90;
                     }
                     $gWidgets[$widget.id] = $widget; //store widget in persistent array
-        
+
+                    var $hoverText = "";  //add html for hoverText (custom tooltip) if populated
+                    if (isDefined($widget.hoverText)) {
+                        $hoverText = " title='" + $widget.hoverText + "' alt='" + $widget.hoverText + "' ";
+                    }
+
                     if ($widget.widgetFamily=="input") {
-                        var msx = "type='number' min='0' max='100'";
                         $("#panel-area").append("<input id=" + $widget.id + " class='" + $widget.classes + 
-                            "' value='" + $widget.text + "' " + ($widget.widgetType=="memorySpinnerIcon"? msx :"") +" >");                        
+                            "' value='" + $widget.text + "' " + $widget.extraAttributes + $hoverText + " >");                        
                     } else {
-                        $("#panel-area").append("<div id=" + $widget.id + " class='" + $widget.classes + "'>" +
+                        $("#panel-area").append("<div id=" + $widget.id + " class='" + $widget.classes + $hoverText + "'>" +
                             $widget.text + "</div>");
                     }
                     $("#panel-area>#" + $widget.id).css($widget.styles); // apply style array to widget
