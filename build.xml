@@ -874,6 +874,7 @@
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="false"/><!-- skip intermittent tests -->
+            <sysproperty key="jmri.skipLinkedWarrantTest" value="false"/><!-- skip LinkedWarrantTest -->
             <sysproperty key="jmri.skipBuildHelpFilesTest" value="false"/><!-- skip BuildHelpFilesTest test -->
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
@@ -912,6 +913,7 @@
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="false"/><!-- skip intermittent tests -->
+            <sysproperty key="jmri.skipLinkedWarrantTest" value="false"/><!-- skip LinkedWarrantTest -->
             <sysproperty key="jmri.skipBuildHelpFilesTest" value="false"/><!-- skip BuildHelpFilesTest test -->
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
@@ -1599,6 +1601,7 @@
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/><!-- skip intermittent tests -->
+            <sysproperty key="jmri.skipLinkedWarrantTest" value="true"/><!-- skip LinkedWarrantTest -->
             <sysproperty key="jmri.skipBuildHelpFilesTest" value="true"/><!-- skip BuildHelpFilesTest test -->
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
@@ -1691,6 +1694,7 @@
                     <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
                     <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
                     <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/>
+                    <sysproperty key="jmri.skipLinkedWarrantTest" value="true"/><!-- skip LinkedWarrantTest -->
                     <sysproperty key="jmri.skipBuildHelpFilesTest" value="true"/><!-- skip BuildHelpFilesTest test -->
                     <sysproperty key="user.language" value="en"/>
                     <sysproperty key="user.country" value="US"/>
@@ -1747,6 +1751,7 @@
             <sysproperty key="jmri.prefsdir" path="${tempdir}"/>
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/><!-- skip intermittent tests -->
+            <sysproperty key="jmri.skipLinkedWarrantTest" value="true"/><!-- skip LinkedWarrantTest -->
             <sysproperty key="jmri.skipBuildHelpFilesTest" value="true"/><!-- skip BuildHelpFilesTest test -->
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
@@ -2039,7 +2044,7 @@
                 <include name="jmri/**"/>
             </packageset>
 
-            <arg value="-Xdoclint:all"/><!-- remove -missing to get warnings about missing javadoc tags -->
+            <arg value="-Xdoclint:all,-missing,-html"/>
             <arg value="-Xmaxwarns"/>
             <arg value="100"/><!-- default is 100; keep synced with pom.xml, other javadoc targets -->
 
@@ -2076,11 +2081,7 @@
 
             <link href="https://fazecast.github.io/jSerialComm/javadoc" />
             
-            <!-- <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>  redirected to next line -->
-            <link href="https://download.java.net/media/java3d/javadoc/1.3.2/" />
-
-            <!-- <link href="https://static.javadoc.io/org.openlcb/openlcb/0.7.23/"/>  redirected to next line -->
-            <link href="https://www.javadoc.io/doc/org.openlcb/openlcb/0.7.23/" />
+            <link href="https://www.javadoc.io/doc/org.openlcb/openlcb/0.7.37/" />
 
             <!-- <link href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/" packagelistLoc="lib/purejavacomm-1.0.1-package-list"/>  redirected to next line -->
             <link href="https://www.javadoc.io/doc/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/" packagelistLoc="lib/purejavacomm-1.0.1-package-list"/>
@@ -2088,10 +2089,10 @@
             <!-- <link href="https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>  redirected to next line -->
             <link href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>
 
-            <link href="http://docs.oracle.com/en/java/javase/11/docs/api/"/>
+            <link href="https://docs.oracle.com/en/java/javase/11/docs/api/"/>
             <link href="http://www.jdom.org/docs/apidocs/"/>
             <link href="https://commons.apache.org/proper/commons-csv/apidocs/"/>
-            <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
+            <link href="https://logging.apache.org/log4j/1.x/apidocs/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
             <link href="https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/4.7.3/"/>
             <link href="https://javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/"/>
@@ -2187,8 +2188,7 @@
 
             <link href="https://fazecast.github.io/jSerialComm/javadoc" />
 
-            <!-- <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>  redirected to next line -->
-            <link href="https://download.java.net/media/java3d/javadoc/1.3.2/" />
+            <link href="https://www.javadoc.io/doc/org.openlcb/openlcb/latest/" />
 
             <link href="http://docs.oracle.com/en/java/javase/11/docs/api/"/>
             <link href="http://www.jdom.org/docs/apidocs/"/>
@@ -2200,7 +2200,6 @@
             <link offline="true" href="https://static.javadoc.io/com.alexandriasoftware.swing/jinputvalidator/0.8.0/" packagelistLoc="lib/jinputvalidator-0.8.0-package-list"/>
             <link offline="true" href="https://static.javadoc.io/com.tngtech.archunit/archunit/0.11.0/" packagelistLoc="lib/archunit-0.11.0-package-list"/>
 
-            <link offline="true" href="https://www.javadoc.io/doc/org.openlcb/openlcb/0.7.23/" packagelistLoc="openlcb-0.7.23-package-list"/>
             <link offline="true" href="https://www.javadoc.io/doc/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/" packagelistLoc="lib/purejavacomm-1.0.1-package-list"/>
             <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>
              <link href="https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/4.7.3/"/>

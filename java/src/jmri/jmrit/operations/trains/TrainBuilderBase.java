@@ -6,7 +6,8 @@ import java.util.*;
 
 import jmri.InstanceManager;
 import jmri.Version;
-import jmri.jmrit.operations.locations.*;
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.*;
@@ -1142,7 +1143,8 @@ public class TrainBuilderBase extends TrainCommon {
                 foundLeadCar = true;
             }
             // check to see that all cars have the same location and track
-            if (car.getLocation() != c.getLocation() || car.getTrack() != c.getTrack()) {
+            if (car.getLocation() != c.getLocation() ||
+                    !car.getTrack().getSplitName().equals(c.getTrack().getSplitName())) {
                 throw new BuildFailedException(Bundle.getMessage("buildErrorCarKernelLocation", c.toString(),
                         car.getKernelName(), c.getLocationName(), c.getTrackName(), car.toString(),
                         car.getLocationName(), car.getTrackName()));

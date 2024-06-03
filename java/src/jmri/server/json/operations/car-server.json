@@ -135,6 +135,13 @@
             ],
             "description": "name of train car is assigned to, null if not assigned"
         },
+        "trainIconName": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "icon name of train car is assigned to, null if not assigned"
+        },
         "destination": {
             "type": [
                 "object",

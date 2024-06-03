@@ -56,6 +56,7 @@ import jmri.util.table.ToggleButtonRenderer;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author Pete Cressman (C) 2010
+ * @author Egbert Broerse (C) 2019
  * @author Egbert Broerse (C) 2020
  */
 public class TableFrames implements InternalFrameListener {
@@ -350,7 +351,6 @@ public class TableFrames implements InternalFrameListener {
      * Convert a copy of your current JMRI Blocks to OBlocks and connect them with Portals and Paths.
      * Accessed from the Options menu.
      * @throws IllegalArgumentException exception
-     * @author Egbert Broerse 2019
      */
     protected void importBlocks() throws IllegalArgumentException {
         Manager<Block> bm = InstanceManager.getDefault(jmri.BlockManager.class);

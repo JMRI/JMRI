@@ -2,12 +2,13 @@ package jmri.jmrix.ieee802154.xbee;
 
 import com.digi.xbee.api.connection.ConnectionType;
 import com.digi.xbee.api.connection.IConnectionInterface;
+
 import java.util.Arrays;
 
-import com.fazecast.jSerialComm.SerialPort;
-import com.fazecast.jSerialComm.SerialPortDataListener;
-import com.fazecast.jSerialComm.SerialPortEvent;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+import jmri.jmrix.AbstractSerialPortController.SerialPortDataListener;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

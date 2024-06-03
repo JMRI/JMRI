@@ -217,7 +217,7 @@ abstract public class AbstractPortController implements PortAdapter {
         log.error("did not find option {} for type", option);
         return false;
     }
-    
+
     @Override
     public boolean isOptionTypePassword(String option) {
         if (options.containsKey(option)) {
@@ -226,7 +226,7 @@ abstract public class AbstractPortController implements PortAdapter {
         log.error("did not find option {} for type", option);
         return false;
     }
-    
+
     @Override
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
     justification = "availability was checked before, should never get here")
@@ -254,27 +254,27 @@ abstract public class AbstractPortController implements PortAdapter {
             TEXT,
             PASSWORD
         }
-        
+
         String currentValue = null;
-        
-        /** 
+
+        /**
          * As a heuristic, we consider the 1st non-null
          * currentValue as the configured value. Changes away from that
          * mark an Option object as "dirty".
          */
         String configuredValue = null;
-        
+
         String displayText;
         String[] options;
         Type type;
-        
+
         Boolean advancedOption = true;  // added options in advanced section by default
 
         public Option(String displayText, @Nonnull String[] options, boolean advanced, Type type) {
             this.displayText = displayText;
             this.options = java.util.Arrays.copyOf(options, options.length);
             this.advancedOption = advanced;
-            this.type = type;            
+            this.type = type;
         }
 
         public Option(String displayText, String[] options, boolean advanced) {
@@ -385,7 +385,7 @@ abstract public class AbstractPortController implements PortAdapter {
 
     /**
      * {@inheritDoc}
-     * After checking the allowConnectionRecovery flag, closes the 
+     * After checking the allowConnectionRecovery flag, closes the
      * connection, resets the open flag and attempts a reconnection.
      */
     @Override
@@ -396,19 +396,19 @@ abstract public class AbstractPortController implements PortAdapter {
         opened = false;
         try {
             closeConnection();
-        } 
+        }
         catch (RuntimeException e) {
             log.warn("closeConnection failed");
         }
         reconnect();
     }
-    
+
     /**
      * Abstract class for controllers to close the connection.
      * Called prior to any re-connection attempts.
      */
     protected void closeConnection(){}
-    
+
     /**
      * Attempts to reconnect to a failed port.
      * Starts a reconnect thread
@@ -427,13 +427,13 @@ abstract public class AbstractPortController implements PortAdapter {
             log.error("Unable to join to the reconnection thread");
         }
     }
-    
+
     /**
      * Abstract class for controllers to re-setup a connection.
      * Called on connection reconnect success.
      */
     protected void resetupConnection(){}
-    
+
     /**
      * Abstract class for ports to attempt a single re-connection attempt.
      * Called from within main reconnect thread.
@@ -473,13 +473,13 @@ abstract public class AbstractPortController implements PortAdapter {
             }
         }
     }
-    
+
     /**
      * Initial interval between reconnection attempts.
      * Default 1 second.
      */
     protected int reconnectinterval = 1;
-    
+
     /**
      * Maximum reconnection attempts that the port should make.
      * Default 100 attempts.
@@ -492,7 +492,7 @@ abstract public class AbstractPortController implements PortAdapter {
      * Default 120 seconds.
      */
     protected int reconnectMaxInterval = 120;
-    
+
     /**
      * {@inheritDoc}
      */
@@ -500,7 +500,7 @@ abstract public class AbstractPortController implements PortAdapter {
     public void setReconnectMaxInterval(int maxInterval) {
         reconnectMaxInterval = maxInterval;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -508,7 +508,7 @@ abstract public class AbstractPortController implements PortAdapter {
     public void setReconnectMaxAttempts(int maxAttempts) {
         reconnectMaxAttempts = maxAttempts;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -516,7 +516,7 @@ abstract public class AbstractPortController implements PortAdapter {
     public int getReconnectMaxInterval() {
         return reconnectMaxInterval;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -524,7 +524,7 @@ abstract public class AbstractPortController implements PortAdapter {
     public int getReconnectMaxAttempts() {
         return reconnectMaxAttempts;
     }
-    
+
     protected static void safeSleep(long milliseconds, String s) {
         try {
             Thread.sleep(milliseconds);
@@ -561,7 +561,7 @@ abstract public class AbstractPortController implements PortAdapter {
      * @throws IOException if the stream is e.g. closed due to failure to open the port completely
      */
      @SuppressFBWarnings(value = "SR_NOT_CHECKED", justification = "skipping all, don't care what skip() returns")
-     protected void purgeStream(@Nonnull java.io.InputStream serialStream) throws IOException {
+     protected static void purgeStream(@Nonnull java.io.InputStream serialStream) throws IOException {
         int count = serialStream.available();
         log.debug("input stream shows {} bytes available", count);
         while (count > 0) {
@@ -569,7 +569,7 @@ abstract public class AbstractPortController implements PortAdapter {
             count = serialStream.available();
         }
     }
-    
+
     /**
      * Get the {@link SystemConnectionMemo} associated with this
      * object.

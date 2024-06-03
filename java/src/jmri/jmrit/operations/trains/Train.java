@@ -390,6 +390,9 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         if (minutes == -1) {
             return ALREADY_SERVICED;
         }
+        if (!routeLocation.getDepartureTime().equals(RouteLocation.NONE)) {
+            return routeLocation.getFormatedDepartureTime();
+        }
         // figure out the work at this location, note that there can be
         // consecutive locations with the same name
         if (getRoute() != null) {
@@ -1654,14 +1657,18 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             return false;
         }
 
-        // determine if the car's location and destination is serviced by this
-        // train
+        // determine if the car's location is serviced by this train
         if (route.getLastLocationByName(car.getLocationName()) == null) {
             addLine(buildReport, Bundle.getMessage("trainNotThisLocation",
                     getName(), car.getLocationName()));
             return false;
         }
-        if (car.getDestination() != null && route.getLastLocationByName(car.getDestinationName()) == null) {
+        // determine if the car's destination is serviced by this train
+        // check to see if destination is staging and is also the last location in the train's route
+        if (car.getDestination() != null &&
+                (route.getLastLocationByName(car.getDestinationName()) == null ||
+                        (car.getDestination().isStaging() &&
+                                getTrainTerminatesRouteLocation().getLocation() != car.getDestination()))) {
             addLine(buildReport, Bundle.getMessage("trainNotThisLocation",
                     getName(), car.getDestinationName()));
             return false;

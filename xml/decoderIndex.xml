@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.7.5plus+jake+20240412T1840Z+R85ea652f7f9 on Fri Apr 12 14:41:09 EDT 2024-->
-  <decoderIndex version="583">
+  <!--Written by JMRI version 5.7.6plus+jake+20240509T1458Z+Rfd628fd8472 on Thu May 09 10:59:14 EDT 2024-->
+  <decoderIndex version="585">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -2301,7 +2301,7 @@
           <functionlabel num="12" lockable="false">Safety Blow off</functionlabel>
         </functionlabels>
       </family>
-      <family name="SFX Sound Decoders - Series 7" mfg="Digitrax" lowVersionID="203" highVersionID="203" file="Digitrax_0SFX_Series7.xml">
+      <family name="SFX Sound Decoders - Series 7" mfg="Digitrax" lowVersionID="203" highVersionID="205" file="Digitrax_0SFX_Series7.xml">
         <model model="SDH167" numOuts="6" numFns="28" productID="SDXH167">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
@@ -31747,6 +31747,51 @@
         </model>
       </family>
       <family name="MN Non-Sound (version 4+)" mfg="Zimo" file="Zimo_MN_small_v4.xml">
+        <!-- not available yet (2024-05-02)
+      <model model="MN140E24 version 4+" lowVersionID="4" highVersionID="42" maxInputVolts="24V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" numOuts="8" numFns="14" productID="119">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">Funkční výstup 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">Funkční výstup 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+          <label xml:lang="cs">Funkční výstup 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+          <label xml:lang="cs">Funkční výstup 4</label>
+        </output>
+        <output name="7" label="FO 5">
+          <label xml:lang="de">FA5</label>
+          <label xml:lang="cs">Funkční výstup 5</label>
+        </output>
+        <output name="8" label="FO 6">
+          <label xml:lang="de">FA6</label>
+          <label xml:lang="cs">Funkční výstup 6</label>
+        </output>
+        <size length="14" width="8.7" height="2.3" units="mm"/>
+      </model>
+-->
+        <model model="MN160 version 4+" lowVersionID="4" highVersionID="42" numOuts="6" numFns="14" productID="122">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+        </model>
         <model model="MN170 version 4+" lowVersionID="4" highVersionID="42" numOuts="8" numFns="14" productID="124">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
@@ -31765,6 +31810,35 @@
           <output name="5" label="FO 3 (+5v)" />
           <output name="6" label="FO 4 (+5v)" />
         </model>
+        <!-- not available yet (2024-05-02)
+      <model model="MN250 version 4+" lowVersionID="4" highVersionID="42" maxInputVolts="24V" maxMotorCurrent="0.2A, peak=1.0A" maxTotalCurrent="0.2A" formFactor="N" numOuts="6" numFns="14" productID="120">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">Funkční výstup 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">Funkční výstup 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+          <label xml:lang="cs">Funkční výstup 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+          <label xml:lang="cs">Funkční výstup 4</label>
+        </output>
+        <size length="9.9" width="7.5" height="2.1" units="mm"/>
+      </model>
+-->
         <model model="MN300 version 4+" lowVersionID="4" highVersionID="41" numOuts="8" numFns="14" productID="125">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
@@ -31853,6 +31927,15 @@
           <output name="5" label="FO 3" />
           <output name="6" label="FO 4" />
         </model>
+        <model model="MS491 version 4+" lowVersionID="4" highVersionID="41" numOuts="7" numFns="14" productID="12">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+        </model>
         <model model="MS500 version 4+" lowVersionID="4" highVersionID="41" numOuts="6" numFns="14" productID="1">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
@@ -31861,13 +31944,82 @@
           <output name="5" label="FO 3 (+5v)" />
           <output name="6" label="FO 4 (+5v)" />
         </model>
-        <model model="MS580N18 version 4+" lowVersionID="4" highVersionID="41" numOuts="6" numFns="14" productID="8">
+        <!-- not available yet (2024-05-02)
+      <model model="MS540E24 version 4+" lowVersionID="4" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="12" numFns="14" productID="14">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <output name="7" label="FO 5">
+          <label xml:lang="de">FA5</label>
+          <label xml:lang="cs">FV 5</label>
+        </output>
+        <output name="8" label="FO 6">
+          <label xml:lang="de">FA6</label>
+          <label xml:lang="cs">FV 6</label>
+        </output>
+        <output name="9" label="FO 7 (+5V)">
+          <label xml:lang="de">FA7 (+5V)</label>
+          <label xml:lang="cs">FV 7 (+5V)</label>
+        </output>
+        <output name="10" label="FO 8 (+5V)">
+          <label xml:lang="de">FA8 (+5V)</label>
+          <label xml:lang="cs">FV 8 (+5V)</label>
+        </output>
+        <output name="11" label="FO 9 (+5V)">
+          <label xml:lang="de">FA9 (+5V)</label>
+          <label xml:lang="cs">FV 9 (+5V)</label>
+        </output>
+        <output name="12" label="FO 10 (+5V)">
+          <label xml:lang="de">FA10 (+5V)</label>
+          <label xml:lang="cs">FV 10 (+5V)</label>
+        </output>
+        <size length="19" width="8.7" height="2.8" units="mm"/>
+      </model>
+-->
+        <model model="MS560 version 4+" lowVersionID="4" highVersionID="41" numOuts="4" numFns="14" productID="10">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1 (+5v)" />
+          <output name="4" label="FO 2 (+5v)" />
+        </model>
+        <model model="MS580N18 version 4+" lowVersionID="4" highVersionID="41" numOuts="6" numFns="14" productID="5">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3 (+5v)" />
           <output name="6" label="FO 4 (+5v)" />
+        </model>
+        <model model="MS581N18 version 4+" lowVersionID="4" highVersionID="41" numOuts="8" numFns="14" productID="13">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="3" label="FO 3" />
+          <output name="4" label="FO 4" />
+          <output name="5" label="FO 5 (+5v)" />
+          <output name="6" label="FO 6 (+5v)" />
         </model>
         <model model="MS590N18 version 4+" lowVersionID="4" highVersionID="41" numOuts="6" numFns="14" productID="8">
           <output name="1" label="Front Light" />

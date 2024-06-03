@@ -3,6 +3,7 @@
 <!--  Version 1.0   24 Nov 2022,  Nigel Cliffe.   Merging various MX and MS-series files to a single unit for MS-Series decoders                        -->
 <!--  Version 1.1   22 Jun 2023,  Ronald Kuhn.    add german translation                        -->
 <!--  Version 1.2   05 Apr 2024,  Ronald Kuhn.    add german translation                        -->
+<!--  Version 1.3   02 May 2024,  Ronald Kuhn.    correcting the default value of CV 310 and CV 313 -->
 
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <variable item="Load Code 1" CV="260">
@@ -707,7 +708,7 @@
       <tooltip xml:lang="de">Die hier zugewiesene Funktionstaste löst einen Bremsvorgang nach der in CV#349 definierten Bremszeit aus</tooltip>
       <tooltip xml:lang="cs">Které tlačítko spustí brždění po doběš definované v CV349</tooltip>
   </variable>
-  <variable CV="310" item="On/off key for engine and random sound" default="8" tooltip="Defines the key that turns the engine and random sounds on or off">
+  <variable CV="310" item="On/off key for engine and random sound" default="1" tooltip="Defines the key that turns the engine and random sounds on or off">
     <enumVal>
       <enumChoice choice="No key assigned">
         <choice>F0</choice>
@@ -933,7 +934,7 @@
     <tooltip xml:lang="de">Definieren einer Funktions-Taste, mit welcher das Entwässerungs-Geräusch ausgelöst werden kann</tooltip>
     <tooltip xml:lang="cs">Definuje která klávesa ručně spustí přehrání zvuku odvodňovacího ventilu</tooltip>
   </variable>
-  <variable item="Mute key" CV="313" default="8">
+  <variable item="Mute key" CV="313" default="114">
     <enumVal>
       <enumChoice choice="No key assigned">
         <choice>No key assigned</choice>

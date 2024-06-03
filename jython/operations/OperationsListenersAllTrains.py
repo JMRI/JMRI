@@ -2,7 +2,7 @@
 # Not to be used as a train move or termination script!
 #
 # Author: Bob Jacobsen, copyright 2004
-# Author: Daniel Boudreau, copyright 2010, 2012
+# Author: Daniel Boudreau, copyright 2010, 2012, 2024
 # Part of the JMRI distribution
 
 import java
@@ -15,11 +15,11 @@ import jmri
 # of course possible.
 class MyListener(PropertyChangeListener):
   def propertyChange(self, event):
-    print " "   # add a line between updates to make it easier to read
-    print "Train name:",event.source.getName()
-    print "Train id:",event.source.getId()
-    print "Train status:",event.source.getStatus()
-    print "Change:", event.propertyName," from: ",event.oldValue," to: ",event.newValue
+    print (' ')   # add a line between updates to make it easier to read
+    print ('Train name: {}'.format(event.source.getName()))
+    print ('Train id: {}'.format(event.source.getId()))
+    print ('Train status: {}'.format(event.source.getStatus()))
+    print ('Change: {} from: {} to: {}'.format(event.propertyName, event.oldValue, event.newValue))
 
     # Some sample code
     # Get the train and show if it was built.
@@ -28,35 +28,36 @@ class MyListener(PropertyChangeListener):
     tm = jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
     train = tm.getTrainById(trainId)
     if (train.isBuilt() == True):
-        print "Train", train.getName(), "is built"
+        print ('Train {} is built'.format(train.getName()))
         # the train move complete property change was added in jmri version 3.2
         if (event.propertyName == jmri.jmrit.operations.trains.Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY):
-            print "Cars in train:", train.getNumberCarsInTrain()
-            print "Train length:", train.getTrainLength()
-            print "Train weight:", train.getTrainWeight()
+            print ('Cars in train: {}'.format(train.getNumberCarsInTrain())) 
+            print ('Train length: {}'.format(train.getTrainLength()))
+            print ('Train weight: {}'.format(train.getTrainWeight()))
     else:
-        print "Train", train.getName(), "not built"
+        print ('Train {} not built'.format(train.getName()))
 
     # determine using property change if train has just been built
     if (event.propertyName == jmri.jmrit.operations.trains.Train.BUILT_CHANGED_PROPERTY and event.newValue == "true"):
-        print "Train", train.getName(), "built status changed to true"
+        print ('Train {} built status changed to true'.format(train.getName()))
 
 class listenAllTrains(jmri.jmrit.automat.AbstractAutomaton) :
   def init(self):
     # get the train manager
     self.tm = jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
-    print "Listen to all trains in operations"
+    print ('Listen to all trains in operations')
     return
 
   def handle(self):
-    print "Number of trains", self.tm.numEntries()
     # get a list of trains from the manager
     trainList = self.tm.getTrainsByIdList()
+    print ('Number of trains {}'.format(len(trainList)))
+        
     count = 1
 
     # show a list of trains and connect property change
     for train in trainList :
-      print "Train", count, train.getName(), train.getDescription()
+      print ('Train {} {}, {}'.format(count, train.getName(), train.getDescription())) 
       train.addPropertyChangeListener(MyListener())
       count = count + 1
 

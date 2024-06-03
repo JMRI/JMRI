@@ -74,9 +74,13 @@ public class NamedBeanTypeTest {
             String namedBeanName = prefix
                     + CreateLogixNGTreeScaffold.getRandomString(20);
 
-            String namedBeanUserName = "UserName__" + CreateLogixNGTreeScaffold.getRandomString(20);
+            String namedBeanUserName = "UserName_" + CreateLogixNGTreeScaffold.getRandomString(20);
 
-            NamedBean namedBean = createBean.createBean(namedBeanName, namedBeanUserName);
+            NamedBean namedBean;
+            if (jmri.jmrit.logixng.GlobalVariable.class.isAssignableFrom(namedBeanType.getClazz())) {
+                namedBeanName = InstanceManager.getDefault(GlobalVariableManager.class).getAutoSystemName();
+            }
+            namedBean = createBean.createBean(namedBeanName, namedBeanUserName);
             Assert.assertNotNull("Manager: "+rootManagerClass.getName(), namedBean);
 
             try {

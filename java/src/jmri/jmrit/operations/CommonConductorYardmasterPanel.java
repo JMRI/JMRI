@@ -547,14 +547,23 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         List<Track> tracks = rl.getLocation().getTracksByNameList(null);
         List<RouteLocation> routeList = _train.getRoute().getBlockingOrder();
         List<Car> carList = carManager.getByTrainDestinationList(_train);
+        List<Car> carsDone = new ArrayList<>();
         for (Track track : tracks) {
             for (RouteLocation rld : routeList) {
                 for (Car car : carList) {
+                    if (carsDone.contains(car)) {
+                        continue;
+                    }
                     // note that a car in train doesn't have a track assignment
                     if (car.getTrack() == null) {
                         continue;
                     }
+                    // do local move later
                     if (car.isLocalMove() && rl == rld) {
+                        continue;
+                    }
+                    if (Setup.isSortByTrackNameEnabled() &&
+                            !car.getTrack().getSplitName().equals(track.getSplitName())) {
                         continue;
                     }
                     // determine if car is a pick up from the right track
@@ -599,11 +608,15 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                             pPickups.add(checkBox);
                             checkBoxes.put("p" + car.getId(), checkBox);
                         }
+                        carsDone.add(car);
                     }
                 }
             }
             // set outs and local moves
             for (Car car : carList) {
+                if (carsDone.contains(car)) {
+                    continue;
+                }
                 if (car.getRouteDestination() != rl || car.getDestinationTrack() == null) {
                     continue;
                 }
@@ -646,7 +659,8 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                     // local move?
                 } else if (car.getTrack() != null &&
                         car.getRouteLocation() == rl &&
-                        (!Setup.isSortByTrackNameEnabled() || car.getTrack().getName().equals(track.getName()))) {
+                        (!Setup.isSortByTrackNameEnabled() ||
+                                car.getTrack().getSplitName().equals(track.getSplitName()))) {
                     movePane.setVisible(true);
                     if (!rollingStock.contains(car)) {
                         rollingStock.add(car);
@@ -675,6 +689,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                         pMoves.add(checkBox);
                         checkBoxes.put("m" + car.getId(), checkBox);
                     }
+                    carsDone.add(car);
                 }
             }
             // if not sorting by track, we're done

@@ -65,7 +65,8 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
     JCheckBox printHeadersCheckBox = new JCheckBox(Bundle.getMessage("PrintHeaders"));
     JCheckBox printPageHeaderCheckBox = new JCheckBox(Bundle.getMessage("PrintPageHeader"));
     JCheckBox truncateCheckBox = new JCheckBox(Bundle.getMessage("Truncate"));
-    JCheckBox departureTimeCheckBox = new JCheckBox(Bundle.getMessage("DepartureTime"));
+    JCheckBox manifestDepartureTimeCheckBox = new JCheckBox(Bundle.getMessage("DepartureTime"));
+    JCheckBox switchListDepartureTimeCheckBox = new JCheckBox(Bundle.getMessage("DepartureTime"));
     JCheckBox trackSummaryCheckBox = new JCheckBox(Bundle.getMessage("TrackSummary"));
     JCheckBox routeLocationCheckBox = new JCheckBox(Bundle.getMessage("RouteLocation"));
 
@@ -141,7 +142,8 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         printHeadersCheckBox.setToolTipText(Bundle.getMessage("PrintHeadersTip"));
         printPageHeaderCheckBox.setToolTipText(Bundle.getMessage("PrintPageHeaderTip"));
         truncateCheckBox.setToolTipText(Bundle.getMessage("TruncateTip"));
-        departureTimeCheckBox.setToolTipText(Bundle.getMessage("DepartureTimeTip"));
+        manifestDepartureTimeCheckBox.setToolTipText(Bundle.getMessage("DepartureTimeTip"));
+        switchListDepartureTimeCheckBox.setToolTipText(Bundle.getMessage("SwitchListDepartureTimeTip"));
         routeLocationCheckBox.setToolTipText(Bundle.getMessage("RouteLocationTip"));
         editManifestCheckBox.setToolTipText(Bundle.getMessage("UseTextEditorTip"));
         trackSummaryCheckBox.setToolTipText(Bundle.getMessage("TrackSummaryTip"));
@@ -229,13 +231,14 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         pSwitchOptions.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutSwitchListOptions")));
         pSwitchOptions.add(trackSummaryCheckBox);
         pSwitchOptions.add(routeLocationCheckBox);
+        pSwitchOptions.add(switchListDepartureTimeCheckBox);
 
         // Manifest options
         JPanel pManifestOptions = new JPanel();
         pManifestOptions.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutManifestOptions")));
         pManifestOptions.add(printLocCommentsCheckBox);
         pManifestOptions.add(printRouteCommentsCheckBox);
-        pManifestOptions.add(departureTimeCheckBox);
+        pManifestOptions.add(manifestDepartureTimeCheckBox);
         pManifestOptions.add(truncateCheckBox);
 
         pM.add(pSwitchOptions);
@@ -336,10 +339,11 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         printPageHeaderCheckBox.setSelected(Setup.isPrintPageHeaderEnabled());
         printHeadersCheckBox.setSelected(Setup.isPrintHeadersEnabled());
         truncateCheckBox.setSelected(Setup.isPrintTruncateManifestEnabled());
-        departureTimeCheckBox.setSelected(Setup.isUseDepartureTimeEnabled());
+        manifestDepartureTimeCheckBox.setSelected(Setup.isUseDepartureTimeEnabled());
         trackSummaryCheckBox.setSelected(Setup.isPrintTrackSummaryEnabled());
         trackSummaryCheckBox.setEnabled(Setup.isSwitchListRealTime());
         routeLocationCheckBox.setSelected(Setup.isSwitchListRouteLocationCommentEnabled());
+        switchListDepartureTimeCheckBox.setSelected(Setup.isUseSwitchListDepartureTimeEnabled());
         editManifestCheckBox.setSelected(Setup.isManifestEditorEnabled());
 
         commentTextArea.setText(TrainCommon.getTextColorString(Setup.getMiaComment()));
@@ -812,9 +816,10 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         Setup.setPrintHeadersEnabled(printHeadersCheckBox.isSelected());
         Setup.setPrintTrainScheduleNameEnabled(printTrainScheduleNameCheckBox.isSelected());
         Setup.setPrintTruncateManifestEnabled(truncateCheckBox.isSelected());
-        Setup.setUseDepartureTimeEnabled(departureTimeCheckBox.isSelected());
+        Setup.setUseDepartureTimeEnabled(manifestDepartureTimeCheckBox.isSelected());
         Setup.setManifestEditorEnabled(editManifestCheckBox.isSelected());
         Setup.setPrintTrackSummaryEnabled(trackSummaryCheckBox.isSelected());
+        Setup.setUseSwitchListDepartureTimeEnabled(switchListDepartureTimeCheckBox.isSelected());
         Setup.setSwitchListRouteLocationCommentEnabled(routeLocationCheckBox.isSelected());
 
         // reload combo boxes if tab changed
@@ -868,10 +873,11 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
                 Setup.isPrintPageHeaderEnabled() != printPageHeaderCheckBox.isSelected() ||
                 Setup.isPrintTrainScheduleNameEnabled() != printTrainScheduleNameCheckBox.isSelected() ||
                 Setup.isPrintTruncateManifestEnabled() != truncateCheckBox.isSelected() ||
-                Setup.isUseDepartureTimeEnabled() != departureTimeCheckBox.isSelected() ||
+                Setup.isUseDepartureTimeEnabled() != manifestDepartureTimeCheckBox.isSelected() ||
                 Setup.isManifestEditorEnabled() != editManifestCheckBox.isSelected() ||
                 Setup.isSwitchListRouteLocationCommentEnabled() != routeLocationCheckBox.isSelected() ||
                 Setup.isPrintTrackSummaryEnabled() != trackSummaryCheckBox.isSelected() ||
+                Setup.isUseSwitchListDepartureTimeEnabled() != switchListDepartureTimeCheckBox.isSelected() ||
                 Setup.isTabEnabled() != this.tabFormatCheckBox.isSelected()) {
             return true;
         }

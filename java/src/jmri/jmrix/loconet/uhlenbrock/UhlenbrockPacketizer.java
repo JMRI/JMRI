@@ -222,19 +222,21 @@ public class UhlenbrockPacketizer extends LnPacketizer {
                 } catch (LocoNetMessageException e) {
                     // just let it ride for now
                     log.warn("run: unexpected LocoNetMessageException: ", e);
-                } catch (java.io.EOFException e) {
+                } catch (java.io.EOFException | java.io.InterruptedIOException e) {
                     // posted from idle port when enableReceiveTimeout used
-                    log.debug("EOFException, is LocoNet serial I/O using timeouts?");
+                    // Normal condition, go around the loop again
+                    continue;
                 } catch (java.io.IOException e) {
                     // fired when write-end of HexFile reaches end
                     log.debug("IOException, should only happen with HexFile", e);
                     log.debug("End of file");
                     disconnectPort(controller);
                     return;
-                } // normally, we don't catch the unnamed Exception, but in this
-                // permanently running loop it seems wise.
-                catch (RuntimeException e) {
-                    log.warn("run: unexpected Exception", e);
+                } catch (RuntimeException e) {
+                    // normally, we don't catch RuntimeException, but in this
+                    // permanently running loop it seems wise.
+                    log.warn("run: unexpected Exception", e); // NOI18N
+                    continue;
                 }
             } // end of permanent loop
         }

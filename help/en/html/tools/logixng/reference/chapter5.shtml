@@ -540,16 +540,39 @@
       <h4>Program On Main<span class="since">since 5.7.3</span></h4>
 
       <p>The Program on Main action provides the ability to change CV settings.  This is similar to
-      the <strong>Single CV Programmer</strong>.
+      the <strong>Single CV Programmer</strong>.</p>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter5/prog_on_main.png"><img class="image-border" src=
         "images/chapter5/prog_on_main.png" alt="Chapter 5 program on main"></a>
       </div>
 
+      <p>Depending on the command station, selecting a Long address for address less than 128 might
+      be ignored or create an error.</p>
+
       <p>The roster is not used or updated.</p>
 
-      <p>A local variable can be assigned which will contain the results of the operation.</p>
+      <p>A local variable can be assigned which will contain the results of the operation.  The local
+      variable is only updated if there are actions in the <strong>Execute</strong> action.  If the
+      value is not zero, there was an error.
+
+      </p>
+
+      <pre style="border: 2px solid #778899; margin: 1em; padding: 0.1em;">
+LogixNG: IQ:AUTO:0001
+    ConditionalNG: IQC:AUTO:0001
+        ! A
+            Many
+               ::: Local variable "result", init to None ""
+                ! A1
+                    Program CV 29 to 32 for address Autodetect 1234 using programming mode OPSBYTEMODE
+                        ! Execute
+                            Many
+                                ! A1
+                                    Log data: Only text: pom returned
+                                ! A2
+                                    Log local variables
+      </pre>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 

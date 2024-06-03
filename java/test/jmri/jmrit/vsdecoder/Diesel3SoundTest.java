@@ -1,6 +1,7 @@
 package jmri.jmrit.vsdecoder;
 
 import jmri.*;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -30,6 +31,7 @@ public class Diesel3SoundTest {
     public void tearDown() {
         JUnitUtil.removeMatchingThreads("VSDecoderManagerThread");
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitAppender.suppressWarnMessage("Error loading OpenAL libraries: Could not initialize class jogamp.openal.ALImpl");
         JUnitUtil.tearDown();
     }
 

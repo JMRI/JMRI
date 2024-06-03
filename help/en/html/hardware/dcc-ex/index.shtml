@@ -98,7 +98,7 @@
 
         <li>DriveAway: Place a locomotive on the service track, program it, then drive it off onto the main track</li>
 
-        <li>Support for direct connection to the EX-CommnadStation over WiFi, Serial or Bluetooth using the WiThrottle or Native DCC-EX protocols</li>
+        <li>Support for direct connection to the EX-CommandStation over WiFi, Serial or Bluetooth using the WiThrottle or Native DCC-EX protocols</li>
 
         <li>Support for automation using the EXRAIL feature</li>
 
@@ -120,7 +120,7 @@
 
         <li>Network: TCP/IP connection from JMRI to an EX-CommandStation with an Ethernet or WiFi Shield.</li>
 
-        <li>DCC++ Over TCP: Remote network connection to a local JMRI instance connected to an EX-CommandStation</li>
+        <li>DCC++ Over TCP: Remote network or client connection to a local JMRI instance connected to an EX-CommandStation</li>
       </ul>
 
       <h4>Simulator</h4>
@@ -132,7 +132,9 @@
       <h4>DCC++ Over TCP</h4>
 
       <p>For the DCC++ Over TCP connection, a host computer must be connected to the EX-CommandStation over a Serial or Network connection (or a simulator). This host computer then runs the DCC++ Over TCP Server. 
-      A remote computer (or several remote computers) can then use the DCC++ Over TCP (Server) interface to remotely access and control the EX-CommandStation.</p>
+      A remote computer (or several remote computers) can then use the DCC++ Over TCP (Server) interface to remotely access and control the EX-CommandStation.<br />
+      Also, clients capable of using the DCC-EX protocol (such as EngineDriver) can connect to this server and thence to the DCC-EX command station. The DCC-EX protocol supports additional client features not supported 
+      by WiThrottle Server.</p>
 
       <h2 id="Limitations">Limitations</h2>
 
@@ -212,7 +214,7 @@
         <li>Restart the program. You should be up and running.</li>
       </ol>
 
-      <h3>Connecting to an EX-CommandStation using DCC++ Over TCP</h3>
+      <h3>Connecting a 2nd JMRI instance to an EX-CommandStation using DCC++ Over TCP</h3>
 
       <ol>
         <li>First, connect the EX-CommandStation to the host computer via the Serial or Network interface as described above.</li>
@@ -230,6 +232,25 @@
         <li>Enter the network name or IP address of the host computer and verify that the port number is the same as on the host computer.</li>
 
         <li>Save your Preferences and restart.</li>
+      </ol>
+
+      <p>Once both the Host and Client instances of JMRI are configured, you can use the Client JMRI just the same as if it were directly connected to the EX-CommandStation. The client JMRI instance can be on the same computer, in the same house, or across the country from the host.</p>
+
+      <h3>Connecting a client device to an EX-CommandStation using DCC++ Over TCP</h3>
+
+      <ol>
+        <li>First, connect the EX-CommandStation to the host computer via the Serial or Network interface as described above.</li>
+
+        <li>On the host computer select "Load DCC++ Over TCP Server" from the DCC++ Menu. Check the settings, then press the "Start Server" button. If you want the server to automatically start when JMRI is launched, click the checkbox provided.</li>
+
+        <li>The Host computer must be running with the EX-CommandStation active before launching the Client computer.</li>
+
+        <li>On the client device, launch an app such as EngineDriver or EX-Toolbox which support the DCC-EX protocol.</li>
+
+        <li>For EngineDriver, enable the "Use native DCC-EX commands".</li>
+
+        <li>Connect the app to the server using the server IP and the port shown in the DCCppOverTCP server window.</li>
+
       </ol>
 
       <p>Once both the Host and Client instances of JMRI are configured, you can use the Client JMRI just the same as if it were directly connected to the EX-CommandStation. The client JMRI instance can be on the same computer, in the same house, or across the country from the host.</p>

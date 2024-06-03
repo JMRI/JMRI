@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.*;
 import jmri.beans.PropertyChangeSupport;
+import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 
@@ -360,6 +361,7 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
     public JComboBox<Location> getComboBox() {
         JComboBox<Location> box = new JComboBox<>();
         updateComboBox(box);
+        OperationsPanel.padComboBox(box, getMaxLocationNameLength());
         return box;
     }
 

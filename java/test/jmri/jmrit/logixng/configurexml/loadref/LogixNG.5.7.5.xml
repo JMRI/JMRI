@@ -46767,6 +46767,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <value>OPSBYTEMODE</value>
         <listenToMemory>no</listenToMemory>
       </programmingMode>
+      <longOrShortAddress>
+        <addressing>Direct</addressing>
+        <enum>Auto</enum>
+        <listenToMemory>no</listenToMemory>
+      </longOrShortAddress>
       <address>
         <addressing>Direct</addressing>
         <value>0</value>
@@ -46783,6 +46788,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <listenToMemory>no</listenToMemory>
       </value>
       <localVariableForStatus />
+      <wait>yes</wait>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -46871,6 +46877,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <value>OPSBYTEMODE</value>
         <listenToMemory>no</listenToMemory>
       </programmingMode>
+      <longOrShortAddress>
+        <addressing>Direct</addressing>
+        <enum>Auto</enum>
+        <listenToMemory>no</listenToMemory>
+      </longOrShortAddress>
       <address>
         <addressing>Direct</addressing>
         <value>10</value>
@@ -46888,6 +46899,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </value>
       <systemConnection>L</systemConnection>
       <localVariableForStatus />
+      <wait>yes</wait>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
@@ -46976,6 +46988,11 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <value>OPSBYTEMODE</value>
         <listenToMemory>no</listenToMemory>
       </programmingMode>
+      <longOrShortAddress>
+        <addressing>Direct</addressing>
+        <enum>Auto</enum>
+        <listenToMemory>no</listenToMemory>
+      </longOrShortAddress>
       <address>
         <addressing>Direct</addressing>
         <value>15</value>
@@ -46992,6 +47009,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <listenToMemory>no</listenToMemory>
       </value>
       <localVariableForStatus>status</localVariableForStatus>
+      <wait>yes</wait>
       <MaleSocket>
         <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">

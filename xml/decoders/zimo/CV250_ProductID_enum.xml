@@ -16,6 +16,8 @@
 <!--    include file for Zimo decoder - Product IDs of CV250                -->
 <!-- version 1.1 - Ronald Kuhn - 2024-04-05                                 -->
 <!--    added some missing and new Zimo decoder                             -->
+<!-- version 1.2 - Ronald Kuhn - 2024-05-02                                 -->
+<!--    added new Zimo MS-decoder                             -->
 <!--                                                                        -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <enumChoice choice="Unknown" value ="0">
@@ -35,13 +37,20 @@
     <enumChoice choice="MS590" value = "8"/>
     <enumChoice choice="MS950" value = "9"/>
     <enumChoice choice="MS560" value = "10"/>
-    <enumChoice choice="MN250" value = "120"/>
+
+    <!-- enumChoice choice="MS001" value = "11"/ Fleischmann Beilhack -->
+    <enumChoice choice="MS491" value = "12"/>
+    <enumChoice choice="MS581" value = "13"/>
+       <enumChoice choice="MS540E24" value = "14"/>
+       <enumChoice choice="MN140E24" value = "119"/>
+       <enumChoice choice="MN250" value = "120"/>
+    <!-- enumChoice choice="MN150" value = "121"/ not available yet (2024-05-02) -->
     <enumChoice choice="MN160" value = "122"/>
     <enumChoice choice="MN340" value = "123"/>
     <enumChoice choice="MN170" value = "124"/>
     <enumChoice choice="MN300" value = "125"/>
     <enumChoice choice="MN330" value = "126"/>
-    <enumChoice choice="MN180" value = "127"/>
+    <enumChoice choice="MN180N18" value = "127"/>
     <enumChoice choice="MX630 (2020)" value = "130"/>
     <enumChoice choice="MX630 (2022)" value = "131"/>
     <enumChoice choice="MX623 (2020)" value = "132"/>

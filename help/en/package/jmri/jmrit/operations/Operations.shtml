@@ -323,14 +323,14 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
             <li><a href="#CarsTools">Cars Tools</a>
               <ul>
-                <li><a href="#CarsTools">Car Roster</a>
+                <li><a href="#CarRoster">Car Roster</a>
                   <uL>
-                    <li>Import from file</li>
-                    <li>Export to file</li>
-                    <li>Delete all cars</li>
-                    <li>Reset move counts all cars</li>
-                    <li>Print</li>
-                    <li>Preview</li>
+                    <li><a href="#CarRoster">Import from file</a></li>
+                    <li><a href="#CarRoster">Export to file</a></li>
+                    <li><a href="#CarRoster">Delete all cars</a></li>
+                    <li><a href="#CarRoster">Reset car move count</a></li>
+                    <li><a href="#CarRoster">Print</a></li>
+                    <li><a href="#CarRoster">Preview</a></li>
                   </uL></li>
                 <li><a href="#ModifyLocationsByCarType">Modify Locations and Tracks by Car
                     Type</a></li>
@@ -353,14 +353,14 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
               </ul></li>
             <li><a href="#LocomotiveTools">Locomotives Tools</a>
               <ul>
-                <li><a href="#LocomotiveTools">Locomotive Roster</a>
+                <li><a href="#LocomotiveRoster">Locomotive Roster</a>
                   <uL>
-                    <li>Import from file</li>
-                    <li>Export to file</li>
-                    <li>Delete all locomotives</li>
-                    <li>Reset move counts all locomotives</li>
-                    <li>Print</li>
-                    <li>Preview</li>
+                    <li><a href="#LocomotiveRoster">Import from file</a></li>
+                    <li><a href="#LocomotiveRoster">Export to file</a></li>
+                    <li><a href="#LocomotiveRoster">Delete all locomotives</a></li>
+                    <li><a href="#LocomotiveRoster">Reset move counts all locomotives</a></li>
+                    <li><a href="#LocomotiveRoster">Print</a></li>
+                    <li><a href="#LocomotiveRoster">Preview</a></li>
                   </uL></li>
                 <li><a href="#SynchronizeWithNCEConsists">Synchronize with NCE Consists</a></li>
               </ul>
@@ -825,7 +825,13 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
         You can also view two excellent NMRA YouTube videos by <a
           href="https://www.youtube.com/watch?v=RBF0V6DEu98">Robert J Thomas Introduction to
           JMRI OPs For A Small Layout</a> and <a href="https://www.youtube.com/watch?v=krhyvrhrxv4">Steve
-          Todd - JMRI Operations with No Paper.</a> And finally under the "Tools" item on the menu bar,
+          Todd - JMRI Operations with No Paper.</a> There's also an excellent set of videos <a
+          href="https://www.youtube.com/@dhtrainz4798">
+          https://www.youtube.com/@dhtrainz4798</a> produced by David Hall using the <a href="https://www.auran.com">Trainz
+        Simulator</a> and OperationsPro.
+      </p>
+
+      <p> And finally under the "Tools" item on the menu bar,
         you will find many useful functions, like the ability to print the contents of the window.
       </p>
 
@@ -1239,7 +1245,7 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
       one major drawback to increasing the number of passes, is that your train build reports will
       be longer since each pass by the program is documented.
 
-      <h3 id="AllowLocalCarMovements">Switcher Service Options (Local Car Movement)</h3>
+      <h3 id="AllowLocalCarMovements">Switcher Service Options (Local Car Movement with Default Loads)</h3>
       The next three "Allow Local ..." options control car movements when using a <a
         href="#SwitcherService">switcher</a> to service a location. A switcher only services one
       location. The three options only apply to cars with the default "E" or "L" <a href="#CarLoad">load</a>.
@@ -2869,17 +2875,28 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
       from a terminal. By defining the track as a classification/interchange track, once the branch
       line train delivers the cars, they will remain there until the main line train stops to
       service the classification/interchange track. Same goes for a <a href="#SwitcherService">local
-        switcher</a>, cars dropped off at a location with a C/I track will remain there until the local
-      moves them to the spur tracks. When the local pulls cars for the spur and places them on the
-      C/I track, they will remain there until the main line train pulls them.
+        switcher</a>, cars dropped off at a location with a C/I track will remain there until the
+      local moves them to the spur tracks. When the local pulls cars for the spur and places them on
+      the C/I track, they will remain there until the main line train pulls them.
+
+      <p>OperationsPro allows you sort cars to C/I tracks by any combination of destination,
+        train, route, road, type, load, and <a href="#PickUpCarOrder">arrival order</a></p>
+        
       <p>The car's load status does not change when placed at a classification/interchange
         track.</p>
 
       <p>
-        If you want more control on how your classification/interchange track will operate, you can
-        optionally specify which <a href="#RestrictingTrackToCertainTrains">trains or train
-          routes</a> can pick up or set out cars. If you restrict which trains or routes can pull cars
-        from a classification/interchange track, you must also restrict the track's car types,
+        You can if you wish control which destinations your C/I track can service. You can access <a
+          href="#TrackDestinations">Track Destinations</a> from the "Tools" menu. The track
+        destinations tool also allows you to restrict the C/I track to cars that are being <a
+          href="#CarRouting">routed</a>. The "Routed" checkbox when selected in the "Edit Location"
+        window means only cars that are being routed can use the C/I track.
+      </p>
+
+      <p>
+        You can optionally specify which <a href="#RestrictingTrackToCertainTrains">trains or
+          train routes</a> can pick up or set out cars. If you restrict which trains or routes can pull
+        cars from a classification/interchange track, you must also restrict the track's car types,
         loads, and roads to the same ones that the train services, otherwise you can have cars
         stranded on the classification/interchange track. Once you specify which trains or routes
         can pull cars, all cars that the train can service are available to the train, even cars
@@ -2890,14 +2907,6 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
         be used to capture a set of cars for a specific train. For example if you had a set of cars
         that you only wanted a "turn" to use, you could create a C/I track that can only be accessed
         by the turn.</p>
-
-      <p>
-        You can if you wish control which destinations your C/I track can service. You can access <a
-          href="#TrackDestinations">Track Destinations</a> from the "Tools" menu. The track
-        destinations tool also allows you to restrict the C/I track to cars that are being <a
-          href="#CarRouting">routed</a>. The "Routed" checkbox when selected in the "Edit Location"
-        window means only cars that are being routed can use the C/I track.
-      </p>
 
       <p>
         The <a href="#BuildReports">build report</a> will provide a list of rolling stock on the C/I track
@@ -3010,7 +3019,7 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
       locomotives on one track will be assigned to the train. A location can have multiple staging
       tracks, but can't have any other types of tracks, spurs, yards, etc. Staging tracks can be at
       the start of a route, the end of the route, or both. Staging tracks in the middle of a route
-      are ignored by the program.
+      are ignored by the program, and are regarded as pass-through tracks.
       <p>
         Note if you are running a train to and from the same staging location using the <a
           href="#BuildOptions">normal</a> build mode, you must define two staging tracks for the
@@ -4106,7 +4115,7 @@ Some lucky folks have more locomotives and cars than track on their layout and w
       <h3 id="CarsTools">Cars Tools</h3>
       The cars window "Tools" menu allows you to perform some useful functions to your car roster.
 
-      <h4>Car Roster</h4>
+      <h4 id="CarRoster">Car Roster</h4>
       The "Car Roster" has a sub-menu that allows you to import and export cars, delete cars, reset
       car move counts, and print or preview your car roster.
       
@@ -4124,18 +4133,17 @@ Some lucky folks have more locomotives and cars than track on their layout and w
       You can remove all of the cars in your roster by using the "Delete all cars" option. Note that
       when only viewing cars for a track, the tool changes to "Delete cars on Track track name", and
       will only delete the cars on the track being viewed.
-      
-      <h4>Car Roster&rArr;Reset move count all cars</h4>
-The "Reset move count all cars" will zero out all of the cars move counts. In normal
-        use you should never reset the car move counts. The program uses the move counts to
-        determine which cars have difficulty finding valid destination tracks. Cars with low move
-        counts eventually get higher priority over cars with larger move counts. By servicing the
-        lower move count cars first, the difficult car moves eventually get made by the program.
-        Reseting car moves foils this algorithm. The only valid time for reseting the move counts is
-        when you add new cars to your roster and you don't want your new cars to have priority over
-        your old cars. However in most cases, folks do want to see the new cars riding the first
-        train out of town, so don't reset the car moves if you want to put your new additions
-        immediately to work!
+
+      <h4>Car Roster&rArr;Reset car move count</h4>
+      The "Reset car move count" will zero out the move counts for the cars shown. In normal use you
+      should never reset the car move counts. The program uses the move counts to determine which
+      cars have difficulty finding valid destination tracks. Cars with low move counts eventually
+      get higher priority over cars with larger move counts. By servicing the lower move count cars
+      first, the difficult car moves eventually get made by the program. Reseting car moves foils
+      this algorithm. The only valid time for reseting the move counts is when you add new cars to
+      your roster and you don't want your new cars to have priority over your old cars. However in
+      most cases, folks do want to see the new cars riding the first train out of town, so don't
+      reset the car moves if you want to put your new additions immediately to work!
 
       <h4>Car Roster&rArr;Print and Preview</h4>
       You can also preview and print your car roster. The preview and print features use the same
@@ -4334,7 +4342,7 @@ The "Reset move count all cars" will zero out all of the cars move counts. In no
       The locomotives window "Tools" menu allows you to perform some useful functions to your
       locomotive roster.
       
-      <h4>Locomotive Roster</h4>
+      <h4 id="LocomotiveRoster">Locomotive Roster</h4>
       The "Locomotive Roster" has a sub-menu that allows you to import and export locomotives,
       delete locomotives, reset locomotive move counts, and print or preview your locomotive roster.
       

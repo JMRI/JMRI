@@ -149,9 +149,11 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
     }
 
     public void resetMoves() {
-        Enumeration<String> en = _hashTable.keys();
-        while (en.hasMoreElements()) {
-            T rs = getById(en.nextElement());
+        resetMoves(getList());
+    }
+
+    public void resetMoves(List<T> list) {
+        for (RollingStock rs : list) {
             rs.setMoves(0);
         }
     }

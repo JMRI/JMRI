@@ -183,7 +183,7 @@ public class FunctionButton extends JToggleButton {
      * Get the locking state of the function.
      *
      * @return True if the a clicking and releasing the button changes the
-     *         function state. False if the state is changed back when the
+     *         function state. False if the state is changed back when 
      *         button is released
      */
     public boolean getIsLockable() {

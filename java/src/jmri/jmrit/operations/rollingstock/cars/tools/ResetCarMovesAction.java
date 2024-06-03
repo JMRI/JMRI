@@ -6,6 +6,7 @@ import javax.swing.AbstractAction;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.cars.CarsTableFrame;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
@@ -16,16 +17,20 @@ import jmri.util.swing.JmriJOptionPane;
  */
 public class ResetCarMovesAction extends AbstractAction {
 
-    public ResetCarMovesAction() {
+    CarsTableFrame _carsTableFrame;
+
+    public ResetCarMovesAction(CarsTableFrame carsTableFrame) {
         super(Bundle.getMessage("MenuItemResetMoves"));
+        _carsTableFrame = carsTableFrame;
     }
 
     @Override
     public void actionPerformed(ActionEvent ae) {
         if (JmriJOptionPane.showConfirmDialog(null, Bundle.getMessage("carSureResetMoves"),
                 Bundle.getMessage("carResetMovesAll"), JmriJOptionPane.OK_CANCEL_OPTION) == JmriJOptionPane.OK_OPTION) {
-            log.debug("Reset moves for all cars in roster");
-            InstanceManager.getDefault(CarManager.class).resetMoves();
+            log.debug("Reset moves for cars shown");
+            InstanceManager.getDefault(CarManager.class)
+                    .resetMoves(_carsTableFrame.carsTableModel.getSelectedCarList());
         }
     }
 
