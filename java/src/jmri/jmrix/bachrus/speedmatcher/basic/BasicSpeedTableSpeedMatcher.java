@@ -220,7 +220,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
             @Override
             protected SpeedMatcherState nextState(BasicSpeedTableSpeedMatcher speedMatcher) {
                 //TODO: TRW - Implementation
-                if (speedMatcher.currentSpeedT) //                if (programmerState == programmerState.IDLE) {
+                //                if (programmerState == programmerState.IDLE) {
                 //                    String speedTableStepValue = currentSpeedTableStep == SpeedTableStep.STEP28 ? INITIAL_STEP28 : INITIAL_SPEED_TABLE_STEP;
                 //                    writeSpeedTableStep(currentSpeedTableStep, speedTableStepValue);
                 //                    setupNextSpeedMatchState(true, 0);
