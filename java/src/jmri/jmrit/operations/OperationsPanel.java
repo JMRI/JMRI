@@ -61,7 +61,7 @@ public class OperationsPanel extends JPanel {
     public static void padComboBox(JComboBox<?> comboBox, int count) {
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < count; i++) {
-            sb.append("W");
+            sb.append("X"); // wider than average
         }
         JComboBox<String> pad = new JComboBox<>();
         pad.addItem(sb.toString());

@@ -1387,6 +1387,39 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
     }
 
     /**
+     * Add a menu entry to disable double click value edits.  This applies when not in panel edit mode.
+     * This is applicable to memory,  block content and LogixNG global variable labels.
+     *
+     * @param p     the item
+     * @param popup the menu to add the entry to
+     */
+    public void setValueEditDisabledMenu(Positionable p, JPopupMenu popup) {
+        if (p.getDisplayLevel() == BKG) {
+            return;
+        }
+        if (p instanceof BlockContentsIcon || p instanceof MemoryIcon || p instanceof GlobalVariableIcon) {
+            JCheckBoxMenuItem valueEditDisableItem = new JCheckBoxMenuItem(Bundle.getMessage("SetValueEditDisabled"));
+            valueEditDisableItem.setSelected(p.isValueEditDisabled());
+            valueEditDisableItem.addActionListener(new ActionListener() {
+                Positionable comp;
+                JCheckBoxMenuItem checkBox;
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    comp.setValueEditDisabled(checkBox.isSelected());
+                }
+
+                ActionListener init(Positionable pos, JCheckBoxMenuItem cb) {
+                    comp = pos;
+                    checkBox = cb;
+                    return this;
+                }
+            }.init(p, valueEditDisableItem));
+            popup.add(valueEditDisableItem);
+        }
+    }
+
+    /**
      * Add a menu entry to edit Id of the Positionable item
      *
      * @param p     the item
