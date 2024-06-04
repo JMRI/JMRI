@@ -21,9 +21,6 @@ public class SerialPort {
 
     private AbstractSerialPortController.SerialPort _serialPort;
 
-    /**
-     * Creates a new instance of <code>SerialPort</code>.
-     */
     public SerialPort(AbstractSerialPortController.SerialPort serialPort) {
         this._serialPort = serialPort;
     }
