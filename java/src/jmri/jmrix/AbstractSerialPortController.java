@@ -36,6 +36,23 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @return Localized message, in case separate presentation to user is
      *         desired
      */
+    //@Deprecated(forRemoval=true) // with jmri.jmrix.PureJavaComm
+    public String handlePortBusy(jmri.jmrix.purejavacomm.PortInUseException p, String portName, org.slf4j.Logger log) {
+        log.error("{} port is in use: {}", portName, p.getMessage());
+        ConnectionStatus.instance().setConnectionState(this.getSystemPrefix(), portName, ConnectionStatus.CONNECTION_DOWN);
+        return Bundle.getMessage("SerialPortInUse", portName);
+    }
+
+    /**
+     * Standard error handling for purejavacomm port-busy case.
+     *
+     * @param p        the exception being handled, if additional information
+     *                 from it is desired
+     * @param portName name of the port being accessed
+     * @param log      where to log a status message
+     * @return Localized message, in case separate presentation to user is
+     *         desired
+     */
     //@Deprecated(forRemoval=true) // with PureJavaComm
     @Override
     public String handlePortBusy(purejavacomm.PortInUseException p, String portName, org.slf4j.Logger log) {
@@ -44,6 +61,20 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
          "Error", JmriJOptionPane.ERROR_MESSAGE);*/
         ConnectionStatus.instance().setConnectionState(this.getSystemPrefix(), portName, ConnectionStatus.CONNECTION_DOWN);
         return Bundle.getMessage("SerialPortInUse", portName);
+    }
+
+    /**
+     * Specific error handling for purejavacomm port-not-found case.
+     * @param p no such port exception.
+     * @param portName port name.
+     * @param log system log.
+     * @return human readable string with error detail.
+     */
+    //@Deprecated(forRemoval=true) // with jmri.jmrix.PureJavaComm
+    public String handlePortNotFound(jmri.jmrix.purejavacomm.NoSuchPortException p, String portName, org.slf4j.Logger log) {
+        log.error("Serial port {} not found", portName);
+        ConnectionStatus.instance().setConnectionState(this.getSystemPrefix(), portName, ConnectionStatus.CONNECTION_DOWN);
+        return Bundle.getMessage("SerialPortNotFound", portName);
     }
 
     /**
@@ -227,6 +258,35 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             portNameVector.addElement(portID.getSystemPortName());
         }
         return portNameVector;
+    }
+
+    /**
+     * Set the control leads and flow control for jmri.jmrix.purejavacomm. This handles any necessary
+     * ordering.
+     *
+     * @param serialPort Port to be updated
+     * @param flow       flow control mode from (@link purejavacomm.SerialPort}
+     * @param rts        set RTS active if true
+     * @param dtr        set DTR active if true
+     */
+    //@Deprecated(forRemoval=true) // Removed with jmri.jmrix.PureJavaComm
+    protected void configureLeadsAndFlowControl(jmri.jmrix.purejavacomm.SerialPort serialPort, int flow, boolean rts, boolean dtr) {
+        // (Jan 2018) PJC seems to mix termios and ioctl access, so it's not clear
+        // what's preserved and what's not. Experimentally, it seems necessary
+        // to write the control leads, set flow control, and then write the control
+        // leads again.
+        serialPort.setRTS(rts);
+        serialPort.setDTR(dtr);
+
+        try {
+            if (flow != jmri.jmrix.purejavacomm.SerialPort.FLOWCONTROL_NONE) {
+                serialPort.setFlowControlMode(flow);
+            }
+        } catch (jmri.jmrix.purejavacomm.UnsupportedCommOperationException e) {
+            log.warn("Could not set flow control, ignoring");
+        }
+        if (flow!=jmri.jmrix.purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_OUT) serialPort.setRTS(rts); // not connected in some serial ports and adapters
+        serialPort.setDTR(dtr);
     }
 
     /**
@@ -447,6 +507,17 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      */
     final protected void closeSerialPort(SerialPort serialPort){
         serialPort.serialPort.closePort();
+    }
+
+    /**
+     * Set the flow control for purejavacomm, while also setting RTS and DTR to active.
+     *
+     * @param serialPort Port to be updated
+     * @param flow       flow control mode from (@link jmri.jmrix.purejavacomm.SerialPort}
+     */
+    //@Deprecated(forRemoval=true) // with jmri.jmrix.PureJavaComm
+    final protected void configureLeadsAndFlowControl(jmri.jmrix.purejavacomm.SerialPort serialPort, int flow) {
+        configureLeadsAndFlowControl(serialPort, flow, true, true);
     }
 
     /**
@@ -904,6 +975,10 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             this.serialPort.setRTS();
         }
 
+        public void clearRTS() {
+            this.serialPort.clearRTS();
+        }
+
         public void setBaudRate(int baudrate) {
             this.serialPort.setBaudRate(baudrate);
         }
@@ -918,6 +993,10 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
 
         public void setDTR() {
             this.serialPort.setDTR();
+        }
+
+        public void clearDTR() {
+            this.serialPort.clearDTR();
         }
 
         public boolean getDTR() {
