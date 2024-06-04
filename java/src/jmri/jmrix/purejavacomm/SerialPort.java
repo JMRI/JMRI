@@ -26,10 +26,7 @@ public class SerialPort {
     private SerialPortEventListener _eventListener;
     private boolean _threadStarted = false;
     private Thread _inputThread;
-    private boolean _notifyOnDataAvailable;
-    private boolean _dataAvailableNotified;
-    private boolean _notifyOnOutputEmpty;
-    private boolean _outputEmptyNotified;
+    private volatile boolean _notifyOnDataAvailable;
 
     public SerialPort(AbstractSerialPortController.SerialPort serialPort) {
         this._serialPort = serialPort;
@@ -40,7 +37,8 @@ public class SerialPort {
             
             while (true) {
                 try {
-                    while ((_eventListener != null) && (inputStream.available() > 0)) {
+                    while (_notifyOnDataAvailable && (_eventListener != null)
+                            && (inputStream.available() > 0)) {
                         _eventListener.serialEvent(new SerialPortEvent(
                                 this, SerialPortEvent.DATA_AVAILABLE, false, true));
                     }
