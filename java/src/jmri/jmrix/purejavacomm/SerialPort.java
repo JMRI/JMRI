@@ -3,6 +3,8 @@ package jmri.jmrix.purejavacomm;
 import java.io.InputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TooManyListenersException;
 
 import jmri.jmrix.AbstractSerialPortController;
@@ -14,23 +16,49 @@ public class SerialPort {
 
     public static final int DATABITS_8 = 8;
     public static final int PARITY_NONE = 0;
+    public static final int PARITY_ODD = 1;
+    public static final int PARITY_EVEN = 2;
     public static final int STOPBITS_1 = 1;
+    public static final int STOPBITS_2 = 2;
     public static final int FLOWCONTROL_NONE = 0;
     public static final int FLOWCONTROL_RTSCTS_IN = 1;
     public static final int FLOWCONTROL_RTSCTS_OUT = 2;
 
     private AbstractSerialPortController.SerialPort _serialPort;
+    private final List<SerialPortEventListener> listeners = new ArrayList<>();
 
     public SerialPort(AbstractSerialPortController.SerialPort serialPort) {
         this._serialPort = serialPort;
     }
 
+    private void setParity(int parity) {
+        switch (parity) {
+            case PARITY_NONE:
+                _serialPort.setParity(AbstractSerialPortController.Parity.NONE);
+                break;
+                
+            case PARITY_EVEN:
+                _serialPort.setParity(AbstractSerialPortController.Parity.EVEN);
+                break;
+                
+            case PARITY_ODD:
+                _serialPort.setParity(AbstractSerialPortController.Parity.ODD);
+                break;
+            
+            default:
+                throw new IllegalArgumentException("Unknown parity: "+Integer.toString(parity));
+        }
+    }
+
     public void setSerialPortParams(int baudRate, int dataBits, int stopBits, int parity) throws UnsupportedCommOperationException {
-        throw new UnsupportedOperationException("Not implemented");
+        _serialPort.setBaudRate(baudRate);
+        _serialPort.setNumDataBits(dataBits);
+        _serialPort.setNumStopBits(stopBits);
+        setParity(parity);
     }
 
     public void addEventListener(SerialPortEventListener listener) throws TooManyListenersException {
-        throw new UnsupportedOperationException("Not implemented");
+        listeners.add(listener);
     }
 
     public void notifyOnDataAvailable(boolean value) {

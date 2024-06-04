@@ -991,6 +991,14 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             this.serialPort.setNumDataBits(bits);
         }
 
+        public void setNumStopBits(int bits) {
+            this.serialPort.setNumStopBits(bits);
+        }
+
+        public void setParity(Parity parity) {
+            serialPort.setParity(parity.getValue());  // constants are defined with values for the specific port class
+        }
+
         public void setDTR() {
             this.serialPort.setDTR();
         }
