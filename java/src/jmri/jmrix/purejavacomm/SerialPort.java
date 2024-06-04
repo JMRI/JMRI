@@ -3,8 +3,6 @@ package jmri.jmrix.purejavacomm;
 import java.io.InputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.TooManyListenersException;
 
 import jmri.jmrix.AbstractSerialPortController;
@@ -25,7 +23,13 @@ public class SerialPort {
     public static final int FLOWCONTROL_RTSCTS_OUT = 2;
 
     private AbstractSerialPortController.SerialPort _serialPort;
-    private final List<SerialPortEventListener> listeners = new ArrayList<>();
+    private SerialPortEventListener _eventListener;
+    private boolean _threadStarted = false;
+    private Thread _inputThread;
+    private boolean _notifyOnDataAvailable;
+    private boolean _dataAvailableNotified;
+    private boolean _notifyOnOutputEmpty;
+    private boolean _outputEmptyNotified;
 
     public SerialPort(AbstractSerialPortController.SerialPort serialPort) {
         this._serialPort = serialPort;
@@ -58,15 +62,46 @@ public class SerialPort {
     }
 
     public void addEventListener(SerialPortEventListener listener) throws TooManyListenersException {
-        listeners.add(listener);
+        if (listener == null) {
+            throw new IllegalArgumentException("listener cannot be null");
+        }
+        if (this._eventListener != null) {
+            throw new TooManyListenersException();
+        }
+        this._eventListener = listener;
+        if (!_threadStarted) {
+            _inputThread.start();
+        }
     }
 
+	private void sendDataEvents(boolean read, boolean write) {
+		if (read && _notifyOnDataAvailable && !_dataAvailableNotified) {
+			_dataAvailableNotified = true;
+			_eventListener.serialEvent(new SerialPortEvent(this, SerialPortEvent.DATA_AVAILABLE, false, true));
+		}
+		if (write && _notifyOnOutputEmpty && !_outputEmptyNotified) {
+			_outputEmptyNotified = true;
+			_eventListener.serialEvent(new SerialPortEvent(this, SerialPortEvent.OUTPUT_BUFFER_EMPTY, false, true));
+		}
+	}
+
     public void notifyOnDataAvailable(boolean value) {
-        throw new UnsupportedOperationException("Not implemented");
+        _notifyOnDataAvailable = value;
     }
 
     public void setFlowControlMode(int mode) throws UnsupportedCommOperationException {
-        throw new UnsupportedOperationException("Not implemented");
+        switch (mode) {
+            case FLOWCONTROL_NONE:
+                _serialPort.setFlowControl(AbstractSerialPortController.FlowControl.NONE);
+                break;
+                
+            case (FLOWCONTROL_RTSCTS_IN | FLOWCONTROL_RTSCTS_OUT):
+                _serialPort.setFlowControl(AbstractSerialPortController.FlowControl.RTSCTS);
+                break;
+            
+            default:
+                throw new IllegalArgumentException("Unknown flow control mode: "+Integer.toString(mode));
+        }
     }
 
     public InputStream getInputStream() throws IOException {

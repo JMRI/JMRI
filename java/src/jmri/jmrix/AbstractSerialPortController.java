@@ -424,29 +424,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      */
     final protected void setFlowControl(SerialPort serialPort, FlowControl flow) {
         lastFlowControl = flow;
-
-        boolean result = true;
-
-        if (null == flow) {
-            log.error("Invalid null FlowControl enum member");
-        } else switch (flow) {
-            case RTSCTS:
-                result = serialPort.serialPort.setFlowControl(com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_RTS_ENABLED
-                        | com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_CTS_ENABLED );
-                break;
-            case XONXOFF:
-                result = serialPort.serialPort.setFlowControl(com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_XONXOFF_IN_ENABLED
-                        | com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_XONXOFF_OUT_ENABLED);
-                break;
-            case NONE:
-                result = serialPort.serialPort.setFlowControl(com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_DISABLED);
-                break;
-            default:
-                log.error("Invalid FlowControl enum member: {}", flow);
-                break;
-        }
-
-        if (!result) log.error("Port did not accept flow control setting {}", flow);
+        serialPort.setFlowControl(flow);
     }
 
     private FlowControl lastFlowControl = FlowControl.NONE;
@@ -1025,6 +1003,37 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
 
         public boolean getDCD() {
             return this.serialPort.getDCD();
+        }
+
+        /**
+         * Configure the flow control settings. Keep this in synch with the
+         * FlowControl enum.
+         *
+         * @param flow  set which kind of flow control to use
+         */
+        public final void setFlowControl(FlowControl flow) {
+            boolean result = true;
+
+            if (null == flow) {
+                log.error("Invalid null FlowControl enum member");
+            } else switch (flow) {
+                case RTSCTS:
+                    result = serialPort.setFlowControl(com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_RTS_ENABLED
+                            | com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_CTS_ENABLED );
+                    break;
+                case XONXOFF:
+                    result = serialPort.setFlowControl(com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_XONXOFF_IN_ENABLED
+                            | com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_XONXOFF_OUT_ENABLED);
+                    break;
+                case NONE:
+                    result = serialPort.setFlowControl(com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_DISABLED);
+                    break;
+                default:
+                    log.error("Invalid FlowControl enum member: {}", flow);
+                    break;
+            }
+
+            if (!result) log.error("Port did not accept flow control setting {}", flow);
         }
 
         public void setBreak() {
