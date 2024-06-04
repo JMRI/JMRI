@@ -33,6 +33,30 @@ public class SerialPort {
 
     public SerialPort(AbstractSerialPortController.SerialPort serialPort) {
         this._serialPort = serialPort;
+
+        Runnable runnable = () -> {
+            final int TIMEOUT = Integer.getInteger("purejavacomm.pollperiod", 10);
+            InputStream inputStream = _serialPort.getInputStream();
+            
+            while (true) {
+                try {
+                    while ((_eventListener != null) && (inputStream.available() > 0)) {
+                        _eventListener.serialEvent(new SerialPortEvent(
+                                this, SerialPortEvent.DATA_AVAILABLE, false, true));
+                    }
+                    Thread.sleep(TIMEOUT);
+                } catch (InterruptedException e) {
+                    log.error("Thread interrupted");
+                    break;
+                } catch (IOException e) {
+                    log.error("An IO error occurred", e);
+                    break;
+                }
+            }
+        };
+        _inputThread = jmri.util.ThreadingUtil.newThread(
+                runnable, "jmri.jmrix.purejavacomm.SerialPort");
+        _inputThread.setDaemon(true);
     }
 
     private void setParity(int parity) {
@@ -70,20 +94,10 @@ public class SerialPort {
         }
         this._eventListener = listener;
         if (!_threadStarted) {
+            _threadStarted = true;
             _inputThread.start();
         }
     }
-
-	private void sendDataEvents(boolean read, boolean write) {
-		if (read && _notifyOnDataAvailable && !_dataAvailableNotified) {
-			_dataAvailableNotified = true;
-			_eventListener.serialEvent(new SerialPortEvent(this, SerialPortEvent.DATA_AVAILABLE, false, true));
-		}
-		if (write && _notifyOnOutputEmpty && !_outputEmptyNotified) {
-			_outputEmptyNotified = true;
-			_eventListener.serialEvent(new SerialPortEvent(this, SerialPortEvent.OUTPUT_BUFFER_EMPTY, false, true));
-		}
-	}
 
     public void notifyOnDataAvailable(boolean value) {
         _notifyOnDataAvailable = value;
@@ -153,11 +167,12 @@ public class SerialPort {
     }
 
     public boolean isReceiveTimeoutEnabled() {
-        throw new UnsupportedOperationException("Not implemented");
+        return false;   // Not implemented
     }
 
     public int getReceiveTimeout() {
-        throw new UnsupportedOperationException("Not implemented");
+        return 0;   // Not implemented
     }
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialPort.class);
 }
