@@ -40,30 +40,46 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
     //<editor-fold defaultstate="collapsed" desc="SpeedMatcher Overrides">
     @Override
     public boolean StartSpeedMatch() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-
-//        if (!super.Validate()) {
-//            return false;
-//        }
+        if (!super.Validate()) {
+            return false;
+        }
+        
         //reset instance variables
+        currentSpeedTableStep = SpeedTableStep.STEP28;
+        currentSpeedTableStepValue = INITIAL_STEP28_VALUE;
+        lastSpeedTableStepValue = INITIAL_STEP28_VALUE;
+        reverseTrimValue = INITIAL_TRIM_VALUE;
+        lastReverseTrimValue = INITIAL_TRIM_VALUE;
+
+        speedMatcherState = SpeedMatcherState.WAIT_FOR_THROTTLE;
+        
+        if (!super.InitializeAndStartSpeedMatcher(e -> speedMatchTimeout())) {
+            CleanUp();
+            return false;
+        }
+        
+        return true;
     }
 
     @Override
     public void StopSpeedMatch() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        logger.info("Speed matching manually stopped");
+        Abort();
     }
 
     @Override
     public boolean IsIdle() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return speedMatcherState == SpeedMatcherState.IDLE;
     }
 
     @Override
     public void CleanUp() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       speedMatcherState = SpeedMatcherState.IDLE;
+       super.CleanUp();
     }
 
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Speed Matcher State">
     private synchronized void speedMatchTimeout() {
         switch (speedMatcherState) {
