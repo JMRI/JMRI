@@ -301,7 +301,7 @@ public class ArchitectureTest {
 
         .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController$1").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController$2").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController$2")
 
         .should().accessClassesThat().resideInAPackage("purejavacomm..");
 
