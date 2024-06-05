@@ -305,9 +305,6 @@ public class ArchitectureTest {
         .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController$2").and()
 
         // non-typical systems that are not (yet) migrated
-        .doNotHaveFullyQualifiedName("jmri.jmrix.pricom.downloader.LoaderPane").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.pricom.downloader.LoaderPane$LocalReader").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.pricom.pockettester.DataSource").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.serialsensor.SerialSensorAdapter").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.serialsensor.SerialSensorAdapter$2")
 

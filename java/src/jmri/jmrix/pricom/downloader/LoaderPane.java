@@ -18,7 +18,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 
-import purejavacomm.*;
+import jmri.jmrix.purejavacomm.*;
 
 /**
  * Pane for downloading software updates to PRICOM products
