@@ -164,6 +164,10 @@ public class SerialPort {
         return _serialPort.getDCD();
     }
 
+    public boolean isRI() {
+        return _serialPort.getRI();
+    }
+
     public boolean isReceiveTimeoutEnabled() {
         return false;   // Not implemented
     }

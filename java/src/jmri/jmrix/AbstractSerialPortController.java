@@ -1005,6 +1005,10 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             return this.serialPort.getDCD();
         }
 
+        public boolean getRI() {
+            return this.serialPort.getRI();
+        }
+
         /**
          * Configure the flow control settings. Keep this in synch with the
          * FlowControl enum.
