@@ -310,7 +310,6 @@ public class ArchitectureTest {
         .doNotHaveFullyQualifiedName("jmri.jmrix.pricom.downloader.LoaderPane").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.pricom.downloader.LoaderPane$LocalReader").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.pricom.pockettester.DataSource").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.qsi.serialdriver.SerialDriverAdapter").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.serialsensor.SerialSensorAdapter").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.serialsensor.SerialSensorAdapter$2")
 
