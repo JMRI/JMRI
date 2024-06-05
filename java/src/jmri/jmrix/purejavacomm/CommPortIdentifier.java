@@ -17,10 +17,16 @@ public class CommPortIdentifier {
         return new CommPortIdentifier(portName);
     }
 
-    public SerialPort open(String appName, int timeout) throws PortInUseException {
+    public SerialPort open(String appName, int timeout) throws PortInUseException, NoSuchPortException {
         String systemPrefix = appName;
-        return new SerialPort(AbstractSerialPortController.activatePort(
-                systemPrefix, _portName, log, 1, AbstractSerialPortController.Parity.NONE));
+        AbstractSerialPortController.SerialPort serialPort = AbstractSerialPortController.activatePort(
+                systemPrefix, _portName, log, 1, AbstractSerialPortController.Parity.NONE);
+
+        if (serialPort != null) {
+            return new SerialPort(serialPort);
+        } else {
+            throw new NoSuchPortException();
+        }
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CommPortIdentifier.class);
