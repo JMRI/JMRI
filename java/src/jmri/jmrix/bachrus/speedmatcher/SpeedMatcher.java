@@ -3,6 +3,7 @@ package jmri.jmrix.bachrus.speedmatcher;
 import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
+import javax.swing.JButton;
 import javax.swing.Timer;
 
 import jmri.*;
@@ -97,6 +98,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener{
 
     protected Logger logger;
     protected JLabel statusLabel;
+    protected JButton startStopButton;
     
     protected ProgrammerState programmerState = ProgrammerState.IDLE;
     
@@ -113,12 +115,13 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener{
 
         this.logger = config.logger;
         this.statusLabel = config.statusLabel;
+        this.startStopButton = config.startStopButton;
     }
 
     //<editor-fold defaultstate="collapsed" desc="Public APIs">   
-    public abstract boolean StartSpeedMatch();
+    public abstract boolean Start();
 
-    public abstract void StopSpeedMatch();
+    public abstract void Stop();
 
     public abstract boolean IsIdle();
 
@@ -126,7 +129,12 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener{
         this.currentSpeed = currentSpeedKPH;
     }
 
-    public void CleanUp() {
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Protected APIs">
+    protected abstract boolean Validate();
+    
+    protected void CleanUp() {
         //stop the timer
         if (speedMatchStateTimer != null) {
             speedMatchStateTimer.stop();
@@ -144,14 +152,9 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener{
             InstanceManager.getDefault(AddressedProgrammerManager.class).releaseAddressedProgrammer(opsModeProgrammer);
             opsModeProgrammer = null;
         }
-
-        statusLabel.setText(" ");
+        
+        startStopButton.setText(Bundle.getMessage("btnStartSpeedMatch"));
     }
-    
-    //</editor-fold>
-    
-    //<editor-fold defaultstate="collapsed" desc="Protected APIs">
-    protected abstract boolean Validate();
 
     protected boolean InitializeAndStartSpeedMatcher(ActionListener timerActionListener) {
         //Setup speed match timer

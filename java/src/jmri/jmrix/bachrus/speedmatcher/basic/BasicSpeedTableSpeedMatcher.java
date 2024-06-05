@@ -39,7 +39,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
 
     //<editor-fold defaultstate="collapsed" desc="SpeedMatcher Overrides">
     @Override
-    public boolean StartSpeedMatch() {
+    public boolean Start() {
         if (!super.Validate()) {
             return false;
         }
@@ -62,9 +62,14 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
     }
 
     @Override
-    public void StopSpeedMatch() {
-        logger.info("Speed matching manually stopped");
-        Abort();
+     public void Stop() {
+        if (!IsIdle()) {
+            logger.info("Speed matching manually stopped");
+            Abort();
+        }
+        else {
+            CleanUp();
+        }
     }
 
     @Override
@@ -73,7 +78,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
     }
 
     @Override
-    public void CleanUp() {
+    protected void CleanUp() {
        speedMatcherState = SpeedMatcherState.IDLE;
        super.CleanUp();
     }

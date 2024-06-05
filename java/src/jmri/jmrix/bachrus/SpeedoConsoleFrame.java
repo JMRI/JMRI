@@ -295,7 +295,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected JRadioButton basicESUSpeedMatchButton = new JRadioButton("ESU Speed Table");
 
     protected JCheckBox basicSpeedMatchReverseCheckbox = new JCheckBox("Trim Reverse Speed");
-    protected JCheckBox basicSpeedMatchWarmUpCheckBox = new JCheckBox("Warm Up Locomotive");
+    protected JCheckBox basicSpeedMatchWarmUpCheckBox = new JCheckBox(Bundle.getMessage("chkbxWarmUp"));
     protected JLabel basicSpeedMatchWarmUpForwardLabel = new JLabel("Forward Warm Up: ");
     protected JSpinner basicSpeedMatchWarmUpForwardSeconds = new JSpinner(warmUpForwardSecondsSM);
     protected JLabel basicSpeedMatchWarmUpForwardUnit = new JLabel(" seconds");
@@ -312,7 +312,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected SpinnerNumberModel highSpeedSM = new SpinnerNumberModel(55, 1, 255, 1);
     protected JSpinner basicSpeedMatchTargetHighSpeedField = new JSpinner(highSpeedSM);
     protected JLabel basicSpeedMatchTargetHighSpeedUnit = new JLabel(" MPH");
-    protected JButton basicSpeedMatchStartStopButton = new JButton("Start Speed Match");
+    protected JButton basicSpeedMatchStartStopButton = new JButton(Bundle.getMessage(("btnStartSpeedMatch")));
 
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Advanced">
@@ -833,8 +833,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             int warmUpReverseSeconds;
 
             SpeedMatcherConfig.SpeedTable speedTableType;
-
-            if ((speedMatcher == null) && (profileState == ProfileState.IDLE)) {
+            
+            if ((speedMatcher == null || speedMatcher.IsIdle()) && (profileState == ProfileState.IDLE)) {
                 targetStartSpeed = startSpeedSM.getNumber().intValue();
                 targetHighSpeed = highSpeedSM.getNumber().intValue();
                 
@@ -866,17 +866,16 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                                 warmUpLoco ? warmUpReverseSeconds : 0,
                                 pm,
                                 log,
-                                statusLabel
+                                statusLabel,
+                                basicSpeedMatchStartStopButton
                         )
                 );
 
-                if (speedMatcher.StartSpeedMatch()) {
-                    //TODO: TRW - I18N
-                    basicSpeedMatchStartStopButton.setText("Stop Speed Match");
-                } else {
+                if (!speedMatcher.Start()) {
                     speedMatcher = null;
                 }
-            } else {
+            } 
+            else {
                 stopProfileAndSpeedMatch();
             }
         });
@@ -1408,14 +1407,13 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
         //clean up speed matcher
         if (speedMatcher != null) {
-            speedMatcher.CleanUp();
+            speedMatcher.Stop();
+            speedMatcher = null;
         }
 
         resetGraphButton.setEnabled(true);
         progState = ProgState.IDLE;
         profileState = ProfileState.IDLE;
-        //TODO: TRW - I18N
-        basicSpeedMatchStartStopButton.setText("Start Speed Match");
     }
 
     /**
@@ -1423,13 +1421,13 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      * either the stop profile or stop speed matching buttons.
      */
     protected synchronized void stopProfileAndSpeedMatch() {
-        if (profileState != ProfileState.IDLE) {
+        if (profileState != ProfileState.IDLE || !speedMatcher.IsIdle()) {
+            if (profileState != ProfileState.IDLE) {
+                log.info("Profiling stopped by user");
+            }
+            
             tidyUp();
-            profileState = ProfileState.IDLE;
-            log.info("Profiling stopped by user");
         }
-
-        speedMatcher.StopSpeedMatch();
     }
 
     /**
@@ -1742,6 +1740,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                     break;
 
                 case WRITE4:
+                    statusLabel.setText(Bundle.getMessage("ProgRdComplete"));
                     progState = ProgState.IDLE;
                     break;
 

@@ -5,10 +5,13 @@
  */
 package jmri.jmrix.bachrus.speedmatcher;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
+
 import jmri.DccLocoAddress;
 import jmri.PowerManager;
 import jmri.jmrix.bachrus.Speed;
+
 import org.slf4j.Logger;
 
 /**
@@ -42,6 +45,7 @@ public class SpeedMatcherConfig {
     public int warmUpReverseSeconds;
     
     public JLabel statusLabel;
+    public JButton startStopButton;
 
     public SpeedMatcherConfig(
             SpeedMatcherType type, 
@@ -55,7 +59,8 @@ public class SpeedMatcherConfig {
             int warmUpReverseSeconds,
             PowerManager powerManager, 
             Logger logger, 
-            JLabel statusLabel
+            JLabel statusLabel,
+            JButton startStopButton
     ) {
         this.type = type;
         this.speedTable = speedTable;
@@ -73,6 +78,7 @@ public class SpeedMatcherConfig {
 
         this.logger = logger;
         this.statusLabel = statusLabel;
+        this.startStopButton = startStopButton;
     }
 
 }
