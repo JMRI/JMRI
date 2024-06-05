@@ -20,7 +20,7 @@ public class CommPortIdentifier {
     public SerialPort open(String appName, int timeout) throws PortInUseException {
         String systemPrefix = appName;
         return new SerialPort(AbstractSerialPortController.activatePort(
-                systemPrefix, _portName, log, 8, AbstractSerialPortController.Parity.NONE));
+                systemPrefix, _portName, log, 1, AbstractSerialPortController.Parity.NONE));
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CommPortIdentifier.class);
