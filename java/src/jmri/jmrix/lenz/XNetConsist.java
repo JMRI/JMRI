@@ -101,10 +101,9 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
      * <p>
      * On Lenz systems, All addresses but 0 can be used in a consist (Either and
      * Advanced Consist or a Double Header).
-     *
+     * {@inheritDoc}
      * @param address {@link jmri.DccLocoAddress DccLocoAddress} object to
      *                check.
-     * {@inheritDoc}
      */
     @Override
     public boolean isAddressAllowed(DccLocoAddress address) {
@@ -131,10 +130,9 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
 
     /**
      * Does the consist contain the specified address?
-     *
+     * {@inheritDoc}
      * @param address {@link jmri.DccLocoAddress DccLocoAddress} object to
      *                check.
-     * {@inheritDoc}
      */
     @Override
     public boolean contains(DccLocoAddress address) {
