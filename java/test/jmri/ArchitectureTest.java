@@ -294,7 +294,6 @@ public class ArchitectureTest {
 
     /**
      * Confine purejavacomm to existing uses. No additional ones permitted.
-     * Ideally these will all be migrated to jSerialComm eventually.
      */
     @ArchTest
     public static final ArchRule checkPurejavacommUsage = noClasses()
@@ -303,10 +302,6 @@ public class ArchitectureTest {
         .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController$1").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController$2").and()
-
-        // non-typical systems that are not (yet) migrated
-        .doNotHaveFullyQualifiedName("jmri.jmrix.serialsensor.SerialSensorAdapter").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.serialsensor.SerialSensorAdapter$2")
 
         .should().accessClassesThat().resideInAPackage("purejavacomm..");
 
