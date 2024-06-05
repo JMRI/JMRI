@@ -312,8 +312,7 @@ public class ArchitectureTest {
         .doNotHaveFullyQualifiedName("jmri.jmrix.pricom.pockettester.DataSource").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.qsi.serialdriver.SerialDriverAdapter").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.serialsensor.SerialSensorAdapter").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.serialsensor.SerialSensorAdapter$2").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.xpa.serialdriver.SerialDriverAdapter")
+        .doNotHaveFullyQualifiedName("jmri.jmrix.serialsensor.SerialSensorAdapter$2")
 
         .should().accessClassesThat().resideInAPackage("purejavacomm..");
 
