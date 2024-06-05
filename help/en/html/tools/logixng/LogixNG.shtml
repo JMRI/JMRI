@@ -217,12 +217,12 @@
           LogixNG Debugger</a> for information about debugger logging.</p>
         </dd>
 
-        <dt>Show system names and user names</dt>
+        <dt id="show-names">Show system names and user names</dt>
 
         <dd>
           <p>The LogixNG expressions and actions have names. These names are used internally by
-          LogixNG. In certain developer situations, making the names visible can be helpful. The
-          default is unchecked.</p>
+          LogixNG. This option is required for <a href="reference/chapter5.shtml#execute-action">Execute action</a>.
+          In certain developer situations, making the names visible can be helpful. The default is unchecked.</p>
         </dd>
 
         <dt>Highlight row in ConditionalNG editor</dt>

@@ -1620,6 +1620,43 @@ LogixNG: IQ:AUTO:0001
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h4 id="execute-action">Execute action<span class="since">since 5.7.8</span></h4>
+
+      <p><strong>Execute action</strong> is used to execute a different part of the current
+      ConditionalNG.  This can be useful if you need to execute a part of the ConditionalNG at
+      several different places, for example if you have several <strong>Listen On Beans - Local
+      variable</strong> in the same ConditionalNG.  This is similar to calling a sub-routine.</p>
+
+      <p>A prerequisite is that the <a href="../LogixNG.shtml#show-names">Show system names and user
+      names</a> preference has to be enabled.</p>
+
+      <p>The action to be executed is assigned a <strong>user name</strong> which is then selected
+      from the dialog combo box.  There can be multiple action names.  Note:  The <strong>Execute
+      action</strong> itself does not require a user name.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/execute-action.png">
+        <img src="images/chapter5/execute-action.png"
+        alt="Chapter 5 execute action"></a>
+      </div>
+
+      <p>This example calls a <strong>sub</strong> action to display the current local variables.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/execute-action-sample.png">
+        <img src="images/chapter5/execute-action-sample.png"
+        alt="Chapter 5 execute action sample"></a>
+      </div>
+
+      <p>Normally a ConditionalNG will execute all of the actions in the top level <strong>Many</strong>.
+      In this example, that would result in a second execution of the <strong>sub</strong> action.
+      The <strong>Return</strong> action is used to finish the ConditionalNG execution sequence.</p>
+
+      <p>Note:  This example was used to verify that the local variable list varies depending on
+      when the <strong>sub</strong> action was called.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h4>Find table row or column<span class="since">since 5.1.6</span></h4>
 
       <p>See <a href="chapter11.shtml#TableActions">Chapter 11 - Table Actions</a> for details.</p>
