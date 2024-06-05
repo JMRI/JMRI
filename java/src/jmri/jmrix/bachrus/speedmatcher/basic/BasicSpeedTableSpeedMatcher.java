@@ -19,6 +19,26 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
     private final int INITIAL_TRIM_VALUE = 128;
     //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Enums">
+    protected enum SpeedMatcherState {
+        IDLE,
+        WAIT_FOR_THROTTLE,
+        INIT_THROTTLE,
+        INIT_ACCEL,
+        INIT_DECEL,
+        INIT_SPEED_TABLE_STEPS,
+        INIT_FORWARD_TRIM,
+        INIT_REVERSE_TRIM,
+        FORWARD_WARM_UP,
+        FORWARD_SPEED_MATCH,
+        REVERSE_WARM_UP,
+        REVERSE_SPEED_MATCH_TRIM,
+        COMPLETE,
+        USER_STOPPED,
+        CLEAN_UP,
+    }
+    //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Instance Variables">
     private SpeedTableStep currentSpeedTableStep = SpeedTableStep.STEP28;
     private int currentSpeedTableStepValue = INITIAL_STEP28_VALUE;
@@ -93,12 +113,18 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
                 logger.error("Timeout waiting for throttle");
                 statusLabel.setText(Bundle.getMessage("StatusTimeout"));
                 break;
+                
+            case INIT_THROTTLE:
+                //set throttle to 0 for init
+                setThrottle(true, 0);
+                initNextSpeedMatcherState(SpeedMatcherState.INIT_ACCEL);
+                break;
 
             case INIT_ACCEL:
                 //set acceleration momentum to 0 (CV 3)
                 if (programmerState == ProgrammerState.IDLE) {
                     writeMomentumAccel(0);
-                    setupNextSpeedMatchState(true, 0);
+                     initNextSpeedMatcherState(SpeedMatcherState.INIT_DECEL);
                 }
                 break;
 
@@ -106,7 +132,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
                 //set deceleration mementum to 0 (CV 4)
                 if (programmerState == ProgrammerState.IDLE) {
                     writeMomentumDecel(0);
-                    setupNextSpeedMatchState(true, 0);
+                    initNextSpeedMatcherState(SpeedMatcherState.INIT_SPEED_TABLE_STEPS);
                 }
                 break;
 
@@ -123,7 +149,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
                 //set forward trim to 128 (CV 66)
                 if (programmerState == ProgrammerState.IDLE) {
                     writeForwardTrim(INITIAL_TRIM_VALUE);
-                    setupNextSpeedMatchState(true, 0);
+                    initNextSpeedMatcherState(SpeedMatcherState.INIT_REVERSE_TRIM);
                 }
                 break;
 
@@ -131,7 +157,14 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
                 //set reverse trim to 128 (CV 95)
                 if (programmerState == ProgrammerState.IDLE) {
                     writeReverseTrim(INITIAL_TRIM_VALUE);
-                    setupNextSpeedMatchState(true, 0);
+                    
+                    SpeedMatcherState nextState;
+                    if (warmUpForwardSeconds > 0) {
+                        nextState = SpeedMatcherState.FORWARD_WARM_UP;
+                    } else {
+                        nextState = SpeedMatcherState.FORWARD_SPEED_MATCH;
+                    }
+                    initNextSpeedMatcherState(nextState);
                 }
                 break;
 
@@ -139,143 +172,21 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
                 //Run 4 minutes at high speed forward
                 statusLabel.setText(Bundle.getMessage("StatForwardWarmUp", warmUpForwardSeconds - stepDuration));
 
-                if (stepDuration == 0) {
-                    setupSpeedMatchState(true, 28, 5000);
-                } else if (stepDuration >= warmUpForwardSeconds) {
-                    setupNextSpeedMatchState(true, 28);
+                if (stepDuration >= warmUpForwardSeconds) {
+                    initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH);
                 } else {
+                    if (stepDuration == 0) {
+                        setSpeedMatchStateTimerDuration(5000);
+                        setThrottle(true, 28);
+                    }
                     stepDuration += 5;
                 }
-
                 break;
+
 
             case FORWARD_SPEED_MATCH:
                 //TODO: TRW - implementation
-                break;
-
-            case REVERSE_WARM_UP:
-                //Run 2 minutes at high speed in reverse
-                statusLabel.setText(Bundle.getMessage("StatReverseWarmUp", warmUpReverseSeconds - stepDuration));
-
-                if (stepDuration == 0) {
-                    setupSpeedMatchState(false, 28, 5000);
-                } else if (stepDuration >= warmUpReverseSeconds) {
-                    setupNextSpeedMatchState(false, 28);
-                } else {
-                    stepDuration += 5;
-                }
-
-                break;
-
-            case REVERSE_SPEED_MATCH_TRIM:
-                //Use PID controller logic to adjust reverse trim until high speed reverse speed matches forward
-                if (programmerState == ProgrammerState.IDLE) {
-                    if (stepDuration == 0) {
-                        statusLabel.setText(Bundle.getMessage("StatSettingReverseTrim"));
-                        setupSpeedMatchState(false, 28, 15000);
-                        stepDuration = 1;
-                    } else {
-                        setSpeedMatchError(targetTopSpeedKPH);
-
-                        if ((speedMatchError < 0.5) && (speedMatchError > -0.5)) {
-                            setupNextSpeedMatchState(true, 0);
-                        } else {
-                            reverseTrimValue = getNextSpeedMatchValue(lastReverseTrimValue);
-
-                            if (((lastReverseTrimValue == 1) || (lastReverseTrimValue == 255)) && (reverseTrimValue == lastReverseTrimValue)) {
-                                statusLabel.setText(Bundle.getMessage("StatSetReverseTripFail"));
-                                logger.debug("Unable to trim reverse to match forward");
-                                Abort();
-                                break;
-                            } else {
-                                lastReverseTrimValue = reverseTrimValue;
-                                writeReverseTrim(reverseTrimValue);
-                            }
-                            speedMatchStateTimer.setInitialDelay(8000);
-                        }
-                    }
-                }
-                break;
-
-            case CLEAN_UP:
-                //wrap it up
-                if (programmerState == ProgrammerState.IDLE) {
-                    CleanUp();
-                    statusLabel.setText(Bundle.getMessage("StatSpeedMatchComplete"));
-                }
-                break;
-
-            default:
-                CleanUp();
-                logger.error("Unexpected speed match timeout");
-                break;
-        }
-    }
-
-    protected enum SpeedMatcherState {
-        IDLE {
-            @Override
-            protected SpeedMatcherState nextState(BasicSpeedTableSpeedMatcher speedMatcher) {
-                return this;
-            }
-        },
-        WAIT_FOR_THROTTLE {
-            @Override
-            protected SpeedMatcherState nextState(BasicSpeedTableSpeedMatcher speedMatcher) {
-                return SpeedMatcherState.IDLE;
-            }
-        },
-        INIT_ACCEL {
-            @Override
-            protected SpeedMatcherState nextState(BasicSpeedTableSpeedMatcher speedMatcher) {
-                return SpeedMatcherState.INIT_DECEL;
-            }
-        },
-        INIT_DECEL {
-            @Override
-            protected SpeedMatcherState nextState(BasicSpeedTableSpeedMatcher speedMatcher) {
-                return SpeedMatcherState.INIT_SPEED_TABLE_STEPS;
-            }
-        },
-        INIT_SPEED_TABLE_STEPS {
-            @Override
-            protected SpeedMatcherState nextState(BasicSpeedTableSpeedMatcher speedMatcher) {
-                //TODO: TRW - Implementation
-                //                if (programmerState == programmerState.IDLE) {
-                //                    String speedTableStepValue = currentSpeedTableStep == SpeedTableStep.STEP28 ? INITIAL_STEP28 : INITIAL_SPEED_TABLE_STEP;
-                //                    writeSpeedTableStep(currentSpeedTableStep, speedTableStepValue);
-                //                    setupNextSpeedMatchState(true, 0);
-                //                }
-                {
-                    return this;
-                }
-            }
-        },
-        INIT_FORWARD_TRIM {
-            @Override
-            protected SpeedMatcherState nextState(BasicSpeedTableSpeedMatcher speedMatcher) {
-                return SpeedMatcherState.INIT_REVERSE_TRIM;
-            }
-        },
-        INIT_REVERSE_TRIM {
-            @Override
-            protected SpeedMatcherState nextState(BasicSpeedTableSpeedMatcher speedMatcher) {
-                if (speedMatcher.warmUpForwardSeconds > 0) {
-                    return SpeedMatcherState.FORWARD_WARM_UP;
-                } else {
-                    return SpeedMatcherState.FORWARD_SPEED_MATCH;
-                }
-            }
-        },
-        FORWARD_WARM_UP {
-            @Override
-            protected SpeedMatcherState nextState(BasicSpeedTableSpeedMatcher speedMatcher) {
-                return SpeedMatcherState.FORWARD_SPEED_MATCH;
-            }
-        },
-        FORWARD_SPEED_MATCH {
-            @Override
-            protected SpeedMatcherState nextState(BasicSpeedTableSpeedMatcher speedMatcher) {
+                
                 //TODO: TRW - Implementation
 //                if (currentSpeedTableStep == SpeedTableStep.STEP28) {
 //                    currentSpeedTableStep = SpeedTableStep.STEP1;
@@ -290,29 +201,84 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
 //                        return SpeedMatcherState.CLEAN_UP;
 //                    }
 //                }
-                return this;
-            }
-        },
-        REVERSE_WARM_UP {
-            @Override
-            protected SpeedMatcherState nextState(BasicSpeedTableSpeedMatcher speedMatcher) {
-                return SpeedMatcherState.REVERSE_SPEED_MATCH_TRIM;
-            }
-        },
-        REVERSE_SPEED_MATCH_TRIM {
-            @Override
-            protected SpeedMatcherState nextState(BasicSpeedTableSpeedMatcher speedMatcher) {
-                return SpeedMatcherState.CLEAN_UP;
-            }
-        },
-        CLEAN_UP {
-            @Override
-            protected SpeedMatcherState nextState(BasicSpeedTableSpeedMatcher speedMatcher) {
-                return SpeedMatcherState.IDLE;
-            }
-        };
+                break;
 
-        protected abstract SpeedMatcherState nextState(BasicSpeedTableSpeedMatcher speedMatcher);
+            case REVERSE_WARM_UP:
+                //Run 2 minutes at high speed in reverse
+                statusLabel.setText(Bundle.getMessage("StatReverseWarmUp", warmUpReverseSeconds - stepDuration));
+
+                if (stepDuration >= warmUpReverseSeconds) {
+                    initNextSpeedMatcherState(SpeedMatcherState.REVERSE_SPEED_MATCH_TRIM);
+                } else {
+                    if (stepDuration == 0) {
+                        setSpeedMatchStateTimerDuration(5000);
+                        setThrottle(false, 28);
+                    }
+                    stepDuration += 5;
+                }
+
+
+                break;
+
+            case REVERSE_SPEED_MATCH_TRIM:
+                //Use PID controller logic to adjust reverse trim until high speed reverse speed matches forward
+                if (programmerState == ProgrammerState.IDLE) {
+                    if (stepDuration == 0) {
+                        statusLabel.setText(Bundle.getMessage("StatSettingReverseTrim"));
+                        setThrottle(false, 28);
+                        setSpeedMatchStateTimerDuration(15000);
+                        stepDuration = 1;
+                    } else {
+                        setSpeedMatchError(targetTopSpeedKPH);
+
+                        if ((speedMatchError < 0.5) && (speedMatchError > -0.5)) {
+                            initNextSpeedMatcherState(SpeedMatcherState.COMPLETE);
+                        } else {
+                            reverseTrimValue = getNextSpeedMatchValue(lastReverseTrimValue, 255, 1);
+
+                            if (((lastReverseTrimValue == 1) || (lastReverseTrimValue == 255)) && (reverseTrimValue == lastReverseTrimValue)) {
+                                statusLabel.setText(Bundle.getMessage("StatSetReverseTripFail"));
+                                logger.debug("Unable to trim reverse to match forward");
+                                Abort();
+                                break;
+                            } else {
+                                lastReverseTrimValue = reverseTrimValue;
+                                writeReverseTrim(reverseTrimValue);
+                            }
+                            setSpeedMatchStateTimerDuration(8000);
+                        }
+                    }
+                }
+                break;
+
+            case COMPLETE:
+                if (programmerState == ProgrammerState.IDLE) {
+                    statusLabel.setText(Bundle.getMessage("StatSpeedMatchComplete"));
+                    setThrottle(true, 0);
+                    initNextSpeedMatcherState(SpeedMatcherState.CLEAN_UP);
+                }
+                break;
+
+            case USER_STOPPED:
+                if (programmerState == ProgrammerState.IDLE) {
+                    statusLabel.setText("User stopped speed matching");
+                    setThrottle(true, 0);
+                    initNextSpeedMatcherState(SpeedMatcherState.CLEAN_UP);
+                }
+                break;
+
+            case CLEAN_UP:
+                //wrap it up
+                if (programmerState == ProgrammerState.IDLE) {
+                    CleanUp();
+                }
+                break;
+
+            default:
+                CleanUp();
+                logger.error("Unexpected speed match timeout");
+                break;
+        }
     }
     //</editor-fold>
 
@@ -344,10 +310,9 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
 
         if (speedMatcherState == SpeedMatcherState.WAIT_FOR_THROTTLE) {
             logger.info("Starting speed matching");
-
             // using speed matching timer to trigger each phase of speed matching            
-            setupNextSpeedMatchState(true, 0);
-            speedMatchStateTimer.start();
+            initNextSpeedMatcherState(SpeedMatcherState.INIT_THROTTLE);
+            startSpeedMatchStateTimer();
         } else {
             CleanUp();
         }
@@ -355,14 +320,25 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Helper Functions">
-    private void Abort() {
-        speedMatcherState = SpeedMatcherState.CLEAN_UP;
-        setupSpeedMatchState(true, 0, 1500);
+        private void Abort() {
+        initNextSpeedMatcherState(SpeedMatcherState.CLEAN_UP);
     }
 
-    private void setupNextSpeedMatchState(boolean isForward, int speedStep) {
-        speedMatcherState = speedMatcherState.nextState(this);
-        setupSpeedMatchState(isForward, speedStep, 1500);
+    private void UserStop() {
+        initNextSpeedMatcherState(SpeedMatcherState.USER_STOPPED);
+    }
+    
+    /**
+     * Sets up the speed match state by clearing the speed match error, clearing
+     * the step duration, setting the timer duration to 500 ms, and setting the next state
+     *
+     * @param nextState     - next SpeedMatcherState to set
+     */
+    protected void initNextSpeedMatcherState(SpeedMatcherState nextState) {
+        speedMatchError = 0;
+        stepDuration = 0;
+        speedMatcherState = nextState;
+        setSpeedMatchStateTimerDuration(500);
     }
     //</editor-fold>
 }

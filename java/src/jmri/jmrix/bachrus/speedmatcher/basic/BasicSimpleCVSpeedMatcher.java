@@ -8,23 +8,48 @@ import jmri.jmrix.bachrus.speedmatcher.SpeedMatcherConfig;
 /**
  * This is a simple speed matcher which will speed match a locomotive to a given
  * start and top speed using the simple VStart, VMid, and VHigh CVs.
+ *
  * @author Todd Wegter
  */
 public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
 
     //<editor-fold defaultstate="collapsed" desc="Constants">
-    private final int INITIAL_VSTART  = 1;
-    private final int INITIAL_VMID  = 2;
+    private final int INITIAL_VSTART = 1;
+    private final int INITIAL_VMID = 2;
     private final int INITIAL_VHIGH = 255;
     private final int INITIAL_TRIM = 128;
 
     //</editor-fold>
+    //<editor-fold defaultstate="collapsed" desc="Enums">
+    protected enum SpeedMatcherState {
+        IDLE,
+        WAIT_FOR_THROTTLE,
+        INIT_THROTTLE,
+        INIT_ACCEL,
+        INIT_DECEL,
+        INIT_VSTART,
+        INIT_VMID,
+        INIT_VHIGH,
+        INIT_FORWARD_TRIM,
+        INIT_REVERSE_TRIM,
+        POST_INIT,
+        FORWARD_WARM_UP,
+        FORWARD_SPEED_MATCH_VHIGH,
+        FORWARD_SPEED_MATCH_VMID,
+        FORWARD_SPEED_MATCH_VSTART,
+        REVERSE_WARM_UP,
+        REVERSE_SPEED_MATCH_TRIM,
+        COMPLETE,
+        USER_STOPPED,
+        CLEAN_UP,
+    }
+    //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Instance Variables">
-    private int vStart = INITIAL_VSTART ;
-    private int lastVStart = INITIAL_VSTART ;
-    private int vMid = INITIAL_VSTART ;
-    private int lastVMid = INITIAL_VSTART ;
+    private int vStart = INITIAL_VSTART;
+    private int lastVStart = INITIAL_VSTART;
+    private int vMid = INITIAL_VSTART;
+    private int lastVMid = INITIAL_VSTART;
     private int vHigh = INITIAL_VHIGH;
     private int lastVHigh = INITIAL_VHIGH;
     private int reverseTrimValue = INITIAL_TRIM;
@@ -33,12 +58,11 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
     private final float targetMidSpeedKPH;
 
     private SpeedMatcherState speedMatcherState = SpeedMatcherState.IDLE;
-    
-    //</editor-fold>
 
+    //</editor-fold>
     public BasicSimpleCVSpeedMatcher(SpeedMatcherConfig config) {
         super(config);
-        
+
         this.targetMidSpeedKPH = this.targetStartSpeedKPH + ((this.targetTopSpeedKPH - this.targetStartSpeedKPH) / 2);
     }
 
@@ -50,8 +74,8 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
         }
 
         //reset instance variables
-        vStart = INITIAL_VSTART ;
-        lastVStart = INITIAL_VSTART ;
+        vStart = INITIAL_VSTART;
+        lastVStart = INITIAL_VSTART;
         vMid = INITIAL_VSTART;
         lastVMid = INITIAL_VSTART;
         vHigh = INITIAL_VHIGH;
@@ -65,7 +89,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
             CleanUp();
             return false;
         }
-        
+
         startStopButton.setText(Bundle.getMessage("btnStopSpeedMatch"));
 
         return true;
@@ -76,8 +100,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
         if (!IsIdle()) {
             logger.info("Speed matching manually stopped");
             UserStop();
-        }
-        else {
+        } else {
             CleanUp();
         }
     }
@@ -90,14 +113,12 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
     @Override
     protected void CleanUp() {
         speedMatcherState = SpeedMatcherState.IDLE;
-        
+
         super.CleanUp();
     }
-    
-    //</editor-fold>
-    
-    //<editor-fold defaultstate="collapsed" desc="Speed Matcher State">
 
+    //</editor-fold>
+    //<editor-fold defaultstate="collapsed" desc="Speed Matcher State">
     /**
      * Timer timeout handler for the speed match timer
      */
@@ -109,11 +130,17 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                 statusLabel.setText(Bundle.getMessage("StatusTimeout"));
                 break;
 
+            case INIT_THROTTLE:
+                //set throttle to 0 for init
+                setThrottle(true, 0);
+                initNextSpeedMatcherState(SpeedMatcherState.INIT_ACCEL);
+                break;
+
             case INIT_ACCEL:
                 //set acceleration momentum to 0 (CV 3)
                 if (programmerState == ProgrammerState.IDLE) {
                     writeMomentumAccel(0);
-                    setupNextSpeedMatchState(true, 0);
+                    initNextSpeedMatcherState(SpeedMatcherState.INIT_DECEL);
                 }
                 break;
 
@@ -121,23 +148,23 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                 //set deceleration mementum to 0 (CV 4)
                 if (programmerState == ProgrammerState.IDLE) {
                     writeMomentumDecel(0);
-                    setupNextSpeedMatchState(true, 0);
+                    initNextSpeedMatcherState(SpeedMatcherState.INIT_VSTART);
                 }
                 break;
 
             case INIT_VSTART:
                 //set vStart to 0 (CV 2)
                 if (programmerState == ProgrammerState.IDLE) {
-                    writeVStart(INITIAL_VSTART );
-                    setupNextSpeedMatchState(true, 0);
+                    writeVStart(INITIAL_VSTART);
+                    initNextSpeedMatcherState(SpeedMatcherState.INIT_VMID);
                 }
                 break;
 
             case INIT_VMID:
                 //set vMid to 1 (CV 6)
                 if (programmerState == ProgrammerState.IDLE) {
-                    writeVMid(INITIAL_VMID );
-                    setupNextSpeedMatchState(true, 0);
+                    writeVMid(INITIAL_VMID);
+                    initNextSpeedMatcherState(SpeedMatcherState.INIT_VHIGH);
                 }
                 break;
 
@@ -145,7 +172,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                 //set vHigh to 255 (CV 5)
                 if (programmerState == ProgrammerState.IDLE) {
                     writeVHigh(INITIAL_VHIGH);
-                    setupNextSpeedMatchState(true, 0);
+                    initNextSpeedMatcherState(SpeedMatcherState.INIT_FORWARD_TRIM);
                 }
                 break;
 
@@ -153,7 +180,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                 //set forward trim to 128 (CV 66)
                 if (programmerState == ProgrammerState.IDLE) {
                     writeForwardTrim(INITIAL_TRIM);
-                    setupNextSpeedMatchState(true, 0);
+                    initNextSpeedMatcherState(SpeedMatcherState.INIT_REVERSE_TRIM);
                 }
                 break;
 
@@ -161,21 +188,37 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                 //set reverse trim to 128 (CV 95)
                 if (programmerState == ProgrammerState.IDLE) {
                     writeReverseTrim(INITIAL_TRIM);
-                    throttle.setIsForward(false);   //un-brick Digitrax decoders after programming
-                    setupNextSpeedMatchState(true, 0);
+                    initNextSpeedMatcherState(SpeedMatcherState.POST_INIT);
                 }
                 break;
+
+            case POST_INIT: {
+                statusLabel.setText("Restoring throttle control");
+                
+                //un-brick Digitrax decoders
+                setThrottle(false, 0);
+                setThrottle(true, 0);
+
+                SpeedMatcherState nextState;
+                if (warmUpForwardSeconds > 0) {
+                    nextState = SpeedMatcherState.FORWARD_WARM_UP;
+                } else {
+                    nextState = SpeedMatcherState.FORWARD_SPEED_MATCH_VHIGH;
+                }
+                initNextSpeedMatcherState(nextState);
+                break;
+            }
 
             case FORWARD_WARM_UP:
                 //Run specified forward warm up time at high speed forward
                 statusLabel.setText(Bundle.getMessage("StatForwardWarmUp", warmUpForwardSeconds - stepDuration));
 
                 if (stepDuration >= warmUpForwardSeconds) {
-                    setupNextSpeedMatchState(true, 28);
-                }
-                else {
+                    initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_VHIGH);
+                } else {
                     if (stepDuration == 0) {
-                        setupSpeedMatchState(true, 28, 5000);
+                        setSpeedMatchStateTimerDuration(5000);
+                        setThrottle(true, 28);
                     }
                     stepDuration += 5;
                 }
@@ -186,29 +229,28 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                 if (programmerState == ProgrammerState.IDLE) {
                     if (stepDuration == 0) {
                         statusLabel.setText(Bundle.getMessage("StatSettingSpeed", "5 (vHigh)"));
-                        setupSpeedMatchState(true, 28, 15000);
+                        setThrottle(true, 28);
+                        setSpeedMatchStateTimerDuration(15000);
                         stepDuration = 1;
-                    } else {                            
-                        //TODO: TRW fix vHigh bounding
+                    } else {
                         setSpeedMatchError(targetTopSpeedKPH);
 
-                        //TODO: TRW - make error to within +/-1 kph
-                        if ((speedMatchError < 0.5) && (speedMatchError > -0.5)) {
-                            //TODO: TRW - figure out why speedstep can't be 0 or just get rid of the nextState function
-                            setupNextSpeedMatchState(false, 14);
+                        if ((speedMatchError < 1) && (speedMatchError > -1)) {
+                            initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_VMID);
                         } else {
-                            vHigh = getNextSpeedMatchValue(lastVHigh);
+                            vHigh = getNextSpeedMatchValue(lastVHigh, INITIAL_VHIGH, INITIAL_VMID + 1);
 
-                            if (((lastVHigh == 1) || (lastVHigh == 255)) && (vHigh == lastVHigh)) {
+                            //if (((lastVHigh == 1) || (lastVHigh == 255)) && (vHigh == lastVHigh)) {
+                            if (vHigh == lastVHigh) {
                                 statusLabel.setText(Bundle.getMessage("StatSetSpeedFail", "5 (vHigh)"));
                                 logger.debug("Unable to achieve desired speed for CV 5 (vHigh)");
                                 Abort();
                                 break;
-                            } else {
-                                lastVHigh = vHigh;
-                                writeVHigh(vHigh);
                             }
-                            speedMatchStateTimer.setInitialDelay(8000);
+
+                            lastVHigh = vHigh;
+                            writeVHigh(vHigh);
+                            setSpeedMatchStateTimerDuration(8000);
                         }
                     }
                 }
@@ -218,24 +260,26 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                 //Use PID Controller logic to adjust vMid to achieve desired speed
                 if (programmerState == ProgrammerState.IDLE) {
                     if (stepDuration == 0) {
+                        vMid = INITIAL_VSTART + ((vHigh - INITIAL_VSTART) / 2);
+                        lastVMid = vMid;
+                        writeVMid(vMid);
+
                         statusLabel.setText(Bundle.getMessage("StatSettingSpeed", "6 (vMid)"));
-                        setupSpeedMatchState(true, 14, 15000);
+
+                        setSpeedMatchStateTimerDuration(15000);
+                        setThrottle(true, 14);
                         stepDuration = 1;
 
-                        vMid = vStart + ((vHigh - vStart) / 2);
-                        lastVMid = vMid;
-
-                        writeVMid(vMid);
                     } else {
                         setSpeedMatchError(targetMidSpeedKPH);
 
-                        if ((speedMatchError < 0.5) && (speedMatchError > -0.5)) {
-                            setupNextSpeedMatchState(false, 0);
+                        if ((speedMatchError < 1) && (speedMatchError > -1)) {
+                            initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_VSTART);
                         } else {
-                            //TODO: TRW fix vMid bounding
-                            vMid = getNextSpeedMatchValue(lastVMid);
+                            vMid = getNextSpeedMatchValue(lastVMid, vHigh, INITIAL_VSTART + 1);
 
-                            if (((lastVMid == vStart) || (lastVMid == vHigh)) && (vMid == lastVMid)) {
+                            //if (((lastVMid == vStart) || (lastVMid == vHigh)) && (vMid == lastVMid)) {
+                            if (vMid == lastVMid) {
                                 statusLabel.setText(Bundle.getMessage("StatSetSpeedFail", "6 (vMid)"));
                                 logger.debug("Unable to achieve desired speed for CV 6 (vMid)");
                                 Abort();
@@ -244,30 +288,40 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                                 lastVMid = vMid;
                                 writeVMid(vMid);
                             }
-                            speedMatchStateTimer.setInitialDelay(8000);
+                            setSpeedMatchStateTimerDuration(8000);
                         }
                     }
                 }
                 break;
 
-            case FORWARD_SPEED_MATCH_VSTART:
+            case FORWARD_SPEED_MATCH_VSTART: {
                 //Use PID Controller to adjust vStart to achieve desired speed
                 if (programmerState == ProgrammerState.IDLE) {
                     if (stepDuration == 0) {
                         statusLabel.setText(Bundle.getMessage("StatSettingSpeed", "2 (vStart)"));
-                        throttle.setIsForward(false);
-                        setupSpeedMatchState(true, 1, 15000);
+                        setThrottle(true, 1);
+                        setSpeedMatchStateTimerDuration(15000);
                         stepDuration = 1;
                     } else {
                         setSpeedMatchError(targetStartSpeedKPH);
 
-                        if ((speedMatchError < 0.5) && (speedMatchError > -0.5)) {
-                            setupNextSpeedMatchState(true, 0);
-                        } else {                            
-                            //TODO: TRW fix vStart bounding
-                            vStart = getNextSpeedMatchValue(lastVStart);
+                        if ((speedMatchError < 1) && (speedMatchError > -1)) {
+                            SpeedMatcherState nextState;
+                            if (trimReverseSpeed) {
+                                if (warmUpReverseSeconds > 0) {
+                                    nextState = SpeedMatcherState.REVERSE_WARM_UP;
+                                } else {
+                                    nextState = SpeedMatcherState.REVERSE_SPEED_MATCH_TRIM;
+                                }
+                            } else {
+                                nextState = SpeedMatcherState.COMPLETE;
+                            }
+                            initNextSpeedMatcherState(nextState);
+                        } else {
+                            vStart = getNextSpeedMatchValue(lastVStart, vMid, INITIAL_VSTART);
 
-                            if (((lastVStart == 1) || (lastVStart == 255)) && (vStart == lastVStart)) {
+                            //if (((lastVStart == 1) || (lastVStart == 255)) && (vStart == lastVStart)) {
+                            if (vStart == lastVStart) {
                                 statusLabel.setText(Bundle.getMessage("StatSetSpeedFail", "2 (vStart)"));
                                 logger.debug("Unable to achieve desired speed for CV 2 (vStart)");
                                 Abort();
@@ -276,23 +330,23 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                                 lastVStart = vStart;
                                 writeVStart(vStart);
                             }
-                            speedMatchStateTimer.setInitialDelay(8000);
+                            setSpeedMatchStateTimerDuration(8000);
                         }
                     }
                 }
                 break;
+            }
 
             case REVERSE_WARM_UP:
                 //Run specified reverse warm up time at high speed in reverse
                 statusLabel.setText(Bundle.getMessage("StatReverseWarmUp", warmUpReverseSeconds - stepDuration));
-               
+
                 if (stepDuration >= warmUpReverseSeconds) {
-                    setupNextSpeedMatchState(false, 28);
-                }
-                else {
+                    initNextSpeedMatcherState(SpeedMatcherState.REVERSE_SPEED_MATCH_TRIM);
+                } else {
                     if (stepDuration == 0) {
-                        throttle.setIsForward(true);
-                        setupSpeedMatchState(false, 28, 5000);
+                        setSpeedMatchStateTimerDuration(5000);
+                        setThrottle(false, 28);
                     }
                     stepDuration += 5;
                 }
@@ -304,16 +358,16 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                 if (programmerState == ProgrammerState.IDLE) {
                     if (stepDuration == 0) {
                         statusLabel.setText(Bundle.getMessage("StatSettingReverseTrim"));
-                        throttle.setIsForward(true);
-                        setupSpeedMatchState(false, 28, 15000);
+                        setThrottle(false, 28);
+                        setSpeedMatchStateTimerDuration(15000);
                         stepDuration = 1;
                     } else {
                         setSpeedMatchError(targetTopSpeedKPH);
 
                         if ((speedMatchError < 0.5) && (speedMatchError > -0.5)) {
-                            setupNextSpeedMatchState(true, 0);
+                            initNextSpeedMatcherState(SpeedMatcherState.COMPLETE);
                         } else {
-                            reverseTrimValue = getNextSpeedMatchValue(lastReverseTrimValue);
+                            reverseTrimValue = getNextSpeedMatchValue(lastReverseTrimValue, 255, 1);
 
                             if (((lastReverseTrimValue == 1) || (lastReverseTrimValue == 255)) && (reverseTrimValue == lastReverseTrimValue)) {
                                 statusLabel.setText(Bundle.getMessage("StatSetReverseTripFail"));
@@ -324,7 +378,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                                 lastReverseTrimValue = reverseTrimValue;
                                 writeReverseTrim(reverseTrimValue);
                             }
-                            speedMatchStateTimer.setInitialDelay(8000);
+                            setSpeedMatchStateTimerDuration(8000);
                         }
                     }
                 }
@@ -333,17 +387,19 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
             case COMPLETE:
                 if (programmerState == ProgrammerState.IDLE) {
                     statusLabel.setText(Bundle.getMessage("StatSpeedMatchComplete"));
-                    setupNextSpeedMatchState(true, 0);
+                    setThrottle(true, 0);
+                    initNextSpeedMatcherState(SpeedMatcherState.CLEAN_UP);
                 }
                 break;
-                
+
             case USER_STOPPED:
                 if (programmerState == ProgrammerState.IDLE) {
                     statusLabel.setText("User stopped speed matching");
-                    setupNextSpeedMatchState(true, 0);
+                    setThrottle(true, 0);
+                    initNextSpeedMatcherState(SpeedMatcherState.CLEAN_UP);
                 }
                 break;
-                
+
             case CLEAN_UP:
                 //wrap it up
                 if (programmerState == ProgrammerState.IDLE) {
@@ -358,142 +414,15 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
         }
 
         if (speedMatcherState != SpeedMatcherState.IDLE) {
-            speedMatchStateTimer.start();
+            startSpeedMatchStateTimer();
         }
     }
 
-    protected enum SpeedMatcherState {
-
-        IDLE {
-            @Override
-            protected SpeedMatcherState nextState(BasicSimpleCVSpeedMatcher speedMatcher) {
-                return this;
-            }
-        },
-        WAIT_FOR_THROTTLE {
-            @Override
-            protected SpeedMatcherState nextState(BasicSimpleCVSpeedMatcher speedMatcher) {
-                return SpeedMatcherState.INIT_ACCEL;
-            }
-        },
-        INIT_ACCEL {
-            @Override
-            protected SpeedMatcherState nextState(BasicSimpleCVSpeedMatcher speedMatcher) {
-                return SpeedMatcherState.INIT_DECEL;
-            }
-        },
-        INIT_DECEL {
-            @Override
-            protected SpeedMatcherState nextState(BasicSimpleCVSpeedMatcher speedMatcher) {
-                return SpeedMatcherState.INIT_VSTART;
-            }
-        },
-        INIT_VSTART {
-            @Override
-            protected SpeedMatcherState nextState(BasicSimpleCVSpeedMatcher speedMatcher) {
-                return SpeedMatcherState.INIT_VMID;
-            }
-        },
-        INIT_VMID {
-            @Override
-            protected SpeedMatcherState nextState(BasicSimpleCVSpeedMatcher speedMatcher) {
-                return SpeedMatcherState.INIT_VHIGH;
-            }
-        },
-        INIT_VHIGH {
-            @Override
-            protected SpeedMatcherState nextState(BasicSimpleCVSpeedMatcher speedMatcher) {
-                return SpeedMatcherState.INIT_FORWARD_TRIM;
-            }
-        },
-        INIT_FORWARD_TRIM {
-            @Override
-            protected SpeedMatcherState nextState(BasicSimpleCVSpeedMatcher speedMatcher) {
-                return SpeedMatcherState.INIT_REVERSE_TRIM;
-            }
-        },
-        INIT_REVERSE_TRIM {
-            @Override
-            protected SpeedMatcherState nextState(BasicSimpleCVSpeedMatcher speedMatcher) {
-                if (speedMatcher.warmUpForwardSeconds > 0) {
-                    return SpeedMatcherState.FORWARD_WARM_UP;
-                } else {
-                    return SpeedMatcherState.FORWARD_SPEED_MATCH_VHIGH;
-                }
-            }
-        },
-        FORWARD_WARM_UP {
-            @Override
-            protected SpeedMatcherState nextState(BasicSimpleCVSpeedMatcher speedMatcher) {
-                return SpeedMatcherState.FORWARD_SPEED_MATCH_VHIGH;
-            }
-        },
-        FORWARD_SPEED_MATCH_VHIGH {
-            @Override
-            protected SpeedMatcherState nextState(BasicSimpleCVSpeedMatcher speedMatcher) {
-                return SpeedMatcherState.FORWARD_SPEED_MATCH_VMID;
-            }
-        },
-        FORWARD_SPEED_MATCH_VMID {
-            @Override
-            protected SpeedMatcherState nextState(BasicSimpleCVSpeedMatcher speedMatcher) {
-                return SpeedMatcherState.FORWARD_SPEED_MATCH_VSTART;
-            }
-        },
-        FORWARD_SPEED_MATCH_VSTART {
-            @Override
-            protected SpeedMatcherState nextState(BasicSimpleCVSpeedMatcher speedMatcher) {
-                if (speedMatcher.trimReverseSpeed) {
-                    if (speedMatcher.warmUpReverseSeconds > 0) {
-                        return SpeedMatcherState.REVERSE_WARM_UP;
-                    } 
-                    else {
-                        return SpeedMatcherState.REVERSE_SPEED_MATCH_TRIM;
-                    }
-                } else {
-                    return SpeedMatcherState.COMPLETE;
-                }
-            }
-        },
-        REVERSE_WARM_UP {
-            @Override
-            protected SpeedMatcherState nextState(BasicSimpleCVSpeedMatcher speedMatcher) {
-                return SpeedMatcherState.REVERSE_SPEED_MATCH_TRIM;
-            }
-        },
-        REVERSE_SPEED_MATCH_TRIM {
-            @Override
-            protected SpeedMatcherState nextState(BasicSimpleCVSpeedMatcher speedMatcher) {
-                return SpeedMatcherState.COMPLETE;
-            }
-        },
-        COMPLETE {
-            @Override
-            protected SpeedMatcherState nextState(BasicSimpleCVSpeedMatcher speedMatcher) {
-                return SpeedMatcherState.CLEAN_UP;
-            }
-        },
-        USER_STOPPED {
-            @Override
-            protected SpeedMatcherState nextState(BasicSimpleCVSpeedMatcher speedMatcher) {
-                return SpeedMatcherState.CLEAN_UP;
-            }
-        },
-        CLEAN_UP {
-            @Override
-            protected SpeedMatcherState nextState(BasicSimpleCVSpeedMatcher speedMatcher) {
-                return SpeedMatcherState.IDLE;
-            }
-        };       
-
-        protected abstract SpeedMatcherState nextState(BasicSimpleCVSpeedMatcher speedMatcher);
-    }
-    
     //</editor-fold>
-
     //<editor-fold defaultstate="collapsed" desc="Programmer">
     /**
      * Starts writing vStart (CV 2) using the ops mode programmer
+     *
      * @param value vStart value (0-255 inclusive)
      */
     private synchronized void writeVStart(int value) {
@@ -504,6 +433,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
 
     /**
      * Starts writing vMid (CV 6) using the ops mode programmer
+     *
      * @param value vMid value (0-255 inclusive)
      */
     private synchronized void writeVMid(int value) {
@@ -514,6 +444,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
 
     /**
      * Starts writing vHigh (CV 5) using the ops mode programmer
+     *
      * @param value vHigh value (0-255 inclusive)
      */
     private synchronized void writeVHigh(int value) {
@@ -521,12 +452,12 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
         statusLabel.setText(Bundle.getMessage("ProgSetCV", "5 (vHigh)", value));
         startOpsModeWrite("5", value);
     }
-    
-    //</editor-fold>
 
+    //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="ThrottleListener Overrides">
     /**
      * Called when a throttle is found
+     *
      * @param t the requested DccThrottle
      */
     @Override
@@ -536,8 +467,8 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
         if (speedMatcherState == SpeedMatcherState.WAIT_FOR_THROTTLE) {
             logger.info("Starting speed matching");
             // using speed matching timer to trigger each phase of speed matching            
-            setupNextSpeedMatchState(true, 0);
-            speedMatchStateTimer.start();
+            initNextSpeedMatcherState(SpeedMatcherState.INIT_THROTTLE);
+            startSpeedMatchStateTimer();
         } else {
             CleanUp();
         }
@@ -546,22 +477,26 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
 
     //<editor-fold defaultstate="collapsed" desc="Helper Functions">
     private void Abort() {
-        speedMatcherState = SpeedMatcherState.CLEAN_UP;
-        setupSpeedMatchState(true, 0, 1500);
+        initNextSpeedMatcherState(SpeedMatcherState.CLEAN_UP);
     }
-    
+
     private void UserStop() {
-        speedMatcherState = SpeedMatcherState.USER_STOPPED;
-        setupSpeedMatchState(true, 0, 1500);
+        initNextSpeedMatcherState(SpeedMatcherState.USER_STOPPED);
     }
-    
-    private void setupNextSpeedMatchState(boolean isForward, int speedStep){
-        setupNextSpeedMatchState(isForward, speedStep, 1500);
+
+    /**
+     * Sets up the speed match state by clearing the speed match error, clearing
+     * the step duration, setting the timer duration to 500 ms, and setting the
+     * next state
+     *
+     * @param nextState - next SpeedMatcherState to set
+     */
+    protected void initNextSpeedMatcherState(SpeedMatcherState nextState) {
+        speedMatchError = 0;
+        stepDuration = 0;
+        speedMatcherState = nextState;
+        setSpeedMatchStateTimerDuration(1200);
     }
-    
-    private void setupNextSpeedMatchState(boolean isForward, int speedStep, int initialDelay) {
-        speedMatcherState = speedMatcherState.nextState(this);
-        setupSpeedMatchState(isForward, speedStep, initialDelay);
-    }
+
     //</editor-fold>
 }
