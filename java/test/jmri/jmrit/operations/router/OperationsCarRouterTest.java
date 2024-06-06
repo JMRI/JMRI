@@ -21,11 +21,17 @@ import jmri.util.JUnitOperationsUtil;
 /**
  * Tests for the Operations Router class
  *
- * @author Daniel Boudreau Copyright (C) 2010, 2011, 2013
+ * @author Daniel Boudreau Copyright (C) 2010, 2011, 2013, 2024
  */
 public class OperationsCarRouterTest extends OperationsTestCase {
 
     private final static int DIRECTION_ALL = Location.EAST + Location.WEST + Location.NORTH + Location.SOUTH;
+
+    @Test
+    public void testCTor() {
+        Router t = new Router();
+        Assert.assertNotNull("exists", t);
+    }
 
     @Test
     public void testCarRoutingDefaults() {
@@ -2733,6 +2739,189 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         Assert.assertEquals("Check car's destination", boston, c3.getDestination());
         Assert.assertEquals("Check car's final destination", gulf, c3.getFinalDestination());
         Assert.assertEquals("Check car's final destination track", gulfSpur1, c3.getFinalDestinationTrack());
+    }
+
+    /**
+     * Seven train routing test. First move uses a local train. Test that the
+     * program handles route branches.
+     */
+    @Test
+    public void testCarRouting7TrainsTree() {
+        // only use interchange tracks for this test
+        Setup.setCarRoutingViaYardsEnabled(false);
+
+        // now load up the managers
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        RouteManager rmanager = InstanceManager.getDefault(RouteManager.class);
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+        Router router = InstanceManager.getDefault(Router.class);
+
+        // create 13 locations and tracks
+        JUnitOperationsUtil.createSevenNormalLocations();
+        Location harvard = JUnitOperationsUtil.createOneNormalLocation("Harvard");
+        Location irvine = JUnitOperationsUtil.createOneNormalLocation("Irvine");
+        Location jackson = JUnitOperationsUtil.createOneNormalLocation("Jackson");
+        Location killington = JUnitOperationsUtil.createOneNormalLocation("Killington");
+        Location longmeadow = JUnitOperationsUtil.createOneNormalLocation("Longmeadow");
+        Location norwood = JUnitOperationsUtil.createOneNormalLocation("Norwood");
+
+        Location acton = lmanager.getLocationByName("Acton");
+        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+
+        Location boston = lmanager.getLocationByName("Boston");
+        Location chelmsford = lmanager.getLocationByName("Chelmsford");
+        Location danvers = lmanager.newLocation("Danvers");
+        Location essex = lmanager.getLocationByName("Essex");
+        Location foxboro = lmanager.getLocationByName("Foxboro");
+        Location gulf = lmanager.getLocationByName("Gulf");
+
+        Track gulfSpur1 = gulf.getTrackByName("Gulf Spur 1", null);
+
+        // create car
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("BA", "3", "Boxcar", "40", "DAB", "1984", actonSpur1, 0);
+
+        // create a train with a route from Acton to Boston
+        Train actonToBostonTrain = tmanager.newTrain("Acton to Boston to Harvard");
+        Route routeAB = rmanager.newRoute("AB");
+        routeAB.addLocation(acton);
+        routeAB.addLocation(boston);
+        routeAB.addLocation(harvard);
+        actonToBostonTrain.setRoute(routeAB);
+
+        // create a train with a route from Boston to Chelmsford
+        Train bostonToChelmsfordTrain = tmanager.newTrain("Boston to Chelmsford to Irvine");
+        Route routeBC = rmanager.newRoute("BC");
+        routeBC.addLocation(boston);
+        routeBC.addLocation(chelmsford);
+        routeBC.addLocation(irvine);
+        bostonToChelmsfordTrain.setRoute(routeBC);
+
+        // create a train with a route from Chelmsford to Danvers
+        Train chelmsfordToDanversTrain = tmanager.newTrain("Chelmsford to Danvers to Jackson");
+        Route routeCD = rmanager.newRoute("CD");
+        routeCD.addLocation(chelmsford);
+        routeCD.addLocation(danvers);
+        routeCD.addLocation(jackson);
+        chelmsfordToDanversTrain.setRoute(routeCD);
+
+        // create a train with a route from Danvers to Essex
+        Train danversToEssexTrain = tmanager.newTrain("Danvers to Essex to Killington");
+        Route routeDE = rmanager.newRoute("DE");
+        routeDE.addLocation(danvers);
+        routeDE.addLocation(essex);
+        routeDE.addLocation(killington);
+        danversToEssexTrain.setRoute(routeDE);
+
+        // create a train with a route from Essex to Foxboro
+        Train essexToFoxboroTrain = tmanager.newTrain("Essex to Foxboro to Longmeadow");
+        Route routeEF = rmanager.newRoute("EF");
+        routeEF.addLocation(essex);
+        routeEF.addLocation(foxboro);
+        routeEF.addLocation(longmeadow);
+        essexToFoxboroTrain.setRoute(routeEF);
+
+        // create a train with a route from Foxboro to Gulf
+        Train FoxboroToGulfTrain = tmanager.newTrain("Foxboro To Gulf to Norwood");
+        Route routeFG = rmanager.newRoute("FG");
+        routeFG.addLocation(foxboro);
+        routeFG.addLocation(gulf);
+        routeFG.addLocation(norwood);
+        FoxboroToGulfTrain.setRoute(routeFG);
+
+        // set final destination Gulf
+        c3.setFinalDestination(gulf);
+        c3.setFinalDestinationTrack(gulfSpur1);
+
+        // 6 train route (A -> B -> C -> D -> E -> F -> G)
+        Assert.assertTrue("Try routing with final destination", router.setDestination(c3, null, null));
+        Assert.assertEquals("Check car's destination", boston, c3.getDestination());
+        Assert.assertEquals("Check car's destination", "Boston Interchange 1", c3.getDestinationTrackName());
+        Assert.assertEquals("Check car's final destination", gulf, c3.getFinalDestination());
+        Assert.assertEquals("Check car's final destination track", gulfSpur1, c3.getFinalDestinationTrack());
+
+        c3.setDestination(null, null); // clear previous destination
+        Assert.assertTrue("Try routing with final destination and train",
+                router.setDestination(c3, actonToBostonTrain, null));
+        Assert.assertEquals("Check car's destination", boston, c3.getDestination());
+        Assert.assertEquals("Check car's destination", "Boston Interchange 1", c3.getDestinationTrackName());
+        Assert.assertEquals("Check car's final destination", gulf, c3.getFinalDestination());
+        Assert.assertEquals("Check car's final destination track", gulfSpur1, c3.getFinalDestinationTrack());
+
+        // force local movement at Danvers
+        Track trackInterchange1 = danvers.getTrackByName("Danvers Interchange 1", null);
+        Track trackInterchange2 = danvers.getTrackByName("Danvers Interchange 2", null);
+
+        trackInterchange1.setDropOption(Track.TRAINS);
+        trackInterchange1.setPickupOption(Track.TRAINS);
+
+        trackInterchange2.setDropOption(Track.TRAINS);
+        trackInterchange2.setPickupOption(Track.TRAINS);
+
+        // should fail, needs local at Danvers
+        c3.setDestination(null, null); // clear previous destination
+        Assert.assertFalse("Try routing with final destination and train",
+                router.setDestination(c3, null, null));
+
+        Train danversLocal = tmanager.newTrain("Danvers Local");
+        Route routeD = rmanager.newRoute("D");
+        routeD.addLocation(danvers);
+        danversLocal.setRoute(routeD);
+
+        trackInterchange1.addDropId(chelmsfordToDanversTrain.getId());
+        trackInterchange1.addPickupId(danversLocal.getId());
+        trackInterchange2.addDropId(danversLocal.getId());
+        trackInterchange2.addPickupId(danversToEssexTrain.getId());
+
+        // 7 train route (A -> B -> C -> D -> D -> E -> F -> G)
+        Assert.assertTrue("Try routing with final destination and train",
+                router.setDestination(c3, null, null));
+
+        // check internal routing lists
+        Assert.assertEquals("confirm next location tracks", 6, router._nextLocationTracks.size());
+        Assert.assertTrue(router._nextLocationTracks.contains(acton.getTrackByName("Acton Interchange 1", null)));
+        Assert.assertTrue(router._nextLocationTracks.contains(acton.getTrackByName("Acton Interchange 2", null)));
+        Assert.assertTrue(router._nextLocationTracks.contains(boston.getTrackByName("Boston Interchange 1", null)));
+        Assert.assertTrue(router._nextLocationTracks.contains(boston.getTrackByName("Boston Interchange 2", null)));
+        Assert.assertTrue(router._nextLocationTracks.contains(harvard.getTrackByName("Harvard Interchange 1", null)));
+        Assert.assertTrue(router._nextLocationTracks.contains(harvard.getTrackByName("Harvard Interchange 2", null)));
+
+        Assert.assertEquals("confirm next location trains", 6, router._nextLocationTrains.size());
+        for (Train train : router._nextLocationTrains) {
+            Assert.assertEquals("confirm train", actonToBostonTrain, train);
+        }
+
+        Assert.assertEquals("confirm 2nd set of location tracks", 4, router._next2ndLocationTracks.size());
+        Assert.assertTrue(
+                router._next2ndLocationTracks.contains(chelmsford.getTrackByName("Chelmsford Interchange 1", null)));
+        Assert.assertTrue(
+                router._next2ndLocationTracks.contains(chelmsford.getTrackByName("Chelmsford Interchange 2", null)));
+        Assert.assertTrue(
+                router._next2ndLocationTracks.contains(irvine.getTrackByName("Irvine Interchange 1", null)));
+        Assert.assertTrue(
+                router._next2ndLocationTracks.contains(irvine.getTrackByName("Irvine Interchange 2", null)));
+        
+        Assert.assertEquals("confirm 3rd set of location tracks", 3, router._next3rdLocationTracks.size());
+        Assert.assertTrue(
+                router._next3rdLocationTracks.contains(jackson.getTrackByName("Jackson Interchange 1", null)));
+        Assert.assertTrue(
+                router._next3rdLocationTracks.contains(jackson.getTrackByName("Jackson Interchange 2", null)));
+        Assert.assertTrue(
+                router._next3rdLocationTracks.contains(danvers.getTrackByName("Danvers Interchange 1", null)));
+
+        Assert.assertEquals("confirm 4th set of location tracks", 1, router._next4thLocationTracks.size());
+        Assert.assertTrue(
+                router._next4thLocationTracks.contains(danvers.getTrackByName("Danvers Interchange 2", null)));
+
+        Assert.assertEquals("confirm last location tracks", 4, router._lastLocationTracks.size());
+        Assert.assertTrue(router._lastLocationTracks.contains(foxboro.getTrackByName("Foxboro Interchange 1", null)));
+        Assert.assertTrue(router._lastLocationTracks.contains(foxboro.getTrackByName("Foxboro Interchange 2", null)));
+        Assert.assertTrue(router._lastLocationTracks.contains(gulf.getTrackByName("Gulf Interchange 1", null)));
+        Assert.assertTrue(router._lastLocationTracks.contains(gulf.getTrackByName("Gulf Interchange 2", null)));
+
+        Assert.assertEquals("confirm last location trains", 4, router._lastLocationTrains.size());
+        for (Train train : router._lastLocationTrains) {
+            Assert.assertEquals("confirm train", FoxboroToGulfTrain, train);
+        }
     }
 
     /**
