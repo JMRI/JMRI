@@ -18,6 +18,7 @@ from java.awt.event import MouseAdapter,MouseEvent, WindowListener, WindowEvent
 from java.awt import GridLayout, Dimension, BorderLayout, Color
 from javax.swing.table import AbstractTableModel, DefaultTableModel
 from java.lang.Object import getClass
+from jmri.jmrit.logix import WarrantPreferences
 import jarray
 from javax.swing.event import TableModelListener, TableModelEvent
 from javax.swing.filechooser import FileNameExtensionFilter
@@ -208,13 +209,24 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 1: print "trains_dispatched", trains_dispatched
 
     def set_direction(self, previous_block, current_block, next_block, previous_direction):
+
+        # We have two cases for the diretion to be changed:
+        # 1) we have a back and forth situation where we can check that the previous_block == next_block
+        # 2) we reverse and go through a point. there will be no through path from the previous_block to the next next_block
+        #
+        # these two cases are not exclusive.
+
         print "set_direction"
+        transit_instruction = "same"
+
+        if previous_block == next_block:
+            transit_instruction = "change"
+
         LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
         current_layout_block = LayoutBlockManager.getLayoutBlock(current_block)
-        if current_layout_block.validThroughPath(previous_block, next_block):
-            transit_instruction = "same"
-        else:
-            transit_instruction = "change"
+        if not current_layout_block.validThroughPath(previous_block, next_block):
+            transit_instruction = "chnage"
+
         if transit_instruction == "change":
             if previous_direction == "forward":
                 transit_direction = "reverse"
@@ -1059,29 +1071,44 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         #get the current length of the engine
         default = "10"
         current_length = engine.getLength()
-        if current_length == "0":
-            current_length = default
+        print "current_length", current_length
+        print "type", type(current_length) , "test", str(current_length) == "0"
+        if str(current_length) == "0":
+            current_length = default     # current length is in unicode
+        print "current_length2", current_length
         return [engine, current_length]
 
     def set_length(self, new_train_name):
-        [engine,current_length] = self.get_train_length(new_train_name)
-        if current_length == "0":
-            default = "10"
-            current_length = default
-            engine.setLength(default)
-        #ask if want to change length
+
+        # jim = "{:.2f}".format( num )
+        # print "jim", jim
+
         title = "Set the length of the engine/train"
-        msg = "length of " + new_train_name + " = " + str(current_length)
-        opt1 = "OK"
-        opt2 = "Change"
-        request = self.od.customQuestionMessage2str(msg,title,opt1, opt2)
-        if request == "Change":
-            #set the new length
-            msg = "input length of " + new_train_name
-            title = "length of " + new_train_name
-            default_value = current_length
-            new_length = self.od.input(msg, title, default_value)
-            engine.setLength(new_length)
+        # msg = str(fred)
+        request = "Change"
+        while request == "Change":
+            [engine,current_length] = self.get_train_length(new_train_name)
+            print "current_length3", current_length
+            # current_length is an integer, and is set to a default of 10 scale metres
+            gauge = WarrantPreferences.getDefault().getLayoutScale()
+            length_in_cm_float = (float(current_length) / gauge) * 100.0
+            length_in_cm_str = str("{:.2f}".format(length_in_cm_float))
+            length_in_inches_float = (float(current_length) / gauge / 2.54) * 100.0
+            length_in_inches_str = str("{:.2f}".format(length_in_inches_float))
+            msg = "<html>length of " + new_train_name + " = " + str(current_length) + " scale metres" + \
+                    "<br> gauge        : " + "1:" + str(int(gauge)) + \
+                    "<br> length in cm : " + length_in_cm_str + \
+                    "<br> length in inches: " + length_in_inches_str
+            opt1 = "OK"
+            opt2 = "Change"
+            request = self.od.customQuestionMessage2str(msg,title,opt1, opt2)
+            if request == "Change":
+                #set the new length
+                msg = "input length of " + new_train_name + " in scale metres"
+                title = "length of " + new_train_name
+                default_value = current_length
+                new_length = self.od.input(msg, title, default_value)
+                engine.setLength(new_length)
 
     def get_train_speed_factor(self, new_train_name):
         EngineManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.engines.EngineManager)
@@ -1558,7 +1585,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
 
         if in_siding:
             if result == "reverse":
-                train_direction = "reverse"
+                train_direction = "forward"
             else:
                 train_direction = "forward"
         else:
@@ -1762,6 +1789,14 @@ class createandshowGUI(TableModelListener):
         # self.buttonPane.add(button_add);
         # self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
 
+        button_apply = JButton("Save", actionPerformed = self.apply_action)
+        self.buttonPane.add(button_apply)
+        self.buttonPane.add(Box.createHorizontalGlue());
+
+        button_cancel = JButton("Close", actionPerformed = self.cancel_action)
+        self.buttonPane.add(button_cancel)
+        self.buttonPane.add(Box.createHorizontalGlue());
+
         button_populate = JButton("Populate", actionPerformed = self.populate_action)
         self.buttonPane.add(button_populate);
         self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
@@ -1769,14 +1804,6 @@ class createandshowGUI(TableModelListener):
         button_tidy = JButton("Tidy", actionPerformed = self.tidy_action)
         self.buttonPane.add(button_tidy);
         self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
-
-        button_apply = JButton("Setup Trains", actionPerformed = self.apply_action)
-        self.buttonPane.add(button_apply)
-        self.buttonPane.add(Box.createHorizontalGlue());
-
-        button_cancel = JButton("Close", actionPerformed = self.cancel_action)
-        self.buttonPane.add(button_cancel)
-        self.buttonPane.add(Box.createHorizontalGlue());
 
         button_savetofile = JButton("Save To File", actionPerformed = self.savetofile_action)
         self.buttonPane.add(button_savetofile)
@@ -2024,7 +2051,16 @@ class createandshowGUI(TableModelListener):
             self.completeTablePanel()
 
     def cancel_action(self, event):
-        self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING))
+        title = ""
+        msg = "Do you wish to exit without saving?"
+        opt1 = "Exit, don't save"
+        opt2 = "Exit and Save Results"
+        reply = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
+        if reply == opt1:
+            self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING))
+        else:  #opt2
+            self.apply_action(None)
+
 
     def apply_action(self, event):
         [train, block, direction, length, speed_factor] = [0, 1, 2, 4, 5]
@@ -2256,7 +2292,7 @@ class MyTableModel (DefaultTableModel):
                    "Block",
                    "Set Direction",
                    "Direction Facing",
-                   "Length",
+                   "Length (scale metres)",
                    "Speed Factor"]
 
     def __init__(self):

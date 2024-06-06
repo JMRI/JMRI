@@ -148,21 +148,9 @@ class CreateAndShowGUI4(TableModelListener):
         columnModel.getColumn(route_col).setPreferredWidth(300);
         columnModel.getColumn(repeat_col).setPreferredWidth(210);
         columnModel.getColumn(dont_schedule_col).setPreferredWidth(150);
-        columnModel.getColumn(train_name_col).setPreferredWidth(100);
-        columnModel.getColumn(delete_col).setPreferredWidth(130);
-
-        # first column is the trains
-        # self.trainColumn = self.table.getColumnModel().getColumn(time_col);
-        # self.combobox0 = JComboBox()
-
-        # for train in self.class_ResetButtonMaster.get_list_of_engines_to_move():
-        #     self.combobox0.addItem(train)
-
-        # self.trainColumn.setCellEditor(DefaultCellEditor(self.combobox0));
-        # renderer0 = ComboBoxCellRenderer4()
-        # self.trainColumn.setCellRenderer(renderer0);
-
-        # second column is the routes
+        columnModel.getColumn(train_name_col).setPreferredWidth(130);
+        columnModel.getColumn(edit_col).setPreferredWidth(100);
+        columnModel.getColumn(delete_col).setPreferredWidth(100);
 
         self.routesColumn = self.table.getColumnModel().getColumn(route_col);
         self.combobox1 = JComboBox()
@@ -605,7 +593,13 @@ class MyModelListener4(TableModelListener):
                 self.model.setValueAt(False, row, edit_col)
         elif column == delete_col:
             print "delete col/row"
-            self.delete_row(row, class_CreateAndShowGUI4)
+            title = ""
+            msg = "delete row?"
+            opt1 = "dont' delete row"
+            opt2 = "delete row"
+            result = self.OptionDialog.customQuestionMessage2str(msg, title, opt1, opt2)
+            if result == opt2:
+                self.delete_row(row, class_CreateAndShowGUI4)
         class_CreateAndShowGUI4.save()                      # save everything when the table is chabged
         # class_CreateAndShowGUI4.completeTablePanel()      # don't need to refresh hence commented out
 

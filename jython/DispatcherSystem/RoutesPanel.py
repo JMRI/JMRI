@@ -629,7 +629,7 @@ class MyModelListener6(TableModelListener):
                 self.model.setValueAt(False, row, edit_col)
         elif column == delete_col:
             # class_CreateAndShowGUI6.run_route(row, model, class_CreateAndShowGUI6, class_SchedulerPanel)
-            # delete thr Opreations route
+            # delete the Operations route
             route_name = self.model.getValueAt(row, route_col)
             RouteManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
             route = RouteManager.getRouteByName(route_name)
@@ -639,7 +639,7 @@ class MyModelListener6(TableModelListener):
             self.delete_row(row)
             self.class_CreateAndShowGUI6.completeTablePanel()
         #
-        # class_CreateAndShowGUI6.save()    # save everything when the table is chabged
+        # class_CreateAndShowGUI5.save()    # save everything when the table is chabged
         
     def delete_row(self, row):
         print "deleting row"

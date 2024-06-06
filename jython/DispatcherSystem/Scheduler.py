@@ -48,7 +48,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def __init__(self):
         global scheduling_in_operation_gbl
-        # print "class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):"
+        print "class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):"
         self.logLevel = 0
         self.frame = None
         self.f = None
@@ -1341,6 +1341,7 @@ class TimeListener(java.beans.PropertyChangeListener):
             if True:
                 pass
                 hour = int(timebase.getTime().getHours())
+                minutes = int(timebase.getTime().getMinutes())
                 rate = timebase.getRate()
 
                 if self.logLevel > 0: print "set_fast_clock_rate:", "schedule_trains_hourly", schedule_trains_hourly
@@ -1350,6 +1351,7 @@ class TimeListener(java.beans.PropertyChangeListener):
                     "fast_clock_rate", fast_clock_rate, "speed_not_operational_gbl", speed_not_operational_gbl, \
                     "hour >= start_hour_gbl and hour <= end_hour_gbl", hour >= int(start_hour_gbl) and hour <= int(end_hour_gbl)
                 if hour >= int(start_hour_gbl) and hour <= int(end_hour_gbl):
+                    # or hour == int(start_hour_gbl - 1) % 24 and minutes == 59:
                     if rate != fast_clock_rate:       # check to stop recursion error
                         timebase.setRate(float(fast_clock_rate))
                         fast_clock_running_at_operational_speed = True
@@ -1417,40 +1419,53 @@ class TimeListener(java.beans.PropertyChangeListener):
             comment = train.getComment()
             repeat_command = self.find_between(comment, "[repeat-", "-repeat]")
             # print "repeat1", repeat_command
+
+            max = minutes
+            min = (minutes - 1)
+            mid = int(train.getDepartTimeMinutes())
+            # else:
+            #     max = minutes + 5               # add arbitrary value to test values to avoid texting with 59 and 0
+            #     min = (minutes - 1) + 5
+            #     mid = int(train.getDepartTimeMinutes()) + 5
+
+
             if repeat_command == "Once":
-                if self.prev_time <= int(train.getDepartTimeMinutes()) < self.curr_time and \
+                if self.prev_time < int(train.getDepartTimeMinutes()) <= self.curr_time and \
                         "skip" not in train.getDescription():   # if skip in description of scheduled Train do not run the train
                     if train not in trains_to_start:
                         trains_to_start.append(train)
                         scheduled[train] = False
             elif repeat_command == "Repeat every 20 mins":
-                if ((minutes-1) % 20 <= (int(train.getDepartTimeMinutes()) % 20) < minutes % 20):
+                if max % 20 == 0:
+                    min += 1; mid += 1; max += 1      # ensure mid lies between min amd max (ensure we don't have 59 < 0 <= 0)
+                if (min % 20 < (mid % 20) <= max % 20):
                     if train not in trains_to_start:
                         trains_to_start.append(train)
                         scheduled[train] = False
             elif repeat_command == "Repeat every 30 mins":
-                if ((minutes-1) % 30 <= (int(train.getDepartTimeMinutes()) % 30) < minutes % 30):
+                if max % 30 == 0:
+                    min += 1; mid += 1; max += 1
+                if (min % 30 < (mid % 30) <= max % 30):
                     if train not in trains_to_start:
                         trains_to_start.append(train)
                         scheduled[train] = False
             elif repeat_command == "Repeat every Hour":
-                if (minutes-1 <= (int(train.getDepartTimeMinutes()) % 60) < minutes):
+                if max == 0:
+                    min += 1; mid += 1; max += 1
+                if (min < (mid % 60) <= max):
                     if train not in trains_to_start:
                         trains_to_start.append(train)
                         scheduled[train] = False
             elif repeat_command == "Repeat every 2 Hours":
-                # print "hour - 1" , hour-1, "%2", (hour-1) % 2
-                # print "hour" , hour, "%2", (hour) % 2
-                # print "int(train.getDepartureTimeHour()) % 2", int(train.getDepartureTimeHour()) % 2
-                # if (minutes-1 < (int(train.getDepartTimeMinutes()) % 60) <= minutes):
-                #     # print "minutes OK"
-                #     # print "hour - 1" , hour-1, "%2", (hour-1) % 2
-                #     # print "hour" , hour, "%2", (hour) % 2
-                #     # print "int(train.getDepartureTimeHour()) % 2", int(train.getDepartureTimeHour()) % 2
-                #     if ((hour-1) % 2 <  int(train.getDepartureTimeHour()) % 2 <= hour % 2):
-                #         # print "hours ok"
-                if (minutes-1 <= (int(train.getDepartTimeMinutes()) % 60) < minutes) and \
-                        ((hour-1) % 2 <  int(train.getDepartureTimeHour()) % 2 <= hour % 2):
+                if max == 0:
+                    min += 1; mid += 1; max += 1
+                min1 = hour - 1
+                mid1 = int(train.getDepartureTimeHour())
+                max1 = hour
+                if max1 % 2 == 0:      # ensure mid lies between min amd max (ensure we don't have 1 < 0 <= 0)
+                    min1 += 1; mid1 += 1; max1 += 1
+                if (min < (mid % 60) <= max) and \
+                        ((min1 % 2) <  (mid1 % 2) <= (max1 % 2)):
                     if train not in trains_to_start:
                         trains_to_start.append(train)
                         scheduled[train] = False
@@ -1880,6 +1895,7 @@ class RunTrain(jmri.jmrit.automat.AbstractAutomaton):
                             # if "set_departure_trains_gbl" not in globals():
                             #     set_departure_trains_gbl = False
                             if self.set_departure_times == False:
+                                print "accumulated_duration",accumulated_duration
                                 self.wait_for_scheduled_time(accumulated_duration)
 
                             # print "station_from, station_to, train_to_move, self.graph, station_comment", \
@@ -1916,7 +1932,10 @@ class RunTrain(jmri.jmrit.automat.AbstractAutomaton):
 
                         current_date = timebase.getTime() # in secs
                         minutes = current_date.getMinutes()
-                        print "No train in block for scheduled train", self.train, "starting from " + station_from + " waited: " + str(j) + " fast minutes "
+                        print "No train in block for scheduled train", self.train, \
+                            "starting from " + station_from + \
+                            " waited: " + str(j) + " fast minutes " + \
+                            " current minutes " + str(minutes)
 
                         # msg = "No train in block for scheduled train starting from " + station_from
                         # msg2 = "Trying again for " + str(scheduling_margin_gbl) + " fast minutes"
@@ -2052,7 +2071,7 @@ class RunTrain(jmri.jmrit.automat.AbstractAutomaton):
         repeat_command = TimeListener().find_between(comment, "[repeat-", "-repeat]")
         if self.logLevel > 0: print "x3"
         current_minutes = int(timebase.getTime().getMinutes())
-        if self.logLevel > 0: print "x2"
+        if self.logLevel > 0: print "x2", "current_minutes", current_minutes
         # the departure time for the train is the first one in the hour
         # get what would be the current time if we were running the first train in the hour
         # so we can get the difference of the two aaaand hence get the wait time

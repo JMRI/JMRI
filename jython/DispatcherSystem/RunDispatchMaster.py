@@ -30,7 +30,7 @@ CreateSimulation = jmri.util.FileUtil.getExternalFilename('program:jython/Dispat
 execfile(CreateSimulation)
 
 RunDispatch = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/RunDispatch.py')
-exec(open (RunDispatch).read())
+exec(open(RunDispatch).read())
 
 global instanceList
 
@@ -98,15 +98,24 @@ class RunDispatcherMaster():
         else:
             if self.logLevel > 0: print("Off-Action Master not started")
 
-        #set default valus of buttons
-
-        sensors.getSensor("Express").setKnownState(ACTIVE)
+        #set default values of buttons
+        sensors.getSensor("Express").setKnownState(INACTIVE)
         sensors.getSensor("simulateSensor").setKnownState(INACTIVE)
         sensors.getSensor("setDispatchSensor").setKnownState(ACTIVE)
+        sensors.getSensor("stopMasterSensor").setKnownState(INACTIVE)
+        sensors.getSensor("modifyMasterSensor").setKnownState(INACTIVE)
         sensors.getSensor("checkRouteSensor").setKnownState(INACTIVE)
         sensors.getSensor("checkRouteSensor").setKnownState(ACTIVE)
         sensors.getSensor("soundSensor").setKnownState(INACTIVE)
         sensors.getSensor("stopAtStopSensor").setKnownState(ACTIVE)
+        sensors.getSensor("editRoutesSensor").setKnownState(INACTIVE)
+        sensors.getSensor("viewScheduledSensor").setKnownState(INACTIVE)
+        sensors.getSensor("schedulerStartTimeSensor").setKnownState(INACTIVE)
+        sensors.getSensor("showClockSensor").setKnownState(INACTIVE)
+        sensors.getSensor("timetableSensor").setKnownState(INACTIVE)
+        sensors.getSensor("departureTimeSensor").setKnownState(INACTIVE)
+        sensors.getSensor("helpSensor").setKnownState(INACTIVE)
+
         global stored_simulate
         if 'stored_simulate' in globals():
             if stored_simulate == ACTIVE:
@@ -114,5 +123,18 @@ class RunDispatcherMaster():
 
 
 if __name__ == '__builtin__':
-    sensors.getSensor("startDispatcherSensor").setKnownState(ACTIVE)
+    sensors.getSensor("stopMasterSensor").setKnownState(INACTIVE)
+    sensors.getSensor("modifyMasterSensor").setKnownState(INACTIVE)
+    # for frame1 in java.awt.Frame.getFrames():
+    #     # print "frame", frame1.getName()
+    #     if frame1.getName() == "Dispatcher System":
+    #         # print "deleting frame", frame.getName()
+    #         frame1.invalidate();
+    #         frame1.validate();
+    #         frame1.repaint();
+    msg = "Press section buttons to set dispatch \nA train needs to be set up in a section first"
+    OptionDialog().displayMessage(msg)
+
+
     RunDispatcherMaster()
+    pass

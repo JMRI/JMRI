@@ -61,7 +61,7 @@ class CreateAndShowGUI5(TableModelListener):
         self.frame.setVisible(False)
 
     def completeTablePanel(self):
-
+        global fast_clock_rate
         self.topPanel= JPanel();
         self.topPanel.setLayout(BoxLayout(self.topPanel, BoxLayout.X_AXIS))
         self.self_table()
@@ -77,6 +77,15 @@ class CreateAndShowGUI5(TableModelListener):
 
         button_close = JButton("Close", actionPerformed = self.close_action)
         self.buttonPane.add(button_close)
+        self.buttonPane.add(Box.createHorizontalGlue());
+        if "fast_clock_rate" not in globals():
+            fast_clock_rate = 10
+        if fast_clock_rate is not None:
+            secs_in_fast_minute = int(1.0 / float(str(fast_clock_rate)) * 60.0)
+            label_info = JLabel("Calculates to the precision of 1 fast minute. " + str(secs_in_fast_minute) + " seconds = 1 fast minute")
+        else:
+            label_info = JLabel("Displays to the precision of 1 fast minute. Several seconds = 1 fast minute")
+        self.buttonPane.add(label_info)
         self.buttonPane.add(Box.createHorizontalGlue());
 
         if self.journey_time_row_displayed == True:
@@ -305,7 +314,7 @@ class CreateAndShowGUI5(TableModelListener):
             # if time_name != "" and route_name != "" and train_name_val != "":
             if locations_name != "":
                 self.save_location_row(row, locations_name, journey_time_name, wait_time_name, duration_sec_name, \
-                                   departure_time_name, delete_name)
+                                        departure_time_name, delete_name)
                 pass
             else:
                 msg = "Cannot save row: " + str(row) + " train name, route or delay is not set"
@@ -450,11 +459,11 @@ class MyModelListener5(TableModelListener):
         routelocations_rows_list = [routelocation.getSequenceNumber()-1 \
                                     for routelocation in self.model.route.getLocationsBySequenceList() \
                                     if ".py" not in routelocation.getName()]
-        if row in routelocations_rows_list and row != self.model.find_row_first_location():
+        if row in routelocations_rows_list:
             if column == duration_sec_col:
                 # return
                 if row != self.model.find_row_first_location():
-                    duration = self.calc_duration_from_duration_sec(row)
+                    duration = str(self.calc_duration_from_duration_sec(row))
                     print "A", "duration", duration, "duration_sec", self.model.getValueAt(row, duration_sec_col), "row", row
                     self.model.setValueAt(duration, row, duration_col)
                     print "A1"
@@ -510,19 +519,31 @@ class MyModelListener5(TableModelListener):
                     # self.update_departure_time_col(row)
             elif column == delete_col:
                 # class_CreateAndShowGUI5.run_route(row, model, class_CreateAndShowGUI5, class_ResetButtonMaster)
+                # location_name = str(self.model.getValueAt(row, locations_col))
+                # route = self.route
+                # LocationManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.locations.LocationManager)
+                # location = LocationManager.getLocationByName(location_name)
+                # print "location name", location.getName()
+                routelocation = class_CreateAndShowGUI5.route.getRouteLocationBySequenceNumber(row+1)
+                print "***********************disposing routelocation", routelocation.getName()
+                class_CreateAndShowGUI5.route.deleteLocation(routelocation)
+                #delete the route row
+                # LocationManager.deregister(location)
+
                 self.delete_row(row)
                 class_CreateAndShowGUI5.completeTablePanel()
                 pass
             elif column == journey_time_col or column == wait_time_col:
-                my_duration = self.calc_duration_sec_from_journey_time_and_wait_time(row)
-                print "duration", my_duration
-                self.model.setValueAt(my_duration, row, duration_sec_col)
+                if row != self.model.find_row_first_location():
+                    my_duration = self.calc_duration_sec_from_journey_time_and_wait_time(row)
+                    print "duration", my_duration
+                    self.model.setValueAt(my_duration, row, duration_sec_col)
             # elif column == duration_sec_col:
             #     print "x"
             #     my_duration = self.calc_duration_from_duration_sec(row)
             #     print "x1"
 
-        # class_CreateAndShowGUI5.save()    # save everything when the table is chabged
+        # class_CreateAndShowGUI5.save()    # save everything when the table is changed
 
     def save_value_to_operations(self, row, col):
         value = self.model.getValueAt(row, col)
@@ -585,8 +606,8 @@ class MyModelListener5(TableModelListener):
         # print "previous_departure_time", previous_departure_time
         hhprev, _, mmprev = previous_departure_time.partition(":")
         print ""
-        departure_time_mins = str((int(mmprev) + int(current_duration)) % 60).zfill(2)
-        departure_time_hours = str(int(hhprev) + (int(mmprev) + int(current_duration)) // 60).zfill(2)
+        departure_time_mins = str((int(mmprev) + int(float(current_duration))) % 60).zfill(2)
+        departure_time_hours = str(int(hhprev) + (int(mmprev) + int(float(current_duration))) // 60).zfill(2)
         departure_time = departure_time_hours + ":" + departure_time_mins
         # print "departure time", departure_time
         return departure_time
@@ -600,7 +621,7 @@ class MyModelListener5(TableModelListener):
 
         try:
             [locations_col, journey_time_col, wait_time_col, duration_sec_col, duration_col, departure_time_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]
-            current_duration = int(self.model.getValueAt(row, duration_col))          # secs
+            current_duration = str(int(self.model.getValueAt(row, duration_col)))         # secs
             print "current_duration", current_duration
             # set fast clock rate
             if "fast_clock_rate" not in globals():
@@ -614,7 +635,7 @@ class MyModelListener5(TableModelListener):
         except:
             # use the existing value
             current_duration_sec = self.model.getValueAt(row, duration_sec_col)
-        return str(current_duration_sec).zfill(2)
+        return str(int(float(current_duration_sec)))
 
 
     def calc_duration_sec_from_journey_time_and_wait_time(self, row):
@@ -666,6 +687,7 @@ class MyModelListener5(TableModelListener):
         except:
             # use the existing value
             current_duration = self.model.getValueAt(row, duration_col)
+            print "in except"
         return str(int(current_duration))
 
 
@@ -708,6 +730,7 @@ class MyModelListener5(TableModelListener):
         self.model.data.pop(row)
 
 
+
     # def show_time_picker(self):
     #     # Show a simple JOptionPane input dialog for time selection
     #     selected_time = JOptionPane.showInputDialog(None, "Select a time (HH:mm):")
@@ -716,26 +739,26 @@ class MyModelListener5(TableModelListener):
     #     return selected_time
 
 
-# class ComboBoxCellRenderer5 (TableCellRenderer):
-#
-#     def getTableCellRendererComponent(self, jtable, value, isSelected, hasFocus, row, column) :
-#         panel = self.createPanel(value)
-#         return panel
-#
-#     def createPanel(self, s) :
-#         p = JPanel(BorderLayout())
-#         p.add(JLabel(str(s), JLabel.LEFT), BorderLayout.WEST)
-#         icon = UIManager.getIcon("Table.descendingSortIcon");
-#         p.add(JLabel(icon, JLabel.RIGHT), BorderLayout.EAST);
-#         p.setBorder(BorderFactory.createLineBorder(Color.blue));
-#         return p;
+class ComboBoxCellRenderer5 (TableCellRenderer):
+
+    def getTableCellRendererComponent(self, jtable, value, isSelected, hasFocus, row, column) :
+        panel = self.createPanel(value)
+        return panel
+
+    def createPanel(self, s) :
+        p = JPanel(BorderLayout())
+        p.add(JLabel(str(s), JLabel.LEFT), BorderLayout.WEST)
+        icon = UIManager.getIcon("Table.descendingSortIcon");
+        p.add(JLabel(icon, JLabel.RIGHT), BorderLayout.EAST);
+        p.setBorder(BorderFactory.createLineBorder(Color.blue));
+        return p;
 
 class MyTableModel5 (DefaultTableModel):
 
     columnNames = ["Station / Action", "Journey Time", "Wait Time", "Duration (secs)", "Duration (f mins)", "Departure Time", "Delete Row"]
 
     def __init__(self):
-        l1 = ["", "", False, "stop at end of route", 0, 1, 0]
+        l1 = ["", "", False, "stop at end of route", "0.0", "0.0", False]
         self.data = [l1]
         self.route = None    # updated from outside class
 
@@ -810,7 +833,7 @@ class MyTableModel5 (DefaultTableModel):
 
 
                 departure_time = "00:00"
-                duration = 0
+                duration = "0"
 
                 print "duration_sec 2", duration_sec, "locstion", location, type(duration_sec), "row", i
             else:
@@ -1034,8 +1057,8 @@ class MyTableModel5 (DefaultTableModel):
     def getValueAt(self, row, col) :
         return self.data[row][col]
 
-    # def getColumnClass(self, col) :
-    #     return java.lang.Boolean.getClass(self.getValueAt(0,col))
+    def getColumnClass(self, col) :
+        return java.lang.Boolean.getClass(self.getValueAt(0,col))
 
     #only include if table editable
     def isCellEditable(self, row, col) :
@@ -1063,7 +1086,9 @@ class MyTableModel5 (DefaultTableModel):
         if col == duration_col or col == journey_time_col or col == wait_time_col:
             if value == None:
                 return
-            if not value.isdigit():
+            try:
+                float(value)
+            except:
                 return
         # if col == duration_sec_col:  #can be float
         #     if value == None:

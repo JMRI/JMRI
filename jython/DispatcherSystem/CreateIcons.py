@@ -355,7 +355,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             success = False
         self.msg1 = ""
         for message in list_of_errors:
-            self.msg1 = self.msg1 +"\n" + message
+            self.msg1 = self.msg1 + "\n" + message
 
         return success
 
@@ -781,9 +781,8 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     # control sensor icons and label
     # **************************************************
     def addControlIconsAndLabels(self):
-
-        if not self.version_number_changed():
-            if self.logLevel > 0: print "not adding control Icons and labels"
+        if (not self.version_number_changed()) and self.dispatcher_system_panel_exists():
+            if self.logLevel > -1: print "not adding control Icons and labels"
             return
 
         # Create the Dispatcher System control panel
@@ -799,9 +798,18 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
                 x += 20
                 self.addTextLabel(panel, control[2], x, y)
 
-        panel.setSize(300, 560)
+        panel.setSize(300,600)
         panel.setAllEditable(False)
         panel.setVisible(True)
+
+    def dispatcher_system_panel_exists(self):
+        for frame1 in java.awt.Frame.getFrames():
+            # print "frame", frame1.getName()
+            if frame1.getName() == "Dispatcher System":
+                if frame1.isVisible():
+                    return True
+        # print "Dispatcher System Panel does not exist"
+        return False
 
     # **************************************************
     # small icon
