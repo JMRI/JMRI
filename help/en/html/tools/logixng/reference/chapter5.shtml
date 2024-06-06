@@ -1627,12 +1627,19 @@ LogixNG: IQ:AUTO:0001
       several different places, for example if you have several <strong>Listen On Beans - Local
       variable</strong> in the same ConditionalNG.  This is similar to calling a sub-routine.</p>
 
-      <p>A prerequisite is that the <a href="../LogixNG.shtml#show-names">Show system names and user
-      names</a> preference has to be enabled.</p>
+      <p>The first step is to assign a <strong>user name</strong> to the action to be executed.
+      Right click on the action and select <strong>Change user name</strong>.  Enter the user
+      name and click on OK.</p>
 
-      <p>The action to be executed is assigned a <strong>user name</strong> which is then selected
-      from the dialog combo box.  There can be multiple action names.  Note:  The <strong>Execute
-      action</strong> itself does not require a user name.</p>
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/execute-action-name.png">
+        <img src="images/chapter5/execute-action-name.png"
+        alt="Chapter 5 execute action name"
+        style="border: 1px solid black; margin: 1em; padding: 0.1em;"></a>
+      </div>
+
+      <p>When the <strong>Execute action</strong> is added, a dialog is displayed.  Select the user
+      name from the combo box and click on OK.</p>
 
       <div style="margin-left: 2em">
         <a href="images/chapter5/execute-action.png">
