@@ -4,7 +4,7 @@
  *    click functions.  Sends and listens for changes to panel elements using the JSON WebSocket server.
  *    If no parm passed, page will list links to available panels.
  *  Approach:  Read panel's xml and create widget objects in the browser with all needed attributes.
- *    There are 4 "widgetFamily"s: text, icon, drawn and switch.  States are handled by storing member's
+ *    There are 5 "widgetFamily"s: text, input, icon, drawn and switch.  States are handled by storing member's
  *    iconX, textX, cssX where X is the state.  The corresponding members are "shown" whenever the state changes.
  *    CSS classes are used throughout to attach events to correct widgets, as well as control appearance.
  *    The JSON type is used to send changes to JSON server and to listen for changes made elsewhere.
@@ -26,6 +26,7 @@
  *  TODO: add support for slipturnouticon (one2beros)
  *  TODO: handle (and test) disableWhenOccupied for layoutslip
  *  TODO: handle block color and track widths for turntable raytracks
+ *  TODO: fix JMRI WARN about username on memoryicons
  *
  **********************************************************************************************/
 
@@ -185,8 +186,8 @@ function processPanelXML($returnedData, $success, $xhr) {
     $($panel[0].attributes).each(function() {
         $gPanel[this.name] = this.value;
     });
-    $("#panel-area").width($gPanel.panelwidth);
-    $("#panel-area").height($gPanel.panelheight);
+    $("#panel-area").width($gPanel.width);
+    $("#panel-area").height($gPanel.height);
 
     // insert the canvas layer and set up context used by LayoutEditor "drawn" objects, set some defaults
     if ($gPanel.paneltype == "LayoutPanel") {
@@ -194,8 +195,6 @@ function processPanelXML($returnedData, $success, $xhr) {
     }
 
     // set up context used by SwitchboardEditor "beanswitch" objects, set some defaults
-    var $swWidthPx;
-    var $swHeightPx;
     if ($gPanel.paneltype == "Switchboard") {
         $("#panel-area").width("100%"); // reset to fill the (mobile) screen
         $("#panel-area").height("100%"); // reset to fill the (mobile) screen
@@ -281,7 +280,8 @@ function processPanelXML($returnedData, $success, $xhr) {
             }
             if (isDefined($widget.showtooltip) && $widget.showtooltip == "true") { //set tooltip for custom tooltip
                 var ht = $(this).find('tooltip').text();
-                if (ht != "") $widget['hoverText'] = ht;                } 
+                if (ht != "") $widget['hoverText'] = ht;
+            } 
 
             // set additional values in this widget
             switch ($widget.widgetFamily) {
