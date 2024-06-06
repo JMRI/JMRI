@@ -326,7 +326,8 @@
 
         <h4>TCS</h4>
             <ul>
-                <li></li>
+                <li>Better handling of an occasional spurious error that
+                can happen when accessing TCS indexed CVs.</li>
             </ul>
 
         <h4>Team Digital</h4>
