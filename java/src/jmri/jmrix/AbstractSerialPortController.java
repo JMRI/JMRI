@@ -1,7 +1,6 @@
 package jmri.jmrix;
 
 import java.io.*;
-import java.util.Enumeration;
 import java.util.Vector;
 
 import jmri.SystemConnectionMemo;
