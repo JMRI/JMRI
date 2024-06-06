@@ -442,7 +442,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
         return null;
     }*/
 
-    boolean isTurnoutUsed(Turnout t) {
+    public boolean isTurnoutUsed(Turnout t) {
         for (int i = 1; i <= outputsToBeans.size(); i++) {
             if (t.equals(getOutputBean(i))) {
                 return true;

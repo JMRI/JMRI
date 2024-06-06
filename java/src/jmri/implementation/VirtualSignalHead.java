@@ -22,7 +22,7 @@ public class VirtualSignalHead extends DefaultSignalHead {
     }
 
     @Override
-    boolean isTurnoutUsed(jmri.Turnout t) {
+    public boolean isTurnoutUsed(jmri.Turnout t) {
         return false;
     }
 

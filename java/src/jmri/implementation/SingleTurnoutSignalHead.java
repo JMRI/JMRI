@@ -255,7 +255,7 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead implements Proper
     }
 
     @Override
-    boolean isTurnoutUsed(Turnout t) {
+    public boolean isTurnoutUsed(Turnout t) {
         return getOutput() != null && t.equals(getOutput().getBean());
     }
 

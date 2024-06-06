@@ -118,13 +118,13 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
     javax.swing.Timer timer = null;
     /**
      * On or off time of flashing signal.
-     * Public so that it can be overridden by 
+     * Public so that it can be overridden by
      * scripting (before first use)
      */
     public int delay = masterDelay;
 
     public static int masterDelay = 750;
-    
+
     /**
      * Start the timer that controls flashing.
      */
@@ -210,7 +210,7 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
     }
 
     @Override
-    boolean isTurnoutUsed(jmri.Turnout t) {
+    public boolean isTurnoutUsed(jmri.Turnout t) {
         return false;
     }
 

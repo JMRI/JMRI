@@ -259,7 +259,7 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         }
     }
 
-    boolean isTurnoutUsed(Turnout t) {
+    public boolean isTurnoutUsed(Turnout t) {
         for (TurnoutAspect ta : turnouts.values()) {
             if (t.equals(ta.getTurnout())) {
                 return true;
