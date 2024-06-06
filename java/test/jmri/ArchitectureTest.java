@@ -293,16 +293,13 @@ public class ArchitectureTest {
         .should().accessClassesThat().resideInAPackage("org.jdom2..");
 
     /**
-     * Confine purejavacomm to existing uses. No additional ones permitted.
+     * Purejavacomm is the previous serial library. It should not be used
+     * by JMRI java code, but there are scripts that uses it. And there
+     * might be users that have scripts using it. So we need to keep the
+     * library but prevent Java code to use it.
      */
     @ArchTest
     public static final ArchRule checkPurejavacommUsage = noClasses()
-        .that()
-
-        .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController$1").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController$2")
-
         .should().accessClassesThat().resideInAPackage("purejavacomm..");
 
     /**
