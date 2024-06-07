@@ -166,9 +166,9 @@
 
         <li>
           <a id="trainDetectionOptions"></a> Train Detection Options <span class="since">since 5.7.5</span>
-          <p> This settings effects the ability of auto trains to stop see autotrains for details</p>
+          <p> This settings effects the ability of auto trains to stop. See autotrains for details</p>
           <ul>
-            <li><strong>Entire Train</strong> The entire train can be detected, no blocks between head and
+            <li><strong>Entire Train</strong> The entire train can be detected, no unoccupied blocks between head and
             tail of the train. Sections and blocks within sections can be reused a soon as they become unoccupied.</li>
 
             <li><strong>Head and Tail</strong> The head and tail are both detected but parts in between may not
