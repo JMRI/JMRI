@@ -4,8 +4,6 @@ import jmri.ConsistListener;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.CommandStation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This is the Default DCC consist manager installed on systems which support
@@ -32,7 +30,7 @@ public class NmraConsist extends DccConsist {
     public NmraConsist(DccLocoAddress address,CommandStation cs){
         super(address);
         commandStation = cs;
-        log.debug("Nmra Consist created for address: {}", address.toString());
+        log.debug("Nmra Consist created for address: {}", address);
     }
 
     /*
@@ -42,41 +40,36 @@ public class NmraConsist extends DccConsist {
      *        the same direction as the consist, or false otherwise.
      */
     @Override
-    protected void addToAdvancedConsist(DccLocoAddress LocoAddress, boolean directionNormal) {
-        if (log.isDebugEnabled()) {
-            log.debug("Add Locomotive {} to advanced consist {} With Direction Normal {}.",
-                    LocoAddress.toString(),
-                    consistAddress.toString(),
-                    directionNormal);
-        }
+    protected void addToAdvancedConsist(DccLocoAddress locoAddress, boolean directionNormal) {
+        log.debug("Add Locomotive {} to advanced consist {} With Direction Normal {}.",
+                locoAddress, consistAddress, directionNormal);
         // create the message and fill it,
-        byte[] contents = jmri.NmraPacket.consistControl(LocoAddress.getNumber(),
-                LocoAddress.isLongAddress(),
+        byte[] contents = jmri.NmraPacket.consistControl(locoAddress.getNumber(),
+                locoAddress.isLongAddress(),
                 consistAddress.getNumber(),
                 directionNormal);
         commandStation.sendPacket(contents, 4);
-        notifyConsistListeners(LocoAddress, ConsistListener.OPERATION_SUCCESS);
+        notifyConsistListeners(locoAddress, ConsistListener.OPERATION_SUCCESS);
 
     }
 
-    /*
+    /**
      *  Remove a Locomotive from an Advanced Consist
-     *  @param address is the Locomotive address to add to the locomotive
+     *  @param locoAddress is the Locomotive address to add to the locomotive
      */
     @Override
-    protected void removeFromAdvancedConsist(DccLocoAddress LocoAddress) {
-        if (log.isDebugEnabled()) {
-            log.debug("Remove Locomotive {} from advanced consist {}.",
-                    LocoAddress.toString(),
-                    consistAddress.toString());
-        }
+    protected void removeFromAdvancedConsist(DccLocoAddress locoAddress) {
+        log.debug("Remove Locomotive {} from advanced consist {}.",
+                locoAddress, consistAddress);
         // create the message and fill it,
-        byte[] contents = jmri.NmraPacket.consistControl(LocoAddress.getNumber(),
-                LocoAddress.isLongAddress(),
+        byte[] contents = jmri.NmraPacket.consistControl(locoAddress.getNumber(),
+                locoAddress.isLongAddress(),
                 0, //set to 0 to remove
                 true);//always normal direction
         commandStation.sendPacket(contents, 4);
-        notifyConsistListeners(LocoAddress, ConsistListener.OPERATION_SUCCESS);
+        notifyConsistListeners(locoAddress, ConsistListener.OPERATION_SUCCESS);
     }
-    private final static Logger log = LoggerFactory.getLogger(NmraConsist.class);
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NmraConsist.class);
+
 }

@@ -1620,6 +1620,50 @@ LogixNG: IQ:AUTO:0001
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h4 id="execute-action">Execute action<span class="since">since 5.7.8</span></h4>
+
+      <p><strong>Execute action</strong> is used to execute a different part of the current
+      ConditionalNG.  This can be useful if you need to execute a part of the ConditionalNG at
+      several different places, for example if you have several <strong>Listen On Beans - Local
+      variable</strong> in the same ConditionalNG.  This is similar to calling a sub-routine.</p>
+
+      <p>The first step is to assign a <strong>user name</strong> to the action to be executed.
+      Right click on the action and select <strong>Change user name</strong>.  Enter the user
+      name and click on OK.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/execute-action-name.png">
+        <img src="images/chapter5/execute-action-name.png"
+        alt="Chapter 5 execute action name"
+        style="border: 1px solid black; margin: 1em; padding: 0.1em;"></a>
+      </div>
+
+      <p>When the <strong>Execute action</strong> is added, a dialog is displayed.  Select the user
+      name from the combo box and click on OK.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/execute-action.png">
+        <img src="images/chapter5/execute-action.png"
+        alt="Chapter 5 execute action"></a>
+      </div>
+
+      <p>This example calls a <strong>sub</strong> action to display the current local variables.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/execute-action-sample.png">
+        <img src="images/chapter5/execute-action-sample.png"
+        alt="Chapter 5 execute action sample"></a>
+      </div>
+
+      <p>Normally a ConditionalNG will execute all of the actions in the top level <strong>Many</strong>.
+      In this example, that would result in a second execution of the <strong>sub</strong> action.
+      The <strong>Return</strong> action is used to finish the ConditionalNG execution sequence.</p>
+
+      <p>Note:  This example was used to verify that the local variable list varies depending on
+      when the <strong>sub</strong> action was called.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h4>Find table row or column<span class="since">since 5.1.6</span></h4>
 
       <p>See <a href="chapter11.shtml#TableActions">Chapter 11 - Table Actions</a> for details.</p>
