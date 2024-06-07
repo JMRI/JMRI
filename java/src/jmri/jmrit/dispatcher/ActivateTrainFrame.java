@@ -657,7 +657,7 @@ public class ActivateTrainFrame extends JmriJFrame {
                 trainBoxLabel.setVisible(true);
                 rosterComboBox.setVisible(true);
                 trainSelectBox.setVisible(false);
-                trainFieldLabel.setVisible(false);
+                trainFieldLabel.setVisible(true);
                 trainNameField.setVisible(true);
                 dccAddressFieldLabel.setVisible(false);
                 dccAddressSpinner.setVisible(false);
@@ -667,7 +667,7 @@ public class ActivateTrainFrame extends JmriJFrame {
                 trainBoxLabel.setVisible(true);
                 trainSelectBox.setVisible(true);
                 rosterComboBox.setVisible(false);
-                trainFieldLabel.setVisible(false);
+                trainFieldLabel.setVisible(true);
                 trainNameField.setVisible(true);
                 dccAddressFieldLabel.setVisible(true);
                 dccAddressSpinner.setVisible(true);
@@ -690,7 +690,7 @@ public class ActivateTrainFrame extends JmriJFrame {
                 trainBoxLabel.setVisible(false);
                 rosterComboBox.setVisible(false);
                 trainSelectBox.setVisible(false);
-                trainFieldLabel.setVisible(false);
+                trainFieldLabel.setVisible(true);
                 trainNameField.setVisible(true);
                 dccAddressFieldLabel.setVisible(false);
                 dccAddressSpinner.setVisible(false);
