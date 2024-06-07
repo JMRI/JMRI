@@ -55,6 +55,8 @@ var DOWNEVENT = 'touchstart mousedown';  // check both touch and mouse events
 var UPEVENT = 'touchend mouseup';
 var BLUR = 'blur';
 var KEYUP = 'keyup';
+var CHANGE = 'change';
+
 var SIZE = 3;               // default factor for circles
 
 var UNKNOWN = '0';          // constants to match JSON Server state names
@@ -790,6 +792,12 @@ function processPanelXML($returnedData, $success, $xhr) {
                                     $widget.styles['width'] = "5em";
                                 }
                             }
+                            var items = $(this).find('itemList').children('item');
+                            $widget['items'] = [];
+                            items.each(function(i, item) {  //get any itemlist defined
+                                 //store item list in items array
+                                $widget.items[item.attributes['index'].value] = item.textContent;
+                            });                            
                             if (isUndefined($widget["systemName"]))
                                 $widget["systemName"] = $widget.name;
                             jmri.getMemory($widget["systemName"]);
@@ -816,8 +824,18 @@ function processPanelXML($returnedData, $success, $xhr) {
                     }
 
                     if ($widget.widgetFamily=="input") {
-                        $("#panel-area").append("<input id=" + $widget.id + " class='" + $widget.classes + 
-                            "' value='" + $widget.text + "' " + $widget.extraAttributes + $hoverText + " >");                        
+                        if ($widget.widgetType=="memoryComboIcon") {
+                            var s = "<select id=" + $widget.id + " class='" + $widget.classes + 
+                                "' value='" + $widget.text + "' " + $widget.extraAttributes + $hoverText + " >";
+                            $($widget.items).each(function(i, item) {
+                                s += " <option value='"+ item + "'>" + item + "</option>";
+                            });
+                            s +="</select>";
+                            $("#panel-area").append(s);
+                        } else {                        
+                            $("#panel-area").append("<input id=" + $widget.id + " class='" + $widget.classes + 
+                                "' value='" + $widget.text + "' " + $widget.extraAttributes + $hoverText + " >");
+                        }                        
                     } else {
                         $("#panel-area").append("<div id=" + $widget.id + " class='" + $widget.classes + $hoverText + "'>" +
                             $widget.text + "</div>");
@@ -1403,8 +1421,10 @@ function processPanelXML($returnedData, $success, $xhr) {
 
         //check for update keys and update when needed
         $('input.input').bind(KEYUP, $handleInputKeyUp);
-        //also update when leaving the input
+        //update when leaving the input
         $('input.input').bind(BLUR, $handleInputBlur);
+        //and update when select input is changed
+        $('select.input').bind(CHANGE, $handleInputBlur);
 
         // Switchboard All Off/All On buttons
         $(".lightswitch#allOff").bind(UPEVENT, $handleClickAllOff); // all Lights Off
@@ -2153,8 +2173,8 @@ var $setWidgetState = function($id, $newState, data) {
                 $reDrawIcon($widget);
                 break;
             case "input" :
-                $('input#' + $id).val($newState);      //update the input
-                $('input#' + $id).data("oldValue", $newState); //save the current value if needed for [Escape]
+                $('#' + $id).val($newState);                //update the input
+                $('#' + $id).data("oldValue", $newState);   //save the current value if needed for [Escape]
                 break;
             case "text" :
                 if ($widget.jsonType == "memory" || $widget.jsonType == "block" || $widget.jsonType == "reporter" ) {
