@@ -28,7 +28,7 @@ public class BrowseAllLogixNGsAction extends AbstractAction {
         LogixNGBrowseWindow browseWindow =
                 new LogixNGBrowseWindow(title);
         browseWindow.getPrintTreeSettings();
-        browseWindow.makeBrowserWindow(true, true, title, "", (printTreeSettings) -> {
+        browseWindow.makeBrowserWindow(true, true, title, title, (printTreeSettings) -> {
                 StringWriter writer = new StringWriter();
                 InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class)
                         .printTree(printTreeSettings, new PrintWriter(writer), "    ", new MutableInt(0));
