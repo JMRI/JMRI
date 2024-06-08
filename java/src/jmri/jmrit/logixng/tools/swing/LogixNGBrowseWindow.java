@@ -70,6 +70,11 @@ public class LogixNGBrowseWindow extends JmriJFrame {
 
     /**
      * Create and initialize the browser window.
+     * @param browseMonoSpace use monospace font?
+     * @param showSettingsPanel show settings panel?
+     * @param header the header
+     * @param systemName the system name of the bean or the header
+     * @param getText the text
      */
     public void makeBrowserWindow(
             boolean browseMonoSpace, boolean showSettingsPanel,
@@ -128,6 +133,8 @@ public class LogixNGBrowseWindow extends JmriJFrame {
 
     /**
      * Save the bean browser window content to a text file.
+     * @param header the header
+     * @param systemName the system name of the bean or the header
      */
     void saveBrowserPressed(String header, String systemName) {
         userFileChooser.setApproveButtonText(Bundle.getMessage("BrowserSaveDialogApprove"));  // NOI18N
