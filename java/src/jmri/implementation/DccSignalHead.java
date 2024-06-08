@@ -256,7 +256,7 @@ public class DccSignalHead extends AbstractSignalHead {
     private int dccSignalDecoderAddress;
 
     @Override
-    boolean isTurnoutUsed(Turnout t) {
+    public boolean isTurnoutUsed(Turnout t) {
         return false;
     }
 
