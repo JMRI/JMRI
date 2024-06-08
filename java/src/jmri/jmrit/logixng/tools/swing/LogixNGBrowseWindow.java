@@ -11,13 +11,8 @@ import javax.swing.*;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.logixng.Base.PrintTreeSettings;
-import jmri.jmrit.logixng.LogixNGPreferences;
-import jmri.jmrit.logixng.MaleSocket.ErrorHandlingType;
-import jmri.jmrit.logixng.implementation.DefaultLogixNGPreferences;
-import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.swing.JComboBoxUtil;
 import jmri.util.swing.JmriJOptionPane;
 
 /**

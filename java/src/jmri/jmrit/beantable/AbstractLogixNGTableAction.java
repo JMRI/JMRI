@@ -1,10 +1,6 @@
 package jmri.jmrit.beantable;
 
-import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.*;
 import java.util.List;
 

@@ -7,7 +7,6 @@ import java.io.StringWriter;
 import javax.swing.AbstractAction;
 
 import jmri.InstanceManager;
-import jmri.jmrit.logixng.LogixNG_Manager;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
