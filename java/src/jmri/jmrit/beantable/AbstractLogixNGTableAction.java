@@ -697,6 +697,11 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         // bean was found, create the window
         _curNamedBean = getManager().getBySystemName(sName);
 
+        if (_curNamedBean == null) {
+            // This should never happen but SpotBugs complains about it.
+            throw new RuntimeException("_curNamedBean is null");
+        }
+
         String title = Bundle.getMessage("BrowserLogixNG") + " " + _curNamedBean.getSystemName() + "    " // NOI18N
                 + _curNamedBean.getUserName() + "    "
                 + (isEnabled(_curNamedBean)
