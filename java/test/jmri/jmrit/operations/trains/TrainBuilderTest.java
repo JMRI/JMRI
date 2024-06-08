@@ -3862,6 +3862,65 @@ public class TrainBuilderTest extends OperationsTestCase {
 
     }
 
+    /**
+     * Test that cars with final destination are sent to staging
+     */
+    @Test
+    public void testStagingtoStagingCarWithFinalDestinationC() {
+
+        JUnitOperationsUtil.initOperationsData();
+
+        // Northend - NI - Southend
+        Train train1 = tmanager.getTrainById("1");
+        train1.addTypeName("Flat");
+
+        // change route move counts
+        Route route = train1.getRoute();
+        RouteLocation rNi = route.getRouteLocationBySequenceNumber(2);
+        rNi.setMaxCarMoves(5);
+
+        // cars departing staging
+        Car c1 = cmanager.getByRoadAndNumber("CP", "X10001"); // Boxcar
+        Car c2 = cmanager.getByRoadAndNumber("CP", "X10002"); // Boxcar
+
+        Location locationNorthIndustries = lmanager.getLocationById("20");
+        Track niYard = locationNorthIndustries.getTrackByName("NI Yard", null);
+
+        Location locationSouthEnd = lmanager.getLocationById("3");
+        Track l3staging1 = locationSouthEnd.getTrackById("3s1");
+        Track l3staging2 = locationSouthEnd.getTrackById("3s2");
+        l3staging2.setMoves(100); // use staging track 1 for this test
+
+        Car c7 = cmanager.getByRoadAndNumber("CP", "777"); // 6 moves
+        Car c8 = cmanager.getByRoadAndNumber("CP", "888"); // 0 moves
+        Car c9 = cmanager.getByRoadAndNumber("CP", "99"); // 0 moves
+
+        // send all three cars to staging
+        c7.setFinalDestination(locationSouthEnd);
+        c8.setFinalDestination(locationSouthEnd);
+        c9.setFinalDestination(locationSouthEnd);
+
+        // should build
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertTrue("Train status", train1.isBuilt());
+
+        // There isn't enough room in staging for all cars
+
+        // confirm destinations
+        Assert.assertEquals("car destination track", niYard, c1.getDestinationTrack());
+        Assert.assertEquals("car destination track", l3staging1, c2.getDestinationTrack());
+        Assert.assertEquals("car destination track", null, c7.getDestinationTrack());
+        Assert.assertEquals("car destination track", l3staging1, c8.getDestinationTrack());
+        Assert.assertEquals("car destination track", l3staging1, c9.getDestinationTrack());
+
+        // confirm final destinations
+        Assert.assertEquals("car destination track", locationSouthEnd, c7.getFinalDestination());
+        Assert.assertEquals("car destination track", null, c8.getFinalDestination());
+        Assert.assertEquals("car destination track", null, c9.getFinalDestination());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
     /*
      * Test location car type acceptance
      */
@@ -18086,7 +18145,9 @@ public class TrainBuilderTest extends OperationsTestCase {
         // Create the turn Acton-Chelmsford-Boston-Acton
         Route acbaRoute = rmanager.newRoute("Acton-Chelmsford-Boston-Acton");
         acbaRoute.addLocation(acton);
-        acbaRoute.addLocation(chelmsford);
+        RouteLocation rlChelmsford = acbaRoute.addLocation(chelmsford);
+        // force special case where train can't route car due to moves used up
+        rlChelmsford.setMaxCarMoves(1);
         acbaRoute.addLocation(boston);
         acbaRoute.addLocation(acton);
         Train acbaTrain = tmanager.newTrain("Acton-Chelmsford-Boston-Acton");
@@ -18095,6 +18156,10 @@ public class TrainBuilderTest extends OperationsTestCase {
         // now place car at Boston destination Chelmsford
         Car c1 = JUnitOperationsUtil.createAndPlaceCar("A", "1", "Boxcar", "40", "DAB", "1958", bostonYard1, 0);
         c1.setFinalDestination(chelmsford);
+
+        // car c2 will create special case where train can't route car due to moves used up
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("A", "2", "Boxcar", "40", "DAB", "1958", actonYard1, 0);
+        c2.setFinalDestination(chelmsford);
 
         // confirm that routing through yard is enabled
         Assert.assertTrue("Yard routing enabled", Setup.isCarRoutingViaYardsEnabled());

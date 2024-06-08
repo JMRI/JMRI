@@ -27,7 +27,7 @@ import jmri.jmrit.operations.trains.*;
  * router is limited to seven trains.
  *
  * @author Daniel Boudreau Copyright (C) 2010, 2011, 2012, 2013, 2015, 2021,
- *         2022
+ *         2022, 2024
  */
 public class Router extends TrainCommon implements InstanceManagerAutoDefault {
 
@@ -43,6 +43,8 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
 
     protected final List<Train> _nextLocationTrains = new ArrayList<>();
     protected final List<Train> _lastLocationTrains = new ArrayList<>();
+
+    protected Hashtable<String, Train> _listTrains = new Hashtable<>();
 
     protected static final String STATUS_NOT_THIS_TRAIN = Bundle.getMessage("RouterTrain");
     public static final String STATUS_NOT_THIS_TRAIN_PREFIX =
@@ -179,6 +181,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         _otherLocationTracks.clear();
         _nextLocationTrains.clear();
         _lastLocationTrains.clear();
+        _listTrains.clear();
 
         // first try using 2 trains and an interchange track to route the car
         if (setCarDestinationTwoTrainsInterchange(car)) {
@@ -1085,8 +1088,21 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         if (toTrack.isInterchange() && toTrack.getPickupOption().equals(Track.ANY)) {
             excludeTrains.add(toTrain);
         }
-        // does a train service these two locations?
-        return tmanager.getTrainForCar(testCar, excludeTrains, null);
+        // does a train service these two locations? 
+        String key = fromTrack.getId() + toTrack.getId();
+        Train train = _listTrains.get(key);
+        if (train == null) {
+            train = tmanager.getTrainForCar(testCar, excludeTrains, null);
+            if (train != null) {
+                _listTrains.put(key, train);
+            } else {
+                _listTrains.put(key, new Train("null", "null"));
+            }
+        } else if (train.getId().equals("null")) {
+            return null;
+        }
+        return train;
+
     }
 
     private void showRoute(Car car, List<Train> trains, List<Track> tracks) {

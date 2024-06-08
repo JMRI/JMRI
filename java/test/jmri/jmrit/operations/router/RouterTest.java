@@ -23,7 +23,7 @@ import jmri.util.JUnitOperationsUtil;
  *
  * @author Daniel Boudreau Copyright (C) 2010, 2011, 2013, 2024
  */
-public class OperationsCarRouterTest extends OperationsTestCase {
+public class RouterTest extends OperationsTestCase {
 
     private final static int DIRECTION_ALL = Location.EAST + Location.WEST + Location.NORTH + Location.SOUTH;
 
@@ -2742,8 +2742,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
     }
 
     /**
-     * Seven train routing test. First move uses a local train. Test that the
-     * program handles route branches.
+     * Seven train routing test. Test that the program handles route branches.
      */
     @Test
     public void testCarRouting7TrainsTree() {
