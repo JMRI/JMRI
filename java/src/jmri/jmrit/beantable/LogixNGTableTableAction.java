@@ -16,6 +16,7 @@ import jmri.jmrit.logixng.Table;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 
+import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
 import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
@@ -150,7 +151,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
     }
 
     @Override
-    protected String getBeanText(NamedTable bean) {
+    protected String getBeanText(NamedTable bean, Base.PrintTreeSettings printTreeSettings) {
         int maxColumnWidth = 0;
         int columnWidth[] = new int[bean.numColumns()+1];
         String[][] cells = new String[bean.numRows()+1][];

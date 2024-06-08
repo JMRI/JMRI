@@ -453,6 +453,12 @@
               ConditionalNG.<br/>
               Note that the action you want to execute must have
               a user name. Otherwise the action can't be selected.</li>
+          <li>The LogixNG tools menu now has the option to browse All LogixNGs.
+              Open <strong>Tools &rArr; LogixNG &rArr; Browse All LogixNGs</strong>.
+              It lists all the LogixNGs, Modules, Tables and Global variables.</li>
+          <li>The option <strong>Print disabled</strong> has been added to the LogixNG
+              Browse window. It adds "Disabled" to the LogixNGs, ConditionalNGs, actions
+              and expressions which are disabled.</li>
           <li></li>
         </ul>
 
