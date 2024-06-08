@@ -89,6 +89,15 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
         }
     }
 
+    public boolean hasRandomItem() {
+        for (ScheduleItem si : getItemsByIdList()) {
+            if (!si.getRandom().equals(ScheduleItem.NONE)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Adds a car type to the end of this schedule
      * 
@@ -459,7 +468,9 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
             log.debug("No Match");
         }
         car.setScheduleItemId(Car.NONE); // clear the car's schedule id
-        return Track.SCHEDULE + " " + Bundle.getMessage("matchMessage", getName());
+        return Track.SCHEDULE +
+                " " +
+                Bundle.getMessage("matchMessage", getName(), hasRandomItem() ? Bundle.getMessage("Random") : "");
     }
 
     public String checkScheduleItem(ScheduleItem si, Car car, Track track) {

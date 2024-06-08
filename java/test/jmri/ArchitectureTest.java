@@ -305,9 +305,6 @@ public class ArchitectureTest {
         .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController$2").and()
 
         // non-typical systems that are not (yet) migrated
-        .doNotHaveFullyQualifiedName("jmri.jmrix.bachrus.SpeedoTrafficController").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.bachrus.kpfserialdriver.SerialDriverAdapter").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.bachrus.serialdriver.SerialDriverAdapter").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.dcc4pc.Dcc4PcTrafficController").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.dcc4pc.serialdriver.SerialDriverAdapter").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.pricom.downloader.LoaderPane").and()

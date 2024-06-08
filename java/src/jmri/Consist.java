@@ -43,9 +43,9 @@ public interface Consist {
     /**
      * Set the Consist Type.
      *
-     * @param consist_type the consist type
+     * @param consistType the consist type
      */
-    void setConsistType(int consist_type);
+    void setConsistType(int consistType);
 
     /**
      * Get the Consist Type.
@@ -155,7 +155,7 @@ public interface Consist {
      * Set the roster entry of a locomotive within the consist
      *
      * @param address  is the Locomotive address
-     * @param rosterId is the roster Identifer of the associated roster entry.
+     * @param rosterId is the roster Identifier of the associated roster entry.
      */
     void setRosterId(DccLocoAddress address, String rosterId);
 
@@ -186,9 +186,9 @@ public interface Consist {
     /**
      * Set the text ID associated with the consist
      *
-     * @param ID is a string identifier for the consist
+     * @param id is a string identifier for the consist
      */
-    void setConsistID(String ID);
+    void setConsistID(String id);
 
     /**
      * Get the text ID associated with the consist
@@ -205,7 +205,7 @@ public interface Consist {
     void reverse();
 
     /**
-     * restore the consist to the command station.
+     * Restore the consist to the command station.
      */
     void restore();
 

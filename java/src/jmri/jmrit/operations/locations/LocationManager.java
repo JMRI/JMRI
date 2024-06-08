@@ -361,7 +361,7 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
     public JComboBox<Location> getComboBox() {
         JComboBox<Location> box = new JComboBox<>();
         updateComboBox(box);
-        OperationsPanel.padComboBox(box, getMaxLocationNameLength() + 1);
+        OperationsPanel.padComboBox(box, getMaxLocationNameLength());
         return box;
     }
 

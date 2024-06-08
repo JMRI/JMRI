@@ -47,7 +47,7 @@
     <!-- Decoder Model information follows -->
     <decoder>
         <family name="Blunami Electric" mfg="SoundTraxx (Throttle-Up)" lowVersionID="72" comment="These are the -retail- version Blunami Electric decoders">
-            <model model="BLU-21PNEM8 Electric" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="2163" comment="Model 886603">
+            <model model="BLU-21PNEM8 Electric" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="2163" comment="Model 886603">
                 <size length="30.5" width="15.5" height="6.5" units="mm"/>
             </model>
             <model model="BLU-2200 Electric" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="2144" comment="Model 886602">

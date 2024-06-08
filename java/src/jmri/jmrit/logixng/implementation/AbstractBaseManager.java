@@ -134,6 +134,23 @@ public abstract class AbstractBaseManager<E extends NamedBean> extends AbstractM
         _maleSocketFactories.add(factory);
     }
     
+    /** {@inheritDoc} */
+    @Override
+    @SuppressWarnings("unchecked")   // Can't check generic types
+    protected E getOuterBean(E bean) {
+        if (bean == null) {
+            return null;
+        }
+        if (bean instanceof Base) {
+            Base b = (Base) bean;
+            while (b.getParent() instanceof MaleSocket) {
+                b = b.getParent();
+            }
+            return (E) b;
+        }
+        return bean;
+    }
+
 //    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractBaseManager.class);
     
 }

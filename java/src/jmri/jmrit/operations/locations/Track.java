@@ -1932,7 +1932,10 @@ public class Track extends PropertyChangeSupport {
         }
         // search schedule if match mode
         if (getScheduleMode() == MATCH && !getSchedule().searchSchedule(car, this).equals(OKAY)) {
-            return SCHEDULE + " " + Bundle.getMessage("matchMessage", getScheduleName());
+            return SCHEDULE +
+                    " " +
+                    Bundle.getMessage("matchMessage", getScheduleName(),
+                            getSchedule().hasRandomItem() ? Bundle.getMessage("Random") : "");
         }
         ScheduleItem currentSi = getCurrentScheduleItem();
         log.debug("Destination track ({}) has schedule ({}) item id ({}) mode: {} ({})", getName(), getScheduleName(),

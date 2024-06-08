@@ -326,7 +326,8 @@
 
         <h4>TCS</h4>
             <ul>
-                <li></li>
+                <li>Better handling of an occasional spurious error that
+                can happen when accessing TCS indexed CVs.</li>
             </ul>
 
         <h4>Team Digital</h4>
@@ -444,6 +445,14 @@
               of an enum, the button <strong>Show valid names</strong> are added.
               Pressing this button opens a dialog that shows a list of valid values
               and their descriptions.</li>
+          <li>The action <strong>Execute action</strong> has been added. It executes
+              another action somewhere else in the ConditionalNG tree. This can be
+              useful if you need to execute a part of the ConditionalNG at several
+              different places, for example if you have several
+              <strong>Listen On Beans - Local variable</strong> in the same
+              ConditionalNG.<br/>
+              Note that the action you want to execute must have
+              a user name. Otherwise the action can't be selected.</li>
           <li>The LogixNG tools menu now has the option to browse All LogixNGs.
               Open <strong>Tools &rArr; LogixNG &rArr; Browse All LogixNGs</strong>.
               It lists all the LogixNGs, Modules, Tables and Global variables.</li>
@@ -615,7 +624,7 @@
         <a id="WA" name="WA"></a>
         <ul>
             <li>new web ui for working with cars</li>
-            <li>web panels: add handling for some text memory inputs</li>
+            <li>web panels: add handling for text memory inputs, use content size instead of window size</li>
         </ul>
 
     <h3>Where Used</h3>

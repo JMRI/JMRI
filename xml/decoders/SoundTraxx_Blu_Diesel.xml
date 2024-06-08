@@ -59,19 +59,19 @@
     <!-- Decoder Model information follows -->
     <decoder>
         <family name="Blunami Diesel" mfg="SoundTraxx (Throttle-Up)" lowVersionID="72" comment="These are the -retail- version Blunami Diesel decoders">
-            <model model="BLU-21PNEM8 Alco Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="2160" comment="Model 885611">
+            <model model="BLU-21PNEM8 Alco Diesels" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="2160" comment="Model 885611">
                 <size length="30.5" width="15.5" height="6.5" units="mm"/>
             </model>
-            <model model="BLU-21PNEM8 Baldwin Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="2161" comment="Model 885612">
+            <model model="BLU-21PNEM8 Baldwin Diesels" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="2161" comment="Model 885612">
                 <size length="30.5" width="15.5" height="6.5" units="mm"/>
             </model>
-            <model model="BLU-21PNEM8 EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="2158" comment="Model 885609">
+            <model model="BLU-21PNEM8 EMD Diesels" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="2158" comment="Model 885609">
                 <size length="30.5" width="15.5" height="6.5" units="mm"/>
             </model>
-            <model model="BLU-21PNEM8 EMD-2 Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="2162" comment="Model 885623">
+            <model model="BLU-21PNEM8 EMD-2 Diesels" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="2162" comment="Model 885623">
                 <size length="30.5" width="15.5" height="6.5" units="mm"/>
             </model>
-            <model model="BLU-21PNEM8 GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="2159" comment="Model 885610">
+            <model model="BLU-21PNEM8 GE Diesels" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="2159" comment="Model 885610">
                 <size length="30.5" width="15.5" height="6.5" units="mm"/>
             </model>
             <model model="BLU-2200 Alco Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="2141" comment="Model 885607">
