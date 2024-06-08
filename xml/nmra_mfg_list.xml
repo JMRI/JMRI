@@ -215,11 +215,15 @@
       <manufacturer mfg="Zimo" mfgID="145" />
       <manufacturer mfg="ZTC" mfgID="132" />
 
+      <!-- Special case for no decoder, e.g. DC operation -->
+      <manufacturer mfg="No Decoder" mfgID="1000" />
+
       <!-- we include Lionel as a special case to support TMCC -->
       <manufacturer mfg="Lionel" mfgID="1001" />
 
       <!-- not registered, provide custom numbers -->
       <manufacturer mfg="LEB" mfgID="1002" />
       <manufacturer mfg="Logic Rail Technologies" mfgID="1003" />
+      
 
 </mfgList>
