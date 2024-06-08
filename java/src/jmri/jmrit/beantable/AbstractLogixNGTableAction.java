@@ -709,7 +709,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                         : Bundle.getMessage("BrowserDisabled"));  // NOI18N
 
         LogixNGBrowseWindow browseWindow =
-                new LogixNGBrowseWindow(title);
+                new LogixNGBrowseWindow(Bundle.getMessage("LogixNG_Browse_Title"));
         browseWindow.getPrintTreeSettings();
         boolean showSettingsPanel = this instanceof LogixNGTableAction || this instanceof LogixNGModuleTableAction;
         browseWindow.makeBrowserWindow(browseMonoSpace(), showSettingsPanel, title, _curNamedBean.getSystemName(),
