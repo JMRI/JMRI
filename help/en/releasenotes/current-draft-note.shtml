@@ -36,7 +36,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li>Can use DCCppOverTCPServer to connect DCC-EX native protocol thru JMRI</li>
+                <li></li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -181,8 +181,7 @@
 
     <h3>New / Updated decoder definitions</h3>
         <ul>
-          <li>Added a new "No Decoder" listing in the New Loco selection to allow people
-              to track DC locomotives in the roster.</li>
+          <li></li>
         </ul>
 
         <h4>Arnold</h4>
@@ -312,7 +311,7 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li>Improved the HO 2 Truck Climax (2climax) definition.</li>
+                <li></li>
             </ul>
 
         <h4>Tam Valley Depot</h4>
@@ -327,8 +326,7 @@
 
         <h4>TCS</h4>
             <ul>
-                <li>Better handling of an occasional spurious error that
-                can happen when accessing TCS indexed CVs.</li>
+                <li></li>
             </ul>
 
         <h4>Team Digital</h4>
@@ -379,8 +377,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Better handling of selected items when roster list is updated</li>
-            <li>Enable/Disable bottom controls depending on selected item</li>
+            <li></li>
         </ul>
 
     <h3>CTC Tool</h3>
@@ -392,8 +389,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>Allow User to enter a train name of their choosing.</li>
-             <li>Add Transit Action to attempt to allocate beyond next safe section.</li>
+             <li></li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -411,14 +407,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>Add the <strong>hidden</strong> attribute to the Layout Editor <strong>Shape</strong>
-            item.  The center popup menu has an option to hide the shape when not editing.  The
-            <strong>setHidden(boolean)</strong> public method can be used by scripts and LogixNG.</li>
-
-            <li>The <strong>Disable value edit popup when not editing</strong> menu item has been
-            added to the context menus for blocks, memories and global variables.  When the panel
-            is not in edit mode and the option is enabled, the pop-up to the edit the value will
-            not occur.</li>
+            <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -435,31 +424,6 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>In panel file print routine (XSLT), separate out "inline" LogixNGs from table-based.</li>
-          <li>Add an <strong>Examples</strong> section to the LogixNG Reference.</li>
-          <li>Add the <strong>Set a yard ladder</strong> example to the Examples section.</li>
-          <li>The action <strong>Program On Main</strong> is improved.
-              It's now possible to select long or short address. It's
-              also possible to select not to wait until programming is
-              completed.</li>
-          <li>For most actions and expressions, when selecting indirect addressing
-              of an enum, the button <strong>Show valid names</strong> are added.
-              Pressing this button opens a dialog that shows a list of valid values
-              and their descriptions.</li>
-          <li>The action <strong>Execute action</strong> has been added. It executes
-              another action somewhere else in the ConditionalNG tree. This can be
-              useful if you need to execute a part of the ConditionalNG at several
-              different places, for example if you have several
-              <strong>Listen On Beans - Local variable</strong> in the same
-              ConditionalNG.<br/>
-              Note that the action you want to execute must have
-              a user name. Otherwise the action can't be selected.</li>
-          <li>The LogixNG tools menu now has the option to browse All LogixNGs.
-              Open <strong>Tools &rArr; LogixNG &rArr; Browse All LogixNGs</strong>.
-              It lists all the LogixNGs, Modules, Tables and Global variables.</li>
-          <li>The option <strong>Print disabled</strong> has been added to the LogixNG
-              Browse window. It adds "Disabled" to the LogixNGs, ConditionalNGs, actions
-              and expressions which are disabled.</li>
           <li></li>
         </ul>
 
@@ -472,33 +436,19 @@
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>Simplified the creation and update of switch lists when using MR SLAM</li>
-            <li>Improvements to destination checking button for C/I tracks</li>
-            <li>Added warning messages if operation files have been corrupted</li>
-            <li>Files are now saved to the millisecond, fixes fast Automation actions and loops</li>
-            <li>Improvements to export Trains</li>
-            <li>Significant improvements to Car importing</li>
-            <li>Conductor improvements when sorting by track name</li>
-            <li>Web Manifest and Conductor improvements, Manifest now supports utility cars. Comment colors now supported</li>
-            <li>Switch lists can now display train's departure time</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li>The <strong>Disable value edit popup when not editing</strong> menu item has been
-            added to the context menus for blocks, memories and global variables.  When the panel
-            is not in edit mode and the option is enabled, the pop-up to the edit the value will
-            not occur. The option does not apply to input and spinner icons.</li>
+            <li></li>
         </ul>
 
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li>The <strong>Disable value edit popup when not editing</strong> menu item has been
-            added to the context menus for memories and global variables.  When the panel
-            is not in edit mode and the option is enabled, the pop-up to the edit the value will
-            not occur. The option does not apply to input, spinner and combo icons.</li>
+            <li></li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
@@ -590,11 +540,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li>A visible property was added to function buttons defined in the label&amp;media panels of decoderpro, this property is used by the throttle UI.</li>
-            <li>A throttle preference was added to show/hide the speed step selector on the control panel of any new UI throttles.</li>
-            <li>When a throttle UI layout is saved using the File->Save current throttle menu entry, if it is linked to a roster entry, the user will be proposed to also export function buttons customizations to the roster entry.</li>
-            <li>Fix issue with throttle window title not resetting when a throttle is released</li>
-            <li>Fix issue with selection foreground color in throttles list window</li>
+            <li></li>
         </ul>
 
     <h3>Timetable</h3>
@@ -624,15 +570,13 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li>new web ui for working with cars</li>
-            <li>web panels: add handling for text memory inputs, use content size instead of window size</li>
+            <li></li>
         </ul>
 
     <h3>Where Used</h3>
         <a id="WhereUsed" name="WhereUsed"></a>
         <ul>
-            <li>Add checks for turnouts in signal heads and signal masts.  Also, check for signal heads
-            in signal head based signal masts.</li>
+            <li></li>
         </ul>
 
    <h3>WiThrottle Server</h3>
@@ -644,8 +588,7 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li>Fixed a problem with clicks ending up in the wrong place
-                on a Table, e.g. Turnout Table, etc, when using the frame server.</li>
+            <li></li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
@@ -657,6 +600,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Improvements to File Selection Dialog boxes when displayed with &quot;Always On Top&quot; window frames present.</li>
+            <li></li>
         </ul>
 
