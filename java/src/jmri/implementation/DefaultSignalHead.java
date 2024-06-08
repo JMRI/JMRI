@@ -1,6 +1,11 @@
 package jmri.implementation;
 
-import java.util.Arrays;
+import java.util.*;
+
+import jmri.NamedBean;
+import jmri.NamedBeanHandle;
+import jmri.NamedBeanHandleManager;
+import jmri.NamedBeanUsageReport;
 
 /**
  * Default implementation of the basic logic of the SignalHead interface.
@@ -214,4 +219,15 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         return false;
     }
 
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null && bean instanceof jmri.Turnout) {
+            var t = (jmri.Turnout) bean;
+            if (isTurnoutUsed(t)) {
+                report.add(new NamedBeanUsageReport("SignalHeadTurnout"));  // NOI18N
+            }
+        }
+        return report;
+    }
 }
