@@ -444,9 +444,9 @@
               of an enum, the button <strong>Show valid names</strong> are added.
               Pressing this button opens a dialog that shows a list of valid values
               and their descriptions.</li>
-          <li>The LogixNG table has now the menu item <strong>Browse All LogixNGs</strong>
-              in the <strong>File</strong> menu. It lists all the LogixNGs, Modules, Tables
-              and Global variables.</li>
+          <li>The LogixNG tools menu now has the option to browse All LogixNGs.
+              Open <strong>Tools &rArr; LogixNG &rArr; Browse All LogixNGs</strong>.
+              It lists all the LogixNGs, Modules, Tables and Global variables.</li>
           <li>The option <strong>Print disabled</strong> has been added to the LogixNG
               Browse window. It adds "Disabled" to the LogixNGs, ConditionalNGs, actions
               and expressions which are disabled.</li>
