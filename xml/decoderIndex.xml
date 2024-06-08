@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.7.7plus+jake+20240608T2103Z+R070f1f537e3 on Sat Jun 08 17:03:21 EDT 2024-->
-  <decoderIndex version="593">
+  <!--Written by JMRI version 5.7.7plus+jake+20240608T2205Z+R68c6b4bc2d3 on Sat Jun 08 18:06:21 EDT 2024-->
+  <decoderIndex version="595">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -15522,11 +15522,11 @@
         </functionlabels>
       </family>
       <family name="Blunami Diesel" mfg="SoundTraxx (Throttle-Up)" lowVersionID="72" file="SoundTraxx_Blu_Diesel.xml">
-        <model model="BLU-21PNEM8 Alco Diesels" numOuts="6" numFns="30" productID="2160" />
-        <model model="BLU-21PNEM8 Baldwin Diesels" numOuts="6" numFns="30" productID="2161" />
-        <model model="BLU-21PNEM8 EMD Diesels" numOuts="6" numFns="30" productID="2158" />
-        <model model="BLU-21PNEM8 EMD-2 Diesels" numOuts="6" numFns="30" productID="2162" />
-        <model model="BLU-21PNEM8 GE Diesels" numOuts="6" numFns="30" productID="2159" />
+        <model model="BLU-21PNEM8 Alco Diesels" numOuts="8" numFns="30" productID="2160" />
+        <model model="BLU-21PNEM8 Baldwin Diesels" numOuts="8" numFns="30" productID="2161" />
+        <model model="BLU-21PNEM8 EMD Diesels" numOuts="8" numFns="30" productID="2158" />
+        <model model="BLU-21PNEM8 EMD-2 Diesels" numOuts="8" numFns="30" productID="2162" />
+        <model model="BLU-21PNEM8 GE Diesels" numOuts="8" numFns="30" productID="2159" />
         <model model="BLU-2200 Alco Diesels" numOuts="6" numFns="30" productID="2141" />
         <model model="BLU-2200 Baldwin Diesels" numOuts="6" numFns="30" productID="2142" />
         <model model="BLU-2200 EMD Diesels" numOuts="6" numFns="30" productID="2139" />
@@ -15603,7 +15603,7 @@
         </functionlabels>
       </family>
       <family name="Blunami Electric" mfg="SoundTraxx (Throttle-Up)" lowVersionID="72" file="SoundTraxx_Blu_Electric.xml">
-        <model model="BLU-21PNEM8 Electric" numOuts="6" numFns="30" productID="2163" />
+        <model model="BLU-21PNEM8 Electric" numOuts="8" numFns="30" productID="2163" />
         <model model="BLU-2200 Electric" numOuts="6" numFns="30" productID="2144" />
         <model model="BLU-4408 Electric" numOuts="8" numFns="30" productID="2151" />
         <output name="3" label="  FX3  " />
@@ -15667,7 +15667,7 @@
         </functionlabels>
       </family>
       <family name="Blunami Steam" mfg="SoundTraxx (Throttle-Up)" lowVersionID="72" file="SoundTraxx_Blu_Steam.xml">
-        <model model="BLU-21PNEM8 Steam-2" numOuts="6" numFns="30" productID="2157" />
+        <model model="BLU-21PNEM8 Steam-2" numOuts="8" numFns="30" productID="2157" />
         <model model="BLU-2200 Steam-2" numOuts="6" numFns="30" productID="2138" />
         <model model="BLU-4408 Steam-2" numOuts="8" numFns="30" productID="2145" />
         <output name="3" label="  FX3  " />
