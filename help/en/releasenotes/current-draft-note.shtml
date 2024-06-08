@@ -326,7 +326,8 @@
 
         <h4>TCS</h4>
             <ul>
-                <li></li>
+                <li>Better handling of an occasional spurious error that
+                can happen when accessing TCS indexed CVs.</li>
             </ul>
 
         <h4>Team Digital</h4>
@@ -452,6 +453,12 @@
               ConditionalNG.<br/>
               Note that the action you want to execute must have
               a user name. Otherwise the action can't be selected.</li>
+          <li>The LogixNG tools menu now has the option to browse All LogixNGs.
+              Open <strong>Tools &rArr; LogixNG &rArr; Browse All LogixNGs</strong>.
+              It lists all the LogixNGs, Modules, Tables and Global variables.</li>
+          <li>The option <strong>Print disabled</strong> has been added to the LogixNG
+              Browse window. It adds "Disabled" to the LogixNGs, ConditionalNGs, actions
+              and expressions which are disabled.</li>
           <li></li>
         </ul>
 
@@ -617,7 +624,7 @@
         <a id="WA" name="WA"></a>
         <ul>
             <li>new web ui for working with cars</li>
-            <li>web panels: add handling for some text memory inputs, use content size instead of window size</li>
+            <li>web panels: add handling for text memory inputs, use content size instead of window size</li>
         </ul>
 
     <h3>Where Used</h3>

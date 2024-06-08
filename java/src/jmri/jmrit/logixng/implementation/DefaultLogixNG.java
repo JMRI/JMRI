@@ -416,6 +416,12 @@ public class DefaultLogixNG extends AbstractNamedBean
         }
         writer.append(currentIndent);
         writer.append(getLongDescription(locale));
+        if (isInline()) {
+            writer.append(" ::: ").append(Bundle.getMessage("Inline"));
+        }
+        if (settings._printDisabled && !isEnabled()) {
+            writer.append(" ::: ").append(Bundle.getMessage("Disabled"));
+        }
         writer.println();
     }
 

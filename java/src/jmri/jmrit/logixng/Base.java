@@ -649,6 +649,8 @@ public interface Base extends PropertyChangeProvider {
         public boolean _printNotConnectedSockets = true;
         public boolean _printLocalVariables = true;
         public boolean _printSystemNames = false;
+        public boolean _printDisabled = false;
+        public boolean _printStartup = false;
     }
 
 }

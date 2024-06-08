@@ -186,6 +186,8 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
 
     int upperByte;
 
+    public static int delayInterval = 10; // public static so can be changed in a script
+    
     /** {@inheritDoc}
      * Note this assumes that there's only one phase to the operation
      */
@@ -201,8 +203,8 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
             return;
         }
         
-        // Complete processing later so that WOWDecoder will go through a complete power on reset and not brown out between CV read/writes
-        int interval = 150;
+        // Complete processing later 
+        // originally installed so that WOWDecoder will go through a complete power on reset and not brown out between CV read/writes
         ActionListener taskPerformer = new ActionListener() {
             final int myValue = value;
             final int myStatus = status;
@@ -211,14 +213,14 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
                 processProgrammingOpReply(myValue, myStatus);
             }
         };
-        Timer t = new Timer(interval, taskPerformer );
+        Timer t = new Timer(delayInterval, taskPerformer );
         t.setRepeats(false);
         t.start();
     }
     
     // After a Swing delay, this processes the reply
     protected void processProgrammingOpReply(int value, int status) {
-        if (status != OK ) {
+        if (status != OK && state != ProgState.DOREADFIRST) {  // we accept errors on the CV204 write due to CS-105 behavior with TCS decoders.
             // pass abort up
             log.debug("Reset and pass abort up");
             jmri.ProgListener temp = _usingProgrammer;
@@ -240,7 +242,7 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
             case DOSTROBEFORREAD:
                 try {
                     state = ProgState.DOREADFIRST;
-                    prog.writeCV(readStrobe, readOffset, this);
+                    prog.writeCV(readStrobe, 0, this);
                 } catch (jmri.ProgrammerException e) {
                     log.error("Exception doing write strobe for read", e);
                 }
