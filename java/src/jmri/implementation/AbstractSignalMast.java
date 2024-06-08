@@ -5,7 +5,6 @@ import javax.annotation.*;
 
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
 import jmri.NamedBeanUsageReport;
 
 import jmri.InstanceManager;
@@ -317,7 +316,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
                 if (this instanceof jmri.implementation.SignalHeadSignalMast) {
                     var m = (jmri.implementation.SignalHeadSignalMast) this;
                     var h = (jmri.SignalHead) bean;
-                    for (NamedBeanHandle handle : m.getHeadsUsed()) {
+                    for (NamedBeanHandle<jmri.SignalHead> handle : m.getHeadsUsed()) {
                         if (h.equals(handle.getBean())) {
                             report.add(new NamedBeanUsageReport("SignalMastSignalHead"));  // NOI18N
                         }

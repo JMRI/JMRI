@@ -3,8 +3,6 @@ package jmri.implementation;
 import java.util.*;
 
 import jmri.NamedBean;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
 import jmri.NamedBeanUsageReport;
 
 /**
