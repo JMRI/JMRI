@@ -31,8 +31,8 @@
     </revision>
   </revhistory>
   <decoder>
-    <family name="DC" mfg="No Decoder">
-      <model model="DC"/>
+    <family name="No Decoder" mfg="No Decoder">
+      <model model="No Decoder"/>
     </family>
     <programming direct="no" paged="no" register="no" ops="no"/>
     <variables>
