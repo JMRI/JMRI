@@ -34,9 +34,25 @@
     <family name="No Decoder" mfg="No Decoder">
       <model model="No Decoder"/>
     </family>
-    <programming direct="no" paged="no" register="no" ops="no"/>
+    <programming nodecoder="yes" direct="no" paged="no" register="no" ops="no"/>
     <variables>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAddressOnly.xml"/>
+      <variable CV="1" comment="Short address" item="Short Address" default="0">
+        <shortAddressVal/>
+        <label>Primary Address</label>
+        <label xml:lang="cs">Základní adresa</label>
+        <label xml:lang="it">Indirizzo Primario</label>
+        <label xml:lang="fr">Adresse décodeur</label>
+        <label xml:lang="de">Basisadresse</label>
+        <label xml:lang="nl">Basisadres</label>
+        <label xml:lang="es">Dirección primaria</label>
+        <tooltip xml:lang="cs">Krátká adresa</tooltip>
+        <tooltip xml:lang="it">Indirizzo Corto</tooltip>
+        <tooltip xml:lang="fr">Adresse courte</tooltip>
+        <tooltip xml:lang="de">Kurze Adresse</tooltip>
+        <tooltip xml:lang="nl">Kort Adres</tooltip>
+        <tooltip xml:lang="es">Dirección corta</tooltip>
+        <tooltip xml:lang="de">Kurze Adresse</tooltip>
+      </variable>
     </variables>
   </decoder>
 </decoder-config>

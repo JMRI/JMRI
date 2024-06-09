@@ -453,6 +453,15 @@ public class PaneProgPane extends javax.swing.JPanel
         }
     }
 
+    public void setNoDecoder() {
+        readChangesButton.setEnabled(false);
+        readAllButton.setEnabled(false);
+        writeChangesButton.setEnabled(false);
+        writeAllButton.setEnabled(false);
+        confirmChangesButton.setEnabled(false);
+        confirmAllButton.setEnabled(false);
+    }
+
     @Override
     public String getName() {
         return mName;
