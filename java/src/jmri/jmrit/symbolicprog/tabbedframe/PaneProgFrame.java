@@ -307,7 +307,10 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     void setProgrammingGui(JPanel bottom) {
         // see if programming mode is available
-        var tempModePane = getModePane();
+        JPanel tempModePane = null;
+        if (!noDecoder) {
+            tempModePane = getModePane();
+        }
         if (tempModePane != null) {
             // if so, configure programming part of GUI
             // add buttons
