@@ -322,7 +322,7 @@ Jenkins will be creating files shortly at the [CI server](https://builds.jmri.or
 ```
 The release-5.7.8 branch has been created.
 
-Maintainers, please set the (next series, i.e. 5.7.9) milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
+Maintainers, please set the (next series, i.e. 5.9.1) milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
 
 Jenkins will be creating files shortly at the [CI server](https://builds.jmri.org/jenkins/job/TestReleases/job/5.7.8/)
 
@@ -499,9 +499,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.7.8+R5cf2ea9d7f.dmg](https://github.com/JMRI/JMRI/releases/download/v5.7.8/JMRI.5.7.8+R5cf2ea9d7f.dmg) | 1ad141e60e4233f1f06795faf74a8f9ef00da66810e1b1371edbba73df80bf68
-[JMRI.5.7.8+R5cf2ea9d7f.exe](https://github.com/JMRI/JMRI/releases/download/v5.7.8/JMRI.5.7.8+R5cf2ea9d7f.exe) | ddba58494cd25b00ad219e12dfb33ffdac27c14054aba863b8a912e3e5a77c7d
-[JMRI.5.7.8+R5cf2ea9d7f.tgz](https://github.com/JMRI/JMRI/releases/download/v5.7.8/JMRI.5.7.8+R5cf2ea9d7f.tgz) | 2e3c44a16378691b1aa83082cbaf4a20c3bfcf971140f70ee8538c0611a4a7e9
+[JMRI.5.7.8+R49ec83adc7.dmg](https://github.com/JMRI/JMRI/releases/download/v5.7.8/JMRI.5.7.8+R49ec83adc7.dmg) | 32acaa5b658f2c585d1fe15c43537a5646876ac7aade6ac6d9f52c8bec6eec0b
+[JMRI.5.7.8+R49ec83adc7.exe](https://github.com/JMRI/JMRI/releases/download/v5.7.8/JMRI.5.7.8+R49ec83adc7.exe) | 77a2ac9d8d0380da058e665d95febed48193fb9fd524c09516a9255ef21218ef
+[JMRI.5.7.8+R49ec83adc7.tgz](https://github.com/JMRI/JMRI/releases/download/v5.7.8/JMRI.5.7.8+R49ec83adc7.tgz) | 5fbb0acf6b37c2835220726518edf31d2386b7ab38bf9637d3b5977d9079b2d9
 ```
 
 - Attach files by selecting them or dragging them in from the release/ subdirectory. Make sure that the Linux one is .tgz, not .tar.
@@ -594,18 +594,18 @@ This is the next release in the 5.8 cycle. It's intended to be created from the 
 
 - Mail announcement to
 
-[jmriusers@groups.io](mailto:jmriusers@groups.io?subject=Test%20version%205.7.8%20of%20JMRI/DecoderPro%20is%20available%20for%20download&body=Test%20version%205.7.8%20of%20JMRI/DecoderPro%20is%20available%20for%20download.%0A%0AThis%20is%20the%20next%20in%20a%20series%20of%20test%20releases%20that%20will%20culminate%20in%20a%20production%20release,%20hopefully%20in%20June%202024.%20It's%20really%20helpful%20when%20people%20download,%20install%20and%20use%20these%20test%20versions%20so%20we%20can%20find%20and%20fix%20any%20inadvertent%20new%20problems%20early.%0A%0A-%20Alt:%20There%20have%20been%20a%20lot%20of%20updates%20in%20this%20version,%20so%20it%20should%20be%20considered%20experimental.%0A-%20Alt:%20We're%20getting%20close%20to%20the%20end%20of%20the%20development%20series,%20so%20we'd%20appreciate%20feedback%20on%20whether%20or%20not%20this%20release%20works%20for%20your%20layout.%0A%0AIf%20you%20are%20currently%20using%20JMRI%204.99.10%20or%20earlier,%20there%20is%20an%20update%20process%20that%20we%20strongly%20recommend.%20See%20the%20release%20note%20section%20on%20updates:%0A<https://www.jmri.org/releasenotes/jmri5.7.8.shtml#update>%0A%0AFor%20more%20information%20on%20the%20issues,%20new%20features%20and%20bug%20fixes%20in%205.7.8%20please%20see%20the%20release%20note:%0A<https://www.jmri.org/releasenotes/jmri5.7.8.shtml>%0A%0ANote%20that%20JMRI%20is%20made%20available%20under%20the%20GNU%20General%20Public%20License.%20For%20more%20information,%20please%20see%20our%20copyright%20and%20licensing%20page.%0A<https://www.jmri.org/Copyright.html>%0A%0AThe%20download%20links,%20along%20with%20lots%20of%20other%20information%20which%20we%20hope%20you'll%20read,%20can%20be%20found%20on%20the%20release%20note%20page:%0A<https://www.jmri.org/releasenotes/jmri5.7.8.shtml>%0A)
+[jmriusers@groups.io](mailto:jmriusers@groups.io?subject=Test%20release%205.7.8%20of%20JMRI/DecoderPro%20is%20available%20for%20download&body=Test%20release%205.7.8%20of%20JMRI/DecoderPro%20is%20available%20for%20download.%0A%0AThis%20is%20the%20next%20in%20a%20series%20of%20test%20releases%20that%20will%20culminate%20in%20a%20production%20release,%20hopefully%20in%20June%202024.%20It's%20really%20helpful%20when%20people%20download,%20install%20and%20use%20these%20test%20versions%20so%20we%20can%20find%20and%20fix%20any%20inadvertent%20new%20problems%20early.%0A%0A-%20Alt:%20There%20have%20been%20a%20lot%20of%20updates%20in%20this%20version,%20so%20it%20should%20be%20considered%20experimental.%0A-%20Alt:%20We're%20getting%20close%20to%20the%20end%20of%20the%20development%20series,%20so%20we'd%20appreciate%20feedback%20on%20whether%20or%20not%20this%20release%20works%20for%20your%20layout.%0A%0AIf%20you%20are%20currently%20using%20JMRI%204.99.10%20or%20earlier,%20there%20is%20an%20update%20process%20that%20we%20strongly%20recommend.%20See%20the%20release%20note%20section%20on%20updates:%0A<https://www.jmri.org/releasenotes/jmri5.7.8.shtml#update>%0A%0AFor%20more%20information%20on%20the%20issues,%20new%20features%20and%20bug%20fixes%20in%205.7.8%20please%20see%20the%20release%20note:%0A<https://www.jmri.org/releasenotes/jmri5.7.8.shtml>%0A%0ANote%20that%20JMRI%20is%20made%20available%20under%20the%20GNU%20General%20Public%20License.%20For%20more%20information,%20please%20see%20our%20copyright%20and%20licensing%20page.%0A<https://www.jmri.org/Copyright.html>%0A%0AThe%20download%20links,%20along%20with%20lots%20of%20other%20information%20which%20we%20hope%20you'll%20read,%20can%20be%20found%20on%20the%20release%20note%20page:%0A<https://www.jmri.org/releasenotes/jmri5.7.8.shtml>%0A)
 
 
 Subject:
 
-   "Test version 5.7.8 of JMRI/DecoderPro is available for download"
+   "Test release 5.7.8 of JMRI/DecoderPro is available for download"
     or
    "JMRI 5.4 is available for download"
 
 Content:
 
-    Test version 5.7.8 of JMRI/DecoderPro is available for download.
+    Test release 5.7.8 of JMRI/DecoderPro is available for download.
 
     This is the next in a series of test releases that will culminate in a production release, hopefully in December 2023. It's really helpful when people download, install and use these test versions so we can find and fix any inadvertent new problems early.
 
