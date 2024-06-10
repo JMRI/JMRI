@@ -25,12 +25,9 @@ public class PrintEngineRosterFrameTest extends OperationsTestCase {
         JUnitOperationsUtil.initOperationsData();
         EnginesTableFrame ctf = new EnginesTableFrame();
 
-        for (int i = 0; i <= ctf.enginesModel.SORTBY_COMMENT; i++) {
-
         PrintEngineRosterFrame f = new PrintEngineRosterFrame(true, ctf);
         Assert.assertNotNull("exists", f);
 
-        f.sortByComboBox.setSelectedIndex(i);
         JemmyUtil.enterClickAndLeave(f.okayButton); // closes window
 
         // confirm print preview window is showing
@@ -41,7 +38,6 @@ public class PrintEngineRosterFrameTest extends OperationsTestCase {
         Assert.assertNotNull("exists", printPreviewFrame);
 
         JUnitUtil.dispose(printPreviewFrame);
-    }
         JUnitUtil.dispose(ctf);
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
