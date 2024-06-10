@@ -6,10 +6,10 @@ import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 /**
- *
  * @author Paul Bender Copyright (C) 2017
+ * @author Daniel Boudreau Copyright (C) 2024
  */
-public class OperationsStartupActionFactoryTest {
+public class OperationsStartupActionFactoryTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
