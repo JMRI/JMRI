@@ -751,7 +751,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 // Get name
                 if (oper != null) {
                     if (!name.isEmpty()) {
-                        log.warn("Skipping superfluous input \"{}\" in line \"{}\", missing newline?", token, lines[i]);
+                        log.warn("Skipping superfluous input \"{}\" in line \"{}\". Perhaps a missing newline?", token, lines[i]);
                         continue;
                     }
                     if (oper.name().startsWith("J")) {   // Jump label
@@ -796,8 +796,8 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         //
         // This implementation will parse "SET0" as a 
         // "SET" command with an argument of "0", even though
-        // it might be intended to be an "SE" with an argument of "T0"".
-        // ("SET" takes no argument, which is how you tell these apart)
+        // it is intended to be an "SE" with an argument of "T0"".
+        // ("SET" takes no argument, which is how the parser should tell these apart)
         // Perhaps "SET" vs "SE" should be added as a special case.
         for (int i = name.length(); i > 0; i--) {
             String opCandidate = name.substring(0,i);
