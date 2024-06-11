@@ -1,6 +1,5 @@
 package jmri.jmrix.openlcb.swing.stleditor;
 
-import java.util.Locale;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 

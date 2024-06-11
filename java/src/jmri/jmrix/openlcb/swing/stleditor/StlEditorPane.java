@@ -784,6 +784,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     /**
      * Handle an operator and operand without
      * an intervening space.
+     * @param name operand or concatenated operand and argument
      * @return index between operator and operand
      *          or -1
      */
