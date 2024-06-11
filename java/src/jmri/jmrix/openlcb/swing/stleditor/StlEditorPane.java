@@ -715,12 +715,29 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                     }
                 }
 
+                if (token.isEmpty()) {
+                    continue;
+                }
+                
                 // Get operator
                 if (needOperator) {
-                    oper = getEnum(token);
-                    if (oper != null) {
+                    int split = findOperatorBoundary(token);
+                    if (split != -1) {
+                        // found an operator
+                        oper = getEnum(token.substring(0, split));
                         needOperator = false;
-                        continue;
+                        // was there also an operand?
+                        if (split != token.length()) {
+                            // yes, split that off and continue to process
+                            token = token.substring(split);
+                        } else {
+                            // no, we're done with that token
+                            continue;
+                        }
+                    } else {
+                        if (! token.equals("//")) {
+                            log.warn("STL needs operator, but skipped \"{}\" in \"{}\"", token, lines[i]);
+                        }
                     }
                 }
 
@@ -733,6 +750,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
                 // Get name
                 if (oper != null) {
+                    if (!name.isEmpty()) {
+                        log.warn("Skipping superfluous input \"{}\" in line \"{}\", missing newline?", token, lines[i]);
+                        continue;
+                    }
                     if (oper.name().startsWith("J")) {   // Jump label
                         name = token;
                     } else if (isMemory(token)) {  // Memory variable
@@ -749,23 +770,52 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                             name = token;
                         }
                     }
+                    continue;
                 }
+                log.warn("STL Token \"{}\" ignored in \"{}\"", token, lines[i]);
             }
 
             var logic = new LogicRow(label, oper, name, comment);
             groupRow.getLogicList().add(logic);
         }
     }
+    
+    
+    /**
+     * Handle an operator and operand without
+     * an intervening space.
+     * @return index between operator and operand
+     *          or -1
+     */
+    static int findOperatorBoundary(String name) {
+        // Works by finding, from the back, the 
+        // longest valid operator string.
+        // Efficient enough in the most common case of 
+        // just an operator.
+        //
+        // This implementation will parse "SET0" as a 
+        // "SET" command with an argument of "0", even though
+        // it might be intended to be an "SE" with an argument of "T0"".
+        // ("SET" takes no argument, which is how you tell these apart)
+        // Perhaps "SET" vs "SE" should be added as a special case.
+        for (int i = name.length(); i > 0; i--) {
+            String opCandidate = name.substring(0,i);
+            if (getEnum(opCandidate) != null) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
-    private Operator getEnum(String name) {
+    static Operator getEnum(String name) {
         try {
-            var temp = name;
+            var temp = name.toUpperCase();
             if (name.equals("=")) {
                 temp = "EQ";
             } else if (name.equals(")")) {
                 temp = "Cp";
             } else if (name.endsWith("(")) {
-                temp = name.replace("(", "p");
+                temp = name.toUpperCase().replace("(", "p");
             }
 
             Operator oper = Enum.valueOf(Operator.class, temp);
