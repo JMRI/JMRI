@@ -12,12 +12,14 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version author="Peter Ulvestad" version="3" lastUpdated="20240612"/>
   <version author="Alain Le Marchand" version="2" lastUpdated="20180216"/>
   <version author="Alain Le Marchand" version="1.1" lastUpdated="20140309"/>
   <version author="Alain Le Marchand" version="1" lastUpdated="20140308"/>
   <!-- Version 1 - Created from Lenz_LE077XF.xml v7.1 - Atlas branded versions of LE062XF and LE063FX (Alain Le Marchand) -->
   <!-- Version 1.1 - Change description for light options to match reality - unclear manual from Atlas - Set default Manufacturer address to 127 = Atlas (Alain Le Marchand) -->
   <!-- Version 2 - Implement Reset properly (Alain Le Marchand) -->
+  <!-- Version 3 - Added MP15DC (Peter Ulvestad)
   <decoder>
     <family name="Atlas N-Scale" mfg="Atlas" lowVersionID="45" highVersionID="45" comment="Factory installed decoders in Atlas N scale locomotives. NCE and Lenz rebranded by Atlas (changed Manufucturer ID to Atlas) http://www.atlasrr.com/pdf/Atlas_N-Scale_Decoder_Applications.pdf">
       <model model="LE062XF by Lenz (Part #490299)" numOuts="2">
@@ -25,6 +27,10 @@
         <output name="2" label="B - Yellow"/>
       </model>
       <model model="LE063XF by Lenz (Part #447299)" numOuts="2">
+        <output name="1" label="A - White"/>
+        <output name="2" label="B - Yellow"/>
+      </model>
+      <model model="MP15DC (Part #522299)" numOuts="2">
         <output name="1" label="A - White"/>
         <output name="2" label="B - Yellow"/>
       </model>
