@@ -742,9 +742,14 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 }
 
                 // Get comment
-                if (token.equals("//")) {
+                if (token.startsWith("//")) {
+                    // Accept either "// comment" or "//comment". In the first case,
+                    // the token is "//" with a separating space that needs to be skipped.
+                    // In the second, the comment text starts directly after the //
+                    int offset = 3;
+                    if (token.length() > 2) offset = 2;
                     int commentPosition = lines[i].indexOf("//");
-                    comment = lines[i].substring(commentPosition + 3);
+                    comment = lines[i].substring(commentPosition + offset);
                     break;
                 }
 
