@@ -512,6 +512,16 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
 
         return value;
     }
+    
+    /**
+     * Resets the PID controller's speed match error, integral, and derivative
+     */
+    protected void resetSpeedMatchError() {
+        speedMatchIntegral = 0;
+        speedMatchDerivative = 0;
+        lastSpeedMatchError = 0;
+        speedMatchError = 0;
+    }
 
     //</editor-fold>
     

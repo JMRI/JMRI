@@ -1,7 +1,6 @@
 package jmri.jmrix.bachrus.speedmatcher.basic;
 
 import jmri.DccThrottle;
-import jmri.ProgrammerException;
 
 import jmri.jmrix.bachrus.speedmatcher.SpeedMatcherConfig;
 
@@ -120,6 +119,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
     }
 
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Speed Matcher State">
     /**
      * Timer timeout handler for the speed match timer
@@ -267,7 +267,6 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                         writeVMid(vMid);
 
                         statusLabel.setText(Bundle.getMessage("StatSettingSpeed", "6 (vMid)"));
-
                         setSpeedMatchStateTimerDuration(15000);
                         setThrottle(true, 14);
                         stepDuration = 1;
@@ -421,6 +420,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
     }
 
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Programmer">
     /**
      * Starts writing vStart (CV 2) using the ops mode programmer
@@ -456,6 +456,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
     }
 
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="ThrottleListener Overrides">
     /**
      * Called when a throttle is found
@@ -494,7 +495,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
      * @param nextState - next SpeedMatcherState to set
      */
     protected void initNextSpeedMatcherState(SpeedMatcherState nextState) {
-        speedMatchError = 0;
+        resetSpeedMatchError();
         stepDuration = 0;
         speedMatcherState = nextState;
         setSpeedMatchStateTimerDuration(1200);
