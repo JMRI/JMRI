@@ -293,7 +293,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
      */
     private synchronized void writeSpeedTableStep(SpeedTableStep step, int value) {
         programmerState = ProgrammerState.WRITE_SPEED_TABLE_STEP;
-        statusLabel.setText(String.format("Setting Speed Table Step %s to %s", step.getName(), value));
+        statusLabel.setText(String.format("Setting Speed Table Step %s to %s", step.getSpeedStep(), value));
         startOpsModeWrite(step.getCV(), value);
     }
 

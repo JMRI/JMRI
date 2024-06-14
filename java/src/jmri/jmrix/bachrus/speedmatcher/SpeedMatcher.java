@@ -26,49 +26,308 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
 
     //<editor-fold defaultstate="collapsed" desc="Enums">
     protected enum SpeedTableStep {
-        STEP1("67", "1"),
-        STEP2("68", "2"),
-        STEP3("69", "3"),
-        STEP4("70", "4"),
-        STEP5("71", "5"),
-        STEP6("72", "6"),
-        STEP7("73", "7"),
-        STEP8("74", "8"),
-        STEP9("75", "9"),
-        STEP10("76", "10"),
-        STEP11("77", "11"),
-        STEP12("78", "12"),
-        STEP13("79", "13"),
-        STEP14("80", "14"),
-        STEP15("81", "15"),
-        STEP16("82", "16"),
-        STEP17("83", "17"),
-        STEP18("84", "18"),
-        STEP19("85", "19"),
-        STEP20("86", "20"),
-        STEP21("87", "21"),
-        STEP22("88", "22"),
-        STEP23("89", "23"),
-        STEP24("90", "24"),
-        STEP25("91", "25"),
-        STEP26("92", "26"),
-        STEP27("93", "27"),
-        STEP28("94", "28");
+        STEP1(1) {
+            @Override
+            public SpeedTableStep getPrevious() {
+                return null;
+            }
+            @Override
+            public SpeedTableStep getNext() {
+                return STEP2;
+            }
+        },
+        STEP2(2) {
+            @Override
+            public SpeedTableStep getPrevious() {
+                return STEP1;
+            }
+            @Override
+            public SpeedTableStep getNext() {
+                return STEP3;
+            }
+        },
+        STEP3(3) {
+            @Override
+            public SpeedTableStep getPrevious() {
+                return STEP2;
+            }
+            @Override
+            public SpeedTableStep getNext() {
+                return STEP4;
+            }
+        },
+        STEP4(4) {
+            @Override
+            public SpeedTableStep getPrevious() {
+                return STEP3;
+            }
+            @Override
+            public SpeedTableStep getNext() {
+                return STEP5;
+            }
+        },
+        STEP5(5) {
+            @Override
+            public SpeedTableStep getPrevious() {
+                return STEP4;
+            }
+            @Override
+            public SpeedTableStep getNext() {
+                return STEP6;
+            }
+        },
+        STEP6(6) {
+            @Override
+            public SpeedTableStep getPrevious() {
+                return STEP5;
+            }
+            @Override
+            public SpeedTableStep getNext() {
+                return STEP7;
+            }
+        },
+        STEP7(7) {
+            @Override
+            public SpeedTableStep getPrevious() {
+                return STEP6;
+            }
+            @Override
+            public SpeedTableStep getNext() {
+                return STEP8;
+            }
+        },
+        STEP8(8) {
+            @Override
+            public SpeedTableStep getPrevious() {
+                return STEP7;
+            }
+            @Override
+            public SpeedTableStep getNext() {
+                return STEP9;
+            }
+        },
+        STEP9(9) {
+            @Override
+            public SpeedTableStep getPrevious() {
+                return STEP8;
+            }
+            @Override
+            public SpeedTableStep getNext() {
+                return STEP10;
+            }
+        },
+        STEP10(10) {
+            @Override
+            public SpeedTableStep getPrevious() {
+                return STEP9;
+            }
+            @Override
+            public SpeedTableStep getNext() {
+                return STEP11;
+            }
+        },
+        STEP11(11) {
+            @Override
+            public SpeedTableStep getPrevious() {
+                return STEP10;
+            }
+            @Override
+            public SpeedTableStep getNext() {
+                return STEP12;
+            }
+        },
+        STEP12(12) {
+            @Override
+            public SpeedTableStep getPrevious() {
+                return STEP11;
+            }
+            @Override
+            public SpeedTableStep getNext() {
+                return STEP13;
+            }
+        },
+        STEP13(13) {
+            @Override
+            public SpeedTableStep getPrevious() {
+                return STEP12;
+            }
+            @Override
+            public SpeedTableStep getNext() {
+                return STEP14;
+            }
+        },
+        STEP14(14) {
+            @Override
+            public SpeedTableStep getPrevious() {
+                return STEP13;
+            }
+            @Override
+            public SpeedTableStep getNext() {
+                return STEP15;
+            }
+        },
+        STEP15(15) {
+            @Override
+            public SpeedTableStep getPrevious() {
+                return STEP14;
+            }
+            @Override
+            public SpeedTableStep getNext() {
+                return STEP16;
+            }
+        },
+        STEP16(16) {
+            @Override
+            public SpeedTableStep getPrevious() {
+                return STEP15;
+            }
+            @Override
+            public SpeedTableStep getNext() {
+                return STEP17;
+            }
+        },
+        STEP17(17) {
+            @Override
+            public SpeedTableStep getPrevious() {
+                return STEP16;
+            }
+            @Override
+            public SpeedTableStep getNext() {
+                return STEP18;
+            }
+        },
+        STEP18(18) {
+            @Override
+            public SpeedTableStep getPrevious() {
+                return STEP17;
+            }
+            @Override
+            public SpeedTableStep getNext() {
+                return STEP19;
+            }
+        },
+        STEP19(19) {
+            @Override
+            public SpeedTableStep getPrevious() {
+                return STEP18;
+            }
+            @Override
+            public SpeedTableStep getNext() {
+                return STEP20;
+            }
+        },
+        STEP20(20) {
+            @Override
+            public SpeedTableStep getPrevious() {
+                return STEP19;
+            }
+            @Override
+            public SpeedTableStep getNext() {
+                return STEP21;
+            }
+        },
+        STEP21(21) {
+            @Override
+            public SpeedTableStep getPrevious() {
+                return STEP20;
+            }
+            @Override
+            public SpeedTableStep getNext() {
+                return STEP22;
+            }
+        },
+        STEP22(22) {
+            @Override
+            public SpeedTableStep getPrevious() {
+                return STEP21;
+            }
+            @Override
+            public SpeedTableStep getNext() {
+                return STEP23;
+            }
+        },
+        STEP23(23) {
+            @Override
+            public SpeedTableStep getPrevious() {
+                return STEP22;
+            }
+            @Override
+            public SpeedTableStep getNext() {
+                return STEP24;
+            }
+        },
+        STEP24(24) {
+            @Override
+            public SpeedTableStep getPrevious() {
+                return STEP23;
+            }
+            @Override
+            public SpeedTableStep getNext() {
+                return STEP25;
+            }
+        },
+        STEP25(25) {
+            @Override
+            public SpeedTableStep getPrevious() {
+                return STEP24;
+            }
+            @Override
+            public SpeedTableStep getNext() {
+                return STEP26;
+            }
+        },
+        STEP26(26) {
+            @Override
+            public SpeedTableStep getPrevious() {
+                return STEP25;
+            }
+            @Override
+            public SpeedTableStep getNext() {
+                return STEP27;
+            }
+        },
+        STEP27(27) {
+            @Override
+            public SpeedTableStep getPrevious() {
+                return STEP26;
+            }
+            @Override
+            public SpeedTableStep getNext() {
+                return STEP28;
+            }
+        },
+        STEP28(28) {
+            @Override
+            public SpeedTableStep getPrevious() {
+                return STEP27;
+            }
+            @Override
+            public SpeedTableStep getNext() {
+                return null;
+            }
+        };
 
+        private final int speedStep;
         private final String cv;
-        private final String name;
 
-        private SpeedTableStep(String cv, String name) {
-            this.cv = cv;
-            this.name = name;
+        private SpeedTableStep(int speedStep) {
+            this.speedStep = speedStep;
+            this.cv = String.valueOf(speedStep + 28);
         }
-
+        
+        public int getSpeedStep() {
+            return this.speedStep;
+        }
+        
         public String getCV() {
             return this.cv;
         }
-
-        public String getName() {
-            return this.name;
+        
+        public abstract SpeedTableStep getNext();
+        public abstract SpeedTableStep getPrevious();
+        
+        public int get128StepEquivalent() {
+            return Math.round(this.speedStep * (long)4.571428571428571);
         }
     }
 
@@ -116,6 +375,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
     private Timer speedMatchStateTimer;
 
     //</editor-fold>
+    
     public SpeedMatcher(SpeedMatcherConfig config) {
         this.dccLocoAddress = config.dccLocoAddress;
         this.powerManager = config.powerManager;
@@ -142,6 +402,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
     }
 
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Protected APIs">
     protected abstract boolean Validate();
 
@@ -253,6 +514,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
     }
 
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Programmer">
     /**
      * Starts writing acceleration momentum (CV 3) using the ops mode programmer

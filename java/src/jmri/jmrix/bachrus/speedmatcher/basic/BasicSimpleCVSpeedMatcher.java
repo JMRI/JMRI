@@ -20,6 +20,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
     private final int INITIAL_TRIM = 128;
 
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Enums">
     protected enum SpeedMatcherState {
         IDLE,
@@ -60,6 +61,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
     private SpeedMatcherState speedMatcherState = SpeedMatcherState.IDLE;
 
     //</editor-fold>
+    
     public BasicSimpleCVSpeedMatcher(SpeedMatcherConfig config) {
         super(config);
 
