@@ -600,6 +600,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Fixed a logging configuration issue which caused some 
+                users to see a message about a `${jmri.log.path}messages.1.log`</li>
         </ul>
 
