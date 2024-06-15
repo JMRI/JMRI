@@ -70,7 +70,6 @@ public class ExpressionReporterSwing extends AbstractDigitalExpressionSwing {
                 InstanceManager.getDefault(ReporterManager.class), getJDialog(), this);
 
         JPanel _tabbedPaneNamedBean;
-        JPanel _tabbedPaneEnum;
 
         if (expression != null) {
             _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(expression.getSelectNamedBean());
