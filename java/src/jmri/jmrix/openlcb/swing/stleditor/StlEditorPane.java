@@ -3075,7 +3075,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     // --------------  Token Class ---------
 
-    class Token {
+    static class Token {
         String _type = "";
         String _name = "";
         int _offsetStart = 0;
