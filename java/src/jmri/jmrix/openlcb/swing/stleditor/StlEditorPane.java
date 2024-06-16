@@ -162,8 +162,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private static Pattern PARSE_COMMENT2 = Pattern.compile("/\\*(.*?)\\*/");
     private static Pattern PARSE_HEXPAIR = Pattern.compile("^[0-9a-fA-F]{2}$");
     private static Pattern PARSE_VERSION = Pattern.compile("^.*(\\d+)\\.(\\d+)$");
-    private static Pattern PARSE_STATEMENT = Pattern.compile("^(.*:)*(.+?)(/{2}.*)?$");
-    private static Pattern PARSE_CMDOPER = Pattern.compile("^(.+?)([IQYZM]\\d+\\.\\d+|[W]#[0123]#\\d{1,3}|[T]\\d{1,2})?$", Pattern.CASE_INSENSITIVE);
 
 
     public StlEditorPane() {
@@ -3106,6 +3104,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             return _offsetEnd;
         }
 
+        @Override
         public String toString() {
             return String.format("Type: %s, Name: %s, Start: %d, End: %d",
                     _type, _name, _offsetStart, _offsetEnd);
