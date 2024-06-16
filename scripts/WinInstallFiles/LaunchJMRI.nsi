@@ -182,7 +182,7 @@
 !define AUTHOR     "Matt Harris for JMRI"         ; Author name
 !define APP        "LaunchJMRI"                   ; Application name
 !define COPYRIGHT  "(C) 1997-2024 JMRI Community" ; Copyright string
-!define VER        "0.1.30.0"                     ; Launcher version
+!define VER        "0.1.31.0"                     ; Launcher version
 !define PNAME      "${APP}"                       ; Name of launcher
 ; -- Comment out next line to use {app}.ico
 !define ICON       "decpro5.ico"                  ; Launcher icon
@@ -754,6 +754,7 @@ Section "Main"
     Goto IsNotNoisy
 
   IsNoisyExec:
+    ; -- use $7 to hold return value
     nsExec::ExecToLog `"$JEXEPATH" $OPTIONS -Djava.class.path="$CLASSPATH" $CLASS $PARAMETERS`
     Pop $0
     Pop $7    ;-- response code
