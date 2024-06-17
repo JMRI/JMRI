@@ -499,15 +499,17 @@ Note: Once a GitHub Release is created it is *not* possible to change it to refe
    - Description should contain text like (the releasesummary script above provided the correct filenames and hashes):
 
 ```
+
 [Release notes](https://jmri.org/releasenotes/jmri5.7.9.shtml)
 
 Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.7.9+R49ec83adc7.dmg](https://github.com/JMRI/JMRI/releases/download/v5.7.9/JMRI.5.7.9+R49ec83adc7.dmg) | 32acaa5b658f2c585d1fe15c43537a5646876ac7aade6ac6d9f52c8bec6eec0b
-[JMRI.5.7.9+R49ec83adc7.exe](https://github.com/JMRI/JMRI/releases/download/v5.7.9/JMRI.5.7.9+R49ec83adc7.exe) | 77a2ac9d8d0380da058e665d95febed48193fb9fd524c09516a9255ef21218ef
-[JMRI.5.7.9+R49ec83adc7.tgz](https://github.com/JMRI/JMRI/releases/download/v5.7.9/JMRI.5.7.9+R49ec83adc7.tgz) | 5fbb0acf6b37c2835220726518edf31d2386b7ab38bf9637d3b5977d9079b2d9
+[JMRI.5.7.9+R80852804ee.dmg](https://github.com/JMRI/JMRI/releases/download/v5.7.9/JMRI.5.7.9+R80852804ee.dmg) | 978eb46cae3d29ec243122ba7e18c28e8c84eb0ffd07e52d276d0a3d7006d129
+[JMRI.5.7.9+R80852804ee.exe](https://github.com/JMRI/JMRI/releases/download/v5.7.9/JMRI.5.7.9+R80852804ee.exe) | 087a740a159efa7d4c1a56cbe54bf8210bf6f94d86d02334a1f4c5ec8ce18eb7
+[JMRI.5.7.9+R80852804ee.tgz](https://github.com/JMRI/JMRI/releases/download/v5.7.9/JMRI.5.7.9+R80852804ee.tgz) | 33d7eb65deb51e2ce92198eb30f8ea0b74687a8e1b53205fc2c1b17ffb675b2c
+
 ```
 
 - Attach files by selecting them or dragging them in from the release/ subdirectory. Make sure that the Linux one is .tgz, not .tar.
