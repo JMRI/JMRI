@@ -131,7 +131,7 @@ public class LogixNGGlobalVariableTableAction extends AbstractLogixNGTableAction
 
     @SuppressWarnings("unchecked")  // Checked cast is not possible due to type erasure
     @Override
-    protected String getBeanText(GlobalVariable e) {
+    protected String getBeanText(GlobalVariable e, Base.PrintTreeSettings printTreeSettings) {
         var content = new StringBuilder(Bundle.getMessage("LogixNG_GlobalVar_Browse_Header",
                 e.getSystemName(),
                 e.getUserName(),

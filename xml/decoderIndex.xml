@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.7.6plus+jake+20240509T1458Z+Rfd628fd8472 on Thu May 09 10:59:14 EDT 2024-->
-  <decoderIndex version="585">
+  <!--Written by JMRI version 5.7.8plus+jake+20240616T2322Z+R016426b6873 on Sun Jun 16 19:22:33 EDT 2024-->
+  <decoderIndex version="597">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -114,6 +114,7 @@
       <manufacturer mfg="Nagoden" mfgID="108" />
       <manufacturer mfg="New York Byano Limited" mfgID="71" />
       <manufacturer mfg="Ngineering" mfgID="43" />
+      <manufacturer mfg="No Decoder" mfgID="1000" />
       <manufacturer mfg="Noarail" mfgID="63" />
       <manufacturer mfg="North Coast Engineering" mfgID="11" />
       <manufacturer mfg="Nucky" mfgID="156" />
@@ -221,6 +222,9 @@
       </family>
       <family name="Raw CVs 1-1024" mfg="NMRA" file="0NMRA_test_1024.xml">
         <model model="Raw CVs 1-1024" />
+      </family>
+      <family name="No Decoder" mfg="No Decoder" file="0NoDecoder.xml">
+        <model model="No Decoder" />
       </family>
       <family name="LocoCruiser" mfg="ANE Model Co, Ltd" lowVersionID="201" highVersionID="201" file="ANE_LC201.xml">
         <model model="LC201" numOuts="5" numFns="5">
@@ -373,6 +377,10 @@
           <output name="2" label="B - Yellow" />
         </model>
         <model model="LE063XF by Lenz (Part #447299)" numOuts="2">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+        </model>
+        <model model="MP15DC (Part #522299)" numOuts="2">
           <output name="1" label="A - White" />
           <output name="2" label="B - Yellow" />
         </model>
@@ -15518,6 +15526,11 @@
         </functionlabels>
       </family>
       <family name="Blunami Diesel" mfg="SoundTraxx (Throttle-Up)" lowVersionID="72" file="SoundTraxx_Blu_Diesel.xml">
+        <model model="BLU-21PNEM8 Alco Diesels" numOuts="8" numFns="30" productID="2160" />
+        <model model="BLU-21PNEM8 Baldwin Diesels" numOuts="8" numFns="30" productID="2161" />
+        <model model="BLU-21PNEM8 EMD Diesels" numOuts="8" numFns="30" productID="2158" />
+        <model model="BLU-21PNEM8 EMD-2 Diesels" numOuts="8" numFns="30" productID="2162" />
+        <model model="BLU-21PNEM8 GE Diesels" numOuts="8" numFns="30" productID="2159" />
         <model model="BLU-2200 Alco Diesels" numOuts="6" numFns="30" productID="2141" />
         <model model="BLU-2200 Baldwin Diesels" numOuts="6" numFns="30" productID="2142" />
         <model model="BLU-2200 EMD Diesels" numOuts="6" numFns="30" productID="2139" />
@@ -15594,6 +15607,7 @@
         </functionlabels>
       </family>
       <family name="Blunami Electric" mfg="SoundTraxx (Throttle-Up)" lowVersionID="72" file="SoundTraxx_Blu_Electric.xml">
+        <model model="BLU-21PNEM8 Electric" numOuts="8" numFns="30" productID="2163" />
         <model model="BLU-2200 Electric" numOuts="6" numFns="30" productID="2144" />
         <model model="BLU-4408 Electric" numOuts="8" numFns="30" productID="2151" />
         <output name="3" label="  FX3  " />
@@ -15657,6 +15671,7 @@
         </functionlabels>
       </family>
       <family name="Blunami Steam" mfg="SoundTraxx (Throttle-Up)" lowVersionID="72" file="SoundTraxx_Blu_Steam.xml">
+        <model model="BLU-21PNEM8 Steam-2" numOuts="8" numFns="30" productID="2157" />
         <model model="BLU-2200 Steam-2" numOuts="6" numFns="30" productID="2138" />
         <model model="BLU-4408 Steam-2" numOuts="8" numFns="30" productID="2145" />
         <output name="3" label="  FX3  " />

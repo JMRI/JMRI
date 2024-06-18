@@ -378,7 +378,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
     }
 
     @Override
-    boolean isTurnoutUsed(Turnout t) {
+    public boolean isTurnoutUsed(Turnout t) {
         if (mInput1 != null && t.equals(mInput1.getBean())) {
             return true;
         }

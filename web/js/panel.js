@@ -4,7 +4,7 @@
  *    click functions.  Sends and listens for changes to panel elements using the JSON WebSocket server.
  *    If no parm passed, page will list links to available panels.
  *  Approach:  Read panel's xml and create widget objects in the browser with all needed attributes.
- *    There are 4 "widgetFamily"s: text, icon, drawn and switch.  States are handled by storing member's
+ *    There are 5 "widgetFamily"s: text, input, icon, drawn and switch.  States are handled by storing member's
  *    iconX, textX, cssX where X is the state.  The corresponding members are "shown" whenever the state changes.
  *    CSS classes are used throughout to attach events to correct widgets, as well as control appearance.
  *    The JSON type is used to send changes to JSON server and to listen for changes made elsewhere.
@@ -26,6 +26,7 @@
  *  TODO: add support for slipturnouticon (one2beros)
  *  TODO: handle (and test) disableWhenOccupied for layoutslip
  *  TODO: handle block color and track widths for turntable raytracks
+ *  TODO: fix JMRI WARN about username on memoryicons
  *
  **********************************************************************************************/
 
@@ -54,6 +55,8 @@ var DOWNEVENT = 'touchstart mousedown';  // check both touch and mouse events
 var UPEVENT = 'touchend mouseup';
 var BLUR = 'blur';
 var KEYUP = 'keyup';
+var CHANGE = 'change';
+
 var SIZE = 3;               // default factor for circles
 
 var UNKNOWN = '0';          // constants to match JSON Server state names
@@ -185,8 +188,8 @@ function processPanelXML($returnedData, $success, $xhr) {
     $($panel[0].attributes).each(function() {
         $gPanel[this.name] = this.value;
     });
-    $("#panel-area").width($gPanel.panelwidth);
-    $("#panel-area").height($gPanel.panelheight);
+    $("#panel-area").width($gPanel.width);
+    $("#panel-area").height($gPanel.height);
 
     // insert the canvas layer and set up context used by LayoutEditor "drawn" objects, set some defaults
     if ($gPanel.paneltype == "LayoutPanel") {
@@ -194,8 +197,6 @@ function processPanelXML($returnedData, $success, $xhr) {
     }
 
     // set up context used by SwitchboardEditor "beanswitch" objects, set some defaults
-    var $swWidthPx;
-    var $swHeightPx;
     if ($gPanel.paneltype == "Switchboard") {
         $("#panel-area").width("100%"); // reset to fill the (mobile) screen
         $("#panel-area").height("100%"); // reset to fill the (mobile) screen
@@ -281,7 +282,8 @@ function processPanelXML($returnedData, $success, $xhr) {
             }
             if (isDefined($widget.showtooltip) && $widget.showtooltip == "true") { //set tooltip for custom tooltip
                 var ht = $(this).find('tooltip').text();
-                if (ht != "") $widget['hoverText'] = ht;                } 
+                if (ht != "") $widget['hoverText'] = ht;
+            } 
 
             // set additional values in this widget
             switch ($widget.widgetFamily) {
@@ -790,6 +792,12 @@ function processPanelXML($returnedData, $success, $xhr) {
                                     $widget.styles['width'] = "5em";
                                 }
                             }
+                            var items = $(this).find('itemList').children('item');
+                            $widget['items'] = [];
+                            items.each(function(i, item) {  //get any itemlist defined
+                                 //store item list in items array
+                                $widget.items[item.attributes['index'].value] = item.textContent;
+                            });                            
                             if (isUndefined($widget["systemName"]))
                                 $widget["systemName"] = $widget.name;
                             jmri.getMemory($widget["systemName"]);
@@ -816,8 +824,18 @@ function processPanelXML($returnedData, $success, $xhr) {
                     }
 
                     if ($widget.widgetFamily=="input") {
-                        $("#panel-area").append("<input id=" + $widget.id + " class='" + $widget.classes + 
-                            "' value='" + $widget.text + "' " + $widget.extraAttributes + $hoverText + " >");                        
+                        if ($widget.widgetType=="memoryComboIcon") {
+                            var s = "<select id=" + $widget.id + " class='" + $widget.classes + 
+                                "' value='" + $widget.text + "' " + $widget.extraAttributes + $hoverText + " >";
+                            $($widget.items).each(function(i, item) {
+                                s += " <option value='"+ item + "'>" + item + "</option>";
+                            });
+                            s +="</select>";
+                            $("#panel-area").append(s);
+                        } else {                        
+                            $("#panel-area").append("<input id=" + $widget.id + " class='" + $widget.classes + 
+                                "' value='" + $widget.text + "' " + $widget.extraAttributes + $hoverText + " >");
+                        }                        
                     } else {
                         $("#panel-area").append("<div id=" + $widget.id + " class='" + $widget.classes + $hoverText + "'>" +
                             $widget.text + "</div>");
@@ -1403,8 +1421,10 @@ function processPanelXML($returnedData, $success, $xhr) {
 
         //check for update keys and update when needed
         $('input.input').bind(KEYUP, $handleInputKeyUp);
-        //also update when leaving the input
+        //update when leaving the input
         $('input.input').bind(BLUR, $handleInputBlur);
+        //and update when select input is changed
+        $('select.input').bind(CHANGE, $handleInputBlur);
 
         // Switchboard All Off/All On buttons
         $(".lightswitch#allOff").bind(UPEVENT, $handleClickAllOff); // all Lights Off
@@ -2153,8 +2173,8 @@ var $setWidgetState = function($id, $newState, data) {
                 $reDrawIcon($widget);
                 break;
             case "input" :
-                $('input#' + $id).val($newState);      //update the input
-                $('input#' + $id).data("oldValue", $newState); //save the current value if needed for [Escape]
+                $('#' + $id).val($newState);                //update the input
+                $('#' + $id).data("oldValue", $newState);   //save the current value if needed for [Escape]
                 break;
             case "text" :
                 if ($widget.jsonType == "memory" || $widget.jsonType == "block" || $widget.jsonType == "reporter" ) {

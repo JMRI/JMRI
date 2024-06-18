@@ -32,6 +32,8 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
  * <li>checkSignalHeadLogic</li>
  * <li>checkSignalMastLogic</li>
  * <li>checkSignalGroups</li>
+ * <li>checkSignalHeads</li>
+ * <li>checkSignalMasts</li>
  * <li>checkOBlocks</li>
  * <li>checkWarrants</li>
  * <li>checkEntryExit</li>
@@ -280,6 +282,47 @@ public class WhereUsedCollectors {
             }
         }));
         return addHeader(sb, "ReferenceSignalGroup");  // NOI18N
+    }
+
+    /**
+     * Create the Signal Head usage string.
+     * Usage keys:
+     * <ul>
+     * <li>SignalHeadTurnout</li>
+     * </ul>
+     * @param bean The requesting bean:  Turnout.
+     * @return usage string
+     */
+    static String checkSignalHeads(NamedBean bean) {
+        StringBuilder sb = new StringBuilder();
+        InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanSet().forEach((head) -> head.getUsageReport(bean).forEach((report) -> {
+            if (report.usageKey.startsWith("SignalHead")) {  // NOI18N
+                String name = head.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
+                sb.append(Bundle.getMessage("ReferenceLineName", name));  // NOI18N
+            }
+        }));
+        return addHeader(sb, "ReferenceSignalHead");  // NOI18N
+    }
+
+    /**
+     * Create the Signal Mast usage string.
+     * Usage keys:
+     * <ul>
+     * <li>SignalMastTurnout</li>
+     * <li>SignalMastSignalHead</li>
+     * </ul>
+     * @param bean The requesting bean:  Signal Head, Turnout.
+     * @return usage string
+     */
+    static String checkSignalMasts(NamedBean bean) {
+        StringBuilder sb = new StringBuilder();
+        InstanceManager.getDefault(SignalMastManager.class).getNamedBeanSet().forEach((mast) -> mast.getUsageReport(bean).forEach((report) -> {
+            if (report.usageKey.startsWith("SignalMast")) {  // NOI18N
+                String name = mast.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
+                sb.append(Bundle.getMessage("ReferenceLineName", name));  // NOI18N
+            }
+        }));
+        return addHeader(sb, "ReferenceSignalMast");  // NOI18N
     }
 
     /**
