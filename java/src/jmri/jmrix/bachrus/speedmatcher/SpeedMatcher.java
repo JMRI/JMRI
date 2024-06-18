@@ -312,7 +312,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
 
         private SpeedTableStep(int speedStep) {
             this.speedStep = speedStep;
-            this.cv = String.valueOf(speedStep + 28);
+            this.cv = String.valueOf(speedStep + 66);
         }
         
         public int getSpeedStep() {
@@ -470,6 +470,8 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
+        
+        logger.info("Set throttle to {} speed step {}", isForward ? "forward" : "reverse", speedStep);
 
         throttle.setIsForward(isForward);
         throttle.setSpeedSetting(speedStep * throttleIncrement);

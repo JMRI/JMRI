@@ -668,7 +668,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         profilePane.add(profileControlPane, BorderLayout.EAST);
 
         profileAndSpeedMatchingTabs.addTab("Speed Profile", profilePane);
-
+        
         //<editor-fold defaultstate="collapsed" desc="Speed Profiling Button Handlers">
         // Listen to track Power button
         trackPowerButton.addActionListener(e -> trackPower());
@@ -725,6 +725,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         });
 
         //</editor-fold>
+        
+        //</editor-fold>        
         //<editor-fold defaultstate="collapsed" desc="Basic Speed Matching Tab">
         basicSpeedMatchReverseCheckbox.setSelected(true);
 
@@ -841,9 +843,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 if (basicSpeedTableSpeedMatchButton.isSelected()) {
                     speedTableType = SpeedMatcherConfig.SpeedTable.ADVANCED; 
                 }
-                else if (basicESUSpeedMatchButton.isSelected()) {
-                    speedTableType = SpeedMatcherConfig.SpeedTable.ESU;
-                }
+//                else if (basicESUSpeedMatchButton.isSelected()) {
+//                    speedTableType = SpeedMatcherConfig.SpeedTable.ESU;
+//                }
                 else {
                     speedTableType = SpeedMatcherConfig.SpeedTable.SIMPLE;
                 }
@@ -921,6 +923,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
         //</editor-fold>
         //</editor-fold>
+        
         // Create the main pane and add the sub-panes
         JPanel mainPane = new JPanel();
         mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.X_AXIS));

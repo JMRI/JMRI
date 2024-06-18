@@ -6,6 +6,7 @@
 package jmri.jmrix.bachrus.speedmatcher;
 
 import jmri.jmrix.bachrus.speedmatcher.basic.BasicSimpleCVSpeedMatcher;
+import jmri.jmrix.bachrus.speedmatcher.basic.BasicSpeedTableSpeedMatcher;
 
 /**
  *
@@ -21,7 +22,10 @@ public class SpeedMatcherFactory {
         switch (config.type) {
             case BASIC:
                 switch (config.speedTable) {
-                    //TODO: TRW - respect different speedtables
+                    //TODO: TRW - respect ESU speedtable
+                    case ADVANCED:
+                        speedMatcher = new BasicSpeedTableSpeedMatcher(config);
+                        break;                    
                     default:
                         speedMatcher = new BasicSimpleCVSpeedMatcher(config);
                         break;

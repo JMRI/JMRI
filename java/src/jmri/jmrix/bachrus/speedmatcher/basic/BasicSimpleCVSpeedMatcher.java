@@ -242,10 +242,9 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                         } else {
                             vHigh = getNextSpeedMatchValue(lastVHigh, INITIAL_VHIGH, INITIAL_VMID + 1);
 
-                            //if (((lastVHigh == 1) || (lastVHigh == 255)) && (vHigh == lastVHigh)) {
-                            if (vHigh == lastVHigh) {
+                            if (((lastVHigh == INITIAL_VMID + 1) || (lastVHigh == INITIAL_VHIGH)) && (vHigh == lastVHigh)) {
                                 statusLabel.setText(Bundle.getMessage("StatSetSpeedFail", "5 (vHigh)"));
-                                logger.debug("Unable to achieve desired speed for CV 5 (vHigh)");
+                                logger.info("Unable to achieve desired speed for CV 5 (vHigh)");
                                 Abort();
                                 break;
                             }
@@ -279,10 +278,9 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                         } else {
                             vMid = getNextSpeedMatchValue(lastVMid, vHigh, INITIAL_VSTART + 1);
 
-                            //if (((lastVMid == vStart) || (lastVMid == vHigh)) && (vMid == lastVMid)) {
-                            if (vMid == lastVMid) {
+                            if (((lastVMid == INITIAL_VSTART + 1) || (lastVMid == vHigh)) && (vMid == lastVMid)) {
                                 statusLabel.setText(Bundle.getMessage("StatSetSpeedFail", "6 (vMid)"));
-                                logger.debug("Unable to achieve desired speed for CV 6 (vMid)");
+                                logger.info("Unable to achieve desired speed for CV 6 (vMid)");
                                 Abort();
                                 break;
                             } else {
@@ -321,10 +319,9 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                         } else {
                             vStart = getNextSpeedMatchValue(lastVStart, vMid, INITIAL_VSTART);
 
-                            //if (((lastVStart == 1) || (lastVStart == 255)) && (vStart == lastVStart)) {
-                            if (vStart == lastVStart) {
+                            if (((lastVStart == INITIAL_VSTART) || (lastVStart == vMid)) && (vStart == lastVStart)) {
                                 statusLabel.setText(Bundle.getMessage("StatSetSpeedFail", "2 (vStart)"));
-                                logger.debug("Unable to achieve desired speed for CV 2 (vStart)");
+                                logger.info("Unable to achieve desired speed for CV 2 (vStart)");
                                 Abort();
                                 break;
                             } else {
@@ -372,7 +369,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
 
                             if (((lastReverseTrimValue == 1) || (lastReverseTrimValue == 255)) && (reverseTrimValue == lastReverseTrimValue)) {
                                 statusLabel.setText(Bundle.getMessage("StatSetReverseTripFail"));
-                                logger.debug("Unable to trim reverse to match forward");
+                                logger.info("Unable to trim reverse to match forward");
                                 Abort();
                                 break;
                             } else {

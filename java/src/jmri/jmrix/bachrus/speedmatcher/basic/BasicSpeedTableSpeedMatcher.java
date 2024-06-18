@@ -29,6 +29,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
         INIT_SPEED_TABLE_STEPS,
         INIT_FORWARD_TRIM,
         INIT_REVERSE_TRIM,
+        POST_INIT,
         FORWARD_WARM_UP,
         FORWARD_SPEED_MATCH,
         REVERSE_WARM_UP,
@@ -85,6 +86,8 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
             CleanUp();
             return false;
         }
+        
+        startStopButton.setText(Bundle.getMessage("btnStopSpeedMatch"));
         
         return true;
     }
@@ -179,16 +182,26 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
                 //set reverse trim to 128 (CV 95)
                 if (programmerState == ProgrammerState.IDLE) {
                     writeReverseTrim(INITIAL_TRIM_VALUE);
-                    
-                    SpeedMatcherState nextState;
-                    if (warmUpForwardSeconds > 0) {
-                        nextState = SpeedMatcherState.FORWARD_WARM_UP;
-                    } else {
-                        nextState = SpeedMatcherState.FORWARD_SPEED_MATCH;
-                    }
-                    initNextSpeedMatcherState(nextState);
+                     initNextSpeedMatcherState(SpeedMatcherState.POST_INIT);
                 }
                 break;
+                
+             case POST_INIT: {
+                statusLabel.setText("Restoring throttle control");
+                
+                //un-brick Digitrax decoders
+                setThrottle(false, 0);
+                setThrottle(true, 0);
+
+                SpeedMatcherState nextState;
+                if (warmUpForwardSeconds > 0) {
+                    nextState = SpeedMatcherState.FORWARD_WARM_UP;
+                } else {
+                    nextState = SpeedMatcherState.FORWARD_SPEED_MATCH;
+                }
+                initNextSpeedMatcherState(nextState);
+                break;
+            }
 
             case FORWARD_WARM_UP:
                 //Run 4 minutes at high speed forward
@@ -212,10 +225,17 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
                 //Use PID Controller to adjust each CV in the speed table to achieve linear response from max to min desired speed
                 if (programmerState == ProgrammerState.IDLE) {
                     if (stepDuration == 0) {
+                        lastSpeedMatchStepCVValue = speedMatchCVValue;
+                        lastSpeedMatchCVValue = speedMatchCVValue;
+                        targetCurrentSpeedStepSpeedKPH = targetStartSpeedKPH + (((targetTopSpeedKPH - targetStartSpeedKPH) / 27) * (speedMatchSpeedTableStep.getSpeedStep() - 1));
+                        
                         statusLabel.setText(Bundle.getMessage("StatSettingSpeed", speedMatchSpeedTableStep.getCV() + " (Speed Step " + String.valueOf(speedMatchSpeedTableStep.getSpeedStep()) + ")"));
+                        logger.info("Setting speed step " + speedMatchSpeedTableStep.getSpeedStep() + " to " + String.valueOf(targetCurrentSpeedStepSpeedKPH) + " KPH ( " + String.valueOf(targetCurrentSpeedStepSpeedKPH * 0.621371) + " MPH)");
+                        
+                        writeSpeedTableStep(speedMatchSpeedTableStep, speedMatchCVValue);
                         setThrottle(true, speedMatchSpeedTableStep.getSpeedStep());
+                        
                         setSpeedMatchStateTimerDuration(8000);
-                        targetCurrentSpeedStepSpeedKPH = targetTopSpeedKPH * speedMatchSpeedTableStep.getSpeedStep() / 28;
                         stepDuration = 1;
                     } else {
                         setSpeedMatchError(targetCurrentSpeedStepSpeedKPH);
@@ -225,10 +245,9 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
                             
                             if (speedMatchSpeedTableStep != null) {
                                 stepDuration = 0;   
-                                lastSpeedMatchStepCVValue = speedMatchCVValue;
-                                lastSpeedMatchCVValue = speedMatchCVValue;
                                 resetSpeedMatchError();
-                                setSpeedMatchStateTimerDuration(2000);
+                               
+                                setSpeedMatchStateTimerDuration(1200);
                             }
                             else {
                                 SpeedMatcherState nextState;
@@ -247,10 +266,9 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
                         else {
                              speedMatchCVValue = getNextSpeedMatchValue(lastSpeedMatchCVValue, lastSpeedMatchStepCVValue, speedMatchSpeedTableStep.getSpeedStep());
 
-                            //if (((lastVStart == 1) || (lastVStart == 255)) && (vStart == lastVStart)) {
-                            if (speedMatchCVValue == lastSpeedMatchCVValue) {
+                            if (((speedMatchCVValue == speedMatchSpeedTableStep.getSpeedStep()) || (speedMatchCVValue == lastSpeedMatchStepCVValue)) && (speedMatchCVValue == lastSpeedMatchCVValue)) {
                                 statusLabel.setText(Bundle.getMessage("StatSetSpeedFail", speedMatchSpeedTableStep.getCV() + " (Speed Step " + String.valueOf(speedMatchSpeedTableStep.getSpeedStep()) + ")"));
-                                logger.debug("Unable to achieve desired speed for CV " + speedMatchSpeedTableStep.getCV() + " (Speed Step " + String.valueOf(speedMatchSpeedTableStep.getSpeedStep()) + ")");
+                                logger.info("Unable to achieve desired speed for CV " + speedMatchSpeedTableStep.getCV() + " (Speed Step " + String.valueOf(speedMatchSpeedTableStep.getSpeedStep()) + ")");
                                 Abort();
                                 break;
                             } else {
@@ -298,7 +316,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
 
                             if (((lastReverseTrimValue == 1) || (lastReverseTrimValue == 255)) && (reverseTrimValue == lastReverseTrimValue)) {
                                 statusLabel.setText(Bundle.getMessage("StatSetReverseTripFail"));
-                                logger.debug("Unable to trim reverse to match forward");
+                                logger.info("Unable to trim reverse to match forward");
                                 Abort();
                                 break;
                             } else {
@@ -356,7 +374,9 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
      */
     private synchronized void writeSpeedTableStep(SpeedTableStep step, int value) {
         programmerState = ProgrammerState.WRITE_SPEED_TABLE_STEP;
-        statusLabel.setText(Bundle.getMessage("ProgSetCV", step.getCV() + " (Speed Step " + String.valueOf(step.getSpeedStep()) + ")", value));
+        String message = Bundle.getMessage("ProgSetCV", step.getCV() + " (Speed Step " + String.valueOf(step.getSpeedStep()) + ")", value);
+        statusLabel.setText(message);
+        logger.info(message);
         startOpsModeWrite(step.getCV(), value);
     }
 
@@ -402,7 +422,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
         speedMatchError = 0;
         stepDuration = 0;
         speedMatcherState = nextState;
-        setSpeedMatchStateTimerDuration(500);
+        setSpeedMatchStateTimerDuration(1200);
     }
     //</editor-fold>
 }
