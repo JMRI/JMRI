@@ -721,7 +721,7 @@
                         <!-- The following are commented out because they throw warnings with Java 17        -->
                         <!-- yet we want real warnings to fail this check in CI.                             -->
                         <!-- By commenting them out, we lose links to their Javadoc from ours. But since     -->
-                        <!-- out web production Javadocs are made with Ant, not Maven, this is not a problem -->
+                        <!-- our web production Javadocs are made with Ant, not Maven, this is not a problem -->
                         <!-- <link>https://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/${jackson-databind.version}/</link> -->
                         <!-- <link>https://static.javadoc.io/org.openlcb/openlcb/${openlcb.version}/</link> -->
                         <!-- <link>https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/4.7.3/</link> -->
