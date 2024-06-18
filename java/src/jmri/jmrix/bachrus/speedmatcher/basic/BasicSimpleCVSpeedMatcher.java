@@ -1,6 +1,7 @@
 package jmri.jmrix.bachrus.speedmatcher.basic;
 
 import jmri.DccThrottle;
+import jmri.jmrix.bachrus.Speed;
 
 import jmri.jmrix.bachrus.speedmatcher.SpeedMatcherConfig;
 
@@ -195,7 +196,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                 break;
 
             case POST_INIT: {
-                statusLabel.setText("Restoring throttle control");
+                statusLabel.setText(Bundle.getMessage("StatRestoreThrottle"));
                 
                 //un-brick Digitrax decoders
                 setThrottle(false, 0);
@@ -231,6 +232,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                 if (programmerState == ProgrammerState.IDLE) {
                     if (stepDuration == 0) {
                         statusLabel.setText(Bundle.getMessage("StatSettingSpeed", "5 (vHigh)"));
+                        logger.info("Setting CV 5 (vHigh) to " + String.valueOf(targetTopSpeedKPH) + " KPH ( " + String.valueOf(Speed.kphToMph(targetTopSpeedKPH)) + " MPH)");
                         setThrottle(true, 28);
                         setSpeedMatchStateTimerDuration(15000);
                         stepDuration = 1;
@@ -266,6 +268,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                         writeVMid(vMid);
 
                         statusLabel.setText(Bundle.getMessage("StatSettingSpeed", "6 (vMid)"));
+                        logger.info("Setting CV 6 (vMid) to " + String.valueOf(targetMidSpeedKPH) + " KPH ( " + String.valueOf(Speed.kphToMph(targetMidSpeedKPH)) + " MPH)");
                         setSpeedMatchStateTimerDuration(15000);
                         setThrottle(true, 14);
                         stepDuration = 1;
@@ -298,6 +301,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                 if (programmerState == ProgrammerState.IDLE) {
                     if (stepDuration == 0) {
                         statusLabel.setText(Bundle.getMessage("StatSettingSpeed", "2 (vStart)"));
+                        logger.info("Setting CV 2 (vStart) to " + String.valueOf(targetStartSpeedKPH) + " KPH ( " + String.valueOf(Speed.kphToMph(targetStartSpeedKPH)) + " MPH)");
                         setThrottle(true, 1);
                         setSpeedMatchStateTimerDuration(15000);
                         stepDuration = 1;
