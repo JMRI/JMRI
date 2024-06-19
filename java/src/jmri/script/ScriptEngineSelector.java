@@ -37,6 +37,10 @@ public class ScriptEngineSelector {
      */
     public void setSelectedEngine(@Nonnull Engine engine) {
         _selectedEngine = engine;
+        if (engine.getLanguageName() == ECMA_SCRIPT) {
+            log.warn("*** Scripting with JavaScript/ECMAscript is being deprecated.***");
+            log.warn("*** Please contact us on the jmriusers group for assistance. ***");
+        }
     }
 
     /**
@@ -47,7 +51,7 @@ public class ScriptEngineSelector {
         Engine engine = InstanceManager.getDefault(
                 InternalScriptEngineSelector.class).getEngineFromLanguage(languageName);
         if (engine != null) {
-            _selectedEngine = engine;
+            setSelectedEngine(engine);
         } else {
             log.warn("Cannot select engine for the language {}", languageName);
         }

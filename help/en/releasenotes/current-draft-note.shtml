@@ -488,7 +488,10 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Added a warning that requests people
+                contact us if they are using JavaScript/ECMAscript
+                for JMRI scripting.  This will help us
+                understand how much that feature is being used.</li>
         </ul>
 
     <h3>Signals</h3>
