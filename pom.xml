@@ -649,7 +649,7 @@
                     <!-- change from default 100 warnings; keep number synced with ant javadoc target -->
                     <additionalJOption>-breakiterator -Xmaxwarns 100</additionalJOption><!-- 100 is default, here so we can easily change it -->
                     <!-- remove ",-missing" to get warnings about missing Javadoc tags -->
-                    <doclint>all</doclint>
+                    <doclint>all,-missing,-html</doclint>
                     <author>true</author><!-- default -->
                     <use>true</use><!-- default -->
                     <failOnError>true</failOnError><!-- default -->
@@ -714,16 +714,22 @@
                         <link>http://java.sun.com/products/javacomm/reference/api/</link>
                         <link>http://www.jdom.org/docs/apidocs/</link>
                         <link>https://commons.apache.org/proper/commons-csv/apidocs/</link>
-                        <link>https://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/${jackson-databind.version}/</link>
                         <link>http://logging.apache.org/log4j/1.2/apidocs/</link>
-                        <link>https://static.javadoc.io/org.openlcb/openlcb/${openlcb.version}/</link>
                         <link>https://commons.apache.org/proper/commons-lang/javadocs/api-release/</link>
-                        <link>https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/4.7.3/</link>
-                        <link>https://javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/</link>
-                        <!-- <link>https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/</link> -->
-                        <link>https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/</link>
-                        <link>https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/</link>
                         <link>https://fazecast.github.io/jSerialComm/javadoc</link>
+                        
+                        <!-- The following are commented out because they throw warnings with Java 17        -->
+                        <!-- yet we want real warnings to fail this check in CI.                             -->
+                        <!-- By commenting them out, we lose links to their Javadoc from ours. But since     -->
+                        <!-- our web production Javadocs are made with Ant, not Maven, this is not a problem -->
+                        <!-- <link>https://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/${jackson-databind.version}/</link> -->
+                        <!-- <link>https://static.javadoc.io/org.openlcb/openlcb/${openlcb.version}/</link> -->
+                        <!-- <link>https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/4.7.3/</link> -->
+                        <!-- <link>https://javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/</link> -->
+                        <!-- <link>https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/</link> -->
+                        <!-- <link>https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/</link> -->
+
+                        <!-- <link>https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/</link> -->
 
                     </links>
                 </configuration>
