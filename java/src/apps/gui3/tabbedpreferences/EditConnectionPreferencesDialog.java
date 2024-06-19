@@ -40,8 +40,12 @@ public final class EditConnectionPreferencesDialog extends JDialog implements Wi
     public static boolean showDialog() {
         EditConnectionPreferencesDialog dialog = new EditConnectionPreferencesDialog();
         SwingUtilities.updateComponentTreeUI(dialog);  // hack because sometimes this was created before L&F was set?
-        
         dialog.pack();
+        dialog.setBounds(
+                (int) ( jmri.util.JmriJFrame.getScreenDimensions().get(0).getBounds().getSize().getWidth() * 0.10 ),
+                (int) ( jmri.util.JmriJFrame.getScreenDimensions().get(0).getBounds().getSize().getHeight() * 0.10 ),
+                (int) ( jmri.util.JmriJFrame.getScreenDimensions().get(0).getBounds().getSize().getWidth() * 0.80 ),
+                (int) (jmri.util.JmriJFrame.getScreenDimensions().get(0).getBounds().getSize().getHeight()* 0.80 ));
         dialog.setVisible(true);
         return dialog.restartProgram;
     }
