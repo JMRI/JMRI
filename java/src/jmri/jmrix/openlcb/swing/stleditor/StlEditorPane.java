@@ -153,7 +153,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     // Regex Patterns
     private static Pattern PARSE_VARIABLE = Pattern.compile("[IQYZM](\\d+)\\.(\\d+)", Pattern.CASE_INSENSITIVE);
     private static Pattern PARSE_NOVAROPER = Pattern.compile("(A\\(|AN\\(|O\\(|ON\\(|X\\(|XN\\(|\\)|NOT|SET|CLR|SAVE)", Pattern.CASE_INSENSITIVE);
-    private static Pattern PARSE_LABEL = Pattern.compile("\\D\\w{0,3}:");
+    private static Pattern PARSE_LABEL = Pattern.compile("([a-zA-Z]\\w{0,3}:)");
     private static Pattern PARSE_JUMP = Pattern.compile("(JNBI|JCN|JCB|JNB|JBI|JU|JC)", Pattern.CASE_INSENSITIVE);
     private static Pattern PARSE_DEST = Pattern.compile("(\\w{1,4})");
     private static Pattern PARSE_TIMERWORD = Pattern.compile("([W]#[0123]#\\d{1,3})", Pattern.CASE_INSENSITIVE);
@@ -885,14 +885,12 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         // Find comment locations
         var matchComment1 = PARSE_COMMENT1.matcher(line);
         while (matchComment1.find()) {
-//             var comment = line.substring(matchComment1.start(), matchComment1.end());
             var comment = matchComment1.group(1).trim();
             _tokenMap.put(matchComment1.start(), new Token("Comment", comment, matchComment1.start(), matchComment1.end()));
         }
 
         var matchComment2 = PARSE_COMMENT2.matcher(line);
         while (matchComment2.find()) {
-//             var comment = line.substring(matchComment2.start(), matchComment2.end());
             var comment = matchComment2.group(1).trim();
             _tokenMap.put(matchComment2.start(), new Token("Comment", comment, matchComment2.start(), matchComment2.end()));
         }
@@ -1789,7 +1787,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             return;
         }
 
-        for (int i = 0; i < 17; i++) {
+        for (int i = 0; i < 129; i++) {
             if (i == 0) {
                 continue;
             }
