@@ -13296,6 +13296,122 @@ public class TrainBuilderTest extends OperationsTestCase {
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
+    @Test
+    public void testEngineInterchangeTracks() {
+
+        et.addName("Diesel");
+
+        // create 4 locations with tracks
+        Location harvard = lmanager.newLocation("Harvard");
+        Track loc1trk1 = harvard.addTrack("Harvard Yard 1", Track.INTERCHANGE);
+        loc1trk1.setLength(1000);
+        Track loc1trk2 = harvard.addTrack("Harvard Yard 2", Track.INTERCHANGE);
+        loc1trk2.setLength(1000);
+
+        Location acton = lmanager.newLocation("Acton");
+        Track loc2trk1 = acton.addTrack("Acton Yard", Track.INTERCHANGE);
+        loc2trk1.setLength(1000);
+
+        Location boston = lmanager.newLocation("Boston");
+        Track loc3trk1 = boston.addTrack("Boston Yard 1", Track.YARD);
+        loc3trk1.setLength(1000);
+        Track loc3trk2 = boston.addTrack("Boston Yard 2", Track.YARD);
+        loc3trk2.setLength(1000);
+
+        Location chelmsford = lmanager.newLocation("Chelmsford");
+        Track loc4trk1 = chelmsford.addTrack("Chelmsford Yard 1", Track.YARD);
+        loc4trk1.setLength(1000);
+        Track loc4trk2 = chelmsford.addTrack("Chelmsford Yard 2", Track.YARD);
+        loc4trk2.setLength(1000);
+
+        Engine e1 = emanager.newRS("UP", "1");
+        e1.setModel("GP30");
+
+        Engine e2 = emanager.newRS("SP", "2");
+        e2.setModel("GP30");
+
+        Engine e3 = emanager.newRS("SP", "3");
+        e3.setMoves(20);
+        e3.setModel("GP40");
+
+        Engine e4 = emanager.newRS("UP", "4");
+        e4.setModel("GP40");
+
+        // Place engines
+        // Harvard tracks are not reachable
+        Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(harvard, loc1trk1));
+        Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(harvard, loc1trk1));
+
+        Assert.assertEquals("Place e3", Track.OKAY, e3.setLocation(acton, loc2trk1));
+        Assert.assertEquals("Place e4", Track.OKAY, e4.setLocation(acton, loc2trk1));
+
+        Route rte1 = rmanager.newRoute("Route Acton-Boston-Chelmsford");
+        rte1.addLocation(acton);
+        rte1.addLocation(boston);
+        rte1.addLocation(chelmsford);
+
+        // Create train
+        Train train = tmanager.newTrain("TestEngineInterchange");
+        train.setRoute(rte1);
+        train.setNumberEngines("1");
+
+        Assert.assertTrue(train.build());
+
+        // confirm that the specified engines were assigned to the train
+        Assert.assertEquals("e1 not assigned to train", null, e1.getDestination());
+        Assert.assertEquals("e2 not assigned to train", null, e2.getDestination());
+
+        Assert.assertEquals("e3 assigned to train", null, e3.getDestination());
+        Assert.assertEquals("e4 assigned to train", chelmsford, e4.getDestination());
+
+        // don't allow train to pull from interchange
+        loc2trk1.setPickupOption(Track.EXCLUDE_TRAINS);
+        loc2trk1.addPickupId(train.getId());
+
+        Assert.assertFalse(train.build());
+
+        Assert.assertEquals("e3 assigned to train", null, e3.getDestination());
+        Assert.assertEquals("e4 assigned to train", null, e4.getDestination());
+
+        // allow train to pull from interchange
+        loc2trk1.setPickupOption(Track.TRAINS);
+        loc2trk1.addPickupId(train.getId());
+
+        Assert.assertTrue(train.build());
+
+        Assert.assertEquals("e3 assigned to train", null, e3.getDestination());
+        Assert.assertEquals("e4 assigned to train", chelmsford, e4.getDestination());
+        
+        // don't allow route to pull from interchange
+        loc2trk1.setPickupOption(Track.EXCLUDE_ROUTES);
+        loc2trk1.addPickupId(train.getRoute().getId());
+
+        Assert.assertFalse(train.build());
+
+        Assert.assertEquals("e3 assigned to train", null, e3.getDestination());
+        Assert.assertEquals("e4 assigned to train", null, e4.getDestination());
+        
+        // allow route to pull from interchange
+        loc2trk1.setPickupOption(Track.ROUTES);
+        loc2trk1.addPickupId(train.getRoute().getId());
+
+        Assert.assertTrue(train.build());
+
+        Assert.assertEquals("e3 assigned to train", null, e3.getDestination());
+        Assert.assertEquals("e4 assigned to train", chelmsford, e4.getDestination());
+
+        // should not pull engine that was dropped off by same train
+        loc2trk1.setPickupOption(Track.ANY);
+        e4.setLastRouteId(train.getRoute().getId());
+
+        Assert.assertTrue(train.build());
+
+        Assert.assertEquals("e3 assigned to train", chelmsford, e3.getDestination());
+        Assert.assertEquals("e4 assigned to train", null, e4.getDestination());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
     /**
      * The program allows up to two caboose changes in a train's route. Route
      * Acton to Westford has caboose changes at Boston and Harvard.
