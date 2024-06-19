@@ -293,28 +293,13 @@ public class ArchitectureTest {
         .should().accessClassesThat().resideInAPackage("org.jdom2..");
 
     /**
-     * Confine purejavacomm to existing uses. No additional ones permitted.
-     * Ideally these will all be migrated to jSerialComm eventually.
+     * Purejavacomm is the previous serial library. It should not be used
+     * by JMRI java code, but there are scripts that uses it. And there
+     * might be users that have scripts using it. So we need to keep the
+     * library but prevent Java code to use it.
      */
     @ArchTest
     public static final ArchRule checkPurejavacommUsage = noClasses()
-        .that()
-
-        .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController$1").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController$2").and()
-
-        // non-typical systems that are not (yet) migrated
-        .doNotHaveFullyQualifiedName("jmri.jmrix.dcc4pc.Dcc4PcTrafficController").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.dcc4pc.serialdriver.SerialDriverAdapter").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.pricom.downloader.LoaderPane").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.pricom.downloader.LoaderPane$LocalReader").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.pricom.pockettester.DataSource").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.qsi.serialdriver.SerialDriverAdapter").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.serialsensor.SerialSensorAdapter").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.serialsensor.SerialSensorAdapter$2").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.xpa.serialdriver.SerialDriverAdapter")
-
         .should().accessClassesThat().resideInAPackage("purejavacomm..");
 
     /**
