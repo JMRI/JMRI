@@ -630,7 +630,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             var jumpLabel = false;
 
             if (!row.getLabel().isEmpty()) {
-                sb.append(row.getLabel() + separator);
+                sb.append(row.getLabel() + " ");
             }
 
             if (row.getOper() != null) {
@@ -656,7 +656,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 var name = row.getName().trim();
 
                 if (jumpLabel) {
-                    sb.append(separator + name);
+                    sb.append(separator + name + " ");
                     jumpLabel = false;
                 } else if (isMemory(name)) {
                     sb.append(separator + name);
