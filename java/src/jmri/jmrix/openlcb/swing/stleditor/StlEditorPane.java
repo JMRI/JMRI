@@ -942,7 +942,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         var sb = new StringBuilder();
         int limit = 10;
 
-        while (limit > 0) {
+        while (limit > 0 && index >= 0) {
             var ch = line.charAt(index);
             if (ch != ' ') {
                 sb.insert(0, ch);
