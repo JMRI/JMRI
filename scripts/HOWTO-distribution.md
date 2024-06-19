@@ -644,6 +644,9 @@ You might want to edit it, i.e. to add
 - For production releases, file copyright registration
 
     https://eco.copyright.gov/eService_enu/   (Firefox only!)
+    
+- For production release, consider updating the release plan page
+    [https://www.jmri.org/help/en/html/doc/Technical/TechRoadMap.shtml](https://www.jmri.org/help/en/html/doc/Technical/TechRoadMap.shtml)
 
 - Take a break!
 
