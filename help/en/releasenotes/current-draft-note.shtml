@@ -491,7 +491,11 @@
             <li>Added a warning that requests people
                 contact us if they are using JavaScript/ECMAscript
                 for JMRI scripting.  This will help us
-                understand how much that feature is being used.</li>
+                understand how much that feature is being used.
+                <p>
+                There's also a new "jython/DontWarnJavaScript.py"
+                script that can be loaded at startup to 
+                suppress this warning.</li>
         </ul>
 
     <h3>Signals</h3>
