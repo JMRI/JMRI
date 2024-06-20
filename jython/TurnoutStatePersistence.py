@@ -20,7 +20,8 @@ import java
 import java.io
 import java.util
 import org.apache.commons.csv
-from org.slf4j import LoggerFactory
+# from org.slf4j import LoggerFactory
+
 
 # Define turnout state file
 # Default is 'TurnoutState.csv' stored in the preferences directory
@@ -41,13 +42,13 @@ class PersistTurnoutStateTask(jmri.implementation.AbstractShutDownTask):
     # NOTE: to enable logging, see https://www.jmri.org/help/en/html/apps/Debug.shtml
     # Add the Logger Category name "jmri.jmrit.jython.exec" at DEBUG Level.
 
-    log = LoggerFactory.getLogger("jmri.jmrit.jython.exec.TurnoutStatePersistence.PersistTurnoutStateTask")
+    # log = LoggerFactory.getLogger("jmri.jmrit.jython.exec.TurnoutStatePersistence.PersistTurnoutStateTask")
 
     # Define task to run at ShutDown
     def run(self):
 
         # Write an info entry to the log
-        self.log.info("Write turnout state to file: '%s'" % turnoutFile)
+        # self.log.info("Write turnout state to file: '%s'" % turnoutFile)
 
         # Open file
         
@@ -69,8 +70,8 @@ class PersistTurnoutStateTask(jmri.implementation.AbstractShutDownTask):
         for to in turnouts.getNamedBeanSet():
 
             # Write a debug entry to the log
-            if (self.log.isDebugEnabled()):
-                self.log.debug("Storing turnout: {}", to.getSystemName())
+            # if (self.log.isDebugEnabled()):
+                # self.log.debug("Storing turnout: {}", to.getSystemName())
 
             # Retrieve details to persist
             csvFile.print(to.getSystemName())
@@ -86,7 +87,7 @@ class PersistTurnoutStateTask(jmri.implementation.AbstractShutDownTask):
             turnoutCount +=1
 
         # Write an info entry to the log
-        self.log.info("Stored state of %d turnouts" % turnoutCount)
+        # self.log.info("Stored state of %d turnouts" % turnoutCount)
 
         # Append a comment to the end of the file
         csvFile.printComment("Written by JMRI version %s on %s" % (jmri.Version.name(), (java.util.Date()).toString()))
@@ -124,7 +125,7 @@ class PersistTurnoutStateTask(jmri.implementation.AbstractShutDownTask):
 class LoadTurnoutState(jmri.jmrit.automat.AbstractAutomaton):
 
     # Get reference to the logger
-    log = LoggerFactory.getLogger("jmri.jmrit.jython.exec.TurnoutStatePersistence.LoadTurnoutState")
+    # log = LoggerFactory.getLogger("jmri.jmrit.jython.exec.TurnoutStatePersistence.LoadTurnoutState")
 
     # Perform any initialisation
     def init(self):
@@ -144,7 +145,7 @@ class LoadTurnoutState(jmri.jmrit.automat.AbstractAutomaton):
             csvFile = org.apache.commons.csv.CSVParser.parse(inFile, java.nio.charset.StandardCharsets.UTF_8, csvFormat)
 
             # Write an info entry to the log
-            self.log.info("Loading turnout state file: %s" % turnoutFile)
+            # self.log.info("Loading turnout state file: %s" % turnoutFile)
 
             # Initialise counter
             turnoutCount = 0
@@ -163,8 +164,8 @@ class LoadTurnoutState(jmri.jmrit.automat.AbstractAutomaton):
                 turnout = turnouts.provideTurnout(systemName)
 
                 # Write a debug entry to the log
-                if (self.log.isDebugEnabled()):
-                    self.log.debug("Setting state of turnout: %s" % systemName)
+                # if (self.log.isDebugEnabled()):
+                    # self.log.debug("Setting state of turnout: %s" % systemName)
 
                 # Set other parameters if specified
                 if (userName != ""):
@@ -184,11 +185,12 @@ class LoadTurnoutState(jmri.jmrit.automat.AbstractAutomaton):
             csvFile.close()
 
             # Write an info entry to the log
-            self.log.info("Loaded state of %d turnouts" % turnoutCount)
+            # self.log.info("Loaded state of %d turnouts" % turnoutCount)
 
         else:
             # It doesn't, so log this fact and carry on
-            self.log.warn("Turnout state file '%s' does not exist" % turnoutFile)
+            # self.log.warn("Turnout state file '%s' does not exist" % turnoutFile)
+            return False
 
         # All done
         return False    # Only need to run once
