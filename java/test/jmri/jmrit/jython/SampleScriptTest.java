@@ -119,7 +119,13 @@ public class SampleScriptTest {
 
         // run shutdown task with blocking
         ((jmri.managers.DefaultShutDownManager)InstanceManager.getDefault(ShutDownManager.class)).setBlockingShutdown(true);
+
+        // Uncomment the line below and you will get the summary
+        // if (1==1) return;
+
         InstanceManager.getDefault(ShutDownManager.class).shutdown();
+
+        if (1==1) return;
 
         File newTurnoutFile = new File(jmri.util.FileUtil.getUserFilesPath() + "TurnoutState.csv");
         Assertions.assertTrue(newTurnoutFile.exists(),"user TurnoutState.csv exists");
