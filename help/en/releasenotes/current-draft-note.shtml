@@ -126,7 +126,8 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Update the STL Editor to support compact store output.  This allows more
+                statements in a Logic group.</li>
             </ul>
 
         <h4>Powerline</h4>
