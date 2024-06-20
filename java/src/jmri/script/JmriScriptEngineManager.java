@@ -446,13 +446,15 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
             log.warn("*** and may soon be removed.  If you are using this, please  ***");
             log.warn("*** contact us on the jmriusers group for assistance.        ***");
             
-            jmri.util.swing.JmriJOptionPane.showMessageDialog(null, 
-                "<html>"+
-                "Scripting with JavaScript/ECMAscript is being deprecated <br/>"+
-                "and may soon be removed.  If you are using this, please<br/>"+
-                "contact us on the jmriusers group for assistance.<br/>"+
-                "</html>"
-            );
+            if (! java.awt.GraphicsEnvironment.isHeadless()) {
+                jmri.util.swing.JmriJOptionPane.showMessageDialog(null, 
+                    "<html>"+
+                    "Scripting with JavaScript/ECMAscript is being deprecated <br/>"+
+                    "and may soon be removed.  If you are using this, please<br/>"+
+                    "contact us on the jmriusers group for assistance.<br/>"+
+                    "</html>"
+                );
+            }
         }
         dontWarnJavaScript = true;
     }
