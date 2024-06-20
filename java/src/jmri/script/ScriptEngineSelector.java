@@ -37,10 +37,6 @@ public class ScriptEngineSelector {
      */
     public void setSelectedEngine(@Nonnull Engine engine) {
         _selectedEngine = engine;
-        if (engine.getLanguageName().equals(ECMA_SCRIPT)) {
-            log.warn("*** Scripting with JavaScript/ECMAscript is being deprecated.***");
-            log.warn("*** Please contact us on the jmriusers group for assistance. ***");
-        }
     }
 
     /**
@@ -116,6 +112,15 @@ public class ScriptEngineSelector {
         public boolean isJython() {
             return "python".equalsIgnoreCase(_languageName)
                     || "jython".equalsIgnoreCase(_languageName);
+        }
+
+        /**
+         * Is this engine for JavaScript/ECMAscript?
+         * @return true if JavaScript/ECMAscript, false otherwise
+         */
+        public boolean isJavaScript() {
+            return "javascript".equalsIgnoreCase(_languageName)
+                    || "ecmascript".equalsIgnoreCase(_languageName);
         }
 
         /** {@inheritDoc} */
