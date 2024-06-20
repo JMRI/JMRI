@@ -1814,6 +1814,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 trackSave.bumpSchedule();
                 log.debug("Sending car to spur ({}, {}) with car schedule id ({}))", trackSave.getLocation().getName(),
                         trackSave.getName(), car.getScheduleItemId());
+            } else {
+                car.setScheduleItemId(Car.NONE);
             }
             if (finalDestinationTrackSave != null) {
                 car.setFinalDestination(finalDestinationTrackSave.getLocation());

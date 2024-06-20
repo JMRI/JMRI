@@ -482,18 +482,18 @@ public class PrintLocationsFrame extends OperationsFrame {
             s = getLocationTypes(location);
             writer.write(s);
 
-            List<Track> yards = location.getTracksByNameList(Track.YARD);
-            if (yards.size() > 0) {
-                s = SPACES_3 + Bundle.getMessage("YardName") + NEW_LINE;
-                writer.write(s);
-                printTrackInfo(location, yards);
-            }
-
             List<Track> spurs = location.getTracksByNameList(Track.SPUR);
             if (spurs.size() > 0) {
                 s = SPACES_3 + Bundle.getMessage("SpurName") + NEW_LINE;
                 writer.write(s);
                 printTrackInfo(location, spurs);
+            }
+
+            List<Track> yards = location.getTracksByNameList(Track.YARD);
+            if (yards.size() > 0) {
+                s = SPACES_3 + Bundle.getMessage("YardName") + NEW_LINE;
+                writer.write(s);
+                printTrackInfo(location, yards);
             }
 
             List<Track> interchanges = location.getTracksByNameList(Track.INTERCHANGE);
@@ -699,6 +699,7 @@ public class PrintLocationsFrame extends OperationsFrame {
                         track.getName() +
                         getDirection(location.getTrainDirections() & track.getTrainDirections());
                 writer.write(s);
+                isAlternate(track);
                 writer.write(getTrackCarTypes(track));
                 writer.write(getTrackEngineTypes(track));
                 writer.write(getTrackRoads(track));
@@ -1084,6 +1085,12 @@ public class PrintLocationsFrame extends OperationsFrame {
                     NEW_LINE);
         }
         return buf.toString();
+    }
+
+    private void isAlternate(Track track) throws IOException {
+        if (track.isAlternate()) {
+            writer.write(TAB + TAB + Bundle.getMessage("AlternateTrack") + NEW_LINE);
+        }
     }
 
     private String getSpurInfo(Track track) {

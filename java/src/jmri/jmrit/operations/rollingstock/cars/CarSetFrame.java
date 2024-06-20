@@ -456,7 +456,8 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
                 car.setFinalDestinationTrack(finalDestTrack);
                 String status = getTestCar(car, car.getLoadName())
                         .checkDestination(car.getFinalDestination(), finalDestTrack);
-                if (!status.equals(Track.OKAY)) {
+                // ignore custom load warning
+                if (!status.equals(Track.OKAY) && !status.contains(Track.CUSTOM)) {
                     JmriJOptionPane.showMessageDialog(this,
                             Bundle.getMessage("rsCanNotFinalMsg", car.toString(), status),
                             Bundle.getMessage("rsCanNotFinal"), JmriJOptionPane.WARNING_MESSAGE);
