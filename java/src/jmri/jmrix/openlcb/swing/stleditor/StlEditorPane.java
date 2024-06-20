@@ -18,6 +18,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.AbstractTableModel;
 
+import jmri.InstanceManager;
+import jmri.UserPreferencesManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.FileUtil;
 import jmri.util.swing.JComboBoxUtil;
@@ -76,6 +78,11 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private ConfigRepresentation _cdi;
     private MimicNodeStore _store;
 
+    /* Preferences setup */
+    final String _storeModeCheck = this.getClass().getName() + ".StoreMode";
+    private final UserPreferencesManager _pm;
+    private JCheckBox _compactOption = new JCheckBox(Bundle.getMessage("StoreMode"));
+
     private boolean _dirty = false;
     private int _logicRow = -1;     // The last selected row, -1 for none
     private int _groupRow = 0;
@@ -84,6 +91,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private boolean _compileNeeded = false;
     private boolean _compileInProgress = false;
     PropertyChangeListener _entryListener = new EntryListener();
+    private List<String> _messages = new ArrayList<>();
 
     private String _csvDirectoryPath = "";
 
@@ -91,6 +99,8 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private JComboBox<NodeEntry> _nodeBox;
 
     private JComboBox<Operator> _operators = new JComboBox<>(Operator.values());
+
+    private TreeMap<Integer, Token> _tokenMap;
 
     private List<GroupRow> _groupList = new ArrayList<>();
     private List<InputRow> _inputList = new ArrayList<>();
@@ -141,14 +151,21 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private static String SYNTAX_MESSAGE = "Syntax Messages.Syntax Messages.Message 1";
 
     // Regex Patterns
-    private static Pattern PARSE_VARIABLE = Pattern.compile("[IQYZM](\\d+)\\.(\\d+)");
-    private static Pattern PARSE_LABEL = Pattern.compile("\\D\\w{0,3}:");
-    private static Pattern PARSE_TIMERWORD = Pattern.compile("W#[0123]#\\d{1,3}");
-    private static Pattern PARSE_TIMERVAR = Pattern.compile("T\\d{1,2}");
+    private static Pattern PARSE_VARIABLE = Pattern.compile("[IQYZM](\\d+)\\.(\\d+)", Pattern.CASE_INSENSITIVE);
+    private static Pattern PARSE_NOVAROPER = Pattern.compile("(A\\(|AN\\(|O\\(|ON\\(|X\\(|XN\\(|\\)|NOT|SET|CLR|SAVE)", Pattern.CASE_INSENSITIVE);
+    private static Pattern PARSE_LABEL = Pattern.compile("([a-zA-Z]\\w{0,3}:)");
+    private static Pattern PARSE_JUMP = Pattern.compile("(JNBI|JCN|JCB|JNB|JBI|JU|JC)", Pattern.CASE_INSENSITIVE);
+    private static Pattern PARSE_DEST = Pattern.compile("(\\w{1,4})");
+    private static Pattern PARSE_TIMERWORD = Pattern.compile("([W]#[0123]#\\d{1,3})", Pattern.CASE_INSENSITIVE);
+    private static Pattern PARSE_TIMERVAR = Pattern.compile("([T]\\d{1,2})", Pattern.CASE_INSENSITIVE);
+    private static Pattern PARSE_COMMENT1 = Pattern.compile("//(.*)\\n");
+    private static Pattern PARSE_COMMENT2 = Pattern.compile("/\\*(.*?)\\*/");
     private static Pattern PARSE_HEXPAIR = Pattern.compile("^[0-9a-fA-F]{2}$");
     private static Pattern PARSE_VERSION = Pattern.compile("^.*(\\d+)\\.(\\d+)$");
 
+
     public StlEditorPane() {
+        _pm = InstanceManager.getDefault(UserPreferencesManager.class);
     }
 
     @Override
@@ -226,7 +243,19 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         _nodeBox.setPreferredSize(newDim);
 
         nodeSelector.add(_nodeBox);
-        add(nodeSelector, BorderLayout.NORTH);
+
+        //Setup up store mode checkbox
+        var storeMode = new JPanel();
+        _compactOption.setToolTipText(Bundle.getMessage("StoreModeTip"));
+        _compactOption.setSelected(_pm.getSimplePreferenceState(_storeModeCheck));
+        storeMode.add(_compactOption);
+
+        var header = new JPanel();
+        header.setLayout(new BorderLayout());
+        header.add(storeMode, BorderLayout.EAST);
+        header.add(nodeSelector, BorderLayout.CENTER);
+
+        add(header, BorderLayout.NORTH);
 
         // Define the center section of the window which consists of 5 tabs
         _detailTabs = new JTabbedPane();
@@ -541,7 +570,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     private String variableToName(String variable) {
-        String name = "";
+        String name = variable;
 
         if (variable.length() > 1) {
             var varType = variable.substring(0, 1);
@@ -593,6 +622,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     private void encode(GroupRow groupRow) {
         String longLine = "";
+        String separator = (_compactOption.isSelected()) ? "" : " ";
 
         var logicList = groupRow.getLogicList();
         for (var row : logicList) {
@@ -626,14 +656,14 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 var name = row.getName().trim();
 
                 if (jumpLabel) {
-                    sb.append(" " + name);
+                    sb.append(separator + name + " ");
                     jumpLabel = false;
                 } else if (isMemory(name)) {
-                    sb.append(" " + name);
+                    sb.append(separator + name);
                 } else if (isTimerWord(name)) {
-                    sb.append(" " + name);
+                    sb.append(separator + name);
                 } else if (isTimerVar(name)) {
-                    sb.append(" " + name);
+                    sb.append(separator + name);
                 } else {
                     var variable = nameToVariable(name);
                     if (variable == null) {
@@ -643,17 +673,23 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                                 JmriJOptionPane.ERROR_MESSAGE);
                         log.error("bad name: {}", name);
                     } else {
-                        sb.append(" " + variable);
+                        sb.append(separator + variable);
                     }
                 }
             }
 
             if (!row.getComment().isEmpty()) {
                 var comment = row.getComment().trim();
-                sb.append(" // " + comment);
+                if (_compactOption.isSelected()) {
+                    sb.append("/*" + comment + "*/");
+                } else {
+                    sb.append(" // " + comment);
+                }
             }
 
-            sb.append("\n");
+            if (!_compactOption.isSelected()) {
+                sb.append("\n");
+            }
 
             longLine = longLine + sb.toString();
         }
@@ -687,85 +723,250 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         return match.find();
     }
 
-    private void decode(GroupRow groupRow) {
-        String[] lines = groupRow.getMultiLine().split("\\n");
+    /**
+     * After the token tree map has been created, build the rows for the STL display.
+     * Each row has an optional label, a required operator, a name as needed and an optional comment.
+     * The operator is always required.  The other fields are added as needed.
+     * The label is found by looking at the previous token.
+     * The name is usually the next token.  If there is no name, it might be a comment.
+     * @param group The CDI group.
+     */
+    private void decode(GroupRow group) {
+        createTokenMap(group);
 
-        for (int i = 0; i < lines.length; i++) {
-            if (lines[i].isEmpty()) {
-                continue;
-            }
-            String[] tokens = lines[i].split(" ");
+        // Get the operator tokens.  They are the anchors for the other values.
+        for (Token token : _tokenMap.values()) {
+            if (token.getType().equals("Oper")) {
 
-            var label = "";
-            var name = "";
-            var comment = "";
-            Operator oper = null;
+                var label = "";
+                var name = "";
+                var comment = "";
+                Operator oper = getEnum(token.getName());
 
-            boolean needOperator = true;
-
-            for (int j = 0; j < tokens.length; j++) {
-                var token = tokens[j];
-
-                // Get label
-                if (j == 0) {
-                    var match = PARSE_LABEL.matcher(token);
-                    if (match.find()) {
-                        label = token;
-                        continue;
+                // Check for a label
+                var prevKey = _tokenMap.lowerKey(token.getStart());
+                if (prevKey != null) {
+                    var prevToken = _tokenMap.get(prevKey);
+                    if (prevToken.getType().equals("Label")) {
+                        label = prevToken.getName();
                     }
                 }
 
-                // Get operator
-                if (needOperator) {
-                    oper = getEnum(token);
-                    if (oper != null) {
-                        needOperator = false;
-                        continue;
-                    }
-                }
+                // Get the name and comment
+                var nextKey = _tokenMap.higherKey(token.getStart());
+                if (nextKey != null) {
+                    var nextToken = _tokenMap.get(nextKey);
 
-                // Get comment
-                if (token.equals("//")) {
-                    int commentPosition = lines[i].indexOf("//");
-                    comment = lines[i].substring(commentPosition + 3);
-                    break;
-                }
-
-                // Get name
-                if (oper != null) {
-                    if (oper.name().startsWith("J")) {   // Jump label
-                        name = token;
-                    } else if (isMemory(token)) {  // Memory variable
-                        name = token;
-                    } else if (isTimerWord(token)) { // Load timer
-                        name = token;
-                    } else if (isTimerVar(token)) {  // Timer variable
-                        name = token;
+                    if (nextToken.getType().equals("Comment")) {
+                        // There is no name between the operator and the comment
+                        comment = variableToName(nextToken.getName());
                     } else {
-                        var match = PARSE_VARIABLE.matcher(token);
-                        if (match.find()) {
-                            name = variableToName(token);
-                        } else {
-                            name = token;
+                        if (!nextToken.getType().equals("Label") &&
+                                !nextToken.getType().equals("Oper")) {
+                            // Set the name value
+                            name = variableToName(nextToken.getName());
+
+                            // Look for comment after the name
+                            var comKey = _tokenMap.higherKey(nextKey);
+                            if (comKey != null) {
+                                var comToken = _tokenMap.get(comKey);
+                                if (comToken.getType().equals("Comment")) {
+                                    comment = comToken.getName();
+                                }
+                            }
+                        }
+                    }
+                }
+
+                var logic = new LogicRow(label, oper, name, comment);
+                group.getLogicList().add(logic);
+            }
+        }
+
+    }
+
+    /**
+     * Create a map of the tokens in the MultiLine string.  The map key contains the offset for each
+     * token in the string.  The tokens are identified using multiple passes of regex tests.
+     * <ol>
+     * <li>Find the labels which consist of 1 to 4 characters and a colon.</li>
+     * <li>Find the table references.  These are the IQYZM tables.  The related operators are found by parsing backwards.</li>
+     * <li>Find the operators that do not have operands.  Note: This might include SETn. These wil be fixed when the timers are processed</li>
+     * <li>Find the jump operators and the jump destinations.</li>
+     * <li>Find the timer word and load operator.</li>
+     * <li>Find timer variable locations and Sx operators.  The SE Tn will update the SET token with the same offset. </li>
+     * <li>Find //...nl comments.</li>
+     * <li>Find /&#42;...&#42;/ comments.</li>
+     * </ol>
+     * An additional check looks for overlaps between jump destinations and labels.  This can occur when
+     * a using the compact mode, a jump destination has less the 4 characters, and is immediatly followed by a label.
+     * @param group The CDI group.
+     */
+    private void createTokenMap(GroupRow group) {
+        _messages.clear();
+        _tokenMap = new TreeMap<>();
+        var line = group.getMultiLine();
+
+        // Find label locations
+        var matchLabel = PARSE_LABEL.matcher(line);
+        while (matchLabel.find()) {
+            var label = line.substring(matchLabel.start(), matchLabel.end());
+            _tokenMap.put(matchLabel.start(), new Token("Label", label, matchLabel.start(), matchLabel.end()));
+        }
+
+        // Find variable locations and operators
+        var matchVar = PARSE_VARIABLE.matcher(line);
+        while (matchVar.find()) {
+            var variable = line.substring(matchVar.start(), matchVar.end());
+            _tokenMap.put(matchVar.start(), new Token("Var", variable, matchVar.start(), matchVar.end()));
+            var operToken = findOperator(matchVar.start() - 1, line);
+            if (operToken != null) {
+                _tokenMap.put(operToken.getStart(), operToken);
+            }
+        }
+
+        // Find operators without variables
+        var matchOper = PARSE_NOVAROPER.matcher(line);
+        while (matchOper.find()) {
+            var oper = line.substring(matchOper.start(), matchOper.end());
+            if (getEnum(oper) != null) {
+                _tokenMap.put(matchOper.start(), new Token("Oper", oper, matchOper.start(), matchOper.end()));
+            } else {
+                _messages.add(Bundle.getMessage("ErrStandAlone", oper));
+            }
+        }
+
+        // Find jump operators and destinations
+        var matchJump = PARSE_JUMP.matcher(line);
+        while (matchJump.find()) {
+            var jump = line.substring(matchJump.start(), matchJump.end());
+            if (getEnum(jump) != null && (jump.startsWith("J") || jump.startsWith("j"))) {
+                _tokenMap.put(matchJump.start(), new Token("Oper", jump, matchJump.start(), matchJump.end()));
+
+                // Get the jump destination
+                var matchDest = PARSE_DEST.matcher(line);
+                if (matchDest.find(matchJump.end())) {
+                    var dest = matchDest.group(1);
+                    _tokenMap.put(matchDest.start(), new Token("Dest", dest, matchDest.start(), matchDest.end()));
+                } else {
+                    _messages.add(Bundle.getMessage("ErrJumpDest", jump));
+                }
+            } else {
+                _messages.add(Bundle.getMessage("ErrJumpOper", jump));
+            }
+        }
+
+        // Find timer word locations and load operator
+        var matchTimerWord = PARSE_TIMERWORD.matcher(line);
+        while (matchTimerWord.find()) {
+            var timerWord = matchTimerWord.group(1);
+            _tokenMap.put(matchTimerWord.start(), new Token("TimerWord", timerWord, matchTimerWord.start(), matchTimerWord.end()));
+            var operToken = findOperator(matchTimerWord.start() - 1, line);
+            if (operToken != null) {
+                if (operToken.getName().equals("L") || operToken.getName().equals("l")) {
+                    _tokenMap.put(operToken.getStart(), operToken);
+                } else {
+                    _messages.add(Bundle.getMessage("ErrTimerLoad", operToken.getName()));
+                }
+            }
+        }
+
+        // Find timer variable locations and S operators
+        var matchTimerVar = PARSE_TIMERVAR.matcher(line);
+        while (matchTimerVar.find()) {
+            var timerVar = matchTimerVar.group(1);
+            _tokenMap.put(matchTimerVar.start(), new Token("TimerVar", timerVar, matchTimerVar.start(), matchTimerVar.end()));
+            var operToken = findOperator(matchTimerVar.start() - 1, line);
+            if (operToken != null) {
+                _tokenMap.put(operToken.getStart(), operToken);
+            }
+        }
+
+        // Find comment locations
+        var matchComment1 = PARSE_COMMENT1.matcher(line);
+        while (matchComment1.find()) {
+            var comment = matchComment1.group(1).trim();
+            _tokenMap.put(matchComment1.start(), new Token("Comment", comment, matchComment1.start(), matchComment1.end()));
+        }
+
+        var matchComment2 = PARSE_COMMENT2.matcher(line);
+        while (matchComment2.find()) {
+            var comment = matchComment2.group(1).trim();
+            _tokenMap.put(matchComment2.start(), new Token("Comment", comment, matchComment2.start(), matchComment2.end()));
+        }
+
+        // Check for overlapping jump destinations and following labels
+        for (Token token : _tokenMap.values()) {
+            if (token.getType().equals("Dest")) {
+                var nextKey = _tokenMap.higherKey(token.getStart());
+                if (nextKey != null) {
+                    var nextToken = _tokenMap.get(nextKey);
+                    if (nextToken.getType().equals("Label")) {
+                        if (token.getEnd() > nextToken.getStart()) {
+                            _messages.add(Bundle.getMessage("ErrDestLabel", token.getName(), nextToken.getName()));
                         }
                     }
                 }
             }
-
-            var logic = new LogicRow(label, oper, name, comment);
-            groupRow.getLogicList().add(logic);
         }
+
+        if (_messages.size() > 0) {
+            // Display messages
+            String msgs = _messages.stream().collect(java.util.stream.Collectors.joining("\n"));
+            JmriJOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("MsgParseErr", group.getName(), msgs),
+                    Bundle.getMessage("TitleParseErr"),
+                    JmriJOptionPane.ERROR_MESSAGE);
+            _messages.forEach((msg) -> {
+                log.error(msg);
+            });
+        }
+
+        // Create token debugging output
+        if (log.isDebugEnabled()) {
+            log.info("Line = {}", line);
+            for (Token token : _tokenMap.values()) {
+                log.info("Token = {}", token);
+            }
+        }
+    }
+
+    /**
+     * Starting as the operator location minus one, work backwards to find a valid operator. When
+     * one is found, create and return the token object.
+     * @param index The current location in the line.
+     * @param line The line for the current group.
+     * @return a token or null.
+     */
+    private Token findOperator(int index, String line) {
+        var sb = new StringBuilder();
+        int limit = 10;
+
+        while (limit > 0 && index >= 0) {
+            var ch = line.charAt(index);
+            if (ch != ' ') {
+                sb.insert(0, ch);
+                if (getEnum(sb.toString()) != null) {
+                    String oper = sb.toString();
+                    return new Token("Oper", oper, index, index + oper.length());
+                }
+            }
+            limit--;
+            index--;
+        }
+        _messages.add(Bundle.getMessage("ErrNoOper", index, line));
+        return null;
     }
 
     private Operator getEnum(String name) {
         try {
-            var temp = name;
+            var temp = name.toUpperCase();
             if (name.equals("=")) {
                 temp = "EQ";
             } else if (name.equals(")")) {
                 temp = "Cp";
             } else if (name.endsWith("(")) {
-                temp = name.replace("(", "p");
+                temp = name.toUpperCase().replace("(", "p");
             }
 
             Operator oper = Enum.valueOf(Operator.class, temp);
@@ -1586,7 +1787,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             return;
         }
 
-        for (int i = 0; i < 17; i++) {
+        for (int i = 0; i < 129; i++) {
             if (i == 0) {
                 continue;
             }
@@ -2870,6 +3071,44 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     }
 
+    // --------------  Token Class ---------
+
+    static class Token {
+        String _type = "";
+        String _name = "";
+        int _offsetStart = 0;
+        int _offsetEnd = 0;
+
+        Token(String type, String name, int offsetStart, int offsetEnd) {
+            _type = type;
+            _name = name;
+            _offsetStart = offsetStart;
+            _offsetEnd = offsetEnd;
+        }
+
+        public String getType() {
+            return _type;
+        }
+
+        public String getName() {
+            return _name;
+        }
+
+        public int getStart() {
+            return _offsetStart;
+        }
+
+        public int getEnd() {
+            return _offsetEnd;
+        }
+
+        @Override
+        public String toString() {
+            return String.format("Type: %s, Name: %s, Start: %d, End: %d",
+                    _type, _name, _offsetStart, _offsetEnd);
+        }
+    }
+
     // --------------  misc items ---------
     @Override
     public java.util.List<JMenu> getMenus() {
@@ -2907,6 +3146,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     @Override
     public void dispose() {
+        _pm.setSimplePreferenceState(_storeModeCheck, _compactOption.isSelected());
         // and complete this
         super.dispose();
     }

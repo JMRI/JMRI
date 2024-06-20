@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-# scripts/default_lcf.xml
-# Default logging configuration file for JMRI project scripts.
+# default_lcf.xml
+# Default logging configuration file for JMRI project distribution.
+#
+# If making changes here that should be included in the distribution
+# please also update the file for distribution at 'scripts/default_lcf.xml'
 
 # JMRI itself uses Log4J et al for logging.  Some of the components
 # that JMRI uses, however, use other approaches.
@@ -66,7 +69,7 @@
             T is defined to preserve messages between sessions and to keep up to
             2 previous log files in addition to the current. -->
         <RollingFile name="T" fileName="${sys:jmri.log.path}messages.log"
-            filePattern="${jmri.log.path}messages.%i.log" append="true">
+            filePattern="${sys:jmri.log.path}messages.%i.log" append="true">
             <PatternLayout pattern="%d{ISO8601} %-37.37c{2} %-5p - %m [%t]%n"/>
             <Policies>
                 <SizeBasedTriggeringPolicy size="1000KB"/>
@@ -92,6 +95,11 @@
 
         <!-- JMDNS Logger -->
         <Logger name="javax.jmdns.impl" level="ERROR"/>
+
+        <!-- libraries used by BiDiB support -->
+        <Logger name="RX" level="WARN"/>
+        <Logger name="TX" level="WARN"/>
+        <Logger name="RAW" level="WARN"/>
 
         <!-- Examples of changing priority of specific categories (classes, packages): -->
         <!-- Remove the comment symbols before and after the class, then relaunch JMRI to activate. -->

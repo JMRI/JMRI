@@ -126,8 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Update the STL Editor to support compact store output.  This allows more
-                statements in a Logic group.</li>
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -441,8 +440,6 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The expression <strong>Reporter</strong> can now use
-              indirect addressing for selecting the Reporter.</li>
           <li></li>
         </ul>
 
@@ -467,7 +464,7 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li>Set the bounds on the dialog when going into EditPreferences after profile connection fail.</li>
+            <li></li>
         </ul>
 
     <h3>Resources</h3>
@@ -582,7 +579,7 @@
             <li></li>
         </ul>
 
-   <h3>Where Used</h3>
+    <h3>Where Used</h3>
         <a id="WhereUsed" name="WhereUsed"></a>
         <ul>
             <li></li>
@@ -603,6 +600,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Updated LauchJMRI.exe to display the console when the /noisy is used. No more return code 1, but and actual explanation</li>
+            <li></li>
         </ul>
 
