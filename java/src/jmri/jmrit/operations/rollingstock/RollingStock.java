@@ -1427,7 +1427,11 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
             setLastDate(a.getValue()); // uses the setLastDate(String) method.
         }
         if ((a = e.getAttribute(Xml.BLOCKING)) != null) {
-            _blocking = Integer.parseInt(a.getValue());
+            try {
+                _blocking = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException nfe) {
+                log.error("Blocking ({}) for rollingstock ({}) isn't a valid number!", a.getValue(), toString());
+            }
         }
         // check for rolling stock without a track assignment
         if (getLocation() != null && getTrack() == null && getTrain() == null) {

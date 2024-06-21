@@ -1,11 +1,13 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Operations RollingStock Cars class Last manually cross-checked
@@ -46,9 +48,9 @@ public class CarsTest extends OperationsTestCase {
         e.setAttribute("id", "TESTID");
         e.setAttribute("roadName", "TESTROAD1");
         e.setAttribute("roadNumber", "TESTNUMBER1");
-        e.setAttribute("type", "TESTTYPE");
-        e.setAttribute("length", "TESTLENGTH");
-        e.setAttribute("color", "TESTCOLOR");
+        e.setAttribute(Xml.TYPE, "TESTTYPE");
+        e.setAttribute(Xml.LENGTH, "TESTLENGTH");
+        e.setAttribute(Xml.COLOR, "TESTCOLOR");
         e.setAttribute("weight", "TESTWEIGHT");
         e.setAttribute("weightTons", "TESTWEIGHTTONS");
         e.setAttribute("built", "TESTBUILT");
@@ -59,7 +61,7 @@ public class CarsTest extends OperationsTestCase {
         e.setAttribute("routeDestinationId", "TESTROUTEDESTINATION");
         e.setAttribute("secDestionationId", "TESTDESTINATIONTRACK");
         e.setAttribute("lastRouteId", "SAVEDROUTE");
-        e.setAttribute("moves", "5");
+        e.setAttribute("moves", "BAD5");
         e.setAttribute("date", "2015/05/15 15:15:15");
         e.setAttribute("selected", Xml.FALSE);
         e.setAttribute("lastLocationId", "TESTLASTLOCATION");
@@ -69,8 +71,8 @@ public class CarsTest extends OperationsTestCase {
         e.setAttribute("rifd", "12345");
         e.setAttribute("locUnknown", Xml.FALSE);
         e.setAttribute("outOfService", Xml.FALSE);
-        e.setAttribute("blocking", "5");
-        e.setAttribute("comment", "Test Comment");
+        e.setAttribute("blocking", "BAD6");
+        e.setAttribute("comment", "TESTCOMMENT");
         e.setAttribute(Xml.PASSENGER, Xml.FALSE);
         e.setAttribute(Xml.HAZARDOUS, Xml.FALSE);
         e.setAttribute(Xml.CABOOSE, Xml.TRUE);
@@ -80,7 +82,7 @@ public class CarsTest extends OperationsTestCase {
         e.setAttribute(Xml.LEAD_KERNEL, Xml.FALSE);
         e.setAttribute(Xml.LOAD, "TESTLOAD");
         e.setAttribute(Xml.LOAD_FROM_STAGING, Xml.TRUE);
-        e.setAttribute(Xml.WAIT, "0");
+        e.setAttribute(Xml.WAIT, "BAD7");
         e.setAttribute(Xml.PICKUP_SCHEDULE_ID, "TESTPICKUPSCHEDULE");
         e.setAttribute(Xml.SCHEDULE_ID, "TESTSCHEDULEID");
         e.setAttribute(Xml.NEXT_DEST_ID, "TESTNEXTDESTID");
@@ -90,13 +92,39 @@ public class CarsTest extends OperationsTestCase {
         e.setAttribute(Xml.PREVIOUS_SCHEDULE_ID, "TESTPREVIOUSSCHEDULEID");
         e.setAttribute(Xml.RWE_DEST_ID, "TESTRWEDESTID");
         e.setAttribute(Xml.RWE_LOAD, "TESTRWELOAD");
+        e.setAttribute(Xml.RWL_DEST_ID, "TESTRWLDESTID");
+        e.setAttribute(Xml.RWL_LOAD, "TESTRWLLOAD");
+        e.setAttribute(Xml.ROUTE_PATH, "TESTROUTEPATH");
 
         Assertions.assertDoesNotThrow( () -> {
             Car c1 = new Car(e);
             Assertions.assertNotNull(c1, "Xml Element Constructor");
+            Assert.assertEquals("Car Road", "TESTROAD1", c1.getRoadName());
+            Assert.assertEquals("Car Number", "TESTNUMBER1", c1.getNumber());
+            Assert.assertEquals("Car ID", "TESTROAD1" + "TESTNUMBER1", c1.getId());
+            Assert.assertEquals("Car Type", "TESTTYPE", c1.getTypeName());
+            Assert.assertEquals("Car Length", "TESTLENGTH", c1.getLength());
+            Assert.assertEquals("Car Color", "TESTCOLOR", c1.getColor());
+            Assert.assertFalse("Car Hazardous", c1.isHazardous());
+            Assert.assertFalse("Car Fred", c1.hasFred());
+            Assert.assertTrue("Car Caboose", c1.isCaboose());
+            Assert.assertEquals("Car Weight", "TESTWEIGHT", c1.getWeight());
+            Assert.assertEquals("Car Built", "TESTBUILT", c1.getBuilt());
+            Assert.assertEquals("Car Owner", "TESTOWNER", c1.getOwnerName());
+            Assert.assertEquals("Car Comment", "TESTCOMMENT", c1.getComment());
+            Assert.assertEquals("Car Load", "TESTLOAD", c1.getLoadName());
+            Assert.assertEquals("Car RWE Load", "TESTRWELOAD", c1.getReturnWhenEmptyLoadName());
+            Assert.assertEquals("Car RWL Load", "TESTRWLLOAD", c1.getReturnWhenLoadedLoadName());
+            Assert.assertEquals("TESTROUTEPATH", c1.getRoutePath());
         } ,"Exception while executing Xml Element Constructor");
 
+        jmri.util.JUnitAppender
+                .assertErrorMessage("Move count (BAD5) for rollingstock (TESTROAD1 TESTNUMBER1) isn't a valid number!");
+        jmri.util.JUnitAppender
+                .assertErrorMessage("Blocking (BAD6) for rollingstock (TESTROAD1 TESTNUMBER1) isn't a valid number!");
         jmri.util.JUnitAppender.assertErrorMessage("Kernel TESTKERNEL does not exist");
+        jmri.util.JUnitAppender
+                .assertErrorMessage("Wait count (BAD7) for car (TESTROAD1 TESTNUMBER1) isn't a valid number!");
     }
 
     // test creation

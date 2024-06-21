@@ -48,6 +48,7 @@ public class Xml {
     static final String RWL_DEST_ID = "rwlDestId"; // NOI18N
     static final String RWL_DEST_TRACK_ID = "rwlDestTrackId"; // NOI18N
     static final String RWL_LOAD = "rwlLoad"; // NOI18N
+    static final String ROUTE_PATH = "routePath"; // NOI18N
 
     // CarManager.java
     static final String OPTIONS = "options"; // NOI18N

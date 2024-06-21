@@ -79,6 +79,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         e.setAttribute(Xml.OUT_OF_SERVICE, Xml.FALSE);
         e.setAttribute(Xml.BLOCKING, "5");
         e.setAttribute(Xml.COMMENT, "Test Comment");
+        e.setAttribute("wait", "6");
 
         Assertions.assertDoesNotThrow( () ->  {
             Car rs1 = new Car(e);

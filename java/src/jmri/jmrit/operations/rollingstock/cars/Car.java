@@ -53,6 +53,8 @@ public class Car extends RollingStock {
     protected String _previousScheduleId = NONE;
     protected String _pickupScheduleId = NONE;
 
+    protected String _routePath = NONE;
+
     public static final String EXTENSION_REGEX = " ";
     public static final String CABOOSE_EXTENSION = Bundle.getMessage("(C)");
     public static final String FRED_EXTENSION = Bundle.getMessage("(F)");
@@ -372,6 +374,7 @@ public class Car extends RollingStock {
             _finalDestination.addPropertyChangeListener(this);
         }
         if ((old != null && !old.equals(destination)) || (destination != null && !destination.equals(old))) {
+            setRoutePath(NONE);
             setDirtyAndFirePropertyChange(FINAL_DESTINATION_CHANGED_PROPERTY, old, destination);
         }
     }
@@ -381,8 +384,8 @@ public class Car extends RollingStock {
     }
     
     public String getFinalDestinationName() {
-        if (_finalDestination != null) {
-            return _finalDestination.getName();
+        if (getFinalDestination() != null) {
+            return getFinalDestination().getName();
         }
         return NONE;
     }
@@ -412,8 +415,8 @@ public class Car extends RollingStock {
     }
 
     public String getFinalDestinationTrackName() {
-        if (_finalDestTrack != null) {
-            return _finalDestTrack.getName();
+        if (getFinalDestinationTrack() != null) {
+            return getFinalDestinationTrack().getName();
         }
         return NONE;
     }
@@ -542,6 +545,18 @@ public class Car extends RollingStock {
             return true;
         }
         return false;
+    }
+
+    public void setRoutePath(String routePath) {
+        String old = _routePath;
+        _routePath = routePath;
+        if (!old.equals(routePath)) {
+            setDirtyAndFirePropertyChange("Route path change", old, routePath);
+        }
+    }
+
+    public String getRoutePath() {
+        return _routePath;
     }
 
     public void setCaboose(boolean caboose) {
@@ -1078,6 +1093,9 @@ public class Car extends RollingStock {
         if ((a = e.getAttribute(Xml.RWL_LOAD)) != null) {
             _rwlLoadName = a.getValue();
         }
+        if ((a = e.getAttribute(Xml.ROUTE_PATH)) != null) {
+            _routePath = a.getValue();
+        }
         addPropertyChangeListeners();
     }
 
@@ -1173,6 +1191,10 @@ public class Car extends RollingStock {
             e.setAttribute(Xml.RWL_LOAD, getReturnWhenLoadedLoadName());
         }
 
+        if (!getRoutePath().isEmpty()) {
+            e.setAttribute(Xml.ROUTE_PATH, getRoutePath());
+        }
+
         return e;
     }
 
@@ -1206,13 +1228,13 @@ public class Car extends RollingStock {
             }
         }
         if (e.getPropertyName().equals(Location.DISPOSE_CHANGED_PROPERTY)) {
-            if (e.getSource() == _finalDestination) {
+            if (e.getSource() == getFinalDestination()) {
                 log.debug("delete final destination for car: ({})", toString());
                 setFinalDestination(null);
             }
         }
         if (e.getPropertyName().equals(Track.DISPOSE_CHANGED_PROPERTY)) {
-            if (e.getSource() == _finalDestTrack) {
+            if (e.getSource() == getFinalDestinationTrack()) {
                 log.debug("delete final destination for car: ({})", toString());
                 setFinalDestinationTrack(null);
             }
