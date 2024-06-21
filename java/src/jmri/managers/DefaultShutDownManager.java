@@ -261,7 +261,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
      * @param exit   true if System.exit() should be called if all tasks are
      *               executed correctly; false otherwise
      */
-    protected void shutdown(int status, boolean exit) {
+    public void shutdown(int status, boolean exit) {
         Runnable shutdownTask = () -> { doShutdown(status, exit); };
 
         if (!blockingShutdown) {
