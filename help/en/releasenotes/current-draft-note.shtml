@@ -442,6 +442,10 @@
         <ul>
           <li>The expression <strong>Reporter</strong> can now use
               indirect addressing for selecting the Reporter.</li>
+          <li>The action <strong>Publish</strong> in the category
+              <strong>MQTT</strong> now has the option
+              <strong>Retain</strong>. If the value is <strong>Default</strong>,
+              the value of the connection will be used.</li>
           <li></li>
         </ul>
 
