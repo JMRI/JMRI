@@ -98,8 +98,8 @@ public class PublishSwing extends AbstractDigitalActionSwing {
         retainPanel.add(_retainComboBox);
 
         panel.add(internalPanel);
-        panel.add(mqttPanel);
         panel.add(retainPanel);
+        panel.add(mqttPanel);
     }
 
     /** {@inheritDoc} */
