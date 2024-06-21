@@ -2842,6 +2842,23 @@ public class CreateLogixNGTreeScaffold {
         publish = new jmri.jmrix.mqtt.logixng.Publish(digitalActionManager.getAutoSystemName(), null, _mqttMemo);
         publish.getSelectTopic().setValue("topic");
         publish.getSelectMessage().setValue("message");
+        publish.setRetain(jmri.jmrix.mqtt.logixng.Publish.Retain.Default);
+        maleSocket = digitalActionManager.registerAction(publish);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        publish = new jmri.jmrix.mqtt.logixng.Publish(digitalActionManager.getAutoSystemName(), null, _mqttMemo);
+        publish.getSelectTopic().setValue("otherTopic");
+        publish.getSelectMessage().setValue("otherMessage");
+        publish.setRetain(jmri.jmrix.mqtt.logixng.Publish.Retain.Yes);
+        maleSocket = digitalActionManager.registerAction(publish);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        publish = new jmri.jmrix.mqtt.logixng.Publish(digitalActionManager.getAutoSystemName(), null, _mqttMemo);
+        publish.getSelectTopic().setValue("topic");
+        publish.getSelectMessage().setValue("message");
+        publish.setRetain(jmri.jmrix.mqtt.logixng.Publish.Retain.No);
         maleSocket = digitalActionManager.registerAction(publish);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
