@@ -1174,13 +1174,13 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
 
         #find one of the trains in the roster
 
-        list = self.get_all_roster_entries_with_speed_profile()
-        if list == []:
+        my_list = self.get_all_roster_entries_with_speed_profile()
+        if my_list == []:
             JOptionPane.showMessageDialog(None, "No roster entries\nCannot produce train info files", 'Stopping', JOptionPane.WARNING_MESSAGE)
             raise Exception
         else:
-            if self.logLevel > 1: print "list of transits" , list
-            train_name = str(list[0])      #use the first roster entry with a speed profile
+            if self.logLevel > 1: print "list of transits" , my_list
+            train_name = str(my_list[0])      #use the first roster entry with a speed profile
 
             TrainInfo.setTrainName(train_name)
             TrainInfo.setTransitId(transit_name)

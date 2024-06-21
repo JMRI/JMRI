@@ -10,14 +10,17 @@ import java.net as net
 class Timetable:
 
     def __init__(self, station):
-        # print "start timetable"
+        print "start timetable"
         self.html_content = "unset"
-        # print "html_content", self.html_content
+        print "html_content", self.html_content
         self.frame = None
-        # print "creating window"
+        print "creating window"
         self.createWindow(station)
 
     def update_timetable(self, required_station, time, timetable):
+
+        # print "required_station, time, timetable", required_station, time, timetable
+        print "required_station", required_station
 
         # print "update timetable"
         html_table = self.get_html_table(time, required_station, timetable)
@@ -38,8 +41,10 @@ class Timetable:
             return ""
 
         string = '''<tr>
+            <th>$station_arrival_time$</th>
             <th>$station_departure_time$</th>
             <th>$train$</th>
+            <th>$first_station$</th>
             <th>$last_station$</th>
             <th>$via$</th$>
             </tr>
@@ -51,24 +56,33 @@ class Timetable:
                 <th>$time$</th>
             </tr>
             <tr>
-                <th class="it">Time</th>
+                <th class="it">Arrival Time</th>
+                <th class="it">Departure Time</th>
                 <th class="it">Train</th>
+                <th class="it">From</th>
                 <th class="it">Destination</th>
                 <th class="it">Via</th>
             </tr>
         '''
-        html_table = html_table1.replace("$station$", required_station).replace("$time$", time)
+
+        try:
+            html_table = html_table1.replace("$station$", required_station).replace("$time$", time)
+        except:
+            html_table = html_table1.replace("$station$", "station not set 1").replace("$time$", time)
 
         for timetable_entry in timetable:
             # ['SidingMiddlleLHS', '7:1',             # ['SidingMiddlleLHS', '7:1', 'SidingMiddlleLHS', '10', 'SidingTopRHS']'SidingMiddlleLHS', '10', 'SidingTopRHS']
             # print "timetable_entry", timetable_entry
-            [train, station_name, station_departure_time, last_station, last_station_arrival_time, via] = timetable_entry
+            [train, station_name, station_departure_time, last_station, station_arrival_time, via] = timetable_entry
+            first_station = "fred"
             # print "[station_name, station_departure_time, last_station, last_station_arrival_time, via]", [station_name, station_departure_time, last_station, last_station_arrival_time, via]
             if str(station_name) == required_station:
                 html_table_entry = string.replace("$station_name$", station_name) \
+                    .replace("$station_arrival_time$", station_arrival_time) \
                     .replace("$station_departure_time$", station_departure_time) \
                     .replace("$train$", train) \
-                    .replace("$last_station$", last_station) \
+                    .replace("$first_station$", first_station) \
+                     .replace("$last_station$", last_station) \
                     .replace("$via$", via)
                 # print "html_table_entry", html_table_entry
 
@@ -91,7 +105,7 @@ class Timetable:
         # self.frame.addWindowListener(MyWindowAdapter())
 
         self.createUI(station)
-        self.frame.setSize(560, 450)
+        self.frame.setSize(700, 450)
         self.frame.setLocationRelativeTo(None)
         self.frame.setVisible(True)
         # print "created window"
@@ -106,7 +120,7 @@ class Timetable:
             self.frame.setVisible(True)
 
     def createUI(self, station):
-        # print "in createUI"
+        print "in createUI"
         self.panel = JPanel()
         # self.panel.setLayout(BorderLayout())   #allow resizing of window by using BorderLayout
         layout = BorderLayout()
@@ -120,14 +134,15 @@ class Timetable:
         #     print "about to get_html2"
         self.html_content = self.get_html()
         self.html_content = self.edit_html_station(station)
-        # print "about to load html"
+        print "about to load html"
         self.load_html(self.html_content)
-        # print "loaded html"
+        print "loaded html"
         jScrollPane = JScrollPane(self.jEditorPane)
         jScrollPane.setPreferredSize(Dimension(540, 400))
 
         self.panel.add(jScrollPane)
         self.frame.getContentPane().add(self.panel, BorderLayout.CENTER)
+        print "finished create UI"
 
     def get_html(self):
         # print "in get_html"
@@ -157,7 +172,12 @@ class Timetable:
     def edit_html_station(self, station):
 
         html_edit = self.html_content
-        html_edit = html_edit.replace("$station$", station)
+        print "html_edit type", type(html_edit)
+        print "*********************station*****************************", station
+        try:
+            html_edit = html_edit.replace("$station$", station)
+        except:
+            html_edit = html_edit.replace("$station$", "station not set")
         # html_edit = html_edit.replace ("$time$", time)
         # print "EDITED html time"
         return html_edit

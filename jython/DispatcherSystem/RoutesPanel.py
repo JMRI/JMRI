@@ -532,7 +532,7 @@ class CreateAndShowGUI6(TableModelListener):
         first, _, rest = string.partition(delim1)
         _, _, rest = rest.partition(delim2)
         # print "string", string, "first.strip()", first.strip(), "rest.strip()", rest.strip()
-        new_val = delim1 + value + delim2
+        new_val = delim1 + str(value) + delim2
         modified_text = new_val.join([first.strip(), rest.strip()])
         # print "modified_text",modified_text
         return modified_text
@@ -604,14 +604,14 @@ class MyModelListener6(TableModelListener):
         self.logLevel = 0
         self.i = 0
     def tableChanged(self, e) :
-
+        global CreateAndShowGUI5_glb
         # print "INDES", self.i
         # self.i +=1
         # # if self.i % 2 == 0: return
         # global trains_allocated
         row = e.getFirstRow()
         column = e.getColumn()
-        print "table changed", column
+        # print "table changed", column
         self.model = e.getSource()
         # columnName = self.model.getColumnName(column)
         #
@@ -622,10 +622,14 @@ class MyModelListener6(TableModelListener):
         # print "a"
         if column == edit_col:     #trains
             if self.model.getValueAt(row, edit_col) == True:
-                print "starting edit"
+                print "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$starting edit"
                 route_data = str(self.model.getValueAt(row, route_col))
                 scheduled_start = "00:00"
-                CreateAndShowGUI5(self, route_data, scheduled_start)
+                if "CreateAndShowGUI5_glb" in globals():
+                    print "*******************************88 IN GLOBALS ****************************************"
+                    if CreateAndShowGUI5_glb != None:
+                        CreateAndShowGUI5_glb.frame.dispose()
+                CreateAndShowGUI5_glb = CreateAndShowGUI5(self, route_data, scheduled_start)
                 self.model.setValueAt(False, row, edit_col)
         elif column == delete_col:
             # class_CreateAndShowGUI6.run_route(row, model, class_CreateAndShowGUI6, class_SchedulerPanel)
@@ -633,7 +637,7 @@ class MyModelListener6(TableModelListener):
             route_name = self.model.getValueAt(row, route_col)
             RouteManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
             route = RouteManager.getRouteByName(route_name)
-            print "route name", route.getName()
+            # print "route name", route.getName()
             #delete the route row
             RouteManager.deregister(route)
             self.delete_row(row)
@@ -642,15 +646,15 @@ class MyModelListener6(TableModelListener):
         # class_CreateAndShowGUI5.save()    # save everything when the table is chabged
         
     def delete_row(self, row):
-        print "deleting row"
+        # print "deleting row"
         self.model.data.pop(row)
 
 
     def show_time_picker(self):
         # Show a simple JOptionPane input dialog for time selection
         selected_time = JOptionPane.showInputDialog(None, "Select a time (HH:mm):")
-        if selected_time:
-            print("Selected time:", selected_time)
+        # if selected_time:
+            # print("Selected time:", selected_time)
         return selected_time
 
 
@@ -705,7 +709,7 @@ class MyTableModel6 (DefaultTableModel):
         # print "in populate"
         for row in reversed(range(len(self.data))):
             self.data.pop(row)
-        print "cleared everything"
+        # print "cleared everything"
         # self.data = []
         # append all trains to put in dropdown
         [time_col, delete_col, edit_col] = [0, 1, 2]
@@ -766,12 +770,12 @@ class MyTableModel6 (DefaultTableModel):
 
     # only include if data can change.
     def setValueAt(self, value, row, col) :
-        print "row1", row, "col", col, "value", value
+        # print "row1", row, "col", col, "value", value
         if col == 0:
-            print "row2", row, "col", col, "value", value
+            # print "row2", row, "col", col, "value", value
             if not self.isValidTimeFormat(value):
                 return
-        print "row", row, "col", col, "value", value
+        # print "row", row, "col", col, "value", value
         self.data[row][col] = value
         self.fireTableCellUpdated(row, col)
 
@@ -784,8 +788,8 @@ class MyTableModel6 (DefaultTableModel):
         import re
         pattern = r"^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$"  # Matches HH.MM format
         my_match = re.match(pattern, input_string) is not None
-        print "m", re.match(pattern, input_string) is not None
-        print "my_match", re.match(pattern, input_string)
+        # print "m", re.match(pattern, input_string) is not None
+        # print "my_match", re.match(pattern, input_string)
 
         return my_match
 

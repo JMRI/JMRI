@@ -156,7 +156,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def transit_restrictions(self, null_text):
         global g
-        list = []
+        my_list = []
         for edge in g.g_express.edgeSet():
             # do for fwd
             filename_fwd = self.get_filename(edge, "fwd")
@@ -168,7 +168,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             if transit_block_name != "":
                 if self.logLevel > 0: print [filename_fwd, transit_name, transit_block_name]
                 #list.append([filename_fwd, transit_block_name])
-                list.append([transit_name, transit_block_name])
+                my_list.append([transit_name, transit_block_name])
                 if self.logLevel > 0: print "appended list"
             else:
                 pass
@@ -183,7 +183,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             #     list.append([filename_rvs, transit_block_name])
         # if list == []:
         #     list.append(null_text)
-        return list
+        return my_list
 
     def switch_sensors_requiring_station_buttons(self, sensor, mode):
 
@@ -403,13 +403,13 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             if self.od.CLOSED_OPTION == True: #check of optionbox was closed prematurely
                 self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
                 return
-            [list,s] = ss
+            [my_list,s] = ss
             if s == opt1:
-                if list != "no stop sensors set up":
+                if my_list != "no stop sensors set up":
                     while(1):
-                        if list != ["no stop sensors set up"]:
+                        if my_list != ["no stop sensors set up"]:
                             #delete the item
-                            [section_text, stopping_sensor_text] = list
+                            [section_text, stopping_sensor_text] = my_list
                             section_name = section_text.split(" ")[1]
                             stopping_sensor_name = stopping_sensor_text.split(" ")[1]
                             sections.getSection(section_name).setForwardStoppingSensorName(None)
@@ -423,7 +423,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
                         if list_items == [] :
                             list_items = ["no stop sensors set up"]
                         if self.logLevel > 1: print "list_items", list_items
-                        [list, option]  = self.od.ListOptions(list_items, title, options)
+                        [my_list, option]  = self.od.ListOptions(list_items, title, options)
                         if self.od.CLOSED_OPTION == True or option == "Cancel": #check of optionbox was closed prematurely
                             self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
                             return

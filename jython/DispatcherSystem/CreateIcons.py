@@ -635,6 +635,8 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         # Create a dummy sensor
         sensor = sensors.provideSensor('IS:DSCT:' + str(0))
         sensor.setUserName("DummyControlSensor")
+        sensor = sensors.provideSensor('IS:DSCTA:' + str(0))
+        sensor.setUserName("Jdialog_closed")
 
         # Create the stop sensors
         index = 0

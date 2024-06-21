@@ -194,12 +194,13 @@ class CreateAndShowGUI4(TableModelListener):
         TrainManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
         train_list = TrainManager.getTrainsByTimeList()
         my_list = [[train.getName(), train.getDepartureTime(), train.getComment(), train.getRoute()] for train in train_list]
+        print "my_list", my_list
         return my_list
 
     def populate_action(self, event):
         # print "populating"
         items_to_put_in_dropdown = self.get_route_list()
-        print "items_to_put_in_dropdown", items_to_put_in_dropdown
+        # print "items_to_put_in_dropdown", items_to_put_in_dropdown
         self.model.populate(items_to_put_in_dropdown)
         # print "populated"
         self.completeTablePanel()
@@ -284,18 +285,18 @@ class CreateAndShowGUI4(TableModelListener):
             [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, edit_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]
             for row in my_list:
                 [time_val, route_val, repeat_val, dont_schedule_val, train_name_val, edit_val, delete_val] = row
-                print "reading row", row
+                # print "reading row", row
                 self.model.add_row()
                 self.model.data[i][time_col] = time_val.replace('"','')
                 self.model.data[i][route_col] = route_val.replace('"','')
                 self.model.data[i][repeat_col] = repeat_val.replace('"','')
-                print "dont_schedule_val", dont_schedule_val, "(dont_schedule_val == 'True'') ", (dont_schedule_val == "True")
+                # print "dont_schedule_val", dont_schedule_val, "(dont_schedule_val == 'True'') ", (dont_schedule_val == "True")
                 self.model.data[i][dont_schedule_col] = (dont_schedule_val.replace('"','') == "True")    #convert string to boolean
                 self.model.data[i][train_name_col] = train_name_val.replace('"','')
                 # self.model.data[i][edit_col] = edit_val.replace('"','')
                 # self.model.data[i][delete_col] = bool(delete_val.replace('"',''))
                 i += 1
-                print "read row", row
+                # print "read row", row
 
             self.save()
             self.completeTablePanel()
@@ -422,20 +423,20 @@ class CreateAndShowGUI4(TableModelListener):
     #
     def save(self):
         [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, edit_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]
-        print "save_action"
+        # print "save_action"
         self.clear_everything()
         # print "apply action"
         for row in reversed(range(len(self.model.data))):
-            print "save row", row
+            # print "save row", row
             time_name = str(self.model.data[row][time_col])
             route_name = str(self.model.data[row][route_col])
             train_name = str(self.model.data[row][train_name_col])
             repeat_name = str(self.model.data[row][repeat_col])
-            print "repeat_name", repeat_name
+            # print "repeat_name", repeat_name
             dont_schedule_name = str(self.model.data[row][dont_schedule_col])
             # if time_name != "" and route_name != "" and train_name_val != "":
             if train_name != "":
-                print "save schedule"
+                # print "save schedule"
                 self.save_schedule(row, time_name, route_name, repeat_name, dont_schedule_name, train_name)
                 pass
             else:
@@ -463,7 +464,7 @@ class CreateAndShowGUI4(TableModelListener):
         train.setName(train_name)
 
     def set_repeat(self, train, repeat):
-        print "in set_repeat"
+        # print "in set_repeat"
         comment = train.getComment()    #Null
         # if comment == None: comment = ""
         # repeat_current = MyTableModel4().find_between(comment, "[repeat-", "-repeat]")   # empty string
@@ -471,9 +472,9 @@ class CreateAndShowGUI4(TableModelListener):
         # if repeat_current != repeat:
         #     # self.delete_between(comment, "[repeat-", "-repeat]")
         # comment = ""
-        print "comment3a", comment
+        # print "comment3a", comment
         comment = self.insert_between(comment, "[repeat-", "-repeat]", repeat)
-        print "comment3", comment
+        # print "comment3", comment
         train.setComment(comment)
 
     def set_skip(self, train, dont_schedule_name):
@@ -493,12 +494,13 @@ class CreateAndShowGUI4(TableModelListener):
         return cleaned_text
     
     def insert_between(self, string, delim1, delim2, value):
-        #inserts value between delim1 and delim2 and adds all to end of string
-        to_be_added = " " + delim1 + value + delim2
-        # print "to_be_added", to_be_added
-        ans = string + to_be_added
-        # print "ans", ans
-        return ans
+        first, _, rest = string.partition(delim1)
+        _, _, rest = rest.partition(delim2)
+        # print "string", string, "first.strip()", first.strip(), "rest.strip()", rest.strip()
+        new_val = delim1 + str(value) + delim2
+        modified_text = new_val.join([first.strip(), rest.strip()])
+        # print "modified_text",modified_text
+        return modified_text
 
     def clear_everything(self):
         TrainManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
@@ -567,13 +569,14 @@ class MyModelListener4(TableModelListener):
         self.logLevel = 0
         self.i = 0
     def tableChanged(self, e) :
-        print "INDES", self.i
+        # print "INDES", self.i
         self.i +=1
         # if self.i % 2 == 0: return
         global trains_allocated
+        global CreateAndShowGUI5_glb
         row = e.getFirstRow()
         column = e.getColumn()
-        print "column", column
+        # print "column", column
         self.model = e.getSource()
         columnName = self.model.getColumnName(column)
 
@@ -581,18 +584,21 @@ class MyModelListener4(TableModelListener):
         class_ResetButtonMaster = self.class_ResetButtonMaster
         tablemodel = class_CreateAndShowGUI4.model
         [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, edit_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]
-        print "a"
         if column == time_col:     #trains
             pass
         elif column == edit_col:       # sections
             if self.model.getValueAt(row, edit_col) == True:
-                print "starting edit"
+                # print "starting edit"
                 route_data = str(self.model.getValueAt(row, route_col))
                 scheduled_start = self.model.getValueAt(row, time_col)
-                CreateAndShowGUI5(self, route_data, scheduled_start)
+                if "CreateAndShowGUI5_glb" in globals():
+                    if CreateAndShowGUI5_glb != None:
+                        CreateAndShowGUI5_glb.frame.dispose()
+                CreateAndShowGUI5_glb = CreateAndShowGUI5(self, route_data, scheduled_start)
+                print "e"
                 self.model.setValueAt(False, row, edit_col)
         elif column == delete_col:
-            print "delete col/row"
+            # print "delete col/row"
             title = ""
             msg = "delete row?"
             opt1 = "dont' delete row"
@@ -614,8 +620,8 @@ class MyModelListener4(TableModelListener):
     def show_time_picker(self):
         # Show a simple JOptionPane input dialog for time selection
         selected_time = JOptionPane.showInputDialog(None, "Select a time (HH:mm):")
-        if selected_time:
-            print("Selected time:", selected_time)
+        # if selected_time:
+        #     print("Selected time:", selected_time)
         return selected_time
 
 
@@ -662,9 +668,9 @@ class MyTableModel4 (DefaultTableModel):
         else:
             index = max(indices) + 1
         train_name = "Train" + str(index)
-        print "adding row"
+        # print "adding row"
         self.data.append(["00:00", "", "Once", False, train_name, False, False])
-        print "added row"
+        # print "added row"
         # print self.data
         # print "added"
 
@@ -677,16 +683,16 @@ class MyTableModel4 (DefaultTableModel):
         # append all trains to put in dropdown
         [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, edit_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]
         for [train, time, comment, route] in items_to_put_in_dropdown:
-            print "train", train
+            # print "train", train
             if "skip" in comment:
                 skip = True
             else:
                 skip = False
-            print "skip", skip
+            # print "skip", skip
             train_present = False
             repeat = self.find_between(comment, "[repeat-", "-repeat]")
             if repeat == "": repeat = "Once"
-            print "repeat" , repeat
+            # print "repeat" , repeat
             # for row in reversed(range(len(self.data))):
             #     if self.data[row][route_col] == route:
             #         train_present = True
@@ -739,12 +745,12 @@ class MyTableModel4 (DefaultTableModel):
 
     # only include if data can change.
     def setValueAt(self, value, row, col) :
-        print "row1", row, "col", col, "value", value
+        # print "row1", row, "col", col, "value", value
         if col == 0:
-            print "row2", row, "col", col, "value", value
+            # print "row2", row, "col", col, "value", value
             if not self.isValidTimeFormat(value):
                 return
-        print "row", row, "col", col, "value", value
+        # print "row", row, "col", col, "value", value
         self.data[row][col] = value
         self.fireTableCellUpdated(row, col)
 
@@ -757,8 +763,8 @@ class MyTableModel4 (DefaultTableModel):
         import re
         pattern = r"^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$"  # Matches HH.MM format
         my_match = re.match(pattern, input_string) is not None
-        print "m", re.match(pattern, input_string) is not None
-        print "my_match", re.match(pattern, input_string)
+        # print "m", re.match(pattern, input_string) is not None
+        # print "my_match", re.match(pattern, input_string)
 
         return my_match
 

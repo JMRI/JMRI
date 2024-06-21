@@ -75,7 +75,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                     return
             self.waitMsec(5000)
             i += 1
-        print "move_between_stations a"
+        # print "move_between_stations a"
         if self.logLevel > 0: print "train is in start block"
         #need to look up the required transit in the graph
         StateVertex_start = station_from_name
@@ -84,10 +84,10 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         # if self.logLevel > 1: print (graph.getEdgeSource(e) + " --> " + graph.getEdgeTarget(e))
         if self.logLevel > 0: print "calling shortest path", StateVertex_start, StateVertex_end
         paths = DijkstraShortestPath.findPathBetween(graph, StateVertex_start, StateVertex_end)
-        print "move_between_stations b"
+        # print "move_between_stations b"
         if paths == None:
-            print "cannot find shortest path, paths found is empty"
-            print "end of move between ", station_from_name, station_to_name
+            # print "cannot find shortest path, paths found is empty"
+            # print "end of move between ", station_from_name, station_to_name
             return
 
         if self.logLevel > 1: print "graph", graph
@@ -112,14 +112,14 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         trains_dispatched.append(str(train_name))
 
         count_path = 0
-        print "move_between_stations c"
+        # print "move_between_stations c"
         if paths == None or paths == []:
             print "1Error cannot find shortest path. restart the system. " + \
                   "The stop dispatcher system routine does not work properly with multiple layout panels. Sorry"
             return
 
         for e in paths:
-            print "move_between_stations d"
+            # print "move_between_stations d"
             # need to check whether:
             #   last block of previous edge and current first block
             #   are the same
@@ -142,7 +142,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
             # wait for the allocated time
             speech_reqd = self.speech_required_flag()
-            print "move_between_stations e"
+            # print "move_between_stations e"
             # wait in station and announce the wait time (announcement only for debugging)
             if 'transit_direction' not in locals():
                 td = "forwards"
@@ -157,7 +157,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             msg = "finished waiting for " + str(int(t)) + " seconds"
             if self.logLevel > 0: self.speak(msg)
             #self.speak(msg)
-            print "move_between_stations f"
+            # print "move_between_stations f"
             if count_path == 0:
                 # we are on a new path and must determine the direction
                 [transit_direction, transit_instruction]  = self.set_direction(previous_block, current_block, next_block, previous_direction)
@@ -177,9 +177,9 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                 self.announce1(e, transit_direction, transit_instruction, train)
             iter = 0
             result = False
-            print "move_between_stations g"
+            # print "move_between_stations g"
             while result == False:
-                print "move_between_stations h move%%%%%%%%%%%%%%%%"
+                # print "move_between_stations h move%%%%%%%%%%%%%%%%"
                 result = self.move(e, transit_direction, transit_instruction,  train_name)
                 if self.logLevel > 1: print "returned from self.move, result = ", result
                 if result == False:
@@ -196,7 +196,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                     else:
                         break
                 iter += 1
-            print "move_between_stations h"
+            # print "move_between_stations h"
             #store the current edge for next move
             train["edge"] = e
             train["penultimate_block_name"] = e.getItem("penultimate_block_name")
@@ -216,16 +216,16 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         #
         # these two cases are not exclusive.
 
-        print "set_direction"
+        # print "set_direction"
         transit_instruction = "same"
 
-        if previous_block == next_block:
-            transit_instruction = "change"
+        # if previous_block == next_block:
+        #     transit_instruction = "change"
 
         LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
         current_layout_block = LayoutBlockManager.getLayoutBlock(current_block)
         if not current_layout_block.validThroughPath(previous_block, next_block):
-            transit_instruction = "chnage"
+            transit_instruction = "change"
 
         if transit_instruction == "change":
             if previous_direction == "forward":
@@ -237,7 +237,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         return [transit_direction, transit_instruction]
 
     def check_train_in_start_block(self, train_to_move, blockName):
-        print "check_train_in_start_block"
+        # print "check_train_in_start_block"
         # print "checking " , train_to_move, " in " , blockName
         block = blocks.getBlock(blockName)
         if self.blockOccupied(block):
@@ -246,11 +246,11 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                 return True
             else:
                 startBlock = block.getUserName()
-                print "trying to move from blockName" , blockName, "but not occupied by", "train_to_move", train_to_move
+                # print "trying to move from blockName" , blockName, "but not occupied by", "train_to_move", train_to_move
                 blockName = [block.getUserName() for block in blocks.getNamedBeanSet() if block.getValue() == train_to_move]
                 if blockName != []:
                     blockName = blockName[0]
-                    print "train", train_to_move, "actually in" , blockName
+                    # print "train", train_to_move, "actually in" , blockName
                     return False
                 else:
                     blockName = "train not in any block"
@@ -269,7 +269,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             return False
 
     def blockOccupied(self, block):
-        print "blockOccupied"
+        # print "blockOccupied"
         if block.getState() == ACTIVE:
             state = True
         else:
@@ -278,7 +278,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def get_time_to_stop_in_station(self, edge, direction):
 
-        print "get_time_to_stop_in_station"
+        # print "get_time_to_stop_in_station"
 
         if direction == "forward":
             filename_fwd = self.get_filename(edge, "fwd")
@@ -304,14 +304,14 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             return float(n).is_integer()
 
     def announce1(self, e, direction, instruction, train):
-        print "announce1"
+        # print "announce1"
         to_name = e.getTarget()
         from_name = e.getSource()
         speech_reqd = self.speech_required_flag()
         self.announce( from_name, to_name, speech_reqd, direction, instruction)
 
     def move(self, e, direction, instruction, train):
-        print "move"
+        # print "move"
         if self.logLevel > 1: print "++++++++++++++++++++++++"
         if self.logLevel > 1: print e, "Target", e.getTarget()
         if self.logLevel > 1: print e, "Source", e.getSource()
@@ -326,7 +326,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         #self.announce( from_name, to_name, speech_reqd, direction, instruction)  # now done when train arrives in platfor instead of when leaving
         if self.logLevel > 1: print "***************************"
         # print "calling move", train, from_name, to_name
-        print "move a"
+        # print "move a"
         result = self.call_dispatch(e, direction, train)
 
         if self.logLevel > 1: print "______________________"
@@ -360,7 +360,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         return result
 
     def speech_required_flag(self):
-        print "speech_required_flag"
+        # print "speech_required_flag"
         self.sound_sensor = sensors.getSensor("soundSensor")
         if self.sound_sensor is None:
             OptionDialog().displayMessage("No sound Sensor set up")
@@ -374,11 +374,11 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         return sound_flag
 
     def call_dispatch(self, e, direction, train):
-        print "call dispatch"
+        # print "call dispatch"
         global check_action_route_flag
         global check_route_flag
 
-        print "call_dispatch"
+        # print "call_dispatch"
 
         # for information only
         if self.logLevel > 1: print ("in dispatch")
@@ -392,24 +392,24 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         else:
             filename = self.get_filename(e, "rvs")
         if self.logLevel > 1: print "filename = ", filename, "direction = " , direction
-        print "call_dispatch a"
+        # print "call_dispatch a"
         check_route_active_flag = sensors.getSensor("checkRouteSensor").getKnownState()
         if check_route_active_flag == ACTIVE:
             check_route_flag = True
         else:
             check_route_flag = False
         if self.logLevel > 0: print "check_route_flag", check_route_flag
-        print "call_dispatch b"
+        # print "call_dispatch b"
         # initialise globals to False if not set
         if 'check_action_route_flag' not in globals():
             check_action_route_flag = False
 
         # wait for blocks to be clear before allocating (if required)
         if check_route_flag == True or check_action_route_flag == True:  # can ask for route to be checked globally or in action
-            print "call_dispatch b1"
+            # print "call_dispatch b1"
             i = 0
             self.wait_route_is_clear(filename, from_name)
-            print "call_dispatch b2"
+            # print "call_dispatch b2"
             #self.do_not_start_trains_simultaneously()
             # self.set_route_allocated(filename, from_name)  # can't wait for dispatcher to do this
                                         # else other routes will be allocated simultaneously
@@ -419,9 +419,9 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                 #     if self.logLevel > 0: print "waiting for route", filename, "to be clear"
                 # self.waitMsec(2000)
         # mark as allocating
-        print "call_dispatch c"
+        # print "call_dispatch c"
         t = trains[self.train_name]   #train is train_name
-        print "call_dispatch a  $$$$$"
+        # print "call_dispatch a  $$$$$"
         t["allocating"] = True
 
         if self.logLevel > 0 and self.train_name == "shunter": print "     ",
@@ -456,7 +456,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def get_filename(self, e, suffix):
 
-        print "get_filename"
+        # print "get_filename"
 
         # suffix is "fwd" or "rvs"
         # e is edge
@@ -476,7 +476,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def doDispatch(self, traininfoFileName, type, value):
 
-        print "doDispatch"
+        # print "doDispatch"
 
         DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
         if self.logLevel > 1: print "traininfoFileName",traininfoFileName
@@ -510,7 +510,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def get_train_length(self, new_train_name):
 
-        print "get_train_length"
+        # print "get_train_length"
 
         EngineManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.engines.EngineManager)
         engineRoad = "Set by Dispatcher System"
@@ -525,8 +525,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def get_train_speed_factor(self, new_train_name):
 
-        print "get_train_speed_factor" \
-              ""
+        # print "get_train_speed_factor"
         EngineManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.engines.EngineManager)
         engineRoad = "Set by Dispatcher System"
         engineNumber = new_train_name
@@ -549,7 +548,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def modify_trainInfo(self, train_name):
 
-        print "modify_trainInfo"
+        # print "modify_trainInfo"
 
         [engine,current_length] = self.get_train_length(train_name)  #get the engine name
         # print "in modify_trainInfo1a length = ", current_length
@@ -570,7 +569,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def set_whether_to_stop_at_sensor(self, DF):
 
-        print "set_whether_to_stop_at_sensor"
+        # print "set_whether_to_stop_at_sensor"
 
         transit_name = self.trainInfo.getTransitName()
         if self.logLevel > 0: print "transit_name", transit_name
@@ -608,7 +607,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def forward_stopping_sensor_exists(self, traininfo):
 
-        print "forward_stopping_sensor_exists"
+        # print "forward_stopping_sensor_exists"
 
         transit_name = traininfo.getTransitId()
         transit = transits.getTransit(transit_name)
@@ -637,7 +636,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def wait_sensor(self, sensorName, sensorState):
 
-        print "wait_sensor"
+        # print "wait_sensor"
 
         sensor = sensors.getSensor(sensorName)
         if sensor is None:
@@ -707,7 +706,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def announce(self, fromblockname, toblockname, speak_on, direction, instruction):
 
-        print "announce"
+        # print "announce"
 
         from_station = self.get_station_name(fromblockname)
         to_station = self.get_station_name(toblockname)
@@ -722,7 +721,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def get_station_name(self, block_name):
 
-        print "get_station_name"
+        # print "get_station_name"
 
         BlockManager = jmri.InstanceManager.getDefault(jmri.BlockManager)
         block = BlockManager.getBlock(block_name)
@@ -745,7 +744,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def bell(self, bell_on = "True"):
 
-        print "bell"
+        # print "bell"
 
         if bell_on == "True":
             snd = jmri.jmrit.Sound("resources/sounds/Bell.wav")
@@ -753,7 +752,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def do_not_start_trains_simultaneously(self):
 
-        print "do_not_start_trains_simultaneously"
+        # print "do_not_start_trains_simultaneously"
 
         global time_last_train
         time_now = int(round(time.time() * 1000))
@@ -832,7 +831,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         
     def set_route_allocated(self, traininfoFileName, startBlockName):
 
-        print "set_route_allocated"
+        # print "set_route_allocated"
 
         [transit_name, transit_id] = self.get_transit(traininfoFileName)
         TransitManager = jmri.InstanceManager.getDefault(jmri.TransitManager)
@@ -1071,11 +1070,11 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         #get the current length of the engine
         default = "10"
         current_length = engine.getLength()
-        print "current_length", current_length
-        print "type", type(current_length) , "test", str(current_length) == "0"
+        # print "current_length", current_length
+        # print "type", type(current_length) , "test", str(current_length) == "0"
         if str(current_length) == "0":
             current_length = default     # current length is in unicode
-        print "current_length2", current_length
+        # print "current_length2", current_length
         return [engine, current_length]
 
     def set_length(self, new_train_name):
@@ -1088,7 +1087,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         request = "Change"
         while request == "Change":
             [engine,current_length] = self.get_train_length(new_train_name)
-            print "current_length3", current_length
+            # print "current_length3", current_length
             # current_length is an integer, and is set to a default of 10 scale metres
             gauge = WarrantPreferences.getDefault().getLayoutScale()
             length_in_cm_float = (float(current_length) / gauge) * 100.0
@@ -1507,7 +1506,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
                 break
             #print "******************************++"
         if edge == None:
-            # print "Error the required block has not been found. restart and try again. Sorry!"
+            print "Error the required block has not been found. restart and try again. Sorry!"
             return ["Error", "Error", "Error"]
 
          # 3) set direction so can check direction of transit
@@ -1585,7 +1584,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
 
         if in_siding:
             if result == "reverse":
-                train_direction = "forward"
+                train_direction = "reverse"
             else:
                 train_direction = "forward"
         else:

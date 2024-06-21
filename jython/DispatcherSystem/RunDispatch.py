@@ -44,9 +44,10 @@ import imp
 import copy
 import org
 import sys
-import java.awt.Dimension
+from java.awt import Dimension
 
-from javax.swing import JScrollPane, JOptionPane, JFrame, JLabel, JButton, JTextField, JFileChooser, JMenu, JMenuItem, JMenuBar,JComboBox,JDialog,JList
+from javax.swing import JScrollPane, JOptionPane, JFrame, JLabel, JButton, JTextField, \
+    JFileChooser, JMenu, JMenuItem, JMenuBar,JComboBox,JDialog,JList, WindowConstants
 
 import sys
 
@@ -112,15 +113,16 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
     logLevel = 0
 
     def List(self, title, list_items, preferred_size = "default"):
-        list = JList(list_items)
-        list.setSelectedIndex(0)
-        scrollPane = JScrollPane(list);
+        my_list = \
+            JList(list_items)
+        my_list.setSelectedIndex(0)
+        scrollPane = JScrollPane(my_list);
         if preferred_size != "default":
             scrollPane.setPreferredSize(preferred_size)     # preferred_size should be set to Dimension(300, 500) say
         else:
             no_rows_to_display = min(40, len(list_items))
-            list.setVisibleRowCount(no_rows_to_display)
-            dim = list.getPreferredScrollableViewportSize()
+            my_list.setVisibleRowCount(no_rows_to_display)
+            dim = my_list.getPreferredScrollableViewportSize()
             w = int(dim.getWidth())
             h = int(dim.getHeight()) + 10  # to leave a bit of space at bottom. Height of row = approx 20
             scrollPane.setPreferredSize(Dimension(w,h))
@@ -140,23 +142,23 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
                 self.CLOSED_OPTION = True
                 if self.logLevel > 1 : print "closed Option"
                 return
-            i = list.getSelectedIndices()
+            i = my_list.getSelectedIndices()
         index = i[0]
         return list_items[index]
 
 
     #list and option buttons
     def ListOptions(self, list_items, title, options, preferred_size = "default"):
-        list = JList(list_items)
+        my_list = JList(list_items)
         if list_items != []:
-            list.setSelectedIndex(0)
-        scrollPane = JScrollPane(list);
+            my_list.setSelectedIndex(0)
+        scrollPane = JScrollPane(my_list);
         if preferred_size != "default":
             scrollPane.setPreferredSize(preferred_size)   # preferred_size should be set to Dimension(300, 500) say
         else:
             no_rows_to_display = min(40, len(list_items))
-            list.setVisibleRowCount(no_rows_to_display)
-            dim = list.getPreferredScrollableViewportSize()
+            my_list.setVisibleRowCount(no_rows_to_display)
+            dim = my_list.getPreferredScrollableViewportSize()
             w = int(dim.getWidth()) + 20
             h = int(dim.getHeight()) + 20  # to leave a bit of space at bottom. Height of row = approx 20
             scrollPane.setPreferredSize(Dimension(w,h))
@@ -174,7 +176,7 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
             return [None,None]
         if list_items == []:
             return [None, options[s]]
-        index = list.getSelectedIndices()[0]
+        index = my_list.getSelectedIndices()[0]
         return [list_items[index], options[s]]
 
         # call using
@@ -198,6 +200,41 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
             )
 
         return result
+
+    def displayMessageNonModal(self, msg, jButtonMsg = "OK"):
+        global customDialog
+        customDialog = JDialog(None, msg, False); # 'true' for modal
+        # customDialog.addWindowListener(WindowAdapter())
+        #     def windowClosing(self, e):
+        #         print("jdialog window closing event received")
+        #         # Add your custom closing logic herecustomDialog.addWindowListener(WindowAdapter():
+
+
+        # Add components to the customDialog
+        # customDialog.setSize(1200, 1200)
+        dimension = Dimension(400,150)
+        customDialog.setPreferredSize(dimension)
+
+
+        pane = customDialog.getContentPane();
+        pane.setLayout(None);
+        button = JButton(jButtonMsg, actionPerformed = self.click_action) ;
+
+        button.setBounds(10,10,300,60);
+        pane.add(button)
+        customDialog.setLocationRelativeTo(None);
+        # customDialog.setUndecorated(True)
+        customDialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE)
+        customDialog.pack();
+        customDialog.setVisible(True);
+
+    def click_action(self,e):
+        global customDialog
+        # global jdialog_closed
+        sensors.getSensor("Jdialog_closed").setKnownState(ACTIVE)
+        # print "&&&&&&&&&&&&&& jdialog_closed", jdialog_closed
+        customDialog.dispose()
+        return
 
     def displayMessage(self, msg, title = ""):
         self.CLOSED_OPTION = False
@@ -349,8 +386,6 @@ class modifiableJComboBox:
 
     def return_val(self):
         return self.ans
-
-
 
 class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
 
@@ -1463,16 +1498,16 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         #go to this bit when complete == True
 
         #get traininfo and stopping fraction
-        print "A"
+        # print "A"
         filename_fwd = self.get_filename(found_edge, "fwd")
         trainInfo_fwd = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(filename_fwd)
         # stopping_fraction = trainInfo_fwd.getStopBySpeedProfileAdjust()
 
         #modify stopping fraction in traininfo
         last_section = self.last_section_of_transit(trainInfo_fwd)
-        print "last section", last_section
+        # print "last section", last_section
         sensor_name = self.choose_stop_sensor(last_section)
-        print "sensor_name", sensor_name
+        # print "sensor_name", sensor_name
         last_section.setForwardStoppingSensorName(sensor_name)
         sensor_changed.setKnownState(INACTIVE)
         self.button_sensors_to_watch = copy.copy(self.button_sensors)
@@ -1871,27 +1906,27 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
     def get_section(self, path_name, last_block_name, penultimate):
         # first_block = blocks.getBlock(first_block_name)
         # last_block = blocks.getBlock(last_block_name)
-        print "path_name", path_name
+        # print "path_name", path_name
         if self.logLevel > 1: print "in get section"
         list_of_sections = []
         for section in sections.getNamedBeanSet():
             if section.getEntryBlock() != None:
-                print "z", section.getUserName()
+                # print "z", section.getUserName()
                 seq_no = section.getBlockSequenceNumber(section.getExitBlock())
-                print "a" , seq_no
+                # print "a" , seq_no
                 if seq_no == 0:
                     pb_no = 1
                 else:
                     pb_no = seq_no - 1
-                    print "b", seq_no -1
+                    # print "b", seq_no -1
                 try:
-                    print
+                    # print
                     penultimate_block = section.getBlockBySequenceNumber(pb_no)
                 except:
                     pass
                 if penultimate_block is not None:
-                    print "c"
-                    print "penultimate_block", penultimate_block.getUserName(), "penultimate", penultimate
+                    # print "c"
+                    # print "penultimate_block", penultimate_block.getUserName(), "penultimate", penultimate
                     if section.getEntryBlock().getUserName() in path_name and \
                             section.getExitBlock().getUserName() == last_block_name and \
                             penultimate_block.getUserName() == penultimate and \
@@ -2055,19 +2090,19 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             msg = "select train you want to move"
             list_items = trains_to_choose
             express = self.get_express_flag()
-            if express:
-                options = ["express", "stopping"]
-                default = "express"
-            else:
-                options = ["stopping", "express"]
-                default = "stopping"
+            # if express:
+            options = ["express", "stopping"]
+            #     default = "express"
+            # else:
+            #     options = ["stopping", "express"]
+            #     default = "stopping"
             title = "title"
             result = self.od.ListOptions(list_items, msg, options)
             if self.od.CLOSED_OPTION == False:
-                list = result[0]
+                my_list = result[0]
                 option = result[1]
-                if self.logLevel > 0: print "option= " ,option, " list = ",list
-                train_to_move = str(list)
+                if self.logLevel > 0: print "option= " ,option, " list = ",my_list
+                train_to_move = str(my_list)
                 train_type = str(option)
 
                 if self.logLevel > 0: print "train_to_move",train_to_move
