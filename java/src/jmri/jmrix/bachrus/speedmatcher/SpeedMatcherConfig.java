@@ -31,7 +31,6 @@ public class SpeedMatcherConfig {
     public SpeedTable speedTable;
 
     public DccLocoAddress dccLocoAddress;
-    public Logger logger;
     public PowerManager powerManager;
 
     public float targetStartSpeed;
@@ -76,7 +75,6 @@ public class SpeedMatcherConfig {
         this.dccLocoAddress = address;
         this.powerManager = powerManager;
 
-        this.logger = logger;
         this.statusLabel = statusLabel;
         this.startStopButton = startStopButton;
     }

@@ -79,8 +79,8 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
      * @return true if speed matching started successfully, false otherwise
      */
     @Override
-    public boolean Start() {
-        if (!super.Validate()) {
+    public boolean startSpeedMatcher() {
+        if (!super.validate()) {
             return false;
         }
 
@@ -96,8 +96,8 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
 
         speedMatcherState = SpeedMatcherState.WAIT_FOR_THROTTLE;
 
-        if (!super.InitializeAndStartSpeedMatcher(e -> speedMatchTimeout())) {
-            CleanUp();
+        if (!super.initializeAndStartSpeedMatcher(e -> speedMatchTimeout())) {
+            cleanUpSpeedMatcher();
             return false;
         }
 
@@ -110,12 +110,12 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
      * Stops the speed matching process
      */
     @Override
-    public void Stop() {
-        if (!IsIdle()) {
+    public void stopSpeedMatcher() {
+        if (!isSpeedMatcherIdle()) {
             logger.info("Speed matching manually stopped");
-            UserStop();
+            userStop();
         } else {
-            CleanUp();
+            cleanUpSpeedMatcher();
         }
     }
 
@@ -125,7 +125,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
      * @return true if idle, false otherwise
      */
     @Override
-    public boolean IsIdle() {
+    public boolean isSpeedMatcherIdle() {
         return speedMatcherState == SpeedMatcherState.IDLE;
     }
 
@@ -133,10 +133,10 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
      * Cleans up the speed matcher when speed matching is stopped or is finished
      */
     @Override
-    protected void CleanUp() {
+    protected void cleanUpSpeedMatcher() {
         speedMatcherState = SpeedMatcherState.IDLE;
 
-        super.CleanUp();
+        super.cleanUpSpeedMatcher();
     }
     //</editor-fold>
 
@@ -147,7 +147,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
     private synchronized void speedMatchTimeout() {
         switch (speedMatcherState) {
             case WAIT_FOR_THROTTLE:
-                CleanUp();
+                cleanUpSpeedMatcher();
                 logger.error("Timeout waiting for throttle");
                 statusLabel.setText(Bundle.getMessage("StatusTimeout"));
                 break;
@@ -266,7 +266,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                             if (((vHigh == VHIGH_MAX) || (vHigh == VHIGH_MIN)) && (vHigh == lastVHigh)) {
                                 statusLabel.setText(Bundle.getMessage("StatSetSpeedFail", "5 (vHigh)"));
                                 logger.info("Unable to achieve desired speed for CV 5 (vHigh)");
-                                Abort();
+                                abort();
                                 break;
                             }
 
@@ -303,7 +303,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                             if (((vMid == vMidMax) || (vMid == VMID_MIN)) && (vMid == lastVMid)) {
                                 statusLabel.setText(Bundle.getMessage("StatSetSpeedFail", "6 (vMid)"));
                                 logger.info("Unable to achieve desired speed for CV 6 (vMid)");
-                                Abort();
+                                abort();
                                 break;
                             }
 
@@ -345,7 +345,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                             if (((vStart == vStartMax) || (vStart == VSTART_MIN)) && (vStart == lastVStart)) {
                                 statusLabel.setText(Bundle.getMessage("StatSetSpeedFail", "2 (vStart)"));
                                 logger.info("Unable to achieve desired speed for CV 2 (vStart)");
-                                Abort();
+                                abort();
                                 break;
                             }
 
@@ -392,7 +392,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                             if (((lastReverseTrimValue == REVERSE_TRIM_MAX) || (lastReverseTrimValue == REVERSE_TRIM_MIN)) && (reverseTrimValue == lastReverseTrimValue)) {
                                 statusLabel.setText(Bundle.getMessage("StatSetReverseTripFail"));
                                 logger.info("Unable to trim reverse to match forward");
-                                Abort();
+                                abort();
                                 break;
                             }
 
@@ -422,12 +422,12 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
             case CLEAN_UP:
                 //wrap it up
                 if (programmerState == ProgrammerState.IDLE) {
-                    CleanUp();
+                    cleanUpSpeedMatcher();
                 }
                 break;
 
             default:
-                CleanUp();
+                cleanUpSpeedMatcher();
                 logger.error("Unexpected speed match timeout");
                 break;
         }
@@ -454,7 +454,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
             initNextSpeedMatcherState(SpeedMatcherState.INIT_THROTTLE);
             startSpeedMatchStateTimer();
         } else {
-            CleanUp();
+            cleanUpSpeedMatcher();
         }
     }
     //</editor-fold>
@@ -463,14 +463,14 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
     /**
      * Aborts the speed matching process programmatically
      */
-    private void Abort() {
+    private void abort() {
         initNextSpeedMatcherState(SpeedMatcherState.CLEAN_UP);
     }
 
     /**
      * Stops the speed matching process due to user input
      */
-    private void UserStop() {
+    private void userStop() {
         initNextSpeedMatcherState(SpeedMatcherState.USER_STOPPED);
     }
 
@@ -487,4 +487,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
         setSpeedMatchStateTimerDuration(1800);
     }
     //</editor-fold>
+    
+    //debugging logger
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(BasicSimpleCVSpeedMatcher.class);
 }

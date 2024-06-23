@@ -834,7 +834,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
             SpeedMatcherConfig.SpeedTable speedTableType;
             
-            if ((speedMatcher == null || speedMatcher.IsIdle()) && (profileState == ProfileState.IDLE)) {
+            if ((speedMatcher == null || speedMatcher.isSpeedMatcherIdle()) && (profileState == ProfileState.IDLE)) {
                 targetStartSpeed = startSpeedSM.getNumber().intValue();
                 targetHighSpeed = highSpeedSM.getNumber().intValue();
                 
@@ -871,7 +871,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                         )
                 );
 
-                if (!speedMatcher.Start()) {
+                if (!speedMatcher.startSpeedMatcher()) {
                     speedMatcher = null;
                 }
             } 
@@ -1299,7 +1299,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected synchronized void startProfile() {
         if (locomotiveAddress.getNumber() > 0) {
             if (dirFwdButton.isSelected() || dirRevButton.isSelected()) {
-                if ((speedMatcher == null || speedMatcher.IsIdle()) && (profileState == ProfileState.IDLE)) {
+                if ((speedMatcher == null || speedMatcher.isSpeedMatcherIdle()) && (profileState == ProfileState.IDLE)) {
                     profileTimer = new javax.swing.Timer(4000, e -> profileTimeout());
                     profileTimer.setRepeats(false);
                     profileState = ProfileState.WAIT_FOR_THROTTLE;
@@ -1408,7 +1408,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
         //clean up speed matcher
         if (speedMatcher != null) {
-            speedMatcher.Stop();
+            speedMatcher.stopSpeedMatcher();
             speedMatcher = null;
         }
 
@@ -1422,7 +1422,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      * either the stop profile or stop speed matching buttons.
      */
     protected synchronized void stopProfileAndSpeedMatch() {
-        if (profileState != ProfileState.IDLE || !speedMatcher.IsIdle()) {
+        if (profileState != ProfileState.IDLE || !speedMatcher.isSpeedMatcherIdle()) {
             if (profileState != ProfileState.IDLE) {
                 log.info("Profiling stopped by user");
             }
@@ -1587,7 +1587,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         showSpeed();
 
         if (speedMatcher != null) {
-            speedMatcher.UpdateCurrentSpeed(currentSpeed);
+            speedMatcher.updateCurrentSpeed(currentSpeed);
         }
     }
 
@@ -1608,7 +1608,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      * using the service mode programmer
      */
     protected void readAddress() {
-        if ((speedMatcher == null || speedMatcher.IsIdle()) && (profileState == ProfileState.IDLE)) {
+        if ((speedMatcher == null || speedMatcher.isSpeedMatcherIdle()) && (profileState == ProfileState.IDLE)) {
             progState = ProgState.READ29;
             statusLabel.setText(Bundle.getMessage("ProgRd29"));
             startRead("29");
@@ -1619,7 +1619,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      * Starts reading the momentum CVs (CV 3 and 4) using the global programmer
      */
     protected void readMomentum() {
-        if ((speedMatcher == null || speedMatcher.IsIdle()) && (profileState == ProfileState.IDLE)) {
+        if ((speedMatcher == null || speedMatcher.isSpeedMatcherIdle()) && (profileState == ProfileState.IDLE)) {
             progState = ProgState.READ3;
             statusLabel.setText(Bundle.getMessage("ProgReadAccel"));
             startRead("3");
@@ -1630,7 +1630,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      * Starts writing the momentum CVs (CV 3 and 4) using the global programmer
      */
     protected void setMomentum() {
-        if ((speedMatcher == null || speedMatcher.IsIdle()) && (profileState == ProfileState.IDLE)) {
+        if ((speedMatcher == null || speedMatcher.isSpeedMatcherIdle()) && (profileState == ProfileState.IDLE)) {
             progState = ProgState.WRITE3;
             int acceleration = accelerationSM.getNumber().intValue();
             statusLabel.setText(Bundle.getMessage("ProgSetAccel", acceleration));

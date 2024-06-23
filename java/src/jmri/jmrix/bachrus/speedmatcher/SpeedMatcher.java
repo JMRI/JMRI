@@ -1,5 +1,7 @@
 package jmri.jmrix.bachrus.speedmatcher;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
@@ -432,7 +434,6 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
     protected AddressedProgrammer opsModeProgrammer = null;
     protected PowerManager powerManager = null;
 
-    protected Logger logger;
     protected JLabel statusLabel;
     protected JButton startStopButton;
 
@@ -453,7 +454,6 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
         this.warmUpForwardSeconds = config.warmUpForwardSeconds;
         this.warmUpReverseSeconds = config.warmUpReverseSeconds;
 
-        this.logger = config.logger;
         this.statusLabel = config.statusLabel;
         this.startStopButton = config.startStopButton;
     }
@@ -464,26 +464,26 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
      *
      * @return true if speed matching started successfully, false otherwise
      */
-    public abstract boolean Start();
+    public abstract boolean startSpeedMatcher();
 
     /**
      * Stops the speed matching process
      */
-    public abstract void Stop();
+    public abstract void stopSpeedMatcher();
 
     /**
      * Indicates if the speed matcher is idle (not currently speed matching)
      *
      * @return true if idle, false otherwise
      */
-    public abstract boolean IsIdle();
+    public abstract boolean isSpeedMatcherIdle();
 
     /**
      * Updates the locomotive's current speed in the speed matcher
      *
      * @param currentSpeedKPH the locomotive's current speed in KPH
      */
-    public void UpdateCurrentSpeed(float currentSpeedKPH) {
+    public void updateCurrentSpeed(float currentSpeedKPH) {
         this.currentSpeed = currentSpeedKPH;
     }
     //</editor-fold>
@@ -494,12 +494,12 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
      *
      * @return true if the configuration is valid, false otherwise
      */
-    protected abstract boolean Validate();
+    protected abstract boolean validate();
 
     /**
      * Cleans up the speed matcher when speed matching is stopped or is finished
      */
-    protected void CleanUp() {
+    protected void cleanUpSpeedMatcher() {
         //stop the timer
         if (speedMatchStateTimer != null) {
             speedMatchStateTimer.stop();
@@ -529,16 +529,24 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
      * @param timerActionListener callback to fire when the timer times out
      * @return true if initialization and start is successful, false otherwise
      */
-    protected boolean InitializeAndStartSpeedMatcher(ActionListener timerActionListener) {
+    protected boolean initializeAndStartSpeedMatcher(ActionListener timerActionListener) {
         //Setup speed match timer
         speedMatchStateTimer = new javax.swing.Timer(4000, timerActionListener);
         speedMatchStateTimer.setRepeats(false); //timer is used without repeats to improve time accuracy when changing the delay
 
-        if (!GetOpsModeProgrammer()) {
+        if (!getOpsModeProgrammer()) {
             return false;
         }
 
-        return GetThrottle();
+        statusLabel.setText("Requesting Throttle");
+        logger.info("Requesting Throttle");
+        speedMatchStateTimer.start();
+        boolean throttleRequestOK = InstanceManager.throttleManagerInstance().requestThrottle(dccLocoAddress, this, true);
+        if (!throttleRequestOK) {
+            logger.error("Loco Address in use, throttle request failed.");
+            statusLabel.setText("Loco Address in use, throttle request failed");
+        }
+        return throttleRequestOK;
     }
 
     /**
@@ -565,7 +573,9 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
      * @param timerDuration timer duration in milliseconds
      */
     protected void setSpeedMatchStateTimerDuration(int timerDuration) {
-        speedMatchStateTimer.setInitialDelay(timerDuration);
+        if (speedMatchStateTimer != null) {
+            speedMatchStateTimer.setInitialDelay(timerDuration);
+        }
     }
 
     /**
@@ -742,10 +752,10 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
      */
     private void startOpsModeWrite(String cv, int value) {
         try {
-            logger.info(Bundle.getMessage("ProgSetCV", cv, value));
+            logger.info("Setting CV {} to {}", cv, value);
             opsModeProgrammer.writeCV(cv, value, this);
         } catch (ProgrammerException e) {
-            logger.error("Exception writing CV " + cv + " " + e);
+            logger.error("Exception writing CV {} {}", cv, e);
         }
     }
 
@@ -784,10 +794,10 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             }
         } else {
             // Error during programming
-            logger.error("Status not OK during " + programmerState.toString() + ": " + status);
+            logger.error("Status not OK during {}: {}", programmerState.toString(), status);
             statusLabel.setText("Error using programmer");
             programmerState = ProgrammerState.IDLE;
-            CleanUp();
+            cleanUpSpeedMatcher();
         }
     }
     //</editor-fold>
@@ -800,7 +810,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
      * @return true if the ops mode programmer was successfully acquired, false
      *         otherwise
      */
-    private boolean GetOpsModeProgrammer() {
+    private boolean getOpsModeProgrammer() {
         logger.info("Requesting Programmer");
         //get OPS MODE Programmer
         if (InstanceManager.getNullableDefault(AddressedProgrammerManager.class) != null) {
@@ -816,23 +826,6 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             statusLabel.setText("Programmer request failed");
             return false;
         }
-    }
-
-    /**
-     * Acquires a throttle for use in the speed matcher
-     *
-     * @return true if the throttle was successfully acquired, false otherwise
-     */
-    private boolean GetThrottle() {
-        statusLabel.setText("Requesting Throttle");
-        logger.info("Requesting Throttle");
-        speedMatchStateTimer.start();
-        boolean throttleRequestOK = InstanceManager.throttleManagerInstance().requestThrottle(dccLocoAddress, this, true);
-        if (!throttleRequestOK) {
-            logger.error("Loco Address in use, throttle request failed.");
-            statusLabel.setText("Loco Address in use, throttle request failed");
-        }
-        return throttleRequestOK;
     }
     //</editor-fold>
 
@@ -861,7 +854,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
         try {
             powerManager.setPower(PowerManager.ON);
         } catch (JmriException e) {
-            logger.error("Exception during power on: " + e.toString());
+            logger.error("Exception during power on: {}", e.toString());
             return;
         }
 
@@ -892,4 +885,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
     public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
     }
     //</editor-fold>
+    
+    //debugging logger
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(SpeedMatcher.class);
 }

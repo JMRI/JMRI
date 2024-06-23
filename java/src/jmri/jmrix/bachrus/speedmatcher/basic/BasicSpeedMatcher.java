@@ -38,7 +38,7 @@ public abstract class BasicSpeedMatcher extends SpeedMatcher {
      * @return true if the configuration is valid, false otherwise
      */
     @Override
-    protected boolean Validate() {
+    protected boolean validate() {
         if (dccLocoAddress.getNumber() <= 0) {
             statusLabel.setText(Bundle.getMessage("StatInvalidDCCAddress"));
             return false;
@@ -65,7 +65,7 @@ public abstract class BasicSpeedMatcher extends SpeedMatcher {
      * @param maxSpeed  maximum speed in KPH (at speed step 28)
      * @return the speed for the given speed step in KPH
      */
-    protected float GetSpeedForSpeedStep(SpeedTableStep speedStep, float minSpeed, float maxSpeed) {
+    protected float getSpeedForSpeedStep(SpeedTableStep speedStep, float minSpeed, float maxSpeed) {
         return minSpeed + (((maxSpeed - minSpeed) / 27) * (speedStep.getSpeedStep() - 1));
     }
     //</editor-fold>

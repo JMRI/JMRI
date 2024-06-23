@@ -19,7 +19,7 @@ public abstract class SpeedStepScaleSpeedMatcher extends SpeedMatcher {
 
      //<editor-fold defaultstate="collapsed" desc="Protected APIs">
     @Override
-    protected boolean Validate() {
+    protected boolean validate() {
          throw new UnsupportedOperationException("Not supported yet."); //TODO: speedStepScale validate 
     }
     //</editor-fold>
