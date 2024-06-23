@@ -364,11 +364,11 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
         public abstract SpeedTableStep getPrevious();
 
         public int get128StepEquivalent() {
-            return Math.round(this.speedStep * (long) 4.571428571428571);
+            return Math.round(this.speedStep * 4.571428571428571f);
         }
     }
 
-    protected enum CV {
+    protected enum SpeedMatcherCV {
         VSTART(2, "vStart"),
         VMID(6, "vMid"),
         VHIGH(5, "vHigh"),
@@ -380,7 +380,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
         private final String name;
         private final String cv;
 
-        private CV(int cv, String name) {
+        private SpeedMatcherCV(int cv, String name) {
             this.cv = String.valueOf(cv);
             this.name = name;
         }
@@ -393,7 +393,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             return this.name;
         }
 
-        public String getCVName() {
+        public String getCVDisplayName() {
             return String.format("%s (%s)", cv, name);
         }
     }
@@ -652,7 +652,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
      */
     protected synchronized void writeVStart(int value) {
         programmerState = ProgrammerState.WRITE2;
-        writeCV(CV.VSTART, value);
+        writeCV(SpeedMatcherCV.VSTART, value);
     }
 
     /**
@@ -662,7 +662,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
      */
     protected synchronized void writeVMid(int value) {
         programmerState = ProgrammerState.WRITE6;
-        writeCV(CV.VMID, value);
+        writeCV(SpeedMatcherCV.VMID, value);
     }
 
     /**
@@ -672,7 +672,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
      */
     protected synchronized void writeVHigh(int value) {
         programmerState = ProgrammerState.WRITE5;
-        writeCV(CV.VHIGH, value);
+        writeCV(SpeedMatcherCV.VHIGH, value);
     }
 
     /**
@@ -682,7 +682,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
      */
     protected synchronized void writeMomentumAccel(int value) {
         programmerState = ProgrammerState.WRITE3;
-        writeCV(CV.ACCEL, value);
+        writeCV(SpeedMatcherCV.ACCEL, value);
     }
 
     /**
@@ -692,7 +692,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
      */
     protected synchronized void writeMomentumDecel(int value) {
         programmerState = ProgrammerState.WRITE4;
-        writeCV(CV.DECEL, value);
+        writeCV(SpeedMatcherCV.DECEL, value);
     }
 
     /**
@@ -702,7 +702,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
      */
     protected synchronized void writeForwardTrim(int value) {
         programmerState = ProgrammerState.WRITE66;
-        writeCV(CV.FORWARDTRIM, value);
+        writeCV(SpeedMatcherCV.FORWARDTRIM, value);
     }
 
     /**
@@ -712,7 +712,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
      */
     protected synchronized void writeReverseTrim(int value) {
         programmerState = ProgrammerState.WRITE95;
-        writeCV(CV.REVERSETRIM, value);
+        writeCV(SpeedMatcherCV.REVERSETRIM, value);
     }
 
     /**
@@ -735,8 +735,8 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
      * @param cv    CV to write to
      * @param value value to write (0-255 inclusive)
      */
-    private synchronized void writeCV(CV cv, int value) {
-        statusLabel.setText(Bundle.getMessage("ProgSetCV", cv.getCVName(), value));
+    private synchronized void writeCV(SpeedMatcherCV cv, int value) {
+        statusLabel.setText(Bundle.getMessage("ProgSetCV", cv.getCVDisplayName(), value));
         startOpsModeWrite(cv.getCV(), value);
     }
 
@@ -751,7 +751,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             logger.info("Setting CV {} to {}", cv, value);
             opsModeProgrammer.writeCV(cv, value, this);
         } catch (ProgrammerException e) {
-            logger.error("Exception writing CV {} {}", cv, e);
+            logger.error("Exception writing CV {} {}", cv, e.toString());
         }
     }
 

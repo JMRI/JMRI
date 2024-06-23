@@ -538,7 +538,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
     private void speedMatchSpeedStepInner(SpeedTableStep speedStep, float targetSpeedKPH, int maxCVValue, int minCVValue, SpeedMatcherState nextState) {
         if (stepDuration == 0) {
             statusLabel.setText(Bundle.getMessage("StatSettingSpeed", speedStep.getCV() + " (Speed Step " + String.valueOf(speedStep.getSpeedStep()) + ")"));
-            logger.info("Setting speed step " + speedStep.getSpeedStep() + " to " + String.valueOf(targetSpeedKPH) + " KPH ( " + String.valueOf(Speed.kphToMph(targetSpeedKPH)) + " MPH)");
+            logger.info("Setting CV {} (speed step {}) to {} KPH ({} MPH)", speedStep.getCV(), speedStep.getSpeedStep(), String.valueOf(targetSpeedKPH), String.valueOf(Speed.kphToMph(targetSpeedKPH)));
             setThrottle(true, speedStep.getSpeedStep());
             setSpeedMatchStateTimerDuration(8000);
             stepDuration = 1;
@@ -552,7 +552,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
 
                 if (((speedMatchCVValue == maxCVValue) || (speedMatchCVValue == minCVValue)) && (speedMatchCVValue == lastSpeedMatchCVValue)) {
                     statusLabel.setText(Bundle.getMessage("StatSetSpeedFail", speedStep.getCV() + " (Speed Step " + String.valueOf(speedStep.getSpeedStep()) + ")"));
-                    logger.info("Unable to achieve desired speed for CV " + speedStep.getCV() + " (Speed Step " + String.valueOf(speedStep.getSpeedStep()) + ")");
+                    logger.info("Unable to achieve desired speed for CV {} (Speed Step {})", speedStep.getCV(), String.valueOf(speedStep.getSpeedStep()));
                     abort();
                     return;
                 }

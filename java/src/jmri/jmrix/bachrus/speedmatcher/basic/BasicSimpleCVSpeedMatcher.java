@@ -251,7 +251,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                 if (programmerState == ProgrammerState.IDLE) {
                     if (stepDuration == 0) {
                         statusLabel.setText(Bundle.getMessage("StatSettingSpeed", "5 (vHigh)"));
-                        logger.info("Setting CV 5 (vHigh) to " + String.valueOf(targetTopSpeedKPH) + " KPH ( " + String.valueOf(Speed.kphToMph(targetTopSpeedKPH)) + " MPH)");
+                        logger.info("Setting CV 5 (vHigh) to {} KPH ({} MPH)", String.valueOf(targetTopSpeedKPH), String.valueOf(Speed.kphToMph(targetTopSpeedKPH)));
                         setThrottle(true, 28);
                         setSpeedMatchStateTimerDuration(8000);
                         stepDuration = 1;
@@ -287,7 +287,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                         writeVMid(vMid);
 
                         statusLabel.setText(Bundle.getMessage("StatSettingSpeed", "6 (vMid)"));
-                        logger.info("Setting CV 6 (vMid) to " + String.valueOf(targetMidSpeedKPH) + " KPH ( " + String.valueOf(Speed.kphToMph(targetMidSpeedKPH)) + " MPH)");
+                        logger.info("Setting CV 6 (vMid) to {} KPH ({} MPH)", String.valueOf(targetMidSpeedKPH), String.valueOf(Speed.kphToMph(targetMidSpeedKPH)));
                         setSpeedMatchStateTimerDuration(8000);
                         setThrottle(true, 14);
                         stepDuration = 1;
@@ -320,7 +320,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                     if (stepDuration == 0) {
                         vStartMax = vMid - 1;
                         statusLabel.setText(Bundle.getMessage("StatSettingSpeed", "2 (vStart)"));
-                        logger.info("Setting CV 2 (vStart) to " + String.valueOf(targetStartSpeedKPH) + " KPH ( " + String.valueOf(Speed.kphToMph(targetStartSpeedKPH)) + " MPH)");
+                        logger.info("Setting CV 2 (vStart) to {} KPH ({} MPH)", String.valueOf(targetStartSpeedKPH), String.valueOf(Speed.kphToMph(targetStartSpeedKPH)));
                         setThrottle(true, 1);
                         setSpeedMatchStateTimerDuration(8000);
                         stepDuration = 1;

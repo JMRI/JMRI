@@ -22,11 +22,11 @@ public class BasicESUTableSpeedMatcher extends BasicSpeedMatcher {
     private final int INITIAL_TRIM = 128;
     private final int STEP28_VALUE = 255;
     private final int STEP1_VALUE = 1;
-    
+
     private final int VHIGH_MAX = 255;
     private final int VHIGH_MIN = INITIAL_VSTART + 1;
     private final int STEP19_MIN = 19;
-    private final int STEP10_MIN = 10;  
+    private final int STEP10_MIN = 10;
     private final int VSTART_MIN = 1;
     //</editor-fold>
 
@@ -159,7 +159,7 @@ public class BasicESUTableSpeedMatcher extends BasicSpeedMatcher {
         super.cleanUpSpeedMatcher();
     }
     //</editor-fold>
-    
+
     //<editor-fold defaultstate="collapsed" desc="Speed Matcher State">
     private synchronized void speedMatchTimeout() {
         switch (speedMatcherState) {
@@ -283,8 +283,8 @@ public class BasicESUTableSpeedMatcher extends BasicSpeedMatcher {
                 //Use PID Controller to adjust vHigh (Speed Step 28) to the max speed
                 if (programmerState == ProgrammerState.IDLE) {
                     if (stepDuration == 0) {
-                        statusLabel.setText(Bundle.getMessage("StatSettingSpeed", CV.VHIGH.getName()));
-                        logger.info("Setting CV " + CV.VHIGH.getName() + " to " + String.valueOf(targetVHighSpeedKPH) + " KPH ( " + String.valueOf(Speed.kphToMph(targetVHighSpeedKPH)) + " MPH)");
+                        statusLabel.setText(Bundle.getMessage("StatSettingSpeed", SpeedMatcherCV.VHIGH.getName()));
+                        logger.info("Setting CV {} to {} KPH ({} MPH)", SpeedMatcherCV.VHIGH.getName(), String.valueOf(targetVHighSpeedKPH), String.valueOf(Speed.kphToMph(targetVHighSpeedKPH)));
                         setThrottle(true, 28);
                         setSpeedMatchStateTimerDuration(8000);
                         stepDuration = 1;
@@ -297,8 +297,8 @@ public class BasicESUTableSpeedMatcher extends BasicSpeedMatcher {
                             vHigh = getNextSpeedMatchValue(lastVHigh, VHIGH_MAX, VHIGH_MIN);
 
                             if (((lastVHigh == VHIGH_MAX) || (lastVHigh == VHIGH_MIN)) && (vHigh == lastVHigh)) {
-                                statusLabel.setText(Bundle.getMessage("StatSetSpeedFail", CV.VHIGH.getName()));
-                                logger.info("Unable to achieve desired speed for CV {}", CV.VHIGH.getName());
+                                statusLabel.setText(Bundle.getMessage("StatSetSpeedFail", SpeedMatcherCV.VHIGH.getName()));
+                                logger.info("Unable to achieve desired speed for CV {}", SpeedMatcherCV.VHIGH.getName());
                                 abort();
                                 break;
                             }
@@ -314,7 +314,7 @@ public class BasicESUTableSpeedMatcher extends BasicSpeedMatcher {
                 //Use PID Controller to adjust Speed Step 19 to the interpolated speed
                 if (programmerState == ProgrammerState.IDLE) {
                     if (stepDuration == 0) {
-                         lastSpeedMatchCVValue = STEP28_VALUE;
+                        lastSpeedMatchCVValue = STEP28_VALUE;
                     }
                     speedMatchSpeedTableStep(SpeedTableStep.STEP19, targetStep19SpeedKPH, INITIAL_VHIGH, STEP19_MIN, SpeedMatcherState.RE_INIT_SPEED_TABLE_MIDDLE_THIRD);
                     step19CVValue = speedMatchCVValue;
@@ -344,7 +344,7 @@ public class BasicESUTableSpeedMatcher extends BasicSpeedMatcher {
                 //Use PID Controller to adjust Speed Step 10 to the interpolated speed
                 if (programmerState == ProgrammerState.IDLE) {
                     if (stepDuration == 0) {
-                         lastSpeedMatchCVValue = step19CVValue;
+                        lastSpeedMatchCVValue = step19CVValue;
                     }
                     speedMatchSpeedTableStep(SpeedTableStep.STEP10, targetStep10SpeedKPH, step19CVValue - 9, STEP10_MIN, SpeedMatcherState.RE_INIT_SPEED_TABLE_BOTTOM_THIRD);
                     step10CVValue = speedMatchCVValue;
@@ -375,8 +375,8 @@ public class BasicESUTableSpeedMatcher extends BasicSpeedMatcher {
                 if (programmerState == ProgrammerState.IDLE) {
                     if (stepDuration == 0) {
                         vStartMax = vHigh - 1;
-                        statusLabel.setText(Bundle.getMessage("StatSettingSpeed", CV.VSTART.getName()));
-                        logger.info("Setting CV " + CV.VSTART.getName() + " to " + String.valueOf(targetVStartSpeedKPH) + " KPH ( " + String.valueOf(Speed.kphToMph(targetVStartSpeedKPH)) + " MPH)");
+                        statusLabel.setText(Bundle.getMessage("StatSettingSpeed", SpeedMatcherCV.VSTART.getName()));
+                        logger.info("Setting CV {} to {} KPH ({} MPH)", SpeedMatcherCV.VSTART.getName(), String.valueOf(targetVStartSpeedKPH), String.valueOf(Speed.kphToMph(targetVStartSpeedKPH)));
                         setThrottle(true, 1);
                         setSpeedMatchStateTimerDuration(8000);
                         stepDuration = 1;
@@ -389,8 +389,8 @@ public class BasicESUTableSpeedMatcher extends BasicSpeedMatcher {
                             vStart = getNextSpeedMatchValue(lastVStart, vStartMax, VSTART_MIN);
 
                             if (((lastVStart == vStartMax) || (lastVStart == VSTART_MIN)) && (vStart == lastVStart)) {
-                                statusLabel.setText(Bundle.getMessage("StatSetSpeedFail", CV.VSTART.getName()));
-                                logger.info("Unable to achieve desired speed for CV {}", CV.VSTART.getName());
+                                statusLabel.setText(Bundle.getMessage("StatSetSpeedFail", SpeedMatcherCV.VSTART.getName()));
+                                logger.info("Unable to achieve desired speed for CV {}", SpeedMatcherCV.VSTART.getName());
                                 abort();
                                 break;
                             }
@@ -485,7 +485,7 @@ public class BasicESUTableSpeedMatcher extends BasicSpeedMatcher {
                                 abort();
                                 break;
                             }
-                            
+
                             lastReverseTrimValue = reverseTrimValue;
                             writeReverseTrim(reverseTrimValue);
                         }
@@ -596,7 +596,7 @@ public class BasicESUTableSpeedMatcher extends BasicSpeedMatcher {
     private void speedMatchSpeedTableStep(SpeedTableStep speedStep, float targetSpeedKPH, int maxCVValue, int minCVValue, SpeedMatcherState nextState) {
         if (stepDuration == 0) {
             statusLabel.setText(Bundle.getMessage("StatSettingSpeed", speedStep.getCV() + " (Speed Step " + String.valueOf(speedStep.getSpeedStep()) + ")"));
-            logger.info("Setting speed step " + speedStep.getSpeedStep() + " to " + String.valueOf(targetSpeedKPH) + " KPH ( " + String.valueOf(Speed.kphToMph(targetSpeedKPH)) + " MPH)");
+            logger.info("Setting CV {} (speed step {}) to {} KPH ({} MPH)", speedStep.getCV(), speedStep.getSpeedStep(), String.valueOf(targetSpeedKPH), String.valueOf(Speed.kphToMph(targetSpeedKPH)));
             setThrottle(true, speedStep.getSpeedStep());
             setSpeedMatchStateTimerDuration(8000);
             stepDuration = 1;
@@ -610,7 +610,7 @@ public class BasicESUTableSpeedMatcher extends BasicSpeedMatcher {
 
                 if (((speedMatchCVValue == maxCVValue) || (speedMatchCVValue == minCVValue)) && (speedMatchCVValue == lastSpeedMatchCVValue)) {
                     statusLabel.setText(Bundle.getMessage("StatSetSpeedFail", speedStep.getCV() + " (Speed Step " + String.valueOf(speedStep.getSpeedStep()) + ")"));
-                    logger.info("Unable to achieve desired speed for CV " + speedStep.getCV() + " (Speed Step " + String.valueOf(speedStep.getSpeedStep()) + ")");
+                    logger.info("Unable to achieve desired speed for CV {} (Speed Step {})", speedStep.getCV(), String.valueOf(speedStep.getSpeedStep()));
                     abort();
                     return;
                 }
@@ -648,7 +648,7 @@ public class BasicESUTableSpeedMatcher extends BasicSpeedMatcher {
         setSpeedMatchStateTimerDuration(1800);
     }
     //</editor-fold>
-    
+
     //debugging logger
     private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(BasicESUTableSpeedMatcher.class);
 }
