@@ -76,7 +76,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
     /**
      * Starts the speed matching process
      *
-     * @return
+     * @return true if speed matching started successfully, false otherwise
      */
     @Override
     public boolean Start() {

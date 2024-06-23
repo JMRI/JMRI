@@ -20,8 +20,6 @@ import java.util.Locale;
 import javax.swing.*;
 import javax.swing.border.*;
 
-import jmri.AddressedProgrammer;
-import jmri.AddressedProgrammerManager;
 import jmri.CommandStation;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
