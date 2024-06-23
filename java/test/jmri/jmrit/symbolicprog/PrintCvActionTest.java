@@ -1,6 +1,5 @@
 package jmri.jmrit.symbolicprog;
 
-import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JLabel;
@@ -9,9 +8,8 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
@@ -20,8 +18,8 @@ import org.junit.Assume;
 public class PrintCvActionTest {
 
     @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).getGlobalProgrammer();
         RosterEntry re = new RosterEntry();
         PaneProgFrame pFrame = new PaneProgFrame(null, re,
@@ -35,8 +33,14 @@ public class PrintCvActionTest {
         };
         CvTableModel cvtm = new CvTableModel(new JLabel(), null);
         PrintCvAction t = new PrintCvAction("Test Action", cvtm, pFrame, false, re);
-        Assert.assertNotNull("exists", t);
+        Assertions.assertNotNull(t, "exists");
         pFrame.dispatchEvent(new WindowEvent(pFrame, WindowEvent.WINDOW_CLOSING));
+    }
+
+    @Test
+    public void testCvSortOrderVal(){
+        Assertions.assertNotEquals(0, PrintCvAction.cvSortOrderVal("187"));
+        Assertions.assertNotEquals(0, PrintCvAction.cvSortOrderVal("257.31=8.32=0"));
     }
 
     @BeforeEach
@@ -53,5 +57,4 @@ public class PrintCvActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PrintCvActionTest.class.getName());
 }
