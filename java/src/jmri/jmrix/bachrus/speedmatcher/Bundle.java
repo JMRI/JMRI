@@ -3,7 +3,7 @@ package jmri.jmrix.bachrus.speedmatcher;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
 import javax.annotation.CheckReturnValue;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
@@ -23,12 +23,13 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.jmrix.bachrus.Bundle {
 
-    @Nullable
+    @CheckForNull
     private static final String name = "jmri.jmrix.bachrus.speedmatcher.SpeedMatcherBundle";
+    
     //
     // below here is boilerplate to be copied exactly
     //
-    /**
+        /**
      * Provides a translated string for a given key from the package resource
      * bundle or parent.
      * <p>
@@ -39,6 +40,20 @@ public class Bundle extends jmri.jmrix.bachrus.Bundle {
      */
     static String getMessage(String key) {
         return getBundle().handleGetMessage(key);
+    }
+
+    /**
+     * Provides a translated string for a given key in a given locale from the
+     * package resource bundle or parent.
+     * <p>
+     * Note that this is intentionally package-local access.
+     *
+     * @param locale The locale to be used
+     * @param key    Bundle key to be translated
+     * @return Internationalized text
+     */
+    static String getMessage(Locale locale, String key) {
+        return getBundle().handleGetMessage(locale, key);
     }
 
     /**
@@ -76,11 +91,10 @@ public class Bundle extends jmri.jmrix.bachrus.Bundle {
         return getBundle().handleGetMessage(locale, key, subs);
     }
 
-
     private final static Bundle b = new Bundle();
 
     @Override
-    @Nullable
+    @CheckForNull
     protected String bundleName() {
         return name;
     }
