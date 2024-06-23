@@ -12,7 +12,7 @@ import jmri.jmrix.bachrus.speedmatcher.SpeedMatcherConfig;
  * these 4 CVs. This is done to reduce the time the speed match takes and to
  * increase likelihood of success.
  *
- * @author toddt
+ * @author Todd Wegter
  */
 public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
 
@@ -20,11 +20,11 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
     private final int INITIAL_STEP1 = 1;
     private final int INITIAL_STEP28 = 255;
     private final int INITIAL_TRIM = 128;
-    
+
     private final int STEP28_MAX = 255;
     private final int STEP28_MIN = 28;
     private final int STEP19_MIN = 19;
-    private final int STEP10_MIN = 10;    
+    private final int STEP10_MIN = 10;
     private final int STEP1_MIN = 1;
     //</editor-fold>
 
@@ -60,7 +60,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
     //<editor-fold defaultstate="collapsed" desc="Instance Variables">
     private SpeedTableStep initSpeedTableStep;
     private int initSpeedTableStepValue;
-    
+
     private SpeedTableStep interpolationSpeedTableStep;
 
     private int speedMatchCVValue = INITIAL_STEP28;
@@ -92,6 +92,11 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
     }
 
     //<editor-fold defaultstate="collapsed" desc="SpeedMatcher Overrides">
+    /**
+     * Starts the speed matching process
+     *
+     * @return true if speed matching started successfully, false otherwise
+     */
     @Override
     public boolean Start() {
         if (!super.Validate()) {
@@ -116,6 +121,9 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
         return true;
     }
 
+    /**
+     * Stops the speed matching process
+     */
     @Override
     public void Stop() {
         if (!IsIdle()) {
@@ -126,19 +134,26 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
         }
     }
 
+    /**
+     * Indicates if the speed matcher is idle (not currently speed matching)
+     *
+     * @return true if idle, false otherwise
+     */
     @Override
     public boolean IsIdle() {
         return speedMatcherState == SpeedMatcherState.IDLE;
     }
 
+    /**
+     * Cleans up the speed matcher when speed matching is stopped or is finished
+     */
     @Override
     protected void CleanUp() {
         speedMatcherState = SpeedMatcherState.IDLE;
         super.CleanUp();
     }
-
     //</editor-fold>
-    
+
     //<editor-fold defaultstate="collapsed" desc="Speed Matcher State">
     private synchronized void speedMatchTimeout() {
         switch (speedMatcherState) {
@@ -411,8 +426,8 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
                                 logger.info("Unable to trim reverse to match forward");
                                 Abort();
                                 break;
-                            } 
-                            
+                            }
+
                             lastReverseTrimValue = reverseTrimValue;
                             writeReverseTrim(reverseTrimValue);
                         }
@@ -454,7 +469,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
         }
     }
     //</editor-fold>
-    
+
     //<editor-fold defaultstate="collapsed" desc="ThrottleListener Overrides">
     /**
      * Called when a throttle is found
@@ -477,6 +492,13 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Helper Functions">
+    /**
+     * Gets the interpolated CV value for the given speed step in the speed
+     * table
+     *
+     * @param speedStep the SpeedTableStep to get the speed for
+     * @return the target speed for the given speed step in KPH
+     */
     private int GetInterpolatedSpeedTableCVValue(SpeedTableStep speedStep) {
         SpeedTableStep maxStep;
         SpeedTableStep minStep;
@@ -503,6 +525,16 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
         return Math.round(minStepCVValue + ((((float) (maxStepCVValue - minStepCVValue)) / (maxStep.getSpeedStep() - minStep.getSpeedStep())) * (speedStep.getSpeedStep() - minStep.getSpeedStep())));
     }
 
+    /**
+     * Helper function for speed matching a given speed step
+     *
+     * @param speedStep      the SpeedTableStep to speed match
+     * @param targetSpeedKPH the target speed in KPH
+     * @param maxCVValue     the maximum allowable value for the CV
+     * @param minCVValue     the minimum allowable value for the CV
+     * @param nextState      the SpeedMatcherState to advance to if speed
+     *                       matching is complete
+     */
     private void SpeedMatchSpeedStepInner(SpeedTableStep speedStep, float targetSpeedKPH, int maxCVValue, int minCVValue, SpeedMatcherState nextState) {
         if (stepDuration == 0) {
             statusLabel.setText(Bundle.getMessage("StatSettingSpeed", speedStep.getCV() + " (Speed Step " + String.valueOf(speedStep.getSpeedStep()) + ")"));
@@ -513,7 +545,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
         } else {
             setSpeedMatchError(targetSpeedKPH);
 
-           if (Math.abs(speedMatchError) < ALLOWED_SPEED_MATCH_ERROR) {
+            if (Math.abs(speedMatchError) < ALLOWED_SPEED_MATCH_ERROR) {
                 initNextSpeedMatcherState(nextState);
             } else {
                 speedMatchCVValue = getNextSpeedMatchValue(lastSpeedMatchCVValue, maxCVValue, minCVValue);
@@ -531,18 +563,23 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
         }
     }
 
+    /**
+     * Aborts the speed matching process programmatically
+     */
     private void Abort() {
         initNextSpeedMatcherState(SpeedMatcherState.CLEAN_UP);
     }
 
+    /**
+     * Stops the speed matching process due to user input
+     */
     private void UserStop() {
         initNextSpeedMatcherState(SpeedMatcherState.USER_STOPPED);
     }
 
     /**
      * Sets up the speed match state by clearing the speed match error, clearing
-     * the step duration, setting the timer duration to 500 ms, and setting the
-     * next state
+     * the step duration, setting the timer duration, and setting the next state
      *
      * @param nextState - next SpeedMatcherState to set
      */

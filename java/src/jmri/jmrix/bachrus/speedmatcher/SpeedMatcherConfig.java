@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.jmrix.bachrus.speedmatcher;
 
 import javax.swing.JButton;
@@ -15,11 +10,13 @@ import jmri.jmrix.bachrus.Speed;
 import org.slf4j.Logger;
 
 /**
+ * Configuration data for a speed matcher
  *
- * @author toddt
+ * @author Todd Wegter
  */
 public class SpeedMatcherConfig {
 
+    //<editor-fold defaultstate="collapsed" desc="Enums">    
     public enum SpeedMatcherType {
         BASIC, SPEEDSTEPSCALE
     }
@@ -27,9 +24,11 @@ public class SpeedMatcherConfig {
     public enum SpeedTable {
         SIMPLE, ADVANCED, ESU
     }
+    //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Instance Variables">
     public SpeedMatcherType type;
-    public SpeedTable speedTable; 
+    public SpeedTable speedTable;
 
     public DccLocoAddress dccLocoAddress;
     public Logger logger;
@@ -38,27 +37,28 @@ public class SpeedMatcherConfig {
     public float targetStartSpeed;
     public float targetTopSpeed;
     public Speed.Unit speedUnit;
-    
+
     public boolean trimReverseSpeed;
-        
+
     public int warmUpForwardSeconds;
     public int warmUpReverseSeconds;
-    
+
     public JLabel statusLabel;
     public JButton startStopButton;
+    //</editor-fold>
 
     public SpeedMatcherConfig(
-            SpeedMatcherType type, 
-            SpeedTable speedTable, 
-            DccLocoAddress address, 
-            float targetStartSpeed, 
-            float targetTopSpeed, 
-            Speed.Unit speedUnit, 
+            SpeedMatcherType type,
+            SpeedTable speedTable,
+            DccLocoAddress address,
+            float targetStartSpeed,
+            float targetTopSpeed,
+            Speed.Unit speedUnit,
             boolean trimReverseSpeed,
             int warmUpForwardSeconds,
             int warmUpReverseSeconds,
-            PowerManager powerManager, 
-            Logger logger, 
+            PowerManager powerManager,
+            Logger logger,
             JLabel statusLabel,
             JButton startStopButton
     ) {
@@ -67,12 +67,12 @@ public class SpeedMatcherConfig {
         this.targetStartSpeed = targetStartSpeed;
         this.targetTopSpeed = targetTopSpeed;
         this.speedUnit = speedUnit;
-        
+
         this.trimReverseSpeed = trimReverseSpeed;
-        
+
         this.warmUpForwardSeconds = warmUpForwardSeconds;
         this.warmUpReverseSeconds = warmUpReverseSeconds;
-        
+
         this.dccLocoAddress = address;
         this.powerManager = powerManager;
 
@@ -80,5 +80,4 @@ public class SpeedMatcherConfig {
         this.statusLabel = statusLabel;
         this.startStopButton = startStopButton;
     }
-
 }

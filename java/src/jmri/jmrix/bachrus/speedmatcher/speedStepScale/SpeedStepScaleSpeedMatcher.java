@@ -5,7 +5,7 @@ import jmri.jmrix.bachrus.speedmatcher.SpeedMatcherConfig;
 
 /**
  *
- * @author toddt
+ * @author Todd Wegter
  */
 public abstract class SpeedStepScaleSpeedMatcher extends SpeedMatcher {
 

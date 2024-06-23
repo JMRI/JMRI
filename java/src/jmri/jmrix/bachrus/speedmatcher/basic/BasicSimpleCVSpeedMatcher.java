@@ -6,7 +6,7 @@ import jmri.jmrix.bachrus.speedmatcher.SpeedMatcherConfig;
 
 /**
  * This is a simple speed matcher which will speed match a locomotive to a given
- * start and top speed using the simple VStart, VMid, and VHigh CVs.
+ * start and top speed using the VStart, VMid, and VHigh CVs.
  *
  * @author Todd Wegter
  */
@@ -64,8 +64,8 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
     private final float targetMidSpeedKPH;
 
     private SpeedMatcherState speedMatcherState = SpeedMatcherState.IDLE;
-
     //</editor-fold>
+
     public BasicSimpleCVSpeedMatcher(SpeedMatcherConfig config) {
         super(config);
 
@@ -73,6 +73,11 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
     }
 
     //<editor-fold defaultstate="collapsed" desc="SpeedMatcher Overrides">
+    /**
+     * Starts the speed matching process
+     *
+     * @return
+     */
     @Override
     public boolean Start() {
         if (!super.Validate()) {
@@ -101,6 +106,9 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
         return true;
     }
 
+    /**
+     * Stops the speed matching process
+     */
     @Override
     public void Stop() {
         if (!IsIdle()) {
@@ -111,19 +119,27 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
         }
     }
 
+    /**
+     * Indicates if the speed matcher is idle (not currently speed matching)
+     *
+     * @return true if idle, false otherwise
+     */
     @Override
     public boolean IsIdle() {
         return speedMatcherState == SpeedMatcherState.IDLE;
     }
 
+    /**
+     * Cleans up the speed matcher when speed matching is stopped or is finished
+     */
     @Override
     protected void CleanUp() {
         speedMatcherState = SpeedMatcherState.IDLE;
 
         super.CleanUp();
     }
-
     //</editor-fold>
+
     //<editor-fold defaultstate="collapsed" desc="Speed Matcher State">
     /**
      * Timer timeout handler for the speed match timer
@@ -420,8 +436,8 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
             startSpeedMatchStateTimer();
         }
     }
-
     //</editor-fold>
+
     //<editor-fold defaultstate="collapsed" desc="ThrottleListener Overrides">
     /**
      * Called when a throttle is found
@@ -444,18 +460,23 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Helper Functions">
+    /**
+     * Aborts the speed matching process programmatically
+     */
     private void Abort() {
         initNextSpeedMatcherState(SpeedMatcherState.CLEAN_UP);
     }
 
+    /**
+     * Stops the speed matching process due to user input
+     */
     private void UserStop() {
         initNextSpeedMatcherState(SpeedMatcherState.USER_STOPPED);
     }
 
     /**
      * Sets up the speed match state by clearing the speed match error, clearing
-     * the step duration, setting the timer duration to 500 ms, and setting the
-     * next state
+     * the step duration, setting the timer duration, and setting the next state
      *
      * @param nextState - next SpeedMatcherState to set
      */
@@ -465,6 +486,5 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
         speedMatcherState = nextState;
         setSpeedMatchStateTimerDuration(1800);
     }
-
     //</editor-fold>
 }

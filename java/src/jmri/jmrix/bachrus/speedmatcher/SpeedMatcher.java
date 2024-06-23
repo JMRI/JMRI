@@ -14,7 +14,7 @@ import org.slf4j.Logger;
  * Abstract class defining the basic operations of a speed matcher. All speed
  * matcher implementations must extend this class.
  *
- * @author toddt
+ * @author Todd Wegter
  */
 public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
 
@@ -442,8 +442,8 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
     private float throttleIncrement;
 
     private Timer speedMatchStateTimer;
-
     //</editor-fold>
+
     public SpeedMatcher(SpeedMatcherConfig config) {
         this.dccLocoAddress = config.dccLocoAddress;
         this.powerManager = config.powerManager;

@@ -5,17 +5,20 @@ import jmri.jmrix.bachrus.speedmatcher.SpeedMatcher;
 import jmri.jmrix.bachrus.speedmatcher.SpeedMatcherConfig;
 
 /**
+ * Abstract class defining the basic operations of a Basic speed matcher (sets a
+ * minimum speed at speed step 1, a maximum at speed step 28, and some number of
+ * points in between). All basic speed matcher implementations must extend this
+ * class.
  *
- * @author toddt
+ * @author Todd Wegter
  */
-public abstract class BasicSpeedMatcher extends SpeedMatcher{
+public abstract class BasicSpeedMatcher extends SpeedMatcher {
 
     //<editor-fold defaultstate="collapsed" desc="Instance Variables">
     protected float targetStartSpeedKPH;
     protected float targetTopSpeedKPH;
-    
     //</editor-fold>
-    
+
     public BasicSpeedMatcher(SpeedMatcherConfig config) {
         super(config);
 
@@ -29,6 +32,11 @@ public abstract class BasicSpeedMatcher extends SpeedMatcher{
     }
 
     //<editor-fold defaultstate="collapsed" desc="Protected APIs">
+    /**
+     * Validates the speed matcher's configuration
+     *
+     * @return true if the configuration is valid, false otherwise
+     */
     @Override
     protected boolean Validate() {
         if (dccLocoAddress.getNumber() <= 0) {
@@ -48,12 +56,13 @@ public abstract class BasicSpeedMatcher extends SpeedMatcher{
 
         return true;
     }
-    
+
     /**
      * Gets the desired speed for a given speed step
+     *
      * @param speedStep the SpeedTableStep to get the speed for
-     * @param minSpeed minimum speed in KPH (at speed step 1)
-     * @param maxSpeed maximum speed in KPH (at speed step 28)
+     * @param minSpeed  minimum speed in KPH (at speed step 1)
+     * @param maxSpeed  maximum speed in KPH (at speed step 28)
      * @return the speed for the given speed step in KPH
      */
     protected float GetSpeedForSpeedStep(SpeedTableStep speedStep, float minSpeed, float maxSpeed) {
