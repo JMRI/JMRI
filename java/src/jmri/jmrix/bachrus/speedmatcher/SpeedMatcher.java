@@ -1,7 +1,5 @@
 package jmri.jmrix.bachrus.speedmatcher;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
@@ -9,8 +7,6 @@ import javax.swing.JButton;
 import javax.swing.Timer;
 
 import jmri.*;
-
-import org.slf4j.Logger;
 
 /**
  * Abstract class defining the basic operations of a speed matcher. All speed
