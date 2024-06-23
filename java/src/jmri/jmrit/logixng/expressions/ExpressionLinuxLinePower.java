@@ -139,7 +139,7 @@ public class ExpressionLinuxLinePower extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() throws JmriException {
-        
+
         if (_thrownException != null) {
             JmriException e = _thrownException;
             _thrownException = null;
