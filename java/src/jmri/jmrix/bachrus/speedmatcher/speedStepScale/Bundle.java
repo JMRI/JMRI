@@ -93,5 +93,4 @@ public class Bundle extends jmri.jmrix.bachrus.Bundle {
     protected String retry(Locale locale, String key) {
         return super.getBundle().handleGetMessage(locale,key);
     }
-
 }

@@ -12,7 +12,7 @@ import jmri.jmrix.bachrus.speedmatcher.SpeedMatcherConfig;
  * these 4 CVs. This is done to reduce the time the speed match takes and to
  * increase likelihood of success.
  *
- * @author Todd Wegter
+ * @author Todd Wegter Copyright (C) 2024
  */
 public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
 

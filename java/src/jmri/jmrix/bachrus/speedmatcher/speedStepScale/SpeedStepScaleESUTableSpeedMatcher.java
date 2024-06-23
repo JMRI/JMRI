@@ -4,9 +4,9 @@ import jmri.jmrix.bachrus.speedmatcher.SpeedMatcherConfig;
 
 /**
  *
- * @author Todd Wegter
+ * @author Todd Wegter Copyright (C) 2024
  */
-public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatcher{
+public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatcher {
 
     public SpeedStepScaleESUTableSpeedMatcher(SpeedMatcherConfig config) {
         super(config);

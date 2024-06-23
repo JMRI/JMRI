@@ -10,7 +10,7 @@ import jmri.jmrix.bachrus.speedmatcher.SpeedMatcherConfig;
  * points in between). All basic speed matcher implementations must extend this
  * class.
  *
- * @author Todd Wegter
+ * @author Todd Wegter Copyright (C) 2024
  */
 public abstract class BasicSpeedMatcher extends SpeedMatcher {
 

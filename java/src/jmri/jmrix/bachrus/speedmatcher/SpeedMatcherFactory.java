@@ -6,7 +6,7 @@ import jmri.jmrix.bachrus.speedmatcher.basic.*;
  * Factory for creating the correct type of speed matcher for the given
  * SpeedMatcherConfig
  *
- * @author Todd Wegter
+ * @author Todd Wegter Copyright (C) 2024
  */
 public class SpeedMatcherFactory {
 

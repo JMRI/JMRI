@@ -26,5 +26,4 @@ public class SpeedoStartupActionFactory extends AbstractStartupActionFactory{
     public Class<?>[] getActionClasses() {
         return new Class<?>[]{SpeedoConsoleAction.class};
     }
-
 }

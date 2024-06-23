@@ -46,7 +46,7 @@ import jmri.util.swing.JmriJOptionPane;
  *
  * @author Andrew Crosland Copyright (C) 2010
  * @author Dennis Miller Copyright (C) 2015
- * @author Todd Wegter Copyright (C) 2019-2022
+ * @author Todd Wegter Copyright (C) 2019-2024
  */
 public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         ThrottleListener,

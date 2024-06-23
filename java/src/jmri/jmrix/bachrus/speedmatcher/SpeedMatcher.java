@@ -12,7 +12,7 @@ import jmri.*;
  * Abstract class defining the basic operations of a speed matcher. All speed
  * matcher implementations must extend this class.
  *
- * @author Todd Wegter
+ * @author Todd Wegter Copyright (C) 2024
  */
 public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
 

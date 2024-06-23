@@ -5,7 +5,7 @@ import jmri.jmrix.bachrus.speedmatcher.SpeedMatcherConfig;
 
 /**
  *
- * @author Todd Wegter
+ * @author Todd Wegter Copyright (C) 2024
  */
 public abstract class SpeedStepScaleSpeedMatcher extends SpeedMatcher {
 
@@ -23,5 +23,4 @@ public abstract class SpeedStepScaleSpeedMatcher extends SpeedMatcher {
          throw new UnsupportedOperationException("Not supported yet."); //TODO: speedStepScale validate 
     }
     //</editor-fold>
-
 }

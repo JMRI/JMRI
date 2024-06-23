@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 /**
  * Configuration data for a speed matcher
  *
- * @author Todd Wegter
+ * @author Todd Wegter Copyright (C) 2024
  */
 public class SpeedMatcherConfig {
 
