@@ -843,9 +843,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 if (basicSpeedTableSpeedMatchButton.isSelected()) {
                     speedTableType = SpeedMatcherConfig.SpeedTable.ADVANCED; 
                 }
-//                else if (basicESUSpeedMatchButton.isSelected()) {
-//                    speedTableType = SpeedMatcherConfig.SpeedTable.ESU;
-//                }
+                else if (basicESUSpeedMatchButton.isSelected()) {
+                    speedTableType = SpeedMatcherConfig.SpeedTable.ESU;
+                }
                 else {
                     speedTableType = SpeedMatcherConfig.SpeedTable.SIMPLE;
                 }

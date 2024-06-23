@@ -11,6 +11,8 @@ import jmri.*;
 import org.slf4j.Logger;
 
 /**
+ * Abstract class defining the basic operations of a speed matcher. All speed
+ * matcher implementations must extend this class.
  *
  * @author toddt
  */
@@ -18,10 +20,18 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
 
     //<editor-fold defaultstate="collapsed" desc="Constants">
     //PID Controller Values
-    //TODO: TRW - tune to reduce overshoot
-    protected final float kP = 0.75f;
-    protected final float kI = 0.3f;
-    protected final float kD = 0.0f; //0.4f;    
+    protected final float Kp = 0.3f;
+    protected final float Ti = 240;
+    protected final float Td = 5;
+    protected final float Ki = Kp / Ti;
+    protected final float Kd = Kp * Td;
+
+    //Other Constants
+    protected final int INITIAL_MOMENTUM = 0;
+    protected final int REVERSE_TRIM_MAX = 255;
+    protected final int REVERSE_TRIM_MIN = 1;
+
+    protected final float ALLOWED_SPEED_MATCH_ERROR = 0.75f;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Enums">
@@ -31,6 +41,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             public SpeedTableStep getPrevious() {
                 return null;
             }
+
             @Override
             public SpeedTableStep getNext() {
                 return STEP2;
@@ -41,6 +52,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             public SpeedTableStep getPrevious() {
                 return STEP1;
             }
+
             @Override
             public SpeedTableStep getNext() {
                 return STEP3;
@@ -51,6 +63,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             public SpeedTableStep getPrevious() {
                 return STEP2;
             }
+
             @Override
             public SpeedTableStep getNext() {
                 return STEP4;
@@ -61,6 +74,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             public SpeedTableStep getPrevious() {
                 return STEP3;
             }
+
             @Override
             public SpeedTableStep getNext() {
                 return STEP5;
@@ -71,6 +85,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             public SpeedTableStep getPrevious() {
                 return STEP4;
             }
+
             @Override
             public SpeedTableStep getNext() {
                 return STEP6;
@@ -81,6 +96,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             public SpeedTableStep getPrevious() {
                 return STEP5;
             }
+
             @Override
             public SpeedTableStep getNext() {
                 return STEP7;
@@ -91,6 +107,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             public SpeedTableStep getPrevious() {
                 return STEP6;
             }
+
             @Override
             public SpeedTableStep getNext() {
                 return STEP8;
@@ -101,6 +118,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             public SpeedTableStep getPrevious() {
                 return STEP7;
             }
+
             @Override
             public SpeedTableStep getNext() {
                 return STEP9;
@@ -111,6 +129,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             public SpeedTableStep getPrevious() {
                 return STEP8;
             }
+
             @Override
             public SpeedTableStep getNext() {
                 return STEP10;
@@ -121,6 +140,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             public SpeedTableStep getPrevious() {
                 return STEP9;
             }
+
             @Override
             public SpeedTableStep getNext() {
                 return STEP11;
@@ -131,6 +151,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             public SpeedTableStep getPrevious() {
                 return STEP10;
             }
+
             @Override
             public SpeedTableStep getNext() {
                 return STEP12;
@@ -141,6 +162,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             public SpeedTableStep getPrevious() {
                 return STEP11;
             }
+
             @Override
             public SpeedTableStep getNext() {
                 return STEP13;
@@ -151,6 +173,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             public SpeedTableStep getPrevious() {
                 return STEP12;
             }
+
             @Override
             public SpeedTableStep getNext() {
                 return STEP14;
@@ -161,6 +184,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             public SpeedTableStep getPrevious() {
                 return STEP13;
             }
+
             @Override
             public SpeedTableStep getNext() {
                 return STEP15;
@@ -171,6 +195,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             public SpeedTableStep getPrevious() {
                 return STEP14;
             }
+
             @Override
             public SpeedTableStep getNext() {
                 return STEP16;
@@ -181,6 +206,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             public SpeedTableStep getPrevious() {
                 return STEP15;
             }
+
             @Override
             public SpeedTableStep getNext() {
                 return STEP17;
@@ -191,6 +217,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             public SpeedTableStep getPrevious() {
                 return STEP16;
             }
+
             @Override
             public SpeedTableStep getNext() {
                 return STEP18;
@@ -201,6 +228,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             public SpeedTableStep getPrevious() {
                 return STEP17;
             }
+
             @Override
             public SpeedTableStep getNext() {
                 return STEP19;
@@ -211,6 +239,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             public SpeedTableStep getPrevious() {
                 return STEP18;
             }
+
             @Override
             public SpeedTableStep getNext() {
                 return STEP20;
@@ -221,6 +250,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             public SpeedTableStep getPrevious() {
                 return STEP19;
             }
+
             @Override
             public SpeedTableStep getNext() {
                 return STEP21;
@@ -231,6 +261,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             public SpeedTableStep getPrevious() {
                 return STEP20;
             }
+
             @Override
             public SpeedTableStep getNext() {
                 return STEP22;
@@ -241,6 +272,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             public SpeedTableStep getPrevious() {
                 return STEP21;
             }
+
             @Override
             public SpeedTableStep getNext() {
                 return STEP23;
@@ -251,6 +283,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             public SpeedTableStep getPrevious() {
                 return STEP22;
             }
+
             @Override
             public SpeedTableStep getNext() {
                 return STEP24;
@@ -261,6 +294,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             public SpeedTableStep getPrevious() {
                 return STEP23;
             }
+
             @Override
             public SpeedTableStep getNext() {
                 return STEP25;
@@ -271,6 +305,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             public SpeedTableStep getPrevious() {
                 return STEP24;
             }
+
             @Override
             public SpeedTableStep getNext() {
                 return STEP26;
@@ -281,6 +316,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             public SpeedTableStep getPrevious() {
                 return STEP25;
             }
+
             @Override
             public SpeedTableStep getNext() {
                 return STEP27;
@@ -291,6 +327,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             public SpeedTableStep getPrevious() {
                 return STEP26;
             }
+
             @Override
             public SpeedTableStep getNext() {
                 return STEP28;
@@ -301,6 +338,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             public SpeedTableStep getPrevious() {
                 return STEP27;
             }
+
             @Override
             public SpeedTableStep getNext() {
                 return null;
@@ -314,20 +352,51 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             this.speedStep = speedStep;
             this.cv = String.valueOf(speedStep + 66);
         }
-        
+
         public int getSpeedStep() {
             return this.speedStep;
         }
-        
+
         public String getCV() {
             return this.cv;
         }
-        
+
         public abstract SpeedTableStep getNext();
+
         public abstract SpeedTableStep getPrevious();
-        
+
         public int get128StepEquivalent() {
-            return Math.round(this.speedStep * (long)4.571428571428571);
+            return Math.round(this.speedStep * (long) 4.571428571428571);
+        }
+    }
+
+    protected enum CV {
+        VSTART(2, "vStart"),
+        VMID(6, "vMid"),
+        VHIGH(5, "vHigh"),
+        ACCEL(3, "Momentum - Accel"),
+        DECEL(4, "Momentum - Decel"),
+        FORWARDTRIM(66, "Forward Trim"),
+        REVERSETRIM(95, "Reverse Trim");
+
+        private final String name;
+        private final String cv;
+
+        private CV(int cv, String name) {
+            this.cv = String.valueOf(cv);
+            this.name = name;
+        }
+
+        public String getCV() {
+            return this.cv;
+        }
+
+        public String getName() {
+            return this.name;
+        }
+
+        public String getCVName() {
+            return String.format("%s (%s)", cv, name);
         }
     }
 
@@ -375,7 +444,6 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
     private Timer speedMatchStateTimer;
 
     //</editor-fold>
-    
     public SpeedMatcher(SpeedMatcherConfig config) {
         this.dccLocoAddress = config.dccLocoAddress;
         this.powerManager = config.powerManager;
@@ -391,21 +459,46 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
     }
 
     //<editor-fold defaultstate="collapsed" desc="Public APIs">   
+    /**
+     * Starts the speed matching process
+     *
+     * @return true if speed matching started successfully, false otherwise
+     */
     public abstract boolean Start();
 
+    /**
+     * Stops the speed matching process
+     */
     public abstract void Stop();
 
+    /**
+     * Indicates if the speed matcher is idle (not currently speed matching)
+     *
+     * @return true if idle, false otherwise
+     */
     public abstract boolean IsIdle();
 
+    /**
+     * Updates the locomotive's current speed in the speed matcher
+     *
+     * @param currentSpeedKPH the locomotive's current speed in KPH
+     */
     public void UpdateCurrentSpeed(float currentSpeedKPH) {
         this.currentSpeed = currentSpeedKPH;
     }
-
     //</editor-fold>
-    
+
     //<editor-fold defaultstate="collapsed" desc="Protected APIs">
+    /**
+     * Validates the speed matcher's configuration
+     *
+     * @return true if the configuration is valid, false otherwise
+     */
     protected abstract boolean Validate();
 
+    /**
+     * Cleans up the speed matcher when speed matching is stopped or is finished
+     */
     protected void CleanUp() {
         //stop the timer
         if (speedMatchStateTimer != null) {
@@ -428,6 +521,14 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
         startStopButton.setText(Bundle.getMessage("btnStartSpeedMatch"));
     }
 
+    /**
+     * Shared code to initialize the speed matcher's programmer and throttle and
+     * start the speed matching timer. Expected to be called in an implementing
+     * speed matcher's Start function.
+     *
+     * @param timerActionListener callback to fire when the timer times out
+     * @return true if initialization and start is successful, false otherwise
+     */
     protected boolean InitializeAndStartSpeedMatcher(ActionListener timerActionListener) {
         //Setup speed match timer
         speedMatchStateTimer = new javax.swing.Timer(4000, timerActionListener);
@@ -440,18 +541,29 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
         return GetThrottle();
     }
 
+    /**
+     * Starts the speed match state timer
+     */
     protected void startSpeedMatchStateTimer() {
         if (speedMatchStateTimer != null) {
             speedMatchStateTimer.start();
         }
     }
 
+    /**
+     * Stops the speed match state timer
+     */
     protected void stopSpeedMatchStateTimer() {
         if (speedMatchStateTimer != null) {
             speedMatchStateTimer.stop();
         }
     }
 
+    /**
+     * Sets the duration for the speed match timer
+     *
+     * @param timerDuration timer duration in milliseconds
+     */
     protected void setSpeedMatchStateTimerDuration(int timerDuration) {
         speedMatchStateTimer.setInitialDelay(timerDuration);
     }
@@ -470,7 +582,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        
+
         logger.info("Set throttle to {} speed step {}", isForward ? "forward" : "reverse", speedStep);
 
         throttle.setIsForward(isForward);
@@ -495,16 +607,16 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
     /**
      * Gets the next value to try for speed matching using a PID controller
      *
-     * @param lastValue - the last speed match CV value tried
-     * @param max       - the maximum value
-     * @param min       - the minimum value
+     * @param lastValue the last speed match CV value tried
+     * @param max       the maximum value
+     * @param min       the minimum value
      * @return the next value to try for speed matching [min:max]
      */
     protected int getNextSpeedMatchValue(int lastValue, int max, int min) {
         speedMatchIntegral += speedMatchError;
         speedMatchDerivative = speedMatchError - lastSpeedMatchError;
 
-        int value = (lastValue + Math.round((kP * speedMatchError) + (kI * speedMatchIntegral) + (kD * speedMatchDerivative)));
+        int value = (lastValue + Math.round((Kp * speedMatchError) + (Ki * speedMatchIntegral) + (Kd * speedMatchDerivative)));
 
         if (value > max) {
             value = max;
@@ -514,7 +626,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
 
         return value;
     }
-    
+
     /**
      * Resets the PID controller's speed match error, integral, and derivative
      */
@@ -524,10 +636,39 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
         lastSpeedMatchError = 0;
         speedMatchError = 0;
     }
-
     //</editor-fold>
-    
+
     //<editor-fold defaultstate="collapsed" desc="Programmer">
+    /**
+     * Starts writing vStart (CV 2) using the ops mode programmer
+     *
+     * @param value vStart value (0-255 inclusive)
+     */
+    protected synchronized void writeVStart(int value) {
+        programmerState = ProgrammerState.WRITE2;
+        writeCV(CV.VSTART, value);
+    }
+
+    /**
+     * Starts writing vMid (CV 6) using the ops mode programmer
+     *
+     * @param value vMid value (0-255 inclusive)
+     */
+    protected synchronized void writeVMid(int value) {
+        programmerState = ProgrammerState.WRITE6;
+        writeCV(CV.VMID, value);
+    }
+
+    /**
+     * Starts writing vHigh (CV 5) using the ops mode programmer
+     *
+     * @param value vHigh value (0-255 inclusive)
+     */
+    protected synchronized void writeVHigh(int value) {
+        programmerState = ProgrammerState.WRITE5;
+        writeCV(CV.VHIGH, value);
+    }
+
     /**
      * Starts writing acceleration momentum (CV 3) using the ops mode programmer
      *
@@ -535,8 +676,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
      */
     protected synchronized void writeMomentumAccel(int value) {
         programmerState = ProgrammerState.WRITE3;
-        statusLabel.setText(Bundle.getMessage("ProgSetAccel", value));
-        startOpsModeWrite("3", value);
+        writeCV(CV.ACCEL, value);
     }
 
     /**
@@ -546,8 +686,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
      */
     protected synchronized void writeMomentumDecel(int value) {
         programmerState = ProgrammerState.WRITE4;
-        statusLabel.setText(Bundle.getMessage("ProgSetDecel", value));
-        startOpsModeWrite("4", value);
+        writeCV(CV.DECEL, value);
     }
 
     /**
@@ -557,8 +696,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
      */
     protected synchronized void writeForwardTrim(int value) {
         programmerState = ProgrammerState.WRITE66;
-        statusLabel.setText(Bundle.getMessage("ProgSetForwardTrim", value));
-        startOpsModeWrite("66", value);
+        writeCV(CV.FORWARDTRIM, value);
     }
 
     /**
@@ -568,12 +706,43 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
      */
     protected synchronized void writeReverseTrim(int value) {
         programmerState = ProgrammerState.WRITE95;
-        statusLabel.setText(Bundle.getMessage("ProgSetReverseTrim", value));
-        startOpsModeWrite("95", value);
+        writeCV(CV.REVERSETRIM, value);
     }
 
-    protected void startOpsModeWrite(String cv, int value) {
+    /**
+     * Starts writing a Speed Table Step CV (CV 67-94) using the ops mode
+     * programmer
+     *
+     * @param step  the SpeedTableStep to set
+     * @param value speed table step value (0-255 inclusive)
+     */
+    protected synchronized void writeSpeedTableStep(SpeedTableStep step, int value) {
+        programmerState = ProgrammerState.WRITE_SPEED_TABLE_STEP;
+        statusLabel.setText(Bundle.getMessage("ProgSetCV", step.getCV() + " (Speed Step " + String.valueOf(step.getSpeedStep()) + ")", value));
+        startOpsModeWrite(step.getCV(), value);
+    }
+
+    /**
+     * Starts writing a CV using the ops mode programmer and sets the status
+     * label
+     *
+     * @param cv    CV to write to
+     * @param value value to write (0-255 inclusive)
+     */
+    private synchronized void writeCV(CV cv, int value) {
+        statusLabel.setText(Bundle.getMessage("ProgSetCV", cv.getCVName(), value));
+        startOpsModeWrite(cv.getCV(), value);
+    }
+
+    /**
+     * Starts writing a CV using the ops mode programmer
+     *
+     * @param cv    string CV to write to
+     * @param value value to write (0-255 inclusive)
+     */
+    private void startOpsModeWrite(String cv, int value) {
         try {
+            logger.info(Bundle.getMessage("ProgSetCV", cv, value));
             opsModeProgrammer.writeCV(cv, value, this);
         } catch (ProgrammerException e) {
             logger.error("Exception writing CV " + cv + " " + e);
@@ -582,11 +751,10 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
 
     //<editor-fold defaultstate="collapsed" desc="ProgListener Overrides">
     /**
-     * Called when the programmer (ops mode or service mode) has completed its
-     * operation
+     * Called when the programmer has completed its operation
      *
-     * @param value  Value from a read operation, or value written on a write
-     * @param status Denotes the completion code. Note that this is a bitwise
+     * @param value  value from a read operation, or value written on a write
+     * @param status denotes the completion code. Note that this is a bitwise
      *               combination of the various states codes defined in this
      *               interface. (see ProgListener.java for possible values)
      */
@@ -617,7 +785,6 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
         } else {
             // Error during programming
             logger.error("Status not OK during " + programmerState.toString() + ": " + status);
-            //profileAddressField.setText("Error");
             statusLabel.setText("Error using programmer");
             programmerState = ProgrammerState.IDLE;
             CleanUp();
@@ -627,6 +794,12 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Helper Functions">
+    /**
+     * Acquires an ops mode programmer for use in the speed matcher
+     *
+     * @return true if the ops mode programmer was successfully acquired, false
+     *         otherwise
+     */
     private boolean GetOpsModeProgrammer() {
         logger.info("Requesting Programmer");
         //get OPS MODE Programmer
@@ -645,6 +818,11 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
         }
     }
 
+    /**
+     * Acquires a throttle for use in the speed matcher
+     *
+     * @return true if the throttle was successfully acquired, false otherwise
+     */
     private boolean GetThrottle() {
         statusLabel.setText("Requesting Throttle");
         logger.info("Requesting Throttle");
@@ -660,8 +838,8 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
 
     //<editor-fold defaultstate="collapsed" desc="ThrottleListener Overrides">
     /**
-     * Called when a throttle is found Must override, call super, and start
-     * speed matcher in implementation
+     * Called when a throttle is found Implementers must override, call super,
+     * and start speed matcher in implementation
      *
      * @param t the requested DccThrottle
      */

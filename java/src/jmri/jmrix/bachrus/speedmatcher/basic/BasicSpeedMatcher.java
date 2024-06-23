@@ -49,5 +49,15 @@ public abstract class BasicSpeedMatcher extends SpeedMatcher{
         return true;
     }
     
+    /**
+     * Gets the desired speed for a given speed step
+     * @param speedStep the SpeedTableStep to get the speed for
+     * @param minSpeed minimum speed in KPH (at speed step 1)
+     * @param maxSpeed maximum speed in KPH (at speed step 28)
+     * @return the speed for the given speed step in KPH
+     */
+    protected float GetSpeedForSpeedStep(SpeedTableStep speedStep, float minSpeed, float maxSpeed) {
+        return minSpeed + (((maxSpeed - minSpeed) / 27) * (speedStep.getSpeedStep() - 1));
+    }
     //</editor-fold>
 }

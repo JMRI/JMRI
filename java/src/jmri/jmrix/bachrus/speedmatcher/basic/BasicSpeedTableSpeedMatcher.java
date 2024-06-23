@@ -17,9 +17,15 @@ import jmri.jmrix.bachrus.speedmatcher.SpeedMatcherConfig;
 public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
 
     //<editor-fold defaultstate="collapsed" desc="Constants">
-    private final int INITIAL_STEP1_VALUE = 1;
-    private final int INITIAL_STEP28_VALUE = 255;
-    private final int INITIAL_TRIM_VALUE = 128;
+    private final int INITIAL_STEP1 = 1;
+    private final int INITIAL_STEP28 = 255;
+    private final int INITIAL_TRIM = 128;
+    
+    private final int STEP28_MAX = 255;
+    private final int STEP28_MIN = 28;
+    private final int STEP19_MIN = 19;
+    private final int STEP10_MIN = 10;    
+    private final int STEP1_MIN = 1;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Enums">
@@ -57,11 +63,11 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
     
     private SpeedTableStep interpolationSpeedTableStep;
 
-    private int speedMatchCVValue = INITIAL_STEP28_VALUE;
-    private int lastSpeedMatchCVValue = INITIAL_STEP28_VALUE;
+    private int speedMatchCVValue = INITIAL_STEP28;
+    private int lastSpeedMatchCVValue = INITIAL_STEP28;
 
-    private int reverseTrimValue = INITIAL_TRIM_VALUE;
-    private int lastReverseTrimValue = INITIAL_TRIM_VALUE;
+    private int reverseTrimValue = INITIAL_TRIM;
+    private int lastReverseTrimValue = INITIAL_TRIM;
 
     private final float targetStep28SpeedKPH;
     private final float targetStep19SpeedKPH;
@@ -80,8 +86,8 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
         super(config);
 
         targetStep28SpeedKPH = targetTopSpeedKPH;
-        targetStep19SpeedKPH = GetSpeedForSpeedStep(SpeedTableStep.STEP19);
-        targetStep10SpeedKPH = GetSpeedForSpeedStep(SpeedTableStep.STEP10);
+        targetStep19SpeedKPH = GetSpeedForSpeedStep(SpeedTableStep.STEP19, targetStartSpeedKPH, targetTopSpeedKPH);
+        targetStep10SpeedKPH = GetSpeedForSpeedStep(SpeedTableStep.STEP10, targetStartSpeedKPH, targetTopSpeedKPH);
         targetStep1SpeedKPH = targetStartSpeedKPH;
     }
 
@@ -93,10 +99,10 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
         }
 
         //reset instance variables
-        speedMatchCVValue = INITIAL_STEP28_VALUE;
-        lastSpeedMatchCVValue = INITIAL_STEP28_VALUE;
-        reverseTrimValue = INITIAL_TRIM_VALUE;
-        lastReverseTrimValue = INITIAL_TRIM_VALUE;
+        speedMatchCVValue = INITIAL_STEP28;
+        lastSpeedMatchCVValue = INITIAL_STEP28;
+        reverseTrimValue = INITIAL_TRIM;
+        lastReverseTrimValue = INITIAL_TRIM;
 
         speedMatcherState = SpeedMatcherState.WAIT_FOR_THROTTLE;
 
@@ -151,7 +157,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
             case INIT_ACCEL:
                 //set acceleration momentum to 0 (CV 3)
                 if (programmerState == ProgrammerState.IDLE) {
-                    writeMomentumAccel(0);
+                    writeMomentumAccel(INITIAL_MOMENTUM);
                     initNextSpeedMatcherState(SpeedMatcherState.INIT_DECEL);
                 }
                 break;
@@ -159,23 +165,22 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
             case INIT_DECEL:
                 //set deceleration mementum to 0 (CV 4)
                 if (programmerState == ProgrammerState.IDLE) {
-                    writeMomentumDecel(0);
+                    writeMomentumDecel(INITIAL_MOMENTUM);
                     initNextSpeedMatcherState(SpeedMatcherState.INIT_SPEED_TABLE);
                 }
                 break;
 
             case INIT_SPEED_TABLE:
-                //initialize every speed table step to its value (so Speed Table Step 1 = 1, etc.)
-                //except Speed Table Step 28 = 255
+                //initialize every speed table step to 1 except speed table step 28 = 255
                 if (programmerState == ProgrammerState.IDLE) {
                     if (stepDuration == 0) {
-                        initSpeedTableStepValue = INITIAL_STEP1_VALUE;
+                        initSpeedTableStepValue = INITIAL_STEP1;
                         initSpeedTableStep = SpeedTableStep.STEP1;
                         stepDuration = 1;
                     }
 
                     if (initSpeedTableStep == SpeedTableStep.STEP28) {
-                        initSpeedTableStepValue = INITIAL_STEP28_VALUE;
+                        initSpeedTableStepValue = INITIAL_STEP28;
                     }
 
                     writeSpeedTableStep(initSpeedTableStep, initSpeedTableStepValue);
@@ -190,7 +195,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
             case INIT_FORWARD_TRIM:
                 //set forward trim to 128 (CV 66)
                 if (programmerState == ProgrammerState.IDLE) {
-                    writeForwardTrim(INITIAL_TRIM_VALUE);
+                    writeForwardTrim(INITIAL_TRIM);
                     initNextSpeedMatcherState(SpeedMatcherState.INIT_REVERSE_TRIM);
                 }
                 break;
@@ -198,7 +203,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
             case INIT_REVERSE_TRIM:
                 //set reverse trim to 128 (CV 95)
                 if (programmerState == ProgrammerState.IDLE) {
-                    writeReverseTrim(INITIAL_TRIM_VALUE);
+                    writeReverseTrim(INITIAL_TRIM);
                     initNextSpeedMatcherState(SpeedMatcherState.POST_INIT);
                 }
                 break;
@@ -238,7 +243,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
             case FORWARD_SPEED_MATCH_STEP28:
                 //Use PID Controller to adjust Speed Step 28 to the max speed
                 if (programmerState == ProgrammerState.IDLE) {
-                    SpeedMatchSpeedStepInner(SpeedTableStep.STEP28, targetStep28SpeedKPH, 255, 20, SpeedMatcherState.RE_INIT_SPEED_TABLE_TOP_THIRD);
+                    SpeedMatchSpeedStepInner(SpeedTableStep.STEP28, targetStep28SpeedKPH, STEP28_MAX, STEP28_MIN, SpeedMatcherState.RE_INIT_SPEED_TABLE_TOP_THIRD);
                     Step28CVValue = speedMatchCVValue;
                 }
                 break;
@@ -265,7 +270,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
             case FORWARD_SPEED_MATCH_STEP19:
                 //Use PID Controller to adjust Speed Step 19 to the interpolated speed
                 if (programmerState == ProgrammerState.IDLE) {
-                    SpeedMatchSpeedStepInner(SpeedTableStep.STEP19, targetStep19SpeedKPH, Step28CVValue - 9, 19, SpeedMatcherState.RE_INIT_SPEED_TABLE_MIDDLE_THIRD);
+                    SpeedMatchSpeedStepInner(SpeedTableStep.STEP19, targetStep19SpeedKPH, Step28CVValue - 9, STEP19_MIN, SpeedMatcherState.RE_INIT_SPEED_TABLE_MIDDLE_THIRD);
                     Step19CVValue = speedMatchCVValue;
                 }
                 break;
@@ -292,7 +297,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
             case FORWARD_SPEED_MATCH_STEP10:
                 //Use PID Controller to adjust Speed Step 10 to the interpolated speed
                 if (programmerState == ProgrammerState.IDLE) {
-                    SpeedMatchSpeedStepInner(SpeedTableStep.STEP10, targetStep10SpeedKPH, Step19CVValue - 9, 10, SpeedMatcherState.RE_INIT_SPEED_TABLE_BOTTOM_THIRD);
+                    SpeedMatchSpeedStepInner(SpeedTableStep.STEP10, targetStep10SpeedKPH, Step19CVValue - 9, STEP10_MIN, SpeedMatcherState.RE_INIT_SPEED_TABLE_BOTTOM_THIRD);
                     Step10CVValue = speedMatchCVValue;
                 }
                 break;
@@ -319,7 +324,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
             case FORWARD_SPEED_MATCH_STEP1:
                 //Use PID Controller to adjust Speed Step 1 to the minimum speed
                 if (programmerState == ProgrammerState.IDLE) {
-                    SpeedMatchSpeedStepInner(SpeedTableStep.STEP1, targetStep1SpeedKPH, Step10CVValue - 9, 1, SpeedMatcherState.INTERPOLATE_SPEED_TABLE);
+                    SpeedMatchSpeedStepInner(SpeedTableStep.STEP1, targetStep1SpeedKPH, Step10CVValue - 9, STEP1_MIN, SpeedMatcherState.INTERPOLATE_SPEED_TABLE);
                     Step1CVValue = speedMatchCVValue;
                 }
                 break;
@@ -391,26 +396,25 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
                     if (stepDuration == 0) {
                         statusLabel.setText(Bundle.getMessage("StatSettingReverseTrim"));
                         setThrottle(false, 28);
-                        setSpeedMatchStateTimerDuration(15000);
+                        setSpeedMatchStateTimerDuration(8000);
                         stepDuration = 1;
                     } else {
                         setSpeedMatchError(targetTopSpeedKPH);
 
-                        if ((speedMatchError < 1) && (speedMatchError > -1)) {
+                        if (Math.abs(speedMatchError) < ALLOWED_SPEED_MATCH_ERROR) {
                             initNextSpeedMatcherState(SpeedMatcherState.COMPLETE);
                         } else {
-                            reverseTrimValue = getNextSpeedMatchValue(lastReverseTrimValue, 255, 1);
+                            reverseTrimValue = getNextSpeedMatchValue(lastReverseTrimValue, REVERSE_TRIM_MAX, REVERSE_TRIM_MIN);
 
-                            if (((lastReverseTrimValue == 1) || (lastReverseTrimValue == 255)) && (reverseTrimValue == lastReverseTrimValue)) {
+                            if (((lastReverseTrimValue == REVERSE_TRIM_MAX) || (lastReverseTrimValue == REVERSE_TRIM_MIN)) && (reverseTrimValue == lastReverseTrimValue)) {
                                 statusLabel.setText(Bundle.getMessage("StatSetReverseTripFail"));
                                 logger.info("Unable to trim reverse to match forward");
                                 Abort();
                                 break;
-                            } else {
-                                lastReverseTrimValue = reverseTrimValue;
-                                writeReverseTrim(reverseTrimValue);
-                            }
-                            setSpeedMatchStateTimerDuration(8000);
+                            } 
+                            
+                            lastReverseTrimValue = reverseTrimValue;
+                            writeReverseTrim(reverseTrimValue);
                         }
                     }
                 }
@@ -450,24 +454,6 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
         }
     }
     //</editor-fold>
-
-    //<editor-fold defaultstate="collapsed" desc="Programmer">
-    /**
-     * Starts writing a Speed Table Step CV (CV 67-94) using the ops mode
-     * programmer
-     *
-     * @param step  the SpeedTableStep to set
-     * @param value speed table step value (0-255 inclusive)
-     */
-    private synchronized void writeSpeedTableStep(SpeedTableStep step, int value) {
-        programmerState = ProgrammerState.WRITE_SPEED_TABLE_STEP;
-        String message = Bundle.getMessage("ProgSetCV", step.getCV() + " (Speed Step " + String.valueOf(step.getSpeedStep()) + ")", value);
-        statusLabel.setText(message);
-        logger.info(message);
-        startOpsModeWrite(step.getCV(), value);
-    }
-
-    //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="ThrottleListener Overrides">
     /**
@@ -491,22 +477,18 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Helper Functions">
-    private float GetSpeedForSpeedStep(SpeedTableStep speedStep) {
-        return targetStartSpeedKPH + (((targetTopSpeedKPH - targetStartSpeedKPH) / 27) * (speedStep.getSpeedStep() - 1));
-    }
-
     private int GetInterpolatedSpeedTableCVValue(SpeedTableStep speedStep) {
         SpeedTableStep maxStep;
         SpeedTableStep minStep;
         int maxStepCVValue;
         int minStepCVValue;
 
-        if (initSpeedTableStep.getSpeedStep() >= SpeedTableStep.STEP19.getSpeedStep()) {
+        if (speedStep.getSpeedStep() >= SpeedTableStep.STEP19.getSpeedStep()) {
             maxStep = SpeedTableStep.STEP28;
             minStep = SpeedTableStep.STEP19;
             maxStepCVValue = Step28CVValue;
             minStepCVValue = Step19CVValue;
-        } else if (initSpeedTableStep.getSpeedStep() >= SpeedTableStep.STEP10.getSpeedStep()) {
+        } else if (speedStep.getSpeedStep() >= SpeedTableStep.STEP10.getSpeedStep()) {
             maxStep = SpeedTableStep.STEP19;
             minStep = SpeedTableStep.STEP10;
             maxStepCVValue = Step19CVValue;
@@ -531,7 +513,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
         } else {
             setSpeedMatchError(targetSpeedKPH);
 
-            if ((speedMatchError < 1) && (speedMatchError > -1)) {
+           if (Math.abs(speedMatchError) < ALLOWED_SPEED_MATCH_ERROR) {
                 initNextSpeedMatcherState(nextState);
             } else {
                 speedMatchCVValue = getNextSpeedMatchValue(lastSpeedMatchCVValue, maxCVValue, minCVValue);
@@ -545,7 +527,6 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
 
                 lastSpeedMatchCVValue = speedMatchCVValue;
                 writeSpeedTableStep(speedStep, speedMatchCVValue);
-                setSpeedMatchStateTimerDuration(8000);
             }
         }
     }
@@ -569,7 +550,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
         resetSpeedMatchError();
         stepDuration = 0;
         speedMatcherState = nextState;
-        setSpeedMatchStateTimerDuration(1200);
+        setSpeedMatchStateTimerDuration(1800);
     }
     //</editor-fold>
 }
