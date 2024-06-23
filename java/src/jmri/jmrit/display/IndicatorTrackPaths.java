@@ -125,6 +125,8 @@ public class IndicatorTrackPaths {
      * Each wraps this method with ThreadingUtil.runOnLayoutEventually, so there is
      * a time lag for when track icon changes and display of the change.
      */
+    @SuppressWarnings("deprecation")    // The method getId() from the type Thread is deprecated since version 19
+                                        // The replacement Thread.threadId() isn't available before version 19
     @jmri.InvokeOnLayoutThread
     synchronized protected void setLocoIcon(OBlock block, Point pt, Dimension size, Editor ed) {
         if (!_showTrain) {
