@@ -680,16 +680,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
             if (!row.getComment().isEmpty()) {
                 var comment = row.getComment().trim();
-                if (_compactOption.isSelected()) {
-                    sb.append("/*" + comment + "*/");
-                } else {
-                    sb.append(" // " + comment);
-                }
+                sb.append(separator + "//" + separator + comment);
             }
 
-            if (!_compactOption.isSelected()) {
-                sb.append("\n");
-            }
+            sb.append("\n");
 
             longLine = longLine + sb.toString();
         }

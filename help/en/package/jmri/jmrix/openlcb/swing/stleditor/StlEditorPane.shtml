@@ -35,7 +35,6 @@ JC E1
 A Y0.0
 = Q0.1
 JC E1
-SET
 = Q0.0
 E1: CLR // Right C
 etc.
@@ -243,16 +242,29 @@ etc.
           with spaces between that data items and a separate line for each statement.  This is a
           readable format.  See the example at the top of the page.</p>
 
-          <p>When checked, the data is stored without the spaces or as separate lines.</p>
+          <p>When checked, the data is stored without most of spaces.</p>
 
           <pre style="margin-left: 2em">
-CLR/*Right B*/=Q0.0=Q0.1=Q0.2OI0.4OI0.5OI1.1=Q0.2JCE1AY0.0=Q0.1JCE1SET=Q0.0E1:CLR/*Right C*/
+CLR//Right B
+=Q0.0
+=Q0.1
+=Q0.2
+OI0.4
+OI0.5
+OI1.1
+=Q0.2
+JCE1
+AY0.0
+=Q0.1
+JCE1
+=Q0.0
+E1:CLR//Right C
           </pre>
 
-          <p>This format provides more room for PLC commands.
+          <p>This format provides more room for PLC statements.
           </p>
 
-          <p>Only changed data is stored.  The store complete dialog will be displayed when done.</p>
+          <p>Only changed data is stored.  The store completion dialog will be displayed when done.</p>
 
           <div style="margin-left: 2em">
             <a href="images/store_done.png"><img src=
