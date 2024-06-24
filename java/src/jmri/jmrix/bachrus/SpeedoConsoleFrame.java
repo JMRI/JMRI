@@ -58,6 +58,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     /**
      * TODO: Complete the help file
      */
+    
     //<editor-fold defaultstate="collapsed" desc="Enums">
     protected enum DisplayType {
         NUMERIC, DIAL
@@ -82,8 +83,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         WRITE3,
         WRITE4,
     }
-
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Member Variables">
     //<editor-fold defaultstate="collapsed" desc="General GUI Elements">
     protected JLabel scaleLabel = new JLabel();
@@ -107,6 +108,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected JLabel statusLabel = new JLabel(" ");
     protected javax.swing.JLabel readerLabel = new javax.swing.JLabel();
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="General Member Variables">
     protected static final int DEFAULT_SCALE = 8;
 
@@ -193,6 +195,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
     protected DisplayType display = DisplayType.NUMERIC;
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="DCC Services">
     /*
      * Keep track of the DCC services available
@@ -213,6 +216,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
     private PowerManager pm = null;
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Address Selector GUI Elements">
     //protected JLabel profileAddressLabel = new JLabel(Bundle.getMessage("LocoAddress"));
     //protected JTextField profileAddressField = new JTextField(6);
@@ -223,6 +227,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     private GlobalRosterEntryComboBox rosterBox;
     protected RosterEntry rosterEntry;
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Address Selector Member Variables">
     private final boolean disableRosterBoxActions = false;
     private DccLocoAddress locomotiveAddress = new DccLocoAddress(0, false);
@@ -230,6 +235,21 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     //protected int profileAddress = 0;
     protected int readAddress = 0;
     //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Momentum GUI Elements">
+    protected SpinnerNumberModel accelerationSM = new SpinnerNumberModel(0, 0, 255, 1);
+    protected SpinnerNumberModel decelerationSM = new SpinnerNumberModel(0, 0, 255, 1);
+    
+    protected JLabel accelerationLabel = new JLabel("Acceleration: ");
+    protected JSpinner accelerationField = new JSpinner(accelerationSM);
+
+    protected JLabel decelerationLabel = new JLabel("Deceleration: ");
+    protected JSpinner decelerationField = new JSpinner(decelerationSM);
+    
+    protected JButton readMomentumButton = new JButton("Read Momentum");
+    protected JButton setMomentumButton = new JButton("Set Momentum");
+    //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Speed Profile GUI Elements">
     protected JButton trackPowerButton = new JButton(Bundle.getMessage("PowerUp"));
     protected JButton startProfileButton = new JButton(Bundle.getMessage("Start"));
@@ -242,6 +262,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
     GraphPane profileGraphPane;
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Speed Profile Member Variables">
     protected DccSpeedProfile spFwd;
     protected DccSpeedProfile spRev;
@@ -256,49 +277,37 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Speed Matching GUI Elements">
-    protected SpinnerNumberModel accelerationSM = new SpinnerNumberModel(0, 0, 255, 1);
-    protected SpinnerNumberModel decelerationSM = new SpinnerNumberModel(0, 0, 255, 1);
-    protected SpinnerNumberModel warmUpForwardSecondsSM = new SpinnerNumberModel(240, 0, 480, 1);
-    protected SpinnerNumberModel warmUpReverseSecondsSM = new SpinnerNumberModel(120, 0, 480, 1);
-
     //<editor-fold defaultstate="collapsed" desc="Basic">
     //TODO: TRW - reformat for I18N
     protected JLabel basicSpeedMatchInfo = new JLabel("<html><p>"
-            + "You may need to adjust some of the provided settings since different decoder manufacturers interpret the NMRA standards differently."
+            + "Use this speed matcher to match your locomotive to a specific start and top speed."
+            + "<br/><br/>You may need to adjust some of the provided settings since different decoder manufacturers interpret the NMRA standards differently."
             + "<br/><br/>Settings for some common manufactures:"
             + "<br/><ul>"
-            + "<li>NCE - Simple CVs or speed table, disable Trim Reverse Speed</li>"
             + "<li>Digitrax - Speed Table only, Trim Reverse Speed can be enabled</li>"
-            + "<li>ESU - Simple CVs or ESU speed table, Trim Reverse Speed can be enabled</li>"
+            + "<li>ESU - Simple CVs or ESU Speed Table, Trim Reverse Speed can be enabled</li>"
             + "<li>SoundTraxx - Simple CVs or Speed Table, Trim Reverse Speed can be enabled</li>"
             + "</ul>"
             + "It is recommended to enable Warm Up Locomotive if your locomotive isn't already warmed up to help achieve a more accurate result."
             + "<br/><br/>Momentum is always cleared, so be sure to read the momentum values before speed matching."
-            + "<br/><br/>Be sure to have you locomotive set to use the desired speed table (CV 29 bit 4)."
+            + "<br/><br/>Be sure to have you locomotive set to use the desired speed curve (CV 29 bit 4)."
             + "<br/><br/></p></html>");
 
     //TODO: TRW - I18N
-    protected JLabel basicSpeedMatchAccelerationLabel = new JLabel("Acceleration: ");
-    protected JSpinner basicSpeedMatchAccelerationField = new JSpinner(accelerationSM);
-
-    protected JLabel basicSpeedMatchDecelerationLabel = new JLabel("Deceleration: ");
-    protected JSpinner basicSpeedMatchDecelerationField = new JSpinner(decelerationSM);
-
-    protected JButton basicSpeedMatchReadMomentumButton = new JButton("Read Momentum");
-    protected JButton basicSpeedMatchSetMomentumButton = new JButton("Set Momentum");
-
     protected ButtonGroup basicSpeedMatcherTypeGroup = new ButtonGroup();
     protected JRadioButton basicSimpleCVSpeedMatchButton = new JRadioButton("Simple CVs (CV 2, CV 6, and CV 5)");
     protected JRadioButton basicSpeedTableSpeedMatchButton = new JRadioButton("Speed Table");
     protected JRadioButton basicESUSpeedMatchButton = new JRadioButton("ESU Speed Table");
-
+    
+    protected SpinnerNumberModel basicSpeedMatchWarmUpForwardSecondsSM = new SpinnerNumberModel(240, 0, 480, 1);
+    protected SpinnerNumberModel basicSpeedMatchWarmUpReverseSecondsSM = new SpinnerNumberModel(120, 0, 480, 1);
     protected JCheckBox basicSpeedMatchReverseCheckbox = new JCheckBox("Trim Reverse Speed");
     protected JCheckBox basicSpeedMatchWarmUpCheckBox = new JCheckBox(Bundle.getMessage("chkbxWarmUp"));
     protected JLabel basicSpeedMatchWarmUpForwardLabel = new JLabel("Forward Warm Up: ");
-    protected JSpinner basicSpeedMatchWarmUpForwardSeconds = new JSpinner(warmUpForwardSecondsSM);
+    protected JSpinner basicSpeedMatchWarmUpForwardSeconds = new JSpinner(basicSpeedMatchWarmUpForwardSecondsSM);
     protected JLabel basicSpeedMatchWarmUpForwardUnit = new JLabel(" seconds");
     protected JLabel basicSpeedMatchWarmUpReverseLabel = new JLabel("Reverse Warm Up: ");
-    protected JSpinner basicSpeedMatchWarmUpReverseSeconds = new JSpinner(warmUpReverseSecondsSM);
+    protected JSpinner basicSpeedMatchWarmUpReverseSeconds = new JSpinner(basicSpeedMatchWarmUpReverseSecondsSM);
     protected JLabel basicSpeedMatchWarmUpReverseUnit = new JLabel(" seconds");
 
     protected JLabel startSpeedTargetLabel = new JLabel("Start Speed: ");
@@ -311,17 +320,52 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected JSpinner basicSpeedMatchTargetHighSpeedField = new JSpinner(highSpeedSM);
     protected JLabel basicSpeedMatchTargetHighSpeedUnit = new JLabel(" MPH");
     protected JButton basicSpeedMatchStartStopButton = new JButton(Bundle.getMessage(("btnStartSpeedMatch")));
-
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Advanced">
-    //TODO: TRW - AdvancedSpeedMatcherPane advancedSpeedMatcherPane;
+    protected JLabel speedStepScaleSpeedMatchInfo = new JLabel("<html><p>"
+            + "Use this speed matcher to match your locomotive's speed to the speed step when controlled in 128 speed step mode with a definied maximum speed."
+            + "<br/><br/>You may need to adjust some of the provided settings since different decoder manufacturers interpret the NMRA standards differently."
+            + "<br/><br/>Settings for some common manufactures:"
+            + "<br/><ul>"
+            + "<li>Digitrax - Speed Table, Trim Reverse Speed can be enabled</li>"
+            + "<li>ESU - ESU Speed Table, Trim Reverse Speed can be enabled</li>"
+            + "<li>NCE - Speed Table, disable Trim Reverse Speed</li>"
+            + "<li>SoundTraxx - Speed Table, Trim Reverse Speed can be enabled</li>"
+            + "</ul>"
+            + "It is recommended to enable Warm Up Locomotive if your locomotive isn't already warmed up to help achieve a more accurate result."
+            + "<br/><br/>Momentum is always cleared, so be sure to read the momentum values before speed matching."
+            + "<br/><br/>Be sure to have you locomotive set to use the Speed Table (CV 29 bit 4)."
+            + "<br/><br/></p></html>");
+    
+    protected ButtonGroup speedStepScaleSpeedMatcherTypeGroup = new ButtonGroup();
+    protected JRadioButton speedStepScaleSpeedTableSpeedMatchButton = new JRadioButton("Speed Table");
+    protected JRadioButton speedStepScaleESUSpeedMatchButton = new JRadioButton("ESU Speed Table");
+    
+    protected SpinnerNumberModel speedStepScaleSpeedMatchWarmUpForwardSecondsSM = new SpinnerNumberModel(240, 0, 480, 1);
+    protected SpinnerNumberModel speedStepScaleSpeedMatchWarmUpReverseSecondsSM = new SpinnerNumberModel(120, 0, 480, 1);
+    protected JCheckBox speedStepScaleSpeedMatchReverseCheckbox = new JCheckBox("Trim Reverse Speed");
+    protected JCheckBox speedStepScaleSpeedMatchWarmUpCheckBox = new JCheckBox(Bundle.getMessage("chkbxWarmUp"));
+    protected JLabel speedStepScaleSpeedMatchWarmUpForwardLabel = new JLabel("Forward Warm Up: ");
+    protected JSpinner speedStepScaleSpeedMatchWarmUpForwardSeconds = new JSpinner(speedStepScaleSpeedMatchWarmUpForwardSecondsSM);
+    protected JLabel speedStepScaleSpeedMatchWarmUpForwardUnit = new JLabel(" seconds");
+    protected JLabel speedStepScaleSpeedMatchWarmUpReverseLabel = new JLabel("Reverse Warm Up: ");
+    protected JSpinner speedStepScaleSpeedMatchWarmUpReverseSeconds = new JSpinner(speedStepScaleSpeedMatchWarmUpReverseSecondsSM);
+    protected JLabel speedStepScaleSpeedMatchWarmUpReverseUnit = new JLabel(" seconds");
+    
+    protected JLabel maxSpeedTargetLabel = new JLabel("Max Speed: ");
+    protected SpinnerNumberModel maxSpeedSM = new SpinnerNumberModel(79, 1, 128, 1);
+    protected JSpinner speedStepScaleSpeedMatchMaxSpeedField = new JSpinner(highSpeedSM);
+    protected JLabel speedStepScaleSpeedMatchMaxSpeedUnit = new JLabel(" MPH");
+    protected JButton speedStepScaleSpeedMatchStartStopButton = new JButton(Bundle.getMessage(("btnStartSpeedMatch")));    
     //</editor-fold>
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Speed Matching Member Variables">
     protected SpeedMatcher speedMatcher;
-
     //</editor-fold>
     //</editor-fold>
+    
     // For testing only, must be 1 for normal use
     protected static final int SPEED_TEST_SCALE_FACTOR = 1;
 
@@ -478,6 +522,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         basicPane.add(customScalePanel);
 
         //</editor-fold>
+        
         //<editor-fold defaultstate="collapsed" desc="Speedometer Panel">
         // Speed panel for the dial or digital speed display
         JPanel speedPanel = new JPanel();
@@ -547,11 +592,13 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         basicPane.add(speedPanel);
 
         //</editor-fold>
+        
         //<editor-fold defaultstate="collapsed" desc="Address, Speed Profiling, Speed Matching, and Title Panel">
         JPanel profileAndSpeedMatchingPane = new JPanel();
         profileAndSpeedMatchingPane.setLayout(new BorderLayout());
 
-        //<editor-fold defaultstate="collapsed" desc="Address Panel">
+        //<editor-fold defaultstate="collapsed" desc="Address and Momentum Panel">      
+        //<editor-fold defaultstate="collapsed" desc="Address Pane">
         JPanel addrPane = new JPanel();
         GridBagLayout gLayout = new GridBagLayout();
         GridBagConstraints gConstraints = new GridBagConstraints();
@@ -594,20 +641,51 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         if ((dccServices & PROG) != PROG) {
             // No programming facility so user must enter address
             readAddressButton.setEnabled(false);
-            basicSpeedMatchReadMomentumButton.setEnabled(false);
+            readMomentumButton.setEnabled(false);
         } else {
             readAddressButton.setEnabled(true);
-            basicSpeedMatchReadMomentumButton.setEnabled(true);
+            readMomentumButton.setEnabled(true);
         }
 
         // Listen to read button
         readAddressButton.addActionListener(e -> readAddress());
-
-        profileAndSpeedMatchingPane.add(addrPane, BorderLayout.NORTH);
-
         //</editor-fold>
+        
+        //<editor-fold defaultstate="collapsed" desc="Momentum Panel">
+        //TODO: TRW - I18N
+        JPanel momentumPane = new JPanel();
+        momentumPane.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Read and Set Momentum"));
+        momentumPane.setLayout(new FlowLayout());
+        momentumPane.add(accelerationLabel);
+        momentumPane.add(accelerationField);
+        momentumPane.add(decelerationLabel);
+        momentumPane.add(decelerationField);
+        momentumPane.add(readMomentumButton);
+        momentumPane.add(setMomentumButton);
+        //</editor-fold>
+        
+        JPanel profileAndSpeedMatchingNorthPane = new JPanel();
+        profileAndSpeedMatchingNorthPane.setLayout(new BoxLayout(profileAndSpeedMatchingNorthPane, BoxLayout.Y_AXIS));
+        profileAndSpeedMatchingNorthPane.add(addrPane);
+        profileAndSpeedMatchingNorthPane.add(momentumPane);
+
+        profileAndSpeedMatchingPane.add(profileAndSpeedMatchingNorthPane, BorderLayout.NORTH);
+        //</editor-fold>
+        
         //<editor-fold defaultstate="collapsed" desc="Speed Matching and Profiling Panel">
         JTabbedPane profileAndSpeedMatchingTabs = new JTabbedPane();
+        
+        GridBagConstraints row1 = new GridBagConstraints();
+        row1.anchor = GridBagConstraints.WEST;
+        row1.fill = GridBagConstraints.HORIZONTAL;
+        GridBagConstraints row2 = new GridBagConstraints();
+        row2.gridy = 1;
+        row2.anchor = GridBagConstraints.EAST;
+        GridBagConstraints row3 = new GridBagConstraints();
+        row3.gridy = 2;
+        row3.anchor = GridBagConstraints.WEST;
+        
+        GridBagConstraints gbc = new GridBagConstraints();
 
         //<editor-fold defaultstate="collapsed" desc="Speed Profiling Tab">
         // Pane for profiling loco speed curve
@@ -642,11 +720,23 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         resetGraphButton.setToolTipText(Bundle.getMessage("TTResetGraph"));
         profileButtonPane.add(loadProfileButton);
         loadProfileButton.setToolTipText(Bundle.getMessage("TTLoadProfile"));
+        
+        // pane to hold the title
+        JPanel titlePane = new JPanel();
+        titlePane.setLayout(new BoxLayout(titlePane, BoxLayout.X_AXIS));
+        titlePane.setBorder(new EmptyBorder(3, 0, 3, 0));
+        //JTextArea profileTitle = new JTextArea("Title: ");
+        //profileTitlePane.add(profileTitle);
+        printTitleText.setToolTipText(Bundle.getMessage("TTPrintTitle"));
+        printTitleText.setText(Bundle.getMessage("TTText1"));
+        titlePane.add(printTitleText);
 
         // pane to wrap buttons and title
         JPanel profileSouthPane = new JPanel();
         profileSouthPane.setLayout(new BoxLayout(profileSouthPane, BoxLayout.Y_AXIS));
         profileSouthPane.add(profileButtonPane);
+        profileSouthPane.add(titlePane);
+        
         profilePane.add(profileSouthPane, BorderLayout.SOUTH);
 
         // Pane to hold controls
@@ -721,13 +811,10 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             }
             profileGraphPane.repaint();
         });
-
         //</editor-fold>
+        //</editor-fold> 
         
-        //</editor-fold>        
         //<editor-fold defaultstate="collapsed" desc="Basic Speed Matching Tab">
-        basicSpeedMatchReverseCheckbox.setSelected(true);
-
         //TODO: TRW - I18N
         basicSimpleCVSpeedMatchButton.setToolTipText("Set VStart (CV 2), VMid (CV 6), and VHigh (CV 5). Faster than setting the speed table.");
         basicSpeedTableSpeedMatchButton.setToolTipText("Set the speed table. Some decoders will only respect the trim CVs if the complex speed table is used.");
@@ -737,12 +824,13 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         basicSpeedMatcherTypeGroup.add(basicESUSpeedMatchButton);
         basicSimpleCVSpeedMatchButton.setSelected(true);
 
-        basicSpeedMatchTargetStartSpeedUnit.setPreferredSize(new Dimension(35, 16));
-        basicSpeedMatchTargetHighSpeedUnit.setPreferredSize(new Dimension(35, 16));
-
+        basicSpeedMatchReverseCheckbox.setSelected(true);
         basicSpeedMatchWarmUpCheckBox.setSelected(true);
-        basicSpeedMatchWarmUpForwardUnit.setPreferredSize(new Dimension(75, 16));
-        basicSpeedMatchWarmUpReverseUnit.setPreferredSize(new Dimension(75, 16));
+        basicSpeedMatchWarmUpForwardUnit.setPreferredSize(new Dimension(78, 16));
+        basicSpeedMatchWarmUpReverseUnit.setPreferredSize(new Dimension(78, 16));
+        
+        basicSpeedMatchTargetStartSpeedUnit.setPreferredSize(new Dimension(45, 16));
+        basicSpeedMatchTargetHighSpeedUnit.setPreferredSize(new Dimension(45, 16));
 
         //TODO: TRW - set tooltips for spinners
         JPanel basicSpeedMatcherPane = new JPanel();
@@ -752,73 +840,50 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
         //Important Information
         //TODO: TRW - I18N
-        JPanel speedMatchImportantInfoPane = new JPanel();
-        speedMatchImportantInfoPane.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Important Information"));
-        speedMatchImportantInfoPane.setLayout(new BoxLayout(speedMatchImportantInfoPane, BoxLayout.LINE_AXIS));
-        speedMatchImportantInfoPane.add(basicSpeedMatchInfo);
-        basicSpeedMatchSettingsPane.add(speedMatchImportantInfoPane);
+        JPanel basicSpeedMatchImportantInfoPane = new JPanel();
+        basicSpeedMatchImportantInfoPane.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Important Information"));
+        basicSpeedMatchImportantInfoPane.setLayout(new BoxLayout(basicSpeedMatchImportantInfoPane, BoxLayout.LINE_AXIS));
+        basicSpeedMatchImportantInfoPane.add(basicSpeedMatchInfo);
+        basicSpeedMatchSettingsPane.add(basicSpeedMatchImportantInfoPane);
 
         //Speed Matcher Mode
         //TODO: TRW - I18N
-        JPanel speedMatchModePane = new JPanel();
-        speedMatchModePane.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Select the Desired Mode"));
-        speedMatchModePane.setLayout(new FlowLayout());
-        speedMatchModePane.add(basicSimpleCVSpeedMatchButton);
-        speedMatchModePane.add(basicSpeedTableSpeedMatchButton);
-        speedMatchModePane.add(basicESUSpeedMatchButton);
-        basicSpeedMatchSettingsPane.add(speedMatchModePane);
+        JPanel basicSpeedMatchModePane = new JPanel();
+        basicSpeedMatchModePane.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Select the Desired Mode"));
+        basicSpeedMatchModePane.setLayout(new FlowLayout());
+        basicSpeedMatchModePane.add(basicSimpleCVSpeedMatchButton);
+        basicSpeedMatchModePane.add(basicSpeedTableSpeedMatchButton);
+        basicSpeedMatchModePane.add(basicESUSpeedMatchButton);
+        basicSpeedMatchSettingsPane.add(basicSpeedMatchModePane);
 
         //Other Settings
         //TODO: TRW - I18N
-        JPanel speedMatchOtherSettingsPane = new JPanel();
-        speedMatchOtherSettingsPane.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Other Speed Matching Settings"));
-        speedMatchOtherSettingsPane.setLayout(new GridBagLayout());
-        GridBagConstraints row1 = new GridBagConstraints();
-        row1.anchor = GridBagConstraints.WEST;
-        row1.fill = GridBagConstraints.HORIZONTAL;
-        GridBagConstraints row2 = new GridBagConstraints();
-        row2.gridy = 1;
-        row2.anchor = GridBagConstraints.EAST;
-        GridBagConstraints row3 = new GridBagConstraints();
-        row3.gridy = 2;
-        row3.anchor = GridBagConstraints.WEST;
-        speedMatchOtherSettingsPane.add(basicSpeedMatchWarmUpCheckBox, row1);
-        speedMatchOtherSettingsPane.add(basicSpeedMatchWarmUpForwardLabel, row2);
-        speedMatchOtherSettingsPane.add(basicSpeedMatchWarmUpForwardSeconds, row2);
-        speedMatchOtherSettingsPane.add(basicSpeedMatchWarmUpForwardUnit, row2);
-        speedMatchOtherSettingsPane.add(basicSpeedMatchWarmUpReverseLabel, row2);
-        speedMatchOtherSettingsPane.add(basicSpeedMatchWarmUpReverseSeconds, row2);
-        speedMatchOtherSettingsPane.add(basicSpeedMatchWarmUpReverseUnit, row2);
-        speedMatchOtherSettingsPane.add(basicSpeedMatchReverseCheckbox, row3);
-        basicSpeedMatchSettingsPane.add(speedMatchOtherSettingsPane);
-
-        //Momentum
-        //TODO: TRW - I18N
-        JPanel speedMatchMomentumPane = new JPanel();
-        speedMatchMomentumPane.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Set Momentum"));
-        speedMatchMomentumPane.setLayout(new FlowLayout());
-        speedMatchMomentumPane.add(basicSpeedMatchAccelerationLabel);
-        speedMatchMomentumPane.add(basicSpeedMatchAccelerationField);
-        speedMatchMomentumPane.add(basicSpeedMatchDecelerationLabel);
-        speedMatchMomentumPane.add(basicSpeedMatchDecelerationField);
-        speedMatchMomentumPane.add(basicSpeedMatchReadMomentumButton);
-        speedMatchMomentumPane.add(basicSpeedMatchSetMomentumButton);
-        basicSpeedMatchSettingsPane.add(speedMatchMomentumPane);
+        JPanel basicSpeedMatchOtherSettingsPane = new JPanel();
+        basicSpeedMatchOtherSettingsPane.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Other Speed Matching Settings"));
+        basicSpeedMatchOtherSettingsPane.setLayout(new GridBagLayout());
+        basicSpeedMatchOtherSettingsPane.add(basicSpeedMatchWarmUpCheckBox, row1);
+        basicSpeedMatchOtherSettingsPane.add(basicSpeedMatchWarmUpForwardLabel, row2);
+        basicSpeedMatchOtherSettingsPane.add(basicSpeedMatchWarmUpForwardSeconds, row2);
+        basicSpeedMatchOtherSettingsPane.add(basicSpeedMatchWarmUpForwardUnit, row2);
+        basicSpeedMatchOtherSettingsPane.add(basicSpeedMatchWarmUpReverseLabel, row2);
+        basicSpeedMatchOtherSettingsPane.add(basicSpeedMatchWarmUpReverseSeconds, row2);
+        basicSpeedMatchOtherSettingsPane.add(basicSpeedMatchWarmUpReverseUnit, row2);
+        basicSpeedMatchOtherSettingsPane.add(basicSpeedMatchReverseCheckbox, row3);
+        basicSpeedMatchSettingsPane.add(basicSpeedMatchOtherSettingsPane);
 
         //Speed Settings
-        JPanel speedMatchSpeedPane = new JPanel();
-        speedMatchSpeedPane.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        speedMatchSpeedPane.add(startSpeedTargetLabel, gbc);
-        speedMatchSpeedPane.add(basicSpeedMatchTargetStartSpeedField, gbc);
-        speedMatchSpeedPane.add(basicSpeedMatchTargetStartSpeedUnit, gbc);
-        speedMatchSpeedPane.add(highSpeedTargetLabel, gbc);
-        speedMatchSpeedPane.add(basicSpeedMatchTargetHighSpeedField, gbc);
-        speedMatchSpeedPane.add(basicSpeedMatchTargetHighSpeedUnit, gbc);
-        speedMatchSpeedPane.add(basicSpeedMatchStartStopButton, gbc);
+        JPanel basicSpeedMatchSpeedPane = new JPanel();
+        basicSpeedMatchSpeedPane.setLayout(new GridBagLayout());
+        basicSpeedMatchSpeedPane.add(startSpeedTargetLabel, gbc);
+        basicSpeedMatchSpeedPane.add(basicSpeedMatchTargetStartSpeedField, gbc);
+        basicSpeedMatchSpeedPane.add(basicSpeedMatchTargetStartSpeedUnit, gbc);
+        basicSpeedMatchSpeedPane.add(highSpeedTargetLabel, gbc);
+        basicSpeedMatchSpeedPane.add(basicSpeedMatchTargetHighSpeedField, gbc);
+        basicSpeedMatchSpeedPane.add(basicSpeedMatchTargetHighSpeedUnit, gbc);
+        basicSpeedMatchSpeedPane.add(basicSpeedMatchStartStopButton, gbc);
 
         basicSpeedMatcherPane.add(basicSpeedMatchSettingsPane, BorderLayout.NORTH);
-        basicSpeedMatcherPane.add(speedMatchSpeedPane, BorderLayout.CENTER);
+        basicSpeedMatcherPane.add(basicSpeedMatchSpeedPane, BorderLayout.CENTER);
 
         profileAndSpeedMatchingTabs.add("Basic Speed Matcher", basicSpeedMatcherPane);
 
@@ -850,8 +915,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 
                 speedMatchReverse = basicSpeedMatchReverseCheckbox.isSelected();
                 warmUpLoco = basicSpeedMatchWarmUpCheckBox.isSelected();
-                warmUpForwardSeconds = warmUpForwardSecondsSM.getNumber().intValue();
-                warmUpReverseSeconds = warmUpReverseSecondsSM.getNumber().intValue();
+                warmUpForwardSeconds = basicSpeedMatchWarmUpForwardSecondsSM.getNumber().intValue();
+                warmUpReverseSeconds = basicSpeedMatchWarmUpReverseSecondsSM.getNumber().intValue();
 
                 speedMatcher = SpeedMatcherFactory.getSpeedMatcher(
                         new SpeedMatcherConfig(
@@ -881,10 +946,10 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         });
 
         // Listen to read momentum button
-        basicSpeedMatchReadMomentumButton.addActionListener(e -> readMomentum());
+        readMomentumButton.addActionListener(e -> readMomentum());
 
         //Listen to set momentum button
-        basicSpeedMatchSetMomentumButton.addActionListener(e -> setMomentum());
+        setMomentumButton.addActionListener(e -> setMomentum());
 
         basicSpeedMatchWarmUpCheckBox.addActionListener(e -> {
             boolean enableWarmUp = basicSpeedMatchWarmUpCheckBox.isSelected();
@@ -899,26 +964,71 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
         //</editor-fold>
         //</editor-fold>
+        
         //<editor-fold defaultstate="collapsed" desc="Advanced Speed Matcher Tab">
+        speedStepScaleSpeedMatcherTypeGroup.add(speedStepScaleSpeedTableSpeedMatchButton);
+        speedStepScaleSpeedMatcherTypeGroup.add(speedStepScaleESUSpeedMatchButton);
+        speedStepScaleSpeedTableSpeedMatchButton.setSelected(true);
+
+        speedStepScaleSpeedMatchReverseCheckbox.setSelected(true);
+        speedStepScaleSpeedMatchWarmUpCheckBox.setSelected(true);
+        speedStepScaleSpeedMatchWarmUpForwardUnit.setPreferredSize(new Dimension(78, 16));
+        speedStepScaleSpeedMatchWarmUpReverseUnit.setPreferredSize(new Dimension(78, 16));
+        speedStepScaleSpeedMatchMaxSpeedUnit.setPreferredSize(new Dimension(45, 16));
+        
         //TODO: TRW - add advanced speed matching pane tab
+        JPanel speedStepScaleSpeedMatcherPane = new JPanel();
+        speedStepScaleSpeedMatcherPane.setLayout(new BorderLayout());
+        JPanel speedStepScaleSpeedMatchSettingsPane = new JPanel();
+        speedStepScaleSpeedMatchSettingsPane.setLayout(new BoxLayout(speedStepScaleSpeedMatchSettingsPane, BoxLayout.PAGE_AXIS));
+        
+        //Important Information
+        //TODO: TRW - I18N
+        JPanel speedStepScaleSpeedMatchImportantInfoPane = new JPanel();
+        speedStepScaleSpeedMatchImportantInfoPane.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Important Information"));
+        speedStepScaleSpeedMatchImportantInfoPane.setLayout(new BoxLayout(speedStepScaleSpeedMatchImportantInfoPane, BoxLayout.LINE_AXIS));
+        speedStepScaleSpeedMatchImportantInfoPane.add(speedStepScaleSpeedMatchInfo);
+        speedStepScaleSpeedMatchSettingsPane.add(speedStepScaleSpeedMatchImportantInfoPane);
+        
+        //Speed Matcher Mode
+        //TODO: TRW - I18N
+        JPanel speedStepScaleSpeedMatchModePane = new JPanel();
+        speedStepScaleSpeedMatchModePane.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Select the Desired Mode"));
+        speedStepScaleSpeedMatchModePane.setLayout(new FlowLayout());
+        speedStepScaleSpeedMatchModePane.add(speedStepScaleSpeedTableSpeedMatchButton);
+        speedStepScaleSpeedMatchModePane.add(speedStepScaleESUSpeedMatchButton);
+        speedStepScaleSpeedMatchSettingsPane.add(speedStepScaleSpeedMatchModePane);
+        
+        //Other Settings
+        JPanel speedStepScaleSpeedMatchOtherSettingsPane = new JPanel();
+        speedStepScaleSpeedMatchOtherSettingsPane.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Other Speed Matching Settings"));
+        speedStepScaleSpeedMatchOtherSettingsPane.setLayout(new GridBagLayout());
+        speedStepScaleSpeedMatchOtherSettingsPane.add(speedStepScaleSpeedMatchWarmUpCheckBox, row1);
+        speedStepScaleSpeedMatchOtherSettingsPane.add(speedStepScaleSpeedMatchWarmUpForwardLabel, row2);
+        speedStepScaleSpeedMatchOtherSettingsPane.add(speedStepScaleSpeedMatchWarmUpForwardSeconds, row2);
+        speedStepScaleSpeedMatchOtherSettingsPane.add(speedStepScaleSpeedMatchWarmUpForwardUnit, row2);
+        speedStepScaleSpeedMatchOtherSettingsPane.add(speedStepScaleSpeedMatchWarmUpReverseLabel, row2);
+        speedStepScaleSpeedMatchOtherSettingsPane.add(speedStepScaleSpeedMatchWarmUpReverseSeconds, row2);
+        speedStepScaleSpeedMatchOtherSettingsPane.add(speedStepScaleSpeedMatchWarmUpReverseUnit, row2);
+        speedStepScaleSpeedMatchOtherSettingsPane.add(speedStepScaleSpeedMatchReverseCheckbox, row3);
+        speedStepScaleSpeedMatchSettingsPane.add(speedStepScaleSpeedMatchOtherSettingsPane);
+        
+        //Speed Settings
+        JPanel speedStepScaleSpeedMatchSpeedPane = new JPanel();
+        speedStepScaleSpeedMatchSpeedPane.setLayout(new GridBagLayout());
+        speedStepScaleSpeedMatchSpeedPane.add(maxSpeedTargetLabel, gbc);
+        speedStepScaleSpeedMatchSpeedPane.add(speedStepScaleSpeedMatchMaxSpeedField, gbc);
+        speedStepScaleSpeedMatchSpeedPane.add(speedStepScaleSpeedMatchMaxSpeedUnit, gbc);
+        speedStepScaleSpeedMatchSpeedPane.add(speedStepScaleSpeedMatchStartStopButton, gbc);
+
+        speedStepScaleSpeedMatcherPane.add(speedStepScaleSpeedMatchSettingsPane, BorderLayout.NORTH);
+        speedStepScaleSpeedMatcherPane.add(speedStepScaleSpeedMatchSpeedPane, BorderLayout.CENTER);
+
+        profileAndSpeedMatchingTabs.add("Speed Step Scale Speed Matcher", speedStepScaleSpeedMatcherPane);
         //</editor-fold>
+        
         profileAndSpeedMatchingPane.add(profileAndSpeedMatchingTabs, BorderLayout.CENTER);
         //</editor-fold>
-
-        //<editor-fold defaultstate="collapsed" desc="Title Panel">
-        // pane to hold the title
-        JPanel titlePane = new JPanel();
-        titlePane.setLayout(new BoxLayout(titlePane, BoxLayout.X_AXIS));
-        titlePane.setBorder(new EmptyBorder(3, 0, 3, 0));
-        //JTextArea profileTitle = new JTextArea("Title: ");
-        //profileTitlePane.add(profileTitle);
-        printTitleText.setToolTipText(Bundle.getMessage("TTPrintTitle"));
-        printTitleText.setText(Bundle.getMessage("TTText1"));
-        titlePane.add(printTitleText);
-
-        profileAndSpeedMatchingPane.add(titlePane, BorderLayout.SOUTH);
-        //</editor-fold>
-
         //</editor-fold>
         //</editor-fold>
         
@@ -1142,8 +1252,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             }
         }
     }
-
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Speedometer Helper Functions">
     /**
      * Check if custom scale selected and enable the custom scale entry field.
@@ -1179,10 +1289,12 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             profileGraphPane.setUnitsMph();
             basicSpeedMatchTargetStartSpeedUnit.setText(" MPH");
             basicSpeedMatchTargetHighSpeedUnit.setText(" MPH");
+            speedStepScaleSpeedMatchMaxSpeedUnit.setText(" MPH");
         } else {
             profileGraphPane.setUnitsKph();
             basicSpeedMatchTargetStartSpeedUnit.setText(" KPH");
             basicSpeedMatchTargetHighSpeedUnit.setText(" KPH");
+            speedStepScaleSpeedMatchMaxSpeedUnit.setText(" KPH");
         }
         profileGraphPane.repaint();
         if (mphButton.isSelected()) {
@@ -1207,8 +1319,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             }
         }
     }
-
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Address Helper Functions">
     /**
      * Handle changing/setting the address.
@@ -1243,8 +1355,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             setRosterEntry(rosterBox.getSelectedRosterEntries()[0]);
         }
     }
-
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Power Manager Helper Functions">
     /**
      * {@inheritDoc}
@@ -1290,6 +1402,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         }
     }
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Speed Profiling">
     javax.swing.Timer profileTimer = null;
 
@@ -1379,8 +1492,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 break;
         }
     }
-
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Speed Profiling and Speed Matching Cleanup">
     /**
      * Resets profiling and speed matching timers and other pertinent values and
@@ -1439,8 +1552,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             profileTimer.stop();
         }
     }
-
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Notifiers">
     /**
      * Called when a throttle is found
@@ -1547,7 +1660,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         fastDisplayTimer.setRepeats(true);     // refresh until stopped by dispose
         fastDisplayTimer.start();
     }
-
+    
     //<editor-fold defaultstate="collapsed" desc="Timer Timeout Handlers">
     /**
      * Internal routine to reset the speed on a timeout.
@@ -1599,9 +1712,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         profileState = ProfileState.IDLE;
         log.error("Timeout waiting for throttle");
     }
-
     //</editor-fold>
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Programming Functions">
     /**
      * Starts reading the address (CVs 29 then 1 (short) or 17 and 18 (long))
@@ -1760,7 +1873,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         }
     }
     //</editor-fold>
+    
     //debugging logger
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SpeedoConsoleFrame.class);
-
 }
