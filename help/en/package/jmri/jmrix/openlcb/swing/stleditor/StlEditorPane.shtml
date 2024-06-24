@@ -23,7 +23,7 @@
       <p>Here is the logic to set the aspect for a single head mast.</p>
 
       <pre style="margin-left: 2em">
-CLR // Signal mast B
+CLR // Right B
 = Q0.0
 = Q0.1
 = Q0.2
@@ -35,9 +35,8 @@ JC E1
 A Y0.0
 = Q0.1
 JC E1
-SET
 = Q0.0
-E1: CLR // Signal mast C
+E1: CLR // Right C
 etc.
       </pre>
 
@@ -235,8 +234,37 @@ etc.
         <dd>
           <p>Update the data on the current node.  The current editor table content is converted to
           the PLC format using an encoding process.  If the resulting PLC code is greater than 255
-          bytes, the encoding error dialog is shown (See the percent button).  Only changed data is
-          stored.  The store complete dialog will be displayed when done.</p>
+          bytes, the encoding error dialog is shown (See the percent button).</p>
+
+          <p><span class="since">since 5.9.1</span>The content will be store based on the
+          <strong>Compact store mode</strong> selection. This is selected using the checkbox in the
+          upper right corner of the editor window.  When unchecked, the data is stored in the node
+          with spaces between that data items and a separate line for each statement.  This is a
+          readable format.  See the example at the top of the page.</p>
+
+          <p>When checked, the data is stored without most of spaces.</p>
+
+          <pre style="margin-left: 2em">
+CLR//Right B
+=Q0.0
+=Q0.1
+=Q0.2
+OI0.4
+OI0.5
+OI1.1
+=Q0.2
+JCE1
+AY0.0
+=Q0.1
+JCE1
+=Q0.0
+E1:CLR//Right C
+          </pre>
+
+          <p>This format provides more room for PLC statements.
+          </p>
+
+          <p>Only changed data is stored.  The store completion dialog will be displayed when done.</p>
 
           <div style="margin-left: 2em">
             <a href="images/store_done.png"><img src=
@@ -305,7 +333,8 @@ etc.
         <dd>Delete the selected row.</dd>
 
         <dt>Percent</dt>
-        <dd>Do the PLC encode process and calculate the utilization.  If the resulting code is more
+        <dd>Do the PLC encode process and calculate the utilization.  The calculation will be
+        based on the <strong>Compact store mode</strong> selection. If the resulting code is more
         that 255 bytes, a dialog is displayed.  It shows the data that would be truncated during a
         store.
         <div style="margin-left: 2em">

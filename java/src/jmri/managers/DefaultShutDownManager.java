@@ -212,7 +212,6 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
     /**
      * {@inheritDoc}
      */
-    @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     @Override
     public void shutdown() {
         shutdown(0, true);
@@ -221,7 +220,6 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
     /**
      * {@inheritDoc}
      */
-    @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     @Override
     public void restart() {
         shutdown(100, true);
@@ -230,7 +228,6 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
     /**
      * {@inheritDoc}
      */
-    @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     @Override
     public void restartOS() {
         shutdown(210, true);
@@ -239,7 +236,6 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
     /**
      * {@inheritDoc}
      */
-    @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     @Override
     public void shutdownOS() {
         shutdown(200, true);
@@ -247,8 +243,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
 
     /**
      * First asks the shutdown tasks if shutdown is allowed.
-     * If not, return false.
-     * Return false if the shutdown was aborted by the user, in which case the program
+     * Returns if the shutdown was aborted by the user, in which case the program
      * should continue to operate.
      * <p>
      * After this check does not return under normal circumstances.
@@ -261,7 +256,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
      * @param exit   true if System.exit() should be called if all tasks are
      *               executed correctly; false otherwise
      */
-    protected void shutdown(int status, boolean exit) {
+    public void shutdown(int status, boolean exit) {
         Runnable shutdownTask = () -> { doShutdown(status, exit); };
 
         if (!blockingShutdown) {
@@ -273,8 +268,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
 
     /**
      * First asks the shutdown tasks if shutdown is allowed.
-     * If not, return false.
-     * Return false if the shutdown was aborted by the user, in which case the program
+     * Returns if the shutdown was aborted by the user, in which case the program
      * should continue to operate.
      * <p>
      * After this check does not return under normal circumstances.

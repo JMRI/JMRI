@@ -665,6 +665,7 @@ public class LocationEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Dest")));
         Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Routed")));
         Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("AbbrevationDirection")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("AlternateTrack")));
         
         // add track moves column
         Setup.setShowTrackMovesEnabled(true);
@@ -678,10 +679,19 @@ public class LocationEditFrameTest extends OperationsTestCase {
         ScheduleManager sm = InstanceManager.getDefault(ScheduleManager.class);
         Schedule s = sm.newSchedule("Test Schedule");
         track.setSchedule(s);
-        // adding a schedule also adds the hold column
-        Assert.assertEquals("Confirm number of columns", 13, tbl.getColumnCount());
-        Assert.assertEquals("Column exists", 11, tbl.findColumn(Bundle.getMessage("Hold")));
+
+        Assert.assertEquals("Confirm number of columns", 12, tbl.getColumnCount());
+        Assert.assertEquals("Column doesn't exists", -1, tbl.findColumn(Bundle.getMessage("Hold")));
         Assert.assertEquals("Column exists", 10, tbl.findColumn(Bundle.getMessage("Schedule")));
+
+        // adding a schedule and an alternate adds the hold column
+        Track altTrack = loc.getTrackByName("Test Location Yard 1", Track.YARD);
+        Assert.assertNotNull(altTrack);
+        track.setAlternateTrack(altTrack);
+
+        Assert.assertEquals("Confirm number of columns", 14, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 11, tbl.findColumn(Bundle.getMessage("Hold")));
+        Assert.assertEquals("Column exists", 12, tbl.findColumn(Bundle.getMessage("AlternateTrack")));
         
         // test change moves value
         tbl.setValueAt(5, 0, tbl.findColumn(Bundle.getMessage("Moves")));
@@ -694,32 +704,26 @@ public class LocationEditFrameTest extends OperationsTestCase {
 
         // add road restriction
         track.setRoadOption(Track.EXCLUDE_ROADS);
-        Assert.assertEquals("Confirm number of columns", 14, tbl.getColumnCount());
+        Assert.assertEquals("Confirm number of columns", 15, tbl.getColumnCount());
         // hold moves to column 12
         Assert.assertEquals("Column exists", 11, tbl.findColumn(Bundle.getMessage("Road")));
 
         // add load restriction
         track.setLoadOption(Track.EXCLUDE_LOADS);
-        Assert.assertEquals("Confirm number of columns", 15, tbl.getColumnCount());
+        Assert.assertEquals("Confirm number of columns", 16, tbl.getColumnCount());
         // hold moves to column 13
         Assert.assertEquals("Column exists", 12, tbl.findColumn(Bundle.getMessage("Load")));
 
         // add train restriction
         track.setDropOption(Track.EXCLUDE_TRAINS);
-        Assert.assertEquals("Confirm number of columns", 16, tbl.getColumnCount());
+        Assert.assertEquals("Confirm number of columns", 17, tbl.getColumnCount());
         Assert.assertEquals("Column exists", 13, tbl.findColumn(Bundle.getMessage("Restrictions")));
         
         // add pool
         Pool pool = loc.addPool("Pool One");
         track.setPool(pool);
-        Assert.assertEquals("Confirm number of columns", 17, tbl.getColumnCount());
-        Assert.assertEquals("Column exists", 15, tbl.findColumn(Bundle.getMessage("Pool")));
-
-        // test alternate track
-        Track trackAlt = loc.getTrackByName("Test Location Spur 2", Track.SPUR);
-        track.setAlternateTrack(trackAlt);
         Assert.assertEquals("Confirm number of columns", 18, tbl.getColumnCount());
-        Assert.assertEquals("Column exists", 16, tbl.findColumn(Bundle.getMessage("AlternateTrack")));
+        Assert.assertEquals("Column exists", 15, tbl.findColumn(Bundle.getMessage("Pool")));
         
         // test load change
         track.setDisableLoadChangeEnabled(true);
@@ -736,6 +740,12 @@ public class LocationEditFrameTest extends OperationsTestCase {
         track.setTrainDirections(Track.EAST);
         Assert.assertEquals("Confirm number of columns", 19, tbl.getColumnCount());
         Assert.assertEquals("Column exists", 17, tbl.findColumn(Bundle.getMessage("AbbrevationDirection")));
+
+        // no schedule, no hold column
+        track.setSchedule(null);
+        Assert.assertEquals("Confirm number of columns", 17, tbl.getColumnCount());
+        Assert.assertEquals("Column doesn't exists", -1, tbl.findColumn(Bundle.getMessage("Hold")));
+        Assert.assertEquals("Column doesn't exists", -1, tbl.findColumn(Bundle.getMessage("Schedule")));
 
         // test track length
         Assert.assertEquals("zero length", 0, tbl.getValueAt(2, tbl.findColumn(Bundle.getMessage("Length"))));

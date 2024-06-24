@@ -95,6 +95,10 @@ public class CarManager extends RollingStockManager<Car>
         return getByList(getByLocationList(), BY_RWL);
     }
 
+    public List<Car> getByRouteList() {
+        return getByList(getByLocationList(), BY_ROUTE);
+    }
+
     public List<Car> getByDivisionList() {
         return getByList(getByLocationList(), BY_DIVISION);
     }
@@ -125,7 +129,8 @@ public class CarManager extends RollingStockManager<Car>
     private static final int BY_PICKUP = 35;
     private static final int BY_HAZARD = 36;
     private static final int BY_RWL = 37; // Return When loaded
-    private static final int BY_DIVISION = 38;
+    private static final int BY_ROUTE = 38;
+    private static final int BY_DIVISION = 39;
     
     // the name of the location and track is "split"
     private static final int BY_SPLIT_FINAL_DEST = 40;
@@ -151,6 +156,8 @@ public class CarManager extends RollingStockManager<Car>
             case BY_FINAL_DEST:
                 return (c1, c2) -> (c1.getFinalDestinationName() + c1.getFinalDestinationTrackName())
                         .compareToIgnoreCase(c2.getFinalDestinationName() + c2.getFinalDestinationTrackName());
+            case BY_ROUTE:
+                return (c1, c2) -> (c1.getRoutePath().compareToIgnoreCase(c2.getRoutePath()));
             case BY_DIVISION:
                 return (c1, c2) -> (c1.getDivisionName().compareToIgnoreCase(c2.getDivisionName()));
             case BY_WAIT:

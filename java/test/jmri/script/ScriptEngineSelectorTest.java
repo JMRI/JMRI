@@ -43,7 +43,6 @@ public class ScriptEngineSelectorTest {
     }
 
     private void runJythonScriptNewStyle() throws ScriptException {
-        System.out.format("runJythonScriptNewStyle()%n");
         Bindings bindings = new SimpleBindings();
         ScriptEngineSelector.Engine engine =
                 _scriptEngineSelector.getSelectedEngine();
@@ -52,7 +51,6 @@ public class ScriptEngineSelectorTest {
     }
 
     private void runEcmaScriptNewStyle() throws ScriptException {
-        System.out.format("runEcmaScriptNewStyle()%n");
         Bindings bindings = new SimpleBindings();
         _scriptEngineSelector.setSelectedEngine(ScriptEngineSelector.ECMA_SCRIPT);
         ScriptEngineSelector.Engine engine =

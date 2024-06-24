@@ -130,6 +130,12 @@
               </xs:restriction>
             </xs:simpleType>
           </xs:attribute>
+          <xs:attribute name="nodecoder" type="yesNoType" default="no">
+            <xs:annotation><xs:documentation>
+                Yes indicates no decoder in loco. If so, it's
+                recommended that the other modes are all "no".
+            </xs:documentation></xs:annotation>
+          </xs:attribute>
           <xs:attribute name="paged" type="yesNoType" default="yes">
             <xs:annotation><xs:documentation>
                 Yes indicates programmer supports Paged mode,

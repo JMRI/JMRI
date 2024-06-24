@@ -197,7 +197,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     public static final String AUTO_HPT = Bundle.getMessage("AutoHPT");
 
     public Train(String id, String name) {
-        log.debug("New train ({}) id: {}", name, id);
+        //       log.debug("New train ({}) id: {}", name, id);
         _name = name;
         _id = id;
         // a new train accepts all types

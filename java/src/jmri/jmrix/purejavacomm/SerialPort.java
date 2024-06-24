@@ -164,12 +164,20 @@ public class SerialPort {
         return _serialPort.getDCD();
     }
 
+    public boolean isRI() {
+        return _serialPort.getRI();
+    }
+
     public boolean isReceiveTimeoutEnabled() {
         return false;   // Not implemented
     }
 
     public int getReceiveTimeout() {
         return 0;   // Not implemented
+    }
+
+    public void close() {
+        _serialPort.closePort();
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialPort.class);
