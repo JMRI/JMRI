@@ -961,7 +961,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
      * Look backwards in the line for the beginning of a comment.  This is not a precise check.
      * @param line The line that contains the Operator.
      * @param index The offset of the operator.
-     * @param returns true if it appears to be in a comment.
+     * @param return true if the operator appears to be in a comment.
      */
     private boolean isOperInComment(String line, int index) {
         int limit = 20;     // look back 20 characters
