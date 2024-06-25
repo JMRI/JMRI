@@ -1,14 +1,12 @@
 package jmri.jmrix.bachrus.speedmatcher.speedStepScale;
 
-import jmri.jmrix.bachrus.speedmatcher.SpeedMatcherConfig;
-
 /**
  *
  * @author Todd Wegter Copyright (C) 2024
  */
 public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMatcher {
 
-    public SpeedStepScaleSpeedTableSpeedMatcher(SpeedMatcherConfig config) {
+    public SpeedStepScaleSpeedTableSpeedMatcher(SpeedStepScaleSpeedMatcherConfig config) {
         super(config);
     }
 

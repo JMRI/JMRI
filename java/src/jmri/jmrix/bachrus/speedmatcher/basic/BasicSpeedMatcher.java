@@ -2,7 +2,6 @@ package jmri.jmrix.bachrus.speedmatcher.basic;
 
 import jmri.jmrix.bachrus.Speed;
 import jmri.jmrix.bachrus.speedmatcher.SpeedMatcher;
-import jmri.jmrix.bachrus.speedmatcher.SpeedMatcherConfig;
 
 /**
  * Abstract class defining the basic operations of a Basic speed matcher (sets a
@@ -19,7 +18,7 @@ public abstract class BasicSpeedMatcher extends SpeedMatcher {
     protected float targetTopSpeedKPH;
     //</editor-fold>
 
-    public BasicSpeedMatcher(SpeedMatcherConfig config) {
+    public BasicSpeedMatcher(BasicSpeedMatcherConfig config) {
         super(config);
 
         if (config.speedUnit == Speed.Unit.MPH) {

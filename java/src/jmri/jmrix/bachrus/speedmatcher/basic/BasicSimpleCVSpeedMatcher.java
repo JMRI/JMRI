@@ -2,7 +2,6 @@ package jmri.jmrix.bachrus.speedmatcher.basic;
 
 import jmri.DccThrottle;
 import jmri.jmrix.bachrus.Speed;
-import jmri.jmrix.bachrus.speedmatcher.SpeedMatcherConfig;
 
 /**
  * This is a simple speed matcher which will speed match a locomotive to a given
@@ -66,7 +65,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
     private SpeedMatcherState speedMatcherState = SpeedMatcherState.IDLE;
     //</editor-fold>
 
-    public BasicSimpleCVSpeedMatcher(SpeedMatcherConfig config) {
+    public BasicSimpleCVSpeedMatcher(BasicSpeedMatcherConfig config) {
         super(config);
 
         this.targetMidSpeedKPH = this.targetStartSpeedKPH + ((this.targetTopSpeedKPH - this.targetStartSpeedKPH) / 2);

@@ -1,6 +1,8 @@
 package jmri.jmrix.bachrus;
 
 //<editor-fold defaultstate="collapsed" desc="Imports">
+import jmri.jmrix.bachrus.speedmatcher.basic.BasicSpeedMatcherFactory;
+
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -919,7 +921,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 warmUpForwardSeconds = basicSpeedMatchWarmUpForwardSecondsSM.getNumber().intValue();
                 warmUpReverseSeconds = basicSpeedMatchWarmUpReverseSecondsSM.getNumber().intValue();
 
-                speedMatcher = SpeedMatcherFactory.getSpeedMatcher(
+                speedMatcher = BasicSpeedMatcherFactory.getSpeedMatcher(
                         new SpeedMatcherConfig(
                                 SpeedMatcherConfig.SpeedMatcherType.BASIC,
                                 speedTableType,

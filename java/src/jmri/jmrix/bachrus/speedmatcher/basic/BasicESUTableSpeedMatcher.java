@@ -88,7 +88,7 @@ public class BasicESUTableSpeedMatcher extends BasicSpeedMatcher {
     private SpeedMatcherState speedMatcherState = SpeedMatcherState.IDLE;
     //</editor-fold>
 
-    public BasicESUTableSpeedMatcher(SpeedMatcherConfig config) {
+    public BasicESUTableSpeedMatcher(BasicSpeedMatcherConfig config) {
         super(config);
 
         targetVHighSpeedKPH = targetTopSpeedKPH;

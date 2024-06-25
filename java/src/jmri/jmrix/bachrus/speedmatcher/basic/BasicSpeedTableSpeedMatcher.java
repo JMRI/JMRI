@@ -2,7 +2,6 @@ package jmri.jmrix.bachrus.speedmatcher.basic;
 
 import jmri.DccThrottle;
 import jmri.jmrix.bachrus.Speed;
-import jmri.jmrix.bachrus.speedmatcher.SpeedMatcherConfig;
 
 /**
  * This is a simple speed matcher which will speed match a locomotive to a given
@@ -82,7 +81,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
     private SpeedMatcherState speedMatcherState = SpeedMatcherState.IDLE;
     //</editor-fold>
 
-    public BasicSpeedTableSpeedMatcher(SpeedMatcherConfig config) {
+    public BasicSpeedTableSpeedMatcher(BasicSpeedMatcherConfig config) {
         super(config);
 
         targetStep28SpeedKPH = targetTopSpeedKPH;
