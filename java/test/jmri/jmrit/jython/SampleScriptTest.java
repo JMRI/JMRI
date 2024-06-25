@@ -152,16 +152,11 @@ public class SampleScriptTest {
 
     // test for jython/ctc/TwoColumnMachine.py
     @Test
-    public void testTwoColumnMachinePy() {
+    public void testTwoColumnMachinePy()
+            throws javax.script.ScriptException, java.io.IOException {
 
         File file = new File("jython/ctc/TwoColumnMachine.py");
-        try {
-            jmri.script.JmriScriptEngineManager.getDefault().eval(file);
-        } catch (javax.script.ScriptException ex1) {
-            Assertions.fail("ScriptException during register Shutdown Task of " + file, ex1);
-        } catch (java.io.IOException ex2) {
-            Assertions.fail("IOException during register Shutdown Task of " + file, ex2);
-        }
+        jmri.script.JmriScriptEngineManager.getDefault().eval(file);
     }
 
     @BeforeAll
