@@ -310,12 +310,12 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected JSpinner basicSpeedMatchWarmUpReverseSeconds = new JSpinner(basicSpeedMatchWarmUpReverseSecondsSM);
     protected JLabel basicSpeedMatchWarmUpReverseUnit = new JLabel(" seconds");
 
-    protected JLabel startSpeedTargetLabel = new JLabel("Start Speed: ");
+    protected JLabel basicSpeedMatchTargetStartSpeedLabel = new JLabel("Start Speed: ");
     protected SpinnerNumberModel startSpeedSM = new SpinnerNumberModel(3, 1, 255, 1);
     protected JSpinner basicSpeedMatchTargetStartSpeedField = new JSpinner(startSpeedSM);
     protected JLabel basicSpeedMatchTargetStartSpeedUnit = new JLabel(" MPH");
 
-    protected JLabel highSpeedTargetLabel = new JLabel("Top Speed: ");
+    protected JLabel basicSpeedMatchTargetHighSpeedLabel = new JLabel("Top Speed: ");
     protected SpinnerNumberModel highSpeedSM = new SpinnerNumberModel(55, 1, 255, 1);
     protected JSpinner basicSpeedMatchTargetHighSpeedField = new JSpinner(highSpeedSM);
     protected JLabel basicSpeedMatchTargetHighSpeedUnit = new JLabel(" MPH");
@@ -353,11 +353,14 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected JSpinner speedStepScaleSpeedMatchWarmUpReverseSeconds = new JSpinner(speedStepScaleSpeedMatchWarmUpReverseSecondsSM);
     protected JLabel speedStepScaleSpeedMatchWarmUpReverseUnit = new JLabel(" seconds");
     
-    protected JLabel maxSpeedTargetLabel = new JLabel("Max Speed: ");
+    protected JLabel speedStepScaleMaxSpeedTargetLabel = new JLabel("Max Speed: ");
     protected SpinnerNumberModel maxSpeedSM = new SpinnerNumberModel(79, 1, 128, 1);
-    protected JSpinner speedStepScaleSpeedMatchMaxSpeedField = new JSpinner(highSpeedSM);
+    protected JSpinner speedStepScaleSpeedMatchMaxSpeedField = new JSpinner(maxSpeedSM);
     protected JLabel speedStepScaleSpeedMatchMaxSpeedUnit = new JLabel(" MPH");
     protected JButton speedStepScaleSpeedMatchStartStopButton = new JButton(Bundle.getMessage(("btnStartSpeedMatch")));    
+    protected JLabel speedStepScaleMaxSpeedActualLabel = new JLabel("Actual Max Speed: ", SwingConstants.RIGHT);
+    protected JLabel speedStepScaleMaxSpeedActualField = new JLabel("___");
+    protected JLabel speedStepScaleMaxSpeedActualUnit = new JLabel(" MPH");
     //</editor-fold>
     //</editor-fold>
     
@@ -826,11 +829,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
         basicSpeedMatchReverseCheckbox.setSelected(true);
         basicSpeedMatchWarmUpCheckBox.setSelected(true);
-        basicSpeedMatchWarmUpForwardUnit.setPreferredSize(new Dimension(78, 16));
-        basicSpeedMatchWarmUpReverseUnit.setPreferredSize(new Dimension(78, 16));
-        
-        basicSpeedMatchTargetStartSpeedUnit.setPreferredSize(new Dimension(45, 16));
-        basicSpeedMatchTargetHighSpeedUnit.setPreferredSize(new Dimension(45, 16));
 
         //TODO: TRW - set tooltips for spinners
         JPanel basicSpeedMatcherPane = new JPanel();
@@ -865,6 +863,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         basicSpeedMatchOtherSettingsPane.add(basicSpeedMatchWarmUpForwardLabel, row2);
         basicSpeedMatchOtherSettingsPane.add(basicSpeedMatchWarmUpForwardSeconds, row2);
         basicSpeedMatchOtherSettingsPane.add(basicSpeedMatchWarmUpForwardUnit, row2);
+        basicSpeedMatchOtherSettingsPane.add(Box.createRigidArea(new Dimension(30, 0)), row2);
         basicSpeedMatchOtherSettingsPane.add(basicSpeedMatchWarmUpReverseLabel, row2);
         basicSpeedMatchOtherSettingsPane.add(basicSpeedMatchWarmUpReverseSeconds, row2);
         basicSpeedMatchOtherSettingsPane.add(basicSpeedMatchWarmUpReverseUnit, row2);
@@ -874,12 +873,14 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         //Speed Settings
         JPanel basicSpeedMatchSpeedPane = new JPanel();
         basicSpeedMatchSpeedPane.setLayout(new GridBagLayout());
-        basicSpeedMatchSpeedPane.add(startSpeedTargetLabel, gbc);
+        basicSpeedMatchSpeedPane.add(basicSpeedMatchTargetStartSpeedLabel, gbc);
         basicSpeedMatchSpeedPane.add(basicSpeedMatchTargetStartSpeedField, gbc);
         basicSpeedMatchSpeedPane.add(basicSpeedMatchTargetStartSpeedUnit, gbc);
-        basicSpeedMatchSpeedPane.add(highSpeedTargetLabel, gbc);
+        basicSpeedMatchSpeedPane.add(Box.createRigidArea(new Dimension(15, 0)), gbc);
+        basicSpeedMatchSpeedPane.add(basicSpeedMatchTargetHighSpeedLabel, gbc);
         basicSpeedMatchSpeedPane.add(basicSpeedMatchTargetHighSpeedField, gbc);
         basicSpeedMatchSpeedPane.add(basicSpeedMatchTargetHighSpeedUnit, gbc);
+        basicSpeedMatchSpeedPane.add(Box.createRigidArea(new Dimension(15, 0)), gbc);
         basicSpeedMatchSpeedPane.add(basicSpeedMatchStartStopButton, gbc);
 
         basicSpeedMatcherPane.add(basicSpeedMatchSettingsPane, BorderLayout.NORTH);
@@ -972,9 +973,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
         speedStepScaleSpeedMatchReverseCheckbox.setSelected(true);
         speedStepScaleSpeedMatchWarmUpCheckBox.setSelected(true);
-        speedStepScaleSpeedMatchWarmUpForwardUnit.setPreferredSize(new Dimension(78, 16));
-        speedStepScaleSpeedMatchWarmUpReverseUnit.setPreferredSize(new Dimension(78, 16));
-        speedStepScaleSpeedMatchMaxSpeedUnit.setPreferredSize(new Dimension(45, 16));
         
         //TODO: TRW - add advanced speed matching pane tab
         JPanel speedStepScaleSpeedMatcherPane = new JPanel();
@@ -1007,6 +1005,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         speedStepScaleSpeedMatchOtherSettingsPane.add(speedStepScaleSpeedMatchWarmUpForwardLabel, row2);
         speedStepScaleSpeedMatchOtherSettingsPane.add(speedStepScaleSpeedMatchWarmUpForwardSeconds, row2);
         speedStepScaleSpeedMatchOtherSettingsPane.add(speedStepScaleSpeedMatchWarmUpForwardUnit, row2);
+        speedStepScaleSpeedMatchOtherSettingsPane.add(Box.createRigidArea(new Dimension(30, 0)), row2);
         speedStepScaleSpeedMatchOtherSettingsPane.add(speedStepScaleSpeedMatchWarmUpReverseLabel, row2);
         speedStepScaleSpeedMatchOtherSettingsPane.add(speedStepScaleSpeedMatchWarmUpReverseSeconds, row2);
         speedStepScaleSpeedMatchOtherSettingsPane.add(speedStepScaleSpeedMatchWarmUpReverseUnit, row2);
@@ -1016,10 +1015,16 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         //Speed Settings
         JPanel speedStepScaleSpeedMatchSpeedPane = new JPanel();
         speedStepScaleSpeedMatchSpeedPane.setLayout(new GridBagLayout());
-        speedStepScaleSpeedMatchSpeedPane.add(maxSpeedTargetLabel, gbc);
+        speedStepScaleSpeedMatchSpeedPane.add(speedStepScaleMaxSpeedTargetLabel, gbc);
         speedStepScaleSpeedMatchSpeedPane.add(speedStepScaleSpeedMatchMaxSpeedField, gbc);
         speedStepScaleSpeedMatchSpeedPane.add(speedStepScaleSpeedMatchMaxSpeedUnit, gbc);
+        speedStepScaleSpeedMatchSpeedPane.add(Box.createRigidArea(new Dimension(15, 0)), gbc);
         speedStepScaleSpeedMatchSpeedPane.add(speedStepScaleSpeedMatchStartStopButton, gbc);
+        speedStepScaleSpeedMatchSpeedPane.add(Box.createRigidArea(new Dimension(15, 0)), gbc);
+        speedStepScaleSpeedMatchSpeedPane.add(speedStepScaleMaxSpeedActualLabel, gbc);
+        speedStepScaleSpeedMatchSpeedPane.add(speedStepScaleMaxSpeedActualField, gbc);
+        speedStepScaleSpeedMatchSpeedPane.add(speedStepScaleMaxSpeedActualUnit, gbc);
+        
 
         speedStepScaleSpeedMatcherPane.add(speedStepScaleSpeedMatchSettingsPane, BorderLayout.NORTH);
         speedStepScaleSpeedMatcherPane.add(speedStepScaleSpeedMatchSpeedPane, BorderLayout.CENTER);
@@ -1290,11 +1295,13 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             basicSpeedMatchTargetStartSpeedUnit.setText(" MPH");
             basicSpeedMatchTargetHighSpeedUnit.setText(" MPH");
             speedStepScaleSpeedMatchMaxSpeedUnit.setText(" MPH");
+            speedStepScaleMaxSpeedActualUnit.setText(" MPH");
         } else {
             profileGraphPane.setUnitsKph();
             basicSpeedMatchTargetStartSpeedUnit.setText(" KPH");
             basicSpeedMatchTargetHighSpeedUnit.setText(" KPH");
             speedStepScaleSpeedMatchMaxSpeedUnit.setText(" KPH");
+            speedStepScaleMaxSpeedActualUnit.setText(" KPH");
         }
         profileGraphPane.repaint();
         if (mphButton.isSelected()) {
