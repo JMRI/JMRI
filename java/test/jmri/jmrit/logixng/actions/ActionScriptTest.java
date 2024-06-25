@@ -362,6 +362,15 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
     }
 
     @Test
+    public void testAction_RunScript_TwoColumnMachine() throws Exception {
+
+        // The purpose of this test is only to check that TwoColumnMachine.py runs.
+        actionScript.setOperationType(ActionScript.OperationType.RunScript);
+        actionScript.setScript("jython/ctc/TwoColumnMachine.py");
+        actionScript.execute();
+    }
+
+    @Test
     public void testAction_GetAndSetLocalVariables() throws Exception {
 
         ((MaleSocket)ifThenElse.getParent()).addLocalVariable("in", SymbolTable.InitialValueType.Integer, "10");
