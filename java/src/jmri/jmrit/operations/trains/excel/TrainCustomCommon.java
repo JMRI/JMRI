@@ -146,7 +146,7 @@ public abstract class TrainCustomCommon {
         // Excel spreadsheets
         // It should work OK with actual programs.
         if (SystemType.isWindows()) {
-            String cmd = "cmd /c start " + getFileName() + " " + mcAppArg; // NOI18N
+            String[] cmd = {"cmd", "/c", "start", getFileName(), mcAppArg}; // NOI18N
             try {
                 process = Runtime.getRuntime().exec(cmd, null,
                         InstanceManager.getDefault(OperationsManager.class).getFile(getDirectoryName()));
@@ -154,7 +154,7 @@ public abstract class TrainCustomCommon {
                 log.error("Unable to execute {}", getFileName(), e);
             }
         } else {
-            String cmd = "open " + getFileName() + " " + mcAppArg; // NOI18N
+            String[] cmd = {"open", getFileName(), mcAppArg}; // NOI18N
             try {
                 process = Runtime.getRuntime().exec(cmd, null,
                         InstanceManager.getDefault(OperationsManager.class).getFile(getDirectoryName()));
