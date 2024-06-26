@@ -503,6 +503,8 @@
                 There's also a new "jython/DontWarnJavaScript.py"
                 script that can be loaded at startup to 
                 suppress this warning.</li>
+            <li>Added "jython/LifxLightControlExample.py", a sample script that shows how to 
+                control LIFX strip lights via a web request.
         </ul>
 
     <h3>Signals</h3>
