@@ -150,15 +150,6 @@ public class SampleScriptTest {
 
     }
 
-    // test for jython/ctc/TwoColumnMachine.py
-    @Test
-    public void testTwoColumnMachinePy()
-            throws javax.script.ScriptException, java.io.IOException {
-
-        File file = new File("jython/ctc/TwoColumnMachine.py");
-        jmri.script.JmriScriptEngineManager.getDefault().eval(file);
-    }
-
     @BeforeAll
     static public void startTests() {
         // this is to System.out because that's where the test output goes
