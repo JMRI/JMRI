@@ -148,8 +148,10 @@ public class AbstractAutomaton implements Runnable {
             } else {
                 log.debug("normal termination, handle() returned false");
             }
-        } catch (Exception e) {
-            log.warn("Unexpected Exception ends AbstractAutomaton thread", e);
+        } catch (StopThread e1) {
+            log.debug("Current thread is stopped()");
+        } catch (Exception e2) {
+            log.warn("Unexpected Exception ends AbstractAutomaton thread", e2);
         } finally {
             currentThread = null;
             done();
@@ -263,7 +265,7 @@ public class AbstractAutomaton implements Runnable {
      */
     public void waitMsec(int milliseconds) {
         long target = System.currentTimeMillis() + milliseconds;
-        while (!threadIsStopped) {
+        while (true) {
             long stillToGo = target - System.currentTimeMillis();
             if (stillToGo <= 0) {
                 break;
@@ -271,6 +273,9 @@ public class AbstractAutomaton implements Runnable {
             try {
                 Thread.sleep(stillToGo);
             } catch (InterruptedException e) {
+                if (threadIsStopped) {
+                    throw new StopThread();
+                }
                 Thread.currentThread().interrupt(); // retain if needed later
             }
         }
@@ -329,6 +334,9 @@ public class AbstractAutomaton implements Runnable {
                     super.wait(milliseconds);
                 }
             } catch (InterruptedException e) {
+                if (threadIsStopped) {
+                    throw new StopThread();
+                }
                 Thread.currentThread().interrupt(); // retain if needed later
                 log.warn("interrupted in wait");
             }
@@ -372,7 +380,7 @@ public class AbstractAutomaton implements Runnable {
         });
 
         int now = mSensor.getKnownState();
-        while (!threadIsStopped && mState == (now = mSensor.getKnownState())) {
+        while (mState == (now = mSensor.getKnownState())) {
             wait(-1);
         }
 
@@ -431,7 +439,7 @@ public class AbstractAutomaton implements Runnable {
             }
         });
 
-        while (!threadIsStopped && state != mSensor.getKnownState()) {
+        while (state != mSensor.getKnownState()) {
             wait(-1);  // wait for notification
         }
 
@@ -496,7 +504,7 @@ public class AbstractAutomaton implements Runnable {
 
         }
 
-        while (!threadIsStopped && !checkForState(mSensors, state)) {
+        while (!checkForState(mSensors, state)) {
             wait(-1);
         }
 
@@ -533,7 +541,7 @@ public class AbstractAutomaton implements Runnable {
             }
         });
 
-        while (!threadIsStopped && state != mSignalHead.getAppearance()) {
+        while (state != mSignalHead.getAppearance()) {
             wait(-1);  // wait for notification
         }
 
@@ -567,7 +575,7 @@ public class AbstractAutomaton implements Runnable {
             }
         });
 
-        while (!threadIsStopped && ! aspect.equals(mSignalMast.getAspect())) {
+        while (! aspect.equals(mSignalMast.getAspect())) {
             wait(-1);  // wait for notification
         }
 
@@ -606,7 +614,7 @@ public class AbstractAutomaton implements Runnable {
             }
         });
 
-        while (!threadIsStopped && warrant.getRunMode() != state) {
+        while (warrant.getRunMode() != state) {
             wait(-1);
         }
 
@@ -646,7 +654,7 @@ public class AbstractAutomaton implements Runnable {
             }
         });
 
-        while (!threadIsStopped && warrant.getCurrentBlockName().equals(block) != occupied) {
+        while (warrant.getCurrentBlockName().equals(block) != occupied) {
             wait(-1);
         }
 
@@ -701,7 +709,7 @@ public class AbstractAutomaton implements Runnable {
             }
         });
 
-        while (!threadIsStopped && !blockChanged) {
+        while (!blockChanged) {
             wait(-1);
         }
 
@@ -746,7 +754,7 @@ public class AbstractAutomaton implements Runnable {
 
         }
 
-        while (!threadIsStopped && !checkForConsistent(mTurnouts)) {
+        while (!checkForConsistent(mTurnouts)) {
             wait(-1);
         }
 
@@ -882,6 +890,9 @@ public class AbstractAutomaton implements Runnable {
                 log.trace("waitChange continues");
             }
         } catch (InterruptedException e) {
+            if (threadIsStopped) {
+                throw new StopThread();
+            }
             Thread.currentThread().interrupt(); // retain if needed later
             log.warn("AbstractAutomaton {} waitChange interrupted", getName());
         }
@@ -1017,7 +1028,7 @@ public class AbstractAutomaton implements Runnable {
 
         // now wait for reply from identified throttle
         int waited = 0;
-        while (!threadIsStopped && throttle == null && failedThrottleRequest == false && waited <= waitSecs) {
+        while (throttle == null && failedThrottleRequest == false && waited <= waitSecs) {
             log.debug("waiting for throttle");
             wait(1000);  //  1 seconds
             waited++;
@@ -1091,7 +1102,7 @@ public class AbstractAutomaton implements Runnable {
 
         // now wait for reply from identified throttle
         int waited = 0;
-        while (!threadIsStopped && throttle == null && failedThrottleRequest == false && waited <= waitSecs) {
+        while (throttle == null && failedThrottleRequest == false && waited <= waitSecs) {
             log.debug("waiting for throttle");
             wait(1000);  //  1 seconds
             waited++;
@@ -1340,10 +1351,21 @@ public class AbstractAutomaton implements Runnable {
         try {
             super.wait();
         } catch (InterruptedException e) {
+            if (threadIsStopped) {
+                throw new StopThread();
+            }
             Thread.currentThread().interrupt(); // retain if needed later
             log.warn("Interrupted during debugging wait, not expected");
         }
     }
+
+    /**
+     * An throwable that's used internally in AbstractAutomation to stop
+     * the thread.
+     */
+    private static class StopThread extends RuntimeException {
+    }
+
     // initialize logging
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractAutomaton.class);
 }

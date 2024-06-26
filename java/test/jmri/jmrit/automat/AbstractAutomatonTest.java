@@ -85,7 +85,7 @@ public class AbstractAutomatonTest {
         JUnitUtil.waitFor(()->{return a.isRunning();}, "running");
         a.stop();
         JUnitUtil.waitFor(()->{return ! a.isRunning();}, "stopped");
-        Assert.assertTrue("completed handle", done);
+        Assert.assertTrue("completed handle", !done);
     }
     
     @Test
