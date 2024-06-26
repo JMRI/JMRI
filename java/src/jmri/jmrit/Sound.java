@@ -155,7 +155,20 @@ public class Sound {
      * Play the sound once.
      */
     public void play() {
+        play(false);
+    }
+
+    /**
+     * Play the sound once.
+     * @param autoClose true if auto close clip, false otherwise. Only
+     *                  valid for clips. For streams, autoClose must be false.
+     * @throws IllegalArgumentException if streaming and autoClose is true
+     */
+    public void play(boolean autoClose) {
         if (streaming) {
+            if (autoClose) {
+                throw new IllegalArgumentException("autoClose is supported only for clips, not streams");
+            }
             Runnable streamSound = new StreamingSound(this.url);
             Thread tStream = jmri.util.ThreadingUtil.newThread(streamSound);
             tStream.start();
@@ -165,6 +178,13 @@ public class Sound {
                     clip = openClip();
                 }
                 if (clip != null) {
+                    if (autoClose) {
+                        clip.addLineListener((event)->{
+                            if (event.getType() == LineEvent.Type.STOP) {
+                                event.getLine().close();
+                            }
+                        });
+                    }
                     clip.start();
                 }
                 return clip;
