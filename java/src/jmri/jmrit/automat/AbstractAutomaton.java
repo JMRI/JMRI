@@ -379,7 +379,7 @@ public class AbstractAutomaton implements Runnable {
             }
         });
 
-        int now = mSensor.getKnownState();
+        int now;
         while (mState == (now = mSensor.getKnownState())) {
             wait(-1);
         }
