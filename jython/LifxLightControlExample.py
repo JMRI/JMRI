@@ -1,5 +1,5 @@
 ###################################################################################################
-# Demonstration of controling LIFX strip lights.
+# Demonstration of controling LIFX strip lights. See https://www.lifx.com/
 #
 # Based on Listen example and sound example by Bob Jacobsen, copyright 2004
 # Original by Darrin Calcutt, Canadian LocomotiveLogisitics
