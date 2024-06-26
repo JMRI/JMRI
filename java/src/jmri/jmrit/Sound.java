@@ -151,24 +151,6 @@ public class Sound {
         }
     }
 
-    /** {@inheritDoc} */
-    @Override
-    @SuppressWarnings("deprecation") // Object.finalize
-    protected void finalize() throws Throwable {
-        try {
-            if (!streaming) {
-                clipRef.updateAndGet(clip -> {
-                    if (clip != null) {
-                        clip.close();
-                    }
-                    return null;
-                });
-            }
-        } finally {
-            super.finalize();
-        }
-    }
-
     /**
      * Play the sound once.
      */
@@ -284,6 +266,20 @@ public class Sound {
         // write(byte[] b, int off, int len)
         line.write(wavData, 0, wavData.length);
 
+    }
+
+    /**
+     * Dispose this sound.
+     */
+    public void dispose() {
+        if (!streaming) {
+            clipRef.updateAndGet(clip -> {
+                if (clip != null) {
+                    clip.close();
+                }
+                return null;
+            });
+        }
     }
 
     public static class WavBuffer {

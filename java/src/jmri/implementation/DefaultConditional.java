@@ -8,6 +8,7 @@ import java.util.BitSet;
 import java.util.List;
 
 import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.swing.*;
 
 import jmri.*;
@@ -993,6 +994,16 @@ public class DefaultConditional extends AbstractNamedBean
             int oldState = _currentState;
             _currentState = state;
             firePropertyChange("KnownState", oldState, _currentState);  // NOI18N
+        }
+    }
+
+    /**
+     * Dispose this DefaultConditional.
+     */
+    @Override
+    public void dispose() {
+        for (int i = 0; i < _actionList.size(); i++) {
+            _actionList.get(i).dispose();
         }
     }
 
