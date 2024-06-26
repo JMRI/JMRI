@@ -175,7 +175,7 @@ public class Sound {
                 }
                 if (clip != null) {
                     if (autoClose) {
-                        clip.addLineListener((event)->{
+                        clip.addLineListener((event) -> {
                             if (event.getType() == LineEvent.Type.STOP) {
                                 event.getLine().close();
                             }
