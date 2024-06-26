@@ -1001,6 +1001,7 @@ public class DefaultConditional extends AbstractNamedBean
      */
     @Override
     public void dispose() {
+        super.dispose();
         for (int i = 0; i < _actionList.size(); i++) {
             _actionList.get(i).dispose();
         }
