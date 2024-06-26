@@ -1360,7 +1360,7 @@ public class AbstractAutomaton implements Runnable {
     }
 
     /**
-     * An throwable that's used internally in AbstractAutomation to stop
+     * An exception that's used internally in AbstractAutomation to stop
      * the thread.
      */
     private static class StopThreadException extends RuntimeException {
