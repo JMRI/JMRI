@@ -58,7 +58,7 @@ public abstract class AbstractAudioThread extends Thread implements AudioThread 
     }
 
     @Override
-    public boolean alive() {
+    public boolean isThreadAlive() {
         return alive(GET, NA);
     }
 

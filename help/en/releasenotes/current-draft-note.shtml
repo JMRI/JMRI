@@ -615,5 +615,7 @@
         <a id="Misc" name="Misc"></a>
         <ul>
             <li>Updated LauchJMRI.exe to display the console when the /noisy is used. No more return code 1, but and actual explanation</li>
+            <li>The method <strong>jmri.jmrit.audio.AudioThread.alive()</strong> has been renamed to <strong>isThreadAlive()</strong>.
+                It should only affect developers and people using JMRI as a library.</li>
         </ul>
 
