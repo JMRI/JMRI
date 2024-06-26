@@ -103,6 +103,7 @@ public class AbstractAutomaton implements Runnable {
     AutomatSummary summary = AutomatSummary.instance();
 
     Thread currentThread = null;
+    private volatile boolean threadIsStopped = false;
 
     /**
      * Start this automat processing.
@@ -119,7 +120,7 @@ public class AbstractAutomaton implements Runnable {
         count = 0;
     }
 
-    private boolean running = false;
+    private volatile boolean running = false;
 
     public boolean isRunning() {
         return running;
@@ -131,8 +132,6 @@ public class AbstractAutomaton implements Runnable {
      * This is invoked on currentThread.
      */
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IMSE_DONT_CATCH_IMSE",
-            justification = "get these when stop() issued against thread doing BlockingQueue.take() in waitChange, should remove when stop() reimplemented")
     public void run() {
         try {
             inThread = true;
@@ -140,27 +139,17 @@ public class AbstractAutomaton implements Runnable {
             // the real processing in the next statement is in handle();
             // and the loop call is just doing accounting
             running = true;
-            while (handle()) {
+            while (!threadIsStopped && handle()) {
                 count++;
                 summary.loop(this);
             }
-            log.debug("normal termination, handle() returned false");
-            currentThread = null;
-            done();
-        } catch (ThreadDeath e1) {
-            if (currentThread == null) {
-                log.debug("Received ThreadDeath, likely due to stop()");
+            if (threadIsStopped) {
+                log.debug("Current thread is stopped()");
             } else {
-                log.warn("Received ThreadDeath while not stopped", e1);
+                log.debug("normal termination, handle() returned false");
             }
-        } catch (IllegalMonitorStateException e2) {
-            if (currentThread == null) {
-                log.debug("Received IllegalMonitorStateException, likely due to stop()");
-            } else {
-                log.warn("Received IllegalMonitorStateException while not stopped", e2);
-            }
-        } catch (Exception e3) {
-            log.warn("Unexpected Exception ends AbstractAutomaton thread", e3);
+        } catch (Exception e) {
+            log.warn("Unexpected Exception ends AbstractAutomaton thread", e);
         } finally {
             currentThread = null;
             done();
@@ -173,9 +162,6 @@ public class AbstractAutomaton implements Runnable {
      * <p>
      * Overrides superclass method to handle local accounting.
      */
-    @SuppressWarnings("deprecation") // Thread.stop()
-    // AbstractAutomaton objects can be waiting on _lots_ of things, so
-    // we need to find another way to deal with this besides Interrupt
     public void stop() {
         log.trace("stop() invoked");
         if (currentThread == null) {
@@ -183,14 +169,8 @@ public class AbstractAutomaton implements Runnable {
             return;
         }
 
-        Thread stoppingThread = currentThread;
-        currentThread = null;
-
-        try {
-            stoppingThread.stop();
-        } catch (java.lang.ThreadDeath e) {
-            log.error("Exception while in stop(): {}", e.toString());
-        }
+        threadIsStopped = true;
+        currentThread.interrupt();
 
         done();
         // note we don't set running = false here.  It's still running until the run() routine thinks it's not.
@@ -283,7 +263,7 @@ public class AbstractAutomaton implements Runnable {
      */
     public void waitMsec(int milliseconds) {
         long target = System.currentTimeMillis() + milliseconds;
-        while (true) {
+        while (!threadIsStopped) {
             long stillToGo = target - System.currentTimeMillis();
             if (stillToGo <= 0) {
                 break;
@@ -391,8 +371,8 @@ public class AbstractAutomaton implements Runnable {
             }
         });
 
-        int now;
-        while (mState == (now = mSensor.getKnownState())) {
+        int now = mSensor.getKnownState();
+        while (!threadIsStopped && mState == (now = mSensor.getKnownState())) {
             wait(-1);
         }
 
@@ -451,7 +431,7 @@ public class AbstractAutomaton implements Runnable {
             }
         });
 
-        while (state != mSensor.getKnownState()) {
+        while (!threadIsStopped && state != mSensor.getKnownState()) {
             wait(-1);  // wait for notification
         }
 
@@ -516,7 +496,7 @@ public class AbstractAutomaton implements Runnable {
 
         }
 
-        while (!checkForState(mSensors, state)) {
+        while (!threadIsStopped && !checkForState(mSensors, state)) {
             wait(-1);
         }
 
@@ -553,7 +533,7 @@ public class AbstractAutomaton implements Runnable {
             }
         });
 
-        while (state != mSignalHead.getAppearance()) {
+        while (!threadIsStopped && state != mSignalHead.getAppearance()) {
             wait(-1);  // wait for notification
         }
 
@@ -587,7 +567,7 @@ public class AbstractAutomaton implements Runnable {
             }
         });
 
-        while (! aspect.equals(mSignalMast.getAspect())) {
+        while (!threadIsStopped && ! aspect.equals(mSignalMast.getAspect())) {
             wait(-1);  // wait for notification
         }
 
@@ -626,7 +606,7 @@ public class AbstractAutomaton implements Runnable {
             }
         });
 
-        while (warrant.getRunMode() != state) {
+        while (!threadIsStopped && warrant.getRunMode() != state) {
             wait(-1);
         }
 
@@ -666,7 +646,7 @@ public class AbstractAutomaton implements Runnable {
             }
         });
 
-        while (warrant.getCurrentBlockName().equals(block) != occupied) {
+        while (!threadIsStopped && warrant.getCurrentBlockName().equals(block) != occupied) {
             wait(-1);
         }
 
@@ -721,7 +701,7 @@ public class AbstractAutomaton implements Runnable {
             }
         });
 
-        while (!blockChanged) {
+        while (!threadIsStopped && !blockChanged) {
             wait(-1);
         }
 
@@ -766,7 +746,7 @@ public class AbstractAutomaton implements Runnable {
 
         }
 
-        while (!checkForConsistent(mTurnouts)) {
+        while (!threadIsStopped && !checkForConsistent(mTurnouts)) {
             wait(-1);
         }
 
@@ -1037,7 +1017,7 @@ public class AbstractAutomaton implements Runnable {
 
         // now wait for reply from identified throttle
         int waited = 0;
-        while (throttle == null && failedThrottleRequest == false && waited <= waitSecs) {
+        while (!threadIsStopped && throttle == null && failedThrottleRequest == false && waited <= waitSecs) {
             log.debug("waiting for throttle");
             wait(1000);  //  1 seconds
             waited++;
@@ -1111,7 +1091,7 @@ public class AbstractAutomaton implements Runnable {
 
         // now wait for reply from identified throttle
         int waited = 0;
-        while (throttle == null && failedThrottleRequest == false && waited <= waitSecs) {
+        while (!threadIsStopped && throttle == null && failedThrottleRequest == false && waited <= waitSecs) {
             log.debug("waiting for throttle");
             wait(1000);  //  1 seconds
             waited++;
