@@ -8,7 +8,6 @@ import java.util.BitSet;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.swing.*;
 
 import jmri.*;
