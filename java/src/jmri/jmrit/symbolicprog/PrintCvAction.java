@@ -10,8 +10,6 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.util.FileUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Action to print the information in the CV table.
@@ -202,7 +200,8 @@ public class PrintCvAction extends AbstractAction {
     public static long cvSortOrderVal(String cvName) {
         final int MAX_CVMNUM_SPACE = 1200;
 
-        String[] cvNumStrings = cvName.split("\\.");
+        // Split the string by any non-numeric character
+        String[] cvNumStrings = cvName.split("\\D+");
         long sortVal = 0;
         for (int i = 0; i < (cvNumStrings.length); i++) {
             sortVal = (sortVal * MAX_CVMNUM_SPACE) + Integer.parseInt(cvNumStrings[i]);
@@ -210,5 +209,6 @@ public class PrintCvAction extends AbstractAction {
         return sortVal;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintCvAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PrintCvAction.class);
+
 }
