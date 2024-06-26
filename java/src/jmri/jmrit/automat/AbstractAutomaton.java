@@ -148,7 +148,7 @@ public class AbstractAutomaton implements Runnable {
             } else {
                 log.debug("normal termination, handle() returned false");
             }
-        } catch (StopThread e1) {
+        } catch (StopThreadException e1) {
             log.debug("Current thread is stopped()");
         } catch (Exception e2) {
             log.warn("Unexpected Exception ends AbstractAutomaton thread", e2);
@@ -274,7 +274,7 @@ public class AbstractAutomaton implements Runnable {
                 Thread.sleep(stillToGo);
             } catch (InterruptedException e) {
                 if (threadIsStopped) {
-                    throw new StopThread();
+                    throw new StopThreadException();
                 }
                 Thread.currentThread().interrupt(); // retain if needed later
             }
@@ -335,7 +335,7 @@ public class AbstractAutomaton implements Runnable {
                 }
             } catch (InterruptedException e) {
                 if (threadIsStopped) {
-                    throw new StopThread();
+                    throw new StopThreadException();
                 }
                 Thread.currentThread().interrupt(); // retain if needed later
                 log.warn("interrupted in wait");
@@ -891,7 +891,7 @@ public class AbstractAutomaton implements Runnable {
             }
         } catch (InterruptedException e) {
             if (threadIsStopped) {
-                throw new StopThread();
+                throw new StopThreadException();
             }
             Thread.currentThread().interrupt(); // retain if needed later
             log.warn("AbstractAutomaton {} waitChange interrupted", getName());
@@ -1352,7 +1352,7 @@ public class AbstractAutomaton implements Runnable {
             super.wait();
         } catch (InterruptedException e) {
             if (threadIsStopped) {
-                throw new StopThread();
+                throw new StopThreadException();
             }
             Thread.currentThread().interrupt(); // retain if needed later
             log.warn("Interrupted during debugging wait, not expected");
@@ -1363,7 +1363,7 @@ public class AbstractAutomaton implements Runnable {
      * An throwable that's used internally in AbstractAutomation to stop
      * the thread.
      */
-    private static class StopThread extends RuntimeException {
+    private static class StopThreadException extends RuntimeException {
     }
 
     // initialize logging
