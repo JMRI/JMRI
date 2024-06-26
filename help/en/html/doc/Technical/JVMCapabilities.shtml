@@ -824,10 +824,10 @@
             does not affect JavaScript run on a web browser, so that
             JMRI's webserver capability will still work OK.
             <p>
-            It’s possible that someday GraalVM or Rhino will provide a solution for this, 
-            but it’s still a ways in the future.  
+            It's possible that someday GraalVM or Rhino will provide a solution for this, 
+            but it's still a ways in the future.  
             The Windows and macOS versions of GraalVM are still tricky to install 
-            and for some older OSs aren’t available at all. 
+            and for some older OSs aren't available at all. 
             Rhino doesn't yet provide full access to the JMRI Java classes.
         <li>The Java module system will in certain circumstances emit a large
             number of "access violation" messages to the log.  These are just advisory
