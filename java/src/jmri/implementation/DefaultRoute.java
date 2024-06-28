@@ -1247,7 +1247,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
             // play sound defined for start of route set
             if ((r.getOutputSoundName() != null) && (!r.getOutputSoundName().isEmpty())) {
                 try {
-                    (new Sound(r.getOutputSoundName())).play();
+                    (new Sound(r.getOutputSoundName())).play(true);
                 } catch (NullPointerException ex) {
                     log.error("Cannot find file {}", r.getOutputSoundName());
                 }
