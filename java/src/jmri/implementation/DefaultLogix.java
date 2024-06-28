@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
+
 import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import jmri.*;
 import jmri.jmrit.beantable.LRouteTableAction;
@@ -1105,6 +1107,17 @@ public class DefaultLogix extends AbstractNamedBean
             }
         }
         return report;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void dispose() {
+        super.dispose();
+        for (int i = 0; i < getNumConditionals(); i++) {
+            Conditional c = getConditional(getConditionalByNumberOrder(i));
+            c.dispose();
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultLogix.class);
