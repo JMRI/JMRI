@@ -68,7 +68,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     ButtonGroup group = new ButtonGroup();
 
     // text field
-    JTextField trainNameTextField = new JTextField(Control.max_len_string_train_name - 5); // make slightly smaller
+    JTextField trainNameTextField = new JTextField(Control.max_len_string_train_name);
     JTextField trainDescriptionTextField = new JTextField(30);
 
     // text area
@@ -150,8 +150,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         pdt.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("DepartTime")));
 
         // build hour and minute menus
-        hourBox.setPrototypeDisplayValue("000"); // needed for font size 9
-        minuteBox.setPrototypeDisplayValue("000");
+        hourBox.setPrototypeDisplayValue("0000"); // needed for font size 9
+        minuteBox.setPrototypeDisplayValue("0000");
         for (int i = 0; i < 24; i++) {
             if (i < 10) {
                 hourBox.addItem("0" + Integer.toString(i));
@@ -699,6 +699,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
                     _train.setRoute(null);
                 }
                 updateLocationCheckboxes();
+                updateDepartureTime();
                 pack();
                 repaint();
             }
@@ -952,7 +953,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     }
 
     RouteEditFrame ref;
-    protected static final String NEW_LINE = "\n"; // NOI18N
 
     private void editAddRoute() {
         log.debug("Edit/add route");

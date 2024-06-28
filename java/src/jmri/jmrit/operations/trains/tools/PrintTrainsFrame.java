@@ -33,7 +33,6 @@ import jmri.util.davidflanagan.HardcopyWriter;
  */
 public class PrintTrainsFrame extends OperationsFrame {
 
-    static final String NEW_LINE = "\n"; // NOI18N
     static final String TAB = "\t"; // NOI18N
     static final char FORM_FEED = '\f'; // NOI18N
 

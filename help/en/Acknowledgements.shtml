@@ -229,6 +229,9 @@
         the JMRI code <a id="C"></a>
         </li>
 
+        <li>Darrin Calcutt, 
+        who provided the sample script for LIFX light acccess.
+        
         <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3AKenC57+">Ken Cameron</a>, <!-- KenC57 -->
         who wrote the NCE fast clock support, added support for more than two
         systems to the preferences, added the Light Control, provided sample scripts, improved the
@@ -598,6 +601,9 @@
          who improved the sound support, has provided multiple sound projects,
          and helped with Intellibox development.</li>
 
+        <li>Vincent Kispersky, <!-- vints1 -->
+         who provided an MDE decoder definition.</li>
+
         <li>Scott Kitts, who helped debug the new communications library for Mac OS X</li>
 
         <li>Arco Klippstein, <!-- arthkl -->
@@ -663,6 +669,8 @@
 
         <li>Peter Lloyd-Jones, who contributed a script for playing a sound when a function key is
         pressed on a throttle and wrote instructions and an installer Ubuntu Linux</li>
+
+        <li>Alex Loes, who updated a Lenz decoder definition</li>
 
         <li>Stephen Lowens, who updated the Digitrax sound decoder definitions</li>
 

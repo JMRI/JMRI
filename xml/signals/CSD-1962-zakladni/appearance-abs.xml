@@ -42,6 +42,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Fix Specific Mapping</revremark>
     </revision>    
+    <revision>
+        <revnumber>5</revnumber>
+        <date>2024-02-21</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Small icons</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>CSD-1962-zakladni</aspecttable>
@@ -53,36 +59,43 @@
     <appearance>
       <aspectname>Stůj</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/000_stuj_ab.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m00_stuj_3.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Volno</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/001_volno_ab.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m01_volno_3.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Výstraha</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/002_vystraha_ab.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m02_vystraha_3.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Očekávej 40</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/003_o40_ab.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m03_o40_3.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Očekávej 60</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/004_o60_ab.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m04_o60_3.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Očekávej 80</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/005_o80_ab.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m05_o80_3.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Zhasnuto</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/026_zhasnuto_ab.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m26_zhasnuto_3.gif</imagelink>
     </appearance>
 
   </appearances>

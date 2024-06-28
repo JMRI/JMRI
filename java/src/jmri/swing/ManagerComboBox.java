@@ -95,16 +95,16 @@ public class ManagerComboBox<B extends NamedBean> extends JComboBox<Manager<B>> 
 
     private class ManagerRenderer implements ListCellRenderer<Manager<B>> {
 
-        private final ListCellRenderer<? super Manager<B>> renderer;
+        private final ListCellRenderer<? super Manager<B>> myRenderer;
 
         public ManagerRenderer(ListCellRenderer<? super Manager<B>> renderer) {
-            this.renderer = renderer;
+            this.myRenderer = renderer;
         }
 
         @Override
         public Component getListCellRendererComponent(JList<? extends Manager<B>> list, Manager<B> value, int index,
                 boolean isSelected, boolean cellHasFocus) {
-            JLabel label = (JLabel) renderer.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+            JLabel label = (JLabel) myRenderer.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             if (value != null) {
                 label.setText(value.getMemo().getUserName());
             }

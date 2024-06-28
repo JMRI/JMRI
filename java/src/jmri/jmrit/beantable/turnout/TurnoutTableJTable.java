@@ -192,28 +192,29 @@ public class TurnoutTableJTable extends JTable {
                 }
             }
             
-            column = table.convertColumnIndexToModel(column);
+            int tableCol = table.convertColumnIndexToModel(column);
+            int tableRow = table.convertRowIndexToModel(row);
             
-            Turnout t = (Turnout)table.getModel().getValueAt(row, TurnoutTableDataModel.SYSNAMECOL);
+            Turnout t = (Turnout)table.getModel().getValueAt(tableRow, TurnoutTableDataModel.SYSNAMECOL);
             if ( t == null ) {
                 return this;
             }
             if (value instanceof Sensor) {
                 setSelectedItem(value);
-                if (( column == TurnoutTableDataModel.SENSOR1COL ) && 
+                if (( tableCol == TurnoutTableDataModel.SENSOR1COL ) && 
                     (t.getFeedbackMode() != Turnout.ONESENSOR && t.getFeedbackMode() != Turnout.TWOSENSOR )) {
                     setBorder(errorBorder);
-                } else if ( column == TurnoutTableDataModel.SENSOR2COL && t.getFeedbackMode() != Turnout.TWOSENSOR ) {
+                } else if ( tableCol == TurnoutTableDataModel.SENSOR2COL && t.getFeedbackMode() != Turnout.TWOSENSOR ) {
                     setBorder(errorBorder);
                 } else {
                     setBorder(existingBorder);
                 }
             } else {
                 setSelectedItem(null);
-                if (( column == TurnoutTableDataModel.SENSOR1COL ) && 
+                if (( tableCol == TurnoutTableDataModel.SENSOR1COL ) && 
                         (t.getFeedbackMode() == Turnout.ONESENSOR || t.getFeedbackMode() == Turnout.TWOSENSOR )) {
                     setBorder(errorBorder);
-                } else if ( column == TurnoutTableDataModel.SENSOR2COL && t.getFeedbackMode() == Turnout.TWOSENSOR ) {
+                } else if ( tableCol == TurnoutTableDataModel.SENSOR2COL && t.getFeedbackMode() == Turnout.TWOSENSOR ) {
                     setBorder(errorBorder);
                 } else {
                     setBorder(existingBorder);

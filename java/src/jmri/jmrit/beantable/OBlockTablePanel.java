@@ -51,7 +51,7 @@ public class OBlockTablePanel extends JPanel {
 
     private static final int bottomStrutWidth = 20;
 
-    @SuppressWarnings("OverridableMethodCallInConstructor")
+//    @SuppressWarnings("OverridableMethodCallInConstructor")
     public OBlockTablePanel(OBlockTableModel oblocks,
                             PortalTableModel portals,
                             SignalTableModel signals,

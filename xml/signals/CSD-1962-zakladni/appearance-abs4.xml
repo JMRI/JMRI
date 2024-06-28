@@ -42,6 +42,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Fix Specific Mapping</revremark>
     </revision>    
+    <revision>
+        <revnumber>5</revnumber>
+        <date>2024-02-21</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Small icons</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>CSD-1962-zakladni</aspecttable>
@@ -53,56 +59,67 @@
     <appearance>
       <aspectname>Stůj</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/000_stuj_ab4.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m00_stuj_3.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Volno</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/001_volno_ab4.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m01_volno_3.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Výstraha</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/002_vystraha_ab4.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m02_vystraha_3.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Očekávej 40</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/003_o40_ab4.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m03_o40_3.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Očekávej 60</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/004_o60_ab4.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m04_o60_3.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Očekávej 80</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/005_o80_ab4.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m05_o80_3.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Opakovaná výstraha</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/022_opvystraha_ab4.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m22_opvystraha_3.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Opakovaná očekávej 40</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/023_opo40_ab4.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m23_opo40_3.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Opakovaná očekávej 60</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/024_opo60_ab4.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m24_opo60_3.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Opakovaná očekávej 80</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/025_opo80_ab4.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m25_opo80_3.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Zhasnuto</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/026_zhasnuto_ab4.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m26_zhasnuto_3.gif</imagelink>
     </appearance>
 
   </appearances>

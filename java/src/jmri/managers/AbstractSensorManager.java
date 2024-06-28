@@ -8,8 +8,6 @@ import jmri.Manager;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.SystemConnectionMemo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base implementation of the SensorManager interface.
@@ -154,12 +152,17 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
 
     /**
      * {@inheritDoc}
-     * Note that this null implementation only needs be implemented in
-     * system-specific SensorManagers where readout of sensor status from the
-     * layout is possible.
+     * Delay between requesting individual Sensor status is determined by the
+     * Connection Output Interval Setting.
      */
     @Override
     public void updateAll() {
+        int i = 0;
+        for ( Sensor nb : getNamedBeanSet() ) {
+            jmri.util.ThreadingUtil.runOnLayoutDelayed( nb::requestUpdateFromLayout,
+                i * getMemo().getOutputInterval() );
+            i++;
+        }
     }
 
     /**
@@ -236,6 +239,6 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         return Bundle.getMessage("EnterNumber1to9999ToolTip");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractSensorManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractSensorManager.class);
 
 }

@@ -19,7 +19,7 @@ public class MultipartMessageTest {
     private WebServer server = null;
 
     @Test
-    public void testCTor() throws java.io.IOException {
+    public void testCTor() throws java.io.IOException, java.net.URISyntaxException {
         MultipartMessage t = new MultipartMessage("http://localhost:12080",StandardCharsets.UTF_8.name());
         Assert.assertNotNull("exists",t);
         t.finish(); // make sure the port closes.

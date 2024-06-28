@@ -130,6 +130,23 @@ public class SymbolTableTest {
         Assert.assertEquals("variable has correct value",
                 "12", symbolTable.getValue("myVar"));
 
+        // Test booleans
+        symbolTable = createLocalVariable(InitialValueType.Boolean, "True");
+        Assert.assertTrue("variable has correct value",
+                (boolean)symbolTable.getValue("myVar"));
+
+        symbolTable = createLocalVariable(InitialValueType.Boolean, "False");
+        Assert.assertFalse("variable has correct value",
+                (boolean)symbolTable.getValue("myVar"));
+
+        symbolTable = createLocalVariable(InitialValueType.Boolean, "true");
+        Assert.assertTrue("variable has correct value",
+                (boolean)symbolTable.getValue("myVar"));
+
+        symbolTable = createLocalVariable(InitialValueType.Boolean, "false");
+        Assert.assertFalse("variable has correct value",
+                (boolean)symbolTable.getValue("myVar"));
+
         // Test integers
         SymbolTable symbolTable2 = createLocalVariable(InitialValueType.Integer, "42");
         Assert.assertEquals("variable has correct value",
@@ -185,6 +202,13 @@ public class SymbolTableTest {
                     case String:
                         symbolTable = createLocalVariable(type, null);
                         Assert.assertNull("variable is null", symbolTable.getValue("myVar"));
+                        break;
+
+                    case Boolean:
+                        ex = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+                            createLocalVariable(type, null);
+                        });
+                        Assert.assertEquals("Initial data is null for local variable \"myVar\". Can't set value to boolean.", ex.getMessage());
                         break;
 
                     case Integer:
@@ -253,6 +277,13 @@ public class SymbolTableTest {
                     case String:
                         globalVariable.initialize();
                         Assert.assertNull("variable is null", globalVariable.getValue());
+                        break;
+
+                    case Boolean:
+                        ex = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+                            globalVariable.initialize();
+                        });
+                        Assert.assertEquals("Initial data is null for global variable \"myVar\". Can't set value to boolean.", ex.getMessage());
                         break;
 
                     case Integer:

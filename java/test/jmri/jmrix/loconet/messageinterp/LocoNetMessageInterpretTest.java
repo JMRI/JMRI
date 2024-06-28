@@ -1,16 +1,11 @@
 package jmri.jmrix.loconet.messageinterp;
 
+import jmri.jmrix.loconet.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
-import jmri.jmrix.loconet.LnReporter;
-import jmri.jmrix.loconet.LnReporterManager;
-import jmri.jmrix.loconet.LnTurnout;
-import jmri.jmrix.loconet.LnTurnoutManager;
-import jmri.jmrix.loconet.LocoNetMessage;
-import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
 /**
  *
@@ -6983,6 +6978,34 @@ public class LocoNetMessageInterpretTest {
 
     }
 
+    @Test
+    public void testQueryMode() {
+        LocoNetMessage m = new LocoNetMessage(
+                new int[] {LnConstants.OPC_ALM_READ, 21, 1, 120, 8,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 26, 0, 1, 1, 52, 65, 0 } );
+        
+        Assert.assertEquals("Verify 1: Slot 248 rd",
+                "Report of status slot 248:\n" +
+                        "\tDevice: Type DCS210PLUS(CS), Serial Number 180(0x00B4). HwVersion 0.1, SwVersion 0.1.\n" +
+                        "\tRsync Max Rsync Max On USB Connected USB Link Off,\n" +
+                        "\tItrk Max Off, Vin Lo Off, Vin Hi Off, Fuse Bad Off, Overtemp Off,\n" +
+                        "\tLnetVmin Off, PtrkIsol Off, PTrkMaxI Off, TrkI Lim Off.\n" +
+                        "\t(See Digitrax KB1049 for details.)\n",
+                LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
+
+        m = new LocoNetMessage(
+                new int[] {LnConstants.OPC_ALM_READ, 21, 1, 122, 0, 0, 7, 0, 
+                    93, 0, 0, 0, 0, 0, 0, 0, 26, 127, 59, 1, 0 } );
+        
+        Assert.assertEquals("Verify 2: Slot 250 rd",
+                "Report of status slot 250:\n\tDevice: Type DCS210PLUS, Serial Number 187(0x00BB).\n"
+                        + "\tSlots InUse 0, Idle 7, Free 93,\n"
+                        + "\tConsist Top locos 0, Consist consisted upwards 0.\n"
+                        + "\t(See Digitrax KB1049 for details.)\n",
+                LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
+        
+    }
+    
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

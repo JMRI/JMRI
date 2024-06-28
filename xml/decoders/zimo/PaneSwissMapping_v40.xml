@@ -18,6 +18,7 @@
 <!-- version 1.4 - Nigel Cliffe. Added dimming group selection and dimming levels  14 Feb 2021 -->
 <!-- version 1.5 - Nigel Cliffe. Small bugfix to v1.4,  Corrected layout for decoders which lack swiss mapping groups 14-17 -->
 <!-- version 1.6 - Ronald Kuhn - add german translation -->
+<!-- version 1.7 - Pierre Billon, added 2nd Address checkboxes for function decoders, 26 Feb 2024 -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>Swiss Mapping V36+</name>
   <name xml:lang="it">Mappatura Svizzera</name>
@@ -184,6 +185,11 @@
                  <label> HiBeam</label>
                  <label xml:lang="de"> Fernlicht</label>
                  <label xml:lang="cs"> Dálkové světlo</label>
+                </display> 
+                <!--checkboxes for bit 6 for function decoders -->
+                <display item="Swiss Mapping Group 1 SecondAddress" format="checkbox">
+                 <label> 2nd Addr.</label>
+                 <label xml:lang="de"> 2. Adresse</label>
                 </display>
              </row>
          </column>
@@ -244,6 +250,11 @@
                  <label xml:lang="de"> Fernlicht</label>
                  <label xml:lang="cs"> Dálkové světlo</label>
                 </display>
+            <!--checkboxes for bit 6 for function decoders -->
+                <display item="Swiss Mapping Group 2 SecondAddress" format="checkbox">
+                 <label> 2nd Addr.</label>
+                 <label xml:lang="de"> 2. Adresse</label>
+                </display>
          </row>
         </column>
       </row>
@@ -303,6 +314,11 @@
                  <label xml:lang="de"> Fernlicht</label>
                  <label xml:lang="cs"> Dálkové světlo</label>
                 </display>
+                <!--checkboxes for bit 6 for function decoders -->
+                <display item="Swiss Mapping Group 3 SecondAddress" format="checkbox">
+                 <label> 2nd Addr.</label>
+                 <label xml:lang="de"> 2. Adresse</label>
+                </display>
          </row>
         </column>
       </row>
@@ -360,6 +376,11 @@
                  <label xml:lang="de"> Fernlicht</label>
                  <label xml:lang="cs"> Dálkové světlo</label>
                 </display>
+            <!--checkboxes for bit 6 for function decoders -->
+                <display item="Swiss Mapping Group 4 SecondAddress" format="checkbox">
+                 <label> 2nd Addr.</label>
+                 <label xml:lang="de"> 2. Adresse</label>
+                </display>
          </row>
         </column>
       </row>
@@ -412,6 +433,11 @@
                  <label> HiBeam</label>
                  <label xml:lang="de"> Fernlicht</label>
                  <label xml:lang="cs"> Dálkové světlo</label>
+                </display>
+            <!--checkboxes for bit 6 for function decoders -->
+                <display item="Swiss Mapping Group 5 SecondAddress" format="checkbox">
+                 <label> 2nd Addr.</label>
+                 <label xml:lang="de"> 2. Adresse</label>
                 </display>
          </row>
         </column>
@@ -467,6 +493,11 @@
                  <label xml:lang="de"> Fernlicht</label>
                  <label xml:lang="cs"> Dálkové světlo</label>
                 </display>
+            <!--checkboxes for bit 6 for function decoders -->
+                <display item="Swiss Mapping Group 6 SecondAddress" format="checkbox">
+                 <label> 2nd Addr.</label>
+                 <label xml:lang="de"> 2. Adresse</label>
+                </display>
          </row>
         </column>
       </row>
@@ -519,6 +550,11 @@
                  <label> HiBeam</label>
                  <label xml:lang="de"> Fernlicht</label>
                  <label xml:lang="cs"> Dálkové světlo</label>
+                </display>
+            <!--checkboxes for bit 6 for function decoders -->
+                <display item="Swiss Mapping Group 7 SecondAddress" format="checkbox">
+                 <label> 2nd Addr.</label>
+                 <label xml:lang="de"> 2. Adresse</label>
                 </display>
          </row>
         </column>
@@ -573,6 +609,11 @@
                  <label xml:lang="de"> Fernlicht</label>
                  <label xml:lang="cs"> Dálkové světlo</label>
                 </display>
+            <!--checkboxes for bit 6 for function decoders -->
+                <display item="Swiss Mapping Group 8 SecondAddress" format="checkbox">
+                 <label> 2nd Addr.</label>
+                 <label xml:lang="de"> 2. Adresse</label>
+                </display>
          </row>
         </column>
       </row>
@@ -625,6 +666,11 @@
                  <label> HiBeam</label>
                  <label xml:lang="de"> Fernlicht</label>
                  <label xml:lang="cs"> Dálkové světlo</label>
+                </display>
+            <!--checkboxes for bit 6 for function decoders -->
+                <display item="Swiss Mapping Group 9 SecondAddress" format="checkbox">
+                 <label> 2nd Addr.</label>
+                 <label xml:lang="de"> 2. Adresse</label>
                 </display>
          </row>
         </column>
@@ -679,6 +725,11 @@
                  <label xml:lang="de"> Fernlicht</label>
                  <label xml:lang="cs"> Dálkové světlo</label>
                 </display>
+            <!--checkboxes for bit 6 for function decoders -->
+                <display item="Swiss Mapping Group 10 SecondAddress" format="checkbox">
+                 <label> 2nd Addr.</label>
+                 <label xml:lang="de"> 2. Adresse</label>
+                </display>
          </row>
         </column>
       </row>
@@ -713,6 +764,12 @@
                 <display item="Swiss Mapping Group 11 M-key M+F" label=" M+F" format="checkbox"/> 
               </row>
             </group>
+            <!-- Qualifier for decoders without groups 11 to 17 -->
+            <qualifier>
+               <variableref>Swiss Mapping Group 11 F-key</variableref>
+               <relation>exists</relation>
+               <value>1</value>
+            </qualifier>
             <group>
               <qualifier>
                 <variableref>Swiss Mapping Group 11 M-key Hibeam</variableref>
@@ -733,6 +790,11 @@
                  <label> HiBeam</label>
                  <label xml:lang="de"> Fernlicht</label>
                  <label xml:lang="cs"> Dálkové světlo</label>
+                </display>
+            <!--checkboxes for bit 6 for function decoders -->
+                <display item="Swiss Mapping Group 11 SecondAddress" format="checkbox">
+                 <label> 2nd Addr.</label>
+                 <label xml:lang="de"> 2. Adresse</label>
                 </display>
          </row>
         </column>
@@ -766,6 +828,12 @@
                 <display item="Swiss Mapping Group 12 M-key M+F" label=" M+F" format="checkbox"/> 
               </row>
             </group>
+            <!-- Qualifier for decoders without groups 11 to 17 -->
+            <qualifier>
+               <variableref>Swiss Mapping Group 12 F-key</variableref>
+               <relation>exists</relation>
+               <value>1</value>
+            </qualifier>
             <group>
               <qualifier>
                 <variableref>Swiss Mapping Group 12 M-key Hibeam</variableref>
@@ -786,6 +854,11 @@
                  <label> HiBeam</label>
                  <label xml:lang="de"> Fernlicht</label>
                  <label xml:lang="cs"> Dálkové světlo</label>
+                </display>
+            <!--checkboxes for bit 6 for function decoders -->
+                <display item="Swiss Mapping Group 12 SecondAddress" format="checkbox">
+                 <label> 2nd Addr.</label>
+                 <label xml:lang="de"> 2. Adresse</label>
                 </display>
          </row>
         </column>
@@ -819,6 +892,12 @@
                 <display item="Swiss Mapping Group 13 M-key M+F" label=" M+F" format="checkbox"/> 
               </row>
             </group>
+            <!-- Qualifier for decoders without groups 11 to 17 -->
+            <qualifier>
+               <variableref>Swiss Mapping Group 13 F-key</variableref>
+               <relation>exists</relation>
+               <value>1</value>
+            </qualifier>
             <group>
               <qualifier>
                 <variableref>Swiss Mapping Group 13 M-key Hibeam</variableref>
@@ -839,6 +918,11 @@
                  <label> HiBeam</label>
                  <label xml:lang="de"> Fernlicht</label>
                  <label xml:lang="cs"> Dálkové světlo</label>
+                </display>
+            <!--checkboxes for bit 6 for function decoders -->
+                <display item="Swiss Mapping Group 13 SecondAddress" format="checkbox">
+                 <label> 2nd Addr.</label>
+                 <label xml:lang="de"> 2. Adresse</label>
                 </display>
          </row>
         </column>
@@ -874,6 +958,12 @@
                 <display item="Swiss Mapping Group 14 M-key M+F" label=" M+F" format="checkbox"/> 
               </row>
             </group>
+            <!-- Qualifier for decoders without groups 11 to 17 -->
+            <qualifier>
+               <variableref>Swiss Mapping Group 14 F-key</variableref>
+               <relation>exists</relation>
+               <value>1</value>
+            </qualifier>
             <group>
               <qualifier>
                 <variableref>Swiss Mapping Group 14 M-key Hibeam</variableref>
@@ -894,6 +984,11 @@
                  <label> HiBeam</label>
                  <label xml:lang="de"> Fernlicht</label>
                  <label xml:lang="cs"> Dálkové světlo</label>
+                </display>
+            <!--checkboxes for bit 6 for function decoders -->
+                <display item="Swiss Mapping Group 14 SecondAddress" format="checkbox">
+                 <label> 2nd Addr.</label>
+                 <label xml:lang="de"> 2. Adresse</label>
                 </display>
          </row>
         </column>
@@ -924,6 +1019,12 @@
                 <display item="Swiss Mapping Group 15 M-key M+F" label=" M+F" format="checkbox"/> 
               </row>
             </group>
+            <!-- Qualifier for decoders without groups 11 to 17 -->
+            <qualifier>
+               <variableref>Swiss Mapping Group 15 F-key</variableref>
+               <relation>exists</relation>
+               <value>1</value>
+            </qualifier>
             <group>
               <qualifier>
                 <variableref>Swiss Mapping Group 15 M-key Hibeam</variableref>
@@ -944,6 +1045,11 @@
                  <label> HiBeam</label>
                  <label xml:lang="de"> Fernlicht</label>
                  <label xml:lang="cs"> Dálkové světlo</label>
+                </display>
+            <!--checkboxes for bit 6 for function decoders -->
+                <display item="Swiss Mapping Group 15 SecondAddress" format="checkbox">
+                 <label> 2nd Addr.</label>
+                 <label xml:lang="de"> 2. Adresse</label>
                 </display>
          </row>
         </column>
@@ -975,6 +1081,12 @@
                 <display item="Swiss Mapping Group 16 M-key M+F" label=" M+F" format="checkbox"/> 
               </row>
             </group>
+            <!-- Qualifier for decoders without groups 11 to 17 -->
+            <qualifier>
+               <variableref>Swiss Mapping Group 16 F-key</variableref>
+               <relation>exists</relation>
+               <value>1</value>
+            </qualifier>
             <group>
               <qualifier>
                 <variableref>Swiss Mapping Group 16 M-key Hibeam</variableref>
@@ -995,6 +1107,11 @@
                  <label> HiBeam</label>
                  <label xml:lang="de"> Fernlicht</label>
                  <label xml:lang="cs"> Dálkové světlo</label>
+                </display>
+            <!--checkboxes for bit 6 for function decoders -->
+                <display item="Swiss Mapping Group 16 SecondAddress" format="checkbox">
+                 <label> 2nd Addr.</label>
+                 <label xml:lang="de"> 2. Adresse</label>
                 </display>
          </row>
         </column>
@@ -1026,6 +1143,12 @@
                 <display item="Swiss Mapping Group 17 M-key M+F" label=" M+F" format="checkbox"/> 
               </row>
             </group>
+            <!-- Qualifier for decoders without groups 11 to 17 -->
+            <qualifier>
+               <variableref>Swiss Mapping Group 17 F-key</variableref>
+               <relation>exists</relation>
+               <value>1</value>
+            </qualifier>
             <group>
               <qualifier>
                 <variableref>Swiss Mapping Group 17 M-key Hibeam</variableref>
@@ -1046,6 +1169,11 @@
                  <label> HiBeam</label>
                  <label xml:lang="de"> Fernlicht</label>
                  <label xml:lang="cs"> Dálkové světlo</label>
+                </display>
+            <!--checkboxes for bit 6 for function decoders -->
+                <display item="Swiss Mapping Group 17 SecondAddress" format="checkbox">
+                 <label> 2nd Addr.</label>
+                 <label xml:lang="de"> 2. Adresse</label>
                 </display>
          </row>
         </column>

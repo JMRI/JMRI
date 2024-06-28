@@ -450,7 +450,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         }
     }
 
-    @SuppressWarnings("SleepWhileInLoop")
+//    @SuppressWarnings("SleepWhileInLoop")
     @Override
     protected void doStop() {
         log.debug("Stop JoalAudioSource ({})", this.getSystemName());

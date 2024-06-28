@@ -301,6 +301,38 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h4>Enable/Disable LogixNG<span class="since">since 5.7.5</span></h4>
+
+      <p>A LogixNG has to be both <strong>enabled</strong> and <strong>activated</strong> before it
+      will execute.</p>
+
+      <p><strong>Enable/Disable</strong> are intended to be persistent changes.
+      <strong>Activate/Deactivate</strong> are temporary changes.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/action_item_enable_disable_logixng.png"><img class="image-border"
+        src="images/chapter5/action_item_enable_disable_logixng.png"
+        alt="Chapter 5 enable disable logixng"></a>
+      </div>
+
+      <ul>
+        <li><strong>Enable:</strong> Enable the selected LogixNG. The setting will be retained when
+        a tables and panels store occurs.</li>
+
+        <li><strong>Disable:</strong> Disable the selected LogixNG. The setting will be retained when a
+        tables and panels store occurs.</li>
+
+        <li><strong>Activate:</strong> Activate the selected LogixNG. The change only persists during
+        the PanelPro session.</li>
+
+        <li><strong>Deactivate:</strong> Deactivate the selected LogixNG. The change only persists
+        during the PanelPro session.</li>
+
+      </ul>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+
       <h4 id="EntryExitActions">Entry/Exit</h4>
 
       <p>Manage an Entry/Exit pair.  The last three items are implemented in JMRI 5.5.7.</p>
@@ -403,8 +435,15 @@
         <li><strong>Null:</strong> Select the <strong>Null</strong> tab to set the selected local
         variable to the null value.</li>
 
-        <li><strong>Constant:</strong> Select the <strong>Constant</strong> tab and enter a string
-        value for the selected local variable.</li>
+        <li><strong>Constant:</strong> Select the <strong>Constant</strong> tab, select the value <strong>Type</strong>
+        and enter a value for the selected local variable.
+          <ul>
+            <li>String</li>
+            <li>Integer</li>
+            <li>Floating number</li>
+            <li>Boolean (True/False)</li>
+          </ul>
+        </li>
 
         <li><strong>Memory:</strong> Select the <strong>Memory</strong> tab and select the memory
         which will provide the value for the selected local variable.</li>
@@ -498,6 +537,45 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h4>Program On Main<span class="since">since 5.7.3</span></h4>
+
+      <p>The Program on Main action provides the ability to change CV settings.  This is similar to
+      the <strong>Single CV Programmer</strong>.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/prog_on_main.png"><img class="image-border" src=
+        "images/chapter5/prog_on_main.png" alt="Chapter 5 program on main"></a>
+      </div>
+
+      <p>Depending on the command station, selecting a Long address for address less than 128 might
+      be ignored or create an error.</p>
+
+      <p>The roster is not used or updated.</p>
+
+      <p>A local variable can be assigned which will contain the results of the operation.  The local
+      variable is only updated if there are actions in the <strong>Execute</strong> action.  If the
+      value is not zero, there was an error.
+
+      </p>
+
+      <pre style="border: 2px solid #778899; margin: 1em; padding: 0.1em;">
+LogixNG: IQ:AUTO:0001
+    ConditionalNG: IQC:AUTO:0001
+        ! A
+            Many
+               ::: Local variable "result", init to None ""
+                ! A1
+                    Program CV 29 to 32 for address Autodetect 1234 using programming mode OPSBYTEMODE
+                        ! Execute
+                            Many
+                                ! A1
+                                    Log data: Only text: pom returned
+                                ! A2
+                                    Log local variables
+      </pre>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h4>Reporter</h4>
 
       <p>The Reporter action is used to copy the report content to a memory variable or a LogixNG
@@ -525,9 +603,53 @@
       or all connections.  The action depends on whether the connection supports sensor state
       requests.</p>
 
+      <p>As of JMRI 5.7.5, supported connection types include :</p>
+      <ul>
+      <li>BiDiB</li>
+      <li>CBUS</li>
+      <li>C/MRI</li>
+      <li>IPOCS</li>
+      <li>Lenz XpressNet</li>
+      <li>LocoNet</li>
+      <li>OpenLCB</li>
+      <li>Roco Z21 CAN</li>
+      <li>XBee</li>
+      </ul>
+
+      <p>For connections that send individual Sensor status requests,
+      the delay between individual requests uses the connection Output Interval
+      within Additional Connection Settings.</p>
+
+      <p>Some hardware types, eg. Acela and NCE,
+      are constantly polled so this action may have little consequence.</p>
+
       <div style="margin-left: 2em;">
         <a href="images/chapter5/request_sensor_update.png">
         <img src="images/chapter5/request_sensor_update.png" alt="Chapter 5 request sensor update"></a>
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Request update of sensor<span class="since">since 5.7.4</span></h4>
+
+      <p>Request the current status of a specific sensor.  The action depends on whether the
+      connection supports sensor state requests.</p>
+
+      <p>As of JMRI 5.7.5, supported connection types include :</p>
+      <ul>
+      <li>BiDiB</li>
+      <li>CBUS</li>
+      <li>C/MRI</li>
+      <li>IPOCS</li>
+      <li>Lenz XpressNet</li>
+      <li>OpenLCB</li>
+      <li>Roco Z21 CAN</li>
+      <li>XBee</li>
+      </ul>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/request_sensor_state.png">
+        <img src="images/chapter5/request_sensor_state.png" alt="Chapter 5 request sensor state"></a>
       </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
@@ -558,6 +680,9 @@
         <img src="images/chapter5/digital_action_script.png" alt="Chapter 5 digital action script"></a>
       </div>
 
+      <p>For details on accessing LogixNG objects from a script see <a href="chapter13.shtml">
+      Chapter 13 - Jython Scripting Support</a>.</p>
+
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h4>Sensor</h4>
@@ -575,6 +700,21 @@
 
         <li><strong>Inconsistent:</strong> Set the selected sensor state to inconsistent.</li>
       </ul>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Set reporter<span class="since">since 5.7.5</span></h4>
+
+      <p>Set a value for the selected Reporter.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/action_item_set_reporter.png">
+        <img src="images/chapter5/action_item_set_reporter.png"
+        alt="Chapter 5 set reporter"></a>
+      </div>
+
+      <p>The <strong>Set reporter as an IdTag</strong> option is used to  provide the report as an
+      IdTag if it's not an IdTag already.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -633,6 +773,20 @@
       field provided. Click the file selection button to bring up a file selection dialog to aid in
       finding the file. Navigate to your sound file, then click your sound file's name in the
       dialog and the name will be copied to the field.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Table<span class="since">since 5.7.4</span></h4>
+
+      <p>Replace the content of the specified table cell.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/table_action.png">
+        <img src="images/chapter5/table_action.png" alt="Chapter 5 table action"></a>
+      </div>
+
+      <p class="noted">Note: Since tables are created from CSV files during PanelPro startup, the content
+      changes are temporary.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -1031,7 +1185,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h4>If Then Else</h4>
+      <h4 id="if-then-else">If Then Else</h4>
 
       <p>Reads a digital child expression and if the answer is <strong>true</strong> it executes
       the <strong>then</strong> child action, else it executes the <strong>else</strong> child
@@ -1061,6 +1215,8 @@
         is executed, regardless of whether the expression has changed value.</dd>
       </dl>
 
+      <p class="noted">The default execution setting can be change using
+      <strong>Preferences &rArr; LogixNG</strong>.</p>
 
       <p><u>How is the If expression evaluated</u><span class="since">since 5.1.6</span></p>
 
@@ -1287,6 +1443,52 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h4>Window management<span class="since">since 5.7.6</span></h4>
+
+      <p>JMRI uses a lot of windows.  Each panel is a window, various tools have windows, tables
+      can be shown in windows, etc.  The <strong>Window management</strong> action provides
+      three tools to help manage the windows.</p>
+
+      <dl>
+        <dt>Show/Hide</dt>
+        <dd>The <strong>visibility</strong> of the window is changed.  The window size and location
+        are not affected.</dd>
+
+        <dt>Maximize/Normalize/Minimize</dt>
+        <dd>Minimize and normalize use the OS process to move the window to and from the task bar or
+        dock.  Normalize returns the window to the same location and size.  Maximize fits the
+        window to the screen size.  Normalize will return the window to the orignal location and
+        size.  <strong><em>There is one exception</em></strong>. If the window location or size has
+        changed while maximized, that becomes the new location and size and normalize will not
+        revert to the previous location and size.</dd>
+
+        <dt>To front/back</dt>
+        <dd><strong>Bring to front</strong> makes the window the top window. <strong>Bring to
+        back</strong> makes the window the bottom window.
+
+      </dl>
+
+      <p>The <strong>Ignore Window not found</strong> option is used to prevent errors when
+      optional windows are not currently open.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/window_management.png"><img src=
+        "images/chapter5/window_management.png" alt="Chapter 5 window management action"></a>
+      </div>
+
+      <p>A simple implementation of this can done using the LogixNG icon with an inline LogixNG.
+      See <a href="../../../../package/jmri/jmrit/logixng/InlineLogixNG.shtml">
+      Inline LogixNG and LogixNG icon</a>.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Window to front<span class="since">since 5.7.4</span></h4>
+
+      <p>The <strong>Window to front</strong> action has been replaced by the
+      <strong>Window management</strong> action.  Existing actions will be automatically converted.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h2 id="digital_action_mqtt">Digital action :: MQTT <span class="since">since 4.99.7</span></h2>
 
       <div style="margin-left: 2em;">
@@ -1306,6 +1508,24 @@
         "images/chapter5/mqtt_publish.png" alt="Chapter 5 digital action mqtt publish"></a>
       </div>
 
+      <p><span class="since">since 5.9.1</span><strong>Retain</strong> is used to tell the MQTT
+      broker if it should also send the message to new subscribers or if it should only send
+      the message to current subscribers.</p>
+
+      <div style="margin-left: 2em;">
+        <dl>
+          <dt>Default</dt>
+          <dd>Use the connection setting.</dd>
+
+          <dt>Yes</dt>
+          <dd>Tell the broker to send the message to the current subscribers and also send the
+          message to new subscribers when they subscribe.</dd>
+
+          <dt>No</dt>
+          <dd>Tell the broker to only send the message to the current subscribers. New subscribers
+          will not see the message.</dd>
+        </dl>
+      </div>
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h4>Subscribe</h4>
@@ -1360,6 +1580,105 @@
       <h4>Create beans from table<span class="since">since 5.1.6</span></h4>
 
       <p>See <a href="chapter11.shtml#TableActions">Chapter 11 - Table Actions</a> for details.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4>Decode JSON<span class="since">since 5.7.4</span></h4>
+
+      <p>A JSON string in the first variable is decoded as a JsonNode tree and placed in the second
+      variable.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/decode_json.png">
+        <img src="images/chapter5/decode_json.png"
+        alt="Chapter 5 decode json"></a>
+      </div>
+
+      <p>The decoding process translates the JSON string into a nested set of LogixNG
+      <strong>Maps</strong> and <strong>Arrays</strong>.  Use a LogixNG formula to access a particular
+      node.</p>
+
+      <p>Here is a sample JSON structure.</p>
+
+<pre style="border: 2px solid #778899; margin: 1em; padding: 0.1em;">
+{"menu": {
+  "id": "file",
+  "value": "File",
+  "popup": {
+    "menuitem": [
+      {"value": "New", "onclick": "CreateNewDoc()"},
+      {"value": "Open", "onclick": "OpenDoc()"},
+      {"value": "Close", "onclick": "CloseDoc()"}
+    ]
+  }
+}}
+</pre>
+
+      <p>Here is a LogixNG that gets the second menuitem value and prints it to the JMRI system
+      console.  In this example, <strong>node value = Open</strong> is printed </p>
+
+<pre style="border: 2px solid #778899; margin: 1em; padding: 0.1em;">
+       1:  LogixNG: test read
+       2:      ConditionalNG: IQC:AUTO:0002
+       3:          ! A
+       4:              Many
+       5:                 ::: Local variable "node", init to String ""
+       6:                  ! A1
+       7:                      Set variable node to the result of formula "str(jsondecoded{"menu"}{"popup"}{"menuitem"}[1]{"value"})"
+       8:                  ! A2
+       9:                      Log data: String.format: node value = %s
+</pre>
+
+      <p><strong>jsondecoded</strong> is the global variable that has the result of the Decode JSON
+      action.  The items in the JSON tree are delimited by braces.  The JSON list rows are referenced
+      by row number in brackets.  Note:  The first row is zero.  In this example, all of the node
+      values are strings, so the formula is enclosed with a str() command.  Node values can also be
+      other data types such as integer and float.  LogixNG has int() and float() commands to handle
+      those data types.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4 id="execute-action">Execute action<span class="since">since 5.7.8</span></h4>
+
+      <p><strong>Execute action</strong> is used to execute a different part of the current
+      ConditionalNG.  This can be useful if you need to execute a part of the ConditionalNG at
+      several different places, for example if you have several <strong>Listen On Beans - Local
+      variable</strong> in the same ConditionalNG.  This is similar to calling a sub-routine.</p>
+
+      <p>The first step is to assign a <strong>user name</strong> to the action to be executed.
+      Right click on the action and select <strong>Change user name</strong>.  Enter the user
+      name and click on OK.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/execute-action-name.png">
+        <img src="images/chapter5/execute-action-name.png"
+        alt="Chapter 5 execute action name"
+        style="border: 1px solid black; margin: 1em; padding: 0.1em;"></a>
+      </div>
+
+      <p>When the <strong>Execute action</strong> is added, a dialog is displayed.  Select the user
+      name from the combo box and click on OK.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/execute-action.png">
+        <img src="images/chapter5/execute-action.png"
+        alt="Chapter 5 execute action"></a>
+      </div>
+
+      <p>This example calls a <strong>sub</strong> action to display the current local variables.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/execute-action-sample.png">
+        <img src="images/chapter5/execute-action-sample.png"
+        alt="Chapter 5 execute action sample"></a>
+      </div>
+
+      <p>Normally a ConditionalNG will execute all of the actions in the top level <strong>Many</strong>.
+      In this example, that would result in a second execution of the <strong>sub</strong> action.
+      The <strong>Return</strong> action is used to finish the ConditionalNG execution sequence.</p>
+
+      <p>Note:  This example was used to verify that the local variable list varies depending on
+      when the <strong>sub</strong> action was called.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 

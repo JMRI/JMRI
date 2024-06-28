@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+      <enumChoice choice="Standard on/off function output">
+       <choice>Standard on/off function output</choice>
+       <choice xml:lang="it">Uscita Standard On/Off</choice>
+       <choice xml:lang="cs">Standardní zapnout/vypnout funkční výstup</choice>
+       <choice xml:lang="de">Standard An/Aus</choice>
+      </enumChoice>
+      <enumChoice choice="Random Flicker">
+        <choice>Random Flicker</choice>
+        <choice xml:lang="de">zufälliges Einschalten</choice>
+      </enumChoice>
+      <enumChoice choice="On if F active and Speed = 0">
+        <choice>On if function active and speed = 0</choice>
+        <choice xml:lang="de">Ein wenn F aktiv und Geschwindigkeit = 0</choice>
+      </enumChoice>
+      <enumChoice choice="On if Speed = 0">
+        <choice>On if speed = 0</choice>
+        <choice xml:lang="de">Ein wenn Geschwindigkeit = 0</choice>
+      </enumChoice>
+      <enumChoice choice="On if F active and Speed > 0">
+        <choice>On if function active and speed > 0</choice>
+        <choice xml:lang="de">Ein wenn F aktiv und Geschwindigkeit > 0</choice>
+      </enumChoice>
+      <enumChoice choice="On if Speed > 0">
+        <choice>On if speed > 0</choice>
+        <choice xml:lang="de">Ein wenn Geschwindigkeit > 0</choice>
+      </enumChoice>
+      <enumChoice choice="On if direction forward">
+        <choice>On if direction forward</choice>
+        <choice xml:lang="de">Ein wenn Fahrtrichtung vorwärts</choice>
+      </enumChoice>
+      <enumChoice choice="On if direction backward">
+        <choice>On if direction backward</choice>
+        <choice xml:lang="de">Ein wenn Fahrtrichtung rückwärts</choice>
+      </enumChoice> 
+      <enumChoice choice="Cycle">
+        <choice>Cycle</choice>
+        <choice xml:lang="de">Intervall</choice>
+      </enumChoice> 
+      <enumChoice choice="Delay on">
+        <choice>Devlay on</choice>
+        <choice xml:lang="de">verzögert einschalten</choice>
+      </enumChoice> 
+      <enumChoice choice="On if Speed &gt; CV#399">
+        <choice>On if speed &gt; CV#399</choice>
+        <choice xml:lang="de">Ein wenn Geschwindigkeit &gt; CV#399</choice>
+      </enumChoice>
+      <enumChoice choice="On if Speed &lt;= CV#399">
+        <choice>On if speed &lt;= CV#399</choice>
+        <choice xml:lang="de">Ein wenn Geschwindigkeit &lt;= CV#399</choice>
+      </enumChoice>
+      <enumChoice choice="On if shunting key on">
+        <choice>On if shunting key on</choice>
+        <choice xml:lang="de">Ein wenn Rangiertaste ein</choice>
+      </enumChoice>
+      <enumChoice choice="Off if shunting key on">
+        <choice>Off if shunting key on</choice>
+        <choice xml:lang="de">Aus wenn Rangiertaste ein</choice>
+      </enumChoice>
+</enumChoiceGroup>

@@ -3,7 +3,7 @@
 # given type at a location and track with the car loads you specify.
 #
 #
-# Author: Daniel Boudreau, copyright 2011
+# Author: Daniel Boudreau, copyright 2011, 2024
 # Part of the JMRI distribution
 #
 # To use this script you must assign the location, tracks, car type
@@ -62,36 +62,36 @@ class loadCars(jmri.jmrit.automat.AbstractAutomaton):
     lm = jmri.InstanceManager.getDefault(jmri.jmrit.operations.locations.LocationManager)
     testLocation = lm.getLocationByName(self.locationName)
     if (testLocation == None):
-      print "Location (", self.locationName, ") does not exist"
+      print ('Location ({}) does not exist'.format(self.locationName))
       return False      # done error!
     for trackName in self.trackNames:
       testTrack = testLocation.getTrackByName(trackName, None)
       if (testTrack == None):
-        print "Track (", trackName, ") does not exist at location (", self.locationName, ")"
+        print ('Track ({}) does not exist at location ({}).'.format(trackName, self.locationName))
         return False        # done error!
 
     # check car type entered
     ct = jmri.InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarTypes)
     if (ct.containsName(self.carTypeName) == False):
-      print "Car type(", self.carTypeName, ") not found"
+      print ('Car type({}) not found'.format(self.carTypeName))
       return False
 
     # check car loads entered
     clm = jmri.InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarLoads)
     for i in range(0, len(self.carLoadNames)):
       if (clm.containsName(self.carTypeName, self.carLoadNames[i]) == False):
-        print "Car load (", self.carLoadNames[i], ") not found for car type (", self.carTypeName, ")"
+        print ('Car load ({}) not found for car type ({})'.format(self.carLoadNames[i], self.carTypeName))
         return False
 
     # check car replace loads entered
     for i in range(0, len(self.carReplaceLoads)):
       if (clm.containsName(self.carTypeName, self.carReplaceLoads[i]) == False):
-        print "Car replace load (", self.carReplaceLoads[i], ") not found for car type (", self.carTypeName, ")"
+        print ('Car replace load ({}) not found for car type ({})'.format(self.carReplaceLoads[i], self.carTypeName))
         return False
 
     # get a list of cars from the manager
     carList = cm.getByIdList()
-    # print "Found", carList.size(), "cars in roster"
+    # print ('Found", carList.size(), "cars in roster"
 
     # index through new car loads
     i = 0
@@ -104,7 +104,7 @@ class loadCars(jmri.jmrit.automat.AbstractAutomaton):
               if (car.getLoadName() == replaceLoadName):
                 for trackName in self.trackNames:
                   if (car.getTrackName() == trackName):
-                    print "Car (", car.toString(), ") at location (", self.locationName, ") track (", trackName, ") type (", self.carTypeName, ") old load (", car.getLoadName(), ") new load (", self.carLoadNames[i], ")"
+                    print ('Car ({}) at location ({}) track ({}) type ({}) old load ({}) new load ({})'.format(car.toString(), self.locationName, trackName, self.carTypeName, car.getLoadName(), self.carLoadNames[i]))
                     car.setLoadName(self.carLoadNames[i])
                     self.number = self.number - 1
                     i = i + 1

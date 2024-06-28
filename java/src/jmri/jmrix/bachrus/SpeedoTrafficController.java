@@ -5,8 +5,8 @@ import java.io.OutputStream;
 import java.util.Vector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import purejavacomm.SerialPortEvent;
-import purejavacomm.SerialPortEventListener;
+import jmri.jmrix.purejavacomm.SerialPortEvent;
+import jmri.jmrix.purejavacomm.SerialPortEventListener;
 
 /**
  * Converts Stream-based I/O to/from Speedo messages. The "SpeedoInterface" side
@@ -146,8 +146,6 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
      * Respond to an event triggered by RXTX. In this case we are
      * only dealing with DATA_AVAILABLE but the other events are left here for
      * reference.
-     *
-     * @author Andrew Berridge Jan 2010
      */
     @Override
     public void serialEvent(SerialPortEvent event) {

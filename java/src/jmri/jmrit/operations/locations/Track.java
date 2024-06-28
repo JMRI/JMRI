@@ -214,6 +214,7 @@ public class Track extends PropertyChangeSupport {
     public static final String TRACK_REPORTER_CHANGED_PROPERTY = "trackReporterChange"; // NOI18N
     public static final String ROUTED_CHANGED_PROPERTY = "onlyCarsWithFinalDestinations"; // NOI18N
     public static final String HOLD_CARS_CHANGED_PROPERTY = "trackHoldCarsWithCustomLoads"; // NOI18N
+    public static final String TRACK_COMMENT_CHANGED_PROPERTY = "trackComments"; // NOI18N
 
     // IdTag reader associated with this track.
     protected Reporter _reader = null;
@@ -348,6 +349,15 @@ public class Track extends PropertyChangeSupport {
 
     public boolean isStaging() {
         return getTrackType().equals(Track.STAGING);
+    }
+
+    public boolean hasMessages() {
+        if (!getCommentBoth().isBlank() ||
+                !getCommentPickup().isBlank() ||
+                !getCommentSetout().isBlank()) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -779,7 +789,7 @@ public class Track extends PropertyChangeSupport {
         String old = _commentPickup;
         _commentPickup = comment;
         if (!old.equals(comment)) {
-            setDirtyAndFirePropertyChange("trackCommentPickup", old, comment); // NOI18N
+            setDirtyAndFirePropertyChange(TRACK_COMMENT_CHANGED_PROPERTY, old, comment); // NOI18N
         }
     }
 
@@ -795,7 +805,7 @@ public class Track extends PropertyChangeSupport {
         String old = _commentSetout;
         _commentSetout = comment;
         if (!old.equals(comment)) {
-            setDirtyAndFirePropertyChange("trackCommentSetout", old, comment); // NOI18N
+            setDirtyAndFirePropertyChange(TRACK_COMMENT_CHANGED_PROPERTY, old, comment); // NOI18N
         }
     }
 
@@ -811,7 +821,7 @@ public class Track extends PropertyChangeSupport {
         String old = _commentBoth;
         _commentBoth = comment;
         if (!old.equals(comment)) {
-            setDirtyAndFirePropertyChange("trackCommentBoth", old, comment); // NOI18N
+            setDirtyAndFirePropertyChange(TRACK_COMMENT_CHANGED_PROPERTY, old, comment); // NOI18N
         }
     }
 
@@ -1922,7 +1932,10 @@ public class Track extends PropertyChangeSupport {
         }
         // search schedule if match mode
         if (getScheduleMode() == MATCH && !getSchedule().searchSchedule(car, this).equals(OKAY)) {
-            return SCHEDULE + " " + Bundle.getMessage("matchMessage", getScheduleName());
+            return SCHEDULE +
+                    " " +
+                    Bundle.getMessage("matchMessage", getScheduleName(),
+                            getSchedule().hasRandomItem() ? Bundle.getMessage("Random") : "");
         }
         ScheduleItem currentSi = getCurrentScheduleItem();
         log.debug("Destination track ({}) has schedule ({}) item id ({}) mode: {} ({})", getName(), getScheduleName(),

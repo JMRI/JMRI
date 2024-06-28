@@ -4,6 +4,8 @@ import java.beans.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
@@ -210,12 +212,12 @@ public class WebRequest extends AbstractDigitalAction
 //                System.out.format("Param string: \"%s\". URL: \"%s\"%n", paramString, urlString);
             }
 
-            url = new URL(urlString);
+            url = new URI(urlString).toURL();
 //            System.out.format("URL: %s, query: %s, userInfo: %s%n", url.toString(), url.getQuery(), url.getUserInfo());
 //            if (!urlString.contains("LogixNG_WebRequest_Test.php") && !urlString.contains("https://www.modulsyd.se/")) return;
 //            if (!urlString.contains("LogixNG_WebRequest_Test.php")) return;
 //            if (!urlString.contains("https://www.modulsyd.se/")) return;
-        } catch (MalformedURLException ex) {
+        } catch (MalformedURLException | URISyntaxException ex) {
             throw new JmriException(ex.getMessage(), ex);
         }
 

@@ -68,10 +68,10 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
      * 
      * @param n a CBUS node
      */
-    public void setNodeOfInterest(CbusNode n) {
+    public synchronized void setNodeOfInterest(CbusNode n) {
         _nodeOfInterest = n;
     }
-    
+
     /**
      * {@inheritDoc}
      */

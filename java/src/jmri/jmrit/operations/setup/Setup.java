@@ -262,6 +262,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private boolean switchListSameManifest = true; // when true switch list format is the same as the manifest
     private boolean manifestTruncated = false; // when true, manifest is truncated if switch list is available
     private boolean manifestDepartureTime = false; // when true, manifest shows train's departure time
+    private boolean switchListDepartureTime = false; // when true, switch list shows train's departure time
     private boolean switchListRouteComment = true; // when true, switch list have route location comments
     private boolean trackSummary = true; // when true, print switch list track summary
 
@@ -891,6 +892,14 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
 
     public static boolean isUseDepartureTimeEnabled() {
         return getDefault().manifestDepartureTime;
+    }
+
+    public static void setUseSwitchListDepartureTimeEnabled(boolean b) {
+        getDefault().switchListDepartureTime = b;
+    }
+
+    public static boolean isUseSwitchListDepartureTimeEnabled() {
+        return getDefault().switchListDepartureTime;
     }
 
     public static void setPrintLocationCommentsEnabled(boolean enable) {
@@ -1909,6 +1918,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
 
         values.setAttribute(Xml.PRINT_ROUTE_LOCATION, isSwitchListRouteLocationCommentEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.TRACK_SUMMARY, isPrintTrackSummaryEnabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.USE_DEPARTURE_TIME, isUseSwitchListDepartureTimeEnabled() ? Xml.TRUE : Xml.FALSE);
 
         e.addContent(values = new Element(Xml.SWITCH_LIST_PICKUP_CAR_FORMAT));
         storeXmlMessageFormat(values, getSwitchListPickupCarPrefix(), getPickupSwitchListMessageFormat());
@@ -2066,7 +2076,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
 
     public static void load(Element e) {
         if (e.getChild(Xml.OPERATIONS) == null) {
-            log.debug("operation setup values missing");
+            log.warn("OperationsPro settings values not found");
             return;
         }
         Element operations = e.getChild(Xml.OPERATIONS);
@@ -2366,6 +2376,11 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 String b = a.getValue();
                 log.debug("track summary: {}", b);
                 setPrintTrackSummaryEnabled(b.equals(Xml.TRUE));
+            }
+            if ((a = operations.getChild(Xml.SWITCH_LIST).getAttribute(Xml.USE_DEPARTURE_TIME)) != null) {
+                String b = a.getValue();
+                log.debug("switch list departure time: {}", b);
+                setUseSwitchListDepartureTimeEnabled(b.equals(Xml.TRUE));
             }
         }
         if (operations.getChild(Xml.SWITCH_LIST_PICKUP_CAR_FORMAT) != null) {

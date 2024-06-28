@@ -1,6 +1,8 @@
 package jmri.jmrit.roster;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 import jmri.Block;
@@ -8,6 +10,7 @@ import jmri.DccThrottle;
 import jmri.NamedBean;
 import jmri.Section;
 import jmri.implementation.SignalSpeedMap;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,6 +70,24 @@ public class RosterSpeedProfile {
 
     public boolean hasReverseSpeeds() {
         return _hasReverseSpeeds;
+    }
+
+    /**
+     * place / remove SpeedProfile from test mode.
+     * reinitializes speedstep trace array
+     * @param value true/false
+     */
+    protected void setTestMode(boolean value) {
+        profileInTestMode = value;
+        testSteps = new ArrayList<SpeedSetting>();
+    }
+
+    /**
+     * Gets the speed step trace array.
+     * @return speedstep trace array
+     */
+    protected List<SpeedSetting> getSpeedStepTrace() {
+        return testSteps;
     }
 
     /* for speed conversions */
@@ -697,6 +718,9 @@ public class RosterSpeedProfile {
 
     int extraTime = 0;
 
+    private List<SpeedSetting> testSteps = new ArrayList<SpeedSetting>();
+    private boolean profileInTestMode = false;
+
     void calculateStepDetails(float speedStep, float distance) {
 
         float stepIncrement = _throttle.getSpeedIncrement();
@@ -817,6 +841,9 @@ public class RosterSpeedProfile {
             SpeedSetting ss = new SpeedSetting(calculatingStep, timePerStep);
             synchronized (this) {
                 stepQueue.addLast(ss);
+                if (profileInTestMode) {
+                    testSteps.add(ss);
+                }
             }
             if (stopTimer == null) { //If this is the first time round then kick off the speed change
                 setNextStep();
@@ -830,7 +857,7 @@ public class RosterSpeedProfile {
                 calculatedDistance = 0;
             }
             if (calculatedDistance <= 0 && !calculated) {
-                log.error("distance remaining is now 0, but we have not reached desired speed setting {} v {}", desiredSpeedStep, calculatingStep);
+                log.warn("distance remaining is now 0, but we have not reached desired speed setting {} v {}", desiredSpeedStep, calculatingStep);
                 ss = new SpeedSetting(desiredSpeedStep, 10);
                 synchronized (this) {
                     stepQueue.addLast(ss);
@@ -891,7 +918,7 @@ public class RosterSpeedProfile {
         }
         SpeedSetting ss = stepQueue.getFirst();
         if (ss.getDuration() == 0) {
-            _throttle.setSpeedSetting(0);
+            _throttle.setSpeedSetting(desiredSpeedStep);
             finishChange();
             return;
         }

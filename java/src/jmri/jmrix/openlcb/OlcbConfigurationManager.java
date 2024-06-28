@@ -501,7 +501,10 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         @Override
         public void handleProtocolIdentificationRequest(ProtocolIdentificationRequestMessage msg, Connection sender) {
             long flags = 0x00041000000000L;  // PC, SNIP protocols
-            getInterface().getOutputConnection().put(new ProtocolIdentificationReplyMessage(nodeID, msg.getSourceNodeID(), flags), this);
+            // only reply if for us
+            if (msg.getDestNodeID() == nodeID) {
+                getInterface().getOutputConnection().put(new ProtocolIdentificationReplyMessage(nodeID, msg.getSourceNodeID(), flags), this);
+            }
         }
 
     }
@@ -543,9 +546,10 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             if (n != null) {
                 address = n.getInetAddresses().nextElement();
             }
-        } catch (SocketException e) {
+        } catch (SocketException | RuntimeException e) {
+            // java.util.NoSuchElementException seen on some Windows machines
             log.warn("Can't get IP address to make NodeID", e);
-        }
+        } 
         log.debug("InetAddress: {}", address);
         int b1 = 0;
         if (address != null) {

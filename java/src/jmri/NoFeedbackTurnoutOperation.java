@@ -12,8 +12,8 @@ import jmri.implementation.NoFeedbackTurnoutOperator;
 public class NoFeedbackTurnoutOperation extends CommonTurnoutOperation {
 
     // This class can deal with ANY feedback mode, although it may not be the best one
-    final int feedbackModes
-            = AbstractTurnout.DIRECT | AbstractTurnout.ONESENSOR | AbstractTurnout.TWOSENSOR 
+    static final int SUPPORTED_FEEDBACK_MODES
+            = AbstractTurnout.DIRECT | AbstractTurnout.ONESENSOR | AbstractTurnout.TWOSENSOR
             | AbstractTurnout.INDIRECT | AbstractTurnout.EXACT | AbstractTurnout.DELAYED
             | AbstractTurnout.MONITORING | AbstractTurnout.LNALTERNATE ;
 
@@ -25,7 +25,7 @@ public class NoFeedbackTurnoutOperation extends CommonTurnoutOperation {
 
     public NoFeedbackTurnoutOperation(String n, int i, int mt) {
         super(n, i, mt);
-        setFeedbackModes(feedbackModes);
+        setFeedbackModes(SUPPORTED_FEEDBACK_MODES);
     }
 
     /**

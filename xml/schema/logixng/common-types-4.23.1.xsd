@@ -46,6 +46,7 @@
     <xs:simpleType name="LogixNG_LocalVariable_InitialValueType_Type">
       <xs:restriction base="xs:token">
         <xs:enumeration value="None"/>
+        <xs:enumeration value="Boolean"/>
         <xs:enumeration value="Integer"/>
         <xs:enumeration value="FloatingNumber"/>
         <xs:enumeration value="String"/>

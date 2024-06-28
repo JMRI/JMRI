@@ -94,7 +94,6 @@ public class SimulatorAdapter extends NcePortController implements Runnable {
 
     NceTrafficController tc;
     // private control members
-    private boolean opened = false;
     private Thread sourceThread;
 
     // streams to share with user class

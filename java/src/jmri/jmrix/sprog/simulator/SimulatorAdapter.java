@@ -31,7 +31,6 @@ import org.slf4j.LoggerFactory;
 public class SimulatorAdapter extends SprogPortController implements Runnable {
 
     // private control members
-    private boolean opened = false;
     private Thread sourceThread;
     private SprogTrafficController control;
 

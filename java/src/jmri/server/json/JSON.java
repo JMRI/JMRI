@@ -1,8 +1,6 @@
 package jmri.server.json;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import jmri.Audio;
 
@@ -577,6 +575,18 @@ public final class JSON {
      */
     public static final String RETURN_WHEN_EMPTY = "returnWhenEmpty";
     /**
+     * {@value #RETURN_WHEN_LOADED}
+     *
+     * @since 5.4.0
+     */
+    public static final String RETURN_WHEN_LOADED = "returnWhenLoaded";
+    /**
+     * {@value #DIVISION}
+     *
+     * @since 5.4.0
+     */
+    public static final String DIVISION = "division";
+    /**
      * {@value #UTILITY}
      *
      * @since 1.1
@@ -895,6 +905,18 @@ public final class JSON {
      * @since 5.0.0
      */
     public static final String RFID = "rfid"; // NOI18N
+    /**
+     * {@value #WHERELASTSEEN}
+     *
+     * @since 5.7.6
+     */
+    public static final String WHERELASTSEEN = "whereLastSeen"; // NOI18N
+    /**
+     * {@value #WHENLASTSEEN}
+     *
+     * @since 5.7.6
+     */
+    public static final String WHENLASTSEEN = "whenLastSeen"; // NOI18N
     /**
      * {@value #TIME}
      *

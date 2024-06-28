@@ -2,8 +2,7 @@ package jmri.web.servlet.operations;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.Iterator;
-import java.util.Locale;
+import java.util.*;
 import java.util.Map.Entry;
 
 import org.apache.commons.text.StringEscapeUtils;
@@ -16,6 +15,8 @@ import com.fasterxml.jackson.databind.util.StdDateFormat;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.Xml;
+import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.JsonManifest;
@@ -80,19 +81,21 @@ public class HtmlManifest extends HtmlTrainCommon {
                     builder.append(String.format(locale, strings.getProperty("ScheduledWorkAt"), routeLocationName)); // NOI18N
                 }
                 // add route comment
-                if (!location.path(JSON.COMMENT).textValue().trim().isEmpty()) {
+                if (!location.path(JSON.COMMENT).textValue().isBlank()) {
                     builder.append(String.format(locale, strings.getProperty("RouteLocationComment"), 
                             location.path(JSON.COMMENT).textValue()));
                 }
 
-                builder.append(getTrackComments(location.path(JsonOperations.TRACK), location.path(JsonOperations.CARS)));
-
                 // add location comment
                 if (Setup.isPrintLocationCommentsEnabled()
-                        && !location.path(JsonOperations.LOCATION).path(JSON.COMMENT).textValue().trim().isEmpty()) {
+                        && !location.path(JsonOperations.LOCATION).path(JSON.COMMENT).textValue().isBlank()) {
                     builder.append(String.format(locale, strings.getProperty("LocationComment"), location.path(
                             JsonOperations.LOCATION).path(JSON.COMMENT).textValue()));
                 }
+
+                // add track comments
+                builder.append(
+                        getTrackComments(location.path(JsonOperations.TRACK), location.path(JsonOperations.CARS)));
             }
 
             previousLocationName = routeLocationName;
@@ -158,7 +161,7 @@ public class HtmlManifest extends HtmlTrainCommon {
                         }
                     } else {
                         log.debug("No work ({})", routeLocation.getComment());
-                        if (routeLocation.getComment().trim().isEmpty()) {
+                        if (routeLocation.getComment().isBlank()) {
                             // no route comment, no work at this location
                             if (train.isShowArrivalAndDepartureTimesEnabled()) {
                                 if (routeLocation == train.getTrainDepartsRouteLocation()) {
@@ -184,12 +187,10 @@ public class HtmlManifest extends HtmlTrainCommon {
                         } else {
                             // if a route comment, then only use location name and route comment, useful for passenger
                             // trains
-                            if (!routeLocation.getComment().equals(RouteLocation.NONE)) {
-                                if (routeLocation.getComment().trim().length() > 0) {
-                                    builder.append(String.format(locale, strings.getProperty("CommentAt"), // NOI18N
-                                            routeLocationName, StringEscapeUtils
-                                            .escapeHtml4(routeLocation.getComment())));
-                                }
+                            if (!routeLocation.getComment().isBlank()) {
+                                builder.append(String.format(locale, strings.getProperty("CommentAt"), // NOI18N
+                                        routeLocationName, StringEscapeUtils
+                                                .escapeHtml4(routeLocation.getCommentWithColor())));
                             }
                             if (train.isShowArrivalAndDepartureTimesEnabled()) {
                                 if (routeLocation == train.getTrainDepartsRouteLocation()) {
@@ -214,7 +215,7 @@ public class HtmlManifest extends HtmlTrainCommon {
                         if (Setup.isPrintLocationCommentsEnabled()
                                 && !routeLocation.getLocation().getComment().isEmpty()) {
                             builder.append(String.format(locale, strings.getProperty("LocationComment"),
-                                    StringEscapeUtils.escapeHtml4(routeLocation.getLocation().getComment())));
+                                    StringEscapeUtils.escapeHtml4(routeLocation.getLocation().getCommentWithColor())));
                         }
                     }
                 }
@@ -228,17 +229,22 @@ public class HtmlManifest extends HtmlTrainCommon {
     protected String blockCars(JsonNode cars, RouteLocation location, boolean isManifest) {
         StringBuilder builder = new StringBuilder();
         log.debug("Cars is {}", cars);
-        for (JsonNode car : cars.path(JSON.ADD)) {
+
+        //copy the adds into a sortable arraylist
+        ArrayList<JsonNode> adds = new ArrayList<JsonNode>();
+        cars.path(JSON.ADD).forEach(adds::add);
+            
+        //sort if requested
+        if (adds.size() > 0 && Setup.isSortByTrackNameEnabled()) {
+            adds.sort(Comparator.comparing(o -> o.path("location").path("track").path("userName").asText()));
+        }
+        //format each car for output
+        // use truncated format if there's a switch list
+        for (JsonNode car : adds) {
             if (!this.isLocalMove(car)) {
-                // TODO utility format not quite ready, so display each car in
-                // manifest for now.
-                // if (this.isUtilityCar(car)) {
-                // builder.append(pickupUtilityCars(cars, car, location,
-                // isManifest));
-                // }
-                // else
-                // use truncated format if there's a switch list
-                if (isManifest &&
+                if (this.isUtilityCar(car)) {
+                    builder.append(pickupUtilityCars(adds, car, location, isManifest));
+                } else if (isManifest &&
                         Setup.isPrintTruncateManifestEnabled() &&
                         location.getLocation().isSwitchListEnabled()) {
                     builder.append(pickUpCar(car, Setup.getPickupTruncatedManifestMessageFormat()));
@@ -247,19 +253,19 @@ public class HtmlManifest extends HtmlTrainCommon {
                 }
             }
         }
-        for (JsonNode car : cars.path(JSON.REMOVE)) {
+
+        //copy the drops into a sortable arraylist
+        ArrayList<JsonNode> drops = new ArrayList<JsonNode>();
+        cars.path(JSON.REMOVE).forEach(drops::add);
+
+        for (JsonNode car : drops) {
             boolean local = isLocalMove(car);
-            // TODO utility format not quite ready, so display each car in
-            // manifest for now.
-            // if (this.isUtilityCar(car)) {
-            // builder.append(setoutUtilityCars(cars, car, location,
-            // isManifest));
-            // } else
-            if (isManifest &&
+            if (this.isUtilityCar(car)) {
+                builder.append(setoutUtilityCars(drops, car, location, isManifest));
+            } else if (isManifest &&
                     Setup.isPrintTruncateManifestEnabled() &&
                     location.getLocation().isSwitchListEnabled() &&
                     !train.isLocalSwitcher()) {
-                // use truncated format if there's a switch list
                 builder.append(dropCar(car, Setup.getDropTruncatedManifestMessageFormat(), local));
             } else {
                 String[] format;
@@ -276,38 +282,32 @@ public class HtmlManifest extends HtmlTrainCommon {
         return String.format(locale, strings.getProperty("CarsList"), builder.toString());
     }
 
-    protected String pickupUtilityCars(JsonNode cars, JsonNode car, RouteLocation location, boolean isManifest) {
-        // list utility cars by type, track, length, and load
-        String[] messageFormat;
-        if (isManifest) {
-            messageFormat = Setup.getPickupUtilityManifestMessageFormat();
-        } else {
-            messageFormat = Setup.getPickupUtilitySwitchListMessageFormat();
-        }
-        // TODO: reimplement following commented out code
-        // if (this.countUtilityCars(messageFormat, carList, car, location, rld, PICKUP) == 0) {
-        // return ""; // already printed out this car type
-        // }
-        return this.pickUpCar(car, messageFormat);
+    protected String pickupUtilityCars(ArrayList<JsonNode> jnCars, JsonNode jnCar, RouteLocation location,
+            boolean isManifest) {
+        List<Car> cars = getCarList(jnCars);
+        Car car = getCar(jnCar);
+        return pickupUtilityCars(cars, car, isManifest);
     }
 
-    protected String setoutUtilityCars(JsonNode cars, JsonNode car, RouteLocation location, boolean isManifest) {
-        boolean isLocal = isLocalMove(car);
-        String[] messageFormat;
-        if (isLocal && isManifest) {
-            messageFormat = Setup.getLocalUtilityManifestMessageFormat();
-        } else if (isLocal && !isManifest) {
-            messageFormat = Setup.getLocalUtilitySwitchListMessageFormat();
-        } else if (!isLocal && !isManifest) {
-            messageFormat = Setup.getDropUtilitySwitchListMessageFormat();
-        } else {
-            messageFormat = Setup.getDropUtilityManifestMessageFormat();
+    protected String setoutUtilityCars(ArrayList<JsonNode> jnCars, JsonNode jnCar, RouteLocation location,
+            boolean isManifest) {
+        List<Car> cars = getCarList(jnCars);
+        Car car = getCar(jnCar);
+        return setoutUtilityCars(cars, car, isManifest);
+    }
+
+    protected List<Car> getCarList(ArrayList<JsonNode> jnCars) {
+        List<Car> cars = new ArrayList<>();
+        for (JsonNode kar : jnCars) { 
+            cars.add(getCar(kar));
         }
-        // TODO: reimplement following commented out code
-        // if (countUtilityCars(messageFormat, carList, car, location, null, !PICKUP) == 0) {
-        // return ""; // already printed out this car type
-        // }
-        return dropCar(car, messageFormat, isLocal);
+        return cars;
+    }
+    
+    protected Car getCar(JsonNode jnCar) {
+        String id = jnCar.path(JSON.NAME).asText();
+        Car car = InstanceManager.getDefault(CarManager.class).getById(id);
+        return car;
     }
 
     protected String pickUpCar(JsonNode car, String[] format) {
@@ -319,7 +319,7 @@ public class HtmlManifest extends HtmlTrainCommon {
         for (String attribute : format) {
             if (!attribute.trim().isEmpty()) {
                 attribute = attribute.toLowerCase();
-                log.debug("Adding car with attribute {}", attribute);
+                log.trace("Adding car with attribute {}", attribute);
                 if (attribute.equals(JsonOperations.LOCATION) || attribute.equals(JsonOperations.TRACK)) {
                     attribute = JsonOperations.LOCATION; // treat "track" as "location"
                     builder.append(
@@ -355,7 +355,7 @@ public class HtmlManifest extends HtmlTrainCommon {
         for (String attribute : format) {
             if (!attribute.trim().isEmpty()) {
                 attribute = attribute.toLowerCase();
-                log.debug("Removing car with attribute {}", attribute);
+                log.trace("Removing car with attribute {}", attribute);
                 if (attribute.equals(JsonOperations.DESTINATION) || attribute.equals(JsonOperations.TRACK)) {
                     attribute = JsonOperations.DESTINATION; // treat "track" as "destination"
                     builder.append(
@@ -504,7 +504,8 @@ public class HtmlManifest extends HtmlTrainCommon {
                 boolean setout = false;
                 if (cars.path(JSON.ADD).size() > 0) {
                     for (JsonNode car : cars.path(JSON.ADD)) {
-                        if (track.getKey().equals(car.path(JsonOperations.TRACK).path(JSON.NAME).textValue())) {
+                        if (track.getKey().equals(car.path(JsonOperations.LOCATION).path(JsonOperations.TRACK)
+                                .path(JSON.NAME).asText())) {
                             pickup = true;
                             break; // we do not need to iterate all cars
                         }
@@ -512,7 +513,8 @@ public class HtmlManifest extends HtmlTrainCommon {
                 }
                 if (cars.path(JSON.REMOVE).size() > 0) {
                     for (JsonNode car : cars.path(JSON.REMOVE)) {
-                        if (track.getKey().equals(car.path(JsonOperations.TRACK).path(JSON.NAME).textValue())) {
+                        if (track.getKey().equals(car.path(JsonOperations.DESTINATION).path(JsonOperations.TRACK)
+                                .path(JSON.NAME).textValue())) {
                             setout = true;
                             break; // we do not need to iterate all cars
                         }
@@ -558,7 +560,7 @@ public class HtmlManifest extends HtmlTrainCommon {
             if (Setup.isPrintTrainScheduleNameEnabled()) {
                 return String.format(locale, strings.getProperty(this.resourcePrefix + "ValidityWithSchedule"),
                         getDate((new StdDateFormat()).parse(this.getJsonManifest().path(JsonOperations.DATE).textValue())),
-                        InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(train.getId()));
+                        InstanceManager.getDefault(TrainScheduleManager.class).getActiveSchedule().getName());
             } else {
                 return String.format(locale, strings.getProperty(this.resourcePrefix + "Validity"),
                         getDate((new StdDateFormat()).parse(this.getJsonManifest().path(JsonOperations.DATE).textValue())));

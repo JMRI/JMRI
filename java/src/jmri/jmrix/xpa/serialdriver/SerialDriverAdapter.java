@@ -1,21 +1,19 @@
 package jmri.jmrix.xpa.serialdriver;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import jmri.InstanceManager;
 import jmri.jmrix.xpa.XpaPortController;
 import jmri.jmrix.xpa.XpaSystemConnectionMemo;
 import jmri.jmrix.xpa.XpaTrafficController;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import purejavacomm.CommPortIdentifier;
-import purejavacomm.NoSuchPortException;
-import purejavacomm.PortInUseException;
-import purejavacomm.SerialPort;
-import purejavacomm.UnsupportedCommOperationException;
+
+import jmri.jmrix.purejavacomm.CommPortIdentifier;
+import jmri.jmrix.purejavacomm.NoSuchPortException;
+import jmri.jmrix.purejavacomm.PortInUseException;
+import jmri.jmrix.purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements SerialPortAdapter for a modem connected to an XPA.
@@ -41,7 +39,7 @@ public class SerialDriverAdapter extends XpaPortController {
         this.manufacturerName = jmri.jmrix.lenz.LenzConnectionTypeList.LENZ;
     }
 
-    SerialPort activeSerialPort = null;
+    jmri.jmrix.purejavacomm.SerialPort activeSerialPort = null;
 
     @Override
     public String openPort(String portName, String appName) {
@@ -50,14 +48,17 @@ public class SerialDriverAdapter extends XpaPortController {
             // get and open the primary port
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
             try {
-                activeSerialPort = (SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
+                activeSerialPort = portID.open(appName, 2000);  // name of program, msec to wait
             } catch (PortInUseException p) {
                 return handlePortBusy(p, portName, log);
             }
 
             // try to set it for communication via SerialDriver
             try {
-                activeSerialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+                activeSerialPort.setSerialPortParams(9600,
+                        jmri.jmrix.purejavacomm.SerialPort.DATABITS_8,
+                        jmri.jmrix.purejavacomm.SerialPort.STOPBITS_1,
+                        jmri.jmrix.purejavacomm.SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
@@ -70,11 +71,8 @@ public class SerialDriverAdapter extends XpaPortController {
             // activeSerialPort.enableReceiveTimeout(1000);
             log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(), activeSerialPort.isReceiveTimeoutEnabled());
 
-            // get and save stream
-            serialStream = activeSerialPort.getInputStream();
-
             // purge contents, if any
-            purgeStream(serialStream);
+            purgeStream(activeSerialPort.getInputStream());
 
             // report status?
             if (log.isInfoEnabled()) {
@@ -119,29 +117,6 @@ public class SerialDriverAdapter extends XpaPortController {
 
     private Thread sinkThread;
 
-    // base class methods for the XpaPortController interface
-    @Override
-    public DataInputStream getInputStream() {
-        if (!opened) {
-            log.error("getInputStream called before load(), stream not available");
-            return null;
-        }
-        return new DataInputStream(serialStream);
-    }
-
-    @Override
-    public DataOutputStream getOutputStream() {
-        if (!opened) {
-            log.error("getOutputStream called before load(), stream not available");
-        }
-        try {
-            return new DataOutputStream(activeSerialPort.getOutputStream());
-        } catch (java.io.IOException e) {
-            log.error("getOutputStream exception", e);
-        }
-        return null;
-    }
-
     @Override
     public boolean status() {
         return opened;
@@ -168,9 +143,6 @@ public class SerialDriverAdapter extends XpaPortController {
     public int defaultBaudIndex() {
         return 0;
     }
-
-    private boolean opened = false;
-    InputStream serialStream = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 

@@ -75,7 +75,7 @@ public class MergTrafficControllerTest extends jmri.jmrix.can.adapters.gridconne
     }
 
     @Test
-    @SuppressWarnings("AssertEqualsBetweenInconvertibleTypes") // CanReply and CanMessage can be tested via Equals
+//    @SuppressWarnings("AssertEqualsBetweenInconvertibleTypes") // CanReply and CanMessage can be tested via Equals
     public void sendRtrAsCanReplyCanMessageTest() throws IOException {
         MergTrafficController ltc = (MergTrafficController)tc;
         

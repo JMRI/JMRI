@@ -10,6 +10,7 @@ import jmri.NamedBean;
  */
 public interface LogixNG extends Base, NamedBean {
 
+    String PROPERTY_ENABLED = "Enabled";
     String PROPERTY_INLINE = "IsInline";
 
     /**
@@ -73,10 +74,19 @@ public interface LogixNG extends Base, NamedBean {
     /**
      * Activates this LogixNG.
      * <P>
-     * This method is only called by the LogixNG manager and it is called
-     * during initialization of the LogixNGs.
+     * This method is called by the LogixNG manager during
+     * initialization of the LogixNGs.
      */
     void activate();
+
+    /**
+     * Activates/deactivates this LogixNG.
+     * <P>
+     * This method is used by the LogixNG action EnableLogixNG to temporary
+     * activate or deactivate a LogixNG.
+     * @param active true if activate, false if deactivate
+     */
+    public void setActive(boolean active);
 
     /**
      * Set the system name for the conditionalNG at the specified position in this list
@@ -162,6 +172,15 @@ public interface LogixNG extends Base, NamedBean {
     void deleteConditionalNG(ConditionalNG conditionalNG);
 
     /**
+     * Is this item active?
+     * This method returns true if the the LogixNG is active but not enabled,
+     * while the method {@link #isActive() } only returns true if the LogixNG
+     * is both active and enabled.
+     * @return true if active, false otherwise.
+     */
+    boolean isActivated();
+
+    /**
      * Execute all ConditionalNGs if the LogixNG is enabled and activated.
      */
     void execute();
@@ -171,5 +190,12 @@ public interface LogixNG extends Base, NamedBean {
      * @param allowRunDelayed true if it's ok to run delayed, false otherwise
      */
     void execute(boolean allowRunDelayed);
+
+    /**
+     * Execute all ConditionalNGs if the LogixNG is enabled and activated.
+     * @param allowRunDelayed true if it's ok to run delayed, false otherwise
+     * @param isStartup true if startup, false otherwise
+     */
+    void execute(boolean allowRunDelayed, boolean isStartup);
 
 }

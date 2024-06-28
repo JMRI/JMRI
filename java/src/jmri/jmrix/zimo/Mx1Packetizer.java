@@ -46,11 +46,6 @@ public class Mx1Packetizer extends Mx1TrafficController {
         return (ostream != null && istream != null);
     }
 
-    public final static boolean ASCII = false;
-    public final static boolean BINARY = true;
-
-    boolean protocol = ASCII;
-
     /**
      * Synchronized list used as a transmit queue
      */

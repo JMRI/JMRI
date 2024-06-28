@@ -3,8 +3,6 @@ package jmri.jmrix.lenz;
 import jmri.Consist;
 import jmri.ConsistListener;
 import jmri.DccLocoAddress;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * XNetConsist.java
@@ -18,9 +16,9 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
 
     // We need to wait for replies before completing consist
     // operations
-    private final int IDLESTATE = 0;
-    private final int ADDREQUESTSENTSTATE = 1;
-    private final int REMOVEREQUESTSENTSTATE = 2;
+    private static final int IDLESTATE = 0;
+    private static final int ADDREQUESTSENTSTATE = 1;
+    private static final int REMOVEREQUESTSENTSTATE = 2;
 
     private int _state = IDLESTATE;
 
@@ -43,7 +41,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
         // At construction, register for messages
         tc.addXNetListener(XNetInterface.COMMINFO
                 | XNetInterface.CONSIST,
-                this);
+                XNetConsist.this);
     }
 
     /**
@@ -60,7 +58,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
         // At construction, register for messages
         tc.addXNetListener(XNetInterface.COMMINFO
                 | XNetInterface.CONSIST,
-                this);
+                XNetConsist.this);
     }
 
     final XNetSystemConnectionMemo systemMemo;
@@ -69,7 +67,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
      * Clean Up local storage, and remove the XNetListener.
      */
     @Override
-    synchronized public void dispose() {
+    public synchronized void dispose() {
         super.dispose();
         tc.removeXNetListener(
                 XNetInterface.COMMINFO
@@ -103,7 +101,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
      * <p>
      * On Lenz systems, All addresses but 0 can be used in a consist (Either and
      * Advanced Consist or a Double Header).
-     *
+     * {@inheritDoc}
      * @param address {@link jmri.DccLocoAddress DccLocoAddress} object to
      *                check.
      */
@@ -132,7 +130,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
 
     /**
      * Does the consist contain the specified address?
-     *
+     * {@inheritDoc}
      * @param address {@link jmri.DccLocoAddress DccLocoAddress} object to
      *                check.
      */
@@ -168,21 +166,21 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
     /**
      * Add an Address to the internal consist list object.
      *
-     * @param LocoAddress     {@link jmri.DccLocoAddress address} of the
+     * @param locoAddress     {@link jmri.DccLocoAddress address} of the
      *                        locomotive to add.
      * @param directionNormal true for normal direction, false for reverse.
      */
-    private synchronized void addToConsistList(DccLocoAddress LocoAddress, boolean directionNormal) {
-        if (!(consistList.contains(LocoAddress))) {
-            consistList.add(LocoAddress);
+    private synchronized void addToConsistList(DccLocoAddress locoAddress, boolean directionNormal) {
+        if (!(consistList.contains(locoAddress))) {
+            consistList.add(locoAddress);
         }
-        consistDir.put(LocoAddress, directionNormal);
+        consistDir.put(locoAddress, directionNormal);
         if (consistType == CS_CONSIST && consistList.size() == 2) {
-            notifyConsistListeners(LocoAddress,
+            notifyConsistListeners(locoAddress,
                     ConsistListener.OPERATION_SUCCESS
                     | ConsistListener.CONSIST_FULL);
         } else {
-            notifyConsistListeners(LocoAddress,
+            notifyConsistListeners(locoAddress,
                     ConsistListener.OPERATION_SUCCESS);
         }
     }
@@ -190,15 +188,15 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
     /**
      * Remove an address from the internal consist list object.
      *
-     * @param LocoAddress {@link jmri.DccLocoAddress address} of the locomotive
+     * @param locoAddress {@link jmri.DccLocoAddress address} of the locomotive
      *                    to remove.
      */
-    private synchronized void removeFromConsistList(DccLocoAddress LocoAddress) {
-        if (consistList.contains(LocoAddress)) {
-            consistDir.remove(LocoAddress);
-            consistList.remove(LocoAddress);
+    private synchronized void removeFromConsistList(DccLocoAddress locoAddress) {
+        if (consistList.contains(locoAddress)) {
+            consistDir.remove(locoAddress);
+            consistList.remove(locoAddress);
         }
-        notifyConsistListeners(LocoAddress, ConsistListener.OPERATION_SUCCESS);
+        notifyConsistListeners(locoAddress, ConsistListener.OPERATION_SUCCESS);
     }
 
     /**
@@ -353,7 +351,8 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
 
         // All we have to do here is create an apropriate XNetMessage,
         // and send it.
-        XNetMessage msg = XNetMessage.getAddLocoToConsistMsg(consistAddress.getNumber(), locoAddress.getNumber(), directionNormal);
+        XNetMessage msg = XNetMessage.getAddLocoToConsistMsg(consistAddress.getNumber(), 
+            locoAddress.getNumber(), directionNormal);
         tc.sendXNetMessage(msg, this);
         _state = ADDREQUESTSENTSTATE;
     }
@@ -422,11 +421,10 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
     }
 
     /**
-     * Remove a Locomotive from a Lenz Double Header.
-     *
-     * @param LocoAddress is the Locomotive address to add to the locomotive
+     * Remove a Locomotive from a Lenz Double Header.locoAddress
+     * @param locoAddress is the Locomotive address, unused here.
      */
-    public synchronized void removeFromCSConsist(DccLocoAddress LocoAddress) {
+    public synchronized void removeFromCSConsist(DccLocoAddress locoAddress) {
         // All we have to do here is create an apropriate XNetMessage,
         // and send it.
         XNetMessage msg = XNetMessage.getDisolveDoubleHeaderMsg(consistList.get(0).getNumber());
@@ -438,12 +436,9 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
      * Listeners for messages from the command station.
      */
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "SLF4J_FORMAT_SHOULD_BE_CONST",
-        justification = "error message built up from parts")
     public synchronized void message(XNetReply l) {
         if (_state != IDLESTATE) {
             // we're waiting for a reply, so examine what we received
-            String text;
             if (l.isOkMessage()) {
                 if (_state == ADDREQUESTSENTSTATE) {
                     addToConsistList(_locoAddress, _directionNormal);
@@ -460,83 +455,72 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
                 }
                 _state = IDLESTATE;
             } else if (l.getElement(0) == XNetConstants.LOCO_MU_DH_ERROR) {
-                text = "XpressNet MU+DH error: ";
+                String text;
                 switch (l.getElement(1)) {
                     case 0x81:
-                        text = text + "Selected Locomotive has not been operated by this XpressNet device or address 0 selected";
-                        log.error(text);
+                        text = "Selected Locomotive has not been operated by this XpressNet device or address 0 selected";
                         _state = IDLESTATE;
                         notifyConsistListeners(_locoAddress,
                                 ConsistListener.CONSIST_ERROR
                                 | ConsistListener.LOCO_NOT_OPERATED);
                         break;
                     case 0x82:
-                        text = text + "Selected Locomotive is being operated by another XpressNet device";
-                        log.error(text);
+                        text = "Selected Locomotive is being operated by another XpressNet device";
                         _state = IDLESTATE;
                         notifyConsistListeners(_locoAddress,
                                 ConsistListener.CONSIST_ERROR
                                 | ConsistListener.LOCO_NOT_OPERATED);
                         break;
                     case 0x83:
-                        text = text + "Selected Locomotive already in MU or DH";
-                        log.error(text);
+                        text = "Selected Locomotive already in MU or DH";
                         _state = IDLESTATE;
                         notifyConsistListeners(_locoAddress,
                                 ConsistListener.CONSIST_ERROR
                                 | ConsistListener.ALREADY_CONSISTED);
                         break;
                     case 0x84:
-                        text = text + "Unit selected for MU or DH has speed setting other than 0";
-                        log.error(text);
+                        text = "Unit selected for MU or DH has speed setting other than 0";
                         _state = IDLESTATE;
                         notifyConsistListeners(_locoAddress,
                                 ConsistListener.CONSIST_ERROR
                                 | ConsistListener.NONZERO_SPEED);
                         break;
                     case 0x85:
-                        text = text + "Locomotive not in a MU";
-                        log.error(text);
+                        text = "Locomotive not in a MU";
                         _state = IDLESTATE;
                         notifyConsistListeners(_locoAddress,
                                 ConsistListener.CONSIST_ERROR
                                 | ConsistListener.NOT_CONSISTED);
-                        log.error(text);
                         break;
                     case 0x86:
-                        text = text + "Locomotive address not a multi-unit base address";
-                        log.error(text);
+                        text = "Locomotive address not a multi-unit base address";
                         _state = IDLESTATE;
                         notifyConsistListeners(_locoAddress,
                                 ConsistListener.CONSIST_ERROR
                                 | ConsistListener.NOT_CONSIST_ADDR);
 
-                        log.error(text);
                         break;
                     case 0x87:
-                        text = text + "It is not possible to delete the locomotive";
-                        log.error(text);
+                        text = "It is not possible to delete the locomotive";
                         _state = IDLESTATE;
                         notifyConsistListeners(_locoAddress,
                                 ConsistListener.CONSIST_ERROR
                                 | ConsistListener.DELETE_ERROR);
                         break;
                     case 0x88:
-                        text = text + "The Command Station Stack is Full";
-                        log.error(text);
+                        text = "The Command Station Stack is Full";
                         _state = IDLESTATE;
                         notifyConsistListeners(_locoAddress,
                                 ConsistListener.CONSIST_ERROR
                                 | ConsistListener.STACK_FULL);
-                        log.error(text);
                         break;
                     default:
-                        text = text + "Unknown";
-                        log.error(text);
+                        text = "Unknown";
                         _state = IDLESTATE;
                         notifyConsistListeners(_locoAddress,
                                 ConsistListener.CONSIST_ERROR);
                 }
+                log.error("XpressNet MU+DH error: {}",text);
             }
         }
     }
@@ -545,12 +529,10 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
     public void message(XNetMessage l) {
     }
 
-    // Handle a timeout notification
+   // Handle a timeout notification
     @Override
     public void notifyTimeout(XNetMessage msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message{}", msg.toString());
-        }
+        log.debug("Notified of timeout on message{}", msg);
     }
 
     /**
@@ -572,6 +554,6 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
         tc.sendXNetMessage(msg, this);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(XNetConsist.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(XNetConsist.class);
 
 }

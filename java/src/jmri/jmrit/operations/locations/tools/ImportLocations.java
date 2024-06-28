@@ -245,25 +245,49 @@ public class ImportLocations extends ImportRollingStock {
                     } else if (loadOptions.startsWith(Bundle.getMessage("Exclude"))) {
                         optionValue = Track.EXCLUDE_LOADS;
                     } else {
-                        log.debug("Locations Import Load option was not recognized: {} ", loadOptions);
+                        log.error("Locations Import load option was not recognized: {} ", loadOptions);
                     }
                     thisTrack.setLoadOption(optionValue);
                 }
-
             }
             if (inputLine.length >= FIELD_LOADS) {
                 // process names of loads, again, don't trim first
                 if (inputLine[FIELD_LOADS].length() > 0) {
                     String[] loads = inputLine[FIELD_LOADS].split("; ");
-                    log.debug("This locations is surviced by {} loads", loads.length);
+                    log.debug("This location is surviced by {} loads", loads.length);
                     for (String load : loads) {
                         thisTrack.addLoadName(load);
                     }
                 }
-
+            }
+            if (inputLine.length >= FIELD_SHIP_LOAD_OPTION) {
+                String loadOptions = inputLine[FIELD_SHIP_LOAD_OPTION].trim();
+                String optionValue = "";
+                if (loadOptions.length() > 0) {
+                    if (loadOptions.startsWith(Bundle.getMessage("ShipsAllLoads"))) {
+                        optionValue = Track.ALL_LOADS;
+                    } else if (loadOptions.startsWith(Bundle.getMessage("ShipOnly"))) {
+                        optionValue = Track.INCLUDE_ROADS;
+                    } else if (loadOptions.startsWith(Bundle.getMessage("Exclude"))) {
+                        optionValue = Track.EXCLUDE_LOADS;
+                    } else {
+                        log.error("Locations Import ship load option was not recognized: {} ", loadOptions);
+                    }
+                    thisTrack.setShipLoadOption(optionValue);
+                }
+            }
+            if (inputLine.length >= FIELD_SHIPS) {
+                // process names of loads, again, don't trim first
+                if (inputLine[FIELD_SHIPS].length() > 0) {
+                    String[] loads = inputLine[FIELD_SHIPS].split("; ");
+                    log.debug("This location ships {} loads", loads.length);
+                    for (String load : loads) {
+                        thisTrack.addShipLoadName(load);
+                    }
+                }
             }
 
-            // TODO import fields 12 through 22
+            // TODO import fields 14 through 22
 
             if (inputLine.length >= FIELD_IGNORE_MINIMUM) {
                 String ignoreMin = inputLine[FIELD_IGNORE_MINIMUM].trim();

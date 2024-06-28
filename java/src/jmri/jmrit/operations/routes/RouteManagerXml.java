@@ -65,6 +65,11 @@ public class RouteManagerXml extends OperationsXml implements InstanceManagerAut
             log.debug("{} file could not be read", name);
             return;
         }
+        
+        if (!root.getName().equals("operations-config")) {
+            log.warn("OperationsPro route file corrupted");
+            return;
+        }
 
         InstanceManager.getDefault(RouteManager.class).load(root);
 

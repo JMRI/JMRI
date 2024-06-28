@@ -27,7 +27,7 @@ import org.jdom2.Element;
 public class DefaultDigitalExpressionManagerXml extends AbstractManagerXml {
 
     private final Map<String, Class<?>> xmlClasses = new HashMap<>();
-    
+
     public DefaultDigitalExpressionManagerXml() {
     }
 
@@ -105,27 +105,28 @@ public class DefaultDigitalExpressionManagerXml extends AbstractManagerXml {
      * @param expressions Element containing the Logix elements to load.
      */
     public void loadExpressions(Element expressions) {
-        
+
         List<Element> expressionList = expressions.getChildren();  // NOI18N
         log.debug("Found {} expressions", expressionList.size());  // NOI18N
 //        DigitalExpressionManager tm = InstanceManager.getDefault(jmri.jmrit.logixng.DigitalExpressionManager.class);
 
         for (int i = 0; i < expressionList.size(); i++) {
-            
+
             String className = expressionList.get(i).getAttribute("class").getValue();
 //            log.warn("className: " + className);
-            
+
             Class<?> clazz = xmlClasses.get(className);
-            
+
             if (clazz == null) {
                 try {
+                    className = jmri.configurexml.ConfigXmlManager.currentClassName(className);
                     clazz = Class.forName(className);
                     xmlClasses.put(className, clazz);
                 } catch (ClassNotFoundException ex) {
                     log.error("cannot load class {}", className, ex);
                 }
             }
-            
+
             if (clazz != null) {
                 Constructor<?> c = null;
                 try {
@@ -133,14 +134,14 @@ public class DefaultDigitalExpressionManagerXml extends AbstractManagerXml {
                 } catch (NoSuchMethodException | SecurityException ex) {
                     log.error("cannot create constructor", ex);
                 }
-                
+
                 if (c != null) {
                     try {
                         AbstractNamedBeanManagerConfigXML o = (AbstractNamedBeanManagerConfigXML)c.newInstance();
-                        
+
                         MaleSocket oldLastItem = InstanceManager.getDefault(DigitalExpressionManager.class).getLastRegisteredMaleSocket();
                         o.load(expressionList.get(i), null);
-                        
+
                         // Load male socket data if a new bean has been registered
                         MaleSocket newLastItem = InstanceManager.getDefault(DigitalExpressionManager.class).getLastRegisteredMaleSocket();
                         if (newLastItem != oldLastItem) loadMaleSocket(expressionList.get(i), newLastItem);

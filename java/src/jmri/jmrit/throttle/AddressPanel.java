@@ -633,12 +633,12 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         log.debug("Requesting new slot for address {} rosterEntry {}",currentAddress,rosterEntry);
         boolean requestOK;
         if (rosterEntry == null) {
-            requestOK = throttleManager.requestThrottle(currentAddress, this, true);
             requestedAddress = currentAddress;
+            requestOK = throttleManager.requestThrottle(currentAddress, this, true);
         }
         else {
-            requestOK = throttleManager.requestThrottle(rosterEntry, this, true);
             requestedAddress = rosterEntry.getDccLocoAddress();
+            requestOK = throttleManager.requestThrottle(rosterEntry, this, true);
         }
         if (!requestOK) {
             requestedAddress = null;
@@ -656,8 +656,8 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
             l.notifyAddressChosen(currentAddress);
         });
         log.debug("Requesting new slot for consist address {}",consistAddress);        
-        boolean requestOK = throttleManager.requestThrottle(consistAddress, this, true);
         requestedAddress = consistAddress;
+        boolean requestOK = throttleManager.requestThrottle(consistAddress, this, true);
         if (!requestOK) {
             requestedAddress = null;
             JmriJOptionPane.showMessageDialog(mainPanel, Bundle.getMessage("AddressInUse"));
@@ -692,20 +692,16 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
     /**
      * Dispatch the current address for use by other throttles
      */
-    public void dispatchAddress() {
+    public void dispatchAddress() {        
         if (throttle != null) {
             int usageCount  = throttleManager.getThrottleUsageCount(throttle.getLocoAddress()) - 1;
-
             if ( usageCount != 0 ) {
                 JmriJOptionPane.showMessageDialog(mainPanel, Bundle.getMessage("CannotDisptach", usageCount));
                 return;
             }
-            throttleManager.dispatchThrottle(throttle, this);
-            if (consistThrottle != null) {
-                throttleManager.dispatchThrottle(consistThrottle, this);
-                consistThrottle = null;
-            }
             notifyThrottleDisposed();
+            throttleManager.dispatchThrottle(throttle, this);
+            throttle = null;
         }
     }
 
@@ -888,6 +884,8 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
             if (((Boolean) evt.getOldValue()) && (!((Boolean) evt.getNewValue()))) {
                 log.debug("propertyChange: ThrottleConnected to false");
                 notifyThrottleDisposed();
+                throttle = null;
+                consistThrottle = null;
             }
         }
 

@@ -31,7 +31,7 @@ public class VirtualSignalMast extends AbstractSignalMast {
         configureFromName(systemName);
     }
 
-    private static final String mastType = "IF$vsm";
+    private static final String THE_MAST_TYPE = "IF$vsm";
 
     private void configureFromName(String systemName) {
         // split out the basic information
@@ -40,8 +40,8 @@ public class VirtualSignalMast extends AbstractSignalMast {
             log.error("SignalMast system name needs at least three parts: {}", systemName);
             throw new IllegalArgumentException("System name needs at least three parts: " + systemName);
         }
-        if (!parts[0].equals(mastType)) {
-            log.warn("SignalMast system name should start with {} but is {}", mastType, systemName);
+        if (!parts[0].equals(THE_MAST_TYPE)) {
+            log.warn("SignalMast system name should start with {} but is {}", THE_MAST_TYPE, systemName);
         }
 
         String system = parts[1];

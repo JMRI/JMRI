@@ -34,6 +34,7 @@ public class ExpressionSensorEdge extends AbstractDigitalExpression
     public ExpressionSensorEdge(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
+        _selectNamedBean.setOnlyDirectAddressingAllowed();
     }
 
     @Override

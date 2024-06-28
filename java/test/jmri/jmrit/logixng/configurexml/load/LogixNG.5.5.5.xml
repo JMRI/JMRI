@@ -10280,7 +10280,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDE:AUTO:0106</systemName>
       <comment>A comment</comment>
       <namedBean>
-        <addressing>LocalVariable</addressing>
+        <addressing>Direct</addressing>
         <name>IS1</name>
         <reference>{IM1}</reference>
         <listenToMemory>no</listenToMemory>
@@ -10380,7 +10380,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDE:AUTO:0107</systemName>
       <comment>A comment</comment>
       <namedBean>
-        <addressing>Formula</addressing>
+        <addressing>Direct</addressing>
         <name>IS1</name>
         <reference>{IM1}</reference>
         <listenToMemory>no</listenToMemory>
@@ -10477,7 +10477,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDE:AUTO:0108</systemName>
       <comment>A comment</comment>
       <namedBean>
-        <addressing>Reference</addressing>
+        <addressing>Direct</addressing>
         <name>IS1</name>
         <reference>{IM1}</reference>
         <listenToMemory>no</listenToMemory>

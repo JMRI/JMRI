@@ -235,8 +235,16 @@ public class ReportContext {
             addString("JmriInsets t:" + jmriInsets.top + ", b:" + jmriInsets.bottom
                     + "; l:" + jmriInsets.left + ", r:" + jmriInsets.right);
         } catch (Exception ex) {
-            addString("Exception getting JmriInsets" + ex.getMessage());
+            addString("Exception getting JmriInsets " + ex.getMessage());
         }
+
+        var laf = javax.swing.UIManager.getLookAndFeel();
+        if ( laf !=null ) {
+            addString("Look and Feel: " + laf.getName());
+        } else {
+            addString("null LookAndFeel");
+        }
+
     }
 
     /**
@@ -269,7 +277,7 @@ public class ReportContext {
         for (InetAddress address : InstanceManager.getDefault(ZeroConfServiceManager.class).getAddresses()) {
             addString("ZeroConfService host: " + InstanceManager.getDefault(ZeroConfServiceManager.class).hostName(address) + " running " + services.size() + " service(s)");
         }
-        if (services.size() > 0) {
+        if (!services.isEmpty()) {
             for (ZeroConfService service : services) {
                 addString("ZeroConfService: " + service.getServiceInfo().getQualifiedName() + "  ");
                 addString(" Name: " + service.getName() + "   ");

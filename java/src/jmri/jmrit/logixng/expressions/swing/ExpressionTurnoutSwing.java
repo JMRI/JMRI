@@ -138,8 +138,11 @@ public class ExpressionTurnoutSwing extends AbstractDigitalExpressionSwing {
         try {
             if (_tabbedPaneTurnoutState.getSelectedComponent() == _panelTurnoutStateReference) {
                 expression.setStateReference(_turnoutStateReferenceTextField.getText());
+            } else if (_tabbedPaneTurnoutState.getSelectedComponent() == _panelTurnoutStateFormula) {
+                expression.setStateAddressing(NamedBeanAddressing.Formula);
+                expression.setStateFormula(_turnoutStateFormulaTextField.getText());
             }
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | ParserException e) {
             errorMessages.add(e.getMessage());
         }
 

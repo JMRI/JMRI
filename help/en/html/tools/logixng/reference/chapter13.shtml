@@ -19,9 +19,9 @@
 
       <p>Jython is an important component provided by JMRI to make it possible to extend the JMRI
       features.  LogixNG continues that ability to run scripts supporting JMRI using the same
-      actions that were part of the original Logix.  LogixNG extents that support to include the
-      ability to extend LogixNG itself, provide access to the LogixNG managers, provide access to
-      global variables and receiving results from a script, etc.</p>
+      actions that were part of the original Logix.  LogixNG extends that support to include the
+      ability to extend LogixNG itself, by providing access to the LogixNG managers, access to
+      global and local (since 5.7.6) variables and receiving results from a script, etc.</p>
 
       <p>
       The following is a summary of the scripting options.
@@ -32,7 +32,7 @@
         ability to run Jython commands or call a script.</li>
         <li>The <a href="chapter6.shtml#script">Script</a> expression in chapter 6 provides the
         ability to run Jython commands or call a script that return true or false.</li>
-        <li>Script options are available to set global and local variable values. See
+        <li>Script options are available to initialize global and local variable values. See
         <a href="chapter8.shtml#variableTypes"> Variable Types</a> for more details.</li>
         <li>LogixNG has functions that can be called by formula actions.  Custom functions can be
         created using a script.  See <a href="chapter9.shtml#jythonFunction">Jython Functions</a>
@@ -58,42 +58,70 @@
 
       <p>These work like the standard bindings, such as <code>masts.getSignalMast('mastName')</code>.
       For example:  <code>myTable = logixngTables.getNamedTable('tableName')</code>.</p>
-      <hr>
 
-      <h4>Sample script for accessing LogixNG content</h4>
+      <p>The LogixNG bindings only exist when the script or command is invoked by LogixNG.  Other
+      scripts, such as startup actions or scripts run using the script editor, need to create their
+      own LogixNG bindings.  Here is an example of creating a binding for the GlobalVariableManager.</p>
 
-      <p>A global variable is defined using <strong>Tools &rArr; Tables &rArr; LogixNG &rArr; LogixNG
-      Global Variables</strong> with an initial value of <strong><em>Hello</em></strong>.  The
-      script is called using a Script action.  The <strong>Log local variables</strong> action
-      is called before and after the script.</p>
+      <pre>
+globalVarMgr = jmri.InstanceManager.getDefault(jmri.jmrit.logixng.GlobalVariableManager)
+      </pre>
 
-      <p>The script gets access to the global variable and modifies the value.</p>
+      <h3><span class="since">since 5.7.6</span>Symbol table support</h3>
+
+      <p>The LogixNG <strong><em>symbol table</em></strong> contains a list of local and global
+      variables. Global variables are also available using the GlobalVariableManager.</p>
+
+      <p>Local variables are only in the symbol table.  They are also very transient.  They only
+      exist during the execution of a ConditionalNG or Module and when within the scope of the logic.</p>
+
+      <p>When a script or command is executed by LogixNG, the <strong>symbolTable</strong> is added
+      to the Jython context as a Python variable.  This variable can be used to read and write the
+      content of global variables and <strong>current</strong> local variables.  Note:  If
+      <strong><em>strict typing</em></strong> has been enabled for the variable type, that will be
+      enforced.</p>
+
+      <h3>Sample script for accessing LogixNG content</h3>
+
+      <p>A LogixNG ConditionalNG uses two local variables.  The <strong>time-of-day</strong>
+      variable contains a word representing the time of the day.  The A1
+      <a href="chapter5.shtml#if-then-else">if then else</a> uses the System Clock
+      <a href="chapter9.shtml#functions">function</a> to get the current hour.  The script is called
+      to add the word <strong>Good</strong> to the time of day and update the <strong>greeting</strong>
+      local variable.  Then the current Local Variables are displayed on the JMRI system console.
+      Note:  This simple example does not require a script since LogixNG can do the whole process.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter13/greeting-conditional.png">
+        <img src="images/chapter13/greeting-conditional.png" alt="Chapter 13 greeting conditional"></a>
+      </div>
+
+
+      <p>The script gets the value of the <strong>time-of-day</strong> local variable, adds the word
+      <strong>Good</strong> and updates the <strong>greeting</strong> local variable</p>
 
       <div style="margin-left: 2em">
         <pre>
 import java
 import jmri
 
-var = globalVariables.getGlobalVariable('first_prog')
-phrase = '{} World'.format(var.getValue())
-var.setValue(phrase)
+greeting = 'Good {}'.format(symbolTable.getValue('time_of_day'))
+symbolTable.setValue('greeting', greeting)
         </pre>
       </div>
 
-      <p>The before and after global value shows the change.</p>
+      <p>The <strong>Log local variables</strong> action shows the local variable values.</p>
 
       <div style="margin-left: 2em">
         <pre>
-WARN  - Log local variables: [JMRI LogixNGThread]
-WARN  - Global variables: [JMRI LogixNGThread]
-WARN  -     Global Name: first_prog, value: Hello [JMRI LogixNGThread]
-WARN  - Log local variables done [JMRI LogixNGThread]
-WARN  - Log local variables: [JMRI LogixNGThread]
-WARN  - Global variables: [JMRI LogixNGThread]
-WARN  -     Global Name: first_prog, value: Hello World [JMRI LogixNGThread]
-WARN  - Log local variables done [JMRI LogixNGThread]
+WARN  - Log local variables:
+WARN  -     Name: greeting, Value: Good morning
+WARN  -     Name: time_of_day, Value: morning
+WARN  - Log local variables done
         </pre>
       </div>
+
+      <hr>
 
       <p><a href="index.shtml">Return to the Reference TOC</a>
       </p>

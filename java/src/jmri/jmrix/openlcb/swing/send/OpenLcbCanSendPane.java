@@ -137,30 +137,24 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
         // special packet forms
         add(new JSeparator());
-        add(new JLabel("Send special frame:"));
-
+        
         pane2 = new JPanel();
         pane2.setLayout(new WrapLayout());
-        pane2.add(new JLabel("Src Node alias:"));
+        add(pane2);
+        pane2.add(new JLabel("Send control frame with source alias:"));
         pane2.add(srcAliasField);
-        add(pane2);
-
-        pane2 = new JPanel();
-        pane2.setLayout(new WrapLayout());
-        add(pane2);
         JButton b;
         b = new JButton("Send CIM");
         b.addActionListener(this::sendCimPerformed);
-
         pane2.add(b);
 
         // send OpenLCB messages
         add(new JSeparator());
-        add(addLineLabel("Send OpenLCB global message:"));
 
         pane2 = new JPanel();
         pane2.setLayout(new WrapLayout());
         add(pane2);
+        pane2.add(new JLabel("Send OpenLCB global message:"));
         b = new JButton("Send Verify Nodes Global");
         b.addActionListener(this::sendVerifyNodeGlobal);
         pane2.add(b);
@@ -228,12 +222,11 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
         // send OpenLCB Configuration message
         add(new JSeparator());
-        add(addLineLabel("Send OpenLCB Configuration Command:"));
 
         pane2 = new JPanel();
         pane2.setLayout(new WrapLayout());
         add(pane2);
-        pane2.add(new JLabel("Memory Address: "));
+        pane2.add(new JLabel("Send OpenLCB memory request with address: "));
         pane2.add(configAddressField);
         pane2.add(new JLabel("Address Space: "));
         pane2.add(addrSpace);
@@ -357,12 +350,12 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     }
 
     public void sendVerifyNodeGlobal(java.awt.event.ActionEvent e) {
-        Message m = new VerifyNodeIDNumberMessage(srcNodeID);
+        Message m = new VerifyNodeIDNumberGlobalMessage(srcNodeID);
         connection.put(m, null);
     }
 
     public void sendVerifyNodeGlobalID(java.awt.event.ActionEvent e) {
-        Message m = new VerifyNodeIDNumberMessage(srcNodeID, destNodeID());
+        Message m = new VerifyNodeIDNumberGlobalMessage(srcNodeID, destNodeID());
         connection.put(m, null);
     }
 

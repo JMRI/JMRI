@@ -144,14 +144,15 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Validates to OpenLCB format.
+     * Validates to OpenLCB 2 part address format.
      * {@inheritDoc}
      */
     @Override
     @Nonnull
-    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
-        name = super.validateSystemNameFormat(name,locale);
-        return OlcbAddress.validateSystemNameFormat(name,locale,getSystemNamePrefix());
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale)
+        throws jmri.NamedBean.BadSystemNameException {
+        return OlcbAddress.validateSystemNameFormat2Part(super.validateSystemNameFormat(
+            name,locale),locale,getSystemNamePrefix());
     }
 
     /**

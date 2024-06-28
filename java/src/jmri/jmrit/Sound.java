@@ -151,28 +151,19 @@ public class Sound {
         }
     }
 
-    /** {@inheritDoc} */
-    @Override
-    @SuppressWarnings("deprecation") // Object.finalize
-    protected void finalize() throws Throwable {
-        try {
-            if (!streaming) {
-                clipRef.updateAndGet(clip -> {
-                    if (clip != null) {
-                        clip.close();
-                    }
-                    return null;
-                });
-            }
-        } finally {
-            super.finalize();
-        }
-    }
-
     /**
      * Play the sound once.
      */
     public void play() {
+        play(false);
+    }
+
+    /**
+     * Play the sound once.
+     * @param autoClose true if auto close clip, false otherwise. Only
+     *                  valid for clips. For streams, autoClose is ignored.
+     */
+    public void play(boolean autoClose) {
         if (streaming) {
             Runnable streamSound = new StreamingSound(this.url);
             Thread tStream = jmri.util.ThreadingUtil.newThread(streamSound);
@@ -183,6 +174,13 @@ public class Sound {
                     clip = openClip();
                 }
                 if (clip != null) {
+                    if (autoClose) {
+                        clip.addLineListener((event) -> {
+                            if (event.getType() == LineEvent.Type.STOP) {
+                                event.getLine().close();
+                            }
+                        });
+                    }
                     clip.start();
                 }
                 return clip;
@@ -286,6 +284,20 @@ public class Sound {
 
     }
 
+    /**
+     * Dispose this sound.
+     */
+    public void dispose() {
+        if (!streaming) {
+            clipRef.updateAndGet(clip -> {
+                if (clip != null) {
+                    clip.close();
+                }
+                return null;
+            });
+        }
+    }
+
     public static class WavBuffer {
 
         public WavBuffer(byte[] content) {
@@ -345,7 +357,7 @@ public class Sound {
 
     public class StreamingSound implements Runnable {
 
-        private final URL url;
+        private final URL localUrl;
         private AudioInputStream stream = null;
         private AudioFormat format = null;
         private SourceDataLine line = null;
@@ -372,7 +384,7 @@ public class Sound {
          * @param count the number of times to loop
          */
         public StreamingSound(URL url, int count) {
-            this.url = url;
+            this.localUrl = url;
             this.count = count;
         }
 
@@ -384,7 +396,7 @@ public class Sound {
             // Set up the audio input stream from the sound file
             try {
                 // link an audio stream to the sampled sound's file
-                stream = AudioSystem.getAudioInputStream(url);
+                stream = AudioSystem.getAudioInputStream(localUrl);
                 format = stream.getFormat();
                 log.debug("Audio format: {}", format);
                 // convert ULAW/ALAW formats to PCM format
@@ -464,7 +476,7 @@ public class Sound {
                     } else {
                         stream.close();
                         try {
-                            stream = AudioSystem.getAudioInputStream(url);
+                            stream = AudioSystem.getAudioInputStream(localUrl);
                         } catch (UnsupportedAudioFileException e) {
                             log.error("AudioFileException {}", e.getMessage());
                             closeLine();

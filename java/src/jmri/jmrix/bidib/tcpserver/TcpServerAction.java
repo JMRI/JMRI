@@ -3,6 +3,7 @@ package jmri.jmrix.bidib.tcpserver;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import jmri.jmrix.bidib.BiDiBSystemConnectionMemo;
+//import jmri.jmrix.bidib.swing;
 
 /**
  * This class implements the GUI releated functions for the TCP server.
@@ -11,19 +12,26 @@ import jmri.jmrix.bidib.BiDiBSystemConnectionMemo;
  *
  * @author Alex Shepherd Copyright (C) 2006
  * @author Mark Underwood Copyright (C) 2015
- * @author Eckart Meyer Copyright (C) 2023
+ * @author Eckart Meyer Copyright (C) 2023-2024
  */
 public class TcpServerAction extends AbstractAction {
     
-    private final String enable;
-    private final String disable;
-    private final TcpServer server;
+    final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.bidib.swing.BiDiBSwingBundle"); // NOI18N
+
+    private String enable;
+    private String disable;
+    private TcpServer server = null;
+
+    public TcpServerAction() {
+        log.warn("TcpServer cannot be started on startup because upstream connection is not known. Use the BiDiB connection type menu instead.");
+    }
+
 
     public TcpServerAction(BiDiBSystemConnectionMemo memo, String enable, String disable) {
         super(enable);
         this.enable = enable;
         this.disable = disable;
-        log.debug("TcpServerAction for {} - \"{}\" \"{}\"", memo.getUserName(), enable, disable);
+        log.debug("create TcpServerAction for {} - \"{}\" \"{}\"", memo.getUserName(), enable, disable);
         // Get a server instance to cause the config to be read and the server
         // started if necessary
         //TcpServer server = InstanceManager.getDefault(TcpServer.class);
@@ -32,27 +40,28 @@ public class TcpServerAction extends AbstractAction {
         putValue(javax.swing.Action.NAME, server.isEnabled() ? disable : enable);
     }
 
-//    public TcpServerAction() {
-//        this("BiDiBOverTcp Server");
-//    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         log.debug("TcpServerAction actionPerformed {}", e);
         //TcpServer server = InstanceManager.getDefault(TcpServer.class);
-        log.trace("TcpServer: {} for {}, enabled: {}", server, server.getSystemConnectionMemo().getUserName(), server.isEnabled());
-        String text = (String)getValue(javax.swing.Action.NAME);
-        log.trace("menu text was: {}", text);
-        // toggle state of TCPserver
-        if (server.isEnabled()) {
-            server.disable();
+        if (server != null) {
+            log.trace("TcpServer: {} for {}, enabled: {}", server, server.getSystemConnectionMemo().getUserName(), server.isEnabled());
+            String text = (String)getValue(javax.swing.Action.NAME);
+            log.trace("menu text was: {}", text);
+            // toggle state of TCPserver
+            if (server.isEnabled()) {
+                server.disable();
+            }
+            else {
+                server.enable();
+            }
+            putValue(javax.swing.Action.NAME, server.isEnabled() ? disable : enable);
+//            ServerFrame f = InstanceManager.getDefault(ServerFrame.class);
+//            f.setVisible(true);
         }
         else {
-            server.enable();
+            log.debug("TcpServer is not created.");
         }
-        putValue(javax.swing.Action.NAME, server.isEnabled() ? disable : enable);
-//        ServerFrame f = InstanceManager.getDefault(ServerFrame.class);
-//        f.setVisible(true);
     }
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TcpServerAction.class);
 

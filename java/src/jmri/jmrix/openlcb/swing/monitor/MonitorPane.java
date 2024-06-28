@@ -293,7 +293,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
             }
         } else {
             // control type
-            String alias = "0x" + Integer.toHexString(header & 0xFFF).toUpperCase();
+            String alias = String.format("0x%03X", header & 0xFFF);
             if ((header & 0x07000000) == 0x00000000) {
                 int[] data = new int[len];
                 System.arraycopy(content, 0, data, 0, len);
@@ -462,6 +462,47 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
             rate = (float) ((-1 * (~data + 1)) /4.0);
         }
         return rate;
+    }
+
+    /**
+     * Check if the raw data starts with the filter string,
+     * with the comparison done in upper case.  If matched,
+     * the line is filtered out.
+     */
+    @Override
+    protected boolean isFiltered(String raw) {
+        String checkRaw = getOpCodeForFilter(raw);
+        //don't bother to check filter if no raw value passed
+        if (raw != null) {
+            // if first bytes are in the skip list,  exit without adding to the Swing thread
+            String[] filters = filterField.getText().toUpperCase().split(" ");
+
+            for (String s : filters) {
+                if (! s.isEmpty() && checkRaw.toUpperCase().startsWith(s.toUpperCase())) {
+                    synchronized (this) {
+                        linesBuffer.setLength(0);
+                    }
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Get initial part of frame contents for filtering.
+     *
+     * @param raw byte sequence
+     * @return the string without the leading ]
+     */
+    @Override
+    protected String getOpCodeForFilter(String raw) {
+        // note: LocoNet raw is formatted like "BB 01 00 45", so extract the correct bytes from it (BB) for comparison
+        if (raw != null && raw.length() >= 2) {
+            return raw.substring(1, raw.length());
+        } else {
+            return null;
+        }
     }
 
     @Override

@@ -74,7 +74,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
      * {@inheritDoc}
      */
     @Override
-    @SuppressWarnings("UseOfObsoleteCollectionType")
+//    @SuppressWarnings("UseOfObsoleteCollectionType")
     public Vector<String> getPortNames() {
         // used for SCM - will prepend "/dev" fpr Linux
         Vector<String> portNameVector = new Vector<>();

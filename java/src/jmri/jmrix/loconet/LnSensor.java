@@ -47,14 +47,13 @@ public class LnSensor extends AbstractSensor  {
 
     /**
      * Request an update on status by sending a LocoNet message.
+     * The only known way to do this from LocoNet is to request the
+     * status of _all_ devices, which is here considered too
+     * heavyweight.
+     * See LnSensorManager.updateAll()
      */
     @Override
     public void requestUpdateFromLayout() {
-        // the only known way to do this from LocoNet is to request the
-        // status of _all_ devices, which is here considered too
-        // heavyweight.  Perhaps this is telling us we need
-        // a "update all" in the SensorManager (and/or TurnoutManager)
-        // interface?
     }
 
     /**

@@ -5,7 +5,6 @@ import java.awt.*;
 import javax.swing.*;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -253,6 +252,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
             paneShipLoadControls.setVisible(_track.isStaging());
             paneShipLoads.setVisible(_track.isStaging());
             pOptions.setVisible(_track.isSpur());
+            holdCars.setEnabled(_track.getSchedule() != null && _track.getAlternateTrack() != null);
             holdCars.setSelected(_track.isHoldCarsWithCustomLoadsEnabled());
             disableloadChange.setSelected(_track.isDisableLoadChangeEnabled());
             updateButtons(true);
@@ -260,12 +260,6 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
             updateButtons(false);
         }
 
-        // build menu
-        // JMenuBar menuBar = new JMenuBar();
-        // _toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
-        // menuBar.add(_toolMenu);
-        // setJMenuBar(menuBar);
-        // load
         updateTypeComboBoxes();
         updateLoadComboBoxes();
         updateLoadNames();
@@ -552,14 +546,20 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
             updateLoadNames();
             updateShipLoadNames();
         }
-        if (_track != null && e.getPropertyName().equals(Track.LOAD_OPTIONS_CHANGED_PROPERTY)) {
-            updateButtons(true);
-        }
-        if (_track != null && e.getPropertyName().equals(Track.HOLD_CARS_CHANGED_PROPERTY)) {
-            holdCars.setSelected(_track.isHoldCarsWithCustomLoadsEnabled());
-        }
-        if (_track != null && e.getPropertyName().equals(Track.LOAD_OPTIONS_CHANGED_PROPERTY)) {
-            disableloadChange.setSelected(_track.isDisableLoadChangeEnabled());
+        if (_track != null) {
+            if (e.getPropertyName().equals(Track.LOAD_OPTIONS_CHANGED_PROPERTY)) {
+                updateButtons(true);
+            }
+            if (e.getPropertyName().equals(Track.HOLD_CARS_CHANGED_PROPERTY)) {
+                holdCars.setSelected(_track.isHoldCarsWithCustomLoadsEnabled());
+            }
+            if (e.getPropertyName().equals(Track.ALTERNATE_TRACK_CHANGED_PROPERTY) ||
+                    e.getPropertyName().equals(Track.SCHEDULE_ID_CHANGED_PROPERTY)) {
+                holdCars.setEnabled(_track.getSchedule() != null && _track.getAlternateTrack() != null);
+            }
+            if (e.getPropertyName().equals(Track.LOAD_OPTIONS_CHANGED_PROPERTY)) {
+                disableloadChange.setSelected(_track.isDisableLoadChangeEnabled());
+            }
         }
     }
 

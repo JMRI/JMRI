@@ -32,7 +32,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       car roster includes information about the car, including road, number, type of car, color,
       length, weight, load, date built, and owner. Trains are assigned routes that define locations
       or stations where cars can be picked up or set out. Features include the ability to control
-      what car types, roads, and car loads a location or industry can service, the available track
+      what car types, roads, and car loads a train, location or industry can service, the available track
       space for a location, and the maximum length the train can be between any two locations in the
       train's route.
       <p>
@@ -156,19 +156,21 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
             <li><a href="#LocationTools">Location Tools</a>
               <ul>
+                <li><a href="#CopyLocation">Copy Location</a></li>
+                
                 <li><a href="#CopyTrack">Copy Track</a></li>
 
                 <li><a href="#ChangeTrackTypeLocation">Change Track Type</a></li>
 
+                <li><a href="#TrackBlockingOrder">Track Blocking Order</a></li>
+
                 <li><a href="#ShowTrackMoves">Show Track Moves</a></li>
+
+                <li><a href="#EditCarType">Edit Car Type</a></li>
 
                 <li><a href="#ModifyLocationByCarType">Modify Location by Car Type</a></li>
 
                 <li><a href="#ModifyLocationByCarLoad">Modify Location by Car Load</a></li>
-
-                <li><a href="#TrackBlockingOrder">Track Blocking Order</a></li>
-
-                <li><a href="#EditCarType">Edit Car Type</a></li>
 
                 <li><a href="#ShowCars">Show Cars</a></li>
 
@@ -213,7 +215,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#ShowStagingAndSchedulesByCarTypeAndLoad">Show Staging and
                     Schedules by Car Type and Load</a></li>
 
-                <li><a href="#AlternateTrack">Alternate Track</a></li>
+                <li><a href="#AlternateTrack">Alternate Track or "Off Spot"</a></li>
               </ul></li>
 
             <li><a href="#Interchange">Classification/Interchange Tracks</a>
@@ -244,6 +246,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
             <li><a href="#TrackTools">Track Tools</a>
               <ul>
+                <li><a href="#CopyTrack">Copy Track</a></li>
+                
                 <li><a href="#LoadOptions">Load Options</a>
                   <ul>
                     <li><a href="#SpurOption">Hold cars with custom loads when spurs are
@@ -253,17 +257,17 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
                 <li><a href="#RoadOptions">Road Options</a></li>
 
-                <li><a href="#TrackWorkComments">Manifest Comments</a></li>
-
                 <li><a href="#Pools">Track Pools</a></li>
 
                 <li><a href="#AlternateTrack">Alternate Track or "Off Spot"</a></li>
+                
+                <li><a href="#ChangeTrackType">Change Track Type</a></li>
 
                 <li><a href="#PlannedPickUps">Planned Pick Ups</a></li>
 
-                <li><a href="#TrackDestinations">Track Destinations</a></li>
+                <li><a href="#TrackWorkComments">Manifest Comments</a></li>
 
-                <li><a href="#ChangeTrackType">Change Track Type</a></li>
+                <li><a href="#TrackDestinations">Track Destinations</a></li>
 
                 <li><a href="#ShowCars">Show Cars</a></li>
 
@@ -284,8 +288,14 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
                 <li><a href="#ModifyLocationsByCarLoad">Modify Locations and Tracks by Car
                     Load</a></li>
+                <li><a href="#ExportLocations">Export Locations</a></li>
+                <li><a href="#ImportLocations">Import Locations</a></li>
 
                 <li><a href="#ShowCarsLocations">Show Cars</a></li>
+                              <li><a href="#ShowTrainsServicingThisLocation">Show Trains Servicing
+                    Location and Track</a></li>
+                <li><a href="#ShowRoutesServicingThisLocation">Show Routes Servicing
+                    Location</a></li>
 
                 <li><a href="#PrintLocation">Print or Preview</a></li>
               </ul></li>
@@ -323,21 +333,25 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
             <li><a href="#CarsTools">Cars Tools</a>
               <ul>
-                <li><a href="#CarsTools">Car Roster</a>
+                <li><a href="#CarRoster">Car Roster</a>
                   <uL>
-                    <li>Import from file</li>
-                    <li>Export to file</li>
-                    <li>Delete all cars</li>
-                    <li>Reset move counts all cars</li>
-                    <li>Print</li>
-                    <li>Preview</li>
+                    <li><a href="#CarRoster">Import from file</a></li>
+                    <li><a href="#CarRoster">Export to file</a></li>
+                    <li><a href="#CarRoster">Delete all cars</a></li>
+                    <li><a href="#CarRoster">Reset car move count</a></li>
+                    <li><a href="#CarRoster">Print</a></li>
+                    <li><a href="#CarRoster">Preview</a></li>
                   </uL></li>
+                  <li><a href="#ShowCheckboxes">Show Checkboxes</a></li>
+                  <li><a href="#ShowCheckboxes">Reset Checkboxes</a></li>
                 <li><a href="#ModifyLocationsByCarType">Modify Locations and Tracks by Car
                     Type</a></li>
 
                 <li><a href="#ModifyTrainsByCarType">Modify Trains by Car Type</a></li>
+                
+                <li>Print or Preview Car Loads</li>
 
-                <li><a href="#SetCars">Set Cars</a></li>
+                <li><a href="#SetCars">Set Cars (Modify Multiple Cars)</a></li>
               </ul></li>
           </ul></li>
 
@@ -353,14 +367,14 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
               </ul></li>
             <li><a href="#LocomotiveTools">Locomotives Tools</a>
               <ul>
-                <li><a href="#LocomotiveTools">Locomotive Roster</a>
+                <li><a href="#LocomotiveRoster">Locomotive Roster</a>
                   <uL>
-                    <li>Import from file</li>
-                    <li>Export to file</li>
-                    <li>Delete all locomotives</li>
-                    <li>Reset move counts all locomotives</li>
-                    <li>Print</li>
-                    <li>Preview</li>
+                    <li><a href="#LocomotiveRoster">Import from file</a></li>
+                    <li><a href="#LocomotiveRoster">Export to file</a></li>
+                    <li><a href="#LocomotiveRoster">Delete all locomotives</a></li>
+                    <li><a href="#LocomotiveRoster">Reset move counts all locomotives</a></li>
+                    <li><a href="#LocomotiveRoster">Print</a></li>
+                    <li><a href="#LocomotiveRoster">Preview</a></li>
                   </uL></li>
                 <li><a href="#SynchronizeWithNCEConsists">Synchronize with NCE Consists</a></li>
               </ul>
@@ -381,7 +395,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
             <li><a href="#RouteFeatures">Route Features</a></li>
 
-            <li><a href="#RouteTools">Route Tools</a>
+            <li><a href="#RouteTools">Edit Route Tools</a>
               <ul>
                 <li><a href="#RouteBlockingOrder">Blocking Order</a></li>
 
@@ -389,8 +403,21 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
                 <li><a href="#SetTrainIconCoordinates">Set Train Icon Coordinates</a></li>
 
-                <li><a href="#ExportRoutes">Export Routes</a></li>
+                <li>Print or Preview</li>
               </ul></li>
+            <li><a href="#RouteTools">Routes Tools</a>
+              <ul>
+                <li><a href="#CopyRoute">Copy Route</a></li>
+
+                <li><a href="#SetTrainIconCoordinates">Set Train Icon Coordinates</a></li>
+
+                <li><a href="#ExportRoutes">Export Routes</a></li>
+                
+                <li><a href="#ShowRoutesServicingThisLocation">Show Routes Servicing
+                    Location</a></li>
+                    
+                <li>Print or Preview</li>
+              </ul>
           </ul></li>
 
         <li><a href="#Trains">Trains</a>
@@ -429,9 +456,15 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
                 <li><a href="#TrainShowCarTypesServiced">Show Car Types Serviced
                     (Diagnostic Tool)</a></li>
+                    
+                <li>Print or Preview</li>
+                <li>Print or Preview Manifest</li>
+                <li>Print or Preview Build Report</li>
 
                 <li><a href="#PrintSavedTrainManifests">Print or Preview Saved Train
                     Manifests</a></li>
+                    
+                <li><a href="#PrintSavedTrainBuildReports">Print or Preview Saved Build Report</a></li>
               </ul></li>
 
             <li><a href="#TrainsTools">Trains Tools</a>
@@ -456,9 +489,6 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
                 <li><a href="#Automation">Automation</a></li>
 
-                <li><a href="#PrintSavedTrainManifests">Print or Preview Saved Train
-                    Manifests</a></li>
-
                 <li><a href="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</a></li>
 
                 <li><a href="#ExportTrains">Export to File</a></li>
@@ -469,6 +499,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
                 <li><a href="#TrainShowCarTypesServiced">Show Car Types Serviced
                     (Diagnostic Tool)</a></li>
+                <li>Print or Preview</li>
+                <li><a href="#PrintSavedTrainManifests">Print or Preview Saved Train
+                    Manifests</a></li>
               </ul></li>
 
             <li><a href="#SwitcherService">Switcher Service (Local)</a></li>
@@ -825,7 +858,13 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
         You can also view two excellent NMRA YouTube videos by <a
           href="https://www.youtube.com/watch?v=RBF0V6DEu98">Robert J Thomas Introduction to
           JMRI OPs For A Small Layout</a> and <a href="https://www.youtube.com/watch?v=krhyvrhrxv4">Steve
-          Todd - JMRI Operations with No Paper.</a> And finally under the "Tools" item on the menu bar,
+          Todd - JMRI Operations with No Paper.</a> There's also an excellent set of videos <a
+          href="https://www.youtube.com/@dhtrainz4798">
+          https://www.youtube.com/@dhtrainz4798</a> produced by David Hall using the <a href="https://www.auran.com">Trainz
+        Simulator</a> and OperationsPro.
+      </p>
+
+      <p> And finally under the "Tools" item on the menu bar,
         you will find many useful functions, like the ability to print the contents of the window.
       </p>
 
@@ -890,6 +929,12 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
         "Very Detailed". You can also use the <a href="#CarsSet">Set Car</a> tool found in the <a
           href="#Cars">Cars</a> window. You'll need to set the car's final destination to get a
         mini-build routing report.
+      </p>
+
+      <p>
+        If you restrict your <a href="#Interchange">classification/interchange</a> tracks to
+        specific destinations, there's a <a href="#TrackDestinations">Check Destinations</a> button
+        that will confirm that your setup will not strand cars.
       </p>
 
       <p>OperationsPro&trade; will send messages to the system console when there are errors or
@@ -1233,7 +1278,7 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
       one major drawback to increasing the number of passes, is that your train build reports will
       be longer since each pass by the program is documented.
 
-      <h3 id="AllowLocalCarMovements">Switcher Service Options (Local Car Movement)</h3>
+      <h3 id="AllowLocalCarMovements">Switcher Service Options (Local Car Movement with Default Loads)</h3>
       The next three "Allow Local ..." options control car movements when using a <a
         href="#SwitcherService">switcher</a> to service a location. A switcher only services one
       location. The three options only apply to cars with the default "E" or "L" <a href="#CarLoad">load</a>.
@@ -1635,7 +1680,9 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
         length, load, color, location name, track name, destination name, destination track name,
         owner name, kernel name, car comment, pick up comment, set out comment, C, F, H, IDTag, RWE
         location name, RWE track name, U, utility car count, final destination name, final
-        destination track name. Where C = Caboose, F = FRED, H = Hazardous, and U = Utility.</p>
+        destination track name, load type, RWL location name, RWL track name, route path.</p>
+
+      <p>Where C = Caboose, F = FRED, H = Hazardous, and U = Utility.</p>
 
       <p>The Search for Missing Car (SMC) parameters are identical to the above for (PC) or
         (SC).</p>
@@ -1754,7 +1801,9 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
       <p>
         The program will also store a copy of each train's build report in a directory called
         "buildStatusBackups" also located in the "operations" directory. You can access old build
-        reports from the <a href="#TrainEdit">Edit Train</a> window under "Tools".
+        reports from the
+        <a href="#TrainEdit">Edit Train</a> window under "Tools" <a
+          href="#PrintSavedTrainBuildReports">Print or Preview Saved Build Report</a>.
       </p>
 
       <p>This option also makes backup copies of any switch list that you create. They are
@@ -2177,7 +2226,7 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
 
       <h4 id="LocationDivision">Railroad Division</h4>
       The railroad divisions feature allows you to create prototypical car movements for your
-      railroad. Cars with a <a href="#homeDivision">home division</a> are <a href="#CarRouting">routed</a>
+      railroad. Cars with a <a href="#HomeDivision">home division</a> are <a href="#CarRouting">routed</a>
       to their destinations and move with "purpose". To use this feature first create and then
       select at least one division for your railroad by using the "Add" button in the "Division"
       section of the "Edit Location" window. You can assign multiple locations to the same division,
@@ -2349,10 +2398,10 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
       </p>
 
       <h4 id="ShowTrainsServicingThisLocation">Show Trains Servicing this Location</h4>
-      This tool can show you which trains can service a location. If you only want to see trains
-      that can can actually work the location, deselect the "Show all Trains" checkbox. You can also
-      determine if a certain car type will be serviced by the trains visiting the location. Use the
-      "Type" drop down menu to select a car type.
+      This tool can show you which trains can service a location or track. If you only want to see
+      trains that can can actually work the location or track, deselect the "Show all Trains"
+      checkbox. You can also determine if a certain car type will be serviced by the trains visiting
+      the location. Use the "Type" drop down menu to select a car type.
 
       <h4 id="ShowRoutesServicingThisLocation">Show Routes Servicing Location</h4>
       This tool will show all of the routes that can service a location. You can also edit a route
@@ -2390,8 +2439,9 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
         href="#EditCarType">Edit Car Type</a>.
 
       <h4 id="RoadAndLoadOptions">Road and Load Options</h4>
-      You can control which car roads and loads your yard can service from the "Tools" menu. See <a
-        href="#RoadOptions">Road Options</a> and <a href="#LoadOptions">Load Options</a> for more
+      You can control which car roads and loads your yard can service from the "Tools" menu, or by
+      pressing the "Road Option" or "Load Option" buttons. See
+      <a href="#RoadOptions">Road Options</a> and <a href="#LoadOptions">Load Options</a> for more
       info.
 
       <h4 id="PickUpCarOrder">Pick Up Car Order</h4>
@@ -2409,17 +2459,23 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
 
       <h4>Save Yard Track</h4>
       Press the "Save Yard Track" to save your work. The program will create a file
-      (OperationsLocationRoster.xml) in your JMRI directory in a folder called "operations". The
+      "OperationsLocationRoster.xml" in your JMRI directory in a folder called "operations". The
       program will also create a backup file containing the last settings for all of your locations.
 
       <h3 id="Spurs">Spurs</h3>
-      A spur is used to service an industry. To add a spur, select the "Spurs" radio button and then
+      A spur is used to service an industry. Most use the industy's name as the spur's name. 
+      To add a spur, select the "Spurs" radio button and then
       press the "Add Spur Track" button in the <a href="#AddLocation">Edit Location</a> window.
       Spurs are very similar to <a href="#Yards">Yards</a> , so see above for more information. When
       entering the length of the spur, enter the length of the cars that will service the industry
       plus the coupler lengths. For example, let's say you have an industry that can service two 50'
       boxcars, the track length in this case is 100' plus 8' for the couplers (4' for each car), for
       a total of 108'. You could optionally round up the length to 110' or more.
+
+      <p>
+        <img src="images/EditSpur.png" alt="">
+      </p>
+
       <p>
         When a car is placed at a spur the car's load status is modified. The program provides two
         load names for all cars, the default empty or "E", and the default load or "L". If a car has
@@ -2553,10 +2609,14 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
       <h5>Random</h5>
       The first option is the "Random" value, which allows you to create some randomness to the
       schedule. If you select a value of 15, it means that the item has a 15 percent chance of being
-      selected if all of the other criteria for the schedule item was met, and there was track space
+      used if all of the other criteria for the schedule item was met, and there was track space
       available for the car. This feature is useful for a RIP track where you would want cars to be
-      randomly sent to the repair facility. For example, a random value of 2 would mean that roughly
-      1 in 50 cars could be sent the to RIP track.
+      randomly sent to the repair facility. For example, a random value of 2 would mean that a car
+      of a given type would have 1 in 50 chance of being sent the to RIP track. Note that if there
+      are several cars of a given type available to the train during the build process, that the
+      odds of a car being sent to the spur improve. For example if there were 10 boxcars available
+      to go the spur with a random value of 2, the odds of one of the boxcars being sent to the spur
+      would improve to roughly 1 in 5 if all 10 boxcars were tried by the program.
 
       <h5>Delivery</h5>
       Select from the "Delivery" pull down menu the train schedule (day) when you want the car
@@ -2858,17 +2918,34 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
       from a terminal. By defining the track as a classification/interchange track, once the branch
       line train delivers the cars, they will remain there until the main line train stops to
       service the classification/interchange track. Same goes for a <a href="#SwitcherService">local
-        switcher</a>, cars dropped off at a location with a C/I track will remain there until the local
-      moves them to the spur tracks. When the local pulls cars for the spur and places them on the
-      C/I track, they will remain there until the main line train pulls them.
+        switcher</a>, cars dropped off at a location with a C/I track will remain there until the
+      local moves them to the spur tracks. When the local pulls cars for the spur and places them on
+      the C/I track, they will remain there until the main line train pulls them.
+
+      <p>
+        <img src="images/EditCI.png" alt="">
+      </p>
+
+      <p>OperationsPro allows you sort cars to C/I tracks by any combination of destination,
+        train, route, road, type, load, and <a href="#PickUpCarOrder">arrival order</a>. In the above image,
+        only two road names are accepted by the C/I track, and only train BB is allowed to spot cars onto the
+        interchange track, and train BLX is the only train allowed to pull cars off the interchange.</p>
+        
       <p>The car's load status does not change when placed at a classification/interchange
         track.</p>
 
       <p>
-        If you want more control on how your classification/interchange track will operate, you can
-        optionally specify which <a href="#RestrictingTrackToCertainTrains">trains or train
-          routes</a> can pick up or set out cars. If you restrict which trains or routes can pull cars
-        from a classification/interchange track, you must also restrict the track's car types,
+        You can if you wish control which destinations your C/I track can service. You can access <a
+          href="#TrackDestinations">Track Destinations</a> from the "Tools" menu. The track
+        destinations tool also allows you to restrict the C/I track to cars that are being <a
+          href="#CarRouting">routed</a>. The "Routed" checkbox when selected in the "Edit Location"
+        window means only cars that are being routed can use the C/I track.
+      </p>
+
+      <p>
+        You can optionally specify which <a href="#RestrictingTrackToCertainTrains">trains or
+          train routes</a> can pick up or set out cars. If you restrict which trains or routes can pull
+        cars from a classification/interchange track, you must also restrict the track's car types,
         loads, and roads to the same ones that the train services, otherwise you can have cars
         stranded on the classification/interchange track. Once you specify which trains or routes
         can pull cars, all cars that the train can service are available to the train, even cars
@@ -2879,14 +2956,6 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
         be used to capture a set of cars for a specific train. For example if you had a set of cars
         that you only wanted a "turn" to use, you could create a C/I track that can only be accessed
         by the turn.</p>
-
-      <p>
-        You can if you wish control which destinations your C/I track can service. You can access <a
-          href="#TrackDestinations">Track Destinations</a> from the "Tools" menu. The track
-        destinations tool also allows you to restrict the C/I track to cars that are being <a
-          href="#CarRouting">routed</a>. The "Routed" checkbox when selected in the "Edit Location"
-        window means only cars that are being routed can use the C/I track.
-      </p>
 
       <p>
         The <a href="#BuildReports">build report</a> will provide a list of rolling stock on the C/I track
@@ -2999,7 +3068,7 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
       locomotives on one track will be assigned to the train. A location can have multiple staging
       tracks, but can't have any other types of tracks, spurs, yards, etc. Staging tracks can be at
       the start of a route, the end of the route, or both. Staging tracks in the middle of a route
-      are ignored by the program.
+      are ignored by the program, and are regarded as pass-through tracks.
       <p>
         Note if you are running a train to and from the same staging location using the <a
           href="#BuildOptions">normal</a> build mode, you must define two staging tracks for the
@@ -3536,6 +3605,19 @@ Some lucky folks have more locomotives and cars than track on their layout and w
       <h4 id="ShowCarsLocations">Show Cars</h4>
       To only see cars that have a location assigned to them, select "Show Cars" from the "Tools"
       menu.
+      
+      <h4 id="ExportLocations">Export Locations</h4>
+
+      Export locations provides a comma separated values (.csv) file with all of the information
+      concerning your locations. The export file "ExportOperationsLocationRoster.csv" can be found
+      in the "operations" directory.
+
+      <h4 id="ImportLocations">Import Locations</h4>
+
+      Import locations allows you to populate your locations using a CSV file. First do an Export
+      Locations and examine the file to see the order the data has to be entered. The import
+      locations code hasn't implemented all of the exports fields. Columns 14 through 22, and
+      columns 26 though 35 are currently ignored during an import.
 
       <h4 id="PrintLocation">Print or Preview</h4>
       This tool provides several options with regards to printing or previewing your locations.
@@ -3787,7 +3869,9 @@ Some lucky folks have more locomotives and cars than track on their layout and w
 
       <h4>Location and Track</h4>
       Now set the car's location on the layout. If the car is off the layout, set the location to
-      none (blank space).
+      none (blank space). The "Auto" checkbox when selected, filters the track selection to only show
+      tracks that have enough space for the car, and are also configured to service the car's type, load, 
+      and road.
 
       <h4>Color</h4>
       You have the option to set the car's color. Useful if you provide it on your Manifests or
@@ -3913,10 +3997,15 @@ Some lucky folks have more locomotives and cars than track on their layout and w
       <h3 id="EditCarLoads">Edit Car Loads</h3>
       To add a custom load or edit a car's load, press the Load "Edit" button in the <a
         href="#CarsEdit">Edit Car</a> or <a href="#CarsSet">Set Car</a> windows. Each car type will
-      have it's own set of custom loads. Note that <a href="#Spurs">spurs</a> normally require a <a
+      have it's own set of custom loads. Select the car type to add, delete or replace a car's load.
+      The "All" checkbox allows you to create loads for all of your car types.  For example you could
+      create a custom empty load for all of your car types if needed.
+      
+      <p>Note that <a href="#Spurs">spurs</a> normally require a <a
         href="#Schedules">schedule</a> to service cars with custom loads. See car <a href="#CarLoad">Load</a>
       and <a href="#SchedulesAndLoads">Purposely Moving Cars Using Schedules and Loads</a> for more
       information.
+      </p>
       <p>
         <img src="images/EditCarLoads.png" alt="">
       </p>
@@ -3929,7 +4018,7 @@ Some lucky folks have more locomotives and cars than track on their layout and w
 
       <h4>Add Car Load Name</h4>
       Enter in the text box the custom load name you want to add, then press the "Add" button. After
-      creating the new custom load name you can change the load's type, priority, is hazardous, and
+      creating the new custom load name you can change the load's type, priority, hazardous, and
       optional messages. Press the "Save" button after making the changes.
 
       <h4>Delete Car Load Name</h4>
@@ -3961,6 +4050,10 @@ Some lucky folks have more locomotives and cars than track on their layout and w
       messages can be useful if you have visible car loads that need to be added or removed by your
       crew. You must select the "PickUp Msg" and "SetOut Msg" <a href="#MessageFormats">car
         attributes</a> if you want these messages on your Manifests and switch lists.
+        
+        <h4>Save</h4>
+        Press the save button after making changes to a car load's type, priority, hazardous, or messages. 
+        If the "All" checkbox is selected, all car types with the selected load name will be updated.
 
       <h3 id="CarsSet">Set Car</h3>
       After creating a car, you can set the car's location, and optionally the car's destination and
@@ -4078,12 +4171,13 @@ Some lucky folks have more locomotives and cars than track on their layout and w
 
       <h4>Train</h4>
       The last field is the train assignment. You can manually decide which train to use before or
-      after building your trains.
+      after building your trains. The "Auto" checkbox when selected will only show trains that can
+      service this car.
 
       <h3 id="CarsTools">Cars Tools</h3>
       The cars window "Tools" menu allows you to perform some useful functions to your car roster.
 
-      <h4>Car Roster</h4>
+      <h4 id="CarRoster">Car Roster</h4>
       The "Car Roster" has a sub-menu that allows you to import and export cars, delete cars, reset
       car move counts, and print or preview your car roster.
       
@@ -4101,18 +4195,17 @@ Some lucky folks have more locomotives and cars than track on their layout and w
       You can remove all of the cars in your roster by using the "Delete all cars" option. Note that
       when only viewing cars for a track, the tool changes to "Delete cars on Track track name", and
       will only delete the cars on the track being viewed.
-      
-      <h4>Car Roster&rArr;Reset move count all cars</h4>
-The "Reset move count all cars" will zero out all of the cars move counts. In normal
-        use you should never reset the car move counts. The program uses the move counts to
-        determine which cars have difficulty finding valid destination tracks. Cars with low move
-        counts eventually get higher priority over cars with larger move counts. By servicing the
-        lower move count cars first, the difficult car moves eventually get made by the program.
-        Reseting car moves foils this algorithm. The only valid time for reseting the move counts is
-        when you add new cars to your roster and you don't want your new cars to have priority over
-        your old cars. However in most cases, folks do want to see the new cars riding the first
-        train out of town, so don't reset the car moves if you want to put your new additions
-        immediately to work!
+
+      <h4>Car Roster&rArr;Reset car move count</h4>
+      The "Reset car move count" will zero out the move counts for the cars shown. In normal use you
+      should never reset the car move counts. The program uses the move counts to determine which
+      cars have difficulty finding valid destination tracks. Cars with low move counts eventually
+      get higher priority over cars with larger move counts. By servicing the lower move count cars
+      first, the difficult car moves eventually get made by the program. Reseting car moves foils
+      this algorithm. The only valid time for reseting the move counts is when you add new cars to
+      your roster and you don't want your new cars to have priority over your old cars. However in
+      most cases, folks do want to see the new cars riding the first train out of town, so don't
+      reset the car moves if you want to put your new additions immediately to work!
 
       <h4>Car Roster&rArr;Print and Preview</h4>
       You can also preview and print your car roster. The preview and print features use the same
@@ -4128,7 +4221,7 @@ The "Reset move count all cars" will zero out all of the cars move counts. In no
         viewing cars for a specific track, you can delete the cars on that track by selecting "Car
         Roster &rArr; Delete Cars on Track track name".</p>
 
-      <h4>Show Checkboxes</h4>
+      <h4 id="ShowCheckboxes">Show Checkboxes</h4>
       You can if wanted, add or remove a checkbox for each car in your roster by selecting "Show
       Checkboxes" from the "Cars" Tools menu. The checkboxes are useful when performing an audit
       using a PC or other electronic device. There's also a "Reset Checkboxes" tool to return all
@@ -4145,7 +4238,7 @@ The "Reset move count all cars" will zero out all of the cars move counts. In no
       car type to your roster. See <a href="#ModifyTrainsByCarType">Modify Trains by Car Type</a>
       for more info.
 
-      <h4 id="SetCars">Set Cars</h4>
+      <h4 id="SetCars">Set Cars (Modify Multiple Cars)</h4>
       If you want to change the status, location, return when empty, return when loaded, home
       division, load, kernel, destinations or train assignment for a group of cars use the "Set
       Cars" tool found under "Tools" in the <a href="#Cars">Cars</a> window. The tool works the same
@@ -4154,7 +4247,7 @@ The "Reset move count all cars" will zero out all of the cars move counts. In no
       select "Set Cars". Note that you can use the "Control" or "Ctrl" key on your keyboard to
       select individual cars in the table, and the "Shift" key allows you to select a range of cars.
       Use "Ctrl A" to select all of the cars in the table. The first car in the table becomes the
-      default, and if you press the "Apply" button, all of the other selected cars will have the
+      default, and when you press the "Apply" button, all of the other selected cars will have the
       same settings as the default car.
 
       <p>When using the "Set Cars" tool, all cars selected in the Cars window will have the same
@@ -4311,7 +4404,7 @@ The "Reset move count all cars" will zero out all of the cars move counts. In no
       The locomotives window "Tools" menu allows you to perform some useful functions to your
       locomotive roster.
       
-      <h4>Locomotive Roster</h4>
+      <h4 id="LocomotiveRoster">Locomotive Roster</h4>
       The "Locomotive Roster" has a sub-menu that allows you to import and export locomotives,
       delete locomotives, reset locomotive move counts, and print or preview your locomotive roster.
       
@@ -4642,49 +4735,63 @@ The "Reset move count all cars" will zero out all of the cars move counts. In no
       <p style="page-break-after: always">
         <a href="#toc">[Click to go back to TOC]</a>
       </p>
-      
+
       <h2 id="Trains">Trains</h2>
       Now that we've created our <a href="#Routes">Routes</a> we need trains to move cars! Create a
-      train by selecting "Tools&rArr;Operations&rArr;Trains" from the top level menu.
+      train by selecting "Tools&rArr;Operations&rArr;Trains" from the top level menu. Press the
+      <a href="#TrainEdit">Add Train</a> button in the lower left corner to create a new train.
       <p>
         <img src="images/Trains.png" alt="">
       </p>
 
       <p>
         The Trains window shows all of your trains. For each train, there's a checkbox in the
-        "Build" column used to select which trains to build, print, and terminate. The buttons on
-        the bottom of the page will build, print or terminate the trains selected. You can also
-        modify an existing train using the "Edit" button for that train. For each train there's also
-        an action button. You can select one of four actions for your train. The 'Move" action
-        causes a built train to depart its current location and move to the next location in the
-        train's route. The "Conductor" action opens a window that provides the train's Manifest for
-        each location in the train's route. The last two actions are <a href="#TerminateTrain">Terminate</a>
-        and "Reset", pressing "Terminate" moves a built train to the last location in the train's
-        route, and completes the work assigned to the train. <a href="#TrainReset">Reset</a> is used
-        to release all cars assigned to a built train. You can only reset a train that hasn't moved.
+        "Build" column used to select which trains to build, print, and terminate. The middle
+        buttons on the bottom of the page will build, preview/print or terminate the trains
+        selected. You can adjust which trains to build using the <a href="#TrainSchedules">Train
+          Schedules</a> tool. You can if you wish build each train independently by pressing the "Build"
+        button under the "Function" column for a train. After a train is built the button becomes
+        "Print" or "Preview" depending on the function "Preview" checkbox located at the bottom of
+        the Trains window.
       </p>
 
       <p>
-        There are several checkboxes along the bottom of the Trains window. The "Show All" when
+        You can modify an existing train using the "Edit" button for that train. For each train
+        there's also an action button. You can select one of four actions for your train using the
+        radio buttons. The 'Move" action causes a built train to depart its current location and
+        move to the next location in the train's route. The "Conductor" action opens a window that
+        provides the train's Manifest for each location in the train's route. The last two actions
+        are <a href="#TerminateTrain">Terminate</a> and "Reset", pressing "Terminate" moves a built
+        train to the last location in the train's route, and completes the work assigned to the
+        train. <a href="#TrainReset">Reset</a> is used to release all cars assigned to a built
+        train. You can only reset a train that hasn't moved.
+      </p>
+
+      <p>There are several checkboxes along the bottom of the Trains window. The "Show All" when
         selected shows all trains in your roster. When deselected, only trains that have the "Build"
-        checkbox selected are shown. The "Messages" checkbox when selected will present a dialog box
-        whenever a train build failure occurs explaining why the train didn't build. The "Build
-        Report" checkbox when selected provides a <a href="#BuildReports">Build Report</a> detailing
-        how the train was built by the program. Use the "Print" or "Preview" button for a built
-        train to see the <a href="#BuildReports">build report</a>. The program always provides a
-        "Report" button under the "Action" column for a train that fails to build.
+        checkbox selected are shown.
+      
+      <p>
+        The function "Preview" checkbox when selected, allows you to preview rather than printing your
+        train's Manifest or <a href="#BuildReports">build report</a>.
       </p>
 
+      <p>The "Messages" checkbox when selected will present a dialog box whenever a train build
+        failure occurs explaining why the train didn't build.</p>
+
       <p>
-        The "Preview" checkbox when selected, allows you to preview rather than printing your
-        train's Manifest or <a href="#BuildReports">build report</a>.
+        The "Build Report" checkbox when selected provides a <a href="#BuildReports">Build
+          Report</a> detailing how the train was built by the program. Use the "Print" or "Preview"
+        button for a built train to see the train Manifest and optional <a href="#BuildReports">build
+          report</a>. The program always provides a "Report" button under the "Action" column for a
+        train that fails to build.
       </p>
 
       <p>
         If you select the "Generate CSV Manifest" from the <a href="#ManifestOptions">Options</a>
         window found under "Tools" in the <a href="#Settings">Settings</a> or <a href="#Trains">Trains</a>
         window, two additional checkboxes will appear labeled "Open" and "Run". If the "Open"
-        checkbox is selected the "Function" button for a built train will become "Open" rather than
+        checkbox is selected the function button for a built train will become "Open" rather than
         "Print" or "Preview". Pressing a train's "Open" button will allow you to examine the train's
         comma separated values file. If you select the "Run" checkbox, the function button for a
         built train becomes "Run". Pressing a train's "Run" button will start the Excel program
@@ -4699,7 +4806,7 @@ The "Reset move count all cars" will zero out all of the cars move counts. In no
         button, a warning will pop up asking you to save your files.</p>
 
       <h3 id="TrainEdit">Add or Edit Train</h3>
-      Press the "Add" button at the bottom left of the "Trains" window to create a new train. Use
+      Press the "Add Train" button at the bottom left of the "Trains" window to create a new train. Use
       the "Edit" button in the "Trains" window table to modify an existing train.
 
       <p>
@@ -4942,6 +5049,10 @@ The "Reset move count all cars" will zero out all of the cars move counts. In no
         the maximums you specified in the route. You could of course reduce the train lengths in
         your route if you find that the program is consistently adding one or two locos to the
         train, and also exceeding the maximum train lengths.</p>
+        
+        <p>Note that the program will attempt to assign locos to your train if this option is enabled,
+        and the HPT value is greater than zero, even if the requested number of locos in the 
+        <a href="#TrainEdit">Edit Train</a> window is also zero.</p>
 
       <h4>Train Owners</h4>
       You can decide which rolling stock the train will service by owner name. Select which owners
@@ -5448,15 +5559,16 @@ The "Reset move count all cars" will zero out all of the cars move counts. In no
         JMRI/Your_Profile_Name.jmri/operations/csvSwitchList directory. You can configure the name of the Excel program by
         opening the "Switch List by Location" window using the "Switch Lists" button at the bottom
         of the "Trains" window. Then under "Tools" in the "Switch List by Location" window, select
-        "Setup Excel Program (Manifest Creator)". You must also enable the creation of CSV switch
+        "Setup Java or Excel Program (Manifest Creator)". You must also enable the creation of CSV switch
         list files, see <a href="#ManifestOptions">Options</a> "Generate CSV Switch Lists" for more
         information.
       </p>
 
       <h4 id="ExportTrains">Export Trains</h4>
-      The export Trains tool produces a comma separated values (.csv) file for the trains selected
-      in the "Build" column.
-      
+      The export trains tool produces a comma separated values (.csv) file for the trains selected
+      in the "Build" column. The file "ExportOperationsTrainRoster.csv" can be found in the
+      "operations" directory.
+
       <h4 id="ExportTimetable">Export Timetable Data</h4>
       The export Timetable tool produces a comma separated values (.csv) file for the Timetable
       application. You can also use the "Import from OperationsPro..." found in the Timetable
@@ -5464,6 +5576,7 @@ The "Reset move count all cars" will zero out all of the cars move counts. In no
       "Segment" called "Locations" based on an alphabetical list of location names, or if you create
       a route named "Timetable", produces a segment of locations based on the route's location
       order.
+      
       <p>During the export, the program will calculate the maximum work times at each train's
         location based on the move counts in the train's route for trains that aren't built, and the
         actual work time for built trains. The work time is referred to as "Duration" in the
@@ -5711,6 +5824,10 @@ The "Reset move count all cars" will zero out all of the cars move counts. In no
       <h4 id="PrintSavedTrainManifests">Print or Preview Saved Train Manifests</h4>
       If you've selected the <a href="#Options">Save Train Manifests</a> option, you can print or
       preview a train Manifest that was previously created by the program and saved.
+      
+      <h4 id="PrintSavedTrainBuildReports">Print or Preview Saved Train Build Reports</h4>
+      If you've selected the <a href="#Options">Save Train Build Reports</a> option, you can print or
+      preview a train build report that was previously created by the program and saved.
 
       <p style="page-break-after: always">
         <a href="#toc">[Click to go back to TOC]</a>
@@ -6195,23 +6312,29 @@ The "Reset move count all cars" will zero out all of the cars move counts. In no
       that are built.
 
       <h3 id="CustomSwitchLists">Custom Switch Lists</h3>
-      You can if you wish create custom switch lists using an Excel program. You can configure where
+      You can if you wish create custom switch lists using an Excel or Java program. You can configure where
       to find the Excel program for custom switch lists from the "Switch Lists by Location" window
       "Tools" menu. Or go to <a href="#SettingsOptions">Options</a> and select the "Generate CSV
       Switch List" to enable this feature. For more information see <a href="#SetupExcelProgram">Setup
         Excel Program (Manifest Creator)</a>.
+        
       <p>When the feature to generate CSV Switch Lists is enabled, the program will create a
         comma separated values file for each of the selected locations. You can find the CSV files
         in the csvSwitchList directory.</p>
 
       <p>Two new buttons will appear at the bottom of the "Switch Lists by Location" window,
         "Run", and "Run Changes". The "Run" button is used to create custom switch lists for all of
-        the selected locations by executing an Excel program. The "Run" button will if needed,
-        create the CSV files needed before asking the Excel program to create and print a custom
+        the selected locations by executing an Excel or Java program. The "Run" button will if needed,
+        create the CSV files needed before asking the Excel or Java program to create and print a custom
         switch list. The "Run Changes" will only create new switch lists for locations that have new
         work.</p>
+        
+        <p>When using a Java program like <a href="https://mrslamf.com/">Model
+        Railroad Switch List and Manifest Formatter</a> to create a custom switch list, you must delete 
+        the Excel switch list file name and then press "Save".</p>
 
       <h3 id="TrainMove">Moving Trains</h3>
+      
       After providing your crew with a printed Manifest or location switch list, you must keep the
       program database synchronized with the actual movement of trains on your layout. This is done
       by the train "Move" buttons located on the right side of the <a href="#Trains">Trains</a>

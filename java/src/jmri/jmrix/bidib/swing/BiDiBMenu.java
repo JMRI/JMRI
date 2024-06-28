@@ -16,7 +16,7 @@ import jmri.util.swing.sdi.JmriJFrameInterface;
  */
 public class BiDiBMenu extends JMenu {
 
-    @SuppressWarnings("OverridableMethodCallInConstructor")
+//    @SuppressWarnings("OverridableMethodCallInConstructor")
     public BiDiBMenu(BiDiBSystemConnectionMemo memo) {
 
         super();

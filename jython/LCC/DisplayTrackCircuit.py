@@ -18,7 +18,7 @@
 # Sensor name can be system name or user name
 # Memory name must be user name
 # If the sensors do not exist, they will be created with user names formed
-#	from the memory name and TC states
+#   from the memory name and TC states
 # You can also put these lines into Logix or LogixNG script features, like an initialzation script
 
 ##a = DisplayTrackCircuit() # create one of these 
@@ -210,7 +210,7 @@ class DisplayTrackCircuit(java.beans.PropertyChangeListener) :
         # read event to see which sensor
         self.memory.setValue(text)
         if (self.debugLevel > 0) :
-        	print("sensorHandler_" + self.memoryName + "(" + sensor + ", " + text + ", " + str(event) + ")")
+            print("sensorHandler_" + self.memoryName + "(" + sensor + ", " + text + ", " + str(event) + ")")
         return
 
     def setDebugLevel(self, value) :

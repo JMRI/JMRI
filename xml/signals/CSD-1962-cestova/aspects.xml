@@ -40,6 +40,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Panel indicators JOP, Speed names</revremark>
     </revision>
+    <revision>
+        <revnumber>4</revnumber>
+        <date>2024-02-22</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Small icons</revremark>
+    </revision>    
   </revhistory>
 
   <aspects>
@@ -469,6 +475,7 @@
 	<imagetype type="JOP hlavní"/>
 	<imagetype type="JOP seřaďovací"/>
 
+	<imagetype type="malé"/>
   </imagetypes>
 
   <appearancefiles>

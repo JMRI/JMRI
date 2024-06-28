@@ -261,7 +261,7 @@ public class HexFileFrame extends JmriJFrame implements LocoNetListener {
 
         // start operation of packetizer
         packets.startThreads();
-        sourceThread = new Thread(port, "LocoNet HexFileFrame");
+        sourceThread = jmri.util.ThreadingUtil.newThread(port, "LocoNet HexFileFrame");
         sourceThread.start();
     }
 

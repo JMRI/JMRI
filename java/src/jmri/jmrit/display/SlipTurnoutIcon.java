@@ -151,12 +151,14 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
      * Constant used to refer to the Turnout address configured to operate
      * the west (or first for a three way) of the Turnout.
      */
+    @SuppressWarnings("hiding")     // Hides a value from Swing Constants
     public static final int WEST = 0x01;
 
     /**
      * Constant used to refer to the Turnout address configured to operate
      * the east (or second for a three way) of the Turnout.
      */
+    @SuppressWarnings("hiding")     // Hides a value from Swing Constants
     public static final int EAST = 0x02;
 
     /**

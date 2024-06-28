@@ -90,6 +90,10 @@
       <h3>Enable Throttle toolbar</h3>
       This option enables a <a href="ThrottleToolBar.shtml">Toolbar that will show in all Throttle
       Windows</a>.
+      
+      <h3>Hide speed step selector on control panel</h3>
+      As a default the speed step selector is shown on the throttle UI control panel, this option allows
+      to hide it as a default.
 
       <h3>Enable button icons when available</h3>
       When a Roster is selected, the address panels buttons are initialized as defined in the

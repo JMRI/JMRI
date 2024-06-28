@@ -30,6 +30,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Panel indicators</revremark>
     </revision>    
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2024-02-22</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Small icons</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>CSD-1962-vlozena</aspecttable>
@@ -43,6 +49,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/200_stuj_3vl.gif</imagelink>
       <imagelink type="AŽD b">../../../resources/icons/smallschematics/aspects/CSD/AZD/27_w.png</imagelink>
       <imagelink type="ESP b">../../../resources/icons/smallschematics/aspects/CSD/ESP/27_w.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/v00_stuj_3.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -50,6 +57,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/206_stuj2_3vl.gif</imagelink>
       <imagelink type="AŽD b">../../../resources/icons/smallschematics/aspects/CSD/AZD/27_w.png</imagelink>
       <imagelink type="ESP b">../../../resources/icons/smallschematics/aspects/CSD/ESP/27_w.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/v06_stuj2_3.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -57,6 +65,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/205_ondj_3vl.gif</imagelink>
       <imagelink type="AŽD b">../../../resources/icons/smallschematics/aspects/CSD/AZD/28_w.png</imagelink>
       <imagelink type="ESP b">../../../resources/icons/smallschematics/aspects/CSD/ESP/28_w.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/v05_ondj_3.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -64,6 +73,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/227_pz_3vl.gif</imagelink>
       <imagelink type="AŽD b">../../../resources/icons/smallschematics/aspects/CSD/AZD/28_w.png</imagelink>
       <imagelink type="ESP b">../../../resources/icons/smallschematics/aspects/CSD/ESP/28_w.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/v27_pz_3.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -71,6 +81,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/228_pd_3vl.gif</imagelink>
       <imagelink type="AŽD b">../../../resources/icons/smallschematics/aspects/CSD/AZD/28_w.png</imagelink>
       <imagelink type="ESP b">../../../resources/icons/smallschematics/aspects/CSD/ESP/28_w.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/v28_pd_3.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -78,6 +89,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/229_npd_3vl.gif</imagelink>
       <imagelink type="AŽD b">../../../resources/icons/smallschematics/aspects/CSD/AZD/28_w.png</imagelink>
       <imagelink type="ESP b">../../../resources/icons/smallschematics/aspects/CSD/ESP/28_w.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/v29_pdn_3.gif</imagelink>
     </appearance>
 
   </appearances>

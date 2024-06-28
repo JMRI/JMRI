@@ -119,7 +119,7 @@ public class SampleScriptTest {
 
         // run shutdown task with blocking
         ((jmri.managers.DefaultShutDownManager)InstanceManager.getDefault(ShutDownManager.class)).setBlockingShutdown(true);
-        InstanceManager.getDefault(ShutDownManager.class).shutdown();
+        ((jmri.managers.DefaultShutDownManager)InstanceManager.getDefault(ShutDownManager.class)).shutdown(0, false);
 
         File newTurnoutFile = new File(jmri.util.FileUtil.getUserFilesPath() + "TurnoutState.csv");
         Assertions.assertTrue(newTurnoutFile.exists(),"user TurnoutState.csv exists");
@@ -166,7 +166,7 @@ public class SampleScriptTest {
         // include a comprehensive set here.
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir.toFile()));
-        
+
         JUnitUtil.initConfigureManager();
         JUnitUtil.initDefaultUserMessagePreferences();
         JUnitUtil.initDebugPowerManager();
@@ -183,6 +183,7 @@ public class SampleScriptTest {
 
         JUnitUtil.resetWindows(false, false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitAppender.suppressWarnMessageStartsWith("Turnout state file "); // Turnout state file '/tmp/junit15888088443980290405/TurnoutState.csv' does not exist
         JUnitUtil.tearDown();
     }
 

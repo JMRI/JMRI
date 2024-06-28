@@ -99,6 +99,12 @@
       <p>
       Entering an event ID in the find box and clicking "Find" will highlight every
       occurrence of that event.  The window will scroll to show the first one if needed.
+      <p>
+      Pressing the "Names from Sensors" will fill in the event name column with the
+      user names from the corresponding JMRI Sensors.  Pressing the "Names from Turnouts"
+      button will fill in the event name column with the user names from the 
+      corresponding JMRI Turnouts.  Note that only empty entries will be filled;
+      this does not overwrite any existing names.
 
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>

@@ -30,6 +30,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Image types</revremark>
     </revision>    
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2024-02-22</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Small icons</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>CSD-1962-mechaniky</aspecttable>
@@ -43,6 +49,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/401_volno_pp.gif</imagelink>
       <imagelink type="prototype-night">../../../resources/icons/largeschematics/aspects/CSD-1962/401_volno_pp_n.gif</imagelink>
       <imagelink type="předvěst-P">../../../resources/icons/largeschematics/aspects/CSD-1962/401_volno_pp.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/x01_volno_p.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -50,6 +57,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/402_vystraha_pp.gif</imagelink>
       <imagelink type="prototype-night">../../../resources/icons/largeschematics/aspects/CSD-1962/402_vystraha_pp_n.gif</imagelink>
       <imagelink type="předvěst-P">../../../resources/icons/largeschematics/aspects/CSD-1962/402_vystraha_pp.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/x02_vystraha_p.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -57,6 +65,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/403_pomalu_pp.gif</imagelink>
       <imagelink type="prototype-night">../../../resources/icons/largeschematics/aspects/CSD-1962/403_pomalu_pp_n.gif</imagelink>
       <imagelink type="předvěst-P">../../../resources/icons/largeschematics/aspects/CSD-1962/403_pomalu_pp.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/x03_pomalu_p.gif</imagelink>
     </appearance>
 
   </appearances>

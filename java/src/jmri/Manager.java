@@ -876,7 +876,7 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
         private final int index0;
         private final int index1;
         private final transient E changedBean; // used when just one bean is added or removed as an efficiency measure
-        private final transient Manager<E> source;
+        private final transient Manager<E> sourceManager;
 
         /**
          * Create a <code>ListDataEvent</code> object.
@@ -896,7 +896,7 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
          */
         public ManagerDataEvent(@Nonnull Manager<E> source, int type, int index0, int index1, E changedBean) {
             super(source);
-            this.source = source;
+            this.sourceManager = source;
             this.type = type;
             this.index0 = Math.min(index0, index1);  // from javax.swing.event.ListDataEvent implementation
             this.index1 = Math.max(index0, index1);  // from javax.swing.event.ListDataEvent implementation
@@ -910,7 +910,7 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
          */
         @Override
         public Manager<E> getSource() {
-            return source;
+            return sourceManager;
         }
 
         /**

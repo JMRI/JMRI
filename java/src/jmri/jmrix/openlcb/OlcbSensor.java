@@ -9,6 +9,7 @@ import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
 
+import org.openlcb.EventID;
 import org.openlcb.OlcbInterface;
 import org.openlcb.implementations.BitProducerConsumer;
 import org.openlcb.implementations.EventTable;
@@ -120,11 +121,16 @@ public class OlcbSensor extends AbstractSensor {
      * @param isActive true for sensor active, false for inactive.
      * @return user-visible string to represent this event.
      */
-    private String getEventName(boolean isActive) {
+    public String getEventName(boolean isActive) {
         String name = getUserName();
         if (name == null) name = mSystemName;
         String msgName = isActive ? "SensorActiveEventName": "SensorInactiveEventName";
         return Bundle.getMessage(msgName, name);
+    }
+
+    public EventID getEventID(boolean isActive) {
+        if (isActive) return addrActive.toEventID();
+        else return addrInactive.toEventID();
     }
 
     /**

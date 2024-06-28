@@ -133,6 +133,12 @@
         <dd>CSX 2014 rule book (former Chessie rules)</dd>
 
         <dt>
+          <a href="CTC-MB/index.shtml">CTC-MB</a>
+        </dt>
+        <dd>Union Switch &amp; Signal Non-Prototypical Signals<br>
+        <em>This system is incomplete and cannot be used with signal mast logic.</em></dd>
+
+        <dt>
           <a href="DanishSimplified/index.shtml">DanishSimplified</a>
         </dt>
         <dd>Danish Simplified signal definition</dd>
@@ -222,7 +228,7 @@
         <dd>1965 Rio Grande Rules of the Operating Department</dd>
 
         <dt>
-          <a href="SBB-1989/index.shtml">SB-1989</a>
+          <a href="SBB-1989/index.shtml">SBB-1989</a>
         </dt>
         <dd>Signaling definitions corresponding to the 
             Swiss Railways (SBB in German, CFF in French and FFS in Italian) </dd>

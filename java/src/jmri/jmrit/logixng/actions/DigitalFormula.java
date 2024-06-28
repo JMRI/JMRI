@@ -19,11 +19,10 @@ import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
 import jmri.jmrit.logixng.util.parser.Variable;
 import jmri.jmrit.logixng.util.parser.GenericExpressionVariable;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
-import jmri.util.TypeConversionUtil;
 
 /**
  * This action evaluates the formula.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2021
  */
 public class DigitalFormula extends AbstractDigitalAction implements FemaleSocketListener {
@@ -32,7 +31,7 @@ public class DigitalFormula extends AbstractDigitalAction implements FemaleSocke
     private ExpressionNode _expressionNode;
     private final List<ExpressionEntry> _expressionEntries = new ArrayList<>();
     private boolean _disableCheckForUnconnectedSocket = false;
-    
+
     /**
      * Create a new instance of Formula with system name and user name.
      * @param sys the system name
@@ -56,12 +55,12 @@ public class DigitalFormula extends AbstractDigitalAction implements FemaleSocke
         super(sys, user);
         setExpressionSystemNames(expressionSystemNames);
     }
-    
+
     @Override
     protected String getPreferredSocketPrefix() {
         return "E";
     }
-    
+
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
         DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
@@ -79,29 +78,29 @@ public class DigitalFormula extends AbstractDigitalAction implements FemaleSocke
         if (!_expressionEntries.isEmpty()) {
             throw new RuntimeException("expression system names cannot be set more than once");
         }
-        
+
         for (SocketData socketData : systemNames) {
             FemaleGenericExpressionSocket socket =
                     createFemaleSocket(this, this, socketData._socketName);
 //            FemaleGenericExpressionSocket socket =
 //                    InstanceManager.getDefault(AnalogExpressionManager.class)
 //                            .createFemaleSocket(this, this, entry.getKey());
-            
+
             _expressionEntries.add(new ExpressionEntry(socket, socketData._socketSystemName, socketData._manager));
         }
     }
-    
+
     public String getExpressionSystemName(int index) {
         return _expressionEntries.get(index)._socketSystemName;
     }
-    
+
     public String getExpressionManager(int index) {
         return _expressionEntries.get(index)._manager;
     }
-    
+
     private FemaleGenericExpressionSocket createFemaleSocket(
             Base parent, FemaleSocketListener listener, String socketName) {
-        
+
         return new DefaultFemaleGenericExpressionSocket(
                 FemaleGenericExpressionSocket.SocketType.GENERIC, parent, listener, socketName);
     }
@@ -118,11 +117,11 @@ public class DigitalFormula extends AbstractDigitalAction implements FemaleSocke
         // the field _formula until we now parseExpression() has succeeded.
         _formula = formula;
     }
-    
+
     public String getFormula() {
         return _formula;
     }
-    
+
     private void parseFormula() {
         try {
             setFormula(_formula);
@@ -130,37 +129,36 @@ public class DigitalFormula extends AbstractDigitalAction implements FemaleSocke
             log.error("Unexpected exception when parsing the formula", e);
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
         return Category.COMMON;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
-        
+
         if (_formula.isEmpty()) return;
-        
-        TypeConversionUtil.convertToBoolean(_expressionNode.calculate(
-                getConditionalNG().getSymbolTable()), false);
+
+        _expressionNode.calculate(getConditionalNG().getSymbolTable());
     }
-    
+
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         return _expressionEntries.get(index)._socket;
     }
-    
+
     @Override
     public int getChildCount() {
         return _expressionEntries.size();
     }
-    
+
     public void setChildCount(int count) {
         List<FemaleSocket> addList = new ArrayList<>();
         List<FemaleSocket> removeList = new ArrayList<>();
-        
+
         // Is there too many children?
         while (_expressionEntries.size() > count) {
             int childNo = _expressionEntries.size()-1;
@@ -171,7 +169,7 @@ public class DigitalFormula extends AbstractDigitalAction implements FemaleSocke
             removeList.add(_expressionEntries.get(childNo)._socket);
             _expressionEntries.remove(childNo);
         }
-        
+
         // Is there not enough children?
         while (_expressionEntries.size() < count) {
             FemaleGenericExpressionSocket socket =
@@ -182,12 +180,12 @@ public class DigitalFormula extends AbstractDigitalAction implements FemaleSocke
         parseFormula();
         firePropertyChange(Base.PROPERTY_CHILD_COUNT, removeList, addList);
     }
-    
+
     @Override
     public String getShortDescription(Locale locale) {
         return Bundle.getMessage(locale, "DigitalFormula_Short");
     }
-    
+
     @Override
     public String getLongDescription(Locale locale) {
         if (_formula.isEmpty()) {
@@ -196,11 +194,11 @@ public class DigitalFormula extends AbstractDigitalAction implements FemaleSocke
             return Bundle.getMessage(locale, "DigitalFormula_Long", _formula);
         }
     }
-    
+
     // This method ensures that we have enough of children
     private void setNumSockets(int num) {
         List<FemaleSocket> addList = new ArrayList<>();
-        
+
         // Is there not enough children?
         while (_expressionEntries.size() < num) {
             FemaleGenericExpressionSocket socket =
@@ -214,7 +212,7 @@ public class DigitalFormula extends AbstractDigitalAction implements FemaleSocke
 
     private void checkFreeSocket() {
         boolean hasFreeSocket = false;
-        
+
         for (ExpressionEntry entry : _expressionEntries) {
             hasFreeSocket |= !entry._socket.isConnected();
         }
@@ -222,14 +220,14 @@ public class DigitalFormula extends AbstractDigitalAction implements FemaleSocke
             FemaleGenericExpressionSocket socket =
                     createFemaleSocket(this, this, getNewSocketName());
             _expressionEntries.add(new ExpressionEntry(socket));
-            
+
             List<FemaleSocket> list = new ArrayList<>();
             list.add(socket);
             parseFormula();
             firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, list);
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean isSocketOperationAllowed(int index, FemaleSocketOperation oper) {
@@ -248,37 +246,37 @@ public class DigitalFormula extends AbstractDigitalAction implements FemaleSocke
                 throw new UnsupportedOperationException("Oper is unknown" + oper.name());
         }
     }
-    
+
     private void insertNewSocket(int index) {
         FemaleGenericExpressionSocket socket =
                 createFemaleSocket(this, this, getNewSocketName());
         _expressionEntries.add(index, new ExpressionEntry(socket));
-        
+
         List<FemaleSocket> addList = new ArrayList<>();
         addList.add(socket);
         parseFormula();
         firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, addList);
     }
-    
+
     private void removeSocket(int index) {
         List<FemaleSocket> removeList = new ArrayList<>();
         removeList.add(_expressionEntries.remove(index)._socket);
         parseFormula();
         firePropertyChange(Base.PROPERTY_CHILD_COUNT, removeList, null);
     }
-    
+
     private void moveSocketDown(int index) {
         ExpressionEntry temp = _expressionEntries.get(index);
         _expressionEntries.set(index, _expressionEntries.get(index+1));
         _expressionEntries.set(index+1, temp);
-        
+
         List<FemaleSocket> list = new ArrayList<>();
         list.add(_expressionEntries.get(index)._socket);
         list.add(_expressionEntries.get(index)._socket);
         parseFormula();
         firePropertyChange(Base.PROPERTY_CHILD_REORDER, null, list);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void doSocketOperation(int index, FemaleSocketOperation oper) {
@@ -305,18 +303,18 @@ public class DigitalFormula extends AbstractDigitalAction implements FemaleSocke
                 throw new UnsupportedOperationException("Oper is unknown" + oper.name());
         }
     }
-    
+
     @Override
     public void connected(FemaleSocket socket) {
         if (_disableCheckForUnconnectedSocket) return;
-        
+
         for (ExpressionEntry entry : _expressionEntries) {
             if (socket == entry._socket) {
                 entry._socketSystemName =
                         socket.getConnectedSocket().getSystemName();
             }
         }
-        
+
         checkFreeSocket();
     }
 
@@ -329,19 +327,19 @@ public class DigitalFormula extends AbstractDigitalAction implements FemaleSocke
             }
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void socketNameChanged(FemaleSocket socket) {
         parseFormula();
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void setup() {
         // We don't want to check for unconnected sockets while setup sockets
         _disableCheckForUnconnectedSocket = true;
-        
+
         for (ExpressionEntry ee : _expressionEntries) {
             try {
                 if ( !ee._socket.isConnected()
@@ -371,62 +369,62 @@ public class DigitalFormula extends AbstractDigitalAction implements FemaleSocke
                 throw new RuntimeException("socket is already connected");
             }
         }
-        
+
         parseFormula();
         checkFreeSocket();
-        
+
         _disableCheckForUnconnectedSocket = false;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
         // Do nothing
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
         // Do nothing
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
     }
-    
-    
+
+
     public static class SocketData {
         public final String _socketName;
         public final String _socketSystemName;
         public final String _manager;
-        
+
         public SocketData(String socketName, String socketSystemName, String manager) {
             _socketName = socketName;
             _socketSystemName = socketSystemName;
             _manager = manager;
         }
     }
-    
-    
+
+
     /* This class is public since ExpressionFormulaXml needs to access it. */
     public static class ExpressionEntry {
         private final FemaleGenericExpressionSocket _socket;
         private String _socketSystemName;
         public String _manager;
-        
+
         public ExpressionEntry(FemaleGenericExpressionSocket socket, String socketSystemName, String manager) {
             _socket = socket;
             _socketSystemName = socketSystemName;
             _manager = manager;
         }
-        
+
         private ExpressionEntry(FemaleGenericExpressionSocket socket) {
             this._socket = socket;
         }
-        
+
     }
-    
-    
+
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DigitalFormula.class);
 }

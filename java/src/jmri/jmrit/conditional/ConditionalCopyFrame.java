@@ -36,7 +36,6 @@ public class ConditionalCopyFrame extends ConditionalFrame {
     JPanel _antecedentPanel;
 
     Conditional.ItemType _saveType = Conditional.ItemType.NONE;
-    static final int STRUT = 10;
 
     // ------------------------------------------------------------------
     

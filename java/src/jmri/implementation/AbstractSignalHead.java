@@ -246,7 +246,7 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
      * @param t Turnout object to check
      * @return true if turnout is configured as output or driver of head
      */
-    abstract boolean isTurnoutUsed(Turnout t);
+    public abstract boolean isTurnoutUsed(Turnout t);
 
     /**
      * {@inheritDoc}

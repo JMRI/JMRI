@@ -3,6 +3,8 @@ package jmri.jmrix.openlcb;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.NamedBean;
 import jmri.Turnout;
+
+import org.openlcb.EventID;
 import org.openlcb.OlcbInterface;
 import org.openlcb.implementations.BitProducerConsumer;
 import org.openlcb.implementations.EventTable;
@@ -134,13 +136,18 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
      * @param isThrown true for thrown event, false for closed event
      * @return user-visible string to represent this event.
      */
-    private String getEventName(boolean isThrown) {
+    public String getEventName(boolean isThrown) {
         String name = getUserName();
         if (name == null) name = mSystemName;
         String msgName = isThrown ? "TurnoutThrownEventName": "TurnoutClosedEventName";
         return Bundle.getMessage(msgName, name);
     }
 
+    public EventID getEventID(boolean isThrown) {
+        if (isThrown) return addrThrown.toEventID();
+        else return addrClosed.toEventID();
+    }
+    
     /**
      * Updates event table entries when the user name changes.
      * @param s new user name

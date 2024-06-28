@@ -34,7 +34,7 @@
         <li><a href="#documentation">Dokumentation</a></li>
       </ul>
       
-      <img src="images/bidib_logo.png" class="floatRight" alt="BiDiB logo" height="48">
+      <img src="images/bidib_logo.png" class="floatRight" alt="BiDiB logo" height="48" width="150">
       
       <a name="summary" id="summary"></a>
       <h2>Zusammenfassung</h2>
@@ -154,12 +154,12 @@
         <tr>
           <td>a</td>
           <td>(non-DCC) Accessory Adresse</td>
-´          <td>Weichen und Detektoren wenn der Knoten keine Command Station ist und der Knoten BiDiB Accessories unterstützt.</td>
+´          <td>Weichen wenn der Knoten keine Command Station ist und der Knoten BiDiB Accessories unterstützt.</td>
         </tr>
         <tr>
           <td>f</td>
           <td>Belegtmelder Nummer</td>
-          <td>Detektoren, wenn der Knoten BiDiB Belegtmelder unterstützt. Melder (Reporters) sind nur für Knoten relevant, die Belegtmelder unterstützen, daher immer Standard</td>
+          <td>Belegtmelder, wenn der Knoten BiDiB Belegtmelder unterstützt. Melder (Reporters) sind nur für Knoten relevant, die Belegtmelder unterstützen, daher immer Standard</td>
         </tr>
         <tr>
           <td>p</td>

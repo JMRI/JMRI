@@ -24,19 +24,19 @@ public class PrintCarRosterFrameTest extends OperationsTestCase {
 
         JUnitOperationsUtil.initOperationsData();
         CarsTableFrame ctf = new CarsTableFrame(true, null, null);
-        
+
         PrintCarRosterFrame f = new PrintCarRosterFrame(true, ctf);
         Assert.assertNotNull("exists", f);
         f.initComponents();
-        
+
         JemmyUtil.enterClickAndLeave(f.okayButton); // closes window
-        
+
         // confirm print preview window is showing
         ResourceBundle rb = ResourceBundle
                 .getBundle("jmri.util.UtilBundle");
         JmriJFrame printPreviewFrame = JmriJFrame.getFrame(rb.getString("PrintPreviewTitle") + " " +Bundle.getMessage("TitleCarRoster"));
         Assert.assertNotNull("exists", printPreviewFrame);
-        
+
         JUnitUtil.dispose(f);
         JUnitUtil.dispose(printPreviewFrame);
         JUnitUtil.dispose(ctf);

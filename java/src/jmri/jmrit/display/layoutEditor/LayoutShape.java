@@ -39,6 +39,7 @@ public class LayoutShape {
     private int lineWidth = 3;
     private Color lineColor = Color.BLACK;
     private Color fillColor = Color.DARK_GRAY;
+    private boolean hidden = false;
 
     // these are saved
     // list of LayoutShapePoints
@@ -172,6 +173,15 @@ public class LayoutShape {
             level = l;
             layoutEditor.sortLayoutShapesByLevel();
         }
+    }
+
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
+        getLayoutEditor().redrawPanel();
+    }
+
+    public boolean isHidden() {
+        return hidden;
     }
 
     public LayoutEditor getLayoutEditor() {
@@ -423,6 +433,7 @@ public class LayoutShape {
     }
 
     private JPopupMenu popup = null;
+    private final JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("ShapeHiddenMenuItemTitle"));
 
     @Nonnull
     protected JPopupMenu showShapePopUp(@CheckForNull JmriMouseEvent mouseEvent, HitPointType hitPointType) {
@@ -619,6 +630,12 @@ public class LayoutShape {
                 });
                 jmi.setToolTipText(Bundle.getMessage("ShapeDuplicateMenuItemToolTip"));
 
+                popup.add(hiddenCheckBoxMenuItem);
+                hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) ->
+                        setHidden(hiddenCheckBoxMenuItem.isSelected()));
+                hiddenCheckBoxMenuItem.setToolTipText(Bundle.getMessage("ShapeHiddenMenuItemToolTip"));
+                hiddenCheckBoxMenuItem.setSelected(isHidden());
+
                 popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -674,6 +691,10 @@ public class LayoutShape {
 
     //@Override
     protected void draw(Graphics2D g2) {
+        if (isHidden()) {
+            return;
+        }
+
         GeneralPath path = new GeneralPath();
 
         int idx, cnt = shapePoints.size();

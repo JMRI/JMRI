@@ -35,9 +35,10 @@ public class DigitalCallModule extends AbstractDigitalAction
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws ParserException {
         DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
         String sysName = systemNames.get(getSystemName());
-        String userName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         DigitalCallModule copy = new DigitalCallModule(sysName, userName);
+        copy.setComment(getComment());
         _selectNamedBean.copy(copy._selectNamedBean);
         for (ParameterData data : _parameterData) {
             copy.addParameter(

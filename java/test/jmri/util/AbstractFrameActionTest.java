@@ -21,7 +21,7 @@ public class AbstractFrameActionTest {
     }
 
     @Test
-    @SuppressWarnings("deprecated") // WindowOperations.close()
+    @SuppressWarnings("deprecation") // WindowOperations.close()
     public void testAction() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AbstractFrameAction t = new AbstractFrameAction("TestAction","jmri.util.JmriJFrame"){

@@ -1432,6 +1432,10 @@ public class TreeEditor extends TreeViewer {
                     if (clipboard.getTopItem() == null) {
                         return;
                     }
+                    if (!femaleSocket.isCompatible(clipboard.getTopItem())) {
+                        log.error("Top item on clipboard is not compatible with the female socket");
+                        return;
+                    }
                     femaleSocket.connect(clipboard.fetchTopItem());
                     List<String> errors = new ArrayList<>();
                     if (!femaleSocket.setParentForAllChildren(errors)) {
@@ -1474,6 +1478,13 @@ public class TreeEditor extends TreeViewer {
                 Clipboard clipboard =
                         InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
 
+                if (clipboard.getTopItem() == null) {
+                    return;
+                }
+                if (!femaleSocket.isCompatible(clipboard.getTopItem())) {
+                    log.error("Top item on clipboard is not compatible with the female socket");
+                    return;
+                }
                 Map<String, String> systemNames = new HashMap<>();
                 Map<String, String> userNames = new HashMap<>();
                 MaleSocket maleSocket = null;
@@ -1980,13 +1991,17 @@ public class TreeEditor extends TreeViewer {
         }
 
         public void doDelete() {
+            _treePane._femaleRootSocket.unregisterListeners();
             try {
                 _currentFemaleSocket.disconnect();
-
                 _maleSocket.getManager().deleteBean(_maleSocket, "DoDelete");
             } catch (PropertyVetoException e) {
                 //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
                 log.error("Unexpected doDelete failure for {}, {}", _maleSocket, e.getMessage() );
+            } finally {
+                if (_treePane._femaleRootSocket.isActive()) {
+                    _treePane._femaleRootSocket.registerListeners();
+                }
             }
         }
 
@@ -1995,8 +2010,6 @@ public class TreeEditor extends TreeViewer {
          */
         @Override
         public Void doInBackground() {
-            _treePane._femaleRootSocket.unregisterListeners();
-
             StringBuilder message = new StringBuilder();
             try {
                 _maleSocket.getManager().deleteBean(_maleSocket, "CanDelete");  // NOI18N
@@ -2112,9 +2125,6 @@ public class TreeEditor extends TreeViewer {
                         (Toolkit.getDefaultToolkit().getScreenSize().height) / 2 - dialog.getHeight() / 2);
                 dialog.setModal(true);
                 dialog.setVisible(true);
-            }
-            if (_treePane._femaleRootSocket.isActive()) {
-                _treePane._femaleRootSocket.registerListeners();
             }
             return null;
         }

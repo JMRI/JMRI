@@ -18,7 +18,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 
-import purejavacomm.*;
+import jmri.jmrix.purejavacomm.*;
 
 /**
  * Pane for downloading software updates to PRICOM products
@@ -387,7 +387,7 @@ public class LoaderPane extends javax.swing.JPanel {
             // get and open the primary port
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
             try {
-                activeSerialPort = (SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
+                activeSerialPort = portID.open(appName, 2000);  // name of program, msec to wait
             } catch (PortInUseException p) {
                 handlePortBusy(p, portName);
                 return "Port " + p + " already in use";

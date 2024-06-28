@@ -191,7 +191,7 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
                         }
                     }
                 }
-                if (rowOrColumnName.isEmpty()) {    // Header row or column
+                if (rowOrColumnName == null || rowOrColumnName.isEmpty()) {    // Header row or column
                     _rowOrColumnNameComboBox.setSelectedIndex(0);
                 } else {
                     _rowOrColumnNameComboBox.setSelectedItem(rowOrColumnName);
@@ -225,7 +225,8 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
             errorMessages.add("Cannot parse formula: " + e.getMessage());
             return false;
         }
-        return true;
+
+        return errorMessages.isEmpty();
     }
 
     /** {@inheritDoc} */

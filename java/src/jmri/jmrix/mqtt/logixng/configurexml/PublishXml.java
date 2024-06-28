@@ -7,6 +7,7 @@ import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrix.mqtt.MqttSystemConnectionMemo;
 import jmri.jmrix.mqtt.logixng.Publish;
+import jmri.jmrix.mqtt.logixng.Publish.Retain;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectStringXml;
 
 import org.jdom2.Element;
@@ -49,6 +50,8 @@ public class PublishXml extends jmri.managers.configurexml.AbstractNamedBeanMana
         element.addContent(selectTopicXml.store(p.getSelectTopic(), "topic"));
         element.addContent(selectDataXml.store(p.getSelectMessage(), "message"));
 
+        element.addContent(new Element("retain").addContent(p.getRetain().name()));
+
         return element;
     }
 
@@ -82,6 +85,11 @@ public class PublishXml extends jmri.managers.configurexml.AbstractNamedBeanMana
 
         selectTopicXml.load(shared.getChild("topic"), h.getSelectTopic());
         selectDataXml.load(shared.getChild("message"), h.getSelectMessage());
+
+        Element retainElem = shared.getChild("retain");
+        if (retainElem != null) {
+            h.setRetain(Retain.valueOf(retainElem.getTextTrim()));
+        }
 
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;

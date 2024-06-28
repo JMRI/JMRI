@@ -67,8 +67,8 @@
 
       <h2 id="logixng_icon">LogixNG Icon<span class="since">since 5.5.5</span></h2>
 
-      <p class="noted">This feature is currently limited to Panel Editor panels.  For use with
-      Control Panel Editor panels, switch the view to Panel Editor, add the icon and then switch
+      <p class="noted">This feature is available for Panel Editor and Layout Editor panels.  For use
+      with Control Panel Editor panels, switch the view to Panel Editor, add the icon and then switch
       back to Control Panel Editor.</p>
 
       <p>The <strong>LogixNG Icon</strong> extends the Inline LogixNG feature to <strong>invoke</strong>

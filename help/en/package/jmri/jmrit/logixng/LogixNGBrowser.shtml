@@ -57,6 +57,11 @@
         <dd>The LogixNG system name for each row is included.  If <strong>Show system names in
         exceptions</strong> is enabled in <strong>Preferences &rArr; LogixNG</strong>, the system
         name from an exception can help identify the row that is having a problem.</dd>
+
+        <dt>Print disabled</dt>
+
+        <dd>When this option is enabled, the <strong>Disabled</strong> keyword is added to lines
+        that have been disabled.</dd>
       </dl>
 
       <h2>Browser Actions</h2>
@@ -72,6 +77,13 @@
         the uses for this is to use the line number option and share the file with another person
         to work on an issue.</dd>
       </dl>
+
+      <h2><span class="since">since 5.7.8</span>Browse All LogixNGs</h2>
+
+      <p>Using the main PanelPro menu, select the <strong>Browse All LogixNGs</strong> menu item
+      from <strong>Tools &rArr; LogixNG</strong>.  This will create a browser window with all of
+      the LogixNGs, Modules, LogixNG Tables, Global Variables and the LogixNG initialization table.</p>
+
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

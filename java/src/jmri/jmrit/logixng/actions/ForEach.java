@@ -184,6 +184,10 @@ public class ForEach extends AbstractDigitalAction
 
                 if (value instanceof Manager) {
                     collectionRef.set(((Manager<? extends NamedBean>) value).getNamedBeanSet());
+                } else if (value != null && value.getClass().isArray()) {
+                    // Note: (Object[]) is needed to tell that the parameter is an array and not a vararg argument
+                    // See: https://stackoverflow.com/questions/2607289/converting-array-to-list-in-java/2607327#2607327
+                    collectionRef.set(Arrays.asList((Object[])value));
                 } else if (value instanceof Collection) {
                     collectionRef.set((Collection<? extends Object>) value);
                 } else if (value instanceof Map) {

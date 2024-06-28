@@ -12,6 +12,8 @@ import javax.swing.table.*;
 import jmri.*;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.openlcb.OlcbConstants;
+import jmri.jmrix.openlcb.OlcbSensor;
+import jmri.jmrix.openlcb.OlcbTurnout;
 
 import jmri.swing.JmriJTablePersistenceManager;
 import jmri.util.swing.MultiLineCellRenderer;
@@ -99,7 +101,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         add(scrollPane);
 
         var buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+        buttonPanel.setLayout(new jmri.util.swing.WrapLayout());
 
         add(buttonPanel);
 
@@ -125,13 +127,24 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         });
         buttonPanel.add(popcorn);
 
+        JPanel findpanel = new JPanel();
+        buttonPanel.add(findpanel);
+        
         JButton find = new JButton("Find");
-        buttonPanel.add(find);
+        findpanel.add(find);
         find.addActionListener(this::findRequested);
 
         findID = EventIdTextField.getEventIdTextField();
         findID.addActionListener(this::findRequested);
-        buttonPanel.add(findID);
+        findpanel.add(findID);
+
+        JButton sensorButton = new JButton("Names from Sensors");
+        sensorButton.addActionListener(this::sensorRequested);
+        buttonPanel.add(sensorButton);
+        
+        JButton turnoutButton = new JButton("Names from Turnouts");
+        turnoutButton.addActionListener(this::turnoutRequested);
+        buttonPanel.add(turnoutButton);
 
         buttonPanel.setMaximumSize(buttonPanel.getPreferredSize());
 
@@ -237,7 +250,52 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         log.debug("Request find event {}", findID.getText());
         model.highlightEvent(new EventID(findID.getText()));
     }
+    
+    public void sensorRequested(java.awt.event.ActionEvent e) {
+        // loop over sensors to find the OpenLCB ones
+        var beans = InstanceManager.getDefault(SensorManager.class).getNamedBeanSet();
+        var tagmgr = InstanceManager.getDefault(IdTagManager.class);
+        for (NamedBean bean : beans ) {
+            if (bean instanceof OlcbSensor) {
+                oneSensorToTag(true,  bean, tagmgr); // active
+                oneSensorToTag(false, bean, tagmgr); // inactive
+            }
+        }
+    }
 
+    private void oneSensorToTag(boolean isActive, NamedBean bean, IdTagManager tagmgr) {
+        var sensor = (OlcbSensor) bean;
+        var sensorID = sensor.getEventID(isActive);
+        if (tagmgr.getIdTag(OlcbConstants.tagPrefix+sensorID.toShortString()) == null) {
+            // tag doesn't exist, make it.
+            tagmgr.provideIdTag(OlcbConstants.tagPrefix+sensorID.toShortString())
+                .setUserName(sensor.getEventName(isActive));
+        }
+    }
+
+    public void turnoutRequested(java.awt.event.ActionEvent e) {
+        // loop over turnouts to find the OpenLCB ones
+        var beans = InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet();
+        var tagmgr = InstanceManager.getDefault(IdTagManager.class);
+        for (NamedBean bean : beans ) {
+            if (bean instanceof OlcbTurnout) {
+                oneTurnoutToTag(true,  bean, tagmgr); // thrown
+                oneTurnoutToTag(false, bean, tagmgr); // closed
+            }
+        }
+    }
+
+    private void oneTurnoutToTag(boolean isThrown, NamedBean bean, IdTagManager tagmgr) {
+        var turnout = (OlcbTurnout) bean;
+        var turnoutID = turnout.getEventID(isThrown);
+        if (tagmgr.getIdTag(OlcbConstants.tagPrefix+turnoutID.toShortString()) == null) {
+            // tag doesn't exist, make it.
+            tagmgr.provideIdTag(OlcbConstants.tagPrefix+turnoutID.toShortString())
+                .setUserName(turnout.getEventName(isThrown));
+        }
+    }
+    
+    
     // CSV file chooser
     // static to remember choice from one use to another.
     static JFileChooser fileChooser = null;
@@ -546,7 +604,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             TripleMemo empty = null;    // an existing empty cell                       // TODO: switch to int index for handle update below
             TripleMemo bestEmpty = null;// an existing empty cell with matching consumer// TODO: switch to int index for handle update below
             TripleMemo sameNodeID = null;// cell with matching consumer                 // TODO: switch to int index for handle update below
-            for (int i = 1; i < memos.size(); i++) {
+            for (int i = 0; i < memos.size(); i++) {
                 var memo = memos.get(i);
                 if (memo.eventID.equals(eventID) ) {
                     // if nodeID matches, already present; ignore
@@ -649,7 +707,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             TripleMemo empty = null;    // an existing empty cell                       // TODO: switch to int index for handle update below
             TripleMemo bestEmpty = null;// an existing empty cell with matching producer// TODO: switch to int index for handle update below
             TripleMemo sameNodeID = null;// cell with matching consumer                 // TODO: switch to int index for handle update below
-            for (int i = 1; i < memos.size(); i++) {
+            for (int i = 0; i < memos.size(); i++) {
                 var memo = memos.get(i);
                 if (memo.eventID.equals(eventID) ) {
                     // if nodeID matches, already present; ignore
@@ -657,6 +715,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                         // might be 2nd EventTablePane to process the data,
                         // hence memos would already have been processed. To
                         // handle that, always fire a change to the table.
+                        log.trace("    nodeDI == memo.consumer");
                         handleTableUpdate(i, i);
                         return;
                     }
@@ -707,6 +766,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             }
 
             // have to make a new one
+            log.trace("    make a new one");
             var memo = new TripleMemo(
                             eventID,
                             null,

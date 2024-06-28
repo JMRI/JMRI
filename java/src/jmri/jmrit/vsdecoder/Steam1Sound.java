@@ -610,7 +610,8 @@ class Steam1Sound extends EngineSound {
                 return null;
             }
         }
-
+        
+        @SuppressWarnings("hiding")     // Field has same name as a field in the super class
         private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(S1Notch.class);
 
     }
@@ -1375,7 +1376,8 @@ class Steam1Sound extends EngineSound {
                 ts.setPosition(p);
             }
         }
-
+        
+        @SuppressWarnings("hiding")     // Field has same name as a field in the super class
         private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(S1LoopThread.class);
 
     }

@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * 
  */
 public class ConsistListCellRenderer extends JLabel implements ListCellRenderer<Object> {
-    private final static int HEIGHT = 19;
+    private final static int IMAGE_HEIGHT = 19;
     
     @Override
     public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {        
@@ -38,7 +38,7 @@ public class ConsistListCellRenderer extends JLabel implements ListCellRenderer<
             LocoAddress consistAddress = (LocoAddress) value;
             setText(consistAddress.toString());
             
-            BufferedImage bi = new BufferedImage( 1, HEIGHT, BufferedImage.TYPE_INT_ARGB);            
+            BufferedImage bi = new BufferedImage( 1, IMAGE_HEIGHT, BufferedImage.TYPE_INT_ARGB);            
             Consist consist =  InstanceManager.getDefault(jmri.ConsistManager.class).getConsist(consistAddress);
             Font f = new Font("Monospaced", Font.PLAIN, InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize());
             
@@ -55,7 +55,7 @@ public class ConsistListCellRenderer extends JLabel implements ListCellRenderer<
                         icon = InstanceManager.getDefault(RosterIconFactory.class).getReversedIcon(reName);
                     }
                     if (icon != null) {                        
-                        BufferedImage ti = new BufferedImage( bi.getWidth() + icon.getIconWidth(), HEIGHT, BufferedImage.TYPE_INT_ARGB);
+                        BufferedImage ti = new BufferedImage( bi.getWidth() + icon.getIconWidth(), IMAGE_HEIGHT, BufferedImage.TYPE_INT_ARGB);
                         Graphics g = ti.createGraphics();
                         g.drawImage(icon.getImage(), ti.getHeight()/2-icon.getIconHeight()/2, 0, null);
                         g.drawImage(bi, icon.getIconWidth(), 0, null);           
@@ -69,13 +69,13 @@ public class ConsistListCellRenderer extends JLabel implements ListCellRenderer<
                 }
                 if (label != null) {
                     // write label for that locomotive in a buffered image                    
-                    BufferedImage li =  new BufferedImage( label.length()*f.getSize(),  HEIGHT, BufferedImage.TYPE_INT_ARGB);
+                    BufferedImage li =  new BufferedImage( label.length()*f.getSize(),  IMAGE_HEIGHT, BufferedImage.TYPE_INT_ARGB);
                     Graphics gli = li.createGraphics();
                     gli.setFont(f);
                     gli.setColor(this.getForeground());
-                    gli.drawString(label, 0, HEIGHT/2 + gli.getFontMetrics().getMaxAscent()/2);                    
+                    gli.drawString(label, 0, IMAGE_HEIGHT/2 + gli.getFontMetrics().getMaxAscent()/2);                    
                     // expand existing buffered image
-                    BufferedImage ti = new BufferedImage( gli.getFontMetrics().stringWidth(label) + bi.getWidth() +2, HEIGHT, BufferedImage.TYPE_INT_ARGB);
+                    BufferedImage ti = new BufferedImage( gli.getFontMetrics().stringWidth(label) + bi.getWidth() +2, IMAGE_HEIGHT, BufferedImage.TYPE_INT_ARGB);
                     Graphics gti = ti.createGraphics(); 
                     gti.drawImage(li, 0, 0, null);
                     gti.drawImage(bi, gli.getFontMetrics().stringWidth(label)+2, 0, null);

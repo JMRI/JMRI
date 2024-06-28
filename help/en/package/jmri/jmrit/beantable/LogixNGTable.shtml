@@ -69,11 +69,20 @@
           The <strong>Select</strong> combo box is used to select actions for the selected LogixNG.
           See <a href="#selectActions">Select Actions</a>
         </dd>
+
+        <dt>Startup<span class="since">since 5.7.3</span></dt>
+
+        <dd>The Startup checkboxes provide a summary of the Startup selections for the ConditionalNGs
+        within each LogixNG. A solid check indicates all of the ConditionalNGs have Startup enabled.
+        An empty checkbox indicates no ConditionalNGs are enabled and a partal check means there is
+        a mixture.  Clicking on a checkbox will enable or disable the Startup setting for all of the
+        ConditionalNGs within that LogixNG.</dd>
+
       </dl>
 
       <h2 id="selectActions">Select Actions</h2>
 
-      <p>The dropdown combo box has 4 actions that can be applied to the current LogixNG row.</p>
+      <p>The dropdown combo box has five actions that can be applied to the current LogixNG row.</p>
 
       <div style="margin-left: 2em">
         <a href="../logixng/images/SelectActions.png"><img src=

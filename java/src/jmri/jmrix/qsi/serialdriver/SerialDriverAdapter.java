@@ -8,13 +8,14 @@ import java.io.InputStream;
 import jmri.jmrix.qsi.QsiPortController;
 import jmri.jmrix.qsi.QsiSystemConnectionMemo;
 import jmri.jmrix.qsi.QsiTrafficController;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import purejavacomm.CommPortIdentifier;
-import purejavacomm.NoSuchPortException;
-import purejavacomm.PortInUseException;
-import purejavacomm.SerialPort;
-import purejavacomm.UnsupportedCommOperationException;
+
+import jmri.jmrix.purejavacomm.CommPortIdentifier;
+import jmri.jmrix.purejavacomm.NoSuchPortException;
+import jmri.jmrix.purejavacomm.PortInUseException;
+import jmri.jmrix.purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements SerialPortAdapter for the QSI system.
@@ -35,7 +36,7 @@ public class SerialDriverAdapter extends QsiPortController {
         this.manufacturerName = jmri.jmrix.qsi.QSIConnectionTypeList.QSI;
     }
 
-    SerialPort activeSerialPort = null;
+    jmri.jmrix.purejavacomm.SerialPort activeSerialPort = null;
 
     @Override
     public String openPort(String portName, String appName) {
@@ -44,14 +45,17 @@ public class SerialDriverAdapter extends QsiPortController {
             // get and open the primary port
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
             try {
-                activeSerialPort = (SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
+                activeSerialPort = portID.open(appName, 2000);  // name of program, msec to wait
             } catch (PortInUseException p) {
                 return handlePortBusy(p, portName, log);
             }
 
             // try to set it for communication via SerialDriver
             try {
-                activeSerialPort.setSerialPortParams(19200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+                activeSerialPort.setSerialPortParams(19200,
+                        jmri.jmrix.purejavacomm.SerialPort.DATABITS_8,
+                        jmri.jmrix.purejavacomm.SerialPort.STOPBITS_1,
+                        jmri.jmrix.purejavacomm.SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();

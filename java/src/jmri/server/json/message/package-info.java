@@ -42,10 +42,10 @@
  * why it received the message. This is null if no context was sent by the
  * client, or if the context sent was not a JSON object.</dd>
  * <dt>message</dt><dd>The message text.</dd>
- * <dt>type</dt><dd>One of {@value jmri.server.json.message.JsonMessage#INFO},
- * {@value jmri.server.json.message.JsonMessage#SUCCESS},
- * {@value jmri.server.json.message.JsonMessage#WARNING}, or
- * {@value jmri.server.json.message.JsonMessage#ERROR}</dd>
+ * <dt>type</dt><dd>One of {@link jmri.server.json.message.JsonMessage.TYPE#INFO},
+ * {@link jmri.server.json.message.JsonMessage.TYPE#SUCCESS},
+ * {@link jmri.server.json.message.JsonMessage.TYPE#WARNING}, or
+ * {@link jmri.server.json.message.JsonMessage.TYPE#ERROR}</dd>
  * <dt>locale</dt><dd>The message locale, which may differ from both the
  * client's locale and the JMRI server's locale.</dd>
  * </dl>

@@ -4,15 +4,14 @@ import java.io.*;
 import java.util.*;
 
 import jmri.JmriException;
+import jmri.jmrit.display.layoutEditor.*;
 import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Test ExpressionNodeMethod.
@@ -36,12 +35,39 @@ public class ExpressionNodeMethodTest {
         ExpressionNodeMethod t = new ExpressionNodeMethod(method, variables, parameterList);
         Object result = t.calculate(object, symbolTable);
 
-        Assert.assertEquals(expectedResult, result);
+        Assertions.assertEquals(expectedResult, result);
     }
 
     @Test
     public void testExpressionNodeMethod() throws JmriException {
         testCall("Hello", "substring", "ell", new Object[]{1,4});
+    }
+
+    @Test
+    public void testMapEntry() throws JmriException {
+        // HashMap.entrySet() returns a set of classes that are private.
+        // We cannot use reflection to call methods on a class that's private.
+        Map<String, String> map = new HashMap<>();
+        map.put("Hello", "World");
+        var entry = map.entrySet().iterator().next();
+        testCall(entry, "getKey", "Hello", new Object[]{});
+        testCall(entry, "getValue", "World", new Object[]{});
+        testCall(entry, "toString", "Hello=World", new Object[]{});
+    }
+
+    @Test
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    public void testMethodWithBooleanParameter() throws JmriException {
+        var editor = new jmri.jmrit.display.layoutEditor.LayoutEditor("My layout");
+        var trackSegment = new TrackSegment("Id", "A", HitPointType.TRACK, "B", HitPointType.TRACK, false, editor);
+        var trackSegmentView = new TrackSegmentView(trackSegment, editor);
+        editor.addLayoutTrack(trackSegment, trackSegmentView);
+        var segments = editor.getTrackSegmentViews();
+        var segment = segments.get(0);
+        segment.setHidden(false);
+        Assertions.assertFalse(segment.isHidden());
+        testCall(segment, "setHidden", null, new Object[]{true});
+        Assertions.assertTrue(segment.isHidden());
     }
 
     /**
@@ -204,13 +230,14 @@ public class ExpressionNodeMethodTest {
     }
 
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 

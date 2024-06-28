@@ -131,7 +131,7 @@ public class TimeoutReporter extends AbstractNamedBeanDecorator implements Repor
         }
 
         @Override
-        @SuppressWarnings("SleepWhileInLoop")
+//        @SuppressWarnings("SleepWhileInLoop")
         public void run() {
             while ((whenLastReported + TIMEOUT) > System.currentTimeMillis()) {
                 try {

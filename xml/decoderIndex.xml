@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.7.2plus+jake+20240112T1529Z+Reb8c83d1bda on Fri Jan 12 10:29:11 EST 2024-->
-  <decoderIndex version="577">
+  <!--Written by JMRI version 5.7.9plus+jake+20240626T1931Z+Rb4c9eabc2bc on Wed Jun 26 15:32:25 EDT 2024-->
+  <decoderIndex version="599">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -114,6 +114,7 @@
       <manufacturer mfg="Nagoden" mfgID="108" />
       <manufacturer mfg="New York Byano Limited" mfgID="71" />
       <manufacturer mfg="Ngineering" mfgID="43" />
+      <manufacturer mfg="No Decoder" mfgID="1000" />
       <manufacturer mfg="Noarail" mfgID="63" />
       <manufacturer mfg="North Coast Engineering" mfgID="11" />
       <manufacturer mfg="Nucky" mfgID="156" />
@@ -221,6 +222,9 @@
       </family>
       <family name="Raw CVs 1-1024" mfg="NMRA" file="0NMRA_test_1024.xml">
         <model model="Raw CVs 1-1024" />
+      </family>
+      <family name="No Decoder" mfg="No Decoder" file="0NoDecoder.xml">
+        <model model="No Decoder" />
       </family>
       <family name="LocoCruiser" mfg="ANE Model Co, Ltd" lowVersionID="201" highVersionID="201" file="ANE_LC201.xml">
         <model model="LC201" numOuts="5" numFns="5">
@@ -373,6 +377,10 @@
           <output name="2" label="B - Yellow" />
         </model>
         <model model="LE063XF by Lenz (Part #447299)" numOuts="2">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+        </model>
+        <model model="MP15DC (Part #522299)" numOuts="2">
           <output name="1" label="A - White" />
           <output name="2" label="B - Yellow" />
         </model>
@@ -2301,7 +2309,7 @@
           <functionlabel num="12" lockable="false">Safety Blow off</functionlabel>
         </functionlabels>
       </family>
-      <family name="SFX Sound Decoders - Series 7" mfg="Digitrax" lowVersionID="203" highVersionID="203" file="Digitrax_0SFX_Series7.xml">
+      <family name="SFX Sound Decoders - Series 7" mfg="Digitrax" lowVersionID="203" highVersionID="205" file="Digitrax_0SFX_Series7.xml">
         <model model="SDH167" numOuts="6" numFns="28" productID="SDXH167">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
@@ -7199,8 +7207,8 @@
         </model>
       </family>
       <family name="ESU LokSound 5" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255" file="ESU_LokSound5.xml">
-        <model model="LokSound 5" maxFnNum="31" numOuts="20" extFnsESU="V5" productID="33554582" />
-        <model model="LokSound 5 DCC" maxFnNum="31" numOuts="20" extFnsESU="V5" productID="33554588" />
+        <model model="LokSound 5" maxFnNum="31" numOuts="20" extFnsESU="V5" productID="33554582,33554679,33554650" />
+        <model model="LokSound 5 DCC" maxFnNum="31" numOuts="20" extFnsESU="V5" productID="33554588,33554680,33554651" />
         <model model="LokSound 5 micro" maxFnNum="31" numOuts="20" extFnsESU="V5" productID="33554587">
           <output name="1,35" label="|" />
           <!-- suppress unused item -->
@@ -7243,8 +7251,8 @@
         </model>
         <model show="no" model="LokSound 5 micro E24 DCC" replacementModel="LokSound 5 nano DCC" maxFnNum="31" numOuts="20" extFnsESU="V5" productID="16777404" />
         <model model="LokSound 5 nano DCC" maxFnNum="31" numOuts="20" extFnsESU="V5" productID="16777404" />
-        <model model="LokSound 5 L" maxFnNum="31" numOuts="20" extFnsESU="V5" productID="33554589" />
-        <model model="LokSound 5 L DCC" maxFnNum="31" numOuts="20" extFnsESU="V5" productID="33554592" />
+        <model model="LokSound 5 L" maxFnNum="31" numOuts="20" extFnsESU="V5" productID="33554589,16777442,33554653" />
+        <model model="LokSound 5 L DCC" maxFnNum="31" numOuts="20" extFnsESU="V5" productID="33554592,16777443,33554654" />
         <model model="LokSound 5 XL" maxFnNum="31" numOuts="20" extFnsESU="V5" productID="33554591" />
         <model model="LokSound 5 Fx" maxFnNum="31" numOuts="20" extFnsESU="V5" productID="33554629">
           <output name="1,37" label="|" />
@@ -7290,7 +7298,7 @@
           <output name="2,20" label="|" />
           <!-- suppress unused item -->
         </model>
-        <model model="LokSound 5 MKL" maxFnNum="31" numOuts="20" extFnsESU="V5" productID="33554598" />
+        <model model="LokSound 5 MKL" maxFnNum="31" numOuts="20" extFnsESU="V5" productID="33554598,33554681,33554652" />
         <model model="LokSound 5 micro KATO" maxFnNum="31" numOuts="20" extFnsESU="V5" productID="16777405" />
         <model model="LokSound 5 micro DCC Direct Atlas Legacy" maxFnNum="31" numOuts="6" extFnsESU="V5" productID="16777432" />
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
@@ -9406,6 +9414,71 @@
           <output name="4" label="Violet" />
         </model>
       </family>
+      <family name="NMRA-DCC/Motorola" mfg="Kuehn Ing." file="Kuehn_F060.xml">
+        <model model="F060" numOuts="6" numFns="14">
+          <versionCV lowVersionID="34" highVersionID="34" />
+          <output name="1" label="Output|A" />
+          <output name="2" label="Output|B" />
+          <output name="3" label="Output|C" />
+          <output name="4" label="Output|D" />
+          <output name="5" label="Output|E" />
+          <output name="6" label="Output|F" />
+        </model>
+        <!--model model="F060-P" numOuts="6" numFns="14" maxMotorCurrent="1.0 A" maxTotalCurrent="1.1 A">
+    <versionCV lowVersionID="35" highVersionID="35"/>
+     <output name="1" label="Output|A">
+      <label xml:lang="de">Ausgang|A</label>
+      <label xml:lang="cs">Přední|Světlo</label>
+     </output>
+     <output name="2" label="Output|B">
+      <label xml:lang="de">Ausgang|B</label>
+      <label xml:lang="cs">Zadní|Světlo</label>
+     </output>
+     <output name="3" label="Output|C">
+      <label xml:lang="de">Ausgang|C</label>
+      <label xml:lang="cs">Výstup|C</label>
+     </output>
+     <output name="4" label="Output|D">
+      <label xml:lang="de">Ausgang|D</label>
+      <label xml:lang="cs">Výstup|D</label>
+     </output>
+     <output name="5" label="Output|E">
+      <label xml:lang="de">Ausgang|E</label>
+      <label xml:lang="cs">Výstup|E</label>
+     </output>
+     <output name="6" label="Output|F">
+      <label xml:lang="de">Ausgang|F</label>
+      <label xml:lang="cs">Výstup|F</label>
+     </output>
+    </model>
+    <model model="F060-P8" numOuts="6" numFns="14" maxMotorCurrent="1.0 A" maxTotalCurrent="1.1 A">
+    <versionCV lowVersionID="35" highVersionID="35"/>
+     <output name="1" label="Output|A">
+      <label xml:lang="de">Ausgang|A</label>
+      <label xml:lang="cs">Přední|Světlo</label>
+     </output>
+     <output name="2" label="Output|B">
+      <label xml:lang="de">Ausgang|B</label>
+      <label xml:lang="cs">Zadní|Světlo</label>
+     </output>
+     <output name="3" label="Output|C">
+      <label xml:lang="de">Ausgang|C</label>
+      <label xml:lang="cs">Výstup|C</label>
+     </output>
+     <output name="4" label="Output|D">
+      <label xml:lang="de">Ausgang|D</label>
+      <label xml:lang="cs">Výstup|D</label>
+     </output>
+     <output name="5" label="Output|E">
+      <label xml:lang="de">Ausgang|E</label>
+      <label xml:lang="cs">Výstup|E</label>
+     </output>
+     <output name="6" label="Output|F">
+      <label xml:lang="de">Ausgang|F</label>
+      <label xml:lang="cs">Výstup|F</label>
+     </output>
+    </model-->
+      </family>
       <family name="NMRA-DCC/Motorola" mfg="Kuehn Ing." file="Kuehn_N45.xml">
         <model model="N45" numOuts="6" numFns="14">
           <versionCV lowVersionID="35" highVersionID="35" />
@@ -9986,7 +10059,7 @@
           <output name="3" label="C" />
         </model>
         <model model="Standard+ V2 NEM652 10231-02" numOuts="4" numFns="31">
-          <versionCV highVersionID="77" lowVersionID="77" />
+          <versionCV highVersionID="104" lowVersionID="77" />
           <output name="1" label="A" />
           <output name="2" label="B" />
           <output name="3" label="C" />
@@ -10188,6 +10261,18 @@
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
+        </model>
+      </family>
+      <family name="mXion" mfg="MD Electronics" file="MDE_mXion_Drive_L.xml">
+        <model model="Drive-L" numOuts="8" numFns="68" lowVersionID="15" highVersionID="15">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+          <output name="5" label=". A3 ." />
+          <output name="6" label=". A4 ." />
+          <output name="7" label=". A5 ." />
+          <output name="8" label=". A6 ." />
         </model>
       </family>
       <family name="MERG decoders" mfg="MERG" lowVersionID="104" file="MERG_10.xml">
@@ -12910,9 +12995,76 @@
       <family name="NYB Dual Mode Decoder" mfg="New York Byano Limited" type="locomotive" file="NYB_dualmode.xml">
         <model model="NYB Dual Mode Decoder" numOuts="2" numFns="0" lowVersionID="46" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
       </family>
+      <family name="PIKO SUSI Lichtdekoder V2 (XP5.1)" mfg="PIKO" lowVersionID="0" highVersionID="15" file="Piko_SUSI_LichtDecoder2_XP5.1.xml">
+        <!-- to be checked by hardware owner -->
+        <model show="no" model="PIKO SUSI LC2" numOuts="22" numFns="31" productID="PIKO_SUSI_LC2" lowVersionID="0">
+          <output name="1" label="A1" />
+          <output name="2" label="A2" />
+          <output name="3" label="A3" />
+          <output name="4" label="A4" />
+          <output name="5" label="A5" />
+          <output name="6" label="A6" />
+          <output name="7" label="A7" />
+          <output name="2" label="A8" />
+          <output name="3" label="A9" />
+          <output name="4" label="A10" />
+          <output name="5" label="A11" />
+          <output name="6" label="A12" />
+          <output name="7" label="A13" />
+        </model>
+        <model model="PIKO ML4000 SUSI LC2" numOuts="22" numFns="31" productID="PIKO_ML4000_SUSI_LC2" lowVersionID="0">
+          <output name="1" label="A1" />
+          <output name="2" label="A2" />
+          <output name="3" label="A3" />
+          <output name="4" label="A4" />
+          <output name="5" label="A5" />
+          <output name="6" label="A6" />
+          <output name="7" label="A7" />
+          <output name="2" label="A8" />
+          <output name="3" label="A9" />
+          <output name="4" label="A10" />
+          <output name="5" label="A11" />
+          <output name="6" label="A12" />
+          <output name="7" label="A13" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">
+              <text>Headlights</text>
+              <text xml:lang="de">Spitzenlicht</text>
+            </functionlabel>
+            <functionlabel num="1" lockable="true" />
+            <functionlabel num="2" lockable="true" />
+            <functionlabel num="3" lockable="false" />
+            <functionlabel num="4" lockable="false" />
+            <functionlabel num="5" lockable="false" />
+            <functionlabel num="6" lockable="false" />
+            <functionlabel num="7" lockable="true">Headlight Dimmer</functionlabel>
+            <functionlabel num="8" lockable="false" />
+            <functionlabel num="9" lockable="false">Indicators + Markers Lights (multi steps)</functionlabel>
+            <functionlabel num="10" lockable="true">Dual White Gyralite</functionlabel>
+            <functionlabel num="11" lockable="true">Red Gyralite</functionlabel>
+            <functionlabel num="12" lockable="true" />
+            <functionlabel num="13" lockable="true">Cab Interior Light</functionlabel>
+            <functionlabel num="14" lockable="true">Engine Room Light</functionlabel>
+            <functionlabel num="15" lockable="false">Lighting Double Traction (multi steps)</functionlabel>
+            <functionlabel num="16" lockable="false" />
+            <functionlabel num="17" lockable="true" />
+            <functionlabel num="18" lockable="true" />
+            <functionlabel num="19" lockable="true" />
+            <functionlabel num="20" lockable="true" />
+            <functionlabel num="21" lockable="false" />
+            <functionlabel num="22" lockable="false" />
+            <functionlabel num="23" lockable="false" />
+            <functionlabel num="24" lockable="true" />
+            <functionlabel num="25" lockable="true">Control Stand Light</functionlabel>
+            <functionlabel num="26" lockable="false" />
+            <functionlabel num="27" lockable="true" />
+            <functionlabel num="28" lockable="true"> m </functionlabel>
+          </functionlabels>
+        </model>
+      </family>
       <family name="PIKO SUSI Lichtdekoder (XP5.1)" mfg="PIKO" lowVersionID="0" highVersionID="15" file="Piko_SUSI_LichtDecoder_XP5.1.xml">
         <!-- to be checked by hardware owner -->
-        <model model="PIKO SUSI Decoder" numOuts="7" numFns="31" productID="PIKO_SUSI_Decoder" lowVersionID="0">
+        <model model="PIKO SUSI LC" numOuts="7" numFns="31" productID="PIKO_SUSI_LC" lowVersionID="0">
           <output name="1" label="A1" />
           <output name="2" label="A2" />
           <output name="3" label="A3" />
@@ -12921,7 +13073,7 @@
           <output name="6" label="A6" />
           <output name="7" label="A7" />
         </model>
-        <model model="PIKO BR 83 SUSI Decoder" numOuts="6" numFns="31" productID="PIKO_BR83_SUSI_Decoder" lowVersionID="0">
+        <model model="PIKO BR 83 SUSI LC" numOuts="6" numFns="31" productID="PIKO_BR83_SUSI_LC" lowVersionID="0">
           <output name="1" label="A1" />
           <output name="2" label="A2" />
           <output name="3" label="A3" />
@@ -12929,7 +13081,7 @@
           <output name="5" label="A5" />
           <output name="6" label="A6" />
         </model>
-        <model model="PIKO BR 93 SUSI Decoder" numOuts="6" numFns="31" productID="PIKO_BR93_SUSI_Decoder" lowVersionID="0">
+        <model model="PIKO BR 93 SUSI LC" numOuts="6" numFns="31" productID="PIKO_BR93_SUSI_LC" lowVersionID="0">
           <output name="1" label="A1" />
           <output name="2" label="A2" />
           <output name="3" label="A3" />
@@ -12937,7 +13089,15 @@
           <output name="5" label="A5" />
           <output name="6" label="A6" />
         </model>
-        <model model="PIKO S 499 SUSI Decoder" numOuts="7" numFns="31" productID="PIKO_S499_SUSI_Decoder" lowVersionID="0">
+        <model model="PIKO BR 150 SUSI LC" numOuts="6" numFns="31" productID="PIKO_BR150_SUSI_LC" lowVersionID="0">
+          <output name="1" label="A1" />
+          <output name="2" label="A2" />
+          <output name="3" label="A3" />
+          <output name="4" label="A4" />
+          <output name="5" label="A5" />
+          <output name="6" label="A6" />
+        </model>
+        <model model="PIKO S 499 SUSI LC" numOuts="7" numFns="31" productID="PIKO_S499_SUSI_LC" lowVersionID="0">
           <output name="1" label="A1" />
           <output name="2" label="A2" />
           <output name="3" label="A3" />
@@ -13001,43 +13161,214 @@
           <!-- Anfahren/Bremsen -->
         </model>
       </family>
-      <family name="PIKO SmartDecoder XP5.1 (old - not use)" mfg="PIKO" lowVersionID="3" highVersionID="15" file="Piko_SmartDecoder_XP5.1_Sound.xml">
+      <family name="PIKO SmartDecoder XP5.1 (old - not use)" mfg="PIKO" lowVersionID="3" highVersionID="9" file="Piko_SmartDecoder_XP5.1_Sound.xml">
         <!-- to be checked by hardware owner -->
-        <model model="PIKO46550-18" numOuts="4" numFns="68" productID="PIKO46550-18" lowVersionID="5" replacementModel="PIKO46550-18 BR83-TT V1.5" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
+        <model show="no" model="PIKO46550-18" numOuts="4" numFns="68" productID="PIKO46550-18" lowVersionID="5" replacementModel="PIKO46550-18 BR83-TT V1.5" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
-        <model model="PIKO46551-18" numOuts="4" numFns="68" productID="PIKO46551-18" lowVersionID="8" replacementModel="PIKO46551-18 BR93-TT V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
-          <output name="1" label="F0(f)" />
-          <output name="2" label="F0(r)" />
-          <output name="3" label=". A1 ." />
-          <output name="4" label=". A2 ." />
-        </model>
-      </family>
-      <family name="PIKO SmartDecoder XP5.1 (version 1.8+)" mfg="PIKO" lowVersionID="8" highVersionID="9" file="Piko_SmartDecoder_XP5.1_Sound_noSUSI_v1.8.xml">
-        <model model="PIKO46505-18 XP5.1 V1.8 no SUSI" numOuts="4" numFns="68" productID="PIKO46505-18" lowVersionID="8">
-          <output name="1" label="F0(f)" />
-          <output name="2" label="F0(r)" />
-          <output name="3" label=". A1 ." />
-          <output name="4" label=". A2 ." />
-        </model>
-        <model model="PIKO46540-18 BR55-TT V1.8 no SUSI" numOuts="4" numFns="68" productID="PIKO46540-18" lowVersionID="8">
+        <model show="no" model="PIKO46551-18" numOuts="4" numFns="68" productID="PIKO46551-18" lowVersionID="8" replacementModel="PIKO46551-18 BR93-TT V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
       </family>
-      <family name="PIKO SmartDecoder XP5.1 (version 1.1+)" mfg="PIKO" lowVersionID="1" highVersionID="2" file="Piko_SmartDecoder_XP5.1_Sound_v1.1.xml">
-        <model model="PIKO46505-18 XP5.1 V1.1" numOuts="4" numFns="68" productID="PIKO46505-18" replacementModel="PIKO46505-18 XP5.1 V1.5" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
+      <family name="PIKO SmartDecoder XP5.1 (version 1.8+)" mfg="PIKO" lowVersionID="8" highVersionID="15" file="Piko_SmartDecoder_XP5.1_Sound_ML4000_v1.8.xml">
+        <model model="PIKO56627-22 KM ML4000-US V1.8" numOuts="9" numFns="68" productID="PIKO56627-22">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+          <output name="5" label=". A3 ." />
+          <output name="6" label=". A4 ." />
+          <output name="7" label=". A5 ." />
+          <output name="8" label=". A6 ." />
+          <output name="9" label=". A7 ." />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">
+              <text>Headlights</text>
+              <text xml:lang="de">Spitzenlicht</text>
+            </functionlabel>
+            <functionlabel num="1" lockable="true">Bell</functionlabel>
+            <functionlabel num="2" lockable="true">Horn - Playable</functionlabel>
+            <functionlabel num="3" lockable="false">Short Horn</functionlabel>
+            <functionlabel num="4" lockable="false">Dynamic Brake Sound</functionlabel>
+            <functionlabel num="5" lockable="false">Manual Notch Up</functionlabel>
+            <functionlabel num="6" lockable="false">Manual Notch Down</functionlabel>
+            <functionlabel num="7" lockable="true">Headlight Dimmer</functionlabel>
+            <functionlabel num="8" lockable="false">Motor Sounds (multi steps)</functionlabel>
+            <functionlabel num="9" lockable="false">Indicators &amp; Markers Lights (multi steps)</functionlabel>
+            <functionlabel num="10" lockable="true">Dual White Gyralite</functionlabel>
+            <functionlabel num="11" lockable="true">Red Gyralite</functionlabel>
+            <functionlabel num="12" lockable="true" />
+            <functionlabel num="13" lockable="true">Cab Interior Light</functionlabel>
+            <functionlabel num="14" lockable="true">Engine Room Light</functionlabel>
+            <functionlabel num="15" lockable="false">Lighting Double Traction (multi steps)</functionlabel>
+            <functionlabel num="16" lockable="false">Volume Stepper - 4 Steps</functionlabel>
+            <functionlabel num="17" lockable="true">Couple - Uncouple Sound</functionlabel>
+            <functionlabel num="18" lockable="true">Brake Squeal - Release</functionlabel>
+            <functionlabel num="19" lockable="true">Curve Squeal Sound</functionlabel>
+            <functionlabel num="20" lockable="true">Radiator Fan Sound</functionlabel>
+            <functionlabel num="21" lockable="false">Sander Valve Sound</functionlabel>
+            <functionlabel num="22" lockable="false">Cab Chatter #1</functionlabel>
+            <functionlabel num="23" lockable="false">Cab Chatter #2</functionlabel>
+            <functionlabel num="24" lockable="true">Air Compressor Sound</functionlabel>
+            <functionlabel num="25" lockable="true">Control Stand Light</functionlabel>
+            <functionlabel num="26" lockable="false">Grade Crossing Horn</functionlabel>
+            <functionlabel num="27" lockable="true" />
+            <functionlabel num="28" lockable="true">Switching Mode - Half Speed</functionlabel>
+          </functionlabels>
+          <soundlabels>
+            <soundlabel num="1">Prime Movers</soundlabel>
+          </soundlabels>
+        </model>
+        <model model="PIKO56627-22 KM ML4000-EU V1.8" numOuts="9" numFns="68" productID="PIKO56627-22">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+          <output name="5" label=". A3 ." />
+          <output name="6" label=". A4 ." />
+          <output name="7" label=". A5 ." />
+          <output name="8" label=". A6 ." />
+          <output name="9" label=". A7 ." />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">
+              <text>Headlights</text>
+              <text xml:lang="de">Spitzenlicht</text>
+            </functionlabel>
+            <functionlabel num="1" lockable="true">
+              <text>Bell</text>
+              <text xml:lang="de">Glocke</text>
+            </functionlabel>
+            <functionlabel num="2" lockable="true">
+              <text>Horn - Playable</text>
+              <text xml:lang="de">Horn lang</text>
+            </functionlabel>
+            <functionlabel num="3" lockable="false">
+              <text>Short Horn</text>
+              <text xml:lang="de">Horn kurz</text>
+            </functionlabel>
+            <functionlabel num="4" lockable="false">
+              <text>Dynamic Brake Sound</text>
+              <text xml:lang="de">Dynamische Bremse</text>
+            </functionlabel>
+            <functionlabel num="5" lockable="true">
+              <text>Signal Light Green</text>
+              <text xml:lang="de">Signallicht grün</text>
+            </functionlabel>
+            <functionlabel num="6" lockable="true">
+              <text>Signal Light White</text>
+              <text xml:lang="de">Signallicht weiß</text>
+            </functionlabel>
+            <functionlabel num="7" lockable="true">
+              <text>Headlight Dimmer</text>
+              <text xml:lang="de">Abblendlicht</text>
+            </functionlabel>
+            <functionlabel num="8" lockable="true">
+              <text>Motor Sounds</text>
+              <text xml:lang="de">Motor Sound</text>
+            </functionlabel>
+            <functionlabel num="9" lockable="true">
+              <text>License Plate Illumination</text>
+              <text xml:lang="de">Nummernschildbeleuchtung</text>
+            </functionlabel>
+            <functionlabel num="10" lockable="true">
+              <text>Dual White Gyralite</text>
+              <text xml:lang="de">Gyralite weiß 2fach</text>
+            </functionlabel>
+            <functionlabel num="11" lockable="true">
+              <text>Red Gyralite</text>
+              <text xml:lang="de">Gyralite rot</text>
+            </functionlabel>
+            <functionlabel num="12" lockable="true">
+              <text>Signal Light Red</text>
+              <text xml:lang="de">Signallicht rot</text>
+            </functionlabel>
+            <functionlabel num="13" lockable="true">
+              <text>Cab Interior Light</text>
+              <text xml:lang="de">Führerstandsbeleuchtung</text>
+            </functionlabel>
+            <functionlabel num="14" lockable="true">
+              <text>Engine Room Light</text>
+              <text xml:lang="de">Maschinenraumbeleuchtung</text>
+            </functionlabel>
+            <functionlabel num="15" lockable="false">
+              <text>Lighting Double Traction (multi steps)</text>
+              <text xml:lang="de">Beleuchtung Doppeltraktion</text>
+            </functionlabel>
+            <functionlabel num="16" lockable="false" />
+            <functionlabel num="17" lockable="true">
+              <text>Couple - Uncouple Sound</text>
+              <text xml:lang="de">Kuppeln</text>
+            </functionlabel>
+            <functionlabel num="18" lockable="true">
+              <text>Brake Squeal - Release</text>
+              <text xml:lang="de">Bremsenquietschen</text>
+            </functionlabel>
+            <functionlabel num="19" lockable="true">
+              <text>Curve Squeal Sound</text>
+              <text xml:lang="de">Kurvenquietschen</text>
+            </functionlabel>
+            <functionlabel num="20" lockable="true">
+              <text>Radiator Fan Sound</text>
+              <text xml:lang="de">Lüfter</text>
+            </functionlabel>
+            <functionlabel num="21" lockable="false">
+              <text>Sander Valve Sound</text>
+              <text xml:lang="de">Sanden</text>
+            </functionlabel>
+            <functionlabel num="22" lockable="false">
+              <text>Cab Chatter #1</text>
+              <text xml:lang="de">Funk 1</text>
+            </functionlabel>
+            <functionlabel num="23" lockable="false">
+              <text>Cab Chatter #2</text>
+              <text xml:lang="de">Funk 2</text>
+            </functionlabel>
+            <functionlabel num="24" lockable="true">
+              <text>Air Compressor Sound</text>
+              <text xml:lang="de">Kompressor</text>
+            </functionlabel>
+            <functionlabel num="25" lockable="true">
+              <text>Control Stand Light</text>
+              <text xml:lang="de">Führerpultbeleuchtung</text>
+            </functionlabel>
+            <functionlabel num="26" lockable="false">
+              <text>Grade Crossing Horn</text>
+              <text xml:lang="de">Bahnübergangshorn</text>
+            </functionlabel>
+            <functionlabel num="27" lockable="false">
+              <text>Volume Stepper - 4 Steps</text>
+              <text xml:lang="de">Lautstärkestufen</text>
+            </functionlabel>
+            <functionlabel num="28" lockable="true">
+              <text>Switching Mode - Half Speed</text>
+              <text xml:lang="de">Rangiergang</text>
+            </functionlabel>
+          </functionlabels>
+          <soundlabels>
+            <soundlabel num="1">Prime Movers</soundlabel>
+          </soundlabels>
+        </model>
+      </family>
+      <family name="PIKO SmartDecoder XP5.1 (version 1.5+)" mfg="PIKO" lowVersionID="3" highVersionID="5" file="Piko_SmartDecoder_XP5.1_Sound_noSUSI_v1.5.xml">
+        <model model="PIKO46505-18 XP5.1 V1.5 no LC (SUSI)" numOuts="4" numFns="68" productID="PIKO46505-18" replacementModel="PIKO46505-18 XP5.1 V1.8 no LC (SUSI)" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
-        <model model="PIKO56505-22 XP5.1 V1.1" numOuts="9" numFns="68" productID="PIKO56505-22" replacementModel="PIKO56505-22 XP5.1 V1.5" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
+        <model model="PIKO46540-18 BR55-TT V1.5" numOuts="4" numFns="68" productID="PIKO46540-18" replacementModel="PIKO46540-18 BR55-TT V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+        </model>
+        <model model="PIKO56505-22 XP5.1 V1.5 no LC (SUSI)" numOuts="9" numFns="68" productID="PIKO56505-22" replacementModel="PIKO56505-22 XP5.1 V1.8 no LC (SUSI)" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
@@ -13048,7 +13379,7 @@
           <output name="8" label=". A6 ." />
           <output name="9" label=". A7 ." />
         </model>
-        <model model="PIKO56508-16 XP5.1 V1.1" numOuts="6" numFns="68" productID="PIKO56508-16" replacementModel="PIKO56508-16 XP5.1 V1.5" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
+        <model model="PIKO56508-16 XP5.1 V1.5 no LC (SUSI)" numOuts="6" numFns="68" productID="PIKO56508-16" replacementModel="PIKO56508-16 XP5.1 V1.8 no LC (SUSI)" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
@@ -13056,7 +13387,79 @@
           <output name="5" label=". A3 ." />
           <output name="6" label=". A4 ." />
         </model>
-        <model model="PIKO46550-18 BR83-TT V1.1" numOuts="4" numFns="68" productID="PIKO46550-18" lowVersionID="5" replacementModel="PIKO46550-18 BR83-TT V1.5" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
+      </family>
+      <family name="PIKO SmartDecoder XP5.1 (version 1.8+)" mfg="PIKO" lowVersionID="8" highVersionID="12" file="Piko_SmartDecoder_XP5.1_Sound_noSUSI_v1.8.xml">
+        <model model="PIKO46505-18 XP5.1 V1.8 no LC (SUSI)" numOuts="4" numFns="68" productID="PIKO46505-18" lowVersionID="8">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+        </model>
+        <model model="PIKO46540-18 BR55-TT V1.8" numOuts="4" numFns="68" productID="PIKO46540-18" lowVersionID="8">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+        </model>
+        <model model="PIKO56505-22 XP5.1 V1.8 no LC (SUSI)" numOuts="9" numFns="68" productID="PIKO56505-22">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+          <output name="5" label=". A3 ." />
+          <output name="6" label=". A4 ." />
+          <output name="7" label=". A5 ." />
+          <output name="8" label=". A6 ." />
+          <output name="9" label=". A7 ." />
+        </model>
+        <model model="PIKO56508-16 XP5.1 V1.8 no LC (SUSI)" numOuts="6" numFns="68" productID="PIKO56508-16">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+          <output name="5" label=". A3 ." />
+          <output name="6" label=". A4 ." />
+        </model>
+      </family>
+      <family name="PIKO SmartDecoder XP5.1 (version 1.1+)" mfg="PIKO" lowVersionID="1" highVersionID="2" file="Piko_SmartDecoder_XP5.1_Sound_v1.1.xml">
+        <model model="PIKO46505-18 XP5.1 V1.1 no LC (SUSI)" numOuts="4" numFns="68" productID="PIKO46505-18" replacementModel="PIKO46505-18 XP5.1 V1.5 no LC (SUSI)" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+        </model>
+        <model model="PIKO56505-22 XP5.1 V1.1 no LC (SUSI)" numOuts="9" numFns="68" productID="PIKO56505-22" replacementModel="PIKO56505-22 XP5.1 V1.5 no LC (SUSI)" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+          <output name="5" label=". A3 ." />
+          <output name="6" label=". A4 ." />
+          <output name="7" label=". A5 ." />
+          <output name="8" label=". A6 ." />
+          <output name="9" label=". A7 ." />
+        </model>
+        <model model="PIKO56508-16 XP5.1 V1.1 no LC (SUSI)" numOuts="6" numFns="68" productID="PIKO56508-16" replacementModel="PIKO56508-16 XP5.1 V1.5 no LC (SUSI)" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+          <output name="5" label=". A3 ." />
+          <output name="6" label=". A4 ." />
+        </model>
+        <model model="PIKO46505-18 XP5.1 V1.1 with LC (SUSI)" numOuts="4" numFns="68" productID="PIKO46505-18" replacementModel="PIKO46505-18 XP5.1 V1.5 with LC (SUSI)" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+        </model>
+        <model model="PIKO46550-18 BR83-TT V1.1" numOuts="4" numFns="68" productID="PIKO46550-18" replacementModel="PIKO46550-18 BR83-TT V1.5" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+        </model>
+        <model model="PIKO46548-18 BR150-TT V1.1" numOuts="4" numFns="68" productID="PIKO46548-18" replacementModel="PIKO46548-18 BR150-TT V1.5" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
@@ -13064,71 +13467,45 @@
         </model>
       </family>
       <family name="PIKO SmartDecoder XP5.1 (version 1.5+)" mfg="PIKO" lowVersionID="3" highVersionID="5" file="Piko_SmartDecoder_XP5.1_Sound_v1.5.xml">
-        <model model="PIKO46505-18 XP5.1 V1.5" numOuts="4" numFns="68" productID="PIKO46505-18" replacementModel="PIKO46505-18 XP5.1 V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
+        <model model="PIKO46505-18 XP5.1 V1.5 with LC (SUSI)" numOuts="4" numFns="68" productID="PIKO46505-18" replacementModel="PIKO46505-18 XP5.1 V1.8 with LC (SUSI)" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
-        <model model="PIKO56505-22 XP5.1 V1.5" numOuts="9" numFns="68" productID="PIKO56505-22" replacementModel="PIKO56505-22 XP5.1 V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
+        <model model="PIKO46550-18 BR83-TT V1.5" numOuts="4" numFns="68" productID="PIKO46550-18" replacementModel="PIKO46550-18 BR83-TT V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
-          <output name="5" label=". A3 ." />
-          <output name="6" label=". A4 ." />
-          <output name="7" label=". A5 ." />
-          <output name="8" label=". A6 ." />
-          <output name="9" label=". A7 ." />
         </model>
-        <model model="PIKO56508-16 XP5.1 V1.5" numOuts="6" numFns="68" productID="PIKO56508-16" replacementModel="PIKO56508-16 XP5.1 V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
-          <output name="1" label="F0(f)" />
-          <output name="2" label="F0(r)" />
-          <output name="3" label=". A1 ." />
-          <output name="4" label=". A2 ." />
-          <output name="5" label=". A3 ." />
-          <output name="6" label=". A4 ." />
-        </model>
-        <model model="PIKO46550-18 BR83-TT V1.5" numOuts="4" numFns="68" productID="PIKO46550-18" lowVersionID="5" replacementModel="PIKO46550-18 BR83-TT V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
+        <model model="PIKO46548-18 BR150-TT V1.5" numOuts="4" numFns="68" productID="PIKO46548-18" replacementModel="PIKO46548-18 BR150-TT V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
       </family>
-      <family name="PIKO SmartDecoder XP5.1 (version 1.8+)" mfg="PIKO" lowVersionID="8" highVersionID="9" file="Piko_SmartDecoder_XP5.1_Sound_v1.8.xml">
-        <model model="PIKO46505-18 XP5.1 V1.8" numOuts="4" numFns="68" productID="PIKO46505-18">
+      <family name="PIKO SmartDecoder XP5.1 (version 1.8+)" mfg="PIKO" lowVersionID="8" highVersionID="12" file="Piko_SmartDecoder_XP5.1_Sound_v1.8.xml">
+        <model model="PIKO46505-18 XP5.1 V1.8 with LC (SUSI)" numOuts="4" numFns="68" productID="PIKO46505-18">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
-        <model model="PIKO56505-22 XP5.1 V1.8" numOuts="9" numFns="68" productID="PIKO56505-22">
-          <output name="1" label="F0(f)" />
-          <output name="2" label="F0(r)" />
-          <output name="3" label=". A1 ." />
-          <output name="4" label=". A2 ." />
-          <output name="5" label=". A3 ." />
-          <output name="6" label=". A4 ." />
-          <output name="7" label=". A5 ." />
-          <output name="8" label=". A6 ." />
-          <output name="9" label=". A7 ." />
-        </model>
-        <model model="PIKO56508-16 XP5.1 V1.8" numOuts="6" numFns="68" productID="PIKO56508-16">
-          <output name="1" label="F0(f)" />
-          <output name="2" label="F0(r)" />
-          <output name="3" label=". A1 ." />
-          <output name="4" label=". A2 ." />
-          <output name="5" label=". A3 ." />
-          <output name="6" label=". A4 ." />
-        </model>
-        <model model="PIKO46550-18 BR83-TT V1.8" numOuts="4" numFns="68" productID="PIKO46550-18" lowVersionID="8">
+        <model model="PIKO46550-18 BR83-TT V1.8" numOuts="4" numFns="68" productID="PIKO46550-18">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
-        <model model="PIKO46551-18 BR93-TT V1.8" numOuts="4" numFns="68" productID="PIKO46551-18" lowVersionID="8">
+        <model model="PIKO46551-18 BR93-TT V1.8" numOuts="4" numFns="68" productID="PIKO46551-18">
+          <output name="1" label="F0(f)" />
+          <output name="2" label="F0(r)" />
+          <output name="3" label=". A1 ." />
+          <output name="4" label=". A2 ." />
+        </model>
+        <model model="PIKO46548-18 BR150-TT V1.8" numOuts="4" numFns="68" productID="PIKO46548-18">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
@@ -15149,6 +15526,11 @@
         </functionlabels>
       </family>
       <family name="Blunami Diesel" mfg="SoundTraxx (Throttle-Up)" lowVersionID="72" file="SoundTraxx_Blu_Diesel.xml">
+        <model model="BLU-21PNEM8 Alco Diesels" numOuts="8" numFns="30" productID="2160" />
+        <model model="BLU-21PNEM8 Baldwin Diesels" numOuts="8" numFns="30" productID="2161" />
+        <model model="BLU-21PNEM8 EMD Diesels" numOuts="8" numFns="30" productID="2158" />
+        <model model="BLU-21PNEM8 EMD-2 Diesels" numOuts="8" numFns="30" productID="2162" />
+        <model model="BLU-21PNEM8 GE Diesels" numOuts="8" numFns="30" productID="2159" />
         <model model="BLU-2200 Alco Diesels" numOuts="6" numFns="30" productID="2141" />
         <model model="BLU-2200 Baldwin Diesels" numOuts="6" numFns="30" productID="2142" />
         <model model="BLU-2200 EMD Diesels" numOuts="6" numFns="30" productID="2139" />
@@ -15225,6 +15607,7 @@
         </functionlabels>
       </family>
       <family name="Blunami Electric" mfg="SoundTraxx (Throttle-Up)" lowVersionID="72" file="SoundTraxx_Blu_Electric.xml">
+        <model model="BLU-21PNEM8 Electric" numOuts="8" numFns="30" productID="2163" />
         <model model="BLU-2200 Electric" numOuts="6" numFns="30" productID="2144" />
         <model model="BLU-4408 Electric" numOuts="8" numFns="30" productID="2151" />
         <output name="3" label="  FX3  " />
@@ -15288,6 +15671,7 @@
         </functionlabels>
       </family>
       <family name="Blunami Steam" mfg="SoundTraxx (Throttle-Up)" lowVersionID="72" file="SoundTraxx_Blu_Steam.xml">
+        <model model="BLU-21PNEM8 Steam-2" numOuts="8" numFns="30" productID="2157" />
         <model model="BLU-2200 Steam-2" numOuts="6" numFns="30" productID="2138" />
         <model model="BLU-4408 Steam-2" numOuts="8" numFns="30" productID="2145" />
         <output name="3" label="  FX3  " />
@@ -16754,24 +17138,33 @@
         <model model="TSU-GN2208 F7 2" numOuts="8" numFns="30" productID="6270" />
         <model model="TSU-GN2208 F7 6" numOuts="8" numFns="30" productID="6271" />
         <model model="TSU-GN2208 F7 7" numOuts="8" numFns="30" productID="6272" />
+        <model model="TSU-GN2208 F7 8" numOuts="8" numFns="30" productID="6411" />
+        <model model="TSU-GN2208 F7 12" numOuts="8" numFns="30" productID="6329" />
         <model model="TSU-GN2208 F7 21" numOuts="8" numFns="30" productID="6367" />
         <model model="TSU-GN2208 F7 15" numOuts="8" numFns="30" productID="6320" />
         <model model="TSU-GN2208 F7 16" numOuts="8" numFns="30" productID="6365" />
         <model model="TSU-GN2208 F7 17" numOuts="8" numFns="30" productID="6366" />
+        <model model="TSU-GN2208 F7/GP7 10" numOuts="8" numFns="30" productID="6331" />
+        <model model="TSU-GN2208 F7/GP9 9" numOuts="8" numFns="30" productID="6328" />
         <model model="TSU-GN2208 FP7" numOuts="8" numFns="30" productID="6330" />
         <model model="TSU-GN2200 GP7" numOuts="6" numFns="30" productID="6146" />
         <model model="TSU-GN2208 GP7" numOuts="8" numFns="30" productID="6292" />
         <model model="TSU-GN2208 GP7 13" numOuts="8" numFns="30" productID="6333" />
         <model model="TSU-GN2208 GP7 19" numOuts="8" numFns="30" productID="6351" />
         <model model="TSU-GN2208 GP7 20" numOuts="8" numFns="30" productID="6357" />
+        <model model="TSU-GN2208 GP7 20a" numOuts="8" numFns="30" productID="6336" />
+        <model model="TSU-GN2208 GP7 27" numOuts="8" numFns="30" productID="6426" />
         <model model="TSU-GN2200 GP7 w/DB" numOuts="6" numFns="30" productID="6147" />
         <model model="TSU-GN2208 GP7A/B" numOuts="8" numFns="30" productID="6356" />
         <model model="TSU-GN2208 GP7R" numOuts="8" numFns="30" productID="6247" />
         <model model="TSU-GN2208 GP7u" numOuts="8" numFns="30" productID="6246" />
         <model model="TSU-GN2200 GP7/GP9" numOuts="6" numFns="30" productID="6169" />
         <model model="TSU-GN2208 GP7/GP9" numOuts="6" numFns="30" productID="6236" />
+        <model model="TSU-GN2208 GP7/GP9 11" numOuts="6" numFns="30" productID="6332" />
         <model model="TSU-GN2208 GP7/GP9 22" numOuts="6" numFns="30" productID="6291" />
+        <model model="TSU-GN2208 GP7/GP9 23" numOuts="6" numFns="30" productID="6355" />
         <model model="TSU-GN2208 GP7/GP9/GP18" numOuts="8" numFns="30" productID="6290" />
+        <model model="TSU-GN2208 GP7/GP9/GP18 14" numOuts="8" numFns="30" productID="6335" />
         <model model="TSU-GN2200 GP7/GP9 w/beacon" numOuts="6" numFns="30" productID="6200" />
         <model model="TSU-GN2200 GP7/GP9 w/mars" numOuts="6" numFns="30" productID="6164" />
         <model model="TSU-GN2208 GP9" numOuts="8" numFns="30" productID="6234" />
@@ -16788,13 +17181,17 @@
         <model model="TSU-GN2200 GP9 w/mars" numOuts="6" numFns="30" productID="6163" />
         <model model="TSU-GN2208 GP9B" numOuts="8" numFns="30" productID="6237" />
         <model model="TSU-GN2208 GP18" numOuts="8" numFns="30" productID="6354" />
+        <model model="TSU-GN2208 GP18 23" numOuts="8" numFns="30" productID="6447" />
         <model model="TSU-GN2208 GP18 25" numOuts="8" numFns="30" productID="6350" />
+        <model model="TSU-GN2208 GP15-1 19" numOuts="8" numFns="30" productID="6361" />
+        <model model="TSU-GN2208 GP15-1 22" numOuts="8" numFns="30" productID="6363" />
         <model model="TSU-GN2208 GP15-1 27" numOuts="8" numFns="30" productID="6465" />
         <model model="TSU-GN2208 GP15-1 28" numOuts="8" numFns="30" productID="6466" />
         <model model="TSU-GN2200 GP15-1 w/beacon" numOuts="6" numFns="30" productID="6174" />
         <model model="TSU-GN2208 GP15-1 w/beacon" numOuts="8" numFns="30" productID="6362" />
         <model model="TSU-GN2200 GP15-1 w/beacon2" numOuts="6" numFns="30" productID="6175" />
         <model model="TSU-GN2200 GP15-1 w/ditch" numOuts="6" numFns="30" productID="6176" />
+        <model model="TSU-GN2208 GP15-1/GP38-2 18" numOuts="8" numFns="30" productID="6360" />
         <model model="TSU-GN2200 GP15T" numOuts="6" numFns="30" productID="6173" />
         <model model="TSU-GN2208 GP15T 5" numOuts="8" numFns="30" productID="6461" />
         <model model="TSU-GN2208 GP15T 6" numOuts="8" numFns="30" productID="6462" />
@@ -16802,10 +17199,20 @@
         <model model="TSU-GN2208 GP15T 8" numOuts="8" numFns="30" productID="6464" />
         <model model="TSU-GN2200 GP38-2" numOuts="6" numFns="30" productID="6152" />
         <model model="TSU-GN2200 GP38-2 2" numOuts="6" numFns="30" productID="6220" />
+        <model model="TSU-GN2208 GP38-2 3" numOuts="8" numFns="30" productID="6368" />
         <model model="TSU-GN2208 GP38-2 4" numOuts="8" numFns="30" productID="6306" />
+        <model model="TSU-GN2208 GP38-2 5" numOuts="8" numFns="30" productID="6434" />
         <model model="TSU-GN2208 GP38-2 7" numOuts="8" numFns="30" productID="6307" />
         <model model="TSU-GN2208 GP38-2 13" numOuts="8" numFns="30" productID="6308" />
         <model model="TSU-GN2208 GP38-2 14" numOuts="8" numFns="30" productID="6309" />
+        <model model="TSU-GN2208 GP38-2 15" numOuts="8" numFns="30" productID="6369" />
+        <model model="TSU-GN2208 GP38-2 16" numOuts="8" numFns="30" productID="6370" />
+        <model model="TSU-GN2208 GP38-2 17" numOuts="8" numFns="30" productID="6371" />
+        <model model="TSU-GN2208 GP38-2 21" numOuts="8" numFns="30" productID="6372" />
+        <model model="TSU-GN2208 GP38-2 23" numOuts="8" numFns="30" productID="6373" />
+        <model model="TSU-GN2208 GP38-2 24" numOuts="8" numFns="30" productID="6374" />
+        <model model="TSU-GN2208 GP38-2 25" numOuts="8" numFns="30" productID="6435" />
+        <model model="TSU-GN2208 GP38-2 26" numOuts="8" numFns="30" productID="6436" />
         <model model="TSU-GN2200 GP38-2 w/ beacon/strobe" numOuts="6" numFns="30" productID="6153" />
         <model model="TSU-GN2200 GP38-2 w/DB" numOuts="6" numFns="30" productID="6216" />
         <model model="TSU-GN2200 GP38-2 w/DB2" numOuts="6" numFns="30" productID="6218" />
@@ -16820,15 +17227,20 @@
         <model model="TSU-GN2200 GP39-2" numOuts="6" numFns="30" productID="6204" />
         <model model="TSU-GN2208 GP39-2 1" numOuts="8" numFns="30" productID="6316" />
         <model model="TSU-GN2208 GP39-2 2" numOuts="8" numFns="30" productID="6317" />
+        <model model="TSU-GN2208 GP39-2 3" numOuts="8" numFns="30" productID="6375" />
         <model model="TSU-GN2208 GP39-2 4" numOuts="8" numFns="30" productID="6376" />
         <model model="TSU-GN2200 GP39-2 w/ beacon/strobe1" numOuts="6" numFns="30" productID="6205" />
         <model model="TSU-GN2200 GP39-2 w/ beacon/strobe2" numOuts="6" numFns="30" productID="6206" />
         <model model="TSU-GN2200 GP39-2 w/ beacon/strobe3" numOuts="6" numFns="30" productID="6207" />
         <model model="TSU-GN2200 GP39-2 w/ strobe" numOuts="6" numFns="30" productID="6208" />
         <model model="TSU-GN2208 GP39X/GP49" numOuts="8" numFns="30" productID="6305" />
+        <model model="TSU-GN2208 GP40-2 1" numOuts="8" numFns="30" productID="6407" />
         <model model="TSU-GN2208 GP40-2 2" numOuts="8" numFns="30" productID="6345" />
         <model model="TSU-GN2208 GP40-2 5" numOuts="8" numFns="30" productID="6346" />
         <model model="TSU-GN2208 GP40-2 6" numOuts="8" numFns="30" productID="6300" />
+        <model model="TSU-GN2208 GP40-2 11" numOuts="8" numFns="30" productID="6337" />
+        <model model="TSU-GN2208 GP40-2 12" numOuts="8" numFns="30" productID="6338" />
+        <model model="TSU-GN2208 GP40-2 13" numOuts="8" numFns="30" productID="6408" />
         <model model="TSU-GN2200 GP40-2 w/DB" numOuts="6" numFns="30" productID="6225" />
         <model model="TSU-GN2200 GP40-2 w/DB,beacon" numOuts="6" numFns="30" productID="6224" />
         <model model="TSU-GN2200 GP40-2 w/DB,strobe" numOuts="6" numFns="30" productID="6223" />
@@ -16850,7 +17262,11 @@
         <model model="TSU-GN2208 GP50 7" numOuts="8" numFns="30" productID="6266" />
         <model model="TSU-GN2208 GP50 8" numOuts="8" numFns="30" productID="6267" />
         <model model="TSU-GN2208 GP50 9" numOuts="8" numFns="30" productID="6268" />
+        <model model="TSU-21PNEM8 MP15AC/SW1500 1" numOuts="8" numFns="30" productID="6421" />
+        <model model="TSU-21PNEM8 MP15AC 2" numOuts="8" numFns="30" productID="6422" />
         <model model="TSU-21PNEM8 MP15AC 3" numOuts="8" numFns="30" productID="6423" />
+        <model model="TSU-21PNEM8 MP15AC 4" numOuts="8" numFns="30" productID="6424" />
+        <model model="TSU-21PNEM8 MP15AC 5" numOuts="8" numFns="30" productID="6425" />
         <model model="TSU-21PNEM8 SD40T-2" numOuts="8" numFns="30" productID="6453" />
         <model model="TSU-GN2200 SDP40F w/gyra" numOuts="6" numFns="30" productID="6189" />
         <model model="TSU-GN2208 SDP40F w/gyra" numOuts="8" numFns="30" productID="6229" />
@@ -16862,9 +17278,11 @@
         <model model="TSU-GN2208 SDP45/SD45-2/F45/FP45 1" numOuts="8" numFns="30" productID="6287" />
         <model model="TSU-GN2208 SDP45/SD45-2/F45/FP45 4" numOuts="8" numFns="30" productID="6289" />
         <model model="TSU-GN2208 SDP45/SD45-2/F45/FP45 5" numOuts="8" numFns="30" productID="6406" />
+        <model model="TSU-GN2208 SDP45/SD45-2/F45/FP45 8" numOuts="8" numFns="30" productID="6323" />
         <model model="TSU-GN2208 SDP45/SD45-2/F45/FP45 9" numOuts="8" numFns="30" productID="6403" />
         <model model="TSU-GN2208 SDP45/SD45-2/F45/FP45 10" numOuts="8" numFns="30" productID="6404" />
         <model model="TSU-GN2208 SDP45/SD45-2/F45/FP45 11" numOuts="8" numFns="30" productID="6405" />
+        <model model="TSU-GN2208 SD32ECO/SD59M-2 1" numOuts="8" numFns="30" productID="6437" />
         <model model="TSU-GN2208 SD60E" numOuts="8" numFns="30" productID="6211" />
         <model model="TSU-GN2208 SD60E 2" numOuts="8" numFns="30" productID="6260" />
         <model model="TSU-GN2200 SD60I" numOuts="6" numFns="30" productID="6180" />
@@ -16876,12 +17294,15 @@
         <model model="TSU-GN2200 SD60M 8" numOuts="8" numFns="30" productID="6314" />
         <model model="TSU-GN2200 SD60M 9" numOuts="8" numFns="30" productID="6349" />
         <model model="TSU-GN2200 SD60M 10" numOuts="8" numFns="30" productID="6313" />
+        <model model="TSU-GN2208 SD60M 11" numOuts="8" numFns="30" productID="6438" />
+        <model model="TSU-GN2208 SD60M 12" numOuts="8" numFns="30" productID="6439" />
         <model model="TSU-GN2200 SD70ACe" numOuts="6" numFns="30" productID="6167" />
         <model model="TSU-GN2200 SD70ACe w/LED" numOuts="6" numFns="30" productID="6212" />
         <model model="TSU-GN2208 SD70ACe w/LED 2" numOuts="8" numFns="30" productID="6248" />
         <model model="TSU-GN2208 SD70ACe w/LED" numOuts="8" numFns="30" productID="6283" />
         <model model="TSU-GN2200 SD70ACe w/ditch" numOuts="6" numFns="30" productID="6168" />
         <model model="TSU-GN2208 SD70ACe w/ditch" numOuts="8" numFns="30" productID="6249" />
+        <model model="TSU-GN2208 SD70M-2 4" numOuts="8" numFns="30" productID="6402" />
         <model model="TSU-GN2208 SD70ACU" numOuts="8" numFns="30" productID="6390" />
         <model model="TSU-GN2208 SD70ACU 13" numOuts="8" numFns="30" productID="6391" />
         <model model="TSU-GN2208 SD70 1" numOuts="8" numFns="30" productID="6352" />
@@ -16913,6 +17334,7 @@
         <model model="TSU-GN2208 ES40DC w/ditch" numOuts="8" numFns="30" productID="6297" />
         <model model="TSU-GN2208 ES44AC" numOuts="8" numFns="30" productID="6231" />
         <model model="TSU-GN2208 ES44AC 2" numOuts="8" numFns="30" productID="6232" />
+        <model model="TSU-GN2208 ES44AC 5" numOuts="8" numFns="30" productID="6344" />
         <model model="TSU-GN2200 ES44DC" numOuts="6" numFns="30" productID="6191" />
         <model model="TSU-GN2200 ES44DC w/ditch" numOuts="6" numFns="30" productID="6193" />
         <model model="TSU-GN2208 ES44DC w/ditch" numOuts="8" numFns="30" productID="6298" />
@@ -30951,7 +31373,7 @@
       </family>
       <family name="IntelliDrive2" mfg="Uhlenbrock Elektronik" file="Uhlenbrock_Tillig_E44_73xx5.xml">
         <!-- to be checked by hardware owner -->
-        <model model="Tillig 66036" highVersionID="36" numOuts="8" numFns="28" productID="Tillig066036">
+        <model model="Tillig E44 + 66036 (73235)" highVersionID="36" numOuts="8" numFns="28" productID="Tillig066036">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
@@ -31340,6 +31762,51 @@
         </model>
       </family>
       <family name="MN Non-Sound (version 4+)" mfg="Zimo" file="Zimo_MN_small_v4.xml">
+        <!-- not available yet (2024-05-02)
+      <model model="MN140E24 version 4+" lowVersionID="4" highVersionID="42" maxInputVolts="24V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" numOuts="8" numFns="14" productID="119">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">Funkční výstup 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">Funkční výstup 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+          <label xml:lang="cs">Funkční výstup 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+          <label xml:lang="cs">Funkční výstup 4</label>
+        </output>
+        <output name="7" label="FO 5">
+          <label xml:lang="de">FA5</label>
+          <label xml:lang="cs">Funkční výstup 5</label>
+        </output>
+        <output name="8" label="FO 6">
+          <label xml:lang="de">FA6</label>
+          <label xml:lang="cs">Funkční výstup 6</label>
+        </output>
+        <size length="14" width="8.7" height="2.3" units="mm"/>
+      </model>
+-->
+        <model model="MN160 version 4+" lowVersionID="4" highVersionID="42" numOuts="6" numFns="14" productID="122">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+        </model>
         <model model="MN170 version 4+" lowVersionID="4" highVersionID="42" numOuts="8" numFns="14" productID="124">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
@@ -31358,6 +31825,35 @@
           <output name="5" label="FO 3 (+5v)" />
           <output name="6" label="FO 4 (+5v)" />
         </model>
+        <!-- not available yet (2024-05-02)
+      <model model="MN250 version 4+" lowVersionID="4" highVersionID="42" maxInputVolts="24V" maxMotorCurrent="0.2A, peak=1.0A" maxTotalCurrent="0.2A" formFactor="N" numOuts="6" numFns="14" productID="120">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">Funkční výstup 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">Funkční výstup 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+          <label xml:lang="cs">Funkční výstup 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+          <label xml:lang="cs">Funkční výstup 4</label>
+        </output>
+        <size length="9.9" width="7.5" height="2.1" units="mm"/>
+      </model>
+-->
         <model model="MN300 version 4+" lowVersionID="4" highVersionID="41" numOuts="8" numFns="14" productID="125">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
@@ -31446,6 +31942,15 @@
           <output name="5" label="FO 3" />
           <output name="6" label="FO 4" />
         </model>
+        <model model="MS491 version 4+" lowVersionID="4" highVersionID="41" numOuts="7" numFns="14" productID="12">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+        </model>
         <model model="MS500 version 4+" lowVersionID="4" highVersionID="41" numOuts="6" numFns="14" productID="1">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
@@ -31454,13 +31959,82 @@
           <output name="5" label="FO 3 (+5v)" />
           <output name="6" label="FO 4 (+5v)" />
         </model>
-        <model model="MS580N18 version 4+" lowVersionID="4" highVersionID="41" numOuts="6" numFns="14" productID="8">
+        <!-- not available yet (2024-05-02)
+      <model model="MS540E24 version 4+" lowVersionID="4" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="12" numFns="14" productID="14">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3">
+          <label xml:lang="de">FA3</label>
+          <label xml:lang="cs">FV 3</label>
+        </output>
+        <output name="6" label="FO 4">
+          <label xml:lang="de">FA4</label>
+          <label xml:lang="cs">FV 4</label>
+        </output>
+        <output name="7" label="FO 5">
+          <label xml:lang="de">FA5</label>
+          <label xml:lang="cs">FV 5</label>
+        </output>
+        <output name="8" label="FO 6">
+          <label xml:lang="de">FA6</label>
+          <label xml:lang="cs">FV 6</label>
+        </output>
+        <output name="9" label="FO 7 (+5V)">
+          <label xml:lang="de">FA7 (+5V)</label>
+          <label xml:lang="cs">FV 7 (+5V)</label>
+        </output>
+        <output name="10" label="FO 8 (+5V)">
+          <label xml:lang="de">FA8 (+5V)</label>
+          <label xml:lang="cs">FV 8 (+5V)</label>
+        </output>
+        <output name="11" label="FO 9 (+5V)">
+          <label xml:lang="de">FA9 (+5V)</label>
+          <label xml:lang="cs">FV 9 (+5V)</label>
+        </output>
+        <output name="12" label="FO 10 (+5V)">
+          <label xml:lang="de">FA10 (+5V)</label>
+          <label xml:lang="cs">FV 10 (+5V)</label>
+        </output>
+        <size length="19" width="8.7" height="2.8" units="mm"/>
+      </model>
+-->
+        <model model="MS560 version 4+" lowVersionID="4" highVersionID="41" numOuts="4" numFns="14" productID="10">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1 (+5v)" />
+          <output name="4" label="FO 2 (+5v)" />
+        </model>
+        <model model="MS580N18 version 4+" lowVersionID="4" highVersionID="41" numOuts="6" numFns="14" productID="5">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
           <output name="5" label="FO 3 (+5v)" />
           <output name="6" label="FO 4 (+5v)" />
+        </model>
+        <model model="MS581N18 version 4+" lowVersionID="4" highVersionID="41" numOuts="8" numFns="14" productID="13">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="3" label="FO 3" />
+          <output name="4" label="FO 4" />
+          <output name="5" label="FO 5 (+5v)" />
+          <output name="6" label="FO 6 (+5v)" />
         </model>
         <model model="MS590N18 version 4+" lowVersionID="4" highVersionID="41" numOuts="6" numFns="14" productID="8">
           <output name="1" label="Front Light" />
@@ -36960,19 +37534,37 @@
         </model>
       </family>
       <family name="Zimo Unified software (version 40+)" mfg="Zimo" file="Zimo_Unified_software_v40_MX60x-MX63x.xml">
-        <model model="MX600 version 40+" lowVersionID="40" highVersionID="41" numOuts="4" numFns="14" productID="166,199">
+        <model model="MX600 version 40+" lowVersionID="40" highVersionID="41" numOuts="4" numFns="14" productID="199">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
         </model>
-        <model model="MX600P12 version 40+" lowVersionID="40" highVersionID="41" numOuts="4" numFns="14" productID="166,199">
+        <model model="MX600P12 version 40+" lowVersionID="40" highVersionID="41" numOuts="4" numFns="14" productID="199">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
         </model>
-        <model model="MX600R version 40+" lowVersionID="40" highVersionID="41" numOuts="4" numFns="14" productID="166,199">
+        <model model="MX600R version 40+" lowVersionID="40" highVersionID="41" numOuts="4" numFns="14" productID="199">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+        </model>
+        <model model="MX600 (2021) version 40+" lowVersionID="40" highVersionID="41" numOuts="4" numFns="14" productID="166">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+        </model>
+        <model model="MX600P12 (2021) version 40+" lowVersionID="40" highVersionID="41" numOuts="4" numFns="14" productID="166">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+        </model>
+        <model model="MX600R (2021) version 40+" lowVersionID="40" highVersionID="41" numOuts="4" numFns="14" productID="166">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37007,6 +37599,30 @@
           <output name="3" label="FO 1" />
           <output name="4" label="FO 2" />
         </model>
+        <model model="MX615 (2023) version 40+" lowVersionID="40" highVersionID="41" numOuts="4" numFns="14" productID="151">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+        </model>
+        <model model="MX615F (2023) version 40+" lowVersionID="40" highVersionID="41" numOuts="4" numFns="14" productID="151">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+        </model>
+        <model model="MX615N (2023) version 40+" lowVersionID="40" highVersionID="41" numOuts="4" numFns="14" productID="151">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+        </model>
+        <model model="MX615R (2023) version 40+" lowVersionID="40" highVersionID="41" numOuts="4" numFns="14" productID="151">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+        </model>
         <model model="MX616 version 40+" lowVersionID="40" highVersionID="41" numOuts="6" numFns="14" productID="195">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
@@ -37032,6 +37648,38 @@
           <output name="6" label="FO 4" />
         </model>
         <model model="MX616R version 40+" lowVersionID="40" highVersionID="41" numOuts="6" numFns="14" productID="195">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+        </model>
+        <model model="MX616 (2023) version 40+" lowVersionID="40" highVersionID="41" numOuts="6" numFns="14" productID="161">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+        </model>
+        <model model="MX616F (2023) version 40+" lowVersionID="40" highVersionID="41" numOuts="6" numFns="14" productID="161">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+        </model>
+        <model model="MX616N (2023) version 40+" lowVersionID="40" highVersionID="41" numOuts="6" numFns="14" productID="161">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+        </model>
+        <model model="MX616R (2023) version 40+" lowVersionID="40" highVersionID="41" numOuts="6" numFns="14" productID="161">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37113,7 +37761,7 @@
           <output name="5" label="FO 3 (+5v)" />
           <output name="6" label="FO 4 (+5v)" />
         </model>
-        <model model="MX622 version 40+" lowVersionID="40" highVersionID="41" numOuts="6" numFns="14" productID="192,233">
+        <model model="MX622 version 40+" lowVersionID="40" highVersionID="41" numOuts="6" numFns="14" productID="138">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37121,7 +37769,7 @@
           <output name="5" label="FO 3 (+5v)" />
           <output name="6" label="FO 4 (+5v)" />
         </model>
-        <model model="MX622F version 40+" lowVersionID="40" highVersionID="41" numOuts="6" numFns="14" productID="192,233">
+        <model model="MX622F version 40+" lowVersionID="40" highVersionID="41" numOuts="6" numFns="14" productID="138">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37129,7 +37777,7 @@
           <output name="5" label="FO 3 (+5v)" />
           <output name="6" label="FO 4 (+5v)" />
         </model>
-        <model model="MX622N version 40+" lowVersionID="40" highVersionID="41" numOuts="6" numFns="14" productID="192,233">
+        <model model="MX622N version 40+" lowVersionID="40" highVersionID="41" numOuts="6" numFns="14" productID="138">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37137,7 +37785,39 @@
           <output name="5" label="FO 3 (+5v)" />
           <output name="6" label="FO 4 (+5v)" />
         </model>
-        <model model="MX622R version 40+" lowVersionID="40" highVersionID="41" numOuts="6" numFns="14" productID="192,233">
+        <model model="MX622R version 40+" lowVersionID="40" highVersionID="41" numOuts="6" numFns="14" productID="138">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+        </model>
+        <model model="MX622 (2020) version 40+" lowVersionID="40" highVersionID="41" numOuts="6" numFns="14" productID="192,233">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+        </model>
+        <model model="MX622F (2020) version 40+" lowVersionID="40" highVersionID="41" numOuts="6" numFns="14" productID="192,233">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+        </model>
+        <model model="MX622N (2020) version 40+" lowVersionID="40" highVersionID="41" numOuts="6" numFns="14" productID="192,233">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+        </model>
+        <model model="MX622R (2020) version 40+" lowVersionID="40" highVersionID="41" numOuts="6" numFns="14" productID="192,233">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37185,231 +37865,7 @@
           <output name="7" label="FO 5 (+5v)" />
           <output name="8" label="FO 6 (+5v)" />
         </model>
-        <model model="MX630 version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="130,211,218">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5 (+5v)" />
-          <output name="8" label="FO 6 (+5v)" />
-        </model>
-        <model model="MX630F version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="130,211,218">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5 (+5v)" />
-          <output name="8" label="FO 6 (+5v)" />
-        </model>
-        <model model="MX630P16 version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="130,211,218">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5 (+5v)" />
-          <output name="8" label="FO 6 (+5v)" />
-        </model>
-        <model model="MX630R version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="130,211,218">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5 (+5v)" />
-          <output name="8" label="FO 6 (+5v)" />
-        </model>
-        <model model="MX631 version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="213,219">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5 (+5v)" />
-          <output name="8" label="FO 6 (+5v)" />
-        </model>
-        <model model="MX631R version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="213,219">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5 (+5v)" />
-          <output name="8" label="FO 6 (+5v)" />
-        </model>
-        <model model="MX631F version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="213,219">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5 (+5v)" />
-          <output name="8" label="FO 6 (+5v)" />
-        </model>
-        <model model="MX632 version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="212,220">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5" />
-          <output name="8" label="FO 6" />
-          <output name="9" label="FO 7" />
-          <output name="10" label="FO 8" />
-        </model>
-        <model model="MX632R version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="212,220">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5" />
-          <output name="8" label="FO 6" />
-          <output name="9" label="FO 7" />
-          <output name="10" label="FO 8" />
-        </model>
-        <model model="MX632D version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="212,220">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5" />
-          <output name="8" label="FO 6" />
-          <output name="9" label="FO 7" />
-          <output name="10" label="FO 8" />
-        </model>
-        <model model="MX632V version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="212,220">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5" />
-          <output name="8" label="FO 6" />
-          <output name="9" label="FO 7" />
-          <output name="10" label="FO 8" />
-        </model>
-        <model model="MX632VD version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="212,220">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5" />
-          <output name="8" label="FO 6" />
-          <output name="9" label="FO 7" />
-          <output name="10" label="FO 8" />
-        </model>
-        <model model="MX632W version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="212,220">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5" />
-          <output name="8" label="FO 6" />
-          <output name="9" label="FO 7" />
-          <output name="10" label="FO 8" />
-        </model>
-        <model model="MX632WD version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="212,220">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5" />
-          <output name="8" label="FO 6" />
-          <output name="9" label="FO 7" />
-          <output name="10" label="FO 8" />
-        </model>
-        <model model="MX633 version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="133,237">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5" />
-          <output name="8" label="FO 6" />
-          <output name="9" label="FO 7" />
-          <output name="10" label="FO 8" />
-        </model>
-        <model model="MX633F version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="133,237">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5" />
-          <output name="8" label="FO 6" />
-          <output name="9" label="FO 7" />
-          <output name="10" label="FO 8" />
-        </model>
-        <model model="MX633P16 version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="133,237">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5" />
-          <output name="8" label="FO 6" />
-          <output name="9" label="FO 7" />
-          <output name="10" label="FO 8" />
-        </model>
-        <model model="MX633P22 version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="133,237">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5" />
-          <output name="8" label="FO 6" />
-          <output name="9" label="FO 7" />
-          <output name="10" label="FO 8" />
-        </model>
-        <model model="MX633R version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="133,237">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5" />
-          <output name="8" label="FO 6" />
-          <output name="9" label="FO 7" />
-          <output name="10" label="FO 8" />
-        </model>
-        <model model="MX634 version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="134,240">
-          <output name="1" label="Front Light" />
-          <output name="2" label="Rear Light" />
-          <output name="3" label="FO 1" />
-          <output name="4" label="FO 2" />
-          <output name="5" label="FO 3" />
-          <output name="6" label="FO 4" />
-          <output name="7" label="FO 5 (+5v)" />
-          <output name="8" label="FO 6 (+5v)" />
-        </model>
-        <model model="MX634C version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="134,240">
+        <model model="MX623 (2020) version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="132">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37419,7 +37875,37 @@
           <output name="7" label="FO 5 (+5v)" />
           <output name="8" label="FO 6 (+5v)" />
         </model>
-        <model model="MX634D version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="134,240">
+        <model model="MX623F (2020) version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="132">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+        </model>
+        <model model="MX623P12 (2020) version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="132">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+        </model>
+        <model model="MX623R (2020) version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="132">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+        </model>
+        <model model="MX630 version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="211,218">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37429,7 +37915,7 @@
           <output name="7" label="FO 5 (+5v)" />
           <output name="8" label="FO 6 (+5v)" />
         </model>
-        <model model="MX634F version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="134,240">
+        <model model="MX630F version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="211,218">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37439,7 +37925,505 @@
           <output name="7" label="FO 5 (+5v)" />
           <output name="8" label="FO 6 (+5v)" />
         </model>
-        <model model="MX634R version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="134,240">
+        <model model="MX630P16 version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="211,218">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+        </model>
+        <model model="MX630R version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="211,218">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+        </model>
+        <model model="MX630 (2020,2022) version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="130,131">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+        </model>
+        <model model="MX630F (2020,2022) version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="130,131">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+        </model>
+        <model model="MX630P16 (2020,2022) version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="130,131">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+        </model>
+        <model model="MX630R (2020,2022) version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="130,131">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+        </model>
+        <model model="MX631 version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="213">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+        </model>
+        <model model="MX631R version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="213">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+        </model>
+        <model model="MX631F version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="213">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+        </model>
+        <model model="MX631 (2011) version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="219">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+        </model>
+        <model model="MX631R (2011) version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="219">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+        </model>
+        <model model="MX631F (2011) version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="219">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+        </model>
+        <model model="MX632 version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="212">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+        </model>
+        <model model="MX632R version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="212">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+        </model>
+        <model model="MX632D version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="212">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+        </model>
+        <model model="MX632V version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="212">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+        </model>
+        <model model="MX632VD version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="212">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+        </model>
+        <model model="MX632W version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="212">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+        </model>
+        <model model="MX632WD version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="212">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+        </model>
+        <model model="MX632 (2011) version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="220">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+        </model>
+        <model model="MX632R (2011) version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="220">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+        </model>
+        <model model="MX632D (2011) version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="220">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+        </model>
+        <model model="MX632V (2011) version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="220">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+        </model>
+        <model model="MX632VD (2011) version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="220">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+        </model>
+        <model model="MX632W (2011) version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="220">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+        </model>
+        <model model="MX632WD (2011) version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="220">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+        </model>
+        <model model="MX633 version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="237">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+        </model>
+        <model model="MX633F version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="237">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+        </model>
+        <model model="MX633P16 version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="237">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+        </model>
+        <model model="MX633P22 version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="237">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+        </model>
+        <model model="MX633R version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="237">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+        </model>
+        <model model="MX633 (2020) version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="133,237">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+        </model>
+        <model model="MX633F (2020) version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="133">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+        </model>
+        <model model="MX633P16 (2020) version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="133">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+        </model>
+        <model model="MX633P22 (2020) version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="133">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+        </model>
+        <model model="MX633R (2020) version 40+" lowVersionID="40" highVersionID="41" numOuts="10" numFns="14" productID="133">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5" />
+          <output name="8" label="FO 6" />
+          <output name="9" label="FO 7" />
+          <output name="10" label="FO 8" />
+        </model>
+        <model model="MX634 version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="240">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+        </model>
+        <model model="MX634C version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="240">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+        </model>
+        <model model="MX634D version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="240">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+        </model>
+        <model model="MX634F version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="240">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+        </model>
+        <model model="MX634R version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="240">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+        </model>
+        <model model="MX634 (2020) version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="134">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+        </model>
+        <model model="MX634C (2020) version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="134">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3 (+5v)" />
+          <output name="6" label="FO 4 (+5v)" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+        </model>
+        <model model="MX634D (2020) version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="134">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+        </model>
+        <model model="MX634F (2020) version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="134">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="FO 2" />
+          <output name="5" label="FO 3" />
+          <output name="6" label="FO 4" />
+          <output name="7" label="FO 5 (+5v)" />
+          <output name="8" label="FO 6 (+5v)" />
+        </model>
+        <model model="MX634R (2020) version 40+" lowVersionID="40" highVersionID="41" numOuts="8" numFns="14" productID="134">
           <output name="1" label="Front Light" />
           <output name="2" label="Rear Light" />
           <output name="3" label="FO 1" />
@@ -37818,6 +38802,80 @@
           <output name="1" label="Front Light (MX605SL)" />
           <output name="2" label="Rear Light (MX605SL)" />
           <output name="3" label="FO 1 (MX605FL)" />
+        </model>
+      </family>
+      <family name="Zimo Light Boards" mfg="Zimo" file="Zimo_Unified_software_v40_MXLIPL1.xml">
+        <model model="LIPLDNW1 version 40+" lowVersionID="40" highVersionID="40" productID="184" numOuts="10" numFns="14">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="LED Gp1" />
+          <output name="5" label="LED Gp2" />
+          <output name="6" label="LED Gp3" />
+          <output name="7" label="LED Gp4" />
+          <output name="8" label="LED Gp5" />
+          <output name="9" label="LED Gp6" />
+          <output name="10" label="LED Gp7" />
+        </model>
+        <model model="LIPLDNY1 version 40+" lowVersionID="40" highVersionID="40" productID="184" numOuts="10" numFns="14">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="LED Gp1" />
+          <output name="5" label="LED Gp2" />
+          <output name="6" label="LED Gp3" />
+          <output name="7" label="LED Gp4" />
+          <output name="8" label="LED Gp5" />
+          <output name="9" label="LED Gp6" />
+          <output name="10" label="LED Gp7" />
+        </model>
+        <model model="LIPLDHW1 version 40+" lowVersionID="40" highVersionID="40" productID="184" numOuts="10" numFns="14">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="LED Gp1" />
+          <output name="5" label="LED Gp2" />
+          <output name="6" label="LED Gp3" />
+          <output name="7" label="LED Gp4" />
+          <output name="8" label="LED Gp5" />
+          <output name="9" label="LED Gp6" />
+          <output name="10" label="LED Gp7" />
+        </model>
+        <model model="LIPLDHY1 version 40+" lowVersionID="40" highVersionID="40" productID="184" numOuts="10" numFns="14">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="LED Gp1" />
+          <output name="5" label="LED Gp2" />
+          <output name="6" label="LED Gp3" />
+          <output name="7" label="LED Gp4" />
+          <output name="8" label="LED Gp5" />
+          <output name="9" label="LED Gp6" />
+          <output name="10" label="LED Gp7" />
+        </model>
+      </family>
+      <family name="Zimo Light Boards" mfg="Zimo" file="Zimo_Unified_software_v40_MXLIPL3.xml">
+        <model model="LIPLDGW1 version 40+" lowVersionID="40" highVersionID="40" productID="179" numOuts="9" numFns="14">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="LED Gp1" />
+          <output name="5" label="LED Gp2" />
+          <output name="6" label="LED Gp3" />
+          <output name="7" label="LED Gp4" />
+          <output name="8" label="LED Gp5" />
+          <output name="9" label="FO 10" />
+        </model>
+        <model model="LIPLDGY1 version 40+" lowVersionID="40" highVersionID="40" productID="179" numOuts="9" numFns="14">
+          <output name="1" label="Front Light" />
+          <output name="2" label="Rear Light" />
+          <output name="3" label="FO 1" />
+          <output name="4" label="LED Gp1" />
+          <output name="5" label="LED Gp2" />
+          <output name="6" label="LED Gp3" />
+          <output name="7" label="LED Gp4" />
+          <output name="8" label="LED Gp5" />
+          <output name="9" label="FO 10" />
         </model>
       </family>
     </familyList>

@@ -10,7 +10,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
 	<copyright xmlns="http://docbook.org/ns/docbook">
 		<year>2023</year>
 		<holder>JMRI</holder>
@@ -36,12 +36,18 @@
 			<authorinitials>UG</authorinitials>
 			<revremark>Add English translations</revremark>
 		</revision>
+		<revision>
+			<revnumber>3</revnumber>
+			<date>2024-04-01</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Add Decoder ML4000</revremark>
+		</revision>
 	</revhistory>
 	<name>Extended Function Mapping</name>
 	<name xml:lang="de">Erweitertes Funktionsmapping</name>
 	<name xml:lang="nl">Uitgebreide Functiemapping - nog verder uit te breiden</name>
 	<name xml:lang="cs">Rozšířené mapování funkcí - bude dokončeno</name>
-	<group exclude="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16">
+	<group exclude="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16,PIKO56627-22">
 		<!--Piko SmartDecoder XP5.1-->
 		<label>
 			<text>CV Bank not available for this Piko SmartDecoder</text>
@@ -52,7 +58,7 @@
 			</label>
 		</row>
 	</group>
-	<group include="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16">
+	<group include="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16,PIKO56627-22">
 		<!--Piko SmartDecoder XP5.1-->
 		<row>
 			<column>
@@ -96,7 +102,7 @@
 						<text>     </text>
 					</label>
 				</column>
-				<display item="Bank_Switch_31"/>
+				<!--				<display item="Bank_Switch_31"/>-->
 				<!-- Leerspalte -->
 				<column>
 					<label>
@@ -2007,7 +2013,7 @@
 							<display item="CV405.7" format="checkbox" label=""/>
 						</row>
 						<row>
-							<display item="Bank_17_CV382"/>
+							<display item="Bank_17_CV406"/>
 							<display item="CV406.0" format="checkbox" label=""/>
 							<display item="CV406.1" format="checkbox" label=""/>
 							<display item="CV406.2" format="checkbox" label=""/>

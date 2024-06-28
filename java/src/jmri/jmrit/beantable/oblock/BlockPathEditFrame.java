@@ -53,7 +53,7 @@ public class BlockPathEditFrame extends JmriJFrame {
     protected boolean isDirty = false;  // true to fire reminder to save work
     private boolean checkEnabled = jmri.InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
 
-    @SuppressWarnings("OverridableMethodCallInConstructor")
+//    @SuppressWarnings("OverridableMethodCallInConstructor")
     public BlockPathEditFrame(String title, @Nonnull OBlock block, @CheckForNull OPath path,
                               @CheckForNull TableFrames.PathTurnoutJPanel turnouttable, BlockPathTableModel pathmodel, TableFrames parent) {
         super(title, true, true);

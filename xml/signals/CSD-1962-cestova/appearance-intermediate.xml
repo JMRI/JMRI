@@ -42,6 +42,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Speed map</revremark>
     </revision>    
+    <revision>
+        <revnumber>5</revnumber>
+        <date>2024-02-22</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Small icons</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>CSD-1962-cestova</aspecttable>
@@ -66,6 +72,7 @@
       <imagelink type="ESP žb">../../../resources/icons/smallschematics/aspects/CSD/ESP/00_yw.png</imagelink>
       <imagelink type="ESP žbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/00_ywg.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_grey.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m00_stuj_5.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -80,6 +87,7 @@
       <imagelink type="ESP zb">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_gw.png</imagelink>
       <imagelink type="ESP zbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_gwg.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m01_volno_5.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -94,6 +102,7 @@
       <imagelink type="ESP žb">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_yw.png</imagelink>
       <imagelink type="ESP žbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ywg.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m02_vystraha_5.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -108,6 +117,7 @@
       <imagelink type="ESP žb">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_yw.png</imagelink>
       <imagelink type="ESP žbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ywg.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m03_o40_5.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -122,6 +132,7 @@
       <imagelink type="ESP zb">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_gw.png</imagelink>
       <imagelink type="ESP zbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_gwg.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/c04_40_opvolno_5.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -132,6 +143,7 @@
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/11_ygwg.png</imagelink>
       <imagelink type="ESP zbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/11_gwg.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/c05_60_opvolno_5.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -146,6 +158,7 @@
       <imagelink type="ESP zb">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_gw.png</imagelink>
       <imagelink type="ESP zbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_gwg.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m06_40_volno_5.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -160,6 +173,7 @@
       <imagelink type="ESP žb">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_yw.png</imagelink>
       <imagelink type="ESP žbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ywg.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m07_40_vystraha_5.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -174,6 +188,7 @@
       <imagelink type="ESP žb">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_yw.png</imagelink>
       <imagelink type="ESP žbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ywg.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m08_40_o40_5.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -184,6 +199,7 @@
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/11_ygwg.png</imagelink>
       <imagelink type="ESP zbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/11_gwg.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/c09_80_opvolno_5.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -198,6 +214,7 @@
       <imagelink type="ESP žb">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_yw.png</imagelink>
       <imagelink type="ESP žbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ywg.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/c10_40_opvystraha_5.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -208,6 +225,7 @@
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/11_ygwg.png</imagelink>
       <imagelink type="ESP zbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/11_gwg.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m11_60_volno_5.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -222,6 +240,7 @@
       <imagelink type="ESP žb">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_yw.png</imagelink>
       <imagelink type="ESP žbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ywg.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/c12_40_opo40_5.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -236,6 +255,7 @@
       <imagelink type="ESP žb">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_yw.png</imagelink>
       <imagelink type="ESP žbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ywg.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/c13_40_opo60_5.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -250,6 +270,7 @@
       <imagelink type="ESP zb">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_gw.png</imagelink>
       <imagelink type="ESP zbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_gwg.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/c14_40_opo80_5.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -260,6 +281,7 @@
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/12_ygwg.png</imagelink>
       <imagelink type="ESP žbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/12_ywg.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/c15_60_opvystraha_5.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -270,6 +292,7 @@
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/11_ygwg.png</imagelink>
       <imagelink type="ESP zbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/11_gwg.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m16_80_volno_5.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -280,6 +303,7 @@
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/12_ygwg.png</imagelink>
       <imagelink type="ESP žbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/12_ywg.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/c17_60_opo40_5.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -290,6 +314,7 @@
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/12_ygwg.png</imagelink>
       <imagelink type="ESP žbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/12_ywg.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/c18_60_opo60_5.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -300,6 +325,7 @@
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/11_ygwg.png</imagelink>
       <imagelink type="ESP zbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/11_gwg.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/c19_60_opo80_5.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -310,6 +336,7 @@
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/12_ygwg.png</imagelink>
       <imagelink type="ESP žbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/12_ywg.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/c20_80_opvystraha_5.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -324,6 +351,7 @@
       <imagelink type="ESP zb">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_gw.png</imagelink>
       <imagelink type="ESP zbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_gwg.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m21_opvolno_5.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -338,6 +366,7 @@
       <imagelink type="ESP žb">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_yw.png</imagelink>
       <imagelink type="ESP žbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ywg.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m22_opvystraha_5.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -352,6 +381,7 @@
       <imagelink type="ESP žb">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_yw.png</imagelink>
       <imagelink type="ESP žbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ywg.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m23_opo40_5.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -366,6 +396,7 @@
       <imagelink type="ESP žb">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_yw.png</imagelink>
       <imagelink type="ESP žbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ywg.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m24_opo60_5.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -380,6 +411,7 @@
       <imagelink type="ESP zb">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_gw.png</imagelink>
       <imagelink type="ESP zbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_gwg.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m25_opo80_5.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -390,6 +422,7 @@
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/12_ygwg.png</imagelink>
       <imagelink type="ESP žbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/12_ywg.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/c26_80_opo40_5.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -408,6 +441,7 @@
       <imagelink type="ESP žb">../../../resources/icons/smallschematics/aspects/CSD/ESP/28_yw.png</imagelink>
       <imagelink type="ESP žbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/28_ywg.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_white.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m28_pd_5.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -418,6 +452,7 @@
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/12_ygwg.png</imagelink>
       <imagelink type="ESP žbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/12_ywg.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/c29_80_opo60_5.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -428,6 +463,7 @@
       <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/11_ygwg.png</imagelink>
       <imagelink type="ESP zbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/11_gwg.png</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_green.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/c30_80_opo80_5.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -444,6 +480,7 @@
       <imagelink type="ESP žb">../../../resources/icons/smallschematics/aspects/CSD/ESP/31_yw.gif</imagelink>
       <imagelink type="ESP zbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/31_gwg.gif</imagelink>
       <imagelink type="JOP hlavní">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_main_blink_white.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m31_opn_5.gif</imagelink>
     </appearance>
 
   </appearances>

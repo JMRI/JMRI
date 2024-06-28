@@ -148,6 +148,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     protected Map<Integer, String> functionSelectedImages;
     protected Map<Integer, String> functionImages;
     protected Map<Integer, Boolean> functionLockables;
+    protected Map<Integer, Boolean> functionVisibles;
     protected String _isShuntingOn = "";
 
     protected final TreeMap<String, String> attributePairs = new TreeMap<>();
@@ -1095,16 +1096,45 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     * Return the lockable state of a specific function. Defaults to true.
+     * Return the lockable/latchable state of a specific function. Defaults to true.
      *
      * @param fn function number, starting with 0
-     * @return true if function is lockable
+     * @return true if function is lockable/latchable
      */
     public boolean getFunctionLockable(int fn) {
         if (functionLockables == null) {
             return true;
         }
         return ((functionLockables.get(fn) != null) ? functionLockables.get(fn) : true);
+    }
+    
+    /**
+     * Define whether a specific function button is visible.
+     *
+     * @param fn       function number, starting with 0
+     * @param visible  true if function button is visible; false to hide
+     */
+    public void setFunctionVisible(int fn, boolean visible) {
+        if (functionVisibles == null) {
+            functionVisibles = Collections.synchronizedMap(new HashMap<>());
+            functionVisibles.put(fn, true);
+        }
+        boolean old = ((functionVisibles.get(fn) != null) ? functionVisibles.get(fn) : true);
+        functionVisibles.put(fn, visible);
+        this.firePropertyChange(RosterEntry.FUNCTION_LOCKABLE + fn, old, visible);
+    }
+    
+    /**
+     * Return the UI visibility of a specific function button. Defaults to true.
+     *
+     * @param fn function number, starting with 0
+     * @return true if function button is visible
+     */
+    public boolean getFunctionVisible(int fn) {
+        if (functionVisibles == null) {
+            return true;
+        }
+        return ((functionVisibles.get(fn) != null) ? functionVisibles.get(fn) : true);
     }
 
     @Override

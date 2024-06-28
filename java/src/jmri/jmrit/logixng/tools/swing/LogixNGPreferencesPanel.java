@@ -29,6 +29,8 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
 
     JCheckBox _startLogixNGOnLoadCheckBox;
     JCheckBox _installDebuggerCheckBox;
+    JCheckBox _logAllBeforeCheckBox;
+    JCheckBox _logAllAfterCheckBox;
     JCheckBox _showSystemUserNamesCheckBox;
     JCheckBox _treeEditorHighlightRow;
     JCheckBox _showSystemNameInException;
@@ -63,6 +65,8 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
         boolean didSet = true;
         preferences.setStartLogixNGOnStartup(_startLogixNGOnLoadCheckBox.isSelected());
         preferences.setInstallDebugger(_installDebuggerCheckBox.isSelected());
+        preferences.setLogAllBefore(_logAllBeforeCheckBox.isSelected());
+        preferences.setLogAllAfter(_logAllAfterCheckBox.isSelected());
         preferences.setShowSystemUserNames(_showSystemUserNamesCheckBox.isSelected());
         preferences.setTreeEditorHighlightRow(_treeEditorHighlightRow.isSelected());
         preferences.setErrorHandlingType(_errorHandlingComboBox.getItemAt(
@@ -84,6 +88,12 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
         _installDebuggerCheckBox = new JCheckBox(Bundle.getMessage("LabelInstallDebugger"));
         _installDebuggerCheckBox.setToolTipText(Bundle.getMessage("ToolTipLabelInstallDebugger"));
 
+        _logAllBeforeCheckBox = new JCheckBox(Bundle.getMessage("LabelLogAllBefore"));
+        _logAllBeforeCheckBox.setToolTipText(Bundle.getMessage("ToolTipLabelLogAllBefore"));
+
+        _logAllAfterCheckBox = new JCheckBox(Bundle.getMessage("LabelLogAllAfter"));
+        _logAllAfterCheckBox.setToolTipText(Bundle.getMessage("ToolTipLabelLogAllAfter"));
+
         _showSystemUserNamesCheckBox = new JCheckBox(Bundle.getMessage("LabelShowSystemUserNames"));
         _showSystemUserNamesCheckBox.setToolTipText(Bundle.getMessage("ToolTipLabeShowSystemUserNames"));
 
@@ -103,6 +113,8 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
 
         gridPanel.add(_startLogixNGOnLoadCheckBox);
         gridPanel.add(_installDebuggerCheckBox);
+        gridPanel.add(_logAllBeforeCheckBox);
+        gridPanel.add(_logAllAfterCheckBox);
         gridPanel.add(_showSystemUserNamesCheckBox);
         gridPanel.add(_treeEditorHighlightRow);
         gridPanel.add(Box.createVerticalStrut(2));
@@ -113,6 +125,8 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
 
         _startLogixNGOnLoadCheckBox.setSelected(preferences.getStartLogixNGOnStartup());
         _installDebuggerCheckBox.setSelected(preferences.getInstallDebugger());
+        _logAllBeforeCheckBox.setSelected(preferences.getLogAllBefore());
+        _logAllAfterCheckBox.setSelected(preferences.getLogAllAfter());
         _showSystemUserNamesCheckBox.setSelected(preferences.getShowSystemUserNames());
         _treeEditorHighlightRow.setSelected(preferences.getTreeEditorHighlightRow());
         _showSystemNameInException.setSelected(preferences.getShowSystemNameInException());

@@ -42,6 +42,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Fix Speed map</revremark>
     </revision>    
+    <revision>
+        <revnumber>5</revnumber>
+        <date>2024-02-21</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Small icons</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>SZDC-2015-zakladni</aspecttable>
@@ -57,6 +63,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/321_opvolno_po.gif</imagelink>
       <imagelink type="AŽD z">../../../resources/icons/smallschematics/aspects/CSD/AZD/01_g.png</imagelink>
       <imagelink type="ESP z">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_g.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m21_opvolno_3.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -64,6 +71,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/322_opvystraha_po.gif</imagelink>
       <imagelink type="AŽD z">../../../resources/icons/smallschematics/aspects/CSD/AZD/02_g.png</imagelink>
       <imagelink type="ESP z">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_g.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m22_opvystraha_3.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -71,6 +79,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/323_opo40_po.gif</imagelink>
       <imagelink type="AŽD z">../../../resources/icons/smallschematics/aspects/CSD/AZD/01_g.png</imagelink>
       <imagelink type="ESP z">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_g.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m23_opo40_3.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -78,6 +87,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/324_opo60_po.gif</imagelink>
       <imagelink type="AŽD z">../../../resources/icons/smallschematics/aspects/CSD/AZD/01_g.png</imagelink>
       <imagelink type="ESP z">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_g.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m24_opo60_3.gif</imagelink>
     </appearance>
 
   </appearances>

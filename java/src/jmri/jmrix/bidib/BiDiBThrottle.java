@@ -62,7 +62,7 @@ public class BiDiBThrottle extends AbstractThrottle {
      * @param memo system connection memo to use
      * @param locoAddress DCC loco locoAddress
      */
-    @SuppressWarnings("OverridableMethodCallInConstructor")
+//    @SuppressWarnings("OverridableMethodCallInConstructor")
     public BiDiBThrottle(BiDiBSystemConnectionMemo memo, DccLocoAddress locoAddress) {
         super(memo);
         this.tc = memo.getBiDiBTrafficController();

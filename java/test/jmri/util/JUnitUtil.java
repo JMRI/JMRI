@@ -997,7 +997,7 @@ public class JUnitUtil {
         }
         InstanceManager.setDefault(StringExpressionManager.class, m9);
 
-        jmri.jmrit.logixng.actions.NamedBeanType.reset();
+        jmri.jmrit.logixng.NamedBeanType.reset();
         jmri.jmrit.logixng.actions.CommonManager.reset();
 
         if (activate) m1.activateAllLogixNGs(false, false);

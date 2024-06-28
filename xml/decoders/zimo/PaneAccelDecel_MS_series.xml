@@ -3,14 +3,17 @@
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 - Ronald Kuhn - add german and czech translation and CVs from v37+ -->
 <!-- version 1.2 - 10 Mar 2021, Nigel Cliffe - New layout, to group related features, and bring all motor CVs into the pane  -->
-<!-- version 1.3 -  29 July 2022 Nigel Cliffe.  Fork from MX series.  New MS Series sound decoders have changes to the motor control parameters -->
+<!-- version 1.3 - 29 July 2022 Nigel Cliffe.  Fork from MX series.  New MS Series sound decoders have changes to the motor control parameters -->
 <!-- version 1.4 - 22 June 2023 Ronald Kuhn - add some german translation and small corrections -->
-
+<!-- version 1.5 - 02 May 2024 Ronald Kuhn - a small visual correction -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>Accel/Decel + Motor</name>
   <name xml:lang="cs">Zrychlení/Zpomalení</name>
   <name xml:lang="de">Beschleunigungs-/Bremsverhalten</name>
   <column>
+       <label>
+        <text> </text>
+       </label>
     <row>
       <column>
 

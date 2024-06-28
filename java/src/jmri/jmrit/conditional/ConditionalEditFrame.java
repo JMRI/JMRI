@@ -108,7 +108,6 @@ public class ConditionalEditFrame extends ConditionalFrame {
     ConditionalAction _curAction;
     int _curActionRowNumber;
     Conditional.ItemType _curActionItem = Conditional.ItemType.NONE;
-    static final int STRUT = 10;
 
     // ------------ Components of Logix and SConditional selection ------------
     JComboBox<String> _selectLogixBox = new JComboBox<>();

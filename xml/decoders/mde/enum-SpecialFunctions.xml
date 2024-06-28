@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012 All rights reserved -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+
+    <enumChoice choice="No Special Function" value="0"/>
+    <enumChoice choice="Symetric Flashing" value="1" comment="0.1s per value"/>
+    <enumChoice choice="Short Asymmetric Flashing (1:4)" value="2" comment="0.1s per value for long period"/>
+    <enumChoice choice="Long Asymmetric Flashing (4:1)" value="3" comment="0.1s per value for long period"/>
+    <enumChoice choice="Photographer Flash" value="4" comment="0.25s per value"/>
+    <enumChoice choice="Monoflop Auto-Off" value="5" comment="0.1s per value"/>
+    <enumChoice choice="Switch on Delay" value="6" comment="0.1s per value"/>
+    <enumChoice choice="Firebox/Campfire Flicker" value="7" />
+    <enumChoice choice="TV Flicker" value="8" />
+    <enumChoice choice="Petroleum Lamp Flicker (Candlelight)" value="9" />
+    <enumChoice choice="Neon Sign Starting Flicker" value="10" />
+    <enumChoice choice="Defective Neon Sign" value="11" />
+    <enumChoice choice="Alternating Flash with Paired Output" value="12" comment="In combination with second output (e.g. A1-A2, A3-A4)"/>
+    <enumChoice choice="US Strobelight" value="13" />
+    <enumChoice choice="US Double Strobelight" value="14" />
+    <enumChoice choice="US Mars Light" value="15" />
+    <enumChoice choice="US Ditch Light" value="16" />
+    <enumChoice choice="Sodium Lamp" value="17"/>
+    <enumChoice choice="Welding Light" value="18"/>
+    <enumChoice choice="Servo Functionality On" value="19" comment="Activates Servo CVs"/>
+    <enumChoice choice="Buffer Control 'BC'" value="20"/>
+    <enumChoice choice="Clock Simulation" value="21" comment="If CV115=1"/>
+    <enumChoice choice="Pulsed Smoke for Steam Engine" value="22" comment="Only for fan, heating on a separate output (user's choice)"/>
+    <enumChoice choice="Pulsed Smoke for Diesel Engine" value="23" comment="Only for fan, heating on a separate output (user's choice)"/>
+    <enumChoice choice="Automatic Coupler" value="24"/>
+    <enumChoice choice="Servo Position by Drive Controller" value="25" comment="Matches servo degrees of rotation with drive controller level"/>
+    <enumChoice choice="Servo Fxn Swinging" value="26" comment="For Bells; time basis: hold time"/>
+    <enumChoice choice="Servo Pos. Drive Ctrlr Split Mid" value="27" comment="Matches servo degrees of rotation with drive controller level split down the middle.  Forward is left direction, backward is right direction."/>
+    <enumChoice choice="Servo Pos. Drive Ctrlr Split Mid Inv." value="28" comment="Matches servo degrees of rotation with drive controller level split down the middle.  Forward is right direction, backward is left direction."/>
+    <enumChoice choice="Speed for Choice Above" value="29" comment="Set servo speed for the above CV=28; Only used for live steam"/>
+    <enumChoice choice="Servo Pos. for Simulated Fuel Consumption" value="30" comment="Time Value in Minutes"/>
+
+</enumVal>

@@ -16,7 +16,7 @@
     <!--#include virtual="../SidebarUp.shtml" -->
 
     <div id="mainContent">
-      <h1 id="top">Hardware Support: MQTT</h1>
+      <h1>Hardware Support: MQTT</h1>
       <img src="images/mqtt-logo.png" alt="MQTT logo" class="floatRight">
       <p><a href="https://mqtt.org" target="_blank">MQTT</a> is a "client-server publish-subscribe"
       protocol, meaning that JMRI connects to an MQTT server (called a "message broker") and subscribes
@@ -35,9 +35,9 @@
 
       <ul>
         <li><a href="#objects">MQTT-connected objects</a>: Certain JMRI objects can be defined as being
-      connected via MQTT. As of release 4.21.1, JMRI implements MQTT-connected turnouts, sensors,
-      and lights.  Signal masts have been available as MQTT objects since release 4.26. Other object
-      types may be added in the future based on user requests.</li>
+      connected via MQTT. As of release 4.26, JMRI implements MQTT-connected turnouts, sensors, lights, 
+      and signal masts. Reporters were added in release 5.3.2. Power and throttle control functions were 
+      added in release 5.5.4.  Other object types and functions may be added in the future based on user requests.</li>
 
         <li><a href="#LNG">LogxiNG</a>: As of release 4.99.7, <a href="../../tools/logixng/LogixNG.shtml">LogixNG</a> has
       the capability to publish and subscribe MQTT messages on any topic of your choosing.</li>
@@ -48,7 +48,7 @@
 
       </ul>
 
-      <p><strong>Contents:</strong></p>
+      <p id="top"><strong>Contents:</strong></p>
       <div class="toc">
 
        <ul>
@@ -62,6 +62,9 @@
         <li><a href="#contents">Message Contents</a>
         </li>
 
+        <li><a href="#QoSRet">MQTT Parameters for Quality of Service and Retained Messages</a>
+        </li>         
+
         <li>
           Using MQTT with...
          <ul>
@@ -72,6 +75,8 @@
               <li>Topics for MQTT-connected Objects</li>
             </ul>
           </li>
+          <li><a href="#powerandthrottle">Power and Throttle Control</a>
+          </li>         
           <li><a href="#LNG">LogixNG</a>
             <ul>
               <li>LogixNG Topics for MQTT</li>
@@ -86,7 +91,7 @@
               <li>Subscribing to (Receiving) Messages</li>
               <li>Changing Default Message Parsing</li>
               <li>Changing Message Topics at Startup</li>
-              <li><a href="#QoSRet">Changing Default MQTT Parameters: QoS and Retained Messages</a></li>
+              <li>Changing MQTT QoS and Retain</li>
              </ul>
           </li>
         </ul>
@@ -248,6 +253,33 @@
       contents is interpreted is up to the processes that subscribe to the topic of the message. See the following sections for more details.</p>
 
 
+<!-- *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= -->
+
+      <h2 id="QoSRet">MQTT Parameters for Quality of Service and Retained Messages</h2>
+      
+      <p><a href="https://mosquitto.org/man/mqtt-7.html" target="_blank">MQTT Quality of  Service</a> indicates
+      to the MQTT message broker how to handle message delivery and receipt. Allowable values are 0, 1, and 2. 
+      JMRI publishes messages using QOS level 2, the most stringent level, to ensure that messages are received by 
+      the broker (this can be changed by <a href="#scripts">script</a>). QoS is between the publisher and
+      the broker.  While JMRI sets a QoS level 2, whoever is publishing messages you want JMRI to receive (via
+      subscription) needs to set its own level (which can be the same or different than the level JMRI sets).
+      </p>
+
+      <p>The <a href="https://www.hivemq.com/blog/mqtt-essentials-part-8-retained-messages/" target=
+      "_blank">Retained Messages</a> parameter indicates to the MQTT message broker whether to retain the current 
+      message to be automatically published whenever a new subscriber to that topic appears. JMRI publishes messages
+      with the retain option on (this can be changed by <a href="#scripts">script</a>).  Since JMRI subscribes to 
+      the receive topics for the individual objects you have set up in JMRI, subscriptions are made  when you load a
+      panel.  Any retained messages will be received at that time.  For example, JMRI subscribes to messages
+      from MQTT sensors (that is, devices managing sensors and publishing MQTT messages). The publisher of those messages
+      decides whether values are retained by the broker so JMRI will receive them when a panel is loaded or a new sensor
+      created.  Turnouts and lights commands are generally published by JMRI so JMRI will not receive anything on 
+      startup as it would not be subscribing to its own messages.
+      </p>
+
+      <p><a href="#top"><em><small>[Go to top of page]</small></em></a>
+      </p>
+
 <!-- *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= -->
 
       <h2 id="objects">Using MQTT-connected Layout Objects</h2>
@@ -333,41 +365,15 @@
           "Approach Medium; Lit; Unheld" and "Clear; Unlit; Held". The available
           aspect names are defined in the signal system definition being used.
         </li>
-
         <li>
-          <strong>Track Power</strong><span class="since">Since JMRI 5.5.4</span>:
-          JMRI sends Track Power ON/OFF commands on the "Power
-          send topic" and receives the track power status on the "Power receive topic".
+          <strong>Throttles and Power Control</strong><span class="since">Since JMRI 5.5.4</span>: 
+          While not "layout objects," JMRI can also generate and receive MQTT messages for these functions, as 
+          described <a href="#powerandthrottle">below</a>.
         </li>
-
-        <li><strong>Throttle Control</strong><span class="since">Since JMRI 5.5.4</span>:
-          JMRI supports controlling cabs over MQTT.  The protocol is
-          controller agnostic though the internal design of JMRI imposes some compliance with DCC standards.
-          <br>Using a Throttle Control over MQTT provides for:
-          <ul>
-            <li><strong>Throttle</strong>: The speed setting as a 0-100 percentage value is sent on the
-            "Throttle send topic" and received on the "Throttle receive topic".</li>
-            <li><strong>Direction</strong>: The throttle direction is sent on the "Direction send topic" and
-            received on the "Direction receive topic".  Direction values are "FORWARD" and "REVERSE", and "STOP"
-            for an emergency stop.</li>
-            <li><strong>Function</strong>: Function states are sent on the "Function send topic" and received
-            on the "Function receive topic".  The placeholder "{1}" within each topic is substituted with
-            the number of the function.Function state values are "ON" and "OFF".</li>
-            <li><strong>Consist</strong>: MQTT supports Command Station Consists in JMRI using the standard
-             Consist Tool. All of the loco addresses that make up a consist are listed in the
-            "Consist send topic" when a throttle is controlling that consist address.  It is up to the controller
-            to determine how it controls the individual locos in the consist.</li>
-            </ul>
-
-          In the topics listed above, the placeholder "{0}" in the topic name is replaced with the loco
-          or consist address that the throttle is controlling.  When the throttle is Released, all of the
-          above topics are removed from MQTT. If a throttle is Dispatched, the topics are retained on MQTT -
-          this allows for locos to be controlled from a script but be able to be taken over and manually
-          controlled as required (ie for shunting operations).
-
       </ul>
 
       <p>All other messages on these defined topics are ignored by the standard JMRI processing.</p>
+      
 
       <h3>MQTT-connected Object Names</h3>
 
@@ -421,6 +427,71 @@
       <p><a href="images/MQTTPrefs_example_rel5_5_6.jpg"><img src="images/MQTTPrefs_example_rel5_5_6.jpg" alt=
       "MQTT preferences example"></a></p>
 
+      <p><a href="#top"><em><small>[Go to top of page]</small></em></a>
+      </p>
+
+<!-- *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= -->
+      <h2 id="powerandthrottle">Power and Throttle Control</h2>
+      
+      <p>It is now possible to subscribe to and receive MQTT messages to turn track power on or off and to control engine throttles.
+      </p>
+      
+      <h3>MQTT Power Control</h3>
+      <p><span class="since">Since JMRI 5.5.4</span>
+      JMRI publishes Track Power ON/OFF commands on the "Power send topic" and receives the track power status on the "Power receive
+      topic". These messages will always be sent if you set power via the 
+      <a href="../../../package/jmri/jmrit/powerpanel/PowerPanelFrame.shtml">JMRI Power Control Window</a>.
+      </p>
+      <p>
+      If you select an MQTT connection as the default for Power Control, MQTT messages will be published when selecting Power 
+      ON or OFF from the Power Control Window, the <a href="../../../package/jmri/jmrit/withrottle/UserInterface.shtml">
+      WiThrottle Server window</a>, or any throttle connected via the
+      WiThrottle Server, or any scripts that use "powermanager.setPower(jmri.PpwerManager)".  [If multiple command stations types 
+      are connecte to JMRI, it is always possible to turn their track power on or off via the Power Control Window.]
+      </p>      
+      <p><a href="images/MQTT_Power_Control_rel554.png"><img src="images/MQTT_Power_Control_rel554.png" alt=
+      "MQTT Power Control Window"></a></p>
+
+      <h3>MQTT Throttle Control</h3>
+      <p><span class="since">Since 5.5.4</span>
+      JMRI supports controlling locomotives over MQTT.  Throttles attached to the specified MQTT connection (either by
+      default or by using <strong>Tools&rArr;Throttles&rArr;Throttles for connections&rArr;[select from pulldown]</strong>)
+      will publish MQTT messages on the indicated topics. The protocol is controller agnostic, however the internal design
+      of JMRI imposes some compliance with DCC standards.
+      </p>
+          
+      <p>Throttles will generate and process MQTT messages as follows:</p>
+          <ul>
+            <li><strong>Throttle</strong>: The speed setting as a 0-100 percentage value is sent on the
+            "Throttle send topic" and received on the "Throttle receive topic".</li>
+            <li><strong>Direction</strong>: The throttle direction is sent on the "Direction send topic" and
+            received on the "Direction receive topic".  Direction values are "FORWARD" and "REVERSE", and "STOP"
+            for an emergency stop.</li>
+            <li><strong>Function</strong>: Function states are sent on the "Function send topic" and received
+            on the "Function receive topic".  The placeholder "{1}" within each topic is substituted with
+            the number of the function.Function state values are "ON" and "OFF".</li>
+            <li><strong>Consist</strong>: MQTT supports Command Station Consists in JMRI using the standard
+             Consist Tool. All of the loco addresses that make up a consist are listed in the
+            "Consist send topic" when a throttle is controlling that consist address.  It is up to the controller
+            to determine how it controls the individual locos in the consist.</li>
+            </ul>
+
+      <p>
+      In the topics listed above, the placeholder "{0}" in the topic name is replaced with the loco or consist address
+      that the throttle is controlling.  When the throttle is Released, all of the above topics are removed from MQTT.
+      If a throttle is Dispatched, the topics are retained on MQTT - this allows for locos to be controlled from a script
+      but be able to be taken over and manually controlled as required (ie for shunting operations).
+      </p>
+      
+      <p>
+      If you select an MQTT connection as the default for Throttle Control (by selecting the "Throttle" button on 
+      <strong>Edit&rArr; Preferences&rArr;Defaults</strong>), any Throttle opened with 
+      <strong>Tools&rArr;Throttle&rArr;New Throttle</strong> from the main Panel window or using smartphone applications
+      such as <a href="../../../package/jmri/jmrit/withrottle/UserInterface.shtml">WiThrottle and EngineDriver</a>
+      will generate MQTT messages. You can always select a throttle for any installed connection using 
+      <strong>Tools&rArr;Throttles&rArr;Throttles for connections&rArr;[select from pulldown]</strong>.
+      </p>
+      
       <p><a href="#top"><em><small>[Go to top of page]</small></em></a>
       </p>
 
@@ -544,23 +615,11 @@
       panel files are loaded. Changing the prefix only affects objects that are created after the
       change.</p>
 
-      <h4 id="QoSRet">Changing MQTT Default Parameters</h4>
+      <h4>Changing MQTT QoS and Retain</h4>
       <span class="since">Since JMRI 4.21.3</span>
-      <p>Two parameters used in MQTT processing can be reset via scripts.</p>
-
-      <p><a href="https://mosquitto.org/man/mqtt-7.html" target="_blank">MQTT Quality of
-      Service</a> indicates to the MQTT message broker how to handle message delivery and receipt.
-      Allowable values are 0, 1, and 2. JMRI uses QoS level 2 (broker will deliver message exactly
-      once) by default.</p>
-
-      <p><a href="https://www.hivemq.com/blog/mqtt-essentials-part-8-retained-messages/" target=
-      "_blank">Retained Messages</a> indicates to the MQTT message broker whether to retain the
-      last message received for a certain topic. JMRI publishes messages with the retain option on.
-      This allows any new subscriber to automatically receive the last message sent to a topic
-      (often the state of a JMRI object) when that new subscriber starts up.</p>
-
-      <p>Both of these parameters can be changed using the <a href=
-      "../../../../../jython/MQTT/SetMqttOptions.py">SetMqttOptions.py</a> script.</p>
+      <p>MQTT parameters <a href="#QoSRet">Quality of Service and Retained Message</a> used by JMRI can be reset
+      via scripting. Example script <a href="../../../../../jython/MQTT/SetMqttOptions.py">SetMqttOptions.py</a> 
+      shows how both of these parameters can be changed .</p>
 
       <p><a href="#top"><em><small>[Go to top of page]</small></em></a>
       </p>
