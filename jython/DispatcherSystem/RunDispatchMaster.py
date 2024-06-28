@@ -110,7 +110,6 @@ class RunDispatcherMaster():
         sensors.getSensor("stopAtStopSensor").setKnownState(ACTIVE)
         sensors.getSensor("editRoutesSensor").setKnownState(INACTIVE)
         sensors.getSensor("viewScheduledSensor").setKnownState(INACTIVE)
-        sensors.getSensor("schedulerStartTimeSensor").setKnownState(INACTIVE)
         sensors.getSensor("showClockSensor").setKnownState(INACTIVE)
         sensors.getSensor("timetableSensor").setKnownState(INACTIVE)
         sensors.getSensor("departureTimeSensor").setKnownState(INACTIVE)

@@ -63,7 +63,6 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     controlSensors.append([i, 'runRouteSensor', 'Run Route', 10, 5]); i += 1
     controlSensors.append([i, 'editRoutesSensor', 'View/Edit Routes', 10, 5]); i += 1
     controlSensors.append([i, 'viewScheduledSensor', 'View/Edit Scheduled Trains', 10, 5]); i += 1
-    controlSensors.append([i, 'schedulerStartTimeSensor', 'Set Scheduler Start Time', 10, 5]); i += 1
     controlSensors.append([i, 'showClockSensor', 'Show Analog Clock', 10, 5]); i += 1
     controlSensors.append([i, 'startSchedulerSensor', 'Start Scheduler', 10, 5]); i += 1
     controlSensors.append([i, 'timetableSensor', 'Show Timetable', 10, 5]); i += 1

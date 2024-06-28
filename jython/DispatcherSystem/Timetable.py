@@ -3,6 +3,7 @@ import re
 from java.awt import BorderLayout, Dimension, FlowLayout
 from javax.swing import JEditorPane, JFrame, JPanel, JScrollPane
 from java.awt.event import WindowAdapter, WindowEvent
+from ast import literal_eval
 import javax.swing.text.html.HTMLEditorKit as HTMLEditorKit
 import java.net as net
 
@@ -10,17 +11,17 @@ import java.net as net
 class Timetable:
 
     def __init__(self, station):
-        print "start timetable"
+        # print "start timetable"
         self.html_content = "unset"
-        print "html_content", self.html_content
+        # print "html_content", self.html_content
         self.frame = None
-        print "creating window"
+        # print "creating window"
         self.createWindow(station)
 
     def update_timetable(self, required_station, time, timetable):
 
         # print "required_station, time, timetable", required_station, time, timetable
-        print "required_station", required_station
+        # print "required_station", required_station
 
         # print "update timetable"
         html_table = self.get_html_table(time, required_station, timetable)
@@ -34,6 +35,10 @@ class Timetable:
         # print "end update timetable"
 
     def get_html_table(self, time, required_station, timetable):
+
+        # a lot of heavy work here because the arrival and departure times have spaces
+        # and to overcome this and sort by time we need to sort by the max of the
+        # arrival and departure times
 
         # print "timetable", timetable
 
@@ -69,29 +74,69 @@ class Timetable:
             html_table = html_table1.replace("$station$", required_station).replace("$time$", time)
         except:
             html_table = html_table1.replace("$station$", "station not set 1").replace("$time$", time)
-
+        timetable_list = []
         for timetable_entry in timetable:
-            # ['SidingMiddlleLHS', '7:1',             # ['SidingMiddlleLHS', '7:1', 'SidingMiddlleLHS', '10', 'SidingTopRHS']'SidingMiddlleLHS', '10', 'SidingTopRHS']
-            # print "timetable_entry", timetable_entry
-            [train, station_name, station_departure_time, last_station, station_arrival_time, via] = timetable_entry
-            first_station = "fred"
+
+            # [train, station_name, station_departure_time, last_station, station_arrival_time, via] = timetable_entry
+            [train_name, station_name, station_arrival_time, station_departure_time, first_station, last_station, via] \
+                = timetable_entry
             # print "[station_name, station_departure_time, last_station, last_station_arrival_time, via]", [station_name, station_departure_time, last_station, last_station_arrival_time, via]
             if str(station_name) == required_station:
+                # print "train_name", train_name
+                # print "timetable_entry", timetable_entry
+                station_time = 0
+                # print "station_arrival_time", station_arrival_time
+                # print "station_departure_time", station_departure_time
+                sat = 0
+                sdt = 0
+                if station_arrival_time != "":
+                    [h, m] = station_arrival_time.split(":")
+                    sat = int(h)*60 + int(m)
+
+                if station_departure_time != "":
+                    [h, m] = station_departure_time.split(":")
+                    sdt = str(int(h)*60 + int(m))
+                station_time = str(max(sat, sdt))
                 html_table_entry = string.replace("$station_name$", station_name) \
                     .replace("$station_arrival_time$", station_arrival_time) \
                     .replace("$station_departure_time$", station_departure_time) \
-                    .replace("$train$", train) \
+                    .replace("$train$", train_name) \
                     .replace("$first_station$", first_station) \
-                     .replace("$last_station$", last_station) \
+                    .replace("$last_station$", last_station) \
                     .replace("$via$", via)
                 # print "html_table_entry", html_table_entry
-
-                html_table += html_table_entry
-                # print "html_table", html_table
+                # timetable_list += {station_time: "station_time", str(html_table_entry): "html_table_entry"}
+                timetable_list.append({"station_time": station_time, "html_table_entry": html_table_entry})
+                # print "#######################################################"
+                # print "html_table", html_table_entry
+                # print "#######################################################"
+        # sort timetable_list
+        # print "timetable_list_before sort", timetable_list
+        timetable_list.sort(key=self.myFunc)
+        # print "timetable_list", timetable_list
+        for t in timetable_list:
+            # html_table += literal_eval(t['html_table_entry'])
+            html_table += t['html_table_entry']
         html_table += "\n</table>"
         # print "html_table", html_table
 
         return html_table
+
+    def myFunc(self, e):
+
+        station_time = e['station_time']
+        # station_departure_time = e['station_departure_time']
+        # sat = 0
+        # sdt = 0
+        # if station_arrival_time != "":
+        #     [h, m] = station_arrival_time.split(":")
+        #     sat = int(h)*60 + int(m)
+        #
+        # if station_departure_time != "":
+        #     [h, m] = station_departure_time.split(":")
+        #     sdt = str(int(h)*60 + int(m))
+        # station_time = str(max(sat, sdt))
+        return int(station_time)
 
     def createWindow(self, station):
         global timetable_frame_gbl
@@ -105,7 +150,7 @@ class Timetable:
         # self.frame.addWindowListener(MyWindowAdapter())
 
         self.createUI(station)
-        self.frame.setSize(700, 450)
+        self.frame.setSize(900, 450)
         self.frame.setLocationRelativeTo(None)
         self.frame.setVisible(True)
         # print "created window"
@@ -120,7 +165,7 @@ class Timetable:
             self.frame.setVisible(True)
 
     def createUI(self, station):
-        print "in createUI"
+        # print "in createUI"
         self.panel = JPanel()
         # self.panel.setLayout(BorderLayout())   #allow resizing of window by using BorderLayout
         layout = BorderLayout()
@@ -136,13 +181,13 @@ class Timetable:
         self.html_content = self.edit_html_station(station)
         print "about to load html"
         self.load_html(self.html_content)
-        print "loaded html"
+        # print "loaded html"
         jScrollPane = JScrollPane(self.jEditorPane)
         jScrollPane.setPreferredSize(Dimension(540, 400))
 
         self.panel.add(jScrollPane)
         self.frame.getContentPane().add(self.panel, BorderLayout.CENTER)
-        print "finished create UI"
+        # print "finished create UI"
 
     def get_html(self):
         # print "in get_html"
@@ -172,8 +217,8 @@ class Timetable:
     def edit_html_station(self, station):
 
         html_edit = self.html_content
-        print "html_edit type", type(html_edit)
-        print "*********************station*****************************", station
+        # print "html_edit type", type(html_edit)
+        # print "*********************station*****************************", station
         try:
             html_edit = html_edit.replace("$station$", station)
         except:

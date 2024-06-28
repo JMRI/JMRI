@@ -216,7 +216,7 @@ class CreateAndShowGUI6(TableModelListener):
     def populate_action(self, event):
         # print "populating"
         items_to_put_in_dropdown = self.get_route_list()
-        print "items_to_put_in_dropdown", items_to_put_in_dropdown
+        # print "items_to_put_in_dropdown", items_to_put_in_dropdown
         self.model.populate(items_to_put_in_dropdown)
         # print "populated"
         self.completeTablePanel()
@@ -362,13 +362,13 @@ class CreateAndShowGUI6(TableModelListener):
         return new_val
 
     def scheduled_routes_action(self, event):
-        print "self.toggle 2", self.toggle
+        # print "self.toggle 2", self.toggle
         if self.toggle == True:
             self.toggle = False
         else:
             self.toggle = True
 
-        print "self.toggle 1", self.toggle
+        # print "self.toggle 1", self.toggle
 
         for row in reversed(range(len(self.model.data))):
             self.model.data.pop(row)
@@ -376,11 +376,11 @@ class CreateAndShowGUI6(TableModelListener):
 
         if self.toggle == True:
             items_to_put_in_dropdown = self.get_route_list()
-            print "items_to_put_in_dropdown 1", items_to_put_in_dropdown, self.toggle
+            # print "items_to_put_in_dropdown 1", items_to_put_in_dropdown, self.toggle
             self.frame.setTitle("All Routes")
         else:
             items_to_put_in_dropdown = self.get_scheduled_route_list()
-            print "items_to_put_in_dropdown 2", items_to_put_in_dropdown, self.toggle
+            # print "items_to_put_in_dropdown 2", items_to_put_in_dropdown, self.toggle
             self.frame.setTitle("Scheduled Routes")
 
         self.model.populate(items_to_put_in_dropdown)
@@ -460,7 +460,7 @@ class CreateAndShowGUI6(TableModelListener):
 
     def save(self):
         [route_col, edit_col, delete_col] = [0, 1, 2]
-        print "save_action"
+        # print "save_action"
         self.clear_everything()
         # print "apply action"
         for row in reversed(range(len(self.model.data))):
@@ -622,11 +622,11 @@ class MyModelListener6(TableModelListener):
         # print "a"
         if column == edit_col:     #trains
             if self.model.getValueAt(row, edit_col) == True:
-                print "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$starting edit"
+                # print "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$starting edit"
                 route_data = str(self.model.getValueAt(row, route_col))
                 scheduled_start = "00:00"
                 if "CreateAndShowGUI5_glb" in globals():
-                    print "*******************************88 IN GLOBALS ****************************************"
+                    # print "*******************************88 IN GLOBALS ****************************************"
                     if CreateAndShowGUI5_glb != None:
                         CreateAndShowGUI5_glb.frame.dispose()
                 CreateAndShowGUI5_glb = CreateAndShowGUI5(self, route_data, scheduled_start)

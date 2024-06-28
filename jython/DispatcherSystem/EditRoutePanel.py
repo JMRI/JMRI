@@ -216,7 +216,7 @@ class CreateAndShowGUI5(TableModelListener):
         # print "populating"
         # print "a"
         items_to_put_in_dropdown = self.get_station_list()
-        print "items_to_put_in_dropdown", items_to_put_in_dropdown
+        # print "items_to_put_in_dropdown", items_to_put_in_dropdown
         # print "b"
         self.model.populate(items_to_put_in_dropdown)
         # print "populated"
@@ -516,9 +516,9 @@ class MyModelListener5(TableModelListener):
 
                 # 2) Calculate the duration in secs (from fast minutes
                     duration_sec = self.calc_duration_sec_from_duration(row)
-                    print "### duration_sec", duration_sec, "row", row
+                    # print "### duration_sec", duration_sec, "row", row
                     existing_val = self.model.getValueAt(row, duration_sec_col)
-                    print "### duration_sec", duration_sec, "existing val", existing_val, "row", row
+                    # print "### duration_sec", duration_sec, "existing val", existing_val, "row", row
                     if existing_val != duration_sec:
                         self.model.setValueAt(duration_sec, row, duration_sec_col)
                     self.save_value_to_operations(row, duration_sec_col)
@@ -693,7 +693,7 @@ class MyModelListener5(TableModelListener):
             # print "current_journey_time", current_journey_time, "current_wait_time", current_wait_time
 
             current_duration_sec = current_journey_time + current_wait_time
-            print "current_duration_sec", current_duration_sec
+            # print "current_duration_sec", current_duration_sec
             # round up to the next multiple of current_duration_sec
             secs_in_fast_minute = int(1.0 / float(str(fast_clock_rate)) * 60.0)
             current_duration_sec1 = (current_duration_sec // secs_in_fast_minute) * secs_in_fast_minute
@@ -847,7 +847,7 @@ class MyTableModel5 (DefaultTableModel):
                     if journey_time == "": journey_time = ""
                 else:
                     if journey_time == "": journey_time = "0"
-                print "journey_time" , journey_time
+                # print "journey_time" , journey_time
 
                 # get default wait time
                 memory = memories.getMemory("IM:" + "DS_wait_time")
@@ -856,18 +856,18 @@ class MyTableModel5 (DefaultTableModel):
                     memory.setValue(3)
                 # print "memory1", type(memory)
                 default = memory.getValue()
-                print "default", default
+                # print "default", default
 
                 wait_time = self.find_between(comment, "[wait_time-", "-wait_time]")
                 if i == 0:
                     if wait_time == "": wait_time = ""
                 else:
                     if wait_time == "": wait_time = str(default)
-                print "wait_time" , wait_time
+                # print "wait_time" , wait_time
 
                 duration_sec = str(self.find_between(comment, "[duration_sec-", "-duration_sec]"))
 
-                print "duration_sec", duration_sec, "location", location, type(duration_sec), "row", i
+                # print "duration_sec", duration_sec, "location", location, type(duration_sec), "row", i
                 if i == 0:
                     if duration_sec == "0": duration_sec = ""
                 else:
@@ -897,7 +897,7 @@ class MyTableModel5 (DefaultTableModel):
         i = 0
         for [location, comment] in items_to_put_in_dropdown:
             if ".py" not in location:    # omit actions
-                print "xxxx setting duration_sec_col", i, duration_sec_array[i]
+                # print "xxxx setting duration_sec_col", i, duration_sec_array[i]
                 self.setValueAt(duration_sec_array[i], i, duration_sec_col)
             i += 1
 
@@ -950,7 +950,7 @@ class MyTableModel5 (DefaultTableModel):
             #     # print "departure_time" , departure_time
             #     duration = "0"
             #     departure_time = "00:00"     # departure times will be filled in from durations
-            #     print "duration_sec 1", duration_sec, "locstion", location, type(duration_sec), "row", i
+            #     # print "duration_sec 1", duration_sec, "locstion", location, type(duration_sec), "row", i
             # else:
             #     journey_time = None
             #     departure_time = None

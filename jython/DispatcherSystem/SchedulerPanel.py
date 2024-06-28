@@ -194,7 +194,7 @@ class CreateAndShowGUI4(TableModelListener):
         TrainManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
         train_list = TrainManager.getTrainsByTimeList()
         my_list = [[train.getName(), train.getDepartureTime(), train.getComment(), train.getRoute()] for train in train_list]
-        print "my_list", my_list
+        # print "my_list", my_list
         return my_list
 
     def populate_action(self, event):
@@ -603,7 +603,7 @@ class MyModelListener4(TableModelListener):
             msg = "delete row?"
             opt1 = "dont' delete row"
             opt2 = "delete row"
-            result = self.OptionDialog.customQuestionMessage2str(msg, title, opt1, opt2)
+            result = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
             if result == opt2:
                 self.delete_row(row, class_CreateAndShowGUI4)
         class_CreateAndShowGUI4.save()                      # save everything when the table is chabged
@@ -678,7 +678,7 @@ class MyTableModel4 (DefaultTableModel):
         # print "in populate"
         for row in reversed(range(len(self.data))):
             self.data.pop(row)
-        print "cleared everything"
+        # print "cleared everything"
         # self.data = []
         # append all trains to put in dropdown
         [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, edit_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]
