@@ -5,6 +5,7 @@ import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
+import jmri.Memory;
 import jmri.Sensor;
 import jmri.SpeedStepMode;
 
@@ -15,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Oct 2020 - change formats to allow I18N of parameters
+ * Jul 2024 - Add the SET_MEMORY action.  This makes it possible to trigger external actions beyond just a sensor.  DAS
  * @author  Pete Cressman Copyright (C) 2009, 2020
  */
 public class ThrottleSetting {
@@ -28,6 +30,7 @@ public class ThrottleSetting {
     static final int CMD_SET_SENSOR = 7;
     static final int CMD_WAIT_SENSOR = 8;
     static final int CMD_RUN_WARRANT = 9;
+    static final int CMD_SET_MEMORY = 10;
 
     public enum Command {
         SPEED(CMD_SPEED, true, "speed"),
@@ -38,7 +41,8 @@ public class ThrottleSetting {
         WAIT_SENSOR(CMD_WAIT_SENSOR, false, "WaitSensor"),
         RUN_WARRANT(CMD_RUN_WARRANT, false, "runWarrant"),
         NOOP(CMD_NOOP, true, "NoOp"),
-        SPEEDSTEP(CMD_SPEEDSTEP, true, "speedstep");
+        SPEEDSTEP(CMD_SPEEDSTEP, true, "speedstep"),
+        SET_MEMORY(CMD_SET_MEMORY, false, "SetMemory");
 
         int _command;
         boolean _hasBlock; // when bean is an OBlock.
@@ -68,6 +72,7 @@ public class ThrottleSetting {
     static final int VALUE_NOOP = 2;
     static final int VALUE_INT = 3;
     static final int VALUE_STEP = 4;
+    static final int VALUE_TEXT = 5;
     static final int VALUE_TRUE = 10;
     static final int VALUE_FALSE = 11;
     static final int VALUE_ON = 20;
@@ -84,6 +89,7 @@ public class ThrottleSetting {
         VAL_NOOP(VALUE_NOOP, "Mark"),
         VAL_INT(VALUE_INT, "NumData"),
         VAL_STEP(VALUE_STEP, "speedstep"),
+        VAL_TEXT(VALUE_TEXT, "TextData"),
         VAL_TRUE(VALUE_TRUE, "StateTrue"),
         VAL_FALSE(VALUE_FALSE, "StateFalse"),
         VAL_ON(VALUE_ON, "StateOn"),
@@ -98,7 +104,7 @@ public class ThrottleSetting {
             _valueId = id;
             _bundleKey = bundleName;
         }
- 
+
         public int getIntId() {
             return _valueId;
         }
@@ -113,18 +119,20 @@ public class ThrottleSetting {
         ValueType _type;
         SpeedStepMode  _stepMode;
         float   _floatValue;
-        NumberFormat formatter = NumberFormat.getNumberInstance(); 
-        NumberFormat intFormatter = NumberFormat.getIntegerInstance(); 
+        String  _textValue;
+        NumberFormat formatter = NumberFormat.getNumberInstance();
+        NumberFormat intFormatter = NumberFormat.getIntegerInstance();
 
-        public CommandValue(ValueType t, SpeedStepMode s, float f) {
+        public CommandValue(ValueType t, SpeedStepMode s, float f, String tx) {
             _type = t;
             _stepMode = s;
             _floatValue = f;
+            _textValue = tx;
         }
 
         @Override
         protected CommandValue clone() {
-            return new CommandValue(_type, _stepMode, _floatValue);
+            return new CommandValue(_type, _stepMode, _floatValue, _textValue);
         }
 
         public ValueType getType() {
@@ -143,13 +151,19 @@ public class ThrottleSetting {
             return _floatValue;
         }
 
+        public String getText() {
+            return _textValue;
+        }
+
         public String showValue() {
             if (_type == ValueType.VAL_FLOAT) {
-                return formatter.format(_floatValue);                               
+                return formatter.format(_floatValue);
             } else if (_type == ValueType.VAL_INT) {
                 return intFormatter.format(_floatValue);
             } else if (_type == ValueType.VAL_STEP) {
                 return _stepMode.name;
+            } else if (_type == ValueType.VAL_TEXT) {
+                return _textValue;
             } else {
                 return _type.toString();
             }
@@ -192,20 +206,20 @@ public class ThrottleSetting {
         _keyNum = -1;
     }
 
-    public ThrottleSetting(long time, Command command, int key, ValueType vType, SpeedStepMode ss, float f, String beanName) {
+    public ThrottleSetting(long time, Command command, int key, ValueType vType, SpeedStepMode ss, float f, String tx, String beanName) {
         _time = time;
         _command = command;
         _keyNum = key;
-        setValue(vType, ss, f);
+        setValue(vType, ss, f, tx);
         setNamedBean(command, beanName);
         _trackSpeed = 0.0f;
     }
 
-    public ThrottleSetting(long time, Command command, int key, ValueType vType, SpeedStepMode ss, float f, String beanName, float trkSpd) {
+    public ThrottleSetting(long time, Command command, int key, ValueType vType, SpeedStepMode ss, float f, String tx, String beanName, float trkSpd) {
         _time = time;
         _command = command;
         _keyNum = key;
-        setValue(vType, ss, f);
+        setValue(vType, ss, f, tx);
         setNamedBean(command, beanName);
         _trackSpeed = trkSpd;
     }
@@ -214,7 +228,7 @@ public class ThrottleSetting {
     public ThrottleSetting(long time, String cmdStr, String value, String beanName) {
         _time = time;
         setCommand(cmdStr);
-        setValue(value);    // must follow setCommand() 
+        setValue(value);    // must follow setCommand()
         setNamedBean(_command, beanName);
         _trackSpeed = 0.0f;
     }
@@ -232,7 +246,7 @@ public class ThrottleSetting {
         _time = time;
         _command = command;
         _keyNum = key;
-        setValue(value);    // must follow setCommand() 
+        setValue(value);    // must follow setCommand()
         _namedHandle = null;
         _trackSpeed = trkSpd;
     }
@@ -281,16 +295,19 @@ public class ThrottleSetting {
         } else if ("NOOP".equals(cmd) || Bundle.getMessage("NoOp").toUpperCase().equals(cmd)) {
             command = Command.NOOP;
             _keyNum = -1;
-        } else if ("SENSOR".equals(cmd) || "SET SENSOR".equals(cmd) || "SET".equals(cmd) 
+        } else if ("SENSOR".equals(cmd) || "SET SENSOR".equals(cmd) || "SET".equals(cmd)
                 || Bundle.getMessage("SetSensor").toUpperCase().equals(cmd)) {
             command = Command.SET_SENSOR;
             _keyNum = -1;
-        } else if ("WAIT SENSOR".equals(cmd) || "WAIT".equals(cmd) 
+        } else if ("WAIT SENSOR".equals(cmd) || "WAIT".equals(cmd)
                 || Bundle.getMessage("WaitSensor").toUpperCase().equals(cmd)) {
             command = Command.WAIT_SENSOR;
             _keyNum = -1;
         } else if ("RUN WARRANT".equals(cmd) || Bundle.getMessage("runWarrant").toUpperCase().equals(cmd)) {
             command = Command.RUN_WARRANT;
+            _keyNum = -1;
+        } else if (Bundle.getMessage("SetMemory").toUpperCase().equals(cmd)) {
+            command = Command.SET_MEMORY;
             _keyNum = -1;
         } else {
             throw new jmri.JmriException(Bundle.getMessage("badCommand", cmdStr));
@@ -305,6 +322,7 @@ public class ThrottleSetting {
         ValueType type;
         SpeedStepMode mode = SpeedStepMode.UNKNOWN;
         float speed = 0.0f;
+        String text = "";
         String val = valueStr.trim().toUpperCase();
         if ("ON".equals(val) || Bundle.getMessage("StateOn").toUpperCase().equals(val)) {
             switch (command) {
@@ -384,6 +402,10 @@ public class ThrottleSetting {
                         mode = SpeedStepMode.getByName(val);
                         type = ValueType.VAL_STEP;
                         break;
+                    case SET_MEMORY:
+                        type = ValueType.VAL_TEXT;
+                        text = valueStr.trim();
+                        break;
                     default:
                         throw new JmriException(Bundle.getMessage("badValue", valueStr, command));
                 }
@@ -391,7 +413,7 @@ public class ThrottleSetting {
                 throw new JmriException(Bundle.getMessage("badValue", valueStr, command), ex);
             }
         }
-        return new CommandValue(type, mode, speed);
+        return new CommandValue(type, mode, speed, text);
     }
 
     /**
@@ -445,8 +467,8 @@ public class ThrottleSetting {
         _value = value.clone();
     }
 
-    public void setValue(ValueType t, SpeedStepMode s, float f) {
-        _value = new CommandValue(t, s, f);
+    public void setValue(ValueType t, SpeedStepMode s, float f, String tx) {
+        _value = new CommandValue(t, s, f, tx);
     }
 
     public CommandValue getValue() {
@@ -478,6 +500,9 @@ public class ThrottleSetting {
             } else if (cmd.equals(Command.RUN_WARRANT)) {
                 Warrant w = InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class).provideWarrant(name);
                 _namedHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(name, w);
+            } else if (cmd.equals(Command.SET_MEMORY)) {
+                Memory m = InstanceManager.getDefault(jmri.MemoryManager.class).provideMemory(name);
+                _namedHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(name, m);
             } else {
                 OBlock b = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(name);
                 if (b != null) {
