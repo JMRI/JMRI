@@ -1,2793 +1,992 @@
+<!DOCTYPE html>
 <html>
-
 <head>
-<meta http-equiv=Content-Type content="text/html; charset=us-ascii">
-<meta name=Generator content="Microsoft Word 15 (filtered)">
-<title>JMRI: Dispatcher System</title>
-<style>
-<!--
- /* Font Definitions */
- @font-face
-	{font-family:Wingdings;
-	panose-1:5 0 0 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:"Aptos Display";}
-@font-face
-	{font-family:Aptos;}
- /* Style Definitions */
- p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	font-size:12.0pt;
-	font-family:"Times New Roman",serif;}
-h1
-	{mso-style-link:"Heading 1 Char";
-	margin-right:0cm;
-	margin-left:0cm;
-	font-size:24.0pt;
-	font-family:"Times New Roman",serif;
-	font-weight:bold;}
-h2
-	{mso-style-link:"Heading 2 Char";
-	margin-right:0cm;
-	margin-left:0cm;
-	font-size:18.0pt;
-	font-family:"Times New Roman",serif;
-	font-weight:bold;}
-h3
-	{mso-style-link:"Heading 3 Char";
-	margin-right:0cm;
-	margin-left:0cm;
-	font-size:13.5pt;
-	font-family:"Times New Roman",serif;
-	font-weight:bold;}
-p.MsoToc1, li.MsoToc1, div.MsoToc1
-	{margin-top:0cm;
-	margin-right:0cm;
-	margin-bottom:5.0pt;
-	margin-left:0cm;
-	font-size:12.0pt;
-	font-family:"Times New Roman",serif;}
-p.MsoToc2, li.MsoToc2, div.MsoToc2
-	{margin-top:0cm;
-	margin-right:0cm;
-	margin-bottom:5.0pt;
-	margin-left:12.0pt;
-	font-size:12.0pt;
-	font-family:"Times New Roman",serif;}
-p.MsoToc3, li.MsoToc3, div.MsoToc3
-	{margin-top:0cm;
-	margin-right:0cm;
-	margin-bottom:5.0pt;
-	margin-left:24.0pt;
-	font-size:12.0pt;
-	font-family:"Times New Roman",serif;}
-p.MsoFootnoteText, li.MsoFootnoteText, div.MsoFootnoteText
-	{mso-style-link:"Footnote Text Char";
-	margin:0cm;
-	font-size:10.0pt;
-	font-family:"Times New Roman",serif;}
-span.MsoFootnoteReference
-	{vertical-align:super;}
-p.MsoTitle, li.MsoTitle, div.MsoTitle
-	{mso-style-link:"Title Char";
-	margin:0cm;
-	font-size:28.0pt;
-	font-family:"Aptos Display",sans-serif;
-	letter-spacing:-.5pt;}
-p.MsoTitleCxSpFirst, li.MsoTitleCxSpFirst, div.MsoTitleCxSpFirst
-	{mso-style-link:"Title Char";
-	margin:0cm;
-	font-size:28.0pt;
-	font-family:"Aptos Display",sans-serif;
-	letter-spacing:-.5pt;}
-p.MsoTitleCxSpMiddle, li.MsoTitleCxSpMiddle, div.MsoTitleCxSpMiddle
-	{mso-style-link:"Title Char";
-	margin:0cm;
-	font-size:28.0pt;
-	font-family:"Aptos Display",sans-serif;
-	letter-spacing:-.5pt;}
-p.MsoTitleCxSpLast, li.MsoTitleCxSpLast, div.MsoTitleCxSpLast
-	{mso-style-link:"Title Char";
-	margin:0cm;
-	font-size:28.0pt;
-	font-family:"Aptos Display",sans-serif;
-	letter-spacing:-.5pt;}
-a:link, span.MsoHyperlink
-	{color:blue;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{color:purple;
-	text-decoration:underline;}
-p
-	{margin-right:0cm;
-	margin-left:0cm;
-	font-size:12.0pt;
-	font-family:"Times New Roman",serif;}
-p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
-	{margin-top:0cm;
-	margin-right:0cm;
-	margin-bottom:0cm;
-	margin-left:36.0pt;
-	font-size:12.0pt;
-	font-family:"Times New Roman",serif;}
-p.MsoListParagraphCxSpFirst, li.MsoListParagraphCxSpFirst, div.MsoListParagraphCxSpFirst
-	{margin-top:0cm;
-	margin-right:0cm;
-	margin-bottom:0cm;
-	margin-left:36.0pt;
-	font-size:12.0pt;
-	font-family:"Times New Roman",serif;}
-p.MsoListParagraphCxSpMiddle, li.MsoListParagraphCxSpMiddle, div.MsoListParagraphCxSpMiddle
-	{margin-top:0cm;
-	margin-right:0cm;
-	margin-bottom:0cm;
-	margin-left:36.0pt;
-	font-size:12.0pt;
-	font-family:"Times New Roman",serif;}
-p.MsoListParagraphCxSpLast, li.MsoListParagraphCxSpLast, div.MsoListParagraphCxSpLast
-	{margin-top:0cm;
-	margin-right:0cm;
-	margin-bottom:0cm;
-	margin-left:36.0pt;
-	font-size:12.0pt;
-	font-family:"Times New Roman",serif;}
-p.MsoTocHeading, li.MsoTocHeading, div.MsoTocHeading
-	{margin-top:12.0pt;
-	margin-right:0cm;
-	margin-bottom:0cm;
-	margin-left:0cm;
-	line-height:105%;
-	page-break-after:avoid;
-	font-size:16.0pt;
-	font-family:"Aptos Display",sans-serif;
-	color:#0F4761;}
-span.Heading1Char
-	{mso-style-name:"Heading 1 Char";
-	mso-style-link:"Heading 1";
-	font-family:"Aptos Display",sans-serif;
-	color:#0F4761;}
-span.Heading2Char
-	{mso-style-name:"Heading 2 Char";
-	mso-style-link:"Heading 2";
-	font-family:"Aptos Display",sans-serif;
-	color:#0F4761;}
-span.Heading3Char
-	{mso-style-name:"Heading 3 Char";
-	mso-style-link:"Heading 3";
-	font-family:"Aptos",sans-serif;
-	color:#0F4761;}
-p.msonormal0, li.msonormal0, div.msonormal0
-	{mso-style-name:msonormal;
-	margin-right:0cm;
-	margin-left:0cm;
-	font-size:12.0pt;
-	font-family:"Times New Roman",serif;}
-p.msochpdefault, li.msochpdefault, div.msochpdefault
-	{mso-style-name:msochpdefault;
-	margin-right:0cm;
-	margin-left:0cm;
-	font-size:10.0pt;
-	font-family:"Times New Roman",serif;}
-span.TitleChar
-	{mso-style-name:"Title Char";
-	mso-style-link:Title;
-	font-family:"Aptos Display",sans-serif;
-	letter-spacing:-.5pt;}
-span.FootnoteTextChar
-	{mso-style-name:"Footnote Text Char";
-	mso-style-link:"Footnote Text";
-	font-family:"Times New Roman",serif;}
-.MsoChpDefault
-	{font-size:10.0pt;}
- /* Page Definitions */
- @page WordSection1
-	{size:595.3pt 841.9pt;
-	margin:72.0pt 72.0pt 72.0pt 72.0pt;}
-div.WordSection1
-	{page:WordSection1;}
- /* List Definitions */
- ol
-	{margin-bottom:0cm;}
-ul
-	{margin-bottom:0cm;}
--->
-</style>
-
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>JMRI: Dispatcher System</title>
 </head>
-
-<body lang=EN-GB link=blue vlink=purple style='word-wrap:break-word'>
-
-<div class=WordSection1>
-
-<div>
-
-<div>
-
-<h1><a name="_Toc170509650"><span lang=EN>Dispatcher System</span></a></h1>
-
-</div>
-
-</div>
-
-<p class=MsoTocHeading>&nbsp;</p>
-
-<p class=MsoToc1><span class=MsoHyperlink><a href="#_Toc170509650"><span
-lang=EN>Dispatcher System</span></a></span></p>
-
-<p class=MsoToc2><span class=MsoHyperlink><a href="#_Toc170509651"><span
-lang=EN>Stages in Setting up the System</span></a></span></p>
-
-<p class=MsoToc2><span class=MsoHyperlink><a href="#_Toc170509652"><span
-lang=EN>Prerequisites</span></a></span></p>
-
-<p class=MsoToc2><span class=MsoHyperlink><a href="#_Toc170509653">Setting Up
-the Dispatcher System - Details</a></span></p>
-
-<p class=MsoToc3><span class=MsoHyperlink><a href="#_Toc170509654"><span
-lang=EN>Running Stage1 &#8212; Editing the panel and producing the transits</span></a></span></p>
-
-<p class=MsoToc3><span class=MsoHyperlink><a href="#_Toc170509655">Running
-Stage2 Final Checks</a></span></p>
-
-<p class=MsoToc2><span class=MsoHyperlink><a href="#_Toc170509656"><span
-lang=EN>Starting the Program</span></a></span></p>
-
-<p class=MsoToc3><span class=MsoHyperlink><a href="#_Toc170509657"><span
-lang=EN>Starting the Program</span></a></span></p>
-
-<p class=MsoToc2><span class=MsoHyperlink><a href="#_Toc170509658">Running the
-System</a></span></p>
-
-<p class=MsoToc3><span class=MsoHyperlink><a href="#_Toc170509659"><span
-lang=EN>Setup or Register a Train</span></a></span></p>
-
-<p class=MsoToc3><span class=MsoHyperlink><a href="#_Toc170509660">Setup two or
-more trains at once</a></span></p>
-
-<p class=MsoToc2><span class=MsoHyperlink><a href="#_Toc170509661"><span
-lang=EN>Dispatch or run a train directly</span></a></span></p>
-
-<p class=MsoToc3><span class=MsoHyperlink><a href="#_Toc170509662"><span
-lang=EN>Example: Run a train between two stops (stations)</span></a></span></p>
-
-<p class=MsoToc1><span class=MsoHyperlink><a href="#_Toc170509663">Routes</a></span></p>
-
-<p class=MsoToc2><span class=MsoHyperlink><a href="#_Toc170509664"><span
-lang=EN>Setup a Route</span></a></span></p>
-
-<p class=MsoToc2><span class=MsoHyperlink><a href="#_Toc170509665">View/Edit
-Routes</a></span></p>
-
-<p class=MsoToc3><span class=MsoHyperlink><a href="#_Toc170509666">View Routes</a></span></p>
-
-<p class=MsoToc3><span class=MsoHyperlink><a href="#_Toc170509667">Editing the
-route</a></span></p>
-
-<p class=MsoToc2><span class=MsoHyperlink><a href="#_Toc170509668"><span
-lang=EN>Run Route</span></a></span></p>
-
-<p class=MsoToc3><span class=MsoHyperlink><a href="#_Toc170509669">Run One
-Route</a></span></p>
-
-<p class=MsoToc3><span class=MsoHyperlink><a href="#_Toc170509670">Run Several
-Routes at Once</a></span></p>
-
-<p class=MsoToc1><span class=MsoHyperlink><a href="#_Toc170509671">Modifying
-the Behaviour of Running Trains</a></span></p>
-
-<p class=MsoToc2><span class=MsoHyperlink><a href="#_Toc170509672">Set Stopping
-Length</a></span></p>
-
-<p class=MsoToc3><span class=MsoHyperlink><a href="#_Toc170509673">Modify All
-Stopping Distances</a></span></p>
-
-<p class=MsoToc3><span class=MsoHyperlink><a href="#_Toc170509674">Modify
-Stopping Distance on one Transit</a></span></p>
-
-<p class=MsoToc2><span class=MsoHyperlink><a href="#_Toc170509675">Set Stop
-Sensor</a></span></p>
-
-<p class=MsoToc2><span class=MsoHyperlink><a href="#_Toc170509676">Set Station
-Wait Time</a></span></p>
-
-<p class=MsoToc3><span class=MsoHyperlink><a href="#_Toc170509677">Modify all
-station wait times</a></span></p>
-
-<p class=MsoToc3><span class=MsoHyperlink><a href="#_Toc170509678">Modify the
-wait time at a particular station approach</a></span></p>
-
-<p class=MsoToc2><span class=MsoHyperlink><a href="#_Toc170509679">Set Station
-Direction</a></span></p>
-
-<p class=MsoToc3><span class=MsoHyperlink><a href="#_Toc170509680">Setting
-Station Direction at a Station</a></span></p>
-
-<p class=MsoToc3><span class=MsoHyperlink><a href="#_Toc170509681">Setting the
-Station Direction using a block</a></span></p>
-
-<p class=MsoToc2><span class=MsoHyperlink><a href="#_Toc170509682">Restrict
-Transit Operation</a></span></p>
-
-<p class=MsoToc3><span class=MsoHyperlink><a href="#_Toc170509683">Introduction</a></span></p>
-
-<p class=MsoToc3><span class=MsoHyperlink><a href="#_Toc170509684">Creating the
-required Rule</a></span></p>
-
-<p class=MsoToc1><span class=MsoHyperlink><a href="#_Toc170509685"><span
-lang=EN>Scheduling</span></a></span></p>
-
-<p class=MsoToc2><span class=MsoHyperlink><a href="#_Toc170509686">Adding
-Schedules</a></span></p>
-
-<p class=MsoToc2><span class=MsoHyperlink><a href="#_Toc170509687">To save the
-set of scheduled trains</a></span></p>
-
-<p class=MsoToc2><span class=MsoHyperlink><a href="#_Toc170509688">To retrieve
-a set of scheduled trains</a></span></p>
-
-<p class=MsoToc1><span class=MsoHyperlink><a href="#_Toc170509689">Setting
-Departure Times</a></span></p>
-
-<p class=MsoToc2><span class=MsoHyperlink><a href="#_Toc170509690">Setting
-Departure Times Manually</a></span></p>
-
-<p class=MsoToc2><span class=MsoHyperlink><a href="#_Toc170509691">Setting
-Departure Times Automatically</a></span></p>
-
-<p class=MsoToc3><span class=MsoHyperlink><a href="#_Toc170509692">Set Wait
-Time in Stations</a></span></p>
-
-<p class=MsoToc3><span class=MsoHyperlink><a href="#_Toc170509693">Run Train on
-Route to Set Journey Times</a></span></p>
-
-<p class=MsoToc1><span class=MsoHyperlink><a href="#_Toc170509694">Run
-Scheduled Trains</a></span></p>
-
-<p class=MsoToc3><span class=MsoHyperlink><a href="#_Toc170509695">Initialisation:
-Change Running Period Parameters</a></span></p>
-
-<p class=MsoToc3><span class=MsoHyperlink><a href="#_Toc170509696">Start the
-Scheduled Trains</a></span></p>
-
-<p class=MsoToc3><span class=MsoHyperlink><a href="#_Toc170509697">1)<span
-style='font-family:"Aptos",sans-serif;color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Set
-the time to a period within the running period</a></span></p>
-
-<p class=MsoToc3><span class=MsoHyperlink><a href="#_Toc170509698">2)<span
-style='font-family:"Aptos",sans-serif;color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Start
-the scheduling of the trains</a></span></p>
-
-<p class=MsoToc3><span class=MsoHyperlink><a href="#_Toc170509699">3)<span
-style='font-family:"Aptos",sans-serif;color:windowtext;text-decoration:none'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Start
-the clock</a></span></p>
-
-<p class=MsoToc3><span class=MsoHyperlink><a href="#_Toc170509700">Stop
-Scheduling Trains</a></span></p>
-
-<p class=MsoToc1><span class=MsoHyperlink><a href="#_Toc170509701">Timetables</a></span></p>
-
-<p class=MsoToc2><span class=MsoHyperlink><a href="#_Toc170509702">Local
-Timetables</a></span></p>
-
-<p class=MsoToc2><span class=MsoHyperlink><a href="#_Toc170509703">Remote
-Timetables triggered by MQTT</a></span></p>
-
-<p class=MsoToc3><span class=MsoHyperlink><a href="#_Toc170509704">Generating
-the MQTT Node Red code</a></span></p>
-
-<p class=MsoToc3><span class=MsoHyperlink><a href="#_Toc170509705">Setting up
-the required Node Red environment</a></span></p>
-
-<p class=MsoToc3><span class=MsoHyperlink><a href="#_Toc170509706"><span
-lang=EN>Setup a MQTT Connection in JMRI</span></a></span></p>
-
-<p class=MsoToc3><span class=MsoHyperlink><a href="#_Toc170509707"><span
-lang=EN>Display the MQTT timetable</span></a></span></p>
-
-<p class=MsoToc1><span class=MsoHyperlink><a href="#_Toc170509708"><span
-lang=EN>Adding New Stations or Track to a Completed Panel</span></a></span></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><span lang=EN>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN>&nbsp;</span></p>
-
-<p><span lang=EN>This is an automated system designed to enable you to run
-trains using the Dispatcher system between locations (normally sidings or
-stations, but really any set of blocks) designated by yourself.</span></p>
-
-<p><span lang=EN>Provided you have set up a system as described in System
-Requirements, by pressing a few buttons on theSystem Generation Panel, a
-complete system will be set up for you complete with Transits, Train Info
-files, and buttons for you to press which will route trains across your layout.</span></p>
-
-<p><span lang=EN>A network will be set up behind the scenes which will find the
-best route from the train's location to the required location, and set in place
-a set of transits which will guide the train to the required location.</span></p>
-
-<p><span lang=EN>The train will either stop at all stations on the route, or
-travel without stopping at intermediate stops, depending on whether express or
-stopping mode is selected</span></p>
-
-<p><span lang=EN>Provision is made for multiple train operation, the trains
-stopping for each other. This is a feature of Dispatcher, but the system allows
-easy selecting of each train to control each one.</span></p>
-
-<h2><a name="_Toc167983231"></a><a name="_Toc168507346"></a><a
-name="_Toc170509651"><span lang=EN>Stages in Setting up the System</span></a></h2>
-
-<p><span lang=EN>There are two stages to set up the system for automatic train
-running:</span></p>
-
-<p><span lang=EN>Fulfil the prerequisites, which include having speed profiled
-your locos that you wish to run with the system</span></p>
-
-<ul style='margin-top:0cm' type=disc>
- <li class=MsoNormal><span lang=EN>Start JMRI with a panel loaded.</span></li>
- <li class=MsoNormal><span lang=EN>The panel should have: </span></li>
+<body>
+<h1><a>Dispatcher System</a></h1>
+<p> </p>
+<ul>
+  <li><a href="#_Toc170509650">Dispatcher System</a></li>
+  <ul>
+    <li><a href="#_Toc170509651">Stages in Setting up the System</a></li>
+    <li><a href="#_Toc170509652">Prerequisites</a></li>
+    <li><a href="#_Toc170509653">Setting Up the Dispatcher System - Details</a></li>
+    <ul>
+      <li><a href="#_Toc170509654">Running Stage1 - Editing the panel and producing the transits</a></li>
+      <li><a href="#_Toc170509655">Running Stage2 Final Checks</a></li>
+    </ul>
+    <li><a href="#_Toc170509656">Starting the Program</a></li>
+    <ul>
+      <li><a href="#_Toc170509657">Starting the Program</a></li>
+    </ul>
+    <li><a href="#_Toc170509658">Running the System</a></li>
+    <ul>
+      <li><a href="#_Toc170509659">Setup or Register a Train</a></li>
+      <li><a href="#_Toc170509660">Setup two or more trains at once</a></li>
+    </ul>
+    <li><a href="#_Toc170509661">Dispatch or run a train directly</a></li>
+    <ul>
+      <li><a href="#_Toc170509662">Example: Run a train between two stops (stations)</ul></a></li>
+  </ul>
+  <li><a href="#_Toc170509663">Routes</a></li>
+  <ul>
+    <li><a href="#_Toc170509664">Setup a Route</a></li>
+    <li><a href="#_Toc170509665">View/Edit Routes</a></li>
+    <ul>
+      <li><a href="#_Toc170509666">View Routes</a></li>
+      <li><a href="#_Toc170509667">Editing the route</a></li>
+    </ul>
+    <li><a href="#_Toc170509668">Run Route</a></li>
+    <ul>
+      <li><a href="#_Toc170509669">Run One Route</a></li>
+      <li><a href="#_Toc170509670">Run Several Routes at Once</a></li>
+    </ul>
+  </ul>
+  <li><a href="#_Toc170509671">Modifying the Behaviour of Running Trains</a></li>
+
+  <ul>
+    <li><a href="#_Toc170509672">Set Stopping Length</a></li>
+    <ul>
+      <li><a href="#_Toc170509673">Modify All Stopping Distances</a></li>
+      <li><a href="#_Toc170509674">Modify Stopping Distance on one Transit</a></li>
+    </ul>
+    <li><a href="#_Toc170509675">Set Stop Sensor</a></li>
+    <li><a href="#_Toc170509676">Set Station Wait Time</a></li>
+    <ul>
+      <li><a href="#_Toc170509677">Modify all station wait times</a></li>
+      <li><a href="#_Toc170509678">Modify the wait time at a particular station approach</a></li>
+    </ul>
+    <li><a href="#_Toc170509679">Set Station Direction</a></li>
+    <ul>
+      <li><a href="#_Toc170509680">Setting Station Direction at a Station</a></li>
+      <li><a href="#_Toc170509681">Setting the Station Direction using a block</a></li>
+    </ul>
+    <li><a href="#_Toc170509682">Restrict Transit Operation</a></li>
+    <ul>
+      <li><a href="#_Toc170509683">Introduction</a></li>
+      <li><a href="#_Toc170509684">Creating the required Rule</a></li>
+    </ul>
+  </ul>
+  <li><a href="#_Toc170509685">Scheduling</a></li>
+  <ul>
+    <li><a href="#_Toc170509686">Adding Schedules</a></li>
+    <li><a href="#_Toc170509687">To save the set of scheduled trains</a></li>
+    <li><a href="#_Toc170509688">To retrieve a set of scheduled trains</a></li>
+  </ul>
+  <li><a href="#_Toc170509689">Setting Departure Times</a></li>
+  <ul>
+    <li><a href="#_Toc170509690">Setting Departure Times Manually</a></li>
+    <li><a href="#_Toc170509691">Setting Departure Times Automatically</a></li>
+    <ul>
+      <li><a href="#_Toc170509692">Set Wait Time in Stations</a></li>
+      <li><a href="#_Toc170509693">Run Train on Route to Set Journey Times</a></li>
+    </ul>
+  </ul>
+  <li><a href="#_Toc170509694">Run Scheduled Trains</a></li>
+  <ul>
+    <li><a href="#_Toc170509695">Initialisation: Change Running Period Parameters</a></li>
+    <li><a href="#_Toc170509696">Start the Scheduled Trains</a></li>
+    <ul>
+      <li><a href="#_Toc170509697">1) Set the time to a period within the running period</a></li>
+      <li><a href="#_Toc170509698">2) Start the scheduling of the trains</a></li>
+      <li><a href="#_Toc170509699">3) Start the clock</a></li>
+    </ul>
+    <li><a href="#_Toc170509700">Stop Scheduling Trains</a></li>
+  </ul>
+  <li><a href="#_Toc170509701">Timetables</a></li>
+  <ul>
+    <li><a href="#_Toc170509702">Local Timetables</a></li>
+    <li><a href="#_Toc170509703">Remote Timetables triggered by MQTT</a></li>
+    <ul>
+      <li><a href="#_Toc170509704">Generating the MQTT Node Red code</a></li>
+      <li><a href="#_Toc170509705">Setting up the required Node Red environment</a></li>
+      <li><a href="#_Toc170509706">Setup a MQTT Connection in JMRI</a></li>
+      <li><a href="#_Toc170509707">Display the MQTT timetable</a></li>
+    </ul>
+  </ul>
+  <li><a href="#_Toc170509708">Adding New Stations or Track to a Completed Panel</a></p></ul>
+<p> </p>
+<p> </p>
+<p> </p>
+<p>This is an automated system designed to enable you to run trains using the Dispatcher system between locations (normally sidings or stations, but really any set of blocks) designated by yourself.</p>
+<p>Provided you have set up a system as described in System Requirements, by pressing a few buttons on theSystem Generation Panel, a complete system will be set up for you complete with Transits, Train Info files, and buttons for you to press which will route trains across your layout.</p>
+<p>A network will be set up behind the scenes which will find the best route from the train's location to the required location, and set in place a set of transits which will guide the train to the required location.</p>
+<p>The train will either stop at all stations on the route, or travel without stopping at intermediate stops, depending on whether express or stopping mode is selected</p>
+<p>Provision is made for multiple train operation, the trains stopping for each other. This is a feature of Dispatcher, but the system allows easy selecting of each train to control each one.</p>
+<h2><a>Stages in Setting up the System</a></h2>
+<p>There are two stages to set up the system for automatic train running:</p>
+<p>Fulfil the prerequisites, which include having speed profiled your locos that you wish to run with the system</p>
+<ul>
+  <li>Start JMRI with a panel loaded.</li>
+  <li>The panel should have:</li>
 </ul>
-
-<ul style='margin-top:0cm' type=disc>
- <ul style='margin-top:0cm' type=circle>
-  <li class=MsoNormal><span lang=EN>SignalMasts</span></li>
-  <li class=MsoNormal><span lang=EN>No SignalMast Logic (if there is any they
-      will be deleted and replaced)</span></li>
-  <li class=MsoNormal><span lang=EN>No Transits (if there are any they will be
-      deleted and replaced)</span></li>
-  <li class=MsoNormal><span lang=EN>No Train Info Files (if there are any they
-      will be deleted and replaced)</span></li>
- </ul>
+<ul>
+  <ul>
+    <li>SignalMasts</li>
+    <li>No SignalMast Logic (if there is any they will be deleted and replaced)</li>
+    <li>No Transits (if there are any they will be deleted and replaced)</li>
+    <li>No Train Info Files (if there are any they will be deleted and replaced)</li>
+  </ul>
 </ul>
-
-<p style='margin-left:36.0pt'><span lang=EN>In addition the block table should
-have been edited to indicate the blocks where the train should stop</span></p>
-
-<p style='margin-left:36.0pt'><span lang=EN>These requirements are explained in
-detail below.</span></p>
-
-<p><span lang=EN>&nbsp; To run Dispatcher System:</span></p>
-
-<ul style='margin-top:0cm' type=disc>
- <li class=MsoNormal><span lang=EN>Bring up the Dispatcher System Panel</span></li>
- <li class=MsoNormal><span lang=EN>Run Stage1 to generate everything to run
-     Dispatcher between stations</span></li>
- <li class=MsoNormal><span lang=EN>Run Stage2 to check the dispatcher options</span></li>
- <li class=MsoNormal><span lang=EN>Run the trains using the commands on a newly
-     produced command panel</span></li>
+<p>In addition the block table should have been edited to indicate the blocks where the train should stop</p>
+<p>These requirements are explained in detail below.</p>
+<p>  To run Dispatcher System:</p>
+<ul>
+  <li>Bring up the Dispatcher System Panel</li>
+  <li>Run Stage1 to generate everything to run Dispatcher between stations</li>
+  <li>Run Stage2 to check the dispatcher options</li>
+  <li>Run the trains using the commands on a newly produced command panel</li>
 </ul>
-
-<h2><a name="_Toc168507347"></a><a name="_Toc170509652"><span lang=EN>Prerequisites</span></a></h2>
-
-<p><span lang=EN>To use the Dispatcher System there are several prerequisites</span></p>
-
-<ul style='margin-top:0cm' type=disc>
- <li class=MsoNormal><span lang=EN>You should have set up the system with
-     signal masts</span></li>
- <li class=MsoNormal><span lang=EN>The locos you want to run on the system
-     should be: </span></li>
+<h2><a>Prerequisites</a></h2>
+<p>To use the Dispatcher System there are several prerequisites</p>
+<ul>
+  <li>You should have set up the system with signal masts</li>
+  <li>The locos you want to run on the system should be:</li>
 </ul>
-
-<ul style='margin-top:0cm' type=disc>
- <ul style='margin-top:0cm' type=circle>
-  <li class=MsoNormal><span lang=EN>entered in the Roster</span></li>
-  <li class=MsoNormal><span lang=EN>set up with a speed profile</span></li>
- </ul>
+<ul>
+  <ul>
+    <li>entered in the Roster</li>
+    <li>set up with a speed profile</li>
+  </ul>
 </ul>
-
-<ul style='margin-top:0cm' type=disc>
- <li class=MsoNormal><span lang=EN>the required stopping places (blocks) should
-     be indicated by entering stop in the comments field for the appropriate
-     block</span></li>
- <li class=MsoNormal><span lang=EN>Provision is made for a station announcement
-     to be made when a train enters a station.</span></li>
- <li class=MsoNormal><span lang=EN>If the block name is unpronounceable, a good
-     stop name can be entered in the comments field for the departure
-     announcements</span></li>
- <li class=MsoNormal><span lang=EN>Typical blocks comments would be</span></li>
+<ul>
+  <li>the required stopping places (blocks) should be indicated by entering stop in the comments field for the appropriate block</li>
+  <li>Provision is made for a station announcement to be made when a train enters a station.</li>
+  <li>If the block name is unpronounceable, a good stop name can be entered in the comments field for the departure announcements</li>
+  <li>Typical blocks comments would be</li>
 </ul>
-
-<p class=MsoNormal style='margin-left:36.0pt'><span lang=EN>&nbsp;</span></p>
-
-<p class=MsoNormal style='margin-left:36.0pt'><img border=0 width=1059
-height=377 src="DispatcherSystem_files/image001.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal style='margin-left:36.0pt'>&nbsp;</p>
-
-<h2><a name="_Toc168507348"></a><a name="_Toc170509653">Setting Up the Dispatcher
-System - Details</a></h2>
-
-<h3><a name="_Toc162537046"></a><a name="_Toc167983233"></a><a
-name="_Toc168507349"></a><a name="_Toc170509654"><span lang=EN>Running Stage1
-&#8212; Editing the panel and producing the transits</span></a></h3>
-
-<p><span lang=EN>Run DispatcherSystem.py in the main jython directory. You will
-get something like this:</span></p>
-
-<p><img border=0 width=681 height=288 src="DispatcherSystem_files/image002.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p><span lang=EN>You are prompted to run Stage1 which adds all the icons
-required to run the system on a new pane, and generates transits</span></p>
-
-<p><span lang=EN>If the old panel name was WR.xml, the new panel will be backed
-up to WR_backup_xx.xml where _xx is an incremental number which is added if
-previous backups exist</span></p>
-
-<p><span lang=EN>Some checks are done first, we check that:</span></p>
-
-<ul style='margin-top:0cm' type=disc>
- <li class=MsoNormal><span lang=EN>All blocks have a sensor</span></li>
- <li class=MsoNormal><span lang=EN>No two blocks have the same sensor</span></li>
- <li class=MsoNormal><span lang=EN>stops are set up</span></li>
- <li class=MsoNormal><span lang=EN>all blocks have lengths</span></li>
+<p> </p>
+<p><img width="1059" height="377" src="DispatcherSystem_files/image001.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<h2><a>Setting Up the Dispatcher System - Details</a></h2>
+<h3><a>Running Stage1 - Editing the panel and producing the transits</a></h3>
+<p>Run DispatcherSystem.py in the main jython directory. You will get something like this:</p>
+<p><img width="681" height="288" src="DispatcherSystem_files/image002.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p>You are prompted to run Stage1 which adds all the icons required to run the system on a new pane, and generates transits</p>
+<p>If the old panel name was WR.xml, the new panel will be backed up to WR_backup_xx.xml where _xx is an incremental number which is added if previous backups exist</p>
+<p>Some checks are done first, we check that:</p>
+<ul>
+  <li>All blocks have a sensor</li>
+  <li>No two blocks have the same sensor</li>
+  <li>stops are set up</li>
+  <li>all blocks have lengths</li>
 </ul>
-
-<p><span lang=EN>If all checks pass we get a message:</span></p>
-
-<p><img border=0 width=454 height=133 src="DispatcherSystem_files/image003.gif"
-alt="A screenshot of a computer screen&#10;&#10;Description automatically generated"></p>
-
-<p><span lang=EN>Further details of the checks can be viewed if required. If
-the checks do not pass details of the errors are given.</span></p>
-
-<p><span lang=EN>If no trains are present in the roster with speed profiles,
-this will be picked up at run time, and can be corrected then.</span></p>
-
-<p><span lang=EN>The following items are then produced automatically, with
-countdown timer showing the progression</span></p>
-
-<p class=MsoNormal><span lang=EN style='font-family:Symbol'>&middot;</span><span
-lang=EN>A backup of the existing panel </span></p>
-
-<p class=MsoNormal><span lang=EN style='font-family:Symbol'>&middot;</span><span
-lang=EN> The changes to the panel with the stopping points and stopping sensors
-</span></p>
-
-<p class=MsoNormal><span lang=EN style='font-family:Symbol'>&middot;</span><span
-lang=EN>&nbsp;The signal logic to operate the signals </span></p>
-
-<p class=MsoNormal><span lang=EN style='font-family:Symbol'>&middot;</span><span
-lang=EN>&nbsp;The required sections </span></p>
-
-<p class=MsoNormal><span lang=EN style='font-family:Symbol'>&middot;</span><span
-lang=EN>&nbsp;The transits and train info files required to move trains between
-stopping points </span></p>
-
-<p><span lang=EN><img border=0 width=474 height=158
-src="DispatcherSystem_files/image004.gif"
-alt="A screenshot of a computer error&#10;&#10;Description automatically generated"></span></p>
-
-<p>&nbsp;</p>
-
-<p><span lang=EN>It is recommended that the panel is saved after testing. The
-current filename can be used if desired as a backup has been done
-automatically.</span></p>
-
-<h3><a name="_Toc162537047"></a><a name="_Toc167983234"></a><a
-name="_Toc168507350"></a><a name="_Toc170509655">Running Stage2 Final Checks</a></h3>
-
-<p><img border=0 width=681 height=288 src="DispatcherSystem_files/image005.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p><span lang=EN>Click Stage2 and one gets two screens, one opening the Dispatcher
-options screen and another saying the options that need to be set for the
-Dispatcher system to work</span></p>
-
-<p><img border=0 width=409 height=749 src="DispatcherSystem_files/image006.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p><img border=0 width=399 height=246 src="DispatcherSystem_files/image007.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p><span lang=EN>Set the required option and we get a message reminding you to
-save the changed options</span></p>
-
-<p><img border=0 width=406 height=142 src="DispatcherSystem_files/image008.gif"
-alt="A screenshot of a computer error&#10;&#10;Description automatically generated"></p>
-
-<p><span lang=EN>Select the dispatcher window that has opened automatically and
-click =&gt; Save Options</span></p>
-
-<p><img border=0 width=159 height=154 src="DispatcherSystem_files/image009.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<h2><a name="_Toc162537048"></a><a name="_Toc167983235"></a><a
-name="_Toc168507351"></a><a name="_Toc170509656"><span lang=EN>Starting the
-Program</span></a></h2>
-
-<p class=MsoNormal><span lang=EN>The program needs to be started. The program
-is a Jython script, which is started from the Disptatcher System Window which
-has been produced in the previous stages.</span></p>
-
-<h3><a name="_Toc168507352"></a><a name="_Toc170509657"><span lang=EN>Starting
-the Program</span></a></h3>
-
-<p><span lang=EN>You will notice several buttons in the top RH corner.</span></p>
-
-<p><span lang=EN><img border=0 width=278 height=588
-src="DispatcherSystem_files/image010.gif"
-alt="A screenshot of a computer screen&#10;&#10;Description automatically generated"></span></p>
-
-<p><span lang=EN>The first two (run and stop dispatcher system) start and end
-the threads required for the program to run. The threads need to be in
-operation for the other buttons to work. </span></p>
-
-<p><span lang=EN>While operating the dispatcher system, if you have the thread
-monitor running (Panels =&gt; Thread Monitor) you can monitor what processes
-are running.</span></p>
-
-<p><span lang=EN>The thread monitor will look like the following once the
-system is started</span></p>
-
-<p><img border=0 width=340 height=277 src="DispatcherSystem_files/image011.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p><span lang=EN>Press the run button. The Express Train and the Run Dispatch
-options will be highlighted and the run Dispatch option will cause the
-following prompt to be displayed:</span></p>
-
-<p><span lang=EN><img border=0 width=282 height=119
-src="../../Documents/GitHub/JMRI/help/en/html/scripthelp/DispatcherSystem/images/NewItem39.png"
-alt=NewItem39></span></p>
-
-<p>&nbsp;</p>
-
-<h2><a name="_Toc167983236"></a><a name="_Toc168507353"></a><a
-name="_Toc170509658">Running the System</a> </h2>
-
-<p><span lang=EN>To run the system the following needs to be set up</span></p>
-
-<ol style='margin-top:0cm' start=1 type=1>
- <li class=MsoNormal><span lang=EN>Place a train on the layout. If you wish to
-     simulate the train to get an idea of how the system will operate click the
-     bottom left button of a station which will make the station occupied.</span></li>
- <li class=MsoNormal><b><span lang=EN>Register the train</span></b><span
-     lang=EN> with the dispatcher system telling the system what way it&#8217;s
-     facing so the system knows what transit to use to move the train (forwards
-     or backwards). Press the 'Setup Train in Section' button to do this.</span></li>
- <li class=MsoNormal><b><span lang=EN>Run the train.</span></b><span lang=EN>
-     This can be done in several ways. </span></li>
+<p>If all checks pass we get a message:</p>
+<p><img width="454" height="133" src="DispatcherSystem_files/image003.gif" alt="A screenshot of a computer screen  Description automatically generated"></p>
+<p>Further details of the checks can be viewed if required. If the checks do not pass details of the errors are given.</p>
+<p>If no trains are present in the roster with speed profiles, this will be picked up at run time, and can be corrected then.</p>
+<p>The following items are then produced automatically, with countdown timer showing the progression</p>
+<p>·A backup of the existing panel</p>
+<p>· The changes to the panel with the stopping points and stopping sensors</p>
+<p>· The signal logic to operate the signals</p>
+<p>· The required sections</p>
+<p>· The transits and train info files required to move trains between stopping points</p>
+<p><img width="474" height="158" src="DispatcherSystem_files/image004.gif" alt="A screenshot of a computer error  Description automatically generated"></p>
+<p> </p>
+<p>It is recommended that the panel is saved after testing. The current filename can be used if desired as a backup has been done automatically.</p>
+<h3><a>Running Stage2 Final Checks</a></h3>
+<p><img width="681" height="288" src="DispatcherSystem_files/image005.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p>Click Stage2 and one gets two screens, one opening the Dispatcher options screen and another saying the options that need to be set for the Dispatcher system to work</p>
+<p><img width="409" height="749" src="DispatcherSystem_files/image006.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p><img width="399" height="246" src="DispatcherSystem_files/image007.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p>Set the required option and we get a message reminding you to save the changed options</p>
+<p><img width="406" height="142" src="DispatcherSystem_files/image008.gif" alt="A screenshot of a computer error  Description automatically generated"></p>
+<p>Select the dispatcher window that has opened automatically and click =&gt; Save Options</p>
+<p><img width="159" height="154" src="DispatcherSystem_files/image009.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<h2><a>Starting the Program</a></h2>
+<p>The program needs to be started. The program is a Jython script, which is started from the Disptatcher System Window which has been produced in the previous stages.</p>
+<h3><a>Starting the Program</a></h3>
+<p>You will notice several buttons in the top RH corner.</p>
+<p><img width="278" height="588" src="DispatcherSystem_files/image010.gif" alt="A screenshot of a computer screen  Description automatically generated"></p>
+<p>The first two (run and stop dispatcher system) start and end the threads required for the program to run. The threads need to be in operation for the other buttons to work.</p>
+<p>While operating the dispatcher system, if you have the thread monitor running (Panels =&gt; Thread Monitor) you can monitor what processes are running.</p>
+<p>The thread monitor will look like the following once the system is started</p>
+<p><img width="340" height="277" src="DispatcherSystem_files/image011.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p>Press the run button. The Express Train and the Run Dispatch options will be highlighted and the run Dispatch option will cause the following prompt to be displayed:</p>
+<p><img width="282" height="119" src="https://d.docs.live.net/Documents/GitHub/JMRI/help/en/html/scripthelp/DispatcherSystem/images/NewItem39.png" alt="NewItem39"></p>
+<p> </p>
+<h2><a>Running the System</a></h2>
+<p>To run the system the following needs to be set up</p>
+<ol>
+  <li>Place a train on the layout. If you wish to simulate the train to get an idea of how the system will operate click the bottom left button of a station which will make the station occupied.</li>
+  <li><strong>Register the train</strong> with the dispatcher system telling the system what way it's facing so the system knows what transit to use to move the train (forwards or backwards). Press the 'Setup Train in Section' button to do this.</li>
+  <li><strong>Run the train.</strong> This can be done in several ways.</li>
 </ol>
-
-<ol style='margin-top:0cm' start=3 type=1>
- <ol style='margin-top:0cm' start=1 type=1>
-  <li class=MsoNormal><b><span lang=EN>Setup a Dispatch</span></b><span
-      lang=EN>. Click the Run Dispatch Button and click a station button and
-      specify which registered train will move towards that station</span></li>
-  <li class=MsoNormal><b><span lang=EN>Setup a Route</span></b><span lang=EN>
-      and run the route. A Route consists of a path joining several stations.
-      The stations joined can be anywhere on the layout no matter how far apart
-      they are, and the system will find valid paths between the stations.The
-      station buttons can be used to either setup a dispatch or setup a route
-      depending upon whether &quot;Setup Route or &quot;Run Dispatch&quot; is
-      selected. The route is run by pressing the &quot;Run Route&quot; button.</span></li>
-  <li class=MsoNormal><span lang=EN>Setup routes, Setup Scheduled Trains and
-      then start the scheduler.</span></li>
- </ol>
+<ol>
+  <ol>
+    <li><strong>Setup a Dispatch</strong>. Click the Run Dispatch Button and click a station button and specify which registered train will move towards that station</li>
+    <li><strong>Setup a Route</strong> and run the route. A Route consists of a path joining several stations. The stations joined can be anywhere on the layout no matter how far apart they are, and the system will find valid paths between the stations.The station buttons can be used to either setup a dispatch or setup a route depending upon whether "Setup Route or "Run Dispatch" is selected. The route is run by pressing the "Run Route" button.</li>
+    <li>Setup routes, Setup Scheduled Trains and then start the scheduler.</li>
+  </ol>
 </ol>
-
-<ol style='margin-top:0cm' start=4 type=1>
- <li class=MsoNormal><span lang=EN>If a physical train is on the layout at the
-     start of the dispatch the train should move. If you have just made the
-     block occupied with no physical train you can press the 'Simulate the
-     Dispatched Train' button to get an idea of how the train will run. The
-     train will simulate much quicker than a real train and takes no account of
-     the train length.</span></li>
- <li class=MsoNormal><span lang=EN>Announcements can be activated by pressing
-     the 'Enable Announcements' button. This is off by default as they can get
-     a but irritating.</span></li>
+<ol>
+  <li>If a physical train is on the layout at the start of the dispatch the train should move. If you have just made the block occupied with no physical train you can press the 'Simulate the Dispatched Train' button to get an idea of how the train will run. The train will simulate much quicker than a real train and takes no account of the train length.</li>
+  <li>Announcements can be activated by pressing the 'Enable Announcements' button. This is off by default as they can get a but irritating.</li>
 </ol>
-
-<p class=MsoNormal><span lang=EN>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN>We go over each of these stages in detail
-below:</span></p>
-
-<h3><a name="_Toc162537049"></a><a name="_Toc167983237"></a><a
-name="_Toc168507354"></a><a name="_Toc170509659"><span lang=EN>Setup or Register
-a Train</span></a></h3>
-
-<p><span lang=EN>The first step is to register a train in a siding or at a
-stop. If you are simulating the system to see whether it will work before
-running trains you may press the bottom left hand small button which will make
-the section occupied. Drive a train to the required stop, and press Setup Train
-in Siding.</span></p>
-
-<p><span lang=EN>We need to tell the system which way the train is pointing.</span></p>
-
-<ul style='margin-top:0cm' type=disc>
- <li class=MsoNormal><span lang=EN>At a siding it's easy there is one direction
-     the train can go, and we say which way it is facing out of the siding</span></li>
- <li class=MsoNormal><span lang=EN>At another stop we have to indicate which
-     way we are talking about and we highlight one direction</span></li>
+<p> </p>
+<p>We go over each of these stages in detail below:</p>
+<h3><a>Setup or Register a Train</a></h3>
+<p>The first step is to register a train in a siding or at a stop. If you are simulating the system to see whether it will work before running trains you may press the bottom left hand small button which will make the section occupied. Drive a train to the required stop, and press Setup Train in Siding.</p>
+<p>We need to tell the system which way the train is pointing.</p>
+<ul>
+  <li>At a siding it's easy there is one direction the train can go, and we say which way it is facing out of the siding</li>
+  <li>At another stop we have to indicate which way we are talking about and we highlight one direction</li>
 </ul>
-
-<p><span lang=EN>suppose we have the following layout with a train in Siding
-One</span></p>
-
-<p><img border=0 width=655 height=301 src="DispatcherSystem_files/image012.gif"
-alt="A diagram of a train&#10;&#10;Description automatically generated"></p>
-
-<p><span lang=EN>Choosing the Train</span></p>
-
-<p><span lang=EN>We click &#8220;Setup Train in Section&#8221;</span></p>
-
-<p><img border=0 width=279 height=212 src="DispatcherSystem_files/image013.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p><span lang=EN>If the train is Siding One as indicated one gets the following
-message</span></p>
-
-<p><img border=0 width=525 height=115 src="DispatcherSystem_files/image014.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p>A facility exists to set up several trains at once. Assume for now we are
-setting up just one train. Click the 1 train button.</p>
-
-<p>A dropdown with the blocks containing trains that have not been assigned.
-Choose the block you wish to assign a train to.</p>
-
-<p><img border=0 width=262 height=120 src="DispatcherSystem_files/image015.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
+<p>suppose we have the following layout with a train in Siding One</p>
+<p><img width="655" height="301" src="DispatcherSystem_files/image012.gif" alt="A diagram of a train  Description automatically generated"></p>
+<p>Choosing the Train</p>
+<p>We click "Setup Train in Section"</p>
+<p><img width="279" height="212" src="DispatcherSystem_files/image013.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p>If the train is Siding One as indicated one gets the following message</p>
+<p><img width="525" height="115" src="DispatcherSystem_files/image014.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p>A facility exists to set up several trains at once. Assume for now we are setting up just one train. Click the 1 train button.</p>
+<p>A dropdown with the blocks containing trains that have not been assigned. Choose the block you wish to assign a train to.</p>
+<p><img width="262" height="120" src="DispatcherSystem_files/image015.gif" alt="A screenshot of a computer  Description automatically generated"></p>
 <p>You get a list of unassigned trains with speed profiles.</p>
-
-<p><img border=0 width=260 height=255 src="DispatcherSystem_files/image016.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
+<p><img width="260" height="255" src="DispatcherSystem_files/image016.gif" alt="A screenshot of a computer  Description automatically generated"></p>
 <p>Select the train that is in the block selected (in our case Siding One)</p>
-
-<p><span lang=EN>Register the Direction the train is facing.</span></p>
-
-<p><span lang=EN>A block next to the selected block will be highlighted:</span></p>
-
-<p><img border=0 width=679 height=294 src="DispatcherSystem_files/image017.gif"
-alt="A diagram of a train&#10;&#10;Description automatically generated"></p>
-
-<p><span lang=EN>The following message then pops up</span></p>
-
-<p><img border=0 width=266 height=140 src="DispatcherSystem_files/image018.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p><span lang=EN>Select the correct direction and click OK.</span></p>
-
-<p><span lang=EN>The train will appear in the memory location for the block</span>.</p>
-
-<p>A message giving the default length of the train will appear in scale metres
-and the equivalent for the scale chosen in cm and inches. Note the scale is set
-in Preferences:Warrants:</p>
-
-<p><img border=0 width=274 height=148 src="DispatcherSystem_files/image019.gif"
-alt="A screenshot of a math test&#10;&#10;Description automatically generated"></p>
-
-<p>Set the length of the train to the actual length. This will be used to stop
-the train accurately.</p>
-
-<p>A message giving the speed factor of the train. If the train runs too slowly
-increase the speed factor, if it runs too fast, decrease it. Normally it will
-not have an effect if you increase by more that 20%.</p>
-
-<p><img border=0 width=255 height=117 src="DispatcherSystem_files/image020.gif"
-alt="A screenshot of a computer error&#10;&#10;Description automatically generated"></p>
-
-<h3><a name="_Toc167983238"></a><a name="_Toc168507355"></a><a
-name="_Toc170509660">Setup two or more trains at once</a></h3>
-
-<p class=MsoNormal>If you wish to setup two or more trains at once, or if you
-always setup certain trains at a given starting position, an alternative way of
-proceeding is provided.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Suppose we wish to setup trains at Siding 2 and Siding 3.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Position trains in the blocks (or of simulation click the occupancy
-buttons to the bottom left of the red buttons).</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=706 height=310
-src="DispatcherSystem_files/image021.gif"
-alt="A diagram of a train&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click Setup Trains as before:</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=525 height=115
-src="DispatcherSystem_files/image022.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click several trains. The following screen appears:</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=594 height=197
-src="DispatcherSystem_files/image023.gif"
-alt="A screenshot of a computer screen&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Rows appear for the two blocks that have non-allocated
-trains.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Select the trains from the dropdown menus</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click -&gt; means click the direction Facing selection box
-in the next column. When this is clicked, the next block to the occupied block
-is highlighted as before and the directions selected populate the set Direction
-column. The Length and Speed Factor can be changed by editing the values given.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=601 height=199
-src="DispatcherSystem_files/image024.gif"
-alt="A screenshot of a computer screen&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click Save, and the trains will be shown in the panel.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=679 height=302
-src="DispatcherSystem_files/image025.gif"
-alt="A diagram of a train&#10;&#10;Description automatically generated"></p>
-
-<h2><a name="_Toc168507356"></a><a name="_Toc170509661"></a><a
-name="_Toc167983239"><span lang=EN>Dispatch or run a train</span></a><span
-lang=EN> directly</span></h2>
-
-<p><span lang=EN>To set up a dispatch a train must have been registered with
-the system, as described in the previous section, and located in a stop)</span></p>
-
-<p><span lang=EN>Clicking the red buttons when the Run Dispatch option is
-selected will allow a train to run between any two stations. The shortest route
-(using the lengths of the blocks) will be found. If the route requires the
-train to reverse then the system will cope with this. There are two options
-allowed Express where the train stops at the minimum stations possible or
-stopping when the train stops at all stations en-route. We will be running the
-train in express mode.</span></p>
-
-<p><img border=0 width=284 height=158 src="DispatcherSystem_files/image026.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
+<p>Register the Direction the train is facing.</p>
+<p>A block next to the selected block will be highlighted:</p>
+<p><img width="679" height="294" src="DispatcherSystem_files/image017.gif" alt="A diagram of a train  Description automatically generated"></p>
+<p>The following message then pops up</p>
+<p><img width="266" height="140" src="DispatcherSystem_files/image018.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p>Select the correct direction and click OK.</p>
+<p>The train will appear in the memory location for the block.</p>
+<p>A message giving the default length of the train will appear in scale metres and the equivalent for the scale chosen in cm and inches. Note the scale is set in Preferences:Warrants:</p>
+<p><img width="274" height="148" src="DispatcherSystem_files/image019.gif" alt="A screenshot of a math test  Description automatically generated"></p>
+<p>Set the length of the train to the actual length. This will be used to stop the train accurately.</p>
+<p>A message giving the speed factor of the train. If the train runs too slowly increase the speed factor, if it runs too fast, decrease it. Normally it will not have an effect if you increase by more that 20%.</p>
+<p><img width="255" height="117" src="DispatcherSystem_files/image020.gif" alt="A screenshot of a computer error  Description automatically generated"></p>
+<h3><a>Setup two or more trains at once</a></h3>
+<p>If you wish to setup two or more trains at once, or if you always setup certain trains at a given starting position, an alternative way of proceeding is provided.</p>
+<p> </p>
+<p>Suppose we wish to setup trains at Siding 2 and Siding 3.</p>
+<p> </p>
+<p>Position trains in the blocks (or of simulation click the occupancy buttons to the bottom left of the red buttons).</p>
+<p> </p>
+<p><img width="706" height="310" src="DispatcherSystem_files/image021.gif" alt="A diagram of a train  Description automatically generated"></p>
+<p> </p>
+<p>Click Setup Trains as before:</p>
+<p> </p>
+<p><img width="525" height="115" src="DispatcherSystem_files/image022.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>Click several trains. The following screen appears:</p>
+<p> </p>
+<p><img width="594" height="197" src="DispatcherSystem_files/image023.gif" alt="A screenshot of a computer screen  Description automatically generated"></p>
+<p> </p>
+<p>Rows appear for the two blocks that have non-allocated trains.</p>
+<p> </p>
+<p>Select the trains from the dropdown menus</p>
+<p> </p>
+<p>Click -&gt; means click the direction Facing selection box in the next column. When this is clicked, the next block to the occupied block is highlighted as before and the directions selected populate the set Direction column. The Length and Speed Factor can be changed by editing the values given.</p>
+<p> </p>
+<p><img width="601" height="199" src="DispatcherSystem_files/image024.gif" alt="A screenshot of a computer screen  Description automatically generated"></p>
+<p> </p>
+<p>Click Save, and the trains will be shown in the panel.</p>
+<p> </p>
+<p><img width="679" height="302" src="DispatcherSystem_files/image025.gif" alt="A diagram of a train  Description automatically generated"></p>
+<h2><a>Dispatch or run a train</a> directly</h2>
+<p>To set up a dispatch a train must have been registered with the system, as described in the previous section, and located in a stop)</p>
+<p>Clicking the red buttons when the Run Dispatch option is selected will allow a train to run between any two stations. The shortest route (using the lengths of the blocks) will be found. If the route requires the train to reverse then the system will cope with this. There are two options allowed Express where the train stops at the minimum stations possible or stopping when the train stops at all stations en-route. We will be running the train in express mode.</p>
+<p><img width="284" height="158" src="DispatcherSystem_files/image026.gif" alt="A screenshot of a computer  Description automatically generated"></p>
 <p>If you wish to run in stopping mode deselect the above buttion.</p>
-
-<h3><a name="_Toc168507357"></a><a name="_Toc170509662"><span lang=EN>Example:
-Run a train between two stops (stations)</span></a></h3>
-
-<p><span lang=EN>Suppose one has the following layout with a train in siding1. Suppose
-we wish to move the train to Upline Platform (near the bottom left of the
-panel).</span></p>
-
-<p><img border=0 width=815 height=447 src="DispatcherSystem_files/image027.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p>To move the train to a station click the destination station, ensuring first
-that the option Run Dispatch is selected (this option is selected at startup,
-but may be deselected if other operations have been utilised.</p>
-
-<p><img border=0 width=207 height=236 src="DispatcherSystem_files/image028.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p>We wish to move train class 121 from Siding 1 to UpLinePlatform. Click the
-UplinePlatform button. A prompt appears with the trains registered on the
-system. Select the one you wish to move and press the mode you wish the train
-to move in express (stopping in the minimum number of stops) or stopping
-(stopping at all stations en-route).</p>
-
-<p><img border=0 width=258 height=159 src="DispatcherSystem_files/image029.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p><span lang=EN>Select the required train from the drop down, and a dispatch
-will be set up to the required stop (UpLinePlatform).</span></p>
-
-<p><img border=0 width=814 height=542 src="DispatcherSystem_files/image030.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p><span lang=EN>The train will start moving, and the speed indicated in the
-Auto trains window.</span></p>
-
-<p><img border=0 width=422 height=146 src="DispatcherSystem_files/image031.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p>If you are simulating the movement of the train, then the Simulate Dispatched
-Trains button must be selected before the simulated movement starts.</p>
-
-<p><img border=0 width=281 height=216 src="DispatcherSystem_files/image032.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<h1><a name="_Toc168507358"></a><a name="_Toc170509663">Routes</a></h1>
-
-<p class=MsoNormal>If you wish to do something more complicated that stop at no
-stations or all, then routes are useful. With routes you can specify several
-places that the train will stop off at en-route to the destination, and not
-just all or none.</p>
-
-<h2><a name="_Toc162537051"></a><a name="_Toc167983240"></a><a
-name="_Toc168507359"></a><a name="_Toc170509664"><span lang=EN>Setup a Route</span></a></h2>
-
-<p class=MsoNormal><img border=0 width=273 height=399
-src="DispatcherSystem_files/image033.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p><span lang=EN>Click 'Setup Route'. Run Dispatch will be deselected, and Setup
-Route Selected. The following message will be displayed:</span></p>
-
-<p><span lang=EN><img border=0 width=260 height=117
-src="DispatcherSystem_files/image034.gif"
-alt="A screenshot of a computer screen&#10;&#10;Description automatically generated"></span></p>
-
-<p><span lang=EN>Suppose we wish to send a train from Siding One to Upline
-Platform stopping at CornerUp</span></p>
-
-<p><span lang=EN>We need to select the following stations in order</span></p>
-
-<p style='margin-left:36.0pt;text-indent:-18.0pt'><span style='font-family:
-Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Siding One</p>
-
-<p style='margin-left:36.0pt;text-indent:-18.0pt'><span style='font-family:
-Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Corner Up</p>
-
-<p style='margin-left:36.0pt;text-indent:-18.0pt'><span style='font-family:
-Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Up Line Platform</p>
-
+<h3><a>Example: Run a train between two stops (stations)</a></h3>
+<p>Suppose one has the following layout with a train in siding1. Suppose we wish to move the train to Upline Platform (near the bottom left of the panel).</p>
+<p><img width="815" height="447" src="DispatcherSystem_files/image027.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p>To move the train to a station click the destination station, ensuring first that the option Run Dispatch is selected (this option is selected at startup, but may be deselected if other operations have been utilised.</p>
+<p><img width="207" height="236" src="DispatcherSystem_files/image028.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p>We wish to move train class 121 from Siding 1 to UpLinePlatform. Click the UplinePlatform button. A prompt appears with the trains registered on the system. Select the one you wish to move and press the mode you wish the train to move in express (stopping in the minimum number of stops) or stopping (stopping at all stations en-route).</p>
+<p><img width="258" height="159" src="DispatcherSystem_files/image029.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p>Select the required train from the drop down, and a dispatch will be set up to the required stop (UpLinePlatform).</p>
+<p><img width="814" height="542" src="DispatcherSystem_files/image030.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p>The train will start moving, and the speed indicated in the Auto trains window.</p>
+<p><img width="422" height="146" src="DispatcherSystem_files/image031.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p>If you are simulating the movement of the train, then the Simulate Dispatched Trains button must be selected before the simulated movement starts.</p>
+<p><img width="281" height="216" src="DispatcherSystem_files/image032.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<h1><a>Routes</a></h1>
+<p>If you wish to do something more complicated that stop at no stations or all, then routes are useful. With routes you can specify several places that the train will stop off at en-route to the destination, and not just all or none.</p>
+<h2><a>Setup a Route</a></h2>
+<p><img width="273" height="399" src="DispatcherSystem_files/image033.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p>Click 'Setup Route'. Run Dispatch will be deselected, and Setup Route Selected. The following message will be displayed:</p>
+<p><img width="260" height="117" src="DispatcherSystem_files/image034.gif" alt="A screenshot of a computer screen  Description automatically generated"></p>
+<p>Suppose we wish to send a train from Siding One to Upline Platform stopping at CornerUp</p>
+<p>We need to select the following stations in order</p>
+<p>·         Siding One</p>
+<p>·         Corner Up</p>
+<p>·         Up Line Platform</p>
 <p>Select Siding One. The following popup will be displayed</p>
-
-<p><img border=0 width=415 height=120 src="DispatcherSystem_files/image035.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p>Actions or special scripts can be run at stations of a route. We will
-describe these later. Select &#8216;Select another station, and press Corner Up
-station</p>
-
+<p><img width="415" height="120" src="DispatcherSystem_files/image035.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p>Actions or special scripts can be run at stations of a route. We will describe these later. Select 'Select another station, and press Corner Up station</p>
 <p>We get the following:</p>
-
-<p><img border=0 width=587 height=123 src="DispatcherSystem_files/image036.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p>Press Select another station, click UpLinePlatform, then press Complete
-Route. The route is created and confirmation is acknowledged.</p>
-
-<p><img border=0 width=653 height=118 src="DispatcherSystem_files/image037.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p>Another route may be created, or here we press Finish selecting routes. The
-setup Route button is deselected. To run a dispatch or setup another route the
-appropriate button must be selected.</p>
-
-<h2><a name="_Toc168507360"></a><a name="_Toc170509665">View/Edit Routes</a></h2>
-
-<h3><a name="_Toc168507361"></a><a name="_Toc170509666">View Routes</a></h3>
-
-<p><span lang=EN>To see the route that has been created press View/Edit Routes</span></p>
-
-<p><img border=0 width=200 height=182 src="DispatcherSystem_files/image038.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
+<p><img width="587" height="123" src="DispatcherSystem_files/image036.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p>Press Select another station, click UpLinePlatform, then press Complete Route. The route is created and confirmation is acknowledged.</p>
+<p><img width="653" height="118" src="DispatcherSystem_files/image037.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p>Another route may be created, or here we press Finish selecting routes. The setup Route button is deselected. To run a dispatch or setup another route the appropriate button must be selected.</p>
+<h2><a>View/Edit Routes</a></h2>
+<h3><a>View Routes</a></h3>
+<p>To see the route that has been created press View/Edit Routes</p>
+<p><img width="200" height="182" src="DispatcherSystem_files/image038.gif" alt="A screenshot of a computer  Description automatically generated"></p>
 <p>You will see something like this:</p>
-
-<p><img border=0 width=452 height=319 src="DispatcherSystem_files/image039.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>If you press Toggle Scheduled Routes you will see only the
-scheduled routes. Suppose we had two scheduled routes (see later for description)
-you would get the following when pressing that button. If you have no scheduled
-routes then you will get a blank window.</p>
-
-<p><img border=0 width=448 height=193 src="DispatcherSystem_files/image040.gif"
-alt="A screenshot of a computer screen&#10;&#10;Description automatically generated"></p>
-
-<p>Click the edit button in the row of Siding One FY_to_UplinePlatform and you
-see:</p>
-
-<p><img border=0 width=697 height=200 src="DispatcherSystem_files/image041.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p>The amount of time spent at each station (Duration) is seconds and fast
-minutes are needed to calculate the Departure time required for scheduling
-trains. These are not needed at this stage so we ignore them.</p>
-
-<p style='margin-left:36.0pt;text-indent:-18.0pt'><span style='font-family:
-Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>For now, note that the route stops at the stations we requested, <a
-name="_Toc162537052"></a><a name="_Toc167983241">Siding One. Corner Up and Up
-Line Platform.</a></p>
-
-<h3><a name="_Toc168507362"></a><a name="_Toc170509667">Editing the route</a></h3>
-
-<p class=MsoNormal>If you wish to delete a station from a route you may select
-the route as shown in the previous section, and press the delete row check box
-for the station you want to delete.</p>
-
-<p class=MsoNormal>For example clicking the delete box for CornerUp will give
-you:</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=700 height=175
-src="DispatcherSystem_files/image042.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Which does not stop at CornerUp.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>If you wish to add a station, no facility to do this is
-given within Dispatcher System per se, and the advised action is to build
-another route from scratch. </p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Note: For Experts: Dispatcher System uses Operations Pro to
-create routes, and the routes can be edited more fully within Operations Pro:
-Routes</p>
-
-<h2><a name="_Toc168507363"></a><a name="_Toc170509668"><span lang=EN>Run Route</span></a></h2>
-
-<p><span lang=EN>To run a route a route must already have been set up. Click
-Run Route</span></p>
-
-<p><img border=0 width=251 height=413 src="DispatcherSystem_files/image043.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p><img border=0 width=261 height=121 src="DispatcherSystem_files/image044.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
+<p><img width="452" height="319" src="DispatcherSystem_files/image039.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p>If you press Toggle Scheduled Routes you will see only the scheduled routes. Suppose we had two scheduled routes (see later for description) you would get the following when pressing that button. If you have no scheduled routes then you will get a blank window.</p>
+<p><img width="448" height="193" src="DispatcherSystem_files/image040.gif" alt="A screenshot of a computer screen  Description automatically generated"></p>
+<p>Click the edit button in the row of Siding One FY_to_UplinePlatform and you see:</p>
+<p><img width="697" height="200" src="DispatcherSystem_files/image041.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p>The amount of time spent at each station (Duration) is seconds and fast minutes are needed to calculate the Departure time required for scheduling trains. These are not needed at this stage so we ignore them.</p>
+<p>·         For now, note that the route stops at the stations we requested, <a>Siding One. Corner Up and Up Line Platform.</a></p>
+<h3><a>Editing the route</a></h3>
+<p>If you wish to delete a station from a route you may select the route as shown in the previous section, and press the delete row check box for the station you want to delete.</p>
+<p>For example clicking the delete box for CornerUp will give you:</p>
+<p> </p>
+<p><img width="700" height="175" src="DispatcherSystem_files/image042.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>Which does not stop at CornerUp.</p>
+<p> </p>
+<p>If you wish to add a station, no facility to do this is given within Dispatcher System per se, and the advised action is to build another route from scratch.</p>
+<p> </p>
+<p>Note: For Experts: Dispatcher System uses Operations Pro to create routes, and the routes can be edited more fully within Operations Pro: Routes</p>
+<h2><a>Run Route</a></h2>
+<p>To run a route a route must already have been set up. Click Run Route</p>
+<p><img width="251" height="413" src="DispatcherSystem_files/image043.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p><img width="261" height="121" src="DispatcherSystem_files/image044.gif" alt="A screenshot of a computer  Description automatically generated"></p>
 <p>You will be prompted to run one or several routes at once.</p>
-
-<h3><a name="_Toc168507364"></a><a name="_Toc170509669">Run One Route</a></h3>
-
-<p><span lang=EN>Select 1 route, You are prompted with the train to move. If
-the train is not at the start of the route it will move to the start before
-running the rout.</span></p>
-
-<p><span lang=EN>You will be prompted with all the trains you have set up</span></p>
-
-<p><img border=0 width=260 height=147 src="DispatcherSystem_files/image045.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p>Choose the train class 121, a list of routes are displayed. </p>
-
-<p><img border=0 width=486 height=210 src="DispatcherSystem_files/image046.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
+<h3><a>Run One Route</a></h3>
+<p>Select 1 route, You are prompted with the train to move. If the train is not at the start of the route it will move to the start before running the rout.</p>
+<p>You will be prompted with all the trains you have set up</p>
+<p><img width="260" height="147" src="DispatcherSystem_files/image045.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p>Choose the train class 121, a list of routes are displayed.</p>
+<p><img width="486" height="210" src="DispatcherSystem_files/image046.gif" alt="A screenshot of a computer  Description automatically generated"></p>
 <p>Select show routes stating at train position.</p>
-
-<p><img border=0 width=261 height=123 src="DispatcherSystem_files/image047.gif"
-alt="A screenshot of a computer error&#10;&#10;Description automatically generated"></p>
-
-<p>We see that train class 121 is at the starting position of route Siding One FY_to_UplinePlatform.
-</p>
-
+<p><img width="261" height="123" src="DispatcherSystem_files/image047.gif" alt="A screenshot of a computer error  Description automatically generated"></p>
+<p>We see that train class 121 is at the starting position of route Siding One FY_to_UplinePlatform.</p>
 <p>Select OK.</p>
-
-<p><img border=0 width=256 height=169 src="DispatcherSystem_files/image048.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
+<p><img width="256" height="169" src="DispatcherSystem_files/image048.gif" alt="A screenshot of a computer  Description automatically generated"></p>
 <p>Select whether you want to</p>
-
-<p style='margin-left:36.0pt;text-indent:-18.0pt'><span style='font-family:
-Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Run the route and stop</p>
-
-<p style='margin-left:36.0pt;text-indent:-18.0pt'><span style='font-family:
-Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Run the route and return to the start position (not necessarily along
-the same route, but the shortest route)</p>
-
-<p style='margin-left:36.0pt;text-indent:-18.0pt'><span style='font-family:
-Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Run the route, return to the start position and repeat</p>
-
+<p>·         Run the route and stop</p>
+<p>·         Run the route and return to the start position (not necessarily along the same route, but the shortest route)</p>
+<p>·         Run the route, return to the start position and repeat</p>
 <p>We will select stop at end of route</p>
-
 <p>The train route is setup and the train starts moving along the route.</p>
-
-<h3><a name="_Toc168507365"></a><a name="_Toc170509670">Run Several Routes at
-Once</a></h3>
-
+<h3><a>Run Several Routes at Once</a></h3>
 <p>Click Run Route. You are prompted for</p>
-
-<p><img border=0 width=261 height=121 src="DispatcherSystem_files/image044.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
+<p><img width="261" height="121" src="DispatcherSystem_files/image044.gif" alt="A screenshot of a computer  Description automatically generated"></p>
 <p>Click several routes</p>
-
-<p><img border=0 width=800 height=244 src="DispatcherSystem_files/image049.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p>The above panel appears populated with a row for each train that has been
-setup in the previous section. Allocate routes to each of the trains that you
-wish to move. The default is for the train to wait 10 seconds before moving the
-train. Change this as required. If the task chosen for a train is to make
-several repetitions, the no of repetitions in the last column will be used. We
-may specify for example</p>
-
-<p><img border=0 width=803 height=245 src="DispatcherSystem_files/image050.gif"
-alt="A screenshot of a computer program&#10;&#10;Description automatically generated"></p>
-
-<p>Note that the trains will move in the order J94, Class_20, Class 121, and
-the route SP-SPUR_to_SP-Spur will repeat 3 times.</p>
-
-<p>Note that Class_20 will run its route Starting from Siding One, whereas J94
-will move to SP-MLD first then run the route from SP-MLD to Parcels Siding,
-similarly Class 121 will travel to SP-SPUR before running the route.</p>
-
-<p>We will go over both options: &#8216;Several routes&#8217; is used to run
-several routes setting off at the same time.</p>
-
-<h1><a name="_Toc168507366"></a><a name="_Toc170509671">Modifying the Behaviour
-of Running Trains</a></h1>
-
-<p class=MsoNormal>Provision is made to:</p>
-
-<p class=MsoListParagraphCxSpFirst style='text-indent:-18.0pt'><span
-style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Change the position where the trains stop, (using a stopping
-sensor or vary the calculated stopping length)</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-18.0pt'><span
-style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Change the wait time in each station</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-18.0pt'><span
-style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Set track to one way operation</p>
-
-<p class=MsoListParagraphCxSpLast style='text-indent:-18.0pt'><span
-style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>Stop transits starting for certain conditions. This will allow
-you to ensure that trains do not get trapped by other trains</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=270 height=399
-src="DispatcherSystem_files/image051.gif"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>The buttons Set Stopping Length through to Restrict Transit
-Operation are used.</p>
-
-<h2><a name="_Toc168507367"></a><a name="_Toc170509672">Set Stopping Length</a></h2>
-
-<p class=MsoNormal>When a train stops at a station the stopping distance is
-calculated using the lengths of the blocks in the last section. If the train
-stops short or overruns, this distance can be changed.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click Set Stopping length.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=381 height=117
-src="DispatcherSystem_files/image052.gif"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>The option is given to modify the stopping distances for all
-transits or just the stopping distance for one transit (from one station to
-another)</p>
-
-<h3><a name="_Toc168507368"></a><a name="_Toc170509673">Modify All Stopping
-Distances</a></h3>
-
-<p class=MsoNormal>This modifies the stopping distance for all transits. Press
-All.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=627 height=118
-src="DispatcherSystem_files/image053.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>You may either </p>
-
-<p class=MsoListParagraphCxSpFirst style='text-indent:-18.0pt'><span
-style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>increase or decrease existing stopping distances by the same
-amount, or </p>
-
-<p class=MsoListParagraphCxSpLast style='text-indent:-18.0pt'><span
-style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>delete any existing stopping distance changes, and increase or
-decrease existing stopping distances by the same amount</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>If we keep existing changes, but modify by a bit, press
-Increase/decrease all existing stopping distances</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=457 height=121
-src="DispatcherSystem_files/image054.gif"
-alt="A screenshot of a computer error message&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Enter the amount to decrease the stopping distance by</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=453 height=115
-src="DispatcherSystem_files/image055.gif"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>The train will now stop 5 cm short of the previous
-calculated position.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Setting all stopping distances to the same value is similar.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<h3><a name="_Toc168507369"></a><a name="_Toc170509674">Modify Stopping
-Distance on one Transit</a></h3>
-
-<p class=MsoNormal><img border=0 width=381 height=117
-src="DispatcherSystem_files/image056.gif"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click From One Station to Another.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=351 height=193
-src="DispatcherSystem_files/image057.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>You need to specify a transit going towards the station, so
-we select two stations, the first the start of the transit, the second the end.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Suppose we want to change the stopping distance for transit
-going from SP_MLU to DownLinePlatform. </p>
-
-<p class=MsoNormal>Select SP_MLU,</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=474 height=118
-src="DispatcherSystem_files/image058.gif"
-alt="A screenshot of a computer error&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>then DownlinePlatform.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=568 height=122
-src="DispatcherSystem_files/image059.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click Modify Length</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=548 height=235
-src="DispatcherSystem_files/image060.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Specify the distance that the train will stop short of the calculated
-stopping distance&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </p>
-
-<h2><a name="_Toc168507370"></a><a name="_Toc170509675">Set Stop Sensor</a></h2>
-
-<p class=MsoNormal><img border=0 width=246 height=142
-src="DispatcherSystem_files/image061.gif"
-alt="A list of different types of vehicles&#10;&#10;Description automatically generated with medium confidence"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click Set Stop Sensor</p>
-
-<p class=MsoNormal><img border=0 width=474 height=120
-src="DispatcherSystem_files/image062.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Suppose we wish to set stop sensor SidingLowerStopSensor at station
-Siding Lower FY, to operate when going in the direction Siding2Down to Siding Lower
-FY.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=730 height=133
-src="DispatcherSystem_files/image063.gif"
-alt="A black and white image of a black and white arrow&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click Set at particular station</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=632 height=201
-src="DispatcherSystem_files/image064.gif"
-alt="A screenshot of a computer screen&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>To specify the direction first click scenic2Down </p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=521 height=118
-src="DispatcherSystem_files/image065.gif"
-alt="A screenshot of a computer error&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Press &#8216;select next station&#8217; then then the
-station containing the stop sensor, Siding Lower FY</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=531 height=117
-src="DispatcherSystem_files/image066.gif"
-alt="A screenshot of a computer error&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click Set stop Sensor</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=343 height=116
-src="DispatcherSystem_files/image067.gif"
-alt="A screenshot of a computer error message&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Select the required stop sensor from the dropdown, in our
-case SidingLowerStopSensor and click OK</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>The set stop sensor routine finishes</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>To check that you have set the sensor correctly select Set
-Stop Sensor again</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=474 height=123
-src="DispatcherSystem_files/image068.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>It shows correctly that the section SD_FYa:SectorPlate3a has
-the stop sensor SidingLowerStopSensor. All trains stopping at that section will
-stop at the stop sensor, provided the &#8220;Stop at Stop Sensos (Default )&#8221;button
-is enabled</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=257 height=254
-src="DispatcherSystem_files/image069.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<h2><a name="_Toc168507371"></a><a name="_Toc170509676">Set Station Wait Time</a></h2>
-
-<p class=MsoNormal>The station wait times may be modified for all stations /
-stops, or at particular stations.</p>
-
-<p class=MsoNormal>Click &#8216;Set Station Wait Time&#8217;</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=222 height=139
-src="DispatcherSystem_files/image070.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>The following screen appears</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=288 height=110
-src="DispatcherSystem_files/image071.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<h3><a name="_Toc168507372"></a><a name="_Toc170509677">Modify all station wait
-times</a></h3>
-
-<p class=MsoNormal>Click All</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>The following screen appears</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=614 height=114
-src="DispatcherSystem_files/image072.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Either increase/decrease all wait times by same amount, or
-set all to same value</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>If setting to same value, click appropriate button, the
-following appears:</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=283 height=118
-src="DispatcherSystem_files/image073.gif"
-alt="A screenshot of a computer error&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Set the number of seconds to wait at station, and click OK</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=264 height=118
-src="DispatcherSystem_files/image074.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click OK</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<h3><a name="_Toc168507373"></a><a name="_Toc170509678">Modify the wait time at
-a particular station approach</a></h3>
-
-<p class=MsoNormal>Click &#8216;At particular station&#8217;. The following
-screen appears:</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=493 height=166
-src="DispatcherSystem_files/image075.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click a station on the approach to the station whose wait
-time we want to set.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=529 height=85
-src="DispatcherSystem_files/image076.gif"
-alt="A black and white image of a black and white object&#10;&#10;Description automatically generated with medium confidence"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Suppose we wish to set the wait time at station Downline
-Platform from direction SP-MLU. Click SP-MLU</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=482 height=114
-src="DispatcherSystem_files/image077.gif"
-alt="A screenshot of a computer error&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Select station DownLinePlatform</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=494 height=114
-src="DispatcherSystem_files/image078.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click Modify Station Wait Time</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=551 height=173
-src="DispatcherSystem_files/image079.gif"
-alt="A screenshot of a computer error message&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>The value is 5 (from the previous action of setting all wait
-times), set it to 3 say&nbsp;&nbsp;&nbsp;&nbsp; </p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=254 height=115
-src="DispatcherSystem_files/image080.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<h2><a name="_Toc168507374"></a><a name="_Toc170509679">Set Station Direction</a></h2>
-
-<h3><a name="_Toc168507375"></a><a name="_Toc170509680">Setting Station
-Direction at a Station</a></h3>
-
-<p class=MsoNormal>The setting of station direction is best illustrated by an
-example.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>On the following UK layout we wish to go from Siding One to
-UplinePlatform Via CornerUp, because we travel on the left, but the shortest
-route is via CornerDown. To make the train travel via Corner Up we have to make
-travel at CornerDown station one way in the direction of Siding One.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>If you are happier you could enforce one-way working at both
-CornerUp and CornerDown, but the above argument shows that we only need to do
-so at the leg with the shorter length.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=874 height=555
-src="DispatcherSystem_files/image081.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><b>Setting the direction at CornerDown.</b></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click Set Station Direction</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=538 height=120
-src="DispatcherSystem_files/image082.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click Set at particular station</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=412 height=134
-src="DispatcherSystem_files/image083.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click CornerDown</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=481 height=115
-src="DispatcherSystem_files/image084.gif"
-alt="A screenshot of a computer error&#10;&#10;Description automatically generated">&nbsp;</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Select Scenic2Down</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=1167 height=114
-src="DispatcherSystem_files/image085.gif"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click Allow only the direction from CornerDown towards
-Scenic2Down.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>The one way working is stored in the Train Info files. These
-are regenerated.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=260 height=114
-src="DispatcherSystem_files/image086.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>To confirm what we have done, Click Set the StationWaitTime
-Button again</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=207 height=143
-src="DispatcherSystem_files/image087.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=536 height=121
-src="DispatcherSystem_files/image088.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>We see we have set one-way working in the direction
-CornerDown to Scenic2Down</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<h3><a name="_Toc168507376"></a><a name="_Toc170509681">Setting the Station
-Direction using a block</a></h3>
-
-<p class=MsoNormal>This is used where there is no station in the area required
-to be one way working, no possibility of putting one in (the area contains a turnout)
-without putting in extra blocks, or just no desire to have a station in the
-area. </p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>The system of setting station direction using a block was
-designed for a system where the area of one way working had no possibility of
-putting a station in, but we will illustrate it by setting the block containing
-the station CornerUp to one way working, assuming that the stations Scenic2Up,
-CornerUp and ML-MLD do not exist.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=481 height=628
-src="DispatcherSystem_files/image089.gif"
-alt="A map of a train&#10;&#10;Description automatically generated with medium confidence"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>The block CornerUp is highlighted.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click Set Station Direction</p>
-
-<p class=MsoNormal><img border=0 width=536 height=122
-src="DispatcherSystem_files/image090.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Then click Set At Block, </p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=373 height=132
-src="DispatcherSystem_files/image091.gif"
-alt="A screenshot of a computer error message&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click OK</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=254 height=777
-src="DispatcherSystem_files/image092.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>select block CornerUp, then click OK</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>The two neighbouring blocks are shown</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=256 height=129
-src="DispatcherSystem_files/image093.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Select ML-MLD</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=1017 height=126
-src="DispatcherSystem_files/image094.gif"
-alt="A screen shot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click Allow only the direction from CornerUp towards ML-MLD
-(UK trains run on the lefthand side.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>The trainInfo Files are regenerated, and if one clicks Set
-the StationWaitTime Button again</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=207 height=143
-src="DispatcherSystem_files/image095.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>You get </p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=538 height=132
-src="DispatcherSystem_files/image096.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click x to close.</p>
-
-<h2><a name="_Toc168507377"></a><a name="_Toc170509682">Restrict Transit
-Operation</a></h2>
-
-<h3><a name="_Toc168507378"></a><a name="_Toc170509683">Introduction</a></h3>
-
-<p class=MsoNormal>This operation is best described by an example. Consider the
-following layout:</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=551 height=142
-src="DispatcherSystem_files/image097.gif"
-alt="A screenshot of a video game&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>DownLinePlatform and UpLinePlatform are terminus stations
-(with a traverser at the end hence the continuations to the left). There is no
-easy way to set up a Traverser at the moment under Dispatcher, though it can be
-done with points and some Logix),<br>
-<br>
-Consider the situation where trains are in Down and UpLinePlatforms. We are in
-the UK where trains travel on the left, and the train in UplinePlatform wants
-to move to DownlinePlatform, where it will pick up passengers before travelling
-in SP-MLU direction. To do this it will travel to SP-MLU and then to UplinePlatform.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>If there is a train in UplinePlatform, this train will be trapped
-by the train in SP-MLU. To avoid this we need a rule, do not go on the journey
-UplinePlatform &#8211; SP-MLU &#8211; DownLinePlatform if there is a train in DownLinePlatform.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<h3><a name="_Toc168507379"></a><a name="_Toc170509684">Creating the required
-Rule</a></h3>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=234 height=141
-src="DispatcherSystem_files/image098.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click Restrict Transit Operation</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=527 height=117
-src="DispatcherSystem_files/image099.gif"
-alt="A screenshot of a computer error&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click Set Transit Restriction</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=318 height=114
-src="DispatcherSystem_files/image100.gif"
-alt="A screenshot of a computer error&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click OK, Select the start and end of the transit.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click UpLinePlatform</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=430 height=115
-src="DispatcherSystem_files/image101.gif"
-alt="A screenshot of a computer error&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click Nest Station, and Click DownLinePlatform.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=497 height=112
-src="DispatcherSystem_files/image102.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>We get an error. Our reasoning is incorrect we must select
-SP-MLU, and apply a rule:</p>
-
-<p class=MsoNormal>Do not go on the journey DownlinePlatform-SP-MLU if UplinePlatform
-is occupied</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Select TryAgain, and Select SP-MLU</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=453 height=113
-src="DispatcherSystem_files/image103.gif"
-alt="A screenshot of a computer error&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Press Select Station to Select its Block. Select Station
-UpLinePlatform</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=442 height=133
-src="DispatcherSystem_files/image104.gif"
-alt="A screenshot of a computer error&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click Restrict This Transit</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>To see what we have done, click Restrict Transit Operation
-again and we get:</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=213 height=66
-src="DispatcherSystem_files/image105.gif"
-alt="A close-up of words&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=603 height=121
-src="DispatcherSystem_files/image106.gif"
-alt="A screenshot of a computer error&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>If you have made a mistake, remove the transit restriction,
-otherwise Click Cancel</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<h1><a name="_Toc167983246"></a><a name="_Toc168507380"></a><a
-name="_Toc170509685"><span lang=EN>Scheduling</span></a><span lang=EN> </span></h1>
-
-<p>Trains can be scheduled to run at specific times over routes. In the
-schedule table the trains on the routes are set to run at specific start times.
-They can then be set to run just at that time or at intervals based on that
-start time, say every 20 minutes.</p>
-
-<p>The running period per day can be set from say 4am to 11pm, and the fast
-clock set to a rate within that period, and optionally at a faster rate outside
-that period (during the night).</p>
-
-<p>Timetables can be set up to display the schedules trains, For timetables to
-work the start time of each station on each route that is scheduled needs to be
-set up. This can be done manually or automatically, the latter by running a
-train over he route using a special routine.</p>
-
-<p>Timetables can be displayed locally on the computer running JMRI, or on
-remote computers/tablets communicating via MQTT usually over a local network.</p>
-
-<p class=MsoNormal>The schedules are set up from the Dispatcher panel. At the
-bottom of the panel you see the following screen.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=223 height=197 id="Picture 78"
-src="DispatcherSystem_files/image107.gif"
-alt="A screenshot of a computer program&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click &#8220;View/Edit Scheduled Trains&#8221; and a screen
-pops up similar to the following:</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=696 height=147 id="Picture 79"
-src="DispatcherSystem_files/image108.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<h2><a name="_Toc167983248"></a><a name="_Toc168507381"></a><a
-name="_Toc170509686">Adding Schedules</a></h2>
-
-<p class=MsoNormal>Press the Add button. A row is added to the screen</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=703 height=190 id="Picture 80"
-src="DispatcherSystem_files/image109.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Press the dropdown for route</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=699 height=384
-src="DispatcherSystem_files/image110.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Select one of the routes that have been set up. We select
-Siding Ine FY to UpLinePlatform.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Press the dropdown for Repeat</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=696 height=382
-src="DispatcherSystem_files/image111.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>We have the options of running just at the given time, or
-repeat at given frequencies, Once, Every 20 mins, Every 30mins, Every Hour, or
-Every 2 hours. We would like the train to repeat every 30 mins, so we select
-that.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Set the time. The hour is ignored if we are running at a set
-frequency, so we can leave it at 00, (note if we have set to Once, the hour is
-used). We set the minutes to say 2 minutes past the hour so the train will run
-a 2 and 32 minutes past the hour. Double click the time to set.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=704 height=385
-src="DispatcherSystem_files/image112.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>The train name is filled in automatically for you, and you
-may leave it at it is. It will be displayed on the timetable (see later) so you
-may wish to enter a special name for the train. We leave it as train one for
-now. </p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Edit Route displays the stations on the route, and allows us
-to enter dispatch times, which will be explained later. </p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Delete Row deletes the row without warning, so if you have
-several trains dispatched, it may be best to save these to file to avoid having
-to type them in again.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Delete all Rows does what it says.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>The Repeat button toggles all the entries through <a
-name="_Toc167983249"></a><a name="_Toc168507382">Once, Every 20 mins, Every
-30mins, Every Hour, or Every 2 hours </a></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Save to File saves the entries to file, Load from File allows
-you to load previously saved schedules, and wipes out existing ones</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Saving Schedules</p>
-
-<p class=MsoNormal>Click the save button to save the schedule. Only valid
-complete rows are saved.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<h2><a name="_Toc167983253"></a><a name="_Toc168507386"></a><a
-name="_Toc170509687">To save the set of scheduled trains</a> </h2>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Press save to file, and select an appropriate file name</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=258 height=115
-src="DispatcherSystem_files/image113.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Only complete valid rows are saved</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=490 height=350
-src="DispatcherSystem_files/image114.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Save to my_saved_file_1</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<h2><a name="_Toc167983254"></a><a name="_Toc168507387"></a><a
-name="_Toc170509688">To retrieve a set of scheduled trains</a></h2>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Press Load from File. Beware this will overwrite the
-existing schedules. It may be advisable to save the existing schedules to file
-before doing this.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=497 height=348
-src="DispatcherSystem_files/image115.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click the required file (here there is only one). The saved
-file will be loaded into </p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<h1><a name="_Toc168507388"></a><a name="_Toc170509689">Setting Departure Times</a></h1>
-
-<p class=MsoNormal>If departure times are set for stations on a route, then the
-trains will wait till the departure time, before setting off. Also the
-departure times will be shown on any timetable for that station</p>
-
-<h2><a name="_Toc167983255"></a><a name="_Toc168507389"></a><a
-name="_Toc170509690">Setting Departure Times Manually</a></h2>
-
-<p class=MsoNormal>Click Setup departure Times</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=238 height=113
-src="DispatcherSystem_files/image116.gif"
-alt="A white background with black text&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Then click set departure times</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=708 height=113
-src="DispatcherSystem_files/image117.gif"
-alt="A screen shot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>If we set departure times for stations along a route, then
-the train will not depart from the station before the departure time.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=695 height=215
-src="DispatcherSystem_files/image118.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Note that we are running at the default fast clock 1:10.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Note that if actions such as bell.py are present in the
-route, no departure times or durations are indicated for these.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>The duration is defined as the time the train takes to
-travel between the previous station and the current station plus the wait time
-in the station. It is displayed in real seconds and fast minutes. The departure
-time is calculated automatically from the durations (and vice-versa). </p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>We can either enter the journey times in real seconds, or
-the durations in fast minutes</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>We could now run a train over the route, measure the time
-taken, and enter the durations in fast minutes. &nbsp;Alternatively you can
-note the time the train arrives at the station, and add a bit to allow the
-train to wait. </p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>For example we enter 3 and 5 for the durations in fast
-minutes and (and toggle journey/wait times and getget:</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=701 height=242
-src="DispatcherSystem_files/image119.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>The departure times or durations update automatically. </p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>We note that if we enter durations in seconds they are
-rounded down to the lowest 6 seconds</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>If you experiment you see that you can toggle the journey/wait
-times once more and enter the journey times in seconds</p>
-
-<h2><a name="_Toc167983256"></a><a name="_Toc168507390"></a><a
-name="_Toc170509691">Setting Departure Times Automatically</a></h2>
-
-<p class=MsoNormal>To make it easier to obtain the durations the train can be
-run over the route, and the durations recoded automatically. The wait time in
-all or individual stations can be set so that the duration can be calculated
-(journey time + wait time) and stored.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=249 height=169
-src="DispatcherSystem_files/image120.gif"
-alt="A list of tasks with text&#10;&#10;Description automatically generated with medium confidence"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>To do this press Setup Departure Times. You get the options:</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=671 height=120
-src="DispatcherSystem_files/image121.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<h3><a name="_Toc167983257"></a><a name="_Toc168507391"></a><a
-name="_Toc170509692">Set Wait Time in Stations</a></h3>
-
-<p class=MsoNormal>This sets the default wait time in all stations. (in real
-secs). It can be overwritten in set departure times for a particular route.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=285 height=121
-src="DispatcherSystem_files/image122.gif"
-alt="A screenshot of a computer screen&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Note that the wait time will be rounded in practice to the
-nearest fast minute. At 10 times normal speed 1 fast minute will equal 6
-seconds.</p>
-
-<h3><a name="_Toc167983258"></a><a name="_Toc168507392"></a><a
-name="_Toc170509693">Run Train on Route to Set Journey Times</a></h3>
-
-<p class=MsoNormal><img border=0 width=711 height=116
-src="DispatcherSystem_files/image123.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>Pressing this option allows you to select a route to run.
-(An engine needs to be at the start of the route, and the engine need to be
-assigned using the setup button before running this routine).</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=198 height=66
-src="DispatcherSystem_files/image124.gif"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Pressing &#8220;Run Train on Route to Set Journey
-Times&#8221; brings up something like the following dialog:</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=258 height=170
-src="DispatcherSystem_files/image125.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Select Siding One FY_to_UplinePlatform </p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=706 height=539
-src="DispatcherSystem_files/image126.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click Check train in required station, ensuring first that a
-engine is setup in (in this case Siding One FY).</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>The train will run over the route and record the time taken
-on each leg of the journey</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=848 height=509
-src="DispatcherSystem_files/image127.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>After the train has run the journey times will be entered</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=696 height=383
-src="DispatcherSystem_files/image128.gif"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>The procedure will be repeated for all routes for all
-scheduled trains</p>
-
-<h1><a name="_Toc167983259"></a><a name="_Toc168507393"></a><a
-name="_Toc170509694">Run Scheduled Trains</a></h1>
-
-<p class=MsoNormal>To run the scheduled trains, we need to set up the running
-period in the day, then start the clock at the beginning of this period.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=249 height=169
-src="DispatcherSystem_files/image120.gif"
-alt="A list of tasks with text&#10;&#10;Description automatically generated with medium confidence"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click the Start Scheduler Button. The following screen pops
-up:</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=415 height=290
-src="DispatcherSystem_files/image129.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>The analogue clock also appears set to 00:00.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<h3><a name="_Toc167983260"></a><a name="_Toc168507394"></a><a
-name="_Toc170509695">Initialisation: Change Running Period Parameters</a></h3>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click &#8220;Initialisation&#8221;, A set of input boxes are
-displayed to enable setting of:</p>
-
-<p class=MsoListParagraphCxSpFirst style='text-indent:-18.0pt'><span
-style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>The start of the running period</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-18.0pt'><span
-style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>The end of the running period</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-18.0pt'><span
-style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>The fast clock rate during the running period</p>
-
-<p class=MsoListParagraphCxSpLast style='text-indent:-18.0pt'><span
-style='font-family:Symbol'>&middot;<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span>The fast clock rate outside the running period</p>
-
-<p class=MsoNormal>Defaults are set and can be left as is for initial testing</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<h3><a name="_Toc167983261"></a><a name="_Toc168507395"></a><a
-name="_Toc170509696">Start the Scheduled Trains</a></h3>
-
-<h3 style='margin-left:36.0pt;text-indent:-18.0pt'><a name="_Toc170509697">1)<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>Set the
-time to a period within the running period</a></h3>
-
-<p class=MsoNormal>Click &#8220;Set Time&#8221;, The clock moves to 5 minutes
-before the start of the running period. It moves to the start of the running
-period at the fast clock rart for outside running times, then at the start of
-the running period, it changes to the running period fast rate.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<h3 style='margin-left:36.0pt;text-indent:-18.0pt'><a name="_Toc170509698">2)<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>Start the
-scheduling of the trains</a></h3>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>The trains will be scheduled according to the schedule
-table, and any timetables set up (see later) will be populated with the scheduled
-trains for the next 3 hours.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<h3 style='margin-left:36.0pt;text-indent:-18.0pt'><a name="_Toc170509699">3)<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span>Start the
-clock</a></h3>
-
-<p class=MsoNormal>The clock is initialised to stop when the start scheduling
-button is pressed. Click Stop/Start to restart the clock.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>The trains will start scheduling</p>
-
-<h3><a name="_Toc167983262"></a><a name="_Toc168507396"></a><a
-name="_Toc170509700">Stop Scheduling Trains</a></h3>
-
-<p class=MsoNormal>Click the Toggle button to stop scheduling trains and to
-restart scheduling</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<h1><a name="_Toc167983263"></a><a name="_Toc168507397"></a><a
-name="_Toc170509701">Timetables</a></h1>
-
-<p class=MsoNormal>A local timetable of any one station can be shown on the
-computer running JMRI. This is denoted as a local timetable.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Timetables can also be shown on remote tablets/computers.
-These are denoted MQTT timetables as they communicate with each other using
-MQTT. </p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Click the show timetable button.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=249 height=169
-src="DispatcherSystem_files/image130.gif"
-alt="A list of tasks with text&#10;&#10;Description automatically generated with medium confidence"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>A popup allowing the choice between a local timetable and
-MQTT timetables. MQTT timetables require some setting up. The local timetable
-works straight away.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=393 height=113 id="Picture 84"
-src="DispatcherSystem_files/image131.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<h2><a name="_Toc167983264"></a><a name="_Toc168507398"></a><a
-name="_Toc170509702">Local Timetables</a></h2>
-
-<p class=MsoNormal>Select the button &#8220;select station for local timetable.
-The following pops up:</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=260 height=209
-src="DispatcherSystem_files/image132.gif"
-alt="A screenshot of a computer program&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Select the required station that you want to display the
-timetable for. Note that only stations at which a train stops on a scheduled
-route are shown. (if a different station could be selected the displayed
-timetable would be blank).</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>A screen will be displayed reminding you that for timetables
-to be displayed the trains must be scheduled and the scheduler be running. If
-these conditions are satisfied you will get a timetable displayed</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>You may thus get a message </p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=337 height=119
-src="DispatcherSystem_files/image133.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>In which case you need to ensure that the clock is running
-and the train scheduler is running by clicking the start scheduler button.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>A timetable similar to the below timetable will be shown:</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=883 height=335
-src="DispatcherSystem_files/image134.gif"></p>
-
-<h2><a name="_Toc170509703"></a><a name="_Toc168507399">Remote Timetables</a>
-triggered by MQTT</h2>
-
-<p class=MsoNormal>To display a timetable on a remote tablet or computer
-screen, we need to:</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoListParagraphCxSpFirst style='text-indent:-18.0pt'>1)<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Set
-up the required MQTT environment using Mosquitto and Node Red on a local or
-remote computer</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-18.0pt'>2)<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Set
-up a local or remote network connection</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-18.0pt'>3)<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Setup
-a MQTT connection in JMRI</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-18.0pt'>4)<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Generate
-the MQTT Node Red Code</p>
-
-<p class=MsoListParagraphCxSpMiddle style='text-indent:-18.0pt'>5)<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Import
-the code to node red, and perform a trivial edit</p>
-
-<p class=MsoListParagraphCxSpLast style='text-indent:-18.0pt'>6)<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Get
-the appropriate page on a browser to display the timetable</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>These timetables were inspired by a Rocrail MQTT
-implementation and modified from that implementation. The Rocrail &nbsp;implementation
-and hence the JMRI Node Red implementation is licenced as follows<span
-style='font-size:9.0pt;font-family:"Arial",sans-serif;color:#333333;background:
-#FBFAF9'>:&nbsp;</span><a
-href="https://creativecommons.org/licenses/by-sa/4.0/deed.en">CC
-Attribution-Share Alike 4.0 International</a>.</p>
-
-<h3><a name="_Toc170509704">Generating the MQTT Node Red code</a></h3>
-
-<p class=MsoNormal>Click select station for MQTT timetable</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=615 height=152
-src="DispatcherSystem_files/image135.gif"
-alt="A screenshot of a computer error message&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Select the required station</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img width=250 height=1
-src="DispatcherSystem_files/image136.gif" align=left hspace=12
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"><br
-clear=all>
-</p>
-
-<p class=MsoNormal>Provision is made to display an icon on the timetable. At
-present you can add a British Rail logo, a Deutsches Bahn logo or none.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=287 height=153
-src="DispatcherSystem_files/image137.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Select the logo required and click Generate Timetable. </p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>It is hoped that users will submit modifications to JMRI to add
-other emblems for different train operators.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Notification that a node red file has been produced in the user
-files directory</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=905 height=210
-src="DispatcherSystem_files/image138.gif"
-alt="A screenshot of a computer error&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<h3><a name="_Toc170509705">Setting up the required Node Red environment</a></h3>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Set up a MQTT broker such as mosquito on the same machine as
-is running JMRI, or one that is connected on the same network. You may use the
-instructions given in <a href="https://mosquitto.org/">Eclipse Mosquitto</a> if
-desired.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Set up Node Red as given in <a href="https://nodered.org/">Node-RED
-(nodered.org)</a>. Note that if you are using a raspberry pi, with some
-installations Node Red comes installed. Note that there are many tutorials on
-this site which give you a good introduction to Node-red.</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Start Node Red in a command file and start node-red in a
-browser using <a href="http://localhost:1880">http://localhost:1880</a> or
-similar. Import the node-red file generated in the previous section</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=166 height=346
-src="DispatcherSystem_files/image139.gif"
-alt="A screenshot of a black screen&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=356 height=300
-src="DispatcherSystem_files/image140.gif"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><img border=0 width=864 height=249
-src="DispatcherSystem_files/image141.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>If you get the message</p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal><a name="_Toc162537054"></a><a name="_Toc167983243"></a><a
-name="_Toc168507400"><img border=0 width=496 height=112
-src="DispatcherSystem_files/image142.gif"></a></p>
-
-<p class=MsoNormal><span lang=EN>Click import copy</span></p>
-
-<p class=MsoNormal><span lang=EN>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN><img border=0 width=1467 height=665
-src="DispatcherSystem_files/image143.gif"
-alt="A screenshot of a computer screen&#10;&#10;Description automatically generated"></span></p>
-
-<p class=MsoNormal><span lang=EN>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN>Open the web socket node as detailed in the comment.
-In this case it is the node labelled [ws] /ws/CornerUp. Double click that node,
-and you will get something like:</span></p>
-
-<p class=MsoNormal><span lang=EN>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN><img border=0 width=506 height=284
-src="DispatcherSystem_files/image144.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></span></p>
-
-<p class=MsoNormal><span lang=EN>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN>The path will not have been set to the correct
-value. Click the pencil to the right of the path, and enter the correct value
-/ws/CornerUp in our case.</span></p>
-
-<p class=MsoNormal><span lang=EN>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN><img border=0 width=524 height=322
-src="DispatcherSystem_files/image145.gif"></span></p>
-
-<p class=MsoNormal><span lang=EN>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN>Click Update Done and Deploy</span></p>
-
-<p class=MsoNormal><span lang=EN>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN><img border=0 width=1471 height=658
-src="DispatcherSystem_files/image146.gif"
-alt="A screenshot of a computer&#10;&#10;Description automatically generated"></span></p>
-
-<p class=MsoNormal><span lang=EN>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN>The blue dots will dissapear.</span></p>
-
-<p class=MsoNormal><span lang=EN>&nbsp;</span></p>
-
-<h3><a name="_Toc170509706"><span lang=EN>Setup a MQTT Connection in JMRI</span></a></h3>
-
-<p class=MsoNormal><span lang=EN>A MQTT connection needs to be set up in JMRI
-to connect to the MQTT broker. Follow the instructions in the JMRI help. You
-will get something like:</span></p>
-
-<p class=MsoNormal><span lang=EN>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN><img border=0 width=643 height=388
-src="DispatcherSystem_files/image147.gif"></span></p>
-
-<p class=MsoNormal><span lang=EN>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN>Reboot JMRI</span></p>
-
-<p class=MsoNormal><span lang=EN>&nbsp;</span></p>
-
-<h3><a name="_Toc170509707"><span lang=EN>Display the MQTT timetable</span></a></h3>
-
-<p class=MsoNormal><span lang=EN>Display the MQTT timetable by going to a
-browser and displaying </span><a href="http://localhost:1880/StationName"><span
-lang=EN>http://localhost:1880/StationName</span></a><span lang=EN>. For example
-if the station name is Siding One FY, then you enter </span><a
-href="http://localhost:1880/Siding%20One%20FY"><span lang=EN>http://localhost:1880/Siding
-One FY</span></a><span lang=EN> </span></p>
-
-<p class=MsoNormal><span lang=EN>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN>If the timetable does not appear ensure
-node-red is started, for example in windows</span></p>
-
-<p class=MsoNormal><span lang=EN>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN><img border=0 width=830 height=176
-src="DispatcherSystem_files/image148.gif"
-alt="A screenshot of a computer screen&#10;&#10;Description automatically generated"></span></p>
-
-<p class=MsoNormal><span lang=EN>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN>You should get something like:</span></p>
-
-<p class=MsoNormal><span lang=EN>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN><img border=0 width=834 height=362
-src="DispatcherSystem_files/image149.gif"
-alt="A screenshot of a computer screen&#10;&#10;Description automatically generated"></span></p>
-
-<p class=MsoNormal><span lang=EN>&nbsp;</span></p>
-
-<h1><a name="_Toc170509708"><span lang=EN>Adding New Stations or Track to a
-Completed Panel</span></a></h1>
-
-<p><span lang=EN>To add a new station or track</span></p>
-
-<p><span lang=EN>Edit the panel and add instructions to add any new stations:</span></p>
-
-<ul style='margin-top:0cm' type=disc>
- <li class=MsoNormal><span lang=EN>the new stations must be entered in the
-     block table as described in a previous section</span></li>
- <li class=MsoNormal><span lang=EN>open the new panel in panel editor, and
-     change the panel to add new track and/or signals as required</span></li>
+<p><img width="800" height="244" src="DispatcherSystem_files/image049.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p>The above panel appears populated with a row for each train that has been setup in the previous section. Allocate routes to each of the trains that you wish to move. The default is for the train to wait 10 seconds before moving the train. Change this as required. If the task chosen for a train is to make several repetitions, the no of repetitions in the last column will be used. We may specify for example</p>
+<p><img width="803" height="245" src="DispatcherSystem_files/image050.gif" alt="A screenshot of a computer program  Description automatically generated"></p>
+<p>Note that the trains will move in the order J94, Class_20, Class 121, and the route SP-SPUR_to_SP-Spur will repeat 3 times.</p>
+<p>Note that Class_20 will run its route Starting from Siding One, whereas J94 will move to SP-MLD first then run the route from SP-MLD to Parcels Siding, similarly Class 121 will travel to SP-SPUR before running the route.</p>
+<p>We will go over both options: 'Several routes' is used to run several routes setting off at the same time.</p>
+<h1><a>Modifying the Behaviour of Running Trains</a></h1>
+<p>Provision is made to:</p>
+<p>·         Change the position where the trains stop, (using a stopping sensor or vary the calculated stopping length)</p>
+<p>·         Change the wait time in each station</p>
+<p>·         Set track to one way operation</p>
+<p>·         Stop transits starting for certain conditions. This will allow you to ensure that trains do not get trapped by other trains</p>
+<p> </p>
+<p><img width="270" height="399" src="DispatcherSystem_files/image051.gif" alt="image051"></p>
+<p> </p>
+<p>The buttons Set Stopping Length through to Restrict Transit Operation are used.</p>
+<h2><a>Set Stopping Length</a></h2>
+<p>When a train stops at a station the stopping distance is calculated using the lengths of the blocks in the last section. If the train stops short or overruns, this distance can be changed.</p>
+<p> </p>
+<p>Click Set Stopping length.</p>
+<p> </p>
+<p><img width="381" height="117" src="DispatcherSystem_files/image052.gif" alt="image052"></p>
+<p> </p>
+<p>The option is given to modify the stopping distances for all transits or just the stopping distance for one transit (from one station to another)</p>
+<h3><a>Modify All Stopping Distances</a></h3>
+<p>This modifies the stopping distance for all transits. Press All.</p>
+<p> </p>
+<p><img width="627" height="118" src="DispatcherSystem_files/image053.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>You may either</p>
+<p>·         increase or decrease existing stopping distances by the same amount, or</p>
+<p>·         delete any existing stopping distance changes, and increase or decrease existing stopping distances by the same amount</p>
+<p> </p>
+<p>If we keep existing changes, but modify by a bit, press Increase/decrease all existing stopping distances</p>
+<p> </p>
+<p><img width="457" height="121" src="DispatcherSystem_files/image054.gif" alt="A screenshot of a computer error message  Description automatically generated"></p>
+<p> </p>
+<p>Enter the amount to decrease the stopping distance by</p>
+<p> </p>
+<p><img width="453" height="115" src="DispatcherSystem_files/image055.gif" alt="image055"></p>
+<p> </p>
+<p>The train will now stop 5 cm short of the previous calculated position.</p>
+<p> </p>
+<p>Setting all stopping distances to the same value is similar.</p>
+<p> </p>
+<h3><a>Modify Stopping Distance on one Transit</a></h3>
+<p><img width="381" height="117" src="DispatcherSystem_files/image056.gif" alt="image056"></p>
+<p> </p>
+<p>Click From One Station to Another.</p>
+<p> </p>
+<p><img width="351" height="193" src="DispatcherSystem_files/image057.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p>You need to specify a transit going towards the station, so we select two stations, the first the start of the transit, the second the end.</p>
+<p> </p>
+<p>Suppose we want to change the stopping distance for transit going from SP_MLU to DownLinePlatform.</p>
+<p>Select SP_MLU,</p>
+<p> </p>
+<p><img width="474" height="118" src="DispatcherSystem_files/image058.gif" alt="A screenshot of a computer error  Description automatically generated"></p>
+<p> </p>
+<p>then DownlinePlatform.</p>
+<p> </p>
+<p><img width="568" height="122" src="DispatcherSystem_files/image059.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>Click Modify Length</p>
+<p> </p>
+<p><img width="548" height="235" src="DispatcherSystem_files/image060.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>Specify the distance that the train will stop short of the calculated stopping distance         </p>
+<h2><a>Set Stop Sensor</a></h2>
+<p><img width="246" height="142" src="DispatcherSystem_files/image061.gif" alt="A list of different types of vehicles  Description automatically generated with medium confidence"></p>
+<p> </p>
+<p>Click Set Stop Sensor</p>
+<p><img width="474" height="120" src="DispatcherSystem_files/image062.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>Suppose we wish to set stop sensor SidingLowerStopSensor at station Siding Lower FY, to operate when going in the direction Siding2Down to Siding Lower FY.</p>
+<p> </p>
+<p><img width="730" height="133" src="DispatcherSystem_files/image063.gif" alt="A black and white image of a black and white arrow  Description automatically generated"></p>
+<p> </p>
+<p>Click Set at particular station</p>
+<p> </p>
+<p><img width="632" height="201" src="DispatcherSystem_files/image064.gif" alt="A screenshot of a computer screen  Description automatically generated"></p>
+<p> </p>
+<p>To specify the direction first click scenic2Down</p>
+<p> </p>
+<p><img width="521" height="118" src="DispatcherSystem_files/image065.gif" alt="A screenshot of a computer error  Description automatically generated"></p>
+<p> </p>
+<p>Press 'select next station' then then the station containing the stop sensor, Siding Lower FY</p>
+<p> </p>
+<p><img width="531" height="117" src="DispatcherSystem_files/image066.gif" alt="A screenshot of a computer error  Description automatically generated"></p>
+<p> </p>
+<p>Click Set stop Sensor</p>
+<p> </p>
+<p><img width="343" height="116" src="DispatcherSystem_files/image067.gif" alt="A screenshot of a computer error message  Description automatically generated"></p>
+<p> </p>
+<p>Select the required stop sensor from the dropdown, in our case SidingLowerStopSensor and click OK</p>
+<p> </p>
+<p>The set stop sensor routine finishes</p>
+<p> </p>
+<p>To check that you have set the sensor correctly select Set Stop Sensor again</p>
+<p> </p>
+<p><img width="474" height="123" src="DispatcherSystem_files/image068.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>It shows correctly that the section SD_FYa:SectorPlate3a has the stop sensor SidingLowerStopSensor. All trains stopping at that section will stop at the stop sensor, provided the "Stop at Stop Sensos (Default )"button is enabled</p>
+<p> </p>
+<p><img width="257" height="254" src="DispatcherSystem_files/image069.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<h2><a>Set Station Wait Time</a></h2>
+<p>The station wait times may be modified for all stations / stops, or at particular stations.</p>
+<p>Click 'Set Station Wait Time'</p>
+<p> </p>
+<p><img width="222" height="139" src="DispatcherSystem_files/image070.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>The following screen appears</p>
+<p> </p>
+<p><img width="288" height="110" src="DispatcherSystem_files/image071.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<h3><a>Modify all station wait times</a></h3>
+<p>Click All</p>
+<p> </p>
+<p>The following screen appears</p>
+<p> </p>
+<p><img width="614" height="114" src="DispatcherSystem_files/image072.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>Either increase/decrease all wait times by same amount, or set all to same value</p>
+<p> </p>
+<p>If setting to same value, click appropriate button, the following appears:</p>
+<p> </p>
+<p><img width="283" height="118" src="DispatcherSystem_files/image073.gif" alt="A screenshot of a computer error  Description automatically generated"></p>
+<p> </p>
+<p>Set the number of seconds to wait at station, and click OK</p>
+<p> </p>
+<p><img width="264" height="118" src="DispatcherSystem_files/image074.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>Click OK</p>
+<p> </p>
+<h3><a>Modify the wait time at a particular station approach</a></h3>
+<p>Click 'At particular station'. The following screen appears:</p>
+<p> </p>
+<p><img width="493" height="166" src="DispatcherSystem_files/image075.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>Click a station on the approach to the station whose wait time we want to set.</p>
+<p> </p>
+<p><img width="529" height="85" src="DispatcherSystem_files/image076.gif" alt="A black and white image of a black and white object  Description automatically generated with medium confidence"></p>
+<p> </p>
+<p>Suppose we wish to set the wait time at station Downline Platform from direction SP-MLU. Click SP-MLU</p>
+<p> </p>
+<p><img width="482" height="114" src="DispatcherSystem_files/image077.gif" alt="A screenshot of a computer error  Description automatically generated"></p>
+<p> </p>
+<p>Select station DownLinePlatform</p>
+<p> </p>
+<p><img width="494" height="114" src="DispatcherSystem_files/image078.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>Click Modify Station Wait Time</p>
+<p> </p>
+<p><img width="551" height="173" src="DispatcherSystem_files/image079.gif" alt="A screenshot of a computer error message  Description automatically generated"></p>
+<p> </p>
+<p>The value is 5 (from the previous action of setting all wait times), set it to 3 say    </p>
+<p> </p>
+<p><img width="254" height="115" src="DispatcherSystem_files/image080.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<h2><a>Set Station Direction</a></h2>
+<h3><a>Setting Station Direction at a Station</a></h3>
+<p>The setting of station direction is best illustrated by an example.</p>
+<p> </p>
+<p>On the following UK layout we wish to go from Siding One to UplinePlatform Via CornerUp, because we travel on the left, but the shortest route is via CornerDown. To make the train travel via Corner Up we have to make travel at CornerDown station one way in the direction of Siding One.</p>
+<p> </p>
+<p>If you are happier you could enforce one-way working at both CornerUp and CornerDown, but the above argument shows that we only need to do so at the leg with the shorter length.</p>
+<p> </p>
+<p><img width="874" height="555" src="DispatcherSystem_files/image081.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p><strong>Setting the direction at CornerDown.</strong></p>
+<p> </p>
+<p>Click Set Station Direction</p>
+<p> </p>
+<p><img width="538" height="120" src="DispatcherSystem_files/image082.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>Click Set at particular station</p>
+<p> </p>
+<p><img width="412" height="134" src="DispatcherSystem_files/image083.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>Click CornerDown</p>
+<p> </p>
+<p><img width="481" height="115" src="DispatcherSystem_files/image084.gif" alt="A screenshot of a computer error  Description automatically generated"> </p>
+<p> </p>
+<p>Select Scenic2Down</p>
+<p> </p>
+<p><img width="1167" height="114" src="DispatcherSystem_files/image085.gif" alt="image085"></p>
+<p> </p>
+<p>Click Allow only the direction from CornerDown towards Scenic2Down.</p>
+<p> </p>
+<p>The one way working is stored in the Train Info files. These are regenerated.</p>
+<p> </p>
+<p><img width="260" height="114" src="DispatcherSystem_files/image086.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>To confirm what we have done, Click Set the StationWaitTime Button again</p>
+<p> </p>
+<p><img width="207" height="143" src="DispatcherSystem_files/image087.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p><img width="536" height="121" src="DispatcherSystem_files/image088.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>We see we have set one-way working in the direction CornerDown to Scenic2Down</p>
+<p> </p>
+<h3><a>Setting the Station Direction using a block</a></h3>
+<p>This is used where there is no station in the area required to be one way working, no possibility of putting one in (the area contains a turnout) without putting in extra blocks, or just no desire to have a station in the area.</p>
+<p> </p>
+<p>The system of setting station direction using a block was designed for a system where the area of one way working had no possibility of putting a station in, but we will illustrate it by setting the block containing the station CornerUp to one way working, assuming that the stations Scenic2Up, CornerUp and ML-MLD do not exist.</p>
+<p> </p>
+<p><img width="481" height="628" src="DispatcherSystem_files/image089.gif" alt="A map of a train  Description automatically generated with medium confidence"></p>
+<p> </p>
+<p>The block CornerUp is highlighted.</p>
+<p> </p>
+<p>Click Set Station Direction</p>
+<p><img width="536" height="122" src="DispatcherSystem_files/image090.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>Then click Set At Block,</p>
+<p> </p>
+<p><img width="373" height="132" src="DispatcherSystem_files/image091.gif" alt="A screenshot of a computer error message  Description automatically generated"></p>
+<p> </p>
+<p>Click OK</p>
+<p> </p>
+<p><img width="254" height="777" src="DispatcherSystem_files/image092.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>select block CornerUp, then click OK</p>
+<p> </p>
+<p>The two neighbouring blocks are shown</p>
+<p> </p>
+<p><img width="256" height="129" src="DispatcherSystem_files/image093.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>Select ML-MLD</p>
+<p> </p>
+<p><img width="1017" height="126" src="DispatcherSystem_files/image094.gif" alt="A screen shot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>Click Allow only the direction from CornerUp towards ML-MLD (UK trains run on the lefthand side.</p>
+<p> </p>
+<p>The trainInfo Files are regenerated, and if one clicks Set the StationWaitTime Button again</p>
+<p> </p>
+<p><img width="207" height="143" src="DispatcherSystem_files/image095.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>You get</p>
+<p> </p>
+<p><img width="538" height="132" src="DispatcherSystem_files/image096.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p> </p>
+<p>Click x to close.</p>
+<h2><a>Restrict Transit Operation</a></h2>
+<h3><a>Introduction</a></h3>
+<p>This operation is best described by an example. Consider the following layout:</p>
+<p> </p>
+<p><img width="551" height="142" src="DispatcherSystem_files/image097.gif" alt="A screenshot of a video game  Description automatically generated"></p>
+<p> </p>
+<p>DownLinePlatform and UpLinePlatform are terminus stations (with a traverser at the end hence the continuations to the left). There is no easy way to set up a Traverser at the moment under Dispatcher, though it can be done with points and some Logix), Consider the situation where trains are in Down and UpLinePlatforms. We are in the UK where trains travel on the left, and the train in UplinePlatform wants to move to DownlinePlatform, where it will pick up passengers before travelling in SP-MLU direction. To do this it will travel to SP-MLU and then to UplinePlatform.</p>
+<p> </p>
+<p>If there is a train in UplinePlatform, this train will be trapped by the train in SP-MLU. To avoid this we need a rule, do not go on the journey UplinePlatform - SP-MLU - DownLinePlatform if there is a train in DownLinePlatform.</p>
+<p> </p>
+<h3><a>Creating the required Rule</a></h3>
+<p> </p>
+<p><img width="234" height="141" src="DispatcherSystem_files/image098.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>Click Restrict Transit Operation</p>
+<p> </p>
+<p><img width="527" height="117" src="DispatcherSystem_files/image099.gif" alt="A screenshot of a computer error  Description automatically generated"></p>
+<p> </p>
+<p>Click Set Transit Restriction</p>
+<p> </p>
+<p><img width="318" height="114" src="DispatcherSystem_files/image100.gif" alt="A screenshot of a computer error  Description automatically generated"></p>
+<p> </p>
+<p> </p>
+<p> </p>
+<p>Click OK, Select the start and end of the transit.</p>
+<p> </p>
+<p>Click UpLinePlatform</p>
+<p> </p>
+<p><img width="430" height="115" src="DispatcherSystem_files/image101.gif" alt="A screenshot of a computer error  Description automatically generated"></p>
+<p> </p>
+<p>Click Nest Station, and Click DownLinePlatform.</p>
+<p> </p>
+<p><img width="497" height="112" src="DispatcherSystem_files/image102.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>We get an error. Our reasoning is incorrect we must select SP-MLU, and apply a rule:</p>
+<p>Do not go on the journey DownlinePlatform-SP-MLU if UplinePlatform is occupied</p>
+<p> </p>
+<p>Select TryAgain, and Select SP-MLU</p>
+<p> </p>
+<p><img width="453" height="113" src="DispatcherSystem_files/image103.gif" alt="A screenshot of a computer error  Description automatically generated"></p>
+<p> </p>
+<p>Press Select Station to Select its Block. Select Station UpLinePlatform</p>
+<p> </p>
+<p><img width="442" height="133" src="DispatcherSystem_files/image104.gif" alt="A screenshot of a computer error  Description automatically generated"></p>
+<p> </p>
+<p>Click Restrict This Transit</p>
+<p> </p>
+<p>To see what we have done, click Restrict Transit Operation again and we get:</p>
+<p> </p>
+<p><img width="213" height="66" src="DispatcherSystem_files/image105.gif" alt="A close-up of words  Description automatically generated"></p>
+<p> </p>
+<p><img width="603" height="121" src="DispatcherSystem_files/image106.gif" alt="A screenshot of a computer error  Description automatically generated"></p>
+<p> </p>
+<p>If you have made a mistake, remove the transit restriction, otherwise Click Cancel</p>
+<p> </p>
+<h1><a>Scheduling</a></h1>
+<p>Trains can be scheduled to run at specific times over routes. In the schedule table the trains on the routes are set to run at specific start times. They can then be set to run just at that time or at intervals based on that start time, say every 20 minutes.</p>
+<p>The running period per day can be set from say 4am to 11pm, and the fast clock set to a rate within that period, and optionally at a faster rate outside that period (during the night).</p>
+<p>Timetables can be set up to display the schedules trains, For timetables to work the start time of each station on each route that is scheduled needs to be set up. This can be done manually or automatically, the latter by running a train over he route using a special routine.</p>
+<p>Timetables can be displayed locally on the computer running JMRI, or on remote computers/tablets communicating via MQTT usually over a local network.</p>
+<p>The schedules are set up from the Dispatcher panel. At the bottom of the panel you see the following screen.</p>
+<p> </p>
+<p><img width="223" height="197" src="DispatcherSystem_files/image107.gif" alt="A screenshot of a computer program  Description automatically generated"></p>
+<p> </p>
+<p>Click "View/Edit Scheduled Trains" and a screen pops up similar to the following:</p>
+<p> </p>
+<p><img width="696" height="147" src="DispatcherSystem_files/image108.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<h2><a>Adding Schedules</a></h2>
+<p>Press the Add button. A row is added to the screen</p>
+<p> </p>
+<p><img width="703" height="190" src="DispatcherSystem_files/image109.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>Press the dropdown for route</p>
+<p> </p>
+<p><img width="699" height="384" src="DispatcherSystem_files/image110.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>Select one of the routes that have been set up. We select Siding Ine FY to UpLinePlatform.</p>
+<p> </p>
+<p>Press the dropdown for Repeat</p>
+<p> </p>
+<p><img width="696" height="382" src="DispatcherSystem_files/image111.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>We have the options of running just at the given time, or repeat at given frequencies, Once, Every 20 mins, Every 30mins, Every Hour, or Every 2 hours. We would like the train to repeat every 30 mins, so we select that.</p>
+<p> </p>
+<p>Set the time. The hour is ignored if we are running at a set frequency, so we can leave it at 00, (note if we have set to Once, the hour is used). We set the minutes to say 2 minutes past the hour so the train will run a 2 and 32 minutes past the hour. Double click the time to set.</p>
+<p> </p>
+<p><img width="704" height="385" src="DispatcherSystem_files/image112.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>The train name is filled in automatically for you, and you may leave it at it is. It will be displayed on the timetable (see later) so you may wish to enter a special name for the train. We leave it as train one for now.</p>
+<p> </p>
+<p>Edit Route displays the stations on the route, and allows us to enter dispatch times, which will be explained later.</p>
+<p> </p>
+<p>Delete Row deletes the row without warning, so if you have several trains dispatched, it may be best to save these to file to avoid having to type them in again.</p>
+<p> </p>
+<p>Delete all Rows does what it says.</p>
+<p> </p>
+<p>The Repeat button toggles all the entries through <a>Once, Every 20 mins, Every 30mins, Every Hour, or Every 2 hours</a></p>
+<p> </p>
+<p>Save to File saves the entries to file, Load from File allows you to load previously saved schedules, and wipes out existing ones</p>
+<p> </p>
+<p>Saving Schedules</p>
+<p>Click the save button to save the schedule. Only valid complete rows are saved.</p>
+<p> </p>
+<h2><a>To save the set of scheduled trains</a></h2>
+<p> </p>
+<p>Press save to file, and select an appropriate file name</p>
+<p> </p>
+<p><img width="258" height="115" src="DispatcherSystem_files/image113.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>Only complete valid rows are saved</p>
+<p> </p>
+<p><img width="490" height="350" src="DispatcherSystem_files/image114.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>Save to my_saved_file_1</p>
+<p> </p>
+<h2><a>To retrieve a set of scheduled trains</a></h2>
+<p> </p>
+<p>Press Load from File. Beware this will overwrite the existing schedules. It may be advisable to save the existing schedules to file before doing this.</p>
+<p> </p>
+<p><img width="497" height="348" src="DispatcherSystem_files/image115.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>Click the required file (here there is only one). The saved file will be loaded into</p>
+<p> </p>
+<h1><a>Setting Departure Times</a></h1>
+<p>If departure times are set for stations on a route, then the trains will wait till the departure time, before setting off. Also the departure times will be shown on any timetable for that station</p>
+<h2><a>Setting Departure Times Manually</a></h2>
+<p>Click Setup departure Times</p>
+<p> </p>
+<p><img width="238" height="113" src="DispatcherSystem_files/image116.gif" alt="A white background with black text  Description automatically generated"></p>
+<p> </p>
+<p>Then click set departure times</p>
+<p> </p>
+<p><img width="708" height="113" src="DispatcherSystem_files/image117.gif" alt="A screen shot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>If we set departure times for stations along a route, then the train will not depart from the station before the departure time.</p>
+<p> </p>
+<p><img width="695" height="215" src="DispatcherSystem_files/image118.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p> </p>
+<p>Note that we are running at the default fast clock 1:10.</p>
+<p> </p>
+<p>Note that if actions such as bell.py are present in the route, no departure times or durations are indicated for these.</p>
+<p> </p>
+<p>The duration is defined as the time the train takes to travel between the previous station and the current station plus the wait time in the station. It is displayed in real seconds and fast minutes. The departure time is calculated automatically from the durations (and vice-versa).</p>
+<p> </p>
+<p>We can either enter the journey times in real seconds, or the durations in fast minutes</p>
+<p> </p>
+<p>We could now run a train over the route, measure the time taken, and enter the durations in fast minutes.  Alternatively you can note the time the train arrives at the station, and add a bit to allow the train to wait.</p>
+<p> </p>
+<p>For example we enter 3 and 5 for the durations in fast minutes and (and toggle journey/wait times and getget:</p>
+<p> </p>
+<p><img width="701" height="242" src="DispatcherSystem_files/image119.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>The departure times or durations update automatically.</p>
+<p> </p>
+<p>We note that if we enter durations in seconds they are rounded down to the lowest 6 seconds</p>
+<p> </p>
+<p>If you experiment you see that you can toggle the journey/wait times once more and enter the journey times in seconds</p>
+<h2><a>Setting Departure Times Automatically</a></h2>
+<p>To make it easier to obtain the durations the train can be run over the route, and the durations recoded automatically. The wait time in all or individual stations can be set so that the duration can be calculated (journey time + wait time) and stored.</p>
+<p> </p>
+<p><img width="249" height="169" src="DispatcherSystem_files/image120.gif" alt="A list of tasks with text  Description automatically generated with medium confidence"></p>
+<p> </p>
+<p>To do this press Setup Departure Times. You get the options:</p>
+<p> </p>
+<p><img width="671" height="120" src="DispatcherSystem_files/image121.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<h3><a>Set Wait Time in Stations</a></h3>
+<p>This sets the default wait time in all stations. (in real secs). It can be overwritten in set departure times for a particular route.</p>
+<p> </p>
+<p><img width="285" height="121" src="DispatcherSystem_files/image122.gif" alt="A screenshot of a computer screen  Description automatically generated"></p>
+<p> </p>
+<p>Note that the wait time will be rounded in practice to the nearest fast minute. At 10 times normal speed 1 fast minute will equal 6 seconds.</p>
+<h3><a>Run Train on Route to Set Journey Times</a></h3>
+<p><img width="711" height="116" src="DispatcherSystem_files/image123.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p>Pressing this option allows you to select a route to run. (An engine needs to be at the start of the route, and the engine need to be assigned using the setup button before running this routine).</p>
+<p> </p>
+<p><img width="198" height="66" src="DispatcherSystem_files/image124.gif" alt="image124"></p>
+<p> </p>
+<p>Pressing "Run Train on Route to Set Journey Times" brings up something like the following dialog:</p>
+<p> </p>
+<p> </p>
+<p><img width="258" height="170" src="DispatcherSystem_files/image125.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>Select Siding One FY_to_UplinePlatform</p>
+<p> </p>
+<p><img width="706" height="539" src="DispatcherSystem_files/image126.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>Click Check train in required station, ensuring first that a engine is setup in (in this case Siding One FY).</p>
+<p> </p>
+<p>The train will run over the route and record the time taken on each leg of the journey</p>
+<p> </p>
+<p><img width="848" height="509" src="DispatcherSystem_files/image127.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p> </p>
+<p>After the train has run the journey times will be entered</p>
+<p> </p>
+<p><img width="696" height="383" src="DispatcherSystem_files/image128.gif" alt="image128"></p>
+<p> </p>
+<p> </p>
+<p>The procedure will be repeated for all routes for all scheduled trains</p>
+<h1><a>Run Scheduled Trains</a></h1>
+<p>To run the scheduled trains, we need to set up the running period in the day, then start the clock at the beginning of this period.</p>
+<p> </p>
+<p><img width="249" height="169" src="DispatcherSystem_files/image120.gif" alt="A list of tasks with text  Description automatically generated with medium confidence"></p>
+<p> </p>
+<p>Click the Start Scheduler Button. The following screen pops up:</p>
+<p> </p>
+<p><img width="415" height="290" src="DispatcherSystem_files/image129.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>The analogue clock also appears set to 00:00.</p>
+<p> </p>
+<h3><a>Initialisation: Change Running Period Parameters</a></h3>
+<p> </p>
+<p>Click "Initialisation", A set of input boxes are displayed to enable setting of:</p>
+<p>·         The start of the running period</p>
+<p>·         The end of the running period</p>
+<p>·         The fast clock rate during the running period</p>
+<p>·         The fast clock rate outside the running period</p>
+<p>Defaults are set and can be left as is for initial testing</p>
+<p> </p>
+<h3><a>Start the Scheduled Trains</a></h3>
+<h3><a>1)     Set the time to a period within the running period</a></h3>
+<p>Click "Set Time", The clock moves to 5 minutes before the start of the running period. It moves to the start of the running period at the fast clock rart for outside running times, then at the start of the running period, it changes to the running period fast rate.</p>
+<p> </p>
+<h3><a>2)     Start the scheduling of the trains</a></h3>
+<p> </p>
+<p>The trains will be scheduled according to the schedule table, and any timetables set up (see later) will be populated with the scheduled trains for the next 3 hours.</p>
+<p> </p>
+<h3><a>3)     Start the clock</a></h3>
+<p>The clock is initialised to stop when the start scheduling button is pressed. Click Stop/Start to restart the clock.</p>
+<p> </p>
+<p>The trains will start scheduling</p>
+<h3><a>Stop Scheduling Trains</a></h3>
+<p>Click the Toggle button to stop scheduling trains and to restart scheduling</p>
+<p> </p>
+<p> </p>
+<h1><a>Timetables</a></h1>
+<p>A local timetable of any one station can be shown on the computer running JMRI. This is denoted as a local timetable.</p>
+<p> </p>
+<p>Timetables can also be shown on remote tablets/computers. These are denoted MQTT timetables as they communicate with each other using MQTT.</p>
+<p> </p>
+<p>Click the show timetable button.</p>
+<p> </p>
+<p><img width="249" height="169" src="DispatcherSystem_files/image130.gif" alt="A list of tasks with text  Description automatically generated with medium confidence"></p>
+<p> </p>
+<p>A popup allowing the choice between a local timetable and MQTT timetables. MQTT timetables require some setting up. The local timetable works straight away.</p>
+<p> </p>
+<p><img width="393" height="113" src="DispatcherSystem_files/image131.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<h2><a>Local Timetables</a></h2>
+<p>Select the button "select station for local timetable. The following pops up:</p>
+<p> </p>
+<p><img width="260" height="209" src="DispatcherSystem_files/image132.gif" alt="A screenshot of a computer program  Description automatically generated"></p>
+<p> </p>
+<p>Select the required station that you want to display the timetable for. Note that only stations at which a train stops on a scheduled route are shown. (if a different station could be selected the displayed timetable would be blank).</p>
+<p> </p>
+<p>A screen will be displayed reminding you that for timetables to be displayed the trains must be scheduled and the scheduler be running. If these conditions are satisfied you will get a timetable displayed</p>
+<p> </p>
+<p>You may thus get a message</p>
+<p> </p>
+<p><img width="337" height="119" src="DispatcherSystem_files/image133.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>In which case you need to ensure that the clock is running and the train scheduler is running by clicking the start scheduler button.</p>
+<p> </p>
+<p>A timetable similar to the below timetable will be shown:</p>
+<p> </p>
+<p><img width="883" height="335" src="DispatcherSystem_files/image134.gif" alt="image134"></p>
+<h2><a>Remote Timetables</a> triggered by MQTT</h2>
+<p>To display a timetable on a remote tablet or computer screen, we need to:</p>
+<p> </p>
+<p>1)      Set up the required MQTT environment using Mosquitto and Node Red on a local or remote computer</p>
+<p>2)      Set up a local or remote network connection</p>
+<p>3)      Setup a MQTT connection in JMRI</p>
+<p>4)      Generate the MQTT Node Red Code</p>
+<p>5)      Import the code to node red, and perform a trivial edit</p>
+<p>6)      Get the appropriate page on a browser to display the timetable</p>
+<p> </p>
+<p>These timetables were inspired by a Rocrail MQTT implementation and modified from that implementation. The Rocrail  implementation and hence the JMRI Node Red implementation is licenced as follows: <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.en">CC Attribution-Share Alike 4.0 International</a>. Note that this is the only part of JMRI licenced in this fashion.</p>
+<h3><a>Generating the MQTT Node Red code</a></h3>
+<p>Click select station for MQTT timetable</p>
+<p> </p>
+<p><img width="615" height="152" src="DispatcherSystem_files/image135.gif" alt="A screenshot of a computer error message  Description automatically generated"></p>
+<p> </p>
+<p>Select the required station</p>
+<p> </p>
+<p><img width="250" height="1" src="DispatcherSystem_files/image136.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p>Proision is made to display an icon on the timetable. At present you can add a British Rail logo, a Deutsches Bahn logo or none.</p>
+<p> </p>
+<p><img width="287" height="153" src="DispatcherSystem_files/image137.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>Select the logo required and click Generate Timetable.</p>
+<p> </p>
+<p>It is hoped that users will submit modifications to JMRI to add other emblems for different train operators.</p>
+<p> </p>
+<p>Notification that a node red file has been produced in the user files directory</p>
+<p> </p>
+<p><img width="905" height="210" src="DispatcherSystem_files/image138.gif" alt="A screenshot of a computer error  Description automatically generated"></p>
+<p> </p>
+<p> </p>
+<h3><a>Setting up the required Node Red environment</a></h3>
+<p> </p>
+<p>Set up a MQTT broker such as mosquito on the same machine as is running JMRI, or one that is connected on the same network. You may use the instructions given in <a href="https://mosquitto.org/">Eclipse Mosquitto</a> if desired.</p>
+<p> </p>
+<p>Set up Node Red as given in <a href="https://nodered.org/">Node-RED (nodered.org)</a>. Note that if you are using a raspberry pi, with some installations Node Red comes installed. Note that there are many tutorials on this site which give you a good introduction to Node-red.</p>
+<p> </p>
+<p>Start Node Red in a command file and start node-red in a browser using <a href="http://localhost:1880">http://localhost:1880</a> or similar. Import the node-red file generated in the previous section</p>
+<p> </p>
+<p><img width="166" height="346" src="DispatcherSystem_files/image139.gif" alt="A screenshot of a black screen  Description automatically generated"></p>
+<p> </p>
+<p><img width="356" height="300" src="DispatcherSystem_files/image140.gif" alt="image140"></p>
+<p> </p>
+<p><img width="864" height="249" src="DispatcherSystem_files/image141.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>If you get the message</p>
+<p> </p>
+<p><a><img width="496" height="112" src="DispatcherSystem_files/image142.gif" alt="image142"></a></p>
+<p>Click import copy</p>
+<p> </p>
+<p><img width="1467" height="665" src="DispatcherSystem_files/image143.gif" alt="A screenshot of a computer screen  Description automatically generated"></p>
+<p> </p>
+<p> </p>
+<p>Open the web socket node as detailed in the comment. In this case it is the node labelled [ws] /ws/CornerUp. Double click that node, and you will get something like:</p>
+<p> </p>
+<p><img width="506" height="284" src="DispatcherSystem_files/image144.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>The path will not have been set to the correct value. Click the pencil to the right of the path, and enter the correct value /ws/CornerUp in our case.</p>
+<p> </p>
+<p><img width="524" height="322" src="DispatcherSystem_files/image145.gif" alt="image145"></p>
+<p> </p>
+<p>Click Update Done and Deploy</p>
+<p> </p>
+<p><img width="1471" height="658" src="DispatcherSystem_files/image146.gif" alt="A screenshot of a computer  Description automatically generated"></p>
+<p> </p>
+<p>The blue dots will dissapear.</p>
+<p> </p>
+<h3><a>Setup a MQTT Connection in JMRI</a></h3>
+<p>A MQTT connection needs to be set up in JMRI to connect to the MQTT broker. Follow the instructions in the JMRI help. You will get something like:</p>
+<p> </p>
+<p><img width="643" height="388" src="DispatcherSystem_files/image147.gif" alt="image147"></p>
+<p> </p>
+<p>Reboot JMRI</p>
+<p> </p>
+<h3><a>Display the MQTT timetable</a></h3>
+<p>Display the MQTT timetable by going to a browser and displaying <a href="http://localhost:1880/StationName">http://localhost:1880/StationName</a>. For example if the station name is Siding One FY, then you enter <a href="http://localhost:1880/Siding%20One%20FY">http://localhost:1880/Siding One FY</a></p>
+<p> </p>
+<p>If the timetable does not appear ensure node-red is started, for example in windows</p>
+<p> </p>
+<p><img width="830" height="176" src="DispatcherSystem_files/image148.gif" alt="A screenshot of a computer screen  Description automatically generated"></p>
+<p> </p>
+<p>You should get something like:</p>
+<p> </p>
+<p> </p>
+<p><img width="834" height="362" src="DispatcherSystem_files/image149.gif" alt="A screenshot of a computer screen  Description automatically generated"></p>
+<p> </p>
+<h1><a>Adding New Stations or Track to a Completed Panel</a></h1>
+<p>To add a new station or track</p>
+<p>Edit the panel and add instructions to add any new stations:</p>
+<ul>
+  <li>the new stations must be entered in the block table as described in a previous section</li>
+  <li>open the new panel in panel editor, and change the panel to add new track and/or signals as required</li>
 </ul>
-
-<p class=MsoNormal><span lang=EN>&nbsp;</span></p>
-
-<p class=MsoNormal><span lang=EN>Run the dispatcher system</span></p>
-
-<ul style='margin-top:0cm' type=disc>
- <li class=MsoNormal><span lang=EN>open the new panel, and re-run dispatcher
-     system. If you have created a version of Dispatcher system before, and the
-     trains were running OK, then you do not have to run stage 2, just Stage 1</span></li>
- <li class=MsoNormal><span lang=EN>All the previous stations and icons will be
-     removed, and new ones added automatically</span></li>
+<p> </p>
+<p>Run the dispatcher system</p>
+<ul>
+  <li>open the new panel, and re-run dispatcher system. If you have created a version of Dispatcher system before, and the trains were running OK, then you do not have to run stage 2, just Stage 1</li>
+  <li>All the previous stations and icons will be removed, and new ones added automatically</li>
 </ul>
-
-<p class=MsoNormal><span lang=EN>&nbsp;</span></p>
-
-<p class=MsoNormal><img border=0 width=683 height=280 id="Picture 1"
-src="DispatcherSystem_files/image150.gif"
-alt="A screenshot of a computer error&#10;&#10;Description automatically generated"></p>
-
-<p class=MsoNormal>&nbsp;</p>
-
-<p class=MsoNormal>Save the new panel, and restart JMRI.</p>
-
-</div>
-
+<p> </p>
+<p><img width="683" height="280" src="DispatcherSystem_files/image150.gif" alt="A screenshot of a computer error  Description automatically generated"></p>
+<p> </p>
+<p>Save the new panel, and restart JMRI.</p>
 </body>
-
 </html>
