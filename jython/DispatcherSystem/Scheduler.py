@@ -847,7 +847,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         timebase_state = timebase.getRun()
         if timebase.getRun() == False:
             self.swap_timebase_state_run_stop()    # put to run state
-        timebase.setRate(float(speed_not_operational_gbl))
+        timebase.userSetRate(float(speed_not_operational_gbl))
 
         # set clock to beginning of session
         self.set_timebase_start_hour(int(start_hour_gbl)-1, 55)
@@ -1340,7 +1340,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         mystate = timebase.getRun()
         if timebase.getRun() == False:
             self.swap_timebase_state_run_stop()
-        timebase.setRate(float(speed_not_operational_gbl))
+        timebase.userSetRate(float(speed_not_operational_gbl))
         desired_state = False
         if False != timebase.getRun():
             self.swap_timebase_state_run_stop()
@@ -1581,7 +1581,7 @@ class TimeListener(java.beans.PropertyChangeListener):
                 if hour >= int(start_hour_gbl) and hour <= int(end_hour_gbl):
                     # or hour == int(start_hour_gbl - 1) % 24 and minutes == 59:
                     if rate != fast_clock_rate:       # check to stop recursion error
-                        timebase.setRate(float(fast_clock_rate))
+                        timebase.userSetRate(float(fast_clock_rate))
                         fast_clock_running_at_operational_speed = True
                     if self.logLevel > 0: print "set_fast_clock_rate:", "fast_clock_rate slow", fast_clock_rate
                     pass
@@ -1590,7 +1590,7 @@ class TimeListener(java.beans.PropertyChangeListener):
                     fcr = fast_clock_during_non_operational_times
                     if fcr > 100 : fcr = 100  # set to maximum
                     if rate != fcr:
-                        timebase.setRate(float(fcr))
+                        timebase.userSetRate(float(fcr))
                         fast_clock_running_at_operational_speed = False
                     if self.logLevel > 0: print "set_fast_clock_rate:", "fcr", fcr
         else:
