@@ -211,15 +211,6 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         advertise(port);
     }
 
-    // For testing
-    @SuppressWarnings("deprecation") // Thread.stop
-    void stopHubThread() {
-        if (t != null) {
-            t.stop();
-            t = null;
-        }
-    }
-
     ArrayList<CanReply> workingReplySet = new ArrayList<>(); // collection of self-sent replies
     ArrayList<CanMessage> workingMessageSet = new ArrayList<>(); // collection of self-sent messages
 
@@ -304,7 +295,6 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         if ( _zero_conf_service != null ) { // set on void advertise(int port)
             _zero_conf_service.stop();
         }
-        stopHubThread();
         hub.dispose();
     }
 
