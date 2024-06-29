@@ -14,13 +14,7 @@ import org.slf4j.Logger;
  *
  * @author Todd Wegter Copyright (C) 2024
  */
-public class SpeedMatcherConfig {
-
-    //<editor-fold defaultstate="collapsed" desc="Enums">    
-    public enum SpeedMatcherType {
-        BASIC, SPEEDSTEPSCALE
-    }
-    //</editor-fold>
+public abstract class SpeedMatcherConfig {
 
     //<editor-fold defaultstate="collapsed" desc="Instance Variables">
     public DccLocoAddress dccLocoAddress;
@@ -43,7 +37,6 @@ public class SpeedMatcherConfig {
             int warmUpForwardSeconds,
             int warmUpReverseSeconds,
             PowerManager powerManager,
-            Logger logger,
             JLabel statusLabel,
             JButton startStopButton
     ) {

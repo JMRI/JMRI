@@ -8,8 +8,6 @@ import jmri.PowerManager;
 import jmri.jmrix.bachrus.Speed;
 import jmri.jmrix.bachrus.speedmatcher.SpeedMatcherConfig;
 
-import org.slf4j.Logger;
-
 /**
  * Configuration data for a basic speed matcher
  *
@@ -37,11 +35,10 @@ public class BasicSpeedMatcherConfig extends SpeedMatcherConfig{
             int warmUpForwardSeconds, 
             int warmUpReverseSeconds, 
             PowerManager powerManager,
-            Logger logger, 
             JLabel statusLabel, 
             JButton startStopButton)
     {
-        super(address, speedUnit, trimReverseSpeed, warmUpForwardSeconds, warmUpReverseSeconds, powerManager, logger, statusLabel, startStopButton);
+        super(address, speedUnit, trimReverseSpeed, warmUpForwardSeconds, warmUpReverseSeconds, powerManager, statusLabel, startStopButton);
         
         this.targetStartSpeed = targetStartSpeed;
         this.targetTopSpeed = targetTopSpeed;

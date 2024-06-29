@@ -8,8 +8,6 @@ import jmri.PowerManager;
 import jmri.jmrix.bachrus.Speed;
 import jmri.jmrix.bachrus.speedmatcher.SpeedMatcherConfig;
 
-import org.slf4j.Logger;
-
 /**
  * Configuration data for a speed step scale speed matcher
  *
@@ -35,11 +33,10 @@ public class SpeedStepScaleSpeedMatcherConfig extends SpeedMatcherConfig{
             int warmUpForwardSeconds, 
             int warmUpReverseSeconds, 
             PowerManager powerManager,
-            Logger logger, 
             JLabel statusLabel, 
             JButton startStopButton)
     {
-        super(address, speedUnit, trimReverseSpeed, warmUpForwardSeconds, warmUpReverseSeconds, powerManager, logger, statusLabel, startStopButton);
+        super(address, speedUnit, trimReverseSpeed, warmUpForwardSeconds, warmUpReverseSeconds, powerManager, statusLabel, startStopButton);
         
         this.targetMaxSpeed = targetMaxSpeed;
     }

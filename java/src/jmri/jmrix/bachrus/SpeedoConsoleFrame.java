@@ -39,6 +39,7 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterEntrySelector;
 import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
 import jmri.jmrix.bachrus.speedmatcher.*;
+import jmri.jmrix.bachrus.speedmatcher.basic.BasicSpeedMatcherConfig;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -900,20 +901,20 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             int warmUpForwardSeconds;
             int warmUpReverseSeconds;
 
-            SpeedMatcherConfig.SpeedTable speedTableType;
+            BasicSpeedMatcherConfig.SpeedTable speedTableType;
             
             if ((speedMatcher == null || speedMatcher.isSpeedMatcherIdle()) && (profileState == ProfileState.IDLE)) {
                 targetStartSpeed = startSpeedSM.getNumber().intValue();
                 targetHighSpeed = highSpeedSM.getNumber().intValue();
                 
                 if (basicSpeedTableSpeedMatchButton.isSelected()) {
-                    speedTableType = SpeedMatcherConfig.SpeedTable.ADVANCED; 
+                    speedTableType = BasicSpeedMatcherConfig.SpeedTable.ADVANCED; 
                 }
                 else if (basicESUSpeedMatchButton.isSelected()) {
-                    speedTableType = SpeedMatcherConfig.SpeedTable.ESU;
+                    speedTableType = BasicSpeedMatcherConfig.SpeedTable.ESU;
                 }
                 else {
-                    speedTableType = SpeedMatcherConfig.SpeedTable.SIMPLE;
+                    speedTableType = BasicSpeedMatcherConfig.SpeedTable.SIMPLE;
                 }
                 
                 speedMatchReverse = basicSpeedMatchReverseCheckbox.isSelected();
@@ -922,9 +923,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 warmUpReverseSeconds = basicSpeedMatchWarmUpReverseSecondsSM.getNumber().intValue();
 
                 speedMatcher = BasicSpeedMatcherFactory.getSpeedMatcher(
-                        new SpeedMatcherConfig(
-                                SpeedMatcherConfig.SpeedMatcherType.BASIC,
-                                speedTableType,
+                        speedTableType,
+                        new BasicSpeedMatcherConfig(
                                 locomotiveAddress,
                                 targetStartSpeed,
                                 targetHighSpeed,
@@ -933,7 +933,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                                 warmUpLoco ? warmUpForwardSeconds : 0,
                                 warmUpLoco ? warmUpReverseSeconds : 0,
                                 pm,
-                                log,
                                 statusLabel,
                                 basicSpeedMatchStartStopButton
                         )
