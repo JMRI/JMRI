@@ -1,3 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+   <title>JMRI: Dispatcher System</title>
+   <!--#include virtual="/help/en/parts/Style.shtml" -->
+ </head>
+ <body>
+   <!--#include virtual="/help/en/parts/Header.shtml" -->
+  <div id="mBody">
+  <div id="mainContent" class="no-sidebar">
+
 <h1><a>Dispatcher System</a></h1>
 <p> </p>
 <ul>
@@ -830,3 +841,8 @@ Description automatically generated" width="834" height="362" border="0" /></p>
 Description automatically generated" width="683" height="280" border="0" /></p>
 <p>Save the new panel, and restart JMRI.</p>
 </div>
+
+  </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>
