@@ -500,6 +500,43 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         _setupTasks.add(task);
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void executeModule(Module module, Object parameter)
+            throws IllegalArgumentException {
+
+        if (module == null) {
+            throw new IllegalArgumentException("The parameter \"module\" is null");
+        }
+        // Get the parameters for the module
+        Collection<Module.Parameter> parameterNames = module.getParameters();
+
+        // Ensure that there is only one parameter
+        if (parameterNames.size() != 1) {
+            throw new IllegalArgumentException("The module doesn't take exactly one parameter");
+        }
+
+        // Get the parameter
+        Module.Parameter param = parameterNames.toArray(Module.Parameter[]::new)[0];
+        if (!param.isInput()) {
+            throw new IllegalArgumentException("The module's parameter is not an input parameter");
+        }
+
+        // Set the value of the parameter
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put(param.getName(), parameter);
+
+        // Execute the module
+        executeModule(module, parameters);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void executeModule(Module module, Map<String, Object> parameters)
+            throws IllegalArgumentException {
+        DefaultConditionalNG.executeModule(module, parameters);
+    }
+
     /**
      * The PropertyChangeListener interface in this class is intended to keep
      * track of user name changes to individual NamedBeans. It is not completely

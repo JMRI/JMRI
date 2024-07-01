@@ -4,9 +4,7 @@ import java.util.*;
 
 import javax.annotation.Nonnull;
 
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.Manager;
+import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.Stack;
@@ -143,6 +141,81 @@ public class DefaultConditionalNG extends AbstractBase
         runOnLogixNG_Thread(() -> {internalExecute(this, socket);}, true);
     }
 
+    /**
+     * Executes a LogixNG Module.
+     * @param module      The module to be executed
+     * @param parameters  The parameters
+     */
+    public static void executeModule(Module module, Map<String, Object> parameters)
+            throws IllegalArgumentException {
+
+        if (module == null) {
+            throw new IllegalArgumentException("The parameter \"module\" is null");
+        }
+        if (!(module.getRootSocket() instanceof DefaultFemaleDigitalActionSocket)) {
+            throw new IllegalArgumentException("The module " + module.getDisplayName() + " is not a DigitalActionModule");
+        }
+        if (parameters == null) {
+            throw new IllegalArgumentException("The parameter \"parameters\" is null");
+        }
+
+        LogixNG_Thread thread = LogixNG_Thread.getThread(LogixNG_Thread.DEFAULT_LOGIXNG_THREAD);
+        ConditionalNG conditionalNG = new DefaultConditionalNG("IQC0000000", null);
+        InternalFemaleSocket socket = new InternalFemaleSocket(conditionalNG, module, parameters);
+        thread.runOnLogixNGEventually(() -> { internalExecute(conditionalNG, socket); });
+    }
+
+    private static class InternalFemaleSocket extends DefaultFemaleDigitalActionSocket {
+
+        private final ConditionalNG _conditionalNG;
+        private final Module _module;
+        private final Map<String, Object> _parameters;
+
+        public InternalFemaleSocket(ConditionalNG conditionalNG, Module module, Map<String, Object> parameters) {
+            super(null, new FemaleSocketListener(){
+                @Override
+                public void connected(FemaleSocket socket) {
+                    // Do nothing
+                }
+
+                @Override
+                public void disconnected(FemaleSocket socket) {
+                    // Do nothing
+                }
+            }, "A");
+            _conditionalNG = conditionalNG;
+            _module = module;
+            _parameters = parameters;
+        }
+
+        @Override
+        public void execute() throws JmriException {
+            FemaleSocket socket = _module.getRootSocket();
+            if (!(socket instanceof DefaultFemaleDigitalActionSocket)) {
+                throw new IllegalArgumentException("The module " + _module.getDisplayName() + " is not a DigitalActionModule");
+            }
+
+            synchronized(this) {
+                SymbolTable oldSymbolTable = _conditionalNG.getSymbolTable();
+                DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(_conditionalNG);
+                List<Module.ParameterData> _parameterData = new ArrayList<>();
+                for (Module.Parameter p : _module.getParameters()) {
+                    _parameterData.add(new Module.ParameterData(
+                            p.getName(), SymbolTable.InitialValueType.None, "",
+                            Module.ReturnValueType.None, ""));
+                }
+                newSymbolTable.createSymbols(_conditionalNG.getSymbolTable(), _parameterData);
+                for (var entry : _parameters.entrySet()) {
+                    newSymbolTable.setValue(entry.getKey(), entry.getValue());
+                }
+                _conditionalNG.setSymbolTable(newSymbolTable);
+
+                ((DefaultFemaleDigitalActionSocket)socket).execute();
+                _conditionalNG.setSymbolTable(oldSymbolTable);
+            }
+        }
+    }
+
     private static void internalExecute(ConditionalNG conditionalNG, FemaleDigitalActionSocket femaleSocket) {
         if (conditionalNG.isEnabled()) {
             DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(conditionalNG);
@@ -152,7 +225,11 @@ public class DefaultConditionalNG extends AbstractBase
 
                 conditionalNG.setSymbolTable(newSymbolTable);
 
-                InlineLogixNG inlineLogixNG = conditionalNG.getLogixNG().getInlineLogixNG();
+                LogixNG logixNG = conditionalNG.getLogixNG();
+                InlineLogixNG inlineLogixNG = null;
+                if (logixNG != null) {
+                    inlineLogixNG = logixNG.getInlineLogixNG();
+                }
                 if (inlineLogixNG != null) {
                     List<SymbolTable.VariableData> localVariables = new ArrayList<>();
                     localVariables.add(new SymbolTable.VariableData(
