@@ -144,7 +144,7 @@ public class DefaultConditionalNG extends AbstractBase
     /**
      * Executes a LogixNG Module.
      * @param module      The module to be executed
-     * @param parameters  The parameters. The module must have exactly one parameter.
+     * @param parameters  The parameters
      */
     public static void executeModule(Module module, Map<String, Object> parameters)
             throws IllegalArgumentException {
