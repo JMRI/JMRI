@@ -20,7 +20,8 @@ public class CallModuleTest {
 
     @Test
     public void testCallModuleWithOneParameter() throws JmriException {
-        // Get the module
+        // Get the module. Note that the module must have exactly one
+        // parameter and that the parameter must have "input" selected.
         Module module = InstanceManager.getDefault(ModuleManager.class).getModule("My module");
 
         // The parameter to the module
