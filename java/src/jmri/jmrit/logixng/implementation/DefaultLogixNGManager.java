@@ -501,6 +501,17 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     }
 
     /**
+     * Executes a LogixNG Module.
+     * @param module      The module to be executed
+     * @param parameters  The parameters. The module must have exactly one parameter.
+     */
+    @Override
+    public void executeModule(Module module, Map<String, Object> parameters)
+            throws IllegalArgumentException {
+        DefaultConditionalNG.executeModule(module, parameters);
+    }
+
+    /**
      * The PropertyChangeListener interface in this class is intended to keep
      * track of user name changes to individual NamedBeans. It is not completely
      * implemented yet. In particular, listeners are not added to newly

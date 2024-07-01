@@ -2,6 +2,7 @@ package jmri.jmrit.logixng;
 
 import java.io.PrintWriter;
 import java.util.Locale;
+import java.util.Map;
 
 import jmri.Manager;
 import jmri.jmrit.logixng.Base.PrintTreeSettings;
@@ -272,5 +273,16 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * @param task the task
      */
     void registerSetupTask(Runnable task);
+
+    /**
+     * Executes a LogixNG Module.
+     * Note that the module must be a Digital Action Module.
+     * @param module      The module to be executed
+     * @param parameters  The parameters. The module must have exactly one parameter.
+     * @throws IllegalArgumentException if module or parameters is null or if module
+     *                    is not a DigitalActionModule.
+     */
+    void executeModule(Module module, Map<String, Object> parameters)
+            throws IllegalArgumentException;
 
 }
