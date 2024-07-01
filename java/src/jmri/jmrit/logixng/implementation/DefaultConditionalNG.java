@@ -162,7 +162,7 @@ public class DefaultConditionalNG extends AbstractBase
         LogixNG_Thread thread = LogixNG_Thread.getThread(LogixNG_Thread.DEFAULT_LOGIXNG_THREAD);
         ConditionalNG conditionalNG = new DefaultConditionalNG("IQC0000000", null);
         InternalFemaleSocket socket = new InternalFemaleSocket(conditionalNG, module, parameters);
-        thread.runOnLogixNGEventually(() -> {internalExecute(conditionalNG, (FemaleDigitalActionSocket)socket);});
+        thread.runOnLogixNGEventually(() -> { internalExecute(conditionalNG, socket); });
     }
 
     private static class InternalFemaleSocket extends DefaultFemaleDigitalActionSocket {
@@ -196,9 +196,15 @@ public class DefaultConditionalNG extends AbstractBase
             }
 
             synchronized(this) {
-                SymbolTable newSymbolTable;
                 SymbolTable oldSymbolTable = _conditionalNG.getSymbolTable();
-                newSymbolTable = new DefaultSymbolTable(oldSymbolTable);
+                DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(_conditionalNG);
+                List<Module.ParameterData> _parameterData = new ArrayList<>();
+                for (Module.Parameter p : _module.getParameters()) {
+                    _parameterData.add(new Module.ParameterData(
+                            p.getName(), SymbolTable.InitialValueType.None, "",
+                            Module.ReturnValueType.None, ""));
+                }
+                newSymbolTable.createSymbols(_conditionalNG.getSymbolTable(), _parameterData);
                 for (var entry : _parameters.entrySet()) {
                     newSymbolTable.setValue(entry.getKey(), entry.getValue());
                 }
@@ -219,7 +225,11 @@ public class DefaultConditionalNG extends AbstractBase
 
                 conditionalNG.setSymbolTable(newSymbolTable);
 
-                InlineLogixNG inlineLogixNG = conditionalNG.getLogixNG().getInlineLogixNG();
+                LogixNG logixNG = conditionalNG.getLogixNG();
+                InlineLogixNG inlineLogixNG = null;
+                if (logixNG != null) {
+                    inlineLogixNG = logixNG.getInlineLogixNG();
+                }
                 if (inlineLogixNG != null) {
                     List<SymbolTable.VariableData> localVariables = new ArrayList<>();
                     localVariables.add(new SymbolTable.VariableData(

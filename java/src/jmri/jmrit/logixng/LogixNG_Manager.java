@@ -277,9 +277,20 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
     /**
      * Executes a LogixNG Module.
      * Note that the module must be a Digital Action Module.
+     * @param module     The module to be executed
+     * @param parameter  The parameter. The module must have exactly one parameter.
+     * @throws IllegalArgumentException If module is null or if module is not a
+     *                   DigitalActionModule.
+     */
+    void executeModule(Module module, Object parameter)
+            throws IllegalArgumentException;
+
+    /**
+     * Executes a LogixNG Module.
+     * Note that the module must be a Digital Action Module.
      * @param module      The module to be executed
-     * @param parameters  The parameters. The module must have exactly one parameter.
-     * @throws IllegalArgumentException if module or parameters is null or if module
+     * @param parameters  The parameters
+     * @throws IllegalArgumentException If module or parameters is null or if module
      *                    is not a DigitalActionModule.
      */
     void executeModule(Module module, Map<String, Object> parameters)
