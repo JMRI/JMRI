@@ -325,7 +325,9 @@ class MyModelListener3(TableModelListener):
     def swap_direction(self, train_name):
         global trains
         train = [trains[t_name] for t_name in trains if t_name ==train_name]
+        print "train", train
         direction_of_train = train["direction"]
+        print "direction_of_train", direction_of_train
         if direction_of_train == "forward":
             direction_of_train = "reverse"
         else:

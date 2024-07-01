@@ -61,7 +61,7 @@ class SimulationMaster(jmri.jmrit.automat.AbstractAutomaton):
         self.waitSensorState(self.simulation_master_sensor, ACTIVE)
 
         # get list of dispatched trains
-        if self.logLevel > 0: print("checking dispatched trains")
+        # if self.logLevel > 0: print("checking dispatched trains")
         DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
         #print "DF.getActiveTrainsList()", DF.getActiveTrainsList()
         if DF != None:
@@ -104,11 +104,9 @@ class SimulationMaster(jmri.jmrit.automat.AbstractAutomaton):
                         # startblock is outside the transit DestBlockList contains the blocks in the transit
                         blocklist = []
                         if startBlock not in DestBlockList:
-                            if self.blockOccupied(startBlock):
-                                blocklist.append(startBlock)
+                            blocklist.append(startBlock)
                         for block in reversed(DestBlockList) :
-                            if self.blockOccupied(block):
-                                blocklist.append(block)
+                            blocklist.append(block)
                         for block in blocklist:
                             if self.logLevel > 0: print "occupied blocks", block, block.getUserName(), self.blockOccupied(block)
 
@@ -137,9 +135,9 @@ class SimulationMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def blockOccupied(self, block):
         if block.getState() == ACTIVE:
-            state = "ACTIVE"
+            state = True
         else:
-            state ="INACTIVE"
+            state = True
         return state
 
 
@@ -240,10 +238,10 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
         return (self.end_position - self.start_position) +1
 
     def blockOccupied(self, block):
-        if block.getSensor().getKnownState() == ACTIVE:
-            state = "ACTIVE"
+        if block.getState() == ACTIVE:
+            state = True
         else:
-            state ="INACTIVE"
+            state = False
         return state
 
     def make_first_block_unoccupied(self, block_list):
@@ -294,13 +292,13 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
         current_section_list = [allocatedSection.getSection() for allocatedSection in allocatedSectionList \
                                  if self.block_list[self.end_position] in allocatedSection.getSection().getBlockList()]
         if current_section_list == []:
-            print "******* current_section list is empty in Simulate Instance +++****"
-            print "active train", self.activeTrain
-            print "allocatedSectionList", allocatedSectionList
-            print "allocatedSectionList", [allocatedSection.getSection().getUserName() for allocatedSection in allocatedSectionList]
-            print "current_section_list", [section.getUserName() for section in current_section_list]
-            print "self.block_list[self.end_position]", self.block_list[self.end_position].getUserName()
-            print "******* current_section ****"
+            # print "******* current_section list is empty in Simulate Instance +++****"
+            # print "active train", self.activeTrain
+            # print "allocatedSectionList", allocatedSectionList
+            # print "allocatedSectionList", [allocatedSection.getSection().getUserName() for allocatedSection in allocatedSectionList]
+            # print "current_section_list", [section.getUserName() for section in current_section_list]
+            # print "self.block_list[self.end_position]", self.block_list[self.end_position].getUserName()
+            # print "******* current_section ****"
             return
         current_section = current_section_list[0]
         return current_section
