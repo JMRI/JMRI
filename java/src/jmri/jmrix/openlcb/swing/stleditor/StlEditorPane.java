@@ -1042,7 +1042,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 for (Window window : windows) {
                     if (window instanceof JDialog) {
                         JDialog dialog = (JDialog) window;
-                        if (dialog.getTitle().equals(Bundle.getMessage("TitleCdiLoad"))) {
+                        if (Bundle.getMessage("TitleCdiLoad").equals(dialog.getTitle())) {
                             dialog.dispose();
                         }
                     }
