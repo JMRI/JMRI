@@ -1301,37 +1301,13 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
         if self.logLevel > 0: print "Setting up Time Scheduler"
         timebase = jmri.InstanceManager.getDefault(jmri.Timebase)
-        timebase.inhibitErrorMessage = False
 
         # set up timebase and start at midnight
         if self.logLevel > 0: print "******************************************set timebase hour"
-        # if schedule_trains_hourly:
-        #     self.set_timebase_start_hour(int(start_hour_gbl)-1, 45)
-        #     timebase.setRun(False)
-        #     timebase.setRate(float(speed_not_operational_gbl))
-        # else:
-        #     self.set_timebase_start_hour(4, 0)
-        #     timebase.setRate(float(fast_clock_rate))
-        if self.logLevel > 0: print "***********************************************finished timebase hour"
 
-
-        # run fast clock 10 times as fast as normal
-
-        # timebase.setRate(fast_clock_rate)
-        # time = timebase.getTime()
-
-        # if schedule_trains_hourly:
-        #     self.set_default_scheduling_hourly_values()
-        # else:
-        #     self.set_default_scheduling__non_hourly_values()
         self.set_default_scheduling_values()
         self.set_timebase_start_hour(int(start_hour_gbl)-1, 45)
         self.set_timebase_start_hour(0, 0)
-
-        # tListener = TimeListener()
-        # if timebase.getRun() == True:
-        #     timebase.removeMinuteChangeListener(tListener)
-        #     timebase.setRun(True)
 
         # attach a listener to the timebase.
         tListener = TimeListener()
@@ -1440,21 +1416,7 @@ class TimeListener(java.beans.PropertyChangeListener):
         self.logLevel = 0
         if self.logLevel > 0: print "set up TimeListener"
         self.prev_time = 0
-        # if "timetable_gbl" not in globals():
-        #     timetable_gbl = None
-        try:
-            if self.logLevel > 0: print "inhibit fast clock message"
-            self.inhibit_fast_clock_error_message()
-        except IndexError:
-            print "IndexError B"
-        except:
-            print "error time listener"
         if self.logLevel > 0: print "end TimeListener"
-
-    def inhibit_fast_clock_error_message(self):
-        global timebase
-        # stop a error message appearing when the fast clock is changed by TimeListener
-        timebase.inhibitErrorMessage = True
 
     def propertyChange(self, event):
 

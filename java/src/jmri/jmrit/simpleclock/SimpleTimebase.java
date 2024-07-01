@@ -37,8 +37,6 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
 
     protected final SystemConnectionMemo memo;
 
-    public boolean inhibitErrorMessage = false;    // Used by Dispatcher System
-
     public SimpleTimebase(InternalSystemConnectionMemo memo) {
         super("SIMPLECLOCK");
         this.memo = memo;
@@ -210,7 +208,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     @Override
     public void setRate(double factor) throws TimebaseRateException {
         checkRateValid(factor);
-        if (internalMaster && (!notInitialized) &&(!inhibitErrorMessage)) {
+        if (internalMaster && (!notInitialized)) {
             log.error("Probable Error - questionable attempt to change fast clock rate");
         }
         double oldFactor = mFactor;
