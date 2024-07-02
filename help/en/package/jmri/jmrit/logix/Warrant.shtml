@@ -325,13 +325,18 @@
       the train occupies. This is the most simple way of tracking in that both the name and
       location are done with a single drag and drop.</p>
 
-      <h2>Using Warrants in Logix</h2>
+      <h2>Using Warrants in Logix and LogixNG</h2>
 
       <p>Several of the operations that can be done from the Warrant List and Warrant Editing frame
-      can be done with Logix Conditionals. You may design and implement a dispatcher's panel using
-      the Warrant state variables and actions found in Logix.</p>
+      can be done with Logix/LogixNG conditionals. You may design and implement a dispatcher's panel
+      using the Warrant state variables/expressions and actions found in Logix/LogixNG.</p>
 
-      <h3>Warrant State Variables</h3>
+      <p>Detailed LogixNG descriptions are at
+      <a href="../../../../html/tools/logixng/reference/chapter5.shtml#WarrantAction">LogixNG Actions</a>
+      and <a href="../../../../html/tools/logixng/reference/chapter6.shtml#WarrantExpression">LogixNG
+      Expressions</a>.</p>
+
+      <h3>Warrant State Variables (Logix)</h3>
 
       <p>When a Warrant has been allocated or is in effect, the following state variables can be
       tested in a Logix conditional.</p>
@@ -354,7 +359,7 @@
         running either in Learn Mode or Auto Run Mode. False otherwise.</li>
       </ul>
 
-      <h3>Warrant Actions</h3>
+      <h3>Warrant Actions (Logix)</h3>
 
       <ul>
         <li><strong>Allocate Warrant Route</strong>: - Allocates the route to this Warrant.</li>

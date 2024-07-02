@@ -390,22 +390,27 @@
         Speeds</strong>. Saving the panel now will allow it to be loaded by earlier versions.
       </div>
 
-      <h2>Triggering External Events From Scripts</h2>
-      External animation or other events may be triggered by the "<strong>Set Sensor</strong>"
+      <h2>Triggering External Events From Throttle Scripts</h2>
+
+      <p>External animation or other events may be triggered by the "<strong>Set Sensor</strong>"
       command. To do this insert a row, then select <strong>Set Sensor</strong> from the list of
       items under the <strong><em>Command</em></strong> column. Next select the action
       (<strong>active</strong> or <strong>inactive</strong>) you want from the
-      <strong>Value</strong> column. Lastly, enter a sensor name in the <strong>Block or
-      Sensor</strong> column. Also enter or adjust the elapsed time when to trigger the setting of
-      the sensor. On playback when this command is executed the state of the sensor will be set.
+      <strong><em>Value</em></strong> column. Lastly, enter a sensor name in the <strong> <em>Block,
+      Sensor or Memory Variable Name</em></strong> column. Also enter or adjust the elapsed time
+      when to trigger the setting of the sensor. On playback when this command is executed the state
+      of the sensor will be set.</p>
+
       <h3>Script Synchronization With External Events</h3>
-      Additional synchronization can be done within a block. For example stopping a train at a
+
+      <p>Additional synchronization can be done within a block. For example stopping a train at a
       water tower or over an uncoupling device or for any reason where using the elapsed time of a
       command is not precise enough. To do this, there is a <strong>Wait Sensor</strong> command.
       Insert a row and follow the same procedure as was done with set Sensor. On playback when this
       command is executed the script is suspended and the current movement of the train is
       sustained until the sensor changes to the specified state. When that happens the script
-      continues to execute according to the recorded times.
+      continues to execute according to the recorded times.</p>
+
       <p>For example the "Wait Sensor" might be an optical sensor named "sStopTrain" positioned to
       detect specific point. The "Wait Sensor" command is bracketed with speed commands, the one
       before with a very slow speed and the one after with speed 0. Sensor "sStopTrain" is set
@@ -436,6 +441,21 @@
       where warrant "from A to B" runs warrant "from B to A" and warrant "from B to A" runs warrant
       "from A to B" and each Warrant specifies the same train ID and the same number of
       repeats.</p>
+
+      <h3><span class="since">since 5.9.2</span>External events using a Memory Variable</h3>
+
+      <p>The <strong>Set Memory Value</strong> command is similar to the <strong>Set Sensor</strong>
+      command.  Instead of being limited to Active/Inactive sensor states, the memory variable value
+      can be set to any text data.  The text data can be used by Logix, LogixNG or Jython scripts to
+      perform external actions.</p>
+
+      <p>After inserting a row, select <strong>Set Memory Value</strong> from <strong><em>Command
+      </em></strong> item list. Enter the text in the <strong><em>Value</em></strong> field.  Enter
+      the name of an existing memory variable in the <strong><em>Block, Sensor or Memory Variable
+      Name</em></strong> field.</p>
+
+      <p>Also enter or adjust the elapsed time when to trigger the setting of the memory value. On
+      playback when this command is executed the memory value will be set.</p>
 
       <h2>Running Trains on Dark Blocks</h2>
       The Learn mode and Run Mode functions can be used on blocks that do not have detection

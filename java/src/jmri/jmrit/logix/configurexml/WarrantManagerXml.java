@@ -36,7 +36,7 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
 
     public WarrantManagerXml() {
     }
-    
+
     /**
      * Store the contents of a WarrantManager.
      *
@@ -136,7 +136,7 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
             str = "";
         }
         elem.setAttribute("trainName", str);
-        
+
         return elem;
     }
 
@@ -197,6 +197,9 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
         elem.setAttribute("valueType", String.valueOf(cmdVal.getType().getIntId()));
         elem.setAttribute("speedMode", cmdVal.getMode().name);
         elem.setAttribute("floatValue", String.valueOf(cmdVal.getFloat()));
+        if (!cmdVal.getText().isEmpty()) {
+            elem.setAttribute("textValue", cmdVal.getText());
+        }
         element.addContent(elem);
 
         return element;
@@ -206,11 +209,11 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
     public boolean load(Element shared, Element perNode) {
 
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
-        
+
         if (shared.getChildren().isEmpty()) {
             return true;
         }
-        
+
         List<Element> warrantList = shared.getChildren("warrant");
         log.debug("Found {} Warrant objects", warrantList.size());
         boolean previouslyLoaded = false;
@@ -226,7 +229,7 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
             String userName = null;
             if (elem.getAttribute("userName") != null)
                 userName = elem.getAttribute("userName").getValue();
-            
+
             boolean SCWa = true;
             log.debug("loading warrant {}", sysName);
             Attribute wType = elem.getAttribute("wtype");
@@ -237,7 +240,7 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
                 log.debug("wtype is {} for {}", wType.getValue(), sysName);
                 SCWa = false;
             }
-            
+
             long timeToPlatform = 500;
             Attribute TTP = elem.getAttribute("timeToPlatform");
             if (TTP != null) {
@@ -284,14 +287,14 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
             if (c != null) {
                 warrant.setComment(c);
             }
-            
+
             Element order = elem.getChild("viaOrder");
             if (order!=null) {
-                warrant.setViaOrder(loadBlockOrder(order));             
+                warrant.setViaOrder(loadBlockOrder(order));
             }
             order = elem.getChild("avoidOrder");
             if (order!=null) {
-                warrant.setAvoidOrder(loadBlockOrder(order));               
+                warrant.setAvoidOrder(loadBlockOrder(order));
             }
 
             if (SCWa) {
@@ -457,10 +460,11 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
         ValueType valType = null;
         SpeedStepMode mode = null;
         float floatVal = 0;
+        String textVal = "";
         if (elem != null) {
             attr = elem.getAttribute("valueType");
             if (attr != null) {
-                try {                
+                try {
                     valType = ThrottleSetting.getValueTypeFromInt(Integer.parseInt(attr.getValue()));
                 } catch (IllegalArgumentException iae) {
                     log.error("{} for throttleSetting {} in warrant {}",iae.getMessage(), ts.toString(), w.getDisplayName());
@@ -476,14 +480,19 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
             if (attr != null) {
                 floatVal = Float.parseFloat(attr.getValue());
             }
+
+            attr = elem.getAttribute("textValue");
+            if (attr != null) {
+                textVal = attr.getValue();
+            }
         }
-        ts.setValue(valType, mode, floatVal);
+        ts.setValue(valType, mode, floatVal, textVal);
 
         attr = element.getAttribute("trackSpeed");
         if (attr != null) {
             ts.setTrackSpeed(Float.parseFloat(attr.getValue()));
         }
-        
+
         attr = element.getAttribute("beanName");
         if (attr != null) {
             String errMsg = ts.setNamedBean(cmd, attr.getValue());
@@ -493,7 +502,7 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
         }
         return ts;
     }
-    
+
     // pre 4.21.3
 //    @SuppressFBWarnings(value="NP_LOAD_OF_KNOWN_NULL_VALUE", justification="nothing wrong about a null return")
     private static ThrottleSetting loadThrottleCommand(Element elem, Warrant w) {
@@ -533,15 +542,15 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
                 log.error("Unable to read speed of command.", ex);
             }
         }
-        
+
         return new ThrottleSetting(time, command, value, block, speed);
     }
-    
+
     @Override
     public int loadOrder(){
         return InstanceManager.getDefault(WarrantManager.class).getXMLOrder();
     }
-    
+
     private final static Logger log = LoggerFactory.getLogger(WarrantManagerXml.class);
 
 }
