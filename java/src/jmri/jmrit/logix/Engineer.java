@@ -844,7 +844,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
     private void setMemory(NamedBeanHandle<?> handle, CommandValue cmdVal) {
         NamedBean bean = handle.getBean();
         if (!(bean instanceof jmri.Memory)) {
-            log.error("setMemory: {} not a Memmory!", bean );
+            log.error("setMemory: {} not a Memory!", bean );
             return;
         }
         jmri.Memory m = (jmri.Memory)bean;
