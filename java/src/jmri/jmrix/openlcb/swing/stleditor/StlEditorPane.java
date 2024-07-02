@@ -656,7 +656,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 var name = row.getName().trim();
 
                 if (jumpLabel) {
-                    sb.append(separator + name + " ");
+                    sb.append(" " + name + " ");
                     jumpLabel = false;
                 } else if (isMemory(name)) {
                     sb.append(separator + name);
