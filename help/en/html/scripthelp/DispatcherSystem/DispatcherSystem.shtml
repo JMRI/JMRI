@@ -773,7 +773,7 @@ Description automatically generated" width="337" height="119" border="0" /></p>
     <p>4) Generate the MQTT Node Red Code</p>
     <p>5) Import the code to node red, and perform a trivial edit</p>
     <p>6) Get the appropriate page on a browser to display the timetable</p>
-    <p>These timetables were inspired by a Rocrail MQTT implementation and modified from that implementation. The Rocrail implementation and hence the JMRI Node Red implementation is licenced as follows:&nbsp;<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.en">CC Attribution-Share Alike 4.0 International</a>. Note that this is the only part of JMRI licenced in this fashion.</p>
+    <p>These timetables were inspired by a Rocrail MQTT implementation and modified from that implementation. The Rocrail implementation and hence the JMRI Node Red implementation is licenced as follows:&nbsp;<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.en">CC Attribution-Share Alike 4.0 International</a>.</p>
     <h3><a name="_Toc170509704"></a>Generating the MQTT Node Red code</h3>
     <p>Click select station for MQTT timetable</p>
     <p><img src="DispatcherSystem_files/image134.gif" alt="A screenshot of a computer error message
