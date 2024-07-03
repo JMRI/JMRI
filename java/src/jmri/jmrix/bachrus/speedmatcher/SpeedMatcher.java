@@ -363,8 +363,8 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
 
         public abstract SpeedTableStep getPrevious();
 
-        public int get128StepEquivalent() {
-            return Math.round(this.speedStep * 4.571428571428571f);
+        public float get128StepScaleSpeed() {
+            return this.speedStep * 4.571428571428571f;
         }
     }
 

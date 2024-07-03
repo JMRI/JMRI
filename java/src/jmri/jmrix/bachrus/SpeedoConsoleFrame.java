@@ -357,7 +357,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected JLabel speedStepScaleSpeedMatchWarmUpReverseUnit = new JLabel(" seconds");
     
     protected JLabel speedStepScaleMaxSpeedTargetLabel = new JLabel("Max Speed: ");
-    protected SpinnerNumberModel maxSpeedSM = new SpinnerNumberModel(79, 1, 128, 1);
+    protected SpinnerNumberModel maxSpeedSM = new SpinnerNumberModel(79, 5, 128, 1);
     protected JSpinner speedStepScaleSpeedMatchMaxSpeedField = new JSpinner(maxSpeedSM);
     protected JLabel speedStepScaleSpeedMatchMaxSpeedUnit = new JLabel(" MPH");
     protected JButton speedStepScaleSpeedMatchStartStopButton = new JButton(Bundle.getMessage(("btnStartSpeedMatch")));    
