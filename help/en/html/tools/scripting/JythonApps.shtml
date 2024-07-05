@@ -35,8 +35,8 @@
       <p>Dispatcher System aims to simplify the setup of <a href=
         "../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">JMRI DispatcherPro</a>, automatically
         creating everything (signal logic, sections, transits and train info files) required to
-        run trains, using Dispatcher, between locations of your choosing.</p>
-      <p> It allows you to run trains directly, by clicking provided location buttons, or indirectly
+        run trains using Dispatcher.</p>
+      <p> It allows you to run trains between stations, by clicking provided station buttons, or by
         using routes. The routes can be scheduled, and the schedules displayed on timetables.</p>
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
