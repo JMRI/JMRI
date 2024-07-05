@@ -339,6 +339,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             + "It is recommended to enable Warm Up Locomotive if your locomotive isn't already warmed up to help achieve a more accurate result."
             + "<br/><br/>Momentum is always cleared, so be sure to read the momentum values before speed matching."
             + "<br/><br/>Be sure to have you locomotive set to use the Speed Table (CV 29 bit 4)."
+            + "<br/><br/>The set max speed will be rounded up to the nearest settable speed in the speed table."
             + "<br/><br/></p></html>");
     
     protected ButtonGroup speedStepScaleSpeedMatcherTypeGroup = new ButtonGroup();
@@ -357,7 +358,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected JLabel speedStepScaleSpeedMatchWarmUpReverseUnit = new JLabel(" seconds");
     
     protected JLabel speedStepScaleMaxSpeedTargetLabel = new JLabel("Max Speed: ");
-    protected SpinnerNumberModel maxSpeedSM = new SpinnerNumberModel(79, 5, 128, 1);
+    protected SpinnerNumberModel maxSpeedSM = new SpinnerNumberModel(79, 4, 128, 1);
     protected JSpinner speedStepScaleSpeedMatchMaxSpeedField = new JSpinner(maxSpeedSM);
     protected JLabel speedStepScaleSpeedMatchMaxSpeedUnit = new JLabel(" MPH");
     protected JButton speedStepScaleSpeedMatchStartStopButton = new JButton(Bundle.getMessage(("btnStartSpeedMatch")));    

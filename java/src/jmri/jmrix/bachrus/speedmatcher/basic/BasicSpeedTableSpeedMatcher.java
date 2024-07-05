@@ -98,7 +98,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
      */
     @Override
     public boolean startSpeedMatcher() {
-        if (!super.validate()) {
+        if (!validate()) {
             return false;
         }
 
@@ -110,7 +110,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
 
         speedMatcherState = SpeedMatcherState.WAIT_FOR_THROTTLE;
 
-        if (!super.initializeAndStartSpeedMatcher(e -> speedMatchTimeout())) {
+        if (!initializeAndStartSpeedMatcher(e -> speedMatchTimeout())) {
             cleanUpSpeedMatcher();
             return false;
         }

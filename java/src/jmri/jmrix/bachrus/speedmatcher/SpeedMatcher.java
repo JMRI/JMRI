@@ -33,7 +33,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Enums">
-    protected enum SpeedTableStep {
+    public enum SpeedTableStep {
         STEP1(1) {
             @Override
             public SpeedTableStep getPrevious() {
@@ -362,10 +362,6 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
         public abstract SpeedTableStep getNext();
 
         public abstract SpeedTableStep getPrevious();
-
-        public float get128StepScaleSpeed() {
-            return this.speedStep * 4.571428571428571f;
-        }
     }
 
     protected enum SpeedMatcherCV {
@@ -423,7 +419,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
     protected int warmUpReverseSeconds = 120;
 
     protected int stepDuration = 0;
-    protected float currentSpeed = 0;
+    protected float currentSpeedKPH = 0;
 
     protected DccLocoAddress dccLocoAddress;
 
@@ -480,7 +476,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
      * @param currentSpeedKPH the locomotive's current speed in KPH
      */
     public void updateCurrentSpeed(float currentSpeedKPH) {
-        this.currentSpeed = currentSpeedKPH;
+        this.currentSpeedKPH = currentSpeedKPH;
     }
     //</editor-fold>
 
@@ -607,7 +603,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
      * @param speedTarget - target speed in KPH
      */
     protected void setSpeedMatchError(float speedTarget) {
-        speedMatchError = speedTarget - currentSpeed;
+        speedMatchError = speedTarget - currentSpeedKPH;
     }
 
     /**

@@ -23,6 +23,7 @@ public class SpeedStepScaleSpeedMatcherConfig extends SpeedMatcherConfig{
     
     //<editor-fold defaultstate="collapsed" desc="Instance Variables">
     public float targetMaxSpeed;
+    public JLabel actualMaxSpeedField;
     //</editor-fold>
     
     public SpeedStepScaleSpeedMatcherConfig(
@@ -34,11 +35,13 @@ public class SpeedStepScaleSpeedMatcherConfig extends SpeedMatcherConfig{
             int warmUpReverseSeconds, 
             PowerManager powerManager,
             JLabel statusLabel, 
+            JLabel actualMaxSpeedField,
             JButton startStopButton)
     {
         super(address, speedUnit, trimReverseSpeed, warmUpForwardSeconds, warmUpReverseSeconds, powerManager, statusLabel, startStopButton);
         
         this.targetMaxSpeed = targetMaxSpeed;
+        this.actualMaxSpeedField = actualMaxSpeedField;
     }
 
 }

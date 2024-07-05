@@ -7,8 +7,6 @@ import jmri.DccLocoAddress;
 import jmri.PowerManager;
 import jmri.jmrix.bachrus.Speed;
 
-import org.slf4j.Logger;
-
 /**
  * Shared configuration data for a speed matcher
  *

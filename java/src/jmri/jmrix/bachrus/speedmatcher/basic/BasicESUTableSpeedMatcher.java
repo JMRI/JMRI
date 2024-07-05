@@ -105,7 +105,7 @@ public class BasicESUTableSpeedMatcher extends BasicSpeedMatcher {
      */
     @Override
     public boolean startSpeedMatcher() {
-        if (!super.validate()) {
+        if (!validate()) {
             return false;
         }
 
