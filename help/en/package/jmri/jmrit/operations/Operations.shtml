@@ -928,7 +928,7 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
           href="#BuildReportDetails">train build report</a> with the router set to "Detailed" or
         "Very Detailed". You can also use the <a href="#CarsSet">Set Car</a> tool found in the <a
           href="#Cars">Cars</a> window. You'll need to set the car's final destination to get a
-        mini-build routing report.
+        <a href="#FinalDestination">mini-build routing report</a>.
       </p>
 
       <p>
