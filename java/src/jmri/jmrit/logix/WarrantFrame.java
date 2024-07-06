@@ -162,7 +162,7 @@ public class WarrantFrame extends WarrantRoute {
                                 while (iter.hasNext()) {
                                     float speedSetting = iter.next().floatValue();
                                     _throttleCommands.add(new ThrottleSetting(et, Command.SPEED, -1, ValueType.VAL_FLOAT,
-                                            SpeedStepMode.UNKNOWN, speedSetting, blockName, _speedUtil.getTrackSpeed(speedSetting)));
+                                            SpeedStepMode.UNKNOWN, speedSetting, "", blockName, _speedUtil.getTrackSpeed(speedSetting)));
                                     et = ramp.getRampTimeIncrement();
                                 }
                             } else {
@@ -170,7 +170,7 @@ public class WarrantFrame extends WarrantRoute {
                                 while (iter.hasPrevious()) {
                                     float speedSetting = iter.previous().floatValue();
                                     _throttleCommands.add(new ThrottleSetting(et, Command.SPEED, -1, ValueType.VAL_FLOAT,
-                                            SpeedStepMode.UNKNOWN, speedSetting, blockName, _speedUtil.getTrackSpeed(speedSetting)));
+                                            SpeedStepMode.UNKNOWN, speedSetting, "", blockName, _speedUtil.getTrackSpeed(speedSetting)));
                                     et = ramp.getRampTimeIncrement();
                                 }
                             }
@@ -1105,6 +1105,24 @@ public class WarrantFrame extends WarrantRoute {
                                 i + 1, cmd.toString(), valType.toString());
                     }
                     break;
+                case SET_MEMORY:
+                    if (valType != ValueType.VAL_TEXT) {
+                        return Bundle.getMessage("badThrottleCommand",
+                                i + 1, cmd.toString(), valType.toString());
+                    }
+                    msg = ts.getBeanDisplayName();
+                    if (msg == null) {
+                        return Bundle.getMessage("badThrottleCommand",
+                                i + 1, cmd.toString(), valType.toString());
+                    }
+                    msg = WarrantFrame.checkBeanName(cmd, ts.getBeanDisplayName());
+                    if (msg != null) {
+                        return msg +
+                                '\n' +
+                                Bundle.getMessage("badThrottleCommand",
+                                        i + 1, cmd.toString(), valType.toString());
+                    }
+                    break;
                 default:
                     return Bundle.getMessage("BadThrottleSetting", i + 1);
             }
@@ -1126,6 +1144,11 @@ public class WarrantFrame extends WarrantRoute {
             case RUN_WARRANT:
                 if (InstanceManager.getDefault(WarrantManager.class).getWarrant(beanName) == null) {
                     return Bundle.getMessage("BadWarrant", beanName);
+                }
+                break;
+            case SET_MEMORY:
+                if (InstanceManager.getDefault(jmri.MemoryManager.class).getMemory(beanName) == null) {
+                    return Bundle.getMessage("BadMemory", beanName);
                 }
                 break;
             default:
@@ -1385,10 +1408,10 @@ public class WarrantFrame extends WarrantRoute {
                         if (blkName == null) {
                             msg = Bundle.getMessage(bundleKey,
                                     _warrant.getTrainName(), _warrant.getDisplayName());
-                            color =  Color.red;                        
+                            color =  Color.red;
                         } else {
                             msg = Bundle.getMessage(bundleKey,
-                                    _warrant.getTrainName(), _warrant.getDisplayName(), 
+                                    _warrant.getTrainName(), _warrant.getDisplayName(),
                                     blkName);
                             color = myGreen;
                         }
@@ -1548,7 +1571,7 @@ public class WarrantFrame extends WarrantRoute {
 
     /**
      * Called by WarrantTableAction before closing the editing of this warrant
-     * 
+     *
      * @return true if this warrant or its pre-editing version is running
      */
     protected boolean isRunning() {
@@ -1558,7 +1581,7 @@ public class WarrantFrame extends WarrantRoute {
 
     /**
      * Verify that commands are correct
-     * 
+     *
      * @return true if commands are OK
      */
     private boolean save() {
@@ -2174,6 +2197,7 @@ public class WarrantFrame extends WarrantRoute {
                         case WAIT_SENSOR:
                         case RUN_WARRANT:
                         case SPEEDSTEP:
+                        case SET_MEMORY:
                             ts.setCommand(cmd);
                             _dirty = true;
                             break;

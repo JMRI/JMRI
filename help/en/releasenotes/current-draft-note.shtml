@@ -564,7 +564,7 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li></li>
+            <li>Add the <strong>Set Memory Value</strong> action to the Throttle Commands script.</li>
         </ul>
 
    <h3>Web Access</h3>
