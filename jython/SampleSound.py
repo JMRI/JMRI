@@ -9,7 +9,7 @@ import jmri
 snd = jmri.jmrit.Sound("resources/sounds/Crossing.wav")
 
 # play the sound once
-snd.play()
+while (True): snd.play()
 
 # You can also do snd.loop() to start playing the sound
 # as a continuous loop, and snd.stop() to stop it

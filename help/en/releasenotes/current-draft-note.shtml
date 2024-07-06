@@ -470,7 +470,11 @@
     <h3>Resources</h3>
         <a id="Resources" name="Resources"></a>
         <ul>
-            <li></li>
+            <li>Added an 
+                "<a href="https://jmri.org/extras">/extras/</li>"
+                directory to contain large/specialized downloadable resource files.
+            <li>Added Jim Well's coal tipple sound file to 
+                <a href="https://jmri.org/extras/sounds">/extras/sounds</li>
         </ul>
 
     <h3>Roster</h3>
