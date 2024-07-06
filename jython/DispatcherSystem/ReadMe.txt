@@ -12,7 +12,8 @@
 # 2) A set of station buttons inserted on the panel which allow trains to run station to station under dispatcher
 # 3) Provision to set up routes so that trains can be sent along these routes
 # 4) A scheduler to enable trains to run at preset times
-# 5) A set of buttons provided on the panel which enable you to setup and run the system easily
+# 5) Timetables showing the scheduled trains
+# 6) A set of buttons provided on the panel which enable you to setup and run the system easily
 
 # The system is stored in the Dispatcher System folder.
 
@@ -20,6 +21,7 @@
 # 1) Run DispatcherSystem.py (versions in the dispatcher folder or in the main jython area).
 # 2) Read the help accessed from the menu to get detailed instructions on how to run the system
 
-# Author:  Bill Fitch copyright (c) 2021
+# Author:  Bill Fitch copyright (c) 2024
 
 # V1.0  Provision for Modular Systems with multiple panels
+# V1.1  Provision of timetables
