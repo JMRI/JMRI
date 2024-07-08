@@ -392,6 +392,9 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             title = "Run Route and Record Journey Times"
             list_items_no_trains = self.get_scheduled_routes("no_train")
             list_items_with_trains = self.get_scheduled_routes("with_train")
+            if list_items_no_trains == []:
+                OptionDialog().displayMessage("Can only record journey times for scheduled trains.\nThere are no scheduled trains")
+                return
             # options = ["Cancel", "Run Route", "show all routes/scheduled routes"]
             options = ["Cancel", "Run Route"]
             reply1 = OptionDialog().ListOptions(list_items_no_trains, title, options, preferred_size = "default")
@@ -421,22 +424,18 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                     if CreateAndShowGUI5_glb != None:
                         CreateAndShowGUI5_glb.frame.dispose()
                 CreateAndShowGUI5_glb = CreateAndShowGUI5(None, route_name, param_scheduled_start, journey_time_row_displayed)
-                # if CreateAndShowGUI5_glb is None:
-                #     CreateAndShowGUI5_glb = CreateAndShowGUI5(None, route_name, param_scheduled_start, journey_time_row_displayed)
-                # print "%%%%%type%%%%%%%%%", type(CreateAndShowGUI5_glb)
-                # global jdialog_closed
-                # jdialog_closed = False
-                OptionDialog().displayMessageNonModal("Run Train along route " + str(route_name) + " now","<html>Check train in required station<br>Then click to run route")
+                title = "Run Train"
+                msg = "Last time to cancel"
+                opt1 = "Cancel"
+                opt2 = "Run Train"
+                reply = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
+                if reply == JOptionPane.CANCEL_OPTION or reply == opt1:
+                    CreateAndShowGUI5_glb.frame.dispose()
+                    return
+                OptionDialog().displayMessageNonModal("Run Train along route " + str(route_name) + " now","<html>Check train is in required station<br>Then click to run route")
                 # print "Ended non modal, wait for non modal"
                 self.waitForNonModal()
                 # print "finished wait for non modal"
-
-                # Jdialog_closed = sensors.getSensor("Jdialog_closed")
-                # Jdialog_closed.setKnownState(INACTIVE)
-                # btn = [Jdialog_closed]
-                # btn_to_watch = java.util.Arrays.asList(btn)
-                # print "waiting for button" , Jdialog_closed.getKnownState()
-                # self.waitSensorState(btn_to_watch, ACTIVE)
 
                 if "stopping" in train.getDescription():
                     # print "running train %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", train.getDescription(), train.getName()
@@ -455,6 +454,9 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             title = "Select Route to set Departure Times"
             list_items_no_trains = self.get_scheduled_routes("no_train")
             list_items_with_trains = self.get_scheduled_routes("with_train")
+            if list_items_no_trains == []:
+                OptionDialog().displayMessage("Can only record journey times for scheduled trains.\nThere are no scheduled trains")
+                return
             options = ["Cancel", "Set Departure Times"]
             reply1 = OptionDialog().ListOptions(list_items_no_trains, title, options, preferred_size = "default")
             my_list = reply1[0]
