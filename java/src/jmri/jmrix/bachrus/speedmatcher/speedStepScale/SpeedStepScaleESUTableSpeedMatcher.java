@@ -5,6 +5,8 @@ package jmri.jmrix.bachrus.speedmatcher.speedStepScale;
  * @author Todd Wegter Copyright (C) 2024
  */
 public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatcher {
+    
+    //TODO: TRW - implementation
 
     public SpeedStepScaleESUTableSpeedMatcher(SpeedStepScaleSpeedMatcherConfig config) {
         super(config);

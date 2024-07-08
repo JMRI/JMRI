@@ -6,37 +6,35 @@ import jmri.jmrix.bachrus.Speed;
 import jmri.jmrix.bachrus.speedmatcher.SpeedMatcher;
 
 /**
- * This is a speed step scale speed matcher which will speed match a locomotive
- * such that its speed in mph/kph will be equal to its speed step in 128 speed
- * step mode. This uses the complex speed table, and the locomotive's speed will
- * plateau at either its actual top speed or the set max speed, whichever is
- * lower. The set max speed will be rounded up to the nearest speed table speed
- * step to maintain as smooth a curve as possible.
+ * Abstract class defining the basic operations of a Speed Step Scale speed
+ * matcher (sets up the complex speed table such that the speed step equals the
+ * locomotive speed when using "128" speed step mode). All speed step scale
+ * speed matcher implementations must extend this class.
  *
  * @author Todd Wegter Copyright (C) 2024
  */
 public abstract class SpeedStepScaleSpeedMatcher extends SpeedMatcher {
 
-    //<editor-fold defaultstate="collapsed" desc="Constants">
-    protected final float CONVERT_28_TO_128_SPEED_STEPS = 4.571428571428571f;
-    //</editor-fold>
-
     //<editor-fold defaultstate="collapsed" desc="Instance Variables">
-    protected final float allowedMaxSpeedKPH;
+    protected final float targetMaxSpeedKPH;
     protected final Speed.Unit speedUnit;
     protected final JLabel actualMaxSpeedField;
+
+    protected float measuredMaxSpeedKPH = 0;
+    protected float speedMatchMaxSpeedKPH = 0;
     //</editor-fold>
 
     public SpeedStepScaleSpeedMatcher(SpeedStepScaleSpeedMatcherConfig config) {
         super(config);
 
-        this.speedUnit = config.speedUnit;
         this.actualMaxSpeedField = config.actualMaxSpeedField;
+        this.speedUnit = config.speedUnit;
+        this.targetMaxSpeedKPH = config.speedUnit == Speed.Unit.MPH ? Speed.mphToKph(config.targetMaxSpeed) : config.targetMaxSpeed;
 
-        //set the allowed max speed to the next highest multiple of CONVERT_28_TO_128_SPEED_STEPS
-        //this ensures we speed match as accurately as possible
-        float targetMaxSpeed = config.speedUnit == Speed.Unit.MPH ? Speed.mphToKph(config.targetMaxSpeed) : config.targetMaxSpeed;
-        this.allowedMaxSpeedKPH = (float) (CONVERT_28_TO_128_SPEED_STEPS * Math.ceil(targetMaxSpeed / CONVERT_28_TO_128_SPEED_STEPS));
+        //TODO: TRW - remove if unneeded
+        //saving code to set allowedMaxSpeedKPH to the next highest speed for a speed table step
+        //float targetMaxSpeed = config.speedUnit == Speed.Unit.MPH ? Speed.mphToKph(config.targetMaxSpeed) : config.targetMaxSpeed;
+        //this.allowedMaxSpeedKPH = (float) (CONVERT_28_TO_128_SPEED_STEPS * Math.ceil(targetMaxSpeed / CONVERT_28_TO_128_SPEED_STEPS));
     }
 
     //<editor-fold defaultstate="collapsed" desc="Protected APIs">
@@ -47,7 +45,7 @@ public abstract class SpeedStepScaleSpeedMatcher extends SpeedMatcher {
             return false;
         }
 
-        if (allowedMaxSpeedKPH < 0) {
+        if (targetMaxSpeedKPH < 0) {
             statusLabel.setText("Please enter a valid max speed");
             return false;
         }
@@ -62,19 +60,44 @@ public abstract class SpeedStepScaleSpeedMatcher extends SpeedMatcher {
      * @param speedStep the SpeedTableStep to get the speed for
      * @return speed for the given speedStep in KPH
      */
-    public float getSpeedStepScaleSpeedInKPH(SpeedTableStep speedStep) {
-        //each speed steep in 28 speed step mode is roughly 4.5 speed steps in 128 speed step mode
-        float speedStepSpeed = speedStep.getSpeedStep() * CONVERT_28_TO_128_SPEED_STEPS;
+    protected float getSpeedStepScaleSpeedInKPH(SpeedTableStep speedStep) {
+        //speed = step in 128 speed step mode
+        float speedStepSpeed = convert28To128SpeedSteps(speedStep);
 
         //convert MPH to KPH since Bachrus does everything in KPH
         if (speedUnit == Speed.Unit.MPH) {
             speedStepSpeed = Speed.mphToKph(speedStepSpeed);
         }
 
-        //speed must be bounded by the allowed max speed
-        speedStepSpeed = Math.min(speedStepSpeed, allowedMaxSpeedKPH);
+        //speed must be bounded by the target max speed
+        speedStepSpeed = Math.min(speedStepSpeed, targetMaxSpeedKPH);
 
         return speedStepSpeed;
+    }
+
+    /**
+     * Converts a 28 speed step mode speed step into its 128 speed step mode
+     * "equivalent"
+     *
+     * @param speedStep the SpeedTableStep to get the 128 speed step mode
+     *                  "equivalent" for
+     * @return the 128 speed step mode "equivalent" for the given speedStep
+     */
+    protected float convert28To128SpeedSteps(SpeedTableStep speedStep) {
+        //speed step 1 (28) = speed step 1 (128), 28 (28) = 126 (128), so 27 speed steps (28) = 125 speed steps (128)
+        //so each step (28) = 4.704 steps (128)
+        return (speedStep.getSpeedStep() * 4.6296f) - 3.6296f;
+    }
+
+    /**
+     * Gets the lowest speed step which will run at the max speed
+     *
+     * @param speedMatchMaxSpeed the max speed in the user facing unit
+     * @return integer speed step value for the lowest 28 speed step mode speed
+     *         step which will run at the max speed
+     */
+    protected int getLowestMaxSpeedStep(float speedMatchMaxSpeed) {
+        return (int) Math.ceil((speedMatchMaxSpeed + 3.6296f) / 4.6296f);
     }
     //</editor-fold>
 }

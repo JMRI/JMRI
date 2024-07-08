@@ -277,7 +277,6 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
                     } else {
                         initSpeedTableStep = initSpeedTableStep.getPrevious();
                     }
-
                 }
                 break;
 
