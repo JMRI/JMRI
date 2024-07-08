@@ -292,17 +292,6 @@
 
         <tr>
           <td>
-            The module system prevents LibUSB (ch.ntb.usb) from accessing the
-            hardware.  This is used in a few scripts.  Not clear if its
-            developers will be issuing an update or not; possibly JMRI will
-            have to switch to a different library.
-          </td>
-          <td>16</td>
-          <td>16</td>
-        </tr>
-
-        <tr>
-          <td>
             <code>Objects</code> class has extensions for testing for
             equality, handling null cases and index manipulation.
           </td>
@@ -822,34 +811,32 @@
       </table>
 
       <a id="jdk17">
+      <a id="compatibilty">
       <h2>Running JMRI 5 on Java 17 or later</h2>
-      There are some known problems when running JMRI
-      on Java versions later than the recommended Java 11.
-      Specifically, for JMRI 5 on Java 17 these include:
+      There are some issues when using JMRI
+      on Java versions later than the required Java 11.
+      Specifically, for JMRI 5 these include:
 
       <ol>
         <li>There is no JavaScript (ECMAscript) interpreter available
+            in Java 15 or later
             so .js scripts can't be run within JMRI.  Note that this
             does not affect JavaScript run on a web browser, so that
             JMRI's webserver capability will still work OK.
-        <li>The module system prevents LibUSB (ch.ntb.usb) from accessing the hardware.
-            This is used in a few scripts. Not clear if its developers will
-            be issuing an update or not; possibly JMRI will have to
-            switch to a different library.
+            <p>
+            It's possible that someday GraalVM or Rhino will provide a solution for this, 
+            but it's still a ways in the future.  
+            The Windows and macOS versions of GraalVM are still tricky to install 
+            and for some older OSs aren't available at all. 
+            Rhino doesn't yet provide full access to the JMRI Java classes.
         <li>The Java module system will in certain circumstances emit a large
-            number of "access violation" messages.  These are just advisory
-            with Java 17, but will become mandatory failures in some later
-            version of Java (Java 21?)
-        <li>There's been a problem reported where OpenLCB/LCC network GridConnect
-            connections can't get networking information to create their 
-            local Node ID under Java 21.
-            The workaround is to manually enter a node ID in the connection preferences.
-        <li>(Development only) Improved error checking in the Javadoc
-            process generates hundreds of warnings that can hide real problems.
-            These will need to be cleaned up.
-        <li>(Development only) Deprecations that are marked for removal
-            generate un-suppressible warning messages.
-            These will need to be cleaned up.
+            number of "access violation" messages to the log.  These are just advisory
+            with Java 17, but will become mandatory failures in some
+            version after Java 21.
+        <li>(Developers only) Deprecations that are marked for removal
+            generate un-suppressible compilation messages in Java 21.
+            These will need to be cleaned up before the references
+            are removed in some version after Java 21.
       </ol>
 
       <!--#include virtual="/help/en/parts/Footer.shtml" -->

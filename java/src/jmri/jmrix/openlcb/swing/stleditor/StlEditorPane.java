@@ -70,8 +70,8 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     /**
      * The STL Editor is dependent on the Tower LCC+Q software version
      */
-    private static int TOWER_LCC_Q_NODE_VERSION = 106;
-    private static String TOWER_LCC_Q_NODE_VERSION_STRING = "v1.06";
+    private static int TOWER_LCC_Q_NODE_VERSION = 109;
+    private static String TOWER_LCC_Q_NODE_VERSION_STRING = "v1.09";
 
     private CanSystemConnectionMemo _canMemo;
     private OlcbInterface _iface;
@@ -656,7 +656,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 var name = row.getName().trim();
 
                 if (jumpLabel) {
-                    sb.append(separator + name + " ");
+                    sb.append(" " + name + " ");
                     jumpLabel = false;
                 } else if (isMemory(name)) {
                     sb.append(separator + name);
@@ -823,6 +823,11 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         var matchOper = PARSE_NOVAROPER.matcher(line);
         while (matchOper.find()) {
             var oper = line.substring(matchOper.start(), matchOper.end());
+
+            if (isOperInComment(line, matchOper.start())) {
+                continue;
+            }
+
             if (getEnum(oper) != null) {
                 _tokenMap.put(matchOper.start(), new Token("Oper", oper, matchOper.start(), matchOper.end()));
             } else {
@@ -952,6 +957,41 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         return null;
     }
 
+    /**
+     * Look backwards in the line for the beginning of a comment.  This is not a precise check.
+     * @param line The line that contains the Operator.
+     * @param index The offset of the operator.
+     * @return true if the operator appears to be in a comment.
+     */
+    private boolean isOperInComment(String line, int index) {
+        int limit = 20;     // look back 20 characters
+        char previous = 0;
+
+        while (limit > 0 && index >= 0) {
+            var ch = line.charAt(index);
+
+            if (ch == 10) {
+                // Found the end of a previous statement, new line character.
+                return false;
+            }
+
+            if (ch == '*' && previous == '/') {
+                // Found the end of a previous /*...*/ comment
+                return false;
+            }
+
+            if (ch == '/' && (previous == '/' || previous == '*')) {
+                // Found the start of a comment
+                return true;
+            }
+
+            previous = ch;
+            index--;
+            limit--;
+        }
+        return false;
+    }
+
     private Operator getEnum(String name) {
         try {
             var temp = name.toUpperCase();
@@ -1002,7 +1042,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 for (Window window : windows) {
                     if (window instanceof JDialog) {
                         JDialog dialog = (JDialog) window;
-                        if (dialog.getTitle().equals(Bundle.getMessage("TitleCdiLoad"))) {
+                        if (Bundle.getMessage("TitleCdiLoad").equals(dialog.getTitle())) {
                             dialog.dispose();
                         }
                     }

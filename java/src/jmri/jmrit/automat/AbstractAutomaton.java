@@ -103,6 +103,7 @@ public class AbstractAutomaton implements Runnable {
     AutomatSummary summary = AutomatSummary.instance();
 
     Thread currentThread = null;
+    private volatile boolean threadIsStopped = false;
 
     /**
      * Start this automat processing.
@@ -119,7 +120,7 @@ public class AbstractAutomaton implements Runnable {
         count = 0;
     }
 
-    private boolean running = false;
+    private volatile boolean running = false;
 
     public boolean isRunning() {
         return running;
@@ -131,8 +132,6 @@ public class AbstractAutomaton implements Runnable {
      * This is invoked on currentThread.
      */
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IMSE_DONT_CATCH_IMSE",
-            justification = "get these when stop() issued against thread doing BlockingQueue.take() in waitChange, should remove when stop() reimplemented")
     public void run() {
         try {
             inThread = true;
@@ -140,27 +139,19 @@ public class AbstractAutomaton implements Runnable {
             // the real processing in the next statement is in handle();
             // and the loop call is just doing accounting
             running = true;
-            while (handle()) {
+            while (!threadIsStopped && handle()) {
                 count++;
                 summary.loop(this);
             }
-            log.debug("normal termination, handle() returned false");
-            currentThread = null;
-            done();
-        } catch (ThreadDeath e1) {
-            if (currentThread == null) {
-                log.debug("Received ThreadDeath, likely due to stop()");
+            if (threadIsStopped) {
+                log.debug("Current thread is stopped()");
             } else {
-                log.warn("Received ThreadDeath while not stopped", e1);
+                log.debug("normal termination, handle() returned false");
             }
-        } catch (IllegalMonitorStateException e2) {
-            if (currentThread == null) {
-                log.debug("Received IllegalMonitorStateException, likely due to stop()");
-            } else {
-                log.warn("Received IllegalMonitorStateException while not stopped", e2);
-            }
-        } catch (Exception e3) {
-            log.warn("Unexpected Exception ends AbstractAutomaton thread", e3);
+        } catch (StopThreadException e1) {
+            log.debug("Current thread is stopped()");
+        } catch (Exception e2) {
+            log.warn("Unexpected Exception ends AbstractAutomaton thread", e2);
         } finally {
             currentThread = null;
             done();
@@ -173,9 +164,6 @@ public class AbstractAutomaton implements Runnable {
      * <p>
      * Overrides superclass method to handle local accounting.
      */
-    @SuppressWarnings("deprecation") // Thread.stop()
-    // AbstractAutomaton objects can be waiting on _lots_ of things, so
-    // we need to find another way to deal with this besides Interrupt
     public void stop() {
         log.trace("stop() invoked");
         if (currentThread == null) {
@@ -183,14 +171,8 @@ public class AbstractAutomaton implements Runnable {
             return;
         }
 
-        Thread stoppingThread = currentThread;
-        currentThread = null;
-
-        try {
-            stoppingThread.stop();
-        } catch (java.lang.ThreadDeath e) {
-            log.error("Exception while in stop(): {}", e.toString());
-        }
+        threadIsStopped = true;
+        currentThread.interrupt();
 
         done();
         // note we don't set running = false here.  It's still running until the run() routine thinks it's not.
@@ -291,6 +273,9 @@ public class AbstractAutomaton implements Runnable {
             try {
                 Thread.sleep(stillToGo);
             } catch (InterruptedException e) {
+                if (threadIsStopped) {
+                    throw new StopThreadException();
+                }
                 Thread.currentThread().interrupt(); // retain if needed later
             }
         }
@@ -349,6 +334,9 @@ public class AbstractAutomaton implements Runnable {
                     super.wait(milliseconds);
                 }
             } catch (InterruptedException e) {
+                if (threadIsStopped) {
+                    throw new StopThreadException();
+                }
                 Thread.currentThread().interrupt(); // retain if needed later
                 log.warn("interrupted in wait");
             }
@@ -902,6 +890,9 @@ public class AbstractAutomaton implements Runnable {
                 log.trace("waitChange continues");
             }
         } catch (InterruptedException e) {
+            if (threadIsStopped) {
+                throw new StopThreadException();
+            }
             Thread.currentThread().interrupt(); // retain if needed later
             log.warn("AbstractAutomaton {} waitChange interrupted", getName());
         }
@@ -1360,10 +1351,21 @@ public class AbstractAutomaton implements Runnable {
         try {
             super.wait();
         } catch (InterruptedException e) {
+            if (threadIsStopped) {
+                throw new StopThreadException();
+            }
             Thread.currentThread().interrupt(); // retain if needed later
             log.warn("Interrupted during debugging wait, not expected");
         }
     }
+
+    /**
+     * An exception that's used internally in AbstractAutomation to stop
+     * the thread.
+     */
+    private static class StopThreadException extends RuntimeException {
+    }
+
     // initialize logging
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractAutomaton.class);
 }

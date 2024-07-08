@@ -298,6 +298,10 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                 break;
             case SPEEDSTEP:
                 break;
+            case SET_MEMORY:
+                ThreadingUtil.runOnGUIEventually(() ->
+                    setMemory(ts.getNamedBeanHandle(), cmdVal));
+                break;
             default:
         }
         _commandTime = System.currentTimeMillis();
@@ -832,6 +836,26 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         } else {
             throw new java.lang.IllegalArgumentException("setFunctionMomentary type " + type + " wrong");
         }
+    }
+
+    /**
+     * Set Memory value
+     */
+    private void setMemory(NamedBeanHandle<?> handle, CommandValue cmdVal) {
+        NamedBean bean = handle.getBean();
+        if (!(bean instanceof jmri.Memory)) {
+            log.error("setMemory: {} not a Memory!", bean );
+            return;
+        }
+        jmri.Memory m = (jmri.Memory)bean;
+        ValueType type = cmdVal.getType();
+
+        if (Warrant._trace || log.isDebugEnabled()) {
+            log.info("{} : Set memory", Bundle.getMessage("setMemory",
+                        _warrant.getTrainName(), m.getDisplayName(), cmdVal.getText()));
+        }
+        _warrant.fireRunStatus("MemorySetCommand", type.toString(), m.getDisplayName());
+        m.setValue(cmdVal.getText());
     }
 
     /**
