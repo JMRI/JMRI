@@ -1,6 +1,9 @@
 This directory contains sound fragments contributed
 for use with JMRI.  
 
+There are also some larger, more detailed sound files in the 
+[/extras/sounds](https://jmri.org/extras/sounds/) directory.
+
 Bell.wav
 Code-receive.wav
 Code-send.wav
