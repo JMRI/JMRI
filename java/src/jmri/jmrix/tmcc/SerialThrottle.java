@@ -56,10 +56,10 @@ public class SerialThrottle extends AbstractThrottle {
         if (func>=0 && func < SERIAL_FUNCTION_CODES.length) {
             if ( SERIAL_FUNCTION_CODES[func] > 0xFFFF ) {
                 // TMCC 2 format
-                sendToLayout(SERIAL_FUNCTION_CODES[func] + address.getNumber() * 512);
+                sendToLayout(SERIAL_FUNCTION_CODES[func] + address.getNumber() * 512, func);
             } else {
                 // TMCC 1 format
-                sendToLayout(SERIAL_FUNCTION_CODES[func] + address.getNumber() * 128);
+                sendToLayout(SERIAL_FUNCTION_CODES[func] + address.getNumber() * 128, func);
             }
         }
         else {
@@ -180,16 +180,26 @@ public class SerialThrottle extends AbstractThrottle {
         firePropertyChange(ISFORWARD, old, isForward);
     }
 
+    static final int REPEAT_TIME = 150;
     /**
      * Send these messages to the layout four times
      * to make sure they're accepted.
      * @param value Content of message to be sent in three bytes
+     * @param func  The number of the function being addressed
      */
-    protected void sendToLayout(int value) {
+    protected void sendToLayout(int value, int func) {
         tc.sendSerialMessage(new SerialMessage(value), null);
         tc.sendSerialMessage(new SerialMessage(value), null);
         tc.sendSerialMessage(new SerialMessage(value), null);
         tc.sendSerialMessage(new SerialMessage(value), null);
+        
+        // Send again shortly if still on
+        System.out.println(getFunction(func));
+        if (getFunction(func)) {
+            jmri.util.ThreadingUtil.runOnLayoutDelayed(() -> {
+                sendToLayout(value, func);
+            }, REPEAT_TIME);
+        }
     }
 
     /*
