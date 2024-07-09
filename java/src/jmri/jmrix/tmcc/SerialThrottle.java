@@ -180,7 +180,6 @@ public class SerialThrottle extends AbstractThrottle {
         firePropertyChange(ISFORWARD, old, isForward);
     }
 
-    static final int REPEAT_TIME = 150;
     /**
      * Send these messages to the layout four times
      * to make sure they're accepted.
@@ -191,13 +190,18 @@ public class SerialThrottle extends AbstractThrottle {
         tc.sendSerialMessage(new SerialMessage(value), null);
         tc.sendSerialMessage(new SerialMessage(value), null);
         tc.sendSerialMessage(new SerialMessage(value), null);
-        tc.sendSerialMessage(new SerialMessage(value), null);
-        
-        // Send again shortly if still on
-        System.out.println(getFunction(func));
+     
+        repeatFunctionSendWhileOn(value, func); // 4th send is here
+    }
+
+    static final int REPEAT_TIME = 150;
+
+    protected void repeatFunctionSendWhileOn(int value, int func) {
+        // Send again if function is still on and repeat in a short while
         if (getFunction(func)) {
+            tc.sendSerialMessage(new SerialMessage(value), null);
             jmri.util.ThreadingUtil.runOnLayoutDelayed(() -> {
-                sendToLayout(value, func);
+                repeatFunctionSendWhileOn(value, func);
             }, REPEAT_TIME);
         }
     }
