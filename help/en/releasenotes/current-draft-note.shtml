@@ -163,6 +163,7 @@
             <ul>
                 <li>Now sends repeated function commands so long as 
                     the throttle function is active.</li>
+                <li>TMCC2 Legacy 200 speed step mode is now available.</li>
             </ul>
 
         <h4>Uhlenbrock Intellibox</h4>
