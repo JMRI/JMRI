@@ -138,9 +138,9 @@ public class SerialThrottle extends AbstractThrottle {
         // send to layout
         if (speedStepMode == jmri.SpeedStepMode.TMCC_200) {
             // TMCC2 Legacy 200 step mode
-            int value = (int) (200 * speed);
-            if (value > 200) {
-                value = 200;    // max possible speed
+            int value = (int) (199 * speed); // max value to send is 199 in 200 step mode
+            if (value > 199) {
+                value = 199;    // max possible speed
             }
             SerialMessage m = new SerialMessage();
             m.setOpCode(0xF8);
