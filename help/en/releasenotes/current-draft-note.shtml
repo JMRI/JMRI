@@ -440,7 +440,8 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>Prepend the proper prefix when using short system names, such as 123 or abcd.  For
+          alpha suffixes include the required $ character.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -470,10 +471,10 @@
     <h3>Resources</h3>
         <a id="Resources" name="Resources"></a>
         <ul>
-            <li>Added an 
+            <li>Added an
                 "<a href="https://jmri.org/extras">/extras/</a>"
                 directory to contain large/specialized downloadable resource files.</li>
-            <li>Added Jim Well's coal tipple sound file to 
+            <li>Added Jim Well's coal tipple sound file to
                 <a href="https://jmri.org/extras/sounds">/extras/sounds</li>
         </ul>
 
