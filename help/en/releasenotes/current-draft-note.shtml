@@ -161,7 +161,8 @@
 
         <h4>TMCC</h4>
             <ul>
-                <li></li>
+                <li>Now sends repeated function commands so long as 
+                    the throttle function is active.</li>
             </ul>
 
         <h4>Uhlenbrock Intellibox</h4>
