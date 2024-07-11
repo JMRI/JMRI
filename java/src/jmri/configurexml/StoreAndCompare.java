@@ -317,11 +317,11 @@ public class StoreAndCompare extends AbstractAction {
             }
 
             if (!match && !line1.equals(line2)) {
-                log.info("Match failed in StoreAndCompare:");
-                log.info("    file1:line {}: \"{}\"", lineNumber1, line1);
-                log.info("    file2:line {}: \"{}\"", lineNumber2, line2);
-                log.info("  comparing file1:\"{}\"", inFile1.getPath());
-                log.info("         to file2:\"{}\"", inFile2.getPath());
+                log.warn("Match failed in StoreAndCompare:");
+                log.warn("    file1:line {}: \"{}\"", lineNumber1, line1);
+                log.warn("    file2:line {}: \"{}\"", lineNumber2, line2);
+                log.warn("  comparing file1:\"{}\"", inFile1.getPath());
+                log.warn("         to file2:\"{}\"", inFile2.getPath());
                 result = true;
                 break;
             }
