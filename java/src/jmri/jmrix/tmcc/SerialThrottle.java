@@ -137,6 +137,7 @@ public class SerialThrottle extends AbstractThrottle {
         
         // send to layout
         if (speedStepMode == jmri.SpeedStepMode.TMCC_200) {
+
             // TMCC2 Legacy 200 step mode
             int value = (int) (199 * speed); // max value to send is 199 in 200 step mode
             if (value > 199) {
@@ -152,12 +153,12 @@ public class SerialThrottle extends AbstractThrottle {
                 // normal speed setting
                 m.putAsWord(0x0000 + (address.getNumber() << 9) + value);
             }
-    
+            // only send twice to advanced command station
             tc.sendSerialMessage(m, null);
             tc.sendSerialMessage(m, null);
-            tc.sendSerialMessage(m, null);
-            tc.sendSerialMessage(m, null);            
+
         } else {
+
             // assume TMCC 32 step mode
             int value = (int) (32 * speed);
             if (value > 31) {
