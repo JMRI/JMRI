@@ -602,7 +602,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 // new Profile can throw an exception, but not for directory is not a profile directory
                 // it just creates and invalid null profile
                 // which when subsequently deleted removes the entire directory tree.
-                log.warn("{} unknown error in new Profile({0})", chooser.getSelectedFile());
+                log.warn("Unexpected error in new Profile({})", chooser.getSelectedFile(),ex);
                 return;
             }
         }

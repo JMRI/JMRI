@@ -277,7 +277,7 @@ public class ProfileManagerDialog extends JDialog {
                 // new Profile can throw an exception, but not for when a directory is not a profile directory
                 // it just creates an invalid null profile
                 // which when subsequently deleted removes the entire directory tree.
-                log.warn("{} unknown error return from new Profile({0})", chooser.getSelectedFile());
+                log.warn("Unexpected error in new Profile({})", chooser.getSelectedFile(),ex);
                 return;
             }
         }
