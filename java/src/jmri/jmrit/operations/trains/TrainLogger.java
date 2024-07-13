@@ -21,7 +21,7 @@ import jmri.jmrit.operations.setup.*;
 /**
  * Logs train movements and status to a file.
  *
- * @author Daniel Boudreau Copyright (C) 2010, 2013
+ * @author Daniel Boudreau Copyright (C) 2010, 2013, 2024
  */
 public class TrainLogger extends XmlFile implements InstanceManagerAutoDefault, PropertyChangeListener {
 
@@ -80,6 +80,21 @@ public class TrainLogger extends XmlFile implements InstanceManagerAutoDefault, 
                 train.getNextLocationName(),
                 train.getStatus(),
                 train.getBuildFailedMessage(),
+                getTime()});
+        fileOut(line);
+    }
+
+    private void storeFileSaved() {
+        if (_fileLogger == null) {
+            return;
+        }
+        List<Object> line = Arrays.asList(new Object[]{
+                Bundle.getMessage("TrainLogger"), // train name
+                "", // train description
+                "", // current location
+                "", // next location name
+                "", // status
+                Bundle.getMessage("TrainsSaved"),
                 getTime()});
         fileOut(line);
     }
@@ -155,6 +170,9 @@ public class TrainLogger extends XmlFile implements InstanceManagerAutoDefault, 
                 removeTrainListeners();
                 addTrainListeners();
             }
+        }
+        if (e.getPropertyName().equals(TrainManager.TRAINS_SAVED_PROPERTY)) {
+            storeFileSaved();
         }
     }
 
