@@ -163,7 +163,12 @@
             <ul>
                 <li>Now sends repeated function commands so long as 
                     the throttle function is active.</li>
-                <li>TMCC2 Legacy 200 speed step mode is now available.</li>
+                <li>TMCC2 Legacy 200 speed step mode is now available.
+                    Select it from the combo box at the top of the Throttle's speed subwindow.</li>
+                <li>Add support for sending two function commands on a button
+                    push/release.  First examples of this are <br/>
+                    Fn28 Start Up Sequence 1 (Delayed Prime Mover, then Immediate Start Up)<br/>
+                    Fn30 Shut Down Sequence 1 (Delay w/ Announcement, then Immediate Shut Down)
             </ul>
 
         <h4>Uhlenbrock Intellibox</h4>
