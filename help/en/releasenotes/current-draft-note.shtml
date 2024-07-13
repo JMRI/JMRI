@@ -219,10 +219,12 @@
         <h4>Digitrax</h4>
             <ul>
                 <li>Updated DS74, DS78V, PM74, and SE74 decoder definitions.  
-		Includes options which can be used with recent firmware.<br> 
-		Be aware that previous versions had erroneous decoder definitions
-		that should be discarded then re-created using the newer 
-		definitions.</li>
+		Includes options which can be used with recent firmware. 
+                <em>Be aware that previous JMRI versions had erroneous decoder definitions
+		for the DS74, DS78V, PM74, and SE74.  All Roster Entries for these 
+                devices should be discarded then re-created using the newer 
+                definitions.</em> Provides corrected code for accessing the 
+                &quot;CVs&quot; for the DS74, DS78V, PM74, and SE74 decoders.</li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -615,4 +617,3 @@
         <ul>
             <li></li>
         </ul>
-
