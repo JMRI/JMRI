@@ -23,14 +23,14 @@
 
         <variables>
 
-          <variable CV="1" comment="Base Address" item="Long Address" infoOnly="yes" min="1" max="2033" >
+          <variable CV="1" comment="Base Address" item="Long Address" default="1" infoOnly="yes" >
             <!-- This is needed to set the Base Address value.
                 2033 is a practical maximum when set for "2-position Servo" mode,
                 or 2025 is a practican max, when set for "3-pos. Servo" mode.
                 Note that the DS78V will allow higher numbers
                 to be set, but they will conflict with the
                 "interrogate" switches.  -->
-            <splitVal highCV="2" upperMask="XXXXXVVV" default="0"/>
+            <splitVal highCV="2" upperMask="XXXXXVVV" default="0" min="1" max="2025"/>
             <label>Board Address </label>
           </variable>
 

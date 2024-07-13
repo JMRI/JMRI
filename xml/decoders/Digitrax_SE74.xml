@@ -22,9 +22,13 @@
         </programming>
 
         <variables>
-          <variable CV="1" comment="Base Address" item="Long Address" default="253" infoOnly="yes" min="1" max="2037" >
-            <!-- needed to set the Base Address value -->
-            <splitVal highCV="2" upperMask="XXXXXVVV" default="0"/>
+          <variable CV="1" comment="Base Address" item="Long Address" default="253" infoOnly="yes">
+            <!-- This is needed to set the Base Address value.
+                2037 is a practical maximum.
+                Note that the SE74 will allow higher numbers
+                to be set, but they will conflict with the
+                "interrogate" switches.  -->
+            <splitVal highCV="2" upperMask="XXXXXVVV" default="0" min="1" max="2037"/>
             <label>Base Address</label>
           </variable>
 
