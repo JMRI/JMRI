@@ -34,7 +34,7 @@
 
            <!-- CV7 is the product ID. Should be 0x70, decimal 112 -->
           <variable CV="7" item="Device Type" readOnly="yes">
-            <decVal/>
+            <decVal min="0" max="255"/>
             <label>Device Type</label>
           </variable>
 

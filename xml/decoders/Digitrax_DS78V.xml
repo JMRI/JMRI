@@ -36,12 +36,12 @@
 
            <!-- CV7 is the product ID. Should be 0x7c (124 decimal) -->
           <variable CV="7" item="Device Type" readOnly="yes">
-            <decVal min="0" max="255" default="124"/>
+            <decVal min="0" max="255"/>
             <label>Device Type</label>
           </variable>
 
           <variable CV="8" item="Device Mfgr" readOnly="yes">
-            <decVal min="0" max="255" default="129"/>
+            <decVal min="0" max="255"/>
             <label>Device Manufacturer (NMRA number) </label>
           </variable>
 
@@ -399,8 +399,8 @@
 
     <pane>
         <name>Servos</name>
-        <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Servo Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
         <column>
+        <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Servo Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
             <row>
                 <display item="Servo 1 Thrown Angle"/>
                 <display item="Servo 1 Closed Angle"/>
