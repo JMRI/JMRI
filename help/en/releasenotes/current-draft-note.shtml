@@ -467,7 +467,9 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li></li>
+            <li>Do not create blank profiles.
+            When deleting blank profiles do not remove directory.
+            Explicitly warn that a directory and its contents will be deleted when deleting a profile.</li>
         </ul>
 
     <h3>Resources</h3>
