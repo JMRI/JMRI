@@ -31,7 +31,6 @@ public class Ln7gAccyRoutesManager implements LocoNetListener  {
     private int activeRouteNum;
     
     public Ln7gAccyRoutesManager() {
-        this.isInitialized = false;
         this.devicesRoutes = new LnSimple7thGenDevicesRoutes();
     }
     
@@ -71,7 +70,6 @@ public class Ln7gAccyRoutesManager implements LocoNetListener  {
      */
     public  void initializeDeviceRoutes() {
         loadTheXML();
-        isInitialized = true;
     }
 
     /**
