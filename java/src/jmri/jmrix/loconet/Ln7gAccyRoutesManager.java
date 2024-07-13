@@ -2,8 +2,6 @@ package jmri.jmrix.loconet;
 
 import javax.annotation.Nonnull;
 
-import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrix.loconet.alm.LnSimple7thGenDevicesRoutes;
 import jmri.jmrix.loconet.alm.LnSimple7thGenDeviceRoutes;
 import jmri.jmrix.loconet.alm.LnSimple7thGenRoute;
@@ -26,7 +24,6 @@ public class Ln7gAccyRoutesManager implements LocoNetListener  {
 
     private LocoNetSystemConnectionMemo memo;
     private final LnSimple7thGenDevicesRoutes devicesRoutes;
-    private  boolean isInitialized;
     private int activeDeviceType;
     private int activeDeviceSerNum;
     private int activeDeviceBaseAddr;
@@ -80,7 +77,7 @@ public class Ln7gAccyRoutesManager implements LocoNetListener  {
     /**
      * Get String which shows all 7th Gen Accy devices which can store routes, 
      * with any route data.
-     * @return
+     * @return string of 7th-gen Accy devices which can have enabled routes
      */
     public String showStoredDevicesWithRoutes() {
         if (getCountOfDevicesWithRoutes() < 1) {
@@ -114,7 +111,8 @@ public class Ln7gAccyRoutesManager implements LocoNetListener  {
 
 
     /**
-     * {@inheritDoc}
+     * Returns the manager's memo.
+     * @return a LocoNetSystemConnectionMemo
      */
     @Nonnull
     public LocoNetSystemConnectionMemo getMemo() {

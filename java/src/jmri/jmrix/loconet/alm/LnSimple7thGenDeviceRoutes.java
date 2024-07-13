@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.ButtonGroup;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.BoxLayout;
 
 import jmri.jmrix.loconet.swing.LnPanel;

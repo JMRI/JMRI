@@ -54,7 +54,7 @@ public class LnSimpleRouteEntry {
     /**
      * Setter.
      * @param turnoutNumber
-     * @return
+     * @return the turnout number which was set
      */
     public int setNumber(int turnoutNumber) {
         if (((turnoutNumber < NmraPacket.accIdLowLimit) || (turnoutNumber > NmraPacket.accIdAltHighLimit)) &&

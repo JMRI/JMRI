@@ -12,12 +12,10 @@ import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.loconet.hexfile.HexFileFrame;
 import jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents;
-import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
 
 import static jmri.jmrix.loconet.uhlenbrock.LncvMessageContents.createCvReadRequest;
 import static jmri.jmrix.loconet.uhlenbrock.LncvMessageContents.createCvWriteRequest;
-import jmri.profile.ProfileManager;
 
 /**
  * Provide an Ops Mode Programmer via a wrapper that works with the LocoNet
