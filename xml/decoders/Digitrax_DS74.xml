@@ -16,7 +16,7 @@
             <model model="DS74"/>
         </family>
 
-        <programming direct="no" paged="no" register="no" ops="no">
+        <programming direct="no" paged="yes" register="no" ops="no">
             <!-- paged yes allows initial setup and change of address -->
             <mode>LOCONETBD7OPSWMODE</mode>
         </programming>
