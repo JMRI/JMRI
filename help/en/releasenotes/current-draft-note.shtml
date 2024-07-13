@@ -218,7 +218,11 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li></li>
+                <li>Updated DS74, DS78V, PM74, and SE74 decoder definitions.  
+		Includes options which can be used with recent firmware.<br> 
+		Be aware that previous versions had erroneous decoder definitions
+		that should be discarded then re-created using the newer 
+		definitions.</li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
