@@ -994,6 +994,14 @@ public class DefaultConditionalAction implements ConditionalAction {
         return str;
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void dispose() {
+        if (_sound != null) {
+            _sound.dispose();
+        }
+    }
+
     private final static Logger log = LoggerFactory.getLogger(DefaultConditionalAction.class);
 
 }

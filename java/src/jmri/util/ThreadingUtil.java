@@ -449,6 +449,8 @@ public class ThreadingUtil {
     /**
      * Warn if a thread is holding locks. Used when transitioning to another context.
      */
+    @SuppressWarnings("deprecation")    // The method getId() from the type Thread is deprecated since version 19
+                                        // The replacement Thread.threadId() isn't available before version 19
     static public void warnLocks() {
         if ( log.isDebugEnabled() ) {
             try {

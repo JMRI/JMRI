@@ -427,27 +427,39 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     }
 
     /**
-     * Check validity of bean system name.
+     * Check validity of various LogixNG system names.
      * <p>
-     * Fixes name if it doesn't start with "IQ".
+     * Fixes name if it doesn't start with the appropriate prefix or the $ for alpha suffixes
      *
-     * @return false if name has length &lt; 1 after displaying a dialog
+     * @return false if the name fails the NameValidity check
      */
     boolean checkLogixNGSysName() {
-        String sName = _systemName.getText();
-        if ((sName.length() < 1)) {
-            // Entered system name is blank or too short
-            JmriJOptionPane.showMessageDialog(addLogixNGFrame,
-                    Bundle.getMessage("LogixNGError8"), Bundle.getMessage("ErrorTitle"), // NOI18N
+        if (_autoSystemName.isSelected()) {
+            return true;
+        }
+
+        var sName = _systemName.getText().trim();
+        var prefix = getManager().getSubSystemNamePrefix();
+
+        if (!sName.isEmpty() && !sName.startsWith(prefix)) {
+            var isNumber = sName.matches("^\\d+$");
+            var hasDollar = sName.startsWith("$");
+
+            var newName = new StringBuilder(prefix);
+            if (!isNumber && !hasDollar) {
+                newName.append("$");
+            }
+            newName.append(sName);
+            sName = newName.toString();
+        }
+
+        if (getManager().validSystemNameFormat(sName) != jmri.Manager.NameValidity.VALID) {
+            JmriJOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("LogixNGError8", sName), Bundle.getMessage("ErrorTitle"), // NOI18N
                     JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if ((sName.length() < 2) || (sName.charAt(0) != 'I')
-                || (sName.charAt(1) != 'Q')) {
-            // System name does not begin with IQ:, prefix IQ: to it
-            String s = sName;
-            sName = "IQ" + s;  // NOI18N
-        }
+
         _systemName.setText(sName);
         return true;
     }

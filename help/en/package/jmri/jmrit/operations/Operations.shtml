@@ -928,7 +928,7 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
           href="#BuildReportDetails">train build report</a> with the router set to "Detailed" or
         "Very Detailed". You can also use the <a href="#CarsSet">Set Car</a> tool found in the <a
           href="#Cars">Cars</a> window. You'll need to set the car's final destination to get a
-        mini-build routing report.
+        <a href="#FinalDestination">mini-build routing report</a>.
       </p>
 
       <p>
@@ -2439,8 +2439,9 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
         href="#EditCarType">Edit Car Type</a>.
 
       <h4 id="RoadAndLoadOptions">Road and Load Options</h4>
-      You can control which car roads and loads your yard can service from the "Tools" menu. See <a
-        href="#RoadOptions">Road Options</a> and <a href="#LoadOptions">Load Options</a> for more
+      You can control which car roads and loads your yard can service from the "Tools" menu, or by
+      pressing the "Road Option" or "Load Option" buttons. See
+      <a href="#RoadOptions">Road Options</a> and <a href="#LoadOptions">Load Options</a> for more
       info.
 
       <h4 id="PickUpCarOrder">Pick Up Car Order</h4>
@@ -2470,6 +2471,11 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
       plus the coupler lengths. For example, let's say you have an industry that can service two 50'
       boxcars, the track length in this case is 100' plus 8' for the couplers (4' for each car), for
       a total of 108'. You could optionally round up the length to 110' or more.
+
+      <p>
+        <img src="images/EditSpur.png" alt="">
+      </p>
+
       <p>
         When a car is placed at a spur the car's load status is modified. The program provides two
         load names for all cars, the default empty or "E", and the default load or "L". If a car has
@@ -2916,8 +2922,14 @@ OperationsPro&trade; uses up to six XML files to store the operations database. 
       local moves them to the spur tracks. When the local pulls cars for the spur and places them on
       the C/I track, they will remain there until the main line train pulls them.
 
+      <p>
+        <img src="images/EditCI.png" alt="">
+      </p>
+
       <p>OperationsPro allows you sort cars to C/I tracks by any combination of destination,
-        train, route, road, type, load, and <a href="#PickUpCarOrder">arrival order</a></p>
+        train, route, road, type, load, and <a href="#PickUpCarOrder">arrival order</a>. In the above image,
+        only two road names are accepted by the C/I track, and only train BB is allowed to spot cars onto the
+        interchange track, and train BLX is the only train allowed to pull cars off the interchange.</p>
         
       <p>The car's load status does not change when placed at a classification/interchange
         track.</p>

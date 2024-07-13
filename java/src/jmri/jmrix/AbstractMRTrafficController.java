@@ -803,12 +803,20 @@ public abstract class AbstractMRTrafficController {
                     public void run() {
                         try {
                             transmitLoop();
-                        } catch (ThreadDeath td) {
-                            if (!threadStopRequest) log.error("Transmit thread terminated prematurely by: {}", td, td);
-                            // ThreadDeath must be thrown per Java API Javadocs
-                            throw td;
                         } catch (Throwable e) {
-                            if (!threadStopRequest) log.error("Transmit thread terminated prematurely by: {}", e, e);
+                            if (!threadStopRequest) {
+                                log.error("Transmit thread terminated prematurely by: {}", e, e);
+                            }
+                            // see http://docs.oracle.com/javase/7/docs/api/java/lang/ThreadDeath.html
+                            // ThreadDeath must be thrown per Java API Javadocs
+                            // 
+                            // The type ThreadDeath has been deprecated since version 20 and marked for removal
+                            // and the warning cannot be suppressed in Java 21. But external libraries might
+                            // throw the exception outside of JMRI control. So check the name of the exception
+                            // instead of using "instanceof".
+                            if ("java.lang.ThreadDeath".equals(e.getClass().getName())) {
+                                throw e;
+                            }
                         }
                 }
             });

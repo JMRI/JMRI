@@ -520,6 +520,8 @@ public final class SystemConsole extends JTextArea {
 
     private Map<Thread, StackTraceElement[]> traces;
 
+    @SuppressWarnings("deprecation")    // The method getId() from the type Thread is deprecated since version 19
+                                        // The replacement Thread.threadId() isn't available before version 19
     private void performStackTrace() {
         System.out.println("----------- Begin Stack Trace -----------"); //NO18N
         System.out.println("-----------------------------------------"); //NO18N

@@ -151,7 +151,7 @@ public class NceConnectionStatus implements NceListener {
 
         // no response from command station?
         if (epromState == WAIT_STATE) {
-            log.warn("Incorrect or no response from NCE command station");
+            log.warn("Incorrect or no response from NCE command station port: {}", tc.getPortName());
             if (JOptPane_WARNING_MESSAGES_ENABLED) {
                 JmriJOptionPane.showMessageDialog(null,
                         "JMRI could not establish communication with NCE command station. \n" +
@@ -164,7 +164,7 @@ public class NceConnectionStatus implements NceListener {
 
         // still no response from command station?
         else if (epromState == WARN1_STATE) {
-            log.warn("No response from NCE command station");
+            log.warn("No response from NCE command station port: {}", tc.getPortName());
         }
 
         if (epromState == ERROR1_STATE) {

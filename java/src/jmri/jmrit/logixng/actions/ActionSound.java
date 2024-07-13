@@ -161,7 +161,7 @@ public class ActionSound extends AbstractDigitalAction
                 case Play:
                     if (!path.equals("")) {
                         try {
-                            new Sound(path).play();
+                            new Sound(path).play(true);
                         } catch (NullPointerException ex) {
                             throw new JmriException(Bundle.getMessage("ActionSound_Error_SoundNotFound", path));
                         }

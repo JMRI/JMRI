@@ -229,6 +229,9 @@
         the JMRI code <a id="C"></a>
         </li>
 
+        <li>Darrin Calcutt, 
+        who provided the sample script for LIFX light acccess.
+        
         <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3AKenC57+">Ken Cameron</a>, <!-- KenC57 -->
         who wrote the NCE fast clock support, added support for more than two
         systems to the preferences, added the Light Control, provided sample scripts, improved the
@@ -1118,7 +1121,8 @@
         <li>Todd Wegter, <!-- toddthetrainnut -->
          who improved Bachrus speed matching.</li>
 
-        <li>Jim Wells, who created our logos and the great program icons</li>
+        <li>Jim Wells, who created our logos and the great program icons
+            and provided some great sound files.</li>
 
         <li>Donn Welton, who provided info on configuring a PowerBook for DecoderPro</li>
 

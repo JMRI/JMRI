@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.net.ssl.HttpsURLConnection;
 
 import jmri.*;
+import jmri.configurexml.ShutdownPreferences;
 import static jmri.configurexml.StoreAndCompare.checkFile;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionTurnout;
@@ -527,6 +528,8 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
                     new File(FileUtil.getProgramPath() + "help/en/html/tools/logixng/reference/WebRequestExample/" + "WebRequest.xml");
 
             try {
+                // Ignore Timebase changes
+                InstanceManager.getDefault(ShutdownPreferences.class).setIgnoreTimebase(true);
                 // Note: The comparision is made with the first xml file that doesn't have the header comment.
                 dataHasChanged = checkFile(fileInDocumentationFolder, firstFile);
             } catch (FileNotFoundException e) {
