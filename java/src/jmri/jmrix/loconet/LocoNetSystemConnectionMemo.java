@@ -331,7 +331,10 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
 
     public Ln7gAccyRoutesManager setLn7gAccyRoutesManager(Ln7gAccyRoutesManager ln7gaccyrm) {
         this.ln7gAcRtm = ln7gaccyrm;
-        this.ln7gAcRtm.initContext(this);
+        if (this.ln7gAcRtm != null) {
+            // this can only be true when getDisabled() == false
+            this.ln7gAcRtm.initContext(this);
+        }
         return this.ln7gAcRtm;
     }
 
