@@ -292,15 +292,15 @@ public class Ln7gAccyRoutesManager implements LocoNetListener  {
     /**
      * Save 4 entries of a route.
      *
-     * @param deviceType
-     * @param deviceSerNum
-     * @param deviceBaseAddr
-     * @param entrySet
-     * @param routeNum
-     * @param entrya
-     * @param entryb
-     * @param entryc
-     * @param entryd
+     * @param deviceType Device type number
+     * @param deviceSerNum Device serial number
+     * @param deviceBaseAddr Device base address
+     * @param entrySet Entry "set" number
+     * @param routeNum Route number
+     * @param entrya Entry A
+     * @param entryb Entry B
+     * @param entryc Entry C
+     * @param entryd Entry D
      */
      public void saveData(int deviceType, int deviceSerNum,
             int deviceBaseAddr, int entrySet, int routeNum,

@@ -137,7 +137,7 @@ public class LnSimple7thGenDeviceRoutes extends LnPanel {
 
     /**
      * Get the device turnoutNumber (IPL device turnoutNumber) from the device name.
-     * @param name
+     * @param name Device name
      * @return device turnoutNumber
      */
     public static int getDeviceType(String name) {
@@ -158,7 +158,7 @@ public class LnSimple7thGenDeviceRoutes extends LnPanel {
 
     /**
      * Get the device name from the device (IPL) nuber.
-     * @param typeNum
+     * @param typeNum device type number
      * @return String containing the device name
      */
     public static String getDeviceName(int typeNum) {
@@ -202,7 +202,7 @@ public class LnSimple7thGenDeviceRoutes extends LnPanel {
     /**
      * get a specific route.
      *
-     * @param routeNumber
+     * @param routeNumber route number
      * @return LnSimple7thGenRoute
      */
     public LnSimple7thGenRoute getRoutes(int routeNumber) {
@@ -212,7 +212,7 @@ public class LnSimple7thGenDeviceRoutes extends LnPanel {
     /**
      * Set the routes.
      *
-     * @param newRoutes
+     * @param newRoutes an array of routes
      */
     public void setRoutes(LnSimple7thGenRoute[] newRoutes) {
         route = newRoutes.clone();
@@ -221,10 +221,10 @@ public class LnSimple7thGenDeviceRoutes extends LnPanel {
     /**
      * Set one route entry.
      *
-     * @param routeNum
-     * @param entryNum
-     * @param turn
-     * @param posn
+     * @param routeNum route number
+     * @param entryNum entry number
+     * @param turn Turnout number
+     * @param posn Position
      */
     public void setOneEntry(int routeNum, int entryNum, int turn,
             RouteSwitchPositionEnum posn) {
@@ -234,6 +234,16 @@ public class LnSimple7thGenDeviceRoutes extends LnPanel {
         route[routeNum].setRouteEntry(entryNum, entry);
     }
 
+    /**
+     * Set four entries for a route
+     * @param routeNum Route number
+     * @param entrySet Entry set
+     * @param entrya Entry a of the set
+     * @param entryb Entry b of the set
+     * @param entryc Entry c of the set
+     * @param entryd Entry d of the set
+     * @return a route
+     */
     public LnSimple7thGenRoute setFourEntries(int routeNum, int entrySet,
             int entrya, int entryb, int entryc, int entryd) {
         int entry = (entrySet == 1) ? 4 : 0;
@@ -280,8 +290,8 @@ public class LnSimple7thGenDeviceRoutes extends LnPanel {
 
     /**
      * get a route entry as a string.
-     * @param routeNum
-     * @param entryNum
+     * @param routeNum Route number
+     * @param entryNum Entry number
      * @return String like "Unused" or "1c" or "2044t"
      */
     public String getOneEntryString(int routeNum, int entryNum) {
@@ -294,7 +304,7 @@ public class LnSimple7thGenDeviceRoutes extends LnPanel {
 
     /**
      * Get a route.
-     * @param routeNum
+     * @param routeNum Route number
      * @return LnSimple7thGenRoute, or null if route not defined
      */
     public LnSimple7thGenRoute getRoute(int routeNum) {
@@ -316,7 +326,7 @@ public class LnSimple7thGenDeviceRoutes extends LnPanel {
 
     /**
      * Setter.
-     * @param baseAddr
+     * @param baseAddr the base address
      */
     public void setBaseAddr(int baseAddr) {
         this.baseAddr = baseAddr;

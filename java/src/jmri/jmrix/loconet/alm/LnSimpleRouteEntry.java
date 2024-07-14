@@ -26,9 +26,9 @@ public class LnSimpleRouteEntry {
 
     /**
      * C'tor.
-     * @param addr
-     * @param closed
-     * @param unused
+     * @param addr address
+     * @param closed true if closed, else thrown
+     * @param unused determines whether the entry is unused or used
      */
     public LnSimpleRouteEntry(int addr, boolean closed, boolean unused) {
         turnoutNumber = addr;
@@ -53,7 +53,7 @@ public class LnSimpleRouteEntry {
 
     /**
      * Setter.
-     * @param turnoutNumber
+     * @param turnoutNumber Turnout number
      * @return the turnout number which was set
      */
     public int setNumber(int turnoutNumber) {
@@ -77,7 +77,7 @@ public class LnSimpleRouteEntry {
 
     /**
      * Setter.
-     * @param position
+     * @param position Turnout position
      */
     public void setPosition(RouteSwitchPositionEnum position) {
         this.position = position;
