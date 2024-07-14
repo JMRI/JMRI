@@ -1,5 +1,7 @@
 package jmri.jmrix.loconet.configurexml;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.FileNotFoundException;
@@ -140,6 +142,7 @@ public class Digitrax7thGenAccyRoutesXML {
      * Store the Routes info.
      * @return true if stored
      */
+    @SuppressFBWarnings(value="RV_RETURN_VALUE_IGNORED_BAD_PRACTICE")
     public boolean doStore()  {
         // Create digitraxRoutesPreferencesElement element
         Element digitraxRoutesPreferencesElement = new Element("DigitraxRoutesPreferences");  // NOI18N
@@ -200,7 +203,7 @@ public class Digitrax7thGenAccyRoutesXML {
                             int turn = device.getRoutes(routeNumber).getRouteEntry(0).getNumber();
                             log.debug("\tdoStore: route {} entry 0 turn = {}", routeNumber, turn);
                             if ((turn >= 0) && (turn <= 2043)) {
-                                log.debug("\tdoStore: Continued at route () with"
+                                log.debug("\tdoStore: Continued at route {} with"
                                         + " 1<=address<=2044: {}.",
                                         routeNumber, turn);
 

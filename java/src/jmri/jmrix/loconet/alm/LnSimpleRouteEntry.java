@@ -14,7 +14,7 @@ public class LnSimpleRouteEntry {
     // data members
     private int turnoutNumber;   // LocoNet Turnout turnoutNumber
     private RouteSwitchPositionEnum position;
-    public final int UNUSEDTURNOUTNUMBER = -1;
+    public static final int UNUSEDTURNOUTNUMBER = -1;
     public SimpleTurnoutStateEntry guiEntry;
 
     /**
