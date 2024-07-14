@@ -77,6 +77,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
     private SlotManager sm;
     private LncvDevicesManager lncvdm = null;
     private LnMessageManager lnm = null;
+    private Ln7gAccyRoutesManager ln7gAcRtm;
 
     /**
      * Provide access to the SlotManager for this particular connection.
@@ -237,6 +238,12 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
 
         // This must be done after the memo is registered
         getThrottleStringIO();
+
+        ln7gAcRtm = 
+                setLn7gAccyRoutesManager(
+                getLn7gAccyRoutesManager());
+        log.debug("Established Ln Accy Rt Mgr with memo {}",ln7gAcRtm.getMemo());
+        
     }
 
     public LnPowerManager getPowerManager() {
@@ -320,6 +327,23 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
             return null;
         }
         return (LnStringIOManager) classObjectMap.computeIfAbsent(StringIOManager.class, (Class<?> c) -> new LnStringIOManager(this));
+    }
+
+    public Ln7gAccyRoutesManager setLn7gAccyRoutesManager(Ln7gAccyRoutesManager ln7gaccyrm) {
+        this.ln7gAcRtm = ln7gaccyrm;
+        if (this.ln7gAcRtm != null) {
+            // this can only be true when getDisabled() == false
+            this.ln7gAcRtm.initContext(this);
+        }
+        return this.ln7gAcRtm;
+    }
+
+     public Ln7gAccyRoutesManager getLn7gAccyRoutesManager() {
+        if (getDisabled()) {
+            return null;
+        }
+        return (Ln7gAccyRoutesManager) classObjectMap.computeIfAbsent(Ln7gAccyRoutesManager.class,
+                (Class<?> c) -> new Ln7gAccyRoutesManager());
     }
 
     protected LnPredefinedMeters predefinedMeters;

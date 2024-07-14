@@ -157,6 +157,9 @@ public class LnPr2PowerManagerTest extends AbstractPowerManagerTestBase {
         JUnitUtil.setUp();
         controller = new LocoNetInterfaceScaffold();
         slotmanager = new SlotManager(controller);
+        
+        jmri.InstanceManager.setDefault(jmri.jmrix.ConnectionConfigManager.class,
+                new jmri.jmrix.ConnectionConfigManager());
         PR2SystemConnectionMemo memo = new PR2SystemConnectionMemo(controller,slotmanager);
         memo.configureManagers();
         jmri.InstanceManager.setThrottleManager(memo.getPr2ThrottleManager());

@@ -17,17 +17,17 @@ public class Alm {
         LnConstants.OPC_IMM_PACKET_2, 16, 1, 0,0,0,0,0,
         0,0,0,0,0,0,0,0});
 
-//    private static final LocoNetMessage almcapr = new LocoNetMessage(new int[] {
-//        LnConstants.OPC_IMM_PACKET_2, 16, 1, 0,0,0,0,0,
-//        0,0,0,0,0,0,0,0});
-
     private static final int[] capqmask = {255, 255, 255, 255, 255, 255, 255, 255,
-    255, 255, 255,255, 255, 255, 255, 0};
+    255, 255, 255,255, 255, 255, 0, 0};
 
-//    private static final LocoNetMessage cmdStnRoutesCapabilities = new LocoNetMessage(new int[] {
-//                        0xE6, 0x10, 0x01, 0x00, 0x00, 0x02, 0x03, 0x02, 0x10,
-//                        0x7F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x64}
-//                    );
+    private static final LocoNetMessage capCsRr = new LocoNetMessage(new int[] {
+        0xE6, 0x10, 0x01, 0x00, 0x40, 0x02, 0x03, 0x02,
+        0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+    });
+
+    private static final int[] csCapabilitiesMasks = {
+        0xff, 0x7f, 0x7f, 0x7f, 0x3f, 0x7d, 0, 0x7f,
+        0x67, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x00 };
 
     private static final LocoNetMessage drcDs74 = new LocoNetMessage(new int[] {
         0xE6, 0x10, 0x02, 0x00, 0x10, 0x00, 0x00, 0x02,
@@ -63,6 +63,10 @@ public class Alm {
     private static final int[] almgetrm = {
         255, 255, 255, 255, 0, 0x7E, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0};
 
+    public static boolean isCsCapsRpt(LocoNetMessage l) {
+        return l.equals(capCsRr, csCapabilitiesMasks);
+    }
+    
     public static boolean isDs74CapsRpt(LocoNetMessage l) {
         return l.equals(drcDs74, ds74CapabilitiesMasks);
     }
@@ -107,6 +111,9 @@ public class Alm {
         }
         if (m.equals(almgetr, almgetrm)) {
             return AlmMsgTypes.ALM_RDQ;
+        }
+        if (m.equals(capCsRr, csCapabilitiesMasks)) {
+            return AlmMsgTypes.ALM_ROUTECSCAPREP;
         }
         return AlmMsgTypes.NOT_ALM_MSG;
     }

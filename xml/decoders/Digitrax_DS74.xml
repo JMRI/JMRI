@@ -9,43 +9,62 @@
                 >
 
     <version author="Bob Jacobsen" version="1" lastUpdated="20230205" />
+    <version author="Bob Milhaupt" version="2" lastUpdated="20240708" />
 
     <decoder>
-
         <family name="Series 7 Boards" mfg="Digitrax">
             <model model="DS74"/>
         </family>
 
-        <programming direct="no" paged="yes" register="no" ops="no"><!-- paged yes allows initial setup and change of address -->
+        <programming direct="no" paged="yes" register="no" ops="no">
+            <!-- paged yes allows initial setup and change of address -->
             <mode>LOCONETBD7OPSWMODE</mode>
         </programming>
 
         <variables>
 
-          <variable CV="1" comment="Board address" item="Long Address" default="40" infoOnly="yes">
-            <!-- needed to set the board address value -->
-            <decVal min="1" max="2045" />
-            <label>Board Address</label>
+          <variable CV="1" comment="Base Address" item="Long Address" default="1" infoOnly="yes" >
+            <!-- This is needed to set the Base Address value.
+                2037 is a practical maximum.
+                Note that the DS74 will allow higher numbers
+                to be set, but they will conflict with the
+                "interrogate" switches.  -->
+            <splitVal highCV="2" upperMask="XXXXXVVV" default="0" min="1" max="2037"/>
+            <label>Base Address</label>
           </variable>
 
-           <variable CV="11" item="Output Type" default="0"
-                tooltip="OpSw1-4" mask="XXXXVVVV">
+           <!-- CV7 is the product ID. Should be 0x74 (116 decimal) -->
+          <variable CV="7" item="Device Type" readOnly="yes">
+            <decVal min="0" max="255" />
+            <label>Device Type</label>
+          </variable>
+
+          <variable CV="8" item="Device Mfgr" readOnly="yes">
+            <decVal min="0" max="255"/>
+            <label>Device Manufacturer (NMRA number) </label>
+          </variable>
+
+          <variable CV="9" item="Serial Number" default="0" mask="VVVVVVVV" readOnly="yes">
+            <splitVal highCV="10" upperMask="VVVVVVVV"/>
+            <label>Serial Number</label>
+          </variable>
+
+           <variable CV="11" item="Output Type" default="0" tooltip="OpSw1-4" mask="XXXXVVVV">
             <enumVal>
-              <enumChoice>
+              <enumChoice value="0">
                 <choice>pulse solenoid (4 outputs)</choice>
               </enumChoice>
-              <enumChoice>
+              <enumChoice value="1">
                 <choice>slow motion (4 outputs)</choice>
               </enumChoice>
-              <enumChoice>
-                <choice value="5">light mode (8 outputs)</choice>
+              <enumChoice value="5">
+                <choice>Light mode (8 outputs)</choice>
               </enumChoice>
             </enumVal>
             <label>Output type: </label>
           </variable>
 
-          <variable CV="11" item="Internal Routes" default="0"
-                tooltip="OpSw06" mask="XXVXXXXX">
+          <variable CV="11" item="Internal Routes" default="0" tooltip="OpSw06" mask="XXVXXXXX">
             <enumVal>
               <enumChoice>
                 <choice>enabled</choice>
@@ -57,8 +76,7 @@
             <label>Internal Routes are</label>
           </variable>
 
-          <variable CV="12" item="Bushby" default="0"
-                tooltip="OpSw10" mask="XXXXXXVX">
+          <variable CV="12" item="Bushby" default="0" tooltip="OpSw10" mask="XXXXXXVX">
             <enumVal>
               <enumChoice>
                 <choice>disabled</choice>
@@ -70,8 +88,7 @@
             <label>Bushby Bit is</label>
           </variable>
 
-          <variable CV="12" item="Input Lines" default="0"
-                tooltip="OpSw11" mask="XXXXXVXX">
+          <variable CV="12" item="Input Lines" default="0" tooltip="OpSw11" mask="XXXXXVXX">
             <enumVal>
               <enumChoice>
                 <choice>do turnout, sensor commands</choice>
@@ -83,8 +100,7 @@
             <label>Input Lines</label>
           </variable>
 
-          <variable CV="12" item="Command Source" default="0"
-                tooltip="OpSw14" mask="XXVXXXXX">
+          <variable CV="12" item="Command Source" default="0" tooltip="OpSw14" mask="XXVXXXXX">
             <enumVal>
               <enumChoice>
                 <choice>Loconet switch commands</choice>
@@ -96,8 +112,7 @@
             <label>Command source is</label>
           </variable>
 
-          <variable CV="12" item="Route Echo" default="0"
-                tooltip="OpSw15" mask="XVXXXXXX">
+          <variable CV="12" item="Route Echo" default="0" tooltip="OpSw15" mask="XVXXXXXX">
             <enumVal>
               <enumChoice>
                 <choice>echo to Loconet</choice>
@@ -109,8 +124,7 @@
             <label>Route Switch Commands</label>
           </variable>
 
-          <variable CV="13" item="Solenoid Pulse" default="0"
-                tooltip="OpSw16" mask="XXXXXXXV">
+          <variable CV="12" item="Solenoid Pulse" default="0" tooltip="OpSw16" mask="VXXXXXXX">
             <enumVal>
               <enumChoice>
                 <choice>normal</choice>
@@ -122,13 +136,31 @@
             <label>Solenoid Pulse</label>
           </variable>
 
+          <variable CV="14" item="InterrogateSwitches" default="0" tooltip="OpSw30" mask="XXVXXXXX">
+            <enumVal>
+              <enumChoice>
+                <choice>Disabled</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>Enabled</choice>
+              </enumChoice>
+            </enumVal>
+            <label>'Interrogate' causes reporting of switch positions: </label>
+          </variable>
+
+          <variable CV="16" item="CP1Led" default="0" tooltip="OpSw44 (13Dec2022 firmware and later)" mask="XXXXVXXX">
+            <enumVal>
+              <enumChoice>
+                <choice>Enabled</choice>
+              </enumChoice>
+              <enumChoice>
+                <choice>Disabled</choice>
+              </enumChoice>
+            </enumVal>
+            <label>CP1 LED is </label>
+          </variable>
+
         </variables>
-        <resets>
-            <mode>LOCONETBD7OPSWMODE</mode>
-            <factReset label="Factory Reset" CV="15" default="128">
-                <label>Reset All CVs</label>
-            </factReset>
-        </resets>
     </decoder>
   <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
     <name>CVs</name>
@@ -140,14 +172,14 @@
             <column>
                 <label>
                     <text>&lt;html&gt;The "CV" column in the table above shows CV
-                        numbers, not the Op Switch number.  To see those, hover
+                        numbers, not the Op Switch number.&lt;p&gt;To see those, hover
                         your mouse over a variable on the OpSw Settings pane.
-                        &lt;p&gt;&lt;p&gt;The top-most row above reflects the Board
-                        Address configured on the "Basic" sheet.
+                        &lt;p&gt;CVs 1 and 2 are the low and high (respectively) 8-bit
+                        "Base Address" values.&lt;p&gt;The "Base Address" is practically
+                        limited to 2033, max.&lt;p&gt;The "Roster" tool and its
+                        Roster entries &lt;em&gt; cannot&lt;/em&gt; change the
+                        "Base Address".
                     </text>
-                </label>
-                <label>
-                    <text> </text>
                 </label>
             </column>
         </row>
@@ -159,33 +191,56 @@
       <column>
           <display item="Long Address"/>
           <label>
-              <text> </text>
-          </label>
-          <label>
-            <text>&lt;html&gt;&lt;p&gt;
+            <text>&lt;html&gt;
                 &lt;p&gt;This roster entry will only access the specified
-                board if the Board Address (i.e. Board ID), specified above,
-                &lt;br&gt;was correctly entered when the roster entry was first created.
-                You cannot change it here.
-                &lt;p&gt;Note that some Digitrax documentation refers
-                to Board Address, while other documentation refers to
-                &lt;p&gt;Board ID.  These are equivalent concepts.
+                board if the Base Address specified above &lt;br&gt;was
+                correctly entered when the roster entry was first created.
+                You &lt;em&gt;cannot&lt;/em&gt; change it in the Roster Entry.
             &lt;/html&gt;</text>
           </label>
+          <label>
+              <text> </text>
+          </label>
+          <display item="Device Type"/>
+          <display item="Device Mfgr"/>
+          <display item="Serial Number"/>
       </column>
   </pane>
 
     <pane>
         <name>OpSw Settings</name>
         <column>
+        <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Output Controls Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
             <display item="Output Type"/>
-            <display item="Internal Routes"/>
-            <display item="Bushby"/>
-
-            <display item="Input Lines"/>
-            <display item="Command Source"/>
-            <display item="Route Echo"/>
             <display item="Solenoid Pulse"/>
+            <label><text>  </text></label>
+        <separator/>
+        <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Control Source Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
+            <display item="Command Source"/>
+            <display item="Bushby"/>
+            <label><text>  </text></label>
+        <separator/>
+        <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Local Inputs Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
+            <display item="Input Lines"/>
+            <label><text>  </text></label>
+            <label>
+                <text>&lt;html&gt;&lt;span style=&quot;color: green;&quot;&gt;&lt;em&gt;
+                    The "Interrogate Switches" settings, below, apply to
+                    DS74 "April 7, 2022, &lt;p&gt; (version 0.4)" and later firmware. Previous firmware versions
+                    do &lt;p&gt;not implement these OpSws.</text>            </label>
+            <display item="InterrogateSwitches"/>
+            <label><text>  </text></label>
+            <label>
+                <text>&lt;html&gt;&lt;span style=&quot;color: green;&quot;&gt;&lt;em&gt;
+                    The "Interrogate Switches" settings, below, apply to
+                    DS74 "December 13, 2022, &lt;p&gt; (version 0.6)" and later firmware. Previous firmware versions
+                    do &lt;p&gt;not implement these OpSws.</text>            </label>
+            <display item="CP1Led"/>
+            <label><text>  </text></label>
+        <separator/>
+        <label><text>&lt;html&gt;&lt;span style=&quot;color: black;&quot;&gt;&lt;h2&gt;&lt;strong&gt;Local Routes Characteristics&lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text></label>
+            <display item="Internal Routes"/>
+            <display item="Route Echo"/>
         </column>
     </pane>
 
