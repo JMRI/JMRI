@@ -29,7 +29,7 @@ public class LnSimple7thGenDevicesRoutes {
      * When a device (by device type and serial number) exists,
      * that device gets updated.
      *
-     * @param dr
+     * @param dr "DeviceRoutes" to be added
      */
     public void add(LnSimple7thGenDeviceRoutes dr) {
         LnSimple7thGenDeviceRoutes deviceRoutes;
