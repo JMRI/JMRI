@@ -3,6 +3,7 @@ package jmri.jmrix.loconet;
 import jmri.ProgListenerScaffold;
 import jmri.ProgrammerException;
 import jmri.util.JUnitUtil;
+import jmri.ProgrammingMode;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -21,7 +22,6 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
         Assert.assertFalse("can write address", programmer.getCanWrite("1234"));
     }
 
-    /*
     @Test
     public void testSetMode() {
         try {
@@ -537,10 +537,6 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
         Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
 
      }
-*/
-
-    /*
-    // This test _works_ for one LOCONETBD7OPSWMODE readCV access.
 
     @Test
      public void testOneOps7genAccyCvReadAccess() throws ProgrammerException {
@@ -605,11 +601,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
 
         JUnitUtil.waitFor(()->{return pl.getRcvdInvoked() == 1;},"getRcvdInvoked not set");
      }
-*/
 
-    /*
-    This is the targeted test.  The one that fails...
-    */
      @Test
      public void testOps7genAccyAccesses() throws ProgrammerException {
         // disallow transponding
@@ -626,7 +618,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
 
         checkSome7thGenAccyReads(4);
         lnopsmodeprogrammer.dispose();
-/*
+
         checkSome7thGenAccyReads(5);
         lnopsmodeprogrammer.dispose();
 
@@ -665,7 +657,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
 
         checkSome7thGenAccyReads(129);
         lnopsmodeprogrammer.dispose();
-*/
+
         checkSome7thGenAccyReads(256);
         lnopsmodeprogrammer.dispose();
 
@@ -677,7 +669,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
 
         checkSome7thGenAccyReads(513);
         lnopsmodeprogrammer.dispose();
-/*
+
         checkSome7thGenAccyReads(1024);
         lnopsmodeprogrammer.dispose();
 
@@ -686,7 +678,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
 
         checkSome7thGenAccyReads(2030);
         lnopsmodeprogrammer.dispose();
-*/
+
         checkSome7thGenAccyReads(2031);
         lnopsmodeprogrammer.dispose();
 
