@@ -2,7 +2,6 @@ package jmri.jmrix.bachrus.speedmatcher.basic;
 
 import jmri.DccThrottle;
 import jmri.jmrix.bachrus.Speed;
-import jmri.jmrix.bachrus.speedmatcher.SpeedMatcherConfig;
 
 /**
  * This is a simple speed matcher which will speed match a locomotive to a given
@@ -45,11 +44,10 @@ public class BasicESUTableSpeedMatcher extends BasicSpeedMatcher {
         POST_INIT,
         FORWARD_WARM_UP,
         FORWARD_SPEED_MATCH_VHIGH,
+        FORWARD_SPEED_MATCH_VSTART,
         FORWARD_SPEED_MATCH_STEP19,
         RE_INIT_SPEED_TABLE_MIDDLE_THIRD,
         FORWARD_SPEED_MATCH_STEP10,
-        RE_INIT_SPEED_TABLE_BOTTOM_THIRD,
-        FORWARD_SPEED_MATCH_VSTART,
         INTERPOLATE_SPEED_TABLE,
         POST_INTERPOLATE,
         REVERSE_WARM_UP,
@@ -292,7 +290,7 @@ public class BasicESUTableSpeedMatcher extends BasicSpeedMatcher {
                         setSpeedMatchError(targetVHighSpeedKPH);
 
                         if (Math.abs(speedMatchError) < ALLOWED_SPEED_MATCH_ERROR) {
-                            initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_STEP19);
+                            initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_VSTART);
                         } else {
                             vHigh = getNextSpeedMatchValue(lastVHigh, VHIGH_MAX, VHIGH_MIN);
 
@@ -305,6 +303,38 @@ public class BasicESUTableSpeedMatcher extends BasicSpeedMatcher {
 
                             lastVHigh = vHigh;
                             writeVHigh(vHigh);
+                        }
+                    }
+                }
+                break;
+                
+            case FORWARD_SPEED_MATCH_VSTART:
+                //Use PID Controller to adjust vStart (Speed Step 1) to the min speed
+                if (programmerState == ProgrammerState.IDLE) {
+                    if (stepDuration == 0) {
+                        vStartMax = vHigh - 1;
+                        statusLabel.setText(Bundle.getMessage("StatSettingSpeed", SpeedMatcherCV.VSTART.getName()));
+                        logger.info("Setting CV {} to {} KPH ({} MPH)", SpeedMatcherCV.VSTART.getName(), String.valueOf(targetVStartSpeedKPH), String.valueOf(Speed.kphToMph(targetVStartSpeedKPH)));
+                        setThrottle(true, 1);
+                        setSpeedMatchStateTimerDuration(8000);
+                        stepDuration = 1;
+                    } else {
+                        setSpeedMatchError(targetVStartSpeedKPH);
+
+                        if (Math.abs(speedMatchError) < ALLOWED_SPEED_MATCH_ERROR) {
+                            initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_STEP19);
+                        } else {
+                            vStart = getNextSpeedMatchValue(lastVStart, vStartMax, VSTART_MIN);
+
+                            if (((lastVStart == vStartMax) || (lastVStart == VSTART_MIN)) && (vStart == lastVStart)) {
+                                statusLabel.setText(Bundle.getMessage("StatSetSpeedFail", SpeedMatcherCV.VSTART.getName()));
+                                logger.info("Unable to achieve desired speed for CV {}", SpeedMatcherCV.VSTART.getName());
+                                abort();
+                                break;
+                            }
+
+                            lastVStart = vStart;
+                            writeVStart(vStart);
                         }
                     }
                 }
@@ -346,59 +376,8 @@ public class BasicESUTableSpeedMatcher extends BasicSpeedMatcher {
                     if (stepDuration == 0) {
                         lastSpeedMatchCVValue = step19CVValue;
                     }
-                    speedMatchSpeedTableStep(SpeedTableStep.STEP10, targetStep10SpeedKPH, step19CVValue - 9, STEP10_MIN, SpeedMatcherState.RE_INIT_SPEED_TABLE_BOTTOM_THIRD);
+                    speedMatchSpeedTableStep(SpeedTableStep.STEP10, targetStep10SpeedKPH, step19CVValue - 9, STEP10_MIN, SpeedMatcherState.INTERPOLATE_SPEED_TABLE);
                     step10CVValue = speedMatchCVValue;
-                }
-                break;
-
-            case RE_INIT_SPEED_TABLE_BOTTOM_THIRD:
-                //Re-initialize Speed Steps 1-9 based off value for Step 10
-                if (programmerState == ProgrammerState.IDLE) {
-                    if (stepDuration == 0) {
-                        initSpeedTableStep = SpeedTableStep.STEP9;
-                        stepDuration = 1;
-                    }
-
-                    writeSpeedTableStep(initSpeedTableStep, step10CVValue);
-
-                    if (initSpeedTableStep == SpeedTableStep.STEP1) {
-                        initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_VSTART);
-                    } else {
-                        initSpeedTableStep = initSpeedTableStep.getPrevious();
-                    }
-
-                }
-                break;
-
-            case FORWARD_SPEED_MATCH_VSTART:
-                //Use PID Controller to adjust vStart (Speed Step 1) to the min speed
-                if (programmerState == ProgrammerState.IDLE) {
-                    if (stepDuration == 0) {
-                        vStartMax = vHigh - 1;
-                        statusLabel.setText(Bundle.getMessage("StatSettingSpeed", SpeedMatcherCV.VSTART.getName()));
-                        logger.info("Setting CV {} to {} KPH ({} MPH)", SpeedMatcherCV.VSTART.getName(), String.valueOf(targetVStartSpeedKPH), String.valueOf(Speed.kphToMph(targetVStartSpeedKPH)));
-                        setThrottle(true, 1);
-                        setSpeedMatchStateTimerDuration(8000);
-                        stepDuration = 1;
-                    } else {
-                        setSpeedMatchError(targetVStartSpeedKPH);
-
-                        if (Math.abs(speedMatchError) < ALLOWED_SPEED_MATCH_ERROR) {
-                            initNextSpeedMatcherState(SpeedMatcherState.INTERPOLATE_SPEED_TABLE);
-                        } else {
-                            vStart = getNextSpeedMatchValue(lastVStart, vStartMax, VSTART_MIN);
-
-                            if (((lastVStart == vStartMax) || (lastVStart == VSTART_MIN)) && (vStart == lastVStart)) {
-                                statusLabel.setText(Bundle.getMessage("StatSetSpeedFail", SpeedMatcherCV.VSTART.getName()));
-                                logger.info("Unable to achieve desired speed for CV {}", SpeedMatcherCV.VSTART.getName());
-                                abort();
-                                break;
-                            }
-
-                            lastVStart = vStart;
-                            writeVStart(vStart);
-                        }
-                    }
                 }
                 break;
 
