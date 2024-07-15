@@ -161,7 +161,7 @@
 
         <h4>TMCC</h4>
             <ul>
-                <li>Now sends repeated function commands so long as 
+                <li>Now sends repeated function commands so long as
                     the throttle function is active.</li>
                 <li>TMCC2 Legacy 200 speed step mode is now available.</li>
             </ul>
@@ -503,7 +503,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Add the SetBlockValues.py script to the JMRI distribution.</li>
         </ul>
 
     <h3>Signals</h3>
