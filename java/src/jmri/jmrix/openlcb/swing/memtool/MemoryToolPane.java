@@ -290,6 +290,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
             setRunning(false);
             return;
         }
+
         log.debug("Start get");
         if (fileChooser == null) {
             fileChooser = new jmri.util.swing.JmriJFileChooser();
@@ -399,7 +400,16 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
 
     void pushedPutButton(ActionEvent e) {
         farID = nodeSelector.getSelectedItem();
+        try {
+            space = Integer.parseInt(spaceField.getText().trim());
+        } catch (NumberFormatException ex) {
+            log.error("error parsing the space field value \"{}\"", spaceField.getText());
+            statusField.setText("Error parsing the space value");
+            setRunning(false);
+            return;
+        }
         log.debug("Start put");
+
         if (fileChooser == null) {
             fileChooser = new jmri.util.swing.JmriJFileChooser();
         }
