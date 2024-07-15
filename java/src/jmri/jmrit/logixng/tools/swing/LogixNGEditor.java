@@ -44,6 +44,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
     LogixNG_Manager _logixNG_Manager = null;
     LogixNG _curLogixNG = null;
 
+    ConditionalNG_Manager _conditionalNG_Manager = null;
     ConditionalNGEditor _treeEdit = null;
     ConditionalNGDebugger _debugger = null;
 
@@ -73,6 +74,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         this.beanTableDataModel = m;
         _logixNG_Manager = InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
         _curLogixNG = _logixNG_Manager.getBySystemName(sName);
+        _conditionalNG_Manager = InstanceManager.getDefault(jmri.jmrit.logixng.ConditionalNG_Manager.class);
         makeEditLogixNGWindow();
     }
 
@@ -445,14 +447,16 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
 
         // make an Add Item Frame
         if (showAddLogixNGFrame()) {
+            if (!checkConditionalNGSysName()) {
+                return;
+            }
             if (_systemName.getText().isEmpty() && _autoSystemName.isSelected()) {
                 _systemName.setText(InstanceManager.getDefault(ConditionalNG_Manager.class).getAutoSystemName());
             }
 
             // Create ConditionalNG
             _curConditionalNG =
-                    InstanceManager.getDefault(ConditionalNG_Manager.class)
-                            .createConditionalNG(_curLogixNG, _systemName.getText(), _addUserName.getText());
+                    _conditionalNG_Manager.createConditionalNG(_curLogixNG, _systemName.getText(), _addUserName.getText());
 
             if (_curConditionalNG == null) {
                 // should never get here unless there is an assignment conflict
@@ -466,6 +470,44 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             _showReminder = true;
             makeEditConditionalNGWindow();
         }
+    }
+
+    /**
+     * Check validity of ConditionalNG system name.
+     * <p>
+     * Fixes name if it doesn't start with "IQC" or is missing the $ for alpha suffixes.
+     *
+     * @return false if the name fails the NameValidity check
+     */
+    boolean checkConditionalNGSysName() {
+        if (_autoSystemName.isSelected()) {
+            return true;
+        }
+
+        var sName = _systemName.getText().trim();
+        var prefix = _conditionalNG_Manager.getSubSystemNamePrefix();
+
+        if (!sName.isEmpty() && !sName.startsWith(prefix)) {
+            var isNumber = sName.matches("^\\d+$");
+            var hasDollar = sName.startsWith("$");
+
+            var newName = new StringBuilder(prefix);
+            if (!isNumber && !hasDollar) {
+                newName.append("$");
+            }
+            newName.append(sName);
+            sName = newName.toString();
+        }
+
+        if (_conditionalNG_Manager.validSystemNameFormat(sName) != jmri.Manager.NameValidity.VALID) {
+            JmriJOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("Error_SystemName_Format", sName), Bundle.getMessage("ErrorTitle"), // NOI18N
+                    JmriJOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        _systemName.setText(sName);
+        return true;
     }
 
     /**

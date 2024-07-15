@@ -161,7 +161,9 @@
 
         <h4>TMCC</h4>
             <ul>
-                <li></li>
+                <li>Now sends repeated function commands so long as 
+                    the throttle function is active.</li>
+                <li>TMCC2 Legacy 200 speed step mode is now available.</li>
             </ul>
 
         <h4>Uhlenbrock Intellibox</h4>
@@ -216,7 +218,13 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li></li>
+                <li>Updated DS74, DS78V, PM74, and SE74 decoder definitions.  
+		Includes options which can be used with recent firmware. 
+                <em>Be aware that previous JMRI versions had erroneous decoder definitions
+		for the DS74, DS78V, PM74, and SE74.  All Roster Entries for these 
+                devices should be discarded then re-created using the newer 
+                definitions.</em> Provides corrected code for accessing the 
+                &quot;CVs&quot; for the DS74, DS78V, PM74, and SE74 decoders.</li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -440,7 +448,8 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>Prepend the proper prefix when using short system names, such as 123 or abcd.  For
+          alpha suffixes include the required $ character.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -464,16 +473,18 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li></li>
+            <li>Do not create blank profiles.
+            When deleting blank profiles do not remove directory.
+            Explicitly warn that a directory and its contents will be deleted when deleting a profile.</li>
         </ul>
 
     <h3>Resources</h3>
         <a id="Resources" name="Resources"></a>
         <ul>
-            <li>Added an 
-                "<a href="https://jmri.org/extras">/extras/</li>"
-                directory to contain large/specialized downloadable resource files.
-            <li>Added Jim Well's coal tipple sound file to 
+            <li>Added an
+                "<a href="https://jmri.org/extras">/extras/</a>"
+                directory to contain large/specialized downloadable resource files.</li>
+            <li>Added Jim Well's coal tipple sound file to
                 <a href="https://jmri.org/extras/sounds">/extras/sounds</li>
         </ul>
 
@@ -606,4 +617,3 @@
         <ul>
             <li></li>
         </ul>
-

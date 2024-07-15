@@ -16,70 +16,77 @@
             <model model="PM74"/>
         </family>
 
-        <programming direct="no" paged="yes" register="no" ops="no"><!-- paged yes allows initial setup and change of address -->
+        <programming direct="no" paged="yes" register="no" ops="no">
+            <!-- paged yes allows initial setup and change of address -->
             <mode>LOCONETBD7OPSWMODE</mode>
         </programming>
 
         <variables>
 
-          <variable CV="1" comment="Board address" item="Long Address" default="40" infoOnly="yes">
-            <!-- needed to set the board address value -->
-            <decVal min="1" max="2045" />
+          <variable CV="1" comment="Base Address" item="Long Address" default="1" infoOnly="yes">
+            <!-- This is needed to set the Base Address value.
+                2037 is a practical maximum.
+                Note that the PM74 will allow higher numbers
+                to be set, but they will conflict with the
+                "interrogate" switches.  -->
+            <splitVal highCV="2" upperMask="XXXXXVVV" default="0" min="1" max="2037"/>
             <label>Board Address</label>
           </variable>
 
            <!-- CV7 is the product ID. Should be 0x4a, 74 decimal -->
-           
-           <variable CV="11" item="DS1 mode" default="0"
-                tooltip="OpSw1" mask="XXXXXXXV"><!-- opsw 1 -->
+          <variable CV="7" item="Device Type" readOnly="yes">
+            <decVal min="0" max="255"/>
+            <label>Device Type</label>
+          </variable>
+
+          <variable CV="8" item="Device Mfgr" readOnly="yes">
+            <decVal min="0" max="255"/>
+            <label>Device Manufacturer (NMRA number) </label>
+          </variable>
+
+          <variable CV="9" item="Serial Number" default="0" mask="VVVVVVVV" readOnly="yes">
+            <splitVal highCV="10" upperMask="VVVVVVVV"/>
+            <label>Serial Number</label>
+          </variable>
+
+
+           <variable CV="11" item="DS1 mode" default="0" tooltip="OpSw1" mask="XXXXXXXV"><!-- opsw 1 -->
             <enumVal>
               <enumChoice>
                 <choice>over-current</choice>
               </enumChoice>
               <enumChoice>
                 <choice>auto-reverse</choice>
-              </enumChoice>
-              <enumChoice>
-                <choice value="5">light mode (8 outputs)</choice>
               </enumChoice>
             </enumVal>
             <label>DS1 mode: </label>
           </variable>
 
-           <variable CV="11" item="DS2 mode" default="0"
-                tooltip="OpSw2" mask="XXXXXXVX"><!-- opsw 2 -->
+           <variable CV="11" item="DS2 mode" default="0" tooltip="OpSw2" mask="XXXXXXVX"><!-- opsw 2 -->
             <enumVal>
               <enumChoice>
                 <choice>over-current</choice>
               </enumChoice>
               <enumChoice>
                 <choice>auto-reverse</choice>
-              </enumChoice>
-              <enumChoice>
-                <choice value="5">light mode (8 outputs)</choice>
               </enumChoice>
             </enumVal>
             <label>DS2 mode: </label>
           </variable>
 
-           <variable CV="11" item="DS3 mode" default="0"
-                tooltip="OpSw3" mask="XXXXXVXX"><!-- opsw 3 -->
+           <variable CV="11" item="DS3 mode" default="0" tooltip="OpSw3" mask="XXXXXVXX"><!-- opsw 3 -->
             <enumVal>
               <enumChoice>
                 <choice>over-current</choice>
               </enumChoice>
               <enumChoice>
                 <choice>auto-reverse</choice>
-              </enumChoice>
-              <enumChoice>
-                <choice value="5">light mode (8 outputs)</choice>
               </enumChoice>
             </enumVal>
             <label>DS3 mode: </label>
           </variable>
 
-           <variable CV="11" item="DS4 mode" default="0"
-                tooltip="OpSw4" mask="XXXXVXXX"><!-- opsw 4 -->
+           <variable CV="11" item="DS4 mode" default="0" tooltip="OpSw4" mask="XXXXVXXX"><!-- opsw 4 -->
             <enumVal>
               <enumChoice>
                 <choice>over-current</choice>
@@ -87,31 +94,26 @@
               <enumChoice>
                 <choice>auto-reverse</choice>
               </enumChoice>
-              <enumChoice>
-                <choice value="5">light mode (8 outputs)</choice>
-              </enumChoice>
             </enumVal>
             <label>DS4 mode: </label>
           </variable>
 
-           <variable CV="11" item="Trip current" default="0"
-                tooltip="OpSw7-8" mask="VVXXXXXX"><!-- opsw 7-8 -->
+           <variable CV="11" item="Trip current" default="0" tooltip="OpSw7-8" mask="VVXXXXXX"><!-- opsw 7-8 -->
             <enumVal>
-              <enumChoice><!-- 00 -->
+              <enumChoice choice="0">
                 <choice>normal</choice>
               </enumChoice>
-              <enumChoice><!-- 01 -->
+              <enumChoice choice="1">
                 <choice>lower</choice>
               </enumChoice>
-              <enumChoice><!-- 10 -->
+              <enumChoice choice="2">
                 <choice>higher</choice>
               </enumChoice>
             </enumVal>
             <label>Trip current: </label>
           </variable>
 
-          <variable CV="12" item="Occupancy" default="0"
-                tooltip="OpSw11" mask="XXXXXVXX"><!-- opsw 11 -->
+          <variable CV="12" item="Occupancy" default="0" tooltip="OpSw11" mask="XXXXXVXX"><!-- opsw 11 -->
             <enumVal>
               <enumChoice>
                 <choice>enabled</choice>
@@ -123,8 +125,7 @@
             <label>Occupancy detection: </label>
           </variable>
 
-          <variable CV="12" item="Transponding" default="0"
-                tooltip="OpSw12" mask="XXXXXVXX"><!-- opsw 12 -->
+          <variable CV="12" item="Transponding" default="0" tooltip="OpSw12" mask="XXXXXVXX"><!-- opsw 12 -->
             <enumVal>
               <enumChoice>
                 <choice>enabled</choice>
@@ -136,8 +137,76 @@
             <label>Transponding detection: </label>
           </variable>
 
-          <variable CV="14" item="Sensitivity" default="0"
-                tooltip="OpSw31" mask="XVXXXXXX"><!-- opsw 31 -->
+          <variable CV="13" item="Section 1 det. speed" default="0" tooltip="OpSw17, 21" mask="XXXVXXXV">
+            <enumVal>
+              <enumChoice choice="0">
+                <choice>Standard</choice>
+              </enumChoice>
+              <enumChoice choice="1">
+                <choice>Slow</choice>
+              </enumChoice>
+              <enumChoice choice="2">
+                <choice>Fast</choice>
+              </enumChoice>
+              <enumChoice choice="3">
+                <choice>Fastest</choice>
+              </enumChoice>
+            </enumVal>
+            <label>Section 1 Occupancy Detection speed: </label>
+          </variable>
+          <variable CV="13" item="Section 2 det. speed" default="0" tooltip="OpSw18, 22" mask="XXVXXXVX">
+            <enumVal>
+              <enumChoice choice="0">
+                <choice>Standard</choice>
+              </enumChoice>
+              <enumChoice choice="1">
+                <choice>Slow</choice>
+              </enumChoice>
+              <enumChoice choice="2">
+                <choice>Fast</choice>
+              </enumChoice>
+              <enumChoice choice="3">
+                <choice>Fastest</choice>
+              </enumChoice>
+            </enumVal>
+            <label>Section 2 Occupancy Detection speed: </label>
+          </variable>
+          <variable CV="13" item="Section 3 det. speed" default="0" tooltip="OpSw19, 23" mask="XVXXXVXX">
+            <enumVal>
+              <enumChoice choice="0">
+                <choice>Standard</choice>
+              </enumChoice>
+              <enumChoice choice="1">
+                <choice>Slow</choice>
+              </enumChoice>
+              <enumChoice choice="2">
+                <choice>Fast</choice>
+              </enumChoice>
+              <enumChoice choice="3">
+                <choice>Fastest</choice>
+              </enumChoice>
+            </enumVal>
+            <label>Section 3 Occupancy Detection speed: </label>
+          </variable>
+          <variable CV="13" item="Section 4 det. speed" default="0" tooltip="OpSw20, 24" mask="VXXXVXXX">
+            <enumVal>
+              <enumChoice choice="0">
+                <choice>Standard</choice>
+              </enumChoice>
+              <enumChoice choice="1">
+                <choice>Slow</choice>
+              </enumChoice>
+              <enumChoice choice="2">
+                <choice>Fast</choice>
+              </enumChoice>
+              <enumChoice choice="3">
+                <choice>Fastest</choice>
+              </enumChoice>
+            </enumVal>
+            <label>Section 4 Occupancy Detection speed: </label>
+          </variable>
+
+          <variable CV="14" item="Sensitivity" default="0" tooltip="OpSw31" mask="XVXXXXXX"><!-- opsw 31 -->
             <enumVal>
               <enumChoice>
                 <choice>normal</choice>
@@ -149,26 +218,18 @@
             <label>Sensitivity: </label>
           </variable>
 
-          <variable CV="16" item="LEDs" default="0"
-                tooltip="OpSw41" mask="XXXXXXXV"><!-- opsw 41 -->
+          <variable CV="16" item="LEDs" default="0" tooltip="OpSw41" mask="XXXXXXXV"><!-- opsw 41 -->
             <enumVal>
               <enumChoice>
-                <choice>detection</choice>
+                <choice>detection and Transponding</choice>
               </enumChoice>
               <enumChoice>
-                <choice>relay state</choice>
+                <choice>relay state (like the PM4x)</choice>
               </enumChoice>
             </enumVal>
             <label>LEDs show: </label>
           </variable>
-
         </variables>
-        <resets>
-            <mode>LOCONETBD7OPSWMODE</mode>
-            <factReset label="Factory Reset" CV="15" default="128">
-                <label>Reset All CVs</label>
-            </factReset>
-        </resets>
     </decoder>
   <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
     <name>CVs</name>
@@ -180,10 +241,13 @@
             <column>
                 <label>
                     <text>&lt;html&gt;The "CV" column in the table above shows CV
-                        numbers, not the Op Switch number.  To see those, hover
+                        numbers, not the Op Switch number.&lt;p&gt;To see those, hover
                         your mouse over a variable on the OpSw Settings pane.
-                        &lt;p&gt;&lt;p&gt;The top-most row above reflects the Board
-                        Address configured on the "Basic" sheet.
+                        &lt;p&gt;CVs 1 and 2 are the low and high (respectively) 8-bit
+                        "Base Address" values.&lt;p&gt;The "Base Address" is practically
+                        limited to 2040, max.&lt;p&gt;The "Roster" tool and its
+                        Roster entries &lt;em&gt; cannot&lt;/em&gt; change the
+                        "Base Address".
                     </text>
                 </label>
                 <label>
@@ -199,34 +263,56 @@
       <column>
           <display item="Long Address"/>
           <label>
-              <text> </text>
-          </label>
-          <label>
-            <text>&lt;html&gt;&lt;p&gt;
+            <text>&lt;html&gt;
                 &lt;p&gt;This roster entry will only access the specified
-                board if the Board Address (i.e. Board ID), specified above,
-                &lt;br&gt;was correctly entered when the roster entry was first created.
-                You cannot change it here.
-                &lt;p&gt;Note that some Digitrax documentation refers
-                to Board Address, while other documentation refers to
-                &lt;p&gt;Board ID.  These are equivalent concepts.
+                board if the Base Address specified above &lt;br&gt;was
+                correctly entered when the roster entry was first created.
+                You &lt;em&gt;cannot&lt;/em&gt; change it in the Roster Entry.
             &lt;/html&gt;</text>
           </label>
+          <label>
+              <text> </text>
+          </label>
+          <display item="Device Type"/>
+          <display item="Device Mfgr"/>
+          <display item="Serial Number"/>
       </column>
   </pane>
 
     <pane>
         <name>OpSw Settings</name>
         <column>
+            <label>
+                <text>&lt;html&gt;&lt;h2&gt;Section "Mode"</text>
+            </label>
             <display item="DS1 mode"/>
             <display item="DS2 mode"/>
             <display item="DS3 mode"/>
             <display item="DS4 mode"/>
-
             <display item="Trip current"/>
+            <label>
+                <text>&lt;html&gt;&lt;h2&gt;Occupancy Detection</text>
+            </label>
             <display item="Occupancy"/>
-            <display item="Transponding"/>
             <display item="Sensitivity"/>
+            <label>
+                <text>&lt;html&gt;&lt;span style=&quot;color: green;&quot;&gt;&lt;em&gt;The "Occupancy Detection Speed" settings, below, apply to
+                    PM74 "July 1, &lt;p&gt;2024 (version Rev 7)" and later firmware. Previous firmware versions
+                    do &lt;p&gt;not implement these OpSws.</text>
+            </label>
+            <display item="Section 1 det. speed"/>
+            <display item="Section 2 det. speed"/>
+            <display item="Section 3 det. speed"/>
+            <display item="Section 4 det. speed"/>
+
+            <label>
+                <text>&lt;html&gt;&lt;h2&gt;Transponding</text>
+            </label>
+            <display item="Transponding"/>
+
+            <label>
+                <text>&lt;html&gt;&lt;h2&gt;Outputs</text>
+            </label>
             <display item="LEDs"/>
         </column>
     </pane>

@@ -39,6 +39,8 @@ import javax.swing.WindowConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import jmri.util.FileUtil;
+import jmri.util.swing.JmriJOptionPane;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -256,15 +258,27 @@ public class ProfileManagerDialog extends JDialog {
         chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         chooser.setFileFilter(new ProfileFileFilter());
         chooser.setFileView(new ProfileFileView());
-        // TODO: Use NetBeans OpenDialog if its availble
+        // TODO: Use NetBeans OpenDialog if its available
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             try {
-                Profile p = new Profile(chooser.getSelectedFile());
-                ProfileManager.getDefault().addProfile(p);
-                profiles.setSelectedValue(p, true);
+                if (!Profile.isProfile(chooser.getSelectedFile())) {
+                    log.warn("{} is not a profile directory", chooser.getSelectedFile());
+                    JmriJOptionPane.showMessageDialog(this,
+                            Bundle.getMessage("addExistingNotAProfile",chooser.getSelectedFile()),
+                            Bundle.getMessage("addExistingNotAProfile"),
+                            JmriJOptionPane.ERROR_MESSAGE);
+                    return;
+                } else {
+                    Profile p = new Profile(chooser.getSelectedFile());
+                    ProfileManager.getDefault().addProfile(p);
+                    profiles.setSelectedValue(p, true);
+                }
             } catch (IOException ex) {
-                log.warn("{} is not a profile directory", chooser.getSelectedFile());
-                // TODO: Display error dialog - selected file is not a profile directory
+                // new Profile can throw an exception, but not for when a directory is not a profile directory
+                // it just creates an invalid null profile
+                // which when subsequently deleted removes the entire directory tree.
+                log.warn("Unexpected error in new Profile({})", chooser.getSelectedFile(),ex);
+                return;
             }
         }
     }//GEN-LAST:event_btnUseExistingActionPerformed
