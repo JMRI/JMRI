@@ -86,14 +86,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>Significant updates for programming the Digitrax DS74, DS78V, PM74, SE74 boards
-                    <ul>
-                    <li>Provides corrected code for accessing the CVs for the DS74, DS78V, PM74, and SE74 
-                    <li>Can handle certain odd behaviors seen with some firmware updates</li>
-                    </ul>
-                    Users should delete any "Roster Entries" which were created using previous 
-                    decoder definitions and create new entries using these new definitions.
-                </li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -133,8 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Fixed a bug that would cause the Memory Tool to fail
-                    when putting data.</li>
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -169,14 +161,7 @@
 
         <h4>TMCC</h4>
             <ul>
-                <li>Now sends repeated function commands so long as
-                    the throttle function is active.</li>
-                <li>TMCC2 Legacy 200 speed step mode is now available.
-                    Select it from the combo box at the top of the Throttle's speed subwindow.</li>
-                <li>Add support for sending two function commands on a button
-                    push/release.  First examples of this are <br/>
-                    Fn28 Start Up Sequence 1 (Delayed Prime Mover, then Immediate Start Up)<br/>
-                    Fn30 Shut Down Sequence 1 (Delay w/ Announcement, then Immediate Shut Down)
+                <li></li>
             </ul>
 
         <h4>Uhlenbrock Intellibox</h4>
@@ -231,15 +216,7 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li>Updated DS74, DS78V, PM74, and SE74 decoder definitions.  
-		            Includes options which can be used with recent firmware. 
-                    <em>Be aware that previous JMRI versions had erroneous decoder definitions
-		                for the DS74, DS78V, PM74, and SE74.  All Roster Entries for these 
-                        devices should be discarded then re-created using the newer 
-                        definitions.</em> 
-                    Provides corrected code for accessing the 
-                    CVs for the DS74, DS78V, PM74, and SE74 decoders.
-                </li>
+                <li></li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -463,8 +440,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>Prepend the proper prefix when using short system names, such as 123 or abcd.  For
-          alpha suffixes include the required $ character.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -488,19 +464,13 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li>Do not create blank profiles.
-            When deleting blank profiles do not remove directory.
-            Explicitly warn that a directory and its contents will be deleted when deleting a profile.</li>
+            <li></li>
         </ul>
 
     <h3>Resources</h3>
         <a id="Resources" name="Resources"></a>
         <ul>
-            <li>Added an
-                "<a href="https://jmri.org/extras">/extras/</a>"
-                directory to contain large/specialized downloadable resource files.</li>
-            <li>Added Jim Well's coal tipple sound file to
-                <a href="https://jmri.org/extras/sounds">/extras/sounds</li>
+            <li></li>
         </ul>
 
     <h3>Roster</h3>
@@ -518,7 +488,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Add the SetBlockValues.py script to the JMRI distribution.</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -594,7 +564,7 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li>Add the <strong>Set Memory Value</strong> action to the Throttle Commands script.</li>
+            <li></li>
         </ul>
 
    <h3>Web Access</h3>
@@ -632,3 +602,4 @@
         <ul>
             <li></li>
         </ul>
+
