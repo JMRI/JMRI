@@ -133,7 +133,8 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Fixed a bug that would cause the Memory Tool to fail
+                    when putting data.</li>
             </ul>
 
         <h4>Powerline</h4>
