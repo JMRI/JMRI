@@ -287,7 +287,7 @@ public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMat
                     if (stepDuration == 0) {
                         speedMatchSpeedTableStep = SpeedTableStep.STEP28;
                     }
-                    SpeedMatchSpeedStepInner(TOP_SPEED_STEP_MAX, lowestMaxSpeedStep, SpeedMatcherState.SET_UPPER_SPEED_STEPS, true);
+                    speedMatchSpeedStepInner(TOP_SPEED_STEP_MAX, lowestMaxSpeedStep, SpeedMatcherState.SET_UPPER_SPEED_STEPS, true);
                     step28CVValue = speedMatchCVValue;
                 }
                 break;
@@ -313,7 +313,7 @@ public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMat
             case FORWARD_SPEED_MATCH:
                 //Use PID Controller to adjust table speed steps lowestMaxSpeedStep through 1 to the appropriate speed
                 if (programmerState == ProgrammerState.IDLE) {
-                    SpeedMatchSpeedStepInner(lastSpeedTableStepCVValue, speedMatchSpeedTableStep.getSpeedStep(), SpeedMatcherState.POST_SPEED_MATCH);
+                    speedMatchSpeedStepInner(lastSpeedTableStepCVValue, speedMatchSpeedTableStep.getSpeedStep(), SpeedMatcherState.POST_SPEED_MATCH);
                 }
                 break;
 
@@ -451,8 +451,8 @@ public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMat
      * @param nextState  the SpeedMatcherState to advance to if speed matching
      *                   is complete
      */
-    private void SpeedMatchSpeedStepInner(int maxCVValue, int minCVValue, SpeedMatcherState nextState) {
-        SpeedMatchSpeedStepInner(maxCVValue, minCVValue, nextState, false);
+    private void speedMatchSpeedStepInner(int maxCVValue, int minCVValue, SpeedMatcherState nextState) {
+        speedMatchSpeedStepInner(maxCVValue, minCVValue, nextState, false);
     }
 
     /**
@@ -466,7 +466,7 @@ public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMat
      *                       state when speed matching the current
      *                       speedMatchSpeedTableStep is complete
      */
-    private void SpeedMatchSpeedStepInner(int maxCVValue, int minCVValue, SpeedMatcherState nextState, boolean forceNextState) {
+    private void speedMatchSpeedStepInner(int maxCVValue, int minCVValue, SpeedMatcherState nextState, boolean forceNextState) {
         if (stepDuration == 0) {
             speedStepTargetSpeedKPH = getSpeedStepScaleSpeedInKPH(speedMatchSpeedTableStep.getSpeedStep());
 

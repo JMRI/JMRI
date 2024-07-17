@@ -399,7 +399,7 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
             case FORWARD_SPEED_MATCH:
                 //Use PID Controller to adjust table speed steps lowestMaxSpeedStep through 2 to the appropriate speed
                 if (programmerState == ProgrammerState.IDLE) {
-                    SpeedMatchSpeedStepInner(lastSpeedTableStepCVValue, speedMatchSpeedTableStep.getSpeedStep(), SpeedMatcherState.POST_SPEED_MATCH);
+                    speedMatchSpeedStepInner(lastSpeedTableStepCVValue, speedMatchSpeedTableStep.getSpeedStep(), SpeedMatcherState.POST_SPEED_MATCH);
                 }
                 break;
 
@@ -537,7 +537,7 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
      * @param nextState  the SpeedMatcherState to advance to if speed matching
      *                   is complete
      */
-    private void SpeedMatchSpeedStepInner(int maxCVValue, int minCVValue, SpeedMatcherState nextState) {
+    private void speedMatchSpeedStepInner(int maxCVValue, int minCVValue, SpeedMatcherState nextState) {
         if (stepDuration == 0) {
             speedStepTargetSpeedKPH = getSpeedStepScaleSpeedInKPH(speedMatchSpeedTableStep.getSpeedStep());
 
@@ -608,5 +608,5 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
     //</editor-fold>
 
     //debugging logger
-    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(SpeedStepScaleSpeedTableSpeedMatcher.class);
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(SpeedStepScaleESUTableSpeedMatcher.class);
 }
