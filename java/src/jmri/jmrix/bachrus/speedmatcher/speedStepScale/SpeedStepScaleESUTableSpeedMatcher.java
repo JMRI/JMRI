@@ -121,7 +121,7 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
             return false;
         }
 
-        startStopButton.setText(Bundle.getMessage("btnStopSpeedMatch"));
+        startStopButton.setText(Bundle.getMessage("SpeedMatchStopBtn"));
 
         return true;
     }
@@ -473,7 +473,7 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
 
             case USER_STOPPED:
                 if (programmerState == ProgrammerState.IDLE) {
-                    statusLabel.setText("User stopped speed matching");
+                    statusLabel.setText(Bundle.getMessage("StatUserStoppedSpeedMatch"));
                     setThrottle(true, 0);
                     initNextSpeedMatcherState(SpeedMatcherState.CLEAN_UP);
                 }

@@ -365,13 +365,13 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
     }
 
     protected enum SpeedMatcherCV {
-        VSTART(2, "vStart"),
-        VMID(6, "vMid"),
-        VHIGH(5, "vHigh"),
-        ACCEL(3, "Momentum - Accel"),
-        DECEL(4, "Momentum - Decel"),
-        FORWARDTRIM(66, "Forward Trim"),
-        REVERSETRIM(95, "Reverse Trim");
+        VSTART(2, Bundle.getMessage("CVVStart")),
+        VMID(6, Bundle.getMessage("CVVMid")),
+        VHIGH(5, Bundle.getMessage("CVVHigh")),
+        ACCEL(3, Bundle.getMessage("CVAccel")),
+        DECEL(4, Bundle.getMessage("CVDecel")),
+        FORWARDTRIM(66, Bundle.getMessage("CVFwdTrim")),
+        REVERSETRIM(95, Bundle.getMessage("CVReverseTrim"));
 
         private final String name;
         private final String cv;
@@ -390,7 +390,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
         }
 
         public String getCVDisplayName() {
-            return String.format("%s (%s)", cv, name);
+            return Bundle.getMessage("CVDisplayName", cv, name);
         }
     }
 
@@ -510,7 +510,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             opsModeProgrammer = null;
         }
 
-        startStopButton.setText(Bundle.getMessage("btnStartSpeedMatch"));
+        startStopButton.setText(Bundle.getMessage("SpeedMatchStartBtn"));
     }
 
     /**
@@ -530,13 +530,13 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             return false;
         }
 
-        statusLabel.setText("Requesting Throttle");
+        statusLabel.setText(Bundle.getMessage("StatRequestingThrottle"));
         logger.info("Requesting Throttle");
         speedMatchStateTimer.start();
         boolean throttleRequestOK = InstanceManager.throttleManagerInstance().requestThrottle(dccLocoAddress, this, true);
         if (!throttleRequestOK) {
             logger.error("Loco Address in use, throttle request failed.");
-            statusLabel.setText("Loco Address in use, throttle request failed");
+            statusLabel.setText(Bundle.getMessage("StatThrottleReqFailed"));
         }
         return throttleRequestOK;
     }
@@ -815,7 +815,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             return true;
         } else {
             logger.error("Programmer request failed.");
-            statusLabel.setText("Programmer request failed");
+            statusLabel.setText(Bundle.getMessage("StatProgrammerReqFailed"));
             return false;
         }
     }

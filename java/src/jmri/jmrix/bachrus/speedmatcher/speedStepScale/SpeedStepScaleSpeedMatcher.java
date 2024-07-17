@@ -30,11 +30,6 @@ public abstract class SpeedStepScaleSpeedMatcher extends SpeedMatcher {
         this.actualMaxSpeedField = config.actualMaxSpeedField;
         this.speedUnit = config.speedUnit;
         this.targetMaxSpeedKPH = config.speedUnit == Speed.Unit.MPH ? Speed.mphToKph(config.targetMaxSpeed) : config.targetMaxSpeed;
-
-        //TODO: TRW - remove if unneeded
-        //saving code to set allowedMaxSpeedKPH to the next highest speed for a speed table step
-        //float targetMaxSpeed = config.speedUnit == Speed.Unit.MPH ? Speed.mphToKph(config.targetMaxSpeed) : config.targetMaxSpeed;
-        //this.allowedMaxSpeedKPH = (float) (CONVERT_28_TO_128_SPEED_STEPS * Math.ceil(targetMaxSpeed / CONVERT_28_TO_128_SPEED_STEPS));
     }
 
     //<editor-fold defaultstate="collapsed" desc="Protected APIs">
@@ -45,8 +40,8 @@ public abstract class SpeedStepScaleSpeedMatcher extends SpeedMatcher {
             return false;
         }
 
-        if (targetMaxSpeedKPH < 0) {
-            statusLabel.setText("Please enter a valid max speed");
+        if (targetMaxSpeedKPH < 1) {
+            statusLabel.setText(Bundle.getMessage("StatInvalidMaxSpeed"));
             return false;
         }
 
