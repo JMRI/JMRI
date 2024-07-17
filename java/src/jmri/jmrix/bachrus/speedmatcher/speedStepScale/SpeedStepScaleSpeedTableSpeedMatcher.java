@@ -8,8 +8,8 @@ import jmri.jmrix.bachrus.Speed;
  * such that its speed in mph/kph will be equal to its speed step in 128 speed
  * step mode. This uses the complex speed table, and the locomotive's speed will
  * plateau at either its actual top speed or the set max speed, whichever is
- * lower. The set max speed will be rounded up to the nearest speed table speed
- * step to maintain as smooth a curve as possible.
+ * lower.
+ *
  * @author Todd Wegter Copyright (C) 2024
  */
 public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMatcher {
@@ -62,6 +62,8 @@ public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMat
 
     private int reverseTrimValue = INITIAL_TRIM;
     private int lastReverseTrimValue = INITIAL_TRIM;
+    private int reverseTrimSpeedStep;
+    private float reverseTrimSpeedKPH;
 
     private SpeedMatcherState speedMatcherState = SpeedMatcherState.IDLE;
     //</editor-fold>
@@ -92,7 +94,7 @@ public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMat
         speedMatchMaxSpeedKPH = 0;
 
         speedMatcherState = SpeedMatcherState.WAIT_FOR_THROTTLE;
-        
+
         actualMaxSpeedField.setText(String.format("___"));
 
         if (!initializeAndStartSpeedMatcher(e -> speedMatchTimeout())) {
@@ -260,11 +262,11 @@ public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMat
                         speedMatchMaxSpeedKPH = measuredMaxSpeedKPH;
                         initNextSpeedMatcherState(SpeedMatcherState.SET_UPPER_SPEED_STEPS);
                     }
-                                           
+
                     //set TOP_SPEED_STEP_MIN to the lowest speed step that will be set to the max speed
                     float speedMatchMaxSpeed = speedUnit == Speed.Unit.MPH ? Speed.kphToMph(speedMatchMaxSpeedKPH) : speedMatchMaxSpeedKPH;
                     lowestMaxSpeedStep = getLowestMaxSpeedStep(speedMatchMaxSpeed);
-                    
+
                     actualMaxSpeedField.setText(String.format("%.1f", speedMatchMaxSpeed));
                 }
                 break;
@@ -347,11 +349,13 @@ public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMat
                 if (programmerState == ProgrammerState.IDLE) {
                     if (stepDuration == 0) {
                         statusLabel.setText(Bundle.getMessage("StatSettingReverseTrim"));
-                        setThrottle(false, 28);
+                        reverseTrimSpeedStep = Math.max(lowestMaxSpeedStep - 2, 1);
+                        reverseTrimSpeedKPH = getSpeedStepScaleSpeedInKPH(reverseTrimSpeedStep);
+                        setThrottle(false, reverseTrimSpeedStep);
                         setSpeedMatchStateTimerDuration(8000);
                         stepDuration = 1;
                     } else {
-                        setSpeedMatchError(speedMatchMaxSpeedKPH);
+                        setSpeedMatchError(reverseTrimSpeedKPH);
 
                         if (Math.abs(speedMatchError) < ALLOWED_SPEED_MATCH_ERROR) {
                             initNextSpeedMatcherState(SpeedMatcherState.COMPLETE);
@@ -359,7 +363,7 @@ public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMat
                             reverseTrimValue = getNextSpeedMatchValue(lastReverseTrimValue, REVERSE_TRIM_MAX, REVERSE_TRIM_MIN);
 
                             if (((lastReverseTrimValue == REVERSE_TRIM_MAX) || (lastReverseTrimValue == REVERSE_TRIM_MIN)) && (reverseTrimValue == lastReverseTrimValue)) {
-                                statusLabel.setText(Bundle.getMessage("StatSetReverseTripFail"));
+                                statusLabel.setText(Bundle.getMessage("StatSetReverseTrimFail"));
                                 logger.info("Unable to trim reverse to match forward");
                                 abort();
                                 break;
@@ -430,20 +434,20 @@ public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMat
 
     //<editor-fold defaultstate="collapsed" desc="Helper Functions">
     private void SpeedMatchSpeedStepInner(int maxCVValue, int minCVValue, SpeedMatcherState nextState) {
-        SpeedMatchSpeedStepInner(maxCVValue, minCVValue, nextState,  false);
+        SpeedMatchSpeedStepInner(maxCVValue, minCVValue, nextState, false);
     }
-    
+
     private void SpeedMatchSpeedStepInner(int maxCVValue, int minCVValue, SpeedMatcherState nextState, boolean forceNextState) {
         if (stepDuration == 0) {
-            speedStepTargetSpeedKPH = getSpeedStepScaleSpeedInKPH(speedMatchSpeedTableStep);
+            speedStepTargetSpeedKPH = getSpeedStepScaleSpeedInKPH(speedMatchSpeedTableStep.getSpeedStep());
 
             statusLabel.setText(Bundle.getMessage("StatSettingSpeed", speedMatchSpeedTableStep.getCV() + " (Speed Step " + String.valueOf(speedMatchSpeedTableStep.getSpeedStep()) + ")"));
             logger.info("Setting CV {} (speed step {}) to {} KPH ({} MPH)", speedMatchSpeedTableStep.getCV(), speedMatchSpeedTableStep.getSpeedStep(), String.valueOf(speedStepTargetSpeedKPH), String.valueOf(Speed.kphToMph(speedStepTargetSpeedKPH)));
 
             setThrottle(true, speedMatchSpeedTableStep.getSpeedStep());
-            
+
             writeSpeedTableStep(speedMatchSpeedTableStep, speedMatchCVValue);
-            
+
             setSpeedMatchStateTimerDuration(8000);
             stepDuration = 1;
         } else {

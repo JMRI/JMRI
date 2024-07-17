@@ -57,10 +57,10 @@ public abstract class SpeedStepScaleSpeedMatcher extends SpeedMatcher {
      * Gets the speed in KPH for a given speed step for a speed step scale speed
      * matcher
      *
-     * @param speedStep the SpeedTableStep to get the speed for
+     * @param speedStep the int speed step to get the speed for
      * @return speed for the given speedStep in KPH
      */
-    protected float getSpeedStepScaleSpeedInKPH(SpeedTableStep speedStep) {
+    protected float getSpeedStepScaleSpeedInKPH(int speedStep) {
         //speed = step in 128 speed step mode
         float speedStepSpeed = convert28To128SpeedSteps(speedStep);
 
@@ -79,14 +79,14 @@ public abstract class SpeedStepScaleSpeedMatcher extends SpeedMatcher {
      * Converts a 28 speed step mode speed step into its 128 speed step mode
      * "equivalent"
      *
-     * @param speedStep the SpeedTableStep to get the 128 speed step mode
+     * @param speedStep the int speed steep to get the 128 speed step mode
      *                  "equivalent" for
      * @return the 128 speed step mode "equivalent" for the given speedStep
      */
-    protected float convert28To128SpeedSteps(SpeedTableStep speedStep) {
+    protected float convert28To128SpeedSteps(int speedStep) {
         //speed step 1 (28) = speed step 1 (128), 28 (28) = 126 (128), so 27 speed steps (28) = 125 speed steps (128)
         //so each step (28) = 4.704 steps (128)
-        return (speedStep.getSpeedStep() * 4.6296f) - 3.6296f;
+        return (speedStep * 4.6296f) - 3.6296f;
     }
 
     /**

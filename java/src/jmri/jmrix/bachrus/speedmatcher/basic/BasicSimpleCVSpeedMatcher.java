@@ -389,7 +389,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                             reverseTrimValue = getNextSpeedMatchValue(lastReverseTrimValue, REVERSE_TRIM_MAX, REVERSE_TRIM_MIN);
 
                             if (((lastReverseTrimValue == REVERSE_TRIM_MAX) || (lastReverseTrimValue == REVERSE_TRIM_MIN)) && (reverseTrimValue == lastReverseTrimValue)) {
-                                statusLabel.setText(Bundle.getMessage("StatSetReverseTripFail"));
+                                statusLabel.setText(Bundle.getMessage("StatSetReverseTrimFail"));
                                 logger.info("Unable to trim reverse to match forward");
                                 abort();
                                 break;
