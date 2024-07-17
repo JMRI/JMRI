@@ -13,33 +13,46 @@ import jmri.jmrix.bachrus.speedmatcher.SpeedMatcherConfig;
  *
  * @author Todd Wegter Copyright (C) 2024
  */
-public class SpeedStepScaleSpeedMatcherConfig extends SpeedMatcherConfig{
-    
+public class SpeedStepScaleSpeedMatcherConfig extends SpeedMatcherConfig {
+
     //<editor-fold defaultstate="collapsed" desc="Enums">
     public enum SpeedTable {
         ADVANCED, ESU
     }
     //</editor-fold>
-    
+
     //<editor-fold defaultstate="collapsed" desc="Instance Variables">
     public float targetMaxSpeed;
     public JLabel actualMaxSpeedField;
     //</editor-fold>
-    
+
+    /**
+     * Create a config object for a Speed Step Scale Speed Matcher
+     *
+     * @param address
+     * @param targetMaxSpeed
+     * @param speedUnit
+     * @param trimReverseSpeed
+     * @param warmUpForwardSeconds
+     * @param warmUpReverseSeconds
+     * @param powerManager
+     * @param statusLabel
+     * @param actualMaxSpeedField
+     * @param startStopButton
+     */
     public SpeedStepScaleSpeedMatcherConfig(
-            DccLocoAddress address, 
+            DccLocoAddress address,
             float targetMaxSpeed,
-            Speed.Unit speedUnit, 
-            boolean trimReverseSpeed, 
-            int warmUpForwardSeconds, 
-            int warmUpReverseSeconds, 
+            Speed.Unit speedUnit,
+            boolean trimReverseSpeed,
+            int warmUpForwardSeconds,
+            int warmUpReverseSeconds,
             PowerManager powerManager,
-            JLabel statusLabel, 
+            JLabel statusLabel,
             JLabel actualMaxSpeedField,
-            JButton startStopButton)
-    {
+            JButton startStopButton) {
         super(address, speedUnit, trimReverseSpeed, warmUpForwardSeconds, warmUpReverseSeconds, powerManager, statusLabel, startStopButton);
-        
+
         this.targetMaxSpeed = targetMaxSpeed;
         this.actualMaxSpeedField = actualMaxSpeedField;
     }

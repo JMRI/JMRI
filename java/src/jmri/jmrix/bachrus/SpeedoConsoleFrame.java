@@ -57,7 +57,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         ThrottleListener,
         ProgListener,
         PropertyChangeListener {
-    
+
     /**
      * TODO: Complete the help file
      */
@@ -525,8 +525,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
         basicPane.add(scalePanel);
         basicPane.add(customScalePanel);
-
         //</editor-fold>
+
         //<editor-fold defaultstate="collapsed" desc="Speedometer Panel">
         // Speed panel for the dial or digital speed display
         JPanel speedPanel = new JPanel();
@@ -594,8 +594,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         dialButton.addActionListener(e -> setDial());
 
         basicPane.add(speedPanel);
-
         //</editor-fold>
+
         //<editor-fold defaultstate="collapsed" desc="Address, Speed Profiling, Speed Matching, and Title Panel">
         JPanel profileAndSpeedMatchingPane = new JPanel();
         profileAndSpeedMatchingPane.setLayout(new BorderLayout());
@@ -664,7 +664,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         momentumPane.add(decelerationField);
         momentumPane.add(readMomentumButton);
         momentumPane.add(setMomentumButton);
-        
+
         // Listen to read momentum button
         readMomentumButton.addActionListener(e -> readMomentum());
 
@@ -959,10 +959,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             basicSpeedMatchWarmUpReverseSeconds.setEnabled(enableWarmUp);
             basicSpeedMatchWarmUpReverseUnit.setEnabled(enableWarmUp);
         });
+        //</editor-fold>
+        //</editor-fold>
 
-        //</editor-fold>
-        //</editor-fold>
-        
         //<editor-fold defaultstate="collapsed" desc="Advanced Speed Matcher Tab">
         speedStepScaleSpeedMatcherTypeGroup.add(speedStepScaleSpeedTableSpeedMatchButton);
         speedStepScaleSpeedMatcherTypeGroup.add(speedStepScaleESUSpeedMatchButton);
@@ -1031,7 +1030,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         speedStepScaleSpeedMatcherPane.add(speedStepScaleSpeedMatchSpeedPane, BorderLayout.CENTER);
 
         profileAndSpeedMatchingTabs.add(Bundle.getMessage("AdvancedSpeedMatchTab"), speedStepScaleSpeedMatcherPane);
-        
+
         //<editor-fold defaultstate="collapsed" desc="Speed Step Scale Speed Matcher Button Handlers">
         // Listen to speed match button
         speedStepScaleSpeedMatchStartStopButton.addActionListener(e -> {
@@ -1105,7 +1104,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         // make basic panel
         mainPane.add(basicPane);
 
-        //TODO: TRW - REMOVE - add profilePane without condition to test/debug without DCC system
+        //TODO: TRW - add profileAndSpeedMatchingPane without condition to test/debug without DCC system
         if (((dccServices & THROTTLE) == THROTTLE) || ((dccServices & COMMAND) == COMMAND)) {
             mainPane.add(profileAndSpeedMatchingPane);
         } else {

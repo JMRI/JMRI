@@ -28,6 +28,19 @@ public abstract class SpeedMatcherConfig {
     public JButton startStopButton;
     //</editor-fold>
 
+    /**
+     * Constructor for the abstract SpeedMatcherConfig at the core of any Speed
+     * Matcher Config
+     *
+     * @param address
+     * @param speedUnit
+     * @param trimReverseSpeed
+     * @param warmUpForwardSeconds
+     * @param warmUpReverseSeconds
+     * @param powerManager
+     * @param statusLabel
+     * @param startStopButton
+     */
     public SpeedMatcherConfig(
             DccLocoAddress address,
             Speed.Unit speedUnit,

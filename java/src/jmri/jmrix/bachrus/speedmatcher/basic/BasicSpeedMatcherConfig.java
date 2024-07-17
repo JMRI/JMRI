@@ -26,6 +26,20 @@ public class BasicSpeedMatcherConfig extends SpeedMatcherConfig{
     public float targetTopSpeed;
     //</editor-fold>
     
+    /**
+     * Create a config object for a Basic Speed Matcher
+     * 
+     * @param address
+     * @param targetStartSpeed
+     * @param targetTopSpeed
+     * @param speedUnit
+     * @param trimReverseSpeed
+     * @param warmUpForwardSeconds
+     * @param warmUpReverseSeconds
+     * @param powerManager
+     * @param statusLabel
+     * @param startStopButton 
+     */
     public BasicSpeedMatcherConfig(
             DccLocoAddress address, 
             float targetStartSpeed,

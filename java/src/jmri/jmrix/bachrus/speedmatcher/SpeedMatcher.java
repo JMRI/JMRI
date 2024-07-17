@@ -351,16 +351,36 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             this.cv = String.valueOf(speedStep + 66);
         }
 
+        /**
+         * Gets the speed step as an int
+         *
+         * @return int speed step
+         */
         public int getSpeedStep() {
             return this.speedStep;
         }
 
+        /**
+         * Gets the string CV of the SpeedTableStep
+         *
+         * @return string CV
+         */
         public String getCV() {
             return this.cv;
         }
 
+        /**
+         * Gets the next SpeedTableStep
+         *
+         * @return next SpeedTableStep
+         */
         public abstract SpeedTableStep getNext();
 
+        /**
+         * Gets the previous SpeedTableStep
+         *
+         * @return previous SpeedTableStep
+         */
         public abstract SpeedTableStep getPrevious();
     }
 
@@ -381,14 +401,29 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
             this.name = name;
         }
 
+        /**
+         * Gets the string CV value for the SpeedMatcherCV
+         *
+         * @return string CV value
+         */
         public String getCV() {
             return this.cv;
         }
 
+        /**
+         * Gets the string name of the SpeedMatcherCV
+         *
+         * @return string name
+         */
         public String getName() {
             return this.name;
         }
 
+        /**
+         * Gets the string display name of the SpeedMatcherCV
+         *
+         * @return string display name
+         */
         public String getCVDisplayName() {
             return Bundle.getMessage("CVDisplayName", cv, name);
         }
@@ -437,6 +472,12 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
     private Timer speedMatchStateTimer;
     //</editor-fold>
 
+    /**
+     * Constructor for the abstract SpeedMatcher at the core of any Speed
+     * Matcher
+     *
+     * @param config
+     */
     public SpeedMatcher(SpeedMatcherConfig config) {
         this.dccLocoAddress = config.dccLocoAddress;
         this.powerManager = config.powerManager;
@@ -877,7 +918,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
     public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
     }
     //</editor-fold>
-    
+
     //debugging logger
     private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(SpeedMatcher.class);
 }

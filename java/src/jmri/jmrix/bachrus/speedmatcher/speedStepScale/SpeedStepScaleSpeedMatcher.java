@@ -24,6 +24,12 @@ public abstract class SpeedStepScaleSpeedMatcher extends SpeedMatcher {
     protected float speedMatchMaxSpeedKPH = 0;
     //</editor-fold>
 
+    /**
+     * Constructs the abstract SpeedStepScaleSpeedMatcher at the core of any
+     * Speed Step Scale Speed Matcher
+     *
+     * @param config SpeedStepScaleSpeedMatcherConfig
+     */
     public SpeedStepScaleSpeedMatcher(SpeedStepScaleSpeedMatcherConfig config) {
         super(config);
 
@@ -33,6 +39,11 @@ public abstract class SpeedStepScaleSpeedMatcher extends SpeedMatcher {
     }
 
     //<editor-fold defaultstate="collapsed" desc="Protected APIs">
+    /**
+     * Validates the speed matcher's configuration
+     *
+     * @return true if the configuration is valid, false otherwise
+     */
     @Override
     protected boolean validate() {
         if (dccLocoAddress.getNumber() <= 0) {

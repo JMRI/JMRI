@@ -68,6 +68,12 @@ public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMat
     private SpeedMatcherState speedMatcherState = SpeedMatcherState.IDLE;
     //</editor-fold>
 
+    /**
+     * Constructs the SpeedStepScaleSpeedTableSpeedMatcher from a
+     * SpeedStepScaleSpeedMatcherConfig
+     *
+     * @param config SpeedStepScaleSpeedMatcherConfig
+     */
     public SpeedStepScaleSpeedTableSpeedMatcher(SpeedStepScaleSpeedMatcherConfig config) {
         super(config);
     }
@@ -141,6 +147,10 @@ public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMat
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Speed Matcher State">
+    /**
+     * Main speed matching timeout handler. This is the state machine that
+     * effectively does the speed matching process.
+     */
     private synchronized void speedMatchTimeout() {
         switch (speedMatcherState) {
             case WAIT_FOR_THROTTLE:
@@ -433,10 +443,29 @@ public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMat
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Helper Functions">
+    /**
+     * Helper function for speed matching the current speedMatchSpeedTableStep
+     *
+     * @param maxCVValue the maximum allowable value for the CV
+     * @param minCVValue the minimum allowable value for the CV
+     * @param nextState  the SpeedMatcherState to advance to if speed matching
+     *                   is complete
+     */
     private void SpeedMatchSpeedStepInner(int maxCVValue, int minCVValue, SpeedMatcherState nextState) {
         SpeedMatchSpeedStepInner(maxCVValue, minCVValue, nextState, false);
     }
 
+    /**
+     * Helper function for speed matching the current speedMatchSpeedTableStep
+     *
+     * @param maxCVValue     the maximum allowable value for the CV
+     * @param minCVValue     the minimum allowable value for the CV
+     * @param nextState      the SpeedMatcherState to advance to if speed
+     *                       matching is complete
+     * @param forceNextState set to true to force speedMatcherState to the next
+     *                       state when speed matching the current
+     *                       speedMatchSpeedTableStep is complete
+     */
     private void SpeedMatchSpeedStepInner(int maxCVValue, int minCVValue, SpeedMatcherState nextState, boolean forceNextState) {
         if (stepDuration == 0) {
             speedStepTargetSpeedKPH = getSpeedStepScaleSpeedInKPH(speedMatchSpeedTableStep.getSpeedStep());
@@ -502,7 +531,7 @@ public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMat
      * Sets up the speed match state by clearing the speed match error, clearing
      * the step duration, setting the timer duration, and setting the next state
      *
-     * @param nextState - next SpeedMatcherState to set
+     * @param nextState next SpeedMatcherState to set
      */
     protected void initNextSpeedMatcherState(SpeedMatcherState nextState) {
         resetSpeedMatchError();

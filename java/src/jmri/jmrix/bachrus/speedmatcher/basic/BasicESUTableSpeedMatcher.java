@@ -86,6 +86,11 @@ public class BasicESUTableSpeedMatcher extends BasicSpeedMatcher {
     private SpeedMatcherState speedMatcherState = SpeedMatcherState.IDLE;
     //</editor-fold>
 
+    /**
+     * Constructs the BasicESUTableSpeedMatcher from a BasicSpeedMatcherConfig
+     * 
+     * @param config BasicSpeedMatcherConfig
+     */
     public BasicESUTableSpeedMatcher(BasicSpeedMatcherConfig config) {
         super(config);
 
@@ -159,6 +164,10 @@ public class BasicESUTableSpeedMatcher extends BasicSpeedMatcher {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Speed Matcher State">
+    /**
+     * Main speed matching timeout handler. This is the state machine that
+     * effectively does the speed matching process.
+     */
     private synchronized void speedMatchTimeout() {
         switch (speedMatcherState) {
             case WAIT_FOR_THROTTLE:

@@ -13,13 +13,13 @@ import jmri.jmrix.bachrus.Speed;
  * @author Todd Wegter Copyright (C) 2024
  */
 public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatcher {
-    
+
     //<editor-fold defaultstate="collapsed" desc="Constants">
     private final int INITIAL_VSTART = 1;
     private final int INITIAL_VHIGH = 255;
     private final int INITIAL_STEP2 = 1;
     private final int INITIAL_TRIM = 128;
-    
+
     private final int VHIGH_MAX = 255;
     private final int VHIGH_MIN = INITIAL_VSTART + 1;
     private final int VSTART_MIN = 1;
@@ -54,7 +54,7 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
         CLEAN_UP,
     }
     //</editor-fold>
-    
+
     //<editor-fold defaultstate="collapsed" desc="Instance Variables">
     private SpeedTableStep initSpeedTableStep;
     private int initSpeedTableStepValue;
@@ -62,10 +62,10 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
     private int lowestMaxSpeedStep;
 
     private float speedStepTargetSpeedKPH;
-    
+
     private int vHigh = INITIAL_VHIGH;
     private int lastVHigh = INITIAL_VHIGH;
-    
+
     private int vStart = INITIAL_VSTART;
     private int lastVStart = INITIAL_VSTART;
     private int vStartMax;
@@ -82,7 +82,13 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
 
     private SpeedMatcherState speedMatcherState = SpeedMatcherState.IDLE;
     //</editor-fold>
-    
+
+    /**
+     * Constructs the SpeedStepScaleESUTableSpeedMatcher from a
+     * SpeedStepScaleSpeedMatcherConfig
+     *
+     * @param config SpeedStepScaleSpeedMatcherConfig
+     */
     public SpeedStepScaleESUTableSpeedMatcher(SpeedStepScaleSpeedMatcherConfig config) {
         super(config);
     }
@@ -149,7 +155,6 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
         return speedMatcherState == SpeedMatcherState.IDLE;
     }
 
-
     /**
      * Cleans up the speed matcher when speed matching is stopped or is finished
      */
@@ -159,8 +164,12 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
         super.cleanUpSpeedMatcher();
     }
     //</editor-fold>
-    
+
     //<editor-fold defaultstate="collapsed" desc="Speed Matcher State">
+    /**
+     * Main speed matching timeout handler. This is the state machine that
+     * effectively does the speed matching process.
+     */
     private synchronized void speedMatchTimeout() {
         switch (speedMatcherState) {
             case WAIT_FOR_THROTTLE:
@@ -190,7 +199,7 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
                     initNextSpeedMatcherState(SpeedMatcherState.INIT_VSTART);
                 }
                 break;
-                
+
             case INIT_VSTART:
                 //set vStart to 0 (CV 2)
                 if (programmerState == ProgrammerState.IDLE) {
@@ -305,7 +314,7 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
                 }
                 break;
 
-            case FORWARD_SPEED_MATCH_VHIGH:                
+            case FORWARD_SPEED_MATCH_VHIGH:
                 //Use PID Controller to adjust vHigh (Speed Step 28) to the max speed
                 if (programmerState == ProgrammerState.IDLE) {
                     if (stepDuration == 0) {
@@ -335,7 +344,7 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
                     }
                 }
                 break;
-                
+
             case FORWARD_SPEED_MATCH_VSTART:
                 //Use PID Controller to adjust vStart (Speed Step 1) to the appropriate speed
                 if (programmerState == ProgrammerState.IDLE) {
@@ -497,7 +506,7 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
         }
     }
     //</editor-fold>
-    
+
     //<editor-fold defaultstate="collapsed" desc="ThrottleListener Overrides">
     /**
      * Called when a throttle is found
@@ -518,13 +527,17 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
         }
     }
     //</editor-fold>
-    
-    //<editor-fold defaultstate="collapsed" desc="Helper Functions">
-    private void SpeedMatchSpeedStepInner(int maxCVValue, int minCVValue, SpeedMatcherState nextState) {
-        SpeedMatchSpeedStepInner(maxCVValue, minCVValue, nextState, false);
-    }
 
-    private void SpeedMatchSpeedStepInner(int maxCVValue, int minCVValue, SpeedMatcherState nextState, boolean forceNextState) {
+    //<editor-fold defaultstate="collapsed" desc="Helper Functions">
+    /**
+     * Helper function for speed matching the current speedMatchSpeedTableStep
+     *
+     * @param maxCVValue the maximum allowable value for the CV
+     * @param minCVValue the minimum allowable value for the CV
+     * @param nextState  the SpeedMatcherState to advance to if speed matching
+     *                   is complete
+     */
+    private void SpeedMatchSpeedStepInner(int maxCVValue, int minCVValue, SpeedMatcherState nextState) {
         if (stepDuration == 0) {
             speedStepTargetSpeedKPH = getSpeedStepScaleSpeedInKPH(speedMatchSpeedTableStep.getSpeedStep());
 
@@ -542,11 +555,6 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
 
             if (Math.abs(speedMatchError) < ALLOWED_SPEED_MATCH_ERROR) {
                 lastSpeedTableStepCVValue = speedMatchCVValue;
-
-                if (forceNextState) {
-                    initNextSpeedMatcherState(nextState);
-                    return;
-                }
 
                 speedMatchSpeedTableStep = speedMatchSpeedTableStep.getPrevious();
 
@@ -598,7 +606,7 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
         setSpeedMatchStateTimerDuration(1800);
     }
     //</editor-fold>
-    
+
     //debugging logger
     private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(SpeedStepScaleSpeedTableSpeedMatcher.class);
 }

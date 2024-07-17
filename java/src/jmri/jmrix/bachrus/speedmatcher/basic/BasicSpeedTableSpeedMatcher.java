@@ -81,6 +81,11 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
     private SpeedMatcherState speedMatcherState = SpeedMatcherState.IDLE;
     //</editor-fold>
 
+    /**
+     * Constructs the BasicSpeedTableSpeedMatcher from a BasicSpeedMatcherConfig
+     *
+     * @param config SpeedStepScaleSpeedMatcherConfig
+     */
     public BasicSpeedTableSpeedMatcher(BasicSpeedMatcherConfig config) {
         super(config);
 
@@ -154,6 +159,10 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Speed Matcher State">
+    /**
+     * Main speed matching timeout handler. This is the state machine that
+     * effectively does the speed matching process.
+     */
     private synchronized void speedMatchTimeout() {
         switch (speedMatcherState) {
             case WAIT_FOR_THROTTLE:
@@ -588,7 +597,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
         setSpeedMatchStateTimerDuration(1800);
     }
     //</editor-fold>
-    
+
     //debugging logger
     private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(BasicSpeedTableSpeedMatcher.class);
 }

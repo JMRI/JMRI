@@ -18,6 +18,12 @@ public abstract class BasicSpeedMatcher extends SpeedMatcher {
     protected float targetTopSpeedKPH;
     //</editor-fold>
 
+    /**
+     * Constructs the abstract BasicSpeedMatcher at the core of any Basic Speed
+     * Matcher
+     *
+     * @param config BasicSpeedMatcherConfig
+     */
     public BasicSpeedMatcher(BasicSpeedMatcherConfig config) {
         super(config);
 

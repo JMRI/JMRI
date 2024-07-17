@@ -65,6 +65,11 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
     private SpeedMatcherState speedMatcherState = SpeedMatcherState.IDLE;
     //</editor-fold>
 
+    /**
+     * Constructs the BasicSimpleCVSpeedMatcher from a BasicSpeedMatcherConfig
+     *
+     * @param config BasicSpeedMatcherConfig
+     */
     public BasicSimpleCVSpeedMatcher(BasicSpeedMatcherConfig config) {
         super(config);
 
@@ -141,7 +146,8 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
 
     //<editor-fold defaultstate="collapsed" desc="Speed Matcher State">
     /**
-     * Timer timeout handler for the speed match timer
+     * Main speed matching timeout handler. This is the state machine that
+     * effectively does the speed matching process.
      */
     private synchronized void speedMatchTimeout() {
         switch (speedMatcherState) {
@@ -486,7 +492,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
         setSpeedMatchStateTimerDuration(1800);
     }
     //</editor-fold>
-    
+
     //debugging logger
     private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(BasicSimpleCVSpeedMatcher.class);
 }
