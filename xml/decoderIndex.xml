@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.7.9plus+jake+20240626T1931Z+Rb4c9eabc2bc on Wed Jun 26 15:32:25 EDT 2024-->
-  <decoderIndex version="599">
+  <!--Written by JMRI version 5.9.1plus+jake+20240716T1008Z+R58c2252ad5a on Tue Jul 16 06:09:27 EDT 2024-->
+  <decoderIndex version="601">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -376,7 +376,75 @@
           <output name="1" label="A - White" />
           <output name="2" label="B - Yellow" />
         </model>
+        <model model="SD50, SD60, SD60M (Part #490299)" numOuts="2">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+        </model>
         <model model="LE063XF by Lenz (Part #447299)" numOuts="2">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+        </model>
+        <model model="TRAINMASTER (Part #447299)" numOuts="2">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+        </model>
+        <model model="C628/C630 (Part #447299)" numOuts="2">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+        </model>
+        <model model="U25 B (Part #447299)" numOuts="2">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+        </model>
+        <model model="B23-7 (Part #447299)" numOuts="2">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+        </model>
+        <model model="B30-7 (Part #447299)" numOuts="2">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+        </model>
+        <model model="B36-7 (Part #447299)" numOuts="2">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+        </model>
+        <model model="DASH 8-32BW/BHW (Part #447299)" numOuts="2">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+        </model>
+        <model model="DASH 8-40B/BW (Part #447299)" numOuts="2">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+        </model>
+        <model model="GP38 (Part #447299)" numOuts="2">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+        </model>
+        <model model="GP38-2 (Part #447299)" numOuts="2">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+        </model>
+        <model model="GP40 (Part #447299)" numOuts="2">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+        </model>
+        <model model="GP40-2 (Part #447299)" numOuts="2">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+        </model>
+        <model model="SD-7/9 (Part #447299)" numOuts="2">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+        </model>
+        <model model="SD-35 (Part #447299)" numOuts="2">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+        </model>
+        <model model="GP-30/35 (Part #470299)" numOuts="2">
+          <output name="1" label="A - White" />
+          <output name="2" label="B - Yellow" />
+        </model>
+        <model model="GP15-1 (Part #508299)" numOuts="2">
           <output name="1" label="A - White" />
           <output name="2" label="B - Yellow" />
         </model>
@@ -395,6 +463,26 @@
           <output name="2" label="LED 2" />
         </model>
         <model model="N12A2-ATL by NCE" numOuts="2" numFns="5">
+          <output name="1" label="LED 1" />
+          <output name="2" label="LED 2" />
+        </model>
+        <model model="VO-1000 (Part #518299)" numOuts="4" numFns="8">
+          <output name="1" label="LED 1" />
+          <output name="2" label="LED 2" />
+        </model>
+        <model model="GP38-2 (Part #518299)" numOuts="4" numFns="8">
+          <output name="1" label="LED 1" />
+          <output name="2" label="LED 2" />
+        </model>
+        <model model="SD50, SD60, SD60M (Part #518299)" numOuts="4" numFns="8">
+          <output name="1" label="LED 1" />
+          <output name="2" label="LED 2" />
+        </model>
+        <model model="GP-7/9 (Part #518299)" numOuts="4" numFns="8">
+          <output name="1" label="LED 1" />
+          <output name="2" label="LED 2" />
+        </model>
+        <model model="Dash 8-40C (Part #518299)" numOuts="4" numFns="8">
           <output name="1" label="LED 1" />
           <output name="2" label="LED 2" />
         </model>

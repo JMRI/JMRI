@@ -56,10 +56,19 @@ public class SerialThrottle extends AbstractThrottle {
         if (func>=0 && func < SERIAL_FUNCTION_CODES.length) {
             if ( SERIAL_FUNCTION_CODES[func] > 0xFFFF ) {
                 // TMCC 2 format
-                sendToLayout(SERIAL_FUNCTION_CODES[func] + address.getNumber() * 512, func);
+                if (SERIAL_FUNCTION_CODES[func] > 0xFFFFFF ) {
+                    int first =  (int)(SERIAL_FUNCTION_CODES[func] >> 24);
+                    int second = (int)(SERIAL_FUNCTION_CODES[func] & 0xFFFFFF);
+                    // doubles are only sent once, not repeating
+                    sendOneWordOnce(first  + address.getNumber() * 512);
+                    sendOneWordOnce(second + address.getNumber() * 512);           
+                } else {
+                    // single message
+                    sendFnToLayout((int)SERIAL_FUNCTION_CODES[func] + address.getNumber() * 512, func);
+                }
             } else {
                 // TMCC 1 format
-                sendToLayout(SERIAL_FUNCTION_CODES[func] + address.getNumber() * 128, func);
+                sendFnToLayout((int)SERIAL_FUNCTION_CODES[func] + address.getNumber() * 128, func);
             }
         }
         else {
@@ -67,12 +76,22 @@ public class SerialThrottle extends AbstractThrottle {
         }
     }
 
+    // the argument is a long containing 3 bytes. 
+    // The first byte is the message opcode
+    private void sendOneWordOnce(int word) {
+        SerialMessage m = new SerialMessage(word);
+        tc.sendSerialMessage(m, null);
+    }
+
     // Translate function number to line characters.
     // If the upper byte is zero, it will be replaces by 0xF8
     //    and the address will be set in the low position.
     // If the upper byte is non-zero, that value will be sent,
     //    and the address will be set in the upper (TMCC2) position.
-    private final static int[] SERIAL_FUNCTION_CODES = new int[] {
+    //    If six bytes are specified (with the upper one non-zero), 
+    //    this will be interpreted as two commands to be sequentially sent,
+    //    with the upper bytes sent first.
+    private final static long[] SERIAL_FUNCTION_CODES = new long[] {
         0x00000D, 0x00001D, 0x00001C, 0x000005, 0x000006, /* Fn0-4 */
         0x000010, 0x000011, 0x000012, 0x000013, 0x000014, /* Fn5-9 */
         0x000015, 0x000016, 0x000017, 0x000018, 0x000019, /* Fn10-14 */
@@ -80,9 +99,9 @@ public class SerialThrottle extends AbstractThrottle {
         0x000004, 0x000007, 0x000047, 0x000042, 0x000028, /* Fn20-24 */
         0x000029, 0x00002A, 0x00002B, /* 25-27 */
         // start of TMCC 2 functions
-        0xF801FB, // Fn28 Start Up Sequence 1 (Delayed Prime Mover)
+        0xF801FBF801FCL, // Fn28 Start Up Sequence 1 (Delayed Prime Mover, then Immediate Start Up)
         0xF801FC, // Fn29 Start Up Sequence 2 (Immediate Start Up)
-        0xF801FD, // Fn30 Shut Down Sequence 1 (Delay w/ Announcement)
+        0xF801FDF801FEL, // Fn30 Shut Down Sequence 1 (Delay w/ Announcement then Immediate Shut Down)
         0xF801FE, // Fn31 Shut down Sequence 2 (Immediate Shut Down)
         0xF90000, // Fn32
         0xF90000, // Fn33
@@ -214,7 +233,7 @@ public class SerialThrottle extends AbstractThrottle {
      * @param value Content of message to be sent in three bytes
      * @param func  The number of the function being addressed
      */
-    protected void sendToLayout(int value, int func) {
+    protected void sendFnToLayout(int value, int func) {
         tc.sendSerialMessage(new SerialMessage(value), null);
         tc.sendSerialMessage(new SerialMessage(value), null);
         tc.sendSerialMessage(new SerialMessage(value), null);
