@@ -1,9 +1,14 @@
 package jmri.jmrix;
 
 import java.io.*;
+import java.util.Set;
 import java.util.Vector;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import jmri.SystemConnectionMemo;
+import jmri.util.SystemType;
 
 /**
  * Provide an abstract base for *PortController classes.
@@ -222,6 +227,26 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         for (com.fazecast.jSerialComm.SerialPort portID : portIDs) {
             portNameVector.addElement(portID.getSystemPortName());
         }
+
+        // On Linux and Mac, use the system property purejavacomm.portnamepattern
+        // to let the user add additional serial ports
+        if (SystemType.isLinux() || SystemType.isMacOSX()) {
+            Pattern pattern = Pattern.compile(System.getProperty("purejavacomm.portnamepattern"));
+
+            File[] files = new File("/dev").listFiles();
+            if (files != null) {
+                Set<String> ports = Stream.of(files)
+                        .filter(file -> !file.isDirectory()
+                                && pattern.matcher(file.getName()).matches()
+                                && !portNameVector.contains(file.getName()))
+                        .map(File::getName)
+                        .collect(Collectors.toSet());
+
+                portNameVector.addAll(ports);
+            }
+
+        }
+
         return portNameVector;
     }
 
