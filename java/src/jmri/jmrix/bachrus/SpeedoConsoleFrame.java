@@ -1426,7 +1426,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     //<editor-fold defaultstate="collapsed" desc="Power Manager Helper Functions">
     /**
      * {@inheritDoc}
-     * <p>
+     * 
      * Handles property changes from the power manager.
      */
     @Override
