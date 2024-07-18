@@ -13,9 +13,11 @@ public class BasicSpeedMatcherFactory {
     /**
      * Gets the correct Basic Speed Matcher for the given speedTable
      *
-     * @param speedTable
-     * @param config BasicSpeedMatcherConfig
-     * @return SpeedMatcher
+     * @param speedTable BasicSpeedMatcherConfig.SpeedTable to use for speed
+     *                   matching
+     * @param config     BasicSpeedMatcherConfig for initializing the speed
+     *                   matcher
+     * @return the SpeedMatcher to use for speed matching
      */
     public static SpeedMatcher getSpeedMatcher(BasicSpeedMatcherConfig.SpeedTable speedTable, BasicSpeedMatcherConfig config) {
 

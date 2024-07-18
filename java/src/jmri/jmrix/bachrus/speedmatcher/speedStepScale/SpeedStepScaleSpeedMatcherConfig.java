@@ -29,16 +29,24 @@ public class SpeedStepScaleSpeedMatcherConfig extends SpeedMatcherConfig {
     /**
      * Create a config object for a Speed Step Scale Speed Matcher
      *
-     * @param address
-     * @param targetMaxSpeed
-     * @param speedUnit
-     * @param trimReverseSpeed
-     * @param warmUpForwardSeconds
-     * @param warmUpReverseSeconds
-     * @param powerManager
-     * @param statusLabel
-     * @param actualMaxSpeedField
-     * @param startStopButton
+     * @param address              Address of locomotive to speed match
+     * @param targetMaxSpeed       Target maximum speed in the given speedUnit
+     * @param speedUnit            Speed.Unit to speed match the locomotive in
+     * @param trimReverseSpeed     Set to true to trim the locomotive's reverse
+     *                             speed, false otherwise
+     * @param warmUpForwardSeconds Number of seconds to warm up the locomotive
+     *                             before forward speed matching; set to 0 to
+     *                             skip the forward warm up
+     * @param warmUpReverseSeconds Number of seconds to warm up the locomotive
+     *                             before trimming revers speed; set to 0 to
+     *                             skip the reverse warm up
+     * @param powerManager         PowerManager for turning on the DCC system
+     *                             power
+     * @param statusLabel          JLabel status label in the SpeedoConsoleFrame
+     * @param actualMaxSpeedField  JLabel for indicating the locomotive's actual
+     *                             max speed
+     * @param startStopButton      JButton for starting and stopping speed
+     *                             matching
      */
     public SpeedStepScaleSpeedMatcherConfig(
             DccLocoAddress address,

@@ -476,7 +476,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
      * Constructor for the abstract SpeedMatcher at the core of any Speed
      * Matcher
      *
-     * @param config
+     * @param config SpeedMatcherConfig for initializing the SpeedMatcher
      */
     public SpeedMatcher(SpeedMatcherConfig config) {
         this.dccLocoAddress = config.dccLocoAddress;

@@ -13,9 +13,11 @@ public class SpeedStepScaleSpeedMatcherFactory {
     /**
      * Gets the correct Speed Step Scale Speed Matcher for the given speedTable
      *
-     * @param speedTable
-     * @param config     SpeedStepScaleSpeedMatcherConfig
-     * @return SpeedMatcher
+     * @param speedTable SpeedStepScaleSpeedMatcherConfig.SpeedTable to use for
+     *                   speed matching
+     * @param config     SpeedStepScaleSpeedMatcherConfig for initializing the
+     *                   speed matcher
+     * @return the SpeedMatcher to use for speed matching
      */
     public static SpeedMatcher getSpeedMatcher(SpeedStepScaleSpeedMatcherConfig.SpeedTable speedTable, SpeedStepScaleSpeedMatcherConfig config) {
 
