@@ -233,8 +233,9 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
 
         // On Linux and Mac, use the system property purejavacomm.portnamepattern
         // to let the user add additional serial ports
-        if (SystemType.isLinux() || SystemType.isMacOSX()) {
-            Pattern pattern = Pattern.compile(System.getProperty("purejavacomm.portnamepattern"));
+        String portnamePattern = System.getProperty("purejavacomm.portnamepattern");
+        if ((portnamePattern != null) && (SystemType.isLinux() || SystemType.isMacOSX())) {
+            Pattern pattern = Pattern.compile(portnamePattern);
 
             File[] files = new File("/dev").listFiles();
             if (files != null) {
