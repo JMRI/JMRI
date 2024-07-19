@@ -212,6 +212,15 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         return mPort;
     }
 
+    private static String getSymLink(File file) {
+        try {
+            // Path.toRealPath() follows a symlink
+            return file.toPath().toRealPath().toFile().getName();
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
     /**
      * Provide the actual serial port names.
      * As a public static method, this can be accessed outside the jmri.jmrix
@@ -241,7 +250,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             if (files != null) {
                 Set<String> ports = Stream.of(files)
                         .filter(file -> !file.isDirectory()
-                                && pattern.matcher(file.getName()).matches()
+                                && (pattern.matcher(file.getName()).matches()
+                                        || portNameVector.contains(getSymLink(file)))
                                 && !portNameVector.contains(file.getName()))
                         .map(File::getName)
                         .collect(Collectors.toSet());
