@@ -212,10 +212,10 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         return mPort;
     }
 
-    private static String getSymLink(File file) {
+    private static String getSymlinkTarget(File symlink) {
         try {
             // Path.toRealPath() follows a symlink
-            return file.toPath().toRealPath().toFile().getName();
+            return symlink.toPath().toRealPath().toFile().getName();
         } catch (IOException e) {
             return null;
         }
@@ -251,7 +251,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
                 Set<String> ports = Stream.of(files)
                         .filter(file -> !file.isDirectory()
                                 && (pattern.matcher(file.getName()).matches()
-                                        || portNameVector.contains(getSymLink(file)))
+                                        || portNameVector.contains(getSymlinkTarget(file)))
                                 && !portNameVector.contains(file.getName()))
                         .map(File::getName)
                         .collect(Collectors.toSet());
