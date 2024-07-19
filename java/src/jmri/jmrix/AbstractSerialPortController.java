@@ -1,5 +1,7 @@
 package jmri.jmrix;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.io.*;
 import java.util.Set;
 import java.util.Vector;
@@ -218,6 +220,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @return the port names in the form they can later be used to open the port
      */
 //    @SuppressWarnings("UseOfObsoleteCollectionType") // historical interface
+    @SuppressFBWarnings("DMI_HARDCODED_ABSOLUTE_FILENAME")  // /dev/ is not expected to change on Linux and Mac
     public static Vector<String> getActualPortNames() {
         // first, check that the comm package can be opened and ports seen
         var portNameVector = new Vector<String>();
