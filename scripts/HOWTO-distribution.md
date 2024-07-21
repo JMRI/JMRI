@@ -15,9 +15,10 @@ Our released filenames are generated with [semantic versioning](http://semver.or
 
 People building releases for distribution need permission to directly operate with the JMRI/JMRI GitHub repository.
 
-See the image at the bottom for how Git is used during this process.
+See the image at the bottom for how Git is used during this process. You should have your Git remotes set up in the [recommended fashion](https://www.jmri.org/help/en/html/doc/Technical/gitdeveloper.shtml#repo).
 
 If you're attempting to perform this on MS Windows, refer to the MS Windows notes section at the bottom of this document.
+
 
 ================================================================================
 ## Update Instructions
@@ -48,16 +49,22 @@ This is the next release in the 5.6 cycle. It's intended to be created from the 
 ## Update Content
 
 - Go to the master branch on your local repository. Pull back from the main JMRI/JMRI repository to make sure you're up to date.
+```
+        git checkout master
+        git pull
+```
 
  - Make sure `git status` shows "up to date", not "ahead".
 
 - If it's a new year, update through-now copyright dates (done for 2023):
+
     JMRI:
     * build.xml in the jmri.copyright.years property value
     * project.properties
     * xml/XSLT/build.xml
     * A flock of places in xml/XSLT/
     * scripts/WinInstallFiles/LaunchJMRI.nsi
+
     website:
     * Copyright.shtml (2 places)
     * Footer.shtml Footer_fr.shtml
@@ -87,7 +94,7 @@ This is the next release in the 5.6 cycle. It's intended to be created from the 
         git diff xml/decoderIndex.xml
 ```
 
-- Check that the version attribute on the decoderIndex element is greater than or equal to the release number (It sometimes gets reset to 1 for some reason)
+- Check that the version attribute on the decoderIndex element is a large number. (It sometimes gets reset to 1 for some unknown reason) If you find that it’s been reset to one, set it to one more than the value in the previous release.  
 
 - If OK, commit
 
