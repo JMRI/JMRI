@@ -203,6 +203,37 @@ WARN  - Log local variables done
 
       <hr>
 
+      <p><u>Jython access to LogixNGs and ConditionalNGs</u></p>
+
+      <p>The ability to invoke LogixNGs and ConditionalNGs can also be done using a Jython script.
+      Instead of using <code>lngmgr</code> to get a module, a LogixNG can be accessed.</p>
+
+      <div style="margin-left: 2em">
+        <pre>
+lng = lngmgr.getNamedBean(&lt;name&gt;)    # User name or system name
+        </pre>
+      </div>
+
+      <p>Use the <code>execute()</code> method to process all of the <strong>enabled</strong>
+      ConditionalNGs in the LogixNG.</p>
+
+      <div style="margin-left: 2em">
+        <pre>
+lng.execute()
+        </pre>
+      </div>
+
+      <p>To invoke a single ConditionalNG, get the ConditionalNG from the LogixNG and execute it.</p>
+
+      <div style="margin-left: 2em">
+        <pre>
+cng = lng.getConditionalNGByUserName(&lt;user name&gt;)   # or lng.getConditionalNG(&lt;system name&gt;)
+cng.execute()
+        </pre>
+      </div>
+
+      <hr>
+
       <p><a href="index.shtml">Return to the Reference TOC</a>
       </p>
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
