@@ -1038,7 +1038,7 @@ public class WarrantFrame extends WarrantRoute {
                     } else if (lastSpeed < 0) { // EStop OK only in the last
                                                 // block
                         OBlock blk = getOrders().get(getOrders().size() - 1).getBlock();
-                        if (blk == null || !blk.getSystemName().equals(ts.getBeanSystemName())) {
+                        if ( !blk.getSystemName().equals(ts.getBeanSystemName())) {
                             return Bundle.getMessage("badSpeed", lastSpeed);
                         }
                     }
@@ -1528,10 +1528,7 @@ public class WarrantFrame extends WarrantRoute {
         String bName = Bundle.getMessage("NoBlock");
         BlockOrder bo = _warrant.getCurrentBlockOrder();
         if (bo != null) {
-            OBlock block = bo.getBlock();
-            if (block != null) {
-                bName = block.getDisplayName();
-            }
+            bName = bo.getBlock().getDisplayName();
         }
         /*
          * if (cmd.equals("Forward")) {

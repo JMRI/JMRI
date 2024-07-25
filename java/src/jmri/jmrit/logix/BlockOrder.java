@@ -1,25 +1,21 @@
 package jmri.jmrit.logix;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 
 import jmri.BeanSetting;
-
-import javax.annotation.Nonnull;
 import jmri.jmrit.logix.TrainOrder.Cause;
 
-
 /**
- * A BlockOrder is a row in the route of the warrant. It contains 
- * where the warranted train enters a block, the path it takes and
- * where it exits the block. (The route is a list of BlockOrder.)
+ * A BlockOrder is a row in the route of the warrant.
+ * It contains where the warranted train enters a block, the path it takes and
+ * where it exits the block.
+ * (The route is a list of BlockOrder.)
  * The Engineer is notified when the train enters the block.
  *
  * @author Pete Cressman Copyright (C) 2009
  */
 public class BlockOrder {
-
-    private static final Logger log = LoggerFactory.getLogger(BlockOrder.class);
 
     private int _index;
     private OBlock _block;     // OBlock of these orders
@@ -28,7 +24,7 @@ public class BlockOrder {
     private String _exitName;  // Name of exit Portal
     private float _pathLength; // path length in millimeters
 
-    public BlockOrder(OBlock block) {
+    public BlockOrder(@Nonnull OBlock block) {
         _block = block;
     }
 
@@ -40,7 +36,7 @@ public class BlockOrder {
      * @param entry MUST be a name of a Portal to the path
      * @param exit  MUST be a name of a Portal to the path
      */
-    public BlockOrder(OBlock block, String path, String entry, String exit) {
+    public BlockOrder(@Nonnull OBlock block, String path, String entry, String exit) {
         this(block);
         _pathName = path;
         _entryName = entry;
@@ -48,12 +44,12 @@ public class BlockOrder {
     }
 
     // for use by WarrantTableFrame 
-    protected BlockOrder(BlockOrder bo) {
-        _index = bo._index;
-        _block = bo._block;      // shallow copy OK. WarrantTableFrame doesn't write to block
-        _pathName = bo._pathName;
-        _entryName = bo._entryName;
-        _exitName = bo._exitName;
+    protected BlockOrder(@Nonnull BlockOrder bo) {
+        _index = bo.getIndex();
+        _block = bo.getBlock();
+        _pathName = bo.getPathName();
+        _entryName = bo.getEntryName();
+        _exitName = bo.getExitName();
     }
 
     public void setIndex(int idx) {
@@ -107,18 +103,17 @@ public class BlockOrder {
         }
         return msg;
     }
-    
+
     @Nonnull
-    protected TrainOrder allocatePaths(Warrant warrant, boolean allocate) {
+    protected TrainOrder allocatePaths(@Nonnull Warrant warrant, boolean allocate) {
         if (_pathName == null) {
-            log.error("setPaths({}) - {}", warrant.getDisplayName(), Bundle.getMessage("NoPaths", _block.getDisplayName()));
+            log.error("setPaths({}) - {}", warrant.getDisplayName(),
+                Bundle.getMessage("NoPaths", _block.getDisplayName()));
             return new TrainOrder(Warrant.Stop, Cause.ERROR, _index, _index, 
                     Bundle.getMessage("NoPaths", _block.getDisplayName()));
         }
-        if (log.isDebugEnabled()) { 
-            log.debug("{}: calls allocatePaths() in block \"{}\" for path \"{}\". _index={}",
-                    warrant.getDisplayName(), _block.getDisplayName(), _pathName, _index); 
-        }
+        log.debug("{}: calls allocatePaths() in block \"{}\" for path \"{}\". _index={}",
+                warrant.getDisplayName(), _block.getDisplayName(), _pathName, _index);
         TrainOrder to = findStopCondition(this, warrant);
         if (to != null && Warrant.Stop.equals(to._speedType)) {
             return to;
@@ -136,17 +131,18 @@ public class BlockOrder {
             if (to1 == null || !Warrant.Stop.equals(to1._speedType)) { // Train may enter block of bo1
                 if (allocate) {
                     nextBlock.allocate(warrant);
-                    nextBlock.showAllocated(warrant, bo1._pathName);
+                    nextBlock.showAllocated(warrant, bo1.getPathName());
                 }
             } else {
                 // See if path to exit can be set without messing up block of bo1
                 OPath path1 = getPath();
                 Portal exit = getExitPortal();
-                msg =  pathsConnect(path1, exit, bo1._block);
+                msg =  pathsConnect(path1, exit, bo1.getBlock());
             }
             if (msg != null) {
                 // cannot set path
-                return new TrainOrder(Warrant.Stop, (to1 != null?to1._cause:Cause.WARRANT), bo1._index, _index, msg);
+                return new TrainOrder(Warrant.Stop, ( to1 != null ? to1._cause : Cause.WARRANT), 
+                    bo1.getIndex(), _index, msg);
             }
             // Crossovers typically have both switches controlled by one TO, 
             // yet each switch is in a different block. Setting the path may change
@@ -169,11 +165,12 @@ public class BlockOrder {
         return new TrainOrder(null, Cause.NONE, _index, _index, null);
     }
 
-    private TrainOrder findStopCondition(BlockOrder bo, Warrant warrant) {
+    @CheckForNull
+    private TrainOrder findStopCondition(@Nonnull BlockOrder bo, @Nonnull Warrant warrant) {
         OBlock block = bo.getBlock();
         Warrant w = block.getWarrant();
         if (w != null && !warrant.equals(w)) {
-           return new TrainOrder(Warrant.Stop, Cause.WARRANT, bo._index, bo._index,
+           return new TrainOrder(Warrant.Stop, Cause.WARRANT, bo.getIndex(), bo.getIndex(),
                    Bundle.getMessage("AllocatedToWarrant",
                    w.getDisplayName(), block.getDisplayName(), w.getTrainName()));
         }
@@ -183,7 +180,7 @@ public class BlockOrder {
                 rogue = Bundle.getMessage("unknownTrain");
             }
             if (!rogue.equals(warrant.getTrainName())) {
-                return new TrainOrder(Warrant.Stop, Cause.OCCUPY, bo._index, bo._index,
+                return new TrainOrder(Warrant.Stop, Cause.OCCUPY, bo.getIndex(), bo.getIndex(),
                         Bundle.getMessage("blockInUse", rogue, block.getDisplayName()));
             }
         }
@@ -195,12 +192,13 @@ public class BlockOrder {
             } else {
                 msg = Bundle.getMessage("BlockSpeedAspect", block.getDisplayName(), speedType);
             }
-            return new TrainOrder(speedType, Cause.SIGNAL, bo._index, bo._index, msg);
+            return new TrainOrder(speedType, Cause.SIGNAL, bo.getIndex(), bo.getIndex(), msg);
         }
         return null;
     }
 
-    protected String pathsConnect(OPath path1, Portal exit, OBlock block) {
+    @CheckForNull
+    protected String pathsConnect(@Nonnull OPath path1, @CheckForNull Portal exit, @CheckForNull OBlock block) {
         if (exit == null || block == null) {
             return null;
         }
@@ -213,44 +211,37 @@ public class BlockOrder {
             for (BeanSetting bs2 : path2.getSettings()) {
                 if (bs1.getBean().equals(bs2.getBean())) {
                     // TO is shared (same bean)
-                    if (bs1.equals(bs2)) {
-                        if (log.isDebugEnabled()) {
+                    if (log.isDebugEnabled()) {
+                        if (bs1.equals(bs2)) {
                             log.debug("Path \"{}\" in block \"{}\" and \"{}\" in block \"{}\" agree on setting of shared turnout \"{}\"",
                                     path1.getName(), _block.getDisplayName(), path2.getName(), block.getDisplayName(), 
                                     bs1.getBean().getDisplayName());
-                        }
-                        return  Bundle.getMessage("SharedTurnout", bs1.getBean().getDisplayName(), _block.getDisplayName(), block.getDisplayName());
-                    } else {
-                        if (log.isDebugEnabled()) {
+                        } else {
                             log.debug("Path \"{}\" in block \"{}\" and \"{}\" in block \"{}\" have opposed settings of shared turnout \"{}\"",
                                     path1.getName(), _block.getDisplayName(), path2.getName(), block.getDisplayName(), 
                                     bs1.getBean().getDisplayName());
                         }
-                        return  Bundle.getMessage("SharedTurnout", bs1.getBean().getDisplayName(), _block.getDisplayName(), block.getDisplayName());
                     }
+                    return  Bundle.getMessage("SharedTurnout", bs1.getBean().getDisplayName(), _block.getDisplayName(), block.getDisplayName());
                 }
             }
         }
         return null;
     }
 
-    static protected String getPermissibleSpeedAt(BlockOrder bo) {
+    protected static String getPermissibleSpeedAt(BlockOrder bo) {
         String speedType = bo.getPermissibleEntranceSpeed();
         if (speedType != null) {
-            if  (log.isDebugEnabled()){
-                log.debug("getPermissibleSpeedAt(): \"{}\" Signal speed= {}",
-                        bo._block.getDisplayName(), speedType);
-            }
+            log.debug("getPermissibleSpeedAt(): \"{}\" Signal speed= {}",
+                bo.getBlock().getDisplayName(), speedType);
         } else { //  if signal is configured, ignore block
-            speedType = bo._block.getBlockSpeed();
+            speedType = bo.getBlock().getBlockSpeed();
             if (speedType.equals("")) {
                 speedType = null;
             }
-            if (log.isDebugEnabled()) {
-                if (speedType != null) {
-                    log.debug("getPermissibleSpeedAt(): \"{}\" Block speed= {}",
-                              bo._block.getDisplayName(), speedType);
-                }
+            if (speedType != null) {
+                log.debug("getPermissibleSpeedAt(): \"{}\" Block speed= {}",
+                    bo.getBlock().getDisplayName(), speedType);
             }
         }
         return speedType;
@@ -272,14 +263,16 @@ public class BlockOrder {
         return _pathLength;
     }
 
-    protected void setBlock(OBlock block) {
+    protected void setBlock(@Nonnull OBlock block) {
         _block = block;
     }
 
+    @Nonnull
     public OBlock getBlock() {
         return _block;
     }
 
+    @CheckForNull
     protected Portal getEntryPortal() {
         if (_entryName == null) {
             return null;
@@ -287,6 +280,7 @@ public class BlockOrder {
         return _block.getPortalByName(_entryName);
     }
 
+    @CheckForNull
     protected Portal getExitPortal() {
         if (_exitName == null) {
             return null;
@@ -316,9 +310,10 @@ public class BlockOrder {
     }
 
     /**
-     * Get the signal protecting entry into the block of this blockorder
+     * Get the signal protecting entry into the block of this BlockOrder.
      * @return signal
      */
+    @CheckForNull
     protected jmri.NamedBean getSignal() {
         Portal portal = getEntryPortal();
         if (portal != null) {            
@@ -326,7 +321,7 @@ public class BlockOrder {
         }
         return null;
     }
-    
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("BlockOrder: Block \"");
@@ -340,4 +335,7 @@ public class BlockOrder {
         sb.append("\"");
         return sb.toString();
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BlockOrder.class);
+
 }
