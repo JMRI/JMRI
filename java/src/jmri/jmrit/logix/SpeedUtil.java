@@ -1084,7 +1084,7 @@ public class SpeedUtil {
     /**
      * The engineer makes this notification before setting a new speed.
      * Calculate the distance traveled since the last speed change.
-     * @param throttleSetting
+     * @param throttleSetting the new Speed of the Throttle.
      */
     protected synchronized void speedChange(float throttleSetting) {
         if (Math.abs(_intEndSpeed - throttleSetting) < 0.00001f) {
