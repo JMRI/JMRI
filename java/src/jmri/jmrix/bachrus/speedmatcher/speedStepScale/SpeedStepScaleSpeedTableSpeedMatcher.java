@@ -51,7 +51,7 @@ public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMat
     private SpeedTableStep initSpeedTableStep;
     private int initSpeedTableStepValue;
     private SpeedTableStep speedMatchSpeedTableStep;
-    private int lowestMaxSpeedStep;
+    private int speedMatchMaxSpeedStep;
 
     private int step28CVValue = INITIAL_STEP28;
     private float speedStepTargetSpeedKPH;
@@ -62,8 +62,6 @@ public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMat
 
     private int reverseTrimValue = INITIAL_TRIM;
     private int lastReverseTrimValue = INITIAL_TRIM;
-    private int reverseTrimSpeedStep;
-    private float reverseTrimSpeedKPH;
 
     private SpeedMatcherState speedMatcherState = SpeedMatcherState.IDLE;
     //</editor-fold>
@@ -263,21 +261,23 @@ public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMat
 
                     String statusMessage = String.format("Measured maximum speed = %.1f KPH (%.1f MPH)", measuredMaxSpeedKPH, Speed.kphToMph(measuredMaxSpeedKPH));
                     logger.info(statusMessage);
+                    
+                    float speedMatchMaxSpeed;
 
                     if (measuredMaxSpeedKPH > targetMaxSpeedKPH) {
+                        speedMatchMaxSpeedStep = targetMaxSpeedStep.getSpeedTableStep().getSpeedStep();
+                        speedMatchMaxSpeed = targetMaxSpeedStep.getSpeed();
                         speedMatchMaxSpeedKPH = targetMaxSpeedKPH;
-                        initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_STEP28);
                     } else {
-                        //skip speed matching step 28 if max speed is less than target
-                        speedMatchMaxSpeedKPH = measuredMaxSpeedKPH;
-                        initNextSpeedMatcherState(SpeedMatcherState.SET_UPPER_SPEED_STEPS);
+                        float measuredMaxSpeed = speedUnit == Speed.Unit.MPH ? Speed.kphToMph(measuredMaxSpeedKPH) : measuredMaxSpeedKPH;
+                        speedMatchMaxSpeedStep = getNextLowestSpeedTableStepForSpeed(measuredMaxSpeed);
+                        speedMatchMaxSpeed = getSpeedForSpeedTableStep(speedMatchMaxSpeedStep);
+                        speedMatchMaxSpeedKPH = speedUnit == Speed.Unit.MPH ? Speed.mphToKph(speedMatchMaxSpeed): speedMatchMaxSpeed;
                     }
-
-                    //set TOP_SPEED_STEP_MIN to the lowest speed step that will be set to the max speed
-                    float speedMatchMaxSpeed = speedUnit == Speed.Unit.MPH ? Speed.kphToMph(speedMatchMaxSpeedKPH) : speedMatchMaxSpeedKPH;
-                    lowestMaxSpeedStep = getLowestMaxSpeedStep(speedMatchMaxSpeed);
-
+                    
                     actualMaxSpeedField.setText(String.format("%.1f", speedMatchMaxSpeed));
+                    
+                    initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_STEP28);
                 }
                 break;
 
@@ -287,7 +287,7 @@ public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMat
                     if (stepDuration == 0) {
                         speedMatchSpeedTableStep = SpeedTableStep.STEP28;
                     }
-                    speedMatchSpeedStepInner(TOP_SPEED_STEP_MAX, lowestMaxSpeedStep, SpeedMatcherState.SET_UPPER_SPEED_STEPS, true);
+                    speedMatchSpeedStepInner(TOP_SPEED_STEP_MAX, speedMatchMaxSpeedStep, SpeedMatcherState.SET_UPPER_SPEED_STEPS, true);
                     step28CVValue = speedMatchCVValue;
                 }
                 break;
@@ -304,7 +304,7 @@ public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMat
 
                     speedMatchSpeedTableStep = speedMatchSpeedTableStep.getPrevious();
 
-                    if (speedMatchSpeedTableStep.getSpeedStep() < lowestMaxSpeedStep) {
+                    if (speedMatchSpeedTableStep.getSpeedStep() < speedMatchMaxSpeedStep) {
                         initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH);
                     }
                 }
@@ -359,13 +359,11 @@ public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMat
                 if (programmerState == ProgrammerState.IDLE) {
                     if (stepDuration == 0) {
                         statusLabel.setText(Bundle.getMessage("StatSettingReverseTrim"));
-                        reverseTrimSpeedStep = Math.max(lowestMaxSpeedStep - 2, 1);
-                        reverseTrimSpeedKPH = getSpeedStepScaleSpeedInKPH(reverseTrimSpeedStep);
-                        setThrottle(false, reverseTrimSpeedStep);
+                        setThrottle(false, speedMatchMaxSpeedStep);
                         setSpeedMatchStateTimerDuration(8000);
                         stepDuration = 1;
                     } else {
-                        setSpeedMatchError(reverseTrimSpeedKPH);
+                        setSpeedMatchError(speedMatchMaxSpeedKPH);
 
                         if (Math.abs(speedMatchError) < ALLOWED_SPEED_MATCH_ERROR) {
                             initNextSpeedMatcherState(SpeedMatcherState.COMPLETE);

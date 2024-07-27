@@ -16,8 +16,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.util.*;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -38,10 +37,11 @@ import jmri.jmrit.DccLocoAddressSelector;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterEntrySelector;
 import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
+import jmri.jmrix.bachrus.Bundle;
 import jmri.jmrix.bachrus.speedmatcher.*;
-import jmri.jmrix.bachrus.speedmatcher.basic.BasicSpeedMatcherConfig;
-import jmri.jmrix.bachrus.speedmatcher.speedStepScale.SpeedStepScaleSpeedMatcherConfig;
-import jmri.jmrix.bachrus.speedmatcher.speedStepScale.SpeedStepScaleSpeedMatcherFactory;
+import jmri.jmrix.bachrus.speedmatcher.SpeedMatcher.SpeedTableStep;
+import jmri.jmrix.bachrus.speedmatcher.basic.*;
+import jmri.jmrix.bachrus.speedmatcher.speedStepScale.*;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -356,8 +356,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected JLabel speedStepScaleSpeedMatchWarmUpReverseUnit = new JLabel(Bundle.getMessage("SpeedMatchSecondsLabel"));
 
     protected JLabel speedStepScaleMaxSpeedTargetLabel = new JLabel(Bundle.getMessage("AdvancedSpeedMatchMaxSpeed"));
-    protected SpinnerNumberModel maxSpeedSM = new SpinnerNumberModel(79, 1, 126, 1);
-    protected JSpinner speedStepScaleSpeedMatchMaxSpeedField = new JSpinner(maxSpeedSM);
+    protected JComboBox<SpeedTableStepSpeed> speedStepScaleSpeedMatchMaxSpeedField = new JComboBox();
     protected JLabel speedStepScaleSpeedMatchMaxSpeedUnit = new JLabel(Bundle.getMessage("SpeedMatchMPHLabel"));
     protected JButton speedStepScaleSpeedMatchStartStopButton = new JButton(Bundle.getMessage(("SpeedMatchStartBtn")));
     protected JLabel speedStepScaleMaxSpeedActualLabel = new JLabel(Bundle.getMessage("AdvancedSpeedMatchActualMaxSpeed"), SwingConstants.RIGHT);
@@ -823,9 +822,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         //</editor-fold> 
 
         //<editor-fold defaultstate="collapsed" desc="Basic Speed Matching Tab">
-        basicSimpleCVSpeedMatchButton.setToolTipText(Bundle.getMessage("BasicSpeedMatchSimpleCVTooltip"));
-        basicSpeedTableSpeedMatchButton.setToolTipText(Bundle.getMessage("BasicSpeedMatchSpeedTableTooltip"));
-        basicESUSpeedMatchButton.setToolTipText(Bundle.getMessage("BasicSpeedMatchESUSpeedTableTooltip"));
         basicSpeedMatcherTypeGroup.add(basicSimpleCVSpeedMatchButton);
         basicSpeedMatcherTypeGroup.add(basicSpeedTableSpeedMatchButton);
         basicSpeedMatcherTypeGroup.add(basicESUSpeedMatchButton);
@@ -1010,6 +1006,13 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         speedStepScaleSpeedMatchSettingsPane.add(speedStepScaleSpeedMatchOtherSettingsPane);
 
         //Speed Settings        
+        SpeedTableStep tempStep = SpeedTableStep.STEP1;
+        while (tempStep != null) {
+            speedStepScaleSpeedMatchMaxSpeedField.addItem(new SpeedTableStepSpeed(tempStep));
+            tempStep = tempStep.getNext();
+        }
+        speedStepScaleSpeedMatchMaxSpeedField.setSelectedIndex(12);
+        
         JPanel speedStepScaleSpeedMatchSpeedPane = new JPanel();
         speedStepScaleSpeedMatchSpeedPane.setLayout(new GridBagLayout());
         speedStepScaleSpeedMatchSpeedPane.add(speedStepScaleMaxSpeedTargetLabel, gbc);
@@ -1034,7 +1037,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         //<editor-fold defaultstate="collapsed" desc="Speed Step Scale Speed Matcher Button Handlers">
         // Listen to speed match button
         speedStepScaleSpeedMatchStartStopButton.addActionListener(e -> {
-            int targetMaxSpeed;
+            SpeedTableStepSpeed targetMaxSpeedStep;
             boolean speedMatchReverse;
             boolean warmUpLoco;
             int warmUpForwardSeconds;
@@ -1043,7 +1046,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             SpeedStepScaleSpeedMatcherConfig.SpeedTable speedTableType;
 
             if ((speedMatcher == null || speedMatcher.isSpeedMatcherIdle()) && (profileState == ProfileState.IDLE)) {
-                targetMaxSpeed = maxSpeedSM.getNumber().intValue();
+                targetMaxSpeedStep = (SpeedTableStepSpeed)speedStepScaleSpeedMatchMaxSpeedField.getSelectedItem();
 
                 if (speedStepScaleESUSpeedMatchButton.isSelected()) {
                     speedTableType = SpeedStepScaleSpeedMatcherConfig.SpeedTable.ESU;
@@ -1060,7 +1063,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                         speedTableType,
                         new SpeedStepScaleSpeedMatcherConfig(
                                 locomotiveAddress,
-                                targetMaxSpeed,
+                                targetMaxSpeedStep,
                                 mphButton.isSelected() ? Speed.Unit.MPH : Speed.Unit.KPH,
                                 speedMatchReverse,
                                 warmUpLoco ? warmUpForwardSeconds : 0,
@@ -1104,7 +1107,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         // make basic panel
         mainPane.add(basicPane);
 
-        //TODO: TRW - add profileAndSpeedMatchingPane without condition to test/debug without DCC system
         if (((dccServices & THROTTLE) == THROTTLE) || ((dccServices & COMMAND) == COMMAND)) {
             mainPane.add(profileAndSpeedMatchingPane);
         } else {
@@ -1426,7 +1428,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     //<editor-fold defaultstate="collapsed" desc="Power Manager Helper Functions">
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * Handles property changes from the power manager.
      */
     @Override
