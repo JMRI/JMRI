@@ -37,7 +37,6 @@ import jmri.jmrit.DccLocoAddressSelector;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterEntrySelector;
 import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
-import jmri.jmrix.bachrus.Bundle;
 import jmri.jmrix.bachrus.speedmatcher.*;
 import jmri.jmrix.bachrus.speedmatcher.SpeedMatcher.SpeedTableStep;
 import jmri.jmrix.bachrus.speedmatcher.basic.*;
