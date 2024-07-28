@@ -205,7 +205,8 @@ public class HtmlTrainCommon extends TrainCommon {
 
     protected String getCarAttribute(Car car, String attribute, boolean isPickup, boolean isLocal) {
         if (attribute.equals(Setup.LOAD)) {
-            return (car.isCaboose() || car.isPassenger()) ? "" : StringEscapeUtils.escapeHtml4(car.getLoadName()); // NOI18N
+            return (car.isCaboose() || car.isPassenger()) ? ""
+                    : StringEscapeUtils.escapeHtml4(car.getLoadName().split(TrainCommon.HYPHEN)[0]); // NOI18N
         } else if (attribute.equals(Setup.HAZARDOUS)) {
             return car.isHazardous() ? Setup.getHazardousMsg() : ""; // NOI18N
         } else if (attribute.equals(Setup.DROP_COMMENT)) {
