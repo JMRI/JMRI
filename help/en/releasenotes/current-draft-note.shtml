@@ -16,7 +16,22 @@
 
         <h4>Bachrus Speedo</h4>
             <ul>
-                <li></li>
+                <li>Revamped the Bachrus speed matcher to support configuration and different styles of speedmatching</li>
+				<li>Added ability to manually read and set a locomotive's momentum</li>
+				<li>Basic Speed matcher
+					<ul>
+						<li>Matches a locomotive to the given starting and top speeds</li>
+						<li>Can use the basic motor control CVs, the speed table, or ESU's speed table</li>
+						<li>Can configure if and how long the locomotive is warmed up and whether reverse is trimmed to match forward</li>
+					</ul>
+				</li>
+				<li>Speed Step Scale Speed matcher
+					<ul>
+						<li>Matches a locomotive to the speed step in 128 speed step mode (for example, locomotive goes 11 mph or kph at speed step 11 in 128 speed step mode) up to the given max speed</li>
+						<li>Can use the speed table or ESU's speed table</li>
+						<li>Can configure if and how long the locomotive is warmed up and whether reverse is trimmed to match forward</li>
+					</ul>
+				</li>
             </ul>
 
         <h4><a href="http://bidib.org/index_e.html">BiDiB</a></h4>
