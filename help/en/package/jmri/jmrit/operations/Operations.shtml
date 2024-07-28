@@ -385,7 +385,16 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
           <ul>
             <li><a href="#AddRoute">Add Route</a></li>
 
-            <li><a href="#EditRoute">Edit Route</a></li>
+            <li><a href="#EditRoute">Edit Route</a>
+              <ul>
+                <li><a href="#RouteSwitchTime">Switch Time and Departure Time</a></li>
+
+                <li><a href="#RouteMaxTrainLength">Maximum Train Length</a></li>
+
+                <li><a href="#RouteGrade">Grade</a></li>
+
+                <li><a href="RouteIconCoordinates">Train Icon Coordinates</a></li>
+              </ul></li>
 
             <li><a href="#TrainTurnRoute">Train Turn Route</a></li>
 
@@ -4589,14 +4598,20 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         greater than 50% to reduce the move count by one, and 100% if you wanted the move count to
         be reduced by 2.</p>
 
+      <h4 id="RouteSwitchTime">Switch Time and Departure Time</h4>
+
       <p>
         The "Switch Time" and "Travel Time" found on the <a href="#Settings">Settings</a> page
         determines the time it takes for your train to service a location and travel to the next. If
         you want to delay the departure of the train from a location or increase the train's travel
         time, enter the number of minutes desired in the "Wait" cell. Another choice is to specify
         the train's departure time from a location by selecting the "Departure Time" radio button in
-        the lower right hand corner of the <a href="#AddRoute">Edit Route</a> window.
+        the lower right hand corner of the <a href="#AddRoute">Edit Route</a> window. Note that when
+        the first location of a route has a departure time that it disables the ability to adjust
+        the <a href="#TrainDepartureTime">Train's Departure Time</a>.
       </p>
+
+      <h4 id="RouteMaxTrainLength">Maximum Train Length</h4>
 
       <p>
         You can also adjust the <a href="#MaximumTrainLength">maximum train length</a> using <a
@@ -4609,12 +4624,16 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         get your trains to build to your liking.
       </p>
 
+      <h4 id="RouteGrade">Grade</h4>
+
       <p>
         The grade is optional and is used to determine how many locomotives the train will require
         for that segment when using the train <a href="#TrainRequires">Auto</a> locomotive
         assignment feature. Enter the maximum grade that the train will encounter between the two
         locations.
       </p>
+
+      <h4 id="RouteIconCoordinates">Train Icon Coordinates</h4>
 
       <p>
         The X and Y are the coordinates on your dispatcher's panel for the optional <a
@@ -4627,7 +4646,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         location. Leave the X and Y coordinates at zero if you want to manually move the icon or
         you're not using the icon feature.
       </p>
-      <a id="RouteComment"></a>
+
+      <h4 id="RouteComment">Comment</h4>
       <p>Each location in the route can also have an optional comment that will appear in the
         train's Manifests. Press the "Add" button under the table heading "Comment" to add a comment
         to a location.</p>
