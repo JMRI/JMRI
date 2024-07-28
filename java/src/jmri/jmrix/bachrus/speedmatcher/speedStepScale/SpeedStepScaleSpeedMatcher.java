@@ -79,7 +79,7 @@ public abstract class SpeedStepScaleSpeedMatcher extends SpeedMatcher {
         }
 
         //speed must be bounded by the target max speed
-        speedStepSpeed = Math.min(speedStepSpeed, targetMaxSpeedKPH);
+        speedStepSpeed = Math.min(speedStepSpeed, speedMatchMaxSpeedKPH);
 
         return speedStepSpeed;
     }

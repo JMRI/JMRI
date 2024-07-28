@@ -18,7 +18,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
 
     //<editor-fold defaultstate="collapsed" desc="Constants">
     //PID Controller Values
-    protected final float Kp = 0.3f;
+    protected final float Kp = 0.275f;
     protected final float Ti = 240;
     protected final float Td = 5;
     protected final float Ki = Kp / Ti;
