@@ -2,7 +2,6 @@ package jmri.jmrit.logix.configurexml;
 
 import java.util.List;
 import java.util.SortedSet;
-//import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -20,8 +19,6 @@ import jmri.jmrit.logix.WarrantManager;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides the abstract base and store functionality for
@@ -143,18 +140,17 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
     private static Element storeOrder(BlockOrder order, String type) {
         Element elem = new Element(type);
         OBlock block = order.getBlock();
-        if (block!=null) {
-            Element blk = new Element("block");
-            blk.setAttribute("systemName", block.getSystemName());
-            String uname = block.getUserName();
-            if (uname==null) uname = "";
-            if (uname.length()>0) {
-                blk.setAttribute("userName", uname);
-            }
-            elem.addContent(blk);
-        } else {
-            log.error("Null block in BlockOrder!");
+        Element blk = new Element("block");
+        blk.setAttribute("systemName", block.getSystemName());
+        String uname = block.getUserName();
+        if (uname==null) {
+            uname = "";
         }
+        if (uname.length()>0) {
+            blk.setAttribute("userName", uname);
+        }
+        elem.addContent(blk);
+
         String str = order.getPathName();
         if (str == null) {
             str = "";
@@ -223,13 +219,13 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
                 break;
             }
             String sysName = null;
-            if (elem.getAttribute("systemName") != null)
+            if (elem.getAttribute("systemName") != null) {
                 sysName = elem.getAttribute("systemName").getValue();
-
+            }
             String userName = null;
-            if (elem.getAttribute("userName") != null)
+            if (elem.getAttribute("userName") != null) {
                 userName = elem.getAttribute("userName").getValue();
-
+            }
             boolean SCWa = true;
             log.debug("loading warrant {}", sysName);
             Attribute wType = elem.getAttribute("wtype");
@@ -393,7 +389,7 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
 
     private static BlockOrder loadBlockOrder(Element elem) {
 
-        OBlock block = null;
+        OBlock block;
         List<Element> blocks = elem.getChildren("block");
         if (blocks.size()>1) log.error("More than one block present: {}", blocks.size());
         if (blocks.size()>0) {
@@ -416,14 +412,14 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
 
         attr = elem.getAttribute("entryName");
         String entryName = null;
-        if (attr != null)
+        if (attr != null) {
             entryName =attr.getValue();
-
+        }
         attr = elem.getAttribute("exitName");
         String exitName = null;
-        if (attr != null)
+        if (attr != null) {
             exitName =attr.getValue();
-
+        }
         return new BlockOrder(block, pathName, entryName, exitName);
     }
 
@@ -514,7 +510,7 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
         }
 
         Attribute attr = elem.getAttribute("command");
-        String command = null;
+        String command;
         if (attr != null) {
             command = attr.getValue();
         } else {
@@ -524,14 +520,14 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
 
         attr = elem.getAttribute("value");
         String value = null;
-        if (attr != null)
+        if (attr != null) {
             value =attr.getValue();
-
+        }
         attr = elem.getAttribute("block");
         String block = null;
-        if (attr != null)
+        if (attr != null) {
             block =attr.getValue();
-
+        }
         float speed = 0.0f;
         attr = elem.getAttribute("trackSpeed");
         if (attr != null) {
@@ -551,6 +547,6 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
         return InstanceManager.getDefault(WarrantManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WarrantManagerXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WarrantManagerXml.class);
 
 }

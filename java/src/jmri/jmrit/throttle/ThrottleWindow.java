@@ -181,6 +181,9 @@ public class ThrottleWindow extends JmriJFrame {
     }
 
     public void updateGUI() {
+        if (getCurrentThrottleFrame() == null) {
+            return;
+        }
         // title bar
         getCurrentThrottleFrame().setFrameTitle();
         // menu items

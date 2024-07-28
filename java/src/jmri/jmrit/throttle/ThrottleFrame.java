@@ -524,6 +524,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         functionPanel.applyPreferences();
         addressPanel.applyPreferences();
         backgroundPanel.applyPreferences();
+        loadDefaultThrottle();
     }
 
     private static class TranslucentJPanel extends JPanel {
