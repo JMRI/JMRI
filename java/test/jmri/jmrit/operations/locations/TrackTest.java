@@ -1,13 +1,11 @@
 package jmri.jmrit.operations.locations;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.schedules.Schedule;
-import jmri.jmrit.operations.locations.schedules.ScheduleItem;
-import jmri.jmrit.operations.locations.schedules.ScheduleManager;
+import jmri.jmrit.operations.locations.schedules.*;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
@@ -557,7 +555,7 @@ public class TrackTest extends OperationsTestCase {
         Track t = l.addTrack("New track 1", Track.SPUR);
         t.setLength(100);
         
-        Schedule schedule = InstanceManager.getDefault(ScheduleManager.class).newSchedule("schedule");
+        Schedule schedule = InstanceManager.getDefault(ScheduleManager.class).newSchedule("Schedule Name");
         ScheduleItem siBoxcar = schedule.addItem("Boxcar");
         ScheduleItem siTankcar =schedule.addItem("Tank car");
         t.setSchedule(schedule);
@@ -582,6 +580,10 @@ public class TrackTest extends OperationsTestCase {
         
         // next car expected is Tank car
         Assert.assertNotEquals("Confirm not Boxcar", Track.OKAY, t.scheduleNext(c1));
+        String errorMessage =
+                Track.SCHEDULE +
+                        " (Schedule Name) in Sequential mode, car (CP X10001) type(Boxcar) schedule() road(CP) load(E) does not match: type(Tank car) schedule() road() receive()";
+        Assert.assertEquals("Confirm not Boxcar", errorMessage, t.scheduleNext(c1));
         Assert.assertEquals("Confirm Tank car", Track.OKAY, t.scheduleNext(c2));
         Assert.assertEquals("Confirm schedule item", siTankcar.getId(), c2.getScheduleItemId());
         c2.setScheduleItemId(Car.NONE);

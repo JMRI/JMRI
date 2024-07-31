@@ -1125,8 +1125,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         String status = car.checkDestination(track.getLocation(), track);
         if (!status.equals(Track.OKAY)) {
             if (track.getScheduleMode() == Track.SEQUENTIAL && status.startsWith(Track.SCHEDULE)) {
-                addLine(_buildReport, SEVEN, Bundle.getMessage("buildTrackSequentialMode", track.getName(),
-                        track.getLocation().getName(), status));
+                addLine(_buildReport, SEVEN, Bundle.getMessage("buildTrackSequentialMode",
+                        track.getLocation().getName(), track.getName(), status));
             }
             // if the track has an alternate track don't abort if the issue was
             // space
