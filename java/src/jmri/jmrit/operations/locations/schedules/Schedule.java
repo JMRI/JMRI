@@ -438,7 +438,7 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
         }
         // first check to see if the schedule services car type
         if (!checkScheduleAttribute(Track.TYPE, car.getTypeName(), car)) {
-            return Track.SCHEDULE + " " + Bundle.getMessage("scheduleNotType", getName(), car.getTypeName());
+            return Bundle.getMessage("scheduleNotType", Track.SCHEDULE, getName(), car.getTypeName());
         }
 
         // search schedule for a match
@@ -467,9 +467,8 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
             log.debug("No Match");
         }
         car.setScheduleItemId(Car.NONE); // clear the car's schedule id
-        return Track.SCHEDULE +
-                " " +
-                Bundle.getMessage("matchMessage", getName(), hasRandomItem() ? Bundle.getMessage("Random") : "");
+        return Bundle.getMessage("matchMessage", Track.SCHEDULE, getName(),
+                hasRandomItem() ? Bundle.getMessage("Random") : "");
     }
 
     public String checkScheduleItem(ScheduleItem si, Car car, Track track) {
@@ -482,60 +481,23 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
             TrainSchedule trainSch = InstanceManager.getDefault(TrainScheduleManager.class)
                     .getScheduleById(si.getSetoutTrainScheduleId());
             if (trainSch != null) {
-                return Track.SCHEDULE +
-                        " (" +
-                        getName() +
-                        ") " +
-                        Bundle.getMessage("requestCarOnly") +
-                        " (" +
-                        trainSch.getName() +
-                        ")";
+                return Bundle.getMessage("requestCarOnly", Track.SCHEDULE, getName(), Track.TYPE, si.getTypeName(),
+                        trainSch.getName());
             }
         }
-        // Check for correct car type, road, load
+        // Check for correct car type
         if (!car.getTypeName().equals(si.getTypeName())) {
-            return Track.SCHEDULE +
-                    " (" +
-                    getName() +
-                    ") " +
-                    Bundle.getMessage("requestCar") +
-                    " " +
-                    Track.TYPE +
-                    " (" +
-                    si.getTypeName() +
-                    ")";
+            return Bundle.getMessage("requestCarType", Track.SCHEDULE, getName(), Track.TYPE, si.getTypeName());
         }
+        // Check for correct car road
         if (!si.getRoadName().equals(ScheduleItem.NONE) && !car.getRoadName().equals(si.getRoadName())) {
-            return Track.SCHEDULE +
-                    " (" +
-                    getName() +
-                    ") " +
-                    Bundle.getMessage("requestCar") +
-                    " " +
-                    Track.TYPE +
-                    " (" +
-                    si.getTypeName() +
-                    ") " +
-                    Track.ROAD +
-                    " (" +
-                    si.getRoadName() +
-                    ")";
+            return Bundle.getMessage("requestCar", Track.SCHEDULE, getName(), Track.TYPE, si.getTypeName(), Track.ROAD,
+                    si.getRoadName());
         }
+        // Check for correct car load
         if (!si.getReceiveLoadName().equals(ScheduleItem.NONE) && !car.getLoadName().equals(si.getReceiveLoadName())) {
-            return Track.SCHEDULE +
-                    " (" +
-                    getName() +
-                    ") " +
-                    Bundle.getMessage("requestCar") +
-                    " " +
-                    Track.TYPE +
-                    " (" +
-                    si.getTypeName() +
-                    ") " +
-                    Track.LOAD +
-                    " (" +
-                    si.getReceiveLoadName() +
-                    ")";
+            return Bundle.getMessage("requestCar", Track.SCHEDULE, getName(), Track.TYPE, si.getTypeName(), Track.LOAD,
+                    si.getReceiveLoadName());
         }
         // don't try the random feature if car is already assigned to this
         // schedule item
