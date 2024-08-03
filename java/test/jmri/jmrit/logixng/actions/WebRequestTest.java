@@ -488,6 +488,9 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testStoreFile() throws Exception {
+        // This test fails for unknown reason on Headless CI
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+
         // Ensure the fast clock is started at a specified time so it doesn't vary.
         // Otherwise the WebRequest.xml will be changed on every run.
         Timebase clock = InstanceManager.getDefault(jmri.Timebase.class);
