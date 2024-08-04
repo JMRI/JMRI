@@ -229,10 +229,10 @@ public class TrainCommon {
             }
             trackNames.add(track.getSplitName()); // use a track name once
 
-            // set outs
+            // car pick ups
             blockCarsPickups(file, train, carList, rl, track, isManifest);
 
-            // now do set outs and local moves
+            // now do car set outs and local moves
             // group local moves first?
             blockCarsSetoutsAndMoves(file, train, carList, rl, track, isManifest, false,
                     Setup.isGroupCarMovesEnabled());
