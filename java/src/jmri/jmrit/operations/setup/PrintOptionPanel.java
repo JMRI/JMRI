@@ -69,6 +69,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
     JCheckBox switchListDepartureTimeCheckBox = new JCheckBox(Bundle.getMessage("DepartureTime"));
     JCheckBox trackSummaryCheckBox = new JCheckBox(Bundle.getMessage("TrackSummary"));
     JCheckBox routeLocationCheckBox = new JCheckBox(Bundle.getMessage("RouteLocation"));
+    JCheckBox groupCarMovesCheckBox = new JCheckBox(Bundle.getMessage("GroupCarMoves"));
 
     // text field
     JTextField pickupEngPrefix = new JTextField(10);
@@ -147,6 +148,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         routeLocationCheckBox.setToolTipText(Bundle.getMessage("RouteLocationTip"));
         editManifestCheckBox.setToolTipText(Bundle.getMessage("UseTextEditorTip"));
         trackSummaryCheckBox.setToolTipText(Bundle.getMessage("TrackSummaryTip"));
+        groupCarMovesCheckBox.setToolTipText(Bundle.getMessage("GroupCarsTip"));
 
         addEngPickupComboboxButton.setToolTipText(Bundle.getMessage("AddMessageComboboxTip"));
         deleteEngPickupComboboxButton.setToolTipText(Bundle.getMessage("DeleteMessageComboboxTip"));
@@ -251,14 +253,15 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
                 BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutManifestSwitchListOptions")));
         addItemLeft(pManifestSwtichListOptions, printValidCheckBox, 0, 0);
         addItemLeft(pManifestSwtichListOptions, printLoadsEmptiesCheckBox, 1, 0);
-        addItemLeft(pManifestSwtichListOptions, printCabooseLoadCheckBox, 2, 0);
-        addItemLeft(pManifestSwtichListOptions, printPassengerLoadCheckBox, 3, 0);
-        addItemLeft(pManifestSwtichListOptions, use12hrFormatCheckBox, 4, 0);
+        addItemLeft(pManifestSwtichListOptions, groupCarMovesCheckBox, 2, 0);
+        addItemLeft(pManifestSwtichListOptions, printCabooseLoadCheckBox, 3, 0);
+        addItemLeft(pManifestSwtichListOptions, printPassengerLoadCheckBox, 4, 0);
 
-        addItemLeft(pManifestSwtichListOptions, printTrainScheduleNameCheckBox, 0, 1);
-        addItemLeft(pManifestSwtichListOptions, sortByTrackCheckBox, 1, 1);
-        addItemLeft(pManifestSwtichListOptions, printHeadersCheckBox, 2, 1);
-        addItemLeft(pManifestSwtichListOptions, printPageHeaderCheckBox, 3, 1);
+        addItemLeft(pManifestSwtichListOptions, use12hrFormatCheckBox, 0, 1);
+        addItemLeft(pManifestSwtichListOptions, printTrainScheduleNameCheckBox, 1, 1);
+        addItemLeft(pManifestSwtichListOptions, sortByTrackCheckBox, 2, 1);
+        addItemLeft(pManifestSwtichListOptions, printHeadersCheckBox, 3, 1);
+        addItemLeft(pManifestSwtichListOptions, printPageHeaderCheckBox, 4, 1);
 
         JPanel p2 = new JPanel();
         p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
@@ -345,6 +348,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         routeLocationCheckBox.setSelected(Setup.isSwitchListRouteLocationCommentEnabled());
         switchListDepartureTimeCheckBox.setSelected(Setup.isUseSwitchListDepartureTimeEnabled());
         editManifestCheckBox.setSelected(Setup.isManifestEditorEnabled());
+        groupCarMovesCheckBox.setSelected(Setup.isGroupCarMovesEnabled());
 
         commentTextArea.setText(TrainCommon.getTextColorString(Setup.getMiaComment()));
         hazardousTextField.setText(Setup.getHazardousMsg());
@@ -821,6 +825,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         Setup.setPrintTrackSummaryEnabled(trackSummaryCheckBox.isSelected());
         Setup.setUseSwitchListDepartureTimeEnabled(switchListDepartureTimeCheckBox.isSelected());
         Setup.setSwitchListRouteLocationCommentEnabled(routeLocationCheckBox.isSelected());
+        Setup.setGroupCarMoves(groupCarMovesCheckBox.isSelected());
 
         // reload combo boxes if tab changed
         boolean oldTabEnabled = Setup.isTabEnabled();
@@ -878,6 +883,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
                 Setup.isSwitchListRouteLocationCommentEnabled() != routeLocationCheckBox.isSelected() ||
                 Setup.isPrintTrackSummaryEnabled() != trackSummaryCheckBox.isSelected() ||
                 Setup.isUseSwitchListDepartureTimeEnabled() != switchListDepartureTimeCheckBox.isSelected() ||
+                Setup.isGroupCarMovesEnabled() != groupCarMovesCheckBox.isSelected() ||
                 Setup.isTabEnabled() != this.tabFormatCheckBox.isSelected()) {
             return true;
         }
