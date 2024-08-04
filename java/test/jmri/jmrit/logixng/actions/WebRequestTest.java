@@ -173,7 +173,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 
         JUnitAppender.assertWarnMessageStartsWith("Log local variables:");
         JUnitAppender.assertWarnMessageStartsWith("Name: turnout, Value: MiamiWest");
-        JUnitAppender.assertWarnMessageStartsWith("Name: bean, Value: IT3");
+        JUnitAppender.assertWarnMessageStartsWith("Name: bean, Value: TorontoFirst");
         JUnitAppender.assertWarnMessageStartsWith("Global variables:");
         JUnitAppender.assertWarnMessageStartsWith("Global Name: responseCode, value: 200");
         JUnitAppender.assertWarnMessageStartsWith("Global Name: reply, value: Turnout MiamiWest is thrown");
@@ -190,7 +190,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 
         JUnitAppender.assertWarnMessageStartsWith("Log local variables:");
         JUnitAppender.assertWarnMessageStartsWith("Name: turnout, Value: Chicago32");
-        JUnitAppender.assertWarnMessageStartsWith("Name: bean, Value: IT3");
+        JUnitAppender.assertWarnMessageStartsWith("Name: bean, Value: TorontoFirst");
         JUnitAppender.assertWarnMessageStartsWith("Global variables:");
         JUnitAppender.assertWarnMessageStartsWith("Global Name: responseCode, value: 200");
         JUnitAppender.assertWarnMessageStartsWith("Global Name: reply, value: Turnout Chicago32 is thrown");
