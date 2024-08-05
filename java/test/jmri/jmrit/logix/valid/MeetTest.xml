@@ -14,7 +14,7 @@
       <userName>West</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>ISTestHeadless</systemName>
+      <systemName>ISTestHeadlessOther</systemName>
       <userName>WestExit.sen</userName>
     </sensor>
     <sensor inverted="false">
@@ -1345,7 +1345,7 @@
       </inconsistent>
       <iconmaps family="SmallBlueJewel" />
     </sensoricon>
-    <sensoricon sensor="ISTestHeadless" x="170" y="135" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="ISTestHeadlessOther" x="170" y="135" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>West (IS1)</tooltip>
       <active url="program:resources/icons/smallschematics/LEDs/flashyellow.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>

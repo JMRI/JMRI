@@ -14,7 +14,7 @@
       <userName>sensor1</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>ISTestHeadless</systemName>
+      <systemName>ISTestHeadlessOther</systemName>
     </sensor>
     <sensor inverted="false">
       <systemName>IS3</systemName>
@@ -145,7 +145,7 @@
       <systemName>IM1</systemName>
       <userName>mem</userName>
     </memory>
-    <memory value="ISTestHeadless">
+    <memory value="ISTestHeadlessOther">
       <systemName>IM2</systemName>
       <userName>empty</userName>
     </memory>
@@ -355,7 +355,7 @@
       <userName>Literal Sensor Actions</userName>
       <conditionalStateVariable operator="4" negated="no" type="1" systemName="ISLITERAL" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalAction option="1" type="9" systemName="IS1" data="2" delay="0" string="0" />
-      <conditionalAction option="1" type="10" systemName="ISTestHeadless" data="2" delay="2" string="2" />
+      <conditionalAction option="1" type="10" systemName="ISTestHeadlessOther" data="2" delay="2" string="2" />
     </conditional>
     <conditional systemName="IXACTIONTESTSC2" userName="Indirect SensorActions" antecedent="R1" logicType="1" triggerOnChange="yes">
       <systemName>IXACTIONTESTSC2</systemName>

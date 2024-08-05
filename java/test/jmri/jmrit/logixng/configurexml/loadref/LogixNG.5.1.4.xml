@@ -13,7 +13,7 @@
       <systemName>IS1</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>ISTestHeadless</systemName>
+      <systemName>ISTestHeadlessOther</systemName>
       <userName>Some sensor</userName>
     </sensor>
     <sensor inverted="false">

@@ -411,8 +411,8 @@
       <systemName>IS19</systemName>
       <userName>Block19Raw</userName>
     </sensor>
-    <sensor systemName="ISTestHeadless" inverted="false">
-      <systemName>ISTestHeadless</systemName>
+    <sensor systemName="ISTestHeadlessOther" inverted="false">
+      <systemName>ISTestHeadlessOther</systemName>
     </sensor>
     <sensor systemName="ISTestHeadless0" inverted="false" userName="Block20Raw">
       <systemName>ISTestHeadless0</systemName>

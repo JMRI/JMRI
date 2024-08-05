@@ -40,7 +40,7 @@
       <systemName>ISCLOCKRUNNING</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>ISTestHeadless</systemName>
+      <systemName>ISTestHeadlessOther</systemName>
     </sensor>
   </sensors>
   <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
@@ -114,7 +114,7 @@
       <systemName>IO:AUTO:0003</systemName>
       <userName>Extrra</userName>
       <routeOutputSensor systemName="IS1" state="INACTIVE" />
-      <routeSensor systemName="ISTestHeadless" mode="vetoInactive" />
+      <routeSensor systemName="ISTestHeadlessOther" mode="vetoInactive" />
     </route>
   </routes>
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">

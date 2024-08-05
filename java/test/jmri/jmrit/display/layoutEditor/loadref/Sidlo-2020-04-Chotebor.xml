@@ -14,7 +14,7 @@
       <userName>TNX-Dub-Z-Trat-S</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>ISTestHeadless</systemName>
+      <systemName>ISTestHeadlessOther</systemName>
       <userName>TNX-Dub-Z-Trat-L</userName>
     </sensor>
     <sensor inverted="false">

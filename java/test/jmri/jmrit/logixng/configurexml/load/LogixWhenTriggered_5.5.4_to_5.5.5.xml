@@ -13,7 +13,7 @@
       <systemName>IS1</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>ISTestHeadless</systemName>
+      <systemName>ISTestHeadlessOther</systemName>
     </sensor>
     <sensor inverted="false">
       <systemName>ISCLOCKRUNNING</systemName>
@@ -148,7 +148,7 @@
       <systemName>IQDE:AUTO:0004</systemName>
       <namedBean>
         <addressing>Direct</addressing>
-        <name>ISTestHeadless</name>
+        <name>ISTestHeadlessOther</name>
         <listenToMemory>no</listenToMemory>
       </namedBean>
       <is_isNot>Is</is_isNot>

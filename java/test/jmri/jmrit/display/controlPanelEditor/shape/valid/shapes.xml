@@ -17,8 +17,8 @@
       <systemName>IS1</systemName>
       <userName>ShowRectangle</userName>
     </sensor>
-    <sensor systemName="ISTestHeadless" inverted="false" userName="ShowRoundRect">
-      <systemName>ISTestHeadless</systemName>
+    <sensor systemName="ISTestHeadlessOther" inverted="false" userName="ShowRoundRect">
+      <systemName>ISTestHeadlessOther</systemName>
       <userName>ShowRoundRect</userName>
     </sensor>
     <sensor systemName="IS3" inverted="false" userName="ShowPolygon">
@@ -95,14 +95,14 @@
       <userName>Sensor Group Help Group</userName>
       <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS0" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS1" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalStateVariable operator="5" negated="no" type="1" systemName="ISTestHeadless" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="5" negated="no" type="1" systemName="ISTestHeadlessOther" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS3" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS4" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS5" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS6" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalAction option="1" type="9" systemName="IS0" data="4" delay="0" string="" />
       <conditionalAction option="1" type="9" systemName="IS1" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessOther" data="4" delay="0" string="" />
       <conditionalAction option="1" type="9" systemName="IS3" data="4" delay="0" string="" />
       <conditionalAction option="1" type="9" systemName="IS4" data="4" delay="0" string="" />
       <conditionalAction option="1" type="9" systemName="IS5" data="4" delay="0" string="" />
@@ -112,13 +112,13 @@
       <systemName>SYS_SGC_HELPBUTTONS</systemName>
       <userName>Sensor Group HelpButtons</userName>
       <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS1" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalStateVariable operator="5" negated="no" type="1" systemName="ISTestHeadless" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="5" negated="no" type="1" systemName="ISTestHeadlessOther" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS3" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS4" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS5" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS6" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalAction option="1" type="9" systemName="IS1" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessOther" data="4" delay="0" string="" />
       <conditionalAction option="1" type="9" systemName="IS3" data="4" delay="0" string="" />
       <conditionalAction option="1" type="9" systemName="IS4" data="4" delay="0" string="" />
       <conditionalAction option="1" type="9" systemName="IS5" data="4" delay="0" string="" />

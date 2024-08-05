@@ -16,7 +16,7 @@
       <systemName>IS1</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>ISTestHeadless</systemName>
+      <systemName>ISTestHeadlessOther</systemName>
     </sensor>
     <sensor inverted="false">
       <systemName>IS3</systemName>
@@ -57,9 +57,9 @@
       <lightcontrol controlType="2" fastClockOnHour="0" fastClockOnMin="1" fastClockOffHour="2" fastClockOffMin="3" />
       <lightcontrol controlType="3" controlTurnout="IT1" turnoutState="2" />
       <lightcontrol controlType="3" controlTurnout="IT2" turnoutState="4" />
-      <lightcontrol controlType="4" timedControlSensor="ISTestHeadless" duration="1000" />
-      <lightcontrol controlType="5" controlSensor="ISTestHeadless" controlSensor2="IS3" sensorSense="2" />
-      <lightcontrol controlType="5" controlSensor="ISTestHeadless" controlSensor2="IS3" sensorSense="4" />
+      <lightcontrol controlType="4" timedControlSensor="ISTestHeadlessOther" duration="1000" />
+      <lightcontrol controlType="5" controlSensor="ISTestHeadlessOther" controlSensor2="IS3" sensorSense="2" />
+      <lightcontrol controlType="5" controlSensor="ISTestHeadlessOther" controlSensor2="IS3" sensorSense="4" />
     </light>
   </lights>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">

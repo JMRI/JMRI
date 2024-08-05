@@ -26,7 +26,7 @@
       <userName>Code Sequencer End</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>ISTestHeadless</systemName>
+      <systemName>ISTestHeadlessOther</systemName>
       <userName>Sec1 TO 1 R</userName>
     </sensor>
     <sensor inverted="false">
@@ -202,9 +202,9 @@
       <systemName>SYS_SGC_SEC1 TO 1</systemName>
       <userName>Sensor Group Sec1 TO 1</userName>
       <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS1" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalStateVariable operator="5" negated="no" type="1" systemName="ISTestHeadless" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="5" negated="no" type="1" systemName="ISTestHeadlessOther" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalAction option="1" type="9" systemName="IS1" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessOther" data="4" delay="0" string="" />
     </conditional>
   </conditionals>
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sun Jun 25 14:31:04 PDT 2017" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" showbutton="no" />

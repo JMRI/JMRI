@@ -16,7 +16,7 @@
       <systemName>IS1</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>ISTestHeadless</systemName>
+      <systemName>ISTestHeadlessOther</systemName>
     </sensor>
     <sensor inverted="false">
       <systemName>IS3</systemName>
@@ -117,7 +117,7 @@
       <systemName>IR:AUTO:0003</systemName>
       <userName>Extrra</userName>
       <routeOutputSensor systemName="IS1" state="INACTIVE" />
-      <routeSensor systemName="ISTestHeadless" mode="vetoInactive" />
+      <routeSensor systemName="ISTestHeadlessOther" mode="vetoInactive" />
     </route>
   </routes>
   <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />

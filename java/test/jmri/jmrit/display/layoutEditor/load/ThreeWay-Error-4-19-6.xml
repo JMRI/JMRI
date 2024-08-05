@@ -14,7 +14,7 @@
       <userName>West-F</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>ISTestHeadless</systemName>
+      <systemName>ISTestHeadlessOther</systemName>
       <userName>West-R</userName>
     </sensor>
     <sensor inverted="false">

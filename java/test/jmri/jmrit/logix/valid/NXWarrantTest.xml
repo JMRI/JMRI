@@ -17,7 +17,7 @@
       <systemName>IS1</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>ISTestHeadless</systemName>
+      <systemName>ISTestHeadlessOther</systemName>
     </sensor>
     <sensor inverted="false">
       <systemName>IS3</systemName>
@@ -152,7 +152,7 @@
       </portal>
     </oblock>
     <oblock systemName="OB2" length="1270.0" units="false" curve="0" permissive="false" speedNotch="">
-      <sensor systemName="ISTestHeadless" />
+      <sensor systemName="ISTestHeadlessOther" />
       <path pathName="Main" blockName="OB2" fromPortal="2-3" toPortal="1-2" fromDirection="0" toDirection="0" length="1270.0" />
       <portal portalName="1-2">
         <fromBlock blockName="OB1">
