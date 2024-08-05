@@ -42,43 +42,43 @@
       <userName>Occ West Platform Switch</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS200</systemName>
+      <systemName>ISTestHeadless00</systemName>
       <userName>East Forward</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS201</systemName>
+      <systemName>ISTestHeadless01</systemName>
       <userName>East Reverse</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS202</systemName>
+      <systemName>ISTestHeadless02</systemName>
       <userName>West Forward</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS203</systemName>
+      <systemName>ISTestHeadless03</systemName>
       <userName>West Reverse</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS204</systemName>
+      <systemName>ISTestHeadless04</systemName>
       <userName>South Forward</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS205</systemName>
+      <systemName>ISTestHeadless05</systemName>
       <userName>South Reverse</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS206</systemName>
+      <systemName>ISTestHeadless06</systemName>
       <userName>North Platform Forward</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS207</systemName>
+      <systemName>ISTestHeadless07</systemName>
       <userName>North PlatForm Reverse</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS208</systemName>
+      <systemName>ISTestHeadless08</systemName>
       <userName>South Platform Forward</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS209</systemName>
+      <systemName>ISTestHeadless09</systemName>
       <userName>South Platform Reverse</userName>
     </sensor>
     <sensor inverted="false">

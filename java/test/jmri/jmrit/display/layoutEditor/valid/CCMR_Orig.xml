@@ -42,75 +42,75 @@
       <userName>Turnout Lever 107</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS200</systemName>
+      <systemName>ISTestHeadless00</systemName>
       <userName>Turnout Lever 200</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS201</systemName>
+      <systemName>ISTestHeadless01</systemName>
       <userName>Code Button 200</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS202</systemName>
+      <systemName>ISTestHeadless02</systemName>
       <userName>Turnout Lever 201</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS203</systemName>
+      <systemName>ISTestHeadless03</systemName>
       <userName>Code Button 201</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS204</systemName>
+      <systemName>ISTestHeadless04</systemName>
       <userName>Turnout Lever 202</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS205</systemName>
+      <systemName>ISTestHeadless05</systemName>
       <userName>Code Button 202</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS211</systemName>
+      <systemName>ISTestHeadless11</systemName>
       <userName>Code Button 205</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS212</systemName>
+      <systemName>ISTestHeadless12</systemName>
       <userName>Turnout Lever 206</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS222</systemName>
+      <systemName>ISTestHeadless22</systemName>
       <userName>Turnout Lever 211</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS223</systemName>
+      <systemName>ISTestHeadless23</systemName>
       <userName>Code Button 211</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS224</systemName>
+      <systemName>ISTestHeadless24</systemName>
       <userName>Turnout Lever 212</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS225</systemName>
+      <systemName>ISTestHeadless25</systemName>
       <userName>Code Button 212</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS226</systemName>
+      <systemName>ISTestHeadless26</systemName>
       <userName>Turnout Lever 213</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS227</systemName>
+      <systemName>ISTestHeadless27</systemName>
       <userName>Code Button 213</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS228</systemName>
+      <systemName>ISTestHeadless28</systemName>
       <userName>Turnout Lever 214</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS229</systemName>
+      <systemName>ISTestHeadless29</systemName>
       <userName>Code Button 214</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS230</systemName>
+      <systemName>ISTestHeadless30</systemName>
       <userName>Turnout Lever 215</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS231</systemName>
+      <systemName>ISTestHeadless31</systemName>
       <userName>Code Button 215</userName>
     </sensor>
     <sensor inverted="false">

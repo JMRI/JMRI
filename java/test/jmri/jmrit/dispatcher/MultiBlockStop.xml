@@ -14,7 +14,7 @@
       <userName>Block 1</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2</systemName>
+      <systemName>ISTestHeadless</systemName>
       <userName>Block 2</userName>
     </sensor>
     <sensor inverted="false">

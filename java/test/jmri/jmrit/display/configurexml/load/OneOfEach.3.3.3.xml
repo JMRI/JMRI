@@ -14,8 +14,8 @@
     <sensor systemName="IS1" inverted="false">
       <systemName>IS1</systemName>
     </sensor>
-    <sensor systemName="IS2" inverted="false">
-      <systemName>IS2</systemName>
+    <sensor systemName="ISTestHeadless" inverted="false">
+      <systemName>ISTestHeadless</systemName>
     </sensor>
     <sensor systemName="IS3" inverted="false">
       <systemName>IS3</systemName>

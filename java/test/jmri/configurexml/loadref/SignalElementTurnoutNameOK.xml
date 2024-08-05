@@ -15,7 +15,7 @@
       <comment>SE8c #1</comment>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2</systemName>
+      <systemName>ISTestHeadless</systemName>
     </sensor>
     <sensor inverted="false">
       <systemName>IS3</systemName>

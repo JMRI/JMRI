@@ -14,7 +14,7 @@
       <userName>Sensor No Spaces</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2</systemName>
+      <systemName>ISTestHeadless</systemName>
       <userName>Sensor Trailing Space</userName>
     </sensor>
     <sensor inverted="false">

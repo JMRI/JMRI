@@ -13,8 +13,8 @@
       <systemName>IS1</systemName>
       <userName>sen1</userName>
     </sensor>
-    <sensor systemName="IS2" inverted="false" userName="sen2">
-      <systemName>IS2</systemName>
+    <sensor systemName="ISTestHeadless" inverted="false" userName="sen2">
+      <systemName>ISTestHeadless</systemName>
       <userName>sen2</userName>
     </sensor>
     <sensor systemName="ISCLOCKRUNNING" inverted="false">

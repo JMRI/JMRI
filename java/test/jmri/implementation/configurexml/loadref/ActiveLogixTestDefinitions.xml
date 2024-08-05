@@ -14,27 +14,27 @@
       <userName>Turrnout Drives Sensor 1</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS201</systemName>
+      <systemName>ISTestHeadless01</systemName>
       <userName>Sensor Logic Drives Turnout 1</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS202</systemName>
+      <systemName>ISTestHeadless02</systemName>
       <userName>Sensor Logic Drives Turnout 2</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS203</systemName>
+      <systemName>ISTestHeadless03</systemName>
       <userName>Sensor Logic Drives Turnout 3</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS204</systemName>
+      <systemName>ISTestHeadless04</systemName>
       <userName>Sensor Logic Drives Turnout 4</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS205</systemName>
+      <systemName>ISTestHeadless05</systemName>
       <userName>Sensor Logic Drives Turnout 5</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS206</systemName>
+      <systemName>ISTestHeadless06</systemName>
       <userName>Sensor Logic Drives Turnout 6</userName>
     </sensor>
     <sensor inverted="false">
@@ -142,12 +142,12 @@
     </conditional>
     <conditional systemName="IX:AUTO:0002C1" antecedent="(R1 and R2) or (R3 and R4) or (R5 and R6)" logicType="3" triggerOnChange="yes">
       <systemName>IX:AUTO:0002C1</systemName>
-      <conditionalStateVariable operator="4" negated="no" type="1" systemName="IS201" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalStateVariable operator="1" negated="no" type="1" systemName="IS202" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalStateVariable operator="1" negated="no" type="1" systemName="IS203" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalStateVariable operator="1" negated="no" type="1" systemName="IS204" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalStateVariable operator="1" negated="no" type="1" systemName="IS205" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalStateVariable operator="1" negated="no" type="1" systemName="IS206" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="ISTestHeadless01" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" negated="no" type="1" systemName="ISTestHeadless02" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" negated="no" type="1" systemName="ISTestHeadless03" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" negated="no" type="1" systemName="ISTestHeadless04" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" negated="no" type="1" systemName="ISTestHeadless05" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" negated="no" type="1" systemName="ISTestHeadless06" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalAction option="1" type="2" systemName="IT201" data="4" delay="0" string="" />
       <conditionalAction option="2" type="2" systemName="IT201" data="2" delay="0" string="" />
     </conditional>

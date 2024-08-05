@@ -34,39 +34,39 @@
       <userName>S-OBlock-Error</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS201</systemName>
+      <systemName>ISTestHeadless01</systemName>
       <userName>S-Left-Approach</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS202</systemName>
+      <systemName>ISTestHeadless02</systemName>
       <userName>S-Left-TO</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS203</systemName>
+      <systemName>ISTestHeadless03</systemName>
       <userName>S-Main</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS204</systemName>
+      <systemName>ISTestHeadless04</systemName>
       <userName>S-Side</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS205</systemName>
+      <systemName>ISTestHeadless05</systemName>
       <userName>S-Right-TO</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS206</systemName>
+      <systemName>ISTestHeadless06</systemName>
       <userName>S-Right-Approach</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS211</systemName>
+      <systemName>ISTestHeadless11</systemName>
       <userName>S-Group-Control-1</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS212</systemName>
+      <systemName>ISTestHeadless12</systemName>
       <userName>S-Group-Control-2</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS221</systemName>
+      <systemName>ISTestHeadless21</systemName>
       <userName>S-Run-Warrant</userName>
     </sensor>
     <sensor inverted="false">
@@ -725,28 +725,28 @@
   </transits>
   <signalelements class="jmri.jmrit.blockboss.configurexml.BlockBossLogicXml">
     <signalelement signal="Left-B" mode="2" watchedturnout="IT202" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
-      <sensorname>IS201</sensorname>
+      <sensorname>ISTestHeadless01</sensorname>
     </signalelement>
     <signalelement signal="Left-C" mode="3" watchedturnout="IT202" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
-      <sensorname>IS201</sensorname>
+      <sensorname>ISTestHeadless01</sensorname>
     </signalelement>
     <signalelement signal="Right-AU" mode="2" watchedturnout="IT203" watchedsignal1="IH103" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
-      <sensorname>IS203</sensorname>
+      <sensorname>ISTestHeadless03</sensorname>
     </signalelement>
     <signalelement signal="Right-AL" mode="3" watchedturnout="IT203" watchedsignal1="IH104" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
-      <sensorname>IS204</sensorname>
+      <sensorname>ISTestHeadless04</sensorname>
     </signalelement>
     <signalelement signal="Right-B" mode="2" watchedturnout="IT203" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
-      <sensorname>IS206</sensorname>
+      <sensorname>ISTestHeadless06</sensorname>
     </signalelement>
     <signalelement signal="Right-C" mode="3" watchedturnout="IT203" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
-      <sensorname>IS206</sensorname>
+      <sensorname>ISTestHeadless06</sensorname>
     </signalelement>
     <signalelement signal="Left-AU" mode="2" watchedturnout="IT202" watchedsignal1="IH107" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
-      <sensorname>IS203</sensorname>
+      <sensorname>ISTestHeadless03</sensorname>
     </signalelement>
     <signalelement signal="Left-AL" mode="3" watchedturnout="IT202" watchedsignal1="IH108" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
-      <sensorname>IS204</sensorname>
+      <sensorname>ISTestHeadless04</sensorname>
     </signalelement>
   </signalelements>
   <routes class="jmri.managers.configurexml.DefaultRouteManagerXml">

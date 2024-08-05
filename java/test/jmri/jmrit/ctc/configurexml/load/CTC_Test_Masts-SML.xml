@@ -19,34 +19,34 @@
       <systemName>IS1:SWRI</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2:CALLON</systemName>
+      <systemName>ISTestHeadless:CALLON</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2:CB</systemName>
+      <systemName>ISTestHeadless:CB</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2:LDGK</systemName>
+      <systemName>ISTestHeadless:LDGK</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2:LDGL</systemName>
+      <systemName>ISTestHeadless:LDGL</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2:LOCKTOGGLE</systemName>
+      <systemName>ISTestHeadless:LOCKTOGGLE</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2:NGK</systemName>
+      <systemName>ISTestHeadless:NGK</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2:NGL</systemName>
+      <systemName>ISTestHeadless:NGL</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2:RDGK</systemName>
+      <systemName>ISTestHeadless:RDGK</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2:RDGL</systemName>
+      <systemName>ISTestHeadless:RDGL</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2:UNLOCKEDINDICATOR</systemName>
+      <systemName>ISTestHeadless:UNLOCKEDINDICATOR</systemName>
     </sensor>
     <sensor inverted="false">
       <systemName>IS3:LEVER</systemName>
@@ -517,16 +517,16 @@
       <SwitchNumber>1</SwitchNumber>
       <SignalEtcNumber>2</SignalEtcNumber>
       <GUIColumnNumber>2</GUIColumnNumber>
-      <CodeButtonInternalSensor>IS2:CB</CodeButtonInternalSensor>
+      <CodeButtonInternalSensor>ISTestHeadless:CB</CodeButtonInternalSensor>
       <OSSectionOccupiedExternalSensor>S-Alpha-Left</OSSectionOccupiedExternalSensor>
       <OSSectionOccupiedExternalSensor2 />
       <OSSectionSwitchSlavedToUniqueID>-1</OSSectionSwitchSlavedToUniqueID>
       <GUIGeneratedAtLeastOnceAlready>false</GUIGeneratedAtLeastOnceAlready>
       <CodeButtonDelayTime>0</CodeButtonDelayTime>
       <SIDI_Enabled>true</SIDI_Enabled>
-      <SIDI_LeftInternalSensor>IS2:LDGK</SIDI_LeftInternalSensor>
-      <SIDI_NormalInternalSensor>IS2:NGK</SIDI_NormalInternalSensor>
-      <SIDI_RightInternalSensor>IS2:RDGK</SIDI_RightInternalSensor>
+      <SIDI_LeftInternalSensor>ISTestHeadless:LDGK</SIDI_LeftInternalSensor>
+      <SIDI_NormalInternalSensor>ISTestHeadless:NGK</SIDI_NormalInternalSensor>
+      <SIDI_RightInternalSensor>ISTestHeadless:RDGK</SIDI_RightInternalSensor>
       <SIDI_CodingTimeInMilliseconds>1000</SIDI_CodingTimeInMilliseconds>
       <SIDI_TimeLockingTimeInMilliseconds>1000</SIDI_TimeLockingTimeInMilliseconds>
       <SIDI_TrafficDirection>BOTH</SIDI_TrafficDirection>
@@ -538,9 +538,9 @@
         <signal>SM-Alpha-Left-C</signal>
       </SIDI_RightLeftTrafficSignals>
       <SIDL_Enabled>true</SIDL_Enabled>
-      <SIDL_LeftInternalSensor>IS2:LDGL</SIDL_LeftInternalSensor>
-      <SIDL_NormalInternalSensor>IS2:NGL</SIDL_NormalInternalSensor>
-      <SIDL_RightInternalSensor>IS2:RDGL</SIDL_RightInternalSensor>
+      <SIDL_LeftInternalSensor>ISTestHeadless:LDGL</SIDL_LeftInternalSensor>
+      <SIDL_NormalInternalSensor>ISTestHeadless:NGL</SIDL_NormalInternalSensor>
+      <SIDL_RightInternalSensor>ISTestHeadless:RDGL</SIDL_RightInternalSensor>
       <SWDI_Enabled>true</SWDI_Enabled>
       <SWDI_NormalInternalSensor>IS1:SWNI</SWDI_NormalInternalSensor>
       <SWDI_ReversedInternalSensor>IS1:SWRI</SWDI_ReversedInternalSensor>
@@ -553,7 +553,7 @@
       <SWDL_Enabled>true</SWDL_Enabled>
       <SWDL_InternalSensor>IS1:LEVER</SWDL_InternalSensor>
       <CO_Enabled>true</CO_Enabled>
-      <CO_CallOnToggleInternalSensor>IS2:CALLON</CO_CallOnToggleInternalSensor>
+      <CO_CallOnToggleInternalSensor>ISTestHeadless:CALLON</CO_CallOnToggleInternalSensor>
       <CO_GroupingsList>
         <CO_GroupEntry>
           <ExternalSignal>SM-Alpha-Left-A</ExternalSignal>
@@ -650,10 +650,10 @@
         </TRL_TrafficLockingRule>
       </TRL_RightRules>
       <TUL_Enabled>true</TUL_Enabled>
-      <TUL_DispatcherInternalSensorLockToggle>IS2:LOCKTOGGLE</TUL_DispatcherInternalSensorLockToggle>
+      <TUL_DispatcherInternalSensorLockToggle>ISTestHeadless:LOCKTOGGLE</TUL_DispatcherInternalSensorLockToggle>
       <TUL_ExternalTurnout>T-Alpha-Left</TUL_ExternalTurnout>
       <TUL_ExternalTurnoutFeedbackDifferent>false</TUL_ExternalTurnoutFeedbackDifferent>
-      <TUL_DispatcherInternalSensorUnlockedIndicator>IS2:UNLOCKEDINDICATOR</TUL_DispatcherInternalSensorUnlockedIndicator>
+      <TUL_DispatcherInternalSensorUnlockedIndicator>ISTestHeadless:UNLOCKEDINDICATOR</TUL_DispatcherInternalSensorUnlockedIndicator>
       <TUL_NoDispatcherControlOfSwitch>false</TUL_NoDispatcherControlOfSwitch>
       <TUL_ndcos_WhenLockedSwitchStateIsClosed>true</TUL_ndcos_WhenLockedSwitchStateIsClosed>
       <TUL_GUI_IconsEnabled>true</TUL_GUI_IconsEnabled>
@@ -1055,8 +1055,8 @@
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <sensoricon sensor="IS2:CB" x="98" y="632" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="true" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
-      <tooltip>IS2:CB</tooltip>
+    <sensoricon sensor="ISTestHeadless:CB" x="98" y="632" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="true" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>ISTestHeadless:CB</tooltip>
       <active url="program:resources/icons/USS/plate/levers/code-press.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>
@@ -1155,8 +1155,8 @@
     <positionablelabel x="106" y="356" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="1" fontname="Dialog" size="11" style="0" red="255" green="255" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <sensoricon sensor="IS2:LDGK" x="81" y="454" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
-      <tooltip>IS2:LDGK</tooltip>
+    <sensoricon sensor="ISTestHeadless:LDGK" x="81" y="454" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>ISTestHeadless:LDGK</tooltip>
       <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>
@@ -1171,8 +1171,8 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <sensoricon sensor="IS2:NGK" x="99" y="440" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
-      <tooltip>IS2:NGK</tooltip>
+    <sensoricon sensor="ISTestHeadless:NGK" x="99" y="440" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>ISTestHeadless:NGK</tooltip>
       <active url="program:resources/icons/USS/sensor/red-on.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>
@@ -1187,8 +1187,8 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <sensoricon sensor="IS2:RDGK" x="115" y="454" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
-      <tooltip>IS2:RDGK</tooltip>
+    <sensoricon sensor="ISTestHeadless:RDGK" x="115" y="454" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>ISTestHeadless:RDGK</tooltip>
       <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>
@@ -1213,14 +1213,14 @@
       <tooltip>SM-Alpha-Left-C</tooltip>
     </signalmasticon>
     <multisensoricon x="85" y="492" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" updown="false" class="jmri.jmrit.display.configurexml.MultiSensorIconXml">
-      <tooltip>IS2:LDGL,IS2:NGL,IS2:RDGL</tooltip>
-      <active url="program:resources/icons/USS/plate/levers/lever-left-wide.gif" degrees="0" scale="1.0" sensor="IS2:LDGL">
+      <tooltip>ISTestHeadless:LDGL,IS2:NGL,IS2:RDGL</tooltip>
+      <active url="program:resources/icons/USS/plate/levers/lever-left-wide.gif" degrees="0" scale="1.0" sensor="ISTestHeadless:LDGL">
         <rotation>0</rotation>
       </active>
-      <active url="program:resources/icons/USS/plate/levers/lever-vertical-wide.gif" degrees="0" scale="1.0" sensor="IS2:NGL">
+      <active url="program:resources/icons/USS/plate/levers/lever-vertical-wide.gif" degrees="0" scale="1.0" sensor="ISTestHeadless:NGL">
         <rotation>0</rotation>
       </active>
-      <active url="program:resources/icons/USS/plate/levers/lever-right-wide.gif" degrees="0" scale="1.0" sensor="IS2:RDGL">
+      <active url="program:resources/icons/USS/plate/levers/lever-right-wide.gif" degrees="0" scale="1.0" sensor="ISTestHeadless:RDGL">
         <rotation>0</rotation>
       </active>
       <inactive url="program:resources/icons/USS/plate/levers/lever-inactive-wide.gif" degrees="0" scale="1.0">
@@ -1236,8 +1236,8 @@
     <positionablelabel x="106" y="470" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="2" fontname="Dialog" size="11" style="0" red="255" green="255" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <sensoricon sensor="IS2:CALLON" x="98" y="582" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
-      <tooltip>IS2:CALLON</tooltip>
+    <sensoricon sensor="ISTestHeadless:CALLON" x="98" y="582" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>ISTestHeadless:CALLON</tooltip>
       <active url="program:resources/icons/USS/plate/levers/switch-on.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>
@@ -1255,8 +1255,8 @@
     <positionablelabel x="125" y="590" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Call-on" fontname="Dialog" size="11" style="0" red="255" green="255" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <sensoricon sensor="IS2:LOCKTOGGLE" x="98" y="541" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
-      <tooltip>IS2:LOCKTOGGLE</tooltip>
+    <sensoricon sensor="ISTestHeadless:LOCKTOGGLE" x="98" y="541" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>ISTestHeadless:LOCKTOGGLE</tooltip>
       <active url="program:resources/icons/USS/plate/levers/switch-on.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>
@@ -1277,8 +1277,8 @@
     <positionablelabel x="125" y="560" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Locked" fontname="Dialog" size="11" style="0" red="255" green="255" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <sensoricon sensor="IS2:UNLOCKEDINDICATOR" x="99" y="200" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
-      <tooltip>IS2:UNLOCKEDINDICATOR</tooltip>
+    <sensoricon sensor="ISTestHeadless:UNLOCKEDINDICATOR" x="99" y="200" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>ISTestHeadless:UNLOCKEDINDICATOR</tooltip>
       <active url="program:resources/icons/USS/sensor/red-on.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>

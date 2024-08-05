@@ -14,7 +14,7 @@
       <userName>West-F</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2</systemName>
+      <systemName>ISTestHeadless</systemName>
       <userName>West-R</userName>
     </sensor>
     <sensor inverted="false">
@@ -67,34 +67,34 @@
       <systemName>IS19</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS20</systemName>
+      <systemName>ISTestHeadless0</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS21</systemName>
+      <systemName>ISTestHeadless1</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS22</systemName>
+      <systemName>ISTestHeadless2</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS23</systemName>
+      <systemName>ISTestHeadless3</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS24</systemName>
+      <systemName>ISTestHeadless4</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS25</systemName>
+      <systemName>ISTestHeadless5</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS26</systemName>
+      <systemName>ISTestHeadless6</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS27</systemName>
+      <systemName>ISTestHeadless7</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS28</systemName>
+      <systemName>ISTestHeadless8</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS29</systemName>
+      <systemName>ISTestHeadless9</systemName>
     </sensor>
     <sensor inverted="false">
       <systemName>IS30</systemName>
@@ -154,76 +154,76 @@
       <systemName>IS128</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS249</systemName>
+      <systemName>ISTestHeadless49</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS250</systemName>
+      <systemName>ISTestHeadless50</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS251</systemName>
+      <systemName>ISTestHeadless51</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS252</systemName>
+      <systemName>ISTestHeadless52</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS253</systemName>
+      <systemName>ISTestHeadless53</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS254</systemName>
+      <systemName>ISTestHeadless54</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS255</systemName>
+      <systemName>ISTestHeadless55</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS256</systemName>
+      <systemName>ISTestHeadless56</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS257</systemName>
+      <systemName>ISTestHeadless57</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS258</systemName>
+      <systemName>ISTestHeadless58</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS259</systemName>
+      <systemName>ISTestHeadless59</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS260</systemName>
+      <systemName>ISTestHeadless60</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS261</systemName>
+      <systemName>ISTestHeadless61</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS262</systemName>
+      <systemName>ISTestHeadless62</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS263</systemName>
+      <systemName>ISTestHeadless63</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS264</systemName>
+      <systemName>ISTestHeadless64</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS265</systemName>
+      <systemName>ISTestHeadless65</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS266</systemName>
+      <systemName>ISTestHeadless66</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS267</systemName>
+      <systemName>ISTestHeadless67</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS268</systemName>
+      <systemName>ISTestHeadless68</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS269</systemName>
+      <systemName>ISTestHeadless69</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS270</systemName>
+      <systemName>ISTestHeadless70</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS271</systemName>
+      <systemName>ISTestHeadless71</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS272</systemName>
+      <systemName>ISTestHeadless72</systemName>
     </sensor>
     <sensor inverted="false">
       <systemName>ISCLOCKRUNNING</systemName>
@@ -339,7 +339,7 @@
       <systemName>IB:AUTO:0003</systemName>
       <userName>CentralEast-B</userName>
       <permissive>no</permissive>
-      <occupancysensor>IS20</occupancysensor>
+      <occupancysensor>ISTestHeadless0</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0005">
         <beansetting setting="2">
           <turnout systemName="EastSwitch" />
@@ -350,7 +350,7 @@
       <systemName>IB:AUTO:0004</systemName>
       <userName>NorthEast-B</userName>
       <permissive>no</permissive>
-      <occupancysensor>IS21</occupancysensor>
+      <occupancysensor>ISTestHeadless1</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0005">
         <beansetting setting="4">
           <turnout systemName="EastSwitch" />
@@ -395,11 +395,11 @@
       <systemName>ILB2</systemName>
       <userName>SouthEast-B</userName>
     </layoutblock>
-    <layoutblock systemName="ILB3" occupancysensor="IS20" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+    <layoutblock systemName="ILB3" occupancysensor="ISTestHeadless0" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
       <systemName>ILB3</systemName>
       <userName>CentralEast-B</userName>
     </layoutblock>
-    <layoutblock systemName="ILB4" occupancysensor="IS21" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+    <layoutblock systemName="ILB4" occupancysensor="ISTestHeadless1" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
       <systemName>ILB4</systemName>
       <userName>NorthEast-B</userName>
     </layoutblock>

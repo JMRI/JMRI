@@ -13,7 +13,7 @@
       <systemName>IS1</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2</systemName>
+      <systemName>ISTestHeadless</systemName>
     </sensor>
     <sensor inverted="false">
       <systemName>IS3</systemName>
@@ -858,7 +858,7 @@
       <active url="program:resources/icons/USS/plate/levers/l-left.gif" degrees="0" scale="1.0" sensor="IS1">
         <rotation>0</rotation>
       </active>
-      <active url="program:resources/icons/USS/plate/levers/l-vertical.gif" degrees="0" scale="1.0" sensor="IS2">
+      <active url="program:resources/icons/USS/plate/levers/l-vertical.gif" degrees="0" scale="1.0" sensor="ISTestHeadless">
         <rotation>0</rotation>
       </active>
       <active url="program:resources/icons/USS/plate/levers/l-right.gif" degrees="0" scale="1.0" sensor="IS3">
@@ -1274,7 +1274,7 @@
         <InlineLogixNG_SystemName>IQ:AUTO:0023</InlineLogixNG_SystemName>
       </LogixNG>
     </turnouticon>
-    <sensoricon sensor="IS2" x="187" y="399" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="ISTestHeadless" x="187" y="399" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>
@@ -1416,7 +1416,7 @@
       <active url="program:resources/icons/USS/plate/levers/l-left.gif" degrees="0" scale="1.0" sensor="IS1">
         <rotation>0</rotation>
       </active>
-      <active url="program:resources/icons/USS/plate/levers/l-vertical.gif" degrees="0" scale="1.0" sensor="IS2">
+      <active url="program:resources/icons/USS/plate/levers/l-vertical.gif" degrees="0" scale="1.0" sensor="ISTestHeadless">
         <rotation>0</rotation>
       </active>
       <active url="program:resources/icons/USS/plate/levers/l-right.gif" degrees="0" scale="1.0" sensor="IS3">

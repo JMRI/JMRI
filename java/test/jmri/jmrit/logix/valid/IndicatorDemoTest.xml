@@ -18,7 +18,7 @@
       <userName>block1</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2</systemName>
+      <systemName>ISTestHeadless</systemName>
       <userName>block2</userName>
     </sensor>
     <sensor inverted="false">
@@ -46,23 +46,23 @@
       <userName>err4</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS20</systemName>
+      <systemName>ISTestHeadless0</systemName>
       <userName>Infinity&amp;Beyond</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS21</systemName>
+      <systemName>ISTestHeadless1</systemName>
       <userName>FarWest</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS22</systemName>
+      <systemName>ISTestHeadless2</systemName>
       <userName>FarEast</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS23</systemName>
+      <systemName>ISTestHeadless3</systemName>
       <userName>EastYard</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS24</systemName>
+      <systemName>ISTestHeadless4</systemName>
       <userName>sMiddle</userName>
     </sensor>
     <sensor inverted="false">
@@ -113,23 +113,23 @@
       <userName>Set Error</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS201</systemName>
+      <systemName>ISTestHeadless01</systemName>
       <userName>Warrant1</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS202</systemName>
+      <systemName>ISTestHeadless02</systemName>
       <userName>Warrant2</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS203</systemName>
+      <systemName>ISTestHeadless03</systemName>
       <userName>Warrant3</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS204</systemName>
+      <systemName>ISTestHeadless04</systemName>
       <userName>Warrant4</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS205</systemName>
+      <systemName>ISTestHeadless05</systemName>
       <userName>Warrant5</userName>
     </sensor>
     <sensor inverted="false">
@@ -902,7 +902,7 @@
     <conditional systemName="IX:AUTO:0003C6" userName="Set WestToEastOnMain" antecedent="R1" logicType="1" triggerOnChange="no">
       <systemName>IX:AUTO:0003C6</systemName>
       <userName>Set WestToEastOnMain</userName>
-      <conditionalStateVariable operator="4" negated="no" type="1" systemName="IS201" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="ISTestHeadless01" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalAction option="1" type="12" systemName="Warrant" data="-1" delay="0" string="WestToEastOnMain" />
       <conditionalAction option="1" type="12" systemName="TrainName" data="-1" delay="0" string="PDQX" />
       <conditionalAction option="1" type="12" systemName="TrainId" data="-1" delay="0" string="Hudson" />
@@ -910,19 +910,19 @@
     <conditional systemName="IX:AUTO:0003C7" userName="Set WestToEastOnSiding" antecedent="R1" logicType="1" triggerOnChange="no">
       <systemName>IX:AUTO:0003C7</systemName>
       <userName>Set WestToEastOnSiding</userName>
-      <conditionalStateVariable operator="4" negated="no" type="1" systemName="IS202" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="ISTestHeadless02" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalAction option="1" type="12" systemName="Warrant" data="-1" delay="0" string="WestToEastOnSiding" />
     </conditional>
     <conditional systemName="IX:AUTO:0003C8" userName="set WestYardToEast" antecedent="R1" logicType="1" triggerOnChange="no">
       <systemName>IX:AUTO:0003C8</systemName>
       <userName>set WestYardToEast</userName>
-      <conditionalStateVariable operator="4" negated="no" type="1" systemName="IS203" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="ISTestHeadless03" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalAction option="1" type="12" systemName="Warrant" data="-1" delay="0" string="WestYardToEast" />
     </conditional>
     <conditional systemName="IX:AUTO:0003C9" userName="Set WestToSidingYard" antecedent="R1" logicType="1" triggerOnChange="no">
       <systemName>IX:AUTO:0003C9</systemName>
       <userName>Set WestToSidingYard</userName>
-      <conditionalStateVariable operator="4" negated="no" type="1" systemName="IS204" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="ISTestHeadless04" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalAction option="1" type="12" systemName="Warrant" data="-1" delay="0" string="WestToSidingYard" />
     </conditional>
     <conditional systemName="IX:AUTO:0003C10" userName="SetEastToWestOnSiding" antecedent="R1" logicType="1" triggerOnChange="yes">
@@ -992,16 +992,16 @@
     <conditional systemName="IX:SYS_SGC_WARRANTS" userName="Sensor Group warrants" antecedent="" logicType="2" triggerOnChange="yes">
       <systemName>IX:SYS_SGC_WARRANTS</systemName>
       <userName>Sensor Group warrants</userName>
-      <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS201" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS202" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS203" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS204" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS205" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalAction option="1" type="9" systemName="IS201" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="IS202" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="IS203" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="IS204" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="IS205" data="4" delay="0" string="" />
+      <conditionalStateVariable operator="5" negated="no" type="1" systemName="ISTestHeadless01" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="5" negated="no" type="1" systemName="ISTestHeadless02" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="5" negated="no" type="1" systemName="ISTestHeadless03" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="5" negated="no" type="1" systemName="ISTestHeadless04" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="5" negated="no" type="1" systemName="ISTestHeadless05" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadless01" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadless02" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadless03" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadless04" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadless05" data="4" delay="0" string="" />
     </conditional>
   </conditionals>
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Tue Dec 28 12:04:15 PST 2010" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
@@ -2166,7 +2166,7 @@
     <positionablelabel x="340" y="304" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="EastToWestOnSiding" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <sensoricon sensor="IS205" x="325" y="305" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="ISTestHeadless05" x="325" y="305" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>Warrant4</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -2339,7 +2339,7 @@
     <positionablelabel x="913" y="177" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Infinity&amp;Beyond" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <sensoricon sensor="IS21" x="183" y="134" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="ISTestHeadless1" x="183" y="134" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>block1</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>

@@ -10,7 +10,7 @@
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
     <sensor inverted="false">
-      <systemName>IS2</systemName>
+      <systemName>ISTestHeadless</systemName>
       <userName>TJTeam Switch</userName>
     </sensor>
     <sensor inverted="false">
@@ -97,51 +97,51 @@
       <useGlobalDebounceTimer>yes</useGlobalDebounceTimer>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS200</systemName>
+      <systemName>ISTestHeadless00</systemName>
       <userName>RESET BUTTON</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS201</systemName>
+      <systemName>ISTestHeadless01</systemName>
       <userName>CP2831E</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS202</systemName>
+      <systemName>ISTestHeadless02</systemName>
       <userName>CP2832E</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS203</systemName>
+      <systemName>ISTestHeadless03</systemName>
       <userName>CP2831W</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS204</systemName>
+      <systemName>ISTestHeadless04</systemName>
       <userName>CP2832W</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS205</systemName>
+      <systemName>ISTestHeadless05</systemName>
       <userName>CP283DY</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS206</systemName>
+      <systemName>ISTestHeadless06</systemName>
       <userName>NX2831E</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS207</systemName>
+      <systemName>ISTestHeadless07</systemName>
       <userName>NX2832E</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS208</systemName>
+      <systemName>ISTestHeadless08</systemName>
       <userName>NX283DY</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS209</systemName>
+      <systemName>ISTestHeadless09</systemName>
       <userName>NX2831W</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS210</systemName>
+      <systemName>ISTestHeadless10</systemName>
       <userName>NX2832W</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS211</systemName>
+      <systemName>ISTestHeadless11</systemName>
       <userName>CP354</userName>
       <useGlobalDebounceTimer>yes</useGlobalDebounceTimer>
     </sensor>

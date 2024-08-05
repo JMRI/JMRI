@@ -10,7 +10,7 @@
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>inactive</defaultInitialState>
     <sensor inverted="false">
-      <systemName>IS2</systemName>
+      <systemName>ISTestHeadless</systemName>
       <userName>Occ East</userName>
     </sensor>
     <sensor inverted="false">
@@ -74,7 +74,7 @@
       <userName>Dir West Rev</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS20</systemName>
+      <systemName>ISTestHeadless0</systemName>
       <userName>Dir West Fwd</userName>
     </sensor>
     <sensor inverted="false">

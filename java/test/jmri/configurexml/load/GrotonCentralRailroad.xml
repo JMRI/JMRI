@@ -14,7 +14,7 @@
       <userName>Reset Main</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2</systemName>
+      <systemName>ISTestHeadless</systemName>
       <userName>Close Yard</userName>
     </sensor>
     <sensor inverted="false">
@@ -27,19 +27,19 @@
       <systemName>IS12</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS20</systemName>
+      <systemName>ISTestHeadless0</systemName>
       <userName>HB20</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS21</systemName>
+      <systemName>ISTestHeadless1</systemName>
       <userName>HB21</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS22</systemName>
+      <systemName>ISTestHeadless2</systemName>
       <userName>HB22</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS23</systemName>
+      <systemName>ISTestHeadless3</systemName>
       <userName>HB23</userName>
     </sensor>
     <sensor inverted="false">
@@ -218,15 +218,15 @@
       <systemName>IS105</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS231</systemName>
+      <systemName>ISTestHeadless31</systemName>
       <userName>FM Rev Loop</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS254</systemName>
+      <systemName>ISTestHeadless54</systemName>
       <userName>Throw Yard</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS255</systemName>
+      <systemName>ISTestHeadless55</systemName>
       <userName>Throw Main</userName>
     </sensor>
     <sensor inverted="false">
@@ -1311,7 +1311,7 @@
       <routeOutputTurnout systemName="IT421" state="CLOSED" />
       <routeOutputTurnout systemName="IT425" state="CLOSED" />
       <routeOutputTurnout systemName="IT427" state="CLOSED" />
-      <routeSensor systemName="IS2" mode="onActive" />
+      <routeSensor systemName="ISTestHeadless" mode="onActive" />
       <turnoutsAlignedSensor name="ISS2" />
     </route>
     <route userName="Reset Danville" controlLockTurnout="IT1003" controlLockTurnoutState="CLOSED">
@@ -1422,7 +1422,7 @@
       <systemName>IOHB20</systemName>
       <userName>Hillsboro 20</userName>
       <routeOutputTurnout systemName="IT121" state="THROWN" />
-      <routeSensor systemName="IS20" mode="onActive" />
+      <routeSensor systemName="ISTestHeadless0" mode="onActive" />
       <turnoutsAlignedSensor name="ISS20" />
     </route>
     <route userName="Hillsboro 21">
@@ -1431,7 +1431,7 @@
       <routeOutputTurnout systemName="IT121" state="CLOSED" />
       <routeOutputTurnout systemName="IT123" state="THROWN" />
       <routeOutputTurnout systemName="IT125" state="THROWN" />
-      <routeSensor systemName="IS21" mode="onActive" />
+      <routeSensor systemName="ISTestHeadless1" mode="onActive" />
       <turnoutsAlignedSensor name="ISS21" />
     </route>
     <route userName="Hillsboro 22">
@@ -1440,7 +1440,7 @@
       <routeOutputTurnout systemName="IT121" state="CLOSED" />
       <routeOutputTurnout systemName="IT123" state="THROWN" />
       <routeOutputTurnout systemName="IT125" state="CLOSED" />
-      <routeSensor systemName="IS22" mode="onActive" />
+      <routeSensor systemName="ISTestHeadless2" mode="onActive" />
       <turnoutsAlignedSensor name="ISS22" />
     </route>
     <route userName="Hillsboro 23">
@@ -1449,7 +1449,7 @@
       <routeOutputTurnout systemName="IT121" state="CLOSED" />
       <routeOutputTurnout systemName="IT123" state="CLOSED" />
       <routeOutputTurnout systemName="IT127" state="CLOSED" />
-      <routeSensor systemName="IS23" mode="onActive" />
+      <routeSensor systemName="ISTestHeadless3" mode="onActive" />
       <turnoutsAlignedSensor name="ISS23" />
     </route>
     <route userName="Lock Bakersfield" controlLockTurnout="IT1001" controlLockTurnoutState="CLOSED">
@@ -1491,14 +1491,14 @@
       <userName>Fremont 231</userName>
       <routeOutputTurnout systemName="IT231" state="CLOSED" />
       <routeOutputTurnout systemName="IT233" state="CLOSED" />
-      <routeSensor systemName="IS231" mode="onActive" />
+      <routeSensor systemName="ISTestHeadless31" mode="onActive" />
     </route>
     <route userName="Fremont 232">
       <systemName>IOLOOP 232</systemName>
       <userName>Fremont 232</userName>
       <routeOutputTurnout systemName="IT231" state="THROWN" />
       <routeOutputTurnout systemName="IT233" state="THROWN" />
-      <routeSensor systemName="IS231" mode="onInactive" />
+      <routeSensor systemName="ISTestHeadless31" mode="onInactive" />
     </route>
     <route userName="Reset Niles" controlLockTurnout="IT1010" controlLockTurnoutState="CLOSED">
       <systemName>IONILE</systemName>
@@ -1798,7 +1798,7 @@
       <routeOutputTurnout systemName="IT233" state="THROWN" />
       <routeOutputTurnout systemName="IT423" state="THROWN" />
       <routeOutputTurnout systemName="IT431" state="THROWN" />
-      <routeSensor systemName="IS255" mode="onActive" />
+      <routeSensor systemName="ISTestHeadless55" mode="onActive" />
       <turnoutsAlignedSensor name="ISS255" />
     </route>
     <route userName="Throw Yard Switches">
@@ -1867,7 +1867,7 @@
       <routeOutputTurnout systemName="IT421" state="THROWN" />
       <routeOutputTurnout systemName="IT425" state="THROWN" />
       <routeOutputTurnout systemName="IT427" state="THROWN" />
-      <routeSensor systemName="IS254" mode="onActive" />
+      <routeSensor systemName="ISTestHeadless54" mode="onActive" />
       <turnoutsAlignedSensor name="ISS254" />
     </route>
     <route userName="Unlock all main turnouts" controlTurnout="IT1000" controlTurnoutState="THROWN">

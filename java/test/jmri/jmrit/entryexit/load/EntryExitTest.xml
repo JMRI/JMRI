@@ -66,51 +66,51 @@
       <userName>BD-Beta-Alpha</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS201</systemName>
+      <systemName>ISTestHeadless01</systemName>
       <userName>NX-Alpha-EB</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS202</systemName>
+      <systemName>ISTestHeadless02</systemName>
       <userName>NX-AW</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS203</systemName>
+      <systemName>ISTestHeadless03</systemName>
       <userName>NX-AW-Main</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS204</systemName>
+      <systemName>ISTestHeadless04</systemName>
       <userName>NX-AW-Side</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS205</systemName>
+      <systemName>ISTestHeadless05</systemName>
       <userName>NX-AE</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS206</systemName>
+      <systemName>ISTestHeadless06</systemName>
       <userName>NX-AE-Main</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS207</systemName>
+      <systemName>ISTestHeadless07</systemName>
       <userName>NX-AE-Side</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS208</systemName>
+      <systemName>ISTestHeadless08</systemName>
       <userName>NX-To-Beta</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS209</systemName>
+      <systemName>ISTestHeadless09</systemName>
       <userName>NX-From-Beta</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS210</systemName>
+      <systemName>ISTestHeadless10</systemName>
       <userName>NX-BW</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS211</systemName>
+      <systemName>ISTestHeadless11</systemName>
       <userName>NX-To-Alpha</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS212</systemName>
+      <systemName>ISTestHeadless12</systemName>
       <userName>NX-From-Alpha</userName>
     </sensor>
     <sensor inverted="false">

@@ -13,8 +13,8 @@
       <systemName>IS1</systemName>
       <userName>Sensor No Spaces</userName>
     </sensor>
-    <sensor systemName="IS2" inverted="false" userName="Sensor Trailing Space">
-      <systemName>IS2</systemName>
+    <sensor systemName="ISTestHeadless" inverted="false" userName="Sensor Trailing Space">
+      <systemName>ISTestHeadless</systemName>
       <userName>Sensor Trailing Space</userName>
     </sensor>
     <sensor systemName="IS3" inverted="false" userName="Sensor Leading Space">

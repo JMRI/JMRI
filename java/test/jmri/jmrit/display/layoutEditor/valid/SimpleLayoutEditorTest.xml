@@ -49,8 +49,8 @@
       <systemName>IS18</systemName>
       <userName>Siding 8</userName>
     </sensor>
-    <sensor systemName="IS2" inverted="false" userName="Main 2">
-      <systemName>IS2</systemName>
+    <sensor systemName="ISTestHeadless" inverted="false" userName="Main 2">
+      <systemName>ISTestHeadless</systemName>
       <userName>Main 2</userName>
     </sensor>
     <sensor systemName="IS3" inverted="false" userName="Main 3">

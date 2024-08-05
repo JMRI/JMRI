@@ -58,7 +58,7 @@
      <string>_mCodeButtonInternalSensor</string>
      <void method="set">
       <object idref="CodeButtonHandlerData0"/>
-      <string>IS2:CB</string>
+      <string>ISTestHeadless:CB</string>
      </void>
     </void>
     <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
@@ -100,21 +100,21 @@
      <string>_mSIDI_LeftInternalSensor</string>
      <void method="set">
       <object idref="CodeButtonHandlerData0"/>
-      <string>IS2:LGK</string>
+      <string>ISTestHeadless:LGK</string>
      </void>
     </void>
     <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
      <string>_mSIDI_NormalInternalSensor</string>
      <void method="set">
       <object idref="CodeButtonHandlerData0"/>
-      <string>IS2:NGK</string>
+      <string>ISTestHeadless:NGK</string>
      </void>
     </void>
     <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
      <string>_mSIDI_RightInternalSensor</string>
      <void method="set">
       <object idref="CodeButtonHandlerData0"/>
-      <string>IS2:RGK</string>
+      <string>ISTestHeadless:RGK</string>
      </void>
     </void>
     <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
@@ -156,21 +156,21 @@
      <string>_mSIDL_LeftInternalSensor</string>
      <void method="set">
       <object idref="CodeButtonHandlerData0"/>
-      <string>IS2:LGL</string>
+      <string>ISTestHeadless:LGL</string>
      </void>
     </void>
     <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
      <string>_mSIDL_NormalInternalSensor</string>
      <void method="set">
       <object idref="CodeButtonHandlerData0"/>
-      <string>IS2:NGL</string>
+      <string>ISTestHeadless:NGL</string>
      </void>
     </void>
     <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
      <string>_mSIDL_RightInternalSensor</string>
      <void method="set">
       <object idref="CodeButtonHandlerData0"/>
-      <string>IS2:RGL</string>
+      <string>ISTestHeadless:RGL</string>
      </void>
     </void>
     <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
@@ -240,7 +240,7 @@
      <string>_mCO_CallOnToggleInternalSensor</string>
      <void method="set">
       <object idref="CodeButtonHandlerData0"/>
-      <string>IS2:CALLON</string>
+      <string>ISTestHeadless:CALLON</string>
      </void>
     </void>
     <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
@@ -282,7 +282,7 @@
      <string>_mTUL_DispatcherInternalSensorLockToggle</string>
      <void method="set">
       <object idref="CodeButtonHandlerData0"/>
-      <string>IS2:LOCKTOGGLE</string>
+      <string>ISTestHeadless:LOCKTOGGLE</string>
      </void>
     </void>
     <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
@@ -296,7 +296,7 @@
      <string>_mTUL_DispatcherInternalSensorUnlockedIndicator</string>
      <void method="set">
       <object idref="CodeButtonHandlerData0"/>
-      <string>IS2:UNLOCKED</string>
+      <string>ISTestHeadless:UNLOCKED</string>
      </void>
     </void>
     <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">

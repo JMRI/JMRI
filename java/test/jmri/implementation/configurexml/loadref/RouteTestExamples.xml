@@ -13,7 +13,7 @@
       <systemName>IS1</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2</systemName>
+      <systemName>ISTestHeadless</systemName>
     </sensor>
     <sensor inverted="false">
       <systemName>IS3</systemName>
@@ -114,7 +114,7 @@
       <systemName>IO:AUTO:0003</systemName>
       <userName>Extrra</userName>
       <routeOutputSensor systemName="IS1" state="INACTIVE" />
-      <routeSensor systemName="IS2" mode="vetoInactive" />
+      <routeSensor systemName="ISTestHeadless" mode="vetoInactive" />
     </route>
   </routes>
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">

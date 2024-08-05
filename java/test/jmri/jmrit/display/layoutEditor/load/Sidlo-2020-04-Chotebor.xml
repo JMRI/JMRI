@@ -14,7 +14,7 @@
       <userName>TNX-Dub-Z-Trat-S</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2</systemName>
+      <systemName>ISTestHeadless</systemName>
       <userName>TNX-Dub-Z-Trat-L</userName>
     </sensor>
     <sensor inverted="false">
@@ -86,43 +86,43 @@
       <userName>TRe-Dub-K3-S-Bi</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS20</systemName>
+      <systemName>ISTestHeadless0</systemName>
       <userName>TRe-Dub-K3-S-Ze</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS21</systemName>
+      <systemName>ISTestHeadless1</systemName>
       <userName>TRe-Dub-K5-S-Bi</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS22</systemName>
+      <systemName>ISTestHeadless2</systemName>
       <userName>TRe-Dub-K5-S-Ze</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS23</systemName>
+      <systemName>ISTestHeadless3</systemName>
       <userName>TRe-Dub-K1-L-Bi</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS24</systemName>
+      <systemName>ISTestHeadless4</systemName>
       <userName>TRe-Dub-K1-L-Ze</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS25</systemName>
+      <systemName>ISTestHeadless5</systemName>
       <userName>TRe-Dub-K3-L-Bi</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS26</systemName>
+      <systemName>ISTestHeadless6</systemName>
       <userName>TRe-Dub-K3-L-Ze</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS27</systemName>
+      <systemName>ISTestHeadless7</systemName>
       <userName>TRe-Dub-K5-L-Bi</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS28</systemName>
+      <systemName>ISTestHeadless8</systemName>
       <userName>TRe-Dub-K5-L-Ze</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS29</systemName>
+      <systemName>ISTestHeadless9</systemName>
       <userName>TRe-Dub-K-Zahl-Bi</userName>
     </sensor>
     <sensor inverted="false">
@@ -808,163 +808,163 @@
       <userName>Hli-V1-Ind</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS200</systemName>
+      <systemName>ISTestHeadless00</systemName>
       <userName>Hli-V2-Ind</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS201</systemName>
+      <systemName>ISTestHeadless01</systemName>
       <userName>Hli-V3-Ind</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS202</systemName>
+      <systemName>ISTestHeadless02</systemName>
       <userName>Hli-V4-Ind</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS203</systemName>
+      <systemName>ISTestHeadless03</systemName>
       <userName>Hli-V1-Rad-Plus</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS204</systemName>
+      <systemName>ISTestHeadless04</systemName>
       <userName>Hli-V1-Rad-Minus</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS205</systemName>
+      <systemName>ISTestHeadless05</systemName>
       <userName>Hli-V1-Rad-Rele</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS206</systemName>
+      <systemName>ISTestHeadless06</systemName>
       <userName>Hli-V2-Rad-Plus</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS207</systemName>
+      <systemName>ISTestHeadless07</systemName>
       <userName>Hli-V2-Rad-Minus</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS208</systemName>
+      <systemName>ISTestHeadless08</systemName>
       <userName>Hli-V2-Rad-Rele</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS209</systemName>
+      <systemName>ISTestHeadless09</systemName>
       <userName>Hli-V3-Rad-Plus</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS210</systemName>
+      <systemName>ISTestHeadless10</systemName>
       <userName>Hli-V3-Rad-Minus</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS211</systemName>
+      <systemName>ISTestHeadless11</systemName>
       <userName>Hli-V3-Rad-Rele</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS212</systemName>
+      <systemName>ISTestHeadless12</systemName>
       <userName>Hli-V4-Rad-Plus</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS213</systemName>
+      <systemName>ISTestHeadless13</systemName>
       <userName>Hli-V4-Rad-Minus</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS214</systemName>
+      <systemName>ISTestHeadless14</systemName>
       <userName>Hli-V4-Rad-Rele</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS215</systemName>
+      <systemName>ISTestHeadless15</systemName>
       <userName>Hli-Priv-Tlac-L</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS216</systemName>
+      <systemName>ISTestHeadless16</systemName>
       <userName>Hli-Priv-Tlac-L1</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS217</systemName>
+      <systemName>ISTestHeadless17</systemName>
       <userName>Hli-Priv-Tlac-L2</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS218</systemName>
+      <systemName>ISTestHeadless18</systemName>
       <userName>Hli-Priv-Tlac-Lc2</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS219</systemName>
+      <systemName>ISTestHeadless19</systemName>
       <userName>Hli-Priv-Tlac-Lc4</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS220</systemName>
+      <systemName>ISTestHeadless20</systemName>
       <userName>Hli-Priv-Tlac-S</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS221</systemName>
+      <systemName>ISTestHeadless21</systemName>
       <userName>Hli-Priv-Tlac-S1</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS222</systemName>
+      <systemName>ISTestHeadless22</systemName>
       <userName>Hli-Priv-Tlac-S2</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS223</systemName>
+      <systemName>ISTestHeadless23</systemName>
       <userName>Hli-Priv-Tlac-S4</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS224</systemName>
+      <systemName>ISTestHeadless24</systemName>
       <userName>Hli-Priv-Tlac-Sc2</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS225</systemName>
+      <systemName>ISTestHeadless25</systemName>
       <userName>Hli-Priv-Ind-L</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS226</systemName>
+      <systemName>ISTestHeadless26</systemName>
       <userName>Hli-Priv-Ind-L1</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS227</systemName>
+      <systemName>ISTestHeadless27</systemName>
       <userName>Hli-Priv-Ind-L2</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS228</systemName>
+      <systemName>ISTestHeadless28</systemName>
       <userName>Hli-Priv-Ind-Lc2</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS229</systemName>
+      <systemName>ISTestHeadless29</systemName>
       <userName>Hli-Priv-Ind-Lc4</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS230</systemName>
+      <systemName>ISTestHeadless30</systemName>
       <userName>Hli-Priv-Ind-S</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS231</systemName>
+      <systemName>ISTestHeadless31</systemName>
       <userName>Hli-Priv-Ind-S1</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS232</systemName>
+      <systemName>ISTestHeadless32</systemName>
       <userName>Hli-Priv-Ind-S2</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS233</systemName>
+      <systemName>ISTestHeadless33</systemName>
       <userName>Hli-Priv-Ind-S4</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS234</systemName>
+      <systemName>ISTestHeadless34</systemName>
       <userName>Hli-Priv-Ind-Sc2</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS235</systemName>
+      <systemName>ISTestHeadless35</systemName>
       <userName>HliTlacReleovka</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS236</systemName>
+      <systemName>ISTestHeadless36</systemName>
       <userName>HliTlacManual</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS237</systemName>
+      <systemName>ISTestHeadless37</systemName>
       <userName>HliTlacNulovani</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS238</systemName>
+      <systemName>ISTestHeadless38</systemName>
       <userName>HliZapReleovka</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS239</systemName>
+      <systemName>ISTestHeadless39</systemName>
       <userName>HliZapManual</userName>
     </sensor>
     <sensor inverted="false">

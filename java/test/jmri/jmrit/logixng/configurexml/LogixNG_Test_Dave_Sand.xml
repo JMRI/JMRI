@@ -34,19 +34,19 @@
       <userName>S-Right-Approach</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS201</systemName>
+      <systemName>ISTestHeadless01</systemName>
       <userName>Set NX Enabled</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS202</systemName>
+      <systemName>ISTestHeadless02</systemName>
       <userName>Set NX Active - Inactive</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS210</systemName>
+      <systemName>ISTestHeadless10</systemName>
       <userName>Trigger Route</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS211</systemName>
+      <systemName>ISTestHeadless11</systemName>
       <userName>NX Active</userName>
     </sensor>
     <sensor inverted="false">
