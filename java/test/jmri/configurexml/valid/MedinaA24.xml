@@ -72,7 +72,7 @@
   </sensors>
   <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
     <sensor systemName="IS1" inverted="false" userName="SensorBlack2S" />
-    <sensor systemName="IS2" inverted="false" userName="SensorGreen8S" />
+    <sensor systemName="IS2_java_test_jmri_configurexml_valid_MedinaA24.xml" inverted="false" userName="SensorGreen8S" />
     <sensor systemName="IS3" inverted="false" userName="SensorBlack13S" />
     <sensor systemName="ISCLOCKRUNNING" inverted="false" />
     <sensor systemName="ISNS775" inverted="false" userName="SensorBlack5" />
@@ -306,7 +306,7 @@
       <path todir="128" fromdir="64" block="IB12" />
     </block>
     <block systemName="IB29" userName="Green8S" length="762.0" curve="0">
-      <sensor systemName="IS2" />
+      <sensor systemName="IS2_java_test_jmri_configurexml_valid_MedinaA24.xml" />
       <path todir="64" fromdir="128" block="IB20" />
     </block>
     <block systemName="IB3" userName="Black8" length="762.0" curve="0">
@@ -395,7 +395,7 @@
     <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IS17" userName="Black9E10" />
     <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IS18" userName="Black10W9" />
     <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IS19" userName="Black10E11" />
-    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IS2" userName="Black2W1" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IS2_java_test_jmri_configurexml_valid_MedinaA24.xml" userName="Black2W1" />
     <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IS20" userName="Black11W10" />
     <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IS21" userName="Black11E12" />
     <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IS22" userName="Black12W11" />
@@ -653,7 +653,7 @@
       <sensor systemName="ISNS971" />
     </signalelement>
     <signalelement signal="IS34" mode="3" watchedturnout="NT24" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
-      <sensor systemName="IS2" />
+      <sensor systemName="IS2_java_test_jmri_configurexml_valid_MedinaA24.xml" />
     </signalelement>
     <signalelement signal="IS33" mode="2" watchedturnout="NT24" watchedsignal1="IS48" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensor systemName="ISNS896" />
@@ -718,7 +718,7 @@
     <signalelement signal="IS3" mode="1" watchedsignal1="IS5" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensor systemName="ISNS791" />
     </signalelement>
-    <signalelement signal="IS2" mode="1" watchedsignal1="IS32" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="IS2_java_test_jmri_configurexml_valid_MedinaA24.xml" mode="1" watchedsignal1="IS32" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensor systemName="ISNS922" />
     </signalelement>
     <signalelement signal="IS1" mode="1" watchedsignal1="IS3" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">

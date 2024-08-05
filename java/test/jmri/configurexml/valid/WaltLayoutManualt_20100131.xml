@@ -851,7 +851,7 @@
     <sensor systemName="IS17" inverted="false" userName="sec017E" />
     <sensor systemName="IS18" inverted="false" userName="sec108E" />
     <sensor systemName="IS19" inverted="false" userName="sec019E" />
-    <sensor systemName="IS2" inverted="false" userName="sec110E" />
+    <sensor systemName="IS2_java_test_jmri_configurexml_valid_WaltLayoutManualt_20100131.xml" inverted="false" userName="sec110E" />
     <sensor systemName="IS20" inverted="false" userName="sec102E" />
     <sensor systemName="IS201" inverted="false" userName="sec111stp" />
     <sensor systemName="IS202" inverted="false" userName="sec110stp" />
@@ -3261,7 +3261,7 @@
       <conditionalStateVariable operator="2" negated="yes" type="1" systemName="sec111E" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalStateVariable operator="3" negated="yes" type="2" systemName="sec111E" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalAction option="1" type="9" systemName="IS1" data="4" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="IS2" data="4" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="IS2_java_test_jmri_configurexml_valid_WaltLayoutManualt_20100131.xml" data="4" delay="0" string="0" />
       <conditionalAction option="1" type="9" systemName="IS3" data="4" delay="0" string="0" />
       <conditionalAction option="1" type="9" systemName="IS4" data="4" delay="0" string="0" />
       <conditionalAction option="1" type="9" systemName="IS5" data="4" delay="0" string="0" />
@@ -8105,7 +8105,7 @@
       <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" degrees="0" scale="1.0" />
       <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" degrees="0" scale="1.0" />
     </sensoricon>
-    <sensoricon sensor="IS2" x="1040" y="180" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="IS2_java_test_jmri_configurexml_valid_WaltLayoutManualt_20100131.xml" x="1040" y="180" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" rotate="0" degrees="0" scale="1.0" />
       <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" rotate="0" degrees="0" scale="1.0" />
       <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" degrees="0" scale="1.0" />

@@ -10,7 +10,7 @@
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
     <sensor inverted="false">
-      <systemName>IS2</systemName>
+      <systemName>IS2_java_test_jmri_jmrit_display_layoutEditor_load_Jlang-Panel-4-19-6.xml</systemName>
       <userName>TJTeam Switch</userName>
     </sensor>
     <sensor inverted="false">

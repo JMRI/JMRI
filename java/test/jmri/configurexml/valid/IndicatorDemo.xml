@@ -61,8 +61,8 @@
       <systemName>IS14</systemName>
       <userName>err4</userName>
     </sensor>
-    <sensor systemName="IS2" inverted="false" userName="block2">
-      <systemName>IS2</systemName>
+    <sensor systemName="IS2_java_test_jmri_configurexml_valid_IndicatorDemo.xml" inverted="false" userName="block2">
+      <systemName>IS2_java_test_jmri_configurexml_valid_IndicatorDemo.xml</systemName>
       <userName>block2</userName>
     </sensor>
     <sensor systemName="IS20" inverted="false" userName="Infinity&amp;Beyond">
@@ -387,7 +387,7 @@
     </oblock>
     <oblock systemName="OB2" userName="Main" length="4000.0" units="true" curve="0" permissive="false" speedNotch="">
       <userName>Main</userName>
-      <sensor systemName="IS2" />
+      <sensor systemName="IS2_java_test_jmri_configurexml_valid_IndicatorDemo.xml" />
       <errorSensor systemName="IS12" />
       <path pathName="main" blockName="OB2" fromPortal="westMain" toPortal="eastMain" fromDirection="0" toDirection="0" length="0.0" />
       <portal portalName="westMain">

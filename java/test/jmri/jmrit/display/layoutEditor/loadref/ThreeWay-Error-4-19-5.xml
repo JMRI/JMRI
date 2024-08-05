@@ -14,7 +14,7 @@
       <userName>West-F</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2</systemName>
+      <systemName>IS2_java_test_jmri_jmrit_display_layoutEditor_load_ThreeWay-Error-4-19-5.xml</systemName>
       <userName>West-R</userName>
     </sensor>
     <sensor inverted="false">

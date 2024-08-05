@@ -17,7 +17,7 @@
       <userName>East2</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2</systemName>
+      <systemName>IS2_java_test_jmri_jmrit_cabsignals_SimpleCabSignalTestPanel.xml</systemName>
       <userName>East1</userName>
     </sensor>
     <sensor inverted="false">

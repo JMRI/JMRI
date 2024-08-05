@@ -13,7 +13,7 @@
       <systemName>IS1</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2</systemName>
+      <systemName>IS2_java_test_jmri_jmrit_logixng_configurexml_load_LogixWhenTriggered_5.5.4_to_5.5.5.xml</systemName>
     </sensor>
     <sensor inverted="false">
       <systemName>ISCLOCKRUNNING</systemName>
@@ -148,7 +148,7 @@
       <systemName>IQDE:AUTO:0004</systemName>
       <namedBean>
         <addressing>Direct</addressing>
-        <name>IS2</name>
+        <name>IS2_java_test_jmri_jmrit_logixng_configurexml_load_LogixWhenTriggered_5.5.4_to_5.5.5.xml</name>
         <listenToMemory>no</listenToMemory>
       </namedBean>
       <is_isNot>Is</is_isNot>

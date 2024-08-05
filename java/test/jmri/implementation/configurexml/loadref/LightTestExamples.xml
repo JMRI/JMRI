@@ -13,7 +13,7 @@
       <systemName>IS1</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2</systemName>
+      <systemName>IS2_java_test_jmri_implementation_configurexml_load_LightTestExamples.xml</systemName>
     </sensor>
     <sensor inverted="false">
       <systemName>IS3</systemName>
@@ -57,9 +57,9 @@
       <lightcontrol controlType="2" fastClockOnHour="0" fastClockOnMin="1" fastClockOffHour="2" fastClockOffMin="3" />
       <lightcontrol controlType="3" controlTurnout="IT1" turnoutState="2" />
       <lightcontrol controlType="3" controlTurnout="IT2" turnoutState="4" />
-      <lightcontrol controlType="4" timedControlSensor="IS2" duration="1000" />
-      <lightcontrol controlType="5" controlSensor="IS2" controlSensor2="IS3" sensorSense="2" />
-      <lightcontrol controlType="5" controlSensor="IS2" controlSensor2="IS3" sensorSense="4" />
+      <lightcontrol controlType="4" timedControlSensor="IS2_java_test_jmri_implementation_configurexml_load_LightTestExamples.xml" duration="1000" />
+      <lightcontrol controlType="5" controlSensor="IS2_java_test_jmri_implementation_configurexml_load_LightTestExamples.xml" controlSensor2="IS3" sensorSense="2" />
+      <lightcontrol controlType="5" controlSensor="IS2_java_test_jmri_implementation_configurexml_load_LightTestExamples.xml" controlSensor2="IS3" sensorSense="4" />
     </light>
   </lights>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">

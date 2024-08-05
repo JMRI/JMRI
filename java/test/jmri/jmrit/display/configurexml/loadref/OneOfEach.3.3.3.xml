@@ -16,7 +16,7 @@
       <systemName>IS1</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2</systemName>
+      <systemName>IS2_java_test_jmri_jmrit_display_configurexml_load_OneOfEach.3.3.3.xml</systemName>
     </sensor>
     <sensor inverted="false">
       <systemName>IS3</systemName>

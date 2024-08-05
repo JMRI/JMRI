@@ -18,7 +18,7 @@
       <userName>block1</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2</systemName>
+      <systemName>IS2_java_test_jmri_jmrit_logix_valid_IndicatorDemoTest.xml</systemName>
       <userName>block2</userName>
     </sensor>
     <sensor inverted="false">

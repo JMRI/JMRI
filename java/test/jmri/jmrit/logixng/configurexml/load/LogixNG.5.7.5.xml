@@ -27,7 +27,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IS1</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2</systemName>
+      <systemName>IS2_java_test_jmri_jmrit_logixng_configurexml_load_LogixNG.5.7.5.xml</systemName>
       <userName>Some sensor</userName>
     </sensor>
     <sensor inverted="false">

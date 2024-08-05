@@ -53,8 +53,8 @@
       <systemName>IS19</systemName>
       <userName>19</userName>
     </sensor>
-    <sensor systemName="IS2" inverted="false" userName="2">
-      <systemName>IS2</systemName>
+    <sensor systemName="IS2_java_test_jmri_jmrit_display_layoutEditor_valid_LEConnectTest.xml" inverted="false" userName="2">
+      <systemName>IS2_java_test_jmri_jmrit_display_layoutEditor_valid_LEConnectTest.xml</systemName>
       <userName>2</userName>
     </sensor>
     <sensor systemName="IS20" inverted="false" userName="20">
@@ -782,7 +782,7 @@
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Thu Dec 30 07:27:13 PST 2010" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
   <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
   <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Connectivity Test" x="0" y="0" height="744" width="1132" windowheight="796" windowwidth="1144" panelheight="744" panelwidth="1132" sliders="yes" scrollable="both" editable="yes" positionable="yes" controlling="yes" animating="yes" showhelpbar="yes" drawgrid="no" snaponadd="no" snaponmove="no" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="black" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="track" turnoutcirclesize="2" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" openDispatcher="no">
-    <sensoricon sensor="IS2" x="426" y="164" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="no" text="2" size="11" style="0" red="0" green="0" blue="255" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="IS2_java_test_jmri_jmrit_display_layoutEditor_valid_LEConnectTest.xml" x="426" y="164" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="no" text="2" size="11" style="0" red="0" green="0" blue="255" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>2 (IS2)</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>

@@ -14,7 +14,7 @@
       <userName>Block 1</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2</systemName>
+      <systemName>IS2_java_test_jmri_jmrit_dispatcher_MultiBlockStop.xml</systemName>
       <userName>Block 2</userName>
     </sensor>
     <sensor inverted="false">

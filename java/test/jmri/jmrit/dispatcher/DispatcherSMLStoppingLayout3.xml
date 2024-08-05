@@ -10,7 +10,7 @@
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>inactive</defaultInitialState>
     <sensor inverted="false">
-      <systemName>IS2</systemName>
+      <systemName>IS2_java_test_jmri_jmrit_dispatcher_DispatcherSMLStoppingLayout3.xml</systemName>
       <userName>Occ East</userName>
     </sensor>
     <sensor inverted="false">

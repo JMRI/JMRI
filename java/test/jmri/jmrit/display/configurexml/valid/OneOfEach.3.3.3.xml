@@ -14,8 +14,8 @@
         <sensor systemName="IS1" inverted="false">
             <systemName>IS1</systemName>
         </sensor>
-        <sensor systemName="IS2" inverted="false">
-            <systemName>IS2</systemName>
+        <sensor systemName="IS2_java_test_jmri_jmrit_display_configurexml_valid_OneOfEach.3.3.3.xml" inverted="false">
+            <systemName>IS2_java_test_jmri_jmrit_display_configurexml_valid_OneOfEach.3.3.3.xml</systemName>
         </sensor>
         <sensor systemName="IS3" inverted="false">
             <systemName>IS3</systemName>
@@ -421,7 +421,7 @@
             <active url="program:resources/icons/USS/plate/levers/l-left.gif" degrees="0" scale="1.0" sensor="IS1">
                 <rotation>0</rotation>
             </active>
-            <active url="program:resources/icons/USS/plate/levers/l-vertical.gif" degrees="0" scale="1.0" sensor="IS2">
+            <active url="program:resources/icons/USS/plate/levers/l-vertical.gif" degrees="0" scale="1.0" sensor="IS2_java_test_jmri_jmrit_display_configurexml_valid_OneOfEach.3.3.3.xml">
                 <rotation>0</rotation>
             </active>
             <active url="program:resources/icons/USS/plate/levers/l-right.gif" degrees="0" scale="1.0" sensor="IS3">

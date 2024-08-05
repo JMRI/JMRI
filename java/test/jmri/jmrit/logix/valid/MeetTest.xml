@@ -14,7 +14,7 @@
       <userName>West</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2</systemName>
+      <systemName>IS2_java_test_jmri_jmrit_logix_valid_MeetTest.xml</systemName>
       <userName>WestExit.sen</userName>
     </sensor>
     <sensor inverted="false">
@@ -1345,7 +1345,7 @@
       </inconsistent>
       <iconmaps family="SmallBlueJewel" />
     </sensoricon>
-    <sensoricon sensor="IS2" x="170" y="135" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="IS2_java_test_jmri_jmrit_logix_valid_MeetTest.xml" x="170" y="135" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>West (IS1)</tooltip>
       <active url="program:resources/icons/smallschematics/LEDs/flashyellow.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>

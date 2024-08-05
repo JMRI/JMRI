@@ -14,7 +14,7 @@
       <userName>Sensor No Spaces</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2</systemName>
+      <systemName>IS2_java_test_jmri_configurexml_load_LeadingTrailingSpaceTest.xml</systemName>
       <userName>Sensor Trailing Space</userName>
     </sensor>
     <sensor inverted="false">

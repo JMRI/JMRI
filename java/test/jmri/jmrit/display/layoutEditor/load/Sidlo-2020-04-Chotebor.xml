@@ -14,7 +14,7 @@
       <userName>TNX-Dub-Z-Trat-S</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2</systemName>
+      <systemName>IS2_java_test_jmri_jmrit_display_layoutEditor_load_Sidlo-2020-04-Chotebor.xml</systemName>
       <userName>TNX-Dub-Z-Trat-L</userName>
     </sensor>
     <sensor inverted="false">

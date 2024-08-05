@@ -14,7 +14,7 @@
       <userName>Reset Main</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>IS2</systemName>
+      <systemName>IS2_java_test_jmri_configurexml_load_GrotonCentralRailroad.xml</systemName>
       <userName>Close Yard</userName>
     </sensor>
     <sensor inverted="false">
@@ -1311,7 +1311,7 @@
       <routeOutputTurnout systemName="IT421" state="CLOSED" />
       <routeOutputTurnout systemName="IT425" state="CLOSED" />
       <routeOutputTurnout systemName="IT427" state="CLOSED" />
-      <routeSensor systemName="IS2" mode="onActive" />
+      <routeSensor systemName="IS2_java_test_jmri_configurexml_load_GrotonCentralRailroad.xml" mode="onActive" />
       <turnoutsAlignedSensor name="ISS2" />
     </route>
     <route userName="Reset Danville" controlLockTurnout="IT1003" controlLockTurnoutState="CLOSED">

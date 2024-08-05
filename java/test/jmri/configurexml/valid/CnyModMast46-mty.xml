@@ -49,8 +49,8 @@
       <systemName>IS19</systemName>
       <userName>Block19Raw</userName>
     </sensor>
-    <sensor systemName="IS2" inverted="false">
-      <systemName>IS2</systemName>
+    <sensor systemName="IS2_java_test_jmri_configurexml_valid_CnyModMast46-mty.xml" inverted="false">
+      <systemName>IS2_java_test_jmri_configurexml_valid_CnyModMast46-mty.xml</systemName>
     </sensor>
     <sensor systemName="IS20" inverted="false" userName="Block20Raw">
       <systemName>IS20</systemName>
