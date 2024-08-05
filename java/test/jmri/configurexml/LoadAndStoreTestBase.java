@@ -372,7 +372,7 @@ public class LoadAndStoreTestBase {
     public void setUp(@TempDir java.io.File tempDir) throws IOException  {
         JUnitUtil.setUp();
 //        JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir));
-        JUnitUtil.resetProfileManager( new jmri.profile.NullProfile("."));
+        JUnitUtil.resetProfileManager( new jmri.profile.NullProfile(new java.io.File(".")));
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
