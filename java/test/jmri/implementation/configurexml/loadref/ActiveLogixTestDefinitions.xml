@@ -14,6 +14,13 @@
       <userName>Turrnout Drives Sensor 1</userName>
     </sensor>
     <sensor inverted="false">
+      <systemName>IS301</systemName>
+      <userName>Check Fast Clock 1</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+    <sensor inverted="false">
       <systemName>ISTestHeadless01</systemName>
       <userName>Sensor Logic Drives Turnout 1</userName>
     </sensor>
@@ -36,13 +43,6 @@
     <sensor inverted="false">
       <systemName>ISTestHeadless06</systemName>
       <userName>Sensor Logic Drives Turnout 6</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>IS301</systemName>
-      <userName>Check Fast Clock 1</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>ISCLOCKRUNNING</systemName>
     </sensor>
   </sensors>
   <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
