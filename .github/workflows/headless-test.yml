@@ -26,3 +26,9 @@ jobs:
       run: |
         # run tests using maven with graphics suppressed
         mvn test "-Djmri.skipTestsRequiringSeparateRunning=true"  "-Djava.awt.headless=true" "-Dsurefire.printSummary=true"
+    - name: Upload temp folder artifact
+      uses: actions/upload-artifact@v3
+      if: ${{ always() }}
+      with:
+        name: tempFolder
+        path: temp/*
