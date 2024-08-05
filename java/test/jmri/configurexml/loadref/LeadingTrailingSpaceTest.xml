@@ -14,15 +14,15 @@
       <userName>Sensor No Spaces</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>ISTestHeadless</systemName>
-      <userName>Sensor Trailing Space</userName>
-    </sensor>
-    <sensor inverted="false">
       <systemName>IS3</systemName>
       <userName>Sensor Leading Space</userName>
     </sensor>
     <sensor inverted="false">
       <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISTestHeadless</systemName>
+      <userName>Sensor Trailing Space</userName>
     </sensor>
   </sensors>
   <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">

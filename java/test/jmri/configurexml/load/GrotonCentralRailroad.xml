@@ -444,14 +444,6 @@
       <userName>Silverton Status</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>ISWC</systemName>
-      <userName>Walnut</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>ISWCS</systemName>
-      <userName>Walnut Status</userName>
-    </sensor>
-    <sensor inverted="false">
       <systemName>ISTestHeadless</systemName>
       <userName>Close Yard</userName>
     </sensor>
@@ -482,6 +474,14 @@
     <sensor inverted="false">
       <systemName>ISTestHeadless55</systemName>
       <userName>Throw Main</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISWC</systemName>
+      <userName>Walnut</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISWCS</systemName>
+      <userName>Walnut Status</userName>
     </sensor>
   </sensors>
   <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">

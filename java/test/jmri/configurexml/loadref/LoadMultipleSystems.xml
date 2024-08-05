@@ -16,9 +16,6 @@
       <systemName>IS1</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>ISTestHeadless</systemName>
-    </sensor>
-    <sensor inverted="false">
       <systemName>IS3</systemName>
     </sensor>
     <sensor inverted="false">
@@ -26,6 +23,9 @@
     </sensor>
     <sensor inverted="false">
       <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISTestHeadless</systemName>
     </sensor>
   </sensors>
   <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
