@@ -899,13 +899,13 @@ public class AutoActiveTrain implements ThrottleListener {
             }
         } else {
             // This might be the last section....
-            if (_currentAllocatedSection.getNextSection() == null) {
+            if (_currentAllocatedSection != null && _currentAllocatedSection.getNextSection() == null) {
                 stopInCurrentSection(END_TRAIN);
             } else {
                 // This will stop it.
                 stopInCurrentSection(NO_TASK);
                 log.debug("{}:Set Stop",_activeTrain.getActiveTrainName());
-                waitingOnAllocation = true;  // flag setSpeedBySignal reuired when another allocation made.
+                waitingOnAllocation = true;  // flag setSpeedBySignal required when another allocation made.
             }
         }
     }
