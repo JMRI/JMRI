@@ -17,8 +17,8 @@
       <systemName>IS3</systemName>
       <userName>Sensor Leading Space</userName>
     </sensor>
-    <sensor systemName="ISTestHeadless" inverted="false" userName="Sensor Trailing Space">
-      <systemName>ISTestHeadless</systemName>
+    <sensor systemName="ISTestHeadlessLeadingTrailingSpaceTest" inverted="false" userName="Sensor Trailing Space">
+      <systemName>ISTestHeadlessLeadingTrailingSpaceTest</systemName>
       <userName>Sensor Trailing Space</userName>
     </sensor>
   </sensors>
