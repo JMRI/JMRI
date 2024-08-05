@@ -13,8 +13,8 @@
       <systemName>IS1</systemName>
       <userName>nx1</userName>
     </sensor>
-    <sensor systemName="ISTestHeadless" inverted="false" userName="nx2">
-      <systemName>ISTestHeadless</systemName>
+    <sensor systemName="ISTestHeadlessEntryExitTest" inverted="false" userName="nx2">
+      <systemName>ISTestHeadlessEntryExitTest</systemName>
       <userName>nx2</userName>
     </sensor>
     <sensor systemName="IS3" inverted="false" userName="nx3">

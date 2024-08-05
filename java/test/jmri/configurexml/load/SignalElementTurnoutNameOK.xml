@@ -25,7 +25,7 @@
       <systemName>IS35</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>ISTestHeadless</systemName>
+      <systemName>ISTestHeadlessSignalElementTurnoutNameOK</systemName>
     </sensor>
   </sensors>
   <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">

@@ -61,8 +61,8 @@
     <sensor systemName="ISCLOCKRUNNING" inverted="false">
       <systemName>ISCLOCKRUNNING</systemName>
     </sensor>
-    <sensor systemName="ISTestHeadless" inverted="false">
-      <systemName>ISTestHeadless</systemName>
+    <sensor systemName="ISTestHeadlessLoadMultipleSystems" inverted="false">
+      <systemName>ISTestHeadlessLoadMultipleSystems</systemName>
     </sensor>
   </sensors>
   <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">

@@ -174,7 +174,7 @@
   </sensors>
   <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
     <sensor systemName="IS1" inverted="false" userName="PtLyLowDirSouth" />
-    <sensor systemName="ISTestHeadless" inverted="false" userName="PtLyLowDirNorth" />
+    <sensor systemName="ISTestHeadlessSMRC_SouthLayout42" inverted="false" userName="PtLyLowDirNorth" />
     <sensor systemName="IS3" inverted="false" userName="PowerControl" />
     <sensor systemName="ISCLOCKRUNNING" inverted="false" />
   </sensors>
@@ -346,19 +346,19 @@
     </signalelement>
     <signalelement signal="PTLYLOWSOUTH4" mode="4" watchedturnout="IT55" watchedsensor1="LS19" watchedsensor2="LS18" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensor systemName="LS20" />
-      <sensor systemName="ISTestHeadless" />
+      <sensor systemName="ISTestHeadlessSMRC_SouthLayout42" />
     </signalelement>
     <signalelement signal="PTLYLOWSOUTH3" mode="1" watchedsignal1="PTLYLOWSOUTH4" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensor systemName="LS21" />
-      <sensor systemName="ISTestHeadless" />
+      <sensor systemName="ISTestHeadlessSMRC_SouthLayout42" />
     </signalelement>
     <signalelement signal="PTLYLOWSOUTH2" mode="1" watchedsignal1="PTLYLOWSOUTH3" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensor systemName="LS22" />
-      <sensor systemName="ISTestHeadless" />
+      <sensor systemName="ISTestHeadlessSMRC_SouthLayout42" />
     </signalelement>
     <signalelement signal="PTLYLOWSOUTH1" mode="1" watchedsignal1="PTLYLOWSOUTH2" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensor systemName="LS23" />
-      <sensor systemName="ISTestHeadless" />
+      <sensor systemName="ISTestHeadlessSMRC_SouthLayout42" />
     </signalelement>
     <signalelement signal="PTLYLOWSOUTH4A" mode="4" watchedturnout="IT55" watchedsensor1="LS18" watchedsensor2="LS19" limitspeed1="true" limitspeed2="true" useflashyellow="false" distantsignal="false">
       <sensor systemName="LS20" />

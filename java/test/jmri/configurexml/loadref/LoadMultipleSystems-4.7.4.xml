@@ -25,7 +25,7 @@
       <systemName>ISCLOCKRUNNING</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>ISTestHeadless</systemName>
+      <systemName>ISTestHeadlessLoadMultipleSystems_4_7_4</systemName>
     </sensor>
   </sensors>
   <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">

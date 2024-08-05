@@ -49,96 +49,96 @@
       <systemName>IS12</systemName>
       <userName>Lockout Button TO313</userName>
     </sensor>
-    <sensor systemName="ISTestHeadless00" inverted="false" userName="RESET BUTTON">
-      <systemName>ISTestHeadless00</systemName>
+    <sensor systemName="ISTestHeadlessJ_Lang_LE_panel00" inverted="false" userName="RESET BUTTON">
+      <systemName>ISTestHeadlessJ_Lang_LE_panel00</systemName>
       <userName>RESET BUTTON</userName>
     </sensor>
-    <sensor systemName="ISTestHeadless01" inverted="false" userName="CP2831E">
-      <systemName>ISTestHeadless01</systemName>
+    <sensor systemName="ISTestHeadlessJ_Lang_LE_panel01" inverted="false" userName="CP2831E">
+      <systemName>ISTestHeadlessJ_Lang_LE_panel01</systemName>
       <userName>CP2831E</userName>
     </sensor>
-    <sensor systemName="ISTestHeadless02" inverted="false" userName="CP2832E">
-      <systemName>ISTestHeadless02</systemName>
+    <sensor systemName="ISTestHeadlessJ_Lang_LE_panel02" inverted="false" userName="CP2832E">
+      <systemName>ISTestHeadlessJ_Lang_LE_panel02</systemName>
       <userName>CP2832E</userName>
     </sensor>
-    <sensor systemName="ISTestHeadless03" inverted="false" userName="CP2831W">
-      <systemName>ISTestHeadless03</systemName>
+    <sensor systemName="ISTestHeadlessJ_Lang_LE_panel03" inverted="false" userName="CP2831W">
+      <systemName>ISTestHeadlessJ_Lang_LE_panel03</systemName>
       <userName>CP2831W</userName>
     </sensor>
-    <sensor systemName="ISTestHeadless04" inverted="false" userName="CP2832W">
-      <systemName>ISTestHeadless04</systemName>
+    <sensor systemName="ISTestHeadlessJ_Lang_LE_panel04" inverted="false" userName="CP2832W">
+      <systemName>ISTestHeadlessJ_Lang_LE_panel04</systemName>
       <userName>CP2832W</userName>
     </sensor>
-    <sensor systemName="ISTestHeadless05" inverted="false" userName="CP283DY">
-      <systemName>ISTestHeadless05</systemName>
+    <sensor systemName="ISTestHeadlessJ_Lang_LE_panel05" inverted="false" userName="CP283DY">
+      <systemName>ISTestHeadlessJ_Lang_LE_panel05</systemName>
       <userName>CP283DY</userName>
     </sensor>
-    <sensor systemName="ISTestHeadless06" inverted="false" userName="NX2831E">
-      <systemName>ISTestHeadless06</systemName>
+    <sensor systemName="ISTestHeadlessJ_Lang_LE_panel06" inverted="false" userName="NX2831E">
+      <systemName>ISTestHeadlessJ_Lang_LE_panel06</systemName>
       <userName>NX2831E</userName>
     </sensor>
-    <sensor systemName="ISTestHeadless07" inverted="false" userName="NX2832E">
-      <systemName>ISTestHeadless07</systemName>
+    <sensor systemName="ISTestHeadlessJ_Lang_LE_panel07" inverted="false" userName="NX2832E">
+      <systemName>ISTestHeadlessJ_Lang_LE_panel07</systemName>
       <userName>NX2832E</userName>
     </sensor>
-    <sensor systemName="ISTestHeadless08" inverted="false" userName="NX283DY">
-      <systemName>ISTestHeadless08</systemName>
+    <sensor systemName="ISTestHeadlessJ_Lang_LE_panel08" inverted="false" userName="NX283DY">
+      <systemName>ISTestHeadlessJ_Lang_LE_panel08</systemName>
       <userName>NX283DY</userName>
     </sensor>
-    <sensor systemName="ISTestHeadless09" inverted="false" userName="NX2831W">
-      <systemName>ISTestHeadless09</systemName>
+    <sensor systemName="ISTestHeadlessJ_Lang_LE_panel09" inverted="false" userName="NX2831W">
+      <systemName>ISTestHeadlessJ_Lang_LE_panel09</systemName>
       <userName>NX2831W</userName>
     </sensor>
-    <sensor systemName="ISTestHeadless1" inverted="false" userName="Signal Lamp 276WL">
-      <systemName>ISTestHeadless1</systemName>
+    <sensor systemName="ISTestHeadlessJ_Lang_LE_panel1" inverted="false" userName="Signal Lamp 276WL">
+      <systemName>ISTestHeadlessJ_Lang_LE_panel1</systemName>
       <userName>Signal Lamp 276WL</userName>
       <comment />
     </sensor>
-    <sensor systemName="ISTestHeadless10" inverted="false" userName="NX2832W">
-      <systemName>ISTestHeadless10</systemName>
+    <sensor systemName="ISTestHeadlessJ_Lang_LE_panel10" inverted="false" userName="NX2832W">
+      <systemName>ISTestHeadlessJ_Lang_LE_panel10</systemName>
       <userName>NX2832W</userName>
     </sensor>
-    <sensor systemName="ISTestHeadless11" inverted="false" userName="CP354">
-      <systemName>ISTestHeadless11</systemName>
+    <sensor systemName="ISTestHeadlessJ_Lang_LE_panel11" inverted="false" userName="CP354">
+      <systemName>ISTestHeadlessJ_Lang_LE_panel11</systemName>
       <userName>CP354</userName>
     </sensor>
-    <sensor systemName="ISTestHeadless2" inverted="false" userName="Signal Lamp 276WC">
-      <systemName>ISTestHeadless2</systemName>
+    <sensor systemName="ISTestHeadlessJ_Lang_LE_panel2" inverted="false" userName="Signal Lamp 276WC">
+      <systemName>ISTestHeadlessJ_Lang_LE_panel2</systemName>
       <userName>Signal Lamp 276WC</userName>
       <comment />
     </sensor>
-    <sensor systemName="ISTestHeadless3" inverted="false" userName="Signal Lamp 276WR">
-      <systemName>ISTestHeadless3</systemName>
+    <sensor systemName="ISTestHeadlessJ_Lang_LE_panel3" inverted="false" userName="Signal Lamp 276WR">
+      <systemName>ISTestHeadlessJ_Lang_LE_panel3</systemName>
       <userName>Signal Lamp 276WR</userName>
       <comment />
     </sensor>
-    <sensor systemName="ISTestHeadless4" inverted="false" userName="Signal Lamp 283EL">
-      <systemName>ISTestHeadless4</systemName>
+    <sensor systemName="ISTestHeadlessJ_Lang_LE_panel4" inverted="false" userName="Signal Lamp 283EL">
+      <systemName>ISTestHeadlessJ_Lang_LE_panel4</systemName>
       <userName>Signal Lamp 283EL</userName>
       <comment />
     </sensor>
-    <sensor systemName="ISTestHeadless5" inverted="false" userName="Signal Lamp 283EC">
-      <systemName>ISTestHeadless5</systemName>
+    <sensor systemName="ISTestHeadlessJ_Lang_LE_panel5" inverted="false" userName="Signal Lamp 283EC">
+      <systemName>ISTestHeadlessJ_Lang_LE_panel5</systemName>
       <userName>Signal Lamp 283EC</userName>
       <comment />
     </sensor>
-    <sensor systemName="ISTestHeadless6" inverted="false" userName="Signal Lamp 283ER">
-      <systemName>ISTestHeadless6</systemName>
+    <sensor systemName="ISTestHeadlessJ_Lang_LE_panel6" inverted="false" userName="Signal Lamp 283ER">
+      <systemName>ISTestHeadlessJ_Lang_LE_panel6</systemName>
       <userName>Signal Lamp 283ER</userName>
       <comment />
     </sensor>
-    <sensor systemName="ISTestHeadless7" inverted="false" userName="Signal Lamp 310WL">
-      <systemName>ISTestHeadless7</systemName>
+    <sensor systemName="ISTestHeadlessJ_Lang_LE_panel7" inverted="false" userName="Signal Lamp 310WL">
+      <systemName>ISTestHeadlessJ_Lang_LE_panel7</systemName>
       <userName>Signal Lamp 310WL</userName>
       <comment />
     </sensor>
-    <sensor systemName="ISTestHeadless8" inverted="false" userName="Signal Lamp 310WC">
-      <systemName>ISTestHeadless8</systemName>
+    <sensor systemName="ISTestHeadlessJ_Lang_LE_panel8" inverted="false" userName="Signal Lamp 310WC">
+      <systemName>ISTestHeadlessJ_Lang_LE_panel8</systemName>
       <userName>Signal Lamp 310WC</userName>
       <comment />
     </sensor>
-    <sensor systemName="ISTestHeadless9" inverted="false" userName="Signal Lamp 310WR">
-      <systemName>ISTestHeadless9</systemName>
+    <sensor systemName="ISTestHeadlessJ_Lang_LE_panel9" inverted="false" userName="Signal Lamp 310WR">
+      <systemName>ISTestHeadlessJ_Lang_LE_panel9</systemName>
       <userName>Signal Lamp 310WR</userName>
       <comment />
     </sensor>

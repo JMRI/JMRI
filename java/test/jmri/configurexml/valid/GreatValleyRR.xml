@@ -276,10 +276,10 @@
     <sensor systemName="IS191A" inverted="false" userName="Eng191A" />
     <sensor systemName="IS191P" inverted="false" userName="Eng191P" />
     <sensor systemName="IS191TC" inverted="false" userName="Eng191TC" />
-    <sensor systemName="ISTestHeadless0" inverted="false" userName="Set route R106" />
-    <sensor systemName="ISTestHeadless1" inverted="false" userName="ReSet route R106" />
-    <sensor systemName="ISTestHeadless2" inverted="false" userName="Set route R108" />
-    <sensor systemName="ISTestHeadless3" inverted="false" userName="ReSet route R108" />
+    <sensor systemName="ISTestHeadlessGreatValleyRR0" inverted="false" userName="Set route R106" />
+    <sensor systemName="ISTestHeadlessGreatValleyRR1" inverted="false" userName="ReSet route R106" />
+    <sensor systemName="ISTestHeadlessGreatValleyRR2" inverted="false" userName="Set route R108" />
+    <sensor systemName="ISTestHeadlessGreatValleyRR3" inverted="false" userName="ReSet route R108" />
     <sensor systemName="IS30" inverted="false" userName="SigEast Plat3" />
     <sensor systemName="IS31" inverted="false" userName="SigWest Plat3" />
     <sensor systemName="IS32" inverted="false" userName="SigWest Plat2" />
@@ -614,12 +614,12 @@
     <route systemName="R106" userName="EastPlatform3">
       <routeOutputTurnout systemName="LT106" state="THROWN" />
       <routeOutputTurnout systemName="LT107" state="THROWN" />
-      <routeSensor systemName="ISTestHeadless0" mode="onActive" />
+      <routeSensor systemName="ISTestHeadlessGreatValleyRR0" mode="onActive" />
     </route>
     <route systemName="R107" userName="EastPlat3 Reset">
       <routeOutputTurnout systemName="LT106" state="CLOSED" />
       <routeOutputTurnout systemName="LT107" state="CLOSED" />
-      <routeSensor systemName="ISTestHeadless1" mode="onActive" />
+      <routeSensor systemName="ISTestHeadlessGreatValleyRR1" mode="onActive" />
     </route>
     <route systemName="R108" userName="WesttPlat3 ">
       <routeOutputTurnout systemName="LT102" state="THROWN" />

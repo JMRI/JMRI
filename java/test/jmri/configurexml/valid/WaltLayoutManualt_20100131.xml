@@ -851,38 +851,38 @@
     <sensor systemName="IS17" inverted="false" userName="sec017E" />
     <sensor systemName="IS18" inverted="false" userName="sec108E" />
     <sensor systemName="IS19" inverted="false" userName="sec019E" />
-    <sensor systemName="ISTestHeadless" inverted="false" userName="sec110E" />
-    <sensor systemName="ISTestHeadless0" inverted="false" userName="sec102E" />
-    <sensor systemName="ISTestHeadless01" inverted="false" userName="sec111stp" />
-    <sensor systemName="ISTestHeadless02" inverted="false" userName="sec110stp" />
-    <sensor systemName="ISTestHeadless03" inverted="false" userName="sec155stp" />
-    <sensor systemName="ISTestHeadless04" inverted="false" userName="sec138stp" />
-    <sensor systemName="ISTestHeadless05" inverted="false" userName="sec137stp" />
-    <sensor systemName="ISTestHeadless06" inverted="false" userName="sec145stp" />
-    <sensor systemName="ISTestHeadless07" inverted="false" userName="sec007stp" />
-    <sensor systemName="ISTestHeadless08" inverted="false" userName="sec120stp" />
-    <sensor systemName="ISTestHeadless09" inverted="false" userName="sec125stp" />
-    <sensor systemName="ISTestHeadless1" inverted="false" userName="sec101E" />
-    <sensor systemName="ISTestHeadless10" inverted="false" userName="sec160stp" />
-    <sensor systemName="ISTestHeadless11" inverted="false" userName="sec119stp" />
-    <sensor systemName="ISTestHeadless12" inverted="false" userName="sec122stp" />
-    <sensor systemName="ISTestHeadless13" inverted="false" userName="sec134stp" />
-    <sensor systemName="ISTestHeadless14" inverted="false" userName="sec140stp" />
-    <sensor systemName="ISTestHeadless15" inverted="false" userName="sec157stp" />
-    <sensor systemName="ISTestHeadless16" inverted="false" userName="sec150stp" />
-    <sensor systemName="ISTestHeadless17" inverted="false" userName="sec017stp" />
-    <sensor systemName="ISTestHeadless18" inverted="false" userName="sec108stp" />
-    <sensor systemName="ISTestHeadless19" inverted="false" userName="sec019stp" />
-    <sensor systemName="ISTestHeadless2" inverted="false" userName="sec135E" />
-    <sensor systemName="ISTestHeadless20" inverted="false" userName="sec102stp" />
-    <sensor systemName="ISTestHeadless21" inverted="false" userName="sec101stp" />
-    <sensor systemName="ISTestHeadless22" inverted="false" userName="sec135stp" />
-    <sensor systemName="ISTestHeadless23" inverted="false" userName="sec023stp" />
-    <sensor systemName="ISTestHeadless24" inverted="false" userName="sec024stp" />
-    <sensor systemName="ISTestHeadless25" inverted="false" userName="sec025stp" />
-    <sensor systemName="ISTestHeadless3" inverted="false" userName="sec023E" />
-    <sensor systemName="ISTestHeadless4" inverted="false" userName="sec024E" />
-    <sensor systemName="ISTestHeadless5" inverted="false" userName="sec025E" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_20100131" inverted="false" userName="sec110E" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_201001310" inverted="false" userName="sec102E" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_2010013101" inverted="false" userName="sec111stp" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_2010013102" inverted="false" userName="sec110stp" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_2010013103" inverted="false" userName="sec155stp" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_2010013104" inverted="false" userName="sec138stp" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_2010013105" inverted="false" userName="sec137stp" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_2010013106" inverted="false" userName="sec145stp" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_2010013107" inverted="false" userName="sec007stp" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_2010013108" inverted="false" userName="sec120stp" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_2010013109" inverted="false" userName="sec125stp" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_201001311" inverted="false" userName="sec101E" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_2010013110" inverted="false" userName="sec160stp" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_2010013111" inverted="false" userName="sec119stp" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_2010013112" inverted="false" userName="sec122stp" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_2010013113" inverted="false" userName="sec134stp" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_2010013114" inverted="false" userName="sec140stp" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_2010013115" inverted="false" userName="sec157stp" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_2010013116" inverted="false" userName="sec150stp" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_2010013117" inverted="false" userName="sec017stp" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_2010013118" inverted="false" userName="sec108stp" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_2010013119" inverted="false" userName="sec019stp" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_201001312" inverted="false" userName="sec135E" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_2010013120" inverted="false" userName="sec102stp" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_2010013121" inverted="false" userName="sec101stp" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_2010013122" inverted="false" userName="sec135stp" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_2010013123" inverted="false" userName="sec023stp" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_2010013124" inverted="false" userName="sec024stp" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_2010013125" inverted="false" userName="sec025stp" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_201001313" inverted="false" userName="sec023E" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_201001314" inverted="false" userName="sec024E" />
+    <sensor systemName="ISTestHeadlessWaltLayoutManualt_201001315" inverted="false" userName="sec025E" />
     <sensor systemName="IS3" inverted="false" userName="sec155E" />
     <sensor systemName="IS4" inverted="false" userName="sec138E" />
     <sensor systemName="IS5" inverted="false" userName="sec137E" />
@@ -3261,7 +3261,7 @@
       <conditionalStateVariable operator="2" negated="yes" type="1" systemName="sec111E" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalStateVariable operator="3" negated="yes" type="2" systemName="sec111E" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalAction option="1" type="9" systemName="IS1" data="4" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless" data="4" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_20100131" data="4" delay="0" string="0" />
       <conditionalAction option="1" type="9" systemName="IS3" data="4" delay="0" string="0" />
       <conditionalAction option="1" type="9" systemName="IS4" data="4" delay="0" string="0" />
       <conditionalAction option="1" type="9" systemName="IS5" data="4" delay="0" string="0" />
@@ -3281,12 +3281,12 @@
       <conditionalAction option="1" type="9" systemName="IS17" data="4" delay="0" string="0" />
       <conditionalAction option="1" type="9" systemName="IS18" data="4" delay="0" string="0" />
       <conditionalAction option="1" type="9" systemName="IS19" data="4" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless0" data="4" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless1" data="4" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless2" data="4" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless3" data="4" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless4" data="4" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless5" data="4" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_201001310" data="4" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_201001311" data="4" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_201001312" data="4" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_201001313" data="4" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_201001314" data="4" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_201001315" data="4" delay="0" string="0" />
       <conditionalAction option="1" type="9" systemName="IS101" data="4" delay="0" string="0" />
       <conditionalAction option="1" type="9" systemName="IS102" data="4" delay="0" string="0" />
       <conditionalAction option="1" type="9" systemName="IS103" data="4" delay="0" string="0" />
@@ -3321,31 +3321,31 @@
     <conditional systemName="IX001C2" userName="Power up set up" antecedent="not R1 and notR2" logicType="1">
       <conditionalStateVariable operator="2" negated="yes" type="1" systemName="sec111stp" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalStateVariable operator="3" negated="yes" type="2" systemName="sec111stp" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless02" data="2" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless03" data="2" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless04" data="2" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless05" data="2" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless06" data="4" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless07" data="4" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless08" data="2" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless09" data="2" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless10" data="2" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless11" data="2" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless12" data="2" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless13" data="2" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless14" data="2" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless15" data="4" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless16" data="4" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless16" data="4" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless17" data="4" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless18" data="4" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless19" data="4" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless20" data="4" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless21" data="2" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless22" data="2" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless23" data="4" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless24" data="4" delay="0" string="0" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless25" data="4" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_2010013102" data="2" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_2010013103" data="2" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_2010013104" data="2" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_2010013105" data="2" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_2010013106" data="4" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_2010013107" data="4" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_2010013108" data="2" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_2010013109" data="2" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_2010013110" data="2" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_2010013111" data="2" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_2010013112" data="2" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_2010013113" data="2" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_2010013114" data="2" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_2010013115" data="4" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_2010013116" data="4" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_2010013116" data="4" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_2010013117" data="4" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_2010013118" data="4" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_2010013119" data="4" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_2010013120" data="4" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_2010013121" data="2" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_2010013122" data="2" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_2010013123" data="4" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_2010013124" data="4" delay="0" string="0" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessWaltLayoutManualt_2010013125" data="4" delay="0" string="0" />
       <conditionalAction option="1" type="9" systemName="setholds" data="2" delay="0" string="0" />
       <conditionalAction option="1" type="9" systemName="clock run" data="2" delay="0" string="0" />
       <conditionalAction option="1" type="9" systemName="AutoMode" data="2" delay="0" string="0" />
@@ -8105,7 +8105,7 @@
       <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" degrees="0" scale="1.0" />
       <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" degrees="0" scale="1.0" />
     </sensoricon>
-    <sensoricon sensor="ISTestHeadless" x="1040" y="180" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="ISTestHeadlessWaltLayoutManualt_20100131" x="1040" y="180" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" rotate="0" degrees="0" scale="1.0" />
       <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" rotate="0" degrees="0" scale="1.0" />
       <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" degrees="0" scale="1.0" />
@@ -8247,13 +8247,13 @@
       <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" degrees="0" scale="1.0" />
       <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" degrees="0" scale="1.0" />
     </sensoricon>
-    <sensoricon sensor="ISTestHeadless2" x="590" y="450" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="ISTestHeadlessWaltLayoutManualt_201001312" x="590" y="450" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" rotate="0" degrees="0" scale="1.0" />
       <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" rotate="0" degrees="0" scale="1.0" />
       <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" degrees="0" scale="1.0" />
       <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" degrees="0" scale="1.0" />
     </sensoricon>
-    <sensoricon sensor="ISTestHeadless1" x="590" y="430" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="ISTestHeadlessWaltLayoutManualt_201001311" x="590" y="430" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" rotate="0" degrees="0" scale="1.0" />
       <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" rotate="0" degrees="0" scale="1.0" />
       <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" degrees="0" scale="1.0" />
@@ -8501,85 +8501,85 @@
       <unknown url="program:resources/icons/smallschematics/LEDs/yellow.gif" rotate="0" degrees="0" scale="1.0" />
       <inconsistent url="program:resources/icons/smallschematics/LEDs/yellow.gif" rotate="0" degrees="0" scale="1.0" />
     </sensoricon>
-    <sensoricon sensor="ISTestHeadless01" x="1070" y="160" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="ISTestHeadlessWaltLayoutManualt_2010013101" x="1070" y="160" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/misc/X-red.gif" rotate="0" degrees="0" scale="1.0" />
       <inactive url="program:resources/icons/misc/X-green.gif" rotate="0" degrees="0" scale="1.0" />
       <unknown url="program:resources/icons/smallschematics/LEDs/gray.gif" rotate="0" degrees="0" scale="1.0" />
       <inconsistent url="program:resources/icons/smallschematics/LEDs/gray.gif" rotate="0" degrees="0" scale="1.0" />
     </sensoricon>
-    <sensoricon sensor="ISTestHeadless02" x="1070" y="180" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="ISTestHeadlessWaltLayoutManualt_2010013102" x="1070" y="180" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/misc/X-red.gif" rotate="0" degrees="0" scale="1.0" />
       <inactive url="program:resources/icons/misc/X-green.gif" rotate="0" degrees="0" scale="1.0" />
       <unknown url="program:resources/icons/smallschematics/LEDs/gray.gif" rotate="0" degrees="0" scale="1.0" />
       <inconsistent url="program:resources/icons/smallschematics/LEDs/gray.gif" rotate="0" degrees="0" scale="1.0" />
     </sensoricon>
-    <sensoricon sensor="ISTestHeadless03" x="1070" y="200" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="ISTestHeadlessWaltLayoutManualt_2010013103" x="1070" y="200" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/misc/X-red.gif" rotate="0" degrees="0" scale="1.0" />
       <inactive url="program:resources/icons/misc/X-green.gif" rotate="0" degrees="0" scale="1.0" />
       <unknown url="program:resources/icons/smallschematics/LEDs/gray.gif" rotate="0" degrees="0" scale="1.0" />
       <inconsistent url="program:resources/icons/smallschematics/LEDs/gray.gif" rotate="0" degrees="0" scale="1.0" />
     </sensoricon>
-    <sensoricon sensor="ISTestHeadless04" x="1070" y="220" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="ISTestHeadlessWaltLayoutManualt_2010013104" x="1070" y="220" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/misc/X-red.gif" rotate="0" degrees="0" scale="1.0" />
       <inactive url="program:resources/icons/misc/X-green.gif" rotate="0" degrees="0" scale="1.0" />
       <unknown url="program:resources/icons/smallschematics/LEDs/gray.gif" rotate="0" degrees="0" scale="1.0" />
       <inconsistent url="program:resources/icons/smallschematics/LEDs/gray.gif" rotate="0" degrees="0" scale="1.0" />
     </sensoricon>
-    <sensoricon sensor="ISTestHeadless05" x="1070" y="240" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="ISTestHeadlessWaltLayoutManualt_2010013105" x="1070" y="240" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/misc/X-red.gif" rotate="0" degrees="0" scale="1.0" />
       <inactive url="program:resources/icons/misc/X-green.gif" rotate="0" degrees="0" scale="1.0" />
       <unknown url="program:resources/icons/smallschematics/LEDs/gray.gif" rotate="0" degrees="0" scale="1.0" />
       <inconsistent url="program:resources/icons/smallschematics/LEDs/gray.gif" rotate="0" degrees="0" scale="1.0" />
     </sensoricon>
-    <sensoricon sensor="ISTestHeadless13" x="1200" y="150" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="ISTestHeadlessWaltLayoutManualt_2010013113" x="1200" y="150" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/misc/X-red.gif" rotate="0" degrees="0" scale="1.0" />
       <inactive url="program:resources/icons/misc/X-green.gif" rotate="0" degrees="0" scale="1.0" />
       <unknown url="program:resources/icons/smallschematics/LEDs/gray.gif" rotate="0" degrees="0" scale="1.0" />
       <inconsistent url="program:resources/icons/smallschematics/LEDs/gray.gif" rotate="0" degrees="0" scale="1.0" />
     </sensoricon>
-    <sensoricon sensor="ISTestHeadless14" x="1200" y="170" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="ISTestHeadlessWaltLayoutManualt_2010013114" x="1200" y="170" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/misc/X-red.gif" rotate="0" degrees="0" scale="1.0" />
       <inactive url="program:resources/icons/misc/X-green.gif" rotate="0" degrees="0" scale="1.0" />
       <unknown url="program:resources/icons/smallschematics/LEDs/gray.gif" rotate="0" degrees="0" scale="1.0" />
       <inconsistent url="program:resources/icons/smallschematics/LEDs/gray.gif" rotate="0" degrees="0" scale="1.0" />
     </sensoricon>
-    <sensoricon sensor="ISTestHeadless21" x="620" y="430" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="ISTestHeadlessWaltLayoutManualt_2010013121" x="620" y="430" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/misc/X-red.gif" rotate="0" degrees="0" scale="1.0" />
       <inactive url="program:resources/icons/misc/X-green.gif" rotate="0" degrees="0" scale="1.0" />
       <unknown url="program:resources/icons/smallschematics/LEDs/gray.gif" rotate="0" degrees="0" scale="1.0" />
       <inconsistent url="program:resources/icons/smallschematics/LEDs/gray.gif" rotate="0" degrees="0" scale="1.0" />
     </sensoricon>
-    <sensoricon sensor="ISTestHeadless22" x="620" y="450" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="ISTestHeadlessWaltLayoutManualt_2010013122" x="620" y="450" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/misc/X-red.gif" rotate="0" degrees="0" scale="1.0" />
       <inactive url="program:resources/icons/misc/X-green.gif" rotate="0" degrees="0" scale="1.0" />
       <unknown url="program:resources/icons/smallschematics/LEDs/gray.gif" rotate="0" degrees="0" scale="1.0" />
       <inconsistent url="program:resources/icons/smallschematics/LEDs/gray.gif" rotate="0" degrees="0" scale="1.0" />
     </sensoricon>
-    <sensoricon sensor="ISTestHeadless09" x="810" y="420" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="ISTestHeadlessWaltLayoutManualt_2010013109" x="810" y="420" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/misc/X-red.gif" rotate="0" degrees="0" scale="1.0" />
       <inactive url="program:resources/icons/misc/X-green.gif" rotate="0" degrees="0" scale="1.0" />
       <unknown url="program:resources/icons/smallschematics/LEDs/gray.gif" rotate="0" degrees="0" scale="1.0" />
       <inconsistent url="program:resources/icons/smallschematics/LEDs/gray.gif" rotate="0" degrees="0" scale="1.0" />
     </sensoricon>
-    <sensoricon sensor="ISTestHeadless08" x="810" y="440" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="ISTestHeadlessWaltLayoutManualt_2010013108" x="810" y="440" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/misc/X-red.gif" rotate="0" degrees="0" scale="1.0" />
       <inactive url="program:resources/icons/misc/X-green.gif" rotate="0" degrees="0" scale="1.0" />
       <unknown url="program:resources/icons/smallschematics/LEDs/gray.gif" rotate="0" degrees="0" scale="1.0" />
       <inconsistent url="program:resources/icons/smallschematics/LEDs/gray.gif" rotate="0" degrees="0" scale="1.0" />
     </sensoricon>
-    <sensoricon sensor="ISTestHeadless12" x="700" y="700" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="ISTestHeadlessWaltLayoutManualt_2010013112" x="700" y="700" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/misc/X-red.gif" rotate="0" degrees="0" scale="1.0" />
       <inactive url="program:resources/icons/misc/X-green.gif" rotate="0" degrees="0" scale="1.0" />
       <unknown url="program:resources/icons/smallschematics/LEDs/gray.gif" rotate="0" degrees="0" scale="1.0" />
       <inconsistent url="program:resources/icons/smallschematics/LEDs/gray.gif" rotate="0" degrees="0" scale="1.0" />
     </sensoricon>
-    <sensoricon sensor="ISTestHeadless11" x="700" y="720" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="ISTestHeadlessWaltLayoutManualt_2010013111" x="700" y="720" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/misc/X-red.gif" rotate="0" degrees="0" scale="1.0" />
       <inactive url="program:resources/icons/misc/X-green.gif" rotate="0" degrees="0" scale="1.0" />
       <unknown url="program:resources/icons/smallschematics/LEDs/gray.gif" rotate="0" degrees="0" scale="1.0" />
       <inconsistent url="program:resources/icons/smallschematics/LEDs/gray.gif" rotate="0" degrees="0" scale="1.0" />
     </sensoricon>
-    <sensoricon sensor="ISTestHeadless10" x="700" y="740" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="ISTestHeadlessWaltLayoutManualt_2010013110" x="700" y="740" level="10" forcecontroloff="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/misc/X-red.gif" rotate="0" degrees="0" scale="1.0" />
       <inactive url="program:resources/icons/misc/X-green.gif" rotate="0" degrees="0" scale="1.0" />
       <unknown url="program:resources/icons/smallschematics/LEDs/gray.gif" rotate="0" degrees="0" scale="1.0" />

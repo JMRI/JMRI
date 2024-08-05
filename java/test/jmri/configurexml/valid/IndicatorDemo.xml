@@ -61,48 +61,48 @@
       <systemName>IS14</systemName>
       <userName>err4</userName>
     </sensor>
-    <sensor systemName="ISTestHeadless" inverted="false" userName="block2">
-      <systemName>ISTestHeadless</systemName>
+    <sensor systemName="ISTestHeadlessIndicatorDemo" inverted="false" userName="block2">
+      <systemName>ISTestHeadlessIndicatorDemo</systemName>
       <userName>block2</userName>
     </sensor>
-    <sensor systemName="ISTestHeadless0" inverted="false" userName="Infinity&amp;Beyond">
-      <systemName>ISTestHeadless0</systemName>
+    <sensor systemName="ISTestHeadlessIndicatorDemo0" inverted="false" userName="Infinity&amp;Beyond">
+      <systemName>ISTestHeadlessIndicatorDemo0</systemName>
       <userName>Infinity&amp;Beyond</userName>
     </sensor>
-    <sensor systemName="ISTestHeadless01" inverted="false" userName="Warrant1">
-      <systemName>ISTestHeadless01</systemName>
+    <sensor systemName="ISTestHeadlessIndicatorDemo01" inverted="false" userName="Warrant1">
+      <systemName>ISTestHeadlessIndicatorDemo01</systemName>
       <userName>Warrant1</userName>
     </sensor>
-    <sensor systemName="ISTestHeadless02" inverted="false" userName="Warrant2">
-      <systemName>ISTestHeadless02</systemName>
+    <sensor systemName="ISTestHeadlessIndicatorDemo02" inverted="false" userName="Warrant2">
+      <systemName>ISTestHeadlessIndicatorDemo02</systemName>
       <userName>Warrant2</userName>
     </sensor>
-    <sensor systemName="ISTestHeadless03" inverted="false" userName="Warrant3">
-      <systemName>ISTestHeadless03</systemName>
+    <sensor systemName="ISTestHeadlessIndicatorDemo03" inverted="false" userName="Warrant3">
+      <systemName>ISTestHeadlessIndicatorDemo03</systemName>
       <userName>Warrant3</userName>
     </sensor>
-    <sensor systemName="ISTestHeadless04" inverted="false" userName="Warrant4">
-      <systemName>ISTestHeadless04</systemName>
+    <sensor systemName="ISTestHeadlessIndicatorDemo04" inverted="false" userName="Warrant4">
+      <systemName>ISTestHeadlessIndicatorDemo04</systemName>
       <userName>Warrant4</userName>
     </sensor>
-    <sensor systemName="ISTestHeadless05" inverted="false" userName="Warrant5">
-      <systemName>ISTestHeadless05</systemName>
+    <sensor systemName="ISTestHeadlessIndicatorDemo05" inverted="false" userName="Warrant5">
+      <systemName>ISTestHeadlessIndicatorDemo05</systemName>
       <userName>Warrant5</userName>
     </sensor>
-    <sensor systemName="ISTestHeadless1" inverted="false" userName="FarWest">
-      <systemName>ISTestHeadless1</systemName>
+    <sensor systemName="ISTestHeadlessIndicatorDemo1" inverted="false" userName="FarWest">
+      <systemName>ISTestHeadlessIndicatorDemo1</systemName>
       <userName>FarWest</userName>
     </sensor>
-    <sensor systemName="ISTestHeadless2" inverted="false" userName="FarEast">
-      <systemName>ISTestHeadless2</systemName>
+    <sensor systemName="ISTestHeadlessIndicatorDemo2" inverted="false" userName="FarEast">
+      <systemName>ISTestHeadlessIndicatorDemo2</systemName>
       <userName>FarEast</userName>
     </sensor>
-    <sensor systemName="ISTestHeadless3" inverted="false" userName="EastYard">
-      <systemName>ISTestHeadless3</systemName>
+    <sensor systemName="ISTestHeadlessIndicatorDemo3" inverted="false" userName="EastYard">
+      <systemName>ISTestHeadlessIndicatorDemo3</systemName>
       <userName>EastYard</userName>
     </sensor>
-    <sensor systemName="ISTestHeadless4" inverted="false" userName="sMiddle">
-      <systemName>ISTestHeadless4</systemName>
+    <sensor systemName="ISTestHeadlessIndicatorDemo4" inverted="false" userName="sMiddle">
+      <systemName>ISTestHeadlessIndicatorDemo4</systemName>
       <userName>sMiddle</userName>
     </sensor>
     <sensor systemName="IS3" inverted="false" userName="block3">
@@ -387,7 +387,7 @@
     </oblock>
     <oblock systemName="OB2" userName="Main" length="4000.0" units="true" curve="0" permissive="false" speedNotch="">
       <userName>Main</userName>
-      <sensor systemName="ISTestHeadless" />
+      <sensor systemName="ISTestHeadlessIndicatorDemo" />
       <errorSensor systemName="IS12" />
       <path pathName="main" blockName="OB2" fromPortal="westMain" toPortal="eastMain" fromDirection="0" toDirection="0" length="0.0" />
       <portal portalName="westMain">
@@ -1472,7 +1472,7 @@
     <conditional systemName="IX:AUTO:0003C6" userName="Set WestToEastOnMain" antecedent="R1" logicType="1" triggerOnChange="no">
       <systemName>IX:AUTO:0003C6</systemName>
       <userName>Set WestToEastOnMain</userName>
-      <conditionalStateVariable operator="4" negated="no" type="1" systemName="ISTestHeadless01" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="ISTestHeadlessIndicatorDemo01" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalAction option="1" type="12" systemName="Warrant" data="-1" delay="0" string="WestToEastOnMain" />
       <conditionalAction option="1" type="12" systemName="TrainName" data="-1" delay="0" string="PDQX" />
       <conditionalAction option="1" type="12" systemName="TrainId" data="-1" delay="0" string="Hudson" />
@@ -1480,19 +1480,19 @@
     <conditional systemName="IX:AUTO:0003C7" userName="Set WestToEastOnSiding" antecedent="R1" logicType="1" triggerOnChange="no">
       <systemName>IX:AUTO:0003C7</systemName>
       <userName>Set WestToEastOnSiding</userName>
-      <conditionalStateVariable operator="4" negated="no" type="1" systemName="ISTestHeadless02" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="ISTestHeadlessIndicatorDemo02" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalAction option="1" type="12" systemName="Warrant" data="-1" delay="0" string="WestToEastOnSiding" />
     </conditional>
     <conditional systemName="IX:AUTO:0003C8" userName="EastYardToWestYard" antecedent="R1" logicType="1" triggerOnChange="no">
       <systemName>IX:AUTO:0003C8</systemName>
       <userName>EastYardToWestYard</userName>
-      <conditionalStateVariable operator="4" negated="no" type="1" systemName="ISTestHeadless03" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="ISTestHeadlessIndicatorDemo03" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalAction option="1" type="12" systemName="Warrant" data="-1" delay="0" string="EastYardToWestYard" />
     </conditional>
     <conditional systemName="IX:AUTO:0003C9" userName="WayFarToWest" antecedent="R1" logicType="1" triggerOnChange="no">
       <systemName>IX:AUTO:0003C9</systemName>
       <userName>WayFarToWest</userName>
-      <conditionalStateVariable operator="4" negated="no" type="1" systemName="ISTestHeadless04" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="ISTestHeadlessIndicatorDemo04" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalAction option="1" type="12" systemName="Warrant" data="-1" delay="0" string="WayFarToWest" />
     </conditional>
     <conditional systemName="MAST INITC1" userName="Signal Mast Init" antecedent="R1 and R2" logicType="2" triggerOnChange="yes">
@@ -1553,16 +1553,16 @@
     <conditional systemName="SYS_SGC_WARRANTS" userName="Sensor Group warrants" antecedent="" logicType="2" triggerOnChange="yes">
       <systemName>SYS_SGC_WARRANTS</systemName>
       <userName>Sensor Group warrants</userName>
-      <conditionalStateVariable operator="5" negated="no" type="1" systemName="ISTestHeadless01" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalStateVariable operator="5" negated="no" type="1" systemName="ISTestHeadless02" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalStateVariable operator="5" negated="no" type="1" systemName="ISTestHeadless03" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalStateVariable operator="5" negated="no" type="1" systemName="ISTestHeadless04" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalStateVariable operator="5" negated="no" type="1" systemName="ISTestHeadless05" dataString="" num1="0" num2="0" triggersCalc="yes" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless01" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless02" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless03" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless04" data="4" delay="0" string="" />
-      <conditionalAction option="1" type="9" systemName="ISTestHeadless05" data="4" delay="0" string="" />
+      <conditionalStateVariable operator="5" negated="no" type="1" systemName="ISTestHeadlessIndicatorDemo01" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="5" negated="no" type="1" systemName="ISTestHeadlessIndicatorDemo02" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="5" negated="no" type="1" systemName="ISTestHeadlessIndicatorDemo03" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="5" negated="no" type="1" systemName="ISTestHeadlessIndicatorDemo04" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="5" negated="no" type="1" systemName="ISTestHeadlessIndicatorDemo05" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessIndicatorDemo01" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessIndicatorDemo02" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessIndicatorDemo03" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessIndicatorDemo04" data="4" delay="0" string="" />
+      <conditionalAction option="1" type="9" systemName="ISTestHeadlessIndicatorDemo05" data="4" delay="0" string="" />
     </conditional>
   </conditionals>
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Tue Dec 28 12:04:15 PST 2010" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
@@ -2741,7 +2741,7 @@
     <positionablelabel x="340" y="304" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="LoopWestToEast" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <sensoricon sensor="ISTestHeadless05" x="325" y="305" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="ISTestHeadlessIndicatorDemo05" x="325" y="305" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>Warrant4</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -2914,7 +2914,7 @@
     <positionablelabel x="931" y="178" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Infinity&amp;Beyond" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <sensoricon sensor="ISTestHeadless1" x="182" y="134" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="ISTestHeadlessIndicatorDemo1" x="182" y="134" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>block1</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
