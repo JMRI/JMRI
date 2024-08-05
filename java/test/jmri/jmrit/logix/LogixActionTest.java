@@ -19,8 +19,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class LogixActionTest {
 
-    @Disabled
     @Test
+    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
     public void testLogixAction() throws Exception {
         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
         };
