@@ -14,10 +14,6 @@
       <userName>Reset Main</userName>
     </sensor>
     <sensor inverted="false">
-      <systemName>ISTestHeadless</systemName>
-      <userName>Close Yard</userName>
-    </sensor>
-    <sensor inverted="false">
       <systemName>IS10</systemName>
     </sensor>
     <sensor inverted="false">
@@ -25,22 +21,6 @@
     </sensor>
     <sensor inverted="false">
       <systemName>IS12</systemName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>ISTestHeadless0</systemName>
-      <userName>HB20</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>ISTestHeadless1</systemName>
-      <userName>HB21</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>ISTestHeadless2</systemName>
-      <userName>HB22</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>ISTestHeadless3</systemName>
-      <userName>HB23</userName>
     </sensor>
     <sensor inverted="false">
       <systemName>IS30</systemName>
@@ -216,18 +196,6 @@
     </sensor>
     <sensor inverted="false">
       <systemName>IS105</systemName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>ISTestHeadless31</systemName>
-      <userName>FM Rev Loop</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>ISTestHeadless54</systemName>
-      <userName>Throw Yard</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>ISTestHeadless55</systemName>
-      <userName>Throw Main</userName>
     </sensor>
     <sensor inverted="false">
       <systemName>ISCLOCKRUNNING</systemName>
@@ -482,6 +450,38 @@
     <sensor inverted="false">
       <systemName>ISWCS</systemName>
       <userName>Walnut Status</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISTestHeadless</systemName>
+      <userName>Close Yard</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISTestHeadless0</systemName>
+      <userName>HB20</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISTestHeadless1</systemName>
+      <userName>HB21</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISTestHeadless2</systemName>
+      <userName>HB22</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISTestHeadless3</systemName>
+      <userName>HB23</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISTestHeadless31</systemName>
+      <userName>FM Rev Loop</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISTestHeadless54</systemName>
+      <userName>Throw Yard</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISTestHeadless55</systemName>
+      <userName>Throw Main</userName>
     </sensor>
   </sensors>
   <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">

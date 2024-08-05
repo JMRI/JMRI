@@ -52,9 +52,6 @@
     <sensor systemName="IS1" inverted="false">
       <systemName>IS1</systemName>
     </sensor>
-    <sensor systemName="ISTestHeadless" inverted="false">
-      <systemName>ISTestHeadless</systemName>
-    </sensor>
     <sensor systemName="IS3" inverted="false">
       <systemName>IS3</systemName>
     </sensor>
@@ -63,6 +60,9 @@
     </sensor>
     <sensor systemName="ISCLOCKRUNNING" inverted="false">
       <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+    <sensor systemName="ISTestHeadless" inverted="false">
+      <systemName>ISTestHeadless</systemName>
     </sensor>
   </sensors>
   <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">

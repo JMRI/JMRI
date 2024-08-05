@@ -13,13 +13,13 @@
       <systemName>IS1</systemName>
       <userName>Sensor No Spaces</userName>
     </sensor>
-    <sensor systemName="ISTestHeadless" inverted="false" userName="Sensor Trailing Space">
-      <systemName>ISTestHeadless</systemName>
-      <userName>Sensor Trailing Space</userName>
-    </sensor>
     <sensor systemName="IS3" inverted="false" userName="Sensor Leading Space">
       <systemName>IS3</systemName>
       <userName>Sensor Leading Space</userName>
+    </sensor>
+    <sensor systemName="ISTestHeadless" inverted="false" userName="Sensor Trailing Space">
+      <systemName>ISTestHeadless</systemName>
+      <userName>Sensor Trailing Space</userName>
     </sensor>
   </sensors>
   <turnouts class="jmri.managers.configurexml.InternalTurnoutManagerXml">

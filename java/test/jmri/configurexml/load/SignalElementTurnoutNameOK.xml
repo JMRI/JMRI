@@ -15,9 +15,6 @@
       <comment>SE8c #1</comment>
     </sensor>
     <sensor inverted="false">
-      <systemName>ISTestHeadless</systemName>
-    </sensor>
-    <sensor inverted="false">
       <systemName>IS3</systemName>
       <userName>Sensor 3</userName>
     </sensor>
@@ -26,6 +23,9 @@
     </sensor>
     <sensor inverted="false">
       <systemName>IS35</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISTestHeadless</systemName>
     </sensor>
   </sensors>
   <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">

@@ -123,12 +123,12 @@
         </turnouts>
         <sensors>
           <sensor>
-            <sensorName>ISTestHeadless</sensorName>
-            <sensorState>inActive</sensorState>
-          </sensor>
-          <sensor>
             <sensorName>IS3</sensorName>
             <sensorState>active</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>ISTestHeadless</sensorName>
+            <sensorState>inActive</sensorState>
           </sensor>
         </sensors>
         <masts>
