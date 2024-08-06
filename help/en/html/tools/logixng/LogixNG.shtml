@@ -325,6 +325,10 @@
       to JMRI table items.  For details, see
       <a href="../../../package/jmri/jmrit/logixng/LogixNGWhereUsed.shtml">LogixNG Where used</a>.</p>
 
+      <p>The <strong>Export LogixNG</strong> tool is used to export LogixNG items while changing the
+      the system name.  This makes it possible to import LogixNG definitions. For details, see
+      <a href="ExportLogixNG.shtml">Export LogixNG</a>.  Note: This not in the tools menu.</p>
+
       <h2>Documentation</h2>
 
       <p>This document is an introduction and overview of LogixNG. The sidebar contains links to
