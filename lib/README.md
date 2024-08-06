@@ -401,6 +401,34 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - version 2.6
 - batik related
 
+##### BiDiB protocol implementation: jbidibc-*-2.0.18.jar, bidibwizard-common-2.0.18.jar
+- version 2.0.18
+- bidibwizard*.jar supports the BiDiB connection simulation
+
+##### commons-collections4-4.4.jar
+- version 4.4
+- used by jbidibc/bidibwizard
+
+##### eventbus-1.4.jar
+- version 1.4
+- used by jbidibc/bidibwizard
+
+##### javax.activation-api-1.2.0.jar
+- version 1.2.0
+- used by jbidibc/bidibwizard
+
+##### jaxb-api-2.3.1.jar, jaxb-core-2.3.0.1.jar, jaxb-impl-2.3.2.jar
+- version 2.3
+- used by jbidibc/bidibwizard
+
+##### jgoodies-binding-2.13.0.jar
+- version 2.13.0
+- used by jbidibc/bidibwizard
+
+##### jgoodies-common-1.8.1.jar
+- version 1.8.1
+- used by jbidibc/bidibwizard
+
 ## For unit tests & development work only:
 
 ##### ArchUnit: archunit-*.jar, archunit-junit5-api-*.jar, archunit-junit5-engine-*.jar, archunit-junit5-engine-api*.jar
