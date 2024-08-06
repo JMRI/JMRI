@@ -191,6 +191,7 @@
 <!ATTLIST manifest useEditor			(true | false ) "false"> 
 <!ATTLIST manifest printCabooseLoad		(true | false ) "false"> 
 <!ATTLIST manifest printPassengerLoad	(true | false ) "false"> 
+<!ATTLIST manifest groupCarMoves		(true | false ) "false"> 
 <!ATTLIST manifest hazardousMsg			CDATA #IMPLIED> 
 
 <!ATTLIST columnFormat twoColumns		(true | false ) "false">

@@ -285,6 +285,10 @@ public interface SymbolTable {
             String className = showClassName && value != null
                     ? ", " + value.getClass().getName()
                     : "";
+            if (value instanceof NamedBean) {
+                // Show display name instead of system name
+                value = ((NamedBean)value).getDisplayName();
+            }
             log.warn("{}{}: {}, {}: {}{}", pad, headerName, name, headerValue, value, className);
         }
     }
