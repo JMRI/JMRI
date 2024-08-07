@@ -76,17 +76,30 @@
 
     <xs:simpleType name="LogixNG_NamedBeanType">
       <xs:restriction base="xs:token">
+         <xs:enumeration value="AnalogIO"/>
+         <xs:enumeration value="Audio"/>
          <xs:enumeration value="Block"/>
+         <xs:enumeration value="Conditional"/>
          <xs:enumeration value="GlobalVariable"/>
          <xs:enumeration value="EntryExit"/>
          <xs:enumeration value="Light"/>
+         <xs:enumeration value="Logix"/>
+         <xs:enumeration value="LogixNG"/>
+         <xs:enumeration value="LogixNG_Expression"/>
+         <xs:enumeration value="LogixNG_Module"/>
+         <xs:enumeration value="LogixNG_Table"/>
          <xs:enumeration value="Memory"/>
          <xs:enumeration value="OBlock"/>
          <xs:enumeration value="Reporter"/>
+         <xs:enumeration value="Route"/>
+         <xs:enumeration value="Section"/>
          <xs:enumeration value="Sensor"/>
          <xs:enumeration value="SignalHead"/>
          <xs:enumeration value="SignalMast"/>
+         <xs:enumeration value="StringIO"/>
+         <xs:enumeration value="Transit"/>
          <xs:enumeration value="Turnout"/>
+         <xs:enumeration value="VariableLight"/>
          <xs:enumeration value="Warrant"/>
        </xs:restriction>
      </xs:simpleType>
