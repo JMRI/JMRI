@@ -686,7 +686,7 @@ public class NXFrame extends WarrantRoute {
 
     /**
      * Return length of warrant route in mm.
-     * @throws exception when a Path Length is &lt; or equals 0
+     * @throws JmriException when a Path Length is &lt; or equals 0
      */
     private float getTotalLength() throws JmriException {
         List<BlockOrder> orders = getOrders();
