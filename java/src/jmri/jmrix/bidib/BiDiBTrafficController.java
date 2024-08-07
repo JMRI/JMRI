@@ -101,7 +101,7 @@ public class BiDiBTrafficController implements CommandStation {
     private Node currentGlobalProgrammerNode = null;
     private final javax.swing.Timer progTimer = new javax.swing.Timer(3000, e -> progTimeout());
 
-    private Thread shutdownHook = null; // retain shutdown hook for  possible removal.
+    //private Thread shutdownHook = null; // retain shutdown hook for  possible removal.
     
     private final Map<Long, String> debugStringBuffer = new HashMap<>();
 
