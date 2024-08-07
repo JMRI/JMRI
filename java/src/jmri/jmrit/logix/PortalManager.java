@@ -39,7 +39,6 @@ public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyC
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private final ArrayList<Portal> _nameList = new ArrayList<>();          // stores Portal in loaded order
     private final HashMap<String, Portal> _portalMap = new HashMap<>(); // stores portal by current name
-    private Integer _nextIndex = 1;
 
     public PortalManager() {
         // no setup currently required
@@ -88,7 +87,6 @@ public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyC
         // save in the maps
         _nameList.add(portal);
         _portalMap.put(userName, portal);
-        _nextIndex ++;
         pcs.firePropertyChange("numPortals", null, _nameList.size());
         // listen for name and state changes to forward
         portal.addPropertyChangeListener(this);
