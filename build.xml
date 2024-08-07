@@ -228,7 +228,6 @@
         <pathelement location="${libdir}/jbidibc-core-2.0.18.jar"/>
         <pathelement location="${libdir}/jbidibc-messages-2.0.18.jar"/>
         <pathelement location="${libdir}/jbidibc-net-serial-over-tcp-2.0.18.jar"/>
-        <pathelement location="${libdir}/jbidibc-purejavacomm-2.0.18.jar"/>
         <pathelement location="${libdir}/jbidibc-jserialcomm-2.0.18.jar"/>
         <pathelement location="${libdir}/jbidibc-serial-2.0.18.jar"/>
         <pathelement location="${libdir}/jbidibc-simulation-2.0.18.jar"/>
