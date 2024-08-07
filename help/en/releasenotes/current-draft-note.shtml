@@ -126,7 +126,8 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Updates the OpenLCB library so that you can write configuration
+                    information to a node even if one or more items are out of range.</li>
             </ul>
 
         <h4>Powerline</h4>
