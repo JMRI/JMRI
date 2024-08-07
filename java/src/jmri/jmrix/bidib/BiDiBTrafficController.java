@@ -140,17 +140,8 @@ public class BiDiBTrafficController implements CommandStation {
         // We now use the ShutdownTask method. This task is executed earlier
         // (and before the external tasks are executed)
         // and the JSerialComm port is still usable.
+        // And registering the shutdown task is moved to connnectPort().
         
-        ShutDownTask shutDownTask = new AbstractShutDownTask("BiDiB Shutdown Task") {
-            @Override
-            public void run() {
-                log.info("Shutdown Task - Terminate BiDiB");
-                terminate();
-                log.info("Shutdown task finished");
-            }
-        };
-        InstanceManager.getDefault(ShutDownManager.class).register(shutDownTask);
-
     }
     
     /**
@@ -381,6 +372,19 @@ public class BiDiBTrafficController implements CommandStation {
                 ((BiDiBPortController)p).registerAllListeners(connectionListener, nodeListeners, messageListeners, transferListeners);
             }
 
+            // the connection has been established - register a shutdown task
+            log.info("registering shutdown task");
+            ShutDownTask shutDownTask = new AbstractShutDownTask("BiDiB Shutdown Task") {
+                @Override
+                public void run() {
+                    log.info("Shutdown Task - Terminate BiDiB");
+                    terminate();
+                    log.info("Shutdown task finished");
+                }
+            };
+            InstanceManager.getDefault(ShutDownManager.class).register(shutDownTask);
+
+            // get data from root node and from all other nodes
             log.debug("get relevant node data");
             BidibNode rootNode = bidib.getRootNode();
             int count = rootNode.getNodeCount();
