@@ -46,20 +46,21 @@
             <name>Reset</name>
             <description>Controls reloading and clearing node memory. Board must be restarted for this to take effect.</description>
             <map>
-                <relation>
-                    <property>85</property>
-                    <value>(No reset)</value>
-                </relation>
-                <relation>
-                    <property>0</property>
-                    <value>Reset all to defaults</value>
-                </relation>
-                <relation>
-                    <property>170</property>
-                    <value>Reset just EventIDs to defaults</value>
-                </relation>
+                <relation><property>85</property><value>(No reset)</value></relation>
+                <relation><property>0</property><value>Reset all to defaults</value></relation>
+                <relation><property>170</property><value>Reset just EventIDs to defaults</value></relation>
             </map>
         </int>
-    </segment>
+        <action size="2">
+            <name>Factory Reset</name>
+            <buttonText>Perform Reset</buttonText>
+            <dialogText>Do a factory reset?</dialogText>
+            <value>12</value>
+        </action>
+        <int size="1">
+            <name>Yet Another Reset</name>
+            <description>This should be stored at address 131.</description>
+        </int>
+</segment>
 
 </cdi>
