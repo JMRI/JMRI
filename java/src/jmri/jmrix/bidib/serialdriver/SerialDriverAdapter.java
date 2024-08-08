@@ -26,8 +26,10 @@ import org.bidib.jbidibc.core.node.BidibNode;
 import org.bidib.jbidibc.messages.ConnectionListener;
 import org.bidib.jbidibc.messages.helpers.Context;
 import org.bidib.jbidibc.messages.utils.ByteUtils;
-import org.bidib.jbidibc.purejavacomm.PureJavaCommSerialBidib;
-import org.bidib.jbidibc.purejavacomm.PortIdentifierUtils;
+import org.bidib.jbidibc.jserialcomm.JSerialCommSerialBidib;
+//import org.bidib.jbidibc.jserialcomm.PortIdentifierUtils;
+//import org.bidib.jbidibc.purejavacomm.PureJavaCommSerialBidib;
+//import org.bidib.jbidibc.purejavacomm.PortIdentifierUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,12 +39,13 @@ import org.slf4j.LoggerFactory;
  * This connects an BiDiB device via a serial com port.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @author Eckart Meyer Copyright (C) 2019-2023
+ * @author Eckart Meyer Copyright (C) 2019-2024
  */
 public class SerialDriverAdapter extends BiDiBSerialPortController {
 
-    private static final boolean usePurjavacomm = true;
-    private static final boolean useScm = !usePurjavacomm;
+    private static final boolean useJSerailComm = true;
+    private static final boolean usePurjavacomm = !useJSerailComm;
+    private static final boolean useScm = false;
     private static final Map<String, Long> connectionRootNodeList = new HashMap<>(); //our static connection list
     
     protected String portNameFilter = "";
@@ -242,7 +245,10 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
 //            return BidibFactory.createBidib(ScmSerialBidib.class.getName());
         }
         if (usePurjavacomm) {
-            return BidibFactory.createBidib(PureJavaCommSerialBidib.class.getName(), context);
+//            return BidibFactory.createBidib(PureJavaCommSerialBidib.class.getName(), context);
+        }
+        if (useJSerailComm) {
+            return BidibFactory.createBidib(JSerialCommSerialBidib.class.getName(), context);
         }
         return null;
     }
@@ -260,7 +266,12 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
 //            b.registerListeners(nodeListeners, messageListeners, transferListeners);
         }
         if (usePurjavacomm) {
-            PureJavaCommSerialBidib b = (PureJavaCommSerialBidib)bidib;
+//            PureJavaCommSerialBidib b = (PureJavaCommSerialBidib)bidib;
+//            b.setConnectionListener(connectionListener);
+//            b.registerListeners(nodeListeners, messageListeners, transferListeners);
+        }
+        if (useJSerailComm) {
+            JSerialCommSerialBidib b = (JSerialCommSerialBidib)bidib;
             b.setConnectionListener(connectionListener);
             b.registerListeners(nodeListeners, messageListeners, transferListeners);
         }
@@ -281,7 +292,10 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
 //            }
 //        }
         if (usePurjavacomm) {
-            list = PortIdentifierUtils.getPortIdentifiers();
+            //list = org.bidib.jbidibc.purejavacomm.PortIdentifierUtils.getPortIdentifiers();
+        }
+        if (useJSerailComm) {
+            list = org.bidib.jbidibc.jserialcomm.PortIdentifierUtils.getPortIdentifiers();
         }
         if (list != null) {
             ret = new ArrayList<>();

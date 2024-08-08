@@ -36,7 +36,7 @@
 
         <h4><a href="http://bidib.org/index_e.html">BiDiB</a></h4>
             <ul>
-                <li></li>
+                <li>BiDiB now uses JSerialComm instead of PureJavaComm - no user impact.</li>
             </ul>
 
         <h4>CBUS</h4>

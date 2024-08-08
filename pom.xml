@@ -1716,15 +1716,8 @@
         </dependency>
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
-            <artifactId>jbidibc-purejavacomm</artifactId>
+            <artifactId>jbidibc-jserialcomm</artifactId>
             <version>2.0.18</version>
-            <exclusions>
-				<!-- don't use special purejavacomm mentioned in jbidibc-purejavacomm -->
-                <exclusion>
-                    <groupId>org.bidib.com.github.purejavacomm</groupId>
-                    <artifactId>purejavacomm</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
