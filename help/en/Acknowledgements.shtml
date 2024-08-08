@@ -937,7 +937,8 @@
         definition.</li>
 
         <li>Bruno Sanches, <!-- bcsanches -->
-         who fixed a bug in the DCC++ throttle implementation.</li>
+         who fixed a bug in the DCC++ throttle implementation
+         and provided a Trix decoder definition.</li>
 
         <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3Adsand47+">Dave Sand</a>,
           <!-- dsand47 -->
