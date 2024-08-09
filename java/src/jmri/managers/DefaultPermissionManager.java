@@ -64,6 +64,8 @@ public class DefaultPermissionManager
         _currentUser.changePassword(newPassword,  oldPassword);
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="The text is from an exception")
     @Override
     public void login(String username, String password) {
         User newUser = _users.get(username);
@@ -120,6 +122,8 @@ public class DefaultPermissionManager
             this._password = password;
         }
 
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification="The text is from an exception")
         public void changePassword(String newPassword, String oldPassword) {
             if (!checkPassword(oldPassword)) {
                 String msg = new BadPasswordException().getMessage();
@@ -146,6 +150,8 @@ public class DefaultPermissionManager
             return _permissions.contains(permission);
         }
 
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification="The text is from an exception")
         public boolean checkPermission(Permission permission) {
             if (!hasPermission(permission)) {
                 String msg = new PermissionDeniedException().getMessage();
