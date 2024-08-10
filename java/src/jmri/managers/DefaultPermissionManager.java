@@ -185,8 +185,8 @@ public class DefaultPermissionManager
     }
 
     @Override
-    public boolean checkPermission(Permission permission) {
-        return !_permissionsEnabled || _currentUser.checkPermission(permission);
+    public boolean checkPermission(Permission permission, boolean suggestCreateUser) {
+        return !_permissionsEnabled || _currentUser.checkPermission(permission, suggestCreateUser);
     }
 
     @Override
@@ -299,18 +299,23 @@ public class DefaultPermissionManager
         }
 
         @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
-            justification="The text is from an exception")
-        public boolean checkPermission(Permission permission) {
+            justification="The text is from a bundle")
+        public boolean checkPermission(Permission permission, boolean suggestCreateUser) {
             if (!hasPermission(permission)) {
-                String msg = new PermissionDeniedException().getMessage();
-
                 if (!GraphicsEnvironment.isHeadless()) {
-                    JmriJOptionPane.showMessageDialog(null,
-                            msg,
-                            jmri.Application.getApplicationName(),
-                            JmriJOptionPane.ERROR_MESSAGE);
+                    if (suggestCreateUser) {
+                        JmriJOptionPane.showMessageDialog(null,
+                                Bundle.getMessage("DefaultPermissionManager_PermissionDenied_CreateUser"),
+                                jmri.Application.getApplicationName(),
+                                JmriJOptionPane.ERROR_MESSAGE);
+                    } else {
+                        JmriJOptionPane.showMessageDialog(null,
+                                Bundle.getMessage("DefaultPermissionManager_PermissionDenied"),
+                                jmri.Application.getApplicationName(),
+                                JmriJOptionPane.ERROR_MESSAGE);
+                    }
                 } else {
-                    log.error(msg);
+                    log.warn(Bundle.getMessage("DefaultPermissionManager_PermissionDenied"));
                 }
                 return false;
             }
