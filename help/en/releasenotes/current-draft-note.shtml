@@ -141,8 +141,13 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Updates the OpenLCB library so that you can write configuration
-                    information to a node even if one or more items are out of range.</li>
+                <li>Updates the OpenLCB library so that
+                    <ul>
+                        <li>You can write configuration information to a node 
+                            even if one or more items are out of range.</li>
+                        <li>The new &lt;action&gt; element in CDI 
+                            will be properly displayed.</li>
+                    <ul>
             </ul>
 
         <h4>Powerline</h4>
