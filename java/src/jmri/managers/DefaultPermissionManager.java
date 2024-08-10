@@ -69,8 +69,6 @@ public class DefaultPermissionManager
                 Element root = new XmlFile().rootFromFile(file);
 
 
-                // writeXML
-
             } catch (JDOMException | IOException ex) {
                 log.error("Exception during loading of permissions", ex);
             }
@@ -95,12 +93,23 @@ public class DefaultPermissionManager
                     .addContent(this._permissionsEnabled ? "yes" : "no"));
             root.addContent(settings);
 
+            checkThatAllUsersKnowsAllPermissions();
+
             Element users = new Element("Users");
             for (User user : _users.values()) {
                 Element userElement = new Element("User");
                 userElement.addContent(new Element("Username").addContent(user._username));
                 userElement.addContent(new Element("Password").addContent(user._passwordMD5));
                 userElement.addContent(new Element("Seed").addContent(user._seed));
+
+                Element userPermissions = new Element("Permissions");
+                for (var entry : user._permissions.entrySet()) {
+                    Element userPermission = new Element("Permission");
+                    userPermission.addContent(new Element("class").addContent(entry.getKey().getClass().getName()));
+                    userPermission.addContent(new Element("enabled").addContent(entry.getValue() ? "yes" : "no"));
+                    userPermissions.addContent(userPermission);
+                }
+                userElement.addContent(userPermissions);
                 users.addContent(userElement);
             }
             root.addContent(users);
@@ -190,6 +199,12 @@ public class DefaultPermissionManager
         _permissions.add(permission);
     }
 
+    public void checkThatAllUsersKnowsAllPermissions() {
+        for (User user : _users.values()) {
+            user.checkThatUserKnowsAllPermissions(_permissions);
+        }
+    }
+
     private static final PrimitiveIterator.OfInt iterator =
             new Random().ints('a', 'z'+10).iterator();
 
@@ -210,7 +225,7 @@ public class DefaultPermissionManager
         public final String _seed;
         public String _passwordMD5;
 
-        private final Set<Permission> _permissions = new HashSet<>();
+        private final Map<Permission, Boolean> _permissions = new HashMap<>();
 
         public User(String username, String password) {
             this._username = username;
@@ -276,7 +291,11 @@ public class DefaultPermissionManager
         }
 
         public boolean hasPermission(Permission permission) {
-            return _permissions.contains(permission);
+            // If the map doesn't contain the permission, assume that
+            // the user has the permission. This happens for example for
+            // new features.
+            Boolean value = _permissions.get(permission);
+            return value == null || value;
         }
 
         @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
@@ -296,6 +315,14 @@ public class DefaultPermissionManager
                 return false;
             }
             return true;
+        }
+
+        private void checkThatUserKnowsAllPermissions(Set<Permission> permissions) {
+            for (Permission p : permissions) {
+                if (!_permissions.containsKey(p)) {
+                    _permissions.put(p, true);
+                }
+            }
         }
     }
 
