@@ -16,6 +16,9 @@ import jmri.util.swing.JmriJOptionPane;
  *
  * @author Daniel Bergqvist (C) 2024
  */
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="DMI_RANDOM_USED_ONLY_ONCE",
+    justification = "False positive. The Random instance is kept by the iterator.")
+
 public class DefaultUser implements User {
 
     private final String _username;
@@ -55,8 +58,8 @@ public class DefaultUser implements User {
         this._systemUserName = null;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("DMI_RANDOM_USED_ONLY_ONCE")
-    private static final PrimitiveIterator.OfInt iterator = new Random().ints('a', 'z'+10).iterator();
+    private static final PrimitiveIterator.OfInt iterator =
+            new Random().ints('a', 'z'+10).iterator();
 
     private String getRandomString(int count) {
         StringBuilder s = new StringBuilder();
