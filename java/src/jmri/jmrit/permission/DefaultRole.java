@@ -13,17 +13,33 @@ public class DefaultRole implements Role {
 
     private final String _name;
     private final boolean _systemRole;
+    private final String _systemName;
 
     private final Map<Permission, Boolean> _permissions = new HashMap<>();
 
-    public DefaultRole(String name, boolean systemRole) {
+    public DefaultRole(String name) {
+        this._name = name;
+        this._systemRole = false;
+        this._systemName = null;
+    }
+
+    public DefaultRole(String name, boolean systemRole, String systemName) {
         this._name = name;
         this._systemRole = systemRole;
+        this._systemName = systemName;
     }
 
     @Override
     public String getName() {
         return this._name;
+    }
+
+    boolean isSystemRole() {
+        return this._systemRole;
+    }
+
+    String getSystemName() {
+        return this._systemName;
     }
 
     Map<Permission,Boolean> getPermissions() {
@@ -47,7 +63,7 @@ public class DefaultRole implements Role {
     void checkThatRoleKnowsAllPermissions(Set<Permission> permissions) {
         for (Permission p : permissions) {
             if (!_permissions.containsKey(p)) {
-                _permissions.put(p, true);
+                _permissions.put(p, false);
             }
         }
     }

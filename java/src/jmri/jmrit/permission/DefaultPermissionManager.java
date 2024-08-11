@@ -28,32 +28,44 @@ import org.jdom2.*;
  */
 public class DefaultPermissionManager implements PermissionManager {
 
-    private static final Role GUEST_ROLE =
-            new DefaultRole(Bundle.getMessage("PermissionManager_Role_Guest"),true);
+    private static final DefaultRole ROLE_GUEST =
+            new DefaultRole(Bundle.getMessage("PermissionManager_Role_Guest"),true,"GUEST");
 
-    private static final Role STANDARD_USER_ROLE =
-            new DefaultRole(Bundle.getMessage("PermissionManager_Role_StandardUser"),true);
+    public static final DefaultRole ROLE_STANDARD_USER =
+            new DefaultRole(Bundle.getMessage("PermissionManager_Role_StandardUser"),true,"STANDARD_USER");
 
-    private static final Role ADMIN_ROLE =
-            new DefaultRole(Bundle.getMessage("PermissionManager_Role_Admin"),true);
+    private static final DefaultRole ROLE_ADMIN =
+            new DefaultRole(Bundle.getMessage("PermissionManager_Role_Admin"),true,"ADMIN");
 
-    private static final User USER_GUEST =
+    private static final DefaultUser USER_GUEST =
             new DefaultUser(Bundle.getMessage("PermissionManager_User_Guest"), null, true, "GUEST");
 
-    private static final User USER_ADMIN =
+    private static final DefaultUser USER_ADMIN =
             new DefaultUser(Bundle.getMessage("PermissionManager_User_Admin"), "", true, "ADMIN");
 
     private final Map<String, DefaultRole> _roles = new HashMap<>();
     private final Map<String, DefaultUser> _users = new HashMap<>();
     private final Set<PermissionOwner> _owners = new HashSet<>();
     private final Set<Permission> _permissions = new HashSet<>();
+    private final Map<String, Permission> _permissionClassNames = new HashMap<>();
 
     private boolean _permissionsEnabled = false;
     private User _currentUser = USER_GUEST;
 
 
     public DefaultPermissionManager init() {
-        jmri.jmrit.Bundle a;
+        _roles.put(ROLE_GUEST.getName(), ROLE_GUEST);
+        _roles.put(ROLE_STANDARD_USER.getName(), ROLE_STANDARD_USER);
+        _roles.put(ROLE_ADMIN.getName(), ROLE_ADMIN);
+
+        USER_GUEST.addRole(ROLE_GUEST);
+        _users.put(USER_GUEST.getName(), USER_GUEST);
+
+        USER_ADMIN.addRole(ROLE_ADMIN);
+        _users.put(USER_ADMIN.getName(), USER_ADMIN);
+
+        _roles.put("Test role", new DefaultRole("Test role"));
+
         _users.put("daniel", new DefaultUser("daniel", "12345678"));
         _users.put("kalle", new DefaultUser("kalle", "testtest"));
         _users.put("sven", new DefaultUser("sven", "testtest"));
@@ -76,6 +88,8 @@ public class DefaultPermissionManager implements PermissionManager {
             try {
                 Element root = new XmlFile().rootFromFile(file);
 
+                Element settings = root.getChild("Settings");
+                _permissionsEnabled = "yes".equals(settings.getChild("Enabled").getValue());
 
             } catch (JDOMException | IOException ex) {
                 log.error("Exception during loading of permissions", ex);
@@ -105,17 +119,20 @@ public class DefaultPermissionManager implements PermissionManager {
 
             Element rolesElement = new Element("Roles");
             for (DefaultRole role : _roles.values()) {
-                Element roleElement = new Element("User");
-                roleElement.addContent(new Element("Username").addContent(role.getName()));
+                Element roleElement = new Element("Role");
+                if (role.isSystemRole()) {
+                    roleElement.addContent(new Element("SystemName").addContent(role.getSystemName()));
+                }
+                roleElement.addContent(new Element("Name").addContent(role.getName()));
 
-                Element userPermissions = new Element("Permissions");
+                Element rolePermissions = new Element("Permissions");
                 for (var entry : role.getPermissions().entrySet()) {
                     Element userPermission = new Element("Permission");
                     userPermission.addContent(new Element("Class").addContent(entry.getKey().getClass().getName()));
                     userPermission.addContent(new Element("Enabled").addContent(entry.getValue() ? "yes" : "no"));
-                    userPermissions.addContent(userPermission);
+                    rolePermissions.addContent(userPermission);
                 }
-                roleElement.addContent(userPermissions);
+                roleElement.addContent(rolePermissions);
                 rolesElement.addContent(roleElement);
             }
             rootElement.addContent(rolesElement);
@@ -131,7 +148,7 @@ public class DefaultPermissionManager implements PermissionManager {
                 userElement.addContent(new Element("Password").addContent(user.getPassword()));
                 userElement.addContent(new Element("Seed").addContent(user.getSeed()));
 
-                Element rolePermissionsElement = new Element("Permissions");
+                Element rolePermissionsElement = new Element("Roles");
                 for (Role role : user.getRoles()) {
                     Element userPermission = new Element("Role");
                     userPermission.addContent(new Element("Name").addContent(role.getName()));
@@ -220,6 +237,11 @@ public class DefaultPermissionManager implements PermissionManager {
     @Override
     public void registerPermission(Permission permission) {
         _permissions.add(permission);
+        _permissionClassNames.put(permission.getClass().getName(), permission);
+    }
+
+    private Permission getPermissionByClassName(String name) {
+        return _permissionClassNames.get(name);
     }
 
     public void checkThatAllRolesKnowsAllPermissions() {

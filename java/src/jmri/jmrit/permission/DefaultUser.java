@@ -27,6 +27,7 @@ public class DefaultUser implements User {
 
     public DefaultUser(String username, String password) {
         this(username, password, false, null);
+        DefaultUser.this.addRole(DefaultPermissionManager.ROLE_STANDARD_USER);
     }
 
     public DefaultUser(String username, String password, boolean systemUser, String systemUserName) {
