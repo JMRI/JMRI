@@ -31,6 +31,19 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
     }
 
     private void initGUI() {
+
+        JPanel outerPanel = new JPanel();
+
+        outerPanel.setLayout(new BoxLayout(outerPanel, BoxLayout.PAGE_AXIS));
+
+        JPanel settingsPanel = new JPanel();
+        JCheckBox enablePermissionManager = new JCheckBox(Bundle.getMessage(
+                "PermissionPreferencesPanel_EnablePermissionManager"));
+        settingsPanel.add(enablePermissionManager);
+        outerPanel.add(settingsPanel);
+
+//        add(Box.createVerticalStrut(10));
+
         JPanel rolesPanel = new JPanel();
         rolesPanel.setLayout(new BoxLayout(rolesPanel, BoxLayout.PAGE_AXIS));
 
@@ -75,7 +88,11 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
                 new JScrollPane(rolesPanel));
         tabbedPane.addTab(Bundle.getMessage("PermissionPreferencesPanel_Users"),
                 new JScrollPane(usersPanel));
-        add(tabbedPane);
+
+        JPanel outerTabbedPanel = new JPanel();
+        outerTabbedPanel.add(tabbedPane);
+        outerPanel.add(outerTabbedPanel);
+        add(outerPanel);
     }
 
     @Override
