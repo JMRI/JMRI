@@ -1175,9 +1175,6 @@
                          value="${libdir}/security.policy"/>
             <sysproperty key="nashorn.args" value="--no-deprecation-warning"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
-                          
-            <sysproperty key="jmri.prefsdir" path="/Users/jake/JMRI/projects/PMRRM-Dispatcher/"/>
-
             <sysproperty key="apple.awt.graphics.UseQuartz" value="true"/>
             <sysproperty key="apple.awt.graphics.EnableQ2DX" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>

@@ -64,7 +64,7 @@ public class CdiPanelDemo {
         JFrame f = makeFrameFromFile("java/test/jmri/jmrix/openlcb/sample1.xml");
         f.setTitle("Sample1 XML");
         f.setVisible(true);
-        //f.dispose();
+        f.dispose();
     }
 
     @Test
@@ -130,6 +130,6 @@ public class CdiPanelDemo {
         
         Thread.sleep(360000);
         
-        //tests.tearDown();
+        tests.tearDown();
     }
 }
