@@ -7,9 +7,6 @@ package jmri;
  */
 public interface PermissionManager {
 
-    public static final String GUEST_USERNAME = "";
-
-
     void addUser(String username, String password)
             throws UserAlreadyExistsException;
 
@@ -32,23 +29,7 @@ public interface PermissionManager {
      * @param permission the permission to check
      * @return true if the user has the permission, false otherwise
      */
-    default boolean checkPermission(Permission permission) {
-        return checkPermission(permission, false);
-    }
-
-    /**
-     * Checks if the current user has the permission.
-     * If not, show a message dialog if not headless. Otherwise log a message.
-     * @param permission the permission to check
-     * @param suggestCreateUser if true and the current user is Guest and JMRI
-     *                          is not running headless, a dialog is shown that
-     *                          tells the user to create a new user and log in.
-     *                          The main purpose is the roster, if the
-     *                          requirement is that only logged in users access
-     *                          the roster.
-     * @return true if the user has the permission, false otherwise
-     */
-    boolean checkPermission(Permission permission, boolean suggestCreateUser);
+    boolean checkPermission(Permission permission);
 
     void registerOwner(PermissionOwner owner);
 

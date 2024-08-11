@@ -85,10 +85,6 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
             return new ProxyMeterManager();
         }
 
-        if (type == PermissionManager.class) {
-            return new DefaultPermissionManager().init();
-        }
-
         if (type == RailComManager.class) {
             return new DefaultRailComManager();
         }
@@ -176,7 +172,6 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
                 LogixManager.class,
                 MemoryManager.class,
                 MeterManager.class,
-                PermissionManager.class,
                 RailComManager.class,
                 ReporterManager.class,
                 RouteManager.class,
