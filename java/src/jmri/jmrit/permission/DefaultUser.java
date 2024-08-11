@@ -55,20 +55,8 @@ public class DefaultUser implements User {
         this._systemUserName = null;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-    public static final Random RANDOM = new Random();
-    private static final PrimitiveIterator.OfInt iterator =
-            RANDOM.ints('a', 'z'+10).iterator();
+    public static final PrimitiveIterator.OfInt iterator =
+            new Random().ints('a', 'z'+10).iterator();
 
     private String getRandomString(int count) {
         StringBuilder s = new StringBuilder();
