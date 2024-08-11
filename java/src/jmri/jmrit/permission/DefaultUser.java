@@ -1,6 +1,5 @@
 package jmri.jmrit.permission;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.awt.GraphicsEnvironment;
 import java.security.MessageDigest;
@@ -56,8 +55,8 @@ public class DefaultUser implements User {
         this._systemUserName = null;
     }
 
-    @SuppressFBWarnings(value = "DMI_RANDOM_USED_ONLY_ONCE",
-            justification = "False positive. The Random instance is kept by the iterator.")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="DMI_RANDOM_USED_ONLY_ONCE",
+        justification = "False positive. The Random instance is kept by the iterator.")
     private static final PrimitiveIterator.OfInt iterator =
             new Random().ints('a', 'z'+10).iterator();
 
