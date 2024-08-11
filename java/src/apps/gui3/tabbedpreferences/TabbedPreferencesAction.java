@@ -8,8 +8,6 @@ import jmri.*;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
 
-import apps.gui3.tabbedpreferences.Bundle;
-
 /**
  * Action launches the tabbed preferences window.
  *

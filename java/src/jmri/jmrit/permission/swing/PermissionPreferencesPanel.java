@@ -138,6 +138,10 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
 
     @Override
     public JComponent getPreferencesComponent() {
+        if (! InstanceManager.getDefault(PermissionManager.class)
+                .checkPermission(StandardPermissions.PERMISSION_ADMIN)) {
+            return null;
+        }
         return this;
     }
 

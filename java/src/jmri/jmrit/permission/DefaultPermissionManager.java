@@ -74,8 +74,9 @@ public class DefaultPermissionManager implements PermissionManager {
         _users.get("daniel").addRole(_roles.get("Test role"));
 */
 
-        DefaultPermissionManager.this.registerOwner(StandardPermissions.PERMISSION_OWNER_ADMIN);
-        DefaultPermissionManager.this.registerPermission(StandardPermissions.PERMISSION_ADMIN);
+//        DefaultPermissionManager.this.registerOwner(StandardPermissions.PERMISSION_OWNER_ADMIN);
+//        DefaultPermissionManager.this.registerPermission(StandardPermissions.PERMISSION_ADMIN);
+
         for (PermissionFactory factory : ServiceLoader.load(PermissionFactory.class)) {
             factory.register(this);
         }
@@ -155,7 +156,8 @@ public class DefaultPermissionManager implements PermissionManager {
 
                     var permissions = role.getPermissions();
 
-                    List<Element> permissionElementList = root.getChildren("Permissions");
+                    List<Element> permissionElementList = roleElement
+                            .getChild("Permissions").getChildren("Permission");
                     for (Element permissionElement : permissionElementList) {
                         String className = permissionElement.getChild("Class").getValue();
                         boolean enabled = "yes".equals(permissionElement.getChild("Enabled").getValue());
@@ -180,7 +182,6 @@ public class DefaultPermissionManager implements PermissionManager {
                             user.setSeed(userElement.getChild("Seed").getValue());
                         }
                     } else {
-                        log.error("User name: {}", userElement.getChild("Username").getValue());
                         user = new DefaultUser(
                                 userElement.getChild("Username").getValue(),
                                 userElement.getChild("Password").getValue(),
@@ -214,6 +215,7 @@ public class DefaultPermissionManager implements PermissionManager {
             log.info("Permission file not found or empty");
         }
 
+//        checkThatAllRolesKnowsAllPermissions();
 //        storePermissionSettings();
     }
 

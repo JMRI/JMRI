@@ -1,5 +1,8 @@
 package jmri;
 
+
+import org.openide.util.lookup.ServiceProvider;
+
 /**
  * Standard permissions.
  *
@@ -15,6 +18,19 @@ public class StandardPermissions {
 
     public static final PermissionEditPreferences PERMISSION_EDIT_PREFERENCES =
             new PermissionEditPreferences();
+
+
+    @ServiceProvider(service = PermissionFactory.class)
+    public static class Factory implements PermissionFactory {
+
+        @Override
+        public void register(PermissionManager manager) {
+            manager.registerOwner(PERMISSION_OWNER_ADMIN);
+            manager.registerPermission(PERMISSION_ADMIN);
+            manager.registerPermission(PERMISSION_EDIT_PREFERENCES);
+        }
+
+    }
 
 
     public static class PermissionOwnerAdmin implements PermissionOwner {
