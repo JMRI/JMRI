@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Permissions</title><!--#include virtual="/help/en/parts/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <span class="since">since 5.9.4</span>
+      <h1>Permissions</h1>
+
+      <p><strong>Permissions</strong> is used to protect sensitive parts of JMRI, for example
+      from unauthorized users to load and store panel and data files.</p>
+      
+      
+      <h2>I have looked myself out! What do I do?</h2>
+      <p>There are two options.</p>
+      <p>The simpliest way is to delete the file <strong>.permissions.xml</strong> in the
+      PREFERENCES folder. On Linux that file is usually <strong>~/.jmri/.permissions.xml</strong>.
+      By deleting that file, all the permission settings are removed.</p>
+      
+      <p>The second option is to edit that file with a text editor or an xml editor. The beginning
+      of the file looks like this:
+      <pre>
+<?xml version="1.0" encoding="UTF-8"?>
+<Permissions>
+  <Settings>
+    <Enabled>no</Enabled>
+  </Settings>
+  <Users>
+    <User>
+      </pre>
+      
+      Change <strong>&lt;Enabled&gt;yes&lt;/Enabled&gt;</strong> to
+      <strong>&lt;Enabled&gt;no&lt;/Enabled&gt;</strong>.
+      It disables the permissions but the users and their permission configuration is still kept.
+      </p>
+		  
+
+      <h2>Securing the preferences</h2>
+      <p>If an unauthorized user is able to delete or edit files on the computer running
+      JMRI, he might be able to disable the permissions and then override them. See the section <strong>I have looked myself out!</strong> above.</p>
+      
+      <p>If you want to protect from that, you could protect that file from being changed or deleted.
+      On Linux, it can be done by changing the owner of the file to <strong>root</strong> and to have
+      it read only for other users.</p>
+      
+      <pre>
+sudo chown root ~/.jmri/.permissions.xml
+sudo chmod 644 ~/.jmri/.permissions.xml
+      </pre>
+      
+
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/help.js"></script>
+</body>
+</html>
