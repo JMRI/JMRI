@@ -38,10 +38,10 @@ public class DefaultPermissionManager implements PermissionManager {
             new DefaultRole(Bundle.getMessage("PermissionManager_Role_Admin"),true);
 
     private static final User USER_GUEST =
-            new DefaultUser(Bundle.getMessage("PermissionManager_User_Guest"), null, true);
+            new DefaultUser(Bundle.getMessage("PermissionManager_User_Guest"), null, true, "GUEST");
 
     private static final User USER_ADMIN =
-            new DefaultUser(Bundle.getMessage("PermissionManager_User_Admin"), "", true);
+            new DefaultUser(Bundle.getMessage("PermissionManager_User_Admin"), "", true, "ADMIN");
 
     private final Map<String, DefaultRole> _roles = new HashMap<>();
     private final Map<String, DefaultUser> _users = new HashMap<>();
@@ -54,9 +54,9 @@ public class DefaultPermissionManager implements PermissionManager {
 
     public DefaultPermissionManager init() {
         jmri.jmrit.Bundle a;
-        _users.put("daniel", new DefaultUser("daniel", "12345678", false));
-        _users.put("kalle", new DefaultUser("kalle", "testtest", false));
-        _users.put("sven", new DefaultUser("sven", "testtest", false));
+        _users.put("daniel", new DefaultUser("daniel", "12345678"));
+        _users.put("kalle", new DefaultUser("kalle", "testtest"));
+        _users.put("sven", new DefaultUser("sven", "testtest"));
 
         DefaultPermissionManager.this.registerOwner(StandardPermissions.PERMISSION_OWNER_ADMIN);
         DefaultPermissionManager.this.registerPermission(StandardPermissions.PERMISSION_ADMIN);
@@ -124,6 +124,9 @@ public class DefaultPermissionManager implements PermissionManager {
             Element usersElement = new Element("Users");
             for (DefaultUser user : _users.values()) {
                 Element userElement = new Element("User");
+                if (user.isSystemUser()) {
+                    userElement.addContent(new Element("SystemUsername").addContent(user.getSystemUserName()));
+                }
                 userElement.addContent(new Element("Username").addContent(user.getName()));
                 userElement.addContent(new Element("Password").addContent(user.getPassword()));
                 userElement.addContent(new Element("Seed").addContent(user.getSeed()));
@@ -156,7 +159,7 @@ public class DefaultPermissionManager implements PermissionManager {
         if (_users.containsKey(username)) {
             throw new UserAlreadyExistsException();
         }
-        _users.put(username, new DefaultUser(username,password,false));
+        _users.put(username, new DefaultUser(username,password));
     }
 
     @Override

@@ -21,12 +21,18 @@ public class DefaultUser implements User {
     private final String _seed;
     private String _passwordMD5;
     private final boolean _systemUser;
+    private final String _systemUserName;
 
     private final Set<Role> _roles = new HashSet<>();
 
-    public DefaultUser(String username, String password, boolean systemUser) {
+    public DefaultUser(String username, String password) {
+        this(username, password, false, null);
+    }
+
+    public DefaultUser(String username, String password, boolean systemUser, String systemUserName) {
         this._username = username;
         this._systemUser = systemUser;
+        this._systemUserName = systemUserName;
         if (password != null) {
             this._seed = getRandomString(10);
             try {
@@ -44,6 +50,7 @@ public class DefaultUser implements User {
         this._passwordMD5 = passwordMD5;
         this._seed = seed;
         this._systemUser = false;
+        this._systemUserName = null;
     }
 
     private static final PrimitiveIterator.OfInt iterator =
@@ -61,6 +68,14 @@ public class DefaultUser implements User {
 
     @Override
     public String getName() {
+        return this._username;
+    }
+
+    boolean isSystemUser() {
+        return this._systemUser;
+    }
+
+    String getSystemUserName() {
         return this._username;
     }
 
