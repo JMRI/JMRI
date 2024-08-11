@@ -15,7 +15,7 @@ public class DefaultRole implements Role {
     private final boolean _systemRole;
     private final String _systemName;
 
-    private final Map<Permission, Boolean> _permissions = new HashMap<>();
+    private final Map<Permission, Boolean> _permissions = new TreeMap<>((a,b) -> {return a.getName().compareTo(b.getName());});
 
     public DefaultRole(String name) {
         this._name = name;

@@ -22,12 +22,12 @@ import jmri.util.swing.JmriJOptionPane;
 public class DefaultUser implements User {
 
     private final String _username;
-    private final String _seed;
+    private String _seed;
     private String _passwordMD5;
     private final boolean _systemUser;
     private final String _systemUserName;
 
-    private final Set<Role> _roles = new HashSet<>();
+    private final Set<Role> _roles = new TreeSet<>((a,b) -> {return a.getName().compareTo(b.getName());});
 
     public DefaultUser(String username, String password) {
         this(username, password, false, null);
@@ -88,8 +88,16 @@ public class DefaultUser implements User {
         return this._passwordMD5;
     }
 
+    void setPassword(String passwordMD5) {
+        this._passwordMD5 = passwordMD5;
+    }
+
     String getSeed() {
         return this._seed;
+    }
+
+    void setSeed(String seed) {
+        this._seed = seed;
     }
 
     @Override
