@@ -64,15 +64,15 @@ public class DefaultPermissionManager implements PermissionManager {
         USER_ADMIN.addRole(ROLE_ADMIN);
         _users.put(USER_ADMIN.getName(), USER_ADMIN);
 
-        if (1==0) {
-            _roles.put("Test role", new DefaultRole("Test role"));
+/*
+        _roles.put("Test role", new DefaultRole("Test role"));
 
-            _users.put("daniel", new DefaultUser("daniel", "12345678"));
-            _users.put("kalle", new DefaultUser("kalle", "testtest"));
-            _users.put("sven", new DefaultUser("sven", "testtest"));
+        _users.put("daniel", new DefaultUser("daniel", "12345678"));
+        _users.put("kalle", new DefaultUser("kalle", "testtest"));
+        _users.put("sven", new DefaultUser("sven", "testtest"));
 
-            _users.get("daniel").addRole(_roles.get("Test role"));
-        }
+        _users.get("daniel").addRole(_roles.get("Test role"));
+*/
 
         DefaultPermissionManager.this.registerOwner(StandardPermissions.PERMISSION_OWNER_ADMIN);
         DefaultPermissionManager.this.registerPermission(StandardPermissions.PERMISSION_ADMIN);
