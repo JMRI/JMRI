@@ -27,8 +27,6 @@ If everything is correct, it will show:
         github	https://github.com/JMRI/JMRI.git (push)
         origin	https://github.com/JMRI/JMRI.git (fetch)
         origin	https://github.com/yourname/JMRI.git (push)
-        upstream	https://github.com/JMRI/JMRI.git (fetch)
-        upstream	https://github.com/JMRI/JMRI.git (push)
 ```
 If the first two lines that start with `github` are missing run the command:
 ```
