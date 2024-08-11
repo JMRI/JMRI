@@ -274,10 +274,6 @@ public class DefaultPermissionManager implements PermissionManager {
         _permissionClassNames.put(permission.getClass().getName(), permission);
     }
 
-    private Permission getPermissionByClassName(String name) {
-        return _permissionClassNames.get(name);
-    }
-
     public void checkThatAllRolesKnowsAllPermissions() {
         for (DefaultRole role : _roles.values()) {
             role.checkThatRoleKnowsAllPermissions(_permissions);
