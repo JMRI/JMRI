@@ -5,7 +5,6 @@ import javax.swing.border.TitledBorder;
 
 import jmri.*;
 import jmri.jmrit.permission.DefaultPermissionManager;
-import jmri.jmrit.permission.swing.Bundle;
 import jmri.swing.PreferencesPanel;
 
 import org.openide.util.lookup.ServiceProvider;

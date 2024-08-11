@@ -1,11 +1,14 @@
 package apps.gui3.tabbedpreferences;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.Icon;
 
-import jmri.InstanceManager;
+import jmri.*;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
+
+import apps.gui3.tabbedpreferences.Bundle;
 
 /**
  * Action launches the tabbed preferences window.
@@ -70,10 +73,14 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
     }
 
     final public void actionPerformed() {
+        if (! InstanceManager.getDefault(PermissionManager.class)
+                .checkPermission(StandardPermissions.PERMISSION_EDIT_PREFERENCES)) {
+            return;
+        }
         TabbedPreferencesFrame f = InstanceManager.getOptionalDefault(TabbedPreferencesFrame.class).orElseGet(() -> {
             return InstanceManager.setDefault(TabbedPreferencesFrame.class, new TabbedPreferencesFrame());
         });
-            
+
         showPreferences(f);
 
     }
@@ -82,10 +89,10 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
         // Update the GUI Look and Feel
         // This is needed as certain controls are instantiated
         // prior to the setup of the Look and Feel
-        
+
         // might not be a preferences item set yet
         if (preferencesItem != null) f.gotoPreferenceItem(preferencesItem, preferenceSubCat);
-        
+
         f.pack();
 
         f.setVisible(true);

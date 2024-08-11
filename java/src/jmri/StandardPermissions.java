@@ -13,8 +13,8 @@ public class StandardPermissions {
     public static final PermissionAdmin PERMISSION_ADMIN =
             new PermissionAdmin();
 
-    public static final PermissionAddUser PERMISSION_ADD_USER =
-            new PermissionAddUser();
+    public static final PermissionEditPreferences PERMISSION_EDIT_PREFERENCES =
+            new PermissionEditPreferences();
 
 
     public static class PermissionOwnerAdmin implements PermissionOwner {
@@ -40,7 +40,7 @@ public class StandardPermissions {
 
     }
 
-    public static class PermissionAddUser implements Permission {
+    public static class PermissionEditPreferences implements Permission {
 
         @Override
         public PermissionOwner getOwner() {
@@ -49,7 +49,7 @@ public class StandardPermissions {
 
         @Override
         public String getName() {
-            return Bundle.getMessage("StandardPermissions_PermissionAddUser");
+            return Bundle.getMessage("StandardPermissions_PermissionEditPreferences");
         }
 
     }
