@@ -17,8 +17,44 @@ People building releases for distribution need permission to directly operate wi
 
 See the image at the bottom for how Git is used during this process. You should have your Git remotes set up in the [recommended fashion](https://www.jmri.org/help/en/html/doc/Technical/gitdeveloper.shtml#repo).
 
+To check, run this command:
+```
+        git remote -v
+```
+If everything is correct, it will show:
+```
+        github	https://github.com/JMRI/JMRI.git (fetch)
+        github	https://github.com/JMRI/JMRI.git (push)
+        origin	https://github.com/JMRI/JMRI.git (fetch)
+        origin	https://github.com/yourname/JMRI.git (push)
+        upstream	https://github.com/JMRI/JMRI.git (fetch)
+        upstream	https://github.com/JMRI/JMRI.git (push)
+```
+If the first two lines are missing, the lines that start with `github`, run the command:
+```
+        git remote add github https://github.com/JMRI/JMRI.git
+```
+If the third line says:
+```
+        origin	https://github.com/yourname/JMRI.git (fetch)
+```
+instead of
+```
+        origin	https://github.com/JMRI/JMRI.git (fetch)
+```
+then run:
+```
+        git remote set-url origin https://github.com/JMRI/JMRI.git
+```
+
+If you have changed anything, run this again to check:
+```
+        git remote -v
+```
+
 If you're attempting to perform this on MS Windows, refer to the MS Windows notes section at the bottom of this document.
 
+While doing the release, it might be useful to have [GitHub Desktop](https://github.com/apps/desktop). It makes it easy to see what you are about to commit. But it's not recommended to commit with GitHub Desktop since many of the `git commit` commands below only commits some of the changed files, not all of them. So run the git commands from the command line to get it right.
 
 ================================================================================
 ## Update Instructions
