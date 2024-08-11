@@ -1,5 +1,7 @@
 package jmri.jmrit.permission;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.GraphicsEnvironment;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -54,9 +56,10 @@ public class DefaultUser implements User {
         this._systemUserName = null;
     }
 
-    private static final Random RANDOM = new Random();
+    @SuppressFBWarnings(value = "DMI_RANDOM_USED_ONLY_ONCE",
+            justification = "False positive. The Random instance is kept by the iterator.")
     private static final PrimitiveIterator.OfInt iterator =
-            RANDOM.ints('a', 'z'+10).iterator();
+            new Random().ints('a', 'z'+10).iterator();
 
     private String getRandomString(int count) {
         StringBuilder s = new StringBuilder();
