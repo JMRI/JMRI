@@ -94,7 +94,6 @@ public class DefaultPermissionManager implements PermissionManager {
 
         log.info("Permission file: {}", file.getAbsolutePath());
 
-        Properties p = new Properties();
         if (file.exists() && file.length() != 0) {
             try {
                 Element root = new XmlFile().rootFromFile(file);
