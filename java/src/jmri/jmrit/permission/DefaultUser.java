@@ -80,7 +80,7 @@ public class DefaultUser implements User {
         return this._systemUser;
     }
 
-    String getSystemUserName() {
+    String getSystemUsername() {
         return this._systemUserName;
     }
 
@@ -94,7 +94,7 @@ public class DefaultUser implements User {
 
     @Override
     public Set<Role> getRoles() {
-        return Collections.unmodifiableSet(_roles);
+        return _roles;
     }
 
     @Override

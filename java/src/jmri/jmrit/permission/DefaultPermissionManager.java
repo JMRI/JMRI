@@ -70,6 +70,8 @@ public class DefaultPermissionManager implements PermissionManager {
         _users.put("kalle", new DefaultUser("kalle", "testtest"));
         _users.put("sven", new DefaultUser("sven", "testtest"));
 
+        _users.get("daniel").addRole(_roles.get("Test role"));
+
         DefaultPermissionManager.this.registerOwner(StandardPermissions.PERMISSION_OWNER_ADMIN);
         DefaultPermissionManager.this.registerPermission(StandardPermissions.PERMISSION_ADMIN);
         for (PermissionFactory factory : ServiceLoader.load(PermissionFactory.class)) {
@@ -84,6 +86,16 @@ public class DefaultPermissionManager implements PermissionManager {
             DefaultRole df = (DefaultRole)r;
             if (df.isSystemRole() && df.getSystemName().equals(systemName)) {
                 return df;
+            }
+        }
+        return null;
+    }
+
+    private DefaultUser getSystemUser(String systemUsername) {
+        for (User u : _users.values()) {
+            DefaultUser du = (DefaultUser)u;
+            if (du.isSystemUser() && du.getSystemUsername().equals(systemUsername)) {
+                return du;
             }
         }
         return null;
@@ -120,10 +132,46 @@ public class DefaultPermissionManager implements PermissionManager {
 
                     List<Element> permissionElementList = root.getChildren("Permissions");
                     for (Element permissionElement : permissionElementList) {
-                        String className = permissionElement.getChild("Name").getValue();
+                        String className = permissionElement.getChild("Class").getValue();
                         boolean enabled = "yes".equals(permissionElement.getChild("Enabled").getValue());
                         Permission permission = _permissionClassNames.get(className);
                         permissions.put(permission, enabled);
+                    }
+                }
+
+                List<Element> userElementList = root.getChild("Users").getChildren("User");
+                for (Element userElement : userElementList) {
+                    Element systemNameElement = userElement.getChild("SystemName");
+                    DefaultUser user;
+                    if (systemNameElement != null) {
+                        user = getSystemUser(systemNameElement.getValue());
+                        if (user == null) {
+                            log.error("SystemUser {} is not found.", systemNameElement.getValue());
+                            continue;
+                        }
+                    } else {
+                        user = new DefaultUser(
+                                userElement.getChild("Username").getValue(),
+                                userElement.getChild("Password").getValue(),
+                                userElement.getChild("Seed").getValue());
+                    }
+
+                    var roles = user.getRoles();
+
+                    List<Element> userRoleElementList = root.getChild("Roles").getChildren("Role");
+                    for (Element roleElement : userRoleElementList) {
+                        Element systemRoleElement = roleElement.getChild("SystemName");
+                        DefaultRole role;
+                        if (systemNameElement != null) {
+                            role = getSystemRole(systemRoleElement.getValue());
+                            if (role == null) {
+                                log.error("SystemRole {} is not found.", systemRoleElement.getValue());
+                                continue;
+                            }
+                        } else {
+                            role = new DefaultRole(roleElement.getChild("Name").getValue());
+                        }
+                        roles.add(role);
                     }
                 }
 
@@ -176,19 +224,23 @@ public class DefaultPermissionManager implements PermissionManager {
             for (DefaultUser user : _users.values()) {
                 Element userElement = new Element("User");
                 if (user.isSystemUser()) {
-                    userElement.addContent(new Element("SystemUsername").addContent(user.getSystemUserName()));
+                    userElement.addContent(new Element("SystemUsername").addContent(user.getSystemUsername()));
                 }
                 userElement.addContent(new Element("Username").addContent(user.getName()));
                 userElement.addContent(new Element("Password").addContent(user.getPassword()));
                 userElement.addContent(new Element("Seed").addContent(user.getSeed()));
 
-                Element rolePermissionsElement = new Element("Roles");
+                Element userRolesElement = new Element("Roles");
                 for (Role role : user.getRoles()) {
-                    Element userPermission = new Element("Role");
-                    userPermission.addContent(new Element("Name").addContent(role.getName()));
-                    rolePermissionsElement.addContent(userPermission);
+                    Element roleElement = new Element("Role");
+                    if (((DefaultRole)role).isSystemRole()) {
+                        roleElement.addContent(new Element("SystemName")
+                                .addContent(((DefaultRole)role).getSystemName()));
+                    }
+                    roleElement.addContent(new Element("Name").addContent(role.getName()));
+                    userRolesElement.addContent(roleElement);
                 }
-                userElement.addContent(rolePermissionsElement);
+                userElement.addContent(userRolesElement);
                 usersElement.addContent(userElement);
             }
             rootElement.addContent(usersElement);
