@@ -77,7 +77,7 @@ public class DefaultUser implements User {
     }
 
     String getSystemUserName() {
-        return this._username;
+        return this._systemUserName;
     }
 
     String getPassword() {
