@@ -55,10 +55,9 @@ public class DefaultUser implements User {
         this._systemUserName = null;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="DMI_RANDOM_USED_ONLY_ONCE",
-        justification = "False positive. The Random instance is kept by the iterator.")
+    public static final Random RANDOM = new Random();
     private static final PrimitiveIterator.OfInt iterator =
-            new Random().ints('a', 'z'+10).iterator();
+            RANDOM.ints('a', 'z'+10).iterator();
 
     private String getRandomString(int count) {
         StringBuilder s = new StringBuilder();
