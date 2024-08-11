@@ -70,8 +70,6 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
 
             JButton removeRoleButton = new JButton(Bundle.getMessage("PermissionPreferencesPanel_RemoveRole"));
             rolePanel.add(removeRoleButton);
-
-//            rolesPanel.add(rolePanel);
         }
 
         rolesPanel.add(rolesTabbedPane);
@@ -82,6 +80,29 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
 
         JPanel usersPanel = new JPanel();
         usersPanel.setLayout(new BoxLayout(usersPanel, BoxLayout.PAGE_AXIS));
+
+        JTabbedPane usersTabbedPane = new JTabbedPane();
+
+        for (User user : permissionManager.getUsers()) {
+            JPanel userPanel = new JPanel();
+            userPanel.setLayout(new BoxLayout(userPanel, BoxLayout.PAGE_AXIS));
+
+            usersTabbedPane.addTab(user.getName(), new JScrollPane(userPanel));
+
+            for (Role role : permissionManager.getRoles()) {
+                JCheckBox checkBox = new JCheckBox(role.getName());
+                userPanel.add(checkBox);
+            }
+
+            JButton removeUserButton = new JButton(Bundle.getMessage("PermissionPreferencesPanel_RemoveUser"));
+            userPanel.add(removeUserButton);
+        }
+
+        usersPanel.add(usersTabbedPane);
+
+        JButton addUserButton = new JButton(Bundle.getMessage("PermissionPreferencesPanel_AddUser"));
+        usersPanel.add(addUserButton);
+
 
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.addTab(Bundle.getMessage("PermissionPreferencesPanel_Roles"),
