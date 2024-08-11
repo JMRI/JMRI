@@ -9,8 +9,7 @@ import org.openide.util.lookup.ServiceProvider;
  *
  * @author Daniel Bergqist (C) 2024
  */
-@ServiceProvider(service = PermissionFactory.class)
-public class LoadAndStorePermissionOwner implements PermissionOwner, PermissionFactory {
+public class LoadAndStorePermissionOwner implements PermissionOwner {
 
     public static final LoadAndStorePermissionOwner LOAD_AND_STORE_PERMISSION_OWNER =
             new LoadAndStorePermissionOwner();
@@ -27,11 +26,17 @@ public class LoadAndStorePermissionOwner implements PermissionOwner, PermissionF
         return Bundle.getMessage("LoadAndStorePermissionOwner_Name");
     }
 
-    @Override
-    public void register(PermissionManager manager) {
-        manager.registerOwner(this);
-        manager.registerPermission(LOAD_XML_FILE_PERMISSION);
-        manager.registerPermission(STORE_XML_FILE_PERMISSION);
+
+    @ServiceProvider(service = PermissionFactory.class)
+    public static class Factory implements PermissionFactory {
+
+        @Override
+        public void register(PermissionManager manager) {
+            manager.registerOwner(LOAD_AND_STORE_PERMISSION_OWNER);
+            manager.registerPermission(LOAD_XML_FILE_PERMISSION);
+            manager.registerPermission(STORE_XML_FILE_PERMISSION);
+        }
+
     }
 
 

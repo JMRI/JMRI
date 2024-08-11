@@ -83,6 +83,28 @@ public class DefaultPermissionManager implements PermissionManager {
         return this;
     }
 
+    public Collection<DefaultRole> getRoles() {
+        return _roles.values();
+    }
+
+    public Collection<DefaultUser> getUsers() {
+        return _users.values();
+    }
+
+    public Set<PermissionOwner> getOwners() {
+        return _owners;
+    }
+
+    public Set<Permission> getPermissions(PermissionOwner owner) {
+        Set<Permission> set = new TreeSet<>((a,b) -> {return a.getName().compareTo(b.getName());});
+        for (Permission p : _permissions) {
+            if (p.getOwner().equals(owner)) {
+                set.add(p);
+            }
+        }
+        return set;
+    }
+
     private DefaultRole getSystemRole(String systemName) {
         for (Role r : _roles.values()) {
             DefaultRole df = (DefaultRole)r;
@@ -192,10 +214,11 @@ public class DefaultPermissionManager implements PermissionManager {
             log.info("Permission file not found or empty");
         }
 
-        storePermissionSettings();
+//        storePermissionSettings();
     }
 
-    private void storePermissionSettings() {
+    @Override
+    public void storePermissionSettings() {
         File file = new File(FileUtil.getPreferencesPath() + ".permissions.xml");
 
         try {
@@ -335,6 +358,11 @@ public class DefaultPermissionManager implements PermissionManager {
 
     @Override
     public void registerPermission(Permission permission) {
+        if (!_owners.contains(permission.getOwner())) {
+            throw new RuntimeException(String.format(
+                    "Permission class %s has an owner that's not known: %s",
+                    permission.getClass().getName(), permission.getOwner()));
+        }
         _permissions.add(permission);
         _permissionClassNames.put(permission.getClass().getName(), permission);
     }

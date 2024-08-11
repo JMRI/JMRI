@@ -35,6 +35,8 @@ public interface PermissionManager {
 
     void registerPermission(Permission permission);
 
+    void storePermissionSettings();
+
 
     public static class UserAlreadyExistsException extends JmriException {
         public UserAlreadyExistsException() {
