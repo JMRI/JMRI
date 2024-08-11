@@ -79,9 +79,20 @@ public class DefaultPermissionManager implements PermissionManager {
         return this;
     }
 
+    private DefaultRole getSystemRole(String systemName) {
+        for (Role r : _roles.values()) {
+            DefaultRole df = (DefaultRole)r;
+            if (df.isSystemRole() && df.getSystemName().equals(systemName)) {
+                return df;
+            }
+        }
+        return null;
+    }
+
     private void loadPermissionSettings() {
         File file = new File(FileUtil.getPreferencesPath() + ".permissions.xml");
-        log.warn(file.getAbsolutePath());
+
+        log.info("Permission file: {}", file.getAbsolutePath());
 
         Properties p = new Properties();
         if (file.exists() && file.length() != 0) {
@@ -90,14 +101,38 @@ public class DefaultPermissionManager implements PermissionManager {
 
                 Element settings = root.getChild("Settings");
                 _permissionsEnabled = "yes".equals(settings.getChild("Enabled").getValue());
+                log.info("Permission system is enabled: {}", _permissionsEnabled ? "yes" : "no");
+
+                List<Element> roleElementList = root.getChild("Roles").getChildren("Role");
+                for (Element roleElement : roleElementList) {
+                    Element systemNameElement = roleElement.getChild("SystemName");
+                    DefaultRole role;
+                    if (systemNameElement != null) {
+                        role = getSystemRole(systemNameElement.getValue());
+                        if (role == null) {
+                            log.error("SystemRole {} is not found.", systemNameElement.getValue());
+                            continue;
+                        }
+                    } else {
+                        role = new DefaultRole(roleElement.getChild("Name").getValue());
+                    }
+
+                    var permissions = role.getPermissions();
+
+                    List<Element> permissionElementList = root.getChildren("Permissions");
+                    for (Element permissionElement : permissionElementList) {
+                        String className = permissionElement.getChild("Name").getValue();
+                        boolean enabled = "yes".equals(permissionElement.getChild("Enabled").getValue());
+                        Permission permission = _permissionClassNames.get(className);
+                        permissions.put(permission, enabled);
+                    }
+                }
 
             } catch (JDOMException | IOException ex) {
                 log.error("Exception during loading of permissions", ex);
             }
-
-            log.error("Loading permissions");
         } else {
-            log.error("Not loading permissions");
+            log.info("Permission file not found or empty");
         }
 
         storePermissionSettings();
