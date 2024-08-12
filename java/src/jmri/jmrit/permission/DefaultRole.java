@@ -13,19 +13,22 @@ public class DefaultRole implements Role {
 
     private final String _name;
     private final boolean _systemRole;
+    private final int _priority;
     private final String _systemName;
 
     private final Map<Permission, Boolean> _permissions = new TreeMap<>((a,b) -> {return a.getName().compareTo(b.getName());});
 
     public DefaultRole(String name) {
         this._name = name;
+        this._priority = 0;
         this._systemRole = false;
         this._systemName = null;
     }
 
-    public DefaultRole(String name, boolean systemRole, String systemName) {
+    public DefaultRole(String name, int priority, String systemName) {
         this._name = name;
-        this._systemRole = systemRole;
+        this._priority = priority;
+        this._systemRole = priority != 0;
         this._systemName = systemName;
     }
 
@@ -34,8 +37,14 @@ public class DefaultRole implements Role {
         return this._name;
     }
 
-    boolean isSystemRole() {
+    @Override
+    public boolean isSystemRole() {
         return this._systemRole;
+    }
+
+    @Override
+    public int getPriority() {
+        return this._priority;
     }
 
     String getSystemName() {

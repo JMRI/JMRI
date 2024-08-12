@@ -30,19 +30,19 @@ import org.jdom2.*;
 public class DefaultPermissionManager implements PermissionManager {
 
     private static final DefaultRole ROLE_GUEST =
-            new DefaultRole(Bundle.getMessage("PermissionManager_Role_Guest"),true,"GUEST");
+            new DefaultRole(Bundle.getMessage("PermissionManager_Role_Guest"),50,"GUEST");
 
     public static final DefaultRole ROLE_STANDARD_USER =
-            new DefaultRole(Bundle.getMessage("PermissionManager_Role_StandardUser"),true,"STANDARD_USER");
+            new DefaultRole(Bundle.getMessage("PermissionManager_Role_StandardUser"),10,"STANDARD_USER");
 
     private static final DefaultRole ROLE_ADMIN =
-            new DefaultRole(Bundle.getMessage("PermissionManager_Role_Admin"),true,"ADMIN");
+            new DefaultRole(Bundle.getMessage("PermissionManager_Role_Admin"),100,"ADMIN");
 
     private static final DefaultUser USER_GUEST =
-            new DefaultUser(Bundle.getMessage("PermissionManager_User_Guest"), null, true, "GUEST");
+            new DefaultUser(Bundle.getMessage("PermissionManager_User_Guest"), null, 50, "GUEST");
 
     private static final DefaultUser USER_ADMIN =
-            new DefaultUser(Bundle.getMessage("PermissionManager_User_Admin"), "", true, "ADMIN");
+            new DefaultUser(Bundle.getMessage("PermissionManager_User_Admin"), "", 100, "ADMIN");
 
     private final Map<String, DefaultRole> _roles = new HashMap<>();
     private final Map<String, DefaultUser> _users = new HashMap<>();
@@ -60,11 +60,13 @@ public class DefaultPermissionManager implements PermissionManager {
         _roles.put(ROLE_ADMIN.getName(), ROLE_ADMIN);
 
         USER_GUEST.addRole(ROLE_GUEST);
-        _users.put(USER_GUEST.getName(), USER_GUEST);
+        _users.put(USER_GUEST.getUsername(), USER_GUEST);
 
         USER_ADMIN.addRole(ROLE_ADMIN);
-        _users.put(USER_ADMIN.getName(), USER_ADMIN);
+        _users.put(USER_ADMIN.getUsername(), USER_ADMIN);
 
+        _roles.put("Aaa role", new DefaultRole("Aaa role"));
+        _roles.put("Zzz role", new DefaultRole("Zzz role"));
 /*
         _roles.put("Test role", new DefaultRole("Test role"));
 
@@ -187,7 +189,7 @@ public class DefaultPermissionManager implements PermissionManager {
                                 userElement.getChild("Username").getValue(),
                                 userElement.getChild("Password").getValue(),
                                 userElement.getChild("Seed").getValue());
-                        _users.put(user.getName(), user);
+                        _users.put(user.getUsername(), user);
                     }
 
                     var roles = user.getRoles();
@@ -262,7 +264,7 @@ public class DefaultPermissionManager implements PermissionManager {
                 if (user.isSystemUser()) {
                     userElement.addContent(new Element("SystemUsername").addContent(user.getSystemUsername()));
                 }
-                userElement.addContent(new Element("Username").addContent(user.getName()));
+                userElement.addContent(new Element("Username").addContent(user.getUsername()));
 
                 if (user.getPassword() != null) {   // Guest user password is null
                     userElement.addContent(new Element("Password").addContent(user.getPassword()));

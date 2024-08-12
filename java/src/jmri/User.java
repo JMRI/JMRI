@@ -9,7 +9,11 @@ import java.util.Set;
  */
 public interface User {
 
-    String getName();
+    String getUsername();
+
+    boolean isSystemUser();
+
+    int getPriority();
 
     void changePassword(String oldPassword, String newPassword);
 

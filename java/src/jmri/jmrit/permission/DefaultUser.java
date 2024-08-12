@@ -22,21 +22,23 @@ import jmri.util.swing.JmriJOptionPane;
 public class DefaultUser implements User {
 
     private final String _username;
+    private final String _systemUserName;
+    private final boolean _systemUser;
+    private final int _priority;
     private String _seed;
     private String _passwordMD5;
-    private final boolean _systemUser;
-    private final String _systemUserName;
 
     private final Set<Role> _roles = new TreeSet<>((a,b) -> {return a.getName().compareTo(b.getName());});
 
     public DefaultUser(String username, String password) {
-        this(username, password, false, null);
+        this(username, password, 0, null);
         DefaultUser.this.addRole(DefaultPermissionManager.ROLE_STANDARD_USER);
     }
 
-    public DefaultUser(String username, String password, boolean systemUser, String systemUserName) {
+    public DefaultUser(String username, String password, int priority, String systemUserName) {
         this._username = username;
-        this._systemUser = systemUser;
+        this._priority = priority;
+        this._systemUser = priority != 0;
         this._systemUserName = systemUserName;
         if (password != null) {
             this._seed = getRandomString(10);
@@ -52,10 +54,11 @@ public class DefaultUser implements User {
 
     public DefaultUser(String username, String passwordMD5, String seed) {
         this._username = username;
+        this._systemUserName = null;
+        this._systemUser = false;
+        this._priority = 0;
         this._passwordMD5 = passwordMD5;
         this._seed = seed;
-        this._systemUser = false;
-        this._systemUserName = null;
     }
 
     private static final PrimitiveIterator.OfInt iterator =
@@ -72,12 +75,18 @@ public class DefaultUser implements User {
     }
 
     @Override
-    public String getName() {
+    public String getUsername() {
         return this._username;
     }
 
-    boolean isSystemUser() {
+    @Override
+    public boolean isSystemUser() {
         return this._systemUser;
+    }
+
+    @Override
+    public int getPriority() {
+        return this._priority;
     }
 
     String getSystemUsername() {
@@ -173,7 +182,7 @@ public class DefaultUser implements User {
         justification="The text is from a bundle")
     public boolean checkPermission(Permission permission) {
         if (!hasPermission(permission)) {
-            log.error("User {} has not permission {}", this.getName(), permission.getName());
+            log.error("User {} has not permission {}", this.getUsername(), permission.getName());
             if (!GraphicsEnvironment.isHeadless()) {
                 JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("DefaultPermissionManager_PermissionDenied"),
