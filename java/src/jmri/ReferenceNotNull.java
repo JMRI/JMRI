@@ -1,8 +1,8 @@
 package jmri;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
 
 import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 
 /**
  * A reference to an object there the object must not be null.
@@ -27,7 +27,7 @@ public class ReferenceNotNull<E> {
      * Create an instance of Reference.
      * @param ref the reference
      */
-    public ReferenceNotNull(@NonNull E ref) {
+    public ReferenceNotNull(@Nonnull E ref) {
         this._ref = ref;
     }
 
@@ -35,7 +35,7 @@ public class ReferenceNotNull<E> {
      * Set the reference.
      * @param ref the new reference
      */
-    public void set(@NonNull E ref) {
+    public void set(@Nonnull E ref) {
         this._ref = ref;
     }
 
@@ -44,7 +44,7 @@ public class ReferenceNotNull<E> {
      * @return the reference
      */
     @CheckReturnValue
-    @NonNull
+    @Nonnull
     public E get() {
         return _ref;
     }
