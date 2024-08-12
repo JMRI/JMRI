@@ -364,7 +364,7 @@ public class TabbedPreferences extends AppConfigBase {
 
         list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         list.setLayoutOrientation(JList.VERTICAL);
-        Reference<Integer> lastSelection = new Reference<>(-1);
+        ReferenceNotNull<Integer> lastSelection = new ReferenceNotNull<>(-1);
         list.addListSelectionListener((ListSelectionEvent e) -> {
             PreferencesCatItems item = preferencesArray.get(list.getSelectedIndex());
             String newSelection = item.getPrefItem();
