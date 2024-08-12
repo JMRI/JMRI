@@ -14,11 +14,12 @@ import org.jdom2.*;
 /*
     TO DO
 
-    * Load/Store settings in JMRI system preference folder.
-    * Enable/disable permission manager
-    * Add/remove user.
-    * Let user login, logout, change password.
-    * Edit user preferences. Checkbox for each preference.
+    * Add/remove role
+    * Add/remove user
+    * Admin change user password
+    * Store changes in the preference panel
+    * Login, logut and change password menu items
+    * Move documentation to the correct folder
 */
 
 /**
