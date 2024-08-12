@@ -368,13 +368,14 @@ public class TabbedPreferences extends AppConfigBase {
         list.addListSelectionListener((ListSelectionEvent e) -> {
             PreferencesCatItems item = preferencesArray.get(list.getSelectedIndex());
             String newSelection = item.getPrefItem();
+
+            BooleanSupplier getIsEnabled = item.getIsEnabled;
             if (list.getSelectedIndex() != lastSelection.get()
-                    && item.getIsEnabled != null
-                    && !item.getIsEnabled.getAsBoolean()) {
+                    && getIsEnabled != null
+                    && !getIsEnabled.getAsBoolean()) {
                 // The new selection is currently disabled
                 // so return to previous selection
                 list.setSelectedIndex(lastSelection.get());
-                System.out.format("Kalle%n");
             } else {
                 lastSelection.set(list.getSelectedIndex());
                 selection(newSelection);
