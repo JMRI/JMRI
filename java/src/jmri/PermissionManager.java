@@ -7,6 +7,10 @@ package jmri;
  */
 public interface PermissionManager {
 
+    interface LoginListener {
+        void loginLogout(boolean isLogin);
+    }
+
     Role addRole(String name)
             throws RoleAlreadyExistsException;
 
@@ -26,9 +30,13 @@ public interface PermissionManager {
 
     void logout();
 
+    boolean isLoggedIn();
+
     boolean isCurrentUser(String username);
 
     boolean isCurrentUser(User user);
+
+    void addLoginListener(LoginListener listener);
 
     boolean isEnabled();
 

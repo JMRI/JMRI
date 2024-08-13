@@ -23,8 +23,6 @@ import jmri.util.SystemType;
 import jmri.util.WindowMenu;
 import jmri.util.swing.WindowInterface;
 
-import apps.Bundle;
-
 /**
   * Create the main menu for PanelPro and related apps.  Includes opening PanelPro from
   * DecoderPro3.
@@ -79,12 +77,12 @@ public class AppsMainMenu {
             var logoutAction = new jmri.jmrit.permission.swing.LogoutAction();
             fileMenu.add(loginAction);
             fileMenu.add(logoutAction);
-            fileMenu.add(new jmri.jmrit.permission.swing.LoginAction());
-            fileMenu.add(new jmri.jmrit.permission.swing.LogoutAction());
-//            if (permissionManager.isLoggedIn()) {
-                loginAction.setEnabled(true);
-                logoutAction.setEnabled(false);
-//            }
+            loginAction.setEnabled(!permissionManager.isLoggedIn());
+            logoutAction.setEnabled(permissionManager.isLoggedIn());
+            permissionManager.addLoginListener((isLogin) -> {
+                loginAction.setEnabled(!isLogin);
+                logoutAction.setEnabled(isLogin);
+            });
             fileMenu.add(new JSeparator());
         }
 

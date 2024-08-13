@@ -90,7 +90,6 @@ public class ChangeUserPasswordDialog extends JDialog {
     private boolean okPressed(User user) {
         PermissionManager mngr = InstanceManager.getDefault(PermissionManager.class);
 
-        String username = _usernameTextField.getText();
         String passwd1 = new String(_passwordTextField.getPassword());
         String passwd2 = new String(_secondPasswordTextField.getPassword());
 

@@ -43,6 +43,7 @@ public class DefaultPermissionManager implements PermissionManager {
     private final Set<PermissionOwner> _owners = new HashSet<>();
     private final Set<Permission> _permissions = new HashSet<>();
     private final Map<String, Permission> _permissionClassNames = new HashMap<>();
+    private final List<LoginListener> _loginListeners = new ArrayList<>();
 
     private boolean _permissionsEnabled = false;
     private boolean _allowEmptyPasswords = false;
@@ -357,6 +358,7 @@ public class DefaultPermissionManager implements PermissionManager {
             return false;
         } else {
             _currentUser = newUser;
+            notifyLoginListeners(true);
             return true;
         }
     }
@@ -364,6 +366,18 @@ public class DefaultPermissionManager implements PermissionManager {
     @Override
     public void logout() {
         _currentUser = USER_GUEST;
+        notifyLoginListeners(false);
+    }
+
+    private void notifyLoginListeners(boolean isLogin) {
+        for (LoginListener listener : _loginListeners) {
+            listener.loginLogout(isLogin);
+        }
+    }
+
+   @Override
+    public boolean isLoggedIn() {
+        return _currentUser != USER_GUEST;
     }
 
     @Override
@@ -374,6 +388,11 @@ public class DefaultPermissionManager implements PermissionManager {
     @Override
     public boolean isCurrentUser(User user) {
         return _currentUser == user;
+    }
+
+    @Override
+    public void addLoginListener(LoginListener listener) {
+        _loginListeners.add(listener);
     }
 
     @Override

@@ -175,9 +175,6 @@ public class DefaultUser implements User {
     public void setPassword(String newPassword) {
         PermissionManager pMngr = InstanceManager.getDefault(PermissionManager.class);
 
-        boolean hasAdminPermission = pMngr.hasPermission(
-                PermissionsSystemAdmin.PERMISSION_EDIT_PERMISSIONS);
-
         if (!pMngr.hasPermission(
                 PermissionsSystemAdmin.PERMISSION_EDIT_PERMISSIONS)) {
             log.warn("The current user has not permission to change password for user {}", getUserName());
