@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import jmri.*;
 import jmri.jmrit.permission.DefaultPermissionManager;
 import jmri.swing.PreferencesPanel;
+import jmri.util.swing.JmriJOptionPane;
 
 import org.openide.util.lookup.ServiceProvider;
 
@@ -82,46 +83,13 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
         JTabbedPane rolesTabbedPane = new JTabbedPane();
 
         for (Role role : roleList) {
-            JPanel rolePanel = new JPanel();
-            rolePanel.setLayout(new BoxLayout(rolePanel, BoxLayout.PAGE_AXIS));
-
-            rolesTabbedPane.addTab(role.getName(), new JScrollPane(rolePanel));
-
-            JLabel roleLabel = new JLabel("<html><font size=\"+1\"><b>"+role.getName()+"</b></font></html>");
-            roleLabel.setBorder(new EmptyBorder(4,4,0,4));
-            rolePanel.add(roleLabel);
-
-            for (PermissionOwner owner : permissionManager.getOwners()) {
-                JPanel ownerPanel = new JPanel();
-                ownerPanel.setLayout(new BoxLayout(ownerPanel, BoxLayout.PAGE_AXIS));
-
-                JLabel ownerLabel = new JLabel("<html><font size=\"0.5\"><b>"+owner.getName()+"</b></font></html>");
-                ownerLabel.setBorder(new EmptyBorder(15,4,4,4));
-                rolePanel.add(ownerLabel);
-
-                for (Permission permission : permissionManager.getPermissions(owner)) {
-                    JCheckBox checkBox = new JCheckBox(permission.getName());
-                    checkBox.setSelected(role.hasPermission(permission));
-                    checkBox.addActionListener((evt) -> {
-                        dirty = true;
-                        role.setPermission(permission, checkBox.isSelected());
-                    });
-                    ownerPanel.add(checkBox);
-                }
-                rolePanel.add(ownerPanel);
-            }
-
-            rolePanel.add(Box.createVerticalStrut(10));
-            JButton removeRoleButton = new JButton(Bundle.getMessage("PermissionPreferencesPanel_RemoveRole"));
-            if (role.isSystemRole()) {
-                removeRoleButton.setEnabled(false);
-            }
-            rolePanel.add(removeRoleButton);
+            rolesTabbedPane.addTab(role.getName(), new JScrollPane(getRolePanel(role)));
         }
 
         rolesPanel.add(rolesTabbedPane);
 
         JButton addRoleButton = new JButton(Bundle.getMessage("PermissionPreferencesPanel_AddRole"));
+        addRoleButton.addActionListener((evt) -> { createNewRole(rolesTabbedPane); });
         rolesPanel.add(addRoleButton);
 
 
@@ -185,6 +153,89 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
         return (Frame)c;
     }
 
+    private void createNewRole(JTabbedPane rolesTabbedPane) {
+        String roleName = JOptionPane.showInputDialog(getFrame(),
+                Bundle.getMessage("PermissionPreferencesPanel_EnterRoleName"));
+
+        if (roleName.isBlank()) {
+            JmriJOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("PermissionPreferencesPanel_NameEmpty"),
+                    jmri.Application.getApplicationName(),
+                    JmriJOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!roleName.equals(roleName.trim())) {
+            JmriJOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("PermissionPreferencesPanel_SpaceNotAllowedInRoleName"),
+                    jmri.Application.getApplicationName(),
+                    JmriJOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            Role role = permissionManager.addRole(roleName);
+
+            // Find the index of the new role
+            List<Role> newRoleList = new ArrayList<>(permissionManager.getRoles());
+            newRoleList.sort((a,b) -> {
+                if (a.getPriority() != b.getPriority()) {
+                    return Integer.compare(b.getPriority(), a.getPriority());
+                }
+                return a.getName().toLowerCase().compareTo(b.getName().toLowerCase());
+            });
+
+            rolesTabbedPane.insertTab(role.getName(), null,
+                    new JScrollPane(getRolePanel(role)),
+                    null, newRoleList.indexOf(role));
+            getFrame().pack();
+
+
+        } catch (PermissionManager.RoleAlreadyExistsException e) {
+            JmriJOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("PermissionPreferencesPanel_RoleNameExists"),
+                    jmri.Application.getApplicationName(),
+                    JmriJOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private JPanel getRolePanel(Role role) {
+        JPanel rolePanel = new JPanel();
+        rolePanel.setLayout(new BoxLayout(rolePanel, BoxLayout.PAGE_AXIS));
+
+        JLabel roleLabel = new JLabel("<html><font size=\"+1\"><b>"+role.getName()+"</b></font></html>");
+        roleLabel.setBorder(new EmptyBorder(4,4,0,4));
+        rolePanel.add(roleLabel);
+
+        for (PermissionOwner owner : permissionManager.getOwners()) {
+            JPanel ownerPanel = new JPanel();
+            ownerPanel.setLayout(new BoxLayout(ownerPanel, BoxLayout.PAGE_AXIS));
+
+            JLabel ownerLabel = new JLabel("<html><font size=\"0.5\"><b>"+owner.getName()+"</b></font></html>");
+            ownerLabel.setBorder(new EmptyBorder(15,4,4,4));
+            rolePanel.add(ownerLabel);
+
+            for (Permission permission : permissionManager.getPermissions(owner)) {
+                JCheckBox checkBox = new JCheckBox(permission.getName());
+                checkBox.setSelected(role.hasPermission(permission));
+                checkBox.addActionListener((evt) -> {
+                    dirty = true;
+                    role.setPermission(permission, checkBox.isSelected());
+                });
+                ownerPanel.add(checkBox);
+            }
+            rolePanel.add(ownerPanel);
+        }
+
+        rolePanel.add(Box.createVerticalStrut(10));
+        JButton removeRoleButton = new JButton(Bundle.getMessage("PermissionPreferencesPanel_RemoveRole"));
+        if (role.isSystemRole()) {
+            removeRoleButton.setEnabled(false);
+        }
+        rolePanel.add(removeRoleButton);
+
+        return rolePanel;
+    }
 
     private JPanel getUserPanel(User user, List<Role> roleList) {
         JPanel userPanel = new JPanel();

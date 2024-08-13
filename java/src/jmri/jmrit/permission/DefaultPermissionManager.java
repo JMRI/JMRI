@@ -298,7 +298,6 @@ public class DefaultPermissionManager implements PermissionManager {
             throw new RoleAlreadyExistsException();
         }
         Role role = new DefaultRole(name);
-        checkThatRoleKnowsAllPermissions(role);
         _roles.put(name, role);
         return role;
     }
@@ -428,17 +427,13 @@ public class DefaultPermissionManager implements PermissionManager {
         _permissionClassNames.put(permission.getClass().getName(), permission);
     }
 
-    private void checkThatRoleKnowsAllPermissions(Role role) {
-        for (Permission p : _permissions) {
-            if (!role.getPermissions().containsKey(p)) {
-                role.setPermission(p, p.getDefaultPermission(role));
-            }
-        }
-    }
-
     private void checkThatAllRolesKnowsAllPermissions() {
         for (Role role : _roles.values()) {
-            checkThatRoleKnowsAllPermissions(role);
+            for (Permission p : _permissions) {
+                if (!role.getPermissions().containsKey(p)) {
+                    role.setPermission(p, p.getDefaultPermission(role));
+                }
+            }
         }
     }
 
