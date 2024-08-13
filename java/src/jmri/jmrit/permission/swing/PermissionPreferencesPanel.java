@@ -74,7 +74,7 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
 
         outerPanel.add(settingsPanel);
 
-//        add(Box.createVerticalStrut(10));
+        outerPanel.add(Box.createVerticalStrut(10));
 
         JPanel rolesPanel = new JPanel();
         rolesPanel.setLayout(new BoxLayout(rolesPanel, BoxLayout.PAGE_AXIS));
@@ -196,16 +196,19 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
         JLabel usernameLabel = new JLabel("<html><font size=\"+1\"><b>"+user.getUserName()+"</b></font></html>");
         usernameLabel.setBorder(new EmptyBorder(4,4,4,4));
         userPanel.add(usernameLabel);
-        userPanel.add(new JLabel("Name:"));
+        userPanel.add(new JLabel(Bundle.getMessage("PermissionPreferencesPanel_Name")));
         userFields._nameTextField = new JTextField(20);
         userFields._nameTextField.setText(user.getName());
         userPanel.add(userFields._nameTextField);
-        userPanel.add(new JLabel("Comment:"));
+        userPanel.add(new JLabel(Bundle.getMessage("PermissionPreferencesPanel_Comment")));
         userFields._commentTextField = new JTextField(40);
         userFields._commentTextField.setText(user.getComment());
         userPanel.add(userFields._commentTextField);
 
         userPanel.add(Box.createVerticalStrut(10));
+
+        userPanel.add(new JLabel(Bundle.getMessage("PermissionPreferencesPanel_Roles")));
+        userPanel.add(Box.createVerticalStrut(5));
 
         int lastPriority = 0;
         for (Role role : roleList) {
