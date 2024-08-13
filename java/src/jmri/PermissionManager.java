@@ -7,13 +7,13 @@ package jmri;
  */
 public interface PermissionManager {
 
-    void addRole(String name)
+    Role addRole(String name)
             throws RoleAlreadyExistsException;
 
     void removeRole(String name)
             throws RoleDoesNotExistException;
 
-    void addUser(String username, String password)
+    User addUser(String username, String password)
             throws UserAlreadyExistsException;
 
     void removeUser(String username)

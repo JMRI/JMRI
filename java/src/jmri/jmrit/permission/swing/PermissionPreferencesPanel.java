@@ -1,6 +1,6 @@
 package jmri.jmrit.permission.swing;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BooleanSupplier;
@@ -42,7 +42,7 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
             if (a.getPriority() != b.getPriority()) {
                 return Integer.compare(b.getPriority(), a.getPriority());
             }
-            return a.getName().compareTo(b.getName());
+            return a.getName().toLowerCase().compareTo(b.getName().toLowerCase());
         });
 
         JPanel outerPanel = new JPanel();
@@ -118,7 +118,7 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
             if (a.getPriority() != b.getPriority()) {
                 return Integer.compare(b.getPriority(), a.getPriority());
             }
-            return a.getUserName().compareTo(b.getUserName());
+            return a.getUserName().toLowerCase().compareTo(b.getUserName().toLowerCase());
         });
 
         JPanel usersPanel = new JPanel();
@@ -127,55 +127,27 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
         JTabbedPane usersTabbedPane = new JTabbedPane();
 
         for (User user : userList) {
-            JPanel userPanel = new JPanel();
-            userPanel.setLayout(new BoxLayout(userPanel, BoxLayout.PAGE_AXIS));
-
-            usersTabbedPane.addTab(user.getUserName(), new JScrollPane(userPanel));
-
-            JLabel usernameLabel = new JLabel("<html><font size=\"+1\"><b>"+user.getUserName()+"</b></font></html>");
-            usernameLabel.setBorder(new EmptyBorder(4,4,4,4));
-            userPanel.add(usernameLabel);
-            userPanel.add(new JLabel("Name:"));
-            userPanel.add(new JTextField(20));
-            userPanel.add(new JLabel("Comment:"));
-            userPanel.add(new JTextField(40));
-
-            userPanel.add(Box.createVerticalStrut(10));
-
-            int lastPriority = 0;
-            for (Role role : roleList) {
-                if (role.getPriority() == 0 && lastPriority != 0) {
-                    userPanel.add(Box.createVerticalStrut(10));
-                }
-                JCheckBox checkBox = new JCheckBox(role.getName());
-                checkBox.setSelected(user.getRoles().contains(role));
-                checkBox.addActionListener((evt) -> {
-                    if (checkBox.isSelected()) {
-                        user.addRole(role);
-                    } else {
-                        user.removeRole(role);
-                    }
-                    dirty = true;
-                });
-                userPanel.add(checkBox);
-                lastPriority = role.getPriority();
-            }
-
-            userPanel.add(Box.createVerticalStrut(10));
-
-            JButton changePasswordButton = new JButton(Bundle.getMessage("PermissionPreferencesPanel_ChangePassword"));
-            userPanel.add(changePasswordButton);
-
-            JButton removeUserButton = new JButton(Bundle.getMessage("PermissionPreferencesPanel_RemoveUser"));
-            if (user.isSystemUser()) {
-                removeUserButton.setEnabled(false);
-            }
-            userPanel.add(removeUserButton);
+            usersTabbedPane.addTab(user.getUserName(), new JScrollPane(getUserPanel(user, roleList)));
         }
 
         usersPanel.add(usersTabbedPane);
 
         JButton addUserButton = new JButton(Bundle.getMessage("PermissionPreferencesPanel_AddUser"));
+        addUserButton.addActionListener((evt) -> {
+            new AddUserDialog(getFrame(), (user) -> {
+                // Find the index of the new user
+                List<User> newUserList = new ArrayList<>(permissionManager.getUsers());
+                newUserList.sort((a,b) -> {
+                    if (a.getPriority() != b.getPriority()) {
+                        return Integer.compare(b.getPriority(), a.getPriority());
+                    }
+                    return a.getUserName().toLowerCase().compareTo(b.getUserName().toLowerCase());
+                });
+                usersTabbedPane.insertTab(user.getUserName(), null,
+                        new JScrollPane(getUserPanel(user, roleList)),
+                        null, newUserList.indexOf(user));
+            }).setVisible(true);
+        });
         usersPanel.add(addUserButton);
 
 
@@ -189,6 +161,64 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
         outerTabbedPanel.add(tabbedPane);
         outerPanel.add(outerTabbedPanel);
         add(outerPanel);
+    }
+
+    private Frame getFrame() {
+        Container c = this;
+        while (c != null && !(c instanceof Frame)) {
+            c = c.getParent();
+        }
+        System.out.format("c: %s%n", c != null ? c.getClass().getName() : null);
+        // c is either a Frame or null
+        return (Frame)c;
+    }
+
+
+    private JPanel getUserPanel(User user, List<Role> roleList) {
+        JPanel userPanel = new JPanel();
+        userPanel.setLayout(new BoxLayout(userPanel, BoxLayout.PAGE_AXIS));
+
+        JLabel usernameLabel = new JLabel("<html><font size=\"+1\"><b>"+user.getUserName()+"</b></font></html>");
+        usernameLabel.setBorder(new EmptyBorder(4,4,4,4));
+        userPanel.add(usernameLabel);
+        userPanel.add(new JLabel("Name:"));
+        userPanel.add(new JTextField(20));
+        userPanel.add(new JLabel("Comment:"));
+        userPanel.add(new JTextField(40));
+
+        userPanel.add(Box.createVerticalStrut(10));
+
+        int lastPriority = 0;
+        for (Role role : roleList) {
+            if (role.getPriority() == 0 && lastPriority != 0) {
+                userPanel.add(Box.createVerticalStrut(10));
+            }
+            JCheckBox checkBox = new JCheckBox(role.getName());
+            checkBox.setSelected(user.getRoles().contains(role));
+            checkBox.addActionListener((evt) -> {
+                if (checkBox.isSelected()) {
+                    user.addRole(role);
+                } else {
+                    user.removeRole(role);
+                }
+                dirty = true;
+            });
+            userPanel.add(checkBox);
+            lastPriority = role.getPriority();
+        }
+
+        userPanel.add(Box.createVerticalStrut(10));
+
+        JButton changePasswordButton = new JButton(Bundle.getMessage("PermissionPreferencesPanel_ChangePassword"));
+        userPanel.add(changePasswordButton);
+
+        JButton removeUserButton = new JButton(Bundle.getMessage("PermissionPreferencesPanel_RemoveUser"));
+        if (user.isSystemUser()) {
+            removeUserButton.setEnabled(false);
+        }
+        userPanel.add(removeUserButton);
+
+        return userPanel;
     }
 
     @Override

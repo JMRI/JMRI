@@ -300,11 +300,13 @@ public class DefaultPermissionManager implements PermissionManager {
     }
 
     @Override
-    public void addRole(String name) throws RoleAlreadyExistsException {
+    public Role addRole(String name) throws RoleAlreadyExistsException {
         if (_users.containsKey(name)) {
             throw new RoleAlreadyExistsException();
         }
-        _roles.put(name, new DefaultRole(name));
+        Role role = new DefaultRole(name);
+        _roles.put(name, role);
+        return role;
     }
 
     @Override
@@ -317,13 +319,15 @@ public class DefaultPermissionManager implements PermissionManager {
     }
 
     @Override
-    public void addUser(String username, String password)
+    public User addUser(String username, String password)
             throws UserAlreadyExistsException {
 
         if (_users.containsKey(username)) {
             throw new UserAlreadyExistsException();
         }
-        _users.put(username, new DefaultUser(username,password));
+        DefaultUser user = new DefaultUser(username,password);
+        _users.put(username, user);
+        return user;
     }
 
     @Override
