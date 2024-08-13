@@ -16,10 +16,7 @@ import jmri.util.*;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.WindowOperator;
+import org.netbeans.jemmy.operators.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -54,12 +51,13 @@ public class LearnWarrantTest {
          * OB1/WestSiding - OB6/EastSiding  Route {OB1, OB6}
         */
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
+        JUnitAppender.suppressErrorMessage("Portal elem = null");
 
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
-        InstanceManager.getDefault(SensorManager.class);
 
-        WarrantFrame frame = new WarrantFrame(null, null);
+        WarrantFrame frame = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new WarrantFrame(null, null);
+        });
 
         frame._origin.blockBox.setText("OB1");
         frame._destination.blockBox.setText("OB5");
@@ -90,7 +88,8 @@ public class LearnWarrantTest {
         JUnitUtil.waitFor(() -> oBlockOccupiedOrAllocated(block0), "Train occupies block ");
         pressButton(jfo, Bundle.getMessage("Start"));
 
-        JUnitUtil.waitFor(() -> (frame._learnThrottle != null), "Found throttle");
+        JFrameOperator learnThrottleFrame = new JFrameOperator("Student - 99(S)");
+        
         assertNotNull(frame._speedUtil.getThrottle(),"Throttle not found");
 
         Sensor lastSensor = recordtimes(route, frame._speedUtil.getThrottle());
@@ -131,12 +130,9 @@ public class LearnWarrantTest {
 
         JUnitUtil.waitFor(() -> oBlockOccupiedOrAllocated(block4), "Train 111 occupies last block ");
 
-/*
-        JUnitAppender.assertWarnMessageStartsWith("block: OB2 Path distance or SpeedProfile unreliable! pathDist= 1270.0,");
-        JUnitAppender.assertWarnMessageStartsWith("block: OB3 Path distance or SpeedProfile unreliable! pathDist= 762.0,");
-        JUnitAppender.assertWarnMessageStartsWith("block: OB4 Path distance or SpeedProfile unreliable! pathDist= 1905.0,");
-*/
-        frame._userNameBox.setText("SavedIt");
+        JLabelOperator jlo = new JLabelOperator(jfo, Bundle.getMessage("LabelUserName"));
+        ((javax.swing.JTextField) jlo.getLabelFor()).setText("SavedIt");
+
         pressButton(jfo, Bundle.getMessage("ButtonSave"));
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
@@ -146,6 +142,8 @@ public class LearnWarrantTest {
         ControlPanelEditor panel = (ControlPanelEditor)jmri.util.JmriJFrame.getFrame("LearnWarrantTest");
         Assertions.assertNotNull(panel);
 
+        learnThrottleFrame.requestClose();
+        learnThrottleFrame.waitClosed();
 
         // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
         Boolean retVal = ThreadingUtil.runOnGUIwithReturn(() -> {
@@ -221,7 +219,6 @@ public class LearnWarrantTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
