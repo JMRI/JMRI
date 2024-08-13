@@ -1809,7 +1809,22 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         }
         // did we find a destination?
         if (trackSave != null) {
-            if (trackSave.isSpur()) {
+            // determine if local staging move is allowed (leaves car in staging)
+            if ((_train.isAllowReturnToStagingEnabled() || Setup.isStagingAllowReturnEnabled()) &&
+                    rl.isDropAllowed() &&
+                    rl.getLocation().isStaging() &&
+                    trackSave.isStaging() &&
+                    rldSave != null &&
+                    rl.getLocation() == rldSave.getLocation() &&
+                    !_train.isLocalSwitcher() &&
+                    !car.isPassenger() &&
+                    !car.isCaboose() &&
+                    !car.hasFred()) {
+                addLine(_buildReport, SEVEN,
+                        Bundle.getMessage("buildLeaveCarInStaging", car.toString(), car.getLocationName(),
+                                car.getTrackName()));
+                rldSave = rl;
+            } else if (trackSave.isSpur()) {
                 car.setScheduleItemId(trackSave.getScheduleItemId());
                 trackSave.bumpSchedule();
                 log.debug("Sending car to spur ({}, {}) with car schedule id ({}))", trackSave.getLocation().getName(),

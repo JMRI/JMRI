@@ -5008,6 +5008,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       return cars to staging when destinations are not available on the layout. Although not
       recommended, you can also set this option for all turns, see <a href="#SettingsOptions">Options</a>.
 
+      <p>
+        You have the option of either leaving the cars in staging or having the cars ride the train
+        and return to the same staging track. If you want the cars to remain in staging, in the
+        train's <a href="#EditRoute">route</a> at the departure location allow set outs. If you want
+        the cars to ride the train, disable set outs at the departure route location.
+      </p>
+
       <p>Note that when this option is enabled, the program may have difficulties swapping cars
         from staging and the layout as the program must assume that all cars in staging could return
         to staging. When this option is disabled (recommended), the program can ignore the cars in
