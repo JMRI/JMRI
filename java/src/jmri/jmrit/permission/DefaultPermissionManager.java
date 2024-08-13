@@ -29,22 +29,13 @@ import org.jdom2.*;
  */
 public class DefaultPermissionManager implements PermissionManager {
 
-    private static final DefaultRole ROLE_GUEST =
-            new DefaultRole(Bundle.getMessage("PermissionManager_Role_Guest"),50,"GUEST");
-
-    public static final DefaultRole ROLE_STANDARD_USER =
-            new DefaultRole(Bundle.getMessage("PermissionManager_Role_StandardUser"),10,"STANDARD_USER");
-
-    private static final DefaultRole ROLE_ADMIN =
-            new DefaultRole(Bundle.getMessage("PermissionManager_Role_Admin"),100,"ADMIN");
-
     private static final DefaultUser USER_GUEST =
             new DefaultUser(Bundle.getMessage("PermissionManager_User_Guest"), null, 50, "GUEST");
 
     private static final DefaultUser USER_ADMIN =
             new DefaultUser(Bundle.getMessage("PermissionManager_User_Admin"), "", 100, "ADMIN");
 
-    private final Map<String, DefaultRole> _roles = new HashMap<>();
+    private final Map<String, Role> _roles = new HashMap<>();
     private final Map<String, DefaultUser> _users = new HashMap<>();
     private final Set<PermissionOwner> _owners = new HashSet<>();
     private final Set<Permission> _permissions = new HashSet<>();
@@ -55,20 +46,20 @@ public class DefaultPermissionManager implements PermissionManager {
 
 
     public DefaultPermissionManager init() {
-        _roles.put(ROLE_GUEST.getName(), ROLE_GUEST);
-        _roles.put(ROLE_STANDARD_USER.getName(), ROLE_STANDARD_USER);
-        _roles.put(ROLE_ADMIN.getName(), ROLE_ADMIN);
+        _roles.put(Role.ROLE_GUEST.getName(), Role.ROLE_GUEST);
+        _roles.put(Role.ROLE_STANDARD_USER.getName(), Role.ROLE_STANDARD_USER);
+        _roles.put(Role.ROLE_ADMIN.getName(), Role.ROLE_ADMIN);
 
-        USER_GUEST.addRole(ROLE_GUEST);
+        USER_GUEST.addRole(Role.ROLE_GUEST);
         _users.put(USER_GUEST.getUserName(), USER_GUEST);
 
-        USER_ADMIN.addRole(ROLE_ADMIN);
+        USER_ADMIN.addRole(Role.ROLE_ADMIN);
         _users.put(USER_ADMIN.getUserName(), USER_ADMIN);
 
-        _roles.put("Aaa role", new DefaultRole("Aaa role"));
-        _roles.put("Zzz role", new DefaultRole("Zzz role"));
+        _roles.put("Aaa role", new Role("Aaa role"));
+        _roles.put("Zzz role", new Role("Zzz role"));
 /*
-        _roles.put("Test role", new DefaultRole("Test role"));
+        _roles.put("Test role", new Role("Test role"));
 
         _users.put("daniel", new DefaultUser("daniel", "12345678"));
         _users.put("kalle", new DefaultUser("kalle", "testtest"));
@@ -87,7 +78,7 @@ public class DefaultPermissionManager implements PermissionManager {
         return this;
     }
 
-    public Collection<DefaultRole> getRoles() {
+    public Collection<Role> getRoles() {
         return _roles.values();
     }
 
@@ -109,11 +100,10 @@ public class DefaultPermissionManager implements PermissionManager {
         return set;
     }
 
-    private DefaultRole getSystemRole(String systemName) {
-        for (Role r : _roles.values()) {
-            DefaultRole df = (DefaultRole)r;
-            if (df.isSystemRole() && df.getSystemName().equals(systemName)) {
-                return df;
+    private Role getSystemRole(String systemName) {
+        for (Role role : _roles.values()) {
+            if (role.isSystemRole() && role.getSystemName().equals(systemName)) {
+                return role;
             }
         }
         return null;
@@ -145,7 +135,7 @@ public class DefaultPermissionManager implements PermissionManager {
                 List<Element> roleElementList = root.getChild("Roles").getChildren("Role");
                 for (Element roleElement : roleElementList) {
                     Element systemNameElement = roleElement.getChild("SystemName");
-                    DefaultRole role;
+                    Role role;
                     if (systemNameElement != null) {
                         role = getSystemRole(systemNameElement.getValue());
                         if (role == null) {
@@ -153,7 +143,7 @@ public class DefaultPermissionManager implements PermissionManager {
                             continue;
                         }
                     } else {
-                        role = new DefaultRole(roleElement.getChild("Name").getValue());
+                        role = new Role(roleElement.getChild("Name").getValue());
                         _roles.put(role.getName(), role);
                     }
 
@@ -208,7 +198,7 @@ public class DefaultPermissionManager implements PermissionManager {
                     List<Element> userRoleElementList = userElement.getChild("Roles").getChildren("Role");
                     for (Element roleElement : userRoleElementList) {
                         Element roleSystemNameElement = roleElement.getChild("SystemName");
-                        DefaultRole role;
+                        Role role;
                         if (roleSystemNameElement != null) {
                             role = getSystemRole(roleSystemNameElement.getValue());
                             if (role == null) {
@@ -216,7 +206,7 @@ public class DefaultPermissionManager implements PermissionManager {
                                 continue;
                             }
                         } else {
-                            role = new DefaultRole(roleElement.getChild("Name").getValue());
+                            role = new Role(roleElement.getChild("Name").getValue());
                         }
                         roles.add(role);
                     }
@@ -249,7 +239,7 @@ public class DefaultPermissionManager implements PermissionManager {
             checkThatAllRolesKnowsAllPermissions();
 
             Element rolesElement = new Element("Roles");
-            for (DefaultRole role : _roles.values()) {
+            for (Role role : _roles.values()) {
                 Element roleElement = new Element("Role");
                 if (role.isSystemRole()) {
                     roleElement.addContent(new Element("SystemName").addContent(role.getSystemName()));
@@ -285,9 +275,9 @@ public class DefaultPermissionManager implements PermissionManager {
                 Element userRolesElement = new Element("Roles");
                 for (Role role : user.getRoles()) {
                     Element roleElement = new Element("Role");
-                    if (((DefaultRole)role).isSystemRole()) {
+                    if (role.isSystemRole()) {
                         roleElement.addContent(new Element("SystemName")
-                                .addContent(((DefaultRole)role).getSystemName()));
+                                .addContent(role.getSystemName()));
                     }
                     roleElement.addContent(new Element("Name").addContent(role.getName()));
                     userRolesElement.addContent(roleElement);
@@ -305,6 +295,23 @@ public class DefaultPermissionManager implements PermissionManager {
         } catch (java.io.IOException ex2) {
             log.error("IO error writing file: {}", file);
         }
+    }
+
+    @Override
+    public void addRole(String name) throws RoleAlreadyExistsException {
+        if (_users.containsKey(name)) {
+            throw new RoleAlreadyExistsException();
+        }
+        _roles.put(name, new Role(name));
+    }
+
+    @Override
+    public void removeRole(String name) throws RoleDoesNotExistException {
+
+        if (!_roles.containsKey(name)) {
+            throw new RoleDoesNotExistException();
+        }
+        _roles.remove(name);
     }
 
     @Override
@@ -384,8 +391,12 @@ public class DefaultPermissionManager implements PermissionManager {
     }
 
     public void checkThatAllRolesKnowsAllPermissions() {
-        for (DefaultRole role : _roles.values()) {
-            role.checkThatRoleKnowsAllPermissions(_permissions);
+        for (Role role : _roles.values()) {
+            for (Permission p : _permissions) {
+                if (!role.getPermissions().containsKey(p)) {
+                    role.setPermission(p, p.getDefaultPermission(role));
+                }
+            }
         }
     }
 

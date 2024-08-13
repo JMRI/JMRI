@@ -32,7 +32,7 @@ public class DefaultUser implements User {
 
     public DefaultUser(String username, String password) {
         this(username, password, 0, null);
-        DefaultUser.this.addRole(DefaultPermissionManager.ROLE_STANDARD_USER);
+        DefaultUser.this.addRole(Role.ROLE_STANDARD_USER);
     }
 
     public DefaultUser(String username, String password, int priority, String systemUserName) {

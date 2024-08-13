@@ -7,6 +7,12 @@ package jmri;
  */
 public interface PermissionManager {
 
+    void addRole(String name)
+            throws RoleAlreadyExistsException;
+
+    void removeRole(String name)
+            throws RoleDoesNotExistException;
+
     void addUser(String username, String password)
             throws UserAlreadyExistsException;
 
@@ -37,6 +43,18 @@ public interface PermissionManager {
 
     void storePermissionSettings();
 
+
+    public static class RoleAlreadyExistsException extends JmriException {
+        public RoleAlreadyExistsException() {
+            super(Bundle.getMessage("PermissionManager_RoleAlreadyExistsException"));
+        }
+    }
+
+    public static class RoleDoesNotExistException extends JmriException {
+        public RoleDoesNotExistException() {
+            super(Bundle.getMessage("PermissionManager_RoleDoesNotExistException"));
+        }
+    }
 
     public static class UserAlreadyExistsException extends JmriException {
         public UserAlreadyExistsException() {

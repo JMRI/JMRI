@@ -58,6 +58,15 @@ public class LoadAndStorePermissionOwner implements PermissionOwner {
             return Bundle.getMessage("LoadAndStorePermission_Load");
         }
 
+        @Override
+        public boolean getDefaultPermission(Role role) {
+            if (role.equals(Role.ROLE_ADMIN)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
     }
 
 
@@ -77,6 +86,15 @@ public class LoadAndStorePermissionOwner implements PermissionOwner {
         @Override
         public String getName() {
             return Bundle.getMessage("LoadAndStorePermission_Store");
+        }
+
+        @Override
+        public boolean getDefaultPermission(Role role) {
+            if (role.equals(Role.ROLE_ADMIN)) {
+                return true;
+            } else {
+                return false;
+            }
         }
 
     }

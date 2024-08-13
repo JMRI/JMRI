@@ -23,4 +23,11 @@ public interface Permission {
     @Nonnull
     String getName();
 
+    /**
+     * Get the default permission for a role.
+     * @param role the role
+     * @return the default
+     */
+    boolean getDefaultPermission(Role role);
+
 }

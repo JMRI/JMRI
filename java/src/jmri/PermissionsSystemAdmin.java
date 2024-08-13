@@ -54,6 +54,15 @@ public class PermissionsSystemAdmin {
             return Bundle.getMessage("PermissionsSystemAdmin_PermissionEditPermissions");
         }
 
+        @Override
+        public boolean getDefaultPermission(Role role) {
+            if (role.equals(Role.ROLE_ADMIN)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
     }
 
     public static class PermissionEditPreferences implements Permission {
@@ -66,6 +75,15 @@ public class PermissionsSystemAdmin {
         @Override
         public String getName() {
             return Bundle.getMessage("PermissionsSystemAdmin_PermissionEditPreferences");
+        }
+
+        @Override
+        public boolean getDefaultPermission(Role role) {
+            if (role.equals(Role.ROLE_ADMIN)) {
+                return true;
+            } else {
+                return false;
+            }
         }
 
     }

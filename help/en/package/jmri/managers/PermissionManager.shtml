@@ -15,6 +15,14 @@
       <p><strong>Permissions</strong> is used to protect sensitive parts of JMRI, for example
       from unauthorized users to load and store panel and data files.</p>
       
+      <h2>Default permissions</h2>
+      <h3>The current permissions are</h3>
+      <ul>
+		  <li><strong>Edit preferences</strong> - The role <strong>Adminstrator</strong> has access.</li>
+		  <li><strong>Edit permissions</strong> - The role <strong>Adminstrator</strong> has access.</li>
+		  <li><strong>Load table content and panels</strong> - The role <strong>Adminstrator</strong> has access.</li>
+		  <li><strong>Store ALL table content and panels</strong> - The role <strong>Adminstrator</strong> has access.</li>
+      </ul>
       
       <h2>I have looked myself out! What do I do?</h2>
       <p>There are two options.</p>
