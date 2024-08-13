@@ -1,6 +1,5 @@
 package jmri.jmrit.permission;
 
-
 import java.awt.GraphicsEnvironment;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -31,11 +30,11 @@ public class DefaultUser implements User {
     private final Set<Role> _roles = new TreeSet<>((a,b) -> {return a.getName().compareTo(b.getName());});
 
     public DefaultUser(String username, String password) {
-        this(username, password, 0, null);
-        DefaultUser.this.addRole(Role.ROLE_STANDARD_USER);
+        this(username, password, 0, null, new Role[]{});
+        DefaultUser.this.addRole(DefaultRole.ROLE_STANDARD_USER);
     }
 
-    public DefaultUser(String username, String password, int priority, String systemUserName) {
+    DefaultUser(String username, String password, int priority, String systemUserName, Role[] roles) {
         this._username = username;
         this._priority = priority;
         this._systemUser = priority != 0;
@@ -49,6 +48,9 @@ public class DefaultUser implements User {
             }
         } else {
             this._seed = null;
+        }
+        for (Role role : roles) {
+            _roles.add(role);
         }
     }
 
@@ -111,18 +113,30 @@ public class DefaultUser implements User {
 
     @Override
     public Set<Role> getRoles() {
-        return _roles;
+        return Collections.unmodifiableSet(_roles);
     }
 
     @Override
     public void addRole(Role role) {
+        if (! InstanceManager.getDefault(PermissionManager.class)
+                .checkPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES)) {
+            return;
+        }
         _roles.add(role);
     }
 
     @Override
     public void removeRole(Role role) {
-        InstanceManager.getDefault(PermissionManager.class).checkPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PERMISSIONS);
+        if (! InstanceManager.getDefault(PermissionManager.class)
+                .checkPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES)) {
+            return;
+        }
         _roles.remove(role);
+    }
+
+    void setRoles(Set<Role> roles) {
+        _roles.clear();
+        _roles.addAll(roles);
     }
 
     private String getPasswordMD5(String password) throws NoSuchAlgorithmException {
@@ -137,24 +151,46 @@ public class DefaultUser implements User {
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
         justification="The text is from an exception")
     public void changePassword(String newPassword, String oldPassword) {
-        if (!checkPassword(oldPassword)) {
-            String msg = new PermissionManager.BadPasswordException().getMessage();
+        PermissionManager pMngr = InstanceManager.getDefault(PermissionManager.class);
 
-            if (!GraphicsEnvironment.isHeadless()) {
-                JmriJOptionPane.showMessageDialog(null,
-                        msg,
-                        jmri.Application.getApplicationName(),
-                        JmriJOptionPane.ERROR_MESSAGE);
+        boolean isCurrentUser = pMngr.isCurrentUser(this);
+        boolean hasEditPasswordPermission = pMngr.hasPermission(
+                PermissionsSystemAdmin.PERMISSION_EDIT_OWN_PASSWORD);
+        boolean hasAdminPermission = pMngr.hasPermission(
+                PermissionsSystemAdmin.PERMISSION_EDIT_PERMISSIONS);
+
+        if (hasAdminPermission || (isCurrentUser && hasEditPasswordPermission)) {
+            if (!checkPassword(oldPassword)) {
+                String msg = new PermissionManager.BadPasswordException().getMessage();
+
+                if (!GraphicsEnvironment.isHeadless()) {
+                    JmriJOptionPane.showMessageDialog(null,
+                            msg,
+                            jmri.Application.getApplicationName(),
+                            JmriJOptionPane.ERROR_MESSAGE);
+                } else {
+                    log.error(msg);
+                }
             } else {
-                log.error(msg);
+                try {
+                    this._passwordMD5 = getPasswordMD5(newPassword);
+                } catch (NoSuchAlgorithmException e) {
+                    String msg = "MD5 algoritm doesn't exists";
+                    log.error(msg);
+                    throw new RuntimeException(msg);
+                }
             }
         } else {
-            try {
-                this._passwordMD5 = getPasswordMD5(newPassword);
-            } catch (NoSuchAlgorithmException e) {
-                String msg = "MD5 algoritm doesn't exists";
-                log.error(msg);
-                throw new RuntimeException(msg);
+            if (pMngr.isCurrentUser(this)) {
+                log.warn("User {} has not permission to change its own password", getUserName());
+            } else {
+                log.warn("The current user has not permission to change password for user {}", getUserName());
+            }
+            if (!GraphicsEnvironment.isHeadless()) {
+                JmriJOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("DefaultPermissionManager_PermissionDenied"),
+                        jmri.Application.getApplicationName(),
+                        JmriJOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -182,14 +218,12 @@ public class DefaultUser implements User {
         justification="The text is from a bundle")
     public boolean checkPermission(Permission permission) {
         if (!hasPermission(permission)) {
-            log.error("User {} has not permission {}", this.getUserName(), permission.getName());
+            log.warn("User {} has not permission {}", this.getUserName(), permission.getName());
             if (!GraphicsEnvironment.isHeadless()) {
                 JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("DefaultPermissionManager_PermissionDenied"),
                         jmri.Application.getApplicationName(),
                         JmriJOptionPane.ERROR_MESSAGE);
-            } else {
-                log.warn(Bundle.getMessage("DefaultPermissionManager_PermissionDenied"));
             }
             return false;
         }

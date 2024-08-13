@@ -30,10 +30,12 @@ import org.jdom2.*;
 public class DefaultPermissionManager implements PermissionManager {
 
     private static final DefaultUser USER_GUEST =
-            new DefaultUser(Bundle.getMessage("PermissionManager_User_Guest"), null, 50, "GUEST");
+            new DefaultUser(Bundle.getMessage("PermissionManager_User_Guest"),
+                    null, 50, "GUEST", new Role[]{DefaultRole.ROLE_GUEST});
 
     private static final DefaultUser USER_ADMIN =
-            new DefaultUser(Bundle.getMessage("PermissionManager_User_Admin"), "", 100, "ADMIN");
+            new DefaultUser(Bundle.getMessage("PermissionManager_User_Admin"),
+                    "", 100, "ADMIN", new Role[]{DefaultRole.ROLE_ADMIN, DefaultRole.ROLE_STANDARD_USER});
 
     private final Map<String, Role> _roles = new HashMap<>();
     private final Map<String, DefaultUser> _users = new HashMap<>();
@@ -46,18 +48,18 @@ public class DefaultPermissionManager implements PermissionManager {
 
 
     public DefaultPermissionManager init() {
-        _roles.put(Role.ROLE_GUEST.getName(), Role.ROLE_GUEST);
-        _roles.put(Role.ROLE_STANDARD_USER.getName(), Role.ROLE_STANDARD_USER);
-        _roles.put(Role.ROLE_ADMIN.getName(), Role.ROLE_ADMIN);
+        _roles.put(DefaultRole.ROLE_GUEST.getName(), DefaultRole.ROLE_GUEST);
+        _roles.put(DefaultRole.ROLE_STANDARD_USER.getName(), DefaultRole.ROLE_STANDARD_USER);
+        _roles.put(DefaultRole.ROLE_ADMIN.getName(), DefaultRole.ROLE_ADMIN);
 
-        USER_GUEST.addRole(Role.ROLE_GUEST);
+//        USER_GUEST.addRole(Role.ROLE_GUEST);
         _users.put(USER_GUEST.getUserName(), USER_GUEST);
 
-        USER_ADMIN.addRole(Role.ROLE_ADMIN);
+//        USER_ADMIN.addRole(Role.ROLE_ADMIN);
         _users.put(USER_ADMIN.getUserName(), USER_ADMIN);
 
-        _roles.put("Aaa role", new Role("Aaa role"));
-        _roles.put("Zzz role", new Role("Zzz role"));
+        _roles.put("Aaa role", new DefaultRole("Aaa role"));
+        _roles.put("Zzz role", new DefaultRole("Zzz role"));
 /*
         _roles.put("Test role", new Role("Test role"));
 
@@ -143,11 +145,9 @@ public class DefaultPermissionManager implements PermissionManager {
                             continue;
                         }
                     } else {
-                        role = new Role(roleElement.getChild("Name").getValue());
+                        role = new DefaultRole(roleElement.getChild("Name").getValue());
                         _roles.put(role.getName(), role);
                     }
-
-                    var permissions = role.getPermissions();
 
                     List<Element> permissionElementList = roleElement
                             .getChild("Permissions").getChildren("Permission");
@@ -156,7 +156,7 @@ public class DefaultPermissionManager implements PermissionManager {
                         boolean enabled = "yes".equals(permissionElement.getChild("Enabled").getValue());
                         Permission permission = _permissionClassNames.get(className);
                         if (permission != null) {
-                            permissions.put(permission, enabled);
+                            ((DefaultRole)role).setPermissionWithoutCheck(permission, enabled);
                         } else {
                             String msg = String.format("Permission class %s does not exists", className);
                             if (!GraphicsEnvironment.isHeadless()) {
@@ -172,6 +172,7 @@ public class DefaultPermissionManager implements PermissionManager {
 
                 List<Element> userElementList = root.getChild("Users").getChildren("User");
                 for (Element userElement : userElementList) {
+
                     Element systemNameElement = userElement.getChild("SystemUsername");
                     DefaultUser user;
                     if (systemNameElement != null) {
@@ -193,7 +194,7 @@ public class DefaultPermissionManager implements PermissionManager {
                         _users.put(user.getUserName(), user);
                     }
 
-                    var roles = user.getRoles();
+                    Set<Role> roles = new HashSet<>();
 
                     List<Element> userRoleElementList = userElement.getChild("Roles").getChildren("Role");
                     for (Element roleElement : userRoleElementList) {
@@ -206,10 +207,11 @@ public class DefaultPermissionManager implements PermissionManager {
                                 continue;
                             }
                         } else {
-                            role = new Role(roleElement.getChild("Name").getValue());
+                            role = new DefaultRole(roleElement.getChild("Name").getValue());
                         }
                         roles.add(role);
                     }
+                    user.setRoles(roles);
                 }
 
             } catch (JDOMException | IOException ex) {
@@ -302,7 +304,7 @@ public class DefaultPermissionManager implements PermissionManager {
         if (_users.containsKey(name)) {
             throw new RoleAlreadyExistsException();
         }
-        _roles.put(name, new Role(name));
+        _roles.put(name, new DefaultRole(name));
     }
 
     @Override
@@ -362,6 +364,30 @@ public class DefaultPermissionManager implements PermissionManager {
     @Override
     public void logout() {
         _currentUser = USER_GUEST;
+    }
+
+    @Override
+    public boolean isCurrentUser(String username) {
+        return _currentUser.getUserName().equals(username);
+    }
+
+    @Override
+    public boolean isCurrentUser(User user) {
+        return _currentUser == user;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return _permissionsEnabled;
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        if (! InstanceManager.getDefault(PermissionManager.class)
+                .checkPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES)) {
+            return;
+        }
+        _permissionsEnabled = enabled;
     }
 
     @Override

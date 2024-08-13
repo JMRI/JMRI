@@ -27,6 +27,14 @@ public interface PermissionManager {
 
     void logout();
 
+    boolean isCurrentUser(String username);
+
+    boolean isCurrentUser(User user);
+
+    boolean isEnabled();
+
+    void setEnabled(boolean enabled);
+
     boolean hasPermission(Permission permission);
 
     /**

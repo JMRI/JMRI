@@ -1,5 +1,6 @@
 package jmri.jmrit.permission.swing;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BooleanSupplier;
@@ -49,9 +50,16 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
         outerPanel.setLayout(new BoxLayout(outerPanel, BoxLayout.PAGE_AXIS));
 
         JPanel settingsPanel = new JPanel();
-        JCheckBox enablePermissionManager = new JCheckBox(Bundle.getMessage(
+        JCheckBox enablePermissionManagerCheckBox = new JCheckBox(Bundle.getMessage(
                 "PermissionPreferencesPanel_EnablePermissionManager"));
-        settingsPanel.add(enablePermissionManager);
+        enablePermissionManagerCheckBox.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.black, 2), new EmptyBorder(4,4,4,4)));
+        enablePermissionManagerCheckBox.setSelected(permissionManager.isEnabled());
+        enablePermissionManagerCheckBox.addActionListener((evt) -> {
+            permissionManager.setEnabled(enablePermissionManagerCheckBox.isSelected());
+            dirty = true;
+        });
+        settingsPanel.add(enablePermissionManagerCheckBox);
         outerPanel.add(settingsPanel);
 
 //        add(Box.createVerticalStrut(10));
@@ -81,6 +89,11 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
 
                 for (Permission permission : permissionManager.getPermissions(owner)) {
                     JCheckBox checkBox = new JCheckBox(permission.getName());
+                    checkBox.setSelected(role.hasPermission(permission));
+                    checkBox.addActionListener((evt) -> {
+                        dirty = true;
+                        role.setPermission(permission, checkBox.isSelected());
+                    });
                     ownerPanel.add(checkBox);
                 }
                 rolePanel.add(ownerPanel);
@@ -135,6 +148,15 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
                     userPanel.add(Box.createVerticalStrut(10));
                 }
                 JCheckBox checkBox = new JCheckBox(role.getName());
+                checkBox.setSelected(user.getRoles().contains(role));
+                checkBox.addActionListener((evt) -> {
+                    if (checkBox.isSelected()) {
+                        user.addRole(role);
+                    } else {
+                        user.removeRole(role);
+                    }
+                    dirty = true;
+                });
                 userPanel.add(checkBox);
                 lastPriority = role.getPriority();
             }
@@ -207,6 +229,7 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
     @Override
     public void savePreferences() {
         permissionManager.storePermissionSettings();
+        dirty = false;
     }
 
     @Override

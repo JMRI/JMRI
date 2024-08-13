@@ -60,11 +60,7 @@ public class LoadAndStorePermissionOwner implements PermissionOwner {
 
         @Override
         public boolean getDefaultPermission(Role role) {
-            if (role.equals(Role.ROLE_ADMIN)) {
-                return true;
-            } else {
-                return false;
-            }
+            return role.isAdminRole();
         }
 
     }
@@ -90,11 +86,7 @@ public class LoadAndStorePermissionOwner implements PermissionOwner {
 
         @Override
         public boolean getDefaultPermission(Role role) {
-            if (role.equals(Role.ROLE_ADMIN)) {
-                return true;
-            } else {
-                return false;
-            }
+            return role.isAdminRole();
         }
 
     }

@@ -10,14 +10,17 @@ import org.openide.util.lookup.ServiceProvider;
  */
 public class PermissionsSystemAdmin {
 
-    public static final PermissionOwnerSystemAdmin PERMISSION_OWNER_SYSTEM_ADMIN =
+    public static final PermissionOwner PERMISSION_OWNER_SYSTEM_ADMIN =
             new PermissionOwnerSystemAdmin();
 
-    public static final PermissionEditPreferences PERMISSION_EDIT_PREFERENCES =
+    public static final Permission PERMISSION_EDIT_PREFERENCES =
             new PermissionEditPreferences();
 
-    public static final PermissionEditPermissions PERMISSION_EDIT_PERMISSIONS =
+    public static final Permission PERMISSION_EDIT_PERMISSIONS =
             new PermissionEditPermissions();
+
+    public static final Permission PERMISSION_EDIT_OWN_PASSWORD =
+            new PermissionEditOwnPassword();
 
 
     @ServiceProvider(service = PermissionFactory.class)
@@ -56,11 +59,7 @@ public class PermissionsSystemAdmin {
 
         @Override
         public boolean getDefaultPermission(Role role) {
-            if (role.equals(Role.ROLE_ADMIN)) {
-                return true;
-            } else {
-                return false;
-            }
+            return role.isAdminRole();
         }
 
     }
@@ -79,11 +78,26 @@ public class PermissionsSystemAdmin {
 
         @Override
         public boolean getDefaultPermission(Role role) {
-            if (role.equals(Role.ROLE_ADMIN)) {
-                return true;
-            } else {
-                return false;
-            }
+            return role.isAdminRole();
+        }
+
+    }
+
+    public static class PermissionEditOwnPassword implements Permission {
+
+        @Override
+        public PermissionOwner getOwner() {
+            return PERMISSION_OWNER_SYSTEM_ADMIN;
+        }
+
+        @Override
+        public String getName() {
+            return Bundle.getMessage("PermissionsSystemAdmin_PermissionChangeOwnPassword");
+        }
+
+        @Override
+        public boolean getDefaultPermission(Role role) {
+            return role.isAdminRole() || role.isStandardUserRole();
         }
 
     }
