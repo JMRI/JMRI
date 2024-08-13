@@ -60,10 +60,10 @@ public class DefaultPermissionManager implements PermissionManager {
         _roles.put(ROLE_ADMIN.getName(), ROLE_ADMIN);
 
         USER_GUEST.addRole(ROLE_GUEST);
-        _users.put(USER_GUEST.getUsername(), USER_GUEST);
+        _users.put(USER_GUEST.getUserName(), USER_GUEST);
 
         USER_ADMIN.addRole(ROLE_ADMIN);
-        _users.put(USER_ADMIN.getUsername(), USER_ADMIN);
+        _users.put(USER_ADMIN.getUserName(), USER_ADMIN);
 
         _roles.put("Aaa role", new DefaultRole("Aaa role"));
         _roles.put("Zzz role", new DefaultRole("Zzz role"));
@@ -189,7 +189,7 @@ public class DefaultPermissionManager implements PermissionManager {
                                 userElement.getChild("Username").getValue(),
                                 userElement.getChild("Password").getValue(),
                                 userElement.getChild("Seed").getValue());
-                        _users.put(user.getUsername(), user);
+                        _users.put(user.getUserName(), user);
                     }
 
                     var roles = user.getRoles();
@@ -264,7 +264,7 @@ public class DefaultPermissionManager implements PermissionManager {
                 if (user.isSystemUser()) {
                     userElement.addContent(new Element("SystemUsername").addContent(user.getSystemUsername()));
                 }
-                userElement.addContent(new Element("Username").addContent(user.getUsername()));
+                userElement.addContent(new Element("Username").addContent(user.getUserName()));
 
                 if (user.getPassword() != null) {   // Guest user password is null
                     userElement.addContent(new Element("Password").addContent(user.getPassword()));

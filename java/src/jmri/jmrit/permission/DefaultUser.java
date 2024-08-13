@@ -75,7 +75,7 @@ public class DefaultUser implements User {
     }
 
     @Override
-    public String getUsername() {
+    public String getUserName() {
         return this._username;
     }
 
@@ -182,7 +182,7 @@ public class DefaultUser implements User {
         justification="The text is from a bundle")
     public boolean checkPermission(Permission permission) {
         if (!hasPermission(permission)) {
-            log.error("User {} has not permission {}", this.getUsername(), permission.getName());
+            log.error("User {} has not permission {}", this.getUserName(), permission.getName());
             if (!GraphicsEnvironment.isHeadless()) {
                 JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("DefaultPermissionManager_PermissionDenied"),

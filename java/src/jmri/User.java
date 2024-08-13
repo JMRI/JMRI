@@ -9,7 +9,7 @@ import java.util.Set;
  */
 public interface User {
 
-    String getUsername();
+    String getUserName();
 
     boolean isSystemUser();
 

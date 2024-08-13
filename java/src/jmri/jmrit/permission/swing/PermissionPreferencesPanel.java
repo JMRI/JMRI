@@ -103,7 +103,7 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
             if (a.getPriority() != b.getPriority()) {
                 return Integer.compare(b.getPriority(), a.getPriority());
             }
-            return a.getUsername().compareTo(b.getUsername());
+            return a.getUserName().compareTo(b.getUserName());
         });
 
         JPanel usersPanel = new JPanel();
@@ -115,9 +115,9 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
             JPanel userPanel = new JPanel();
             userPanel.setLayout(new BoxLayout(userPanel, BoxLayout.PAGE_AXIS));
 
-            usersTabbedPane.addTab(user.getUsername(), new JScrollPane(userPanel));
+            usersTabbedPane.addTab(user.getUserName(), new JScrollPane(userPanel));
 
-            JLabel usernameLabel = new JLabel("<html><font size=\"+1\"><b>"+user.getUsername()+"</b></font></html>");
+            JLabel usernameLabel = new JLabel("<html><font size=\"+1\"><b>"+user.getUserName()+"</b></font></html>");
             usernameLabel.setBorder(new EmptyBorder(4,4,4,4));
             userPanel.add(usernameLabel);
 //            userPanel.add(Box.createVerticalStrut(5));
