@@ -8,16 +8,16 @@ import org.openide.util.lookup.ServiceProvider;
  *
  * @author Daniel Bergqvist (C) 2024
  */
-public class StandardPermissions {
+public class PermissionsSystemAdmin {
 
-    public static final PermissionOwnerAdmin PERMISSION_OWNER_ADMIN =
-            new PermissionOwnerAdmin();
-
-    public static final PermissionAdmin PERMISSION_ADMIN =
-            new PermissionAdmin();
+    public static final PermissionOwnerSystemAdmin PERMISSION_OWNER_SYSTEM_ADMIN =
+            new PermissionOwnerSystemAdmin();
 
     public static final PermissionEditPreferences PERMISSION_EDIT_PREFERENCES =
             new PermissionEditPreferences();
+
+    public static final PermissionEditPermissions PERMISSION_EDIT_PERMISSIONS =
+            new PermissionEditPermissions();
 
 
     @ServiceProvider(service = PermissionFactory.class)
@@ -25,33 +25,33 @@ public class StandardPermissions {
 
         @Override
         public void register(PermissionManager manager) {
-            manager.registerOwner(PERMISSION_OWNER_ADMIN);
-            manager.registerPermission(PERMISSION_ADMIN);
+            manager.registerOwner(PERMISSION_OWNER_SYSTEM_ADMIN);
             manager.registerPermission(PERMISSION_EDIT_PREFERENCES);
+            manager.registerPermission(PERMISSION_EDIT_PERMISSIONS);
         }
 
     }
 
 
-    public static class PermissionOwnerAdmin implements PermissionOwner {
+    public static class PermissionOwnerSystemAdmin implements PermissionOwner {
 
         @Override
         public String getName() {
-            return Bundle.getMessage("StandardPermissions_PermissionOwnerAdmin");
+            return Bundle.getMessage("PermissionsSystemAdmin_PermissionOwnerSystemAdmin");
         }
 
     }
 
-    public static class PermissionAdmin implements Permission {
+    public static class PermissionEditPermissions implements Permission {
 
         @Override
         public PermissionOwner getOwner() {
-            return PERMISSION_OWNER_ADMIN;
+            return PERMISSION_OWNER_SYSTEM_ADMIN;
         }
 
         @Override
         public String getName() {
-            return Bundle.getMessage("StandardPermissions_PermissionAdmin");
+            return Bundle.getMessage("PermissionsSystemAdmin_PermissionEditPermissions");
         }
 
     }
@@ -60,18 +60,18 @@ public class StandardPermissions {
 
         @Override
         public PermissionOwner getOwner() {
-            return PERMISSION_OWNER_ADMIN;
+            return PERMISSION_OWNER_SYSTEM_ADMIN;
         }
 
         @Override
         public String getName() {
-            return Bundle.getMessage("StandardPermissions_PermissionEditPreferences");
+            return Bundle.getMessage("PermissionsSystemAdmin_PermissionEditPreferences");
         }
 
     }
 
     // This class should never be instantiated.
-    private StandardPermissions() {}
+    private PermissionsSystemAdmin() {}
 
 
 }

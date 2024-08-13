@@ -121,7 +121,7 @@ public class DefaultUser implements User {
 
     @Override
     public void removeRole(Role role) {
-        InstanceManager.getDefault(PermissionManager.class).checkPermission(StandardPermissions.PERMISSION_ADMIN);
+        InstanceManager.getDefault(PermissionManager.class).checkPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PERMISSIONS);
         _roles.remove(role);
     }
 

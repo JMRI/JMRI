@@ -165,7 +165,18 @@ public class DefaultPermissionManager implements PermissionManager {
                         String className = permissionElement.getChild("Class").getValue();
                         boolean enabled = "yes".equals(permissionElement.getChild("Enabled").getValue());
                         Permission permission = _permissionClassNames.get(className);
-                        permissions.put(permission, enabled);
+                        if (permission != null) {
+                            permissions.put(permission, enabled);
+                        } else {
+                            String msg = String.format("Permission class %s does not exists", className);
+                            if (!GraphicsEnvironment.isHeadless()) {
+                                JmriJOptionPane.showMessageDialog(null,
+                                        msg,
+                                        jmri.Application.getApplicationName(),
+                                        JmriJOptionPane.ERROR_MESSAGE);
+                            }
+                            log.error(msg);
+                        }
                     }
                 }
 

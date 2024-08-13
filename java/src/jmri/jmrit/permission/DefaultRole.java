@@ -63,7 +63,7 @@ public class DefaultRole implements Role {
     @Override
     public void setPermission(Permission permission, boolean enable) {
         if (! InstanceManager.getDefault(PermissionManager.class)
-                .checkPermission(StandardPermissions.PERMISSION_ADMIN)) {
+                .checkPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PERMISSIONS)) {
             return;
         }
         _permissions.put(permission, enable);

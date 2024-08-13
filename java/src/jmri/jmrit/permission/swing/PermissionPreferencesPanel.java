@@ -6,7 +6,6 @@ import java.util.function.BooleanSupplier;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.TitledBorder;
 
 import jmri.*;
 import jmri.jmrit.permission.DefaultPermissionManager;
@@ -69,14 +68,16 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
             rolesTabbedPane.addTab(role.getName(), new JScrollPane(rolePanel));
 
             JLabel roleLabel = new JLabel("<html><font size=\"+1\"><b>"+role.getName()+"</b></font></html>");
-            roleLabel.setBorder(new EmptyBorder(4,4,4,4));
+            roleLabel.setBorder(new EmptyBorder(4,4,0,4));
             rolePanel.add(roleLabel);
 
             for (PermissionOwner owner : permissionManager.getOwners()) {
                 JPanel ownerPanel = new JPanel();
                 ownerPanel.setLayout(new BoxLayout(ownerPanel, BoxLayout.PAGE_AXIS));
-                TitledBorder title = BorderFactory.createTitledBorder(owner.getName());
-                ownerPanel.setBorder(title);
+
+                JLabel ownerLabel = new JLabel("<html><font size=\"0.5\"><b>"+owner.getName()+"</b></font></html>");
+                ownerLabel.setBorder(new EmptyBorder(15,4,4,4));
+                rolePanel.add(ownerLabel);
 
                 for (Permission permission : permissionManager.getPermissions(owner)) {
                     JCheckBox checkBox = new JCheckBox(permission.getName());
@@ -85,6 +86,7 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
                 rolePanel.add(ownerPanel);
             }
 
+            rolePanel.add(Box.createVerticalStrut(10));
             JButton removeRoleButton = new JButton(Bundle.getMessage("PermissionPreferencesPanel_RemoveRole"));
             if (role.isSystemRole()) {
                 removeRoleButton.setEnabled(false);
@@ -120,30 +122,33 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
             JLabel usernameLabel = new JLabel("<html><font size=\"+1\"><b>"+user.getUserName()+"</b></font></html>");
             usernameLabel.setBorder(new EmptyBorder(4,4,4,4));
             userPanel.add(usernameLabel);
-//            userPanel.add(Box.createVerticalStrut(5));
             userPanel.add(new JLabel("Name:"));
             userPanel.add(new JTextField(20));
             userPanel.add(new JLabel("Comment:"));
             userPanel.add(new JTextField(40));
 
+            userPanel.add(Box.createVerticalStrut(10));
+
             int lastPriority = 0;
             for (Role role : roleList) {
                 if (role.getPriority() == 0 && lastPriority != 0) {
-                    userPanel.add(Box.createVerticalStrut(5));
+                    userPanel.add(Box.createVerticalStrut(10));
                 }
                 JCheckBox checkBox = new JCheckBox(role.getName());
                 userPanel.add(checkBox);
                 lastPriority = role.getPriority();
             }
 
+            userPanel.add(Box.createVerticalStrut(10));
+
+            JButton changePasswordButton = new JButton(Bundle.getMessage("PermissionPreferencesPanel_ChangePassword"));
+            userPanel.add(changePasswordButton);
+
             JButton removeUserButton = new JButton(Bundle.getMessage("PermissionPreferencesPanel_RemoveUser"));
             if (user.isSystemUser()) {
                 removeUserButton.setEnabled(false);
             }
             userPanel.add(removeUserButton);
-
-            JButton changePasswordButton = new JButton(Bundle.getMessage("PermissionPreferencesPanel_ChangePassword"));
-            userPanel.add(changePasswordButton);
         }
 
         usersPanel.add(usersTabbedPane);
@@ -228,7 +233,7 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
     public BooleanSupplier getIsEnabled() {
         return () -> {
             return InstanceManager.getDefault(PermissionManager.class)
-                    .checkPermission(StandardPermissions.PERMISSION_ADMIN);
+                    .checkPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PERMISSIONS);
         };
     }
 }
