@@ -17,6 +17,14 @@ public interface User {
 
     void changePassword(String oldPassword, String newPassword);
 
+    String getName();
+
+    void setName(String name);
+
+    String getComment();
+
+    void setComment(String comment);
+
     Set<Role> getRoles();
 
     void addRole(Role role);

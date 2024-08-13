@@ -1,7 +1,7 @@
 package jmri.jmrit.permission.swing;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 
@@ -23,7 +23,7 @@ import org.openide.util.lookup.ServiceProvider;
 public class PermissionPreferencesPanel extends JPanel implements PreferencesPanel {
 
     private final DefaultPermissionManager permissionManager;
-
+    private final Map<User, UserFields> _userFieldsMap = new HashMap<>();
     private boolean dirty = false;
 
     public PermissionPreferencesPanel() {
@@ -50,16 +50,28 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
         outerPanel.setLayout(new BoxLayout(outerPanel, BoxLayout.PAGE_AXIS));
 
         JPanel settingsPanel = new JPanel();
+        settingsPanel.setLayout(new BoxLayout(settingsPanel, BoxLayout.PAGE_AXIS));
+        settingsPanel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.black, 1), new EmptyBorder(4,4,4,4)));
+
         JCheckBox enablePermissionManagerCheckBox = new JCheckBox(Bundle.getMessage(
                 "PermissionPreferencesPanel_EnablePermissionManager"));
-        enablePermissionManagerCheckBox.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Color.black, 2), new EmptyBorder(4,4,4,4)));
         enablePermissionManagerCheckBox.setSelected(permissionManager.isEnabled());
         enablePermissionManagerCheckBox.addActionListener((evt) -> {
             permissionManager.setEnabled(enablePermissionManagerCheckBox.isSelected());
             dirty = true;
         });
         settingsPanel.add(enablePermissionManagerCheckBox);
+
+        JCheckBox allowEmptyPasswordsCheckBox = new JCheckBox(Bundle.getMessage(
+                "PermissionPreferencesPanel_AllowEmptyPasswords"));
+        allowEmptyPasswordsCheckBox.setSelected(permissionManager.isAllowEmptyPasswords());
+        allowEmptyPasswordsCheckBox.addActionListener((evt) -> {
+            permissionManager.setAllowEmptyPasswords(allowEmptyPasswordsCheckBox.isSelected());
+            dirty = true;
+        });
+        settingsPanel.add(allowEmptyPasswordsCheckBox);
+
         outerPanel.add(settingsPanel);
 
 //        add(Box.createVerticalStrut(10));
@@ -146,6 +158,7 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
                 usersTabbedPane.insertTab(user.getUserName(), null,
                         new JScrollPane(getUserPanel(user, roleList)),
                         null, newUserList.indexOf(user));
+                getFrame().pack();
             }).setVisible(true);
         });
         usersPanel.add(addUserButton);
@@ -177,13 +190,20 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
         JPanel userPanel = new JPanel();
         userPanel.setLayout(new BoxLayout(userPanel, BoxLayout.PAGE_AXIS));
 
+        UserFields userFields = new UserFields();
+        _userFieldsMap.put(user, userFields);
+
         JLabel usernameLabel = new JLabel("<html><font size=\"+1\"><b>"+user.getUserName()+"</b></font></html>");
         usernameLabel.setBorder(new EmptyBorder(4,4,4,4));
         userPanel.add(usernameLabel);
         userPanel.add(new JLabel("Name:"));
-        userPanel.add(new JTextField(20));
+        userFields._nameTextField = new JTextField(20);
+        userFields._nameTextField.setText(user.getName());
+        userPanel.add(userFields._nameTextField);
         userPanel.add(new JLabel("Comment:"));
-        userPanel.add(new JTextField(40));
+        userFields._commentTextField = new JTextField(40);
+        userFields._commentTextField.setText(user.getComment());
+        userPanel.add(userFields._commentTextField);
 
         userPanel.add(Box.createVerticalStrut(10));
 
@@ -257,6 +277,10 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
 
     @Override
     public void savePreferences() {
+        for (var entry : _userFieldsMap.entrySet()) {
+            entry.getKey().setName(entry.getValue()._nameTextField.getText());
+            entry.getKey().setComment(entry.getValue()._commentTextField.getText());
+        }
         permissionManager.storePermissionSettings();
         dirty = false;
     }
@@ -288,4 +312,11 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
                     .checkPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PERMISSIONS);
         };
     }
+
+
+    private static class UserFields {
+        JTextField _nameTextField;
+        JTextField _commentTextField;
+    }
+
 }

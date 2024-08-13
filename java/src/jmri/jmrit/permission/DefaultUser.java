@@ -26,6 +26,8 @@ public class DefaultUser implements User {
     private final int _priority;
     private String _seed;
     private String _passwordMD5;
+    private String _name = "";
+    private String _comment = "";
 
     private final Set<Role> _roles = new TreeSet<>((a,b) -> {return a.getName().compareTo(b.getName());});
 
@@ -109,6 +111,26 @@ public class DefaultUser implements User {
 
     void setSeed(String seed) {
         this._seed = seed;
+    }
+
+    @Override
+    public String getName() {
+        return _name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this._name = name;
+    }
+
+    @Override
+    public String getComment() {
+        return _comment;
+    }
+
+    @Override
+    public void setComment(String comment) {
+        this._comment = comment;
     }
 
     @Override

@@ -35,6 +35,10 @@ public interface PermissionManager {
 
     void setEnabled(boolean enabled);
 
+    boolean isAllowEmptyPasswords();
+
+    void setAllowEmptyPasswords(boolean value);
+
     boolean hasPermission(Permission permission);
 
     /**

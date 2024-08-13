@@ -7,6 +7,7 @@ import java.util.*;
 import jmri.*;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
+import jmri.util.ThreadingUtil;
 import jmri.util.swing.JmriJOptionPane;
 
 import org.jdom2.*;
@@ -44,6 +45,7 @@ public class DefaultPermissionManager implements PermissionManager {
     private final Map<String, Permission> _permissionClassNames = new HashMap<>();
 
     private boolean _permissionsEnabled = false;
+    private boolean _allowEmptyPasswords = false;
     private User _currentUser = USER_GUEST;
 
 
@@ -52,31 +54,16 @@ public class DefaultPermissionManager implements PermissionManager {
         _roles.put(DefaultRole.ROLE_STANDARD_USER.getName(), DefaultRole.ROLE_STANDARD_USER);
         _roles.put(DefaultRole.ROLE_ADMIN.getName(), DefaultRole.ROLE_ADMIN);
 
-//        USER_GUEST.addRole(Role.ROLE_GUEST);
         _users.put(USER_GUEST.getUserName(), USER_GUEST);
-
-//        USER_ADMIN.addRole(Role.ROLE_ADMIN);
         _users.put(USER_ADMIN.getUserName(), USER_ADMIN);
-
-        _roles.put("Aaa role", new DefaultRole("Aaa role"));
-        _roles.put("Zzz role", new DefaultRole("Zzz role"));
-/*
-        _roles.put("Test role", new Role("Test role"));
-
-        _users.put("daniel", new DefaultUser("daniel", "12345678"));
-        _users.put("kalle", new DefaultUser("kalle", "testtest"));
-        _users.put("sven", new DefaultUser("sven", "testtest"));
-
-        _users.get("daniel").addRole(_roles.get("Test role"));
-*/
-
-//        DefaultPermissionManager.this.registerOwner(StandardPermissions.PERMISSION_OWNER_ADMIN);
-//        DefaultPermissionManager.this.registerPermission(StandardPermissions.PERMISSION_ADMIN);
 
         for (PermissionFactory factory : ServiceLoader.load(PermissionFactory.class)) {
             factory.register(this);
         }
         loadPermissionSettings();
+        ThreadingUtil.runOnGUIEventually(() -> {
+            checkThatAllRolesKnowsAllPermissions();
+        });
         return this;
     }
 
@@ -132,6 +119,7 @@ public class DefaultPermissionManager implements PermissionManager {
 
                 Element settings = root.getChild("Settings");
                 _permissionsEnabled = "yes".equals(settings.getChild("Enabled").getValue());
+                _allowEmptyPasswords = "yes".equals(settings.getChild("AllowEmptyPasswords").getValue());
                 log.info("Permission system is enabled: {}", _permissionsEnabled ? "yes" : "no");
 
                 List<Element> roleElementList = root.getChild("Roles").getChildren("Role");
@@ -194,6 +182,9 @@ public class DefaultPermissionManager implements PermissionManager {
                         _users.put(user.getUserName(), user);
                     }
 
+                    user.setName(userElement.getChild("Name").getValue());
+                    user.setComment(userElement.getChild("Comment").getValue());
+
                     Set<Role> roles = new HashSet<>();
 
                     List<Element> userRoleElementList = userElement.getChild("Roles").getChildren("Role");
@@ -220,9 +211,6 @@ public class DefaultPermissionManager implements PermissionManager {
         } else {
             log.info("Permission file not found or empty");
         }
-
-//        checkThatAllRolesKnowsAllPermissions();
-//        storePermissionSettings();
     }
 
     @Override
@@ -236,6 +224,8 @@ public class DefaultPermissionManager implements PermissionManager {
             Element settings = new Element("Settings");
             settings.addContent(new Element("Enabled")
                     .addContent(this._permissionsEnabled ? "yes" : "no"));
+            settings.addContent(new Element("AllowEmptyPasswords")
+                    .addContent(this._allowEmptyPasswords ? "yes" : "no"));
             rootElement.addContent(settings);
 
             checkThatAllRolesKnowsAllPermissions();
@@ -274,6 +264,9 @@ public class DefaultPermissionManager implements PermissionManager {
                     userElement.addContent(new Element("Seed").addContent(user.getSeed()));
                 }
 
+                userElement.addContent(new Element("Name").addContent(user.getName()));
+                userElement.addContent(new Element("Comment").addContent(user.getComment()));
+
                 Element userRolesElement = new Element("Roles");
                 for (Role role : user.getRoles()) {
                     Element roleElement = new Element("Role");
@@ -305,6 +298,7 @@ public class DefaultPermissionManager implements PermissionManager {
             throw new RoleAlreadyExistsException();
         }
         Role role = new DefaultRole(name);
+        checkThatRoleKnowsAllPermissions(role);
         _roles.put(name, role);
         return role;
     }
@@ -395,6 +389,20 @@ public class DefaultPermissionManager implements PermissionManager {
     }
 
     @Override
+    public boolean isAllowEmptyPasswords() {
+        return _allowEmptyPasswords;
+    }
+
+    @Override
+    public void setAllowEmptyPasswords(boolean value) {
+        if (! InstanceManager.getDefault(PermissionManager.class)
+                .checkPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES)) {
+            return;
+        }
+        _allowEmptyPasswords = value;
+    }
+
+    @Override
     public boolean hasPermission(Permission permission) {
         return !_permissionsEnabled || _currentUser.hasPermission(permission);
     }
@@ -420,13 +428,17 @@ public class DefaultPermissionManager implements PermissionManager {
         _permissionClassNames.put(permission.getClass().getName(), permission);
     }
 
-    public void checkThatAllRolesKnowsAllPermissions() {
-        for (Role role : _roles.values()) {
-            for (Permission p : _permissions) {
-                if (!role.getPermissions().containsKey(p)) {
-                    role.setPermission(p, p.getDefaultPermission(role));
-                }
+    private void checkThatRoleKnowsAllPermissions(Role role) {
+        for (Permission p : _permissions) {
+            if (!role.getPermissions().containsKey(p)) {
+                role.setPermission(p, p.getDefaultPermission(role));
             }
+        }
+    }
+
+    private void checkThatAllRolesKnowsAllPermissions() {
+        for (Role role : _roles.values()) {
+            checkThatRoleKnowsAllPermissions(role);
         }
     }
 
