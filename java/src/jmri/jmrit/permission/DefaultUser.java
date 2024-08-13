@@ -101,7 +101,7 @@ public class DefaultUser implements User {
         return this._passwordMD5;
     }
 
-    void setPassword(String passwordMD5) {
+    void setPasswordMD5(String passwordMD5) {
         this._passwordMD5 = passwordMD5;
     }
 
@@ -172,7 +172,37 @@ public class DefaultUser implements User {
     @Override
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
         justification="The text is from an exception")
-    public void changePassword(String newPassword, String oldPassword) {
+    public void setPassword(String newPassword) {
+        PermissionManager pMngr = InstanceManager.getDefault(PermissionManager.class);
+
+        boolean hasAdminPermission = pMngr.hasPermission(
+                PermissionsSystemAdmin.PERMISSION_EDIT_PERMISSIONS);
+
+        if (!pMngr.hasPermission(
+                PermissionsSystemAdmin.PERMISSION_EDIT_PERMISSIONS)) {
+            log.warn("The current user has not permission to change password for user {}", getUserName());
+
+            if (!GraphicsEnvironment.isHeadless()) {
+                JmriJOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("DefaultPermissionManager_PermissionDenied"),
+                        jmri.Application.getApplicationName(),
+                        JmriJOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        try {
+            this._passwordMD5 = getPasswordMD5(newPassword);
+        } catch (NoSuchAlgorithmException e) {
+            String msg = "MD5 algoritm doesn't exists";
+            log.error(msg);
+            throw new RuntimeException(msg);
+        }
+    }
+
+    @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="The text is from an exception")
+    public void changePassword(String oldPassword, String newPassword) {
         PermissionManager pMngr = InstanceManager.getDefault(PermissionManager.class);
 
         boolean isCurrentUser = pMngr.isCurrentUser(this);

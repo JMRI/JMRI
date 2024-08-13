@@ -15,6 +15,8 @@ public interface User {
 
     int getPriority();
 
+    void setPassword(String newPassword);
+
     void changePassword(String oldPassword, String newPassword);
 
     String getName();

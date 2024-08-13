@@ -287,6 +287,9 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
         userPanel.add(Box.createVerticalStrut(10));
 
         JButton changePasswordButton = new JButton(Bundle.getMessage("PermissionPreferencesPanel_ChangePassword"));
+        changePasswordButton.addActionListener((evt) -> {
+            new ChangeUserPasswordDialog(getFrame(), user).setVisible(true);
+        });
         userPanel.add(changePasswordButton);
 
         JButton removeUserButton = new JButton(Bundle.getMessage("PermissionPreferencesPanel_RemoveUser"));

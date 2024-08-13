@@ -13,24 +13,15 @@ import jmri.util.swing.JmriJOptionPane;
  *
  * @author Daniel Bergqvist (C) 2024
  */
-public class AddUserDialog extends JDialog {
+public class ChangeUserPasswordDialog extends JDialog {
 
-    public interface UserAdded {
-        void userAdded(User user);
-    }
-
-    private final UserAdded _userAdded;
     private final JTextField _usernameTextField;
     private final JPasswordField _passwordTextField;
     private final JPasswordField _secondPasswordTextField;
-    private final JTextField _nameTextField;
-    private final JTextField _commentTextField;
 
 
-    public AddUserDialog(Frame owner, UserAdded userAdded) {
-        super(owner, Bundle.getMessage("AddUserDialog_AddUserTitle"), true);
-
-        this._userAdded = userAdded;
+    public ChangeUserPasswordDialog(Frame owner, User user) {
+        super(owner, Bundle.getMessage("ChangeUserPasswordDialog_ChangePasswordTitle"), true);
 
         JPanel contentPanel = new JPanel();
         rootPane.getContentPane().add(contentPanel);
@@ -49,10 +40,6 @@ public class AddUserDialog extends JDialog {
         contentPanel.add(new JLabel(Bundle.getMessage("AddUserDialog_Password")), c);
         c.gridy = 2;
         contentPanel.add(new JLabel(Bundle.getMessage("AddUserDialog_PasswordAgain")), c);
-        c.gridy = 3;
-        contentPanel.add(new JLabel(Bundle.getMessage("AddUserDialog_Name")), c);
-        c.gridy = 4;
-        contentPanel.add(new JLabel(Bundle.getMessage("AddUserDialog_Comment")), c);
 
         c.gridx = 1;
         c.gridy = 0;
@@ -62,19 +49,13 @@ public class AddUserDialog extends JDialog {
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.WEST;
         _usernameTextField = new JTextField(20);
-        contentPanel.add(_usernameTextField, c);
+        contentPanel.add(new JLabel(user.getUserName()), c);
         c.gridy = 1;
         _passwordTextField = new JPasswordField(20);
         contentPanel.add(_passwordTextField, c);
         c.gridy = 2;
         _secondPasswordTextField = new JPasswordField(20);
         contentPanel.add(_secondPasswordTextField, c);
-        c.gridy = 3;
-        _nameTextField = new JTextField(40);
-        contentPanel.add(_nameTextField, c);
-        c.gridy = 4;
-        _commentTextField = new JTextField(40);
-        contentPanel.add(_commentTextField, c);
 
         JPanel buttonPanel = new JPanel();
         JButton buttonCancel = new JButton(Bundle.getMessage("ButtonCancel"));    // NOI18N
@@ -89,7 +70,7 @@ public class AddUserDialog extends JDialog {
         JButton buttonOK = new JButton(Bundle.getMessage("ButtonOK"));    // NOI18N
         buttonPanel.add(buttonOK);
         buttonOK.addActionListener((ActionEvent e) -> {
-            if (okPressed()) {
+            if (okPressed(user)) {
                 dispose();
             }
         });
@@ -97,7 +78,7 @@ public class AddUserDialog extends JDialog {
         buttonOK.setToolTipText("CancelLogixButtonHint");      // NOI18N
 
         c.gridx = 0;
-        c.gridy = 5;
+        c.gridy = 3;
         c.gridwidth = 2;
         c.anchor = java.awt.GridBagConstraints.CENTER;
         contentPanel.add(buttonPanel, c);
@@ -106,30 +87,12 @@ public class AddUserDialog extends JDialog {
         pack();
     }
 
-    private boolean okPressed() {
+    private boolean okPressed(User user) {
         PermissionManager mngr = InstanceManager.getDefault(PermissionManager.class);
 
         String username = _usernameTextField.getText();
         String passwd1 = new String(_passwordTextField.getPassword());
         String passwd2 = new String(_secondPasswordTextField.getPassword());
-        String name = _nameTextField.getText();
-        String comment = _commentTextField.getText();
-
-        if (username.isBlank()) {
-            JmriJOptionPane.showMessageDialog(null,
-                    Bundle.getMessage("AddUserDialog_UsernameEmpty"),
-                    jmri.Application.getApplicationName(),
-                    JmriJOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        if (!username.equals(username.trim())) {
-            JmriJOptionPane.showMessageDialog(null,
-                    Bundle.getMessage("AddUserDialog_SpaceNotAllowedInUsername"),
-                    jmri.Application.getApplicationName(),
-                    JmriJOptionPane.ERROR_MESSAGE);
-            return false;
-        }
 
         if (passwd1.isBlank() && !mngr.isAllowEmptyPasswords()) {
             JmriJOptionPane.showMessageDialog(null,
@@ -155,19 +118,8 @@ public class AddUserDialog extends JDialog {
             return false;
         }
 
-        try {
-            User user = mngr.addUser(_usernameTextField.getText(), _passwordTextField.getText());
-            user.setName(name);
-            user.setComment(comment);
-            _userAdded.userAdded(user);
-            return true;
-        } catch (PermissionManager.UserAlreadyExistsException e) {
-            JmriJOptionPane.showMessageDialog(null,
-                    Bundle.getMessage("AddUserDialog_UsernameExists"),
-                    jmri.Application.getApplicationName(),
-                    JmriJOptionPane.ERROR_MESSAGE);
-            return false;
-        }
+        user.setPassword(passwd1);
+        return true;
     }
 
 }

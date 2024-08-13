@@ -171,7 +171,7 @@ public class DefaultPermissionManager implements PermissionManager {
                         }
                         Element passwordElement = userElement.getChild("Password");
                         if (passwordElement != null) {
-                            user.setPassword(passwordElement.getValue());
+                            user.setPasswordMD5(passwordElement.getValue());
                             user.setSeed(userElement.getChild("Seed").getValue());
                         }
                     } else {
