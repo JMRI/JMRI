@@ -168,7 +168,6 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
         while (c != null && !(c instanceof Frame)) {
             c = c.getParent();
         }
-        System.out.format("c: %s%n", c != null ? c.getClass().getName() : null);
         // c is either a Frame or null
         return (Frame)c;
     }
