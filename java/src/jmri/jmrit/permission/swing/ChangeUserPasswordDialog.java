@@ -15,7 +15,6 @@ import jmri.util.swing.JmriJOptionPane;
  */
 public class ChangeUserPasswordDialog extends JDialog {
 
-    private final JTextField _usernameTextField;
     private final JPasswordField _passwordTextField;
     private final JPasswordField _secondPasswordTextField;
 
@@ -48,7 +47,6 @@ public class ChangeUserPasswordDialog extends JDialog {
         c.gridx = 2;
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.WEST;
-        _usernameTextField = new JTextField(20);
         contentPanel.add(new JLabel(user.getUserName()), c);
         c.gridy = 1;
         _passwordTextField = new JPasswordField(20);
