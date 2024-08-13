@@ -31,6 +31,7 @@ public class PermissionsSystemAdmin {
             manager.registerOwner(PERMISSION_OWNER_SYSTEM_ADMIN);
             manager.registerPermission(PERMISSION_EDIT_PREFERENCES);
             manager.registerPermission(PERMISSION_EDIT_PERMISSIONS);
+            manager.registerPermission(PERMISSION_EDIT_OWN_PASSWORD);
         }
 
     }

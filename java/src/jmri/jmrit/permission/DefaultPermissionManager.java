@@ -15,12 +15,8 @@ import org.jdom2.*;
 /*
     TO DO
 
-    * Add/remove role
-    * Add/remove user
-    * Admin change user password
-    * Store changes in the preference panel
-    * Login, logut and change password menu items
-    * Move documentation to the correct folder
+    * Remove role
+    * Remove user
 */
 
 /**
@@ -460,7 +456,8 @@ public class DefaultPermissionManager implements PermissionManager {
         for (Role role : _roles.values()) {
             for (Permission p : _permissions) {
                 if (!role.getPermissions().containsKey(p)) {
-                    role.setPermission(p, p.getDefaultPermission(role));
+                    ((DefaultRole)role).setPermissionWithoutCheck(
+                            p, p.getDefaultPermission(role));
                 }
             }
         }

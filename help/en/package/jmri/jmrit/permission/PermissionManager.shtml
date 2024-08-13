@@ -15,14 +15,29 @@
       <p><strong>Permissions</strong> is used to protect sensitive parts of JMRI, for example
       from unauthorized users to load and store panel and data files.</p>
       
+      <h2>Default users</h2>
+      <h3>The current default users are</h3>
+      <table>
+		  <tr><th>User</th><th>Password</th><th>Role</th></tr>
+		  <tr><td>Admin</td><td>jmri</td><td>Administrator</td></tr>
+		  <tr><td>Guest</td><td></td><td>Guest</td></tr>
+      </table>
+      <p>These two users cannot be deleted. But if you don't want to use
+      the <strong>Admin</strong> user, you can unselect all the roles.
+      It will then not have any permissions at all.</p>
+      <p>New users will get the <strong>Standard user</strong> role when created.</p>
+      <p>Note that the <strong>Guest</strong> cannot have a password.</p>
+      
       <h2>Default permissions</h2>
       <h3>The current permissions are</h3>
-      <ul>
-		  <li><strong>Edit preferences</strong> - The role <strong>Adminstrator</strong> has access.</li>
-		  <li><strong>Edit permissions</strong> - The role <strong>Adminstrator</strong> has access.</li>
-		  <li><strong>Load table content and panels</strong> - The role <strong>Adminstrator</strong> has access.</li>
-		  <li><strong>Store ALL table content and panels</strong> - The role <strong>Adminstrator</strong> has access.</li>
-      </ul>
+      <table>
+		  <tr><th>Permission</th><th>Roles with this permission as standard</th></tr>
+		  <tr><td>Edit preferences</td><td><strong>Administrator</strong></td></tr>
+		  <tr><td>Edit permissions</td><td><strong>Administrator</strong></td></tr>
+		  <tr><td>Change user's own password</td><td><strong>Administrator</strong> and <strong>Standard user</strong></td></tr>
+		  <tr><td>Load table content and panels</td><td><strong>Administrator</strong></td></tr>
+		  <tr><td>Store ALL table content and panels</td><td><strong>Administrator</strong></td></tr>
+      </table>
       
       <h2>I have looked myself out! What do I do?</h2>
       <p>There are two options.</p>

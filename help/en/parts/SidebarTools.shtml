@@ -46,7 +46,7 @@
                 <li><a href="/help/en/html/tools/TimeTable.shtml">Timetable</a>
                 <li><a href="/help/en/html/tools/vsd/index.shtml">Virtual Sound Decoder</a>
                 <li><a href="/help/en/package/jmri/jmrit/whereused/WhereUsed.shtml">Where Used</a>
-                <li><a href="/help/en/package/jmri/jmrit/PermissionManager/PermissionManager.shtml">Permissions</a>
+                <li><a href="/help/en/package/jmri/jmrit/permission/PermissionManager.shtml">Permissions</a>
               </ul>
             </li>
 
