@@ -8,7 +8,6 @@ import jmri.ConfigureManager;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.Sensor;
-import jmri.SensorManager;
 import jmri.ShutDownManager;
 import jmri.ShutDownTask;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
