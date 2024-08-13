@@ -679,11 +679,13 @@
             <li><strong>Default Track Colors</strong> - This item's submenu allows colors to be
             selected from a color chooser as the <strong>Default Track Color</strong>, the
             <strong>Default Occupied Color</strong> and the <strong>Default Alternative Track
-            Color</strong>. When a track component is added it will have the default track color.
-            If the track component is added with a block name assigned and the block has been used
-            before, it will inherit the existing block colors. If this is the first track component
-            for this block, the new layout block will be assigned all three colors. The default
-            track color is also used for lines of the selection rectangle.</li>
+            Color</strong>. Note: <em>These are actually the default <strong>layout block</strong>
+            colors.</em> When a track component is added it will use the <strong>rail</strong> color
+            from <strong>Set Track Drawing Options</strong>. If the track component is added with a
+            block name assigned and the block has been used before, it will use the existing layout
+            block colors. If this is the first track component for this block, the new layout block
+            will be assigned the three default colors.  The <strong>Set All Tracks to Default Colors</strong>
+            menu item sets all of the <strong>layout blocks</strong> to the default colors.</li>
 
             <li><strong>Automatically Assign Blocks to Track</strong> - A block is created for each
             piece of track as it is added. The generated block names are <strong>AUTOBLK:n</strong>
