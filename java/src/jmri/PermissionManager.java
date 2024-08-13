@@ -23,8 +23,7 @@ public interface PermissionManager {
     void removeUser(String username)
             throws UserDoesNotExistException;
 
-    void changePassword(String newPassword, String oldPassword)
-            throws BadPasswordException;
+    void changePassword(String newPassword, String oldPassword);
 
     boolean login(String username, String password);
 
@@ -35,6 +34,8 @@ public interface PermissionManager {
     boolean isCurrentUser(String username);
 
     boolean isCurrentUser(User user);
+
+    String getCurrentUserName();
 
     void addLoginListener(LoginListener listener);
 

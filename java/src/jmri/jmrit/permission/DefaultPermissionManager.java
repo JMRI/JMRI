@@ -336,7 +336,9 @@ public class DefaultPermissionManager implements PermissionManager {
 
     @Override
     public void changePassword(String newPassword, String oldPassword) {
-        _currentUser.changePassword(newPassword,  oldPassword);
+        if (_currentUser.changePassword(newPassword,  oldPassword)) {
+            storePermissionSettings();
+        }
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
@@ -388,6 +390,11 @@ public class DefaultPermissionManager implements PermissionManager {
     @Override
     public boolean isCurrentUser(User user) {
         return _currentUser == user;
+    }
+
+    @Override
+    public String getCurrentUserName() {
+        return _currentUser.getUserName();
     }
 
     @Override

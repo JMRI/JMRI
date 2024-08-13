@@ -199,7 +199,7 @@ public class DefaultUser implements User {
     @Override
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
         justification="The text is from an exception")
-    public void changePassword(String oldPassword, String newPassword) {
+    public boolean changePassword(String oldPassword, String newPassword) {
         PermissionManager pMngr = InstanceManager.getDefault(PermissionManager.class);
 
         boolean isCurrentUser = pMngr.isCurrentUser(this);
@@ -223,6 +223,7 @@ public class DefaultUser implements User {
             } else {
                 try {
                     this._passwordMD5 = getPasswordMD5(newPassword);
+                    return true;
                 } catch (NoSuchAlgorithmException e) {
                     String msg = "MD5 algoritm doesn't exists";
                     log.error(msg);
@@ -242,6 +243,7 @@ public class DefaultUser implements User {
                         JmriJOptionPane.ERROR_MESSAGE);
             }
         }
+        return false;
     }
 
     public boolean checkPassword(String password) {

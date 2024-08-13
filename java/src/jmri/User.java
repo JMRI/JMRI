@@ -17,7 +17,7 @@ public interface User {
 
     void setPassword(String newPassword);
 
-    void changePassword(String oldPassword, String newPassword);
+    boolean changePassword(String oldPassword, String newPassword);
 
     String getName();
 
