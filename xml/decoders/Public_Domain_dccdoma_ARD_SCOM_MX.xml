@@ -16,6 +16,7 @@
     <version author="Petr Šídlo sidlo64@hotmail.com" version="1" lastUpdated="20181201"/>
     <version author="Petr Šídlo sidlo64@hotmail.com" version="2" lastUpdated="20190220"/>
     <version author="Petr Šídlo sidlo64@hotmail.com" version="3" lastUpdated="20190305"/>
+    <version author="Petr Šídlo sidlo64@hotmail.com" version="4" lastUpdated="20240810"/>
     <!-- Accessory decoder  -->
     <!-- Description of circuit diagram https://sites.google.com/site/sidloweb/elektrika/22-uni16ard -->
     <!-- Program description https://sites.google.com/site/sidloweb/elektrika/29-ard-scom-mx -->
@@ -25,6 +26,7 @@
 
         <family name="dccdoma.cz" mfg="Public-domain and DIY" >
             <model model="ARD-SCOM-MX" lowVersionID="10" highVersionID="19" productID="16843265" maxInputVolts="24V AC" maxTotalCurrent="0.2A peak 3.3A" numOuts="16" connector="other" />
+            <model model="ARD-SCOM-MX-2" lowVersionID="20" highVersionID="29" productID="16843265" maxInputVolts="24V AC" maxTotalCurrent="0.2A peak 3.3A" numOuts="16" connector="other" />
         </family>
     
         <programming direct="yes" paged="yes" register="no" ops="no" />
@@ -76,6 +78,14 @@
         <label xml:lang="cs">Adresování:</label>
         <tooltip>ROCO addressing is NMRA addressing + 4.</tooltip>
         <tooltip xml:lang="cs">ROCO adresování je NMRA adresování + 4.</tooltip>
+      </variable>
+    
+      <variable item="Use OutputPower Off" CV="38" default="1" include="ARD-SCOM-MX-2" >
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Use OutputPower=Off</label>
+        <label xml:lang="cs">Použít OutputPower=Vypnuto</label>
+        <tooltip>Decoder will respond to DCC command with attribute OutputPower = Off.</tooltip>
+        <tooltip xml:lang="cs">Dekodér bude reagovat na DCC příkaz s atributem OutputPower = Vypnuto.</tooltip>
       </variable>
     
       <variable CV="41" item="Aspect lag" default="4" >
@@ -4029,6 +4039,7 @@
             <display item="Start delay" />
             <display item="Bit period" />
             <display item="Aspect lag" />
+            <display item="Use OutputPower Off" format="checkbox" />
             <display item="Key" />
             <display item="Lock" />
         </column>
