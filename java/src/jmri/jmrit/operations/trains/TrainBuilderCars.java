@@ -1808,13 +1808,12 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             }
         }
         // did we find a destination?
-        if (trackSave != null) {
+        if (trackSave != null && rldSave != null) {
             // determine if local staging move is allowed (leaves car in staging)
             if ((_train.isAllowReturnToStagingEnabled() || Setup.isStagingAllowReturnEnabled()) &&
                     rl.isDropAllowed() &&
                     rl.getLocation().isStaging() &&
                     trackSave.isStaging() &&
-                    rldSave != null &&
                     rl.getLocation() == rldSave.getLocation() &&
                     !_train.isLocalSwitcher() &&
                     !car.isPassenger() &&
@@ -1823,7 +1822,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 addLine(_buildReport, SEVEN,
                         Bundle.getMessage("buildLeaveCarInStaging", car.toString(), car.getLocationName(),
                                 car.getTrackName()));
-                rldSave = rl;
+                rldSave = rl; // make local move
             } else if (trackSave.isSpur()) {
                 car.setScheduleItemId(trackSave.getScheduleItemId());
                 trackSave.bumpSchedule();
