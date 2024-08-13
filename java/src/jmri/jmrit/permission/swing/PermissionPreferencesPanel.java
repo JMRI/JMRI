@@ -157,6 +157,10 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
         String roleName = JOptionPane.showInputDialog(getFrame(),
                 Bundle.getMessage("PermissionPreferencesPanel_EnterRoleName"));
 
+        if (roleName == null) {
+            return;     // User selected "Cancel"
+        }
+
         if (roleName.isBlank()) {
             JmriJOptionPane.showMessageDialog(null,
                     Bundle.getMessage("PermissionPreferencesPanel_NameEmpty"),

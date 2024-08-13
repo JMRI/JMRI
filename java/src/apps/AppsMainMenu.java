@@ -7,6 +7,8 @@ import java.util.ResourceBundle;
 import javax.swing.*;
 import javax.swing.text.DefaultEditorKit;
 
+import jmri.*;
+
 import apps.jmrit.DebugMenu;
 import apps.plaf.macosx.Application;
 
@@ -20,6 +22,8 @@ import jmri.util.HelpUtil;
 import jmri.util.SystemType;
 import jmri.util.WindowMenu;
 import jmri.util.swing.WindowInterface;
+
+import apps.Bundle;
 
 /**
   * Create the main menu for PanelPro and related apps.  Includes opening PanelPro from
@@ -67,6 +71,22 @@ public class AppsMainMenu {
     static private void fileMenu(JMenuBar menuBar, WindowInterface wi) {
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));  // NOI18N
         menuBar.add(fileMenu);
+
+        var permissionManager = InstanceManager.getDefault(PermissionManager.class);
+//        if (InstanceManager.getDefault(PermissionManager.class).isEnabled()) {
+        if (permissionManager.isEnabled()) {
+            var loginAction = new jmri.jmrit.permission.swing.LoginAction();
+            var logoutAction = new jmri.jmrit.permission.swing.LogoutAction();
+            fileMenu.add(loginAction);
+            fileMenu.add(logoutAction);
+            fileMenu.add(new jmri.jmrit.permission.swing.LoginAction());
+            fileMenu.add(new jmri.jmrit.permission.swing.LogoutAction());
+//            if (permissionManager.isLoggedIn()) {
+                loginAction.setEnabled(true);
+                logoutAction.setEnabled(false);
+//            }
+            fileMenu.add(new JSeparator());
+        }
 
         fileMenu.add(new jmri.configurexml.LoadXmlUserAction(Bundle.getMessage("FileMenuItemLoad")));  // NOI18N
         fileMenu.add(new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("FileMenuItemStore")));  // NOI18N

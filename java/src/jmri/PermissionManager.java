@@ -22,8 +22,7 @@ public interface PermissionManager {
     void changePassword(String newPassword, String oldPassword)
             throws BadPasswordException;
 
-    void login(String username, String password)
-            throws BadUserOrPasswordException;
+    boolean login(String username, String password);
 
     void logout();
 

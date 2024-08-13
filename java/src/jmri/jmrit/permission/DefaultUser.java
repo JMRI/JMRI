@@ -44,7 +44,7 @@ public class DefaultUser implements User {
         if (password != null) {
             this._seed = getRandomString(10);
             try {
-                this._passwordMD5 = getPasswordMD5(this._seed + password);
+                this._passwordMD5 = getPasswordMD5(password);
             } catch (NoSuchAlgorithmException e) {
                 log.error("MD5 algoritm doesn't exists", e);
             }

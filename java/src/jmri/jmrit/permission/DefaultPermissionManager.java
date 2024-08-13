@@ -341,7 +341,7 @@ public class DefaultPermissionManager implements PermissionManager {
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
         justification="The text is from an exception")
     @Override
-    public void login(String username, String password) {
+    public boolean login(String username, String password) {
         DefaultUser newUser = _users.get(username);
         if (newUser == null || !newUser.checkPassword(password)) {
             String msg = new BadUserOrPasswordException().getMessage();
@@ -354,8 +354,11 @@ public class DefaultPermissionManager implements PermissionManager {
             } else {
                 log.error(msg);
             }
+            return false;
+        } else {
+            _currentUser = newUser;
+            return true;
         }
-        _currentUser = newUser;
     }
 
     @Override
