@@ -70,8 +70,13 @@ public class AppsMainMenu {
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));  // NOI18N
         menuBar.add(fileMenu);
 
+        fileMenu.add(new jmri.configurexml.LoadXmlUserAction(Bundle.getMessage("FileMenuItemLoad")));  // NOI18N
+        fileMenu.add(new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("FileMenuItemStore")));  // NOI18N
+        fileMenu.add(new jmri.jmrit.revhistory.swing.FileHistoryAction(Bundle.getMessage("FileMenuItemHistory")));  // NOI18N
+
+        fileMenu.add(new JSeparator());
+
         var permissionManager = InstanceManager.getDefault(PermissionManager.class);
-//        if (InstanceManager.getDefault(PermissionManager.class).isEnabled()) {
         if (permissionManager.isEnabled()) {
             var loginAction = new jmri.jmrit.permission.swing.LoginAction();
             var logoutAction = new jmri.jmrit.permission.swing.LogoutAction();
@@ -89,12 +94,6 @@ public class AppsMainMenu {
             });
             fileMenu.add(new JSeparator());
         }
-
-        fileMenu.add(new jmri.configurexml.LoadXmlUserAction(Bundle.getMessage("FileMenuItemLoad")));  // NOI18N
-        fileMenu.add(new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("FileMenuItemStore")));  // NOI18N
-        fileMenu.add(new jmri.jmrit.revhistory.swing.FileHistoryAction(Bundle.getMessage("FileMenuItemHistory")));  // NOI18N
-
-        fileMenu.add(new JSeparator());
 
         fileMenu.add(new PrintDecoderListAction(Bundle.getMessage("MenuPrintDecoderDefinitions"), wi.getFrame(), false));  // NOI18N
         fileMenu.add(new PrintDecoderListAction(Bundle.getMessage("MenuPrintPreviewDecoderDefinitions"), wi.getFrame(), true));  // NOI18N
