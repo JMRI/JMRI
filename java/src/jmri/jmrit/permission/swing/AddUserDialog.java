@@ -156,7 +156,7 @@ public class AddUserDialog extends JDialog {
         }
 
         try {
-            User user = mngr.addUser(_usernameTextField.getText(), _passwordTextField.getText());
+            User user = mngr.addUser(_usernameTextField.getText(), passwd1);
             user.setName(name);
             user.setComment(comment);
             _userAdded.userAdded(user);

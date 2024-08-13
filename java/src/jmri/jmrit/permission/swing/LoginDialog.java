@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 import jmri.*;
+import jmri.util.swing.JmriJOptionPane;
 
 /**
  * Dialog to add user
@@ -66,6 +67,11 @@ public class LoginDialog extends JDialog {
             String password = new String(_passwordTextField.getPassword());
             if (InstanceManager.getDefault(PermissionManager.class)
                     .login(_usernameTextField.getText(), password)) {
+
+                JmriJOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("LoginAction_UserLoggedIn"),
+                        jmri.Application.getApplicationName(),
+                        JmriJOptionPane.INFORMATION_MESSAGE);
                 dispose();
             }
         });
