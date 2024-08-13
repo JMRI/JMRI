@@ -11,8 +11,6 @@ import jmri.*;
 import jmri.swing.PreferencesPanel;
 import jmri.util.swing.JmriJOptionPane;
 
-import apps.gui3.tabbedpreferences.Bundle;
-
 /**
  * Provide a Connection preferences dialog.
  * <p>
