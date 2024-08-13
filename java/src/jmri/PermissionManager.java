@@ -37,6 +37,8 @@ public interface PermissionManager {
 
     String getCurrentUserName();
 
+    boolean isGuestUser(User user);
+
     void addLoginListener(LoginListener listener);
 
     boolean isEnabled();

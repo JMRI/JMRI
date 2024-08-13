@@ -394,6 +394,11 @@ public class DefaultPermissionManager implements PermissionManager {
     }
 
     @Override
+    public boolean isGuestUser(User user) {
+        return user == USER_GUEST;
+    }
+
+    @Override
     public void addLoginListener(LoginListener listener) {
         _loginListeners.add(listener);
     }
