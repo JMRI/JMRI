@@ -32,7 +32,7 @@ public class DefaultPermissionManager implements PermissionManager {
 
     private static final DefaultUser USER_ADMIN =
             new DefaultUser(Bundle.getMessage("PermissionManager_User_Admin"),
-                    "", 100, "ADMIN", new Role[]{DefaultRole.ROLE_ADMIN, DefaultRole.ROLE_STANDARD_USER});
+                    "jmri", 100, "ADMIN", new Role[]{DefaultRole.ROLE_ADMIN, DefaultRole.ROLE_STANDARD_USER});
 
     private final Map<String, Role> _roles = new HashMap<>();
     private final Map<String, DefaultUser> _users = new HashMap<>();
