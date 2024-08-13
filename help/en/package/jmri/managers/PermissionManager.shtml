@@ -62,6 +62,18 @@ sudo chmod 644 ~/.jmri/.permissions.xml
       </pre>
       
 
+      <h2>Connection failure during startup of JMRI</h2>
+      <p>If JMRI is unable to connect to the layout during startup,
+      a dialog is shown with the options <strong>Quit PanelPro</strong>,
+      <strong>Continue</strong> and <strong>Edit connections</strong>.
+      If the permission manager is enabled, the guest user probably
+      doesn't have the permission to edit the connections. In this case,
+      select <strong>Continue</strong> to start JMRI. When you do, a
+      dialog will open with the message <strong>Permission denied.</strong>.
+      Ignore that and log in and then open the preferences and then edit
+      the connection.</p>
+
+
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
