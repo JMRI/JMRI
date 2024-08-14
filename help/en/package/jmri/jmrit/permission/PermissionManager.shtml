@@ -13,35 +13,40 @@
       <h1>Permissions</h1>
 
       <p><strong>Permissions</strong> is used to protect sensitive parts of JMRI, for example
-      from unauthorized users to load and store panel and data files.</p>
-      
+      preventing the loading and storing of the <em>table content and panels</em> file by
+      unauthorized users.</p>
+
       <h2>Settings</h2>
-      <p><strong>Edit -> Preferences -> Permissions</strong> has the preferences for the
+
+      <p><strong>Edit &rArr; Preferences &rArr; Permissions</strong> has the configuration for the
       permission manager.</p>
-      
+
       <h3>Options</h3>
-      <ul>
-          <li><strong>Enable permission manager</strong> - If selected, the
-          permission manager will be active. You need to restart JMRI for the
-          login/logout menu items to be available on the <strong>File</strong>
-          menu. By default, the permission manager is disabled.</li>
-          <li><strong>Allow empty passwords</strong> - If selected, empty
-          passwords are allowed. By default, empty passwords are not allowed.</li>
-      </ul>
-      
+      <dl>
+        <dt>Enable permission manager</dt>
+          <dd>If selected, the permission manager will be active. You need to restart JMRI for the
+          login/logout menu items to be available on the <strong>File</strong> menu. By default, the
+          permission manager is disabled.</dd>
+
+        <dt>Allow empty passwords</dt>
+          <dd>If selected, empty passwords are allowed. By default, empty passwords are not allowed.</dd>
+      </dl>
+
       <h2>Default users</h2>
+
       <h3>The current default users are</h3>
       <table>
           <tr><th>User</th><th>Password</th><th>Role</th></tr>
           <tr><td>Admin</td><td>jmri</td><td>Administrator</td></tr>
           <tr><td>Guest</td><td></td><td>Guest</td></tr>
       </table>
-      <p>These two users cannot be deleted. But if you don't want to use
-      the <strong>Admin</strong> user, you can unselect all the roles.
-      It will then not have any permissions at all.</p>
+      <p>These two users cannot be deleted. If you don't want to use the <strong>Admin</strong> user,
+      you can unselect all the roles. It will then not have any permissions at all.</p>
+
       <p>New users will get the <strong>Standard user</strong> role when created.</p>
-      <p>Note that the <strong>Guest</strong> cannot have a password.</p>
-      
+
+      <p>Note that the <strong>Guest</strong> user cannot have a password.</p>
+
       <h2>Default permissions</h2>
       <h3>The current permissions are</h3>
       <table>
@@ -52,56 +57,63 @@
           <tr><td>Load table content and panels</td><td><strong>Administrator</strong></td></tr>
           <tr><td>Store ALL table content and panels</td><td><strong>Administrator</strong></td></tr>
       </table>
-      
-      <h2>I have looked myself out! What do I do?</h2>
+
+      <h2>I have locked myself out! What do I do?</h2>
+
       <p>There are two options.</p>
-      <p>The simpliest way is to delete the file <strong>.permissions.xml</strong> in the
-      PREFERENCES folder. On Linux that file is usually <strong>~/.jmri/.permissions.xml</strong>.
-      By deleting that file, all the permission settings are removed.</p>
-      
+
+      <p>The simplest way is to delete the file <strong>.permissions.xml</strong> in the
+      PREFERENCES folder. Note: This is the <strong>Settings Location</strong> in <strong>Help &rArr;
+      File Locations</strong>.</p>
+
+      <p>By deleting the file, the permission configuration is removed.</p>
+
       <p>The second option is to edit that file with a text editor or an xml editor. The beginning
-      of the file looks like this:
+      of the file looks like this:</p>
+
       <pre>
-<?xml version="1.0" encoding="UTF-8"?>
-<Permissions>
-  <Settings>
-    <Enabled>no</Enabled>
-  </Settings>
-  <Users>
-    <User>
+&lt;Permissions&gt;
+  &lt;Settings&gt;
+    &lt;Enabled&gt;no&lt;/Enabled&gt;
+    &lt;AllowEmptyPasswords&gt;no&lt;/AllowEmptyPasswords&gt;
+  &lt;/Settings&gt;
+  ...
+&lt;/Permissions&gt;
       </pre>
-      
-      Change <strong>&lt;Enabled&gt;yes&lt;/Enabled&gt;</strong> to
+
+      <p>Change <strong>&lt;Enabled&gt;yes&lt;/Enabled&gt;</strong> to
       <strong>&lt;Enabled&gt;no&lt;/Enabled&gt;</strong>.
-      It disables the permissions but the users and their permission configuration is still kept.
+      It disables permission checking but retains the permission configuration.
       </p>
-          
 
       <h2>Securing the preferences</h2>
+
       <p>If an unauthorized user is able to delete or edit files on the computer running
-      JMRI, he might be able to disable the permissions and then override them. See the section <strong>I have looked myself out!</strong> above.</p>
-      
-      <p>If you want to protect from that, you could protect that file from being changed or deleted.
+      JMRI, he might be able to disable the permissions and then override them. See the section
+      <strong>I have looked myself out!</strong> above.</p>
+
+      <p>If you want to protect from that, you could protect that file from being changed.
       On Linux, it can be done by changing the owner of the file to <strong>root</strong> and to have
-      it read only for other users.</p>
-      
+      it read only for other users. This assumes that the OS user that runs JMRI does not have OS
+      administrative authority.</p>
+
       <pre>
 sudo chown root ~/.jmri/.permissions.xml
 sudo chmod 644 ~/.jmri/.permissions.xml
       </pre>
-      
+
+      <p>On Linux the .permissions.xml file can deleted even when write access is denied.  To prevent
+      this, the <strong>.jmri</strong> parent directory also needs to be protected.  However, doing
+      so can result in JMRI errors.</p>
 
       <h2>Connection failure during startup of JMRI</h2>
-      <p>If JMRI is unable to connect to the layout during startup,
-      a dialog is shown with the options <strong>Quit PanelPro</strong>,
-      <strong>Continue</strong> and <strong>Edit connections</strong>.
-      If the permission manager is enabled, the guest user probably
-      doesn't have the permission to edit the connections. In this case,
-      select <strong>Continue</strong> to start JMRI. When you do, a
-      dialog will open with the message <strong>Permission denied.</strong>.
-      Ignore that and log in and then open the preferences and then edit
-      the connection.</p>
 
+      <p>If JMRI is unable to connect to the layout during startup, a dialog is shown with the options
+      <strong>Quit PanelPro</strong>, <strong>Continue</strong> and <strong>Edit connections</strong>.
+      If the permission manager is enabled, the guest user probably doesn't have the permission to
+      edit the connections. In this case, select <strong>Continue</strong> to start JMRI. When you
+      do, a dialog will open with the message <strong>Permission denied.</strong>. Ignore that, log
+      in with an authorized user and then open the preferences. Now edit the connection.</p>
 
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
