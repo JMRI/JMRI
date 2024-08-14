@@ -1516,7 +1516,10 @@ public class Track extends PropertyChangeSupport {
                         Bundle.getMessage("carIsNotAllowed", getName()); // no
             }
             // does this track accept cars without a final destination?
-            if (isOnlyCarsWithFinalDestinationEnabled() && car.getFinalDestination() == null) {
+            if (isOnlyCarsWithFinalDestinationEnabled() &&
+                    car.getFinalDestination() == null &&
+                    !car.isCaboose() &&
+                    !car.hasFred()) {
                 return NO_FINAL_DESTINATION;
             }
             // check for car in kernel
