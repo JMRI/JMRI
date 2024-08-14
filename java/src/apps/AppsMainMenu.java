@@ -7,8 +7,6 @@ import java.util.ResourceBundle;
 import javax.swing.*;
 import javax.swing.text.DefaultEditorKit;
 
-import jmri.*;
-
 import apps.jmrit.DebugMenu;
 import apps.plaf.macosx.Application;
 
@@ -76,24 +74,10 @@ public class AppsMainMenu {
 
         fileMenu.add(new JSeparator());
 
-        var permissionManager = InstanceManager.getDefault(PermissionManager.class);
-        if (permissionManager.isEnabled()) {
-            var loginAction = new jmri.jmrit.permission.swing.LoginAction();
-            var logoutAction = new jmri.jmrit.permission.swing.LogoutAction();
-            var changePasswordAction = new jmri.jmrit.permission.swing.ChangePasswordAction();
-            fileMenu.add(loginAction);
-            fileMenu.add(logoutAction);
-            fileMenu.add(changePasswordAction);
-            loginAction.setEnabled(!permissionManager.isLoggedIn());
-            logoutAction.setEnabled(permissionManager.isLoggedIn());
-            changePasswordAction.setEnabled(permissionManager.isLoggedIn());
-            permissionManager.addLoginListener((isLogin) -> {
-                loginAction.setEnabled(!isLogin);
-                logoutAction.setEnabled(isLogin);
-                changePasswordAction.setEnabled(isLogin);
-            });
-            fileMenu.add(new JSeparator());
-        }
+        fileMenu.add(new jmri.jmrit.permission.swing.LoginAction());
+        fileMenu.add(new jmri.jmrit.permission.swing.LogoutAction());
+        fileMenu.add(new jmri.jmrit.permission.swing.ChangePasswordAction());
+        fileMenu.add(new JSeparator());
 
         fileMenu.add(new PrintDecoderListAction(Bundle.getMessage("MenuPrintDecoderDefinitions"), wi.getFrame(), false));  // NOI18N
         fileMenu.add(new PrintDecoderListAction(Bundle.getMessage("MenuPrintPreviewDecoderDefinitions"), wi.getFrame(), true));  // NOI18N
