@@ -4,8 +4,8 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.Icon;
 
-import jmri.InstanceManager;
-import jmri.PermissionManager;
+import jmri.*;
+import jmri.jmrit.permission.swing.Bundle;
 import jmri.util.swing.*;
 
 
@@ -45,6 +45,15 @@ public class ChangePasswordAction extends JmriAbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        var permissionManager = InstanceManager.getDefault(PermissionManager.class);
+        if (!permissionManager.hasPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PERMISSIONS)) {
+            // Note that the line above _asks_ about the permission and the line below
+            // _checks_ for the permission. If the line below doesn't have the permission,
+            // a JOptionPane will show an error message.
+            if (!permissionManager.checkPermission(PermissionsSystemAdmin.PERMISSION_EDIT_OWN_PASSWORD)) {
+                return;
+            }
+        }
         new ChangePasswordDialog().setVisible(true);
     }
 
