@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.Icon;
 
 import jmri.*;
-import jmri.jmrit.permission.swing.Bundle;
 import jmri.util.swing.*;
 
 
