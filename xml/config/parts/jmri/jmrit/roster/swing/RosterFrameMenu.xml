@@ -97,16 +97,6 @@
         <name xml:lang="nl">Bouw Loclijst opnieuw op</name>
         <adapter>jmri.jmrit.roster.RecreateRosterAction</adapter>
     </node>
-    <node>separator</node><!-- separator -->
-    <node name="Login">
-        <adapter>jmri.jmrit.permission.swing.LoginAction</adapter>
-    </node>
-    <node name="Logout">
-        <adapter>jmri.jmrit.permission.swing.LogoutAction</adapter>
-    </node>
-    <node name="Change password">
-        <adapter>jmri.jmrit.permission.swing.ChangePasswordAction</adapter>
-    </node>
     <node name="Validate XML File...">
         <name xml:lang="fr">Valider Fichier XML...</name>
         <name xml:lang="it">Convalida file XML...</name>
@@ -118,6 +108,16 @@
 		<name xml:lang="ca">Validar el fitxer XML...</name>
         <name xml:lang="nl">Valideer XML bestand...</name>
         <adapter>jmri.jmrit.XmlFileValidateAction</adapter>
+    </node>
+    <node>separator</node><!-- separator -->
+    <node name="Login">
+        <adapter>jmri.jmrit.permission.swing.LoginAction</adapter>
+    </node>
+    <node name="Logout">
+        <adapter>jmri.jmrit.permission.swing.LogoutAction</adapter>
+    </node>
+    <node name="Change password">
+        <adapter>jmri.jmrit.permission.swing.ChangePasswordAction</adapter>
     </node>
     <node>separator</node><!-- separator -->
     <node name="Open PanelPro Window">
