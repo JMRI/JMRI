@@ -5,7 +5,7 @@ import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
 /**
- * A reference to an object there the object must not be null.
+ * A reference to an object where the object must not be null.
  * It's a faster replacement for AtomicReference when thread safety is not
  * needed.
  *
