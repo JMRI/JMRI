@@ -19,7 +19,7 @@ public class ChangeUserPasswordDialog extends JDialog {
     private final JPasswordField _secondPasswordTextField;
 
 
-    public ChangeUserPasswordDialog(Frame owner, User user) {
+    public ChangeUserPasswordDialog(Frame owner, User user, Runnable passwordChangedRunnable) {
         super(owner, Bundle.getMessage("ChangeUserPasswordDialog_ChangePasswordTitle"), true);
 
         JPanel contentPanel = new JPanel();
@@ -69,6 +69,7 @@ public class ChangeUserPasswordDialog extends JDialog {
         buttonPanel.add(buttonOK);
         buttonOK.addActionListener((ActionEvent e) -> {
             if (okPressed(user)) {
+                passwordChangedRunnable.run();
                 dispose();
             }
         });

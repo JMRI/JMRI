@@ -129,6 +129,7 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
                         new JScrollPane(getUserPanel(user, usersTabbedPane, roleList, userList)),
                         null, userList.indexOf(user));
                 getFrame().pack();
+                _dirty = true;
             }).setVisible(true);
         });
         usersPanel.add(addUserButton);
@@ -201,6 +202,7 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
 
             reloadUsersTabbedPane(usersTabbedPane, roleList, userList);
             getFrame().pack();
+            _dirty = true;
 
         } catch (PermissionManager.RoleAlreadyExistsException e) {
             JmriJOptionPane.showMessageDialog(null,
@@ -231,8 +233,8 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
                 JCheckBox checkBox = new JCheckBox(permission.getName());
                 checkBox.setSelected(role.hasPermission(permission));
                 checkBox.addActionListener((evt) -> {
-                    _dirty = true;
                     role.setPermission(permission, checkBox.isSelected());
+                    _dirty = true;
                 });
                 ownerPanel.add(checkBox);
             }
@@ -326,7 +328,8 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
         JButton changePasswordButton = new JButton(Bundle.getMessage("PermissionPreferencesPanel_ChangePassword"));
         changePasswordButton.setEnabled(!permissionManager.isGuestUser(user));
         changePasswordButton.addActionListener((evt) -> {
-            new ChangeUserPasswordDialog(getFrame(), user).setVisible(true);
+            new ChangeUserPasswordDialog(getFrame(), user, ()->{_dirty = true;})
+                    .setVisible(true);
         });
         userPanel.add(changePasswordButton);
 
