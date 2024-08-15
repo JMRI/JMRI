@@ -109,7 +109,8 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
         JTabbedPane usersTabbedPane = new JTabbedPane();
 
         for (User user : userList) {
-            usersTabbedPane.addTab(user.getUserName(), new JScrollPane(getUserPanel(user, roleList)));
+            usersTabbedPane.addTab(user.getUserName(), new JScrollPane(
+                    getUserPanel(user, usersTabbedPane, roleList, userList)));
         }
 
         usersPanel.add(usersTabbedPane);
@@ -118,16 +119,17 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
         addUserButton.addActionListener((evt) -> {
             new AddUserDialog(getFrame(), (user) -> {
                 // Find the index of the new user
-                List<User> newUserList = new ArrayList<>(permissionManager.getUsers());
-                newUserList.sort((a,b) -> {
+                userList.clear();
+                userList.addAll(permissionManager.getUsers());
+                userList.sort((a,b) -> {
                     if (a.getPriority() != b.getPriority()) {
                         return Integer.compare(b.getPriority(), a.getPriority());
                     }
                     return a.getUserName().toLowerCase().compareTo(b.getUserName().toLowerCase());
                 });
                 usersTabbedPane.insertTab(user.getUserName(), null,
-                        new JScrollPane(getUserPanel(user, roleList)),
-                        null, newUserList.indexOf(user));
+                        new JScrollPane(getUserPanel(user, usersTabbedPane, roleList, userList)),
+                        null, userList.indexOf(user));
                 getFrame().pack();
             }).setVisible(true);
         });
@@ -260,7 +262,8 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
         return rolePanel;
     }
 
-    private JPanel getUserPanel(User user, List<Role> roleList) {
+    private JPanel getUserPanel(User user, JTabbedPane usersTabbedPane,
+            List<Role> roleList, List<User> userList) {
         JPanel userPanel = new JPanel();
         userPanel.setLayout(new BoxLayout(userPanel, BoxLayout.PAGE_AXIS));
 
@@ -313,6 +316,22 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
         userPanel.add(changePasswordButton);
 
         JButton removeUserButton = new JButton(Bundle.getMessage("PermissionPreferencesPanel_RemoveUser"));
+        removeUserButton.addActionListener((evt) -> {
+            if (JmriJOptionPane.YES_OPTION == JmriJOptionPane.showConfirmDialog(
+                            null,
+                            Bundle.getMessage("PermissionPreferencesPanel_RemoveUserConfirmation", user.getUserName(), user.getName()),
+                            Bundle.getMessage("PermissionPreferencesPanel_RemoveUserTitle"),
+                            JmriJOptionPane.YES_NO_OPTION)) {
+                try {
+                    permissionManager.removeUser(user.getUserName());
+                    usersTabbedPane.remove(userList.indexOf(user));
+                    userList.remove(user);
+                    _dirty = true;
+                } catch (PermissionManager.UserDoesNotExistException e) {
+                    log.error("Unexpected exception", e);
+                }
+            }
+        });
         if (user.isSystemUser()) {
             removeUserButton.setEnabled(false);
         }
