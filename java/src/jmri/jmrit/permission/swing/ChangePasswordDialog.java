@@ -9,7 +9,7 @@ import jmri.*;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
- * Dialog to add user
+ * Dialog to change the user's own password.
  *
  * @author Daniel Bergqvist (C) 2024
  */
