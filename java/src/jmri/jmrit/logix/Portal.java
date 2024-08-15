@@ -15,9 +15,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * A Portal is a boundary between two Blocks.
  * <p>
@@ -94,11 +91,13 @@ public class Portal {
                 if (pName.equals(p.getName())) {
                     return true;    // OK, everything equal
                 } else {
-                    log.warn("Path \"{}\" is duplicate of path \"{}\" in Portal \"{}\" from block {}.", path.getName(), p.getName(), _name, path.getBlock().getDisplayName());
+                    log.warn("Path \"{}\" is duplicate of path \"{}\" in Portal \"{}\" from block {}.", 
+                        path.getName(), p.getName(), _name, path.getBlock().getDisplayName());
                     return false;
                 }
             } else if (pName.equals(p.getName())) {
-                log.warn("Path \"{}\" is duplicate name for another path in Portal \"{}\" from block {}.", path.getName(), _name, path.getBlock().getDisplayName());
+                log.warn("Path \"{}\" is duplicate name for another path in Portal \"{}\" from block {}.",
+                    path.getName(), _name, path.getBlock().getDisplayName());
                 return false;
             }
         }
@@ -137,7 +136,8 @@ public class Portal {
      * @param newName name for path
      * @return return error message, null if name change is OK
      */
-    public String setName(String newName) {
+    @CheckForNull
+    public String setName(@CheckForNull String newName) {
         if (newName == null || newName.length() == 0) {
             return null;
         }
@@ -177,7 +177,7 @@ public class Portal {
      *                    verify that all toPaths are contained in the block.
      * @return false if paths are not in the block
      */
-    public boolean setToBlock(OBlock block, boolean changePaths) {
+    public boolean setToBlock(@CheckForNull OBlock block, boolean changePaths) {
         if (((block != null) && block.equals(_toBlock)) || ((block == null) && (_toBlock == null))) {
             return true;
         }
@@ -207,6 +207,7 @@ public class Portal {
         return _toBlock;
     }
 
+    // @CheckForNull needs further dev
     public String getToBlockName() {
         return (_toBlock != null ? _toBlock.getDisplayName() : null);
     }
@@ -224,7 +225,7 @@ public class Portal {
      *                    verify that all toPaths are contained in the block.
      * @return false if paths are not in the block
      */
-    public boolean setFromBlock(OBlock block, boolean changePaths) {
+    public boolean setFromBlock(@CheckForNull OBlock block, boolean changePaths) {
         if ((block != null && block.equals(_fromBlock)) || (block == null && _fromBlock == null)) {
             return true;
         }
@@ -237,7 +238,7 @@ public class Portal {
             return false;
         }
         log.debug("setFromBlock: oldBlock= \"{}\" newBlock \"{}\".", getFromBlockName(),
-             (block != null ? block.getDisplayName() : null));
+            (block != null ? block.getDisplayName() : null));
         OBlock oldBlock = _fromBlock;
         if (_fromBlock != null) {
             _fromBlock.removePortal(this);
@@ -254,6 +255,7 @@ public class Portal {
         return _fromBlock;
     }
 
+    // @CheckForNull needs further dev
     public String getFromBlockName() {
         return (_fromBlock != null ? _fromBlock.getDisplayName() : null);
     }
@@ -274,7 +276,7 @@ public class Portal {
      * @param protectedBlock OBlock the signal protects
      * @return true if signal is set
      */
-    public boolean setProtectSignal(@CheckForNull NamedBean signal, float length, OBlock protectedBlock) {
+    public boolean setProtectSignal(@CheckForNull NamedBean signal, float length, @CheckForNull OBlock protectedBlock) {
         if (protectedBlock == null) {
             return false;
         }
@@ -308,6 +310,7 @@ public class Portal {
      * @param block is the direction of entry, i.e. the protected block
      * @return signal protecting block, if block is protected, otherwise null.
      */
+    @CheckForNull
     public NamedBean getSignalProtectingBlock(@Nonnull OBlock block) {
         if (block.equals(_toBlock)) {
             return _fromSignal;
@@ -323,7 +326,8 @@ public class Portal {
      * @param signal is the signal, either a SignalMast or a SignalHead
      * @return Protected OBlock, if it is protected, otherwise null.
      */
-    public OBlock getProtectedBlock(NamedBean signal) {
+    @CheckForNull
+    public OBlock getProtectedBlock(@CheckForNull NamedBean signal) {
         if (signal == null) {
             return null;
         }
@@ -351,6 +355,7 @@ public class Portal {
         return _toSignal;
     }
 
+    @CheckForNull
     public String getToSignalName() {
         return (_toSignal != null ? _toSignal.getDisplayName() : null);
     }
@@ -377,6 +382,7 @@ public class Portal {
         }
     }
 
+    @CheckForNull
     public static NamedBean getSignal(String name) {
         NamedBean signal = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name);
         if (signal == null) {
@@ -392,7 +398,8 @@ public class Portal {
      * @param block OBlock
      * @return null if portal does not connect to block
      */
-    public List<OPath> getPathsWithinBlock(OBlock block) {
+    // @CheckForNull requires further dev
+    public List<OPath> getPathsWithinBlock(@CheckForNull OBlock block) {
         if (block == null) {
             return null;
         }
@@ -411,6 +418,7 @@ public class Portal {
      * @param block starting OBlock
      * @return the opposite block
      */
+    // @CheckForNull needs further dev
     public OBlock getOpposingBlock(@Nonnull OBlock block) {
         if (block.equals(_fromBlock)) {
             return _toBlock;
@@ -427,6 +435,7 @@ public class Portal {
      * @param block OBlock
      * @return null if portal does not connect to block
      */
+    // @CheckForNull requires further dev
     public List<OPath> getPathsFromOpposingBlock(@Nonnull OBlock block) {
         if (block.equals(_fromBlock)) {
             return _toPaths;
@@ -441,7 +450,7 @@ public class Portal {
      *
      * @param block OBlock
      */
-    protected void setEntryState(OBlock block) {
+    protected void setEntryState(@CheckForNull OBlock block) {
         if (block == null) {
             _state = UNKNOWN;
         } else if (block.equals(_fromBlock)) {
@@ -542,11 +551,9 @@ public class Portal {
         } else {
             log.error("Block \"{}\" is not in Portal \"{}\".", blockName, _name);
         }
-        if (log.isDebugEnabled()) {
-            if (speed != null) {
-                log.debug("Portal \"{}\" has {} speed= {} into \"{}\" from signal.",
-                        _name, (entrance ? "ENTRANCE" : "EXIT"), speed, blockName);
-            }
+        if ( log.isDebugEnabled() && speed != null ) {
+            log.debug("Portal \"{}\" has {} speed= {} into \"{}\" from signal.",
+                _name, (entrance ? "ENTRANCE" : "EXIT"), speed, blockName);
         }
         // no signals, proceed at recorded speed
         return speed;
@@ -561,7 +568,8 @@ public class Portal {
      */
     private static @Nonnull String getPermissibleSignalSpeed(@Nonnull SignalHead signal, boolean entrance) {
         int appearance = signal.getAppearance();
-        String speed = InstanceManager.getDefault(SignalSpeedMap.class).getAppearanceSpeed(signal.getAppearanceName(appearance));
+        String speed = InstanceManager.getDefault(SignalSpeedMap.class).
+            getAppearanceSpeed(signal.getAppearanceName(appearance));
         // on head, speed is the same for entry and exit
         if (speed == null) {
             log.error("SignalHead \"{}\" has no {} speed specified for appearance \"{}\"! - Restricting Movement!",
@@ -585,9 +593,11 @@ public class Portal {
         String signalAspect = ( aspect == null ? "" : aspect );
         String speed;
         if (entrance) {
-            speed = InstanceManager.getDefault(SignalSpeedMap.class).getAspectSpeed(signalAspect, signal.getSignalSystem());
+            speed = InstanceManager.getDefault(SignalSpeedMap.class).
+                getAspectSpeed(signalAspect, signal.getSignalSystem());
         } else {
-            speed = InstanceManager.getDefault(SignalSpeedMap.class).getAspectExitSpeed(signalAspect, signal.getSignalSystem());
+            speed = InstanceManager.getDefault(SignalSpeedMap.class).
+                getAspectExitSpeed(signalAspect, signal.getSignalSystem());
         }
         if (speed == null) {
             log.error("SignalMast \"{}\" has no {} speed specified for aspect \"{}\"! - Restricting Movement!",
@@ -605,7 +615,7 @@ public class Portal {
      * or
      * Block is a potential _fromBlock and Paths are the current _fromPaths
      */
-    private static boolean verify(List<OPath> paths, OBlock block) {
+    private static boolean verify(@Nonnull List<OPath> paths, @CheckForNull OBlock block) {
         if (block == null) {
             return (paths.isEmpty());
         }
@@ -633,7 +643,7 @@ public class Portal {
      * @param path OPath to test
      * @return true if valid
      */
-    public boolean isValidPath(OPath path) {
+    public boolean isValidPath(@Nonnull OPath path) {
         String name = path.getName();
         for (OPath toPath : _toPaths) {
             if (toPath.getName().equals(name)) {
@@ -662,7 +672,7 @@ public class Portal {
 
     @OverridingMethodsMustInvokeSuper
     public boolean dispose() {
-        if (!InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class).okToRemovePortal(this)) {
+        if (!InstanceManager.getDefault(WarrantManager.class).okToRemovePortal(this)) {
             return false;
         }
         if (_toBlock != null) {
@@ -697,6 +707,6 @@ public class Portal {
         return sb.toString();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(Portal.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Portal.class);
 
 }

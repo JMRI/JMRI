@@ -1932,9 +1932,7 @@ public class Track extends PropertyChangeSupport {
         }
         // search schedule if match mode
         if (getScheduleMode() == MATCH && !getSchedule().searchSchedule(car, this).equals(OKAY)) {
-            return SCHEDULE +
-                    " " +
-                    Bundle.getMessage("matchMessage", getScheduleName(),
+            return Bundle.getMessage("matchMessage", SCHEDULE, getScheduleName(),
                             getSchedule().hasRandomItem() ? Bundle.getMessage("Random") : "");
         }
         ScheduleItem currentSi = getCurrentScheduleItem();
@@ -1967,12 +1965,10 @@ public class Track extends PropertyChangeSupport {
             if (sch != null) {
                 currentTrainScheduleName = sch.getName();
             }
-            return SCHEDULE +
-                    " " +
-                    Bundle.getMessage("sequentialMessage", getScheduleName(), getScheduleModeName(), car.toString(),
-                            car.getTypeName(), scheduleName, car.getRoadName(), car.getLoadName(),
-                            currentSi.getTypeName(), currentTrainScheduleName, currentSi.getRoadName(),
-                            currentSi.getReceiveLoadName());
+            return Bundle.getMessage("sequentialMessage", SCHEDULE, getScheduleName(), getScheduleModeName(),
+                    car.toString(), car.getTypeName(), scheduleName, car.getRoadName(), car.getLoadName(),
+                    currentSi.getTypeName(), currentTrainScheduleName, currentSi.getRoadName(),
+                    currentSi.getReceiveLoadName());
         } else {
             log.error("ERROR Track {} current schedule item is null!", getName());
             return SCHEDULE + " ERROR Track " + getName() + " current schedule item is null!"; // NOI18N

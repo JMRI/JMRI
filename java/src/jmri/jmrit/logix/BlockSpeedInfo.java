@@ -11,16 +11,17 @@ import javax.annotation.Nonnull;
 */
 
 class BlockSpeedInfo {
-    String blockName;
-    float entranceSpeed;
-    float exitSpeed;
-    long time;
-    float pathDist;
-    float calcDist;
-    int firstIdx;
-    int lastIdx;
 
-    BlockSpeedInfo(String n, float ens, float exs, long t, float d, float c, int fi, int li) {
+    private final String blockName;
+    private final float entranceSpeed;
+    private final float exitSpeed;
+    private final long time;
+    private final float pathDist;
+    private final float calcDist;
+    private final int firstIdx;
+    private final int lastIdx;
+
+    BlockSpeedInfo( @Nonnull String n, float ens, float exs, long t, float d, float c, int fi, int li) {
         blockName = n;
         entranceSpeed = ens;
         exitSpeed = exs;
@@ -68,7 +69,7 @@ class BlockSpeedInfo {
     @Override
     @Nonnull
     public String toString() {
-        StringBuilder sb = new StringBuilder("BlockSpeedInfo \"");
+        StringBuilder sb = new StringBuilder(" \"");
         sb.append(blockName);
         sb.append("\" entranceSpeed ");
         sb.append(entranceSpeed);

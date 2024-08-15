@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.9.1plus+jake+20240716T1008Z+R58c2252ad5a on Tue Jul 16 06:09:27 EDT 2024-->
-  <decoderIndex version="601">
+  <!--Written by JMRI version 5.9.2plus+jake+20240807T0511Z+R5533ed3867b on Tue Aug 06 22:11:57 PDT 2024-->
+  <decoderIndex version="603">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -27394,6 +27394,22 @@
           <functionlabel num="2" lockable="true">Operating sounds</functionlabel>
           <functionlabel num="4" lockable="true">Accel/Decel delay (ABV)</functionlabel>
           <functionlabel num="5" lockable="true">Squealing brakes</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="Trix_Sound_HO" mfg="Trix Modelleisenbahn" lowVersionID="159" highVersionID="159" file="Trix_Snd_BR23.xml">
+        <model show="no" model="Trix_Sound_HO_BR23_22230" replacementModel="Trix Sound BR23 (22230)" replacementFamily="Trix_Sound_HO_BR23_22230" />
+        <model model="Trix Sound BR23 (22230)" />
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Lights</functionlabel>
+          <functionlabel num="1" lockable="true">Smoke Generator</functionlabel>
+          <functionlabel num="2" lockable="true">Sound</functionlabel>
+          <functionlabel num="3" lockable="false">Whistle</functionlabel>
+          <functionlabel num="4" lockable="true">ABV</functionlabel>
+          <functionlabel num="5" lockable="true">Air Pump</functionlabel>
+          <functionlabel num="6" lockable="true">Coal Shoveling</functionlabel>
+          <functionlabel num="7" lockable="false">Short Whistle</functionlabel>
+          <functionlabel num="8" lockable="true">Air</functionlabel>
+          <functionlabel num="10" lockable="false">Grate</functionlabel>
         </functionlabels>
       </family>
       <family name="Trix_Sound_HO" mfg="Trix Modelleisenbahn" file="Trix_Snd_Glasscar.xml">

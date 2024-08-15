@@ -1,11 +1,12 @@
 package jmri.web.servlet.operations;
 
-import jmri.InstanceManager;
-import jmri.jmrit.operations.trains.TrainManager;
-import jmri.util.JUnitUtil;
-
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import jmri.InstanceManager;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
+import jmri.util.JUnitUtil;
 
 /**
  *
@@ -18,6 +19,21 @@ public class HtmlConductorTest {
         HtmlConductor t = new HtmlConductor(java.util.Locale.US,
                      (InstanceManager.getDefault(TrainManager.class)).getTrainById("2"));
         Assert.assertNotNull("exists",t);
+    }
+
+    @Test
+    public void testLocation() throws java.io.IOException {
+        Train train = InstanceManager.getDefault(TrainManager.class).getTrainById("2");
+        train.build();
+        HtmlConductor hc = new HtmlConductor(java.util.Locale.US,train);
+        Assert.assertNotNull("exists", hc);
+        String loc = hc.getLocation();
+        Assert.assertTrue("location train name", loc.contains("SFF Train icon name"));
+        Assert.assertFalse("location terminated", loc.contains("<h2>Terminated</h2>"));
+        train.terminate();
+        loc = hc.getLocation();
+        Assert.assertTrue("location train name", loc.contains("SFF Train icon name"));
+        Assert.assertTrue("location terminated", loc.contains("<h2>Terminated</h2>"));
     }
 
     @BeforeEach

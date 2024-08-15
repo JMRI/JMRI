@@ -138,7 +138,7 @@ which checks the dates of the control files to make sure they've been updated wh
 
 ##### openlcb.jar
  - 0.7.37 from https://repo.maven.apache.org/maven2/org/openlcb/openlcb/0.7.35/openlcb-0.7.37.jar
- - plus PRs through 265 from https://github.com/openlcb/OpenLCB_Java/pulls?q=is%3Apr+is%3Aclosed
+ - plus PRs through 267 from https://github.com/openlcb/OpenLCB_Java/pulls?q=is%3Apr+is%3Amerged
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
@@ -400,6 +400,34 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 ##### xmlgraphics-commons-2.6.jar
 - version 2.6
 - batik related
+
+##### BiDiB protocol implementation: jbidibc-*-2.0.18.jar, bidibwizard-*-2.0.18.jar
+- version 2.0.18
+- bidibwizard*.jar supports the BiDiB connection simulation
+
+##### commons-collections4-4.4.jar
+- version 4.4
+- used by jbidibc/bidibwizard
+
+##### eventbus-1.4.jar
+- version 1.4
+- used by jbidibc/bidibwizard
+
+##### javax.activation-api-1.2.0.jar
+- version 1.2.0
+- used by jbidibc/bidibwizard
+
+##### jaxb-api-2.3.1.jar, jaxb-core-2.3.0.1.jar, jaxb-impl-2.3.2.jar
+- version 2.3
+- used by jbidibc/bidibwizard
+
+##### jgoodies-binding-2.13.0.jar
+- version 2.13.0
+- used by jbidibc/bidibwizard
+
+##### jgoodies-common-1.8.1.jar
+- version 1.8.1
+- used by jbidibc/bidibwizard
 
 ## For unit tests & development work only:
 

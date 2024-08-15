@@ -10,8 +10,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.CommandStation;
-import jmri.NmraPacket;
 import jmri.jmrix.PortAdapter;
+import jmri.NmraPacket;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
+import jmri.ShutDownTask;
+import jmri.implementation.AbstractShutDownTask;
 
 import org.bidib.jbidibc.messages.BidibLibrary;
 import org.bidib.jbidibc.messages.exception.ProtocolException;
@@ -65,7 +69,7 @@ import org.slf4j.LoggerFactory;
  * Instead, it delegates BiDiB handling to a BiDiB controller instance (serial, simulation, etc.) using BiDiBInterface.
  * 
  * @author Bob Jacobsen Copyright (C) 2002
- * @author Eckart Meyer Copyright (C) 2019-2023
+ * @author Eckart Meyer Copyright (C) 2019-2024
  *
  */
  
@@ -97,7 +101,7 @@ public class BiDiBTrafficController implements CommandStation {
     private Node currentGlobalProgrammerNode = null;
     private final javax.swing.Timer progTimer = new javax.swing.Timer(3000, e -> progTimeout());
 
-    private Thread shutdownHook = null; // retain shutdown hook for  possible removal.
+    //private Thread shutdownHook = null; // retain shutdown hook for  possible removal.
     
     private final Map<Long, String> debugStringBuffer = new HashMap<>();
 
@@ -119,6 +123,10 @@ public class BiDiBTrafficController implements CommandStation {
         
         nodeInitializer = new BiDiBNodeInitializer(this, bidib, nodes);
         
+        // NO LONGER USED - When using JSerialComm, the port is obviously
+        // already closed when the ShutdownHook is executed.
+        // With PureJavacomm, this was not a problem...
+        
         // Copied from AbstractMRTrafficController:
         // We use a shutdown hook here to make sure the connection is left
         // in a clean state prior to exiting.  This is required on systems
@@ -126,8 +134,14 @@ public class BiDiBTrafficController implements CommandStation {
         // in an unusable state (This code predates the ShutdownTask 
         // mechanisim).  Once the shutdown hook executes, the connection
         // must be considered closed.
-        shutdownHook = new Thread(new CleanupHook(this));
-        Runtime.getRuntime().addShutdownHook(shutdownHook);      
+        //shutdownHook = new Thread(new CleanupHook(this));
+        //Runtime.getRuntime().addShutdownHook(shutdownHook);
+        
+        // We now use the ShutdownTask method. This task is executed earlier
+        // (and before the external tasks are executed)
+        // and the JSerialComm port is still usable.
+        // And registering the shutdown task is moved to connnectPort().
+        
     }
     
     /**
@@ -358,6 +372,19 @@ public class BiDiBTrafficController implements CommandStation {
                 ((BiDiBPortController)p).registerAllListeners(connectionListener, nodeListeners, messageListeners, transferListeners);
             }
 
+            // the connection has been established - register a shutdown task
+            log.info("registering shutdown task");
+            ShutDownTask shutDownTask = new AbstractShutDownTask("BiDiB Shutdown Task") {
+                @Override
+                public void run() {
+                    log.info("Shutdown Task - Terminate BiDiB");
+                    terminate();
+                    log.info("Shutdown task finished");
+                }
+            };
+            InstanceManager.getDefault(ShutDownManager.class).register(shutDownTask);
+
+            // get data from root node and from all other nodes
             log.debug("get relevant node data");
             BidibNode rootNode = bidib.getRootNode();
             int count = rootNode.getNodeCount();
@@ -1445,7 +1472,7 @@ public class BiDiBTrafficController implements CommandStation {
 //    }
     
     
-// Shutdown hook - copied from AbstractMRTrafficController
+// Shutdown function
 
     protected void terminate () {
         log.debug("Cleanup starts {}", this);
@@ -1457,10 +1484,10 @@ public class BiDiBTrafficController implements CommandStation {
             checkProgMode(false, node); //possibly switch to normal mode
         }
         setWatchdogTimer(false); //stop watchdog
-        // sending SYS_DISABLE disables all spontaneous messages and thus informs the node that the host will probably disappear
+        // sending SYS_DISABLE disables all spontaneous messages and thus informs all nodes that the host will probably disappear
         try {
             log.info("sending sysDisable to {}", getRootNode());
-            bidib.getRootNode().sysDisable();
+            bidib.getRootNode().sysDisable(); //Throws ProtocolException
         }
         catch (ProtocolException e) {
             log.error("unable to disable node", e);
@@ -1469,25 +1496,25 @@ public class BiDiBTrafficController implements CommandStation {
         log.debug("Cleanup ends");
     }
     
-    /**
-     * Internal class to handle traffic controller cleanup. The primary task of
-     * this thread is to make sure the DCC system has exited service mode when
-     * the program exits.
-     */
-    static class CleanupHook implements Runnable {
-
-        BiDiBTrafficController tc;
-
-        CleanupHook(BiDiBTrafficController tc) {
-            this.tc = tc;
-        }
-
-        @Override
-        public void run() {
-            tc.terminate();
-        }
-    }
-
+//    /** NO LONGER USED
+//     * Internal class to handle traffic controller cleanup. The primary task of
+//     * this thread is to make sure the DCC system has exited service mode when
+//     * the program exits.
+//     */
+//    static class CleanupHook implements Runnable {
+//
+//        BiDiBTrafficController tc;
+//
+//        CleanupHook(BiDiBTrafficController tc) {
+//            this.tc = tc;
+//        }
+//
+//        @Override
+//        public void run() {
+//            tc.terminate();
+//        }
+//    }
+//
     
     private final static Logger log = LoggerFactory.getLogger(BiDiBTrafficController.class);
 

@@ -90,6 +90,7 @@
 <!ATTLIST car pickupId				CDATA #IMPLIED>
 <!ATTLIST car nextPickupId			CDATA #IMPLIED>
 <!ATTLIST car divisionId			CDATA #IMPLIED>
+<!ATTLIST car routePath				CDATA #IMPLIED>
 
 <!ELEMENT loads (defaults | load*)*>
 <!ELEMENT defaults EMPTY>

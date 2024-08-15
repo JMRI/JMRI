@@ -36,7 +36,7 @@
 
         <h4><a href="http://bidib.org/index_e.html">BiDiB</a></h4>
             <ul>
-                <li></li>
+                <li>BiDiB now uses JSerialComm instead of PureJavaComm - no user impact.</li>
             </ul>
 
         <h4>CBUS</h4>
@@ -121,7 +121,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>Set the max-in-flight number to 100 to avoid overflow errors.</li>
             </ul>
 
         <h4>MRC</h4>
@@ -141,7 +141,13 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Updates the OpenLCB library so that
+                    <ul>
+                        <li>You can write configuration information to a node 
+                            even if one or more items are out of range.</li>
+                        <li>The new &lt;action&gt; element in CDI 
+                            will be properly displayed.</li>
+                    <ul>
             </ul>
 
         <h4>Powerline</h4>
@@ -356,7 +362,7 @@
 
         <h4>Trix Modelleisenbahn</h4>
             <ul>
-                <li></li>
+                <li>New definition for the Trix Sound BR23 (22230) decoder</li>
             </ul>
 
         <h4>Uhlenbrock</h4>
@@ -585,7 +591,7 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li></li>
+            <li>new parameter ("protect=yes") to treat web-panel as read-only</li>
         </ul>
 
    <h3>Web Server</h3>

@@ -1,12 +1,9 @@
 package jmri.jmrit.logix;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.io.File;
 
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
-import jmri.util.JUnitUtil;
+import jmri.*;
+import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
 
 import org.junit.jupiter.api.*;
@@ -14,41 +11,56 @@ import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import org.netbeans.jemmy.operators.JFrameOperator;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  * @author Pete Cressman Copyright (C) 2020
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class WarrantFrameTest {
+
     private WarrantManager _warrantMgr;
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testCTorNull(){
-       assertThat(new WarrantFrame(null, null)).withFailMessage("WarrantFrame exits").isNotNull();
+        WarrantFrame wf = new WarrantFrame(null, null);
+        assertNotNull(wf ,"WarrantFrame exists");
+        
+        wf.dispose();
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    public void testCTorWarrant() throws Exception {
+    public void testCTorWarrant() throws JmriException {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/MeetTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
+        JUnitAppender.suppressErrorMessage("Portal elem = null");
 
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         Warrant w = _warrantMgr.getWarrant("WestBoundStart");
-        assertThat(new WarrantFrame(w, null)).withFailMessage("WarrantFrame exits").isNotNull();
+        WarrantFrame wf = new WarrantFrame(w, null);
+        assertNotNull(wf,"WarrantFrame exists");
+
+        // JFrameOperator requestClose just hides panel, not disposing of it.
+        // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
+        Boolean retVal = ThreadingUtil.runOnGUIwithReturn(() -> {
+            wf.dispose();
+            JmriJFrame.getFrame("TrainMeetTest").dispose();
+            return true;
+        });
+        assertTrue(retVal);
+
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    public void testJoinWarrantsStop() throws Exception {
+    public void testJoinWarrantsStop() throws JmriException {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/MeetTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
+        JUnitAppender.suppressErrorMessage("Portal elem = null");
 
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
         JUnitUtil.waitFor(100);
@@ -63,28 +75,34 @@ public class WarrantFrameTest {
         t.start();
         
         WarrantFrame warrantFrame= new WarrantFrame(startW, endW);
-        assertThat(warrantFrame).withFailMessage("JoinWFrame exits").isNotNull();
+        assertNotNull(warrantFrame,"JoinWFrame exits");
 
-        JUnitUtil.waitFor( () -> (!t.isAlive()), "dialogue stop train in block east main? answered");
+        JUnitUtil.waitFor( () -> !t.isAlive(), "dialogue stop train in block east main? answered");
 
         warrantFrame._userNameBox.setText("WestBoundLocal");
         JFrameOperator editFrame = new JFrameOperator(warrantFrame);
         JemmyUtil.pressButton(editFrame, Bundle.getMessage("ButtonSave"));
 
         Warrant w = _warrantMgr.getWarrant("WestBoundLocal");
-        assertThat(w).withFailMessage("Concatenated Warrant exits").isNotNull();
+        assertNotNull(w,"Concatenated Warrant exists");
 
-        warrantFrame.close();
-        warrantFrame.dispose();
+        // JFrameOperator requestClose just hides panel, not disposing of it.
+        // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
+        Boolean retVal = ThreadingUtil.runOnGUIwithReturn(() -> {
+            warrantFrame.close();
+            JmriJFrame.getFrame("Warrant Table").dispose();
+            JmriJFrame.getFrame("TrainMeetTest").dispose();
+            return true;
+        });
+        assertTrue(retVal);
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    public void testJoinWarrantsNoStop() throws Exception {
+    public void testJoinWarrantsNoStop() throws JmriException {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/MeetTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        jmri.util.JUnitAppender.suppressErrorMessage("Portal elem = null");
+        JUnitAppender.suppressErrorMessage("Portal elem = null");
 
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
         JUnitUtil.waitFor(100);
@@ -99,19 +117,25 @@ public class WarrantFrameTest {
         clickDialog.start();
 
         WarrantFrame warrantFrame= new WarrantFrame(startW, endW);
-        assertThat(warrantFrame).withFailMessage("JoinWFrame exits").isNotNull();
+        assertNotNull(warrantFrame,"JoinWFrame exists");
 
         warrantFrame._userNameBox.setText("WestBound");
         JFrameOperator editFrame = new JFrameOperator(warrantFrame);
         JemmyUtil.pressButton(editFrame, Bundle.getMessage("ButtonSave"));
 
-        JUnitUtil.waitFor(() ->  { return !clickDialog.isAlive(); },"QuestionTitle ButtonNo clicked");
+        JUnitUtil.waitFor(() -> !clickDialog.isAlive(),"QuestionTitle ButtonNo clicked");
 
         Warrant w = _warrantMgr.getWarrant("WestBound");
-        assertThat(w).withFailMessage("Concatenated Warrant exits").isNotNull();
-
-        warrantFrame.close();
-        warrantFrame.dispose();
+        assertNotNull(w,"Concatenated Warrant exists");
+        
+        Boolean retVal = ThreadingUtil.runOnGUIwithReturn(() -> {
+            warrantFrame.close();
+            JmriJFrame.getFrame("Warrant Table").dispose();
+            JmriJFrame.getFrame("TrainMeetTest").dispose();
+            return true;
+        });
+        assertTrue(retVal);
+        
     }
 
     @BeforeEach
@@ -133,7 +157,5 @@ public class WarrantFrameTest {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
-
-    // private final static Logger log = LoggerFactory.getLogger(WarrantFrameTest.class);
 
 }

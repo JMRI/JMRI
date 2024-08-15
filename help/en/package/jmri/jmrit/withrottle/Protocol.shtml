@@ -385,8 +385,8 @@ M0AL341&lt;;&gt;F10
         <li>Function state <code>Fsnn</code> where 's' is state ('0'=Off, '1'=On) and 'nn' is
         function number ('0'-'28')</li>
 
-        <li>Speed <code>Vnnnn</code> where 'nnnn' is a speed value between 0 and 126, or -1 for
-        eStop</li>
+        <li>Speed <code>Vnnnn</code> where 'nnnn' is a speed value between 0 and 126 inclusive.
+        (Use the X command for eStop)</li>
 
         <li>Direction <code>Rd</code> where 'd' is '0'=Reverse and '1'=Forward</li>
 

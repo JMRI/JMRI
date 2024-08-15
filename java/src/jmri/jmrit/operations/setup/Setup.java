@@ -265,6 +265,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private boolean switchListDepartureTime = false; // when true, switch list shows train's departure time
     private boolean switchListRouteComment = true; // when true, switch list have route location comments
     private boolean trackSummary = true; // when true, print switch list track summary
+    private boolean groupCarMoves = false; // when true, car moves are grouped together
 
     private boolean switchListRealTime = true; // when true switch list only show work for built trains
     private boolean switchListAllTrains = true; // when true show all trains that visit the location
@@ -835,6 +836,14 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
 
     public static boolean isSwitchListRouteLocationCommentEnabled() {
         return getDefault().switchListRouteComment;
+    }
+
+    public static void setGroupCarMoves(boolean b) {
+        getDefault().groupCarMoves = b;
+    }
+
+    public static boolean isGroupCarMovesEnabled() {
+        return getDefault().groupCarMoves;
     }
 
     public static void setSwitchListRealTime(boolean b) {
@@ -1970,6 +1979,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         values.setAttribute(Xml.USE_EDITOR, isManifestEditorEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_CABOOSE_LOAD, isPrintCabooseLoadEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_PASSENGER_LOAD, isPrintPassengerLoadEnabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.GROUP_MOVES, isGroupCarMovesEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.HAZARDOUS_MSG, getHazardousMsg());
 
         // new format June 2014
@@ -2591,6 +2601,11 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 String enable = a.getValue();
                 log.debug("manifest print passenger load: {}", enable);
                 setPrintPassengerLoadEnabled(enable.equals(Xml.TRUE));
+            }
+            if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.GROUP_MOVES)) != null) {
+                String enable = a.getValue();
+                log.debug("manifest group car moves: {}", enable);
+                setGroupCarMoves(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.HAZARDOUS_MSG)) != null) {
                 String message = a.getValue();
