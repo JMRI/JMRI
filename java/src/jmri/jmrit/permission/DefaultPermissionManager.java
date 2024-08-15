@@ -195,7 +195,11 @@ public class DefaultPermissionManager implements PermissionManager {
                                 continue;
                             }
                         } else {
-                            role = new DefaultRole(roleElement.getChild("Name").getValue());
+                            role = _roles.get(roleElement.getChild("Name").getValue());
+                            if (role == null) {
+                                log.error("UserRole {} is not found.", roleElement.getValue());
+                                continue;
+                            }
                         }
                         roles.add(role);
                     }
