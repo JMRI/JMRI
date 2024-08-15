@@ -239,7 +239,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             }
             showCarServiceOrder(car);
             addLine(_buildReport, SEVEN,
-                    Bundle.getMessage("buildCarHasFRED", car.toString(), car.getRoadName(), car.getLocationName()));
+                    Bundle.getMessage("buildCarHasFRED", car.toString(), car.getRoadName(), car.getLocationName(),
+                            car.getTrackName()));
             // all cars with FRED departing staging must leave with train
             if (car.getTrack() == departTrack) {
                 foundCarWithFred = false;
