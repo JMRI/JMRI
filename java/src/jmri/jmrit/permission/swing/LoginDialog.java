@@ -77,6 +77,7 @@ public class LoginDialog extends JDialog {
         });
 //        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
         buttonOK.setToolTipText("CancelLogixButtonHint");      // NOI18N
+        getRootPane().setDefaultButton(buttonOK);
 
         c.gridx = 0;
         c.gridy = 2;
