@@ -9,7 +9,7 @@ import jmri.util.swing.*;
 
 
 /**
- * Let a user login to the permission manager.
+ * Let a user change his own password.
  *
  * @author Daniel Bergqvist (C) 2024
  */
