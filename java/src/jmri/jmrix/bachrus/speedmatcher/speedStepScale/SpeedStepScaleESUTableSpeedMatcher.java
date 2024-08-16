@@ -44,7 +44,7 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
         READ_MAX_SPEED,
         FORWARD_SPEED_MATCH_VHIGH,
         FORWARD_SPEED_MATCH_VSTART,
-        SET_UPPER_SPEED_STEPS,
+        RE_INIT_SPEED_TABLE,
         FORWARD_SPEED_MATCH,
         POST_SPEED_MATCH,
         REVERSE_WARM_UP,
@@ -220,12 +220,11 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
                 //255, respectively on ESU decoders
                 if (programmerState == ProgrammerState.IDLE) {
                     if (stepDuration == 0) {
-                        initSpeedTableStepValue = INITIAL_STEP2;
                         initSpeedTableStep = SpeedTableStep.STEP2;
                         stepDuration = 1;
                     }
 
-                    writeSpeedTableStep(initSpeedTableStep, initSpeedTableStepValue);
+                    writeSpeedTableStep(initSpeedTableStep, getSpeedStepLinearValue(initSpeedTableStep.getSpeedStep()));
 
                     initSpeedTableStep = initSpeedTableStep.getNext();
                     if (initSpeedTableStep == SpeedTableStep.STEP28) {
@@ -360,7 +359,7 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
                         setSpeedMatchError(targetVStartSpeedKPH);
 
                         if (Math.abs(speedMatchError) < ALLOWED_SPEED_MATCH_ERROR) {
-                            initNextSpeedMatcherState(SpeedMatcherState.SET_UPPER_SPEED_STEPS);
+                            initNextSpeedMatcherState(SpeedMatcherState.RE_INIT_SPEED_TABLE);
                         } else {
                             vStart = getNextSpeedMatchValue(lastVStart, vStartMax, VSTART_MIN);
 
@@ -378,19 +377,28 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
                 }
                 break;
 
-            case SET_UPPER_SPEED_STEPS:
-                //Set Speed table steps 27 through lowestMaxSpeedStep to TOP_SPEED_STEP_MAX
+            case RE_INIT_SPEED_TABLE:
+                //Set Speed table steps 27 through lowestMaxSpeedStep to TOP_SPEED_STEP_MAX 
+                //and the remaining steps through step 2 to 1
                 if (programmerState == ProgrammerState.IDLE) {
                     if (stepDuration == 0) {
-                        speedMatchSpeedTableStep = SpeedTableStep.STEP27;
+                        initSpeedTableStepValue = TOP_SPEED_STEP_MAX;
+                        initSpeedTableStep = SpeedTableStep.STEP27;
                         stepDuration = 1;
                     }
 
-                    writeSpeedTableStep(speedMatchSpeedTableStep, TOP_SPEED_STEP_MAX);
+                    writeSpeedTableStep(initSpeedTableStep, initSpeedTableStepValue);
+                    
+                    if (initSpeedTableStep.getSpeedStep() == speedMatchMaxSpeedStep) {
+                        initSpeedTableStep = initSpeedTableStep.getPrevious();
+                        speedMatchSpeedTableStep = initSpeedTableStep;
+                        initSpeedTableStepValue = INITIAL_STEP2;
+                    }
+                    else {
+                        initSpeedTableStep = initSpeedTableStep.getPrevious();
+                    }
 
-                    speedMatchSpeedTableStep = speedMatchSpeedTableStep.getPrevious();
-
-                    if (speedMatchSpeedTableStep.getSpeedStep() < speedMatchMaxSpeedStep) {
+                    if (initSpeedTableStep.getSpeedStep() < 2) {
                         initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH);
                     }
                 }
