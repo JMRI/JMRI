@@ -44,7 +44,7 @@ public class DefaultUser implements User {
         if (password != null) {
             this._seed = getRandomString(10);
             try {
-                this._passwordMD5 = getPasswordMD5(password);
+                this._passwordMD5 = getPasswordSHA256(password);
             } catch (NoSuchAlgorithmException e) {
                 log.error("MD5 algoritm doesn't exists", e);
             }
@@ -161,9 +161,9 @@ public class DefaultUser implements User {
         _roles.addAll(roles);
     }
 
-    private String getPasswordMD5(String password) throws NoSuchAlgorithmException {
+    private String getPasswordSHA256(String password) throws NoSuchAlgorithmException {
         String passwd = this._seed + password;
-        MessageDigest md = MessageDigest.getInstance("MD5");
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
         md.update(passwd.getBytes());
         return DatatypeConverter
                 .printHexBinary(md.digest()).toUpperCase();
@@ -188,7 +188,7 @@ public class DefaultUser implements User {
         }
 
         try {
-            this._passwordMD5 = getPasswordMD5(newPassword);
+            this._passwordMD5 = getPasswordSHA256(newPassword);
         } catch (NoSuchAlgorithmException e) {
             String msg = "MD5 algoritm doesn't exists";
             log.error(msg);
@@ -222,7 +222,7 @@ public class DefaultUser implements User {
                 }
             } else {
                 try {
-                    this._passwordMD5 = getPasswordMD5(newPassword);
+                    this._passwordMD5 = getPasswordSHA256(newPassword);
                     return true;
                 } catch (NoSuchAlgorithmException e) {
                     String msg = "MD5 algoritm doesn't exists";
@@ -248,7 +248,7 @@ public class DefaultUser implements User {
 
     public boolean checkPassword(String password) {
         try {
-            return _passwordMD5.equals(getPasswordMD5(password));
+            return _passwordMD5.equals(getPasswordSHA256(password));
         } catch (NoSuchAlgorithmException e) {
             String msg = "MD5 algoritm doesn't exists";
             log.error(msg);
