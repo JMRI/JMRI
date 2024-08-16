@@ -44,4 +44,4 @@ jobs:
         # Test if stale sources exists
         ./scripts/test_stale_sources.sh
         # Test if  if there are any files with with multiple UTF-8 Byte-Order-Marks (BOM) or TABs
-        ./scripts/test_stale_sources.sh
+        ./scripts/test_BOM_and_tab.sh
