@@ -410,7 +410,7 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
 
     @Override
     public boolean isRestartRequired() {
-        return false;
+        return true;
     }
 
     @Override
