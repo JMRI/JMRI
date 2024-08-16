@@ -4,7 +4,7 @@
 # or TABs
 
 # Check all files for multiple BOMs
-grep_output=$(grep -rlI --exclude-dir=.git '^\xEF\xBB\xBF\xEF\xBB\xBF' .)
+grep_output=$(grep -rlIP --exclude-dir=.git '^\xEF\xBB\xBF\xEF\xBB\xBF' .)
 result=$?
 if [[ $result == 2 ]]; then
     echo "grep failed."
