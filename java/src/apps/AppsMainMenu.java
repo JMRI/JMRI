@@ -74,10 +74,12 @@ public class AppsMainMenu {
 
         fileMenu.add(new JSeparator());
 
-        fileMenu.add(new jmri.jmrit.permission.swing.LoginAction());
-        fileMenu.add(new jmri.jmrit.permission.swing.LogoutAction());
-        fileMenu.add(new jmri.jmrit.permission.swing.ChangePasswordAction());
-        fileMenu.add(new JSeparator());
+        if (jmri.InstanceManager.getDefault(jmri.PermissionManager.class).isEnabled()) {
+            fileMenu.add(new jmri.jmrit.permission.swing.LoginAction());
+            fileMenu.add(new jmri.jmrit.permission.swing.LogoutAction());
+            fileMenu.add(new jmri.jmrit.permission.swing.ChangePasswordAction());
+            fileMenu.add(new JSeparator());
+        }
 
         fileMenu.add(new PrintDecoderListAction(Bundle.getMessage("MenuPrintDecoderDefinitions"), wi.getFrame(), false));  // NOI18N
         fileMenu.add(new PrintDecoderListAction(Bundle.getMessage("MenuPrintPreviewDecoderDefinitions"), wi.getFrame(), true));  // NOI18N
