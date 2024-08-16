@@ -24,7 +24,7 @@ myTable = logixngTables.getNamedTable(tableName)
 
 myMap = java.util.concurrent.ConcurrentHashMap()
 
-print "Table: " +	myTable.getSystemName()
+print "Table: " + myTable.getSystemName()
 
 column = myTable.getColumnNumber(columnName)
 
