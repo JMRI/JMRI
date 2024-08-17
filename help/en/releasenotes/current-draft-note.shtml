@@ -147,6 +147,10 @@
                             even if one or more items are out of range.</li>
                         <li>The new &lt;action&gt; element in CDI 
                             will be properly displayed.</li>
+                        <li>The CDI can now hint that a slider should be displayed for an integer</li>
+                        <li>A bug when displaying String variables with 0x0A newline characters has been fixed</li>
+                        <li>When an integer variable is displayed as a map and an unmapped value is
+                            encountered, it's now displayed as "Reserved: nnn"</li>
                     <ul>
             </ul>
 
