@@ -4,18 +4,37 @@
 # or TABs
 
 # Check all files for multiple BOMs
-grep_output=$(grep -rlIP --exclude-dir=.git '^\xEF\xBB\xBF\xEF\xBB\xBF' .)
-result=$?
-if [[ $result == 2 ]]; then
-    echo "grep failed."
+
+
+
+IFS=$'\n'
+
+found=0
+
+for x in `find -P -type f `; do
+
+    if [[ "$x" == "./.git/"* ]]; then
+#        echo "git file: $x"
+        continue
+    fi
+
+#    echo "the next file is $x"
+
+    xxd_output=$(xxd -g 0 -l 6 -p "$x")
+    if [[ "$xxd_output" == "efbbbfefbbef" ]]; then
+        echo "File $x has two UTF-8 Byte-Order-Marks"
+        found=1
+    fi
+
+done
+
+
+# If $found, we have at least on file with two BOMs
+if [[ $found == 1 ]]; then
+    echo "One or more files with two UTF-8 Byte-Order-Marks found"
     exit 1
 fi
 
-if [[ $result == 0 ]]; then
-    echo "grep found multiple UTF-8 Byte-Order-Marks in these files:"
-    echo $grep_output
-    exit 1
-fi
 
 
 # Check for any scripts with tabs.
@@ -30,10 +49,12 @@ if [[ $result == 0 ]]; then
     echo "grep found TABs in these files:"
     echo $grep_output
     exit 1
-else
-    # If here, everything is OK
-    echo ""
-    echo "No UTF-8 Byte-Order-Marks or TABs found"
-    echo ""
-    exit 0
 fi
+
+
+
+# If here, everything is OK
+echo ""
+echo "No UTF-8 Byte-Order-Marks or TABs found"
+echo ""
+exit 0
