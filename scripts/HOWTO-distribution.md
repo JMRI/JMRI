@@ -50,6 +50,28 @@ If you have changed anything, run this again to check:
         git remote -v
 ```
 
+### Important note of GitHub Desktop
+
+GitHub Desktop requires that git is setup as below
+
+```
+        origin	https://github.com/yourname/JMRI.git (fetch)
+        origin	https://github.com/yourname/JMRI.git (push)
+```
+
+Therefore, if you are using GitHub Desktop, when you have completed the
+building of the release, you need to run:
+
+```
+        git remote set-url origin https://github.com/yourname/JMRI.git
+```
+
+You can still use GitHub Desktop during the building of the release,
+but with the settings required for the build, GitHub Desktop will not
+see your own branches, only the branches in the JMRI/JMRI repository.
+
+### Windows
+
 If you're attempting to perform this on MS Windows, refer to the MS Windows notes section at the bottom of this document.
 
 While doing the release, it might be useful to have [GitHub Desktop](https://github.com/apps/desktop). It makes it easy to see what you are about to commit. But it's not recommended to commit with GitHub Desktop since many of the `git commit` commands below only commits some of the changed files, not all of them. So run the git commands from the command line to get it right.
