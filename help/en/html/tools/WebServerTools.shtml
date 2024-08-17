@@ -20,7 +20,16 @@
       
       <p><a href="http://localhost:12080/operations_RFID_Trains.html">Operations with RFID</a></p>
       
-      <p>Alternate "Conductor" webpage, with Id-Tag updates (eg. RFID), and showing current train composition.</p>
+      <p>Alternate "Conductor" webpage, with Id-Tag updates (eg. RFID), and showing current train
+      composition. Illustrates use of the jQuery mechanisms into the JMRI webserver, and the displaying
+      of information in dynamically updating and sortable tables. To see "where last seen" and "when
+      last seen" data from Id-Tag reports requires the following steps:
+        <ul>
+          <li>a) associate each Id-Tag with a Car (Wagon)</li>
+          <li>b) define Reporters (in the Reporter table) which receive the Id-Tag reports</li>
+          <li>c) associate each Reporter with a Location (either a Location in general, or a specific road/siding within the Location)</li>
+        </ul>
+      </p>
 
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
