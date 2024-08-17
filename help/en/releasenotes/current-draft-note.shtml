@@ -621,6 +621,12 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li><strong>Permissions</strong> are now added to JMRI. It
+                allows you to password protect some parts of JMRI. For
+                now, you can protect Load and Store of table content
+                and panel files. And you can protect the preferences.
+                Permissions are disabled by default so you need to
+                enable them to use them. For more information, see the
+                <a href="https://www.jmri.org/help/en/package/jmri/jmrit/permission/PermissionManager.shtml">documentation</a>.</li>
         </ul>
 
