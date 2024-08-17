@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Blocks Documentation</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="layout java model railroad JMRI tools dcc">
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
+      <h1>JMRI: Web server tools</h1>
+
+      <h2>Operations with RFID</h2>
+      
+      <p><a href="http://localhost:12080/web/operations_RFID_Trains.html">Operations with RFID</a></p>
+      
+      <p>Alternate "Conductor" webpage, with Id-Tag updates (eg. RFID), and showing current train
+      composition. Illustrates use of the jQuery mechanisms into the JMRI webserver, and the displaying
+      of information in dynamically updating and sortable tables. To see "where last seen" and "when
+      last seen" data from Id-Tag reports requires the following steps:
+        <ul>
+          <li>a) associate each Id-Tag with a Car (Wagon)</li>
+          <li>b) define Reporters (in the Reporter table) which receive the Id-Tag reports</li>
+          <li>c) associate each Reporter with a Location (either a Location in general, or a specific road/siding within the Location)</li>
+        </ul>
+      </p>
+
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/help.js"></script>
+</body>
+</html>
