@@ -70,6 +70,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         log.trace("start to get configuration profile - locate files");
         // Needs to be done before loading a ConfigManager or UserPreferencesManager
         FileUtil.createDirectory(FileUtil.getPreferencesPath());
+        // Load permission manager
+        InstanceManager.getDefault(PermissionManager.class);
         // Needs to be declared final as we might need to
         // refer to this on the Swing thread
         final File profileFile;

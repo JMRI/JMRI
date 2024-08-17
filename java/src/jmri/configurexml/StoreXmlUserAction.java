@@ -6,6 +6,7 @@ import javax.swing.JFileChooser;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
+import jmri.PermissionManager;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
@@ -31,6 +32,10 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (! InstanceManager.getDefault(PermissionManager.class)
+                .checkPermission(LoadAndStorePermissionOwner.STORE_XML_FILE_PERMISSION)) {
+            return;
+        }
         JFileChooser userFileChooser = getUserFileChooser();
         userFileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
         userFileChooser.setApproveButtonText(Bundle.getMessage("ButtonSave"));  // NOI18N

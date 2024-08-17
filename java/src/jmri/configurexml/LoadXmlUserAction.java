@@ -5,6 +5,8 @@ import java.io.File;
 
 import javax.swing.JFileChooser;
 
+import jmri.InstanceManager;
+import jmri.PermissionManager;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
@@ -33,6 +35,10 @@ public class LoadXmlUserAction extends LoadXmlConfigAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (! InstanceManager.getDefault(PermissionManager.class)
+                .checkPermission(LoadAndStorePermissionOwner.LOAD_XML_FILE_PERMISSION)) {
+            return;
+        }
         JFileChooser userFileChooser = getUserFileChooser();
         userFileChooser.setDialogType(javax.swing.JFileChooser.OPEN_DIALOG);
         userFileChooser.setApproveButtonText(Bundle.getMessage("ButtonOpen"));
