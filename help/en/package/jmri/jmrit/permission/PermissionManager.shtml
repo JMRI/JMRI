@@ -8,7 +8,7 @@
   <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
-    <!--#include virtual="Sidebar.shtml" -->
+    <!--#include virtual="/Sidebar.shtml" -->
 
     <div id="mainContent" class="no-sidebar">
       <span class="since">since 5.9.4</span>
