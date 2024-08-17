@@ -14,7 +14,6 @@ found=0
 for x in `find -P -type f `; do
 
     if [[ "$x" == "./.git/"* ]]; then
-#        echo "git file: $x"
         continue
     fi
 
@@ -27,7 +26,6 @@ for x in `find -P -type f `; do
     fi
 
 done
-
 
 # If $found, we have at least on file with two BOMs
 if [[ $found == 1 ]]; then
