@@ -3,8 +3,6 @@
 # default_lcf.xml
 # Default logging configuration file for JMRI project development.
 #
-# Test line of Static Analysis CI /DanielB
-#
 # If making changes here that should be included in the distribution
 # please also update the file for distribution at 'scripts/default_lcf.xml'
 
