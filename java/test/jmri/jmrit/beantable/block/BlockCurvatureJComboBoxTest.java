@@ -93,9 +93,9 @@ public class BlockCurvatureJComboBoxTest {
             BlockCurvatureJComboBox.getCurvatureFromObject("String, not a Curvature ComboBox"));
         
     }
-    
-    private BlockCurvatureJComboBox t;
-    
+
+    private BlockCurvatureJComboBox t = null;
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
