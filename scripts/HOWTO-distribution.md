@@ -517,9 +517,9 @@ ant realclean compile
 cd target
 rm -f properties.5.9.2.zip
 
-foreach x ( `find classes -name \*.properties` )
+for x in `find classes -name \*.properties`; do
 printf '%s\n' 0a '# from tag v5.9.2' . x | ex $x
-end
+done
 
 find classes -name \*.properties | zip -@ properties.5.9.2.zip
 cd ..
