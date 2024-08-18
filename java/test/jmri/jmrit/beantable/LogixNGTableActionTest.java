@@ -248,14 +248,14 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     public void testDeleteLogixNG() throws InterruptedException {
         AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
 
-        logixNGTable.actionPerformed(null); // show table
+        ThreadingUtil.runOnGUI( () -> logixNGTable.actionPerformed(null)); // show table
         JFrameOperator logixNGFrame = new JFrameOperator(Bundle.getMessage("TitleLogixNGTable"));  // NOI18N
         Assert.assertNotNull("Found LogixNG Frame", logixNGFrame);  // NOI18N
 
         // Delete IQ102, respond No
         Thread t1 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonNo"), "Are you sure you want to delete IQ102?");  // NOI18N
         logixNGTable.deletePressed("IQ102");  // NOI18N
-        JUnitUtil.waitFor(() -> {return !t1.isAlive();});
+        JUnitUtil.waitFor(() -> !t1.isAlive(),"Click dialog no did not complete");
 
         LogixNG chk102 = jmri.InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ102");  // NOI18N
         Assert.assertNotNull("Verify IQ102 Not Deleted", chk102);  // NOI18N
@@ -263,12 +263,12 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         // Delete IQ103, respond Yes
         Thread t2 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"), "Are you sure you want to delete IQ103?");  // NOI18N
         logixNGTable.deletePressed("IQ103");  // NOI18N
-        JUnitUtil.waitFor(() -> {return !t2.isAlive();});
+        JUnitUtil.waitFor(() -> !t2.isAlive(),"Click dialog yes did not complete");
 
         LogixNG chk103 = jmri.InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ103");  // NOI18N
         Assert.assertNull("Verify IQ103 Is Deleted", chk103);  // NOI18N
 
-        logixNGFrame.requestClose();
+        JUnitUtil.dispose(logixNGFrame.getWindow());
         logixNGFrame.waitClosed();
     }
 
@@ -290,7 +290,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         // Delete IQ102, respond No
         Thread t1 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonNo"), "Are you sure you want to delete IQ102 and its children?");  // NOI18N
         logixNGTable.deletePressed("IQ102");  // NOI18N
-        JUnitUtil.waitFor(() -> {return !t1.isAlive();});
+        JUnitUtil.waitFor(() -> !t1.isAlive(),"dialog click no");
         LogixNG log102 = jmri.InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ102");  // NOI18N
         Assert.assertNotNull("Verify IQ102 Not Deleted", log102);  // NOI18N
         ConditionalNG cond102 = InstanceManager.getDefault(ConditionalNG_Manager.class).getBySystemName("IQC102");   // NOI18N
@@ -299,7 +299,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         // Delete IQ103, respond Yes
         Thread t2 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"), "Are you sure you want to delete IQ103 and its children?");  // NOI18N
         logixNGTable.deletePressed("IQ103");  // NOI18N
-        JUnitUtil.waitFor(() -> {return !t2.isAlive();});
+        JUnitUtil.waitFor(() -> !t2.isAlive(),"dialog click yes");
         LogixNG chk103 = jmri.InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ103");  // NOI18N
         Assert.assertNull("Verify IQ103 Is Deleted", chk103);  // NOI18N
         ConditionalNG cond103 = InstanceManager.getDefault(ConditionalNG_Manager.class).getBySystemName("IQC103");   // NOI18N
@@ -452,7 +452,9 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
             }
             if (component instanceof Container) {
                 JEditorPane textArea = findTextArea((Container) component);
-                if (textArea != null) return textArea;
+                if (textArea != null) {
+                    return textArea;
+                }
             }
         }
         return null;
@@ -584,7 +586,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         JDialogOperator addItemDialog = new JDialogOperator("Add ! ");  // NOI18N
         new JButtonOperator(addItemDialog, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
 
-        JUnitUtil.waitFor(() -> {return conditionalNG.getChild(0).isConnected();});
+        JUnitUtil.waitFor(() -> conditionalNG.getChild(0).isConnected(),"child0 connected");
 
         Assert.assertTrue("Is connected", conditionalNG.getChild(0).isConnected());
         Assert.assertEquals("Action is correct", "If Then Else. Execute on change",
@@ -612,9 +614,12 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         new JButtonOperator(addItemDialog, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
 
         Assert.assertTrue("Is connected", conditionalNG.getChild(0).isConnected());
-        Assert.assertEquals("Num childs are correct", 3, conditionalNG.getChild(0).getConnectedSocket().getChildCount());
+        Assert.assertEquals("Num childs are correct", 3,
+            conditionalNG.getChild(0).getConnectedSocket().getChildCount());
 
-        JUnitUtil.waitFor(() -> {return conditionalNG.getChild(0).getConnectedSocket().getChild(0).getConnectedSocket() != null;});
+        JUnitUtil.waitFor(() -> 
+            conditionalNG.getChild(0).getConnectedSocket().getChild(0).getConnectedSocket() != null,
+            "child0 socket not null");
 
         Assert.assertEquals("Expression is correct", "Sensor IS1 is Active",
                 conditionalNG.getChild(0).getConnectedSocket().getChild(0).getConnectedSocket().getLongDescription());
@@ -640,7 +645,9 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         new JComboBoxOperator(addItemDialog, 1).setSelectedItem(ActionTurnout.TurnoutState.Thrown);
         new JButtonOperator(addItemDialog, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
 
-        JUnitUtil.waitFor(() -> {return conditionalNG.getChild(0).getConnectedSocket().getChild(1).getConnectedSocket() != null;});
+        JUnitUtil.waitFor(() ->
+            conditionalNG.getChild(0).getConnectedSocket().getChild(1).getConnectedSocket() != null,
+            "socket not null");
 
         Assert.assertTrue("Is connected", conditionalNG.getChild(0).isConnected());
         Assert.assertEquals("Num childs are correct", 3, conditionalNG.getChild(0).getConnectedSocket().getChildCount());
@@ -671,7 +678,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         editLogixNGframeOperator.waitClosed();
 
         // Close LogixNG frame
-        logixNGFrameOperator.requestClose();
+        JUnitUtil.dispose(logixNGFrameOperator.getWindow());
         logixNGFrameOperator.waitClosed();
     }
 
@@ -679,10 +686,10 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initLogixManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        jmri.util.JUnitUtil.initLogixNGManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initLogixManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initLogixNGManager();
 
 //        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
 
