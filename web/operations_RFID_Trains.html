@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Operations Trains List for RFID</title>
+        <style>
+
+
+        </style>
+		
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/panel.css">
+<link rel="stylesheet" href="/css/user.css">
+<link rel="stylesheet" href="/css/tables.css">
+
+<!-- include the jquery.jmri library and its dependencies -->
+<script src="/js/jquery-2.2.4.min.js"></script>
+<script src="/js/json2.js"></script>
+<script src="/js/jquery.websocket.js"></script>
+<script src="/js/logger.js"></script>
+<script src="/js/jquery.jmri.js"></script>
+<script src="/js/sorttable.js"></script>
+
+<!--
+    Webpage which changes its appearance depending how it is called.  With just the file name, it displays the currently built trains in Operations
+    , with an extension  " [webpage].html?number=3  " for trainID 3,  etc.. it shows a version of Conductor pages for the train in question.  
+    
+    Replicates the "Conductor" pages, in providing a list of wagons to Pickup, DropOff or Local Shunting.   Main difference in "drop off" 
+    which shows the current train composition and drop-off wagons tagged within that table.  
+    
+    Includes ID-Tag data in each table of wagons, which updates as wagons pass a tag reader.  Intended for use with RFID tags.  
+    Tables automatically hide if nothing within that table. 
+    
+    Works using the jQuery mechanisms into the JMRI webserver, and requires JMRI 5.7.6 or later. 
+    
+    Thanks to Steve Todd for technical guidance, and in adding a few features to JMRI 5.7.6 to make this possible. 
+    
+    author and file copyright  Nigel Cliffe,  June 2024
+
+-->
+
+<script type="text/javascript">
+    var jmri = null;
+        
+    //get the URL details to set variables for behaviour of page
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const params = Object.fromEntries(urlSearchParams.entries());
+    const pagePath = window.location.pathname; 
+    const arrayOfParams = Object.keys(params) ;
+    if (arrayOfParams.length) {
+        var conductorPage = true ;
+        var trainListPage = false ;
+    } else {
+        var trainListPage = true ;
+        var conductorPage = false ;
+    }
+    //  initialise the variables used by the Javascript later on
+    var theTrainName ="" ; 
+    var theTrainNumber = "";
+    var theCars = [] ;   // all cars reserved for train (including cars collected at future stops)
+    var dropCars = [] ;  // car names to be dropped at current stop
+    var pickupCars = [] ;  // car names to be picked up at current stop
+    var inTrainCars = [] ;  //  cars in train at current stop, including those to be dropped off
+    var localCars = [] ;   // cars to be moved about at local stop, not joining train 
+    const tickCarHTML = "<input class='rs-check' type='checkbox' onchange = 'rsCheck()'>" ;
+
+
+
+        //append a new row to the trains table, or replace an existing row, based on name
+    function setRowAllTrains(name, data){
+        var trainstbody = $("table#trains tbody").html(); //get current table body
+        var tr = "";
+        var tds = "" ;
+        if (data.location != "") {    // ie. only display running trains 
+            tds = "<td><a href='" + pagePath + "?number=" + data.name +"'>" + data.userName + "</a></td><td>" 
+                + data.description + "</td><td>" 
+                + data.trainDepartsName + "</td><td>"
+                + data.departureTime + "</td><td>" 
+                + data.status + "</td><td>" 
+                + data.location + "</td><td>" 
+                + data.trainTerminatesName + "</td><td>"
+                + data.route +"</td>";
+            tr = "<tr data-name='" + data.name + "'>" + tds + "</tr>"; //build row with key
+        }
+        var row = $("table#trains tr[data-name='" + name + "']"); //look for row by key
+        if ($(row).length) {
+              // jmri.log("replacing a row with:   " + name );
+              row.html(tds); //if found, replace cells
+              if (tds == "") { row.remove();  }   // remove a now empty row
+        } else {
+               // jmri.log("inside Trains updater else statement " + tr );
+              $("table#trains tbody").html(trainstbody + tr); //if not found, append row to table body
+        }
+    };
+
+        //  append new row, or replace existing row, for cars.   Table used depends on status of car.   
+    function setRow(name, data){
+        var carstbody = $("table#cars tbody").html(); //get current table body
+        var pickuptbody  = $("table#pickupCars tbody").html(); //get pickupCars table body
+        var localtbody  = $("table#localCars tbody").html(); //get localCars table body
+        var tr = "";
+        var pu_tr = "" ;
+        var local_tr = "" ; 
+        var tickCar = "";
+        if(data.destination) {
+            var where = "" ;
+            if (data.whereLastSeen != null ) { where = data.whereLastSeen; }; 
+            var when = ""
+            if (data.whenLastSeen != null ) { when = data.whenLastSeen; };
+            if( inTrainCars.includes(name)) {    //  should be inTrainCars....
+              // jmri.log("inside Cars updater  " +name );
+              if (dropCars.includes(name)) { 
+                 tickCar = tickCarHTML ;  
+                // jmri.log("should mark for drop: " + name);
+              }
+              var tds = "<td>" + data.name + "</td><td>" + data.carType + "</td><td>" + where + "</td><td>" + when + "</td><td>" //build cells
+                + data.destination.userName + "</td><td>" + data.destination.track.userName + "</td><td>"
+                + tickCar +"</td>";
+              var tr = "<tr data-name='" + data.name + "'>" + tds + "</tr>"; //build row with key
+            } else {
+                 var tds = "";
+            }
+            if (pickupCars.includes(name)) {
+              // jmri.log("inside pickupCars updater:   " + name );
+              tickCar = tickCarHTML ;
+              var pu_tds = "<td>" + data.name + "</td><td>" + data.carType + "</td><td>" + where + "</td><td>" //build cells
+              + when + "</td><td>" + data.destination.userName + "</td><td>"
+              + data.destination.track.userName + "</td><td>"  + data.location.userName + "</td><td>"
+              + data.location.track.userName +"</td><td>" + tickCar +"</td>";
+              //..data.trainName + "</td><td>" + data.destination.userName + "</td>";     // NC - need something to check for not-null values in destination..
+              var pu_tr = "<tr data-name='" + data.name + "'>" + pu_tds + "</tr>"; //build row with key
+              // jmri.log(pu_tr);
+            } else {
+                var pu_tds="";
+            }
+            if (localCars.includes(name)) {
+              // jmri.log("inside pickupCars updater:   " + name );
+              tickCar = tickCarHTML ;
+              var local_tds = "<td>" + data.name + "</td><td>" + data.carType + "</td><td>" + where + "</td><td>" //build cells
+              + when + "</td><td>" + data.destination.userName + "</td><td>"
+              + data.destination.track.userName + "</td><td>"  + data.location.userName + "</td><td>"
+              + data.location.track.userName +"</td><td>" + tickCar +"</td>";
+              //..data.trainName + "</td><td>" + data.destination.userName + "</td>";     // NC - need something to check for not-null values in destination..
+              var local_tr = "<tr data-name='" + data.name + "'>" + local_tds + "</tr>"; //build row with key
+              // jmri.log(local_tr);
+            } else {
+                var local_tds="";
+            }
+          var row = $("table#cars tr[data-name='" + name + "']"); //look for row by key
+          if ($(row).length) {
+              // jmri.log("replacing a row with:   " + name );
+              row.html(tds); //if found, replace cells
+          } else {
+               // jmri.log("inside Cars updater else statement " + tr );
+              $("table#cars tbody").html(carstbody + tr); //if not found, append row to table body
+          }
+          var puRow = $("table#pickupCars tr[data-name='" + name + "']"); //look for row by key
+          if ($(puRow).length) {
+              // jmri.log("inside puRow change updater" );
+              puRow.html(pu_tds); //if found, replace cells
+          } else {
+              // jmri.log("inside pickupCars updater else statement " + pu_tr );
+              $("table#pickupCars tbody").html(pickuptbody + pu_tr); //if not found, append row to table body
+          }
+          var localRow = $("table#localCars tr[data-name='" + name + "']"); //look for row by key
+          if ($(localRow).length) {
+              // jmri.log("inside puRow change updater" );
+              localRow.html(local_tds); //if found, replace cells
+          } else {
+              // jmri.log("inside pickupCars updater else statement " + pu_tr );
+              $("table#localCars tbody").html(localtbody + local_tr); //if not found, append row to table body
+          }
+        };
+    };
+
+        // check whether all the tick-boxes are ticked to enable/disable the move location button
+    function rsCheck() {
+        var disabled = false;
+        var arrayOfTicks = Array.from(document.getElementsByClassName("rs-check"));
+        if (arrayOfTicks.length) {
+            // enable the tick-All buttons 
+            $("#check-all").prop("disabled", false)  ;
+            $("#clear-all").prop("disabled", false)  ;
+            arrayOfTicks.forEach(ele => {
+                if (!ele.checked) {
+                    disabled = true ;
+                    return false;
+                 };
+            });
+        } else {
+            // There are no check boxes to tick, so disable the tick ALL buttons
+            $("#check-all").prop("disabled", true);
+            $("#clear-all").prop("disabled", true);
+        }
+        // jmri.log("Rs Check: "  + disabled ) ; 
+        $("#move-train").prop("disabled", disabled);
+    };
+
+        //  tick all the checkboxes for cars, allowing the train to move location, rather than ticking each individually. 
+    function tickAll(checkState) {
+        Array.from(document.getElementsByClassName("rs-check")).forEach(ele => {
+            ele.checked = checkState ; 
+        });
+        $("#move-train").prop("disabled", !checkState);
+        $("#clear-all").prop("disabled", !checkState);
+        $("#check-all").prop("disabled", checkState);
+    };
+
+        //  Move the train to a new location
+    function moveTrain() {
+        var nextStop = document.getElementById("move-train").getAttribute("data-location");
+        // jmri.log("would like to move train: " + theTrainNumber +  "  To: " + nextStop)  ; 
+        //  To move: {"type":"train","method":"post","data":{"name":"12","location":"Lakeview"}}
+        //  To terminate: {"type":"train","method":"post","data":{"name":"12","location":null}}
+        // jmri.socket._send( json string to send );
+        if (nextStop == "Terminate_Train") {
+            var stringToSend = '{"type":"train","method":"post","data":{"name":' + theTrainNumber + ',"location":null}}';
+        } else {
+            var stringToSend = '{"type":"train","method":"post","data":{"name":' + theTrainNumber + ',"location":"' + nextStop + '"}}';
+        }
+        // jmri.log(stringToSend) ;
+       jmri.socket._send(stringToSend) ; 
+    }
+
+        // update the text at top of page when a train updates its location (or other status), including working out the next location
+    function setTitles(name, data) {
+        // set the page title stuff when the train updates
+        // jmri.log("setting titles for train: name='" + name + "', data=" + JSON.stringify(data).substr(0, 12080) + "  (End of data).");
+        document.getElementById("train-name").innerText = data.userName ;
+        document.getElementById("train-status").innerText = data.status ;
+        // document.getElementById("train-comment").innerText     is set lower down in the function, as it needs the locations array to be opened ; 
+        //  jmri.log ("Train is: " +theTrainName + "  at Location: " + currentLocation + ) ;
+        if (!data.location) {
+            //  No location means train no longer running, and tables not required.  
+            document.getElementById("all_tables").hidden = true ;   //  hide tabels when no train
+            document.getElementById("train-progress").innerText = "not running/terminated" ;
+        } else {
+            //  Train is running, populate the information and unhide the tables.  
+            if (! document.getElementById("train-location")) {  //  if we'd previously removed some HTML, put it back again...
+                 document.getElementById("train-progress").innerHTML = "Train currently at: <span  class=\'nc-bold\' id=\'train-location\'>Subtitle me</span>,  next stop is:  <span class=\'nc-bold\' id=\'train-next-location\'></span>" ;
+            }
+            document.getElementById("train-location").innerText = data.location ;
+            var curLocation = data.locationId;
+            var tempLocations = data.locations ;
+            var nextOne = false; 
+            var foundNextLocation = false ; 
+            const keysArray = Object.keys(tempLocations);
+            const numOfLocations = keysArray.length;
+            var loopCounter = 0; 
+            
+                tempLocations.forEach(eloc => {
+                        // jmri.log("locations: " + eloc.name + "( " + eloc.userName + " ) " + nextOne) ; 
+                        loopCounter ++    ; 
+                        if (nextOne ) {
+                            document.getElementById("train-next-location").innerText = eloc.userName ;
+                            document.getElementById("move-train").innerText = "Move to " + eloc.userName ;
+                            document.getElementById("move-train").setAttribute("data-location", eloc.userName) ;
+                            foundNextLocation = true ;
+                        } 
+                        nextOne = false; 
+                        if (eloc.name == curLocation) {
+                            nextOne = true; 
+                            document.getElementById("train-comment").innerText = eloc.comment ;
+                        }
+                        if (loopCounter == numOfLocations) {
+                            if (!foundNextLocation) { 
+                                // we're at end of locations loop, so there isn't a "next place"
+                                // jmri.log("train terminating") ;
+                                document.getElementById("train-next-location").innerText = "Train Terminates Here" ;
+                                document.getElementById("move-train").innerText = "Terminate Train" ;
+                                document.getElementById("move-train").setAttribute("data-location", "Terminate_Train") ;
+                            } else {
+                                // jmri.log("found a location, train not terminating") ;
+                            }
+                        }
+                });
+            document.getElementById("all_tables").hidden = false ;   //  show tabels when train exists
+        }
+    }
+
+        // Sort Tables based on when last seen.    Not really happy with this, but seems a limitation of the sortable tables library. 
+    function resortTheTables() {
+        // cludge sorting method - we call the "sort by carName" (column 0) then "sort by whenLastSeen" to 
+        //  force the sort to happen after each call to this function   
+        //  First the main Cars table
+        var firstTH = document.getElementsByName("th-carsSystemName")[0]; 
+        sorttable.innerSortFunction.apply(firstTH, []);
+        var firstTH = document.getElementsByName("th-carsWhenLastSeen")[0];   
+        sorttable.innerSortFunction.apply(firstTH, []);
+        // And then the Pickup table..
+        var firstTH = document.getElementsByName("th-pickUpSystemName")[0]; 
+        sorttable.innerSortFunction.apply(firstTH, []);
+        var firstTH = document.getElementsByName("th-pickUpWhenLastSeen")[0];   
+        sorttable.innerSortFunction.apply(firstTH, []);
+    }
+    
+    
+    
+    //  After the document has loaded, call this to start doing things
+    $(document).ready(function () {
+        // Start by hiding elements not required depending on whether this is a "trainListPage" or a "conductorPage"
+        if (trainListPage) {
+            // ie. not a "conductorPage",  so hide all the Conductor tables.  
+            document.getElementById("train-summary").hidden = true ;
+            document.getElementById("inTrainCars-div").hidden = true ;   
+            document.getElementById("cars").hidden = true ;
+            document.getElementById("pickupCars-div").hidden = true ;  
+            document.getElementById("pickupCars").hidden = true ;
+            document.getElementById("localCars-div").hidden = true ;   
+            document.getElementById("localCars").hidden = true ;
+            document.getElementById("conductor_buttons").hidden = true ;
+        } else {  //  this is a "conductorPage", so hide the trains overview elements
+            document.getElementById("trainsDiv").hidden = true ;   //  Hide the trains tables from the overview page
+            document.getElementById("trains").hidden = true ;
+            document.getElementById("pageTitleRow").innerHTML = "<h1 class=\'title text-capitalize\'>Train: <span id=\'train-name\'>Title Here: </span> </h1>" ;
+            
+        }
+        // once the document is loaded, assign a $.JMRI object to
+        // the jmri variable and overload the function train(name, state, data)        
+        jmri = $.JMRI({
+            // when the JMRI websocket has completed initialization, call this
+            hello: function (data) {
+                // jmri.log("in hello: data=" + JSON.stringify(data).substr(0, 80) + "..." );
+                jmri.getList("trains");
+            },
+            // when the JMRI object receives an array of trains, call this
+            trains: function (data) {
+                //  jmri.log("in trains: data=" + JSON.stringify(data).substr(0, 80) + "...");
+                data.forEach(el => {
+                //	jmri.log("found train name:" + theTrainName + " Requesting Listener for: "  + el.type +" '" + el.data.name +"'") ; 
+                    // create listener for the specific train 
+                    jmri.getObject(el.type, el.data.name)
+                });
+                
+                if (trainListPage) {
+                    //   Using Sortable Table JS file, which is a standard download
+                    var newTableObject = document.getElementById("trains");
+                    sorttable.makeSortable(newTableObject);
+                    //empty the body of the table                        
+                    $("table#trains tbody").html(""); 
+                }
+                
+                if (conductorPage) {
+                    $.each(params, function (index, value) { //compare against URL params
+                        if(index == "trainName") {
+                            // jmri.log("param element:  " +index+"="+value )
+                            theTrainName = value ; 
+                        }
+                        if (index == "number") {
+                            // jmri.log("param element is number: " +index+"="+value );
+                            theTrainNumber = value ;   // train identified by number rather than name..
+                        }
+                    });
+                    // jmri.log("in trains: data=" + JSON.stringify(data).substr(0, 1080) + "...");
+                    data.forEach(el => {
+                        if(el.data.name == theTrainNumber) {
+                            theTrainName = el.data.userName ;
+                        }
+                        if(el.data.userName == theTrainName) {
+                            // jmri.log("found train name:" + theTrainName + " Requesting Listener for: "  + el.type +" '" + el.data.name +"'") ; 
+                            // create listener for the specific train 
+                            jmri.getObject(el.type, el.data.name)
+                            // var theCars = el.data.cars; 
+                            // jmri.log("found cars:" + JSON.stringify(theCars).substr(0, 180));
+                            el.data.cars.forEach(mycar => { ;  
+                                    // jmri.log("requesting listener for car name: " + mycar.name ) ; 
+                                    //  create a listener for each car in the train
+                                    jmri.getObject("car", mycar.name); 
+                                })
+                            }
+                        // jmri.log("Not actually Requesting update listener for " + el.type +" '" + el.data.name +"'");
+                        //jmri.getObject(el.type, el.data.name);
+                    });
+                    
+                    //   Using Sortable Table JS file, which is a standard download
+                    var newTableObject = document.getElementById("cars");
+                    sorttable.makeSortable(newTableObject);
+                    //empty the body of the table                        
+                    $("table#cars tbody").html(""); 
+                    
+                    var newTableObject2 = document.getElementById("pickupCars");
+                    sorttable.makeSortable(newTableObject2);
+                    $("table#pickupCars tbody").html(""); 
+                    
+                    var newTableObject3 = document.getElementById("localCars");
+                    sorttable.makeSortable(newTableObject3);
+                    $("table#localCars tbody").html(""); 
+                    
+                    //  and check the buttons are correctly set
+                    // jmri.log("check the radio buttons"); 
+                    tickAll(false) ; 
+                    
+                }
+            },
+
+            // when the JMRI object receives a train update, call this
+            train: function (name, data) {
+                // jmri.log("in train: name='" + name + "', data=" + JSON.stringify(data).substr(0, 180) + "  (End of data).");
+                if (trainListPage) {
+                    setRowAllTrains(name, data);   //  add/remove to table for display
+                }
+                if (conductorPage) {
+                
+                    if (data.userName == theTrainName) {  // only in the train we're interested in servicing...
+                        setTitles(name, data) ; 
+                        theCars = [];
+                        pickupCars = [] ;
+                        dropCars = [];
+                        inTrainCars = [] ;
+                        localCars = [] ;
+                        
+                        var currentLocation = data.location ; 
+                        var currentLocationId = data.locationId ; 
+                        
+                        // jmri.log("cars list:  " +JSON.stringify(data.cars).substr(0, 180) ); 
+                       
+                        // clear the table contents
+                        $("table#cars tbody").html("");
+                        $("table#pickupCars tbody").html(""); 
+                        $("table#localCars tbody").html(""); 
+                        
+                        data.cars.forEach(mycar => {
+                            //   if (mycar.location.userName == currentLocation) {     // car is in current location
+                            if (mycar.location.route == currentLocationId) {  // car is in current locationId, which deals with multiple stops at same place
+                                // jmri.log("in location car: " + mycar.name + " is at: " + mycar.location.userName + " Id: " + mycar.location.route );
+                                if(mycar.location.track) {  // car exists at current destination, either local shunt, or to join train
+                                    if (mycar.destination.route == currentLocationId) { // local shunting move, tag as such !
+                                        // jmri.log(mycar.name + " local shunting move only" ) ; 
+                                        localCars.push(mycar.name) ;
+                                    } else {
+                                        //  it's not a local move, its a pickup
+                                        pickupCars.push(mycar.name);     // car is already here, so pick it up
+                                    }
+                                } else {
+                                    inTrainCars.push(mycar.name) ;   // ought to be   inTrainCars
+                                    if(mycar.destination.userName == currentLocation) { 
+                                        dropCars.push(mycar.name);     // drop off car here !
+                                    }
+                                }
+                            } else {
+                                // car is somewhere other than current location
+                                // jmri.log("out of location car: " + mycar.name + " is at: " + mycar.location.userName);
+                            }
+                            theCars.push(mycar.name);  // regardless of where car might be, add it to the total list "theCars"
+                            setRow(mycar.name, mycar);   //  adds the "car" to relevant tables for display
+                        })
+                        resortTheTables()  // resorts the tables after adding all the cars
+                        //   jmri.log("theCars: " + theCars + "  dropCars: " + dropCars + "  pickupCars: " +pickupCars + "  inTrain: " + inTrainCars + "  localCars: " + localCars );
+                        if(inTrainCars.length == 0)  {
+                            // jmri.log(" should hide inTrainCars") ;
+                            document.getElementById("inTrainCars-div").hidden = true ;   //  hide Div and Table when no wagons in the train
+                            document.getElementById("cars").hidden = true ;
+                        } else {
+                            document.getElementById("inTrainCars-div").hidden = false ;   //  show Div and Table when there area wagons in the train
+                            document.getElementById("cars").hidden = false ;
+                        }
+                        if(pickupCars.length == 0)  {
+                            // jmri.log(" should hide pickupCars") ;
+                            document.getElementById("pickupCars-div").hidden = true ;   //  hide Div and Table when no wagons in the train
+                            document.getElementById("pickupCars").hidden = true ;
+                        } else {
+                            document.getElementById("pickupCars-div").hidden = false ;   //  show Div and Table when there area wagons in the train
+                            document.getElementById("pickupCars").hidden = false ;
+                        }
+                        if(localCars.length == 0)  {
+                            // jmri.log(" should hide localCars") ;
+                            document.getElementById("localCars-div").hidden = true ;   //  hide Div and Table when no wagons in the train
+                            document.getElementById("localCars").hidden = true ;
+                        } else {
+                            document.getElementById("localCars-div").hidden = false ;   //  show Div and Table when there area wagons in the train
+                            document.getElementById("localCars").hidden = false ;
+                        }
+                        rsCheck();
+                      }
+                    
+                }
+            },
+
+            cars: function (data) {
+                // jmri.log("in cars: data=" + JSON.stringify(data).substr(0, 180) + "...");
+            },
+
+
+            car: function (name, data) {
+                // jmri.log("in car: name='" + name + "', data=" + JSON.stringify(data).substr(0, 180) + "  (End of data).");
+                // jmri.log("Pickups: " +  pickupCars + "   InTrain: " +inTrainCars  + "   Full Set: " + theCars );
+                setRow(name, data); // add or update the row
+                resortTheTables()
+            },
+
+
+            
+            // all messages call console(), so use it for debugging
+            console: function (originalData) {
+                var data = JSON.parse(originalData);
+                // jmri.log("in console: data=" + JSON.stringify(data).substr(0, 80) + "...");
+            }                    
+        });
+        
+        // trigger the initial connection to the JMRI server
+        jmri.connect();
+        
+
+    
+    
+    });
+
+</script>
+
+
+
+    </head>
+    <body>
+        <div >
+            <p>
+            Example page with alternative "Conductor" screens for "operations".  Uses (what I believe to be) more easily understood Javascript to access the underlying data within OperationsPro.    It is intended for use with stock fitted with ID-Tags, such as RFID, though will work without such tags.   The screens show the last reported locations for stock as it passes tag readers, which will then re-sort the display of Cars to reflect the order of tag reading.  A single "page" can display either the list of trains that are built, or the conductor screen for a given train. 
+            </p>
+        </div>
+	    <div class="jumbotron">
+			<div class="container">
+                <div class="row vertical-align">
+                    <div id="pageTitleRow" class="col-md-6">
+                        <h1 class="title text-capitalize">Trains built and ready:  </h1>
+                    </div>
+                    <div id="filter-text" class="col-md-6">
+                        <!-- filter text will go here -->
+                    </div>
+                </div>                    
+			</div>
+		</div>
+		
+
+
+       <div class="container">
+            <div id="train-summary">
+				<ul>
+				<li id="train-progress"> Train currently at: <span class="nc-bold" id="train-location">Subtitle</span>,  next stop is:  <span class="nc-bold" id="train-next-location"></span></li>
+				<li> Train Status:   <span id="train-status"></span></li>
+                <li> Special notes at this location: <span id="train-comment"></span></li>
+				</ul>
+			</div>
+         <div id="all_tables">
+
+          <div id="pickupCars-div"> Cars to pickup at stop</div>
+            <table id="pickupCars" class="table table-striped table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th name="th-pickUpSystemName">System Name</th><th >Type</th>
+                        <th >WhereLastSeen</th><th name="th-pickUpWhenLastSeen">WhenLastSeen</th>
+                        <th id="th-destination" >Destination</th><th >Track</th>
+                        <th >Current Loc</th><th >Current Track</th>
+                        <th class="sorttable_nosort">Pick Up</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <td>S</td><td>U</td><td>V</td><td>C</td> <!-- this will be cleared and replaced -->
+                </tbody>
+            </table>
+          <div id="inTrainCars-div"> Cars to drop-off or remaining in Train </div>
+            <table id="cars" class="table table-striped table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th name="th-carsSystemName">System Name</th><th >Type</th>
+                        <th >WhereLastSeen</th><th name="th-carsWhenLastSeen">WhenLastSeen</th>
+                        <th id="th-destination" >Destination</th><th >Track</th>
+                        <th >Drop Off</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <td>S</td><td>U</td><td>V</td><td>C</td> <!-- this will be cleared and replaced -->
+                </tbody>
+            </table>
+
+          <div id="localCars-div"> Local Car Moves </div>
+            <table id="localCars" class="table table-striped table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th name="th-LocalCarsSystemName">System Name</th><th >Type</th>
+                        <th >WhereLastSeen</th><th name="th-carsWhenLastSeen">WhenLastSeen</th>
+                        <th id="th-destination" >Destination</th><th >Track</th>
+                        <th >Current Loc</th><th >Current Track</th>
+                        <th class="sorttable_nosort">Drop Off</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <td>S</td><td>U</td><td>V</td><td>C</td> <!-- this will be cleared and replaced -->
+                </tbody>
+            </table>
+
+            
+         <form class="form-inline" role="form" id="conductor_buttons">
+            <div class="btn-group" id="tick-all-buttons">
+              <button id="check-all" type="button" class="btn btn-default" onclick="tickAll(true)"><span class="glyphicon glyphicon-check"></span></button>
+              <button id="clear-all" type="button" class="btn btn-default" onclick="tickAll(false)"><span class="glyphicon glyphicon-unchecked"></span></button>
+            </div>
+            <button id="move-train" type="button" class="btn btn-primary" data-statuscode="20" data-location="norham" disabled="" onClick="moveTrain()">Move to (place)</button>
+        </form>
+
+
+
+            <div id="trainsDiv">
+            All Built Trains </div>
+            <table id="trains" class="table table-striped table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th name="th-trainName">System Name</th>
+                        <th >Description</th>
+                        <th >Departs</th>
+                        <th >Time</th>
+                        <th >Status</th>
+                        <th >Currently At</th>
+                        <th >Terminates</th>
+                        <th >Route</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <td>S</td><td>U</td><td>V</td><td>C</td> <!-- this will be cleared and replaced -->
+                </tbody>
+            </table>
+
+
+        </div><!-- id="all_tables" -->
+        <p></p>
+         </div><!-- /container -->
+        
+        
+        
+
+
+        
+    </body>
+</html>
