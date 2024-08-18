@@ -430,7 +430,8 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>For trains with HEAD ONLY detection release sections by length.</li>
+             <li>When train exits section leave coloured as allocated until released.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
