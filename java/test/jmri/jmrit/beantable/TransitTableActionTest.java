@@ -1,8 +1,8 @@
 package jmri.jmrit.beantable;
 
-import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.InstanceManager;
@@ -11,9 +11,10 @@ import jmri.SectionManager;
 import jmri.Transit;
 import jmri.TransitSection;
 import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -55,10 +56,11 @@ public class TransitTableActionTest extends AbstractTableActionBase<Transit> {
 
     @Test
     @Override
+    @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
     public void testAddThroughDialog() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeTrue(a.includeAddButton());
-        a.actionPerformed(null);
+
+        Assertions.assertTrue(a.includeAddButton());
+        jmri.util.ThreadingUtil.runOnGUI( () -> a.actionPerformed(null));
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
         // find the "Add... " button and press it.
@@ -77,16 +79,17 @@ public class TransitTableActionTest extends AbstractTableActionBase<Transit> {
 
     @Test
     @Override
+    @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
     public void testEditButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeTrue(a.includeAddButton());
+
+        Assertions.assertTrue(a.includeAddButton());
         Transit t1 = InstanceManager.getDefault(jmri.TransitManager.class).createNewTransit("t1", "test transit");
         TransitSection ts1 = new TransitSection(InstanceManager.getDefault(SectionManager.class).getBySystemName("TS1"), 0, 0);
         TransitSection ts2 = new TransitSection(InstanceManager.getDefault(SectionManager.class).getBySystemName("TS2"), 0, 0);
         t1.addTransitSection(ts1);
         t1.addTransitSection(ts2);
 
-        a.actionPerformed(null);
+        jmri.util.ThreadingUtil.runOnGUI( () -> a.actionPerformed(null));
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
         JFrameOperator jfo = new JFrameOperator(f);
 
@@ -115,18 +118,22 @@ public class TransitTableActionTest extends AbstractTableActionBase<Transit> {
         JUnitUtil.initSectionManager();
         a = new TransitTableAction();
         Block b1 = InstanceManager.getDefault(BlockManager.class).provideBlock("IB12");
+        b1.setUserName("Block 12 UserName");
         Block b2 = InstanceManager.getDefault(BlockManager.class).provideBlock("IB13");
+        b2.setUserName("Block 13 UserName");
         Section s = InstanceManager.getDefault(SectionManager.class).createNewSection("TS1");
         s.addBlock(b1);
         Section s2 = InstanceManager.getDefault(SectionManager.class).createNewSection("TS2");
         s2.addBlock(b2);
-        jmri.util.JUnitAppender.suppressWarnMessage("Block IB12 does not have a user name,may not work correctly in Section IY:AUTO:0001");
-        jmri.util.JUnitAppender.suppressWarnMessage("Block IB13 does not have a user name,may not work correctly in Section IY:AUTO:0001");
     }
 
     @Override
     @AfterEach
     public void tearDown() {
+        if ( a != null ) {
+            a.dispose();
+            a = null;
+        }
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
