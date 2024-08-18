@@ -180,23 +180,6 @@ This is the next release in the 5.6 cycle. It's intended to be created from the 
 
 - [ ] We roll some general code maintenance items into the release process. There should be automated and removed from here.
 
-- Check for any files with multiple UTF-8 Byte-Order-Marks.  This shouldn't usually happen but when it does can be a bit tricky to find. The following command scans from the root of the repository. Use a Hex editor to remove the erroneous extra Byte-Order-Marks found - a valid UTF-8 file should only have either one 3-byte BOM (EF BB BF) or no BOM at all.
-
-```
-        grep -rlI --exclude-dir=.git '^\xEF\xBB\xBF\xEF\xBB\xBF' .
-```
-
-- Check for any scripts with tabs. If you find them, use an editor with a "DeTab" tool that can replace them with alignment on 4-character tab columns; do not just replace them with four spaces.
-
-```
-        grep -lr '\t' jython/ | grep '\.py'
-```
-
-- Check that the `default_lcf.xml` and `scripts/default.xml` files are in synch.  The only difference should be a comment near the top:
-```
-        diff default_lcf.xml scripts/default_lcf.xml
-```
-
 
 - Consider running jmri.ArchitectureCheck to recreate (and hopefully reduce) the known coupling exceptions in archunit_store/
 
