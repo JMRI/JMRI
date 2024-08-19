@@ -341,7 +341,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     }
 
     NodeID destNodeID() {
-        return nodeSelector.getSelectedItem();
+        return nodeSelector.getSelectedNodeID();
     }
 
     EventID eventID() {
