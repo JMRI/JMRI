@@ -119,7 +119,7 @@ code {
 
 						<dt>WS</dt>
 
-						<dd>Open a JSON WebSocekt.</dd>
+						<dd>Open a JSON WebSocket.</dd>
 					</dl>
 				</dd>
 
@@ -258,15 +258,9 @@ code {
 					<td>request current state of sensor IS2</td>
 				</tr>
 				<tr>
-					<td><code>{"type":"sensor","data":{"name":"IS2","state":4}}</code></td>
+					<td><code>{"type":"sensor","method":"post","data":{"name":"IS2","state":4}}</code></td>
 					<td><code>{"type":"sensor","data":{"name":"IS2","state":4}}</code></td>
 					<td>set sensor IS2 to InActive (4)</td>
-				</tr>
-				<tr>
-					<td><code>{"type":"turnout","data":{"name":"IT99","state":0}}</code></td>
-					<td><code>{"type":"turnout","data":{"name":"IT99","state":4}}</code></td>
-					<td>sending state=0 is also treated as request for current
-						state</td>
 				</tr>
 				<tr>
 					<td><code>{"type":"power","data":{}}</code></td>
@@ -277,7 +271,7 @@ code {
 					<td><code>{"type":"memory","data":{"name":"IMCURRENTTIME"}}</code></td>
 					<td><code>{"type":"memory","data":{"name":"IMCURRENTTIME","userName":null,"comment":null,"value":"2:53
 							PM"}}</code></td>
-					<td>get (fast)clock time, resent each minute</td>
+					<td>get (fast)clock time, updates sent for each time change.</td>
 				</tr>
 				<tr>
 					<td><code>{"type":"ping"}</code></td>
