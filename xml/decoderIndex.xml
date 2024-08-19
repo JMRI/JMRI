@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.9.2plus+jake+20240807T0511Z+R5533ed3867b on Tue Aug 06 22:11:57 PDT 2024-->
-  <decoderIndex version="603">
+  <!--Written by JMRI version 5.9.2plus+daniel+20240818T1437Z+Rbca9d98ed8 on Sun Aug 18 16:37:38 CEST 2024-->
+  <decoderIndex version="605">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -13686,12 +13686,15 @@
       </family>
       <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_ARD_8SCOM_4VYH_TC.xml">
         <model model="ARD-8SCOM-4VYH-TC" lowVersionID="10" highVersionID="19" productID="16843521" numOuts="16" />
+        <model model="ARD-8SCOM-4VYH-TC-2" lowVersionID="20" highVersionID="29" productID="16843521" numOuts="16" />
       </family>
       <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_ARD_SCOM_MX.xml">
         <model model="ARD-SCOM-MX" lowVersionID="10" highVersionID="19" productID="16843265" numOuts="16" />
+        <model model="ARD-SCOM-MX-2" lowVersionID="20" highVersionID="29" productID="16843265" numOuts="16" />
       </family>
       <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_ARD_SCOM_TC.xml">
         <model model="ARD-SCOM-TC" lowVersionID="10" highVersionID="19" productID="16843266" numOuts="16" />
+        <model model="ARD-SCOM-TC-2" lowVersionID="20" highVersionID="29" productID="16843266" numOuts="16" />
       </family>
       <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_UNI16ARD_8VYH.xml">
         <model model="UNI16ARD-8VYH" lowVersionID="00" highVersionID="39" productID="16843009" numOuts="16" />
@@ -13699,6 +13702,8 @@
         <model model="UNI16ARD-8VYH-5" lowVersionID="50" highVersionID="59" productID="16843009" numOuts="16" />
         <model model="UNI16ARD-8VYH-6" lowVersionID="60" highVersionID="69" productID="16843009" numOuts="16" />
         <model model="UNI16ARD-8VYH-7" lowVersionID="70" highVersionID="79" productID="16843009" numOuts="16" />
+        <model model="UNI16ARD-8VYH-8" lowVersionID="80" highVersionID="89" productID="16843009" numOuts="16" />
+        <model model="UNI16ARD-8VYH-9" lowVersionID="90" highVersionID="99" productID="16843009" numOuts="16" />
       </family>
       <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_UNI16ARD_NAV.xml">
         <model show="no" model="UNI16ARD-NAV" replacementModel="UNI16ARD-NAV-ST" replacementFamily="dccdoma.cz" lowVersionID="41" highVersionID="49" productID="16843010" numOuts="16" />
@@ -13708,12 +13713,14 @@
       </family>
       <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_UNI16ARD_NAV_MX.xml">
         <model model="UNI16ARD-NAV-MX" lowVersionID="10" highVersionID="19" productID="16843012" numOuts="16" />
+        <model model="UNI16ARD-NAV-MX-2" lowVersionID="20" highVersionID="29" productID="16843012" numOuts="16" />
       </family>
       <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_UNI16ARD_NAV_ST.xml">
         <model model="UNI16ARD-NAV-ST" lowVersionID="41" highVersionID="49" productID="16843010" numOuts="16" />
       </family>
       <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_UNI16ARD_NAV_TC.xml">
         <model model="UNI16ARD-NAV-TC" lowVersionID="10" highVersionID="19" productID="16843013" numOuts="16" />
+        <model model="UNI16ARD-NAV-TC-2" lowVersionID="20" highVersionID="29" productID="16843013" numOuts="16" />
       </family>
       <family name="sidlo" mfg="Public-domain and DIY" file="Public_Domain_sidlo_ARD-LN-S88.xml">
         <model model="ARD-LN-S88" lowVersionID="10" highVersionID="19" productID="1" developerID="21" />

@@ -387,7 +387,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
             <li><a href="#EditRoute">Edit Route</a>
               <ul>
-                <li><a href="#RouteSwitchTime">Switch Time and Departure Time</a></li>
+                <li>Train Direction</li>
+                <li><a href="#RouteMoves">Moves</a></li>
+                <li>Random Moves</li>
+                <li>Pick ups and Set outs</li>
+                <li><a href="#RouteSwitchTime">Wait and Departure Time</a></li>
 
                 <li><a href="#RouteMaxTrainLength">Maximum Train Length</a></li>
 
@@ -446,6 +450,17 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
               <ul>
                 <li><a href="#TrainBuildOptions">Train Build Options</a>
                   <ul>
+                    <li>Use normal mode when building this train</li>
+                    <li>Send all car pick ups to terminal</li>
+                    <li>Allow cars to return to staging</li>
+                    <li><a href="#TrainLocalMoveOption">Allow local moves when a car has a
+                        custom load or FD</a></li>
+                    <li>Allow cars to travel from origin to terminal</li>
+                    <li>Service all cars with a final destination</li>
+                    <li>Send cars with custom loads to staging</li>
+                    <li><a href="#BuildlocoConsist">Build loco consist from single locos</a></li>
+                    <li>Train Owners</li>
+                    <li>Train Built Dates</li>
                     <li><a href="#OptionalTrainRequirements">Locomotive or Caboose Changes
                         en Route</a></li>
                   </ul></li>
@@ -1054,7 +1069,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h4>Close on Save</h4>
       When selected, close operation windows when the "Save" button is pressed.
 
-      <h4>Auto Save</h4>
+      <h4 id="AutoSave">Auto Save</h4>
       When selected, the program will automatically save the operation files after they have been
       changed. When a change occurs the program will after 1 to 2 minutes automatically save the
       operations files. The program will also automatically save the operation files if you close
@@ -4563,23 +4578,29 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       or by doubling clicking one of the cells and entering a new value. Press "Save Route" to
       complete your change.
 
-      <p>
-        Each route location has the train's departure direction, number of desired car moves, and
-        whether car pick ups and or car set outs are allowed at that location. A car move can be a
-        car pick up or car set out at that location. For example, 5 moves can be 5 pick ups, or 5
-        set outs, or any combination of 5 pick ups or set outs. Picking up or dropping off a <a
-          href="#Kernel">kernel</a> (group of cars) represents one move. Moving a car or kernel from
-        one track to another at the same location also represents one move. The program doesn't
-        normally create local car moves, however you can use <a href="#Schedules">schedules</a> or <a
-          href="#LocationDivision">divisions</a> to change the program's behavior. To modify the
-        number of moves for a location, double click directly on the cell in the route table. When
-        entering the desired number of car moves, enter reasonable numbers that reflect what you
-        want the program to do for you. For example, if you want your train to depart with
-        approximately 15 cars, then 15 is the correct value for your moves at the start of the
-        route. At the end of the route, if you want close to 12 cars in the train when it
-        terminates, then 12 is the right value for the move count for the last location in your
-        train's route. Entering "0" moves means no car pick ups or set outs at the location.
-      </p>
+      <p>Each route location has the train's departure direction, number of desired car moves,
+        and whether car pick ups and or car set outs are allowed at that location.</p>
+
+      <h4>Train Direction</h4>
+
+      Select the direction the train departs each location in the route. If the train reverses
+      direction see <a href="#TrainTurnRoute">Train Turn Route</a> below.
+
+      <h4 id="RouteMoves">Moves</h4>
+
+      A car move can be a car pick up or car set out at that location. For example, 5 moves can be 5
+      pick ups, or 5 set outs, or any combination of 5 pick ups or set outs. Picking up or dropping
+      off a <a href="#Kernel">kernel</a> (group of cars) represents one move. Moving a car or kernel
+      from one track to another at the same location also represents one move. The program doesn't
+      normally create local car moves, however you can use <a href="#Schedules">schedules</a> or <a
+        href="#LocationDivision">divisions</a> to change the program's behavior. To modify the
+      number of moves for a location, double click directly on the cell in the route table. When
+      entering the desired number of car moves, enter reasonable numbers that reflect what you want
+      the program to do for you. For example, if you want your train to depart with approximately 15
+      cars, then 15 is the correct value for your moves at the start of the route. At the end of the
+      route, if you want close to 12 cars in the train when it terminates, then 12 is the right
+      value for the move count for the last location in your train's route. Entering "0" moves means
+      no car pick ups or set outs at the location.
 
       <p>You can use the route location move counts to control how many cars are set out or
         picked up along your train's route. If you want more cars to be set out at the middle
@@ -4587,6 +4608,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         and if needed increase the move count for the departure location. Conversely, if you want to
         pick up more cars along the train's route, increase the move count for the last location,
         and decrease the move count for the departure location.</p>
+
+      <h4>Random Moves</h4>
 
       <p>You can also request that the program randomly reduce the number of desired car moves
         for a location. Use this feature if you find that the program is consistently generating the
@@ -4603,7 +4626,19 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         greater than 50% to reduce the move count by one, and 100% if you wanted the move count to
         be reduced by 2.</p>
 
-      <h4 id="RouteSwitchTime">Switch Time and Departure Time</h4>
+      <h4>Pick ups? and Set outs?</h4>
+
+      If the train is allowed to pull cars from the location select "Yes" under "Pick ups?",
+      otherwise select "No". Same goes for "Set outs?", select "Yes" if the train is allowed to spot
+      cars at the location, and "No" if set outs aren't allowed. Selecting "Yes" for both pick ups
+      and set outs allows the train to do both and also perform local moves. A local move is when a
+      car is pulled and spotted at the same location. You can prevent local moves using one of the
+      train build options, see <a href="TrainLocalMoveOption">Allow local moves when a car has a
+        custom load or FD</a>. Another method to disallow local moves is to enter a location twice in
+      the route, and in the first location only allow set outs, and in the second only allow pick
+      ups.
+
+      <h4 id="RouteSwitchTime">Wait or Departure Time</h4>
 
       <p>
         The "Switch Time" and "Travel Time" found on the <a href="#Settings">Settings</a> page
@@ -4845,11 +4880,15 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         window found in the Trains "Tools" menu .
       </p>
 
-      <p>One of the most important buttons is the "Save Builds" button. When pressed, the
-        program saves all the files that have been modified by building and moving your trains.
-        Pressing this button allows you to shut down the program and resume exactly where you left
-        the program. If you attempt to close the "Trains" window before pressing the "Save Builds"
-        button, a warning will pop up asking you to save your files.</p>
+      <p>
+        One of the most important buttons is the "Save Builds" button. When pressed, the program
+        saves all the files that have been modified by building and moving your trains. Pressing
+        this button allows you to shut down the program and resume exactly where you left the
+        program. If you attempt to close the "Trains" window before pressing the "Save Builds"
+        button, a warning will pop up asking you to save your files. Note that if you enabled <a
+          href="#AutoSave">Auto Save</a> no warning will appear and the program will automatically
+        save your files.
+      </p>
 
       <h3 id="TrainEdit">Add or Edit Train</h3>
       Press the "Add Train" button at the bottom left of the "Trains" window to create a new train.

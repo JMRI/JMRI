@@ -83,6 +83,15 @@ public abstract class SpeedStepScaleSpeedMatcher extends SpeedMatcher {
 
         return speedStepSpeed;
     }
+    
+    /**
+     * Gets the speed step value for a linear speed table
+     * @param speedStep the inst speed step to get the value for
+     * @return value for the speed step
+     */
+    protected int getSpeedStepLinearValue(int speedStep) {
+        return (int) (speedStep / 28f * 255f);
+    }
 
     /**
      * Gets the 128 speed step mode speed for a speed table step

@@ -379,9 +379,9 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - version 1.15.3
 - used to rebuild Help metadata
 
-##### objenesis-2.2.jar
-- version 2.2
-- initially used to mock an XBee Connection for testing.
+##### objenesis-3.3.jar
+- version 3.3
+- Mockito dependency
 
 ##### opentest4j-1.2.0.jar
 - version 1.2.0
@@ -436,8 +436,9 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - Jars from https://search.maven.org/search?q=g:com.tngtech.archunit
 - version 1.0.0-rc1
 
-##### byte-buddy-1.10.14
-- version 1.10.14
+##### byte-buddy-1.14.15
+- version 1.14.15
+- Mockito dependency
 
 ##### checker-framework directory and contents
 - The Checker Framework 2.0.1 (1-Jun-2016)
@@ -485,8 +486,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 
 ##### junit-vintage-engine-5.9.1.jar
 
-##### mockito-core mockito-inline mockito-junit-jupiter
-- version 3.5.11
+##### mockito-core mockito-junit-jupiter
+- version 5.12.0
 
 ##### OpenIDE Utilities
 - org-openide-util-lookup-RELEASE150.jar
