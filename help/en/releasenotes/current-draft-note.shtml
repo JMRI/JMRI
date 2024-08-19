@@ -126,7 +126,13 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>update library to 0.3.38 which includes
+                    <ul>
+                        <li>Improvements to the node selector's presentation, 
+                            which JMRI uses in the send tool, the firmware upgrade tool,
+                            the file tool, and other places.</li>
+                    </ul>
+                </li>
             </ul>
 
         <h4>Powerline</h4>
