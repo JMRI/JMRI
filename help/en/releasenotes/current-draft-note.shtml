@@ -126,7 +126,13 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>OpenLCB_Java lib updated to release 0.7.39, which includes:
+                    <ul>
+                        <li>Better GUI for the node selection tool, which improves
+                            layout of the firmware upgrade window, send tool window, 
+                            memory tool window and other places.
+                    </ul>
+                </li>
             </ul>
 
         <h4>Powerline</h4>
