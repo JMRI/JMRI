@@ -3668,7 +3668,7 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
                     }
 
                 } else {
-                    if ( pos!= null && bean.equals(pos.getNamedBean())) {
+                    if ( bean.equals(pos.getNamedBean())) {
                         report.add(new NamedBeanUsageReport("PositionalIcon", data));
                     }
                }
