@@ -6,10 +6,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Tests for jmri.jmrit.beantable.routtable.RouteSensor
+ * Tests for jmri.jmrit.beantable.routetable.RouteSensor
  *
  * @author Paul Bender Copyright (C) 2020
  */
@@ -18,53 +18,53 @@ class RouteSensorTest {
     private RouteSensor rs;
 
     @BeforeEach
-    void setUp() {
-        JUnitUtil.setUpLoggingAndCommonProperties();
+    public void setUp() {
+        JUnitUtil.setUp();
         rs = new RouteSensor("IS0","Sensor");
     }
 
     @AfterEach
-    void tearDown() {
+    public void tearDown() {
         rs = null;
         JUnitUtil.tearDown();
     }
 
     @Test
-    void getSysName() {
-        assertThat(rs.getSysName()).isNotNull().isEqualTo("IS0");
+    public void getSysName() {
+        assertEquals( "IS0", rs.getSysName() );
     }
 
     @Test
-    void getUserName() {
-        assertThat(rs.getUserName()).isNotNull().isEqualTo("Sensor");
+    public void getUserName() {
+        assertEquals( "Sensor", rs.getUserName() );
     }
 
     @Test
-    void getDisplayName() {
-        assertThat(rs.getDisplayName()).isNotNull().isEqualTo("Sensor");
+    public void getDisplayName() {
+        assertEquals( "Sensor", rs.getDisplayName() );
     }
 
     @Test
-    void getAndSetIncluded() {
-        assertThat(rs.isIncluded()).isFalse();
+    public void getAndSetIncluded() {
+        assertFalse( rs.isIncluded() );
         rs.setIncluded(true);
-        assertThat(rs.isIncluded()).isTrue();
+        assertTrue( rs.isIncluded() );
         rs.setIncluded(false);
-        assertThat(rs.isIncluded()).isFalse();
+        assertFalse( rs.isIncluded() );
     }
 
     @Test
-    void getAndSetState() {
-        assertThat(rs.getState()).isEqualTo(Sensor.INACTIVE);
+    public void getAndSetState() {
+        assertEquals( Sensor.INACTIVE, rs.getState() );
         rs.setState(Sensor.ACTIVE);
-        assertThat(rs.getState()).isEqualTo(Sensor.ACTIVE);
+        assertEquals( Sensor.ACTIVE, rs.getState() );
     }
 
     @Test
-    void getAndSetToState() {
-        assertThat(rs.getSetToState()).isEqualTo("Set Inactive");
+    public void getAndSetToState() {
+        assertEquals( "Set Inactive", rs.getSetToState() );
         rs.setSetToState("Set Active");
-        assertThat(rs.getSetToState()).isEqualTo("Set Active");
+        assertEquals( "Set Active", rs.getSetToState() );
     }
 
 }
