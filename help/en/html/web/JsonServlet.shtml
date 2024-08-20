@@ -244,9 +244,11 @@ code {
 			<p>
 				The <b>WebSocket</b> feature of the servlet can be seen by browsing
 				to the <b>/json/</b> url, where a <b>JSON console</b> is provided
-				for testing.<br> Example commands and responses:
+				for testing.<br>
+                Notes: Method "get" is default. "get"ting an item sets up a listener which sends all subsequent changes as well.<br>                
 			</p>
 			<table id="jsonResponses">
+                <caption><b>Example commands and responses</b></caption>
 				<tr>
 					<th>command</th>
 					<th>response</th>
@@ -267,6 +269,11 @@ code {
                     <td><code>{"type":"turnout","data":{"name":"IT99","state":4,"userName":null,"comment":null,"properties":[],"inverted":false,"feedbackMode":1,"feedbackModes":[16,32,128,1],"sensor":[null,null]}}</code></td>
                     <td>request current state of turnout IT99</td>
                 </tr>
+                <tr>
+                    <td><code>{"type":"turnout","method":"put","data":{"name":"IT98","userName":"Test Turnout 98"}}</code></td>
+                    <td><code>{"type":"turnout","data":{"name":"IT98","userName":"Test Turnout 98","comment":null,"properties":[],"inverted":false,"state":0,"feedbackMode":1,"feedbackModes":[16,32,128,1],"sensor":[null,null]}}</code></td>
+                    <td>creaate turnout IT98 using "put" method</td>
+                </tr>
 				<tr>
 					<td><code>{"type":"power"}</code></td>
 					<td><code>{"type":"power","data":{"name":"LocoNet","state":2,"default":true}}</code></td>
@@ -276,7 +283,7 @@ code {
 					<td><code>{"type":"memory","data":{"name":"IMCURRENTTIME"}}</code></td>
 					<td><code>{"type":"memory","data":{"name":"IMCURRENTTIME","userName":null,"comment":null,"value":"2:53
 							PM"}}</code></td>
-					<td>get (fast)clock time, updates sent for each time change.</td>
+					<td>get builtin memory (fast)clock time.</td>
 				</tr>
 				<tr>
 					<td><code>{"type":"ping"}</code></td>
