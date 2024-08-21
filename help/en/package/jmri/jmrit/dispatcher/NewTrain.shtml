@@ -176,7 +176,7 @@
             </li>
 
             <li><strong>Head Only</strong> Only the head of the train can be detected. The same as
-            <strong>Head and Tail</strong> with the addition that section or any part of the section may be
+            <strong>Head and Tail</strong> with the addition that section or any part of the section may not be
             reused if occupied.</li>
           </ul>
           <p>See also <strong><a href="#trainlength">Train Length</a></strong> for more AutoTrain stopping information.</p>

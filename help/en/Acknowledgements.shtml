@@ -102,8 +102,9 @@
         who wrote the XpressNet throttle code, maintains the XpressNet
         implementation, created the LI101 configuration tool, has made important contributions to
         the base code, added Lenz XPA support, wrote the Lenz feedback code, wrote the Lenz
-        consisting support, provided the SLSF (Frisco) signals, provided the jmris server tree, and
-        in general has made more contributions than can be counted.</li>
+        consisting support, provided the SLSF (Frisco) signals, provided the jmris server tree, 
+        wrote and maintains the XBee support
+        and in general has made more contributions than can be counted.</li>
 
         <li>Taylor Berg, <!-- tman0 -->
          who worked on the DCC++ support.</li>
@@ -116,7 +117,7 @@
 
         <li>Andrew Berridge, who debugged and fixed problems with the SPROG serial interface</li>
 
-        <li>Jim Betz provided a version number for TCS decoders and a model definition for the Z2
+        <li>Jim Betz, who provided a version number for TCS decoders and a model definition for the Z2
         decoder.</li>
 
         <li>Thomas Beutel, who helped with the early EasyDCC tests</li>
@@ -229,6 +230,9 @@
         the JMRI code <a id="C"></a>
         </li>
 
+        <li>Darrin Calcutt, 
+        who provided the sample script for LIFX light acccess.
+        
         <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3AKenC57+">Ken Cameron</a>, <!-- KenC57 -->
         who wrote the NCE fast clock support, added support for more than two
         systems to the preferences, added the Light Control, provided sample scripts, improved the
@@ -477,7 +481,8 @@
         implementation to do a background refresh of the function values.</li>
 
         <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3Ajerryg2003+">Jerry Grochow</a>, <!-- jerryg2003 -->
-         who helped with the scripting documentation and the XSLT panel viewer.</li>
+         who helped with the scripting documentation and the XSLT panel viewer
+         and has worked on the MQTT support.</li>
 
         <li>Mark Gurries, who provided loaner equipment and great ideas. He's currently working on
         decoder definitions for DecoderPro <a id="H"></a>
@@ -824,6 +829,12 @@
         <li>P&aring;l <!--paoSoft -->
         who worked on the LocoNet refresh algorithm</li>
 
+        <li>David Parks
+        whose Cumberland West layout was the proving grounds for 
+        Control Panel and Warrants, and was very helpful in developing
+        support of Digitrax and LCC hardware.
+        </li>
+
         <li>Gopal Patnaik <!-- patnaik-g -->
         who helped with Intellibox development and improvements to startup scripts.</li>
 
@@ -874,8 +885,8 @@
 
         <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3Abalazsracz+">Balazs Racz</a>, <!-- balazsracz -->
         who fixed a bug in startup and improved our tech documentation, updated
-        the OpenLCB support to their version 0.7, and added support for bean properties to the
-        Tables</li>
+        the OpenLCB support to their version 0.7, added support for bean properties to the
+        Tables, and provided OpenLCB train control support.</li>
 
         <li>Robert Raggi, who contributed the Reading 1954 signal system definition.</li>
 
@@ -907,8 +918,8 @@
         <li>Wim Ros, who provide help with the direct connection to the Intellibox</li>
 
         <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3AnewHeiko+">Heiko Rosemann</a>, <!-- newHeiko -->
-         who created the Slackware repository version of JMRI and worked on
-         WiThrottle protocol issues.</li>
+         who created the Slackware repository version of JMRI, worked on
+         WiThrottle protocol issues and has provided several decoder file updates.</li>
 
         <li>Klaus Ruebsam, who was hosting German and English JMRI discussion groups on his
           http://www.dcc-portal.net/ website.
@@ -926,7 +937,8 @@
         definition.</li>
 
         <li>Bruno Sanches, <!-- bcsanches -->
-         who fixed a bug in the DCC++ throttle implementation.</li>
+         who fixed a bug in the DCC++ throttle implementation
+         and provided a Trix decoder definition.</li>
 
         <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3Adsand47+">Dave Sand</a>,
           <!-- dsand47 -->
@@ -1058,7 +1070,8 @@
         DS54 accessory decoder, updated lots of decoder definitions, improved many help pages, and
         was an active jmriusers group moderator.</li>
 
-        <li>Steve Todd, primary author of EngineDriver throttle for Android, added scripts, helped
+        <li>Steve Todd, <!-- mstevetodd-->
+        primary author of EngineDriver throttle for Android, added scripts, helped
         with web server (particularly client-side panels), updated Dispatcher, and enhanced the
         DCCpp connection to keep up with the DCC++EX rewrite and improvements.</li>
 
@@ -1118,7 +1131,8 @@
         <li>Todd Wegter, <!-- toddthetrainnut -->
          who improved Bachrus speed matching.</li>
 
-        <li>Jim Wells, who created our logos and the great program icons</li>
+        <li>Jim Wells, who created our logos and the great program icons
+            and provided some great sound files.</li>
 
         <li>Donn Welton, who provided info on configuring a PowerBook for DecoderPro</li>
 

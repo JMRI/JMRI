@@ -997,6 +997,17 @@ public class DefaultConditional extends AbstractNamedBean
     }
 
     /**
+     * Dispose this DefaultConditional.
+     */
+    @Override
+    public void dispose() {
+        super.dispose();
+        for (int i = 0; i < _actionList.size(); i++) {
+            _actionList.get(i).dispose();
+        }
+    }
+
+    /**
      * Class for defining ActionListener for ACTION_DELAYED_SENSOR
      */
     class TimeSensor implements java.awt.event.ActionListener {

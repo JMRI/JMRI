@@ -1,9 +1,16 @@
 package jmri.jmrix;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.io.*;
+import java.util.Set;
 import java.util.Vector;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import jmri.SystemConnectionMemo;
+import jmri.util.SystemType;
 
 /**
  * Provide an abstract base for *PortController classes.
@@ -205,6 +212,15 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         return mPort;
     }
 
+    private static String getSymlinkTarget(File symlink) {
+        try {
+            // Path.toRealPath() follows a symlink
+            return symlink.toPath().toRealPath().toFile().getName();
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
     /**
      * Provide the actual serial port names.
      * As a public static method, this can be accessed outside the jmri.jmrix
@@ -213,6 +229,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @return the port names in the form they can later be used to open the port
      */
 //    @SuppressWarnings("UseOfObsoleteCollectionType") // historical interface
+    @SuppressFBWarnings("DMI_HARDCODED_ABSOLUTE_FILENAME")  // /dev/ is not expected to change on Linux and Mac
     public static Vector<String> getActualPortNames() {
         // first, check that the comm package can be opened and ports seen
         var portNameVector = new Vector<String>();
@@ -222,6 +239,28 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         for (com.fazecast.jSerialComm.SerialPort portID : portIDs) {
             portNameVector.addElement(portID.getSystemPortName());
         }
+
+        // On Linux and Mac, use the system property purejavacomm.portnamepattern
+        // to let the user add additional serial ports
+        String portnamePattern = System.getProperty("purejavacomm.portnamepattern");
+        if ((portnamePattern != null) && (SystemType.isLinux() || SystemType.isMacOSX())) {
+            Pattern pattern = Pattern.compile(portnamePattern);
+
+            File[] files = new File("/dev").listFiles();
+            if (files != null) {
+                Set<String> ports = Stream.of(files)
+                        .filter(file -> !file.isDirectory()
+                                && (pattern.matcher(file.getName()).matches()
+                                        || portNameVector.contains(getSymlinkTarget(file)))
+                                && !portNameVector.contains(file.getName()))
+                        .map(File::getName)
+                        .collect(Collectors.toSet());
+
+                portNameVector.addAll(ports);
+            }
+
+        }
+
         return portNameVector;
     }
 

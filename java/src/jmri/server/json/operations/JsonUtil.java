@@ -130,7 +130,7 @@ public class JsonUtil {
      * @return the JSON representation of car
      */
     public ObjectNode getCar(@Nonnull Car car, @Nonnull ObjectNode data, Locale locale) {
-        data.put(JSON.LOAD, car.getLoadName()); // NOI18N
+        data.put(JSON.LOAD, car.getLoadName().split(TrainCommon.HYPHEN)[0]); // NOI18N
         data.put(JSON.HAZARDOUS, car.isHazardous());
         data.put(JsonOperations.CABOOSE, car.isCaboose());
         data.put(JsonOperations.PASSENGER, car.isPassenger());

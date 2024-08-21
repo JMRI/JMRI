@@ -2,8 +2,8 @@ package jmri.jmrix.loconet;
 
 import jmri.ProgListenerScaffold;
 import jmri.ProgrammerException;
-import jmri.ProgrammingMode;
 import jmri.util.JUnitUtil;
+import jmri.ProgrammingMode;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -538,10 +538,464 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
 
      }
 
+    @Test
+     public void testOneOps7genAccyCvReadAccess() throws ProgrammerException {
+        // disallow transponding
+        sm.setTranspondingAvailable(false);
+
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, 4625, true);
+
+        lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETBD7OPSWMODE);
+        lnopsmodeprogrammer.readCV("12", pl);
+
+        // should have written
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+
+        Assert.assertEquals("sent", "ED 0B 7F 54 07 04 58 64 0B 00 00", lnis.outbound.get(0).toString());
+
+        // check echo of sent message has no effect
+        LocoNetMessage m = lnis.outbound.get(0);
+
+        lnis.sendTestMessage(m); // (Device sends the message on LocoNet)
+
+        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+
+        try {
+            Thread.sleep(1);
+        } catch (InterruptedException e) {
+
+        }
+
+        // receive a LACK "accepted" from "command station"
+        m = new LocoNetMessage(new int[]{0xB4, 0x6d, 0x7f, 0x64});
+
+        lnis.sendTestMessage(m); // (Device sends the message on LocoNet)
+
+        // make sure the "accepted blind" was received.
+        try {
+            Thread.sleep(10);
+
+        } catch (InterruptedException e) {
+
+        }
+
+        // Now "receive" the reply from the 7th-gen Accy device
+        m = new LocoNetMessage(new int[]{0xB4, 0x6E, 0x12, 0x00});
+
+        // lnopsmodeprogrammer.message(m);
+        lnis.sendTestMessage(m); // (Device sends the message on LocoNet)
+
+        JUnitUtil.waitFor(()->{return pl.getRcvdInvoked() == 1;},"getRcvdInvoked not set");
+        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
+        Assert.assertEquals("Got read of 18", 18, pl.getRcvdValue());
+
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException e) {
+
+        }
+        // end of first read!
+
+        JUnitUtil.waitFor(()->{return pl.getRcvdInvoked() == 1;},"getRcvdInvoked not set");
+     }
+
+     @Test
+     public void testOps7genAccyAccesses() throws ProgrammerException {
+        // disallow transponding
+        sm.setTranspondingAvailable(false);
+
+        checkSome7thGenAccyReads(1);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyReads(2);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyReads(3);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyReads(4);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyReads(5);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyReads(6);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyReads(7);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyReads(8);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyReads(9);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyReads(16);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyReads(17);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyReads(32);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyReads(33);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyReads(64);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyReads(65);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyReads(128);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyReads(129);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyReads(256);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyReads(257);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyReads(512);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyReads(513);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyReads(1024);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyReads(1025);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyReads(2030);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyReads(2031);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyReads(2040);
+        lnopsmodeprogrammer.dispose();
+
+    }
+
+    /*
+    This is the targeted test.  The one that fails...
+    */
+    @Test
+    public void testOps7genAccyWritesAccesses() throws ProgrammerException {
+        // disallow transponding
+        sm.setTranspondingAvailable(false);
+        checkSome7thGenAccyWrites(1);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyWrites(2);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyWrites(3);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyWrites(4);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyWrites(256);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyWrites(275);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyWrites(519);
+        lnopsmodeprogrammer.dispose();
+
+        checkSome7thGenAccyWrites(2039);
+        lnopsmodeprogrammer.dispose();
+
+    }
+
+     private void checkSome7thGenAccyReads(int address)  throws ProgrammerException {
+        int incoming = 1;
+        int num;
+        int i;
+        lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, address, true);
+        lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETBD7OPSWMODE);
+
+        LocoNetMessage m;
+        for (i = 0; i <8; ++ i) {
+
+            lnis.clearReceivedMessages();
+            Assert.assertEquals("Zero messages sent", 0, lnis.outbound.size());
+            num = 1 << i;
+            pl = new ProgListenerScaffold();
+            Assert.assertEquals("no programmingListener reply (yet)",
+                    0, pl.getRcvdInvoked());
+            log.debug("At begin of loop {}, getRcvdInvolked = {}, Num {}",
+                    i, pl.getRcvdInvoked(), num);
+
+            log.debug("--> Sending readCV() from testcase loop {} with CV num {}", i, num);
+            lnopsmodeprogrammer.readCV(Integer.toString(num), pl);
+            log.debug("   testcase continuing...  After the CV Read accesss started, getRcvdInvolked = {}",
+                    pl.getRcvdInvoked());
+            // should have sent the CV access to Addr 1 CV num (i)
+            Assert.assertEquals("outbound size (i="+Integer.toString(i)+") ",
+                    1, lnis.outbound.size());
+            log.debug("  testcase checks lnis.outbound.size() as 1 and was ok.");
+            Assert.assertEquals("no programmingListener reply (yet)",
+                    0, pl.getRcvdInvoked());
+
+            String snum = "0"+Integer.toHexString(num-1);
+            if (snum.length() >= 3) {
+                snum = snum.substring(snum.length() - 2);
+            }
+            snum = snum.toUpperCase();
+
+            // Map the NMRA address into the Bytes of the LocoNet message
+            int a = getNmraBasicAccyAddr(address);
+            int a1 = a & 0x7f;
+            int a2 = (a >> 8) & 0x7f;
+            String sa1 = "0"+(Integer.toHexString(a1)).toUpperCase();
+            if (sa1.length() != 2) {
+                sa1 = sa1.substring(sa1.length()-2);
+            }
+            String sa2 = "0"+Integer.toHexString(a2).toUpperCase();
+            if (sa2.length() != 2) {
+                sa2 = sa2.substring(sa2.length()-2);
+            }
+            Assert.assertEquals("sent", "ED 0B 7F 54 07 " + sa2 + " " + sa1 +" 64 "+snum+" 00 00",
+                    lnis.outbound.get(0).toString());
+            // check echo of sent message has no effect
+            log.debug("   testcase got access request message from JMRI's LocoNet transmit");
+            m = lnis.outbound.get(0);
+            log.debug("   testcase copies access request to IN as an echo");
+            lnis.sendTestMessage(m);  // (LocoNet echo of transmitted message!)
+            log.debug("   testcase has echoed CV access request");
+
+            Assert.assertEquals("Still 1 message sent", 1, lnis.outbound.size());
+            Assert.assertEquals("Still 0 programming replies",
+                    0, pl.getRcvdInvoked());
+            incoming++;
+
+            // wait a little for command station response
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+            }
+
+            Assert.assertEquals("saw 1 message sent", 1, lnis.outbound.size());
+            // receive a LACK "accepted" from "command station"
+            m = new LocoNetMessage(new int[]{0xB4, 0x6d, 0x7f, 0x64});
+
+            log.debug("   testcase is sending c.s.'s 'long_ack' as {}", m.toString());
+            lnis.sendTestMessage(m);  // (Command station default response)
+
+            Assert.assertEquals("saw 1 message sent", 1, lnis.outbound.size());
+
+            // make sure the "accepted blind" was received.
+            Assert.assertNotNull("PL is not null",pl);
+            final int j= incoming;
+            log.debug("   testcase getRcvdInvolked = {}; j = incoming = {}.",
+                    pl.getRcvdInvoked(), Integer.toString(j));
+            JUnitUtil.waitFor(()->{return pl.getRcvdInvoked() == 0;},"getRcvdInvoked not set after CS long_ack");
+            Assert.assertEquals("Still Reply status not ready", -1, pl.getRcvdStatus());
+
+            // Now "receive" the reply from the 7th-gen Accy device
+
+            log.debug("   testcase device opc_long_ack reply being sent: "+m.toString()+
+                    "; j = "+Integer.toString(j)+" before sent.");
+
+            // wait a while for the device to reply
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+            }
+
+            m = getLnLongAckFromVal(num);
+            lnis.sendTestMessage(m); // (Device sends the message on LocoNet)
+
+            log.debug("   testcase device opc_long_ack reply and data was sent.");
+
+            log.debug("   testcase: after send, pl.getRcvdInvoked() is {}  for j = {}, num= {}.",
+                    Integer.toString(pl.getRcvdInvoked()), j, num);
+            JUnitUtil.waitFor(()->{return pl.getRcvdInvoked() == 1;},"getRcvdInvoked not set (#2)");
+            Assert.assertEquals("saw 1 message sent", 1, lnis.outbound.size());
+            Assert.assertEquals("Still Reply status OK", 0, pl.getRcvdStatus());
+            Assert.assertEquals("Expected read of "+num, num, pl.getRcvdValue());
+            log.debug("Got readCV result of {} at {}.",pl.getRcvdValue(), java.time.LocalTime.now());
+
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+            }
+
+            log.debug("!!!!!! end of test loop !!!!!!");
+        }
+     }
+
+    private void checkSome7thGenAccyWrites(int address)  throws ProgrammerException {
+        int incoming = 1;
+        int num;
+        int i;
+        lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, address, true);
+        lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETBD7OPSWMODE);
+
+        LocoNetMessage m;
+        for (i = 0; i <8; ++ i) {
+
+            lnis.clearReceivedMessages();
+            Assert.assertEquals("Zero messages sent", 0, lnis.outbound.size());
+            num = 1 << i;
+            pl = new ProgListenerScaffold();
+            Assert.assertEquals("no programmingListener reply (yet)",
+                    0, pl.getRcvdInvoked());
+            log.debug("At begin of loop {}, getRcvdInvolked = {}, Num {}",
+                    i, pl.getRcvdInvoked(), num);
+
+            log.debug("--> Sending readCV() from testcase loop {} with CV num {}", i, num);
+            lnopsmodeprogrammer.writeCV(Integer.toString(num), (~num) & 255, pl);
+            log.debug("   testcase continuing...  After the CV Read accesss started, getRcvdInvolked = {}",
+                    pl.getRcvdInvoked());
+            // should have sent the CV access to Addr 1 CV num (i)
+            Assert.assertEquals("outbound size (i="+Integer.toString(i)+") ",
+                    1, lnis.outbound.size());
+            log.debug("  testcase checks lnis.outbound.size() as 1 and was ok.");
+            Assert.assertEquals("no programmingListener reply (yet)",
+                    0, pl.getRcvdInvoked());
+
+            String snum = "0"+Integer.toHexString(num-1);
+            if (snum.length() >= 3) {
+                snum = snum.substring(snum.length() - 2);
+            }
+            snum = snum.toUpperCase();
+
+            // Map the NMRA address into the Bytes of the LocoNet message
+            int a = getNmraBasicAccyAddr(address);
+            int a1 = a & 0x7f;
+            int a2 = (a >> 8) & 0x7f;
+
+            String sa1 = "0"+(Integer.toHexString(a1)).toUpperCase();
+            if (sa1.length() != 2) {
+                sa1 = sa1.substring(sa1.length()-2);
+            }
+            String sa2 = "0"+Integer.toHexString(a2).toUpperCase();
+            if (sa2.length() != 2) {
+                sa2 = sa2.substring(sa2.length()-2);
+            }
+            String expectVal = "0"+Integer.toHexString(((~num)&127) ).toUpperCase();
+            if (expectVal.length() > 2) {
+                expectVal = expectVal.substring(expectVal.length()-2);
+            }
+
+            String evExtraBits = "0"+Integer.toHexString(7 + ((((~num)&128)==128)?0x10:0));
+            if (evExtraBits.length() > 2) {
+                evExtraBits = evExtraBits.substring(evExtraBits.length()-2);
+            }
+
+            Assert.assertEquals("sent", "ED 0B 7F 54 "+evExtraBits+" " + sa2 + " " + sa1 +" 6C "+snum+" "+ expectVal+" 00",
+                    lnis.outbound.get(0).toString());
+            // check echo of sent message has no effect
+            log.debug("   testcase got access request message from JMRI's LocoNet transmit");
+            m = lnis.outbound.get(0);
+            log.debug("   testcase copies access request to IN as an echo");
+            lnis.sendTestMessage(m);  // (LocoNet echo of transmitted message!)
+            log.debug("   testcase has echoed CV access request");
+
+            Assert.assertEquals("Still 1 message sent", 1, lnis.outbound.size());
+            Assert.assertEquals("Still 0 programming replies",
+                    0, pl.getRcvdInvoked());
+            incoming++;
+
+            // wait a little for command station response
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+            }
+
+            Assert.assertEquals("saw 1 message sent", 1, lnis.outbound.size());
+            // receive a LACK "accepted" from "command station"
+            m = new LocoNetMessage(new int[]{0xB4, 0x6d, 0x7f, 0x64});
+
+            log.debug("   testcase is sending c.s.'s 'long_ack' as {}", m.toString());
+            lnis.sendTestMessage(m);  // (Command station default response)
+
+            Assert.assertEquals("saw 1 message sent", 1, lnis.outbound.size());
+
+            // make sure the "accepted blind" was received.
+            Assert.assertNotNull("PL is not null",pl);
+            final int j= incoming;
+            log.debug("   testcase getRcvdInvolked = {}; j = incoming = {}.",
+                    pl.getRcvdInvoked(), Integer.toString(j));
+            JUnitUtil.waitFor(()->{return pl.getRcvdInvoked() == 0;},"getRcvdInvoked not set after CS long_ack");
+            Assert.assertEquals("Still Reply status not ready", -1, pl.getRcvdStatus());
+
+            // Now "receive" the reply from the 7th-gen Accy device
+
+            log.debug("   testcase device opc_long_ack reply being sent: "+m.toString()+
+                    "; j = "+Integer.toString(j)+" before sent.");
+
+            // wait a while for the device to reply
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+            }
+
+            m = getLnLongAckFromVal(0x5A);
+            lnis.sendTestMessage(m); // (Device sends the message on LocoNet)
+
+            log.debug("   testcase device opc_long_ack reply and data was sent.");
+
+            log.debug("   testcase: after send, pl.getRcvdInvoked() is {}  for j = {}, num= {}.",
+                    Integer.toString(pl.getRcvdInvoked()), j, num);
+            JUnitUtil.waitFor(()->{return pl.getRcvdInvoked() == 1;},"getRcvdInvoked not set (#2)");
+            Assert.assertEquals("saw 1 message sent", 1, lnis.outbound.size());
+            Assert.assertEquals("Still Reply status OK", 0, pl.getRcvdStatus());
+            Assert.assertEquals("Expected result of 0x5A", 0x5A, pl.getRcvdValue());
+            log.debug("Got readCV result of {} at {}.",pl.getRcvdValue(), java.time.LocalTime.now());
+
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+            }
+
+            log.debug("!!!!!! end of test loop !!!!!!");
+        }
+     }
+
+    private LocoNetMessage getLnLongAckFromVal(int val) {
+        int opc = LnConstants.OPC_LONG_ACK;
+        int prevOpc = val>127 ? 0x6D : 0x6E;
+        int val7 = val & 0x7f;
+        int chk = 255 ^ opc ^ prevOpc ^ val7;
+        return new LocoNetMessage(new int[] {opc, prevOpc, val7, chk});
+    }
+
+    /*
+    "Basic-like" address
+    10AAAAAA 1AAA1AA0
+      000000  100 00
+      765432  098 10
+    */
+    private int getNmraBasicAccyAddr(int addr) {
+        int a = addr-1;
+        int a2 = a & 0x3;
+        int a3 = (a & 0xFC) >> 2;
+        int a4 = (~((a & 0x700) >> 8)) & 0x7;
+        return (a2 << 1) + (a4 << 4) + (a3 << 8) + (0x8000 + 0x80 + 0x8);
+    }
+
     @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+
+        jmri.InstanceManager.setDefault(jmri.jmrix.ConnectionConfigManager.class,
+                new jmri.jmrix.ConnectionConfigManager());
 
         lnis = new LocoNetInterfaceScaffold();
         sm = new SlotManager(lnis);
@@ -560,5 +1014,5 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
         programmer = lnopsmodeprogrammer = null;
         JUnitUtil.tearDown();
     }
-
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LnOpsModeProgrammerTest.class);
 }

@@ -30,17 +30,21 @@
 
         <dt>/panel?name=&lt;type&gt;/&lt;name&gt;</dt>
 
-        <dd>Displays an open, oparable panel. <em>&lt;type&gt;</em> is one of: <em>Panel</em>,
+        <dd>Displays an open, operable panel. <em>&lt;type&gt;</em> is one of: <em>Panel</em>,
         <em>ControlPanel</em>, <em>Switchboard</em> or <em>Layout</em>.</dd>
 
         <dt>/panel/&lt;type&gt;/&lt;name&gt;?format=xml</dt>
 
         <dd>Retrieves a portable XML representation of the panel. <em>&lt;type&gt;</em> is one of:
         <em>Panel</em>, <em>ControlPanel</em>, <em>Switchboard</em> or <em>Layout</em>.</dd>
+
+        <dt>/panel/&lt;type&gt;/&lt;name&gt;?protect=yes</dt>
+
+        <dd>Displays a read-only representation of the specified panel.</dd>
       </dl>
 
-      <p>Panel redisplay requires a modern browser with HTML5 support (Chrome, FireFox, Safari,
-      IE9).</p>
+      <p>Panel display requires a modern browser with HTML5 support including WebSocket. 
+      The JMRI web server's About page includes a test for this.</p>
 
       <h2 id="example">Technical Example: Behind the scenes of Web Server Panels</h2>
       <a href="images/WebServerFlow.png"><img src="images/WebServerFlow.png" alt=

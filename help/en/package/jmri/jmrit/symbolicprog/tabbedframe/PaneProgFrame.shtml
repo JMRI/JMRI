@@ -29,6 +29,14 @@
         </li>
 
         <li>
+          <a href="#Function">Function Labels tab</a>
+        </li>
+        <li>
+          <a href="#Media">Roster Media tab</a>
+        </li>
+
+
+        <li>
           <a href="#Other%20Tabs">Other Tabs</a>
         </li>
 
@@ -112,6 +120,16 @@
 
       <p>The Manufacture ID and the Manufacture Version ID are set in the decoder by the
       Manufacture. JMRI uses these to identify the decoder.</p>
+
+      <h3 id="Function">Function Labels Tab</h3>
+      
+      For more on the Function Labels tab, please see
+      <a href="https://www.jmri.org/help/en/manual/DecoderPro3/Adv_FunctionLabel.shtml">this page</a> on the web.
+
+      <h3 id="Media">Roster Media Tab</h3>
+      
+      For more on the Roster Media tab, please see
+      <a href="https://www.jmri.org/help/en/html/tools/throttle/RostersMediaPane.shtml">this page</a> on the web.
 
       <h3 id="Other_Tabs">Other tabs</h3>
 

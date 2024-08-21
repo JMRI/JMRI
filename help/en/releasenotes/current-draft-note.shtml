@@ -126,8 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Update the STL Editor to support compact store output.  This allows more
-                statements in a Logic group.</li>
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -400,13 +399,14 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Fixes an issue with printing and previewing CVs with certain decoders, eg. Uhlenbrock IntelliDrive2</li>
+            <li></li>
         </ul>
 
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>For trains with HEAD ONLY detection release sections by length.</li>
+             <li>When train exits section leave coloured as allocated until released.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -441,12 +441,6 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The expression <strong>Reporter</strong> can now use
-              indirect addressing for selecting the Reporter.</li>
-          <li>The action <strong>Publish</strong> in the category
-              <strong>MQTT</strong> now has the option
-              <strong>Retain</strong>. If the value is <strong>Default</strong>,
-              the value of the connection will be used.</li>
           <li></li>
         </ul>
 
@@ -471,7 +465,7 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li>Set the bounds on the dialog when going into EditPreferences after profile connection fail.</li>
+            <li></li>
         </ul>
 
     <h3>Resources</h3>
@@ -495,14 +489,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Added a warning that requests people
-                contact us if they are using JavaScript/ECMAscript
-                for JMRI scripting.  This will help us
-                understand how much that feature is being used.
-                <p>
-                There's also a new "jython/DontWarnJavaScript.py"
-                script that can be loaded at startup to 
-                suppress this warning.</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -593,7 +580,7 @@
             <li></li>
         </ul>
 
-   <h3>Where Used</h3>
+    <h3>Where Used</h3>
         <a id="WhereUsed" name="WhereUsed"></a>
         <ul>
             <li></li>
@@ -614,8 +601,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Updated LauchJMRI.exe to display the console when the /noisy is used. No more return code 1, but and actual explanation</li>
-            <li>The method <strong>jmri.jmrit.audio.AudioThread.alive()</strong> has been renamed to <strong>isThreadAlive()</strong>.
-                It should only affect developers and people using JMRI as a library.</li>
+            <li></li>
         </ul>
 

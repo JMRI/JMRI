@@ -43,7 +43,7 @@ public class PipeListener extends Thread {
                     });
 
                 } catch (IOException ex) {
-                    if (ex.getMessage().equals("Write end dead") || ex.getMessage().equals("Pipe broken")) {
+                    if ( "Write end dead".equals(ex.getMessage()) || "Pipe broken".equals(ex.getMessage())) {
                         // happens when the writer thread, possibly a script, terminates
                         synchronized (this) {
                             try {

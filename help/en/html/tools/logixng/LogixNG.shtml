@@ -63,6 +63,12 @@
         create templates/subroutines/etc., that can be called from ConditionalNGs with the
         appropriate variables.</p></dd>
 
+        <dd><p><span class="since">since 5.9.2</span>Normally, LogixNG Modules are called from a
+        LogixNG or another module.  It is also possible to call a module from another JMRI class
+        or a Jython script.  The module must be a <strong>Digital Action Module</strong>.  For an
+        example Jython script see <a href="reference/chapter13#call_module_script">Call Module
+        Script</a>.</p></dd>
+
         <dt>Tables</dt>
 
         <dd><p>LogixNG adds the <strong>LogixNG Tables</strong> concept to JMRI. A LogixNG Table is
@@ -318,6 +324,10 @@
       <p>The <strong>Where Used</strong> tool displays the LogixNG definitions that have references
       to JMRI table items.  For details, see
       <a href="../../../package/jmri/jmrit/logixng/LogixNGWhereUsed.shtml">LogixNG Where used</a>.</p>
+
+      <p>The <strong>Export LogixNG</strong> tool is used to export LogixNG items while changing the
+      the system name.  This makes it possible to import LogixNG definitions. For details, see
+      <a href="ExportLogixNG.shtml">Export LogixNG</a>.  Note: This not in the tools menu.</p>
 
       <h2>Documentation</h2>
 

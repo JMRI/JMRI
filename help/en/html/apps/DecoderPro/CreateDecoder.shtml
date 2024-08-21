@@ -41,10 +41,9 @@
           <p>For the provided files, we use the same capitalization, etc, that the decoder
           manufacturer uses in their documentation.</p>
 
-          <p>This new file should go in the <code>xml/decoders</code> subdirectory in the
+          <p>This new file should go in the <code>decoders</code> subdirectory in the
           <code>JMRI</code> User Files Location so that the program can find it.
-          You may have to create this directory (including the xml/ directory above it)
-          if it hasn't already been created.
+          You may have to create this directory if it hasn't already been created.
           You can select "File Locations"
           from the JMRI Help menu to find (and open) the User Files Location. (See the <a href=
           "../../doc/Technical/ProfileFileStructure.shtml"><em>configuration files page</em></a>
@@ -57,6 +56,10 @@
           more reformatting than you have to. If you change the tech stuff in the top 5 or 10
           lines, or reformat the contents, it gets very hard to tell what's changed and what has
           not.</p>
+
+          <p>After adding your new decoder definition, do not forget to recreate the <b>Decoder Index</b>, 
+          see below for futher instructions</p>
+
         </dd>
 
         <dt class="left">Edit the new file</dt>
@@ -408,6 +411,9 @@
 
           <p>Select the "Recreate decoder index" item from the DecoderPro "Actions" menu or the
           PanelPro "Debug" menu.</p>
+
+          <p>Restart JMRI to see the new changes take effect</p>
+            
         </dd>
       </dl>
 

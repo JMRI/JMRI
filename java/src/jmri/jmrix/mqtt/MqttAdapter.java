@@ -118,6 +118,8 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         // Setup the MQTT Connection Options
         MqttConnectOptions mqttConnOpts = new MqttConnectOptions();
         mqttConnOpts.setCleanSession(true);
+        mqttConnOpts.setMaxInflight(100);
+        
         if ( getOptionState(MQTT_USERNAME_OPTION) != null
                 && ! getOptionState(MQTT_USERNAME_OPTION).isEmpty()) {
             mqttConnOpts.setUserName(getOptionState(MQTT_USERNAME_OPTION));

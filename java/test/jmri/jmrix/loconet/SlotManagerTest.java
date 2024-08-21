@@ -1524,6 +1524,8 @@ public class SlotManagerTest {
     public void setUp() {
         JUnitUtil.setUp();
 
+        jmri.InstanceManager.setDefault(jmri.jmrix.ConnectionConfigManager.class,
+                new jmri.jmrix.ConnectionConfigManager());
         // prepare an interface
         lnis = new LocoNetInterfaceScaffold();
 

@@ -487,6 +487,8 @@ public class TreeEditor extends TreeViewer {
                         _systemName.setText(_addSwingConfiguratorInterface.getAutoSystemName());
                     }
 
+                    checkAndAdjustSystemName();
+
                     if (_addSwingConfiguratorInterface.getManager()
                             .validSystemNameFormat(_systemName.getText()) != Manager.NameValidity.VALID) {
                         isValid = false;
@@ -561,6 +563,33 @@ public class TreeEditor extends TreeViewer {
                 makeAddEditFrame(true, femaleSocket, _create, commentStr);
             }
         }
+    }
+
+    /**
+     * Check the system name format.  Add prefix and/or $ as neeeded.
+     */
+    void checkAndAdjustSystemName() {
+        if (_autoSystemName.isSelected()) {
+            return;
+        }
+
+        var sName = _systemName.getText().trim();
+        var prefix = _addSwingConfiguratorInterface.getManager().getSubSystemNamePrefix();
+
+        if (!sName.isEmpty() && !sName.startsWith(prefix)) {
+            var isNumber = sName.matches("^\\d+$");
+            var hasDollar = sName.startsWith("$");
+
+            var newName = new StringBuilder(prefix);
+            if (!isNumber && !hasDollar) {
+                newName.append("$");
+            }
+            newName.append(sName);
+            sName = newName.toString();
+        }
+
+        _systemName.setText(sName);
+        return;
     }
 
     /**
@@ -877,6 +906,8 @@ public class TreeEditor extends TreeViewer {
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
             _autoSystemName.setSelected(prefMgr.getCheckboxPreferenceState(_systemNameAuto, true));
         });
+
+        _systemName.setEnabled(addOrEdit);
 
         dialog.setVisible(true);
     }

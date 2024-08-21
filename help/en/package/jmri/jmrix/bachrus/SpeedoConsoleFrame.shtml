@@ -78,6 +78,14 @@
         profile on programming track" in the "Select Mode" section, you can press the "Read" button
         to read the address directly from the loco.</li>
       </ul>
+	  
+	  <p><strong>Momentum:</strong> This section provides a way to read and set the momentum for 
+	  your locomotive.</p>
+	  <p>For best results when speed profiling, the momentum CVs should be set to zero 
+	  so that speed commands take immediate effect. Speed matching will automatically set the 
+	  locomotive's momentum CVs to 0. For both speed profiling and matching, you should read the 
+	  locomotive's momentum before starting so that you can restore the momementum CVs afterword.</p>
+	  <a href="../../../../html/hardware/bachrus/images/MomentumSection.png"><img src="../../../../html/hardware/bachrus/images/MomentumSection.png"></a>
 
       <p><strong>Speed Profile Chart:</strong> The radio buttons to the right of the chart allow
       you to select whether you want a profile for the locomotive running forward, or backwards, or
@@ -132,30 +140,49 @@
         </li>
       </ul>
 
-      <p>For best results the momentum CVs should be set to zero so that speed commands take
-      immediate effect.</p>
-
-      <p>
-      <strong>Speed Matching:</strong>
-      At the bottom of the right side is a "Speed Matching" section.
-      This configures the Vstart (3) and Vhigh (4) CVs to match the
-      your desired speeds at speed step 1 and 28.
-      The Vmid CV is set to half way between these to attempt
-      to set a straight-line speed curve.</p>
-      <a href="../../../../html/hardware/bachrus/images/SpeedMatchSection.png"><img src="../../../../html/hardware/bachrus/images/SpeedMatchSection.png"></a>
-      <p>
-      Note that after these CVs have been set by running the matching,
-      you should go to the DecoderPro roster entry for this decoder
-      and do a "Read Full Sheet"
-      of the "Basic Speed Control" pane to capture the new values.
-      <p>
-      If you are doing this on the the programming track,
-      the process will have set the momentum CVs to zero and restored them on
-      successful completion. This is done
-      to avoid them interfering with the matching process. If you're programming
-      on the main track, this step is skipped.  In that case, make sure that you
-      have set the momentum CVs to zero before starting the process, and
-      restore them manually afterwards.
+     
+      <p><strong>Speed Matching:</strong> There are two tabs for speed matching behind the Speed 
+	  Profile tab. The first is for the Basic Speed Matcher. The second is for the Speed Step 
+	  Scale Speed Matcher.</p>
+	  
+	  <p>Both speed matchers will set your locomotive's momentum CVs to 0, so be sure to read the 
+	  momentum CVs with the Momentum panel before speed matching so you can easily restore them 
+	  afterword. Both speed matchers also provide configuration for if and how long the locomotive 
+	  is warmed up and whether reverse is trimmed to match forward. Your locomotive should be 
+	  warmed up to ensure accurate results. Reverse should also be trimmed for accurate results, 
+	  but it should be disabled if your decoder doesn't support reverse trim (CV 95) or if it 
+	  doesn't work with your decoder (NCE decoders have CV 95, but it is not compatible with how 
+	  this speed matcher sets it).</p>
+	  
+	  <p>The Basic Speed Matcher allows you to speed match your locomotive's start and top speed 
+	  to your desired value with a straight-line speed curve between them. You can use the basic 
+	  motor control CVs (Vstart [3], Vhigh [4], and Vmid [6]), the speed table (CVs 67-94), or 
+	  ESU's speed table (a combination of the basic motor control CVs and speed table). When using 
+	  the basic motor control CVs, Vmid will be speed matched to the speed half way between your 
+	  desired start and top speeds. When using one of the speed table modes, speed table steps 10 
+	  and 19 will be matched to the speeds 1/3 and 2/3 of the way between your desired start and top 
+	  speeds, respectively.</p>
+	  <a href="../../../../html/hardware/bachrus/images/BasicSpeedMatcher.png"><img src="../../../../html/hardware/bachrus/images/BasicSpeedMatcher.png"></a>
+      
+	  <p> The Speed Step Scale Speed Matcher allows you to speed match your locomotive such that 
+	  its speed is equal to the speed step when running in 128 speed step mode. For example, when 
+	  running at speed step 11 in 128 speed step mode, the locomotive will be going 11 mph or kph 
+	  depending on what unit the speed matcher was set to. You can use the speed table (CVs 67-94)
+	  or ESU's speed table (a combination of the basic motor control CVs and speed table). While 
+	  this speed matcher is intended to be used with 128 speed step mode, we still only have 28 
+	  steps in the speed table, so we can only actually speed match roughly every 4.7 speed steps. 
+	  The speed matcher first determines the locomotive's top speed. Then it sets the target max 
+	  speed to either the desired max speed or the next lowest speed table step speed, whichever 
+	  is lower. The locomotive will then be speed matched so that it plateaus at the target max 
+	  speed at its corresponding speed step. Every speed table step between and including 1 and 
+	  the target max speed table step will be speed matched to the corresponding speed. Every 
+	  speed table step above the target max speed table step will be set to maintain the target 
+	  max speed.</p>
+	  <a href="../../../../html/hardware/bachrus/images/SpeedStepScaleSpeedMatcher.png"><img src="../../../../html/hardware/bachrus/images/SpeedStepScaleSpeedMatcher.png"></a>
+      
+	  <p>Note that after these CVs have been set by running the matching, you should go to the 
+	  DecoderPro roster entry for this decoder and do a "Read Full Sheet" of the corresponding 
+	  motor control pane to capture the new values.</P>
 
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>

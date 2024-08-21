@@ -16,7 +16,7 @@
 <!-- Need to instruct the XSLT processor to use HTML output rules.
      See http://www.w3.org/TR/xslt#output for more details
 -->
-<xsl:output method="html" encoding="ISO-8859-1"/>
+<xsl:output method="html" encoding="UTF-8"/>
 
 
 <!-- Define variables for translation -->
