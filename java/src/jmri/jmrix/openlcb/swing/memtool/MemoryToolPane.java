@@ -143,7 +143,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
     }
 
     void pushedCheckButton(ActionEvent e) {
-        var node = nodeSelector.getSelectedItem();
+        var node = nodeSelector.getSelectedNodeID();
         JmriJFrame f = new JmriJFrame();
         f.setTitle("Configuration Capabilities");
 
@@ -281,7 +281,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
      */
     void pushedGetButton(ActionEvent e) {
         setRunning(true);
-        farID = nodeSelector.getSelectedItem();
+        farID = nodeSelector.getSelectedNodeID();
         try {
             space = Integer.parseInt(spaceField.getText().trim());
         } catch (NumberFormatException ex) {
@@ -399,7 +399,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         };
 
     void pushedPutButton(ActionEvent e) {
-        farID = nodeSelector.getSelectedItem();
+        farID = nodeSelector.getSelectedNodeID();
         try {
             space = Integer.parseInt(spaceField.getText().trim());
         } catch (NumberFormatException ex) {
