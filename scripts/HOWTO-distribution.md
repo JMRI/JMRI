@@ -50,6 +50,19 @@ If you have changed anything, run this again to check:
         git remote -v
 ```
 
+Note that this also applies to the JMRI/website repository. You will
+need to have a fork of both JMRI/JMRI and JMRI/website repositores
+and to have cloned both repositories to your local computer.
+
+If you are not the owner of the JMRI project, you will need a token
+to be able to push to the JMRI repository.
+
+[Cloning with HTTPS URLs](https://docs.github.com/en/get-started/getting-started-with-git/about-remote-repositories#cloning-with-https-urls)
+
+[Managing your personal access tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)
+
+[Your tokens](https://github.com/settings/tokens)
+
 ### Important note of GitHub Desktop
 
 GitHub Desktop requires that git is setup as below
@@ -313,12 +326,12 @@ For each, if it doesn't have the right milestone set, add the current milestone.
 ```
         git checkout master
         git pull
-        sed -i .bak s/5.9.1-SNAPSHOT/5.9.3-SNAPSHOT/g pom.xml
+        sed -i.bak s/5.9.2-SNAPSHOT/5.9.3-SNAPSHOT/g pom.xml
 ```
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field now, so check the numbers in the following line)
 ```
-        sed -i .bak s/release.build=1/release.build=2/g release.properties
+        sed -i.bak s/release.build=2/release.build=3/g release.properties
 ```
  - Check that both those edits left 5.9.3 defined in the two files
  
@@ -394,7 +407,7 @@ If you're developing any additional (post-5.9.3) changes that you want in the JM
 
 - Click "New Item"
 
-- Click "Copy Existing Item". Fill out the new 5.9.3 release name at the top. Enter the 5.7.5 most recent release at the bottom.  Click "OK"
+- Click "Copy Existing Item". Fill out the new 5.9.3 release name at the top. Enter the 5.9.2 most recent release at the bottom.  Click "OK"
 
 - Update
 
