@@ -355,13 +355,6 @@ public class LoaderPane extends javax.swing.JPanel {
         if (activeSerialPort != null) {
             activeSerialPort.close();
         }
-        if (serialStream != null) {
-            try {
-                serialStream.close();
-            } catch (IOException ex) {
-                // Do nothing
-            }
-        }
     }
 
     public void dispose() {
