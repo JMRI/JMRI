@@ -26,6 +26,7 @@ import jmri.util.swing.JmriMouseEvent;
  */
 public class BlockContentsIcon extends MemoryIcon {
 
+    private NamedIcon defaultIcon = null;
     private NamedBeanHandle<Block> namedBlock;
 
     public BlockContentsIcon(String s, Editor editor) {
