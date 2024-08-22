@@ -270,7 +270,7 @@
         <!-- SpotBugs annotations -->
         <pathelement location="${libdir}/jcip-annotations-1.0.jar"/>
         <pathelement location="${libdir}/jsr305.jar"/>
-        <pathelement location="${libdir}/spotbugs-annotations-4.7.3.jar"/>
+        <pathelement location="${libdir}/spotbugs-annotations-4.8.6.jar"/>
     </path>
 
     <!-- path to run regular executables -->
