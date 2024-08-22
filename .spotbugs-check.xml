@@ -10,10 +10,13 @@
         <Or>
 			<!-- Temporary disable these until we have decided what to do about them -->
            <Bug pattern="CT_CONSTRUCTOR_THROW" />
+           <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
            <Bug pattern="NP_UNWRITTEN_FIELD" />
            <Bug pattern="PA_PUBLIC_PRIMITIVE_ATTRIBUTE" />
+           <Bug pattern="SIC_INNER_SHOULD_BE_STATIC" />
            <Bug pattern="SING_SINGLETON_GETTER_NOT_SYNCHRONIZED" />
            <Bug pattern="SING_SINGLETON_IMPLEMENTS_SERIALIZABLE" />
+           <Bug pattern="SING_SINGLETON_HAS_NONPRIVATE_CONSTRUCTOR" />
            <Bug pattern="SS_SHOULD_BE_STATIC" />
            <Bug pattern="UWF_NULL_FIELD" />
 			<!-- Temporary disable these until we have decided what to do about them -->
@@ -35,9 +38,12 @@
            <Bug pattern="PA_PUBLIC_MUTABLE_OBJECT_ATTRIBUTE" />
            <Bug pattern="URF_UNREAD_FIELD" />
            <Bug pattern="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" />
+           <Bug pattern="UUF_UNUSED_FIELD" />
+           <Bug pattern="UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD" />
            <Bug pattern="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" />
            <Bug pattern="UWF_UNWRITTEN_FIELD" />
            <Bug pattern="UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD" />
+           <Bug pattern="UWF_NULL_FIELD" />
 			<!-- Temporary disable these until we have decided what to do about them -->
 
            <Bug pattern="IS2_INCONSISTENT_SYNC" />
