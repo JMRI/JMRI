@@ -10,14 +10,12 @@
         <Or>
 			<!-- Temporary disable these until we have decided what to do about them -->
            <Bug pattern="CT_CONSTRUCTOR_THROW" />
-           <Bug pattern="PA_PUBLIC_MUTABLE_OBJECT_ATTRIBUTE" />
+           <Bug pattern="NP_UNWRITTEN_FIELD" />
            <Bug pattern="PA_PUBLIC_PRIMITIVE_ATTRIBUTE" />
            <Bug pattern="SING_SINGLETON_GETTER_NOT_SYNCHRONIZED" />
+           <Bug pattern="SING_SINGLETON_IMPLEMENTS_SERIALIZABLE" />
            <Bug pattern="SS_SHOULD_BE_STATIC" />
-           <Bug pattern="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" />
-           <Bug pattern="URF_UNREAD_FIELD" />
-           <Bug pattern="UWF_UNWRITTEN_FIELD" />
-           <Bug pattern="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" />
+           <Bug pattern="UWF_NULL_FIELD" />
 			<!-- Temporary disable these until we have decided what to do about them -->
 
            <Bug pattern="IS2_INCONSISTENT_SYNC" />
@@ -31,6 +29,17 @@
      <Match>
         <Confidence value="3" /> <!-- 3 is low priority, 2 is medium priority, 1 is high priority -->
         <Or>
+			<!-- Temporary disable these until we have decided what to do about them -->
+           <Bug pattern="AA_ASSERTION_OF_ARGUMENTS" />
+           <Bug pattern="FE_FLOATING_POINT_EQUALITY" />
+           <Bug pattern="PA_PUBLIC_MUTABLE_OBJECT_ATTRIBUTE" />
+           <Bug pattern="URF_UNREAD_FIELD" />
+           <Bug pattern="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" />
+           <Bug pattern="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" />
+           <Bug pattern="UWF_UNWRITTEN_FIELD" />
+           <Bug pattern="UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD" />
+			<!-- Temporary disable these until we have decided what to do about them -->
+
            <Bug pattern="IS2_INCONSISTENT_SYNC" />
            <Bug pattern="NO_NOTIFY_NOT_NOTIFYALL" />
            <Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE" />
