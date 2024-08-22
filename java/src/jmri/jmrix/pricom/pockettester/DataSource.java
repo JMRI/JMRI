@@ -55,7 +55,6 @@ public class DataSource extends jmri.util.JmriJFrame {
         }
     }
 
-    Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
 
     JLabel version = new JLabel("");  // hold version label when returned
@@ -293,7 +292,6 @@ public class DataSource extends jmri.util.JmriJFrame {
         serialStream = null;
         ostream = null;
         activeSerialPort = null;
-        portNameVector = null;
 
         // and clean up parent
         super.dispose();
