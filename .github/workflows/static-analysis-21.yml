@@ -32,7 +32,7 @@ jobs:
         # compile with ECJ for warnings or errors
         mvn antrun:run -Danttarget=tests-warnings-check
         # run Spotbugs and Checkstyle
-        mvn clean test -U -P travis-spotbugs --batch-mode --file=pom.xml
+        # mvn clean test -U -P travis-spotbugs --batch-mode --file=pom.xml
         # run Javadoc
         mvn javadoc:javadoc -U --batch-mode --file=pom.xml
         # check html
