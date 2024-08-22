@@ -343,7 +343,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
                 readConsistMemory(_consistNum, MID);
                 setValid(true);
             } catch (InterruptedException e) {
-                return; // we're done!
+                // we're done!
             } catch (Throwable t) {
                 throw t;
             }
