@@ -282,7 +282,6 @@ public class DataSource extends jmri.util.JmriJFrame {
             = new javax.swing.JComboBox<String>(new String[]{"9600", "19200", "38400", "57600", "115200"});
     protected javax.swing.JButton openPortButton = new javax.swing.JButton();
 
-    @SuppressWarnings("deprecation") // Thread.stop
     @Override
     public void dispose() {
         // release port
