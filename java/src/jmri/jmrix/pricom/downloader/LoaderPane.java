@@ -27,7 +27,6 @@ import jmri.jmrix.purejavacomm.*;
  */
 public class LoaderPane extends javax.swing.JPanel {
 
-    Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
 
     Thread readerThread;
@@ -371,7 +370,6 @@ public class LoaderPane extends javax.swing.JPanel {
         serialStream = null;
         ostream = null;
         activeSerialPort = null;
-        portNameVector = null;
         //opened = false;
     }
 
