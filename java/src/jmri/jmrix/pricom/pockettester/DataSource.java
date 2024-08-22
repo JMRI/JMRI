@@ -1,10 +1,11 @@
 package jmri.jmrix.pricom.pockettester;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.FlowLayout;
-import java.io.DataInputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.Vector;
+
 import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -13,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
+
 import jmri.jmrix.purejavacomm.CommPortIdentifier;
 import jmri.jmrix.purejavacomm.NoSuchPortException;
 import jmri.jmrix.purejavacomm.PortInUseException;
@@ -284,10 +286,6 @@ public class DataSource extends jmri.util.JmriJFrame {
     @SuppressWarnings("deprecation") // Thread.stop
     @Override
     public void dispose() {
-        if (readerThread != null) {
-            readerThread.stop();
-        }
-
         // release port
         if (activeSerialPort != null) {
             activeSerialPort.close();
