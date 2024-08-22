@@ -108,7 +108,7 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
 
     public static final Color HIGHLIGHT_COLOR = new Color(204, 207, 88);
 
-   public static final String POSITIONABLE_FLAVOR = DataFlavor.javaJVMLocalObjectMimeType
+    public static final String POSITIONABLE_FLAVOR = DataFlavor.javaJVMLocalObjectMimeType
             + ";class=jmri.jmrit.display.Positionable";
 
     private boolean _loadFailed = false;
