@@ -117,7 +117,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
             this.manualPortLabel.setText("<html>" + as + "</html>"); // NOI18N
             
         } catch (SocketException ex) {
-            log.warn("Unable to enumerate Network Interfaces: {}", ex);
+            log.warn("Unable to enumerate Network Interfaces: {}", ex.getMessage());
         }
         
     }
