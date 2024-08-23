@@ -47,8 +47,6 @@ public class OBlockTablePanel extends JPanel {
     TableFrames _tf;
     private final JPanel bottomBox; // panel at bottom for extra buttons etc
 
-    private static final int bottomStrutWidth = 20;
-
 //    @SuppressWarnings("OverridableMethodCallInConstructor")
     public OBlockTablePanel(OBlockTableModel oblocks,
                             PortalTableModel portals,
