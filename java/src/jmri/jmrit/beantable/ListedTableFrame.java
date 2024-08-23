@@ -558,10 +558,6 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
             mouseItem = list.locationToIndex(e.getPoint());
         }
 
-        void setCurrentItem(int current) {
-            currentItemSelected = current;
-        }
-
         @Override
         public void mouseClicked(JmriMouseEvent e) {
 
