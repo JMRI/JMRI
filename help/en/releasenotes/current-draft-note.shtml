@@ -133,6 +133,11 @@
                             memory tool window and other places.
                     </ul>
                 </li>
+                <li>Improve memory tools via OpenLCB_Java PR #270:
+                    <ul>
+                        <li>Allow selection of space 0 - 255 in Memory R/W tool
+                        <li>Improve display of spaces by omitting missing spaces to reduce length
+                    </ul>
             </ul>
 
         <h4>Powerline</h4>
