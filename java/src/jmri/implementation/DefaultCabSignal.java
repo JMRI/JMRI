@@ -107,8 +107,8 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
         Set<Block> blockSet = bmgr.getNamedBeanSet();
         LocoAddress addr = getCabSignalAddress();
         for (Block blockVal : blockSet) {
-            if ( blockVal.getValue() != null ) {
-                Object val = blockVal.getValue();
+            Object val = blockVal.getValue();
+            if ( val != null ) {
                 log.debug("CabSignal for {} searching block {} value {}",
                            addr,blockVal,val);
                 if (val instanceof jmri.AddressedIdTag) {
@@ -117,9 +117,9 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
                        setBlock(blockVal); 
                        return;
                     }
-                } else if (blockVal.getValue().equals(addr) ||
-                    blockVal.getValue().toString().equals(addr.toString()) || 
-                    blockVal.getValue().toString().equals("" + addr.getNumber())) {
+                } else if ( val.equals(addr) ||
+                    val.toString().equals(addr.toString()) || 
+                    val.toString().equals("" + addr.getNumber())) {
                     setBlock(blockVal);
                     return;
                 }
