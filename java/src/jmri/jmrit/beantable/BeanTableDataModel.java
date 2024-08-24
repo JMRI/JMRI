@@ -552,7 +552,10 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 .setPreferredWidth((sample.getPreferredSize().width) + 4);
     }
 
-    synchronized public void dispose() {
+    /**
+     * Removes property change listeners from Beans.
+     */
+    public synchronized void dispose() {
         getManager().removePropertyChangeListener(this);
         if (sysNameList != null) {
             for (String s : sysNameList) {
