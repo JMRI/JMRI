@@ -81,10 +81,6 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
                 xmtRunnable = () -> {
                     try {
                         transmitLoop();
-                    } catch (ThreadDeath td) {
-                        if (!threadStopRequest) log.error("Transmit thread terminated prematurely by: {}", td, td);
-                        // ThreadDeath must be thrown per Java API Javadocs
-                        throw td;
                     } catch (Throwable e) {
                         if (!threadStopRequest) log.error("Transmit thread terminated prematurely by: {}", e, e);
                     }

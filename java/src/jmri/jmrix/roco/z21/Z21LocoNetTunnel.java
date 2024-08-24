@@ -5,12 +5,14 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetMessageException;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.streamport.LnStreamPortController;
 import jmri.util.ImmediatePipedOutputStream;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -292,9 +294,9 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
 
     @SuppressWarnings("deprecation") // Thread.stop
     public void dispose(){
-       if(lsc != null){
-          lsc.dispose();
-       }
+        if(lsc != null){
+            lsc.dispose();
+        }
         if( _memo != null ) {
             Z21TrafficController tc = _memo.getTrafficController();
             if ( tc != null ) {
@@ -302,12 +304,11 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
             }
            _memo.dispose();
         }
-       sourceThread.stop();
-       try {
-          sourceThread.join();
-       } catch (InterruptedException ie){
-          // interrupted durrng cleanup.
-       }
+        try {
+            inpipe.close();
+        } catch (IOException ex) {
+            // Ignore IO error
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(Z21LocoNetTunnel.class);
