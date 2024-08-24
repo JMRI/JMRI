@@ -26,8 +26,7 @@ public class Mx1TurnoutTest extends jmri.implementation.AbstractTurnoutTestBase 
     public void checkThrownMsgSent() {
         Assertions.assertNotNull(lastSent);
 
-        // Note that we are just checking a message has been sent.
-        // There is a discrepancy in Mx1Turnout forwardCommandChangeToLayout CLOSED / THROWN
+        // Note discrepancy in Mx1Turnout forwardCommandChangeToLayout CLOSED / THROWN
         // which has been present since initial class upload.
 
         Assertions.assertEquals(
@@ -40,8 +39,7 @@ public class Mx1TurnoutTest extends jmri.implementation.AbstractTurnoutTestBase 
     public void checkClosedMsgSent() {
         Assertions.assertNotNull(lastSent);
 
-        // Note that we are just checking a message has been sent.
-        // There is a discrepancy in Mx1Turnout forwardCommandChangeToLayout CLOSED / THROWN
+        // Note discrepancy in Mx1Turnout forwardCommandChangeToLayout CLOSED / THROWN
         // which has been present since initial class upload.
 
         Assertions.assertEquals(
