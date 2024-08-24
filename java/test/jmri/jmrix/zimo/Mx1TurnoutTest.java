@@ -30,10 +30,10 @@ public class Mx1TurnoutTest extends jmri.implementation.AbstractTurnoutTestBase 
         // There is a discrepancy in Mx1Turnout forwardCommandChangeToLayout CLOSED / THROWN
         // which has been present since initial class upload.
 
-        // Assertions.assertEquals(
-        //    Mx1Message.getSwitchMsg(5, jmri.Turnout.THROWN, true).toString(),
-        //    lastSent.toString());
-        // Assertions.assertEquals("0 10 7 80 5 4 ", lastSent.toString());
+        Assertions.assertEquals(
+            Mx1Message.getSwitchMsg(5, jmri.Turnout.CLOSED, true).toString(),
+            lastSent.toString());
+        Assertions.assertEquals("0 10 7 80 5 0 ", lastSent.toString());
     }
 
     @Override
@@ -44,10 +44,10 @@ public class Mx1TurnoutTest extends jmri.implementation.AbstractTurnoutTestBase 
         // There is a discrepancy in Mx1Turnout forwardCommandChangeToLayout CLOSED / THROWN
         // which has been present since initial class upload.
 
-        // Assertions.assertEquals(
-        //    Mx1Message.getSwitchMsg(5, jmri.Turnout.CLOSED, true).toString(),
-        //    lastSent.toString());
-        // Assertions.assertEquals("0 10 7 80 5 0 ", lastSent.toString());
+        Assertions.assertEquals(
+            Mx1Message.getSwitchMsg(5, jmri.Turnout.THROWN, true).toString(),
+            lastSent.toString());
+        Assertions.assertEquals("0 10 7 80 5 4 ", lastSent.toString());
     }
 
     private Mx1Message lastSent = null;
