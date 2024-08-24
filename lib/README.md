@@ -138,6 +138,7 @@ which checks the dates of the control files to make sure they've been updated wh
 
 ##### openlcb.jar
  - 0.7.39 from https://repo.maven.apache.org/maven2/org/openlcb/openlcb/0.7.39/openlcb-0.7.39.jar
+ - plus PR 270 from https://github.com/openlcb/OpenLCB_Java/pulls
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
@@ -524,10 +525,10 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - From FindBugs 3.0.0 from http://findbugs.sourceforge.net
 - Only needed at compile/build time, not runtime
 
-##### spotbugs-annotations-4.7.3.jar
-- From SpotBugs 4.7.3
+##### spotbugs-annotations-4.8.6.jar
+- From SpotBugs 4.8.6
 - Only needed at compile/build time, not runtime
-- https://mvnrepository.com/artifact/com.github.spotbugs/spotbugs-annotations/4.7.3
+- https://mvnrepository.com/artifact/com.github.spotbugs/spotbugs-annotations/4.8.6
 
 ##### picocontainer-2.15.jar
 - version 2.15
