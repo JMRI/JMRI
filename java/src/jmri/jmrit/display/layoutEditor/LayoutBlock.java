@@ -16,7 +16,6 @@ import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.beantable.beanedit.*;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.swing.NamedBeanComboBox;
-import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
 import jmri.util.swing.JmriColorChooser;
 import jmri.util.swing.JmriJOptionPane;
@@ -932,12 +931,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         suppressNameUpdate = set;
     }
 
-    // variables for Edit Layout Block pane
-    private JmriJFrame editLayoutBlockFrame = null;
-    private final JTextField sensorNameField = new JTextField(16);
-    private final JTextField sensorDebounceInactiveField = new JTextField(5);
-    private final JTextField sensorDebounceActiveField = new JTextField(5);
-    private final JCheckBox sensorDebounceGlobalCheck = new JCheckBox(Bundle.getMessage("SensorUseGlobalDebounce"));
 
     private final NamedBeanComboBox<Memory> memoryComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(MemoryManager.class), null, DisplayOptions.DISPLAYNAME);
@@ -975,154 +968,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     // TODO I18N in ManagersBundle.properties
     protected List<JComboBox<String>> neighbourDir;
-
-    void blockEditDonePressed(ActionEvent a) {
-        boolean needsRedraw = false;
-        // check if Sensor changed
-        String newName = NamedBean.normalizeUserName(sensorNameField.getText());
-        if (!(getOccupancySensorName()).equals(newName)) {
-            // sensor has changed
-            if ((newName == null) || newName.isEmpty()) {
-                setOccupancySensorName(newName);
-                sensorNameField.setText("");
-                needsRedraw = true;
-            } else if (validateSensor(newName, editLayoutBlockFrame) == null) {
-                // invalid sensor entered
-                occupancyNamedSensor = null;
-                occupancySensorName = "";
-                sensorNameField.setText("");
-                return;
-            } else {
-                sensorNameField.setText(newName);
-                needsRedraw = true;
-            }
-        }
-
-        Sensor s = getOccupancySensor();
-        if ( s != null) {
-            if (sensorDebounceGlobalCheck.isSelected()) {
-                s.setUseDefaultTimerSettings(true);
-            } else {
-                s.setUseDefaultTimerSettings(false);
-                if (!sensorDebounceInactiveField.getText().trim().isEmpty()) {
-                    s.setSensorDebounceGoingInActiveTimer(Long.parseLong(sensorDebounceInactiveField.getText().trim()));
-                }
-                if (!sensorDebounceActiveField.getText().trim().isEmpty()) {
-                    s.setSensorDebounceGoingActiveTimer(Long.parseLong(sensorDebounceActiveField.getText().trim()));
-                }
-            }
-            Reporter reporter = s.getReporter();
-            if (reporter != null && block != null) {
-                String msg = java.text.MessageFormat.format(
-                        Bundle.getMessage("BlockAssignReporter"),
-                        new Object[]{s.getDisplayName(),
-                            reporter.getDisplayName()});
-                if (JmriJOptionPane.showConfirmDialog(editLayoutBlockFrame,
-                        msg, Bundle.getMessage("BlockAssignReporterTitle"),
-                        JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION ) {
-                    block.setReporter(reporter);
-                }
-            }
-        }
-
-        // check if occupied sense changed
-        int k = senseBox.getSelectedIndex();
-        int oldSense = occupiedSense;
-        if (k == senseActiveIndex) {
-            occupiedSense = Sensor.ACTIVE;
-        } else {
-            occupiedSense = Sensor.INACTIVE;
-        }
-        if (oldSense != occupiedSense) {
-            needsRedraw = true;
-        }
-
-        // check if track color changed
-        Color oldColor = blockTrackColor;
-        blockTrackColor = trackColorChooser.getColor();
-        if (oldColor != blockTrackColor) {
-            needsRedraw = true;
-        }
-        // check if occupied color changed
-        oldColor = blockOccupiedColor;
-        blockOccupiedColor = occupiedColorChooser.getColor();
-        if (oldColor != blockOccupiedColor) {
-            needsRedraw = true;
-        }
-        // check if extra color changed
-        oldColor = blockExtraColor;
-        blockExtraColor = extraColorChooser.getColor();
-        if (oldColor != blockExtraColor) {
-            needsRedraw = true;
-        }
-
-        // check if Memory changed
-        newName = memoryComboBox.getSelectedItemDisplayName();
-        if (newName == null) {
-            newName = "";
-        }
-        if (!memoryName.equals(newName)) {
-            // memory has changed
-            setMemory(validateMemory(newName, editLayoutBlockFrame), newName);
-            if (getMemory() == null) {
-                // invalid memory entered
-                memoryName = "";
-                memoryComboBox.setSelectedItem(null);
-                return;
-            } else {
-                memoryComboBox.setSelectedItem(getMemory());
-                needsRedraw = true;
-            }
-        }
-        int m = Integer.parseInt(metricField.getText().trim());
-        if (m != metric) {
-            setBlockMetric(m);
-        }
-        if (neighbourDir != null) {
-            for (int i = 0; i < neighbourDir.size(); i++) {
-                int neigh = neighbourDir.get(i).getSelectedIndex();
-                neighbours.get(i).getBlock().removeBlockDenyList(this.block);
-                this.block.removeBlockDenyList(neighbours.get(i).getBlock());
-                switch (neigh) {
-                    case 0: {
-                        updateNeighbourPacketFlow(neighbours.get(i), RXTX);
-                        break;
-                    }
-
-                    case 1: {
-                        neighbours.get(i).getBlock().addBlockDenyList(this.block.getDisplayName());
-                        updateNeighbourPacketFlow(neighbours.get(i), TXONLY);
-                        break;
-                    }
-
-                    case 2: {
-                        this.block.addBlockDenyList(neighbours.get(i).getBlock().getDisplayName());
-                        updateNeighbourPacketFlow(neighbours.get(i), RXONLY);
-                        break;
-                    }
-
-                    default: {
-                        break;
-                    }
-                }
-                /* switch */
-            }
-        }
-        // complete
-        editLayoutBlockFrame.setVisible(false);
-        editLayoutBlockFrame.dispose();
-        editLayoutBlockFrame = null;
-
-        if (needsRedraw) {
-            redrawLayoutBlockPanels();
-        }
-    }
-
-    void blockEditCancelPressed(ActionEvent a) {
-        editLayoutBlockFrame.setVisible(false);
-        editLayoutBlockFrame.dispose();
-        editLayoutBlockFrame = null;
-    }
 
     protected class LayoutBlockEditAction extends BlockEditAction {
 
@@ -1221,7 +1066,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     }
                     if (!memoryName.equals(newName)) {
                         // memory has changed
-                        setMemory(validateMemory(newName, editLayoutBlockFrame), newName);
+                        setMemory(validateMemory(newName, null), newName);
                         if (getMemory() == null) {
                             // invalid memory entered
                             memoryName = "";

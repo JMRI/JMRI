@@ -27,12 +27,11 @@ import jmri.util.swing.JmriMouseEvent;
 public class BlockContentsIcon extends MemoryIcon {
 
     private NamedIcon defaultIcon = null;
-    java.util.HashMap<String, NamedIcon> map = null;
     private NamedBeanHandle<Block> namedBlock;
 
     public BlockContentsIcon(String s, Editor editor) {
         super(s, editor);
-        resetDefaultIcon();
+        BlockContentsIcon.this.resetDefaultIcon();
         _namedIcon = defaultIcon;
         //By default all text objects are left justified
         _popupUtil.setJustification(LEFT);
