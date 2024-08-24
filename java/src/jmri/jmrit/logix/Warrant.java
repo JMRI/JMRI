@@ -995,6 +995,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     /**
      * @return error message if any
      */
+    @CheckForNull
     protected String acquireThrottle() {
         String msg = null;
         DccLocoAddress dccAddress = _speedUtil.getDccAddress();
