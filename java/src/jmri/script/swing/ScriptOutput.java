@@ -8,8 +8,6 @@ import javax.swing.JTextArea;
 import jmri.InstanceManager;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.PipeListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -21,7 +19,6 @@ public class ScriptOutput {
      * JTextArea containing the output
      */
     private JTextArea output = null;
-    private final static Logger log = LoggerFactory.getLogger(ScriptOutput.class);
 
     /**
      * Provide access to the JTextArea containing all ScriptEngine output.
@@ -62,7 +59,7 @@ public class ScriptOutput {
         return output;
     }
 
-    static public ScriptOutput getDefault() {
+    public static ScriptOutput getDefault() {
         if (InstanceManager.getNullableDefault(ScriptOutput.class) == null) {
             InstanceManager.store(new ScriptOutput(), ScriptOutput.class);
         }
@@ -76,7 +73,7 @@ public class ScriptOutput {
      *
      * @param script The script to write.
      */
-    static public void writeScript(final String script) {
+    public static void writeScript(final String script) {
         String output = ">>> " + script; // NOI18N
         // Strip ending newlines
         while (output.endsWith("\n")) { // NOI18N
@@ -86,4 +83,7 @@ public class ScriptOutput {
         output += "\n"; // NOI18N
         ScriptOutput.getDefault().getOutputArea().append(output);
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ScriptOutput.class);
+
 }
