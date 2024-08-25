@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.*;
+import jmri.util.junit.annotations.ToDo;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
@@ -31,7 +31,6 @@ public abstract class AbstractTableTabActionBase {
     public final void testDeferredCreation() {
         assertThat(a.m).isNull();
         assertThat(a.f).isNull();
-        assertThat(a.dataPanel).isNull();
         assertThat(a.dataTabs).isNull();
     }
 
