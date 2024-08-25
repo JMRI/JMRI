@@ -1,5 +1,7 @@
 package jmri.jmrix.openlcb.swing.send;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
@@ -67,7 +69,8 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     final JTextField writeDataField = new JTextField(60);
     final JComboBox<String> addrSpace = new JComboBox<>(new String[]{"CDI", "All", "Config", "None"});
     final JComboBox<String> validitySelector = new JComboBox<String>(new String[]{"Unknown", "Valid", "Invalid"});
-
+    JButton cdiButton;
+    
     Connection connection;
     AliasMap aliasMap;
     NodeID srcNodeID;
@@ -105,7 +108,13 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         mcs = memo.get(MemoryConfigurationService.class);
         store = memo.get(MimicNodeStore.class);
         nodeSelector = new NodeSelector(store);
+        nodeSelector.addActionListener (new ActionListener () {
+            public void actionPerformed(ActionEvent e) {
+                setCdiButton();
+            }
+        });
 
+        // start window layout
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // handle single-packet part
@@ -251,12 +260,41 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         writeDataField.setText("00 00");   // NOI18N
         pane2.add(writeDataField);
 
-        b = new JButton("Open CDI Config Tool");
-        add(b);
-        b.addActionListener(e -> openCdiPane());
+        cdiButton = new JButton("Open CDI Config Tool");
+        add(cdiButton);
+        cdiButton.addActionListener(e -> openCdiPane());
+        cdiButton.setToolTipText("If this button is disabled, please select another node.");
+        setCdiButton(); // get initial state
 
+        // listen for mimic store changes to set CDI button
+        store.addPropertyChangeListener(e -> {
+            setCdiButton();
+        });
+        jmri.util.ThreadingUtil.runOnGUIDelayed( ()->{ 
+            setCdiButton(); 
+        }, 500);
     }
 
+    /**
+     * Set whether Open CDI button is enabled based on whether
+     * the selected node has CDI in its PIP
+     */
+    protected void setCdiButton() {
+        var nodeID = nodeSelector.getSelectedNodeID();
+        if (nodeID == null) { 
+            cdiButton.setEnabled(false);
+            return;
+        }
+        var pip = store.getProtocolIdentification(nodeID);
+        if (pip == null || pip.getProtocols() == null) { 
+            cdiButton.setEnabled(false);
+            return;
+        }
+        cdiButton.setEnabled(
+            pip.getProtocols()
+                .contains(org.openlcb.ProtocolIdentification.Protocol.ConfigurationDescription));
+    }
+    
     private JPanel getSendSinglePacketJPanel() {
         JPanel outer = new JPanel();
         outer.setLayout(new BoxLayout(outer, BoxLayout.X_AXIS));
@@ -613,7 +651,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     }
 
     // private data
-    private TrafficController tc = null; //was CanInterface
+    private TrafficController tc = null; // was CanInterface
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OpenLcbCanSendPane.class);
 
 }

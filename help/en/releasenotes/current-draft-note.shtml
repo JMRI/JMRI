@@ -138,6 +138,8 @@
                         <li>Allow selection of space 0 - 255 in Memory R/W tool
                         <li>Improve display of spaces by omitting missing spaces to reduce length
                     </ul>
+                <li>Send Frame tool will no longer allow you to access CDI if there's no CDI in the node.
+                    This prevents you from accidentally getting into a confusing situation.
             </ul>
 
         <h4>Powerline</h4>
