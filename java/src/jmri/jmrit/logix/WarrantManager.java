@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.InstanceManager;
@@ -29,9 +30,9 @@ import jmri.util.swing.JmriJOptionPane;
  */
 public class WarrantManager extends AbstractManager<Warrant>
         implements jmri.InstanceManagerAutoDefault {
-    
+
     private HashMap<String, RosterSpeedProfile> _mergeProfiles = new HashMap<>();
-    ShutDownTask _shutDownTask = null;
+    private ShutDownTask _shutDownTask = null;
     private boolean _suppressWarnings = false;
 
     public WarrantManager() {
@@ -56,12 +57,12 @@ public class WarrantManager extends AbstractManager<Warrant>
      *
      * @param systemName the system name.
      * @param userName   the user name.
-     * @param SCWa       true for a new SCWarrant, false for a new Warrant.
-     * @param TTP        the time to platform.
+     * @param sCWa       true for a new SCWarrant, false for a new Warrant.
+     * @param tTP        the time to platform.
      * @return an existing warrant if found or a new warrant, may be null.
      */
-    public Warrant createNewWarrant(String systemName, String userName, boolean SCWa, long TTP) {
-        log.debug("createNewWarrant {} SCWa= {}",systemName,SCWa);
+    public Warrant createNewWarrant(String systemName, String userName, boolean sCWa, long tTP) {
+        log.debug("createNewWarrant {} SCWa= {}",systemName,sCWa);
         // Check that Warrant does not already exist
         Warrant r;
         if (userName != null && userName.trim().length() > 0) {
@@ -80,8 +81,8 @@ public class WarrantManager extends AbstractManager<Warrant>
             return null;
         }
         // Warrant does not exist, create a new Warrant
-        if (SCWa) {
-            r = new SCWarrant(systemName, userName, TTP);
+        if (sCWa) {
+            r = new SCWarrant(systemName, userName, tTP);
         } else {
             r = new Warrant(systemName, userName);
         }
@@ -120,7 +121,7 @@ public class WarrantManager extends AbstractManager<Warrant>
         return w;
     }
 
-    protected boolean okToRemoveBlock(OBlock block) {
+    protected boolean okToRemoveBlock( @Nonnull OBlock block) {
         String name = block.getDisplayName();
         List<Warrant> list = warrantsUsing(block);
         boolean ok = true;
@@ -233,12 +234,10 @@ public class WarrantManager extends AbstractManager<Warrant>
         return true;
     }
 
-    synchronized protected void portalNameChange(String oldName, String newName) {
+    protected synchronized void portalNameChange(String oldName, String newName) {
         for (Warrant w : getNamedBeanSet()) {
             List<BlockOrder> orders = w.getBlockOrders();
-            Iterator<BlockOrder> it = orders.iterator();
-            while (it.hasNext()) {
-                BlockOrder bo = it.next();
+            for (BlockOrder bo : orders) {
                 if (oldName.equals(bo.getEntryName())) {
                     bo.setEntryName(newName);
                 }
@@ -255,8 +254,9 @@ public class WarrantManager extends AbstractManager<Warrant>
             List<BlockOrder> orders = w.getBlockOrders();
             Iterator<BlockOrder> it = orders.iterator();
             while (it.hasNext()) {
-                if (block.equals(it.next().getBlock()))
+                if (block.equals(it.next().getBlock())) {
                     list.add(w);
+                }
             }
         }
         return list;
@@ -267,12 +267,9 @@ public class WarrantManager extends AbstractManager<Warrant>
         String name = portal.getName();
         for (Warrant w : getNamedBeanSet()) {
             List<BlockOrder> orders = w.getBlockOrders();
-            Iterator<BlockOrder> it = orders.iterator();
-            while (it.hasNext()) {
-                BlockOrder bo = it.next();
-                if (name.equals(bo.getEntryName()) && !list.contains(w)) {
-                    list.add(w);
-                } else if (name.equals(bo.getExitName()) && !list.contains(w)) {
+            for (BlockOrder bo : orders) {
+                if (( name.equals(bo.getEntryName()) && !list.contains(w))
+                    || ( name.equals(bo.getExitName()) && !list.contains(w))) {
                     list.add(w);
                 }
             }
@@ -298,9 +295,7 @@ public class WarrantManager extends AbstractManager<Warrant>
         String name = path.getName();
         for (Warrant w : getNamedBeanSet()) {
             List<BlockOrder> orders = w.getBlockOrders();
-            Iterator<BlockOrder> it = orders.iterator();
-            while (it.hasNext()) {
-                BlockOrder bo = it.next();
+            for (BlockOrder bo : orders) {
                 if (block.equals(bo.getBlock()) && name.equals(bo.getPathName())) {
                     list.add(w);
                 }
@@ -309,12 +304,10 @@ public class WarrantManager extends AbstractManager<Warrant>
         return list;
     }
 
-    synchronized protected void pathNameChange(OBlock block, String oldName, String newName) {
+    protected synchronized void pathNameChange(OBlock block, String oldName, String newName) {
         for (Warrant w : getNamedBeanSet()) {
             List<BlockOrder> orders = w.getBlockOrders();
-            Iterator<BlockOrder> it = orders.iterator();
-            while (it.hasNext()) {
-                BlockOrder bo = it.next();
+            for (BlockOrder bo : orders) {
                 if (bo.getBlock().equals(block) && bo.getPathName().equals(oldName)) {
                     bo.setPathName(newName);
                 }
@@ -328,9 +321,9 @@ public class WarrantManager extends AbstractManager<Warrant>
      * @return the default WarrantManager, creating it if necessary
      */
     public static WarrantManager getDefault() {
-        return InstanceManager.getOptionalDefault(WarrantManager.class).orElseGet(() -> {
-            return InstanceManager.setDefault(WarrantManager.class, new WarrantManager());
-        });
+        return InstanceManager.getOptionalDefault(WarrantManager.class).orElseGet(() -> 
+            InstanceManager.setDefault(WarrantManager.class, new WarrantManager())
+        );
     }
 
     @Override
@@ -351,7 +344,7 @@ public class WarrantManager extends AbstractManager<Warrant>
         if (_shutDownTask == null) {
             if (!WarrantPreferences.getDefault().getShutdown().equals((WarrantPreferences.Shutdown.NO_MERGE))) {
                 _shutDownTask = new WarrantShutdownTask("WarrantRosterSpeedProfileCheck");
-                jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(_shutDownTask);
+                InstanceManager.getDefault(jmri.ShutDownManager.class).register(_shutDownTask);
             }
         }
         log.debug("setMergeProfile id = {}", id);
@@ -371,7 +364,7 @@ public class WarrantManager extends AbstractManager<Warrant>
         return _mergeProfiles.get(id);
     }
 
-    protected RosterSpeedProfile makeProfileCopy(RosterSpeedProfile mergeProfile, @Nonnull RosterEntry re) {
+    protected RosterSpeedProfile makeProfileCopy(@CheckForNull RosterSpeedProfile mergeProfile, @Nonnull RosterEntry re) {
         RosterSpeedProfile profile = new RosterSpeedProfile(re);
         if (mergeProfile == null) {
             mergeProfile = re.getSpeedProfile();
