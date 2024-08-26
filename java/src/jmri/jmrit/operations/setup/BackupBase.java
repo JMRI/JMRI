@@ -196,6 +196,8 @@ public abstract class BackupBase {
      *
      * @throws java.io.IOException Due to trouble loading files
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification = "I18N of Info Message")
     public void restoreFilesFromDirectory(File directory) throws IOException {
         log.info(Bundle.getMessage("InfoRestoringDirectory", directory.getAbsolutePath()));
 
