@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import javax.annotation.concurrent.GuardedBy;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.*;
@@ -18,9 +19,9 @@ import jmri.jmrit.logix.ThrottleSetting.ValueType;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
- * An Warrant contains the operating permissions and directives needed for a
- * train to proceed from an Origin to a Destination. There are three modes that
- * a Warrant may execute;
+ * A Warrant contains the operating permissions and directives needed for a
+ * train to proceed from an Origin to a Destination.
+ * There are three modes that a Warrant may execute;
  * <p>
  * MODE_LEARN - Warrant is created or edited in WarrantFrame and then launched
  * from WarrantFrame who records throttle commands from "_student" throttle.
@@ -129,7 +130,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             "RunningLate", "WaitingForStart", "RecordingScript", "StopPending"};
 
     static final float BUFFER_DISTANCE = 50*12*25.4F / WarrantPreferences.getDefault().getLayoutScale(); // 50 scale feet for safety distance
-    static protected boolean _trace = WarrantPreferences.getDefault().getTrace();
+    protected static boolean _trace = WarrantPreferences.getDefault().getTrace();
 
     // Speed states: steady, increasing, decreasing
     static final int AT_SPEED = 1;
@@ -289,14 +290,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     /**
      * @return block order currently at the train position
      */
-    final public BlockOrder getCurrentBlockOrder() {
+    public final BlockOrder getCurrentBlockOrder() {
         return getBlockOrderAt(_idxCurrentOrder);
     }
 
     /**
      * @return index of block order currently at the train position
      */
-    final public int getCurrentOrderIndex() {
+    public final int getCurrentOrderIndex() {
         return _idxCurrentOrder;
     }
 
@@ -728,12 +729,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             case SignalSpeedMap.SPEED_MPH:
                 units = Bundle.getMessage("mph");
                 speed = _speedUtil.getTrackSpeed(_engineer.getSpeedSetting()) * speedMap.getLayoutScale();
-                speed = speed * 2.2369363f;
+                speed *= 2.2369363f;
                 break;
             case SignalSpeedMap.SPEED_KMPH:
                 units = Bundle.getMessage("kph");
                 speed = _speedUtil.getTrackSpeed(_engineer.getSpeedSetting()) * speedMap.getLayoutScale();
-                speed = speed * 3.6f;
+                speed *= 3.6f;
                 break;
             default:
                 log.error("{} Unknown speed interpretation {}", getDisplayName(), speedMap.getInterpretation());
@@ -753,11 +754,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             }
         } else if (_waitForWarrant) {
             Warrant w = getBlockingWarrant();
-            if (w != null) {
-                which = Bundle.getMessage("WarrantWait",  w.getDisplayName());
-            } else {
-                which = Bundle.getMessage("WarrantWait", "Unknown");
-            }
+            which = Bundle.getMessage("WarrantWait",
+                w==null ? "Unknown" : w.getDisplayName());
             if (_stoppingBlock != null) {
                 where = _stoppingBlock.getDisplayName();
             }
@@ -768,11 +766,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             }
         }
         int runState = _engineer.getRunState();
-        if (which == null) {
-            if (runState == HALT || runState == RAMP_HALT) {
-                which = Bundle.getMessage("Halt");
-                where = blockName;
-            }
+        if (which == null && (runState == HALT || runState == RAMP_HALT)) {
+            which = Bundle.getMessage("Halt");
+            where = blockName;
         }
         if (_engineer.isRamping() && runState != RAMP_HALT) {
             String speedMsg = getSpeedMessage(_engineer.getSpeedType(true));
@@ -879,7 +875,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         _addTracker = false;
 
         // insulate possible non-GUI thread making this call (e.g. Engineer)
-        ThreadingUtil.runOnGUI(()-> deAllocate());
+        ThreadingUtil.runOnGUI(this::deAllocate);
 
         String bundleKey;
         String blockName;
@@ -999,6 +995,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     /**
      * @return error message if any
      */
+    @CheckForNull
     protected String acquireThrottle() {
         String msg = null;
         DccLocoAddress dccAddress = _speedUtil.getDccAddress();
@@ -1259,16 +1256,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
 
     private boolean askResumeQuestion(OBlock block, String reason) {
         String msg = Bundle.getMessage("ResumeQuestion", reason);
-            boolean ret = ThreadingUtil.runOnGUIwithReturn(() -> {
-                int result = JmriJOptionPane.showConfirmDialog(WarrantTableFrame.getDefault(), msg, Bundle.getMessage("ResumeTitle"),
-                    JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.QUESTION_MESSAGE);
-                if (result==JmriJOptionPane.YES_OPTION) {
-                    return true;
-                }
-            return false;
+        return ThreadingUtil.runOnGUIwithReturn(() -> {
+            int result = JmriJOptionPane.showConfirmDialog(WarrantTableFrame.getDefault(),
+                msg, Bundle.getMessage("ResumeTitle"),
+                JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.QUESTION_MESSAGE);
+            return result==JmriJOptionPane.YES_OPTION;
         });
-        return ret;
     }
+
     // User insists to run train
     private boolean reStartTrain() {
         BlockOrder bo = getBlockOrderAt(_idxCurrentOrder);
