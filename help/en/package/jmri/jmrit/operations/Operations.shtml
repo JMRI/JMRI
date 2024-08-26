@@ -3753,19 +3753,23 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       If you already have a list of cars in a database, you can import the cars into the program.
       The import function requires an ACSII text file, with one line for each car. The car import
       requires four attributes and the order is car number, road (reporting mark), type, and length.
-      All four car attributes are required for the import to work correctly. The program requires
-      each car to have a unique road and number. Use the <a href="#CarRoadNumber">hyphen</a> feature
-      if you have cars with the same road and number. The following shows two examples of the
-      correct format:
+      <a href="#CarTypeLengthWeight">Length</a> is the car's full scale body length. Do not include
+      coupler length, the program does that automatically. All four car attributes are required for
+      the import to work correctly. The program requires each car to have a unique road and number.
+      Use the <a href="#CarRoadNumber">hyphen</a> feature if you have cars with the same road and
+      number. The following shows two examples of the correct format for two 40 foot cars:
       <p>
         336 GCR Flat 40<br> 655578 UP Boxcar 40
       </p>
 
-      <p>Each line can start with a space and multiple spaces between fields is okay. Optionally
-        you can include additional attributes in the following order; weight, color, owner name,
-        date built, and location. The location can have two fields, the location name followed by
-        the location's spur or yard name separated by a hyphen. The following shows two examples of
-        the correct format:</p>
+      <p>
+        Each line can start with a space and multiple spaces between fields is okay. Optionally you
+        can include additional attributes in the following order; <a href="#CarTypeLengthWeight">weight</a>,
+        color, owner name, <a href="#BuiltDate">date built</a>, and location. The weight is the
+        car's weight in ounces which can be 0 if you want the program to automatically calculate it.
+        The location can have two fields, the location name followed by the location's spur or yard
+        name separated by a hyphen. The following shows two examples of the correct format:
+      </p>
 
       <p>
         336 GCR Flat 40 3.8 Black AT 1930 Home Town USA - George's Oil Terminal<br> 655578 UP
@@ -3963,7 +3967,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         blocking number will place the car before positive numbers.
       </p>
 
-      <h4>Built</h4>
+      <h4 id="BuiltDate">Built</h4>
       An optional built date can be entered for the car. The built date can be entered as a two or
       four digit year, or in the format of month-year (mm-yy). A two digit year will be converted to
       a car built in the 1900s. Trains can be <a href="#TrainBuildOptions">configured</a> to only
@@ -4737,6 +4741,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       long as the train doesn't require a caboose or car with FRED. The staging track can have
       locomotives.
 
+      <p>
+        There are also several <a href="#TrainBuildOptions">Train Build Options</a> available when
+        departing staging.
+      </p>
+
       <h3 id="RouteFeatures">Route Features</h3>
       One very powerful feature of routes is the ability to specify the same location more than
       once. When the same location name is used back to back, the train's Manifest will print as
@@ -4766,14 +4775,17 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         However, we do want locals to service them! We need to tell the program which tracks in
         Danville are service by which trains.</p>
 
-      <p>Solution, we create a yard in "Danville", and create spurs in "Danville-1". The
-        mainline train has "Danville" in it's route. The locals will service "Danville" and
-        "Danville-1". Now the dilemma, do the locals service "Danville-1" or "Danville" first? Not
-        an issue, we create a route for the locals that services "Danville-1", then "Danville", and
-        then "Danville-1". At the first "Danville-1" we request only pick ups at the spurs, at
-        "Danville" we specify both pick ups and set outs to the yard, and at the second "Danville-1"
-        we specify only set outs. Another solution is to simply use the spur's ability to select
-        which trains can service the track.</p>
+      <p>
+        Solution, we create a yard in "Danville", and create spurs in "Danville-1". The mainline
+        train has "Danville" in it's route. The locals will service "Danville" and "Danville-1". Now
+        the dilemma, do the locals service "Danville-1" or "Danville" first? Not an issue, we create
+        a route for the locals that services "Danville-1", then "Danville", and then "Danville-1".
+        At the first "Danville-1" we request only pick ups at the spurs, at "Danville" we specify
+        both pick ups and set outs to the yard, and at the second "Danville-1" we specify only set
+        outs. Another solution is to simply use the spur's ability to select which trains can
+        service the track. See <a href="#RestrictingTrackToCertainTrains">Restricting Track to
+          Certain Trains or Routes</a>.
+      </p>
 
       <h3 id="RouteTools">Route Tools</h3>
 
