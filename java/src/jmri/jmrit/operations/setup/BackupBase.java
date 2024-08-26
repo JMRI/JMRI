@@ -197,7 +197,7 @@ public abstract class BackupBase {
      * @throws java.io.IOException Due to trouble loading files
      */
     public void restoreFilesFromDirectory(File directory) throws IOException {
-        log.debug("restoring files from directory {}", directory.getAbsolutePath());
+        log.info(Bundle.getMessage("InfoRestoringDirectory", directory.getAbsolutePath()));
 
         copyBackupSet(directory, getOperationsRoot());
     }
