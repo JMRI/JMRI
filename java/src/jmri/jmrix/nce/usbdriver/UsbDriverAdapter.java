@@ -146,10 +146,10 @@ public class UsbDriverAdapter extends NcePortController {
             }
         }
 
+        tc.csm = new UsbCmdStationMemory();
         tc.connectPort(this);
 
         this.getSystemConnectionMemo().configureManagers();
-        tc.csm = new UsbCmdStationMemory();
     }
 
     // base class methods for the NcePortController interface

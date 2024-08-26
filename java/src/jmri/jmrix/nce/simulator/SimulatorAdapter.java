@@ -154,8 +154,6 @@ public class SimulatorAdapter extends NcePortController implements Runnable {
         tc = new NceTrafficController();
         this.getSystemConnectionMemo().setNceTrafficController(tc);
         tc.setAdapterMemo(this.getSystemConnectionMemo());
-        tc.connectPort(this);
-        tc.setSimulatorRunning(true);
 
         // setting binary mode
         this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_2006);
@@ -174,8 +172,11 @@ public class SimulatorAdapter extends NcePortController implements Runnable {
             epromRevision = 1;  // default revision if no match
         }
 
-        this.getSystemConnectionMemo().configureManagers();
         tc.csm = new NceCmdStationMemory();
+        tc.connectPort(this);
+        tc.setSimulatorRunning(true);
+
+        this.getSystemConnectionMemo().configureManagers();
 
         // start the simulator
         sourceThread = new Thread(this);

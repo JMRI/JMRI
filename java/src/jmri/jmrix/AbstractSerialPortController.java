@@ -481,8 +481,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      */
     final protected void reportPortStatus(org.slf4j.Logger log, String portName) {
         if (log.isInfoEnabled()) {
-            log.info("Port {} {} opened at {} baud, sees DTR: {} RTS: {} DSR: {} CTS: {} DCD: {} flow: {}",
-                    portName, currentSerialPort.serialPort.getDescriptivePortName(),
+            log.info("{}: Port {} {} opened at {} baud, sees DTR: {} RTS: {} DSR: {} CTS: {} DCD: {} flow: {}",
+                    this.getSystemConnectionMemo().getUserName(), currentSerialPort.serialPort.getDescriptivePortName(),
                     currentSerialPort.serialPort.getBaudRate(), currentSerialPort.serialPort.getDTR(),
                     currentSerialPort.serialPort.getRTS(), currentSerialPort.serialPort.getDSR(), currentSerialPort.serialPort.getCTS(),
                     currentSerialPort.serialPort.getDCD(), getFlowControl(currentSerialPort));
