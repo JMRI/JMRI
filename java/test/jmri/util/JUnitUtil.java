@@ -11,6 +11,7 @@ import java.util.*;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractButton;
@@ -1419,28 +1420,44 @@ public class JUnitUtil {
     }
 
     /**
-     * Wait for a thread to dispose, ie is no longer alive.
+     * Wait for a thread to terminate, ie is no longer alive.
      * A non-existent Thread is not an test failure.
      * A Thread which does not complete in time IS a test failure.
      * @param threadName full name of the Thread to wait for.
      */
-    public static void waitThreadDisposed( String threadName ) {
+    public static void waitThreadTerminated( String threadName ) {
         Thread t = getThreadByName( threadName );
         if ( t != null ) {
             waitFor( () -> !t.isAlive(), "Thread \"" + threadName + "\" is still alive");
         }
     }
 
+    /**
+     * Get a Thread by matching the name.
+     * @param threadName Starting characters of the Thread name.
+     * @return the Thread, null if no Thread found.
+     */
+    @CheckForNull
     public static Thread getThreadByName(String threadName) {
         for (Thread t : Thread.getAllStackTraces().keySet()) {
-            if (t.getName().equals(threadName)) return t;
+            if (t.getName().equals(threadName)) {
+                return t;
+            }
         }
         return null;
     }
 
+    /**
+     * Get a Thread with a name starting with the supplied String.
+     * @param threadName Name of the Thread.
+     * @return the Thread, null if no Thread found.
+     */
+    @CheckForNull
     public static Thread getThreadStartsWithName(String threadName) {
         for (Thread t : Thread.getAllStackTraces().keySet()) {
-            if (t.getName().startsWith(threadName)) return t;
+            if (t.getName().startsWith(threadName)) {
+                return t;
+            }
         }
         return null;
     }
