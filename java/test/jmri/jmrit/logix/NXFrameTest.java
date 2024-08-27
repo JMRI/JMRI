@@ -313,7 +313,7 @@ public class NXFrameTest {
         });
         assertTrue(retVal);
 
-        JUnitUtil.waitThreadDisposed("Loop Killer");
+        JUnitUtil.waitThreadTerminated("Loop Killer");
 
     }
 
@@ -399,7 +399,7 @@ public class NXFrameTest {
         });
         assertTrue(retVal);
 
-        JUnitUtil.waitThreadDisposed("RampHalt Killer");
+        JUnitUtil.waitThreadTerminated("RampHalt Killer");
 
     }
 
