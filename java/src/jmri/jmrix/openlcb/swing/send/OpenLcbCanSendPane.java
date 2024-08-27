@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
@@ -31,7 +32,9 @@ import jmri.util.swing.WrapLayout;
 import org.openlcb.*;
 import org.openlcb.can.AliasMap;
 import org.openlcb.implementations.MemoryConfigurationService;
+import org.openlcb.swing.EventIdTextField;
 import org.openlcb.swing.NodeSelector;
+import org.openlcb.swing.MemorySpaceSelector;
 
 /**
  * User interface for sending OpenLCB CAN frames to exercise the system
@@ -61,13 +64,13 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
     final JTextField srcAliasField = new JTextField(4);
     NodeSelector nodeSelector;
-    final JTextField sendEventField = new JTextField("02 03 04 05 06 07 00 01 ");     // NOI18N
+    final JFormattedTextField sendEventField = EventIdTextField.getEventIdTextField();// NOI18N
     final JTextField datagramContentsField = new JTextField("20 61 00 00 00 00 08");  // NOI18N
     final JTextField configNumberField = new JTextField("40");                        // NOI18N
     final JTextField configAddressField = new JTextField("000000");                   // NOI18N
     final JTextField readDataField = new JTextField(60);
     final JTextField writeDataField = new JTextField(60);
-    final JComboBox<String> addrSpace = new JComboBox<>(new String[]{"CDI", "All", "Config", "None"});
+    final MemorySpaceSelector addrSpace = new MemorySpaceSelector();
     final JComboBox<String> validitySelector = new JComboBox<String>(new String[]{"Unknown", "Valid", "Invalid"});
     JButton cdiButton;
     
@@ -173,7 +176,6 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
         // event messages 
         add(new JSeparator());
-        sendEventField.setColumns(24);
         
         var insert = new JPanel();
         insert.setLayout(new WrapLayout());
@@ -200,8 +202,6 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         b = new JButton("Send Event Produced");
         b.addActionListener(this::sendEventPerformed);
         pane2.add(b);
-        //pane2.add(new JLabel("Event ID (8 bytes):"));
-        //pane2.add(sendEventField);
 
         // addressed messages
         add(new JSeparator());
@@ -453,7 +453,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     }
 
     public void readPerformed(java.awt.event.ActionEvent e) {
-        int space = 0xFF - addrSpace.getSelectedIndex();
+        int space = addrSpace.getMemorySpace();
         long addr = Integer.parseInt(configAddressField.getText(), 16);
         int length = Integer.parseInt(configNumberField.getText());
         mcs.requestRead(destNodeID(), space, addr,
@@ -473,7 +473,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     }
 
     public void writePerformed(java.awt.event.ActionEvent e) {
-        int space = 0xFF - addrSpace.getSelectedIndex();
+        int space = addrSpace.getMemorySpace();
         long addr = Integer.parseInt(configAddressField.getText(), 16);
         byte[] content = jmri.util.StringUtil.bytesFromHexString(writeDataField.getText());
         mcs.requestWrite(destNodeID(), space, addr, content, new MemoryConfigurationService.McsWriteHandler() {
