@@ -3,9 +3,10 @@
  */
 package jmri.jmrit.operations.setup;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.util.Date;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Represents the set of Operations files that is considered a "Backup" of the
@@ -24,6 +25,10 @@ public class BackupSet {
 
     public String getSetName() {
         return _setName;
+    }
+
+    public Date getLastModifiedDate() {
+        return _lastModifiedDate;
     }
 
     private Date _lastModifiedDate;
