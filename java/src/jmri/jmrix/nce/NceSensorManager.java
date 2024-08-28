@@ -24,12 +24,11 @@ import org.slf4j.LoggerFactory;
  */
 public class NceSensorManager extends jmri.managers.AbstractSensorManager
         implements NceListener {
-
-    private int aiuCabIdMin = ((NceSystemConnectionMemo) memo).getNceTrafficController().csm.getCabMin();
-    private int aiuCabIdMax = ((NceSystemConnectionMemo) memo).getNceTrafficController().csm.getCabMax();
     
     public NceSensorManager(NceSystemConnectionMemo memo) {
         super(memo);
+        aiuCabIdMin = memo.getNceTrafficController().csm.getCabMin();
+        aiuCabIdMax = memo.getNceTrafficController().csm.getCabMax();
         for (int i = aiuCabIdMin; i <= aiuCabIdMax; i++) {
             aiuArray[i] = null;
         }
@@ -50,6 +49,8 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     private NceSensorManager mInstance = null;
+    private int aiuCabIdMin;
+    private int aiuCabIdMax;
 
     /**
      * {@inheritDoc}
