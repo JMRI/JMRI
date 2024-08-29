@@ -29,9 +29,11 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         super(memo);
         aiuCabIdMin = memo.getNceTrafficController().csm.getCabMin();
         aiuCabIdMax = memo.getNceTrafficController().csm.getCabMax();
+        aiuArray = new NceAIU[aiuCabIdMax + 1];  // element 0 isn't used
         for (int i = aiuCabIdMin; i <= aiuCabIdMax; i++) {
             aiuArray[i] = null;
         }
+        activeAIUs = new int[aiuCabIdMax];  // keep track of those worth polling
         mInstance = this;
         listener = new NceListener() {
             @Override
@@ -51,6 +53,10 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     private NceSensorManager mInstance = null;
     private int aiuCabIdMin;
     private int aiuCabIdMax;
+    private NceAIU[] aiuArray = null;   // P
+    private int[] activeAIUs = null;    // P
+    private int activeAIUMax = 0;       // last+1 element used of activeAIUs P
+    private static final int MAXPIN = 14;    // only pins 1 - 14 used on NCE AIU
 
     /**
      * {@inheritDoc}
@@ -118,11 +124,6 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
 
         return s;
     }
-
-    NceAIU[] aiuArray = new NceAIU[aiuCabIdMax + 1];  // element 0 isn't used
-    int[] activeAIUs = new int[aiuCabIdMax];  // keep track of those worth polling
-    int activeAIUMax = 0;       // last+1 element used of activeAIUs
-    private static final int MAXPIN = 14;    // only pins 1 - 14 used on NCE AIU
 
     volatile Thread pollThread;
     volatile boolean stopPolling = false;
