@@ -126,18 +126,24 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>OpenLCB_Java lib updated to release 0.7.39, which includes:
+                <li>OpenLCB_Java lib updated to release 0.8.1, which includes:
                     <ul>
                         <li>Better GUI for the node selection tool, which improves
                             layout of the firmware upgrade window, send tool window, 
                             memory tool window and other places.
+                        <li>Event ID fields now have a contextual menu to assist in
+                            specifying well-known events, time (clock) events, and 
+                            DCC accessory decoder events.  These are also available
+                            from the "More..." buttons on the CDI window.
                     </ul>
                 </li>
-                <li>Improve memory tools via OpenLCB_Java PR #270:
+                <li>Improve memory tools:
                     <ul>
-                        <li>Allow selection of space 0 - 255 in Memory R/W tool
-                        <li>Improve display of spaces by omitting missing spaces to reduce length
+                        <li>Allow selection of space 0 - 255 in Memory R/W tool and Send Frame Tool
+                        <li>Improve display of available spaces by omitting missing spaces to reduce length of display
                     </ul>
+                <li>Send Frame tool will no longer allow you to access CDI if there's no CDI in the node.
+                    This prevents you from accidentally getting into a confusing situation.
             </ul>
 
         <h4>Powerline</h4>
