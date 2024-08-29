@@ -11,6 +11,7 @@ import java.util.*;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractButton;
@@ -1386,21 +1387,21 @@ public class JUnitUtil {
     }
 
     /**
-     * Dispose of a visible frame searched for by title. Disposes of the first
-     * visible frame found with the given title. Asserts that the calling test
-     * failed if the frame cannot be found.
+     * Dispose of a visible frame searched for by title.
+     * Disposes of the first visible frame found with the given title.
+     * Asserts that the calling test failed if the frame cannot be found.
      *
-     * @param title the title of the frame to dispose of
-     * @param ce    true to match title param as a substring of the frame's
+     * @param title the title of the frame to dispose of.
+     * @param subString    true to match title param as a substring of the frame's
      *              title; false to require an exact match
-     * @param cc    true if search is case sensitive; false otherwise
+     * @param caseSensitive    true if search is case sensitive; false otherwise
      */
-    public static void disposeFrame(String title, boolean ce, boolean cc) {
-        Frame frame = FrameWaiter.getFrame(title, ce, cc);
+    public static void disposeFrame(String title, boolean subString, boolean caseSensitive) {
+        Frame frame = FrameWaiter.getFrame(title, subString, caseSensitive);
         if (frame != null) {
             JUnitUtil.dispose(frame);
         } else {
-            Assert.fail("Unable to find frame \"" + title + "\" to dispose.");
+            Assertions.fail("Unable to find frame \"" + title + "\" to dispose.");
         }
     }
 
@@ -1418,16 +1419,45 @@ public class JUnitUtil {
         });
     }
 
+    /**
+     * Wait for a thread to terminate, ie is no longer alive.
+     * A non-existent Thread is not an test failure.
+     * A Thread which does not complete in time IS a test failure.
+     * @param threadName full name of the Thread to wait for.
+     */
+    public static void waitThreadTerminated( String threadName ) {
+        Thread t = getThreadByName( threadName );
+        if ( t != null ) {
+            waitFor( () -> !t.isAlive(), "Thread \"" + threadName + "\" is still alive");
+        }
+    }
+
+    /**
+     * Get a Thread by matching the name.
+     * @param threadName Starting characters of the Thread name.
+     * @return the Thread, null if no Thread found.
+     */
+    @CheckForNull
     public static Thread getThreadByName(String threadName) {
         for (Thread t : Thread.getAllStackTraces().keySet()) {
-            if (t.getName().equals(threadName)) return t;
+            if (t.getName().equals(threadName)) {
+                return t;
+            }
         }
         return null;
     }
 
+    /**
+     * Get a Thread with a name starting with the supplied String.
+     * @param threadName Name of the Thread.
+     * @return the Thread, null if no Thread found.
+     */
+    @CheckForNull
     public static Thread getThreadStartsWithName(String threadName) {
         for (Thread t : Thread.getAllStackTraces().keySet()) {
-            if (t.getName().startsWith(threadName)) return t;
+            if (t.getName().startsWith(threadName)) {
+                return t;
+            }
         }
         return null;
     }

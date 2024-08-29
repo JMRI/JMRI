@@ -202,6 +202,8 @@ public class LinkedWarrantTest {
         });
         assertTrue(retVal);
 
+        JUnitUtil.waitThreadTerminated("WestToEast Killer");
+
     }
 
     // tests a warrant running a train out and launching a return train
@@ -428,6 +430,8 @@ public class LinkedWarrantTest {
             return true;
         });
         assertTrue(retVal);
+        
+        www.dispose();
         
     }
 
