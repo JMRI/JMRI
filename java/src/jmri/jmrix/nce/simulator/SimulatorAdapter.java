@@ -135,7 +135,7 @@ public class SimulatorAdapter extends NcePortController implements Runnable {
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {
-            log.error("init (pipe): Exception: ", e);
+            log.error("{}: init (pipe): Exception: ", manufacturerName, e);
         }
         opened = true;
         return null; // indicates OK return

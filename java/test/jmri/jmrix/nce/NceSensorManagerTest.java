@@ -14,6 +14,7 @@ import org.junit.jupiter.api.*;
 public class NceSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
     private NceInterfaceScaffold lnis = null;
+    private NceSystemConnectionMemo memo = null;
 
     @Override
     public String getSystemName(int i) {
@@ -82,6 +83,14 @@ public class NceSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
         // prepare an interface
         lnis = new NceInterfaceScaffold();
         Assert.assertNotNull("exists", lnis);
+        
+        NceCmdStationMemory t = new NceCmdStationMemory();
+        Assert.assertNotNull("exist", t);
+        
+        lnis.csm = t;
+        
+        memo = new NceSystemConnectionMemo();
+        memo.setNceTrafficController(lnis);
 
         // create and register the manager object
         l = new NceSensorManager(lnis.getAdapterMemo());
@@ -91,6 +100,10 @@ public class NceSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
     @AfterEach
     public void tearDown() {
         l.dispose();
+        memo.dispose();
+        memo = null;
+        lnis.terminateThreads();
+        lnis = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
