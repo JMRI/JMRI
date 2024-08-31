@@ -68,30 +68,35 @@ public class RocoXNetThrottleTest extends jmri.jmrix.lenz.XNetThrottleTest {
     @Override
     @Test
     @Timeout(1000)
+    @Disabled("Test requires further development")
     public void testInitSequenceNormalUnitSpeedStep128() throws Exception {
     }
 
     @Override
     @Test
     @Timeout(1000)
+    @Disabled("Test requires further development")
     public void initSequenceNormalUnitSpeedStep14() throws Exception {
     }
 
     @Override
     @Test
     @Timeout(1000)
+    @Disabled("Test requires further development")
     public void initSequenceMUAddress28SpeedStep() throws Exception {
     }
 
     @Override
     @Test
     @Timeout(1000)
+    @Disabled("Test requires further development")
     public void initSequenceMuedUnitSpeedStep128() throws Exception {
     }
 
     @Override
     @Test
     @Timeout(1000)
+    @Disabled("Test requires further development")
     public void initSequenceDHUnitSpeedStep27() throws Exception {
     }
 
