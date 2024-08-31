@@ -1911,7 +1911,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             return false;
         }
         if (!track.isDropTrainAccepted(this)) {
-            addLine(buildReport, Bundle.getMessage("buildCanNotDropCarTrain",
+            addLine(buildReport, Bundle.getMessage("buildCanNotDropTrain",
                     car.toString(), getName(), track.getTrackTypeName(), track.getLocation().getName(),
                             track.getName()));
             return false;
