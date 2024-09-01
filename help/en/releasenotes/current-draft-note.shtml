@@ -470,7 +470,11 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>New feature, print or preview trains serving a location or track.</li>
+            <li>Locos set out to a spur or interchange now obey which train or routes service the track.</li>
+            <li>Cabooses and cars with FRED without a final destination can now use staging that only allows cars with an final destination.</li>
+            <li>There's now an option to leave cars in staging for trains that return to the same staging track. See "Allow cars to return to staging" for more details.</li>
+            <li>There's a new Manifest feature that allows you group all "Moves" together. See "Manifest Print Options".</li>
         </ul>
 
    <h3>Panel Editor</h3>
