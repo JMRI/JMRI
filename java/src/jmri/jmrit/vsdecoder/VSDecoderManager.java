@@ -676,8 +676,9 @@ public class VSDecoderManager implements PropertyChangeListener {
         // handle different formats or objects to get the address
         if (blk.getValue() instanceof String) {
             repVal = blk.getValue().toString();
-            if (Roster.getDefault().getEntryForId(repVal) != null) {
-                locoAddress = Integer.parseInt(Roster.getDefault().getEntryForId(repVal).getDccAddress()); // numeric RosterEntry Id
+            RosterEntry entry = Roster.getDefault().getEntryForId(repVal);
+            if (entry != null) {
+                locoAddress = Integer.parseInt(entry.getDccAddress()); // numeric RosterEntry Id
             } else if (org.apache.commons.lang3.StringUtils.isNumeric(repVal)) {
                 locoAddress = Integer.parseInt(repVal);
             } else if (jmri.InstanceManager.getDefault(TrainManager.class).getTrainByName(repVal) != null) {
