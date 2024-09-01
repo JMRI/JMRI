@@ -243,7 +243,12 @@
 
         <h4>ESU</h4>
             <ul>
-                <li></li>
+                <li>Added LokPilot 5 micro DCC Direct</li>
+                <li>Added LokPilot 5 nano DCC</li>
+                <li>Added LokSound 5 micro DCC Direct Atlas S2</li>
+                <li>Added LokSound 5 nano DCC Next18</li>
+                <li>Updated LokPilot 5 L and 5L DCC productIDs</li>
+              
             </ul>
 
         <h4>Hornby</h4>
