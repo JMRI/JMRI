@@ -502,7 +502,8 @@
     <h3>Routes</h3>
         <a id="Routes" name="Routes"></a>
        <ul>
-            <li></li>
+            <li>When you're editing a Route, the window will now close when you hit Update.
+                This makes this edit window behave like other ones.</li>
        </ul>
 
     <h3>Scripting</h3>
