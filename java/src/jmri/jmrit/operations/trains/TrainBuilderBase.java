@@ -482,8 +482,11 @@ public class TrainBuilderBase extends TrainCommon {
      */
     protected void showTrainRequirements() {
         addLine(_buildReport, ONE, Bundle.getMessage("TrainRequirements"));
-        if (_train.getNumberEngines().equals("0")) {
-            addLine(_buildReport, ONE, Bundle.getMessage("buildTrainReq0Engine"));
+        if (_train.isBuildConsistEnabled() && Setup.getHorsePowerPerTon() > 0) {
+            addLine(_buildReport, ONE,
+                    Bundle.getMessage("buildTrainReqConsist", Setup.getHorsePowerPerTon(), _train.getNumberEngines()));
+        } else if (_train.getNumberEngines().equals("0")) {
+                addLine(_buildReport, ONE, Bundle.getMessage("buildTrainReq0Engine"));
         } else if (_train.getNumberEngines().equals("1")) {
             addLine(_buildReport, ONE, Bundle.getMessage("buildTrainReq1Engine", _train.getTrainDepartsName(),
                     _train.getEngineModel(), _train.getEngineRoad()));

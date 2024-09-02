@@ -53,6 +53,7 @@ public class IpocsTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
 
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testAutoSystemNames() {
     }
 

@@ -452,7 +452,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                   <ul>
                     <li>Use normal mode when building this train</li>
                     <li>Send all car pick ups to terminal</li>
-                    <li>Allow cars to return to staging</li>
+                    <li><a href="#AllowTrainToReturn">Allow cars to return to staging</a></li>
                     <li><a href="#TrainLocalMoveOption">Allow local moves when a car has a
                         custom load or FD</a></li>
                     <li>Allow cars to travel from origin to terminal</li>
@@ -4718,7 +4718,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h3 id="TrainTurnRoute">Train Turn Route</h3>
       A train that returns to its departure location is normally referred to as a "turn". The image
       below shows a route for a train that departs "Bakersfield", works "Port Arthur" and
-      "Danville", reverses direction in "Hillsboro" and returns to "Bakersfield".
+      "Danville", reverses direction in "Hillsboro" and returns to "Bakersfield".  For trains departing
+      and returning to staging there's the option <a href="#AllowTrainToReturn">Allow cars to return to staging</a>
+      that will cause cars to ride the train if needed.
       <p>
         <img src="images/RouteTurn.png" alt="">
       </p>
@@ -5061,7 +5063,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       location in the train's route (terminal). Useful if you don't want your cars picked up and set
       out at various locations in your train's route.
 
-      <h5>Allow cars to return to staging</h5>
+      <h5 id="AllowTrainToReturn">Allow cars to return to staging</h5>
       When a train departs and returns to the same staging location, it is regarded as a turn by the
       program. A turn normally takes cars from staging, sets them out on the layout, picks up new
       cars and returns to staging with those cars. Normally the program doesn't allow the same cars
