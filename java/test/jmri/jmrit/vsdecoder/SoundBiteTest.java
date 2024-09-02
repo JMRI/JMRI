@@ -21,6 +21,7 @@ public class SoundBiteTest {
     private Runnable damsdt;
 
     @Test
+    @Disabled("Test requires further development")
     public void testStateConstants() {
         // Maybe check the enums here?
     }
@@ -32,13 +33,13 @@ public class SoundBiteTest {
         Assert.assertFalse("is playing", uut.getSource().getState() == jmri.Audio.STATE_PLAYING);
     }
 
-    String filename = "java/test/jmri/jmrit/vsdecoder/test.wav";
+    private final static String FILENAME = "java/test/jmri/jmrit/vsdecoder/test.wav";
 
     @Test
     public void testCreateFull() {
-        SoundBite uut = new SoundBite(null, filename, "sysname", "uname"); // BOUND_MODE
+        SoundBite uut = new SoundBite(null, FILENAME, "sysname", "uname"); // BOUND_MODE
         Assert.assertEquals("sound name", "uname", uut.getName());
-        Assert.assertEquals("file name", filename, uut.getFileName());
+        Assert.assertEquals("file name", FILENAME, uut.getFileName());
         Assert.assertEquals("system name", "sysname", uut.getSystemName());
         Assert.assertEquals("user name", "uname", uut.getUserName());
         Assert.assertTrue("initialized", uut.isInitialized());
