@@ -29,10 +29,8 @@ public class LayoutTest {
         assertNotNull(ex);
         assertEquals("FastClockLt1", ex.getMessage());
 
-        // ex = assertThrows(IllegalArgumentException.class, () -> { layout.setFastClock(100); });
-        // assertNotNull(ex);
-        // assertEquals("TimeOutOfRange", ex.getMessage());
-        layout.setFastClock(9999); // does not throw Exception, should it?
+        // supplying ridiculous fast clock values is self correcting since the user gets ridiculous timetable results
+        assertDoesNotThrow( () -> layout.setFastClock(9999));
 
         assertDoesNotThrow( () -> layout.setFastClock(6));
         assertEquals(6, layout.getFastClock());
