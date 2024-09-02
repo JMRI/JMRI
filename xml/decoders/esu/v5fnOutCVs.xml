@@ -923,6 +923,8 @@
         </qualifier>
         <decVal max="127"/>
     </variable>
+    <!-- exclude AUX2 [1] to AUX18 -->
+    <variables exclude="LokSound 5 micro DCC Direct Atlas S2">
     <!-- AUX2 [1] Mode -->
     <variable label="AUX2 [1] Mode" CV="16.0.283" default="1" item="ESU FnOut A2-1 Mode">
         <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
@@ -3075,7 +3077,7 @@
                     </variable>
                 </variables>
                 <!-- exclude AUX9 to AUX18 -->
-                <variables exclude="LokSound 5 micro DCC Direct">
+                <variables exclude="LokPilot 5 micro DCC Direct,LokSound 5 micro DCC Direct">
                     <!-- AUX9 Mode -->
                     <variable label="AUX9 Mode" CV="16.0.339" default="1" item="ESU FnOut A9 Mode">
                         <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
@@ -6257,6 +6259,7 @@
             </variables>
         </variables>
     </variables>
+    </variables>
     <!-- Exclude [2] outputs to avoid tripping over a firmware bug -->
     <!-- At least up to 5.8.156 (current as of writing this) these functions are not -->
     <!-- accessible through standard CV programming on ESU 58751 -->
@@ -7180,6 +7183,8 @@
 	    </qualifier>
 	    <decVal max="127"/>
 	</variable>
+        <!-- exclude AUX2 [2] -->
+        <variables exclude="LokSound 5 micro DCC Direct Atlas S2">
 	<!-- AUX2 [2] Mode -->
 	<variable label="AUX2 [2] Mode" CV="16.0.443" default="1" item="ESU FnOut A2-2 Mode">
 	    <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
@@ -7487,4 +7492,5 @@
 	    <decVal max="127"/>
 	</variable>
     </variables>
+</variables>
 </variables>
