@@ -7,9 +7,7 @@ import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -178,21 +176,19 @@ public class BlockBossLogicTest {
     // check for basic not-fail if no signal name was set
     @Test
     public void testSimpleBlockNoSignal() {
-        try {
-            new BlockBossLogic(null);
-        } catch (java.lang.NullPointerException e) {
-            // this is expected
-        }
+        Exception ex = Assertions.assertThrows(NullPointerException.class, () -> {
+            Assertions.assertNull(new BlockBossLogic(null));});
+        Assertions.assertNotNull(ex);
+        Assertions.assertEquals("BlockBossLogic name cannot be null", ex.getMessage());
     }
 
     // check for basic not-fail if empty signal name was set
     @Test
     public void testSimpleBlockEmptyName() {
-        try {
-            new BlockBossLogic("");
-        } catch (java.lang.IllegalArgumentException e) {
-            // this is expected
-        }
+        Exception ex = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            Assertions.assertNull(new BlockBossLogic(""));});
+        Assertions.assertNotNull(ex);
+        Assertions.assertEquals("SignalHead \"\" does not exist", ex.getMessage());
         jmri.util.JUnitAppender.assertWarnMessage("Signal Head \"\" was not found");
     }
 
