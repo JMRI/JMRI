@@ -12,13 +12,12 @@ public class SampleFunctionalClassTest {
     @Test
     // test creation
     public void testCreate() {
-        new SampleFunctionalClass("foo");
+        Assertions.assertNotNull( new SampleFunctionalClass("foo") );
     }
 
     @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initConfigureManager();
     }

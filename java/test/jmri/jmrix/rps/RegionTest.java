@@ -17,19 +17,21 @@ public class RegionTest {
     @Test
     public void testCtors() {
         // square
-        new Region(new Point3d[]{
+        Region r = new Region(new Point3d[]{
             new Point3d(0., 0., 0.),
             new Point3d(1., 0., 0.),
             new Point3d(1., 1., 0.),
             new Point3d(0., 1., 0.)}
         );
+        Assertions.assertNotNull( r );
 
         // triangle
-        new Region(new Point3d[]{
+        r = new Region(new Point3d[]{
             new Point3d(0., 0., 0.),
             new Point3d(1., 0., 0.),
             new Point3d(1., 1., 0.)}
         );
+        Assertions.assertNotNull( r );
 
     }
 
