@@ -629,5 +629,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Protected against an uncommon error that can happen 
+                when loading a file at startup on Windows.</li>
         </ul>
