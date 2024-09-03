@@ -1110,7 +1110,7 @@ public class LayoutSlipView extends LayoutTurnoutView {
             if (stateA == Turnout.THROWN) {
                 g2.setColor(backgroundColor);
             } else if (stateA != Turnout.CLOSED) {
-                g2.setColor(Color.GRAY);
+                g2.setColor(foregroundColor);
             }
             Point2D rightCircleCenter = getCoordsRight();
             if (layoutEditor.isTurnoutFillControlCircles()) {
@@ -1131,7 +1131,7 @@ public class LayoutSlipView extends LayoutTurnoutView {
             if (stateB == Turnout.THROWN) {
                 g2.setColor(backgroundColor);
             } else if (stateB != Turnout.CLOSED) {
-                g2.setColor(Color.GRAY);
+                g2.setColor(foregroundColor);
             }
             // drawHidden left/right turnout control circles
             Point2D leftCircleCenter = getCoordsLeft();
