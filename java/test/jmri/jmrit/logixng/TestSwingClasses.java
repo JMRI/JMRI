@@ -23,7 +23,7 @@ import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
  */
 public class TestSwingClasses {
 
-    JDialog dialog;
+    private JDialog dialog;
 
     private Map<Category, List<Class<? extends Base>>> getAnalogActionClasses() {
         return InstanceManager.getDefault(AnalogActionManager.class).getActionClasses();
@@ -53,7 +53,7 @@ public class TestSwingClasses {
         return InstanceManager.getDefault(StringExpressionManager.class).getExpressionClasses();
     }
 
-    private void testClass(Class clazz) {
+    private void testClass(Class<? extends Base> clazz) {
         SwingConfiguratorInterface configureSwing;
         configureSwing = SwingTools.getSwingConfiguratorForClass(clazz);
         configureSwing.setJDialog(dialog);
@@ -128,6 +128,10 @@ public class TestSwingClasses {
 
     @AfterEach
     public void tearDown() {
+        if ( dialog != null ) {
+            dialog.dispose();
+        }
+        dialog = null;
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
