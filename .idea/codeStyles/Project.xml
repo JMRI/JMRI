@@ -11,7 +11,6 @@
     <codeStyleSettings language="HTML">
       <option name="RIGHT_MARGIN" value="120" />
       <option name="WRAP_ON_TYPING" value="1" />
-      <option name="BLANK_LINES_BEFORE_CLASS_END" value="1" />
       <indentOptions>
         <option name="INDENT_SIZE" value="2" />
         <option name="TAB_SIZE" value="2" />
@@ -23,17 +22,11 @@
       <option name="KEEP_CONTROL_STATEMENT_IN_ONE_LINE" value="false" />
       <option name="BLANK_LINES_BEFORE_CLASS_END" value="1" />
       <option name="WRAP_COMMENTS" value="true" />
-      <indentOptions>
-        <option name="INDENT_SIZE" value="4" />
-        <option name="TAB_SIZE" value="4" />
-      </indentOptions>
     </codeStyleSettings>
     <codeStyleSettings language="Properties">
       <option name="ALIGN_GROUP_FIELD_DECLARATIONS" value="true" />
-      <option name="BLANK_LINES_BEFORE_FILE_END" value="1" />
     </codeStyleSettings>
     <codeStyleSettings language="XML">
-      <option name="BLANK_LINES_BEFORE_FILE_END" value="1" />
       <indentOptions>
         <option name="INDENT_SIZE" value="2" />
         <option name="TAB_SIZE" value="2" />
