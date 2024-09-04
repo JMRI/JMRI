@@ -191,6 +191,7 @@ public class DefaultShutDownManagerTest {
         dsdm.shutdown(0, false);
         assertThat(dsdm.isShuttingDown()).isTrue();
         assertThat(runs).isEqualTo(1);
+        JUnitUtil.waitFor( () -> dsdm.isShutDownComplete(),"ShutDown Completed");
     }
 
     @Test
@@ -221,6 +222,7 @@ public class DefaultShutDownManagerTest {
         dsdm.shutdown(0, false);
         assertThat(dsdm.isShuttingDown()).isTrue();
         assertThat(runs).isEqualTo(1);
+        JUnitUtil.waitFor( () -> dsdm.isShutDownComplete(),"ShutDown Completed");
     }
 
     @Test
@@ -235,6 +237,7 @@ public class DefaultShutDownManagerTest {
         JUnitAppender.assertErrorMessageStartsWith("Could not complete Shutdown Task in time:");
         Assertions.assertTrue(dsdm.isShuttingDown());
         JUnitUtil.waitFor(() -> { return runs == 2; } , "Second runs++ call eventually triggered");
+        JUnitUtil.waitFor( () -> dsdm.isShutDownComplete(),"ShutDown Completed");
     }
 
     @Test
@@ -244,6 +247,7 @@ public class DefaultShutDownManagerTest {
         JUnitAppender.assertErrorMessageStartsWith("Could not complete Shutdown Task in time:");
         Assertions.assertTrue(dsdm.isShuttingDown());
         JUnitUtil.waitFor(() -> { return runs == 2; } , "Second runs++ call eventually triggered");
+        JUnitUtil.waitFor( () -> dsdm.isShutDownComplete(),"ShutDown Completed");
     }
 
     @Test
@@ -253,6 +257,7 @@ public class DefaultShutDownManagerTest {
         JUnitAppender.assertErrorMessageStartsWith("Issue Completing ShutdownTask :");
         Assertions.assertTrue(dsdm.isShuttingDown());
         Assertions.assertEquals( 1, runs, "run triggered");
+        JUnitUtil.waitFor( () -> dsdm.isShutDownComplete(),"ShutDown Completed");
     }
 
     @Test
@@ -267,6 +272,7 @@ public class DefaultShutDownManagerTest {
         // Assertions.assertEquals(30, runs); // fails often with a few missing
         // JUnitUtil.waitFor times out every now and then, so we use concurrentRuns
         Assertions.assertEquals(30, concurrentRuns.size(),"all runs triggered");
+        JUnitUtil.waitFor( () -> dsdm.isShutDownComplete(),"ShutDown Completed");
     }
 
     @Test
@@ -279,6 +285,7 @@ public class DefaultShutDownManagerTest {
         long testTime = new Date().getTime() - start.getTime();
         Assertions.assertTrue(testTime < dsdm.tasksTimeOutMilliSec*2,
             "Completed before earlytimeout and mainTimeout");
+        JUnitUtil.waitFor( () -> dsdm.isShutDownComplete(),"ShutDown Completed");
     }
 
     @Test
@@ -298,6 +305,7 @@ public class DefaultShutDownManagerTest {
         Assertions.assertEquals(0, concurrentRuns.size(),"early run triggered before main run");
         JUnitUtil.waitFor(() -> concurrentRuns.size() == 1 , "run triggered");
         JUnitUtil.waitFor(()->{return !(t1.isAlive());}, "shutdown thread completed");
+        JUnitUtil.waitFor( () -> dsdm.isShutDownComplete(),"ShutDown Completed");
     }
 
     private class CallTrueShutDownTask extends AbstractShutDownTask {
@@ -410,15 +418,18 @@ public class DefaultShutDownManagerTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.waitFor(50);
         dsdm = new DefaultShutDownManager();
         dsdm.setBlockingShutdown(true);
-        dsdm.tasksTimeOutMilliSec = 100; // normal default 30000 msecs but this is a test
+        dsdm.tasksTimeOutMilliSec = 200; // normal default 30000 msecs but this is a test
         runs = 0;
         InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).setEnableStoreCheck(false);
     }
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.waitFor(50);
+        dsdm = null;
         DefaultShutDownManager.setStaticShuttingDown(false);
         JUnitUtil.tearDown();
     }
