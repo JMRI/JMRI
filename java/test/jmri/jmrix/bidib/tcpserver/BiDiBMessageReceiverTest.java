@@ -20,7 +20,7 @@ import org.junit.jupiter.api.*;
  */
 public class BiDiBMessageReceiverTest {
 
-    BiDiBSystemConnectionMemo memo;
+    private BiDiBSystemConnectionMemo memo;
 
     @Test
     public void testCTor() {
@@ -36,12 +36,12 @@ public class BiDiBMessageReceiverTest {
         Assertions.assertNotNull(r, "r exists");
         TcpServerNetMessageHandler h = new TcpServerNetMessageHandler(r);
         Assertions.assertNotNull(h, "h exists");
-        try {
+
+        Assertions.assertDoesNotThrow( () -> {
             NetBidibServerPlainTcpPort p = new NetBidibServerPlainTcpPort(42, null, h);
             BiDiBMessageReceiver t = new BiDiBMessageReceiver(h, p);
             Assertions.assertNotNull(t, "t exists");
-        }
-        catch (Exception e) {}
+        });
     }
 
     @BeforeEach
@@ -53,6 +53,10 @@ public class BiDiBMessageReceiverTest {
 
     @AfterEach
     public void tearDown() {
+        if ( memo != null ) {
+            memo.dispose();
+            memo = null;
+        }
         JUnitUtil.tearDown();
     }
 
