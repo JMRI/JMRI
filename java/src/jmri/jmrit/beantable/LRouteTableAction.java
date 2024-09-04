@@ -917,7 +917,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             pb.add(cancelButton);
             cancelButton.addActionListener(this::cancelPressed);
             cancelButton.setToolTipText(Bundle.getMessage("TooltipCancelRoute"));
-            cancelButton.setName("ButtonCancel");
+            cancelButton.setName("CancelButton");
             // Add Route button
             pb.add(createButton);
             createButton.addActionListener(this::createPressed);
