@@ -51,6 +51,7 @@ import jmri.util.ThreadingUtil;
 public class DefaultShutDownManager extends Bean implements ShutDownManager {
 
     private static volatile boolean shuttingDown = false;
+    private volatile boolean shutDownComplete = false; // used by tests
 
     private final Set<Callable<Boolean>> callables = new CopyOnWriteArraySet<>();
     private final Set<EarlyTask> earlyRunnables = new CopyOnWriteArraySet<>();
@@ -322,9 +323,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
             // wait for parallel tasks to complete
             runShutDownTasks(new HashSet<>(earlyRunnables), "JMRI ShutDown - Early Tasks");
 
-            jmri.util.ThreadingUtil.runOnGUI(() -> {
-                jmri.configurexml.StoreAndCompare.requestStoreIfNeeded();
-            });
+            jmri.configurexml.StoreAndCompare.requestStoreIfNeeded();
 
             // wait for parallel tasks to complete
             runShutDownTasks(runnables, "JMRI ShutDown - Main Tasks");
@@ -336,6 +335,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
             if (exit) {
                 System.exit(status);
             }
+            shutDownComplete = true;
         }
     }
 
@@ -386,6 +386,15 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
     }
 
     /**
+     * Flag to indicate when all shutDown tasks completed.
+     * For test purposes, the app would normally exit before setting the flag.
+     * @return true when Shutdown tasks are complete and System.exit is not called.
+     */
+    public boolean isShutDownComplete() {
+        return shutDownComplete;
+    }
+
+    /**
      * This method is static so that if multiple DefaultShutDownManagers are
      * registered, they are all aware of this state.
      *
@@ -395,6 +404,9 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
         boolean old = shuttingDown;
         setStaticShuttingDown(state);
         log.debug("Setting shuttingDown to {}", state);
+        if ( !state ) { // reset complete if previously set
+            shutDownComplete = false;
+        }
         firePropertyChange(PROP_SHUTTING_DOWN, old, state);
     }
 
