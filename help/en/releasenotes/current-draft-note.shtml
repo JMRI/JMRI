@@ -129,10 +129,10 @@
                 <li>OpenLCB_Java lib updated to release 0.8.1, which includes:
                     <ul>
                         <li>Better GUI for the node selection tool, which improves
-                            layout of the firmware upgrade window, send tool window, 
+                            layout of the firmware upgrade window, send tool window,
                             memory tool window and other places.
                         <li>Event ID fields now have a contextual menu to assist in
-                            specifying well-known events, time (clock) events, and 
+                            specifying well-known events, time (clock) events, and
                             DCC accessory decoder events.  These are also available
                             from the "More..." buttons on the CDI window.
                     </ul>
@@ -421,7 +421,8 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Will now show decoder family and model comments if you
+                hover your mouse over the decoder selection tree.</li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -446,7 +447,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>Enable control circle colors and the fill option for slip turnouts.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -491,8 +492,8 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li>Added text to "start Up" Preferences to note that optimal XML file 
-                loading should be done <em>before</em> "Opening" <u>any</u> 
+            <li>Added text to "start Up" Preferences to note that optimal XML file
+                loading should be done <em>before</em> "Opening" <u>any</u>
                 "Table".</li>
         </ul>
 
@@ -511,7 +512,8 @@
     <h3>Routes</h3>
         <a id="Routes" name="Routes"></a>
        <ul>
-            <li></li>
+            <li>When you're editing a Route, the window will now close when you hit Update.
+                This makes this edit window behave like other ones.</li>
        </ul>
 
     <h3>Scripting</h3>
@@ -629,5 +631,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Protected against an uncommon error that can happen 
+                when loading a file at startup on Windows.</li>
         </ul>

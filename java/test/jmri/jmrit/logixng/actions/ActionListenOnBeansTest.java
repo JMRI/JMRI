@@ -272,6 +272,7 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
     @After
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        JUnitUtil.removeMatchingThreads("ScriptOutput PipeListener");
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
         s1 = s2 = s3 = s99 = null;

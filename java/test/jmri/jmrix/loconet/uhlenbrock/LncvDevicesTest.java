@@ -2,12 +2,8 @@ package jmri.jmrix.loconet.uhlenbrock;
 
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
-//import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.*;
 
 class LncvDevicesTest {
 
@@ -18,43 +14,53 @@ class LncvDevicesTest {
     }
 
     @Test
+    @Disabled("Test requires further development")
     void addDevice() {
     }
 
     @Test
+    @Disabled("Test requires further development")
     void removeAllDevices() {
     }
 
     @Test
+    @Disabled("Test requires further development")
     void isDeviceExistant() {
     }
 
     @Test
+    @Disabled("Test requires further development")
     void deviceExists() {
     }
 
     @Test
+    @Disabled("Test requires further development")
     void getDevice() {
     }
 
     @Test
+    @Disabled("Test requires further development")
     void getDevices() {
     }
 
     @Test
+    @Disabled("Test requires further development")
     void size() {
     }
+
+    private LocoNetSystemConnectionMemo memo;
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        LocoNetSystemConnectionMemo memo = new jmri.jmrix.loconet.LocoNetSystemConnectionMemo();
+        memo = new jmri.jmrix.loconet.LocoNetSystemConnectionMemo();
         jmri.InstanceManager.setDefault(jmri.jmrix.loconet.LocoNetSystemConnectionMemo.class, memo);
     }
 
     @AfterEach
     public void tearDown() {
+        memo.dispose();
+        memo = null;
         JUnitUtil.tearDown();
     }
 
