@@ -26,6 +26,8 @@
     <version author="Dave Heap" version="5" lastUpdated="20200924"/>
     <!-- ver6 add some new productIDs -->
     <version author="Dave Heap" version="6" lastUpdated="20211203"/>
+    <!-- ver7 add "LokPilot 5 micro DCC Direct", "LokPilot 5 nano DCC" and a few more productIDs -->
+    <version author="Heiko Rosemann" version="7" lastUpdated="20240901"/>
     <decoder>
         <family name="ESU LokPilot 5" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
             <model model="LokPilot 5" maxFnNum="31" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554600,33554636">
@@ -76,6 +78,9 @@
                 <output name="2,20" label="|"/> <!-- suppress unused item -->
                 <size length="25.5" width="10.6" height="4.5" units="mm"/>
             </model>
+            <model model="LokPilot 5 micro DCC Direct" maxFnNum="31" numOuts="10" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777370">
+                <size length="66.0" width="8.5" height="3.0" units="mm"/>
+            </model>
             <model model="LokPilot 5 micro Next18" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554604">
                 <output name="1,35" label="|"/> <!-- suppress unused item -->
                 <size length="21.0" width="10.6" height="4.0" units="mm"/>
@@ -84,10 +89,13 @@
                 <output name="1,35" label="|"/> <!-- suppress unused item -->
                 <size length="21.0" width="10.6" height="4.0" units="mm"/>
             </model>
-            <model model="LokPilot 5 L" maxFnNum="31" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554609,33554639">
+            <model model="LokPilot 5 nano DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777468">
+                <size length="19.6" width="8.5" height="3.2" units="mm"/>
+            </model>
+            <model model="LokPilot 5 L" maxFnNum="31" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554609,33554639,33554672">
                 <size length="51.8" width="25.4" height="14" units="mm"/>
             </model>
-            <model model="LokPilot 5 L DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554610,33554640">
+            <model model="LokPilot 5 L DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554610,33554640,33554673">
                 <size length="51.8" width="25.4" height="14" units="mm"/>
             </model>
             <model model="LokPilot 5 Fx" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="16777406,16777425">

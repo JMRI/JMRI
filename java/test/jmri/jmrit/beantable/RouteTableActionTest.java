@@ -119,9 +119,6 @@ public class RouteTableActionTest extends AbstractTableActionBase<Route> {
         //press Update to save the Route change
         jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonUpdate"));
 
-        //press Cancel to close the Edit window
-        jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonCancel"));
-        
         //retrieve the expected route for verification
         Route chkRoute = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getRoute("IO:AUTO:0001");  // NOI18N
         Assert.assertEquals("Verify no additional routes were created", 1, tbl.getRowCount());  // NOI18N

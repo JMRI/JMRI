@@ -68,6 +68,7 @@ public class ExpressionNodeMethodTest {
         Assertions.assertFalse(segment.isHidden());
         testCall(segment, "setHidden", null, new Object[]{true});
         Assertions.assertTrue(segment.isHidden());
+        editor.dispose();
     }
 
     /**
@@ -238,6 +239,7 @@ public class ExpressionNodeMethodTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.resetWindows(false, false);
         JUnitUtil.tearDown();
     }
 

@@ -13,11 +13,11 @@ import org.junit.Assert;
 public class SpjFileTest {
 
     @Test
-    public void testCreate() {
-        new SpjFile(new java.io.File("ac4400.spj"));
+    public void testSpjFileCTor() {
+        Assertions.assertNotNull( new SpjFile(new java.io.File("ac4400.spj")) );
     }
 
-    SpjFile testFile = null;
+    private SpjFile testFile = null;
 
     void loadFile() throws java.io.IOException {
         if (testFile == null) {

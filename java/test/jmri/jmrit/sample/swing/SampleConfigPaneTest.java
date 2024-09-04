@@ -12,7 +12,7 @@ public class SampleConfigPaneTest {
     @Test
     // test creation
     public void testCreate() {
-        new SampleConfigPane();
+        Assertions.assertNotNull( new SampleConfigPane() );
     }
 
     @BeforeEach

@@ -23,7 +23,7 @@ public class PositionFileTest {
 
     @Test
     public void testCtor() {
-        new PositionFile();
+        Assertions.assertNotNull( new PositionFile() );
     }
 
     @Test
