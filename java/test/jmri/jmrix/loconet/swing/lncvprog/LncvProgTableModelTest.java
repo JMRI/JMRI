@@ -34,8 +34,8 @@ class LncvProgTableModelTest {
 
     @Test
     void testGetColumnClass() {
-        Assertions.assertEquals(Integer.class, (Class)lptm.getColumnClass(LncvProgTableModel.VALUE_COLUMN), "VALUE_COLUMN class");
-        Assertions.assertEquals(javax.swing.JButton.class, (Class)lptm.getColumnClass(LncvProgTableModel.OPENPRGMRBUTTONCOLUMN), "OPENPRGMRBUTTONCOLUMN class");
+        Assertions.assertEquals(Integer.class, lptm.getColumnClass(LncvProgTableModel.VALUE_COLUMN), "VALUE_COLUMN class");
+        Assertions.assertEquals(javax.swing.JButton.class, lptm.getColumnClass(LncvProgTableModel.OPENPRGMRBUTTONCOLUMN), "OPENPRGMRBUTTONCOLUMN class");
     }
 
     @Test
