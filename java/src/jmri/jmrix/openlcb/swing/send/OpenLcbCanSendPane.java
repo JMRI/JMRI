@@ -70,7 +70,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     final JTextField configAddressField = new JTextField("000000");                   // NOI18N
     final JTextField readDataField = new JTextField(60);
     final JTextField writeDataField = new JTextField(60);
-    final MemorySpaceSelector addrSpace = new MemorySpaceSelector();
+    final MemorySpaceSelector addrSpace = new MemorySpaceSelector(0xFF);
     final JComboBox<String> validitySelector = new JComboBox<String>(new String[]{"Unknown", "Valid", "Invalid"});
     JButton cdiButton;
     
