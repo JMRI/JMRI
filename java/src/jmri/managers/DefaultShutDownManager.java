@@ -85,7 +85,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
         } catch (IllegalStateException ex) {
             // thrown only if System.exit() has been called, so ignore
         }
-        
+
         // register a Signal handlers that do shutdown
         try {
             if (SystemType.isMacOSX() || SystemType.isLinux()) {
@@ -97,16 +97,16 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
                 };
                 Signal.handle(new Signal("TERM"), handler);
                 Signal.handle(new Signal("INT"), handler);
-                
+
                 handler = new SignalHandler () {
                     @Override
                     public void handle(Signal sig) {
                         restart();
                     }
                 };
-                Signal.handle(new Signal("HUP"), handler);     
-            } 
-            
+                Signal.handle(new Signal("HUP"), handler);
+            }
+
             else if (SystemType.isWindows()) {
                 SignalHandler handler = new SignalHandler () {
                     @Override
@@ -116,7 +116,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
                 };
                 Signal.handle(new Signal("TERM"), handler);
             }
-            
+
         } catch (NullPointerException e) {
             log.warn("Failed to add signal handler due to missing signal definition");
         }
@@ -302,6 +302,14 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
                     setShuttingDown(false);
                     return;
                 }
+            }
+            boolean abort = jmri.util.ThreadingUtil.runOnGUIwithReturn(() -> {
+                return jmri.configurexml.StoreAndCompare.checkPermissionToStoreIfNeeded();
+            });
+            if (abort) {
+                log.info("User aborted due to unsaved changes and has not permission to store");
+                setShuttingDown(false);
+                return;
             }
             // close any open windows by triggering a closing event
             // this gives open windows a final chance to perform any cleanup
