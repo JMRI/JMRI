@@ -85,7 +85,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         spaceField = new MemorySpaceSelector(0xEF);
         p.add(spaceField);
         selectorPane.add(p);
-        spaceField.setToolTipText("The number of the address space, e.g. 239 or 0XEF");
+        spaceField.setToolTipText("The number of the address space, e.g. 239 or 0xEF");
 
         p = new JPanel();
         p.setLayout(new WrapLayout());
