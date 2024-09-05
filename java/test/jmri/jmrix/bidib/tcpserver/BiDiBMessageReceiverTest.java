@@ -13,6 +13,8 @@ import org.bidib.jbidibc.net.serialovertcp.NetBidibServerPlainTcpPort;
 
 import org.junit.jupiter.api.*;
 
+import static org.mockito.Mockito.mock;
+
 /**
  * Tests for the BiDiBMessageReceiver class
  * 
@@ -37,11 +39,12 @@ public class BiDiBMessageReceiverTest {
         TcpServerNetMessageHandler h = new TcpServerNetMessageHandler(r);
         Assertions.assertNotNull(h, "h exists");
 
-        Assertions.assertDoesNotThrow( () -> {
-            NetBidibServerPlainTcpPort p = new NetBidibServerPlainTcpPort(42, null, h);
-            BiDiBMessageReceiver t = new BiDiBMessageReceiver(h, p);
-            Assertions.assertNotNull(t, "t exists");
-        });
+        // use a Mocked NetBidibServerPlainTcpPort as creating a real one throws
+        // java.net.BindException: Permission denied (Bind failed) on CI runs
+        NetBidibServerPlainTcpPort p = mock(NetBidibServerPlainTcpPort.class);
+        BiDiBMessageReceiver t = new BiDiBMessageReceiver(h, p);
+        Assertions.assertNotNull(t, "t exists");
+
     }
 
     @BeforeEach
