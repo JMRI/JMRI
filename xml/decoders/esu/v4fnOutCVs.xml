@@ -192,7 +192,7 @@
             <value>25</value>
         </qualifier>
         <decVal max="31"/>
-        <label xml:lang="de">Stäke des Bläsers</label>
+        <label xml:lang="de">Stärke des Bläsers</label>
     </variable>
     <variable label="Phase Reverse" CV="16.0.263" default="0" item="ESU FnOut HL-1 Check 6" mask="XXXXXXXV">
         <qualifier>
@@ -535,7 +535,7 @@
             <value>25</value>
         </qualifier>
         <decVal max="31"/>
-        <label xml:lang="de">Stäke des Bläsers</label>
+        <label xml:lang="de">Stärke des Bläsers</label>
     </variable>
     <variable label="Phase Reverse" CV="16.0.271" default="0" item="ESU FnOut RL-1 Check 6" mask="XXXXXXXV">
         <qualifier>
@@ -878,7 +878,7 @@
             <value>25</value>
         </qualifier>
         <decVal max="31"/>
-        <label xml:lang="de">Stäke des Bläsers</label>
+        <label xml:lang="de">Stärke des Bläsers</label>
     </variable>
     <variable label="Phase Reverse" CV="16.0.279" default="0" item="ESU FnOut A1-1 Check 6" mask="XXXXXXXV">
         <qualifier>
@@ -1221,7 +1221,7 @@
             <value>25</value>
         </qualifier>
         <decVal max="31"/>
-        <label xml:lang="de">Stäke des Bläsers</label>
+        <label xml:lang="de">Stärke des Bläsers</label>
     </variable>
     <variable label="Phase Reverse" CV="16.0.287" default="0" item="ESU FnOut A2-1 Check 6" mask="XXXXXXXV">
         <qualifier>
@@ -1564,7 +1564,7 @@
             <value>25</value>
         </qualifier>
         <decVal max="31"/>
-        <label xml:lang="de">Stäke des Bläsers</label>
+        <label xml:lang="de">Stärke des Bläsers</label>
     </variable>
     <variable label="Phase Reverse" CV="16.0.295" default="0" item="ESU FnOut A3 Check 6" mask="XXXXXXXV">
         <qualifier>
@@ -1907,7 +1907,7 @@
             <value>25</value>
         </qualifier>
         <decVal max="31"/>
-        <label xml:lang="de">Stäke des Bläsers</label>
+        <label xml:lang="de">Stärke des Bläsers</label>
     </variable>
     <variable label="Phase Reverse" CV="16.0.303" default="0" item="ESU FnOut A4 Check 6" mask="XXXXXXXV">
         <qualifier>
@@ -2251,7 +2251,7 @@
                 <value>25</value>
             </qualifier>
             <decVal max="31"/>
-            <label xml:lang="de">Stäke des Bläsers</label>
+            <label xml:lang="de">Stärke des Bläsers</label>
         </variable>
         <variable label="Phase Reverse" CV="16.0.311" default="0" item="ESU FnOut A5 Check 6" mask="XXXXXXXV">
             <qualifier>
@@ -2594,7 +2594,7 @@
                 <value>25</value>
             </qualifier>
             <decVal max="31"/>
-            <label xml:lang="de">Stäke des Bläsers</label>
+            <label xml:lang="de">Stärke des Bläsers</label>
         </variable>
         <variable label="Phase Reverse" CV="16.0.319" default="0" item="ESU FnOut A6 Check 6" mask="XXXXXXXV">
             <qualifier>
@@ -2937,7 +2937,7 @@
                 <value>25</value>
             </qualifier>
             <decVal max="31"/>
-            <label xml:lang="de">Stäke des Bläsers</label>
+            <label xml:lang="de">Stärke des Bläsers</label>
         </variable>
         <variable label="Phase Reverse" CV="16.0.327" default="0" item="ESU FnOut A7 Check 6" mask="XXXXXXXV">
             <qualifier>
@@ -3280,7 +3280,7 @@
                 <value>25</value>
             </qualifier>
             <decVal max="31"/>
-            <label xml:lang="de">Stäke des Bläsers</label>
+            <label xml:lang="de">Stärke des Bläsers</label>
         </variable>
         <variable label="Phase Reverse" CV="16.0.335" default="0" item="ESU FnOut A8 Check 6" mask="XXXXXXXV">
             <qualifier>
@@ -3623,7 +3623,7 @@
                 <value>25</value>
             </qualifier>
             <decVal max="31"/>
-            <label xml:lang="de">Stäke des Bläsers</label>
+            <label xml:lang="de">Stärke des Bläsers</label>
         </variable>
         <variable label="Phase Reverse" CV="16.0.343" default="0" item="ESU FnOut A9 Check 6" mask="XXXXXXXV">
             <qualifier>
@@ -3966,7 +3966,7 @@
                 <value>25</value>
             </qualifier>
             <decVal max="31"/>
-            <label xml:lang="de">Stäke des Bläsers</label>
+            <label xml:lang="de">Stärke des Bläsers</label>
         </variable>
         <variable label="Phase Reverse" CV="16.0.351" default="0" item="ESU FnOut A10 Check 6" mask="XXXXXXXV">
             <qualifier>
@@ -4311,7 +4311,7 @@
             <value>25</value>
         </qualifier>
         <decVal max="31"/>
-        <label xml:lang="de">Stäke des Bläsers</label>
+        <label xml:lang="de">Stärke des Bläsers</label>
     </variable>
     <variable label="Phase Reverse" CV="16.0.359" default="0" item="ESU FnOut HL-2 Check 6" mask="XXXXXXXV">
         <qualifier>
@@ -4654,7 +4654,7 @@
             <value>25</value>
         </qualifier>
         <decVal max="31"/>
-        <label xml:lang="de">Stäke des Bläsers</label>
+        <label xml:lang="de">Stärke des Bläsers</label>
     </variable>
     <variable label="Phase Reverse" CV="16.0.367" default="0" item="ESU FnOut RL-2 Check 6" mask="XXXXXXXV">
         <qualifier>
@@ -4997,7 +4997,7 @@
             <value>25</value>
         </qualifier>
         <decVal max="31"/>
-        <label xml:lang="de">Stäke des Bläsers</label>
+        <label xml:lang="de">Stärke des Bläsers</label>
     </variable>
     <variable label="Phase Reverse" CV="16.0.375" default="0" item="ESU FnOut A1-2 Check 6" mask="XXXXXXXV">
         <qualifier>
@@ -5340,7 +5340,7 @@
             <value>25</value>
         </qualifier>
         <decVal max="31"/>
-        <label xml:lang="de">Stäke des Bläsers</label>
+        <label xml:lang="de">Stärke des Bläsers</label>
     </variable>
     <variable label="Phase Reverse" CV="16.0.383" default="0" item="ESU FnOut A2-2 Check 6" mask="XXXXXXXV">
         <qualifier>

@@ -8,7 +8,6 @@ import jmri.util.swing.SamplePane;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -21,7 +20,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 public class MultiJfcUnitTest {
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @jmri.util.junit.annotations.DisabledIfHeadless
     public void testShow() throws Exception {
 
         // show the window
@@ -37,6 +36,9 @@ public class MultiJfcUnitTest {
 
         // Load the license
         JUnitUtil.pressButton(f1, "License");
+        JFrameOperator jfl = new JFrameOperator("JMRI License");
+        jfl.requestClose();
+        jfl.waitClosed();        
 
         // Find the button that opens a sample panel
         JButton samplebutton = JButtonOperator.findJButton(f1, "Sample", true, true);
