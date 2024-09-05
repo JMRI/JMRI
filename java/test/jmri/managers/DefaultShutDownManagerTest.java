@@ -292,7 +292,7 @@ public class DefaultShutDownManagerTest {
     public void testEarlyTasks() {
         concurrentEarlyRuns = new ConcurrentHashMap<>(3);
         concurrentRuns = new ConcurrentHashMap<>(3);
-        dsdm.tasksTimeOutMilliSec = 250;
+        dsdm.tasksTimeOutMilliSec *= 2;
         dsdm.register(new EarlyShutDownTask("testEarlyTasks"));
 
         Thread t1 = new Thread(() -> {
