@@ -170,7 +170,9 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
         this.callables.remove(s);
         this.runnables.remove(s);
         for (EarlyTask r : earlyRunnables) {
-            if (r.task == s) earlyRunnables.remove(r);
+            if (r.task == s) {
+                earlyRunnables.remove(r);
+            }
         }
     }
 
@@ -258,7 +260,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
      *               executed correctly; false otherwise
      */
     public void shutdown(int status, boolean exit) {
-        Runnable shutdownTask = () -> { doShutdown(status, exit); };
+        Runnable shutdownTask = () -> doShutdown(status, exit);
 
         if (!blockingShutdown) {
             new Thread(shutdownTask).start();
@@ -351,9 +353,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
         long timeoutEnd = new Date().getTime()+ tasksTimeOutMilliSec;
 
 
-        sDrunnables.forEach((runnable) -> {
-             complete.add(executor.submit(runnable));
-        });
+        sDrunnables.forEach((runnable) -> complete.add(executor.submit(runnable)));
 
         executor.shutdown(); // no more tasks allowed from here, starts the threads.
         while (!executor.isTerminated() && ( timeoutEnd > new Date().getTime() )) {
@@ -361,7 +361,8 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
                 // awaitTermination blocks the thread, checking occasionally
                 executor.awaitTermination(50, TimeUnit.MILLISECONDS);
             } catch (InterruptedException e) {
-                // ignore
+                // Restore interrupted state...
+                Thread.currentThread().interrupt();
             }
         }
 
@@ -411,7 +412,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
     }
 
     // package private so tests can reset
-    synchronized static void setStaticShuttingDown(boolean state){
+    static synchronized void setStaticShuttingDown(boolean state){
         shuttingDown = state;
     }
 
@@ -422,7 +423,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
         // set thread name with custom ThreadFactory
         private ShutDownThreadPoolExecutor(int numberTasks, String threadName) {
             super(8, 8, 10, TimeUnit.SECONDS,
-                new ArrayBlockingQueue<Runnable>(numberTasks), new ShutDownThreadFactory(threadName));
+                new ArrayBlockingQueue<>(numberTasks), new ShutDownThreadFactory(threadName));
         }
 
         @Override
@@ -444,7 +445,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
                 }
             }
             if (t != null) {
-                log.error("Issue Completing ShutdownTask : ", t);
+                log.error("Issue Completing ShutdownTask : {} : {}", r, t.getMessage());
             }
         }
     }
