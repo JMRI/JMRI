@@ -662,8 +662,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       and six identically named backup files. The operation files use the .xml extension, and the
       backup files have the .bak extension appended to them. These files are created when needed,
       for example the "OperationsEngineRoster.xml" file is created when you enter your first
-      locomotive into OperationsPro&trade;. The back-up files are created when you make a change to
-      one of the operation files.
+      locomotive into OperationsPro&trade;. The .bak back-up files are created when you make a
+      change to one of the operation files.
+
+      <p>The program automatically loads the necessary files when you open one of the six major
+        operations windows found under the menu bar "OperationsPro".</p>
 
       <table>
         <tr>
@@ -1124,8 +1127,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h4>Save</h4>
       When you're finished with the settings window, press the save button to store your settings in
       a file named "Operations.xml". You can find this file in JMRI&rArr; "profile name" &rArr;
-      operations. OperationsPro&trade; will also create a backup file each time you press the save
-      button.
+      operations. OperationsPro&trade; will also create a backup file "Operations.xml.bak" each time
+      you press the save button.
 
       <h3 id="Backup">Backup</h3>
       Copies of the operations files can be made to provide backups for both error recovery and for
@@ -1223,8 +1226,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </table>
 
       <h3 id="Restore">Restore</h3>
-      Note that restoring a Backup Set will overwrite the current operations files, therefore an
-      Automatic Backup is done just before the restore copies the files, "just in case".
+      The program will automatically load the necessary operations files when one of the six major
+      windows under OperationsPro is selected. If you wish to override the latest files use the <a
+        href="#Settings">Settings</a> "Restore" button, or under "Tools" <a href="#RestoreDirectory">Restore</a>.
+
+      <p>Note that restoring a Backup Set will overwrite the current operations files, therefore
+        an Automatic Backup is done just before the restore copies the files, "just in case".</p>
 
       <p>
         Backup Sets can be restored from either the Automatic Store or the Manual Store using the
@@ -2415,7 +2422,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       If you only want to see cars for a location or track, select "Show Cars" from the "Tools"
       menu. This tool is also useful when you want to print out cars for a specific location or
       track. Note that the Export Cars tool will only export cars for a location or track, and the
-      delete cars tool when only showing cars on a track, will only delete those cars.
+      delete cars tool, when showing cars at a location or track, will only delete those cars. The
+      "Reset car move count" tool also behaves the same way.
 
       <h4 id="LocationReporter">
         Id Tag Reader at this Location [only if <a href="#EnableIdentificationTagFields">Enable
@@ -2500,7 +2508,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h4>Save Yard Track</h4>
       Press the "Save Yard Track" to save your work. The program will create a file
       "OperationsLocationRoster.xml" in your JMRI directory in a folder called "operations". The
-      program will also create a backup file containing the last settings for all of your locations.
+      program will also create a backup file "OperationsLocationRoster.xml.bak" containing the last
+      settings for all of your locations.
 
       <h3 id="Spurs">Spurs</h3>
       A spur is used to service an industry. Most use the industy's name as the spur's name. To add
@@ -4002,8 +4011,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h4>Save</h4>
       <p>Press "Save" to store the car's attributes after you've made changes. The program will
         create a file named "OperationsCarRoster.xml". You can find this file in JMRI&rArr; "profile
-        name" &rArr; operations. A backup file with the last settings for all of your cars is also
-        created each time the "Save" button is pressed.</p>
+        name" &rArr; operations. A backup file "OperationsCarRoster.xml.bak" with the last settings
+        for all of your cars is also created each time the "Save" button is pressed.</p>
 
       <h3 id="EditCarAttributes">Edit Car Attribute Names</h3>
       To the right of each of the car attributes (Road, Type, Length, Color, Kernel, Load, Owner) in
@@ -4321,8 +4330,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         values once you press the "Apply" button. However, if you want to change only one or two of
         the fields shown in the Set Cars window, select the ignore checkbox for the fields you don't
         want changed by the "Apply" button. Only the fields that don't have the "ignore" selected
-        will change. For example, in the "Set Cars" image above, all the cars selected will have their
-        return when empty set to "Bakersfield" track "#68 Heritage Furn" with a load of "E". </p>
+        will change. For example, in the "Set Cars" image above, all the cars selected will have
+        their return when empty set to "Bakersfield" track "#68 Heritage Furn" with a load of "E".</p>
 
       <p>After making your changes, be sure to press "Save" in the Cars window if you want to
         keep your changes.</p>
@@ -4465,8 +4474,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h4>Save</h4>
       Press "Save" to store the locomotive's settings. The program will create a file named
       "OperationsEngineRoster.xml". You can find this file in JMRI&rArr; "profile name" &rArr;
-      operations. A backup file with the last settings for all of your locomotives is also created
-      each time the "Save" button is pressed.
+      operations. A backup file "OperationsEngineRoster.xml.bak" with the last settings for all of
+      your locomotives is also created each time the "Save" button is pressed.
 
       <h3 id="LocomotiveTools">Locomotives Tools</h3>
       The locomotives window "Tools" menu allows you to perform some useful functions to your
@@ -4712,15 +4721,15 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h4>Save Route</h4>
       Press "Save Route" to save your route. The program will create a file named
       "OperationsRouteRoster.xml". You can find this file in JMRI&rArr; "profile name" &rArr;
-      operations. A backup file with the last settings for all of your routes is also created each
-      time the "Save Route" button is pressed.
+      operations. A backup file "OperationsRouteRoster.xml.bak" with the last settings for all of
+      your routes is also created each time the "Save Route" button is pressed.
 
       <h3 id="TrainTurnRoute">Train Turn Route</h3>
       A train that returns to its departure location is normally referred to as a "turn". The image
       below shows a route for a train that departs "Bakersfield", works "Port Arthur" and
-      "Danville", reverses direction in "Hillsboro" and returns to "Bakersfield".  For trains departing
-      and returning to staging there's the option <a href="#AllowTrainToReturn">Allow cars to return to staging</a>
-      that will cause cars to ride the train if needed.
+      "Danville", reverses direction in "Hillsboro" and returns to "Bakersfield". For trains
+      departing and returning to staging there's the option <a href="#AllowTrainToReturn">Allow
+        cars to return to staging</a> that will cause cars to ride the train if needed.
       <p>
         <img src="images/RouteTurn.png" alt="">
       </p>
@@ -5028,8 +5037,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h4>Save Train</h4>
       Press "Save Train" to save your train. The program will create a file named
       "OperationsTrainRoster.xml". You can find this file in JMRI&rArr; "profile name" &rArr;
-      operations. A backup file with the last settings for all of your trains is also created each
-      time the "Save Train" button is pressed.
+      operations. A backup file "OperationsTrainRoster.xml.bak" with the last settings for all of
+      your trains is also created each time the "Save Train" button is pressed.
 
       <h3 id="EditTrainTools">Edit Train Tools</h3>
       <img src="images/EditTrainTools.png" alt="Operations Edit Train Tools Menu">
