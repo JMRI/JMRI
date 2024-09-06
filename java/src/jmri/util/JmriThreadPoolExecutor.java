@@ -1,19 +1,21 @@
-package jmri.managers;
+package jmri.util;
 
 import java.util.concurrent.*;
 
 /**
  * @author Steve Young Copyright (C) 2024
  */
-public class ShutDownThreadPoolExecutor extends ThreadPoolExecutor {
+public class JmriThreadPoolExecutor extends ThreadPoolExecutor {
 
-    public ShutDownThreadPoolExecutor(int poolSize, String threadName) {
+    private final String threadName;
+
+    public JmriThreadPoolExecutor(int poolSize, String threadName) {
         super(poolSize, poolSize, 10L, TimeUnit.SECONDS,
               new LinkedBlockingQueue<>(), new ShutDownThreadFactory(threadName));
-
+        this.threadName = threadName;
         // Set a custom RejectedExecutionHandler to handle tasks that are rejected.
         this.setRejectedExecutionHandler((Runnable r, ThreadPoolExecutor executor) ->
-            log.error("Task was rejected: {}", r));
+            log.error("{} Task was rejected: {}", threadName, r));
     }
 
     @Override
@@ -26,16 +28,16 @@ public class ShutDownThreadPoolExecutor extends ThreadPoolExecutor {
                     future.get(); // this will throw any exceptions encountered during execution
                 }
             } catch (CancellationException ce) {
-                log.error("Task was cancelled: {}", r );
+                log.error("{} Task was cancelled: {}", threadName, r );
             } catch (ExecutionException ee) {
-                log.error("Exception in task: {}", r, ee.getCause());
+                log.error("{} Exception in task: {}", threadName, r, ee );
             } catch (InterruptedException ie) {
                 // Restore interrupted state
                 Thread.currentThread().interrupt();
             }
         } else if (t != null) {
             // Log the exception that occurred during execution
-            log.error("Exception in task execution: {}", r, t);
+            log.error("{} Exception in task execution: {}", threadName, r, t);
         }
 
     }
@@ -55,6 +57,6 @@ public class ShutDownThreadPoolExecutor extends ThreadPoolExecutor {
         }
     }
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ShutDownThreadPoolExecutor.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JmriThreadPoolExecutor.class);
 
 }
