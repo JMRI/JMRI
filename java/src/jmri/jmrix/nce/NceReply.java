@@ -74,6 +74,7 @@ public class NceReply extends jmri.jmrix.AbstractMRReply {
      *
      * @return true if message asynch sensor message Boudreau: Improved
      *         detection to check three bytes and message length of exactly 3
+     *         KSC 24 Aug 2024 - seems to never match a reply
      */
     public boolean isSensorMessage() {
         return getElement(0) == 0x61 && getElement(1) >= 0x30
