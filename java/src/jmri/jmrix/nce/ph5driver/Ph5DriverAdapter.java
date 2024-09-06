@@ -32,10 +32,10 @@ public class Ph5DriverAdapter extends NcePortController {
         // get and open the primary port
         currentSerialPort = activatePort(portName, log);
         if (currentSerialPort == null) {
-            log.error("failed to connect NCE PH5 to {}", portName);
+            log.error("{}: failed to connect PH5 to {}", manufacturerName, portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
-        log.info("Connecting NCE PH5 to {} {}", portName, currentSerialPort);
+        log.info("{}: Connecting PH5 to {} {}", manufacturerName, portName, currentSerialPort);
         
         // try to set it for communication via SerialDriver
         // find the baud rate value, configure comm options
@@ -64,10 +64,11 @@ public class Ph5DriverAdapter extends NcePortController {
 
         this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_PH5);
         this.getSystemConnectionMemo().setNceCmdGroups(~NceTrafficController.CMDS_USB);
+
+        tc.csm = new Ph5CmdStationMemory();
         tc.connectPort(this);
 
         this.getSystemConnectionMemo().configureManagers();
-        tc.csm = new Ph5CmdStationMemory();
     }
 
     // base class methods for the NcePortController interface

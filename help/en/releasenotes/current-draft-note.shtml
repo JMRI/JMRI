@@ -519,7 +519,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>The Jython library has been updated to version 2.7.4</li>
         </ul>
 
     <h3>Signals</h3>
@@ -631,6 +631,9 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
+            <li><strong>Permissions</strong>, which was added in JMRI 5.9.3,
+                has a serious bug. If the user doesn't have permission to store,
+                it can still store when JMRI shutdown. That bug is now fixed.</li>
             <li>Protected against an uncommon error that can happen 
                 when loading a file at startup on Windows.</li>
         </ul>

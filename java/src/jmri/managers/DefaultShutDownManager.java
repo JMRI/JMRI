@@ -87,7 +87,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
         } catch (IllegalStateException ex) {
             // thrown only if System.exit() has been called, so ignore
         }
-        
+
         // register a Signal handlers that do shutdown
         try {
             if (SystemType.isMacOSX() || SystemType.isLinux()) {
@@ -99,16 +99,16 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
                 };
                 Signal.handle(new Signal("TERM"), handler);
                 Signal.handle(new Signal("INT"), handler);
-                
+
                 handler = new SignalHandler () {
                     @Override
                     public void handle(Signal sig) {
                         restart();
                     }
                 };
-                Signal.handle(new Signal("HUP"), handler);     
-            } 
-            
+                Signal.handle(new Signal("HUP"), handler);
+            }
+
             else if (SystemType.isWindows()) {
                 SignalHandler handler = new SignalHandler () {
                     @Override
@@ -118,7 +118,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
                 };
                 Signal.handle(new Signal("TERM"), handler);
             }
-            
+
         } catch (NullPointerException e) {
             log.warn("Failed to add signal handler due to missing signal definition");
         }
@@ -308,7 +308,17 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
                 }
             }
 
+
             closeFrames(start);
+
+            boolean abort = jmri.util.ThreadingUtil.runOnGUIwithReturn(() -> {
+                return jmri.configurexml.StoreAndCompare.checkPermissionToStoreIfNeeded();
+            });
+            if (abort) {
+                log.info("User aborted the shutdown request due to not having permission to store changes");
+                setShuttingDown(false);
+                return;
+            }
 
             // wait for parallel tasks to complete
             runShutDownTasks(new HashSet<>(earlyRunnables), "JMRI ShutDown - Early Tasks");
