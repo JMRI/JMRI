@@ -15,6 +15,7 @@ import java.util.concurrent.*;
 import jmri.ShutDownManager;
 import jmri.ShutDownTask;
 import jmri.util.SystemType;
+import jmri.util.JmriThreadPoolExecutor;
 
 import jmri.beans.Bean;
 import jmri.util.ThreadingUtil;
@@ -306,23 +307,8 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
                     return;
                 }
             }
-            // close any open windows by triggering a closing event
-            // this gives open windows a final chance to perform any cleanup
-            if (!GraphicsEnvironment.isHeadless()) {
-                Arrays.asList(Frame.getFrames()).stream().forEach(frame -> {
-                    // do not run on thread, or in parallel, as System.exit()
-                    // will get called before windows can close
-                    if (frame.isDisplayable()) { // dispose() has not been called
-                        log.debug("Closing frame \"{}\", title: \"{}\"", frame.getName(), frame.getTitle());
-                        long timer = System.currentTimeMillis();
-                        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-                        log.debug("Frame \"{}\" took {} milliseconds to close",
-                            frame.getName(), System.currentTimeMillis() - timer);
-                    }
-                });
-            }
-            log.debug("windows completed closing {} milliseconds after starting shutdown",
-                System.currentTimeMillis() - start);
+
+            closeFrames(start);
 
             // wait for parallel tasks to complete
             runShutDownTasks(new HashSet<>(earlyRunnables), "JMRI ShutDown - Early Tasks");
@@ -343,6 +329,26 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
         }
     }
 
+    private void closeFrames( long startTime ) {
+        // close any open windows by triggering a closing event
+        // this gives open windows a final chance to perform any cleanup
+        if (!GraphicsEnvironment.isHeadless()) {
+            Arrays.asList(Frame.getFrames()).stream().forEach(frame -> {
+                // do not run on thread, or in parallel, as System.exit()
+                // will get called before windows can close
+                if (frame.isDisplayable()) { // dispose() has not been called
+                    log.debug("Closing frame \"{}\", title: \"{}\"", frame.getName(), frame.getTitle());
+                    long timer = System.currentTimeMillis();
+                    frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+                    log.debug("Frame \"{}\" took {} milliseconds to close",
+                        frame.getName(), System.currentTimeMillis() - timer);
+                }
+            });
+        }
+        log.debug("windows completed closing {} milliseconds after starting shutdown",
+            System.currentTimeMillis() - startTime );
+    }
+
     // blocks the main Thread until tasks complete or timed out
     private void runShutDownTasks(Set<Runnable> toRun, String threadName ) {
         Set<Runnable> sDrunnables = new HashSet<>(toRun); // copy list so cannot be modified
@@ -350,7 +356,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
             return;
         }
         // use a custom Executor which checks the Task output for Exceptions.
-        ExecutorService executor = new ShutDownThreadPoolExecutor(sDrunnables.size(), threadName);
+        JmriThreadPoolExecutor executor = new JmriThreadPoolExecutor(sDrunnables.size(), threadName);
         List<Future<?>> complete = new ArrayList<>();
         long timeoutEnd = System.currentTimeMillis() + tasksTimeOutMilliSec;
 
@@ -371,12 +377,12 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
                 // Attempt to get the result of each task within the remaining time
                 future.get(remainingTime, TimeUnit.MILLISECONDS);
             } catch (TimeoutException te) {
-                log.error("Task timed out: {}", future);
+                log.error("{} Task timed out: {}", threadName, future);
             } catch (InterruptedException ie) {
                 Thread.currentThread().interrupt();
-                log.error("Task was interrupted: {}", future);
+                // log.error("{} Task was interrupted: {}", threadName, future);
             } catch (ExecutionException ee) {
-                log.error("Task threw an exception: {}", future, ee.getCause());
+                // log.error("{} Task threw an exception: {}", threadName, future, ee.getCause());
             }
         }
 
