@@ -71,9 +71,6 @@ public class StoreAndCompare extends AbstractAction {
     }
 
     public static void requestStoreIfNeeded() {
-        if ( Application.getApplicationName().equals("PanelPro") && _preferences.isStoreCheckEnabled()) {
-            jmri.util.ThreadingUtil.runOnGUI( () -> {
-                if ( dataHasChanged() && !GraphicsEnvironment.isHeadless() ) {
         if (!InstanceManager.getDefault(PermissionManager.class)
                 .hasPermission(LoadAndStorePermissionOwner.STORE_XML_FILE_PERMISSION)) {
             // User has not permission to store.
@@ -84,7 +81,7 @@ public class StoreAndCompare extends AbstractAction {
                 if (dataHasChanged() && !GraphicsEnvironment.isHeadless()) {
                     jmri.configurexml.swing.StoreAndCompareDialog.showDialog();
                 }
-            });
+            }
         }
     }
 
