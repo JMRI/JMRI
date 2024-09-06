@@ -212,7 +212,9 @@ public class DefaultShutDownManagerTest {
         dsdm.shutdown(0, false);
         assertThat(dsdm.isShuttingDown()).isFalse();
         assertThat(runs).isEqualTo(0);
-        JUnitAppender.assertErrorMessage("Unable to stop");
+
+        JUnitUtil.waitFor(dsdm.tasksTimeOutMilliSec * 4);
+        JUnitAppender.assertErrorMessageStartsWith("Unable to stop");
     }
 
     @Test
@@ -234,30 +236,38 @@ public class DefaultShutDownManagerTest {
     public void testShutDownTaskTakesTooLong() {
         dsdm.register(new TakesOneSecondShutDownTask("testShutDownTaskTakesTooLong"));
         dsdm.shutdown(0, false);
-        JUnitAppender.assertErrorMessageStartsWith("Could not complete Shutdown Task in time:");
+        
         Assertions.assertTrue(dsdm.isShuttingDown());
         JUnitUtil.waitFor(() -> { return runs == 2; } , "Second runs++ call eventually triggered");
         JUnitUtil.waitFor( () -> dsdm.isShutDownComplete(),"ShutDown Completed");
+
+        JUnitUtil.waitFor(dsdm.tasksTimeOutMilliSec * 4);
+        JUnitAppender.assertErrorMessageStartsWith("JMRI ShutDown - Main Tasks Task timed out:");
     }
 
     @Test
     public void testEarlyShutDownTaskTakesTooLong() {
         dsdm.register(new TakesOneSecondEarlyShutDownTask("testEarlyShutDownTaskTakesTooLong"));
         dsdm.shutdown(0, false);
-        JUnitAppender.assertErrorMessageStartsWith("Could not complete Shutdown Task in time:");
+        
         Assertions.assertTrue(dsdm.isShuttingDown());
         JUnitUtil.waitFor(() -> { return runs == 2; } , "Second runs++ call eventually triggered");
         JUnitUtil.waitFor( () -> dsdm.isShutDownComplete(),"ShutDown Completed");
+
+        JUnitUtil.waitFor(dsdm.tasksTimeOutMilliSec * 4);
+        JUnitAppender.assertErrorMessageStartsWith("JMRI ShutDown - Early Tasks Task timed out:");
     }
 
     @Test
     public void testShutDownTaskThrowsException() {
         dsdm.register(new ThrowsExceptionShutDownTask("testShutDownTaskThrowsException"));
         dsdm.shutdown(0, false);
-        JUnitAppender.assertErrorMessageStartsWith("Issue Completing ShutdownTask :");
+
         Assertions.assertTrue(dsdm.isShuttingDown());
         Assertions.assertEquals( 1, runs, "run triggered");
         JUnitUtil.waitFor( () -> dsdm.isShutDownComplete(),"ShutDown Completed");
+        JUnitUtil.waitFor(dsdm.tasksTimeOutMilliSec * 4);
+        JUnitAppender.assertErrorMessageStartsWith("JMRI ShutDown - Main Tasks Exception in task:");
     }
 
     @Test
