@@ -307,7 +307,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
                 return jmri.configurexml.StoreAndCompare.checkPermissionToStoreIfNeeded();
             });
             if (abort) {
-                log.info("User aborted due to unsaved changes and has not permission to store");
+                log.info("User aborted the shutdown request due to not having permission to store changes");
                 setShuttingDown(false);
                 return;
             }
