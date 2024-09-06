@@ -10,7 +10,7 @@ public class JmriThreadPoolExecutor extends ThreadPoolExecutor {
     private final String threadName;
 
     public JmriThreadPoolExecutor(int poolSize, String threadName) {
-        super(poolSize, poolSize, 10L, TimeUnit.SECONDS,
+        super(poolSize, poolSize, 1, TimeUnit.SECONDS,
               new LinkedBlockingQueue<>(), new ShutDownThreadFactory(threadName));
         this.threadName = threadName;
         // Set a custom RejectedExecutionHandler to handle tasks that are rejected.
