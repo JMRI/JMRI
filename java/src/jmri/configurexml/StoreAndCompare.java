@@ -76,12 +76,12 @@ public class StoreAndCompare extends AbstractAction {
             // User has not permission to store.
             return;
         }
-        if (Application.getApplicationName().equals("PanelPro")) {
-            if (_preferences.isStoreCheckEnabled()) {
+        if (Application.getApplicationName().equals("PanelPro") &&_preferences.isStoreCheckEnabled()) {
+            jmri.util.ThreadingUtil.runOnGUI(() -> {
                 if (dataHasChanged() && !GraphicsEnvironment.isHeadless()) {
                     jmri.configurexml.swing.StoreAndCompareDialog.showDialog();
                 }
-            }
+            });
         }
     }
 
