@@ -737,7 +737,8 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
                 }
                 // make and show edit dialog
                 log.debug("TurnoutOpsEditDialog starting");
-                TurnoutOperationEditorDialog dialog = new TurnoutOperationEditorDialog(op, t, box);
+                java.awt.Window w = JmriJOptionPane.findWindowForObject(box);
+                TurnoutOperationEditorDialog dialog = new TurnoutOperationEditorDialog(op, t, box, w);
                 dialog.setVisible(true);
             } else {
                 JmriJOptionPane.showMessageDialog(box, Bundle.getMessage("TurnoutOperationErrorDialog"),
