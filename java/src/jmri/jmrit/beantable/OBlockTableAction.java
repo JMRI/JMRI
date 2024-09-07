@@ -42,9 +42,9 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
     // - PathTurnoutTable(block)
 
     @Nonnull
-    protected OBlockManager oblockManager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
+    protected OBlockManager oblockManager = InstanceManager.getDefault(OBlockManager.class);
     @Nonnull
-    protected PortalManager portalManager = InstanceManager.getDefault(jmri.jmrit.logix.PortalManager.class);
+    protected PortalManager portalManager = InstanceManager.getDefault(PortalManager.class);
 
     TableFrames tf;
     OBlockTableFrame otf;
@@ -543,6 +543,6 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
         return "package.jmri.jmrit.beantable.OBlockTable";
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OBlockTableAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OBlockTableAction.class);
 
 }
