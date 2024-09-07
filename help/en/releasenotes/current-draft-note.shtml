@@ -486,6 +486,7 @@
             <li>Cabooses and cars with FRED without a final destination can now use staging that only allows cars with an final destination.</li>
             <li>There's now an option to leave cars in staging for trains that return to the same staging track. See "Allow cars to return to staging" for more details.</li>
             <li>There's a new Manifest feature that allows you group all "Moves" together. See "Manifest Print Options".</li>
+            <li>The program now issues a warning during a build when removing a final destination due to track space issues.</li>
         </ul>
 
    <h3>Panel Editor</h3>
