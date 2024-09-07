@@ -100,9 +100,9 @@ public class AbstractAutomaton implements Runnable {
         setName(name);
     }
 
-    AutomatSummary summary = AutomatSummary.instance();
+    private final AutomatSummary summary = AutomatSummary.instance();
 
-    Thread currentThread = null;
+    private Thread currentThread = null;
     private volatile boolean threadIsStopped = false;
 
     /**
@@ -223,7 +223,7 @@ public class AbstractAutomaton implements Runnable {
      * @param name the new name
      * @see #getName()
      */
-    public void setName(String name) {
+    public final void setName(String name) {
         this.name = name;
     }
 
@@ -1125,11 +1125,11 @@ public class AbstractAutomaton implements Runnable {
     /**
      * Write a CV on the service track, including waiting for completion.
      *
-     * @param CV    Number 1 through 512
+     * @param cv    Number 1 through 512
      * @param value Value 0-255 to be written
      * @return true if completed OK
      */
-    public boolean writeServiceModeCV(String CV, int value) {
+    public boolean writeServiceModeCV(String cv, int value) {
         // get service mode programmer
         Programmer programmer = InstanceManager.getDefault(jmri.GlobalProgrammerManager.class)
                 .getGlobalProgrammer();
@@ -1141,7 +1141,7 @@ public class AbstractAutomaton implements Runnable {
 
         // do the write, response will wake the thread
         try {
-            programmer.writeCV(CV, value, (int value1, int status) -> {
+            programmer.writeCV(cv, value, (int value1, int status) -> {
                 synchronized (self) {
                     self.notifyAll(); // should be only one thread waiting, but just in case
                 }
@@ -1161,10 +1161,10 @@ public class AbstractAutomaton implements Runnable {
     /**
      * Read a CV on the service track, including waiting for completion.
      *
-     * @param CV Number 1 through 512
+     * @param cv Number 1 through 512
      * @return -1 if error, else value
      */
-    public int readServiceModeCV(String CV) {
+    public int readServiceModeCV(String cv) {
         // get service mode programmer
         Programmer programmer = InstanceManager.getDefault(jmri.GlobalProgrammerManager.class)
                 .getGlobalProgrammer();
@@ -1177,7 +1177,7 @@ public class AbstractAutomaton implements Runnable {
         // do the read, response will wake the thread
         cvReturnValue = -1;
         try {
-            programmer.readCV(CV, (int value, int status) -> {
+            programmer.readCV(cv, (int value, int status) -> {
                 cvReturnValue = value;
                 synchronized (self) {
                     self.notifyAll(); // should be only one thread waiting, but just in case
@@ -1195,13 +1195,13 @@ public class AbstractAutomaton implements Runnable {
     /**
      * Write a CV in ops mode, including waiting for completion.
      *
-     * @param CV          Number 1 through 512
+     * @param cv          Number 1 through 512
      * @param value       0-255 value to be written
      * @param loco        Locomotive decoder address
      * @param longAddress true is the locomotive is using a long address
      * @return true if completed OK
      */
-    public boolean writeOpsModeCV(String CV, int value, boolean longAddress, int loco) {
+    public boolean writeOpsModeCV(String cv, int value, boolean longAddress, int loco) {
         // get service mode programmer
         Programmer programmer = InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)
                 .getAddressedProgrammer(longAddress, loco);
@@ -1213,7 +1213,7 @@ public class AbstractAutomaton implements Runnable {
 
         // do the write, response will wake the thread
         try {
-            programmer.writeCV(CV, value, (int value1, int status) -> {
+            programmer.writeCV(cv, value, (int value1, int status) -> {
                 synchronized (self) {
                     self.notifyAll(); // should be only one thread waiting, but just in case
                 }
@@ -1367,5 +1367,5 @@ public class AbstractAutomaton implements Runnable {
     }
 
     // initialize logging
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractAutomaton.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractAutomaton.class);
 }
