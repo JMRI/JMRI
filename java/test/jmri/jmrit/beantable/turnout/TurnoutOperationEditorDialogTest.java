@@ -19,7 +19,7 @@ public class TurnoutOperationEditorDialogTest {
         TurnoutOperation proto = InstanceManager.getDefault(TurnoutOperationManager.class).getMatchingOperationAlways(testedTurnout);
         Assert.assertNotNull("proto exists",proto);
 
-        TurnoutOperationEditorDialog t = new TurnoutOperationEditorDialog(proto,testedTurnout,null, null);
+        TurnoutOperationEditorDialog t = new TurnoutOperationEditorDialog(proto,testedTurnout,null);
         Assert.assertNotNull("exists",t);
         
         t.dispose();
