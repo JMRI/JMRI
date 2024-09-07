@@ -141,7 +141,7 @@ public class AutomatSummary {
         javax.swing.SwingUtilities.invokeLater(r);
     }
 
-    class Notifier implements Runnable {
+    private class Notifier implements Runnable {
 
         Notifier(String property, Object arg1, Object arg2) {
             this.property = property;
