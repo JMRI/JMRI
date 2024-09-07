@@ -1,6 +1,7 @@
 package apps;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -29,11 +31,12 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
+
 import jmri.UserPreferencesManager;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.TextAreaFIFO;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,7 +56,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Matthew Harris copyright (c) 2010, 2011, 2012
  */
-public final class SystemConsole extends JTextArea {
+public final class SystemConsole {
 
     static final ResourceBundle rbc = ResourceBundle.getBundle("apps.AppsConfigBundle"); // NOI18N
 
