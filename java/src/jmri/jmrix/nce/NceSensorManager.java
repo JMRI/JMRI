@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  */
 public class NceSensorManager extends jmri.managers.AbstractSensorManager
         implements NceListener {
-    
+
     public NceSensorManager(NceSystemConnectionMemo memo) {
         super(memo);
         aiuCabIdMin = memo.getNceTrafficController().csm.getCabMin();
@@ -50,9 +50,9 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         memo.getNceTrafficController().addNceListener(listener);
     }
 
-    private NceSensorManager mInstance = null;
-    private int aiuCabIdMin;
-    private int aiuCabIdMax;
+    private final NceSensorManager mInstance;
+    private final int aiuCabIdMin;
+    private final int aiuCabIdMax;
     private NceAIU[] aiuArray = null;   // P
     private int[] activeAIUs = null;    // P
     private int activeAIUMax = 0;       // last+1 element used of activeAIUs P
@@ -173,7 +173,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
      *
      */
     private void buildActiveAIUs() {
-        if ((getMemo().getNceTrafficController().getCmdGroups() & NceTrafficController.CMDS_AUI_READ) 
+        if ((getMemo().getNceTrafficController().getCmdGroups() & NceTrafficController.CMDS_AUI_READ)
                 != NceTrafficController.CMDS_AUI_READ) {
             if (!loggedAiuNotSupported) {
                 log.info("AIU not supported in this configuration");
@@ -259,7 +259,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
      * one poll of each sensor before squelching active polls.
      */
     private void pollManager() {
-        if ((getMemo().getNceTrafficController().getCmdGroups() & NceTrafficController.CMDS_AUI_READ) 
+        if ((getMemo().getNceTrafficController().getCmdGroups() & NceTrafficController.CMDS_AUI_READ)
                 != NceTrafficController.CMDS_AUI_READ) {
             if (!loggedAiuNotSupported) {
                 log.info("AIU not supported in this configuration");

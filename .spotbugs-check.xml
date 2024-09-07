@@ -11,7 +11,6 @@
 			<!-- Temporary disable these until we have decided what to do about them -->
            <Bug pattern="CT_CONSTRUCTOR_THROW" /> <!-- 318 cases -->
            <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" /> <!-- 25 cases -->
-           <Bug pattern="NP_UNWRITTEN_FIELD" /> <!-- 1 case: jmri.jmrix.nce.NceSensorManager line 41. See https://github.com/JMRI/JMRI/pull/13363#issuecomment-2305984182 with replies -->
            <Bug pattern="PA_PUBLIC_PRIMITIVE_ATTRIBUTE" /> <!-- 190 cases -->
            <Bug pattern="SIC_INNER_SHOULD_BE_STATIC" /> <!-- 2 cases -->
            <Bug pattern="SING_SINGLETON_GETTER_NOT_SYNCHRONIZED" /> <!-- 6 cases -->
