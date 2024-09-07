@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable.turnout;
 
+
 import javax.annotation.Nonnull;
 import javax.swing.*;
 
@@ -27,12 +28,13 @@ public class TurnoutOperationEditorDialog extends JDialog {
     /**
      * Pop up a TurnoutOperationConfig Dialog for the turnout.
      *
-     * @param op TunoutOperation to edit.
-     * @param t   turnout
-     * @param box JComboBox that triggered the edit, currently unused.
+     * @param op TunoutOperation to edit, not null.
+     * @param t  The turnout.
+     * @param window  Parent Window for the Dialog, can be null.
      */
-    TurnoutOperationEditorDialog( @Nonnull TurnoutOperation op, Turnout t, JComboBox<String> box, java.awt.Window w) {
-        super(w);
+    TurnoutOperationEditorDialog( @Nonnull TurnoutOperation op, @Nonnull Turnout t,
+            @javax.annotation.CheckForNull java.awt.Window window) {
+        super(window);
         self = this;
         myOp = op;
         myTurnout = t;
