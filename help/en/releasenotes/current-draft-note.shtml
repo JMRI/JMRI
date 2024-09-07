@@ -139,11 +139,16 @@
                 </li>
                 <li>Improve memory tools:
                     <ul>
-                        <li>Allow selection of space 0 - 255 in Memory R/W tool and Send Frame Tool
+                        <li>Allow selection of space 0 - 255 in Memory R/W tool and Send Frame Tool,
+                            with data entry in either hex or decimal
                         <li>Improve display of available spaces by omitting missing spaces to reduce length of display
                     </ul>
                 <li>Send Frame tool will no longer allow you to access CDI if there's no CDI in the node.
                     This prevents you from accidentally getting into a confusing situation.
+                <li>Firmware Upgrade Tool and Memory Tool now let you select the memory space
+                    with a decimal or hexadecimal number.
+                <li>Implements the slider and action button proposal in CDI.  There are
+                    no products using this, but we'll be ready when they're introduced.
             </ul>
 
         <h4>Powerline</h4>
