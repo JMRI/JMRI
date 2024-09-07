@@ -308,9 +308,6 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
                 }
             }
 
-
-            closeFrames(start);
-
             boolean abort = jmri.util.ThreadingUtil.runOnGUIwithReturn(() -> {
                 return jmri.configurexml.StoreAndCompare.checkPermissionToStoreIfNeeded();
             });
@@ -319,6 +316,8 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
                 setShuttingDown(false);
                 return;
             }
+
+            closeFrames(start);
 
             // wait for parallel tasks to complete
             runShutDownTasks(new HashSet<>(earlyRunnables), "JMRI ShutDown - Early Tasks");
