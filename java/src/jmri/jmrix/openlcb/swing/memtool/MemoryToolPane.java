@@ -14,6 +14,7 @@ import org.openlcb.*;
 import org.openlcb.implementations.*;
 import org.openlcb.swing.*;
 import org.openlcb.swing.memconfig.MemConfigDescriptionPane;
+import org.openlcb.swing.MemorySpaceSelector;
 
 
 /**
@@ -39,7 +40,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
 
     static final int CHUNKSIZE = 64;
 
-    JTextField spaceField;
+    MemorySpaceSelector spaceField;
     JLabel statusField;
     JButton gb;
     JButton pb;
@@ -91,7 +92,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         ms.setLayout(new WrapLayout());
         add(ms);
         ms.add(new JLabel("Memory Space:"));
-        spaceField = new JTextField("255");
+        spaceField = new MemorySpaceSelector(0xFF);
         ms.add(spaceField);
 
         trustStatusReply = new JCheckBox("Trust Status Info");
@@ -283,7 +284,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         setRunning(true);
         farID = nodeSelector.getSelectedNodeID();
         try {
-            space = Integer.parseInt(spaceField.getText().trim());
+            space = spaceField.getMemorySpace();
         } catch (NumberFormatException ex) {
             log.error("error parsing the space field value \"{}\"", spaceField.getText());
             statusField.setText("Error parsing the space value");
@@ -401,7 +402,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
     void pushedPutButton(ActionEvent e) {
         farID = nodeSelector.getSelectedNodeID();
         try {
-            space = Integer.parseInt(spaceField.getText().trim());
+            space = spaceField.getMemorySpace();
         } catch (NumberFormatException ex) {
             log.error("error parsing the space field value \"{}\"", spaceField.getText());
             statusField.setText("Error parsing the space value");

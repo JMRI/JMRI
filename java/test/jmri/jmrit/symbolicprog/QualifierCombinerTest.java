@@ -23,9 +23,9 @@ import org.junit.jupiter.api.*;
 public class QualifierCombinerTest {
 
     // Service routine for tests
-    ProgDebugger p = new ProgDebugger();
-    CvTableModel cvtable;
-    VariableTableModel model;
+    private ProgDebugger p = new ProgDebugger();
+    private CvTableModel cvtable;
+    private VariableTableModel model;
     // VariableValue v1;
     // VariableValue v2;
     // VariableValue v3;
@@ -115,6 +115,7 @@ public class QualifierCombinerTest {
     }
 
     @Test
+    @Disabled("Test requires further development")
     public void testVariableNeAndNeFromXml() {
     }
 
