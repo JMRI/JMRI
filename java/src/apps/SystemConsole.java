@@ -58,6 +58,29 @@ import org.slf4j.LoggerFactory;
  */
 public final class SystemConsole {
 
+    /**
+     * Get current SystemConsole instance.
+     * If one doesn't yet exist, create it.
+     * @return current SystemConsole instance
+     */
+    public static SystemConsole getInstance() {
+        return InstanceHolder.INSTANCE;
+    }
+
+    private static class InstanceHolder {
+        private static final SystemConsole INSTANCE;
+
+        static {
+            SystemConsole instance = null;
+            try {
+                instance = new SystemConsole();
+            } catch (RuntimeException ex) {
+                log.error("failed to complete Console redirection", ex);
+            }
+            INSTANCE = instance;
+        }
+    }
+
     static final ResourceBundle rbc = ResourceBundle.getBundle("apps.AppsConfigBundle"); // NOI18N
 
     private static final int STD_ERR = 1;
@@ -99,8 +122,6 @@ public final class SystemConsole {
 
     private int wrapStyle = WRAP_STYLE_WORD;
 
-    private static SystemConsole instance;
-
     private UserPreferencesManager pref;
 
     private JCheckBox autoScroll;
@@ -115,17 +136,6 @@ public final class SystemConsole {
      * Initialise the system console ensuring both System.out and System.err
      * streams are re-directed to the consoles JTextArea
      */
-
-    public static void create() {
-
-        if (instance == null) {
-            try {
-                instance = new SystemConsole();
-            } catch (RuntimeException ex) {
-                log.error("failed to complete Console redirection", ex);
-            }
-        }
-    }
 
     @SuppressFBWarnings(value = "DM_DEFAULT_ENCODING",
             justification = "Can only be called from the same instance so default encoding OK")
@@ -151,27 +161,6 @@ public final class SystemConsole {
 
         // Then redirect to it
         redirectSystemStreams(outputStream, errorStream);
-    }
-
-    /**
-     * Get current SystemConsole instance.
-     * If one doesn't yet exist, create it.
-     * @return current SystemConsole instance
-     */
-    public static SystemConsole getInstance() {
-        if (instance == null) {
-            SystemConsole.create();
-        }
-        return instance;
-    }
-
-    /**
-     * Test if the default instance exists.
-     *
-     * @return true if default instance exists; false otherwise
-     */
-    public static boolean isCreated() {
-        return instance != null;
     }
 
     /**
