@@ -88,6 +88,7 @@ public class ConnectionStatusTest {
 
     @BeforeEach
     public void setUp() {
+        ConnectionStatus.clearInstance();
         JUnitUtil.setUp();
     }
 

@@ -50,6 +50,11 @@ public class ConnectionStatus {
         return _instance;
     }
 
+    // Used by ConnectionStatusTest
+    static synchronized void clearInstance() {
+        _instance = null;
+    }
+
     private ConnectionStatus() {
         // Private constructor to protect singleton
     }
