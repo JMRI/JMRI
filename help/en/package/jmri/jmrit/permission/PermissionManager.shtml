@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI: Permissions</title><!--#include virtual="/help/en/parts/Style.shtml" -->
+  <title>JMRI: Permissions</title>
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
   <!--#include virtual="/help/en/parts/Header.shtml" -->
@@ -10,8 +11,8 @@
   <div id="mBody">
     <!--#include virtual="/Sidebar.shtml" -->
 
-    <div id="mainContent" class="no-sidebar">
-      <span class="since">since 5.9.4</span>
+    <div id="mainContent">
+      <span class="since">since 5.9.3</span>
       <h1>Permissions</h1>
 
       <p><strong>Permissions</strong> is used to protect sensitive parts of JMRI, for example

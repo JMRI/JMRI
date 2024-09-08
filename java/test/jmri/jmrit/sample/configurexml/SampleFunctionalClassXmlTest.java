@@ -12,7 +12,7 @@ public class SampleFunctionalClassXmlTest {
     @Test
     // test creation
     public void testCreate() {
-        new SampleFunctionalClassXml();
+        Assertions.assertNotNull( new SampleFunctionalClassXml() );
     }
 
     @BeforeEach

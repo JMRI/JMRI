@@ -127,9 +127,9 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         testRegisterDuplicateSystemName(l, s1, s2);
     }
 
-    // Test requires further setup
     @Override
     @Test
+    @Disabled("Test requires further setup")
     public void testCreate() {}
 
     @Override

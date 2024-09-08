@@ -452,7 +452,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                   <ul>
                     <li>Use normal mode when building this train</li>
                     <li>Send all car pick ups to terminal</li>
-                    <li>Allow cars to return to staging</li>
+                    <li><a href="#AllowTrainToReturn">Allow cars to return to staging</a></li>
                     <li><a href="#TrainLocalMoveOption">Allow local moves when a car has a
                         custom load or FD</a></li>
                     <li>Allow cars to travel from origin to terminal</li>
@@ -662,8 +662,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       and six identically named backup files. The operation files use the .xml extension, and the
       backup files have the .bak extension appended to them. These files are created when needed,
       for example the "OperationsEngineRoster.xml" file is created when you enter your first
-      locomotive into OperationsPro&trade;. The back-up files are created when you make a change to
-      one of the operation files.
+      locomotive into OperationsPro&trade;. The .bak back-up files are created when you make a
+      change to one of the operation files.
+
+      <p>The program automatically loads the necessary files when you open one of the six major
+        operations windows found under the menu bar "OperationsPro".</p>
 
       <table>
         <tr>
@@ -1124,8 +1127,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h4>Save</h4>
       When you're finished with the settings window, press the save button to store your settings in
       a file named "Operations.xml". You can find this file in JMRI&rArr; "profile name" &rArr;
-      operations. OperationsPro&trade; will also create a backup file each time you press the save
-      button.
+      operations. OperationsPro&trade; will also create a backup file "Operations.xml.bak" each time
+      you press the save button.
 
       <h3 id="Backup">Backup</h3>
       Copies of the operations files can be made to provide backups for both error recovery and for
@@ -1223,8 +1226,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </table>
 
       <h3 id="Restore">Restore</h3>
-      Note that restoring a Backup Set will overwrite the current operations files, therefore an
-      Automatic Backup is done just before the restore copies the files, "just in case".
+      The program will automatically load the necessary operations files when one of the six major
+      windows under OperationsPro is selected. If you wish to override the latest files use the <a
+        href="#Settings">Settings</a> "Restore" button, or under "Tools" <a href="#RestoreDirectory">Restore</a>.
+
+      <p>Note that restoring a Backup Set will overwrite the current operations files, therefore
+        an Automatic Backup is done just before the restore copies the files, "just in case".</p>
 
       <p>
         Backup Sets can be restored from either the Automatic Store or the Manual Store using the
@@ -2415,7 +2422,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       If you only want to see cars for a location or track, select "Show Cars" from the "Tools"
       menu. This tool is also useful when you want to print out cars for a specific location or
       track. Note that the Export Cars tool will only export cars for a location or track, and the
-      delete cars tool when only showing cars on a track, will only delete those cars.
+      delete cars tool, when showing cars at a location or track, will only delete those cars. The
+      "Reset car move count" tool also behaves the same way.
 
       <h4 id="LocationReporter">
         Id Tag Reader at this Location [only if <a href="#EnableIdentificationTagFields">Enable
@@ -2500,7 +2508,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h4>Save Yard Track</h4>
       Press the "Save Yard Track" to save your work. The program will create a file
       "OperationsLocationRoster.xml" in your JMRI directory in a folder called "operations". The
-      program will also create a backup file containing the last settings for all of your locations.
+      program will also create a backup file "OperationsLocationRoster.xml.bak" containing the last
+      settings for all of your locations.
 
       <h3 id="Spurs">Spurs</h3>
       A spur is used to service an industry. Most use the industy's name as the spur's name. To add
@@ -3753,19 +3762,23 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       If you already have a list of cars in a database, you can import the cars into the program.
       The import function requires an ACSII text file, with one line for each car. The car import
       requires four attributes and the order is car number, road (reporting mark), type, and length.
-      All four car attributes are required for the import to work correctly. The program requires
-      each car to have a unique road and number. Use the <a href="#CarRoadNumber">hyphen</a> feature
-      if you have cars with the same road and number. The following shows two examples of the
-      correct format:
+      <a href="#CarTypeLengthWeight">Length</a> is the car's full scale body length. Do not include
+      coupler length, the program does that automatically. All four car attributes are required for
+      the import to work correctly. The program requires each car to have a unique road and number.
+      Use the <a href="#CarRoadNumber">hyphen</a> feature if you have cars with the same road and
+      number. The following shows two examples of the correct format for two 40 foot cars:
       <p>
         336 GCR Flat 40<br> 655578 UP Boxcar 40
       </p>
 
-      <p>Each line can start with a space and multiple spaces between fields is okay. Optionally
-        you can include additional attributes in the following order; weight, color, owner name,
-        date built, and location. The location can have two fields, the location name followed by
-        the location's spur or yard name separated by a hyphen. The following shows two examples of
-        the correct format:</p>
+      <p>
+        Each line can start with a space and multiple spaces between fields is okay. Optionally you
+        can include additional attributes in the following order; <a href="#CarTypeLengthWeight">weight</a>,
+        color, owner name, <a href="#BuiltDate">date built</a>, and location. The weight is the
+        car's weight in ounces which can be 0 if you want the program to automatically calculate it.
+        The location can have two fields, the location name followed by the location's spur or yard
+        name separated by a hyphen. The following shows two examples of the correct format:
+      </p>
 
       <p>
         336 GCR Flat 40 3.8 Black AT 1930 Home Town USA - George's Oil Terminal<br> 655578 UP
@@ -3963,7 +3976,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         blocking number will place the car before positive numbers.
       </p>
 
-      <h4>Built</h4>
+      <h4 id="BuiltDate">Built</h4>
       An optional built date can be entered for the car. The built date can be entered as a two or
       four digit year, or in the format of month-year (mm-yy). A two digit year will be converted to
       a car built in the 1900s. Trains can be <a href="#TrainBuildOptions">configured</a> to only
@@ -3998,8 +4011,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h4>Save</h4>
       <p>Press "Save" to store the car's attributes after you've made changes. The program will
         create a file named "OperationsCarRoster.xml". You can find this file in JMRI&rArr; "profile
-        name" &rArr; operations. A backup file with the last settings for all of your cars is also
-        created each time the "Save" button is pressed.</p>
+        name" &rArr; operations. A backup file "OperationsCarRoster.xml.bak" with the last settings
+        for all of your cars is also created each time the "Save" button is pressed.</p>
 
       <h3 id="EditCarAttributes">Edit Car Attribute Names</h3>
       To the right of each of the car attributes (Road, Type, Length, Color, Kernel, Load, Owner) in
@@ -4106,13 +4119,19 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h3 id="CarsSet">Set Car</h3>
       After creating a car, you can set the car's location, status, Return When Empty (RWE), Return
       When Loaded (RWL), home division, kernel, and optionally the car's destination and train by
-      using the "Set" button found for each car in the <a href="#Cars">Cars</a> window. Normally the
-      car's destination and assigned train are generated by the program, but you can use these
-      fields to force a car to a specific destination using the specified train.
+      using the "Set" button found for each car in the <a href="#Cars">Cars</a> window. To modify
+      several cars at once use <a href="#SetCars">Set Cars (Modify Multiple Cars)</a>.
 
-      <p>You can remove a car that has been assigned to a train by simply pressing the "Save"
-        button. You can also add a car to an already built train that hasn't departed its first
-        location. Select a destination, track and train for the car, then press the "Save" button.</p>
+      <p>Normally the car's destination and assigned train are generated by the program, but you
+        can use the optional fields to force a car to a specific destination using the specified
+        train.</p>
+
+      <p>
+        You can remove a car that has been assigned to a train by simply pressing the "Save" button.
+        You can also add a car to an already built train that hasn't departed its first location.
+        Select a <a href="#DestinationAndTrack">destination</a>, track and train for the car, then
+        press the "Save" button.
+      </p>
 
       <p>
         <img src="images/SetCarLocation.png" alt="">
@@ -4186,7 +4205,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       menus. By default the destination and track fields are disabled. Under "Tools" there's an
       option to enable the destination fields.
 
-      <h4>Destination and Track</h4>
+      <h4 id="DestinationAndTrack">Destination and Track</h4>
       The "Destination" is the next location that the car will be delivered to. The destination must
       be reachable using one train from the car's current location or the car will not be serviced.
       Normally we recommend that you don't use the "Destination and Track" pull down menus to
@@ -4248,15 +4267,16 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       will only delete the cars on the track being viewed.
 
       <h4>Car Roster&rArr;Reset car move count</h4>
-      The "Reset car move count" will zero out the move counts for the cars shown. In normal use you
-      should never reset the car move counts. The program uses the move counts to determine which
-      cars have difficulty finding valid destination tracks. Cars with low move counts eventually
-      get higher priority over cars with larger move counts. By servicing the lower move count cars
-      first, the difficult car moves eventually get made by the program. Reseting car moves foils
-      this algorithm. The only valid time for reseting the move counts is when you add new cars to
-      your roster and you don't want your new cars to have priority over your old cars. However in
-      most cases, folks do want to see the new cars riding the first train out of town, so don't
-      reset the car moves if you want to put your new additions immediately to work!
+      The "Reset car move count" will zero out the move counts for the cars displayed in the "Cars"
+      window. In normal use you should never reset the car move counts. The program uses the move
+      counts to determine which cars have difficulty finding valid destination tracks. Cars with low
+      move counts eventually get higher priority over cars with larger move counts. By servicing the
+      lower move count cars first, the difficult car moves eventually get made by the program.
+      Reseting car moves foils this algorithm. The only valid time for reseting the move counts is
+      when you add new cars to your roster and you don't want your new cars to have priority over
+      your old cars. However in most cases, folks do want to see the new cars riding the first train
+      out of town, so don't reset the car moves if you want to put your new additions immediately to
+      work!
 
       <h4>Car Roster&rArr;Print and Preview</h4>
       You can also preview and print your car roster. The preview and print features use the same
@@ -4290,6 +4310,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       for more info.
 
       <h4 id="SetCars">Set Cars (Modify Multiple Cars)</h4>
+
+      <p>
+        <img src="images/SetCars.png" alt="">
+      </p>
+
       If you want to change the status, location, return when empty, return when loaded, home
       division, load, kernel, destinations or train assignment for a group of cars use the "Set
       Cars" tool found under "Tools" in the <a href="#Cars">Cars</a> window. The tool works the same
@@ -4305,7 +4330,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         values once you press the "Apply" button. However, if you want to change only one or two of
         the fields shown in the Set Cars window, select the ignore checkbox for the fields you don't
         want changed by the "Apply" button. Only the fields that don't have the "ignore" selected
-        will change.</p>
+        will change. For example, in the "Set Cars" image above, all the cars selected will have
+        their return when empty set to "Bakersfield" track "#68 Heritage Furn" with a load of "E".</p>
 
       <p>After making your changes, be sure to press "Save" in the Cars window if you want to
         keep your changes.</p>
@@ -4448,8 +4474,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h4>Save</h4>
       Press "Save" to store the locomotive's settings. The program will create a file named
       "OperationsEngineRoster.xml". You can find this file in JMRI&rArr; "profile name" &rArr;
-      operations. A backup file with the last settings for all of your locomotives is also created
-      each time the "Save" button is pressed.
+      operations. A backup file "OperationsEngineRoster.xml.bak" with the last settings for all of
+      your locomotives is also created each time the "Save" button is pressed.
 
       <h3 id="LocomotiveTools">Locomotives Tools</h3>
       The locomotives window "Tools" menu allows you to perform some useful functions to your
@@ -4695,13 +4721,15 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h4>Save Route</h4>
       Press "Save Route" to save your route. The program will create a file named
       "OperationsRouteRoster.xml". You can find this file in JMRI&rArr; "profile name" &rArr;
-      operations. A backup file with the last settings for all of your routes is also created each
-      time the "Save Route" button is pressed.
+      operations. A backup file "OperationsRouteRoster.xml.bak" with the last settings for all of
+      your routes is also created each time the "Save Route" button is pressed.
 
       <h3 id="TrainTurnRoute">Train Turn Route</h3>
       A train that returns to its departure location is normally referred to as a "turn". The image
       below shows a route for a train that departs "Bakersfield", works "Port Arthur" and
-      "Danville", reverses direction in "Hillsboro" and returns to "Bakersfield".
+      "Danville", reverses direction in "Hillsboro" and returns to "Bakersfield". For trains
+      departing and returning to staging there's the option <a href="#AllowTrainToReturn">Allow
+        cars to return to staging</a> that will cause cars to ride the train if needed.
       <p>
         <img src="images/RouteTurn.png" alt="">
       </p>
@@ -4737,6 +4765,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       long as the train doesn't require a caboose or car with FRED. The staging track can have
       locomotives.
 
+      <p>
+        There are also several <a href="#TrainBuildOptions">Train Build Options</a> available when
+        departing staging.
+      </p>
+
       <h3 id="RouteFeatures">Route Features</h3>
       One very powerful feature of routes is the ability to specify the same location more than
       once. When the same location name is used back to back, the train's Manifest will print as
@@ -4766,14 +4799,17 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         However, we do want locals to service them! We need to tell the program which tracks in
         Danville are service by which trains.</p>
 
-      <p>Solution, we create a yard in "Danville", and create spurs in "Danville-1". The
-        mainline train has "Danville" in it's route. The locals will service "Danville" and
-        "Danville-1". Now the dilemma, do the locals service "Danville-1" or "Danville" first? Not
-        an issue, we create a route for the locals that services "Danville-1", then "Danville", and
-        then "Danville-1". At the first "Danville-1" we request only pick ups at the spurs, at
-        "Danville" we specify both pick ups and set outs to the yard, and at the second "Danville-1"
-        we specify only set outs. Another solution is to simply use the spur's ability to select
-        which trains can service the track.</p>
+      <p>
+        Solution, we create a yard in "Danville", and create spurs in "Danville-1". The mainline
+        train has "Danville" in it's route. The locals will service "Danville" and "Danville-1". Now
+        the dilemma, do the locals service "Danville-1" or "Danville" first? Not an issue, we create
+        a route for the locals that services "Danville-1", then "Danville", and then "Danville-1".
+        At the first "Danville-1" we request only pick ups at the spurs, at "Danville" we specify
+        both pick ups and set outs to the yard, and at the second "Danville-1" we specify only set
+        outs. Another solution is to simply use the spur's ability to select which trains can
+        service the track. See <a href="#RestrictingTrackToCertainTrains">Restricting Track to
+          Certain Trains or Routes</a>.
+      </p>
 
       <h3 id="RouteTools">Route Tools</h3>
 
@@ -5001,8 +5037,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h4>Save Train</h4>
       Press "Save Train" to save your train. The program will create a file named
       "OperationsTrainRoster.xml". You can find this file in JMRI&rArr; "profile name" &rArr;
-      operations. A backup file with the last settings for all of your trains is also created each
-      time the "Save Train" button is pressed.
+      operations. A backup file "OperationsTrainRoster.xml.bak" with the last settings for all of
+      your trains is also created each time the "Save Train" button is pressed.
 
       <h3 id="EditTrainTools">Edit Train Tools</h3>
       <img src="images/EditTrainTools.png" alt="Operations Edit Train Tools Menu">
@@ -5036,7 +5072,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       location in the train's route (terminal). Useful if you don't want your cars picked up and set
       out at various locations in your train's route.
 
-      <h5>Allow cars to return to staging</h5>
+      <h5 id="AllowTrainToReturn">Allow cars to return to staging</h5>
       When a train departs and returns to the same staging location, it is regarded as a turn by the
       program. A turn normally takes cars from staging, sets them out on the layout, picks up new
       cars and returns to staging with those cars. Normally the program doesn't allow the same cars

@@ -366,7 +366,7 @@
         <name xml:lang="de">Zeige/Verbirge Lokparkbild</name>
 		    <name xml:lang="ca">Oculta/Mostra Imatge de la flota</name>
         <name xml:lang="cs">Skrýt/zobrazit obrázek evidence</name>
-        <name xml:lang="nl">Toon/Verberg Locafbeelding</name>
+        <name xml:lang="nl">Toon/Verberg Loc-afbeelding</name>
         <mnemonic>i</mnemonic>
         <current>hiderosterimage</current>
     </node>
@@ -548,7 +548,7 @@
         <name xml:lang="de">Weichensteuerung</name>
 		    <name xml:lang="ca">Comandament d'Agulles</name>
         <name xml:lang="cs">Ovládání výhybek</name>
-        <name xml:lang="nl">Wisselaansturing</name>
+        <name xml:lang="nl">Wisselbediening</name>
         <adapter>jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlAction</adapter>
     </node>
     <node name="Power Control">

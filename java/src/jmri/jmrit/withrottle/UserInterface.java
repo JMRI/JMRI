@@ -6,9 +6,11 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Set;
+import java.util.Enumeration;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
@@ -31,7 +33,6 @@ import jmri.jmrit.throttle.StopAllButton;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.prefs.JmriPreferencesActionFactory;
-import jmri.util.zeroconf.ZeroConfServiceManager;
 
 /**
  * UserInterface.java Create a window for WiThrottle information and and create
@@ -97,19 +98,28 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
         //get port# directly from prefs
         int port = InstanceManager.getDefault(WiThrottlePreferences.class).getPort();
         //list IPv4 addresses on the UI, for manual connections
-        //TODO: use some mechanism that is not tied to zeroconf networking
         StringBuilder as = new StringBuilder(); //build multiline string of valid addresses
-        ZeroConfServiceManager manager = InstanceManager.getDefault(ZeroConfServiceManager.class);
-        Set<InetAddress> addresses = manager.getAddresses(ZeroConfServiceManager.Protocol.IPv4, false, false);
-        if (addresses.isEmpty()) {
-            // include IPv6 and link-local addresses if no non-link-local IPv4 addresses are available
-            addresses = manager.getAddresses(ZeroConfServiceManager.Protocol.All, true, false);
+        try {
+            // This code based on ReportContext.addNetworkInfo()
+            Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
+            while (networkInterfaces.hasMoreElements()) {
+                NetworkInterface networkInterface = networkInterfaces.nextElement();
+                Enumeration<InetAddress> inetAddresses = networkInterface.getInetAddresses();
+                while (inetAddresses.hasMoreElements()) {
+                    InetAddress inetAddress = inetAddresses.nextElement();
+                    String hostAddress = inetAddress.getHostAddress();
+                    if (!hostAddress.equals("0.0.0.0") && !hostAddress.regionMatches(0, "127", 0, 3) && !hostAddress.contains(":")) {
+                        this.portLabel.setText(inetAddress.getHostName());
+                        as.append(hostAddress).append(":").append(port).append("<br/>");
+                    }
+                }
+            }
+            this.manualPortLabel.setText("<html>" + as + "</html>"); // NOI18N
+            
+        } catch (SocketException ex) {
+            log.warn("Unable to enumerate Network Interfaces: {}", ex.getMessage());
         }
-        for (InetAddress ha : addresses) {
-            this.portLabel.setText(ha.getHostName());
-            as.append(ha.getHostAddress()).append(":").append(port).append("<br/>");
-        }
-        this.manualPortLabel.setText("<html>" + as + "</html>"); // NOI18N
+        
     }
 
     protected void createWindow() {
@@ -322,5 +332,5 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
         return rosterGroupSelector.getSelectedRosterGroup();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(UserInterface.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(UserInterface.class);
 }

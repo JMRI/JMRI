@@ -482,8 +482,11 @@ public class TrainBuilderBase extends TrainCommon {
      */
     protected void showTrainRequirements() {
         addLine(_buildReport, ONE, Bundle.getMessage("TrainRequirements"));
-        if (_train.getNumberEngines().equals("0")) {
-            addLine(_buildReport, ONE, Bundle.getMessage("buildTrainReq0Engine"));
+        if (_train.isBuildConsistEnabled() && Setup.getHorsePowerPerTon() > 0) {
+            addLine(_buildReport, ONE,
+                    Bundle.getMessage("buildTrainReqConsist", Setup.getHorsePowerPerTon(), _train.getNumberEngines()));
+        } else if (_train.getNumberEngines().equals("0")) {
+                addLine(_buildReport, ONE, Bundle.getMessage("buildTrainReq0Engine"));
         } else if (_train.getNumberEngines().equals("1")) {
             addLine(_buildReport, ONE, Bundle.getMessage("buildTrainReq1Engine", _train.getTrainDepartsName(),
                     _train.getEngineModel(), _train.getEngineRoad()));
@@ -1584,30 +1587,33 @@ public class TrainBuilderBase extends TrainCommon {
     }
 
     /**
-     * Determinate if car can be dropped by this train to the track specified.
+     * Determinate if rolling stock can be dropped by this train to the track
+     * specified.
      *
-     * @param car   the car.
+     * @param rs    the rolling stock to be set out.
      * @param track the destination track.
      * @return true if able to drop.
      */
-    protected boolean checkTrainCanDrop(Car car, Track track) {
+    protected boolean checkTrainCanDrop(RollingStock rs, Track track) {
         if (track.isInterchange() || track.isSpur()) {
             if (track.getDropOption().equals(Track.TRAINS) || track.getDropOption().equals(Track.EXCLUDE_TRAINS)) {
                 if (track.isDropTrainAccepted(_train)) {
-                    log.debug("Car ({}) can be droped by train to track ({})", car.toString(), track.getName());
+                    log.debug("Rolling stock ({}) can be droped by train to track ({})", rs.toString(),
+                            track.getName());
                 } else {
                     addLine(_buildReport, SEVEN,
-                            Bundle.getMessage("buildCanNotDropCarTrain", car.toString(), _train.getName(),
+                            Bundle.getMessage("buildCanNotDropTrain", rs.toString(), _train.getName(),
                                     track.getTrackTypeName(), track.getLocation().getName(), track.getName()));
                     return false;
                 }
             }
             if (track.getDropOption().equals(Track.ROUTES) || track.getDropOption().equals(Track.EXCLUDE_ROUTES)) {
                 if (track.isDropRouteAccepted(_train.getRoute())) {
-                    log.debug("Car ({}) can be droped by route to track ({})", car.toString(), track.getName());
+                    log.debug("Rolling stock ({}) can be droped by route to track ({})", rs.toString(),
+                            track.getName());
                 } else {
                     addLine(_buildReport, SEVEN,
-                            Bundle.getMessage("buildCanNotDropCarRoute", car.toString(), _train.getRoute().getName(),
+                            Bundle.getMessage("buildCanNotDropRoute", rs.toString(), _train.getRoute().getName(),
                                     track.getTrackTypeName(), track.getLocation().getName(), track.getName()));
                     return false;
                 }
@@ -3044,7 +3050,8 @@ public class TrainBuilderBase extends TrainCommon {
             } else {
                 addLine(_buildReport, SEVEN,
                         Bundle.getMessage("buildCanNotDropEngineToTrack", engine.toString(),
-                                _terminateStageTrack.getName(), status, _terminateStageTrack.getTrackTypeName()));
+                                _terminateStageTrack.getTrackTypeName(),
+                                _terminateStageTrack.getLocation().getName(), _terminateStageTrack.getName(), status));
             }
         } else {
             // find a destination track for this engine
@@ -3057,13 +3064,18 @@ public class TrainBuilderBase extends TrainCommon {
                 if (!checkDropTrainDirection(engine, rld, track)) {
                     continue;
                 }
+                if (!checkTrainCanDrop(engine, track)) {
+                    continue;
+                }
                 String status = engine.checkDestination(destination, track);
                 if (status.equals(Track.OKAY)) {
                     addEngineToTrain(engine, rl, rld, track);
                     return true;
                 } else {
-                    addLine(_buildReport, SEVEN, Bundle.getMessage("buildCanNotDropEngineToTrack", engine.toString(),
-                            track.getName(), status, track.getTrackTypeName()));
+                    addLine(_buildReport, SEVEN,
+                            Bundle.getMessage("buildCanNotDropEngineToTrack", engine.toString(),
+                                    track.getTrackTypeName(),
+                                    track.getLocation().getName(), track.getName(), status));
                 }
             }
             addLine(_buildReport, FIVE,
@@ -3388,11 +3400,15 @@ public class TrainBuilderBase extends TrainCommon {
         // 100 car train at 100 tons per car and 2 HPT requires 20,000 HP.
         // will assign consisted engines to train.
         boolean foundLoco = false;
+        List<Engine> rejectedLocos = new ArrayList<>();
         hpLoop: while (hpMax < 20000) {
             hpMax += hpNeeded / 2; // start off looking for an engine with no
                                    // more than 50% extra HP
             log.debug("Max hp {}", hpMax);
             for (Engine engine : _engineList) {
+                if (rejectedLocos.contains(engine)) {
+                    continue;
+                }
                 // don't use non lead locos in a consist
                 if (engine.getConsist() != null && !engine.isLead()) {
                     continue;
@@ -3421,6 +3437,8 @@ public class TrainBuilderBase extends TrainCommon {
                     if (setEngineDestination(engine, rl, rld)) {
                         foundLoco = true;
                         break hpLoop;
+                    } else {
+                        rejectedLocos.add(engine);
                     }
                 }
             }

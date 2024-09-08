@@ -103,7 +103,7 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
         
         _t1Table.dispose();
 
-        t1Frame.requestClose();
+        JUnitUtil.dispose(t1Frame.getWindow());
         t1Frame.waitClosed();
     }
 
@@ -111,10 +111,8 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
     @Test
     public void testSpeedsMenu() {
 
-        ThreadingUtil.runOnGUI(() -> {
-            a.actionPerformed(null); // show table
-        });
-        
+        ThreadingUtil.runOnGUI(() -> a.actionPerformed(null) );
+
         // Open Speed pane to test Speed menu, which displays a JmriJOptionPane
         // log.debug("Speed pane started at {}", java.time.LocalTime.now()); // debug
         JFrameOperator main = new JFrameOperator(Bundle.getMessage("TitleTurnoutTable")); 
@@ -145,7 +143,7 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
         }, "Dismiss Default Speeds Thread finished");
 
         // clean up
-        main.requestClose();
+        JUnitUtil.dispose(main.getWindow());
         main.waitClosed();
     }
 
@@ -171,7 +169,7 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
         JemmyUtil.pressButton(f1, Bundle.getMessage("ButtonClose")); // not sure why this is close in this frame.
         f1.waitClosed();
 
-        f.requestClose();
+        JUnitUtil.dispose(f.getWindow());
         f.waitClosed();
 
     }
@@ -185,9 +183,7 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
         a = new TurnoutTableAction();
         Assert.assertTrue(a.includeAddButton());
 
-        ThreadingUtil.runOnGUI(() -> {
-            a.actionPerformed(null); // show table
-        });
+        ThreadingUtil.runOnGUI(() -> a.actionPerformed(null) );
         JFrameOperator f = new JFrameOperator(getTableFrameName());
         // find the "Add... " button and press it.
         JemmyUtil.pressButton(f, Bundle.getMessage("ButtonAdd"));
@@ -203,19 +199,18 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
         //and press create
         JemmyUtil.pressButton(f1, Bundle.getMessage("ButtonCreate"));
         f1.getQueueTool().waitEmpty();
-        JUnitUtil.waitFor(()->{return !(add1.isAlive());}, "dialog finished");  // NOI18N
-        
+        JUnitUtil.waitFor(()-> !(add1.isAlive()), "dialog finished");  // NOI18N
         f1.getQueueTool().waitEmpty();
-        
+
         JemmyUtil.pressButton(f1, Bundle.getMessage("ButtonClose")); // not sure why this is close in this frame.
         f1.getQueueTool().waitEmpty();
         f1.waitClosed();
 
-        f.requestClose();
+        JUnitUtil.dispose(f.getWindow());
         f.waitClosed();
 
     }
-    
+
     private static class AlwaysExceptionCreateNewTurnout extends InternalTurnoutManager {
 
         protected AlwaysExceptionCreateNewTurnout() {
@@ -237,9 +232,7 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
     public void testEditButton() {
 
         Assert.assertTrue(a.includeAddButton());
-        ThreadingUtil.runOnGUI(() -> {
-            a.actionPerformed(null); // show table
-        });
+        ThreadingUtil.runOnGUI(() -> a.actionPerformed(null));
         JFrameOperator jfo = new JFrameOperator(getTableFrameName());
 
         // find the "Add... " button and press it.
@@ -267,6 +260,9 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
         
         f1.requestClose();
         f1.waitClosed();
+
+        JUnitUtil.dispose(jfo.getWindow());
+        jfo.waitClosed();
     }
 
     @Test
@@ -299,7 +295,10 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
     @AfterEach
     @Override
     public void tearDown() {
-        a = null;
+        if ( a != null ) {
+            a.dispose();
+            a = null;
+        }
         JUnitUtil.tearDown();
     }
 

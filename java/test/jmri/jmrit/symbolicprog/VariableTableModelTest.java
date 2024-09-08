@@ -23,16 +23,17 @@ import org.junit.jupiter.api.*;
  */
 public class VariableTableModelTest {
 
-    ProgDebugger p = new ProgDebugger();
+    private ProgDebugger p = new ProgDebugger();
 
     @Test
     public void testStart() {
         // create one with some dummy arguments
-        new VariableTableModel(
+        VariableTableModel t = new VariableTableModel(
                 new JLabel(""),
                 new String[]{"Name", "Value"},
                 new CvTableModel(new JLabel(""), p)
         );
+        Assertions.assertNotNull(t);
     }
 
     // Can we create a table?

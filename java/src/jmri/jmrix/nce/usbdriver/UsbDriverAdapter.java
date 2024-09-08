@@ -33,10 +33,10 @@ public class UsbDriverAdapter extends NcePortController {
         // get and open the primary port
         currentSerialPort = activatePort(portName, log);
         if (currentSerialPort == null) {
-            log.error("failed to connect NCE USB to {}", portName);
+            log.error("{}: failed to connect NCE USB to {}", manufacturerName, portName);
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
-        log.info("Connecting NCE USB to {} {}", portName, currentSerialPort);
+        log.info("{}: Connecting NCE USB to {} {}", manufacturerName, portName, currentSerialPort);
         
         // try to set it for communication via SerialDriver
         // find the baud rate value, configure comm options
@@ -146,10 +146,10 @@ public class UsbDriverAdapter extends NcePortController {
             }
         }
 
+        tc.csm = new UsbCmdStationMemory();
         tc.connectPort(this);
 
         this.getSystemConnectionMemo().configureManagers();
-        tc.csm = new UsbCmdStationMemory();
     }
 
     // base class methods for the NcePortController interface

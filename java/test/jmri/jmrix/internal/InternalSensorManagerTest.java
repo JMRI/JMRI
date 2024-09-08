@@ -263,14 +263,14 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
                 .hasMessage("Property foo cannot be silenced.");
     }
 
-    // No manager-specific system name validation at present
     @Test
     @Override
+    @Disabled("No manager-specific system name validation at present")
     public void testMakeSystemNameWithNoPrefixNotASystemName() {}
 
-    // No manager-specific system name validation at present
     @Test
     @Override
+    @Disabled("No manager-specific system name validation at present")
     public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     private static class CountingPropertyChangeListener implements PropertyChangeListener {
@@ -289,7 +289,6 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
     public void setUp() {
         JUnitUtil.setUp();
         // create and register the manager object
-        jmri.util.JUnitUtil.resetInstanceManager();
 
         l = new InternalSensorManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
 

@@ -11,6 +11,7 @@ import java.util.*;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractButton;
@@ -199,10 +200,13 @@ public class JUnitUtil {
     static private String initPrefsDir = null;
 
     /**
-     * JMRI standard setUp for tests that mock the InstanceManager. This should be the first line in the {@code @Before}
+     * JMRI standard setUp for tests that mock the InstanceManager.
+     * This should be the first line in the {@code @BeforeEach}
      * annotated method if the tests mock the InstanceManager.
+     * <p>
      * One or the other of {@link #setUp()} or {@link #setUpLoggingAndCommonProperties()} must
-     * be present in the {@code @Before} routine.
+     * be present in the {@code @BeforeEach} routine.
+     * <p>
      */
     public static void setUpLoggingAndCommonProperties() {
         if (!isLoggingInitialized) {
@@ -287,10 +291,15 @@ public class JUnitUtil {
     }
 
     /**
-     * JMRI standard setUp for tests. This should be the first line in the {@code @Before}
+     * JMRI standard setUp for tests.
+     * This should be the first line in the {@code @BeforeEach}
      * annotated method if the tests do not mock the InstanceManager.
+     * <p>
      * One or the other of {@link #setUp()} or {@link #setUpLoggingAndCommonProperties()} must
-     * be present in the {@code @Before} routine.
+     * be present in the {@code @BeforeEach} routine.
+     * <p>
+     * Calls {@link #setUpLoggingAndCommonProperties()}, {@link #resetInstanceManager()}
+     * and sets the jmri.configurexml.ShutdownPreferences setEnableStoreCheck to false.
      */
     public static void setUp() {
         WAITFOR_DELAY_STEP = DEFAULT_WAITFOR_DELAY_STEP;
@@ -727,6 +736,15 @@ public class JUnitUtil {
         }, "setAndWait " + bean.getSystemName() + ": " + state);
     }
 
+    /**
+     * Reset the Instance Manager.
+     * Clears all instances from the static InstanceManager.
+     * <p>
+     * Ensures the auto-default UserPreferencesManager is not created
+     * by installing a test one.
+     * <p>
+     * Sets the jmri.configurexml.ShutdownPreferences setEnableStoreCheck to false.
+     */
     public static void resetInstanceManager() {
         // clear all instances from the static InstanceManager
         InstanceManager.getDefault().clearAll();
@@ -1050,18 +1068,25 @@ public class JUnitUtil {
      * Ensure that any existing
      * {@link jmri.util.zeroconf.ZeroConfServiceManager} (real or mocked) has
      * stopped all services it is managing.
+     * @return true when complete.
      */
-    public static void resetZeroConfServiceManager() {
-        if (! InstanceManager.containsDefault(ZeroConfServiceManager.class)) return; // not present, don't create on by asking for it.
+    public static boolean resetZeroConfServiceManager() {
+        if (! InstanceManager.containsDefault(ZeroConfServiceManager.class)) {
+            return true; // not present, don't create one by asking for it.
+        }
 
         ZeroConfServiceManager manager = InstanceManager.getDefault(ZeroConfServiceManager.class);
         manager.stopAll();
 
-        JUnitUtil.waitFor(() -> {
-            return (manager.allServices().isEmpty());
-        }, "Stopping all ZeroConf Services");
+        waitFor( () -> manager.allServices().isEmpty(), "Stopping all ZeroConf Services");
 
         manager.dispose();
+
+        Thread t = getThreadByName( ZeroConfServiceManager.DNS_CLOSE_THREAD_NAME );
+        if ( t != null ) {
+            waitFor( () -> !t.isAlive(), "dns.close thread did not complete");
+        }
+        return true;
     }
 
     /**
@@ -1362,21 +1387,21 @@ public class JUnitUtil {
     }
 
     /**
-     * Dispose of a visible frame searched for by title. Disposes of the first
-     * visible frame found with the given title. Asserts that the calling test
-     * failed if the frame cannot be found.
+     * Dispose of a visible frame searched for by title.
+     * Disposes of the first visible frame found with the given title.
+     * Asserts that the calling test failed if the frame cannot be found.
      *
-     * @param title the title of the frame to dispose of
-     * @param ce    true to match title param as a substring of the frame's
+     * @param title the title of the frame to dispose of.
+     * @param subString    true to match title param as a substring of the frame's
      *              title; false to require an exact match
-     * @param cc    true if search is case sensitive; false otherwise
+     * @param caseSensitive    true if search is case sensitive; false otherwise
      */
-    public static void disposeFrame(String title, boolean ce, boolean cc) {
-        Frame frame = FrameWaiter.getFrame(title, ce, cc);
+    public static void disposeFrame(String title, boolean subString, boolean caseSensitive) {
+        Frame frame = FrameWaiter.getFrame(title, subString, caseSensitive);
         if (frame != null) {
             JUnitUtil.dispose(frame);
         } else {
-            Assert.fail("Unable to find frame \"" + title + "\" to dispose.");
+            Assertions.fail("Unable to find frame \"" + title + "\" to dispose.");
         }
     }
 
@@ -1394,16 +1419,45 @@ public class JUnitUtil {
         });
     }
 
+    /**
+     * Wait for a thread to terminate, ie is no longer alive.
+     * A non-existent Thread is not an test failure.
+     * A Thread which does not complete in time IS a test failure.
+     * @param threadName full name of the Thread to wait for.
+     */
+    public static void waitThreadTerminated( String threadName ) {
+        Thread t = getThreadByName( threadName );
+        if ( t != null ) {
+            waitFor( () -> !t.isAlive(), "Thread \"" + threadName + "\" is still alive");
+        }
+    }
+
+    /**
+     * Get a Thread by matching the name.
+     * @param threadName Starting characters of the Thread name.
+     * @return the Thread, null if no Thread found.
+     */
+    @CheckForNull
     public static Thread getThreadByName(String threadName) {
         for (Thread t : Thread.getAllStackTraces().keySet()) {
-            if (t.getName().equals(threadName)) return t;
+            if (t.getName().equals(threadName)) {
+                return t;
+            }
         }
         return null;
     }
 
+    /**
+     * Get a Thread with a name starting with the supplied String.
+     * @param threadName Name of the Thread.
+     * @return the Thread, null if no Thread found.
+     */
+    @CheckForNull
     public static Thread getThreadStartsWithName(String threadName) {
         for (Thread t : Thread.getAllStackTraces().keySet()) {
-            if (t.getName().startsWith(threadName)) return t;
+            if (t.getName().startsWith(threadName)) {
+                return t;
+            }
         }
         return null;
     }

@@ -736,7 +736,7 @@
     <name xml:lang="de">Funktionszuordnung</name>
     <name xml:lang="fr">Carte des Fonctions</name>
     <name xml:lang="it">Mappa Funzioni</name>
-    <name xml:lang="nl">Funktietoewijzing</name>
+    <name xml:lang="nl">Functietoewijzing</name>
     <column>
       <grid gridy="NEXT" weightx="1" ipadx="10">
         <griditem gridx="0" gridy="0" gridwidth="1" anchor="LINE_END">

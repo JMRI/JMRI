@@ -1059,7 +1059,7 @@
     <xi:include href="http://jmri.org/xml/decoders/esu/v5randFuncCVs.xml"/>
     <!-- begin SUSI variables -->
     <!-- note that the exclusions below must be copied to xml/decoders/esu/susiMapPane.xml -->
-    <variables exclude="Essential Sound Unit,LokPilot 5 Fx micro,LokPilot 5 Fx micro DCC,LokPilot 5 micro,LokPilot 5 micro DCC,LokSound 5 micro DCC Direct">
+    <variables exclude="Essential Sound Unit,LokPilot 5 Fx micro,LokPilot 5 Fx micro DCC,LokPilot 5 micro,LokPilot 5 micro DCC,LokPilot 5 micro DCC Direct,LokSound 5 micro DCC Direct,LokSound 5 micro DCC Direct Atlas Legacy,LokSound 5 micro DCC Direct Atlas S2">
         <variable CV="124" mask="XXXXVXXX" default="0" item="ESU V4 Compatibility SUSI">
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
             <label>Serial User Standard Interface (SUSI Master)</label>

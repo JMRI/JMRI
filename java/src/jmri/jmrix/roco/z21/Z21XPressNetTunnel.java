@@ -264,11 +264,10 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
        if(xsc != null){
           xsc.dispose();
        }
-       sourceThread.stop();
        try {
-          sourceThread.join();
-       } catch (InterruptedException ie){
-          // interrupted during cleanup.
+          inpipe.close();
+       } catch (IOException ex) {
+          // Ignore IO error
        }
     }
 

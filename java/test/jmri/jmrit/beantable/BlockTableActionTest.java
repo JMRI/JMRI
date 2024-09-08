@@ -125,7 +125,7 @@ public class BlockTableActionTest extends AbstractTableActionBase<Block> {
         Assert.assertNotNull("Verify IB105 Added", chk105);  // NOI18N
         Assert.assertEquals("Verify system name prefix", "IB105", chk105.getSystemName());  // NOI18N
 
-        f.requestClose();
+        JUnitUtil.dispose(f.getWindow());
         f.waitClosed();
 
     }
@@ -193,7 +193,7 @@ public class BlockTableActionTest extends AbstractTableActionBase<Block> {
         Assert.assertEquals("New Block Name", layoutBlock.getUserName());
 
         JUnitAppender.assertWarnMessage("Cannot remove user name for block Block Name");  // NOI18N
-        jfo.requestClose();
+        JUnitUtil.dispose(jfo.getWindow());
         jfo.waitClosed();
     }
 
@@ -226,7 +226,7 @@ public class BlockTableActionTest extends AbstractTableActionBase<Block> {
         JemmyUtil.pressButton(jf, Bundle.getMessage("ButtonCancel"));  // NOI18N
         jf.waitClosed();
 
-        f.requestClose();
+        JUnitUtil.dispose(f.getWindow());
         f.waitClosed();
     }
 
@@ -235,15 +235,11 @@ public class BlockTableActionTest extends AbstractTableActionBase<Block> {
     public void testSetDefaultSpeed() {
 
         Assert.assertTrue(a.includeAddButton());
-        ThreadingUtil.runOnGUI( ()-> {
-            a.actionPerformed(null); // show table
-        });
+        ThreadingUtil.runOnGUI( ()-> a.actionPerformed(null));
         JFrameOperator main = new JFrameOperator(getTableFrameName());
 
         // find the "Add... " button and press it.
-        ThreadingUtil.runOnGUI( ()-> {
-            JemmyUtil.pressButton(main, Bundle.getMessage("ButtonAdd"));
-        });
+        JemmyUtil.pressButton(main, Bundle.getMessage("ButtonAdd"));
         JFrameOperator jf = new JFrameOperator(getAddFrameName());
 
         //Enter 1 in the text field labeled "System Name:"
@@ -286,7 +282,7 @@ public class BlockTableActionTest extends AbstractTableActionBase<Block> {
         }, "Dismiss Default Speeds Thread finished");
 
         // clean up
-        main.requestClose();
+        JUnitUtil.dispose(main.getWindow());
         main.waitClosed();
 
     }
@@ -297,9 +293,7 @@ public class BlockTableActionTest extends AbstractTableActionBase<Block> {
     public void testEditButton() {
 
         Assert.assertTrue(a.includeAddButton());
-        ThreadingUtil.runOnGUI( ()-> {
-            a.actionPerformed(null);
-        });
+        ThreadingUtil.runOnGUI( ()-> a.actionPerformed(null));
 
         JFrameOperator jfo = new JFrameOperator(getTableFrameName());
 
@@ -331,7 +325,7 @@ public class BlockTableActionTest extends AbstractTableActionBase<Block> {
         jf.requestClose();
         jf.waitClosed();
 
-        jfo.requestClose();
+        JUnitUtil.dispose(jfo.getWindow());
         jfo.waitClosed();
     }
 

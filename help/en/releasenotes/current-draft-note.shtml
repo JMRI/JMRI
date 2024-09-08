@@ -16,27 +16,12 @@
 
         <h4>Bachrus Speedo</h4>
             <ul>
-                <li>Revamped the Bachrus speed matcher to support configuration and different styles of speedmatching</li>
-				<li>Added ability to manually read and set a locomotive's momentum</li>
-				<li>Basic Speed matcher
-					<ul>
-						<li>Matches a locomotive to the given starting and top speeds</li>
-						<li>Can use the basic motor control CVs, the speed table, or ESU's speed table</li>
-						<li>Can configure if and how long the locomotive is warmed up and whether reverse is trimmed to match forward</li>
-					</ul>
-				</li>
-				<li>Speed Step Scale Speed matcher
-					<ul>
-						<li>Matches a locomotive to the speed step in 128 speed step mode (for example, locomotive goes 11 mph or kph at speed step 11 in 128 speed step mode) up to the given max speed</li>
-						<li>Can use the speed table or ESU's speed table</li>
-						<li>Can configure if and how long the locomotive is warmed up and whether reverse is trimmed to match forward</li>
-					</ul>
-				</li>
+                <li></li>
             </ul>
 
         <h4><a href="http://bidib.org/index_e.html">BiDiB</a></h4>
             <ul>
-                <li>BiDiB now uses JSerialComm instead of PureJavaComm - no user impact.</li>
+                <li></li>
             </ul>
 
         <h4>CBUS</h4>
@@ -121,7 +106,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li>Set the max-in-flight number to 100 to avoid overflow errors.</li>
+                <li></li>
             </ul>
 
         <h4>MRC</h4>
@@ -141,17 +126,29 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Updates the OpenLCB library so that
+                <li>OpenLCB_Java lib updated to release 0.8.1, which includes:
                     <ul>
-                        <li>You can write configuration information to a node 
-                            even if one or more items are out of range.</li>
-                        <li>The new &lt;action&gt; element in CDI 
-                            will be properly displayed.</li>
-                        <li>The CDI can now hint that a slider should be displayed for an integer</li>
-                        <li>A bug when displaying String variables with 0x0A newline characters has been fixed</li>
-                        <li>When an integer variable is displayed as a map and an unmapped value is
-                            encountered, it's now displayed as "Reserved: nnn"</li>
+                        <li>Better GUI for the node selection tool, which improves
+                            layout of the firmware upgrade window, send tool window,
+                            memory tool window and other places.
+                        <li>Event ID fields now have a contextual menu to assist in
+                            specifying well-known events, time (clock) events, and
+                            DCC accessory decoder events.  These are also available
+                            from the "More..." buttons on the CDI window.
+                    </ul>
+                </li>
+                <li>Improve memory tools:
                     <ul>
+                        <li>Allow selection of space 0 - 255 in Memory R/W tool and Send Frame Tool,
+                            with data entry in either hex or decimal
+                        <li>Improve display of available spaces by omitting missing spaces to reduce length of display
+                    </ul>
+                <li>Send Frame tool will no longer allow you to access CDI if there's no CDI in the node.
+                    This prevents you from accidentally getting into a confusing situation.
+                <li>Firmware Upgrade Tool and Memory Tool now let you select the memory space
+                    with a decimal or hexadecimal number.
+                <li>Implements the slider and action button proposal in CDI.  There are
+                    no products using this, but we'll be ready when they're introduced.
             </ul>
 
         <h4>Powerline</h4>
@@ -251,7 +248,12 @@
 
         <h4>ESU</h4>
             <ul>
-                <li></li>
+                <li>Added LokPilot 5 micro DCC Direct</li>
+                <li>Added LokPilot 5 nano DCC</li>
+                <li>Added LokSound 5 micro DCC Direct Atlas S2</li>
+                <li>Added LokSound 5 nano DCC Next18</li>
+                <li>Updated LokPilot 5 L and 5L DCC productIDs</li>
+              
             </ul>
 
         <h4>Hornby</h4>
@@ -366,7 +368,7 @@
 
         <h4>Trix Modelleisenbahn</h4>
             <ul>
-                <li>New definition for the Trix Sound BR23 (22230) decoder</li>
+                <li></li>
             </ul>
 
         <h4>Uhlenbrock</h4>
@@ -424,13 +426,15 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Will now show decoder family and model comments if you
+                hover your mouse over the decoder selection tree.</li>
         </ul>
 
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>For trains with HEAD ONLY detection release sections by length.</li>
+             <li>When train exits section leave coloured as allocated until released.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -448,7 +452,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>Enable control circle colors and the fill option for slip turnouts.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -477,7 +481,12 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>New feature, print or preview trains serving a location or track.</li>
+            <li>Locos set out to a spur or interchange now obey which train or routes service the track.</li>
+            <li>Cabooses and cars with FRED without a final destination can now use staging that only allows cars with an final destination.</li>
+            <li>There's now an option to leave cars in staging for trains that return to the same staging track. See "Allow cars to return to staging" for more details.</li>
+            <li>There's a new Manifest feature that allows you group all "Moves" together. See "Manifest Print Options".</li>
+            <li>The program now issues a warning during a build when removing a final destination due to track space issues.</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -489,7 +498,9 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li></li>
+            <li>Added text to "start Up" Preferences to note that optimal XML file
+                loading should be done <em>before</em> "Opening" <u>any</u>
+                "Table".</li>
         </ul>
 
     <h3>Resources</h3>
@@ -507,13 +518,14 @@
     <h3>Routes</h3>
         <a id="Routes" name="Routes"></a>
        <ul>
-            <li></li>
+            <li>When you're editing a Route, the window will now close when you hit Update.
+                This makes this edit window behave like other ones.</li>
        </ul>
 
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>The Jython library has been updated to version 2.7.4</li>
         </ul>
 
     <h3>Signals</h3>
@@ -595,13 +607,13 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li>new parameter ("protect=yes") to treat web-panel as read-only</li>
+            <li></li>
         </ul>
 
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li>alternate "Conductor" webpage, with Id-Tag updates (eg. RFID), and showing current train composition. </li>
+            <li></li>
         </ul>
 
     <h3>Where Used</h3>
@@ -625,12 +637,9 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li><strong>Permissions</strong> are now added to JMRI. It
-                allows you to password protect some parts of JMRI. For
-                now, you can protect Load and Store of table content
-                and panel files. And you can protect the preferences.
-                Permissions are disabled by default so you need to
-                enable them to use them. For more information, see the
-                <a href="https://www.jmri.org/help/en/package/jmri/jmrit/permission/PermissionManager.shtml">documentation</a>.</li>
+            <li><strong>Permissions</strong>, which was added in JMRI 5.9.3,
+                has a serious bug. If the user doesn't have permission to store,
+                it can still store when JMRI shutdown. That bug is now fixed.</li>
+            <li>Protected against an uncommon error that can happen 
+                when loading a file at startup on Windows.</li>
         </ul>
-

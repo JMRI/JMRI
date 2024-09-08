@@ -10,7 +10,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import jmri.jmrit.MemoryContents;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -26,6 +25,7 @@ import org.openlcb.OlcbInterface;
 import org.openlcb.implementations.DatagramService;
 import org.openlcb.implementations.MemoryConfigurationService;
 import org.openlcb.swing.NodeSelector;
+import org.openlcb.swing.MemorySpaceSelector;
 
 /**
  * Pane for downloading firmware files files to OpenLCB devices which support
@@ -45,7 +45,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     MimicNodeStore store;
     NodeSelector nodeSelector;
     JPanel selectorPane;
-    JTextField spaceField;
+    MemorySpaceSelector spaceField;
     JCheckBox lockNode;
     LoaderClient loaderClient;
     NodeID nid;
@@ -82,10 +82,10 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         p.setLayout(new WrapLayout());
         p.add(new JLabel("Address Space: "));
 
-        spaceField = new JTextField("" + 0xEF);
+        spaceField = new MemorySpaceSelector(0xEF);
         p.add(spaceField);
         selectorPane.add(p);
-        spaceField.setToolTipText("The decimal number of the address space, e.g. 239");
+        spaceField.setToolTipText("The number of the address space, e.g. 239 or 0xEF");
 
         p = new JPanel();
         p.setLayout(new WrapLayout());
@@ -178,7 +178,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         setOperationAborted(false);
         abortButton.setEnabled(false);
         abortButton.setToolTipText(Bundle.getMessage("TipAbortDisabled"));
-        int ispace = Integer.parseInt(spaceField.getText());
+        int ispace = spaceField.getMemorySpace();
         long addr = 0;
         loaderClient.doLoad(nid, destNodeID(), ispace, addr, fdata, new LoaderStatusReporter() {
             @Override
@@ -223,7 +223,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
      * @return selected node id
      */
     NodeID destNodeID() {
-        return nodeSelector.getSelectedItem();
+        return nodeSelector.getSelectedNodeID();
     }
 
     @Override

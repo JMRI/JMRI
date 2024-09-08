@@ -1,6 +1,7 @@
 package jmri.jmrix.pricom.downloader;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.FlowLayout;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -27,7 +28,6 @@ import jmri.jmrix.purejavacomm.*;
  */
 public class LoaderPane extends javax.swing.JPanel {
 
-    Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
 
     Thread readerThread;
@@ -282,7 +282,7 @@ public class LoaderPane extends javax.swing.JPanel {
             javax.swing.SwingUtilities.invokeLater(r);
 
             // stop this thread
-            stopThread(readerThread);
+            stopThread();
 
         }
 
@@ -351,17 +351,16 @@ public class LoaderPane extends javax.swing.JPanel {
         } // end class Notify
     } // end class LocalReader
 
-    // use deprecated stop method to stop thread,
-    // which will be sitting waiting for input
-    @SuppressWarnings("deprecation") // Thread.stop
-    void stopThread(Thread t) {
-        t.stop();
+    void stopThread() {
+        if (activeSerialPort != null) {
+            activeSerialPort.close();
+        }
     }
 
     public void dispose() {
         // stop operations if in process
         if (readerThread != null) {
-            stopThread(readerThread);
+            stopThread();
         }
 
         // release port
@@ -371,7 +370,6 @@ public class LoaderPane extends javax.swing.JPanel {
         serialStream = null;
         ostream = null;
         activeSerialPort = null;
-        portNameVector = null;
         //opened = false;
     }
 

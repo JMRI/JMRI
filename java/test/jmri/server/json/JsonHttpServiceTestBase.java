@@ -4,11 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.NullNode;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-import static org.junit.Assume.assumeNotNull;
-
 import java.util.Locale;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -18,8 +13,9 @@ import jmri.server.json.schema.JsonSchemaServiceCache;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Common methods for JMRI JSON Service HTTP provider tests.
@@ -54,6 +50,7 @@ public abstract class JsonHttpServiceTestBase<I extends JsonHttpService> {
     public void tearDown() throws Exception {
         service = null;
         mapper = null;
+        assertTrue(JUnitUtil.resetZeroConfServiceManager());
         JUnitUtil.tearDown();
     }
 
@@ -61,13 +58,13 @@ public abstract class JsonHttpServiceTestBase<I extends JsonHttpService> {
     public void testDoDelete() throws JsonException {
         try {
             // protect against JUnit tests in Eclipse that test this class directly
-            assumeNotNull(service);
+            Assumptions.assumeTrue( service != null);
             service.doDelete("foo", "foo", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
-            assertEquals("Code is HTTP METHOD NOT ALLOWED", 405, ex.getCode());
-            assertEquals("Message", "Deleting foo is not allowed.", ex.getMessage());
-            assertEquals("ID is 42", 42, ex.getId());
+            assertEquals( 405, ex.getCode(), "Code is HTTP METHOD NOT ALLOWED");
+            assertEquals( "Deleting foo is not allowed.", ex.getMessage(), "Message");
+            assertEquals( 42, ex.getId(), "ID is 42");
         }
     }
     
@@ -79,13 +76,17 @@ public abstract class JsonHttpServiceTestBase<I extends JsonHttpService> {
      */
     public final void testDoSchema(String type) throws JsonException {
         // protect against JUnit tests in Eclipse that test this class directly
-        assumeNotNull(service);
+        Assumptions.assumeTrue( service != null);
         JsonNode schema = service.doSchema(type, false, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(type, schema);
-        assertEquals("Type is in client schema", "jmri-json-" + type + "-client-message", schema.path(JSON.DATA).path(JSON.SCHEMA).path("title").asText());
+        assertEquals( "jmri-json-" + type + "-client-message",
+            schema.path(JSON.DATA).path(JSON.SCHEMA).path("title").asText(),
+            "Type is in client schema");
         schema = service.doSchema(type, true, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(type, schema);
-        assertEquals("Type is in server schema", "jmri-json-" + type + "-server-message", schema.path(JSON.DATA).path(JSON.SCHEMA).path("title").asText());
+        assertEquals( "jmri-json-" + type + "-server-message",
+            schema.path(JSON.DATA).path(JSON.SCHEMA).path("title").asText(),
+            "Type is in server schema");
         // Suppress a warning message (see networknt/json-schema-validator#79)
         JUnitAppender.checkForMessageStartingWith(
                 "Unknown keyword exclusiveMinimum - you should define your own Meta Schema.");
@@ -94,9 +95,9 @@ public abstract class JsonHttpServiceTestBase<I extends JsonHttpService> {
             schema = service.doSchema("non-existant-type", false, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             Assertions.fail("schema should not be valid: " + schema.toPrettyString());
         } catch (JsonException ex) {
-            assertThat(ex.getCode()).isEqualTo(500);
-            assertThat(ex.getMessage()).isEqualTo("Unknown object type non-existant-type was requested.");
-            assertThat(ex.getId()).isEqualTo(42);
+            assertEquals( 500, ex.getCode());
+            assertEquals("Unknown object type non-existant-type was requested.", ex.getMessage());
+            assertEquals( 42, ex.getId());
         }
     }
 
@@ -110,17 +111,19 @@ public abstract class JsonHttpServiceTestBase<I extends JsonHttpService> {
      */
     public final void testDoSchema(String type1, String type2) throws JsonException {
         // protect against JUnit tests in Eclipse that test this class directly
-        assumeNotNull(service);
+        Assumptions.assumeTrue( service != null);
         JsonNode schema1 = service.doSchema(type1, false, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(type1, schema1);
         JsonNode schema2 = service.doSchema(type2, false, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(type2, schema2);
-        assertEquals("Client schema objects are the same", schema1.path(JSON.DATA).path(JSON.SCHEMA), schema1.path(JSON.DATA).path(JSON.SCHEMA));
+        assertEquals( schema1.path(JSON.DATA).path(JSON.SCHEMA),
+            schema2.path(JSON.DATA).path(JSON.SCHEMA), "Client schema objects are the same");
         schema1 = service.doSchema(type1, true, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(type1, schema1);
         schema2 = service.doSchema(type2, true, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(type2, schema2);
-        assertEquals("Server schema objects are the same", schema1.path(JSON.DATA).path(JSON.SCHEMA), schema1.path(JSON.DATA).path(JSON.SCHEMA));
+        assertEquals( schema1.path(JSON.DATA).path(JSON.SCHEMA),
+            schema2.path(JSON.DATA).path(JSON.SCHEMA), "Server schema objects are the same");
         // Suppress a warning message (see networknt/json-schema-validator#79)
         JUnitAppender.checkForMessageStartingWith(
                 "Unknown keyword exclusiveMinimum - you should define your own Meta Schema.");
@@ -159,11 +162,11 @@ public abstract class JsonHttpServiceTestBase<I extends JsonHttpService> {
      *               a client node
      */
     public final void validate(String type, JsonNode node, boolean server) {
-        Assert.assertNotNull("Node is not null.", node);
+        assertNotNull( node, "Node is not null.");
         try {
             InstanceManager.getDefault(JsonSchemaServiceCache.class).validateMessage(node, server, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         } catch (JsonException ex) {
-            Assert.fail("Unable to validate " + ((server) ? "server" : "client") + " schema for " + type + ".");
+            fail("Unable to validate " + ((server) ? "server" : "client") + " schema for " + type + ".");
         }
     }
 
@@ -189,11 +192,11 @@ public abstract class JsonHttpServiceTestBase<I extends JsonHttpService> {
      *               a client node
      */
     public final void validateData(String type, JsonNode node, boolean server) {
-        Assert.assertNotNull("Node is not null.", node);
+        assertNotNull( node, "Node is not null.");
         try {
             InstanceManager.getDefault(JsonSchemaServiceCache.class).validateData(type, node, server, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         } catch (JsonException ex) {
-            Assert.fail("Unable to validate schema.");
+            fail("Unable to validate schema.");
         }
     }
 

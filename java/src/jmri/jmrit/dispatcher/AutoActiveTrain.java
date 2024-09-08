@@ -221,6 +221,14 @@ public class AutoActiveTrain implements ThrottleListener {
         return _maxTrainLength;
     }
 
+    public int getMaxTrainLengthMM() {
+        double dMM = _maxTrainLength * dispatcher.getScale().getScaleFactor();
+        if (dispatcher.getUseScaleMeters()) {
+            return (int)(dMM  * 1000.0);
+        }
+        return (int)(dMM / 0.00328084);
+    }
+
     public void setMaxTrainLength(float length) {
         _maxTrainLength = length;
     }
@@ -239,6 +247,14 @@ public class AutoActiveTrain implements ThrottleListener {
 
     public void setStopBySpeedProfileAdjust(float adjust) {
         _stopBySpeedProfileAdjust = adjust;
+    }
+
+    public boolean getStopBySpeedProfile() {
+        return _stopBySpeedProfile;
+    }
+
+    public float getStopBySpeedProfileAdjust() {
+        return _stopBySpeedProfileAdjust;
     }
 
     /**
@@ -1372,6 +1388,7 @@ public class AutoActiveTrain implements ThrottleListener {
     protected synchronized void executeStopTasks(int task) {
         // clean up stopping
         cancelStopInCurrentSection();
+        dispatcher.queueReleaseOfCompletedAllocations();
         log.trace("exec[{}]",task);
         switch (task) {
             case END_TRAIN:

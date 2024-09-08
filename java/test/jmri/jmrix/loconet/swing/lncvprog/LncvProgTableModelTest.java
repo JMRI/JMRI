@@ -5,15 +5,14 @@ import jmri.jmrix.loconet.LncvDevicesManager;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.jupiter.api.*;
 
-import javax.swing.*;
-import java.awt.*;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 class LncvProgTableModelTest {
 
-    LocoNetSystemConnectionMemo memo;
-    LncvProgTableModel lptm;
+    private LocoNetSystemConnectionMemo memo;
+    private LncvProgTableModel lptm;
 
     @Test
     public void testCTor() {
@@ -22,7 +21,7 @@ class LncvProgTableModelTest {
 
     @Test
     void testInitTable() {
-        JTable table = new JTable(lptm);
+        javax.swing.JTable table = new javax.swing.JTable(lptm);
         lptm.initTable(table); // one would expect 8 but is 15
         Assertions.assertEquals(15, table.getColumn("#").getMaxWidth(), "IDColumn width");
     }
@@ -36,7 +35,7 @@ class LncvProgTableModelTest {
     @Test
     void testGetColumnClass() {
         Assertions.assertEquals(Integer.class, lptm.getColumnClass(LncvProgTableModel.VALUE_COLUMN), "VALUE_COLUMN class");
-        Assertions.assertEquals(JButton.class, lptm.getColumnClass(LncvProgTableModel.OPENPRGMRBUTTONCOLUMN), "OPENPRGMRBUTTONCOLUMN class");
+        Assertions.assertEquals(javax.swing.JButton.class, lptm.getColumnClass(LncvProgTableModel.OPENPRGMRBUTTONCOLUMN), "OPENPRGMRBUTTONCOLUMN class");
     }
 
     @Test
@@ -51,17 +50,17 @@ class LncvProgTableModelTest {
     }
 
     @Test
+    @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
     void testGetSetValueAt() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         LncvDevicesManager lcdm = new LncvDevicesManager(memo);
         memo.setLncvDevicesManager(lcdm);
         jmri.InstanceManager.setDefault(jmri.jmrit.roster.RosterConfigManager.class, new RosterConfigManager());
         Assertions.assertEquals(0, lcdm.getDeviceCount(), "LncvDeviceManager List empty");
         lcdm.message(new LocoNetMessage(new int[] {0xE5, 0x0F, 0x05, 0x49, 0x4B, 0x1F, 0x11, 0x29, 0x13, 0x00, 0x00, 0x08, 0x00, 0x00, 0x4D}));
         // should add 1 row to table
-        Assertions.assertEquals(1, lptm.getValueAt(0, LncvProgTableModel.COUNT_COLUMN), "getValue in cell 0,COUNT_COLUMN");
-        Assertions.assertEquals(136, lptm.getValueAt(0, LncvProgTableModel.VALUE_COLUMN), "getValue in cell 0,VALUE_COLUMN");
-        Assertions.assertEquals(5033, lptm.getValueAt(0, LncvProgTableModel.ARTICLE_COLUMN), "getValue in cell 0,ARTICLE_COLUMN");
+        Assertions.assertEquals(1, (int)lptm.getValueAt(0, LncvProgTableModel.COUNT_COLUMN), "getValue in cell 0,COUNT_COLUMN");
+        Assertions.assertEquals(136, (int)lptm.getValueAt(0, LncvProgTableModel.VALUE_COLUMN), "getValue in cell 0,VALUE_COLUMN");
+        Assertions.assertEquals(5033, (int)lptm.getValueAt(0, LncvProgTableModel.ARTICLE_COLUMN), "getValue in cell 0,ARTICLE_COLUMN");
         // Roster should be loaded for match
         Assertions.assertEquals("DR5033", lptm.getValueAt(0, LncvProgTableModel.DEVICENAMECOLUMN), "getValue in cell 0,DEVICENAMECOLUMN");
         Assertions.assertEquals(Bundle.getMessage("ButtonCreateEntry"), lptm.getValueAt(0, LncvProgTableModel.OPENPRGMRBUTTONCOLUMN), "getValue in cell 0,OPENPRGMRBUTTONCOLUMN");
@@ -69,7 +68,7 @@ class LncvProgTableModelTest {
 
         lcdm.message(new LocoNetMessage(new int[] {0xE5, 0x0F, 0x05, 0x49, 0x4B, 0x1F, 0x11, 0x29, 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x4D}));
         // should add row 2 to table, unknown article number 0029, no match
-        Assertions.assertEquals(2, lptm.getValueAt(1, LncvProgTableModel.COUNT_COLUMN), "getValue in cell 1,COUNT_COLUMN");
+        Assertions.assertEquals(2, (int)lptm.getValueAt(1, LncvProgTableModel.COUNT_COLUMN), "getValue in cell 1,COUNT_COLUMN");
         Assertions.assertEquals(Bundle.getMessage("ButtonNoMatchInRoster"), lptm.getValueAt(1, LncvProgTableModel.OPENPRGMRBUTTONCOLUMN), "getValue in cell 1,OPENPRGMRBUTTONCOLUMN");
     }
 
@@ -80,15 +79,17 @@ class LncvProgTableModelTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
         JUnitUtil.initRosterConfigManager();
-        memo = new jmri.jmrix.loconet.LocoNetSystemConnectionMemo();
-        jmri.InstanceManager.setDefault(jmri.jmrix.loconet.LocoNetSystemConnectionMemo.class, memo);
+        memo = new LocoNetSystemConnectionMemo();
+        jmri.InstanceManager.setDefault( LocoNetSystemConnectionMemo.class, memo);
         lptm = new LncvProgTableModel(new LncvProgPane(), memo);
     }
 
     @AfterEach
     public void tearDown() {
+        lptm.dispose();
+        lptm = null;
+        memo.dispose();
         memo = null;
         JUnitUtil.tearDown();
     }

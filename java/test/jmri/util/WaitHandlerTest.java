@@ -21,8 +21,7 @@ public class WaitHandlerTest {
     private transient boolean flag1;
     private transient boolean flag2;
 
-    static final int THREAD_DELAY = 200;   // time to delay thread under test
-    static final int TEST_DELAY = THREAD_DELAY + 250;  // time to wait for thread to complete
+    static final int THREAD_DELAY = 500;   // time to delay thread under test
 
     transient long startTime;
     transient long endTime;

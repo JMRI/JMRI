@@ -84,6 +84,7 @@ public class ConfigXmlManagerTest {
     }
 
     @Test
+    @Disabled("Test requires further development")
     public void testDeregister() {
     }
 
