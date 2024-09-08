@@ -118,6 +118,26 @@ sudo chmod 644 ~/.jmri/.permissions.xml
       do, a dialog will open with the message <strong>Permission denied</strong>. Ignore that, log
       in with an authorized user and then open the preferences. Now edit the connection.</p>
 
+      <h2>Permission failure during PanelPro shutdown</h2>
+
+      <p>The normal PanelPro shutdown process checks for changes that have not been stored.  If
+      change detection is enabled, changes have been made and the user is not authorized to store
+      changes, a dialog is displayed.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/shutdown-abort.png"><img src="images/shutdown-abort.png"
+         alt="abort shutdown question"></a>
+      </div>
+
+      <p>If it is possible to login with the necessary authority, then click on <strong>Yes</strong>,
+      login and do the store process.  If not, click on <strong>No</strong>.</p>
+
+      <p>For production environments, change detection can be disabled. This will eliminate shutdown
+      issues.  See the <a href="../../../apps/TabbedPreferences.shtml#Shutdown">Shutdown</a>
+      preference.</p>
+
+
+
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
