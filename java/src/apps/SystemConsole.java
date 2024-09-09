@@ -1,6 +1,7 @@
 package apps;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -29,11 +31,12 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
+
 import jmri.UserPreferencesManager;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.TextAreaFIFO;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,7 +56,30 @@ import org.slf4j.LoggerFactory;
  *
  * @author Matthew Harris copyright (c) 2010, 2011, 2012
  */
-public final class SystemConsole extends JTextArea {
+public final class SystemConsole {
+
+    /**
+     * Get current SystemConsole instance.
+     * If one doesn't yet exist, create it.
+     * @return current SystemConsole instance
+     */
+    public static SystemConsole getInstance() {
+        return InstanceHolder.INSTANCE;
+    }
+
+    private static class InstanceHolder {
+        private static final SystemConsole INSTANCE;
+
+        static {
+            SystemConsole instance = null;
+            try {
+                instance = new SystemConsole();
+            } catch (RuntimeException ex) {
+                log.error("failed to complete Console redirection", ex);
+            }
+            INSTANCE = instance;
+        }
+    }
 
     static final ResourceBundle rbc = ResourceBundle.getBundle("apps.AppsConfigBundle"); // NOI18N
 
@@ -96,8 +122,6 @@ public final class SystemConsole extends JTextArea {
 
     private int wrapStyle = WRAP_STYLE_WORD;
 
-    private static SystemConsole instance;
-
     private UserPreferencesManager pref;
 
     private JCheckBox autoScroll;
@@ -112,17 +136,6 @@ public final class SystemConsole extends JTextArea {
      * Initialise the system console ensuring both System.out and System.err
      * streams are re-directed to the consoles JTextArea
      */
-
-    public static void create() {
-
-        if (instance == null) {
-            try {
-                instance = new SystemConsole();
-            } catch (RuntimeException ex) {
-                log.error("failed to complete Console redirection", ex);
-            }
-        }
-    }
 
     @SuppressFBWarnings(value = "DM_DEFAULT_ENCODING",
             justification = "Can only be called from the same instance so default encoding OK")
@@ -148,27 +161,6 @@ public final class SystemConsole extends JTextArea {
 
         // Then redirect to it
         redirectSystemStreams(outputStream, errorStream);
-    }
-
-    /**
-     * Get current SystemConsole instance.
-     * If one doesn't yet exist, create it.
-     * @return current SystemConsole instance
-     */
-    public static SystemConsole getInstance() {
-        if (instance == null) {
-            SystemConsole.create();
-        }
-        return instance;
-    }
-
-    /**
-     * Test if the default instance exists.
-     *
-     * @return true if default instance exists; false otherwise
-     */
-    public static boolean isCreated() {
-        return instance != null;
     }
 
     /**
