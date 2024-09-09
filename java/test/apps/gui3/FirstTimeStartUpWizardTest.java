@@ -1,30 +1,28 @@
 package apps.gui3;
 
+import apps.gui3.dp3.DecoderPro3;
+
 import java.io.File;
 import java.io.IOException;
 
 import jmri.InstanceManager;
 import jmri.jmrit.roster.RosterConfigManager;
 import jmri.util.JUnitAppender;
-
-import apps.gui3.dp3.DecoderPro3;
-
 import jmri.util.JUnitUtil;
 import jmri.util.gui.GuiLafPreferencesManager;
 
-import org.netbeans.jemmy.operators.*;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.junit.jupiter.api.io.TempDir;
+import org.netbeans.jemmy.operators.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.io.TempDir;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  * @author Steve Young Copyright (C) 2022
  */
-@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class FirstTimeStartUpWizardTest {
 
     @Test
@@ -38,6 +36,9 @@ public class FirstTimeStartUpWizardTest {
         JUnitUtil.waitFor(() -> {
             return JUnitAppender.checkForMessageStartingWith("No pre-existing config file found, searched for ") != null;
         }, "no existing config Info line seen");
+
+        JUnitUtil.waitThreadTerminated("Start-Up Wizard Connect");
+
     }
 
     @Test
@@ -222,6 +223,7 @@ public class FirstTimeStartUpWizardTest {
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.resetApplication();
+        JUnitUtil.resetWindows(false, false);
         JUnitUtil.tearDown();
     }
 
