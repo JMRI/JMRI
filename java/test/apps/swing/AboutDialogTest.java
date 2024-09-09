@@ -7,7 +7,7 @@ import jmri.util.ThreadingUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.operators.JDialogOperator;
 
 /**
@@ -15,10 +15,10 @@ import org.netbeans.jemmy.operators.JDialogOperator;
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class AboutDialogTest {
 
     @Test
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testCtor() {
         // create a frame to be the dialog parent so that nothing attempts to
         // remove the SwingUtilities$SharedOwnerFrame instance
@@ -30,7 +30,6 @@ public class AboutDialogTest {
     }
 
     @Test
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     public void testShowAndClose() {
         JFrame frame = new JFrame();
         AboutDialog dialog = new AboutDialog(frame, true);
@@ -38,7 +37,8 @@ public class AboutDialogTest {
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("TitleAbout", jmri.Application.getApplicationName()));
-            jdo.close();
+            jdo.requestClose();
+            jdo.waitClosed();
         });
         t.setName("About Dialog Close Thread");
         t.start();
@@ -46,7 +46,7 @@ public class AboutDialogTest {
             dialog.setVisible(true);
         });
         JUnitUtil.waitFor(() -> {
-            return !dialog.isVisible();
+            return !t.isAlive();
         }, "About dialog did not close");
         JUnitUtil.dispose(dialog);
         JUnitUtil.dispose(frame);
