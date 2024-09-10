@@ -21,12 +21,15 @@ import jmri.implementation.AbstractShutDownTask;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 /**
  *
  * @author Paul Bender Copyright 2017
  * @author Randall Wood Copyright 2020
  */
 @Timeout(10)
+@DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
 public class DefaultShutDownManagerTest {
 
     private ConcurrentMap<String, String> concurrentRuns = new ConcurrentHashMap<>();
@@ -236,7 +239,7 @@ public class DefaultShutDownManagerTest {
     public void testShutDownTaskTakesTooLong() {
         dsdm.register(new TakesOneSecondShutDownTask("testShutDownTaskTakesTooLong"));
         dsdm.shutdown(0, false);
-        
+
         Assertions.assertTrue(dsdm.isShuttingDown());
         JUnitUtil.waitFor(() -> { return runs == 2; } , "Second runs++ call eventually triggered");
         JUnitUtil.waitFor( () -> dsdm.isShutDownComplete(),"ShutDown Completed");
@@ -249,7 +252,7 @@ public class DefaultShutDownManagerTest {
     public void testEarlyShutDownTaskTakesTooLong() {
         dsdm.register(new TakesOneSecondEarlyShutDownTask("testEarlyShutDownTaskTakesTooLong"));
         dsdm.shutdown(0, false);
-        
+
         Assertions.assertTrue(dsdm.isShuttingDown());
         JUnitUtil.waitFor(() -> { return runs == 2; } , "Second runs++ call eventually triggered");
         JUnitUtil.waitFor( () -> dsdm.isShutDownComplete(),"ShutDown Completed");

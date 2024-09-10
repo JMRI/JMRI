@@ -6,6 +6,7 @@ import java.util.Calendar;
 
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Tests for the jmri.util.WaitHandler class.
@@ -100,6 +101,7 @@ public class WaitHandlerTest {
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
     @SuppressFBWarnings(value = "NO_NOTIFY_NOT_NOTIFYALL", justification = "There should only ever be one thread waiting for this method.")
     public void testSpuriousWake() {
         flag1 = false;
