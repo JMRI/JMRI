@@ -1,8 +1,10 @@
 package jmri.web.servlet.permission;
 
+import java.io.*;
+
 import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 
-import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 import javax.servlet.ServletException;
@@ -45,6 +47,42 @@ public class PermissionServlet extends HttpServlet {
         log.error("Query string: {}", request.getQueryString());
         log.error("Request URI: {}", request.getRequestURI());
         log.error("Request URL: {}", request.getRequestURL().toString());
+
+//        request.getContentLength();
+//        request.getInputStream();
+//        request.getMethod();
+
+
+        if (request.getContentLength() > 0) {
+            StringBuilder textBuilder = new StringBuilder();
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    request.getInputStream(), StandardCharsets.UTF_8))) {
+                int c = 0;
+                while ((c = reader.read()) != -1) {
+                    textBuilder.append((char) c);
+                }
+            }
+
+            log.error("textBuilder: {}", textBuilder);
+
+            String username = null;
+            String password = null;
+            for (String params : textBuilder.toString().split("&")) {
+                String[] parts = params.split("=");
+                switch (parts[0]) {
+                    case "username": username = parts[1]; break;
+                    case "password": password = parts[1]; break;
+                    default: throw new IllegalArgumentException("Unknown parameter: \""+parts[0]+"\" with value \""+parts[1]+"\"");
+                }
+            }
+
+            if (username != null && password != null) {
+                log.error("Login with {} and {}", username, password);
+            }
+        }
+
+
+
 
         //retrieve the list of JMRI connections as a string
         StringBuilder connList = new StringBuilder("");

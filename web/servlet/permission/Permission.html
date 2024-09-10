@@ -62,6 +62,14 @@
 						src="/resources/logo.gif" alt="JMRI Logo"></a>
 				</div>
 				<div class="col-md-10">
+					 <form action="/permission/login" method="post">
+						<label for="username">Username:</label><br>
+						<input type="text" id="username" name="username"><br>
+						<label for="password">Password:</label><br>
+						<input type="password" id="password" name="password">
+						<input type="submit" value="Log in">
+					 </form>
+<!--					
 					<ul class="list-group">
 						<li class="list-group-item"><em>JMRI &reg; version:</em> <strong>%6$s</strong></li>
 						<li class="list-group-item"><strong>%7$s</strong></li>
@@ -72,6 +80,7 @@
                         <li class="list-group-item"><em>WebSocket Support:</em> <strong>This browser <i><span id='websockettest'>does not support</span></i>
                          the <a href="https://en.wikipedia.org/wiki/WebSocket">WebSocket protocol</a>.</strong></li>
 					</ul>
+-->
 				</div><!-- /col-md-10 -->
 			</div><!-- /row -->
 
