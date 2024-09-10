@@ -197,7 +197,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             case GRADE:
             case TRAINICONX:
             case TRAINICONY:
-                return String.class; 
+                return String.class;
             case TRAIN_DIRECTION_COLUMN:
             case RANDOM_CONTROL_COLUMN:
             case PICKUP_COLUMN:
@@ -469,8 +469,16 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             log.error("Maximum departure length must be a postive number");
             return;
         }
-        if (length < 500 && Setup.getLengthUnit().equals(Setup.FEET) ||
-                length < 160 && Setup.getLengthUnit().equals(Setup.METER)) {
+        if (length > Setup.getMaxTrainLength()) {
+            log.error("Maximum departure length can not exceed maximum train length");
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("DepartureLengthNotExceed",
+                    length, Setup.getMaxTrainLength()), Bundle.getMessage("CanNotChangeMaxLength"),
+                    JmriJOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (rl != _route.getTerminatesRouteLocation() &&
+                (length < 500 && Setup.getLengthUnit().equals(Setup.FEET) ||
+                        length < 160 && Setup.getLengthUnit().equals(Setup.METER))) {
             // warn that train length might be too short
             if (JmriJOptionPane.showConfirmDialog(null, Bundle.getMessage("LimitTrainLength",
                     length, Setup.getLengthUnit().toLowerCase(), rl.getName()),
@@ -479,16 +487,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
                 return;
             }
         }
-        if (length > Setup.getMaxTrainLength()) {
-            log.error("Maximum departure length can not exceed maximum train length");
-            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("DepartureLengthNotExceed",
-                    length, Setup.getMaxTrainLength()), Bundle.getMessage("CanNotChangeMaxLength"),
-                    JmriJOptionPane.ERROR_MESSAGE);
-            return;
-        } else {
-            rl.setMaxTrainLength(length);
-            _maxTrainLength = length;
-        }
+        rl.setMaxTrainLength(length);
+        _maxTrainLength = length;
     }
 
     private void setGrade(Object value, RouteLocation rl) {
@@ -503,7 +503,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             rl.setGrade(grade);
         } else {
             log.error("Maximum grade is 6 percent");
-            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("MaxGrade"), Bundle.getMessage("CanNotChangeGrade"),
+            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("MaxGrade"),
+                    Bundle.getMessage("CanNotChangeGrade"),
                     JmriJOptionPane.ERROR_MESSAGE);
         }
     }
@@ -543,7 +544,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         JPanel buttonPane = new JPanel();
         buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER));
         dialog.add(buttonPane, BorderLayout.SOUTH);
-        
+
         // text color chooser
         JPanel pTextColor = new JPanel();
         pTextColor.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TextColor")));
