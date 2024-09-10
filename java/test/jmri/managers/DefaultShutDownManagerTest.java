@@ -303,6 +303,7 @@ public class DefaultShutDownManagerTest {
 
     @Test
     public void testEarlyTasks() {
+        dsdm.tasksTimeOutMilliSec = 1000; // normal default 30000 msecs but this is a test
         concurrentEarlyRuns = new ConcurrentHashMap<>(3);
         concurrentRuns = new ConcurrentHashMap<>(3);
         dsdm.tasksTimeOutMilliSec *= 2;
