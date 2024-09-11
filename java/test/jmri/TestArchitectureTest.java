@@ -117,8 +117,7 @@ public class TestArchitectureTest {
         .and().areNotDeclaredIn(jmri.util.junit.rules.RetryRuleTest.class)
         .should()
         .beAnnotatedWith(BeforeEach.class)
-        .orShould().beAnnotatedWith(BeforeAll.class)
-        .orShould().beAnnotatedWith(io.cucumber.java.Before.class);
+        .orShould().beAnnotatedWith(BeforeAll.class);
 
     /**
      * tearDown methods should normally use the org.junit.jupiter.api.AfterEach annotation.
@@ -135,8 +134,7 @@ public class TestArchitectureTest {
         .and().areNotDeclaredIn(jmri.util.junit.rules.RetryRuleTest.class)
         .should()
         .beAnnotatedWith(AfterEach.class)
-        .orShould().beAnnotatedWith(AfterAll.class)
-        .orShould().beAnnotatedWith(io.cucumber.java.After.class);
+        .orShould().beAnnotatedWith(AfterAll.class);
 
     /**
      * JMRI does not require PackageTest.class .
