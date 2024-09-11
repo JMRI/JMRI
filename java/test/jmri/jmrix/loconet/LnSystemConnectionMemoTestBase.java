@@ -30,6 +30,7 @@ abstract public class LnSystemConnectionMemoTestBase<M extends DefaultSystemConn
     public void tearDown() {
         JUnitUtil.removeMatchingThreads("LnPowerManager LnTrackStatusUpdateThread");
         JUnitUtil.removeMatchingThreads("LnSensorUpdateThread");
+        JUnitUtil.removeMatchingThreads("LocoNet" + LocoNetThrottledTransmitter.SERVICE_THREAD_NAME);
 
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
