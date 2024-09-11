@@ -2,8 +2,10 @@ package jmri;
 
 import org.junit.jupiter.api.*;
 
+import com.tngtech.archunit.core.domain.JavaMethod;
 import com.tngtech.archunit.core.domain.JavaModifier;
 import com.tngtech.archunit.lang.*;
+import com.tngtech.archunit.lang.syntax.ArchRuleDefinition;
 import com.tngtech.archunit.junit.*;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.*;
@@ -115,7 +117,8 @@ public class TestArchitectureTest {
         .and().areNotDeclaredIn(jmri.util.junit.rules.RetryRuleTest.class)
         .should()
         .beAnnotatedWith(BeforeEach.class)
-        .orShould().beAnnotatedWith(BeforeAll.class);
+        .orShould().beAnnotatedWith(BeforeAll.class)
+        .orShould().beAnnotatedWith(io.cucumber.java.Before.class);
 
     /**
      * tearDown methods should normally use the org.junit.jupiter.api.AfterEach annotation.
@@ -132,7 +135,8 @@ public class TestArchitectureTest {
         .and().areNotDeclaredIn(jmri.util.junit.rules.RetryRuleTest.class)
         .should()
         .beAnnotatedWith(AfterEach.class)
-        .orShould().beAnnotatedWith(AfterAll.class);
+        .orShould().beAnnotatedWith(AfterAll.class)
+        .orShould().beAnnotatedWith(io.cucumber.java.After.class);
 
     /**
      * JMRI does not require PackageTest.class .
@@ -164,5 +168,29 @@ public class TestArchitectureTest {
         .or().areAnnotatedWith(AfterAll.class)
         .should()
         .haveModifier(JavaModifier.ABSTRACT);
+
+    @ArchTest
+    public static final ArchRule no_empty_test_methods = 
+        ArchRuleDefinition.methods()
+            .that().areAnnotatedWith(Test.class)
+            .and().areNotAnnotatedWith(Disabled.class)
+            .and().areNotAnnotatedWith(jmri.util.junit.annotations.NotApplicable.class)
+            // java assert may be removed in compilation resulting in an empty method
+            .and().areNotDeclaredIn(jmri.util.junit.AssertTest.class)
+            .should(notBeEmpty())
+            .because("this saves invoking both the setUp and tearDown Class methods. "
+            +"Please use @Disabled or @jmri.util.junit.annotations.NotApplicable");
+
+    private static ArchCondition<JavaMethod> notBeEmpty() {
+        return new ArchCondition<>("not be empty") {
+            @Override
+            public void check(JavaMethod method, ConditionEvents events) {
+                if (method.getMethodCallsFromSelf().isEmpty() && method.getRawParameterTypes().isEmpty()) {
+                    String message = String.format("Method %s is empty", method.getFullName());
+                    events.add(SimpleConditionEvent.violated(method, message));
+                }
+            }
+        };
+    }
 
 }
