@@ -640,6 +640,10 @@
             <li><strong>Permissions</strong>, which was added in JMRI 5.9.3,
                 has a serious bug. If the user doesn't have permission to store,
                 it can still store when JMRI shutdown. That bug is now fixed.</li>
+            <li>New Permission user names are now case-insensitive and stored using
+                lower case. Existing Permission user names are unaffected by this
+                change.</li>
+            <li>Trying to log in as 'guest' is now returned with a dialog.</li>
             <li>Protected against an uncommon error that can happen 
                 when loading a file at startup on Windows.</li>
         </ul>
