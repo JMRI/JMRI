@@ -41,14 +41,14 @@
       <table>
           <tr><th>User</th><th>Password</th><th>Role</th></tr>
           <tr><td>admin</td><td>jmri</td><td>Administrator</td></tr>
-          <tr><td>Guest</td><td></td><td>Guest</td></tr>
+          <tr><td>guest</td><td></td><td>Guest</td></tr>
       </table>
       <p>These two users cannot be deleted. If you don't want to use the <strong>admin</strong> user,
       you can unselect all the roles. It will then not have any permissions at all.</p>
 
       <p>New users will get the <strong>Standard user</strong> role when created.</p>
 
-      <p>Note that the <strong>Guest</strong> user cannot have a password.</p>
+      <p>Note that the <strong>guest</strong> user cannot have a password.</p>
 
       <h2>Default permissions</h2>
       <h3>The current permissions are</h3>
@@ -113,8 +113,8 @@ sudo chmod 644 ~/.jmri/.permissions.xml
 
       <p>If JMRI is unable to connect to the layout during startup, a dialog is shown with the options
       <strong>Quit PanelPro</strong>, <strong>Continue</strong> and <strong>Edit connections</strong>.
-      If the permission manager is enabled, the guest user probably doesn't have the permission to
-      edit the connections. In this case, select <strong>Continue</strong> to start JMRI. When you
+      If the permission manager is enabled, a user with the Guest role probably doesn't have the permission
+      to edit the connections. In this case, select <strong>Continue</strong> to start JMRI. When you
       do, a dialog will open with the message <strong>Permission denied</strong>. Ignore that, log
       in with an authorized user and then open the preferences. Now edit the connection.</p>
 
