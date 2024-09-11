@@ -448,6 +448,11 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
             try {
                 num = Integer.parseInt(super.validateSystemNameFormat(name, locale)
                         .substring(getSystemNamePrefix().length()));
+                if (num < (aiuCabIdMin * 16)) {
+                    throw new NamedBean.BadSystemNameException(
+                            Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameBadAIUCab", name, aiuCabIdMin, aiuCabIdMax),
+                            Bundle.getMessage(locale, "InvalidSystemNameBadAIUCab", name, aiuCabIdMin, aiuCabIdMax));
+                }
                 parts[0] = Integer.toString((num / 16) + 1); // aiu cab
                 parts[1] = Integer.toString((num % 16) + 1); // aiu pin
             } catch (NumberFormatException ex) {
