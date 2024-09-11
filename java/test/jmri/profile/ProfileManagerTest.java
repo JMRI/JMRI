@@ -20,13 +20,13 @@ public class ProfileManagerTest {
 
     @Test
     public void testCTor() {
-        ProfileManager pm = new ProfileManager();
+        ProfileManager pm = ProfileManager.getDefault();
         Assert.assertNotNull("exists", pm);
     }
 
     @Test
     public void testSetActiveProfile_Profile(@TempDir File folder) throws IOException {
-        ProfileManager pm = new ProfileManager();
+        ProfileManager pm = ProfileManager.getDefault();
         // null profile
         pm.setActiveProfile((Profile) null);
         Assert.assertNull(pm.getActiveProfile());
@@ -40,7 +40,7 @@ public class ProfileManagerTest {
 
     @Test
     public void testSetActiveProfile_String(@TempDir File folder) throws IOException {
-        ProfileManager pm = new ProfileManager();
+        ProfileManager pm = ProfileManager.getDefault();
         // null profile
         pm.setActiveProfile((String) null);
         Assert.assertNull(pm.getActiveProfile());

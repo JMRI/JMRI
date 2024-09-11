@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
  * running program.
  * <p>
  * The "system name" referred to here is the human-readable name like "LocoNet 2"
- * which can be obtained from i.e. 
- * {@link jmri.SystemConnectionMemo#getUserName}. 
+ * which can be obtained from i.e.
+ * {@link jmri.SystemConnectionMemo#getUserName}.
  * Not clear whether {@link ConnectionConfig#getConnectionName} is correct.
  * It's not intended to be the prefix from i.e. {@link PortAdapter#getSystemPrefix}.
  * Maybe the right thing is to pass in the SystemConnectionMemo?
@@ -48,6 +48,15 @@ public class ConnectionStatus {
         }
         // log.debug("ConnectionStatus returns instance {}", _instance);
         return _instance;
+    }
+
+    // Used by ConnectionStatusTest
+    static synchronized void clearInstance() {
+        _instance = null;
+    }
+
+    private ConnectionStatus() {
+        // Private constructor to protect singleton
     }
 
     /**

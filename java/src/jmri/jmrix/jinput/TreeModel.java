@@ -1,17 +1,23 @@
 package jmri.jmrix.jinput;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.Arrays;
+
 import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+
 import jmri.util.SystemType;
+
 import net.java.games.input.Component;
 import net.java.games.input.Controller;
 import net.java.games.input.ControllerEnvironment;
 import net.java.games.input.Event;
 import net.java.games.input.EventQueue;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,6 +41,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright 2008, 2010
  */
+@SuppressFBWarnings(value = "SING_SINGLETON_IMPLEMENTS_SERIALIZABLE",
+        justification = "DefaultTreeModel implements Serializable")
 public final class TreeModel extends DefaultTreeModel {
 
     private TreeModel() {
@@ -276,7 +284,7 @@ public final class TreeModel extends DefaultTreeModel {
             jmri.util.HelpUtil.displayHelpRef("package.jmri.jmrix.jinput.treemodel.TreeFrame");
             return false;
         }
-        
+
         for (Controller controller : controllers()) {
             UsbNode controllerNode = null;
             UsbNode deviceNode = null;
