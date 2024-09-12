@@ -1,6 +1,5 @@
 package jmri.jmrit.ctc.editor;
 
-import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
 
@@ -12,7 +11,6 @@ import jmri.profile.NullProfile;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
 import org.netbeans.jemmy.EventTool;
@@ -23,16 +21,16 @@ import org.netbeans.jemmy.operators.*;
  *
  * @author Dave Sand Copyright (C) 2019
  */
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class CtcEditorSignalMastsTest {
 
-    JFrameOperator _jfo = null;
+    private JFrameOperator _jfo = null;
 
     static int DELAY = 0;  // if this is final, get dead code warnings
     static final boolean PAUSE = false;
 
     @Test
     public void testEditor() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // Load the test panel and initialize Logix and advanced block routing
         java.io.File f = new java.io.File("java/test/jmri/jmrit/ctc/configurexml/load/CTC_Test_Masts-SML.xml");  // NOI18N
@@ -400,7 +398,8 @@ public class CtcEditorSignalMastsTest {
         JFrameOperator frmRulesLeft = new JFrameOperator("Edit Left traffic locking rules");  // NOI18N
         Assert.assertNotNull(frmRulesLeft);
         if (PAUSE) JUnitUtil.waitFor(2000);
-        frmRulesLeft.close();
+        frmRulesLeft.requestClose();
+        frmRulesLeft.waitClosed();
 
         // Close the TRL summary
         new JButtonOperator(frmTRL, Bundle.getMessage("ButtonOK")).doClick();
@@ -572,8 +571,9 @@ public class CtcEditorSignalMastsTest {
 
     @Test
     public void testMakePanel() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertThrows(IllegalArgumentException.class, () -> new CtcEditorAction().makePanel());
+        Exception ex = Assertions.assertThrows(IllegalArgumentException.class, () ->
+            new CtcEditorAction().makePanel());
+        Assertions.assertNotNull(ex);
     }
 
     @BeforeEach
