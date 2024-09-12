@@ -81,7 +81,7 @@ public class TestArchitectureTest {
         .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.After");
 
     /**
-     * jmri should not reference org.apache.log4j to allow jmri
+     * JMRI should not reference org.apache.log4j to allow JMRI
      * to be used as library in applications that choose not to use Log4J.
      */
     @ArchTest
@@ -89,7 +89,8 @@ public class TestArchitectureTest {
         .that().doNotHaveFullyQualifiedName("jmri.util.JUnitAppender")
         .and().doNotHaveFullyQualifiedName("jmri.util.TestingLoggerConfiguration")
         .and().doNotHaveFullyQualifiedName("apps.jmrit.log.Log4JTreePaneTest")
-        .should().dependOnClassesThat().resideInAPackage("org.apache.logging.log4j");
+        .should().dependOnClassesThat().resideInAPackage("org.apache.logging.log4j")
+        .because("Tests should normally use org.slf4j.Logger instead of Log4J");
 
     /**
      * JMRI tests should use org.slf4j.Logger instead of JUL.
@@ -100,7 +101,8 @@ public class TestArchitectureTest {
         .and().doNotHaveFullyQualifiedName("jmri.util.TestingLoggerConfiguration") // tests jul routed to l4j OK
         .and().doNotHaveFullyQualifiedName("jmri.util.web.BrowserFactory") // 3rd party lib setup
         .and().doNotHaveFullyQualifiedName("jmri.web.WebServerAcceptanceSteps") // testing output from lib
-        .should().dependOnClassesThat().resideInAPackage("java.util.logging");
+        .should().dependOnClassesThat().resideInAPackage("java.util.logging")
+        .because("Tests should normally use org.slf4j.Logger instead of JUL");
 
     /**
      * setUp methods should normally use the org.junit.jupiter.api.BeforeEach annotation.
@@ -117,7 +119,8 @@ public class TestArchitectureTest {
         .and().areNotDeclaredIn(jmri.util.junit.rules.RetryRuleTest.class)
         .should()
         .beAnnotatedWith(BeforeEach.class)
-        .orShould().beAnnotatedWith(BeforeAll.class);
+        .orShould().beAnnotatedWith(BeforeAll.class)
+        .because("setUp methods should normally use the BeforeEach annotation");
 
     /**
      * tearDown methods should normally use the org.junit.jupiter.api.AfterEach annotation.
@@ -134,14 +137,16 @@ public class TestArchitectureTest {
         .and().areNotDeclaredIn(jmri.util.junit.rules.RetryRuleTest.class)
         .should()
         .beAnnotatedWith(AfterEach.class)
-        .orShould().beAnnotatedWith(AfterAll.class);
+        .orShould().beAnnotatedWith(AfterAll.class)
+        .because("tearDown methods should normally use the AfterEach annotation");
 
     /**
      * JMRI does not require PackageTest.class .
      */
     @ArchTest
     public static final ArchRule noJUnit4PackageTestsRule = noClasses()
-        .should().haveSimpleName("PackageTest");
+        .should().haveSimpleName("PackageTest")
+        .because("JMRI does not require PackageTest.class");
 
     /**
      * JUnit5 should not have abstract methods with Test annotation.
@@ -152,7 +157,8 @@ public class TestArchitectureTest {
         .that().areAnnotatedWith(Test.class)
         .or().areAnnotatedWith(org.junit.jupiter.params.ParameterizedTest.class)
         .should()
-        .haveModifier(JavaModifier.ABSTRACT);
+        .haveModifier(JavaModifier.ABSTRACT)
+        .because("The overriding method should have the Test annotation, not the abstract.");
 
     /**
      * JUnit5 should not have abstract methods with LifeCycle annotation.
@@ -165,8 +171,13 @@ public class TestArchitectureTest {
         .or().areAnnotatedWith(BeforeAll.class)
         .or().areAnnotatedWith(AfterAll.class)
         .should()
-        .haveModifier(JavaModifier.ABSTRACT);
+        .haveModifier(JavaModifier.ABSTRACT)
+        .because("The overriding method should have the Test Lifecycle annotation, not the abstract.");
 
+    /**
+     * Tests should not have empty methods
+     * as this saves invoking both the setUp and tearDown Class methods.
+     */
     @ArchTest
     public static final ArchRule no_empty_test_methods = 
         ArchRuleDefinition.methods()
