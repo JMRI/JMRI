@@ -146,6 +146,7 @@ public class DefaultCabSignalIT {
 
         // and close the editor window
         to.closeFrameWithConfirmations();
+        jmri.jmrit.display.EditorFrameOperator.clearEditorFrameOperatorThreads();
     }
 
     private void moveBlock(String startingBlock,String endingBlock) {
@@ -197,6 +198,7 @@ public class DefaultCabSignalIT {
         cs = null;
         InstanceManager.getDefault(jmri.IdTagManager.class).dispose();
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.resetWindows(false, false);
         JUnitUtil.tearDown();
     }
 

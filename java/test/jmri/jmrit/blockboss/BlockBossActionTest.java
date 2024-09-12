@@ -1,13 +1,10 @@
 package jmri.jmrit.blockboss;
 
 import jmri.util.JUnitUtil;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-import org.netbeans.jemmy.operators.JFrameOperator;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.*;
+
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  *
@@ -18,17 +15,18 @@ public class BlockBossActionTest {
     @Test
     public void testCtor() {
         BlockBossAction t = new BlockBossAction();
-        assertThat(t).withFailMessage("exists").isNotNull();
+        Assertions.assertNotNull(t, "exists");
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @jmri.util.junit.annotations.DisabledIfHeadless
     public void testAction() {
         BlockBossAction t = new BlockBossAction();
         t.actionPerformed(new java.awt.event.ActionEvent(this,1,"test action event"));
 
         JFrameOperator fo = new JFrameOperator(Bundle.getMessage("Simple_Signal_Logic"));
-        fo.close();
+        JUnitUtil.dispose(fo.getWindow());
+        fo.waitClosed();
     }
 
     @BeforeEach
