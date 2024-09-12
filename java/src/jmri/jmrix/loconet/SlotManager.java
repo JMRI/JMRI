@@ -13,9 +13,6 @@ import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 import jmri.jmrix.loconet.SlotMapEntry.SlotType;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Controls a collection of slots, acting as the counter-part of a LocoNet
  * command station.
@@ -1790,16 +1787,22 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @param inputSlotMap array of from to pairs
      * @param interval ms between slt rds
      */
-    synchronized public void update(List<SlotMapEntry> inputSlotMap, int interval) {
+    public synchronized void update(List<SlotMapEntry> inputSlotMap, int interval) {
         if (_rAS == null) {
             _rAS = new ReadAllSlots_Helper(  inputSlotMap, interval);
-            jmri.util.ThreadingUtil.newThread(_rAS, "Read All Slots ").start();
+            jmri.util.ThreadingUtil.newThread(_rAS, getUserName() + READ_ALL_SLOTS_THREADNAME).start();
         } else {
             if (!_rAS.isRunning()) {
-                jmri.util.ThreadingUtil.newThread(_rAS, "Read All Slots ").start();
+                jmri.util.ThreadingUtil.newThread(_rAS, getUserName() + READ_ALL_SLOTS_THREADNAME).start();
             }
         }
     }
+
+    /**
+     * String with name for Read all slots thread.
+     * Requires getUserName prepending.
+     */
+    public static final String READ_ALL_SLOTS_THREADNAME = " Read All Slots ";
 
     /**
      * Checks slotNum valid for slot map
@@ -1955,10 +1958,13 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         if (staleSlotCheckTimer != null) {
             staleSlotCheckTimer.stop();
         }
+        if ( _rAS != null ) {
+            _rAS.setAbort();
+        }
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SlotManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SlotManager.class);
 
     // Read all slots
     class ReadAllSlots_Helper implements Runnable {

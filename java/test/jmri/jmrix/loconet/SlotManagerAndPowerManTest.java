@@ -2,16 +2,16 @@ package jmri.jmrix.loconet;
 
 import jmri.JmriException;
 import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
-public class SlotManagerAndPowerMan {
+public class SlotManagerAndPowerManTest {
 
-        LocoNetInterfaceScaffold lnis;
-        LocoNetInterfaceScaffold controller;  // holds dummy for testing
-        LnPowerManager pwr;
-        SlotManager sm;
-        LocoNetSystemConnectionMemo memo;
+        private LocoNetInterfaceScaffold lnis;
+        private LnPowerManager pwr;
+        private SlotManager sm;
+        private LocoNetSystemConnectionMemo memo;
 
         @Test
         public void testPowerManagerSlotZero() throws JmriException {
@@ -80,7 +80,7 @@ public class SlotManagerAndPowerMan {
 
         @BeforeEach
         public void setUp() {
-            jmri.util.JUnitUtil.setUp();
+            JUnitUtil.setUp();
             memo = new LocoNetSystemConnectionMemo();
             lnis = new LocoNetInterfaceScaffold(memo);
             memo.setLnTrafficController(lnis);
@@ -91,6 +91,10 @@ public class SlotManagerAndPowerMan {
 
         @AfterEach
         public void tearDown() {
+            Assertions.assertNotNull(memo);
+            Assertions.assertNotNull(sm);
+            Assertions.assertNotNull(pwr);
+            memo.dispose();
             memo= null;
             sm.dispose();
             sm = null;

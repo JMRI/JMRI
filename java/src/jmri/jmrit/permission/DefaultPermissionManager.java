@@ -27,11 +27,11 @@ import org.jdom2.*;
 public class DefaultPermissionManager implements PermissionManager {
 
     private static final DefaultUser USER_GUEST =
-            new DefaultUser(Bundle.getMessage("PermissionManager_User_Guest"),
+            new DefaultUser(Bundle.getMessage("PermissionManager_User_Guest").toLowerCase(),
                     null, 50, "GUEST", new Role[]{DefaultRole.ROLE_GUEST});
 
     private static final DefaultUser USER_ADMIN =
-            new DefaultUser(Bundle.getMessage("PermissionManager_User_Admin"),
+            new DefaultUser(Bundle.getMessage("PermissionManager_User_Admin").toLowerCase(),
                     "jmri", 100, "ADMIN", new Role[]{DefaultRole.ROLE_ADMIN, DefaultRole.ROLE_STANDARD_USER});
 
     private final Map<String, Role> _roles = new HashMap<>();
@@ -316,11 +316,12 @@ public class DefaultPermissionManager implements PermissionManager {
     public User addUser(String username, String password)
             throws UserAlreadyExistsException {
 
-        if (_users.containsKey(username)) {
+        String u = username.toLowerCase();
+        if (_users.containsKey(u)) {
             throw new UserAlreadyExistsException();
         }
-        DefaultUser user = new DefaultUser(username,password);
-        _users.put(username, user);
+        DefaultUser user = new DefaultUser(u, password);
+        _users.put(u, user);
         return user;
     }
 
