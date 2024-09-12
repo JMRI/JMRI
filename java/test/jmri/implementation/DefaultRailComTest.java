@@ -82,9 +82,9 @@ public class DefaultRailComTest {
         };
 
         Date timeBefore = Calendar.getInstance().getTime();
-        Thread.sleep(5);
+        JUnitUtil.waitFor(5);
         r.setWhereLastSeen(rep);
-        Thread.sleep(5);
+        JUnitUtil.waitFor(5);
         Date timeAfter = Calendar.getInstance().getTime();
 
         Assert.assertEquals("Where last seen is 'IR1'", rep, r.getWhereLastSeen());
@@ -92,8 +92,8 @@ public class DefaultRailComTest {
         Date date = r.getWhenLastSeen();
         Assert.assertNotNull("When last seen is not null", date);
         Assert.assertEquals("Status is SEEN", RailCom.SEEN, r.getState());
-        Assert.assertTrue("Time when last seen is later than 'timeBefore'", r.getWhenLastSeen().after(timeBefore));
-        Assert.assertTrue("Time when last seen is earlier than 'timeAfter'", r.getWhenLastSeen().before(timeAfter));
+        Assert.assertTrue("Time when last seen is later than 'timeBefore'", date.after(timeBefore));
+        Assert.assertTrue("Time when last seen is earlier than 'timeAfter'", date.before(timeAfter));
 
         r.setWhereLastSeen(null);
         Assert.assertTrue("Time when last seen is later than 'timeBefore'", date.after(timeBefore));
@@ -175,7 +175,7 @@ public class DefaultRailComTest {
     }
 
     @Test
-    public void TestToReportString(){
+    public void testToReportString(){
         DefaultRailCom r = new DefaultRailCom("ID1234");
         Assert.assertEquals("Basic Report String", "Unknown Orientation Address 1234(L) " , r.toReportString());
 
@@ -201,10 +201,10 @@ public class DefaultRailComTest {
     @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalLightManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initRailComManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initRailComManager();
     }
 
     @AfterEach
