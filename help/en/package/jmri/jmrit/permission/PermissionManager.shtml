@@ -41,14 +41,14 @@
       <table>
           <tr><th>User</th><th>Password</th><th>Role</th></tr>
           <tr><td>admin</td><td>jmri</td><td>Administrator</td></tr>
-          <tr><td>Guest</td><td></td><td>Guest</td></tr>
+          <tr><td>guest</td><td></td><td>Guest</td></tr>
       </table>
       <p>These two users cannot be deleted. If you don't want to use the <strong>admin</strong> user,
       you can unselect all the roles. It will then not have any permissions at all.</p>
 
       <p>New users will get the <strong>Standard user</strong> role when created.</p>
 
-      <p>Note that the <strong>Guest</strong> user cannot have a password.</p>
+      <p>Note that the <strong>guest</strong> user cannot have a password.</p>
 
       <h2>Default permissions</h2>
       <h3>The current permissions are</h3>
@@ -113,10 +113,30 @@ sudo chmod 644 ~/.jmri/.permissions.xml
 
       <p>If JMRI is unable to connect to the layout during startup, a dialog is shown with the options
       <strong>Quit PanelPro</strong>, <strong>Continue</strong> and <strong>Edit connections</strong>.
-      If the permission manager is enabled, the guest user probably doesn't have the permission to
-      edit the connections. In this case, select <strong>Continue</strong> to start JMRI. When you
+      If the permission manager is enabled, a user with the Guest role probably doesn't have the permission
+      to edit the connections. In this case, select <strong>Continue</strong> to start JMRI. When you
       do, a dialog will open with the message <strong>Permission denied</strong>. Ignore that, log
       in with an authorized user and then open the preferences. Now edit the connection.</p>
+
+      <h2>Permission failure during PanelPro shutdown</h2>
+
+      <p>The normal PanelPro shutdown process checks for changes that have not been stored.  If
+      change detection is enabled, changes have been made and the user is not authorized to store
+      changes, a dialog is displayed.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/shutdown-abort.png"><img src="images/shutdown-abort.png"
+         alt="abort shutdown question"></a>
+      </div>
+
+      <p>If it is possible to login with the necessary authority, then click on <strong>Yes</strong>,
+      login and do the store process.  If not, click on <strong>No</strong>.</p>
+
+      <p>For production environments, change detection can be disabled. This will eliminate shutdown
+      issues.  See the <a href="../../../apps/TabbedPreferences.shtml#Shutdown">Shutdown</a>
+      preference.</p>
+
+
 
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>

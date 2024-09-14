@@ -49,6 +49,11 @@ public class NceProgrammerManagerTest {
 
         memo = new NceSystemConnectionMemo();
         memo.setNceTrafficController(new NceTrafficController());
+        
+        NceCmdStationMemory t = new NceCmdStationMemory();
+        Assert.assertNotNull("exists",t);
+        memo.getNceTrafficController().csm = t;
+
         memo.configureManagers();
     }
 

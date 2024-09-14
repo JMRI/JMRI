@@ -27,7 +27,7 @@ public class NceCmdStationMemory {
      * give min cab id
      */
     public int getCabMin() {
-        return 0;    // min number for cab memory slot
+        return 1;    // min number for cab memory slot
     }
     
     /*

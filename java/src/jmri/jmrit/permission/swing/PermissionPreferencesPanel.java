@@ -72,8 +72,15 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
                 "PermissionPreferencesPanel_EnablePermissionManager"));
         enablePermissionManagerCheckBox.setSelected(permissionManager.isEnabled());
         enablePermissionManagerCheckBox.addActionListener((evt) -> {
-            permissionManager.setEnabled(enablePermissionManagerCheckBox.isSelected());
-            _dirty = true;
+            if (enablePermissionManagerCheckBox.isSelected()) {
+                // Ask for confirmation before turning Permission Manager on
+                if (JmriJOptionPane.YES_OPTION == JmriJOptionPane.showConfirmDialog(null, Bundle.getMessage("PermissionPreferencesPanel_WarnStartPermissions"), Bundle.getMessage("WarningTitle"), JmriJOptionPane.YES_NO_OPTION)) {
+                    permissionManager.setEnabled(enablePermissionManagerCheckBox.isSelected());
+                    _dirty = true;
+                } else {
+                    enablePermissionManagerCheckBox.setSelected(false);
+                }
+            }
         });
         settingsPanel.add(enablePermissionManagerCheckBox);
 

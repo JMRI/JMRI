@@ -25,7 +25,8 @@ public class LocoNetThrottledTransmitterTest {
     @Test
     public void testMemoCtor() {
         LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(new LocoNetInterfaceScaffold(memo), false);
-        new LocoNetThrottledTransmitter.Memo(null, 100, TimeUnit.MILLISECONDS);
+        Assertions.assertNotNull(
+            new LocoNetThrottledTransmitter.Memo(null, 100, TimeUnit.MILLISECONDS));
 
         q.dispose();
         JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
@@ -143,7 +144,7 @@ public class LocoNetThrottledTransmitterTest {
         JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
     }
 
-    LocoNetSystemConnectionMemo memo;
+    private LocoNetSystemConnectionMemo memo;
 
     @BeforeEach
     public void setUp() {
@@ -153,6 +154,9 @@ public class LocoNetThrottledTransmitterTest {
 
     @AfterEach
     public void tearDown() {
+        Assertions.assertNotNull(memo);
+        memo.dispose();
+        JUnitUtil.waitThreadTerminated(memo.getUserName() + LocoNetThrottledTransmitter.SERVICE_THREAD_NAME);
         memo = null;
         JUnitUtil.tearDown();
     }

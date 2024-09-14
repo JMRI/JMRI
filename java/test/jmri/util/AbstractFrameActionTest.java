@@ -1,10 +1,8 @@
 package jmri.util;
 
-import java.awt.GraphicsEnvironment;
-
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
@@ -21,9 +19,8 @@ public class AbstractFrameActionTest {
     }
 
     @Test
-    @SuppressWarnings("deprecation") // WindowOperations.close()
+    @jmri.util.junit.annotations.DisabledIfHeadless
     public void testAction() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AbstractFrameAction t = new AbstractFrameAction("TestAction","jmri.util.JmriJFrame"){
         };
         t.actionPerformed(new java.awt.event.ActionEvent(this,1,"test action event"));
@@ -32,7 +29,8 @@ public class AbstractFrameActionTest {
         Assert.assertNotNull("found output frame", f);
         // then close the frame.
         JFrameOperator fo = new JFrameOperator(f);
-        fo.close();
+        fo.requestClose();
+        fo.waitClosed();
 
     }
 

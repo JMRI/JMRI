@@ -47,6 +47,9 @@ public class JmriFacelessTest {
         Assert.assertNotNull(a);
         // shutdown the application
         AppsBase.handleQuit();
+        JUnitUtil.waitFor( () ->
+           ((jmri.managers.DefaultShutDownManager)jmri.InstanceManager.getDefault(jmri.ShutDownManager.class)).
+            isShutDownComplete(),"Shutdown complete");
     }
 
     @BeforeEach

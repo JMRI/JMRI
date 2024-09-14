@@ -54,8 +54,8 @@ public class ConsistListCellRenderer extends JLabel implements ListCellRenderer<
                     } else {
                         icon = InstanceManager.getDefault(RosterIconFactory.class).getReversedIcon(reName);
                     }
-                    if (icon != null) {                        
-                        BufferedImage ti = new BufferedImage( bi.getWidth() + icon.getIconWidth(), IMAGE_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+                    if ( (icon != null) && (bi.getWidth() + icon.getIconWidth() > 0) ) {                        
+                        BufferedImage ti = new BufferedImage(bi.getWidth() + icon.getIconWidth(), IMAGE_HEIGHT, BufferedImage.TYPE_INT_ARGB);
                         Graphics g = ti.createGraphics();
                         g.drawImage(icon.getImage(), ti.getHeight()/2-icon.getIconHeight()/2, 0, null);
                         g.drawImage(bi, icon.getIconWidth(), 0, null);           

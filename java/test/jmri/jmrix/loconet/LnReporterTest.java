@@ -102,8 +102,11 @@ public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase
         Assert.assertEquals("MessageFromManagerFindReport- check last loco after message 1",
                 7, ((LnReporter) r).lastLoco);
 
+        var location = ((IdTag) ((LnReporter) r).getCurrentReport()).getWhereLastSeen();
+        Assertions.assertNotNull(location);
         Assert.assertEquals("MessageFromManagerFindReport- check location last seen after message 1",
-                "LR3", ((IdTag) ((LnReporter) r).getCurrentReport()).getWhereLastSeen().toString());
+                "LR3", location.toString());
+
         Assert.assertEquals("MessageFromManagerFindReport- check ID last seen after message 1",
                 "LD7", ((IdTag) ((LnReporter) r).getCurrentReport()).getDisplayName());
 
@@ -132,7 +135,7 @@ public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase
     @Test
     public void testLnReporterGetLocoAddress() {
         LocoAddress t = ((LnReporter) r).getLocoAddress("7413 enter");
-        Assert.assertEquals("getLocoAddress 7431 enter", t.getNumber(), 7413);
+        Assertions.assertEquals( 7413, t.getNumber(), "getLocoAddress 7431 enter");
 
         LocoAddress t2 = ((LnReporter) r).getLocoAddress(null);
         Assert.assertNull("getLocoAddress <null>", t2);
@@ -365,8 +368,8 @@ public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase
     }
 
     @Test
+    @Disabled("Test requires further development")
     public void testGetDriectionString() {
-
     }
 
     @Test
@@ -397,7 +400,8 @@ public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase
     public void setUp() {
         JUnitUtil.setUp();
         tc = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
-        new TranspondingTagManager(); // this class registers itself.
+        TranspondingTagManager t = new TranspondingTagManager(); // this class registers itself.
+        Assertions.assertNotNull(t);
         r = new LnReporter(3, tc, "L");
     }
 

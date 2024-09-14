@@ -126,24 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>OpenLCB_Java lib updated to release 0.8.1, which includes:
-                    <ul>
-                        <li>Better GUI for the node selection tool, which improves
-                            layout of the firmware upgrade window, send tool window,
-                            memory tool window and other places.
-                        <li>Event ID fields now have a contextual menu to assist in
-                            specifying well-known events, time (clock) events, and
-                            DCC accessory decoder events.  These are also available
-                            from the "More..." buttons on the CDI window.
-                    </ul>
-                </li>
-                <li>Improve memory tools:
-                    <ul>
-                        <li>Allow selection of space 0 - 255 in Memory R/W tool and Send Frame Tool
-                        <li>Improve display of available spaces by omitting missing spaces to reduce length of display
-                    </ul>
-                <li>Send Frame tool will no longer allow you to access CDI if there's no CDI in the node.
-                    This prevents you from accidentally getting into a confusing situation.
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -243,12 +226,7 @@
 
         <h4>ESU</h4>
             <ul>
-                <li>Added LokPilot 5 micro DCC Direct</li>
-                <li>Added LokPilot 5 nano DCC</li>
-                <li>Added LokSound 5 micro DCC Direct Atlas S2</li>
-                <li>Added LokSound 5 nano DCC Next18</li>
-                <li>Updated LokPilot 5 L and 5L DCC productIDs</li>
-              
+                <li></li>
             </ul>
 
         <h4>Hornby</h4>
@@ -421,15 +399,13 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Will now show decoder family and model comments if you
-                hover your mouse over the decoder selection tree.</li>
+            <li></li>
         </ul>
 
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>For trains with HEAD ONLY detection release sections by length.</li>
-             <li>When train exits section leave coloured as allocated until released.</li>
+             <li></li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -447,7 +423,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>Enable control circle colors and the fill option for slip turnouts.</li>
+            <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -476,11 +452,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>New feature, print or preview trains serving a location or track.</li>
-            <li>Locos set out to a spur or interchange now obey which train or routes service the track.</li>
-            <li>Cabooses and cars with FRED without a final destination can now use staging that only allows cars with an final destination.</li>
-            <li>There's now an option to leave cars in staging for trains that return to the same staging track. See "Allow cars to return to staging" for more details.</li>
-            <li>There's a new Manifest feature that allows you group all "Moves" together. See "Manifest Print Options".</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -492,9 +464,7 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li>Added text to "start Up" Preferences to note that optimal XML file
-                loading should be done <em>before</em> "Opening" <u>any</u>
-                "Table".</li>
+            <li></li>
         </ul>
 
     <h3>Resources</h3>
@@ -512,14 +482,13 @@
     <h3>Routes</h3>
         <a id="Routes" name="Routes"></a>
        <ul>
-            <li>When you're editing a Route, the window will now close when you hit Update.
-                This makes this edit window behave like other ones.</li>
+            <li></li>
        </ul>
 
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>The Jython library has been updated to version 2.7.4</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -631,6 +600,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Protected against an uncommon error that can happen 
-                when loading a file at startup on Windows.</li>
+            <li></li>
         </ul>
+
