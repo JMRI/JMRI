@@ -381,7 +381,7 @@ public class DefaultPermissionManager implements PermissionManager {
             if (newUser == null || !newUser.checkPassword(password)) {
                 return false;
             }
-            if (sessionId.isEmpty()) {
+            if (sessionId.length() == 0) {
                 sessionId.append(DefaultUser.getRandomString(10));
             }
             _remoteUsers.put(sessionId.toString(), newUser);
