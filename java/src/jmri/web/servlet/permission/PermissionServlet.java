@@ -10,14 +10,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
 import jmri.*;
-import jmri.profile.Profile;
-import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
 import jmri.web.servlet.ServletUtil;
 
 import org.openide.util.lookup.ServiceProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -57,7 +53,6 @@ public class PermissionServlet extends HttpServlet {
         //print the html, using the replacement values listed to fill in the calculated stuff
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
         response.setContentType(UTF8_TEXT_HTML);
-        Profile profile = ProfileManager.getDefault().getActiveProfile();
         response.getWriter().print(String.format(request.getLocale(),
                 FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), page))),
                 Bundle.getMessage(request.getLocale(), "PermissionTitle"),                              // page title is parm 1
@@ -212,6 +207,6 @@ public class PermissionServlet extends HttpServlet {
         return "About Servlet";
     }// </editor-fold>
 
-    private final static Logger log = LoggerFactory.getLogger(PermissionServlet.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PermissionServlet.class);
 
 }
