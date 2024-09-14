@@ -37,7 +37,6 @@ import jmri.server.json.util.JsonUtilHttpService;
 import jmri.util.FileUtil;
 import jmri.web.server.WebServer;
 import jmri.web.servlet.ServletUtil;
-import jmri.web.servlet.panel.Bundle;
 import jmri.web.servlet.permission.PermissionServlet;
 import jmri.RemotePermissions;
 
