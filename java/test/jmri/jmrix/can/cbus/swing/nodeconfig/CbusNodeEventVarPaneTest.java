@@ -1,14 +1,12 @@
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeEvent;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -17,20 +15,19 @@ import org.netbeans.jemmy.operators.*;
  * @author Paul Bender Copyright (C) 2016
  * @author Steve Young Copyright (C) 2019
  */
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class CbusNodeEventVarPaneTest {
     
     private CbusNodeEventVarPane t;
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         t = new CbusNodeEventVarPane(null);
         Assert.assertNotNull("exists",t);
     }
 
     @Test
     public void testIntComponents() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         t = new CbusNodeEventVarPane(null);
         t.initComponents(null);
         Assert.assertNotNull("exists",t);
@@ -38,7 +35,6 @@ public class CbusNodeEventVarPaneTest {
     
     @Test
     public void testSetNodeNull() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         t = new CbusNodeEventVarPane(null);
         t.initComponents(null);
         t.setNode(null);
@@ -47,7 +43,6 @@ public class CbusNodeEventVarPaneTest {
     
     @Test
     public void testSetNodeInGui() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         t = new CbusNodeEventVarPane(null);
         t.initComponents(null);
         
@@ -82,7 +77,9 @@ public class CbusNodeEventVarPaneTest {
         newNode.getNodeParamManager().setParameters(new int[]{8,1,2,3,4,-1,6,7,8});
         t.setNode(newNode);
         Assert.assertFalse("Button Not Enabled",getNewEventButtonEnabled(jfo));
-        
+
+        JUnitUtil.dispose(f);
+
     }
     
     private boolean getNewEventButtonEnabled( JFrameOperator jfo ){
