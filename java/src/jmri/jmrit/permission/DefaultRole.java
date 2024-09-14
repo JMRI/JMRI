@@ -14,6 +14,9 @@ public class DefaultRole implements Role {
     public static final Role ROLE_GUEST =
             new DefaultRole(Bundle.getMessage("Role_Guest"),50,"GUEST");
 
+    public static final Role ROLE_REMOTE_GUEST =
+            new DefaultRole(Bundle.getMessage("Role_Remote_Guest"),40,"REMOTE_GUEST");
+
     public static final Role ROLE_STANDARD_USER =
             new DefaultRole(Bundle.getMessage("Role_StandardUser"),10,"STANDARD_USER");
 

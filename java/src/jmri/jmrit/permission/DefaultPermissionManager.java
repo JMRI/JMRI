@@ -25,7 +25,7 @@ public class DefaultPermissionManager implements PermissionManager {
 
     private static final DefaultUser REMOTE_USER_GUEST =
             new DefaultUser(Bundle.getMessage("PermissionManager_Remote_User_Guest"),
-                    null, 50, "GUEST", new Role[]{DefaultRole.ROLE_GUEST});
+                    null, 50, "REMOTE_GUEST", new Role[]{DefaultRole.ROLE_REMOTE_GUEST});
 
     private static final DefaultUser USER_ADMIN =
             new DefaultUser(Bundle.getMessage("PermissionManager_User_Admin").toLowerCase(),
@@ -46,6 +46,7 @@ public class DefaultPermissionManager implements PermissionManager {
 
     synchronized DefaultPermissionManager init() {
         _roles.put(DefaultRole.ROLE_GUEST.getName(), DefaultRole.ROLE_GUEST);
+        _roles.put(DefaultRole.ROLE_REMOTE_GUEST.getName(), DefaultRole.ROLE_REMOTE_GUEST);
         _roles.put(DefaultRole.ROLE_STANDARD_USER.getName(), DefaultRole.ROLE_STANDARD_USER);
         _roles.put(DefaultRole.ROLE_ADMIN.getName(), DefaultRole.ROLE_ADMIN);
 
