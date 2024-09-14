@@ -15,11 +15,11 @@ public class RemotePermissions {
     public static final Permission PERMISSION_VIEW_PANELS =
             new PermissionViewPanels();
 
-    public static final Permission PERMISSION_LIST_NAMED_BEANS =
-            new PermissionListNamedBeans();
+//    public static final Permission PERMISSION_LIST_NAMED_BEANS =
+//            new PermissionListNamedBeans();
 
-    public static final Permission PERMISSION_CHANGE_STATE_NAMED_BEANS =
-            new PermissionChangeStateNamedBeans();
+//    public static final Permission PERMISSION_CHANGE_STATE_NAMED_BEANS =
+//            new PermissionChangeStateNamedBeans();
 
 
     @ServiceProvider(service = PermissionFactory.class)
@@ -29,8 +29,8 @@ public class RemotePermissions {
         public void register(PermissionManager manager) {
             manager.registerOwner(PERMISSION_OWNER_REMOTE);
             manager.registerPermission(PERMISSION_VIEW_PANELS);
-            manager.registerPermission(PERMISSION_LIST_NAMED_BEANS);
-            manager.registerPermission(PERMISSION_CHANGE_STATE_NAMED_BEANS);
+//            manager.registerPermission(PERMISSION_LIST_NAMED_BEANS);
+//            manager.registerPermission(PERMISSION_CHANGE_STATE_NAMED_BEANS);
         }
 
     }

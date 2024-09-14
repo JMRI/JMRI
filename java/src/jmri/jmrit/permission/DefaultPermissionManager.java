@@ -143,14 +143,7 @@ public class DefaultPermissionManager implements PermissionManager {
                         if (permission != null) {
                             ((DefaultRole)role).setPermissionWithoutCheck(permission, enabled);
                         } else {
-                            String msg = String.format("Permission class %s does not exists", className);
-                            if (!GraphicsEnvironment.isHeadless()) {
-                                JmriJOptionPane.showMessageDialog(null,
-                                        msg,
-                                        jmri.Application.getApplicationName(),
-                                        JmriJOptionPane.ERROR_MESSAGE);
-                            }
-                            log.error(msg);
+                            log.error("Permission class {} does not exists", className);
                         }
                     }
                 }
