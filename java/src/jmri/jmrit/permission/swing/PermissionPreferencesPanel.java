@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import jmri.*;
+import jmri.Permission.PermissionComparator;
 import jmri.jmrit.permission.DefaultPermissionManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.swing.JmriJOptionPane;
@@ -222,31 +223,49 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
 
     private JPanel getRolePanel(Role role, JTabbedPane rolesTabbedPane,
             JTabbedPane usersTabbedPane, List<Role> roleList, List<User> userList) {
+
         JPanel rolePanel = new JPanel();
-        rolePanel.setLayout(new BoxLayout(rolePanel, BoxLayout.PAGE_AXIS));
+        rolePanel.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridwidth = 2;
+        c.gridheight = 1;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.anchor = java.awt.GridBagConstraints.WEST;
 
         JLabel roleLabel = new JLabel("<html><font size=\"+1\"><b>"+role.getName()+"</b></font></html>");
         roleLabel.setBorder(new EmptyBorder(4,4,0,4));
-        rolePanel.add(roleLabel);
+        rolePanel.add(roleLabel, c);
+        c.gridy++;
 
-        for (PermissionOwner owner : permissionManager.getOwners()) {
-            JPanel ownerPanel = new JPanel();
-            ownerPanel.setLayout(new BoxLayout(ownerPanel, BoxLayout.PAGE_AXIS));
+        List<PermissionOwner> owners = new ArrayList<>(permissionManager.getOwners());
+        owners.sort((a,b) -> {return a.getName().compareTo(b.getName());});
+        for (PermissionOwner owner : owners) {
 
             JLabel ownerLabel = new JLabel("<html><font size=\"0.5\"><b>"+owner.getName()+"</b></font></html>");
             ownerLabel.setBorder(new EmptyBorder(15,4,4,4));
-            rolePanel.add(ownerLabel);
+            rolePanel.add(ownerLabel, c);
+            c.gridy++;
 
-            for (Permission permission : permissionManager.getPermissions(owner)) {
+            List<Permission> permissions = new ArrayList<>(permissionManager.getPermissions(owner));
+            permissions.sort(new PermissionComparator());
+            for (Permission permission : permissions) {
                 JCheckBox checkBox = new JCheckBox(permission.getName());
                 checkBox.setSelected(role.hasPermission(permission));
                 checkBox.addActionListener((evt) -> {
                     role.setPermission(permission, checkBox.isSelected());
                     _dirty = true;
                 });
-                ownerPanel.add(checkBox);
+                if (permission.getParent() != null) {
+                    c.gridwidth = 1;
+                    rolePanel.add(Box.createHorizontalStrut(20), c);
+                    c.gridx = 1;
+                }
+                rolePanel.add(checkBox, c);
+                c.gridy++;
+                c.gridx = 0;
+                c.gridwidth = 2;
             }
-            rolePanel.add(ownerPanel);
         }
 
         rolePanel.add(Box.createVerticalStrut(10));

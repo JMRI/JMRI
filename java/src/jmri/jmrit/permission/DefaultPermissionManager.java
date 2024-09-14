@@ -33,8 +33,8 @@ public class DefaultPermissionManager implements PermissionManager {
 
     private final Map<String, Role> _roles = new HashMap<>();
     private final Map<String, DefaultUser> _users = new HashMap<>();
-    private final Set<PermissionOwner> _owners = new TreeSet<>((a,b) -> { return a.getName().compareTo(b.getName()); });
-    private final Set<Permission> _permissions = new TreeSet<>((a,b) -> { return a.getName().compareTo(b.getName()); });
+    private final Set<PermissionOwner> _owners = new HashSet<>();
+    private final Set<Permission> _permissions = new HashSet<>();
     private final Map<String, Permission> _permissionClassNames = new HashMap<>();
     private final List<LoginListener> _loginListeners = new ArrayList<>();
     private final Map<String, DefaultUser> _remoteUsers = new HashMap<>();
@@ -77,7 +77,7 @@ public class DefaultPermissionManager implements PermissionManager {
     }
 
     public synchronized Set<Permission> getPermissions(PermissionOwner owner) {
-        Set<Permission> set = new TreeSet<>((a,b) -> {return a.getName().compareTo(b.getName());});
+        Set<Permission> set = new HashSet<>();
         for (Permission p : _permissions) {
             if (p.getOwner().equals(owner)) {
                 set.add(p);
