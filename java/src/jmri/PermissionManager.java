@@ -67,7 +67,7 @@ public interface PermissionManager {
      * Login locally to JMRI.
      * @param username the username
      * @param password the password
-     * @return
+     * @return true if login was successful, false otherwise
      */
     boolean login(String username, String password);
 
