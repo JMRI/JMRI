@@ -755,22 +755,23 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </p>
 
       <p>
-        The next window to try is the <a href="#Cars">cars</a> window. This is where you enter the
-        non-powered rolling stock for your railroad. Press the "Add" button at the bottom of the <a
-          href="#Cars">cars</a> window and the <a href="#CarsEdit">add car</a> window will allow you
-        to enter cars into your operations database. Be sure to place the cars on a track using the
-        "Location and Track" field found in either the <a href="#CarsEdit">add / edit car</a> or <a
-          href="#CarsSet">set car</a> window. The program works best if you keep at least 20% of
-        your tracks empty, so don't place too many cars on tracks until you understand how the
-        program builds trains.
+        The next window to try is the <a href="#Cars">cars</a> window. This is where you enter or <a
+          href="#ImportingCars">import from a file</a> the non-powered rolling stock for your
+        railroad. Press the "Add" button at the bottom of the <a href="#Cars">cars</a> window and
+        the <a href="#CarsEdit">add car</a> window will allow you to enter cars into your operations
+        database. Be sure to place the cars on a track using the "Location and Track" field found in
+        either the <a href="#CarsEdit">add / edit car</a> or <a href="#CarsSet">set car</a> window.
+        The program works best if you keep at least 20% of your tracks empty, so don't place too
+        many cars on tracks until you understand how the program builds trains.
       </p>
 
       <p>
         The <a href="#Locomotives">locomotives</a> window is similar to the <a href="#Cars">cars</a>
-        window and allows you to enter locomotives for your trains. Entering and requiring
-        locomotives for your trains is completely optional, and locomotives are not needed for the
-        program to operate correctly. So if you want to manually assign your locomotives to your
-        trains, don't bother entering the locomotive data into the program.
+        window and allows you to enter or <a href="#ImportLocomotives">import</a> locomotives for
+        your trains. <a href="#LocomotivesAdd">Entering</a> and requiring locomotives for your
+        trains is completely optional, and locomotives are not needed for the program to operate
+        correctly. So if you want to manually assign your locomotives to your trains, don't bother
+        entering the locomotive data into the program.
       </p>
 
       <p>
@@ -3050,7 +3051,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <p>
         Note that it is okay to create more classification tracks or "virtual tracks" then there are
-        physical tracks in your classification yard. The cars can share common tracks until its time
+        physical tracks in your classification yard. The cars can share common tracks until it's time
         to finally sort them into their various destinations or trains. You can also use the <a
           href="#Pools">Track Pools</a> feature to share the track space in your yard.
       </p>
@@ -3182,7 +3183,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         to 900 divided by 3 or 300 scale feet.</p>
 
       <p>Note that when using this feature you need to correctly terminate trains in the order
-        they arrive into staging.</p>
+        they arrive into staging. The program uses the car's last moved date and time to determine
+        the order trains arrived into staging.</p>
 
       <h3 id="StagingAndCarLoads">Staging and Car loads</h3>
       Staging tracks can optionally swap the car default loads from empty to loaded, and loaded to
@@ -3446,7 +3448,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         Normal, FIFO, and LIFO. "Normal" selects a departure track based on usage, tracks with the
         least use are selected first. You would not use "Normal" when there are two or more trains
         on one physical track. "FIFO" selects the first train to arrive into staging for departure,
-        and "LIFO" selects the last train to arrive for departure.
+        and "LIFO" selects the last train to arrive for departure. The program uses the car's last
+        moved date and time to determine the order trains arrived into staging, so the order you
+        terminate the trains is very important if you use FIFO or LIFO modes.
       </p>
 
       <p>Note that the program normally selects a departure track out of staging by usage. If
@@ -3508,7 +3512,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         the car to the spur's alternate track. This is done to free up space at the spur, allowing
         the program to move inbound cars from the alternate to the spur. Once the first hop
         interchanges or yards get cleared, the program will assign the outbound car to the available
-        interchange or yard and the car will continue to it's final destination.</p>
+        interchange or yard and the car will continue to its final destination.</p>
 
       <h4 id="PlannedPickUps">Planned Pick Ups</h4>
       The program when searching for tracks to set out cars, checks to see if there's space
@@ -3881,15 +3885,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       cars with coal, and HopCoal-E for the empties, the program can use this information to assign
       and deliver cars to their appropriate trains and locations respectively.
 
-      <h4 id="CabooseFredHazardous">Passenger, Caboose, FRED, Utility, and Hazardous Checkboxes</h4>
+      <h4 id="CabooseFredHazardous">Passenger, Caboose, FRED, Utility, and Hazardous checkboxes</h4>
+
+      <h4>Passenger checkbox</h4>
       If the car is used in passenger service select the passenger checkbox. The program will place
       passenger cars towards the rear of a mixed service (combination of passenger and freight cars)
       train when the "Car Blocking Order" numbers are positive, and at the front of the train if the
-      blocking numbers are negative. If the car is a caboose, has a FRED (Flashing Rear End Device),
-      or is hazardous independent of the car's load, select the proper checkbox. The program uses
-      the caboose and FRED options to place the car at the end of a train when the train requires a
-      caboose or car with FRED. Note that you can also use the passenger blocking feature to place a
-      caboose or car with FRED anywhere needed in a train.
+      blocking numbers are negative.
 
       <p>When the passenger checkbox is selected, a new field called "Car Blocking Order" will
         appear. The text box allows you to enter a number between -100 and 100 and this gives you
@@ -3901,17 +3903,32 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         value, cars in the middle of the train could use "50". Later you can fine tune your
         passenger trains by using the other numbers that are available.</p>
 
-      <p>The program allows passenger cars, cabooses, and cars with FRED to return to their
-        original location and track. The passenger option is also useful for any car that needs to
-        ride a train. For example MOW, milk, and buffer cars can use the passenger option to ride
-        and return to their original track.</p>
+      <p>The passenger option is also useful for any car that needs to ride a train. For example
+        MOW, milk, and buffer cars can use the passenger option to ride and return to their original
+        track.</p>
 
-      <p>When the utility checkbox is selected, it instructions the program when printing
-        Manifests and switch lists to not show the individual car's road and number, but rather the
-        quantity of cars needed of that type. For example, prototype unit trains when shipping coal
-        don't normally list the cars in the train by the car's road number but instead it shows the
-        number of cars, the type of car, and the car's load on the train's Manifest. The color of
-        utility cars isn't shown on Manifests and switch lists.</p>
+      <h4>Caboose or FRED checkbox</h4>
+      If the car is a caboose or has a FRED (Flashing Rear End Device) select the respective
+      checkbox. The program uses the caboose and FRED options to place the car at the end of a train
+      when the train <a href="#OptionalLastCar">requires</a> a caboose or car with FRED. Note that
+      you can also select the passenger checkbox to use the blocking feature allowing you to place a
+      caboose or car with FRED anywhere needed in a train.
+
+      <p>
+        The program can optionally add, remove, or swap a caboose in a train's route. See <a
+          href="#OptionalTrainRequirements">Locomotive or Caboose Changes en Route</a> for more
+        information.
+      </p>
+
+      <p>The program allows passenger cars, cabooses, and cars with FRED to return to their
+        original location and track.
+      <h4>Utility checkbox</h4>
+      When the utility checkbox is selected, it instructions the program when printing Manifests and
+      switch lists to not show the individual car's road and number, but rather the quantity of cars
+      needed of that type. For example, prototype unit trains when shipping coal don't normally list
+      the cars in the train by the car's road number but instead it shows the number of cars, the
+      type of car, and the car's load on the train's Manifest. The color of utility cars isn't shown
+      on Manifests and switch lists.
 
       <p>If you use the utility feature, it is strongly recommended that you select the utility
         feature for all cars of a given type. Since the car's road and number isn't displayed on the
@@ -3919,12 +3936,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         and find a car by its road number, it could very well have been shipped out on an earlier
         train. So you have to decide, use road numbers or not for a given type of car.</p>
 
-      <p>
-        The hazardous checkbox will cause the program to add a <a href="#HazardousComment">Hazardous
-          Comment</a> to the switch list that the car is transporting hazardous materials. You can also
-        classify a car's <a href="#EditCarLoads">load</a> as hazardous. The program when blocking a
-        train will attempt to place non-hazardous cars in front of hazardous cars.
-      </p>
+      <h4>Hazardous checkbox</h4>
+      If a car is hazardous independent of the car's load, select the hazardous checkbox. The
+      hazardous option will cause the program to add a <a href="#HazardousComment">Hazardous
+        Comment</a> to the switch list that the car is transporting hazardous materials. You can also
+      classify a car's <a href="#EditCarLoads">load</a> as hazardous. The program when blocking a
+      train will attempt to place non-hazardous cars in front of hazardous cars.
 
       <h4>Location and Track</h4>
       Now set the car's location on the layout. If the car is off the layout, set the location to
@@ -4056,7 +4073,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h3 id="EditCarLoads">Edit Car Loads</h3>
       To add a custom load or edit a car's load, press the Load "Edit" button in the <a
         href="#CarsEdit">Edit Car</a> or <a href="#CarsSet">Set Car</a> windows. Each car type will
-      have it's own set of custom loads. Select the car type to add, delete or replace a car's load.
+      have its own set of custom loads. Select the car type to add, delete or replace a car's load.
       The "All" checkbox allows you to create loads for all of your car types. For example you could
       create a custom empty load for all of your car types if needed.
 
@@ -4801,7 +4818,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <p>
         Solution, we create a yard in "Danville", and create spurs in "Danville-1". The mainline
-        train has "Danville" in it's route. The locals will service "Danville" and "Danville-1". Now
+        train has "Danville" in its route. The locals will service "Danville" and "Danville-1". Now
         the dilemma, do the locals service "Danville-1" or "Danville" first? Not an issue, we create
         a route for the locals that services "Danville-1", then "Danville", and then "Danville-1".
         At the first "Danville-1" we request only pick ups at the spurs, at "Danville" we specify

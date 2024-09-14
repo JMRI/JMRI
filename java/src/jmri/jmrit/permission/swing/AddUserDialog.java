@@ -163,7 +163,7 @@ public class AddUserDialog extends JDialog {
             return true;
         } catch (PermissionManager.UserAlreadyExistsException e) {
             JmriJOptionPane.showMessageDialog(null,
-                    Bundle.getMessage("AddUserDialog_UsernameExists"),
+                    Bundle.getMessage("AddUserDialog_UsernameExists", username.toLowerCase()),
                     jmri.Application.getApplicationName(),
                     JmriJOptionPane.ERROR_MESSAGE);
             return false;
