@@ -7,6 +7,7 @@ import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+
 import java.awt.Container;
 import java.awt.Frame;
 import java.awt.image.BufferedImage;
@@ -24,10 +25,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.JComponent;
-import jmri.InstanceManager;
-import jmri.Sensor;
-import jmri.SignalMast;
-import jmri.SignalMastManager;
+
+import jmri.*;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorManager;
@@ -38,6 +37,10 @@ import jmri.server.json.util.JsonUtilHttpService;
 import jmri.util.FileUtil;
 import jmri.web.server.WebServer;
 import jmri.web.servlet.ServletUtil;
+import jmri.web.servlet.panel.Bundle;
+import jmri.web.servlet.permission.PermissionServlet;
+import jmri.RemotePermissions;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,6 +98,13 @@ public abstract class AbstractPanelServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.debug("Handling GET request for {}", request.getRequestURI());
+
+        String sessionId = PermissionServlet.getSessionId(request);
+        if (! InstanceManager.getDefault(PermissionManager.class)
+                .hasRemotePermission(sessionId, RemotePermissions.PERMISSION_VIEW_PANELS)) {
+            PermissionServlet.permissionDenied(request, response);
+            return;
+        }
         if (request.getRequestURI().equals("/web/showPanel.html")) { // NOI18N
             response.sendRedirect("/panel/"); // NOI18N
             return;

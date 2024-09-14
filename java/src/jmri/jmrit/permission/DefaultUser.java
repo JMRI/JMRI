@@ -68,7 +68,7 @@ public class DefaultUser implements User {
     private static final PrimitiveIterator.OfInt iterator =
             new Random().ints('a', 'z'+10).iterator();
 
-    private String getRandomString(int count) {
+    public static String getRandomString(int count) {
         StringBuilder s = new StringBuilder();
         for (int i=0; i < count; i++) {
             int r = iterator.nextInt();

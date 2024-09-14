@@ -134,6 +134,7 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
         });
         usersPanel.add(addUserButton);
 
+        usersPanel.add(Box.createGlue());
 
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.addTab(Bundle.getMessage("PermissionPreferencesPanel_Roles"),
@@ -326,7 +327,7 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
         userPanel.add(Box.createVerticalStrut(10));
 
         JButton changePasswordButton = new JButton(Bundle.getMessage("PermissionPreferencesPanel_ChangePassword"));
-        changePasswordButton.setEnabled(!permissionManager.isGuestUser(user));
+        changePasswordButton.setEnabled(!permissionManager.isAGuestUser(user));
         changePasswordButton.addActionListener((evt) -> {
             new ChangeUserPasswordDialog(getFrame(), user, ()->{_dirty = true;})
                     .setVisible(true);

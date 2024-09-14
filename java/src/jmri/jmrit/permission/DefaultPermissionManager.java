@@ -12,13 +12,6 @@ import jmri.util.swing.JmriJOptionPane;
 
 import org.jdom2.*;
 
-/*
-    TO DO
-
-    * Remove role
-    * Remove user
-*/
-
 /**
  * Default permission manager.
  *
@@ -30,28 +23,34 @@ public class DefaultPermissionManager implements PermissionManager {
             new DefaultUser(Bundle.getMessage("PermissionManager_User_Guest"),
                     null, 50, "GUEST", new Role[]{DefaultRole.ROLE_GUEST});
 
+    private static final DefaultUser REMOTE_USER_GUEST =
+            new DefaultUser(Bundle.getMessage("PermissionManager_Remote_User_Guest"),
+                    null, 50, "GUEST", new Role[]{DefaultRole.ROLE_GUEST});
+
     private static final DefaultUser USER_ADMIN =
             new DefaultUser(Bundle.getMessage("PermissionManager_User_Admin"),
                     "jmri", 100, "ADMIN", new Role[]{DefaultRole.ROLE_ADMIN, DefaultRole.ROLE_STANDARD_USER});
 
     private final Map<String, Role> _roles = new HashMap<>();
     private final Map<String, DefaultUser> _users = new HashMap<>();
-    private final Set<PermissionOwner> _owners = new HashSet<>();
-    private final Set<Permission> _permissions = new HashSet<>();
+    private final Set<PermissionOwner> _owners = new TreeSet<>((a,b) -> { return a.getName().compareTo(b.getName()); });
+    private final Set<Permission> _permissions = new TreeSet<>((a,b) -> { return a.getName().compareTo(b.getName()); });
     private final Map<String, Permission> _permissionClassNames = new HashMap<>();
     private final List<LoginListener> _loginListeners = new ArrayList<>();
+    private final Map<String, DefaultUser> _remoteUsers = new HashMap<>();
 
     private boolean _permissionsEnabled = false;
     private boolean _allowEmptyPasswords = false;
     private User _currentUser = USER_GUEST;
 
 
-    public DefaultPermissionManager init() {
+    synchronized DefaultPermissionManager init() {
         _roles.put(DefaultRole.ROLE_GUEST.getName(), DefaultRole.ROLE_GUEST);
         _roles.put(DefaultRole.ROLE_STANDARD_USER.getName(), DefaultRole.ROLE_STANDARD_USER);
         _roles.put(DefaultRole.ROLE_ADMIN.getName(), DefaultRole.ROLE_ADMIN);
 
         _users.put(USER_GUEST.getUserName(), USER_GUEST);
+        _users.put(REMOTE_USER_GUEST.getUserName(), REMOTE_USER_GUEST);
         _users.put(USER_ADMIN.getUserName(), USER_ADMIN);
 
         for (PermissionFactory factory : ServiceLoader.load(PermissionFactory.class)) {
@@ -64,26 +63,26 @@ public class DefaultPermissionManager implements PermissionManager {
         return this;
     }
 
-    public Collection<Role> getRoles() {
-        return _roles.values();
+    public synchronized Collection<Role> getRoles() {
+        return Collections.unmodifiableSet(new HashSet<>(_roles.values()));
     }
 
-    public Collection<DefaultUser> getUsers() {
-        return _users.values();
+    public synchronized Collection<DefaultUser> getUsers() {
+        return Collections.unmodifiableSet(new HashSet<>(_users.values()));
     }
 
-    public Set<PermissionOwner> getOwners() {
-        return _owners;
+    public synchronized Set<PermissionOwner> getOwners() {
+        return Collections.unmodifiableSet(new HashSet<>(_owners));
     }
 
-    public Set<Permission> getPermissions(PermissionOwner owner) {
+    public synchronized Set<Permission> getPermissions(PermissionOwner owner) {
         Set<Permission> set = new TreeSet<>((a,b) -> {return a.getName().compareTo(b.getName());});
         for (Permission p : _permissions) {
             if (p.getOwner().equals(owner)) {
                 set.add(p);
             }
         }
-        return set;
+        return Collections.unmodifiableSet(set);
     }
 
     private Role getSystemRole(String systemName) {
@@ -215,7 +214,7 @@ public class DefaultPermissionManager implements PermissionManager {
     }
 
     @Override
-    public void storePermissionSettings() {
+    public synchronized void storePermissionSettings() {
         File file = new File(FileUtil.getPreferencesPath() + ".permissions.xml");
 
         try {
@@ -294,7 +293,7 @@ public class DefaultPermissionManager implements PermissionManager {
     }
 
     @Override
-    public Role addRole(String name) throws RoleAlreadyExistsException {
+    public synchronized Role addRole(String name) throws RoleAlreadyExistsException {
         if (_users.containsKey(name)) {
             throw new RoleAlreadyExistsException();
         }
@@ -304,7 +303,7 @@ public class DefaultPermissionManager implements PermissionManager {
     }
 
     @Override
-    public void removeRole(String name) throws RoleDoesNotExistException {
+    public synchronized void removeRole(String name) throws RoleDoesNotExistException {
 
         if (!_roles.containsKey(name)) {
             throw new RoleDoesNotExistException();
@@ -313,7 +312,7 @@ public class DefaultPermissionManager implements PermissionManager {
     }
 
     @Override
-    public User addUser(String username, String password)
+    public synchronized User addUser(String username, String password)
             throws UserAlreadyExistsException {
 
         if (_users.containsKey(username)) {
@@ -325,7 +324,7 @@ public class DefaultPermissionManager implements PermissionManager {
     }
 
     @Override
-    public void removeUser(String username)
+    public synchronized void removeUser(String username)
             throws UserDoesNotExistException {
 
         if (!_users.containsKey(username)) {
@@ -335,7 +334,7 @@ public class DefaultPermissionManager implements PermissionManager {
     }
 
     @Override
-    public void changePassword(String newPassword, String oldPassword) {
+    public synchronized void changePassword(String newPassword, String oldPassword) {
         if (_currentUser.changePassword(newPassword,  oldPassword)) {
             storePermissionSettings();
         }
@@ -345,30 +344,64 @@ public class DefaultPermissionManager implements PermissionManager {
         justification="The text is from an exception")
     @Override
     public boolean login(String username, String password) {
-        DefaultUser newUser = _users.get(username);
-        if (newUser == null || !newUser.checkPassword(password)) {
-            String msg = new BadUserOrPasswordException().getMessage();
 
-            if (!GraphicsEnvironment.isHeadless()) {
-                JmriJOptionPane.showMessageDialog(null,
-                        msg,
-                        jmri.Application.getApplicationName(),
-                        JmriJOptionPane.ERROR_MESSAGE);
-            } else {
-                log.error(msg);
+        synchronized(this) {
+            DefaultUser newUser = _users.get(username);
+
+            if (newUser == null || !newUser.checkPassword(password)) {
+                String msg = new BadUserOrPasswordException().getMessage();
+
+                if (!GraphicsEnvironment.isHeadless()) {
+                    JmriJOptionPane.showMessageDialog(null,
+                            msg,
+                            jmri.Application.getApplicationName(),
+                            JmriJOptionPane.ERROR_MESSAGE);
+                } else {
+                    log.error(msg);
+                }
+                return false;
             }
-            return false;
-        } else {
+
             _currentUser = newUser;
-            notifyLoginListeners(true);
-            return true;
         }
+        notifyLoginListeners(true);
+        return true;
+    }
+
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="The text is from an exception")
+    @Override
+    public boolean remoteLogin(StringBuilder sessionId, Locale locale,
+            String username, String password) {
+
+        synchronized(this) {
+            DefaultUser newUser = _users.get(username);
+            if (newUser == null || !newUser.checkPassword(password)) {
+                return false;
+            }
+            if (sessionId.isEmpty()) {
+                sessionId.append(DefaultUser.getRandomString(10));
+            }
+            _remoteUsers.put(sessionId.toString(), newUser);
+        }
+        // notifyLoginListeners(true);
+        return true;
     }
 
     @Override
-    public void logout() {
-        _currentUser = USER_GUEST;
+    public synchronized void logout() {
+        synchronized(this) {
+            _currentUser = USER_GUEST;
+        }
         notifyLoginListeners(false);
+    }
+
+    @Override
+    public synchronized void remoteLogout(String sessionId) {
+        if (sessionId == null || sessionId.isBlank() || !_remoteUsers.containsKey(sessionId)) {
+            return;
+        }
+        _remoteUsers.remove(sessionId);
     }
 
     private void notifyLoginListeners(boolean isLogin) {
@@ -378,28 +411,33 @@ public class DefaultPermissionManager implements PermissionManager {
     }
 
    @Override
-    public boolean isLoggedIn() {
+    public synchronized boolean isLoggedIn() {
         return _currentUser != USER_GUEST;
     }
 
     @Override
-    public boolean isCurrentUser(String username) {
+    public synchronized boolean isRemotelyLoggedIn(String sessionId) {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    @Override
+    public synchronized boolean isCurrentUser(String username) {
         return _currentUser.getUserName().equals(username);
     }
 
     @Override
-    public boolean isCurrentUser(User user) {
+    public synchronized boolean isCurrentUser(User user) {
         return _currentUser == user;
     }
 
     @Override
-    public String getCurrentUserName() {
+    public synchronized String getCurrentUserName() {
         return _currentUser.getUserName();
     }
 
     @Override
-    public boolean isGuestUser(User user) {
-        return user == USER_GUEST;
+    public synchronized boolean isAGuestUser(User user) {
+        return user == USER_GUEST || user == REMOTE_USER_GUEST;
     }
 
     @Override
@@ -408,12 +446,12 @@ public class DefaultPermissionManager implements PermissionManager {
     }
 
     @Override
-    public boolean isEnabled() {
+    public synchronized boolean isEnabled() {
         return _permissionsEnabled;
     }
 
     @Override
-    public void setEnabled(boolean enabled) {
+    public synchronized void setEnabled(boolean enabled) {
         if (! InstanceManager.getDefault(PermissionManager.class)
                 .checkPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES)) {
             return;
@@ -422,12 +460,12 @@ public class DefaultPermissionManager implements PermissionManager {
     }
 
     @Override
-    public boolean isAllowEmptyPasswords() {
+    public synchronized boolean isAllowEmptyPasswords() {
         return _allowEmptyPasswords;
     }
 
     @Override
-    public void setAllowEmptyPasswords(boolean value) {
+    public synchronized void setAllowEmptyPasswords(boolean value) {
         if (! InstanceManager.getDefault(PermissionManager.class)
                 .checkPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES)) {
             return;
@@ -436,22 +474,34 @@ public class DefaultPermissionManager implements PermissionManager {
     }
 
     @Override
-    public boolean hasPermission(Permission permission) {
+    public synchronized boolean hasPermission(Permission permission) {
         return !_permissionsEnabled || _currentUser.hasPermission(permission);
     }
 
     @Override
-    public boolean checkPermission(Permission permission) {
+    public synchronized boolean hasRemotePermission(String sessionId, Permission permission) {
+        if (!_permissionsEnabled) return true;
+
+        DefaultUser user = REMOTE_USER_GUEST;
+        if (sessionId != null && !sessionId.isBlank() && _remoteUsers.containsKey(sessionId)) {
+            user = _remoteUsers.get(sessionId);
+        }
+        // log.error("hasPermission: sessionId: {}, user: {}, permission: {}, has: {}", sessionId, user.getUserName(), permission.getName(), user.hasPermission(permission));
+        return user.hasPermission(permission);
+    }
+
+    @Override
+    public synchronized boolean checkPermission(Permission permission) {
         return !_permissionsEnabled || _currentUser.checkPermission(permission);
     }
 
     @Override
-    public void registerOwner(PermissionOwner owner) {
+    public synchronized void registerOwner(PermissionOwner owner) {
         _owners.add(owner);
     }
 
     @Override
-    public void registerPermission(Permission permission) {
+    public synchronized void registerPermission(Permission permission) {
         if (!_owners.contains(permission.getOwner())) {
             throw new RuntimeException(String.format(
                     "Permission class %s has an owner that's not known: %s",
@@ -471,7 +521,6 @@ public class DefaultPermissionManager implements PermissionManager {
             }
         }
     }
-
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultPermissionManager.class);
 }

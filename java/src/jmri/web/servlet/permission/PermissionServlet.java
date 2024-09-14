@@ -1,22 +1,15 @@
 package jmri.web.servlet.permission;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Locale;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 
-import jmri.Application;
-import jmri.InstanceManager;
-import jmri.jmrix.ConnectionConfig;
-import jmri.jmrix.ConnectionConfigManager;
+import jmri.*;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
@@ -40,7 +33,112 @@ public class PermissionServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String theRequest = request.getRequestURI().substring("/permission/".length());
-        log.error("Request: {}", theRequest);
+        // log.error("Request: {}", theRequest);
+
+        switch (theRequest) {
+            case "login":
+                login(request, response);
+                break;
+            case "logout":
+                logout(request, response);
+                break;
+//            case "status":
+//                status(request, response);
+//                break;
+            default:
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+        }
+    }
+
+    private static void sendPage(String page, String message,
+            HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+
+        //print the html, using the replacement values listed to fill in the calculated stuff
+        response.setHeader("Connection", "Keep-Alive"); // NOI18N
+        response.setContentType(UTF8_TEXT_HTML);
+        Profile profile = ProfileManager.getDefault().getActiveProfile();
+        response.getWriter().print(String.format(request.getLocale(),
+                FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), page))),
+                Bundle.getMessage(request.getLocale(), "PermissionTitle"),                              // page title is parm 1
+                InstanceManager.getDefault(ServletUtil.class).getNavBar(request.getLocale(), "/permission"), // navbar is parm 2
+                InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),                   // railroad name is parm 3
+                InstanceManager.getDefault(ServletUtil.class).getFooter(request.getLocale(), "/permission"), // footer is parm 4
+                message                                                                                 // Response message
+        ));
+    }
+
+    private void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if (request.getContentLength() > 0) {
+            StringBuilder textBuilder = new StringBuilder();
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    request.getInputStream(), StandardCharsets.UTF_8))) {
+                int c;
+                while ((c = reader.read()) != -1) {
+                    textBuilder.append((char) c);
+                }
+            }
+
+            String username = null;
+            String password = null;
+
+            for (String param : textBuilder.toString().split("&")) {
+                String[] parts = param.split("=");
+                switch (parts[0]) {
+                    case "username":
+                        username = parts[1];
+                        break;
+                    case "password":
+                        if (parts.length > 1)
+                            password = parts[1];
+                        else
+                            password = "";
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Unknown parameter: \""+parts[0]+"\" with value \""+parts[1]+"\"");
+                }
+            }
+
+            if (username != null && password != null) {
+                // log.warn("Login with {} and {}", username, password);
+
+                String sessId = PermissionServlet.getSessionId(request);
+                if (sessId == null) sessId = "";
+
+                StringBuilder sessionId = new StringBuilder(sessId);
+
+                boolean result = InstanceManager.getDefault(PermissionManager.class)
+                        .remoteLogin(sessionId, request.getLocale(), username, password);
+
+                if (result) {
+                    setSessionId(sessionId.toString(), response);
+                }
+                String message = result ? Bundle.getMessage("LoginSuccessful") : Bundle.getMessage("BadUsernameOrPassword");
+                sendPage("Response.html", message, request, response);
+
+                return;
+            }
+        }
+
+        //print the html, using the replacement values listed to fill in the calculated stuff
+        response.setHeader("Connection", "Keep-Alive"); // NOI18N
+        response.setContentType(UTF8_TEXT_HTML);
+        response.getWriter().print(String.format(request.getLocale(),
+                FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Login.html"))),
+                Bundle.getMessage(request.getLocale(), "PermissionTitle"),                              // page title is parm 1
+                InstanceManager.getDefault(ServletUtil.class).getNavBar(request.getLocale(), "/permission"), // navbar is parm 2
+                InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),                   // railroad name is parm 3
+                InstanceManager.getDefault(ServletUtil.class).getFooter(request.getLocale(), "/permission") // footer is parm 4
+        ));
+    }
+
+    private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String sessionId = PermissionServlet.getSessionId(request);
+        InstanceManager.getDefault(PermissionManager.class).remoteLogout(sessionId);
+        sendPage("Response.html", Bundle.getMessage("LogoutSuccessful"), request, response);
+    }
+/*
+    private void status(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         log.error("Context path: {}", request.getContextPath());
         log.error("Servlet path: {}", request.getServletPath());
@@ -51,67 +149,28 @@ public class PermissionServlet extends HttpServlet {
 //        request.getContentLength();
 //        request.getInputStream();
 //        request.getMethod();
+    }
+*/
+    public static void permissionDenied(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String session = "";
+        InstanceManager.getDefault(PermissionManager.class).remoteLogout(session);
+        sendPage("Response.html", Bundle.getMessage("PermissionDenied"), request, response);
+    }
 
-
-        if (request.getContentLength() > 0) {
-            StringBuilder textBuilder = new StringBuilder();
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    request.getInputStream(), StandardCharsets.UTF_8))) {
-                int c = 0;
-                while ((c = reader.read()) != -1) {
-                    textBuilder.append((char) c);
-                }
-            }
-
-            log.error("textBuilder: {}", textBuilder);
-
-            String username = null;
-            String password = null;
-            for (String params : textBuilder.toString().split("&")) {
-                String[] parts = params.split("=");
-                switch (parts[0]) {
-                    case "username": username = parts[1]; break;
-                    case "password": password = parts[1]; break;
-                    default: throw new IllegalArgumentException("Unknown parameter: \""+parts[0]+"\" with value \""+parts[1]+"\"");
-                }
-            }
-
-            if (username != null && password != null) {
-                log.error("Login with {} and {}", username, password);
+    public static String getSessionId(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        for (Cookie c : cookies) {
+            if ("sessionId".equals(c.getName())) {
+                return c.getValue();
             }
         }
+        return null;
+    }
 
-
-
-
-        //retrieve the list of JMRI connections as a string
-        StringBuilder connList = new StringBuilder("");
-        String comma = "";
-        for (ConnectionConfig conn : InstanceManager.getDefault(ConnectionConfigManager.class)) {
-            if (!conn.getDisabled()) {
-                connList.append(comma).append(Bundle.getMessage(request.getLocale(), "ConnectionSucceeded", conn.getConnectionName(), conn.name(), conn.getInfo()));
-                comma = ", ";
-            }
-        }
-
-        //print the html, using the replacement values listed to fill in the calculated stuff
-        response.setHeader("Connection", "Keep-Alive"); // NOI18N
-        response.setContentType(UTF8_TEXT_HTML);
-        Profile profile = ProfileManager.getDefault().getActiveProfile();
-        String profileName = profile != null ? profile.getName() : "";
-        response.getWriter().print(String.format(request.getLocale(),
-                FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Permission.html"))),
-                Bundle.getMessage(request.getLocale(), "PermissionTitle"),                              // page title is parm 1
-                InstanceManager.getDefault(ServletUtil.class).getNavBar(request.getLocale(), "/permission"), // navbar is parm 2
-                InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),                   // railroad name is parm 3
-                InstanceManager.getDefault(ServletUtil.class).getFooter(request.getLocale(), "/permission"), // footer is parm 4
-                connList,                                                                               // system connection list is parm 5
-                Application.getApplicationName() + " " + jmri.Version.name(),                           // JMRI version is parm 6                                         //JMRI version is parm 6
-                jmri.Version.getCopyright(),                                                            // Copyright is parm 7
-                System.getProperty("java.version", "<unknown>"),                                        // Java version is parm 8
-                Locale.getDefault().toString(),                                                         // locale is parm 9
-                profileName                                                                             // active profile name is 10
-        ));
+    public static void setSessionId(String sessionId, HttpServletResponse response) {
+        Cookie cookie = new Cookie("sessionId", sessionId);
+        cookie.setPath("/");
+        response.addCookie(cookie);
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
