@@ -2076,7 +2076,8 @@
             </bottom>
 
             <!-- <link href="http://java.sun.com/products/javacomm/reference/api/"/> redirected to next line -->
-            <link href="https://docs.oracle.com/cd/E17802_01/products/products/javacomm/reference/api/" />
+            <!-- Link below removed 2024/09/15 as failing Java21 static JavaDoc build, see https://github.com/JMRI/JMRI/pull/13452 -->
+            <!-- <link href="https://docs.oracle.com/cd/E17802_01/products/products/javacomm/reference/api/" /> -->
 
             <link href="https://fazecast.github.io/jSerialComm/javadoc" />
             
@@ -2183,7 +2184,8 @@
             </bottom>
 
             <!-- <link href="http://java.sun.com/products/javacomm/reference/api/"/> redirected to next line -->
-            <link href="https://docs.oracle.com/cd/E17802_01/products/products/javacomm/reference/api/" />
+            <!-- Link below removed 2024/09/15 as failing Java21 static JavaDoc build, see https://github.com/JMRI/JMRI/pull/13452 -->
+            <!-- <link href="https://docs.oracle.com/cd/E17802_01/products/products/javacomm/reference/api/" /> -->
 
             <link href="https://fazecast.github.io/jSerialComm/javadoc" />
 
