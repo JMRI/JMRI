@@ -587,6 +587,7 @@ public class ActionTimer extends AbstractDigitalAction
     @Override
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
+            _stateMap.computeIfAbsent(getConditionalNG(), o -> new State());
             _stateMap.forEach((conditionalNG, state) -> {
                 // If _timerState is not TimerState.Off, the timer was running when listeners wss unregistered
                 if ((_startImmediately) || (state._timerState != TimerState.Off)) {
