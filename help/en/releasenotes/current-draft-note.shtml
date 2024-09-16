@@ -126,7 +126,8 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Fix a problem when CDI contains "immediate" slider hints</li>
+                <li>Slider hints now control tick spacing, instead of number of ticks.</li>
             </ul>
 
         <h4>Powerline</h4>
