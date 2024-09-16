@@ -69,7 +69,7 @@ public class TrainBuilderBase extends TrainCommon {
     CarLoads carLoads = InstanceManager.getDefault(CarLoads.class);
     Router router = InstanceManager.getDefault(Router.class);
 
-    protected void createBuildReportFile() {
+    protected void createBuildReportFile() throws BuildFailedException {
         // backup the train's previous build report file
         InstanceManager.getDefault(TrainManagerXml.class).savePreviousBuildStatusFile(_train.getName());
 
@@ -81,7 +81,7 @@ public class TrainBuilderBase extends TrainCommon {
                     true);
         } catch (IOException e) {
             log.error("Can not open build report file: {}", e.getLocalizedMessage());
-            return;
+            throw new BuildFailedException(e);
         }
     }
 

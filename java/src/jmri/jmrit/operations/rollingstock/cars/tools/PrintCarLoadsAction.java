@@ -124,7 +124,7 @@ public class PrintCarLoadsAction extends AbstractAction {
             } catch (HardcopyWriter.PrintCanceledException ex) {
                 log.debug("Print cancelled");
             } catch (IOException ex) {
-                log.error("Error printing car roster: {}", ex);
+                log.error("Error printing car roster: {}", ex.getLocalizedMessage());
             }
         }
     }

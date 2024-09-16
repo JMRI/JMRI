@@ -25,7 +25,7 @@ import jmri.jmrit.operations.setup.Setup;
  */
 public class TrainCsvManifest extends TrainCsvCommon {
 
-    public TrainCsvManifest(Train train) {
+    public TrainCsvManifest(Train train) throws BuildFailedException {
         if (!Setup.isGenerateCsvManifestEnabled()) {
             return;
         }
@@ -174,6 +174,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
             fileOut.close();
         } catch (IOException e) {
             log.error("Can not open CSV manifest file: {}", e.getLocalizedMessage());
+            throw new BuildFailedException(e);
         }
     }
 
