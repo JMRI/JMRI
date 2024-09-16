@@ -405,7 +405,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Do not release any allocated section from a train if the position of the train is not known.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
