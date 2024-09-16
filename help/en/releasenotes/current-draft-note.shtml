@@ -440,7 +440,11 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>A bug is fixed in the <strong>Timer</strong> action. The
+              bug caused the timer to <strong>not</strong> start
+              automatically when the tables and panel file is loaded,
+              despite the <strong>Start timer immediately on load</strong>
+              setting was selected for the timer.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
