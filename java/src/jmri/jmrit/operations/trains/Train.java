@@ -3071,7 +3071,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             try {
                 return (printManifest(isPreview));
             } catch (BuildFailedException e) {
-                log.error("Print Manifest failed: {}", e);
+                log.error("Print Manifest failed: {}", e.getMessage());
             }
         } else {
             log.debug("Need to build train ({}) before printing manifest", getName());
