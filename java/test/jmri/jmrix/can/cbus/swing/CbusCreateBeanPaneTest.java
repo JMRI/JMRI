@@ -1,7 +1,5 @@
 package jmri.jmrix.can.cbus.swing;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.awt.datatransfer.Transferable;
 import java.io.File;
 import java.io.IOException;
@@ -18,10 +16,11 @@ import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.io.TempDir;
 
 import org.netbeans.jemmy.operators.*;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test simple functioning of CbusCreateBeanPane
@@ -29,7 +28,7 @@ import org.netbeans.jemmy.operators.*;
  * @author Paul Bender Copyright (C) 2016
  * @author Steve Young Copyright (C) 2020
 */
-@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class CbusCreateBeanPaneTest  {
 
     @Test
@@ -99,6 +98,8 @@ public class CbusCreateBeanPaneTest  {
 
         dh.dispose();
 
+        JUnitUtil.dispose(f);
+        jfo.waitClosed();
     }
 
     private static class TestPane extends CanPanel{

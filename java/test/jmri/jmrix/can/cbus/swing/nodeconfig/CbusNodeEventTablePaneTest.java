@@ -9,7 +9,7 @@ import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JTableOperator;
 
@@ -19,7 +19,7 @@ import org.netbeans.jemmy.operators.JTableOperator;
  * @author Paul Bender Copyright (C) 2016
  * @author Steve Young Copyright (C) 2019
  */
-@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class CbusNodeEventTablePaneTest {
 
     @Test
@@ -85,8 +85,7 @@ public class CbusNodeEventTablePaneTest {
         Assert.assertTrue("2 rows",tbl.getRowCount()==2);
         // JemmyUtil.pressButton(new JFrameOperator(f),("Pause Test"));
         
-        nodeModel.dispose();
-        t.dispose();
+        JUnitUtil.dispose(f);
         
     }
     
