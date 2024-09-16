@@ -80,7 +80,7 @@ public class TrainBuilderBase extends TrainCommon {
                     new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)),
                     true);
         } catch (IOException e) {
-            log.error("Can not open build report file: {}", file.getName());
+            log.error("Can not open build report file: {}", e.getLocalizedMessage());
             return;
         }
     }

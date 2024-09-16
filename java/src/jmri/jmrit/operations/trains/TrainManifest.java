@@ -42,7 +42,7 @@ public class TrainManifest extends TrainCommon {
                     new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)),
                     true);
         } catch (IOException e) {
-            log.error("Can not open train manifest file: {}", file.getName());
+            log.error("Can not open train manifest file: {}", e.getLocalizedMessage());
             return;
         }
 

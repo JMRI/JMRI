@@ -173,7 +173,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
             fileOut.flush();
             fileOut.close();
         } catch (IOException e) {
-            log.error("Can not open CSV manifest file: {}", file.getName());
+            log.error("Can not open CSV manifest file: {}", e.getLocalizedMessage());
         }
     }
 

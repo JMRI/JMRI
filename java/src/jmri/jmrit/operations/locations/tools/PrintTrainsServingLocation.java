@@ -52,7 +52,7 @@ public class PrintTrainsServingLocation {
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
         } catch (IOException we) {
-            log.error("Error printing PrintLocationAction", we);
+            log.error("Error printing PrintLocationAction: {}", we.getLocalizedMessage());
         }
     }
 

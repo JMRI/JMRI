@@ -166,7 +166,7 @@ public class PrintTrainsFrame extends OperationsFrame {
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
         } catch (IOException e1) {
-            log.error("Exception in print train details");
+            log.error("Exception in print train details: {}", e1.getLocalizedMessage());
         }
     }
 
@@ -223,7 +223,7 @@ public class PrintTrainsFrame extends OperationsFrame {
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
         } catch (IOException ex) {
-            log.error("Exception in print train");
+            log.error("Exception in print train: {}", ex.getLocalizedMessage());
         }
     }
 
