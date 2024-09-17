@@ -330,7 +330,7 @@ public class RouteEditFrameTest extends OperationsTestCase {
         JFrameOperator jfo = new JFrameOperator(f);
         JTableOperator tbl = new JTableOperator(jfo);
 
-        Assert.assertEquals("Travel Time", "4", tbl.getValueAt(0, tbl.findColumn(Bundle.getMessage("Travel"))));
+        Assert.assertEquals("Travel Time", 4, tbl.getValueAt(0, tbl.findColumn(Bundle.getMessage("Travel"))));
         tbl.setValueAt(20, 0, tbl.findColumn(Bundle.getMessage("Travel")));
         JemmyUtil.enterClickAndLeave(f.saveRouteButton);
         // wait = travel - time
@@ -450,9 +450,10 @@ public class RouteEditFrameTest extends OperationsTestCase {
 
         JFrameOperator jfo = new JFrameOperator(f);
         JTableOperator tbl = new JTableOperator(jfo);
-        tbl.setValueAt(3, 0, tbl.findColumn(Bundle.getMessage("Grade")));
+        Double grade = 3.3;
+        tbl.setValueAt(grade, 0, tbl.findColumn(Bundle.getMessage("Grade")));
         JemmyUtil.enterClickAndLeave(f.saveRouteButton);
-        Assert.assertEquals("New Grade", 3, (int) rl.getGrade());
+        Assert.assertEquals("New Grade", grade, (Double) rl.getGrade());
 
         JUnitUtil.dispose(f);
     }
