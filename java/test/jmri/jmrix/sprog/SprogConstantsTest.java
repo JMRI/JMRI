@@ -12,9 +12,9 @@ import org.junit.jupiter.api.*;
 public class SprogConstantsTest {
 
     @Test
-    public void testCTor() {
-        SprogConstants t = new SprogConstants();
-        Assert.assertNotNull("exists",t);
+    public void testSprogConstants() {
+        Assertions.assertEquals(50, SprogConstants.PACKET_DELAY_WARN_THRESHOLD);
+
     }
 
     @BeforeEach
