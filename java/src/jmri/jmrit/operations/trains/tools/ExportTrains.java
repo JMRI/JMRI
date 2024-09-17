@@ -46,7 +46,8 @@ public class ExportTrains extends XmlFile {
             }
             writeFile(defaultOperationsFilename());
         } catch (IOException e) {
-            log.error("Exception while writing the new CSV operations file, may not be complete", e);
+            log.error("Exception while writing the new CSV operations file, may not be complete: {}",
+                    e.getLocalizedMessage());
         }
     }
 
@@ -182,7 +183,7 @@ public class ExportTrains extends XmlFile {
                             count, defaultOperationsFilename()),
                     Bundle.getMessage("ExportComplete"), JmriJOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
-            log.error("Can not open export trains CSV file: {}", file.getName());
+            log.error("Can not open export trains CSV file: {}", e.getLocalizedMessage());
             JmriJOptionPane.showMessageDialog(null,
                     Bundle.getMessage("ExportedTrainsToFile",
                             0, defaultOperationsFilename()),

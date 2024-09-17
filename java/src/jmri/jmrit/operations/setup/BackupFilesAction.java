@@ -56,7 +56,7 @@ public class BackupFilesAction extends AbstractAction {
         try {
             backup.backupFilesToDirectory(directory);
         } catch (IOException ex) {
-            log.error("backup failed");
+            log.error("backup failed: {}", ex.getLocalizedMessage());
         }
     }
 
