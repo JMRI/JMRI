@@ -110,7 +110,7 @@ public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDe
             fileOut.flush();
             fileOut.close();
         } catch (IOException e) {
-            log.error("Exception while opening log file: {}", e.getMessage());
+            log.error("Exception while opening log file: {}", e.getLocalizedMessage());
         }
     }
 
@@ -139,7 +139,7 @@ public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDe
                     fileLogger = new java.io.File(getFullLoggerFileName());
                 }
             } catch (IOException e) {
-                log.error("Exception while making logging directory: {}", e.getMessage());
+                log.error("Exception while making logging directory: {}", e.getLocalizedMessage());
             }
         }
         return fileLogger;
@@ -185,7 +185,7 @@ public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDe
                     file = new java.io.File(getFullLoggerFileName(rs));
                 }
             } catch (IOException e) {
-                log.error("Exception while making logging directory: {}", e.getMessage());
+                log.error("Exception while making logging directory: {}", e.getLocalizedMessage());
             }
         }
         return file;

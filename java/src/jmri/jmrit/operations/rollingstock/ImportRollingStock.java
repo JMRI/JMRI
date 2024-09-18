@@ -80,7 +80,7 @@ public abstract class ImportRollingStock extends Thread {
         } catch (IndexOutOfBoundsException e) {
             // do nothing blank line
         } catch (IOException ex) {
-            log.error("Error parsing CSV: {}", line, ex);
+            log.error("Error parsing CSV: {}, {}", line, ex.getLocalizedMessage());
             Arrays.fill(outLine, ""); // NOI18N
         }
         return outLine;

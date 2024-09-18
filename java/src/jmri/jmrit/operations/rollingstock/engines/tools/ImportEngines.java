@@ -481,6 +481,7 @@ public class ImportEngines extends ImportRollingStock {
         try {
             in.close();
         } catch (IOException e) {
+            log.error("Import Engines failed: {}", e.getLocalizedMessage());
         }
 
         if (importOkay) {

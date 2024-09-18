@@ -46,15 +46,18 @@ public class PrintTrainManifestAction extends AbstractAction {
                 return;
             }
         }
-        if (!_train.printManifest(_isPreview)) {
-            String string = Bundle.getMessage("NeedToBuildTrainBeforePrinting",
-                    _train.getName());
-            JmriJOptionPane.showMessageDialog(null, string, 
-                    Bundle.getMessage("CanNotPrintManifest", Bundle.getMessage("print")),
-                    JmriJOptionPane.ERROR_MESSAGE);
-            return;
+        try {
+            if (!_train.printManifest(_isPreview)) {
+                String string = Bundle.getMessage("NeedToBuildTrainBeforePrinting",
+                        _train.getName());
+                JmriJOptionPane.showMessageDialog(null, string,
+                        Bundle.getMessage("CanNotPrintManifest", Bundle.getMessage("print")),
+                        JmriJOptionPane.ERROR_MESSAGE);
+            }
+        } catch (jmri.jmrit.operations.trains.BuildFailedException e1) {
         }
     }
+
 
 //    private final static Logger log = LoggerFactory.getLogger(PrintTrainManifestAction.class);
 }
