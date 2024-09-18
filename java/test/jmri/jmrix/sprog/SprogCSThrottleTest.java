@@ -422,7 +422,7 @@ public class SprogCSThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         try {
             m.getSlotThread().interrupt();
             m.dispose();
-            JUnitUtil.waitFor(() -> { return !m.getSlotThread().isAlive(); },"SPROG Slot Thread still alive");
+            JUnitUtil.waitThreadTerminated(m.getSlotThread().getName());
             stcs.dispose();
         } finally {
             JUnitUtil.tearDown();
