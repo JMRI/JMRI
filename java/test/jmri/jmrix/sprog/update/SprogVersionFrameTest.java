@@ -11,6 +11,7 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class SprogVersionFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private SprogTrafficControlScaffold stcs = null;
