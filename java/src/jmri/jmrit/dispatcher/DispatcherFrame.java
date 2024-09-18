@@ -2117,6 +2117,20 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     }
 
     /**
+     * Check an active train has an occupied section
+     * @param at  ActiveTRain object
+     * @return true / false
+     */
+    protected boolean hasTrainAnOccupiedSection(ActiveTrain at) {
+        for (AllocatedSection asItem : at.getAllocatedSectionList()) {
+            if (asItem.getSection().getOccupancy() == Section.OCCUPIED) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      *
      * @param s Section to check
      * @param sSeqNum Sequence number of section
@@ -2438,6 +2452,15 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                                     }
                                 }
                             }
+
+                            // The train must have one occupied section.
+                            // The train may be sitting in one of its allocated section undetected.
+                            if ( foundOne && !hasTrainAnOccupiedSection(as.getActiveTrain())) {
+                                log.warn("[{}]:CheckAutoRelease release section [{}] failed, train has no occupied section",
+                                        as.getActiveTrain().getActiveTrainName(),as.getSectionName());
+                                foundOne = false;
+                            }
+
                             if (foundOne) {
                                 // check its not the last allocated section
                                 int allocatedCount = 0;
@@ -2545,6 +2568,12 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      *                         false otherwise
      */
     public void releaseAllocatedSection(AllocatedSection as, boolean terminatingTrain) {
+        // Unless the train is termination it must have one occupied section.
+        // The train may be sitting in an allocated section undetected.
+        if ( !terminatingTrain && !hasTrainAnOccupiedSection(as.getActiveTrain())) {
+                log.warn("[{}]: releaseAllocatedSection release section [{}] failed train has no occupied section",as.getActiveTrain().getActiveTrainName(),as.getSectionName());
+            return;
+        }
         if (_AutoAllocate ) {
             autoAllocate.scanAllocationRequests(new TaskAllocateRelease(TaskAction.RELEASE_ONE,as,terminatingTrain));
         } else {

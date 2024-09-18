@@ -2,6 +2,7 @@ package jmri.jmrit.permission.swing;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
+import java.util.Objects;
 
 import javax.swing.*;
 
@@ -57,26 +58,29 @@ public class LoginDialog extends JDialog {
         buttonCancel.addActionListener((ActionEvent e) -> {
             dispose();
         });
-//        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
-        buttonCancel.setToolTipText("CancelLogixButtonHint");      // NOI18N
+        //buttonCancel.setToolTipText(Bundle.getMessage("LoginCancelButtonHint");      // NOI18N
 
         // OK
         JButton buttonOK = new JButton(Bundle.getMessage("ButtonOK"));    // NOI18N
         buttonPanel.add(buttonOK);
         buttonOK.addActionListener((ActionEvent e) -> {
-            String password = new String(_passwordTextField.getPassword());
-            if (InstanceManager.getDefault(PermissionManager.class)
-                    .login(_usernameTextField.getText(), password)) {
-
+            if (Objects.equals(_usernameTextField.getText(),
+                    Bundle.getMessage("PermissionManager_User_Guest").toLowerCase())) {
+                // default guest user does log in
                 JmriJOptionPane.showMessageDialog(null,
-                        Bundle.getMessage("LoginAction_UserLoggedIn"),
+                        Bundle.getMessage("LoginAction_GuestMessage"),
                         jmri.Application.getApplicationName(),
-                        JmriJOptionPane.INFORMATION_MESSAGE);
-                dispose();
+                        JmriJOptionPane.ERROR_MESSAGE);
+            } else {
+                String password = new String(_passwordTextField.getPassword());
+                if (InstanceManager.getDefault(PermissionManager.class).login(_usernameTextField.getText(), password)) {
+
+                    JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("LoginAction_UserLoggedIn"), jmri.Application.getApplicationName(), JmriJOptionPane.INFORMATION_MESSAGE);
+                    dispose();
+                }
             }
         });
-//        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
-        buttonOK.setToolTipText("CancelLogixButtonHint");      // NOI18N
+        //buttonOK.setToolTipText(Bundle.getMessage("LoginOkButtonHint");      // NOI18N
         getRootPane().setDefaultButton(buttonOK);
 
         c.gridx = 0;

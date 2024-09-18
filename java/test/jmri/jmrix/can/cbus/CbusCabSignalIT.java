@@ -56,6 +56,7 @@ public class CbusCabSignalIT extends jmri.implementation.DefaultCabSignalIT {
         InstanceManager.getDefault(jmri.IdTagManager.class).dispose();
         JUnitUtil.deregisterBlockManagerShutdownTask();
         jmri.jmrit.display.EditorFrameOperator.clearEditorFrameOperatorThreads();
+        JUnitUtil.resetWindows(false, false);
         JUnitUtil.tearDown();
 
     }

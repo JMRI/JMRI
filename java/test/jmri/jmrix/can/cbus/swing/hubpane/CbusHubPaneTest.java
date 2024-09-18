@@ -1,20 +1,20 @@
 package jmri.jmrix.can.cbus.swing.hubpane;
 
 import jmri.jmrix.can.*;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * @author Steve Young Copyright(C) 2022
  */
-@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class CbusHubPaneTest {
 
-    CbusHubPane hub = null;
-    CanSystemConnectionMemo memo = null;
-    TrafficController tc = null;
+    private CbusHubPane hub = null;
+    private CanSystemConnectionMemo memo = null;
+    private TrafficController tc = null;
 
     @Test
     public void testCtor() {
@@ -42,6 +42,10 @@ public class CbusHubPaneTest {
         memo = null;
         tc.terminateThreads();
         tc = null;
+
+        JUnitUtil.removeMatchingThreads("openlcb-hub-output"); // Daemon thread
+        JUnitAppender.suppressErrorMessageStartsWith("Hub: Interrupted in queue handling loop");
+
         JUnitUtil.tearDown();
     }
 }

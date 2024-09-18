@@ -917,6 +917,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         ncbtm.reply(r);
         JUnitUtil.waitFor(()->{return !(t1.isAlive());}, "checkCanErrorDialog finished");
         JUnitAppender.assertErrorMessageStartsWith(Bundle.getMessage("ERR_CAN_BUS_ERROR"));
+        JUnitUtil.resetWindows(false, false); // nameless invisible frame created by creating a dialog with a null parent
     }
 
     @Test
@@ -934,6 +935,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         ncbtm.reply(r);
         JUnitUtil.waitFor(()->{return !(t1.isAlive());}, "checkCbusInvalidRequestDialog finished");
         JUnitAppender.assertErrorMessageStartsWith(Bundle.getMessage("ERR_INVALID_REQUEST"));
+        JUnitUtil.resetWindows(false, false); // nameless invisible frame created by creating a dialog with a null parent
     }
 
     @Test

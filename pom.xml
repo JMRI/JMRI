@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>5.9.3-SNAPSHOT</version>
+    <version>5.9.4-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -711,7 +711,8 @@
                     </bottom>
                     <links>
                         <link>http://docs.oracle.com/en/java/javase/11/docs/api/</link>
-                        <link>http://java.sun.com/products/javacomm/reference/api/</link>
+                        <!-- Link below removed 2024/09/15 as failing Java21 static JavaDoc build, see https://github.com/JMRI/JMRI/pull/13454 -->
+                        <!-- <link>http://java.sun.com/products/javacomm/reference/api/</link> -->
                         <link>http://www.jdom.org/docs/apidocs/</link>
                         <link>https://commons.apache.org/proper/commons-csv/apidocs/</link>
                         <link>http://logging.apache.org/log4j/1.2/apidocs/</link>
