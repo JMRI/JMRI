@@ -1,7 +1,5 @@
 package jmri.jmrix.sprog.update;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.jmrix.sprog.SprogTrafficControlScaffold;
 import jmri.util.JUnitUtil;
