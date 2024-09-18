@@ -112,7 +112,7 @@ public class ExportRoutes extends XmlFile {
                 Bundle.getMessage("Random"),
                 Bundle.getMessage("Pickups"),
                 Bundle.getMessage("Drops"),
-                Bundle.getMessage("Wait"),
+                Bundle.getMessage("Travel"),
                 Bundle.getMessage("DepartTime"),
                 Bundle.getMessage("MaxLength"),
                 Bundle.getMessage("Grade"),

@@ -15,6 +15,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
@@ -282,7 +283,7 @@ public class RouteEditFrameTest extends OperationsTestCase {
         f.setSize(new Dimension(1200, Control.panelHeight400));
 
         // confirm that wait time is displayed
-        Assert.assertTrue(f.showWait.isSelected());
+        Assert.assertTrue(f.showTravel.isSelected());
 
         JFrameOperator jfo = new JFrameOperator(f);
         JTableOperator tbl = new JTableOperator(jfo);
@@ -324,12 +325,16 @@ public class RouteEditFrameTest extends OperationsTestCase {
 
         // confirm default wait value
         Assert.assertEquals("Wait", 0, rl.getWait());
+        Assert.assertEquals("Time", 4, Setup.getTravelTime());
 
         JFrameOperator jfo = new JFrameOperator(f);
         JTableOperator tbl = new JTableOperator(jfo);
-        tbl.setValueAt(20, 0, tbl.findColumn(Bundle.getMessage("Wait")));
+
+        Assert.assertEquals("Travel Time", 4, tbl.getValueAt(0, tbl.findColumn(Bundle.getMessage("Travel"))));
+        tbl.setValueAt(20, 0, tbl.findColumn(Bundle.getMessage("Travel")));
         JemmyUtil.enterClickAndLeave(f.saveRouteButton);
-        Assert.assertEquals("New Wait", 20, rl.getWait());
+        // wait = travel - time
+        Assert.assertEquals("New Wait", 16, rl.getWait());
 
         JUnitUtil.dispose(f);
     }
@@ -445,9 +450,10 @@ public class RouteEditFrameTest extends OperationsTestCase {
 
         JFrameOperator jfo = new JFrameOperator(f);
         JTableOperator tbl = new JTableOperator(jfo);
-        tbl.setValueAt(3, 0, tbl.findColumn(Bundle.getMessage("Grade")));
+        Double grade = 3.3;
+        tbl.setValueAt(grade, 0, tbl.findColumn(Bundle.getMessage("Grade")));
         JemmyUtil.enterClickAndLeave(f.saveRouteButton);
-        Assert.assertEquals("New Grade", 3, (int) rl.getGrade());
+        Assert.assertEquals("New Grade", grade, (Double) rl.getGrade());
 
         JUnitUtil.dispose(f);
     }

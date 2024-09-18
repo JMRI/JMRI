@@ -106,7 +106,7 @@ public class PrintRoutes {
                 SPACE +
                 Bundle.getMessage("Drops") +
                 SPACE +
-                Bundle.getMessage("Wait") +
+                Bundle.getMessage("Travel") +
                 TAB +
                 Bundle.getMessage("Length") +
                 TAB +

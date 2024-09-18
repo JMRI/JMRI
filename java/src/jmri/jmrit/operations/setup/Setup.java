@@ -340,6 +340,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static final String ALLOW_CARS_TO_RETURN_PROPERTY_CHANGE = "allowCarsToReturnChange"; // NOI18N
     public static final String TRAIN_DIRECTION_PROPERTY_CHANGE = "setupTrainDirectionChange"; // NOI18N
     public static final String ROUTING_STAGING_PROPERTY_CHANGE = "setupRoutingStagingChange"; // NOI18N
+    public static final String TRAVEL_TIME_PROPERTY_CHANGE = "setupTravelTimeChange"; // NOI18N
 
     public static boolean isMainMenuEnabled() {
         InstanceManager.getDefault(OperationsSetupXml.class); // load file
@@ -1015,7 +1016,9 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     }
 
     public static void setTravelTime(int minutes) {
+        int old = getTravelTime();
         getDefault().travelTime = minutes;
+        setDirtyAndFirePropertyChange(TRAVEL_TIME_PROPERTY_CHANGE, old, minutes);
     }
 
     public static int getTravelTime() {
