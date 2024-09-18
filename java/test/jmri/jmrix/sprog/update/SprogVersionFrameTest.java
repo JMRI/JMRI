@@ -5,6 +5,7 @@ import java.awt.GraphicsEnvironment;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.jmrix.sprog.SprogTrafficControlScaffold;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
 
 import org.junit.jupiter.api.*;
 
@@ -17,6 +18,14 @@ public class SprogVersionFrameTest extends jmri.util.JmriJFrameTestBase {
     private SprogTrafficControlScaffold stcs = null;
     private SprogSystemConnectionMemo m = null;
 
+    @Test
+    @Override
+    public void testAccessibleContent() {
+        Thread t = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("SprogVersionTitle"), "OK");
+        super.testAccessibleContent();
+        JUnitUtil.waitThreadTerminated(t.getName());
+    }
+
     @BeforeEach
     @Override
     public void setUp() {
@@ -25,18 +34,18 @@ public class SprogVersionFrameTest extends jmri.util.JmriJFrameTestBase {
         stcs = new SprogTrafficControlScaffold(m);
         m.setSprogTrafficController(stcs);
         m.configureCommandStation();
-        if (!GraphicsEnvironment.isHeadless()) {
-            frame = new SprogVersionFrame(m);
-        }
+        frame = new SprogVersionFrame(m);
     }
 
     @AfterEach
     @Override
     public void tearDown() {
         m.getSlotThread().interrupt();
-        JUnitUtil.waitFor(() -> {return m.getSlotThread().getState() == Thread.State.TERMINATED;}, "Slot thread failed to stop");
+        JUnitUtil.waitThreadTerminated(m.getSlotThread().getName());
         stcs.dispose();
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+
+        JUnitUtil.waitFor(50); // mini pause while Dialog operator fully completes
         super.tearDown();
     }
 
