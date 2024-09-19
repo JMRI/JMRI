@@ -40,12 +40,12 @@ public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelT
 
     @Test
     public void testConcreteCtor() {
-        assertDoesNotThrow( () -> ThreadingUtil.runOnGUI( () -> pane.initComponents() ));
+        assertDoesNotThrow( () -> ThreadingUtil.runOnGUIWithJmriException(() -> pane.initComponents() ));
     }
 
     @Test
     public void testInsertLine() {
-        assertDoesNotThrow( () -> ThreadingUtil.runOnGUI( () -> pane.initComponents() ));
+        assertDoesNotThrow( () -> ThreadingUtil.runOnGUIWithJmriException( () -> pane.initComponents() ));
 
         setFrameTextOnGUIThread("foo");
 
