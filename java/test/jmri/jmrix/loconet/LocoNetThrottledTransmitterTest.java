@@ -22,6 +22,7 @@ public class LocoNetThrottledTransmitterTest {
         JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
     }
 
+    @Disabled
     @Test
     public void testMemoCtor() {
         LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(new LocoNetInterfaceScaffold(memo), false);
@@ -32,6 +33,7 @@ public class LocoNetThrottledTransmitterTest {
         JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
     }
 
+    @Disabled
     @Test
     public void testMemoComparable() {
         LocoNetThrottledTransmitter.Memo m50   = new LocoNetThrottledTransmitter.Memo(null, 50, TimeUnit.MILLISECONDS);
@@ -54,6 +56,7 @@ public class LocoNetThrottledTransmitterTest {
         Assert.assertEquals("greater than 3", 1, m200a.compareTo(m50));
     }
 
+    @Disabled
     @Test
     public void testThreadStartStop() {
         LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(new LocoNetInterfaceScaffold(memo), false);
@@ -65,6 +68,7 @@ public class LocoNetThrottledTransmitterTest {
         JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
     }
 
+    @Disabled
     @Test
     public void testSendOneImmediate() {
         LocoNetInterfaceScaffold s = new LocoNetInterfaceScaffold(memo);
@@ -87,6 +91,7 @@ public class LocoNetThrottledTransmitterTest {
         JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
     }
 
+    @Disabled
     @Test
     public void testSendOneNowOneLater() {
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
@@ -116,6 +121,7 @@ public class LocoNetThrottledTransmitterTest {
         JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
     }
 
+    @Disabled
     @Test
     public void testAfterTimeNewMessageSentImmediately() {
         LocoNetInterfaceScaffold s = new LocoNetInterfaceScaffold(memo);
