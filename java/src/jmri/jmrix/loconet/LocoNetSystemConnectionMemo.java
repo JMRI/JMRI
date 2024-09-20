@@ -182,7 +182,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
     @Override
     public void configureManagers() {
 
-        tm = new LocoNetThrottledTransmitter(getLnTrafficController(), mTurnoutExtraSpace, "LocoNetSystemConnectionMemo");
+        tm = new LocoNetThrottledTransmitter(getLnTrafficController(), mTurnoutExtraSpace);
         log.debug("ThrottleTransmitted configured with: {}", mTurnoutExtraSpace);
         if (sm != null) {
             sm.setThrottledTransmitter(tm, mTurnoutNoRetry);
