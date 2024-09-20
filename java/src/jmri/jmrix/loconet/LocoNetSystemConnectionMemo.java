@@ -182,7 +182,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
     @Override
     public void configureManagers() {
 
-        tm = new LocoNetThrottledTransmitter(getLnTrafficController(), mTurnoutExtraSpace);
+        tm = new LocoNetThrottledTransmitter(getLnTrafficController(), mTurnoutExtraSpace, "LocoNetSystemConnectionMemo");
         log.debug("ThrottleTransmitted configured with: {}", mTurnoutExtraSpace);
         if (sm != null) {
             sm.setThrottledTransmitter(tm, mTurnoutNoRetry);
@@ -239,11 +239,11 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         // This must be done after the memo is registered
         getThrottleStringIO();
 
-        ln7gAcRtm = 
+        ln7gAcRtm =
                 setLn7gAccyRoutesManager(
                 getLn7gAccyRoutesManager());
         log.debug("Established Ln Accy Rt Mgr with memo {}",ln7gAcRtm.getMemo());
-        
+
     }
 
     public LnPowerManager getPowerManager() {

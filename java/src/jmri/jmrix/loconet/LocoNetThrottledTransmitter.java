@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  */
 public class LocoNetThrottledTransmitter implements LocoNetInterface {
 
-    public LocoNetThrottledTransmitter(@Nonnull LocoNetInterface controller, boolean mTurnoutExtraSpace) {
+    public LocoNetThrottledTransmitter(@Nonnull LocoNetInterface controller, boolean mTurnoutExtraSpace, String threadName) {
         this.controller = controller;
         this.memo = controller.getSystemConnectionMemo();
         this.mTurnoutExtraSpace = mTurnoutExtraSpace;
@@ -35,7 +35,7 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
             minInterval = minInterval * 4;
         }
 
-        attachServiceThread();
+        attachServiceThread(threadName);
     }
 
     /**
@@ -144,10 +144,10 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
      */
     public static final String SERVICE_THREAD_NAME = " LocoNetThrottledTransmitter";
 
-    private void attachServiceThread() {
+    private void attachServiceThread(String threadName) {
         theServiceThread = new ServiceThread();
         theServiceThread.setPriority(Thread.NORM_PRIORITY);
-        theServiceThread.setName( memo.getUserName() + SERVICE_THREAD_NAME);
+        theServiceThread.setName( memo.getUserName() + SERVICE_THREAD_NAME + " " + threadName);
         theServiceThread.setDaemon(true);
         theServiceThread.start();
     }
