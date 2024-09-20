@@ -239,11 +239,11 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         // This must be done after the memo is registered
         getThrottleStringIO();
 
-        ln7gAcRtm = 
+        ln7gAcRtm =
                 setLn7gAccyRoutesManager(
                 getLn7gAccyRoutesManager());
         log.debug("Established Ln Accy Rt Mgr with memo {}",ln7gAcRtm.getMemo());
-        
+
     }
 
     public LnPowerManager getPowerManager() {
@@ -421,6 +421,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         if (predefinedMeters != null) {
             predefinedMeters.dispose();
         }
+        LnPowerManager pm = (LnPowerManager) classObjectMap.get(PowerManager.class);
         InstanceManager.deregister(this, LocoNetSystemConnectionMemo.class);
         if (cf != null) {
             InstanceManager.deregister(cf, ComponentFactory.class);
@@ -447,6 +448,9 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         if (lt != null){
             lt.dispose();
             lt = null;
+        }
+        if (pm != null){
+            pm.dispose();
         }
         super.dispose();
     }
