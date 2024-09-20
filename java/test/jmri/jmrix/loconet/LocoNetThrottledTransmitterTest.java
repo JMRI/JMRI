@@ -17,7 +17,7 @@ public class LocoNetThrottledTransmitterTest {
 
     @Test
     public void testCtorAndDispose() {
-        Assume.assumeFalse("Ignoring test", true);
+//        Assume.assumeFalse("Ignoring test", true);
         LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(new LocoNetInterfaceScaffold(memo), false, "testCtorAndDispose");
         q.dispose();
         JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
