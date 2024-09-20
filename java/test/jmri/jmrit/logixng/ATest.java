@@ -17,9 +17,6 @@ public class ATest {
 
     @Test
     public void testA() throws FileNotFoundException, IOException {
-        jmri.jmrix.dcc4pc.swing.boardlists.BoardListPanelTest a;
-
-
         boolean foundTest = false;
         int count = 0;
         String lastLine = null;
@@ -37,7 +34,7 @@ public class ATest {
                 if (line.equals(lastLine)) continue;
                 lastLine = line;
 
-                if (!line.startsWith("WARN  - Found remnant thread \"DCC4PC Sensor Poll\" in group \"main\" ")) continue;
+                if (line.startsWith("WARN  - Found remnant thread \"DCC4PC Sensor Poll\" in group \"main\" ")) continue;
 
                 log.error(line);
                 if (++count >= 10000) break;
