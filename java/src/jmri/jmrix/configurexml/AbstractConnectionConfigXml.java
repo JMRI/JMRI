@@ -208,6 +208,8 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
         }
     }
 
+    abstract protected void dispose();
+
     // initialize logging
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractConnectionConfigXml.class);
 
