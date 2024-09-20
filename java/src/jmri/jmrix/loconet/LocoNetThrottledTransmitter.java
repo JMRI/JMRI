@@ -147,7 +147,7 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
     private void attachServiceThread() {
         theServiceThread = new ServiceThread();
         theServiceThread.setPriority(Thread.NORM_PRIORITY);
-        theServiceThread.setName( memo.getUserName() + SERVICE_THREAD_NAME + " ");
+        theServiceThread.setName( memo.getUserName() + SERVICE_THREAD_NAME);
         theServiceThread.setDaemon(true);
         theServiceThread.start();
     }
