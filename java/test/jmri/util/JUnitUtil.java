@@ -1435,6 +1435,15 @@ public class JUnitUtil {
     }
 
     /**
+     * Wait for a thread to terminate, ie is no longer alive.
+     * A Thread which does not complete in time is a test failure.
+     * @param thread the Thread to wait for.
+     */
+    public static void waitThreadTerminated( @Nonnull Thread thread ) {
+        waitFor( () -> !thread.isAlive(), "Thread \"" + thread.getName() + "\" is still alive");
+    }
+
+    /**
      * Get a Thread by matching the name.
      * @param threadName Starting characters of the Thread name.
      * @return the Thread, null if no Thread found.
