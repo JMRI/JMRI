@@ -114,7 +114,7 @@ public class AbstractAnalogIOTest {
     }
 
 
-    private class MyAbstractAnalogIO extends AbstractAnalogIO {
+    private static class MyAbstractAnalogIO extends AbstractAnalogIO {
 
         private double _min = 0;
         private double _max = 100;

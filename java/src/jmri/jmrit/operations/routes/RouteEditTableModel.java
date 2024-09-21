@@ -34,8 +34,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     private static final int RANDOM_CONTROL_COLUMN = MAXMOVES_COLUMN + 1;
     private static final int PICKUP_COLUMN = RANDOM_CONTROL_COLUMN + 1;
     private static final int DROP_COLUMN = PICKUP_COLUMN + 1;
-    private static final int WAIT_COLUMN = DROP_COLUMN + 1;
-    private static final int TIME_COLUMN = WAIT_COLUMN + 1;
+    private static final int TRAVEL_COLUMN = DROP_COLUMN + 1;
+    private static final int TIME_COLUMN = TRAVEL_COLUMN + 1;
     private static final int MAXLENGTH_COLUMN = TIME_COLUMN + 1;
     private static final int GRADE = MAXLENGTH_COLUMN + 1;
     private static final int TRAINICONX = GRADE + 1;
@@ -58,7 +58,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 
     public void setWait(boolean showWait) {
         XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(WAIT_COLUMN), showWait);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(TRAVEL_COLUMN), showWait);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(TIME_COLUMN), !showWait);
     }
 
@@ -113,7 +113,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         table.getColumnModel().getColumn(RANDOM_CONTROL_COLUMN).setPreferredWidth(65);
         table.getColumnModel().getColumn(PICKUP_COLUMN).setPreferredWidth(65);
         table.getColumnModel().getColumn(DROP_COLUMN).setPreferredWidth(65);
-        table.getColumnModel().getColumn(WAIT_COLUMN).setPreferredWidth(65);
+        table.getColumnModel().getColumn(TRAVEL_COLUMN).setPreferredWidth(65);
         table.getColumnModel().getColumn(TIME_COLUMN).setPreferredWidth(65);
         table.getColumnModel().getColumn(MAXLENGTH_COLUMN).setPreferredWidth(75);
         table.getColumnModel().getColumn(GRADE).setPreferredWidth(50);
@@ -161,8 +161,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
                 return Bundle.getMessage("Pickups");
             case DROP_COLUMN:
                 return Bundle.getMessage("Drops");
-            case WAIT_COLUMN:
-                return Bundle.getMessage("Wait");
+            case TRAVEL_COLUMN:
+                return Bundle.getMessage("Travel");
             case TIME_COLUMN:
                 return Bundle.getMessage("Time");
             case MAXLENGTH_COLUMN:
@@ -191,13 +191,15 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         switch (col) {
             case ID_COLUMN:
             case NAME_COLUMN:
-            case MAXMOVES_COLUMN:
-            case WAIT_COLUMN:
+                return String.class;
+            case TRAVEL_COLUMN:
             case MAXLENGTH_COLUMN:
-            case GRADE:
+            case MAXMOVES_COLUMN:
             case TRAINICONX:
             case TRAINICONY:
-                return String.class;
+                return Integer.class;
+            case GRADE:
+                return Double.class;
             case TRAIN_DIRECTION_COLUMN:
             case RANDOM_CONTROL_COLUMN:
             case PICKUP_COLUMN:
@@ -223,7 +225,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             case RANDOM_CONTROL_COLUMN:
             case PICKUP_COLUMN:
             case DROP_COLUMN:
-            case WAIT_COLUMN:
+            case TRAVEL_COLUMN:
             case TIME_COLUMN:
             case MAXLENGTH_COLUMN:
             case GRADE:
@@ -258,7 +260,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
                 return cb;
             }
             case MAXMOVES_COLUMN:
-                return Integer.toString(rl.getMaxCarMoves());
+                return rl.getMaxCarMoves();
             case RANDOM_CONTROL_COLUMN: {
                 JComboBox<String> cb = getRandomControlComboBox();
                 cb.setSelectedItem(rl.getRandomControl());
@@ -274,8 +276,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
                 cb.setSelectedItem(rl.isDropAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"));
                 return cb;
             }
-            case WAIT_COLUMN: {
-                return Integer.toString(rl.getWait());
+            case TRAVEL_COLUMN: {
+                return rl.getWait() + Setup.getTravelTime();
             }
             case TIME_COLUMN: {
                 JComboBox<String> cb = getTimeComboBox();
@@ -283,13 +285,13 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
                 return cb;
             }
             case MAXLENGTH_COLUMN:
-                return Integer.toString(rl.getMaxTrainLength());
+                return rl.getMaxTrainLength();
             case GRADE:
-                return Double.toString(rl.getGrade());
+                return rl.getGrade();
             case TRAINICONX:
-                return Integer.toString(rl.getTrainIconX());
+                return rl.getTrainIconX();
             case TRAINICONY:
-                return Integer.toString(rl.getTrainIconY());
+                return rl.getTrainIconY();
             case COMMENT_COLUMN: {
                 if (rl.getComment().equals(RouteLocation.NONE)) {
                     return Bundle.getMessage("Add");
@@ -346,8 +348,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             case DROP_COLUMN:
                 setDrop(value, rl);
                 break;
-            case WAIT_COLUMN:
-                setWait(value, rl);
+            case TRAVEL_COLUMN:
+                setTravel(value, rl);
                 break;
             case TIME_COLUMN:
                 setDepartureTime(value, rl);
@@ -404,13 +406,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     private void setMaxTrainMoves(Object value, RouteLocation rl) {
-        int moves;
-        try {
-            moves = Integer.parseInt(value.toString());
-        } catch (NumberFormatException e) {
-            log.error("Location moves must be a number");
-            return;
-        }
+        int moves = (int) value;
         if (moves <= 500) {
             rl.setMaxCarMoves(moves);
             _maxTrainMoves = moves;
@@ -440,17 +436,9 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         return _maxTrainLength;
     }
 
-    private void setWait(Object value, RouteLocation rl) {
-        int wait;
-        try {
-            wait = Integer.parseInt(value.toString());
-        } catch (NumberFormatException e) {
-            log.error("Location wait must be a number");
-            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("EnterWaitTimeMinutes"), Bundle
-                    .getMessage("WaitTimeNotValid"), JmriJOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        rl.setWait(wait);
+    private void setTravel(Object value, RouteLocation rl) {
+        int wait = (int) value;
+        rl.setWait(wait - Setup.getTravelTime());
     }
 
     private void setDepartureTime(Object value, RouteLocation rl) {
@@ -458,13 +446,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     private void setMaxTrainLength(Object value, RouteLocation rl) {
-        int length;
-        try {
-            length = Integer.parseInt(value.toString());
-        } catch (NumberFormatException e) {
-            log.error("Maximum departure length must be a number");
-            return;
-        }
+        int length = (int) value;
         if (length < 0) {
             log.error("Maximum departure length must be a postive number");
             return;
@@ -492,13 +474,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     private void setGrade(Object value, RouteLocation rl) {
-        double grade;
-        try {
-            grade = Double.parseDouble(value.toString());
-        } catch (NumberFormatException e) {
-            log.error("grade must be a number");
-            return;
-        }
+        double grade = (Double) value;
         if (grade <= 6 && grade >= -6) {
             rl.setGrade(grade);
         } else {
@@ -510,24 +486,12 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     private void setTrainIconX(Object value, RouteLocation rl) {
-        int x;
-        try {
-            x = Integer.parseInt(value.toString());
-        } catch (NumberFormatException e) {
-            log.error("Train icon x coordinate must be a number");
-            return;
-        }
+        int x = (int) value;
         rl.setTrainIconX(x);
     }
 
     private void setTrainIconY(Object value, RouteLocation rl) {
-        int y;
-        try {
-            y = Integer.parseInt(value.toString());
-        } catch (NumberFormatException e) {
-            log.error("Train icon y coordinate must be a number");
-            return;
-        }
+        int y = (int) value;
         rl.setTrainIconY(y);
     }
 
@@ -634,7 +598,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             updateList();
             fireTableDataChanged();
         }
-        if (e.getPropertyName().equals(Setup.TRAIN_DIRECTION_PROPERTY_CHANGE)) {
+        if (e.getPropertyName().equals(Setup.TRAIN_DIRECTION_PROPERTY_CHANGE) ||
+                e.getPropertyName().equals(Setup.TRAVEL_TIME_PROPERTY_CHANGE)) {
             fireTableDataChanged();
         }
         if (e.getSource().getClass().equals(RouteLocation.class)) {

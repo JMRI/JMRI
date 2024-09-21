@@ -1,13 +1,12 @@
 package jmri.jmrit.withrottle;
 
-import jmri.ConsistManager;
-import jmri.InstanceManager;
-import jmri.NamedBeanHandleManager;
+import jmri.*;
 import jmri.jmrit.consisttool.TestConsistManager;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test simple functioning of ConsistController
@@ -17,9 +16,27 @@ import org.junit.jupiter.api.*;
 public class ConsistControllerTest {
 
     @Test
-    public void testCtor() {
-        ConsistController panel = new ConsistController();
-        Assert.assertNotNull("exists", panel );
+    public void testConsistControllerCtor() {
+        ConsistController t = new ConsistController();
+        assertNotNull( t, "exists" );
+        assertTrue(t.verifyCreation());
+    }
+
+    @Test
+    public void testSendDataForConsist(){
+
+        Consist consist = InstanceManager.getDefault(ConsistManager.class).getConsist(new DccLocoAddress(44, true));
+        Assertions.assertNotNull(consist);
+
+        ConsistController t = new ConsistController();
+        ControllerInterfaceScaffold scaf = new ControllerInterfaceScaffold();
+        t.addControllerListener(scaf);
+
+        t.sendDataForConsist(consist);
+
+        String last = scaf.getLastPacket();
+        assertNotNull(last);
+        assertEquals( "RCD}|{44(L)}|{44(L)", last);
     }
 
     @BeforeEach
@@ -32,7 +49,7 @@ public class ConsistControllerTest {
         InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
         InstanceManager.setDefault(NamedBeanHandleManager.class, new NamedBeanHandleManager());
     }
-    
+
     @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
