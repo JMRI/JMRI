@@ -1545,6 +1545,18 @@ public class JUnitUtil {
                  || ( name.startsWith("pool-") && name.endsWith("thread-1") )
                  || group.contains("FailOnTimeoutGroup") // JUnit timeouts
                  || ( name.equals("Cleaner-0") && group.contains("InnocuousThreadGroup") )  // Created indirectly by ScriptEngineSelector
+
+                    // Threads created by OpenLCB which JMRI cannot end
+                 || ( name.equals("openlcb-hub-output") && group.contains("main") )
+                 || ( name.equals("OpenLCB Mimic Node Store Timer") && group.contains("main") )
+                 || ( name.equals("OpenLCB-datagram-timer") && group.contains("main") )
+                 || ( name.startsWith("Olcb-Pool-") && group.contains("main") )
+                 || ( name.equals("OpenLCB Memory Configuration Service Retry Timer") && group.contains("main") )
+                 || ( name.equals("OpenLCB NIDaAlgorithm Timer") && group.contains("main") )
+                 || ( name.equals("OpenLCB LoaderClient Timeout Timer") && group.contains("main") )
+                 || ( name.equals("OLCB Interface dispose thread") && group.contains("main") )
+                 || ( name.equals("olcbCanInterface.initialize") && group.contains("JMRI") )    // Created by JMRI but hangs due to OpenLCB lib
+
                  || ( name.startsWith("SwingWorker-pool-1-thread-") &&
                          ( group.contains("FailOnTimeoutGroup") || group.contains("main") )
                     )
