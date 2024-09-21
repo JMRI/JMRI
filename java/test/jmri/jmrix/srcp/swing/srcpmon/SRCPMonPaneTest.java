@@ -2,7 +2,6 @@ package jmri.jmrix.srcp.swing.srcpmon;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -15,7 +14,7 @@ public class SRCPMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     @Test
     public void testDefault() {
         jmri.util.swing.JmriNamedPaneAction f = new SRCPMonPane.Default();
-        Assert.assertNotNull(f);
+        Assertions.assertNotNull(f);
     }
 
     @BeforeEach
@@ -35,6 +34,7 @@ public class SRCPMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     @Override
     public void tearDown() {
         panel = pane = null;
+        memo.dispose();
         jmri.InstanceManager.deregister(memo, jmri.jmrix.srcp.SRCPSystemConnectionMemo.class);
         super.tearDown();
     }
