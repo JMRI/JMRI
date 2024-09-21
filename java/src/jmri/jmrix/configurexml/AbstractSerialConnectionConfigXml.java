@@ -128,7 +128,9 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
 
     @Override
     protected void dispose() {
-        adapter.dispose();
+        if (adapter != null) {
+            adapter.dispose();
+        }
     }
 
     // initialize logging
