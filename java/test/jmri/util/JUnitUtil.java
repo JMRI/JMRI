@@ -1544,6 +1544,7 @@ public class JUnitUtil {
                  || name.startsWith("surefire-forkedjvm-")
                  || ( name.startsWith("pool-") && name.endsWith("thread-1") )
                  || group.contains("FailOnTimeoutGroup") // JUnit timeouts
+                 || ( name.equals("Cleaner-0") && group.contains("InnocuousThreadGroup") )  // Created indirectly by ScriptEngineSelector
                  || ( name.startsWith("SwingWorker-pool-1-thread-") &&
                          ( group.contains("FailOnTimeoutGroup") || group.contains("main") )
                     )
