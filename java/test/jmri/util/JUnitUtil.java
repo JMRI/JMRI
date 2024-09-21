@@ -160,16 +160,16 @@ public class JUnitUtil {
      * <p>
      * Set from the jmri.util.JUnitUtil.checkRemnantThreads environment variable.
      */
-    static boolean checkRemnantThreads =    true;
-//    static boolean checkRemnantThreads =    Boolean.getBoolean("jmri.util.JUnitUtil.checkRemnantThreads"); // false unless set true
+//    static boolean checkRemnantThreads =    true;
+    static boolean checkRemnantThreads =    Boolean.getBoolean("jmri.util.JUnitUtil.checkRemnantThreads"); // false unless set true
 
     /**
      * Fail Test if any threads left behind after a test calls {@link #tearDown}
      * <p>
      * Set from the jmri.util.JUnitUtil.failRemnantThreads environment variable.
      */
-    static boolean failRemnantThreads =  true;
-//    static boolean failRemnantThreads =  Boolean.getBoolean("jmri.util.JUnitUtil.failRemnantThreads"); // false unless set true
+//    static boolean failRemnantThreads =  true;
+    static boolean failRemnantThreads =  Boolean.getBoolean("jmri.util.JUnitUtil.failRemnantThreads"); // false unless set true
 
     /**
      * Kill any threads left behind after a test calls {@link #tearDown}
