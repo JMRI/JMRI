@@ -1586,6 +1586,7 @@ public class JUnitUtil {
 
                                 log.warn("Jemmy remnant thread running {}", details );
                                 if ( failRemnantThreads ) {
+                                    threadsSeen.add(t);
                                     Assertions.fail("Jemmy remnant thread running " + details);
                                 }
                             } else {
@@ -1594,12 +1595,14 @@ public class JUnitUtil {
                                 ex.setStackTrace(traces);
                                 log.warn("{} remnant thread \"{}\" in group \"{}\" after {}", action, name, group, getTestClassName(), ex);
                                 if ( failRemnantThreads ) {
+                                    threadsSeen.add(t);
                                     Assertions.fail("Thread \"" + name + "\" after " + getTestClassName());
                                 }
                             }
                         } else {
                             log.warn("{} remnant thread \"{}\" in group \"{}\" after {}", action, name, group, getTestClassName());
                             if ( failRemnantThreads ) {
+                                threadsSeen.add(t);
                                 Assertions.fail("Thread \"" + name + "\" in group \"" + group + "\" after " + getTestClassName());
                             }
                         }
