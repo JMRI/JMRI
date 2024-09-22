@@ -424,7 +424,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>Improved zoom menu selection matching.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
