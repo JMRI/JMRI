@@ -25,4 +25,4 @@ jobs:
     - name: Run HeadLessTest with Maven
       run: |
         # run tests using maven with graphics suppressed
-        mvn test "-Djmri.skipTestsRequiringSeparateRunning=true"  "-Djava.awt.headless=true" "-Dsurefire.printSummary=true"
+        mvn test "-Djmri.skipTestsRequiringSeparateRunning=true"  "-Djava.awt.headless=true" "-Dsurefire.printSummary=false"

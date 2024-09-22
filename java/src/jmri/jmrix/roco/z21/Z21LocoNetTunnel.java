@@ -32,8 +32,9 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
     // internal ends of the pipes
     private DataOutputStream outpipe = null;  // feed pin
     private DataInputStream inpipe = null; // feed pout
-    private Z21SystemConnectionMemo _memo;
+    private final Z21SystemConnectionMemo _memo;
     private Thread sourceThread;
+    private volatile boolean stopThread = false;
 
     /**
      * Build a new LocoNet tunnel.
@@ -85,7 +86,7 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
         // and writes modified data to the output pipe.  This is the heart
         // of the command station simulation.
         log.debug("LocoNet Tunnel Thread Started");
-        for (;;) {
+        while (!stopThread) {
             LocoNetMessage m = readMessage();
             if(m != null) {
                // don't forward a null message.
@@ -294,6 +295,15 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
 
     @SuppressWarnings("deprecation") // Thread.stop
     public void dispose(){
+        if (sourceThread != null) {
+            stopThread = true;
+            sourceThread.interrupt();
+            try {
+                sourceThread.join();
+            } catch (InterruptedException e) {
+                // Do nothing
+            }
+        }
         if(lsc != null){
             lsc.dispose();
         }
@@ -302,7 +312,6 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
             if ( tc != null ) {
                 tc.removez21Listener(this);
             }
-           _memo.dispose();
         }
         try {
             inpipe.close();
