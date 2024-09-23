@@ -678,8 +678,10 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             }
             // can't use staging if car's load can be modified
             if (trackType.equals(Track.STAGING) && track.isModifyLoadsEnabled()) {
-                addLine(_buildReport, SEVEN, Bundle.getMessage("RouterStagingExcluded",
-                        track.getLocation().getName(), track.getName()));
+                if (_addtoReportVeryDetailed) {
+                    addLine(_buildReport, SEVEN, Bundle.getMessage("RouterStagingExcluded",
+                            track.getLocation().getName(), track.getName()));
+                }
                 continue;
             }
             String status = track.isRollingStockAccepted(testCar);
@@ -804,8 +806,9 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             foundRoute = routeUsing7Trains(car);
         }
         if (!foundRoute) {
-            addLine(_buildReport, SEVEN, Bundle.getMessage("RouterNotAbleToRoute", car.toString(), car.getLocationName(),
-                    car.getTrackName(), car.getFinalDestinationName(), car.getFinalDestinationTrackName()));
+            addLine(_buildReport, SEVEN,
+                    Bundle.getMessage("RouterNotAbleToRoute", car.toString(), car.getLocationName(),
+                            car.getTrackName(), car.getFinalDestinationName(), car.getFinalDestinationTrackName()));
         }
         return foundRoute;
     }
@@ -1195,13 +1198,13 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         }
         return true;
     }
-    
+
     /**
-     * Used when the 1st hop interchanges and yards are full. Will attempt to use a
-     * spur's alternate track when pulling a car from the spur. This will create
-     * a local move. Code checks to see if local move by the train being used is
-     * allowed. Will only use the alternate track if all possible 1st hop tracks
-     * were tested.
+     * Used when the 1st hop interchanges and yards are full. Will attempt to
+     * use a spur's alternate track when pulling a car from the spur. This will
+     * create a local move. Code checks to see if local move by the train being
+     * used is allowed. Will only use the alternate track if all possible 1st
+     * hop tracks were tested.
      * 
      * @param car the car being redirected
      * @return true if car's destination was set to alternate track
