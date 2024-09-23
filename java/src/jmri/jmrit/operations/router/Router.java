@@ -492,27 +492,8 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         boolean foundRoute = false;
         // now search for a yard or interchange that a train can pick up and
         // deliver the car to its destination
-        List<Track> tracks = InstanceManager.getDefault(LocationManager.class).getTracksByMoves(trackType);
+        List<Track> tracks = getTracks(car, testCar, trackType);
         for (Track track : tracks) {
-            if (car.getTrack() == track || car.getFinalDestinationTrack() == track) {
-                continue; // don't use car's current track
-            }
-            // can't use staging if car's load can be modified
-            if (trackType.equals(Track.STAGING) && track.isModifyLoadsEnabled()) {
-                addLine(_buildReport, SEVEN, Bundle.getMessage("RouterStagingExcluded",
-                        track.getLocation().getName(), track.getName()));
-                continue;
-            }
-            String status = track.isRollingStockAccepted(testCar);
-            if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
-                if (_addtoReportVeryDetailed) {
-                    addLine(_buildReport, SEVEN, BLANK_LINE);
-                    addLine(_buildReport, SEVEN, Bundle.getMessage("RouterCanNotDeliverCar",
-                            car.toString(), track.getLocation().getName(), track.getName(),
-                            status, track.getTrackTypeName()));
-                }
-                continue;
-            }
             if (_addtoReportVeryDetailed) {
                 addLine(_buildReport, SEVEN, BLANK_LINE);
                 addLine(_buildReport, SEVEN, Bundle.getMessage("RouterFoundTrack",
@@ -677,6 +658,42 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             }
         }
         return foundRoute;
+    }
+
+    /**
+     * This routine builds a set of tracks that could be used for routing. It
+     * also lists all of the tracks that can't be used.
+     * 
+     * @param car       The car being routed
+     * @param testCar   the test car
+     * @param trackType the type of track used for routing
+     * @return list of usable tracks
+     */
+    private List<Track> getTracks(Car car, Car testCar, String trackType) {
+        List<Track> inTracks = InstanceManager.getDefault(LocationManager.class).getTracksByMoves(trackType);
+        List<Track> tracks = new ArrayList<Track>();
+        for (Track track : inTracks) {
+            if (car.getTrack() == track || car.getFinalDestinationTrack() == track) {
+                continue; // don't use car's current track
+            }
+            // can't use staging if car's load can be modified
+            if (trackType.equals(Track.STAGING) && track.isModifyLoadsEnabled()) {
+                addLine(_buildReport, SEVEN, Bundle.getMessage("RouterStagingExcluded",
+                        track.getLocation().getName(), track.getName()));
+                continue;
+            }
+            String status = track.isRollingStockAccepted(testCar);
+            if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
+                if (_addtoReportVeryDetailed) {
+                    addLine(_buildReport, SEVEN, Bundle.getMessage("RouterCanNotDeliverCar",
+                            car.toString(), track.getLocation().getName(), track.getName(),
+                            status, track.getTrackTypeName()));
+                }
+                continue;
+            }
+            tracks.add(track);
+        }
+        return tracks;
     }
 
     /*
