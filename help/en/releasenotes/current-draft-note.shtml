@@ -172,7 +172,7 @@
 
         <h4>Zimo MXULF</h4>
             <ul>
-                <li>Fix an error that could cause occasional crashes.</li>
+                <li></li>
             </ul>
 
         <h4>ZTC</h4>
@@ -601,6 +601,13 @@
         <ul>
             <li></li>
         </ul>
+
+   <h3>Z21 Server</h3>
+        <a id="z21" name="z21"></a>
+        <ul>
+            <li>Fix an error that causes occasional crashes.</li>
+        </ul>
+
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
