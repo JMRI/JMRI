@@ -23,7 +23,6 @@ import javax.swing.event.ListSelectionEvent;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import jmri.*;
-import jmri.PermissionValue;
 import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.DirectorySearcher;
 import jmri.jmrit.catalog.ImageIndexEditor;
@@ -45,7 +44,6 @@ import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.JmriMouseListener;
 import jmri.util.swing.JmriMouseMotionListener;
 
-import org.openide.util.lookup.ServiceProvider;
 
 /**
  * This is the Model and a Controller for panel editor Views. (Panel Editor,
@@ -3686,117 +3684,6 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
                 pos.getClass().getSimpleName(),
                 Math.round(point.getX()),
                 Math.round(point.getY()));
-    }
-
-
-    public static final PermissionOwner EDITOR_PERMISSION_OWNER =
-            new EditorPermissionOwner();
-
-    public static final Permission EDITOR_PERMISSION =
-            new EditorPermission();
-
-
-    @ServiceProvider(service = PermissionFactory.class)
-    public static class Factory implements PermissionFactory {
-
-        @Override
-        public void register(PermissionManager manager) {
-            manager.registerOwner(EDITOR_PERMISSION_OWNER);
-            manager.registerPermission(EDITOR_PERMISSION);
-        }
-
-    }
-
-
-    public static class EditorPermissionOwner implements PermissionOwner {
-
-        @Override
-        public String getName() {
-            return Bundle.getMessage("Editor_EditorPermissionOwner");
-        }
-
-    }
-
-
-    public static class EditorPermission implements EnumPermission<EditorPermissionEnum> {
-
-        @Override
-        public EditorPermissionEnum[] getValues() {
-            return EditorPermissionEnum.values();
-        }
-
-        @Override
-        public PermissionOwner getOwner() {
-            return EDITOR_PERMISSION_OWNER;
-        }
-
-        @Override
-        public String getName() {
-            return Bundle.getMessage("Editor_EditorPermission");
-        }
-
-        @Override
-        public String getValue(PermissionValue value) {
-            if (!(value instanceof EditorPermissionEnum)) {
-                throw new IllegalArgumentException("value is not a EditorPermissionEnum: "
-                        + (value != null ? value.getClass().getName() : "null"));
-            }
-            return ((EditorPermissionEnum)value).name();
-        }
-
-        @Override
-        public PermissionValue valueOf(String value) {
-            return EditorPermissionEnum.valueOf(value);
-        }
-
-        @Override
-        public PermissionValue getDefaultPermission() {
-            return EditorPermissionEnum.None;
-        }
-
-        @Override
-        public PermissionValue getDefaultPermission(Role role) {
-            return EditorPermissionEnum.Default;
-        }
-
-        @Override
-        public int compare(PermissionValue o1, PermissionValue o2) {
-            if (o1 instanceof EditorPermission && o2 instanceof EditorPermission) {
-                EditorPermissionEnum ep1 = (EditorPermissionEnum) o1;
-                EditorPermissionEnum ep2 = (EditorPermissionEnum) o2;
-                return Integer.compare(ep1.ordinal(), ep2.ordinal());
-            } else {
-                throw new IllegalArgumentException("Cannot compare o1 and o2 since one or both is not an EditorPermission");
-            }
-        }
-
-    }
-
-    public static enum EditorPermissionEnum implements PermissionValue {
-        Default(true, Bundle.getMessage("Editor_EditorPermission_Default")),
-        None(false, Bundle.getMessage("Editor_EditorPermission_None")),
-        Read(false, Bundle.getMessage("Editor_EditorPermission_Read")),
-        ReadWrite(false, Bundle.getMessage("Editor_EditorPermission_ReadWrite")),
-        ReadWriteEdit(false, Bundle.getMessage("Editor_EditorPermission_ReadWriteEdit"));
-
-        final boolean _isDefault;
-        final String _text;
-
-        private EditorPermissionEnum(boolean isDefault, String text) {
-            this._isDefault = isDefault;
-            this._text = text;
-        }
-
-        @Override
-        public boolean isDefault() {
-            return _isDefault;
-        }
-
-        @Override
-        public String toString() {
-            return _text;
-        }
-
     }
 
     // initialize logging

@@ -28,10 +28,7 @@ import javax.swing.JComponent;
 
 import jmri.*;
 import jmri.configurexml.ConfigXmlManager;
-import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.EditorManager;
-import jmri.jmrit.display.MultiSensorIcon;
-import jmri.jmrit.display.Positionable;
+import jmri.jmrit.display.*;
 import jmri.server.json.JSON;
 import jmri.server.json.util.JsonUtilHttpService;
 import jmri.util.FileUtil;
@@ -99,8 +96,8 @@ public abstract class AbstractPanelServlet extends HttpServlet {
 
         String sessionId = PermissionServlet.getSessionId(request);
         if (! InstanceManager.getDefault(PermissionManager.class)
-                .hasAtLeastRemotePermission(sessionId, Editor.EDITOR_PERMISSION,
-                        Editor.EditorPermissionEnum.Read)) {
+                .hasAtLeastRemotePermission(sessionId, EditorPermissions.EDITOR_PERMISSION,
+                        EditorPermissions.EditorPermissionEnum.Read)) {
             PermissionServlet.permissionDenied(request, response);
             return;
         }

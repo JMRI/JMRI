@@ -3,7 +3,7 @@ package jmri.jmrit.display.swing;
 import javax.swing.*;
 
 import jmri.*;
-import jmri.jmrit.display.Editor.EditorPermissionEnum;
+import jmri.jmrit.display.EditorPermissions.EditorPermissionEnum;
 import jmri.swing.PermissionSwing;
 
 /**
@@ -11,7 +11,7 @@ import jmri.swing.PermissionSwing;
  *
  * @author Daniel Bergqvist Copyright 2024
  */
-public class Editor {
+public class EditorPermissions {
 
     public static class EditorPermissionSwing implements PermissionSwing {
 
