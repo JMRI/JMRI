@@ -171,26 +171,29 @@ public interface PermissionManager {
 
     /**
      * Has the current user permission?
-     * @param permission the permission to check
+     * @param permission  the permission to check
+     * @param minValue    the minimum value
      * @return true if the user has the permission, false otherwise
      */
-    boolean hasPermission(Permission permission);
+    boolean hasAtLeastPermission(Permission permission, PermissionValue minValue);
 
     /**
      * Has the current user of this session permission?
-     * @param sessionId  the session ID
-     * @param permission the permission to check
+     * @param sessionId   the session ID
+     * @param permission  the permission to check
+     * @param minValue    the minimum value
      * @return true if the user has the permission, false otherwise
      */
-    boolean hasRemotePermission(String sessionId, Permission permission);
+    boolean hasAtLeastRemotePermission(String sessionId, Permission permission, PermissionValue minValue);
 
     /**
      * Checks if the current user has the permission.
      * If not, show a message dialog if not headless. Otherwise log a message.
-     * @param permission the permission to check
+     * @param permission  the permission to check
+     * @param minValue    the minimum value
      * @return true if the user has the permission, false otherwise
      */
-    boolean checkPermission(Permission permission);
+    boolean ensureAtLeastPermission(Permission permission, PermissionValue minValue);
 
     /**
      * Register a permission owner.

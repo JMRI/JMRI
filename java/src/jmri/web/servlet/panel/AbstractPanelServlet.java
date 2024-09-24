@@ -38,7 +38,6 @@ import jmri.util.FileUtil;
 import jmri.web.server.WebServer;
 import jmri.web.servlet.ServletUtil;
 import jmri.web.servlet.permission.PermissionServlet;
-import jmri.RemotePermissions;
 
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -100,7 +99,8 @@ public abstract class AbstractPanelServlet extends HttpServlet {
 
         String sessionId = PermissionServlet.getSessionId(request);
         if (! InstanceManager.getDefault(PermissionManager.class)
-                .hasRemotePermission(sessionId, RemotePermissions.PERMISSION_VIEW_PANELS)) {
+                .hasAtLeastRemotePermission(sessionId, Editor.EDITOR_PERMISSION,
+                        Editor.EditorPermissionEnum.Read)) {
             PermissionServlet.permissionDenied(request, response);
             return;
         }

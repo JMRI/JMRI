@@ -9,8 +9,9 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import jmri.*;
-import jmri.Permission.PermissionComparator;
+import jmri.jmrit.logixng.swing.SwingTools;
 import jmri.jmrit.permission.DefaultPermissionManager;
+import jmri.swing.PermissionSwing;
 import jmri.swing.PreferencesPanel;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -227,7 +228,7 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
         JPanel rolePanel = new JPanel();
         rolePanel.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        c.gridwidth = 2;
+        c.gridwidth = 3;
         c.gridheight = 1;
         c.gridx = 0;
         c.gridy = 0;
@@ -248,23 +249,24 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
             c.gridy++;
 
             List<Permission> permissions = new ArrayList<>(permissionManager.getPermissions(owner));
-            permissions.sort(new PermissionComparator());
+            permissions.sort((a,b) -> { return a.getName().compareTo(b.getName()); });
             for (Permission permission : permissions) {
-                JCheckBox checkBox = new JCheckBox(permission.getName());
-                checkBox.setSelected(role.hasPermission(permission));
-                checkBox.addActionListener((evt) -> {
-                    role.setPermission(permission, checkBox.isSelected());
-                    _dirty = true;
-                });
-                if (permission.getParent() != null) {
+                PermissionSwing permissionSwing =
+                        SwingTools.getPermissionSwingForClass(permission);
+                JLabel label = permissionSwing.getLabel(permission);
+                if (label != null) {
                     c.gridwidth = 1;
-                    rolePanel.add(Box.createHorizontalStrut(20), c);
+                    c.gridx = 0;
+                    rolePanel.add(label, c);
                     c.gridx = 1;
+                    rolePanel.add(Box.createHorizontalStrut(5), c);
+                    c.gridx = 2;
                 }
-                rolePanel.add(checkBox, c);
+                rolePanel.add(permissionSwing.getComponent(
+                        role, permission, this::setDirtyFlag), c);
                 c.gridy++;
                 c.gridx = 0;
-                c.gridwidth = 2;
+                c.gridwidth = 3;
             }
         }
 
@@ -291,9 +293,17 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
         if (role.isSystemRole()) {
             removeRoleButton.setEnabled(false);
         }
-        rolePanel.add(removeRoleButton);
+        c.gridy++;
+        rolePanel.add(Box.createVerticalStrut(5), c);
+        c.gridy++;
+        c.anchor = GridBagConstraints.CENTER;
+        rolePanel.add(removeRoleButton, c);
 
         return rolePanel;
+    }
+
+    private void setDirtyFlag() {
+        _dirty = true;
     }
 
     private void reloadUsersTabbedPane(JTabbedPane usersTabbedPane,
@@ -454,7 +464,8 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
     public BooleanSupplier getIsEnabled() {
         return () -> {
             return InstanceManager.getDefault(PermissionManager.class)
-                    .checkPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PERMISSIONS);
+                    .ensureAtLeastPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES,
+                            BooleanPermission.BooleanValue.TRUE);
         };
     }
 

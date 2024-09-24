@@ -138,10 +138,10 @@ public class DefaultPermissionManager implements PermissionManager {
                             .getChild("Permissions").getChildren("Permission");
                     for (Element permissionElement : permissionElementList) {
                         String className = permissionElement.getChild("Class").getValue();
-                        boolean enabled = "yes".equals(permissionElement.getChild("Enabled").getValue());
                         Permission permission = _permissionClassNames.get(className);
                         if (permission != null) {
-                            ((DefaultRole)role).setPermissionWithoutCheck(permission, enabled);
+                            PermissionValue value = permission.valueOf(permissionElement.getChild("Enabled").getValue());
+                            ((DefaultRole)role).setPermissionWithoutCheck(permission, value);
                         } else {
                             log.error("Permission class {} does not exists", className);
                         }
@@ -233,10 +233,12 @@ public class DefaultPermissionManager implements PermissionManager {
                 roleElement.addContent(new Element("Name").addContent(role.getName()));
 
                 Element rolePermissions = new Element("Permissions");
-                for (var entry : role.getPermissions().entrySet()) {
+                for (java.util.Map.Entry<jmri.Permission, jmri.PermissionValue> entry : role.getPermissions().entrySet()) {
+                    Permission permission = entry.getKey();
+                    PermissionValue permissionValue = entry.getValue();
                     Element userPermission = new Element("Permission");
                     userPermission.addContent(new Element("Class").addContent(entry.getKey().getClass().getName()));
-                    userPermission.addContent(new Element("Enabled").addContent(entry.getValue() ? "yes" : "no"));
+                    userPermission.addContent(new Element("Enabled").addContent(permission.getValue(permissionValue)));
                     rolePermissions.addContent(userPermission);
                 }
                 roleElement.addContent(rolePermissions);
@@ -448,7 +450,8 @@ public class DefaultPermissionManager implements PermissionManager {
     @Override
     public synchronized void setEnabled(boolean enabled) {
         if (! InstanceManager.getDefault(PermissionManager.class)
-                .checkPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES)) {
+                .ensureAtLeastPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES,
+                        BooleanPermission.BooleanValue.TRUE)) {
             return;
         }
         _permissionsEnabled = enabled;
@@ -462,19 +465,23 @@ public class DefaultPermissionManager implements PermissionManager {
     @Override
     public synchronized void setAllowEmptyPasswords(boolean value) {
         if (! InstanceManager.getDefault(PermissionManager.class)
-                .checkPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES)) {
+                .ensureAtLeastPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES,
+                        BooleanPermission.BooleanValue.TRUE)) {
             return;
         }
         _allowEmptyPasswords = value;
     }
 
     @Override
-    public synchronized boolean hasPermission(Permission permission) {
-        return !_permissionsEnabled || _currentUser.hasPermission(permission);
+    public synchronized boolean hasAtLeastPermission(
+            Permission permission, PermissionValue minValue) {
+        return !_permissionsEnabled || _currentUser.hasAtLeastPermission(permission, minValue);
     }
 
     @Override
-    public synchronized boolean hasRemotePermission(String sessionId, Permission permission) {
+    public synchronized boolean hasAtLeastRemotePermission(
+            String sessionId, Permission permission, PermissionValue minValue) {
+
         if (!_permissionsEnabled) return true;
 
         DefaultUser user = REMOTE_USER_GUEST;
@@ -482,12 +489,13 @@ public class DefaultPermissionManager implements PermissionManager {
             user = _remoteUsers.get(sessionId);
         }
         // log.error("hasPermission: sessionId: {}, user: {}, permission: {}, has: {}", sessionId, user.getUserName(), permission.getName(), user.hasPermission(permission));
-        return user.hasPermission(permission);
+        return user.hasAtLeastPermission(permission, minValue);
     }
 
     @Override
-    public synchronized boolean checkPermission(Permission permission) {
-        return !_permissionsEnabled || _currentUser.checkPermission(permission);
+    public synchronized boolean ensureAtLeastPermission(
+            Permission permission, PermissionValue minValue) {
+        return !_permissionsEnabled || _currentUser.ensureAtLeastPermission(permission, minValue);
     }
 
     @Override

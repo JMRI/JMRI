@@ -53,7 +53,8 @@ public class StoreAndCompare extends AbstractAction {
      */
     public static boolean checkPermissionToStoreIfNeeded() {
         if (InstanceManager.getDefault(PermissionManager.class)
-                .hasPermission(LoadAndStorePermissionOwner.STORE_XML_FILE_PERMISSION)) {
+                .ensureAtLeastPermission(LoadAndStorePermissionOwner.STORE_XML_FILE_PERMISSION,
+                        BooleanPermission.BooleanValue.TRUE)) {
             // User has permission to store. No need to abort.
             return false;
         }
@@ -72,7 +73,8 @@ public class StoreAndCompare extends AbstractAction {
 
     public static void requestStoreIfNeeded() {
         if (!InstanceManager.getDefault(PermissionManager.class)
-                .hasPermission(LoadAndStorePermissionOwner.STORE_XML_FILE_PERMISSION)) {
+                .ensureAtLeastPermission(LoadAndStorePermissionOwner.STORE_XML_FILE_PERMISSION,
+                        BooleanPermission.BooleanValue.TRUE)) {
             // User has not permission to store.
             return;
         }

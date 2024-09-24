@@ -1,5 +1,8 @@
 package jmri.jmrit.logixng.swing;
 
+import jmri.Permission;
+import jmri.swing.PermissionSwing;
+
 /**
  * LogixNG Swing tools.
  *
@@ -86,6 +89,24 @@ public final class SwingTools {
             log.error("Cannot load SwingConfiguratorInterface for {}", clazz.getName());
             return null;
         }
+    }
+
+    /**
+     * Get a SwingConfiguratorInterface for a class
+     * @param permission The permission to get a PermissionSwing of
+     * @return a PermissionSwing object
+     */
+    static public PermissionSwing getPermissionSwingForClass(Permission permission) {
+        Class<?> clazz = permission.getClass();
+        PermissionSwing permissionSwing;
+        try {
+            permissionSwing = (PermissionSwing) Class.forName(adapterNameForClass(clazz)).getDeclaredConstructor().newInstance();
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException
+                    | NoSuchMethodException | java.lang.reflect.InvocationTargetException ex) {
+            log.error("Cannot load PermissionSwing for {}", clazz.getName(), ex);
+            return null;
+        }
+        return permissionSwing;
     }
 
 

@@ -3,6 +3,7 @@ package jmri.jmrit.permission;
 import java.util.*;
 
 import jmri.*;
+import jmri.PermissionValue;
 
 /**
  * A role in the permission system.
@@ -28,7 +29,8 @@ public class DefaultRole implements Role {
     private final int _priority;
     private final String _systemName;
 
-    private final Map<Permission, Boolean> _permissions = new TreeMap<>((a,b) -> {return a.getName().compareTo(b.getName());});
+    private final Map<Permission, PermissionValue> _permissions =
+            new TreeMap<>((a,b) -> {return a.getName().compareTo(b.getName());});
 
     public DefaultRole(String name) {
         this._name = name;
@@ -65,26 +67,27 @@ public class DefaultRole implements Role {
     }
 
     @Override
-    public Map<Permission,Boolean> getPermissions() {
+    public Map<Permission,PermissionValue> getPermissions() {
         return Collections.unmodifiableMap(_permissions);
     }
 
     @Override
-    public boolean hasPermission(Permission permission) {
-        return _permissions.getOrDefault(permission, false);
+    public PermissionValue getPermissionValue(Permission permission) {
+        return _permissions.getOrDefault(permission, permission.getDefaultPermission(this));
     }
 
     @Override
-    public void setPermission(Permission permission, boolean enable) {
+    public void setPermission(Permission permission, PermissionValue value) {
         if (! InstanceManager.getDefault(PermissionManager.class)
-                .checkPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PERMISSIONS)) {
+                .ensureAtLeastPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES,
+                        BooleanPermission.BooleanValue.TRUE)) {
             return;
         }
-        _permissions.put(permission, enable);
+        _permissions.put(permission, value);
     }
 
-    void setPermissionWithoutCheck(Permission permission, boolean enable) {
-        _permissions.put(permission, enable);
+    void setPermissionWithoutCheck(Permission permission, PermissionValue value) {
+        _permissions.put(permission, value);
     }
 
     @Override
