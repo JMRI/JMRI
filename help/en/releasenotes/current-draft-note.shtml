@@ -602,6 +602,13 @@
             <li></li>
         </ul>
 
+   <h3>Z21 Server</h3>
+        <a id="z21" name="z21"></a>
+        <ul>
+            <li>Fix an error that causes occasional crashes.</li>
+        </ul>
+
+
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
