@@ -28,7 +28,7 @@ public class Editor {
             if (!(value instanceof EditorPermissionEnum)) {
                 throw new IllegalArgumentException("Permission value is not a EditorPermissionEnum: " + value.getClass().getName());
             }
-            comboBox.setSelectedItem((EditorPermissionEnum)value);
+            comboBox.setSelectedItem(value);
             comboBox.addActionListener((evt) -> {
                 role.setPermission(permission, comboBox.getItemAt(comboBox.getSelectedIndex()));
                 onChange.run();

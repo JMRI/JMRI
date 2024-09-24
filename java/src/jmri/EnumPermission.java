@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
  * @author Daniel Bergqvist (C) 2024
  * @param <E> the enum for this permission
  */
-public interface EnumPermission<E extends Enum> extends Permission {
+public interface EnumPermission<E extends Enum<?>> extends Permission {
 
     /**
      * Get the values of the enum.
