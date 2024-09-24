@@ -1819,7 +1819,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             }
         }
         //check here to see if block is already assigned to an allocated section
-        // or crosses and allocated section.
+        // or crosses an allocated section or occupied section.
         if (checkBlocksNotInAllocatedSection(s, ar) != null) {
             return null;
         }
