@@ -40,6 +40,8 @@ import jmri.TransitSection;
 import jmri.jmrit.dispatcher.TaskAllocateRelease.TaskAction;
 import jmri.jmrit.dispatcher.ActiveTrain.TrainDetection;
 import jmri.jmrit.display.EditorManager;
+import jmri.jmrit.display.layoutEditor.LayoutBlock;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
@@ -1816,7 +1818,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 }
             }
         }
-        //check here to see if block is already assigned to an allocated section;
+        //check here to see if block is already assigned to an allocated section
+        // or crosses and allocated section.
         if (checkBlocksNotInAllocatedSection(s, ar) != null) {
             return null;
         }
@@ -2241,6 +2244,27 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         return _levelXingList;
     }
 
+    /*
+     * returns a list of double XOvers  (0 to n) in a list of blocks
+     */
+    private List<LayoutTurnout> containedDoubleXOver( Section s ) {
+        List<LayoutTurnout> _XOverList = new ArrayList<>();
+        LayoutBlockManager lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
+        for (var panel : editorManager.getAll(LayoutEditor.class)) {
+            for (Block blk: s.getBlockList()) {
+                LayoutBlock lb = lbm.getLayoutBlock(blk);
+                List<LayoutTurnout> turnoutsInBlock = panel.getConnectivityUtil().getAllTurnoutsThisBlock(lb);
+                for (LayoutTurnout lt: turnoutsInBlock) {
+                    if (lt.isTurnoutTypeXover() && !_XOverList.contains(lt)) {
+                        _XOverList.add(lt);
+                    }
+                }
+            }
+        }
+        return _XOverList;
+    }
+
+
     /**
      * Checks for a block in allocated section, except one
      * @param b - The Block
@@ -2259,7 +2283,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     }
 
     /*
-     * This is used to determine if the blocks in a section we want to allocate are already allocated to a section, or if they are now free.
+     * This is used to determine if the blocks in a section we want to allocate are already allocated to
+     * another train.
+     * Additional blocks can be added during this process that need to checked for occupancy as they were not
+     * known during establishment of the route.
      */
     protected Section checkBlocksNotInAllocatedSection(Section s, AllocationRequest ar) {
         for (AllocatedSection as : allocatedSections) {
@@ -2308,10 +2335,50 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                         Block bAC = lx.getLayoutBlockAC().getBlock();
                         Block bBD = lx.getLayoutBlockBD().getBlock();
                         if (!bls.contains(bAC)) {
+                            if (bAC.getState() != Block.UNOCCUPIED) {
+                                return as.getSection();
+                            }
                             bls.add(bAC);
                         }
                         if (!bls.contains(bBD)) {
+                            if (bBD.getState() != Block.UNOCCUPIED) {
+                                return as.getSection();
+                            }
                             bls.add(bBD);
+                        }
+                    }
+                    for (LayoutTurnout lx : containedDoubleXOver(s)) {
+                        if ((bls.contains(lx.getLayoutBlock().getBlock()) &&
+                                bls.contains(lx.getLayoutBlockB().getBlock())) ||
+                                (bls.contains(lx.getLayoutBlockD().getBlock()) &&
+                                        bls.contains(lx.getLayoutBlockC().getBlock()))) {
+                            // going A to B or B to A or D to C or C to D
+                            // No special special checks
+                            break;
+                        } else if (bls.contains(lx.getLayoutBlock().getBlock()) &&
+                                bls.contains(lx.getLayoutBlockC().getBlock())) {
+                            // going A to C or C to A
+                            if (lx.getLayoutBlockB().getBlock().getState() != Block.UNOCCUPIED
+                                    || lx.getLayoutBlockD().getBlock().getState() != Block.UNOCCUPIED) {
+                                        return as.getSection();
+                            }
+                            bls.add(lx.getLayoutBlockB().getBlock());
+                            bls.add(lx.getLayoutBlockD().getBlock());
+                            break;
+                        } else if (bls.contains(lx.getLayoutBlockD().getBlock()) &&
+                                bls.contains(lx.getLayoutBlockB().getBlock())) {
+                            // going D to B or B to D
+                            if (lx.getLayoutBlock().getBlock().getState() != Block.UNOCCUPIED
+                                    || lx.getLayoutBlockC().getBlock().getState() != Block.UNOCCUPIED) {
+                                        return as.getSection();
+                            }
+                            bls.add(lx.getLayoutBlock().getBlock());
+                            bls.add(lx.getLayoutBlockC().getBlock());
+                            break;
+                        } else {
+                            log.error("In XOver [{}] cannot allocate only one of fours switchs, must allocate two.",
+                                    lx.getTurnout().getDisplayName());
+                            return as.getSection();
                         }
                     }
                 }
