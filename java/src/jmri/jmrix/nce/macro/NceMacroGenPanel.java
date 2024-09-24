@@ -1,8 +1,6 @@
 package jmri.jmrix.nce.macro;
 
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.*;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -68,6 +66,14 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
         x.append(": ");
         x.append(Bundle.getMessage("TitleNceMacroGen"));
         return x.toString();
+    }
+
+    /**
+     * The minimum frame size for font size 16
+     */
+    @Override
+    public Dimension getMinimumDimension() {
+        return new Dimension(200, 200);
     }
 
     /**
