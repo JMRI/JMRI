@@ -424,7 +424,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>Improved zoom menu selection matching.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -605,6 +605,11 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Some cleanup has been done to JMRI. It shouldn't affect
+                the users, but if it does, please report it on the
+                <a href="https://groups.io/g/jmriusers/topics">JMRI Users Groups.io</a>
+                Group. If there is any problem, it could case JMRI to
+                not quit properly, not restart properly or leave Java
+                running when JMRI has quit.</li>
         </ul>
 

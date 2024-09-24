@@ -112,12 +112,14 @@ public class WaitHandlerTest {
             public void run() {
                 startTime = Calendar.getInstance().getTimeInMillis();
                 flag1 = true;
-                new WaitHandler(this, THREAD_DELAY) {
+
+                WaitHandler wh = new WaitHandler(this, THREAD_DELAY) {
                     @Override
                     public boolean wasSpurious() {
                         return true;
                     }
                 };
+                Assertions.assertNotNull(wh);
                 endTime = Calendar.getInstance().getTimeInMillis();
                 flag2 = true;
             }

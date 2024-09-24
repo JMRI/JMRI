@@ -20,6 +20,7 @@ public class LocoNetThrottledTransmitterTest {
         LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(new LocoNetInterfaceScaffold(memo), false);
         q.dispose();
         JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
+        JUnitUtil.waitThreadTerminated(q.theServiceThread);
     }
 
     @Test
@@ -30,6 +31,7 @@ public class LocoNetThrottledTransmitterTest {
 
         q.dispose();
         JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
+        JUnitUtil.waitThreadTerminated(q.theServiceThread);
     }
 
     @Test
@@ -63,6 +65,7 @@ public class LocoNetThrottledTransmitterTest {
 
         q.dispose();
         JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
+        JUnitUtil.waitThreadTerminated(q.theServiceThread);
     }
 
     @Test
@@ -85,6 +88,7 @@ public class LocoNetThrottledTransmitterTest {
 
         q.dispose();
         JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
+        JUnitUtil.waitThreadTerminated(q.theServiceThread);
     }
 
     @Test
@@ -114,6 +118,7 @@ public class LocoNetThrottledTransmitterTest {
 
         q.dispose();
         JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
+        JUnitUtil.waitThreadTerminated(q.theServiceThread);
     }
 
     @Test
@@ -142,6 +147,7 @@ public class LocoNetThrottledTransmitterTest {
 
         q.dispose();
         JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
+        JUnitUtil.waitThreadTerminated(q.theServiceThread);
     }
 
     private LocoNetSystemConnectionMemo memo;
@@ -156,7 +162,6 @@ public class LocoNetThrottledTransmitterTest {
     public void tearDown() {
         Assertions.assertNotNull(memo);
         memo.dispose();
-        JUnitUtil.waitThreadTerminated(memo.getUserName() + LocoNetThrottledTransmitter.SERVICE_THREAD_NAME);
         memo = null;
         JUnitUtil.tearDown();
     }
