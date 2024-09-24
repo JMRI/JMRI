@@ -414,7 +414,10 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Before allocating a Double Cross Over to cross from one track to the other check that there is no
+                 conflicting allocation or occupation of the opposite cross over.
+                 It is a requirement that a section through a crossover includes 2 switches as a train cannot
+                 stop halfway through a Double Cross Over.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
