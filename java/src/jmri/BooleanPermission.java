@@ -64,14 +64,12 @@ public interface BooleanPermission extends Permission {
 
     @Override
     default int compare(PermissionValue o1, PermissionValue o2) {
-        if (o1 instanceof BooleanPermission && o2 instanceof BooleanPermission) {
+        if (o1 instanceof BooleanValue && o2 instanceof BooleanValue) {
             boolean b1 = ((BooleanValue) o1).get();
             boolean b2 = ((BooleanValue) o2).get();
-            if (b1 == b2) return 0;
-            if (b1) return 1;   // b1 && !b2
-            return -1;          // !b1 && b2
+            return Boolean.compare(b1, b2);
         } else {
-            throw new IllegalArgumentException("Cannot compare o1 and o2 since one or both is not an EditorPermission");
+            throw new IllegalArgumentException("Cannot compare o1 and o2 since one or both is not a BooleanValue");
         }
     }
 
