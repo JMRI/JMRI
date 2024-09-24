@@ -11,7 +11,6 @@ import javax.annotation.Nonnull;
  */
 public interface Permission extends Comparator<PermissionValue> {
 
-
     /**
      * Get the owner
      * @return the owner
