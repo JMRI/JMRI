@@ -354,7 +354,7 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
             _catalog.setToolTipText(Bundle.getMessage("ToolTipDragIconToText"));
             panel.add(_catalog);
             content.add(panel);
-            setContentPane(content);
+            super.setContentPane(content);
             setLocation(200, 100);
             pack();
         }
