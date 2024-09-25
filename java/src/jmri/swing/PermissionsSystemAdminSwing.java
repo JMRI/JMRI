@@ -7,7 +7,7 @@ import jmri.swing.PermissionSwing.BooleanPermissionSwing;
  *
  * @author Daniel Bergqvist Copyright 2024
  */
-public class PermissionsSystemAdmin {
+public class PermissionsSystemAdminSwing {
 
     public static class PermissionEditOwnPasswordSwing extends BooleanPermissionSwing {
     }

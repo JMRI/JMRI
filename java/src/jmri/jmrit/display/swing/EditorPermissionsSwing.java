@@ -11,7 +11,7 @@ import jmri.swing.PermissionSwing;
  *
  * @author Daniel Bergqvist Copyright 2024
  */
-public class EditorPermissions {
+public class EditorPermissionsSwing {
 
     public static class EditorPermissionSwing implements PermissionSwing {
 

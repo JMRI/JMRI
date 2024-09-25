@@ -7,7 +7,7 @@ import jmri.swing.PermissionSwing.BooleanPermissionSwing;
  *
  * @author Daniel Bergqvist Copyright 2024
  */
-public class LoadAndStorePermissionOwner {
+public class LoadAndStorePermissionOwnerSwing {
 
     public static class LoadXmlFilePermissionSwing extends BooleanPermissionSwing {
     }

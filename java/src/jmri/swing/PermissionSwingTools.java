@@ -35,10 +35,22 @@ public final class PermissionSwingTools {
         int lastDot = className.lastIndexOf(".");
         if (lastDot > 0) {
             // found package-class boundary OK
-            String result = className.substring(0, lastDot)
-                    + ".swing."
-                    + className.substring(lastDot + 1, className.length())
-                    + "Swing";
+            int firstDollarSign = className.indexOf("$");
+            String result;
+            if (firstDollarSign > 0) {
+                // found inner-class boundary OK
+                result = className.substring(0, lastDot)
+                        + ".swing."
+                        + className.substring(lastDot + 1, firstDollarSign)
+                        + "Swing$"
+                        + className.substring(firstDollarSign + 1)
+                        + "Swing";
+            } else {
+                result = className.substring(0, lastDot)
+                        + ".swing."
+                        + className.substring(lastDot + 1, className.length())
+                        + "Swing";
+            }
             log.trace("adapter class name is {}", result);
             return result;
         } else {
