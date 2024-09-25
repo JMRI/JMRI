@@ -268,7 +268,7 @@ public class DefaultUser implements User {
         // Try to find the highest permission this user has
         for (Role role : _roles) {
             PermissionValue value = role.getPermissionValue(permission);
-            if (lastValue == null || permission.compare(lastValue, value) > 0) {
+            if (lastValue == null || permission.compare(lastValue, value) < 0) {
                 lastValue = value;
             }
         }
@@ -278,7 +278,7 @@ public class DefaultUser implements User {
             // Try to find the highest default permission this user has
             for (Role role : _roles) {
                 PermissionValue value = permission.getDefaultPermission(role);
-                if (lastValue == null || permission.compare(lastValue, value) > 0) {
+                if (lastValue == null || permission.compare(lastValue, value) < 0) {
                     lastValue = value;
                 }
             }
@@ -288,7 +288,7 @@ public class DefaultUser implements User {
             // Get the default permission if no role.
             lastValue = permission.getDefaultPermission();
         }
-        return permission.compare(minValue, lastValue) >= 0;
+        return permission.compare(minValue, lastValue) <= 0;
     }
 
     @Override
