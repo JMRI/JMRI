@@ -55,6 +55,14 @@ public class UsbCmdStationMemory extends jmri.jmrix.nce.NceCmdStationMemory {
     }
     
     /*
+     * give cab addr macro table
+     */
+    @Override
+    public int getMacroAddr() {
+        return 0x0E; // start of NCE CS Macro memory 
+    }
+
+    /*
      * give size of macro entry
      */
     @Override
