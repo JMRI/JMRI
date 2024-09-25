@@ -30,6 +30,11 @@ public interface BooleanPermission extends Permission {
         public boolean isDefault() {
             return false;
         }
+
+        @Override
+        public String toString() {
+            return Boolean.toString(_value);
+        }
     }
 
     @Override
