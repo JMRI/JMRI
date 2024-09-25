@@ -305,6 +305,9 @@ public class SprogSystemConnectionMemo extends DefaultSystemConnectionMemo imple
 
     @Override
     public void dispose() {
+        if (st != null) {
+            st.dispose();
+        }
         st = null;
         InstanceManager.deregister(this, SprogSystemConnectionMemo.class);
         if (cf != null) {

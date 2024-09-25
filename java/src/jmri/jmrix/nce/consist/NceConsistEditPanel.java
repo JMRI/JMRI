@@ -1,8 +1,6 @@
 package jmri.jmrix.nce.consist;
 
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -252,6 +250,14 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         List<JMenu> l = new ArrayList<>();
         l.add(toolMenu);
         return l;
+    }
+
+    /**
+     * The minimum frame size for font size 16
+     */
+    @Override
+    public Dimension getMinimumDimension() {
+        return new Dimension(700, 500);
     }
 
     /**

@@ -29,6 +29,11 @@ public class AutoSave {
     public static synchronized void stop() {
         if (autoSave != null) {
             autoSave.interrupt();
+            try {
+                autoSave.join();
+            } catch (InterruptedException e) {
+                // Do nothing
+            }
             autoSave = null;
         }
     }

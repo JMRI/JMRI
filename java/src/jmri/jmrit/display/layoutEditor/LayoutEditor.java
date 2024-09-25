@@ -1959,8 +1959,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
                 Object zoomProp = prefsMgr.getProperty(getWindowFrameRef(), "zoom");
 
-                log.debug(
-                        "{} zoom is {}", getWindowFrameRef(), zoomProp);
+                log.debug("{} zoom is {}", getWindowFrameRef(), zoomProp);
 
                 if (zoomProp
                         != null) {
@@ -2168,14 +2167,16 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         }
     }
 
-    //
-    // select the apropreate zoom menu item based on the zoomFactor
-    //
+    /**
+     * Select the appropriate zoom menu item based on the zoomFactor.
+     * @param zoomFactor eg. 0.5 ( 1/2 zoom ), 1.0 ( no zoom ), 2.0 ( 2x zoom )
+     */
     private void selectZoomMenuItem(double zoomFactor) {
-        // this will put zoomFactor on 100% increments
-        //(so it will more likely match one of these values)
-        int newZoomFactor = (int) MathUtil.granulize(zoomFactor, 100);
-        // int newZoomFactor = ((int) Math.round(zoomFactor)) * 100;
+
+        double zoom = zoomFactor * 100;
+
+        // put zoomFactor on 100% increments
+        int newZoomFactor = (int) MathUtil.granulize(zoom, 100);
         noZoomItem.setSelected(newZoomFactor == 100);
         zoom20Item.setSelected(newZoomFactor == 200);
         zoom30Item.setSelected(newZoomFactor == 300);
@@ -2185,25 +2186,20 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         zoom70Item.setSelected(newZoomFactor == 700);
         zoom80Item.setSelected(newZoomFactor == 800);
 
-        // this will put zoomFactor on 50% increments
-        //(so it will more likely match one of these values)
-        // newZoomFactor = ((int) (zoomFactor * 2)) * 50;
-        newZoomFactor = (int) MathUtil.granulize(zoomFactor, 50);
+        // put zoomFactor on 50% increments
+        newZoomFactor = (int) MathUtil.granulize(zoom, 50);
         zoom05Item.setSelected(newZoomFactor == 50);
         zoom15Item.setSelected(newZoomFactor == 150);
 
-        // this will put zoomFactor on 25% increments
-        //(so it will more likely match one of these values)
-        // newZoomFactor = ((int) (zoomFactor * 4)) * 25;
-        newZoomFactor = (int) MathUtil.granulize(zoomFactor, 25);
+        // put zoomFactor on 25% increments
+        newZoomFactor = (int) MathUtil.granulize(zoom, 25);
         zoom025Item.setSelected(newZoomFactor == 25);
         zoom075Item.setSelected(newZoomFactor == 75);
     }
 
     /**
-     * setZoom
-     *
-     * @param zoomFactor the amount to scale
+     * Set panel Zoom factor.
+     * @param zoomFactor the amount to scale, eg. 2.0 for 2x zoom.
      * @return the new scale amount (not necessarily the same as zoomFactor)
      */
     public double setZoom(double zoomFactor) {

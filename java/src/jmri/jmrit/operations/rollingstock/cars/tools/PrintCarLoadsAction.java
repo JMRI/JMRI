@@ -12,9 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
-import jmri.jmrit.operations.rollingstock.cars.CarLoad;
-import jmri.jmrit.operations.rollingstock.cars.CarLoads;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.davidflanagan.HardcopyWriter;
 
@@ -126,7 +124,7 @@ public class PrintCarLoadsAction extends AbstractAction {
             } catch (HardcopyWriter.PrintCanceledException ex) {
                 log.debug("Print cancelled");
             } catch (IOException ex) {
-                log.error("Error printing car roster", ex);
+                log.error("Error printing car roster: {}", ex.getLocalizedMessage());
             }
         }
     }

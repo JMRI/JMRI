@@ -126,7 +126,8 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Fix a problem when CDI contains "immediate" slider hints</li>
+                <li>Slider hints now control tick spacing, instead of number of ticks.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -405,7 +406,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Do not release any allocated section from a train if the position of the train is not known.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -423,7 +424,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>Improved zoom menu selection matching.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -440,7 +441,11 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>A bug is fixed in the <strong>Timer</strong> action. The
+              bug caused the timer to <strong>not</strong> start
+              automatically when the tables and panel file is loaded,
+              despite the <strong>Start timer immediately on load</strong>
+              setting was selected for the timer.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -452,7 +457,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>Changed "Wait" to travel time in the route edit window</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -597,9 +602,21 @@
             <li></li>
         </ul>
 
+   <h3>Z21 Server</h3>
+        <a id="z21" name="z21"></a>
+        <ul>
+            <li>Fix an error that causes occasional crashes.</li>
+        </ul>
+
+
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Some cleanup has been done to JMRI. It shouldn't affect
+                the users, but if it does, please report it on the
+                <a href="https://groups.io/g/jmriusers/topics">JMRI Users Groups.io</a>
+                Group. If there is any problem, it could case JMRI to
+                not quit properly, not restart properly or leave Java
+                running when JMRI has quit.</li>
         </ul>
 

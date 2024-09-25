@@ -2,7 +2,6 @@ package jmri.jmrix.sprog;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -20,8 +19,8 @@ public class SprogTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
     }
 
     @Test
-    public void ConstructorTest() {
-        Assert.assertNotNull(l);
+    public void testSprogTurnoutManagerConstructor() {
+        Assertions.assertNotNull(l);
     }
 
     @Override

@@ -13,9 +13,7 @@ import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainCommon;
-import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.*;
 import jmri.util.davidflanagan.HardcopyWriter;
 
 /**
@@ -89,7 +87,7 @@ public class PrintTrainsByCarTypesAction extends AbstractAction {
             // and force completion of the printing
             writer.close();
         } catch (IOException we) {
-            log.error("Error printing PrintLocationAction", we);
+            log.error("Error printing PrintLocationAction: {}", we.getLocalizedMessage());
         }
     }
 

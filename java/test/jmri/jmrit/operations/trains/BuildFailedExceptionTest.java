@@ -1,8 +1,9 @@
 package jmri.jmrit.operations.trains;
 
-import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
+
+import jmri.jmrit.operations.OperationsTestCase;
 
 /**
  * Tests for BuildFailedException class.
@@ -14,11 +15,20 @@ public class BuildFailedExceptionTest extends OperationsTestCase {
 
     @Test
     public void stringTypeConstructorTest() {
-        Assert.assertNotNull("BuildFailedException constructor", new BuildFailedException("test exception", "normal"));
+        BuildFailedException bfe = new BuildFailedException("test exception", "NoRmAl");
+        Assert.assertNotNull("BuildFailedException constructor", bfe);
+        Assert.assertEquals("Type of build exception", "NoRmAl", bfe.getExceptionType());
     }
 
     @Test
     public void stringConstructorTest() {
-        Assert.assertNotNull("BuildFailedException string constructor", new BuildFailedException("test exception"));
+        BuildFailedException bfe = new BuildFailedException("test exception");
+        Assert.assertNotNull("BuildFailedException string constructor", bfe);
+        Assert.assertEquals("Type of build exception", "normal", bfe.getExceptionType());
+    }
+
+    @Test
+    public void exceptionConstructorTest() {
+        Assert.assertNotNull("BuildFailedException string constructor", new BuildFailedException(new Exception()));
     }
 }

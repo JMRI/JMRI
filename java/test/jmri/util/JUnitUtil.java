@@ -160,6 +160,7 @@ public class JUnitUtil {
      * <p>
      * Set from the jmri.util.JUnitUtil.checkRemnantThreads environment variable.
      */
+//    static boolean checkRemnantThreads =    true;
     static boolean checkRemnantThreads =    Boolean.getBoolean("jmri.util.JUnitUtil.checkRemnantThreads"); // false unless set true
 
     /**
@@ -167,6 +168,7 @@ public class JUnitUtil {
      * <p>
      * Set from the jmri.util.JUnitUtil.failRemnantThreads environment variable.
      */
+//    static boolean failRemnantThreads =  true;
     static boolean failRemnantThreads =  Boolean.getBoolean("jmri.util.JUnitUtil.failRemnantThreads"); // false unless set true
 
     /**
@@ -1433,6 +1435,15 @@ public class JUnitUtil {
     }
 
     /**
+     * Wait for a thread to terminate, ie is no longer alive.
+     * A Thread which does not complete in time is a test failure.
+     * @param thread the Thread to wait for.
+     */
+    public static void waitThreadTerminated( @Nonnull Thread thread ) {
+        waitFor( () -> !thread.isAlive(), "Thread \"" + thread.getName() + "\" is still alive");
+    }
+
+    /**
      * Get a Thread by matching the name.
      * @param threadName Starting characters of the Thread name.
      * @return the Thread, null if no Thread found.
@@ -1539,8 +1550,22 @@ public class JUnitUtil {
                  || name.startsWith("Libgraal")
                  || name.startsWith("LibGraal")
                  || name.startsWith("TruffleCompilerThread-")
+                 || name.startsWith("surefire-forkedjvm-")
                  || ( name.startsWith("pool-") && name.endsWith("thread-1") )
                  || group.contains("FailOnTimeoutGroup") // JUnit timeouts
+                 || ( name.equals("Cleaner-0") && group.contains("InnocuousThreadGroup") )  // Created indirectly by ScriptEngineSelector
+
+                    // Threads created by OpenLCB which JMRI cannot end
+                 || ( name.equals("openlcb-hub-output") && group.contains("main") )
+                 || ( name.equals("OpenLCB Mimic Node Store Timer") && group.contains("main") )
+                 || ( name.equals("OpenLCB-datagram-timer") && group.contains("main") )
+                 || ( name.startsWith("Olcb-Pool-") && group.contains("main") )
+                 || ( name.equals("OpenLCB Memory Configuration Service Retry Timer") && group.contains("main") )
+                 || ( name.equals("OpenLCB NIDaAlgorithm Timer") && group.contains("main") )
+                 || ( name.equals("OpenLCB LoaderClient Timeout Timer") && group.contains("main") )
+                 || ( name.equals("OLCB Interface dispose thread") && group.contains("main") )
+                 || ( name.equals("olcbCanInterface.initialize") && group.contains("JMRI") )    // Created by JMRI but hangs due to OpenLCB lib
+
                  || ( name.startsWith("SwingWorker-pool-1-thread-") &&
                          ( group.contains("FailOnTimeoutGroup") || group.contains("main") )
                     )
@@ -1570,6 +1595,7 @@ public class JUnitUtil {
 
                                 log.warn("Jemmy remnant thread running {}", details );
                                 if ( failRemnantThreads ) {
+                                    threadsSeen.add(t);
                                     Assertions.fail("Jemmy remnant thread running " + details);
                                 }
                             } else {
@@ -1578,12 +1604,14 @@ public class JUnitUtil {
                                 ex.setStackTrace(traces);
                                 log.warn("{} remnant thread \"{}\" in group \"{}\" after {}", action, name, group, getTestClassName(), ex);
                                 if ( failRemnantThreads ) {
+                                    threadsSeen.add(t);
                                     Assertions.fail("Thread \"" + name + "\" after " + getTestClassName());
                                 }
                             }
                         } else {
                             log.warn("{} remnant thread \"{}\" in group \"{}\" after {}", action, name, group, getTestClassName());
                             if ( failRemnantThreads ) {
+                                threadsSeen.add(t);
                                 Assertions.fail("Thread \"" + name + "\" in group \"" + group + "\" after " + getTestClassName());
                             }
                         }

@@ -1,12 +1,11 @@
 package jmri.jmrix.nce.packetgen;
 
 import java.awt.Dimension;
-import javax.swing.*;
 
-import jmri.jmrix.nce.NceMessage;
-import jmri.jmrix.nce.NceReply;
-import jmri.jmrix.nce.NceSystemConnectionMemo;
-import jmri.jmrix.nce.NceTrafficController;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+
+import jmri.jmrix.nce.*;
 import jmri.util.StringUtil;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -64,6 +63,14 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         x.append(": ");
         x.append(Bundle.getMessage("Title"));
         return x.toString();
+    }
+
+    /**
+     * The minimum frame size for font size 16
+     */
+    @Override
+    public Dimension getMinimumDimension() {
+        return new Dimension(200, 200);
     }
 
     /**

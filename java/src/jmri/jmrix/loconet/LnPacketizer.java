@@ -183,7 +183,7 @@ public class LnPacketizer extends LnTrafficController {
             int nchars;
             // The istream should be configured so that the following
             // read(..) call only blocks for a short time, e.g. 100msec, if no
-            // data is available.  It's OK if it 
+            // data is available.  It's OK if it
             // throws e.g. java.io.InterruptedIOException
             // in that case, as the calling loop should just go around
             // and request input again.  This semi-blocking behavior will
@@ -480,12 +480,13 @@ public class LnPacketizer extends LnTrafficController {
      * {@inheritDoc}
      */
     // The join(150) is using a timeout because some receive threads
-    // (and maybe some day transmit threads) use calls that block 
+    // (and maybe some day transmit threads) use calls that block
     // even when interrupted.  We wait 150 msec and proceed.
-    // Threads that do that are responsible for ending cleanly 
+    // Threads that do that are responsible for ending cleanly
     // when the blocked call eventually returns.
     @Override
     public void dispose() {
+        threadStopRequest = true;
         if (xmtThread != null) {
             xmtThread.interrupt();
             try {
@@ -507,9 +508,9 @@ public class LnPacketizer extends LnTrafficController {
      * This is intended to be used only by testing subclasses.
      */
     // The join(150) is using a timeout because some receive threads
-    // (and maybe some day transmit threads) use calls that block 
+    // (and maybe some day transmit threads) use calls that block
     // even when interrupted.  We wait 150 msec and proceed.
-    // Threads that do that are responsible for ending cleanly 
+    // Threads that do that are responsible for ending cleanly
     // when the blocked call eventually returns.
     public void terminateThreads() {
         threadStopRequest = true;

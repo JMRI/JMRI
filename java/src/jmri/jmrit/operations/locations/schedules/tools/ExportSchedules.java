@@ -39,7 +39,8 @@ public class ExportSchedules extends XmlFile {
             }
             writeFile(defaultOperationsFilename());
         } catch (IOException e) {
-            log.error("Exception while writing the new CSV operations file, may not be complete", e);
+            log.error("Exception while writing the new CSV operations file, may not be complete: {}",
+                    e.getLocalizedMessage());
         }
     }
 
@@ -98,7 +99,7 @@ public class ExportSchedules extends XmlFile {
                     Bundle.getMessage("ExportedSchedulesToFile", schedules.size(), defaultOperationsFilename()),
                     Bundle.getMessage("ExportComplete"), JmriJOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
-            log.error("Can not open export schedules CSV file: {}", file.getName());
+            log.error("Can not open export schedules CSV file: {}", e.getLocalizedMessage());
             JmriJOptionPane.showMessageDialog(null,
                     Bundle.getMessage("ExportedSchedulesToFile", 0, defaultOperationsFilename()),
                     Bundle.getMessage("ExportFailed"), JmriJOptionPane.ERROR_MESSAGE);
