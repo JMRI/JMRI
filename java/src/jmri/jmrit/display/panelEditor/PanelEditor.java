@@ -43,11 +43,8 @@ import jmri.InstanceManager;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.catalog.ImageIndexEditor;
-import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.EditorManager;
-import jmri.jmrit.display.Positionable;
-import jmri.jmrit.display.PositionablePopupUtil;
-import jmri.jmrit.display.ToolTip;
+import jmri.jmrit.display.*;
+import jmri.jmrit.display.panelEditor.Bundle;
 import jmri.util.JmriJFrame;
 import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.JmriColorChooser;
@@ -504,7 +501,7 @@ public class PanelEditor extends Editor implements ItemListener {
      * @return the frame.
      */
     public JmriJFrame makeFrame(String name) {
-        JmriJFrame targetFrame = new JmriJFrame(name);
+        JmriJFrame targetFrame = new JmriJFrameWithPermissions(name);
         targetFrame.setVisible(false);
 
         JMenuBar menuBar = new JMenuBar();
