@@ -1,23 +1,12 @@
 package jmri.jmrix.nce.macro;
 
+import java.awt.*;
+
+import javax.swing.*;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-
 import jmri.InstanceManager;
-import jmri.jmrix.nce.NceBinaryCommand;
-import jmri.jmrix.nce.NceMessage;
-import jmri.jmrix.nce.NceReply;
-import jmri.jmrix.nce.NceSystemConnectionMemo;
-import jmri.jmrix.nce.NceTrafficController;
+import jmri.jmrix.nce.*;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
@@ -237,6 +226,14 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         x.append(": ");
         x.append(Bundle.getMessage("TitleEditNCEMacro"));
         return x.toString();
+    }
+
+    /**
+     * The minimum frame size for font size 16
+     */
+    @Override
+    public Dimension getMinimumDimension() {
+        return new Dimension(500, 500);
     }
 
     /**

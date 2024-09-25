@@ -1,9 +1,8 @@
 package jmri.jmrix.nce.ncemon;
 
-import jmri.jmrix.nce.NceListener;
-import jmri.jmrix.nce.NceMessage;
-import jmri.jmrix.nce.NceReply;
-import jmri.jmrix.nce.NceSystemConnectionMemo;
+import java.awt.Dimension;
+
+import jmri.jmrix.nce.*;
 import jmri.jmrix.nce.swing.NcePanelInterface;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -36,6 +35,14 @@ public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListen
         x.append(": ");
         x.append("Command Monitor");
         return x.toString();
+    }
+
+    /**
+     * The minimum frame size for font size 16
+     */
+    @Override
+    public Dimension getMinimumDimension() {
+        return new Dimension(700, 500);
     }
 
     @Override
