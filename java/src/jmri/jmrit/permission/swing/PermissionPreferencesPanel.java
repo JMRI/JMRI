@@ -9,10 +9,10 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import jmri.*;
-import jmri.jmrit.logixng.swing.SwingTools;
+import jmri.PermissionsSystemAdmin;
 import jmri.jmrit.permission.DefaultPermissionManager;
-import jmri.swing.PermissionSwing;
-import jmri.swing.PreferencesPanel;
+import jmri.jmrit.permission.swing.Bundle;
+import jmri.swing.*;
 import jmri.util.swing.JmriJOptionPane;
 
 import org.openide.util.lookup.ServiceProvider;
@@ -252,7 +252,7 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
             permissions.sort((a,b) -> { return a.getName().compareTo(b.getName()); });
             for (Permission permission : permissions) {
                 PermissionSwing permissionSwing =
-                        SwingTools.getPermissionSwingForClass(permission);
+                        PermissionSwingTools.getPermissionSwingForClass(permission);
                 JLabel label = permissionSwing.getLabel(permission);
                 if (label != null) {
                     c.gridwidth = 1;
