@@ -19,6 +19,7 @@ public class JmriJFrameWithPermissions extends JmriJFrame {
     private Container _contentPane = new JPanel();
     private final JMenuBar _hiddenMenuBar = new JMenuBar();
     private JMenuBar _menuBar = super.getJMenuBar();
+    private boolean _keepSize = true;
 
     public JmriJFrameWithPermissions() {
         setupContentPaneAndMenu();
@@ -77,7 +78,11 @@ public class JmriJFrameWithPermissions extends JmriJFrame {
         // Save the bounds before pack() since pack() might resize the panel
         Rectangle bounds = getBounds();
         pack();
-        setBounds(bounds);
+        if (_keepSize) {
+            setBounds(bounds);
+        } else {
+            setLocation(bounds.x, bounds.y);
+        }
         revalidate();
     }
 
@@ -103,6 +108,15 @@ public class JmriJFrameWithPermissions extends JmriJFrame {
     public void setJMenuBar(JMenuBar menuBar) {
         this._menuBar = menuBar;
         switchContentPaneAndMenu();
+    }
+
+    /**
+     * Should the panel keep its size when switching between normal and
+     * hidden panel?
+     * @param keepSize true if to keep size, false if only keep location
+     */
+    public final void setKeepSize(boolean keepSize) {
+        this._keepSize = keepSize;
     }
 
 }
