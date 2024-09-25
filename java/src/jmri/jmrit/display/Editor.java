@@ -176,12 +176,19 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
     private boolean _inEditInlineLogixNGMode = false;
     private LogixNGEditor _inlineLogixNGEdit;
 
+    private final JPanel _hiddenPane = new JPanel();
+    private Container _contentPane = new JPanel();
+    private final JMenuBar _hiddenMenuBar = new JMenuBar();
+    private JMenuBar _menuBar = super.getJMenuBar();
+
     public Editor() {
+        setupContentPaneAndMenu();
     }
 
     public Editor(String name, boolean saveSize, boolean savePosition) {
         super(name, saveSize, savePosition);
         setName(name);
+        setupContentPaneAndMenu();
         _defaultToolTip = new ToolTip(null, 0, 0, null);
         setVisible(false);
         InstanceManager.getDefault(SignalHeadManager.class).addVetoableChangeListener(this);
@@ -195,6 +202,77 @@ abstract public class Editor extends JmriJFrame implements JmriMouseListener, Jm
 
     public Editor(String name) {
         this(name, true, true);
+    }
+
+    /**
+     * Setup a fake content pane and a fake menu to be used if
+     * the user doesn't have permission to view the panel.
+     */
+    private void setupContentPaneAndMenu() {
+        if (!InstanceManager.getDefault(PermissionManager.class).isEnabled()) {
+            return;
+        }
+        _hiddenPane.setLayout(new GridBagLayout());  // Center innerPanel
+        JPanel innerPanel = new JPanel();
+        innerPanel.setLayout(new BoxLayout(innerPanel, BoxLayout.Y_AXIS));
+        innerPanel.add(new JLabel(Bundle.getMessage("Editor_PermissionDenied")));
+        innerPanel.add(Box.createVerticalStrut(5));
+        innerPanel.add(new JLabel(Bundle.getMessage("Editor_LoginToViewPanel")));
+        _hiddenPane.add(innerPanel);
+        switchContentPaneAndMenu();
+        InstanceManager.getDefault(PermissionManager.class).addLoginListener((isLogin) -> {
+            switchContentPaneAndMenu();
+        });
+    }
+
+    @Override
+    public void setContentPane(Container contentPane) {
+        this._contentPane = contentPane;
+    }
+
+    /**
+     * Switch contentPane and menu depending on whenether
+     * the user has read access to the panel or not.
+     */
+    private void switchContentPaneAndMenu() {
+        if (! InstanceManager.getDefault(PermissionManager.class)
+                .hasAtLeastPermission(EditorPermissions.EDITOR_PERMISSION,
+                        EditorPermissions.EditorPermissionEnum.Read)) {
+            super.setContentPane(_hiddenPane);
+            super.setJMenuBar(_hiddenMenuBar);
+        } else {
+            super.setContentPane(_contentPane);
+            super.setJMenuBar(_menuBar);
+        }
+        // Save the bounds before pack() since pack() might resize the panel
+        Rectangle bounds = getBounds();
+        pack();
+        setBounds(bounds);
+        revalidate();
+    }
+
+    @Override
+    public Container getContentPane() {
+        // We have our own content pane which may or may not be the content
+        // pane that's actually in use. If the user doesn't have permission
+        // to view the panel, we show another content pane instead which only
+        // has a message: "Permission denied. Login to view the panel".
+        return _contentPane;
+    }
+
+    @Override
+    public JMenuBar getJMenuBar() {
+        // We have our own menu which may or may not be the menu
+        // that's actually in use. If the user doesn't have permission
+        // to view the panel, we show another menu instead which is
+        // empty.
+        return _menuBar;
+    }
+
+    @Override
+    public void setJMenuBar(JMenuBar menuBar) {
+        this._menuBar = menuBar;
+        switchContentPaneAndMenu();
     }
 
     /**
