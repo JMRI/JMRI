@@ -11,12 +11,10 @@ import javax.swing.border.EmptyBorder;
 import jmri.*;
 import jmri.PermissionsSystemAdmin;
 import jmri.jmrit.permission.DefaultPermissionManager;
-import jmri.jmrit.permission.swing.Bundle;
 import jmri.swing.*;
 import jmri.util.swing.JmriJOptionPane;
 
 import org.openide.util.lookup.ServiceProvider;
-
 
 /**
  * Preferences panel for Permission manager.
