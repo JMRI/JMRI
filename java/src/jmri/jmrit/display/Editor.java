@@ -44,7 +44,6 @@ import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.JmriMouseListener;
 import jmri.util.swing.JmriMouseMotionListener;
 
-
 /**
  * This is the Model and a Controller for panel editor Views. (Panel Editor,
  * Layout Editor or any subsequent editors) The Model is simply a list of
