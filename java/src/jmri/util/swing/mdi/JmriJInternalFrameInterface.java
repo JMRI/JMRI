@@ -2,10 +2,9 @@ package jmri.util.swing.mdi;
 
 import java.awt.Frame;
 import java.util.List;
-import javax.swing.JDesktopPane;
-import javax.swing.JInternalFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
+
+import javax.swing.*;
+
 import jmri.util.JmriJFrame;
 
 /**
@@ -64,6 +63,8 @@ public class JmriJInternalFrameInterface implements jmri.util.swing.WindowInterf
         if (child.getTitle() != null) {
             frame.setTitle(child.getTitle());
         }
+
+        frame.setMinimumSize(child.getMinimumDimension());
 
         // arrange to run dispose on close
         //frame.addWindowListener( new java.awt.event.WindowAdapter(){
