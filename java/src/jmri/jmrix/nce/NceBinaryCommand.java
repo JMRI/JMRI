@@ -348,7 +348,7 @@ public class NceBinaryCommand {
     public static byte[] usbMemoryPointer(int cab, int loc) {
 
         byte[] retVal = new byte[3];
-        retVal[0] = (byte) (NceMessage.USB_MEM_POINTER_CMD); // read N bytes command
+        retVal[0] = (byte) (NceMessage.USB_MEM_POINTER_CMD);
         retVal[1] = (byte) (cab);                 // cab number
         retVal[2] = (byte) (loc);                 // memory offset
 
