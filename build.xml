@@ -244,6 +244,8 @@
         <pathelement location="${libdir}/jgoodies-binding-2.13.0.jar"/>
         <pathelement location="${libdir}/jgoodies-common-1.8.1.jar"/>
         <!-- //BiDiB -->
+        <pathelement location="${libdir}/reflections-0.10.2.jar"/>
+	<pathelement location="${libdir}/javassist-3.28.0-GA.jar"/>
     </path>
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
 
