@@ -483,12 +483,14 @@
                 added. If the user doesn't have at least <strong>Read</strong>
                 permission, the panel will be empty with the text
                 <strong>Permission denied</strong>.</li>
-            <li>The web server now has support for permissions. The
+            <li>The JMRI web server now has support for permissions. The
                 user can login and logout using the web server. Note
                 that the web server has the guest user <strong>remote guest</strong>
-                instead of the usual <strong>guest</strong> user. This
-                allows you to have different default permissions for
-                web access than local access.</li>
+                instead of the usual <strong>guest</strong> user. The
+                remote guest user has by defaul the <strong>Remote guest</strong>
+                role. This allows you to have different permissions for
+                web access than local access for users that have not
+                logged in.</li>
             <li></li>
         </ul>
 
