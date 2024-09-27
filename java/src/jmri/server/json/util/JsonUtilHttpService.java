@@ -340,7 +340,6 @@ public class JsonUtilHttpService extends JsonHttpService {
             JFrame frame = editor.getTargetFrame();
             if (frame != null) {
                 String title = frame.getTitle();
-
                 if (!title.isEmpty() &&
                         !Arrays.asList(InstanceManager.getDefault(WebServerPreferences.class).getDisallowedFrames())
                                 .contains(title)) {
