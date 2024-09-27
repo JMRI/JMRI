@@ -3,7 +3,7 @@ package jmri.swing;
 import jmri.Permission;
 
 /**
- * LogixNG Swing tools.
+ * Permission Swing tools.
  *
  * @author Daniel Bergqvist 2019
  */
