@@ -365,8 +365,6 @@ public class DefaultPermissionManager implements PermissionManager {
         return true;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
-        justification="The text is from an exception")
     @Override
     public boolean remoteLogin(StringBuilder sessionId, Locale locale,
             String username, String password) {
@@ -386,7 +384,7 @@ public class DefaultPermissionManager implements PermissionManager {
     }
 
     @Override
-    public synchronized void logout() {
+    public void logout() {
         synchronized(this) {
             _currentUser = USER_GUEST;
         }
@@ -414,7 +412,9 @@ public class DefaultPermissionManager implements PermissionManager {
 
     @Override
     public synchronized boolean isRemotelyLoggedIn(String sessionId) {
-        throw new UnsupportedOperationException("Not supported");
+        return sessionId != null
+                && !sessionId.isBlank()
+                && _remoteUsers.containsKey(sessionId);
     }
 
     @Override
@@ -438,7 +438,7 @@ public class DefaultPermissionManager implements PermissionManager {
     }
 
     @Override
-    public void addLoginListener(LoginListener listener) {
+    public synchronized void addLoginListener(LoginListener listener) {
         _loginListeners.add(listener);
     }
 
