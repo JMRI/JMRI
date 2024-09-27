@@ -78,7 +78,7 @@ public class EditorPermissions {
 
         @Override
         public PermissionValue getDefaultPermission(Role role) {
-            return EditorPermissionEnum.Default;
+            return EditorPermissionEnum.ReadWriteEdit;
         }
 
         @Override
