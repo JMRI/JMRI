@@ -5,7 +5,7 @@ import jmri.Permission;
 /**
  * Permission Swing tools.
  *
- * @author Daniel Bergqvist 2019
+ * @author Daniel Bergqvist 2024
  */
 public final class PermissionSwingTools {
 
