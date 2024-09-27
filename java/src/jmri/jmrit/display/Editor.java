@@ -276,7 +276,7 @@ abstract public class Editor extends JmriJFrameWithPermissions
             _catalog.setToolTipText(Bundle.getMessage("ToolTipDragIconToText"));
             panel.add(_catalog);
             content.add(panel);
-            super.setContentPane(content);
+            setContentPane(content);
             setLocation(200, 100);
             pack();
         }
