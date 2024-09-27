@@ -199,11 +199,8 @@ public class PanelEditor extends Editor implements ItemListener {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    Component ancestor = getTargetPanel().getTopLevelAncestor(); // could be null
-                    String oldName = "";
-                    if (ancestor instanceof JFrame) {
-                        oldName = ((JFrame) ancestor).getTitle();
-                    }
+                    JFrame frame = getTargetFrame();
+                    String oldName = frame.getTitle();
                     // prompt for name
                     String newName = JmriJOptionPane.showInputDialog(null, Bundle.getMessage("PromptNewName"), oldName);
                     if ((newName == null) || (oldName.equals(newName))) {
@@ -214,9 +211,7 @@ public class PanelEditor extends Editor implements ItemListener {
                                 JmriJOptionPane.ERROR_MESSAGE);
                         return;
                     }
-                    if (ancestor instanceof JFrame) {
-                        ((JFrame) ancestor).setTitle(newName);
-                    }
+                    frame.setTitle(newName);
                     editor.setTitle();
                 }
 

@@ -488,7 +488,7 @@ public class DefaultPermissionManager implements PermissionManager {
         if (sessionId != null && !sessionId.isBlank() && _remoteUsers.containsKey(sessionId)) {
             user = _remoteUsers.get(sessionId);
         }
-        // log.error("hasPermission: sessionId: {}, user: {}, permission: {}, has: {}", sessionId, user.getUserName(), permission.getName(), user.hasPermission(permission));
+//        log.error("hasPermission: sessionId: {}, user: {}, permission: {}, has: {}", sessionId, user.getUserName(), permission.getName(), user.hasAtLeastPermission(permission, minValue));
         return user.hasAtLeastPermission(permission, minValue);
     }
 

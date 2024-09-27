@@ -8,8 +8,6 @@ import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import java.awt.Container;
-import java.awt.Frame;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -25,6 +23,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 
 import jmri.*;
 import jmri.configurexml.ConfigXmlManager;
@@ -216,11 +215,9 @@ public abstract class AbstractPanelServlet extends HttpServlet {
     @CheckForNull
     protected Editor getEditor(String name) {
         for (Editor editor : InstanceManager.getDefault(EditorManager.class).getAll()) {
-            Container container = editor.getTargetPanel().getTopLevelAncestor();
-            if (container instanceof Frame) {
-                if (((Frame) container).getTitle().equals(name)) {
-                    return editor;
-                }
+            JFrame frame = editor.getTargetFrame();
+            if (frame.getTitle().equals(name)) {
+                return editor;
             }
         }
         return null;

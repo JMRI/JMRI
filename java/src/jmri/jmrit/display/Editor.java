@@ -1014,11 +1014,7 @@ abstract public class Editor extends JmriJFrameWithPermissions
      * time. Deletion must be accomplished via the Delete this panel menu item.
      */
     protected void targetWindowClosing() {
-        String name = "Panel";
-        Container ancestor = _targetPanel.getTopLevelAncestor();
-        if (ancestor instanceof JFrame) {
-            name = ((JFrame) ancestor).getTitle();
-        }
+        String name = _targetFrame.getTitle();
         if (!InstanceManager.getDefault(ShutDownManager.class).isShuttingDown()) {
             InstanceManager.getDefault(UserPreferencesManager.class).showInfoMessage(
                     Bundle.getMessage("PanelHideTitle"), Bundle.getMessage("PanelHideNotice", name),  // NOI18N
@@ -2860,11 +2856,7 @@ abstract public class Editor extends JmriJFrameWithPermissions
     }
 
     public void setTitle() {
-        String name = "";
-        Container ancestor = _targetPanel.getTopLevelAncestor();
-        if (ancestor instanceof JFrame) {
-            name = ((JFrame) ancestor).getTitle();
-        }
+        String name = _targetFrame.getTitle();
         if (name == null || name.equals("")) {
             super.setTitle(Bundle.getMessage("LabelEditor"));
         } else {

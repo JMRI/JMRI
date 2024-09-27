@@ -87,6 +87,28 @@ public class JmriJFrameWithPermissions extends JmriJFrame {
     }
 
     @Override
+    public void revalidate() {
+        if (_contentPane != super.getContentPane()) {
+            // Ensure the contentPane is validated as well
+            super.setContentPane(_contentPane);
+            _contentPane.revalidate();
+            super.setContentPane(_hiddenPane);
+        }
+        super.revalidate();
+    }
+
+    @Override
+    public void setVisible(boolean b) {
+        if (b && _contentPane != super.getContentPane()) {
+            // Ensure the contentPane is validated as well
+            super.setContentPane(_contentPane);
+            super.setVisible(b);
+            super.setContentPane(_hiddenPane);
+        }
+        super.setVisible(b);
+    }
+
+    @Override
     public Container getContentPane() {
         // We have our own content pane which may or may not be the content
         // pane that's actually in use. If the user doesn't have permission
