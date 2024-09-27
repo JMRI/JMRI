@@ -111,16 +111,19 @@
     </node>
     <node>separator</node><!-- separator -->
     <node name="Login">
+        <name xml:lang="cs">P\u0159ihl\u00e1\u0161en\u00ed</name>
         <adapter>jmri.jmrit.permission.swing.LoginAction</adapter>
         <instanceManagerOptionalClass>jmri.PermissionManager</instanceManagerOptionalClass>
         <optionalFunction>isEnabled</optionalFunction>
     </node>
     <node name="Logout">
+        <name xml:lang="cs">Odhl\u00e1\u0161en\u00ed</name>
         <adapter>jmri.jmrit.permission.swing.LogoutAction</adapter>
         <instanceManagerOptionalClass>jmri.PermissionManager</instanceManagerOptionalClass>
         <optionalFunction>isEnabled</optionalFunction>
     </node>
     <node name="Change password">
+        <name xml:lang="cs">Zm\u011bnit heslo</name>
         <adapter>jmri.jmrit.permission.swing.ChangePasswordAction</adapter>
         <instanceManagerOptionalClass>jmri.PermissionManager</instanceManagerOptionalClass>
         <optionalFunction>isEnabled</optionalFunction>
