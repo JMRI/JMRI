@@ -80,6 +80,9 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
                 } else {
                     enablePermissionManagerCheckBox.setSelected(false);
                 }
+            } else {
+                permissionManager.setEnabled(false);
+                _dirty = true;
             }
         });
         settingsPanel.add(enablePermissionManagerCheckBox);
