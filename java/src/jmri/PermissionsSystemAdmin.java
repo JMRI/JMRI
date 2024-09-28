@@ -46,7 +46,7 @@ public class PermissionsSystemAdmin {
 
     }
 
-    public static class PermissionEditPermissions implements Permission {
+    public static class PermissionEditPermissions implements BooleanPermission {
 
         @Override
         public PermissionOwner getOwner() {
@@ -59,13 +59,13 @@ public class PermissionsSystemAdmin {
         }
 
         @Override
-        public boolean getDefaultPermission(Role role) {
-            return role.isAdminRole();
+        public BooleanValue getDefaultPermission(Role role) {
+            return BooleanValue.get(role.isAdminRole());
         }
 
     }
 
-    public static class PermissionEditPreferences implements Permission {
+    public static class PermissionEditPreferences implements BooleanPermission {
 
         @Override
         public PermissionOwner getOwner() {
@@ -78,13 +78,13 @@ public class PermissionsSystemAdmin {
         }
 
         @Override
-        public boolean getDefaultPermission(Role role) {
-            return role.isAdminRole();
+        public BooleanValue getDefaultPermission(Role role) {
+            return BooleanValue.get(role.isAdminRole());
         }
 
     }
 
-    public static class PermissionEditOwnPassword implements Permission {
+    public static class PermissionEditOwnPassword implements BooleanPermission {
 
         @Override
         public PermissionOwner getOwner() {
@@ -97,8 +97,8 @@ public class PermissionsSystemAdmin {
         }
 
         @Override
-        public boolean getDefaultPermission(Role role) {
-            return role.isAdminRole() || role.isStandardUserRole();
+        public BooleanValue getDefaultPermission(Role role) {
+            return BooleanValue.get(role.isAdminRole() || role.isStandardUserRole());
         }
 
     }

@@ -4,9 +4,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JFileChooser;
 
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
-import jmri.PermissionManager;
+import jmri.*;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
@@ -33,7 +31,8 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (! InstanceManager.getDefault(PermissionManager.class)
-                .checkPermission(LoadAndStorePermissionOwner.STORE_XML_FILE_PERMISSION)) {
+                .ensureAtLeastPermission(LoadAndStorePermissionOwner.STORE_XML_FILE_PERMISSION,
+                        BooleanPermission.BooleanValue.TRUE)) {
             return;
         }
         JFileChooser userFileChooser = getUserFileChooser();

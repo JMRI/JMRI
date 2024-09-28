@@ -1,5 +1,7 @@
 package jmri;
 
+import java.util.Comparator;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -7,7 +9,7 @@ import javax.annotation.Nonnull;
  *
  * @author Daniel Bergqvist (C) 2024
  */
-public interface Permission {
+public interface Permission extends Comparator<PermissionValue> {
 
     /**
      * Get the owner
@@ -23,11 +25,21 @@ public interface Permission {
     @Nonnull
     String getName();
 
+    String getValue(PermissionValue value);
+
+    PermissionValue valueOf(String value);
+
+    /**
+     * Get the default permission if the user has no role.
+     * @return the default
+     */
+    PermissionValue getDefaultPermission();
+
     /**
      * Get the default permission for a role.
      * @param role the role
      * @return the default
      */
-    boolean getDefaultPermission(Role role);
+    PermissionValue getDefaultPermission(Role role);
 
 }

@@ -40,7 +40,8 @@ public final class EditConnectionPreferencesDialog extends JDialog implements Wi
      */
     public static boolean showDialog() {
         if (! InstanceManager.getDefault(PermissionManager.class)
-                .checkPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES)) {
+                .ensureAtLeastPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES,
+                        BooleanPermission.BooleanValue.TRUE)) {
             return false;
         }
         EditConnectionPreferencesDialog dialog = new EditConnectionPreferencesDialog();

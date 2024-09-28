@@ -8,6 +8,7 @@ import java.util.*;
 import javax.xml.bind.DatatypeConverter;
 
 import jmri.*;
+import jmri.PermissionValue;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
@@ -68,7 +69,7 @@ public class DefaultUser implements User {
     private static final PrimitiveIterator.OfInt iterator =
             new Random().ints('a', 'z'+10).iterator();
 
-    private String getRandomString(int count) {
+    public static String getRandomString(int count) {
         StringBuilder s = new StringBuilder();
         for (int i=0; i < count; i++) {
             int r = iterator.nextInt();
@@ -141,7 +142,8 @@ public class DefaultUser implements User {
     @Override
     public void addRole(Role role) {
         if (! InstanceManager.getDefault(PermissionManager.class)
-                .checkPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES)) {
+                .ensureAtLeastPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES,
+                        BooleanPermission.BooleanValue.TRUE)) {
             return;
         }
         _roles.add(role);
@@ -150,7 +152,8 @@ public class DefaultUser implements User {
     @Override
     public void removeRole(Role role) {
         if (! InstanceManager.getDefault(PermissionManager.class)
-                .checkPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES)) {
+                .ensureAtLeastPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES,
+                        BooleanPermission.BooleanValue.TRUE)) {
             return;
         }
         _roles.remove(role);
@@ -175,8 +178,9 @@ public class DefaultUser implements User {
     public void setPassword(String newPassword) {
         PermissionManager pMngr = InstanceManager.getDefault(PermissionManager.class);
 
-        if (!pMngr.hasPermission(
-                PermissionsSystemAdmin.PERMISSION_EDIT_PERMISSIONS)) {
+        if (!pMngr.hasAtLeastPermission(
+                PermissionsSystemAdmin.PERMISSION_EDIT_PERMISSIONS,
+                BooleanPermission.BooleanValue.TRUE)) {
             log.warn("The current user has not permission to change password for user {}", getUserName());
 
             if (!GraphicsEnvironment.isHeadless()) {
@@ -203,10 +207,12 @@ public class DefaultUser implements User {
         PermissionManager pMngr = InstanceManager.getDefault(PermissionManager.class);
 
         boolean isCurrentUser = pMngr.isCurrentUser(this);
-        boolean hasEditPasswordPermission = pMngr.hasPermission(
-                PermissionsSystemAdmin.PERMISSION_EDIT_OWN_PASSWORD);
-        boolean hasAdminPermission = pMngr.hasPermission(
-                PermissionsSystemAdmin.PERMISSION_EDIT_PERMISSIONS);
+        boolean hasEditPasswordPermission = pMngr.hasAtLeastPermission(
+                PermissionsSystemAdmin.PERMISSION_EDIT_OWN_PASSWORD,
+                BooleanPermission.BooleanValue.TRUE);
+        boolean hasAdminPermission = pMngr.hasAtLeastPermission(
+                PermissionsSystemAdmin.PERMISSION_EDIT_PERMISSIONS,
+                BooleanPermission.BooleanValue.TRUE);
 
         if (hasAdminPermission || (isCurrentUser && hasEditPasswordPermission)) {
             if (!checkPassword(oldPassword)) {
@@ -257,18 +263,39 @@ public class DefaultUser implements User {
     }
 
     @Override
-    public boolean hasPermission(Permission permission) {
+    public boolean hasAtLeastPermission(Permission permission, PermissionValue minValue) {
+        PermissionValue lastValue = null;
+        // Try to find the highest permission this user has
         for (Role role : _roles) {
-            if (role.hasPermission(permission)) return true;
+            PermissionValue value = role.getPermissionValue(permission);
+            if (lastValue == null || permission.compare(lastValue, value) < 0) {
+                lastValue = value;
+            }
         }
-        return false;
+        if (lastValue == null || lastValue.isDefault()) {
+            // No role of this user have a permission value set, or the
+            // permission value is the default.
+            // Try to find the highest default permission this user has
+            for (Role role : _roles) {
+                PermissionValue value = permission.getDefaultPermission(role);
+                if (lastValue == null || permission.compare(lastValue, value) < 0) {
+                    lastValue = value;
+                }
+            }
+        }
+        if (lastValue == null || lastValue.isDefault()) {
+            // This user has no roles or the permission value is the default.
+            // Get the default permission if no role.
+            lastValue = permission.getDefaultPermission();
+        }
+        return permission.compare(minValue, lastValue) <= 0;
     }
 
     @Override
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
         justification="The text is from a bundle")
-    public boolean checkPermission(Permission permission) {
-        if (!hasPermission(permission)) {
+    public boolean ensureAtLeastPermission(Permission permission, PermissionValue minValue) {
+        if (!hasAtLeastPermission(permission, minValue)) {
             log.warn("User {} has not permission {}", this.getUserName(), permission.getName());
             if (!GraphicsEnvironment.isHeadless()) {
                 JmriJOptionPane.showMessageDialog(null,
