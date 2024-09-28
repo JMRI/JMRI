@@ -72,7 +72,8 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
 
     final public void actionPerformed() {
         if (! InstanceManager.getDefault(PermissionManager.class)
-                .checkPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES)) {
+                .ensureAtLeastPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES,
+                        BooleanPermission.BooleanValue.TRUE)) {
             return;
         }
         TabbedPreferencesFrame f = InstanceManager.getOptionalDefault(TabbedPreferencesFrame.class).orElseGet(() -> {

@@ -2,6 +2,8 @@ package jmri;
 
 import java.util.*;
 
+import javax.annotation.Nonnull;
+
 /**
  * A role in the permission system.
  *
@@ -9,19 +11,23 @@ import java.util.*;
  */
 public interface Role {
 
+    @Nonnull
     String getName();
 
     boolean isSystemRole();
 
     int getPriority();
 
+    @Nonnull
     String getSystemName();
 
-    Map<Permission,Boolean> getPermissions();
+    @Nonnull
+    Map<Permission,PermissionValue> getPermissions();
 
-    boolean hasPermission(Permission permission);
+    @Nonnull
+    PermissionValue getPermissionValue(@Nonnull Permission permission);
 
-    void setPermission(Permission permission, boolean enable);
+    void setPermission(@Nonnull Permission permission, @Nonnull PermissionValue value);
 
     boolean isGuestRole();
 

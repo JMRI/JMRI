@@ -167,7 +167,9 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
     @BeforeEach
     @Override
     public void setUp(@TempDir java.io.File tempDir) throws IOException  {
-        super.setUp(tempDir);
+        // This test should not use tempDir because if we do, we cannot download
+        // the screenshots of failing tests from GitHub Windows CI.
+        super.setUp(FileUtil.getFile(FileUtil.SETTINGS));
         JUnitUtil.initLayoutBlockManager();
     }
 

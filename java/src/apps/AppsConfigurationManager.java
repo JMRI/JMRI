@@ -11,7 +11,8 @@ public class AppsConfigurationManager extends JmriConfigurationManager {
     @Override
     protected boolean isEditDialogRestart() {
         if (! InstanceManager.getDefault(PermissionManager.class)
-                .checkPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES)) {
+                .ensureAtLeastPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES,
+                        BooleanPermission.BooleanValue.TRUE)) {
             return false;
         }
         return EditConnectionPreferencesDialog.showDialog();
