@@ -40,7 +40,7 @@ public class LoadAndStorePermissionOwner implements PermissionOwner {
     }
 
 
-    public static class LoadXmlFilePermission implements Permission {
+    public static class LoadXmlFilePermission implements BooleanPermission {
 
         private final PermissionOwner _owner;
 
@@ -59,14 +59,14 @@ public class LoadAndStorePermissionOwner implements PermissionOwner {
         }
 
         @Override
-        public boolean getDefaultPermission(Role role) {
-            return role.isAdminRole();
+        public BooleanValue getDefaultPermission(Role role) {
+            return BooleanValue.get(role.isAdminRole());
         }
 
     }
 
 
-    public static class StoreXmlFilePermission implements Permission {
+    public static class StoreXmlFilePermission implements BooleanPermission {
 
         private final PermissionOwner _owner;
 
@@ -85,8 +85,8 @@ public class LoadAndStorePermissionOwner implements PermissionOwner {
         }
 
         @Override
-        public boolean getDefaultPermission(Role role) {
-            return role.isAdminRole();
+        public BooleanValue getDefaultPermission(Role role) {
+            return BooleanValue.get(role.isAdminRole());
         }
 
     }

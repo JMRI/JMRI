@@ -45,11 +45,13 @@ public class ChangePasswordAction extends JmriAbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         var permissionManager = InstanceManager.getDefault(PermissionManager.class);
-        if (!permissionManager.hasPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PERMISSIONS)) {
+        if (!permissionManager.hasAtLeastPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PERMISSIONS,
+                BooleanPermission.BooleanValue.TRUE)) {
             // Note that the line above _asks_ about the permission and the line below
             // _checks_ for the permission. If the line below doesn't have the permission,
             // a JOptionPane will show an error message.
-            if (!permissionManager.checkPermission(PermissionsSystemAdmin.PERMISSION_EDIT_OWN_PASSWORD)) {
+            if (!permissionManager.ensureAtLeastPermission(PermissionsSystemAdmin.PERMISSION_EDIT_OWN_PASSWORD,
+                    BooleanPermission.BooleanValue.TRUE)) {
                 return;
             }
         }
