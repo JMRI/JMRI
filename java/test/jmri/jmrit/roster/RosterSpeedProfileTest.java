@@ -1,6 +1,5 @@
 package jmri.jmrit.roster;
 
-import java.util.Enumeration;
 import java.util.HashMap;
 
 import jmri.util.JUnitUtil;
