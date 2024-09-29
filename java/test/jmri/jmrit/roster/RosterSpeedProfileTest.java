@@ -1,12 +1,17 @@
 package jmri.jmrit.roster;
 
+import java.util.Enumeration;
+import java.util.HashMap;
+
 import jmri.util.JUnitUtil;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
 import jmri.ThrottleListener;
 import jmri.ThrottleManager;
+import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.roster.RosterSpeedProfile.SpeedSetting;
+import jmri.util.JUnitAppender;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -17,9 +22,10 @@ import org.junit.jupiter.api.*;
  */
 public class RosterSpeedProfileTest {
 
-    boolean throttleResult;
-    DccThrottle throttle;
-    protected class ThrottleListen implements ThrottleListener {
+    private boolean throttleResult;
+    private DccThrottle throttle;
+
+    private class ThrottleListen implements ThrottleListener {
 
         @Override
         public void notifyThrottleFound(DccThrottle t){
@@ -49,8 +55,8 @@ public class RosterSpeedProfileTest {
     @Test
     public void testSpeedProfileStopFromFiftyPercent() {
         // statics for test objects
-        org.jdom2.Element f1 = null;
-        RosterEntry rF1 = null;
+        org.jdom2.Element f1;
+        RosterEntry rF1;
 
         // create Element
         f1 = new org.jdom2.Element("locomotive")
@@ -125,8 +131,8 @@ public class RosterSpeedProfileTest {
     @Test
     public void testSpeedProfileFromFiftyPercentToTwenty() {
         // statics for test objects
-        org.jdom2.Element f1 = null;
-        RosterEntry rF1 = null;
+        org.jdom2.Element f1;
+        RosterEntry rF1;
 
         // create Element
         f1 = new org.jdom2.Element("locomotive")
@@ -202,8 +208,8 @@ public class RosterSpeedProfileTest {
     @Test
     public void testSpeedProfileFromFiftyPercentToTwentyShortBlock() {
         // statics for test objects
-        org.jdom2.Element f1 = null;
-        RosterEntry rF1 = null;
+        org.jdom2.Element f1;
+        RosterEntry rF1;
 
         // create Element
         f1 = new org.jdom2.Element("locomotive")
@@ -257,13 +263,44 @@ public class RosterSpeedProfileTest {
         // Allow speed step table to be constructed
         //JUnitUtil.waitFor(3000);
         // Note it must be a perfect 0.20
-        //Assert.assertEquals("Speed didnt get to a perfect zero", 0.20f, throttle.getSpeedSetting(), 0.0f);
         JUnitUtil.waitFor(()->(throttle.getSpeedSetting() == 0.20f),"Failed to reach requested speed");
+
+        JUnitAppender.assertWarnMessageStartsWith("distance remaining is now 0, but we have not reached desired speed setting 0.2 v 0.3");
 
         // as the calc goes wrong we immediatly set speed to final speed. The entries are rubbish so dont bother checking
         Assert.assertEquals("SpeedStep Table has lincorrect number of entries.", 1, sp.getSpeedStepTrace().size() ) ;
         sp.cancelSpeedChange();
     }
+
+    @Test
+    public void testconvertThrottleSettingToScaleSpeedWithUnits(){
+
+        SignalSpeedMap ssm = InstanceManager.getDefault(SignalSpeedMap.class);
+        setSpeedInterpretation(ssm, SignalSpeedMap.PERCENT_NORMAL);
+        Assertions.assertEquals("0.50 millimeters/sec",RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(0.5f));
+
+        setSpeedInterpretation(ssm, SignalSpeedMap.PERCENT_THROTTLE);
+        Assertions.assertEquals("0.50 millimeters/sec",RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(0.5f));
+
+        setSpeedInterpretation(ssm, SignalSpeedMap.SPEED_KMPH);
+        Assertions.assertEquals("0.16 Kilometers/Hour",RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(0.5f));
+
+        setSpeedInterpretation(ssm, SignalSpeedMap.SPEED_MPH);
+        Assertions.assertEquals("0.10 Miles/Hour",RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(0.5f));
+
+    }
+
+    private void setSpeedInterpretation(SignalSpeedMap map, int interpretation) {
+        HashMap<String, Float> newMap = new HashMap<>(11);
+        Enumeration<String> e = map.getSpeedIterator();
+        while (e.hasMoreElements()) {
+            String key = e.nextElement();
+            newMap.put(key, map.getSpeed(key));
+            // System.out.println("key " + key + " value: " + map.getSpeed(key));
+        }
+        map.setAspects(newMap, interpretation);
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
