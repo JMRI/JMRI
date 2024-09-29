@@ -291,12 +291,11 @@ public class RosterSpeedProfileTest {
     }
 
     private void setSpeedInterpretation(SignalSpeedMap map, int interpretation) {
-        HashMap<String, Float> newMap = new HashMap<>(11);
-        Enumeration<String> e = map.getSpeedIterator();
-        while (e.hasMoreElements()) {
-            String key = e.nextElement();
-            newMap.put(key, map.getSpeed(key));
-            // System.out.println("key " + key + " value: " + map.getSpeed(key));
+        var speedNames = map.getValidSpeedNames();
+        HashMap<String, Float> newMap = new HashMap<>(speedNames.size());
+        for ( var speedName : speedNames ) {
+            newMap.put(speedName, map.getSpeed(speedName));
+            // System.out.println("key " + speedName + " value: " + map.getSpeed(speedName));
         }
         map.setAspects(newMap, interpretation);
     }
