@@ -19,7 +19,7 @@ public class RosterTableModelTest {
     public void testTableLength() throws Exception {
         RosterTableModel t = new RosterTableModel();
 
-        Assert.assertEquals(NENTRIES, t.getRowCount());
+        Assertions.assertEquals(3, t.getRowCount());
         t.dispose();
     }
 
@@ -193,9 +193,6 @@ public class RosterTableModelTest {
     }
 
     // create a standard test roster
-    static int NENTRIES = 3;
-    static int NKEYS = 4;
-
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
