@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * @author Paul Bender Copyright (C) 2024
+ */
 public class Z21MessageFormatterTest {
 
     @Test
