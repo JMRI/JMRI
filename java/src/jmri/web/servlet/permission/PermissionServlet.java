@@ -154,6 +154,7 @@ public class PermissionServlet extends HttpServlet {
 
     public static String getSessionId(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
+        if (cookies == null) return null;
         for (Cookie c : cookies) {
             if ("sessionId".equals(c.getName())) {
                 return c.getValue();
