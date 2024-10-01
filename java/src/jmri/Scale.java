@@ -51,18 +51,34 @@ public class Scale extends ConstrainedBean {
     private double _ratio = 87.1;
     private double _factor = 1 / 87.1;
 
+    /**
+     * Get the Name of the Scale.
+     * @return the Scale name.
+     */
     public String getScaleName() {
         return _name;
     }
 
+    /**
+     * Get the UserName of the Scale.
+     * @return the UserName.
+     */
     public String getUserName() {
         return _userName;
     }
 
+    /**
+     * Get the Scale Ratio.
+     * @return e.g. 87.1
+     */
     public double getScaleRatio() {
         return _ratio;
     }
 
+    /**
+     * Get the Scale Factor
+     * @return e.g. 1 divided by 87.1
+     */
     public double getScaleFactor() {
         return _factor;
     }
@@ -76,10 +92,9 @@ public class Scale extends ConstrainedBean {
      */
     public void setUserName(@Nonnull String newName) throws IllegalArgumentException, PropertyVetoException {
         for (Scale scale : ScaleManager.getScales()) {
-            if (scale.getUserName().equals(newName)) {
-                if (!scale.getScaleName().equals(_name)) {
-                    throw new IllegalArgumentException("Duplicate scale user name");  // NOI18N
-                }
+            if ( scale.getUserName().equals(newName)
+                && !scale.getScaleName().equals(_name)) {
+                throw new IllegalArgumentException("Duplicate scale user name: " + newName);
             }
         }
 
@@ -132,6 +147,6 @@ public class Scale extends ConstrainedBean {
         return String.format("%s (%.1f)", getUserName(), getScaleRatio());
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Scale.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Scale.class);
 
 }
