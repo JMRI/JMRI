@@ -455,12 +455,17 @@ public class DefaultPermissionManager implements PermissionManager {
 
     @Override
     public synchronized String getCurrentUserName() {
-        return _currentUser.getUserName();
+        return _currentUser != null ? _currentUser.getUserName() : null;
     }
 
     @Override
     public synchronized boolean isAGuestUser(User user) {
         return user == USER_GUEST || user == REMOTE_USER_GUEST;
+    }
+
+    @Override
+    public synchronized boolean isCurrentUserPermittedToChangePassword() {
+        return _currentUser != null && _currentUser.isPermittedToChangePassword();
     }
 
     @Override
