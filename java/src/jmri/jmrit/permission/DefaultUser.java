@@ -37,6 +37,18 @@ public class DefaultUser implements User {
         DefaultUser.this.addRole(DefaultRole.ROLE_STANDARD_USER);
     }
 
+    DefaultUser(DefaultUser u) {
+        _username = u._username;
+        _systemUserName = u._systemUserName;
+        _systemUser = u._systemUser;
+        _priority = u._priority;
+        _seed = u._seed;
+        _passwordMD5 = u._passwordMD5;
+        _name = u._name;
+        _comment = u._comment;
+        _roles.addAll(u._roles);
+    }
+
     DefaultUser(String username, String password, int priority, String systemUserName, Role[] roles) {
         this._username = username;
         this._priority = priority;

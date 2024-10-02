@@ -12,16 +12,16 @@ import jmri.PermissionValue;
  */
 public class DefaultRole implements Role {
 
-    public static final Role ROLE_GUEST =
+    public static final DefaultRole ROLE_GUEST =
             new DefaultRole(Bundle.getMessage("Role_Guest"),50,"GUEST");
 
-    public static final Role ROLE_REMOTE_GUEST =
+    public static final DefaultRole ROLE_REMOTE_GUEST =
             new DefaultRole(Bundle.getMessage("Role_Remote_Guest"),40,"REMOTE_GUEST");
 
-    public static final Role ROLE_STANDARD_USER =
+    public static final DefaultRole ROLE_STANDARD_USER =
             new DefaultRole(Bundle.getMessage("Role_StandardUser"),10,"STANDARD_USER");
 
-    public static final Role ROLE_ADMIN =
+    public static final DefaultRole ROLE_ADMIN =
             new DefaultRole(Bundle.getMessage("Role_Admin"),100,"ADMIN");
 
     private final String _name;
@@ -31,6 +31,15 @@ public class DefaultRole implements Role {
 
     private final Map<Permission, PermissionValue> _permissions =
             new TreeMap<>((a,b) -> {return a.getName().compareTo(b.getName());});
+
+
+    public DefaultRole(DefaultRole r) {
+        this._name = r._name;
+        this._systemRole = r._systemRole;
+        this._priority = r._priority;
+        this._systemName = r._systemName;
+        this._permissions.putAll(r._permissions);
+    }
 
     public DefaultRole(String name) {
         this._name = name;
