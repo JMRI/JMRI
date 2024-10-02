@@ -18,7 +18,18 @@
       <p><strong>Permissions</strong> is used to protect sensitive parts of JMRI, for example
       preventing the loading and storing of the <em>table content and panels</em> file by
       unauthorized users.</p>
+      
+      <ul>
+		  <li><a href="#settings">Settings</a></li>
+		  <li><a href="#defaultusers">Default users</a></li>
+		  <li><a href="#defaultpermissions">Default permissions</a></li>
+		  <li><a href="#lockedout">I have locked myself out! What do I do?</a></li>
+		  <li><a href="#securingpreferences">Securing the preferences</a></li>
+		  <li><a href="#connectionfailure">Connection failure during startup of JMRI</a></li>
+		  <li><a href="#panelproshutdown">Permission failure during PanelPro shutdown</a></li>
+      </ul>
 
+      <a id="settings"></a>
       <h2>Settings</h2>
 
       <p><strong>Edit &rArr; Preferences &rArr; Permissions</strong> has the configuration for the
@@ -35,6 +46,7 @@
           <dd>If selected, empty passwords are allowed. By default, empty passwords are not allowed.</dd>
       </dl>
 
+      <a id="defaultusers"></a>
       <h2>Default users</h2>
 
       <h3>The current default users are</h3>
@@ -50,6 +62,7 @@
 
       <p>Note that the <strong>guest</strong> user cannot have a password.</p>
 
+      <a id="defaultpermissions"></a>
       <h2>Default permissions</h2>
       <h3>The current permissions are</h3>
       <table>
@@ -61,6 +74,7 @@
           <tr><td>Store ALL table content and panels</td><td><strong>Administrator</strong></td></tr>
       </table>
 
+      <a id="lockedout"></a>
       <h2>I have locked myself out! What do I do?</h2>
 
       <p>There are two options.</p>
@@ -89,6 +103,7 @@
       It disables permission checking but retains the permission configuration.
       </p>
 
+      <a id="securingpreferences"></a>
       <h2>Securing the preferences</h2>
 
       <p>If an unauthorized user is able to delete or edit files on the computer running
@@ -109,6 +124,7 @@ sudo chmod 644 ~/.jmri/.permissions.xml
       this, the <strong>.jmri</strong> parent directory also needs to be protected.  However, doing
       so can result in JMRI errors.</p>
 
+      <a id="connectionfailure"></a>
       <h2>Connection failure during startup of JMRI</h2>
 
       <p>If JMRI is unable to connect to the layout during startup, a dialog is shown with the options
@@ -118,6 +134,7 @@ sudo chmod 644 ~/.jmri/.permissions.xml
       do, a dialog will open with the message <strong>Permission denied</strong>. Ignore that, log
       in with an authorized user and then open the preferences. Now edit the connection.</p>
 
+      <a id="panelproshutdown"></a>
       <h2>Permission failure during PanelPro shutdown</h2>
 
       <p>The normal PanelPro shutdown process checks for changes that have not been stored.  If
