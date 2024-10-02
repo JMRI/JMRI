@@ -156,12 +156,20 @@ public class TrainBuilderEngines extends TrainBuilderBase {
         }
 
         // First engine change in route?
-        if ((_train.getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES) {
+        if ((_train.getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES ||
+                (_train.getSecondLegOptions() & Train.ADD_ENGINES) == Train.ADD_ENGINES) {
             addLine(_buildReport, THREE, BLANK_LINE);
+            if ((_train.getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES) {
             addLine(_buildReport, THREE,
                     Bundle.getMessage("buildTrainEngineChange", _train.getSecondLegStartLocationName(),
                             _train.getSecondLegNumberEngines(), _train.getSecondLegEngineModel(),
                             _train.getSecondLegEngineRoad()));
+            } else {
+                addLine(_buildReport, THREE,
+                        Bundle.getMessage("buildTrainAddEngines", _train.getSecondLegNumberEngines(),
+                                _train.getSecondLegStartLocationName(), _train.getSecondLegEngineModel(),
+                                _train.getSecondLegEngineRoad()));
+            }
             if (getEngines(_train.getSecondLegNumberEngines(), _train.getSecondLegEngineModel(),
                     _train.getSecondLegEngineRoad(), _train.getSecondLegStartRouteLocation(),
                     engineTerminatesSecondLeg)) {
@@ -179,7 +187,8 @@ public class TrainBuilderEngines extends TrainBuilderBase {
             }
         }
         // Second engine change in route?
-        if ((_train.getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES) {
+        if ((_train.getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES ||
+                (_train.getThirdLegOptions() & Train.ADD_ENGINES) == Train.ADD_ENGINES) {
             addLine(_buildReport, THREE, BLANK_LINE);
             addLine(_buildReport, THREE,
                     Bundle.getMessage("buildTrainEngineChange", _train.getThirdLegStartLocationName(),
