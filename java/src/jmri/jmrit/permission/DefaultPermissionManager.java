@@ -55,7 +55,7 @@ public class DefaultPermissionManager implements PermissionManager {
         _permissions.addAll(source._permissions);
         _permissionClassNames.putAll(source._permissionClassNames);
         for (var entry : source._roles.entrySet()) {
-            _roles.put(entry.getKey(), new DefaultRole((DefaultRole) entry.getValue()));
+            _roles.put(entry.getKey(), new DefaultRole(entry.getValue()));
         }
         for (var entry : source._users.entrySet()) {
             _users.put(entry.getKey(), new DefaultUser(entry.getValue()));
@@ -167,7 +167,7 @@ public class DefaultPermissionManager implements PermissionManager {
                         Permission permission = _permissionClassNames.get(className);
                         if (permission != null) {
                             PermissionValue value = permission.valueOf(permissionElement.getChild("Enabled").getValue());
-                            ((DefaultRole)role).setPermissionWithoutCheck(permission, value);
+                            role.setPermissionWithoutCheck(permission, value);
                         } else {
                             log.error("Permission class {} does not exists", className);
                         }
