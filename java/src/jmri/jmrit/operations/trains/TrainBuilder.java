@@ -207,12 +207,11 @@ public class TrainBuilder extends TrainBuilderCars {
         if ((_train.getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
                 _train.getSecondLegStartRouteLocation() != null) {
             engineTerminatesFirstLeg = _train.getSecondLegStartRouteLocation();
-        }
-        if ((_train.getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
+        } else if ((_train.getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
                 _train.getThirdLegStartRouteLocation() != null) {
-            if ((_train.getSecondLegOptions() & Train.CHANGE_ENGINES) != Train.CHANGE_ENGINES) {
+            //            if ((_train.getSecondLegOptions() & Train.CHANGE_ENGINES) != Train.CHANGE_ENGINES) {
                 engineTerminatesFirstLeg = _train.getThirdLegStartRouteLocation();
-            }
+            //            }
         }
 
         // determine if train is departing staging
