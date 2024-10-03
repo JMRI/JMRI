@@ -8,7 +8,7 @@ import javax.swing.*;
 import jmri.InstanceManager;
 import jmri.PermissionManager;
 import jmri.util.JmriJFrame;
-import jmri.util.swing.JmriJOptionPane;
+import jmri.util.swing.*;
 
 /**
  * A JmriJFrame with permissions.
@@ -156,11 +156,11 @@ public class JmriJFrameWithPermissions extends JmriJFrame {
      * It's used when the panel is read only.
      */
     private static class MyGlassPane extends JPanel
-            implements MouseListener, KeyListener {
+            implements JmriMouseListener, KeyListener {
 
         private MyGlassPane init() {
             setOpaque(false);
-            addMouseListener(this);
+            addMouseListener(JmriMouseListener.adapt(this));
             addKeyListener(this);
             return this;
         }
@@ -173,29 +173,29 @@ public class JmriJFrameWithPermissions extends JmriJFrame {
         }
 
         @Override
-        public void mouseClicked(MouseEvent e) {
+        public void mouseClicked(JmriMouseEvent e) {
             // Do nothing
         }
 
         @Override
-        public void mousePressed(MouseEvent e) {
+        public void mousePressed(JmriMouseEvent e) {
             e.consume();
             requestFocusInWindow();
             showReadOnly();
         }
 
         @Override
-        public void mouseReleased(MouseEvent e) {
+        public void mouseReleased(JmriMouseEvent e) {
             // Do nothing
         }
 
         @Override
-        public void mouseEntered(MouseEvent e) {
+        public void mouseEntered(JmriMouseEvent e) {
             // Do nothing
         }
 
         @Override
-        public void mouseExited(MouseEvent e) {
+        public void mouseExited(JmriMouseEvent e) {
             // Do nothing
         }
 

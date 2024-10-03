@@ -496,4 +496,12 @@ public class JmriMouseEvent {
         return event.getSource();
     }
 
+    /**
+     * Consumes this event so that it will not be processed
+     * in the default manner by the source which originated it.
+     */
+    public void consume() {
+        event.consume();
+    }
+
 }
