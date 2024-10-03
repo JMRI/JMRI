@@ -37,6 +37,18 @@ public class DefaultUser implements User {
         DefaultUser.this.addRole(DefaultRole.ROLE_STANDARD_USER);
     }
 
+    DefaultUser(DefaultUser u) {
+        _username = u._username;
+        _systemUserName = u._systemUserName;
+        _systemUser = u._systemUser;
+        _priority = u._priority;
+        _seed = u._seed;
+        _passwordMD5 = u._passwordMD5;
+        _name = u._name;
+        _comment = u._comment;
+        _roles.addAll(u._roles);
+    }
+
     DefaultUser(String username, String password, int priority, String systemUserName, Role[] roles) {
         this._username = username;
         this._priority = priority;
@@ -201,9 +213,7 @@ public class DefaultUser implements User {
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
-        justification="The text is from an exception")
-    public boolean changePassword(String oldPassword, String newPassword) {
+    public boolean isPermittedToChangePassword() {
         PermissionManager pMngr = InstanceManager.getDefault(PermissionManager.class);
 
         boolean isCurrentUser = pMngr.isCurrentUser(this);
@@ -214,7 +224,16 @@ public class DefaultUser implements User {
                 PermissionsSystemAdmin.PERMISSION_EDIT_PERMISSIONS,
                 BooleanPermission.BooleanValue.TRUE);
 
-        if (hasAdminPermission || (isCurrentUser && hasEditPasswordPermission)) {
+        return (hasAdminPermission || (isCurrentUser && hasEditPasswordPermission));
+    }
+
+    @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+        justification="The text is from an exception")
+    public boolean changePassword(String oldPassword, String newPassword) {
+        PermissionManager pMngr = InstanceManager.getDefault(PermissionManager.class);
+
+        if (isPermittedToChangePassword()) {
             if (!checkPassword(oldPassword)) {
                 String msg = new PermissionManager.BadPasswordException().getMessage();
 
