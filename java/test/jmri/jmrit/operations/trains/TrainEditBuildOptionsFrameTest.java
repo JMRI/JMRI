@@ -234,7 +234,12 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
         Assert.assertEquals("loco 1 road", "UP", t.getSecondLegEngineRoad());
 
         JemmyUtil.enterClickAndLeave(f.add1Engine);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
         Assert.assertEquals("loco 1 add", Train.ADD_ENGINES, t.getSecondLegOptions());
+
+        JemmyUtil.enterClickAndLeave(f.remove1Engine);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        Assert.assertEquals("loco 1 remove", Train.REMOVE_ENGINES, t.getSecondLegOptions());
 
         JemmyUtil.enterClickAndLeave(f.modify1Caboose);
 
@@ -302,7 +307,12 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
         Assert.assertEquals("loco 2 road", "UP", t.getThirdLegEngineRoad());
 
         JemmyUtil.enterClickAndLeave(f.add2Engine);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
         Assert.assertEquals("loco 2 add", Train.ADD_ENGINES, t.getThirdLegOptions());
+
+        JemmyUtil.enterClickAndLeave(f.remove2Engine);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        Assert.assertEquals("loco 2 remove", Train.REMOVE_ENGINES, t.getThirdLegOptions());
 
         JemmyUtil.enterClickAndLeave(f.modify2Caboose);
 
