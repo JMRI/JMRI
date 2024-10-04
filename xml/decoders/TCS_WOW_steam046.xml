@@ -565,27 +565,27 @@
             <label>DC Mode Chuff Volume</label>
             <tooltip>Sets the maximum chuff volume level while in DC mode. If you are using a high power speaker and an power pack with poor regulation, loud chuffs can cause a significant drop in voltage. Lowering the maximum chuff volume can alleviate this issue. </tooltip>
          </variable>
-		 <variable item="DC Mode Sound Options" CV="T2CV.4.43" default="2400" mask="VVVVVVVVVVVVVVVV">
+		 <variable item="DC Mode Sound Options 1" CV="T2CV.4.43" default="2400" mask="VVVVVVVVVVVVVVVV">
             <decVal max="65535"/>
             <label>DC Mode Motor Start Voltage</label>
             <tooltip>Minimum ADC Voltage at which the motor will start, as well as any automatic directional whistles will play</tooltip>
          </variable>
-		 <variable item="DC Mode Sound Options" CV="T2CV.4.44" default="2525" mask="VVVVVVVVVVVVVVVV">
+		 <variable item="DC Mode Sound Options 2" CV="T2CV.4.44" default="2525" mask="VVVVVVVVVVVVVVVV">
             <decVal max="65535"/>
             <label>DC Mode Automatic Bell Cutout Voltage</label>
             <tooltip>Sets the maximum voltage level at whcih the bell will ring in DC mode. This value must be greater than the DC motor start voltage to function properly.</tooltip>
          </variable>
-		 <variable item="DC Mode Sound Options" CV="T2CV.4.46" default="600" mask="VVVVVVVVVVVVVVVV">
+		 <variable item="DC Mode Sound Options 3" CV="T2CV.4.46" default="600" mask="VVVVVVVVVVVVVVVV">
             <decVal max="65535"/>
             <label>DC Mode Motor Hysteresis</label>
             <tooltip>Sets the amount of voltage the track may drop below the start voltage before the locomotive comes to a stop. This allows the locomotive to run at a slower speed than when starting out, while preventing issues on poorly regulated power packs which do not handle the current draw at startup.</tooltip>
          </variable>
-		 <variable item="DC Mode Sound Options" CV="T2CV.4.48" default="431" mask="VVVVVVVVVVVVVVVV">
+		 <variable item="DC Mode Sound Options 4" CV="T2CV.4.48" default="431" mask="VVVVVVVVVVVVVVVV">
             <decVal max="65535"/>
             <label>DC Mode Quill Sensitivity</label>
             <tooltip>Sets the voltage delta required to trigger a grade crossing quill.</tooltip>
          </variable>
-		 <variable item="DC Mode Sound Options" CV="T2CV.4.54" default="4250" mask="VVVVVVVVVVVVVVVV">
+		 <variable item="DC Mode Sound Options 5" CV="T2CV.4.54" default="4250" mask="VVVVVVVVVVVVVVVV">
             <decVal max="65535"/>
             <label>DC Mode Max Voltage</label>
             <tooltip>Sets the expected maximum ADC value the decoder can expect to see when running in Analog mode. This gives the decoder a range that can be used to determine which speed to go depending on the track voltage. By default=, this CV is set to the maximum resolution size, which means the decoder will max out at about 14.5V on the rails. This CV will not help for DC power packs with higher max outputs than 15V, but for max outputs below 15V, the speed step range can be tuned; additionally, going above the ADC range, or increasing this CV, can limit the speed step at full throttle. This often does sound nicer, and gives more of a range in the "nice chuff rate zone" where speed is limited but enjoy-ability is increased. Range of values is 0-4250. Recommended absolute minimum value is 2800. This CV MUST NOT be less than or equal to the Motor Start Voltage!</tooltip>
