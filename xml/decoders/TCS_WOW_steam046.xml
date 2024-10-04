@@ -392,13 +392,15 @@
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
             <label>Johnson Bar Feedback</label>
          </variable>
-         <variable item="Sound Group 8 Checkbox 7" CV="T2CV.4.19" default="1" mask="XVXXXXXXXXXXXXXX" toolTip="Enabling this setting will allow all 28 functions to be controlled using only the first ten buttons on the throttle">
+         <variable item="Sound Group 8 Checkbox 7" CV="T2CV.4.19" default="1" mask="XVXXXXXXXXXXXXXX">
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
             <label>Function Pagination</label>
+            <tooltip>Enabling this setting will allow all 28 functions to be controlled using only the first ten buttons on the throttle</tooltip>
          </variable>	
-         <variable item="Sound Setting 2" CV="T2CV.4.21" default="1200" mask="VVVVVVVVVVVVVVVV" toolTip="Default setting of 1200 is approximately 15 minutes">
+         <variable item="Sound Setting 2" CV="T2CV.4.21" default="1200" mask="VVVVVVVVVVVVVVVV">
             <decVal max="65535"/>
             <label>Audio Auto Shut-off Time</label>
+            <tooltip>Default setting of 1200 is approximately 15 minutes</tooltip>
          </variable>
          <variable item="Sound Setting 12" CV="T2CV.4.23" default="0" mask="VVVVVVVVVVVVVVVV">
             <decVal max="65535"/>
