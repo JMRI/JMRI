@@ -372,7 +372,7 @@
 <!ATTLIST switchListTrack text			CDATA #IMPLIED>
 <!ATTLIST holdCar text					CDATA #IMPLIED>
 
-<!ELEMENT control (backwardCompatibility | maximumStringLengths | reports | actions | printOptions)*>
+<!ELEMENT control (backwardCompatibility | maximumStringLengths | reports | actions | printOptions | speedHpt)*>
 
 <!ELEMENT backwardCompatibility EMPTY>
 <!ATTLIST backwardCompatibility saveUsingPre_2013_Format	(true | false ) "false">
@@ -417,3 +417,6 @@
 
 <!ELEMENT printOptions EMPTY>
 <!ATTLIST printOptions disablePrintIfCustom (true | false ) "false">
+
+<!ELEMENT speedHpt EMPTY>
+<!ATTLIST speedHpt MPH CDATA #IMPLIED>
