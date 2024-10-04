@@ -7,6 +7,7 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
 /**
@@ -302,7 +303,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
                         leadEngine.getDestinationName(), _train.getTrainHorsePower(leadEngine.getRouteLocation()),
                         Setup.getHorsePowerPerTon()));
         // now determine the HP needed for this train
-        int hpNeeded = 0;
+        double hpNeeded = 0;
         int hpAvailable = 0;
         Route route = _train.getRoute();
         if (route != null) {
@@ -341,10 +342,9 @@ public class TrainBuilderEngines extends TrainBuilderBase {
                 if (_train.getTrainHorsePower(rl) > hpAvailable)
                     hpAvailable = _train.getTrainHorsePower(rl);
                 int weight = rl.getTrainWeight();
-                int hpRequired = (int) ((36 * rl.getGrade() / 12) * weight);
+                double hpRequired = (Control.speedHpt * rl.getGrade() / 12) * weight;
                 if (hpRequired < Setup.getHorsePowerPerTon() * weight)
-                    hpRequired = Setup.getHorsePowerPerTon() * weight; // minimum
-                                                                       // HPT
+                    hpRequired = Setup.getHorsePowerPerTon() * weight; // min HPT
                 if (hpRequired > hpNeeded) {
                     addLine(_buildReport, SEVEN,
                             Bundle.getMessage("buildReportTrainHpNeeds", weight, _train.getNumberCarsInTrain(rl),
@@ -356,11 +356,11 @@ public class TrainBuilderEngines extends TrainBuilderBase {
         if (hpNeeded > hpAvailable) {
             addLine(_buildReport, ONE,
                     Bundle.getMessage("buildAssignedHpNotEnough", leadEngine.toString(), hpAvailable, hpNeeded));
-            getNewEngine(hpNeeded, leadEngine, model, road);
+            getNewEngine((int) hpNeeded, leadEngine, model, road);
         } else if (hpAvailable > 2 * hpNeeded) {
             addLine(_buildReport, ONE,
                     Bundle.getMessage("buildAssignedHpTooMuch", leadEngine.toString(), hpAvailable, hpNeeded));
-            getNewEngine(hpNeeded, leadEngine, model, road);
+            getNewEngine((int) hpNeeded, leadEngine, model, road);
         } else {
             log.debug("Keeping engine ({}) it meets the train's HP requirement", leadEngine.toString());
         }
@@ -428,23 +428,24 @@ public class TrainBuilderEngines extends TrainBuilderBase {
                 if (departingStaging) {
                     continue;
                 }
-                int weight = rl.getTrainWeight();
+                double weight = rl.getTrainWeight();
                 if (weight > 0) {
                     double hptMinimum = Setup.getHorsePowerPerTon();
-                    double hptGrade = (36 * rl.getGrade() / 12);
-                    int hp = _train.getTrainHorsePower(rl);
-                    int hpt = hp / weight;
+                    double hptGrade = (Control.speedHpt * rl.getGrade() / 12);
+                    double hp = _train.getTrainHorsePower(rl);
+                    double hpt = hp / weight;
                     if (hptGrade > hptMinimum) {
                         hptMinimum = hptGrade;
                     }
                     if (hptMinimum > hpt) {
                         int addHp = (int) (hptMinimum * weight - hp);
                         if (addHp > extraHpNeeded) {
-                            hpAvailable = hp;
+                            hpAvailable = (int) hp;
                             extraHpNeeded = addHp;
                             rlNeedHp = rl;
                         }
-                        addLine(_buildReport, SEVEN, Bundle.getMessage("buildAddLocosStatus", weight, hp, rl.getGrade(),
+                        addLine(_buildReport, SEVEN,
+                                Bundle.getMessage("buildAddLocosStatus", weight, hp, Control.speedHpt, rl.getGrade(),
                                 hpt, hptMinimum, rl.getName(), rl.getId()));
                         addLine(_buildReport, FIVE,
                                 Bundle.getMessage("buildTrainRequiresAddHp", addHp, rl.getName(), hptMinimum));
