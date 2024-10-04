@@ -1,12 +1,14 @@
 package jmri.jmrit.display;
 
 import java.awt.*;
+import java.awt.event.*;
 
 import javax.swing.*;
 
 import jmri.InstanceManager;
 import jmri.PermissionManager;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.*;
 
 /**
  * A JmriJFrame with permissions.
@@ -43,6 +45,7 @@ public class JmriJFrameWithPermissions extends JmriJFrame {
         if (!InstanceManager.getDefault(PermissionManager.class).isEnabled()) {
             return;
         }
+        setGlassPane(new MyGlassPane().init());
         _hiddenPane.setLayout(new GridBagLayout());  // Center innerPanel
         JPanel innerPanel = new JPanel();
         innerPanel.setLayout(new BoxLayout(innerPanel, BoxLayout.Y_AXIS));
@@ -69,11 +72,17 @@ public class JmriJFrameWithPermissions extends JmriJFrame {
         if (! InstanceManager.getDefault(PermissionManager.class)
                 .hasAtLeastPermission(EditorPermissions.EDITOR_PERMISSION,
                         EditorPermissions.EditorPermissionEnum.Read)) {
+            super.getGlassPane().setVisible(false);
             super.setContentPane(_hiddenPane);
             super.setJMenuBar(_hiddenMenuBar);
         } else {
             super.setContentPane(_contentPane);
             super.setJMenuBar(_menuBar);
+            super.getGlassPane().setVisible(
+                    ! InstanceManager.getDefault(PermissionManager.class)
+                            .hasAtLeastPermission(EditorPermissions.EDITOR_PERMISSION,
+                                    EditorPermissions.EditorPermissionEnum.ReadWrite)
+            );
         }
         // Save the bounds before pack() since pack() might resize the panel
         Rectangle bounds = getBounds();
@@ -139,6 +148,73 @@ public class JmriJFrameWithPermissions extends JmriJFrame {
      */
     public final void setKeepSize(boolean keepSize) {
         this._keepSize = keepSize;
+    }
+
+
+    /**
+     * This pane consumes all the mouse events and key events when visible.
+     * It's used when the panel is read only.
+     */
+    private static class MyGlassPane extends JPanel
+            implements JmriMouseListener, KeyListener {
+
+        private MyGlassPane init() {
+            setOpaque(false);
+            addMouseListener(JmriMouseListener.adapt(this));
+            addKeyListener(this);
+            return this;
+        }
+
+        private void showReadOnly() {
+            JmriJOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("JmriJFrameWithPermissions_PanelReadOnly"),
+                    Bundle.getMessage("JmriJFrameWithPermissions_TitleError"),
+                    JmriJOptionPane.ERROR_MESSAGE);
+        }
+
+        @Override
+        public void mouseClicked(JmriMouseEvent e) {
+            // Do nothing
+        }
+
+        @Override
+        public void mousePressed(JmriMouseEvent e) {
+            e.consume();
+            requestFocusInWindow();
+            showReadOnly();
+        }
+
+        @Override
+        public void mouseReleased(JmriMouseEvent e) {
+            // Do nothing
+        }
+
+        @Override
+        public void mouseEntered(JmriMouseEvent e) {
+            // Do nothing
+        }
+
+        @Override
+        public void mouseExited(JmriMouseEvent e) {
+            // Do nothing
+        }
+
+        @Override
+        public void keyTyped(KeyEvent e) {
+            e.consume();
+            showReadOnly();
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            // Do nothing
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            // Do nothing
+        }
+
     }
 
 }
