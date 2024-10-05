@@ -46,7 +46,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 public class LoadAndStoreTest extends LoadAndStoreTestBase {
 
     public static Stream<Arguments> data() {
-        return getFiles(new File("java/test/jmri/jmrit/logixng/configurexml"), false, true);
+        return getFiles(new File("java/test/jmri/jmrit/logixng/configurexml2"), false, true);
     }
 
     @ParameterizedTest(name = "{index}: {0} (pass={1})")
@@ -95,7 +95,7 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
 
         TransitScaffold.initTransits();
 
-//        InstanceManager.getDefault(jmri.jmrit.logixng.LogixNGPreferences.class).setInstallDebugger(false);
+        InstanceManager.getDefault(jmri.jmrit.logixng.LogixNGPreferences.class).setInstallDebugger(false);
     }
 
     @AfterEach

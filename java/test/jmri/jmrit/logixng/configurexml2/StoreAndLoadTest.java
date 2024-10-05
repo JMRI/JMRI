@@ -196,7 +196,7 @@ public class StoreAndLoadTest {
     public void setUp() {
         createLogixNGTreeScaffold = new CreateLogixNGTreeScaffold();
         createLogixNGTreeScaffold.setUp();
-//        InstanceManager.getDefault(jmri.jmrit.logixng.LogixNGPreferences.class).setInstallDebugger(false);
+        InstanceManager.getDefault(jmri.jmrit.logixng.LogixNGPreferences.class).setInstallDebugger(false);
     }
 
     @After

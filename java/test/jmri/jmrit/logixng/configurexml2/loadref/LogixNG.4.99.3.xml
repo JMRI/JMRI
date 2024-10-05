@@ -309,7 +309,6 @@
         </Socket>
       </Expressions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -374,7 +373,6 @@
         </Socket>
       </Expressions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -439,7 +437,6 @@
         </Socket>
       </Expressions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -504,7 +501,6 @@
         </Socket>
       </Expressions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -569,7 +565,6 @@
         </Socket>
       </Expressions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -634,7 +629,6 @@
         </Socket>
       </Expressions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -699,7 +693,6 @@
         </Socket>
       </Expressions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -763,7 +756,6 @@
         </Socket>
       </Expressions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -848,7 +840,6 @@
         </column>
       </table>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -933,7 +924,6 @@
         </column>
       </table>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -1001,7 +991,6 @@
         </Socket>
       </Expressions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -1478,7 +1467,6 @@
         </Socket>
       </Expressions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -1543,7 +1531,6 @@
         </Socket>
       </Expressions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>AbortExecution</errorHandling>
           <LocalVariable>
@@ -1608,7 +1595,6 @@
         </Socket>
       </Expressions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -1674,7 +1660,6 @@
         </Socket>
       </Expressions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>LogError</errorHandling>
           <LocalVariable>
@@ -1739,7 +1724,6 @@
         </Socket>
       </Expressions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>LogErrorOnce</errorHandling>
           <LocalVariable>
@@ -1804,7 +1788,6 @@
         </Socket>
       </Expressions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>ShowDialogBox</errorHandling>
           <LocalVariable>
@@ -1869,7 +1852,6 @@
         </Socket>
       </Expressions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>ThrowException</errorHandling>
           <LocalVariable>
@@ -1933,7 +1915,6 @@
       </namedBean>
       <Parameters />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -2056,7 +2037,6 @@
         </Parameter>
       </Parameters>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -2130,7 +2110,6 @@
         <listenToMemory>no</listenToMemory>
       </blockValueData>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -2206,7 +2185,6 @@
         <listenToMemory>no</listenToMemory>
       </blockValueData>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -2282,7 +2260,6 @@
         <listenToMemory>no</listenToMemory>
       </blockValueData>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -2359,7 +2336,6 @@
         <listenToMemory>no</listenToMemory>
       </blockValueData>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -2436,7 +2412,6 @@
         <listenToMemory>no</listenToMemory>
       </blockValueData>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -2513,7 +2488,6 @@
         <listenToMemory>no</listenToMemory>
       </blockValueData>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -2589,7 +2563,6 @@
         <listenToMemory>no</listenToMemory>
       </blockValueData>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -2652,7 +2625,6 @@
       <beginTime>0</beginTime>
       <endTime>0</endTime>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -2716,7 +2688,6 @@
       <beginTime>10</beginTime>
       <endTime>20</endTime>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -2785,7 +2756,6 @@
       <stateLocalVariable />
       <stateFormula />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -2859,7 +2829,6 @@
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -2933,7 +2902,6 @@
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -3007,7 +2975,6 @@
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -3081,7 +3048,6 @@
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -3150,7 +3116,6 @@
       <stateLocalVariable />
       <stateFormula />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -3223,7 +3188,6 @@
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -3296,7 +3260,6 @@
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -3369,7 +3332,6 @@
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -3442,7 +3404,6 @@
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -3511,7 +3472,6 @@
       <stateLocalVariable />
       <stateFormula />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -3585,7 +3545,6 @@
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -3659,7 +3618,6 @@
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -3733,7 +3691,6 @@
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -3807,7 +3764,6 @@
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -3888,7 +3844,6 @@
         </column>
       </table>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -3970,7 +3925,6 @@
         </column>
       </table>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -4054,7 +4008,6 @@
         </column>
       </table>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -4138,7 +4091,6 @@
         </column>
       </table>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -4234,7 +4186,6 @@
         </column>
       </table>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -4318,7 +4269,6 @@
         </column>
       </table>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -4403,7 +4353,6 @@
         </column>
       </table>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -4490,7 +4439,6 @@
         </column>
       </table>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -4578,7 +4526,6 @@
         </column>
       </table>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -4678,7 +4625,6 @@
         </column>
       </table>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -4766,7 +4712,6 @@
         </column>
       </table>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -4854,7 +4799,6 @@
         </column>
       </table>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -4923,7 +4867,6 @@
       <stateLocalVariable />
       <stateFormula />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -4997,7 +4940,6 @@
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -5071,7 +5013,6 @@
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -5145,7 +5086,6 @@
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -5219,7 +5159,6 @@
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -5281,7 +5220,6 @@
       <powerState>On</powerState>
       <ignoreUnknownState>no</ignoreUnknownState>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -5344,7 +5282,6 @@
       <powerState>Off</powerState>
       <ignoreUnknownState>no</ignoreUnknownState>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -5407,7 +5344,6 @@
       <powerState>On</powerState>
       <ignoreUnknownState>no</ignoreUnknownState>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -5470,7 +5406,6 @@
       <powerState>OnOrOff</powerState>
       <ignoreUnknownState>no</ignoreUnknownState>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -5532,7 +5467,6 @@
       <is_isNot>Is</is_isNot>
       <pointsTo>LogixNGTable</pointsTo>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -5595,7 +5529,6 @@
       <is_isNot>IsNot</is_isNot>
       <pointsTo>Light</pointsTo>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -5669,7 +5602,6 @@
         <language>python</language>
       </scriptLanguage>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -5744,7 +5676,6 @@
         <language>python</language>
       </scriptLanguage>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -5813,7 +5744,6 @@
         <listenToMemory>no</listenToMemory>
       </state>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -5890,7 +5820,6 @@
         <formula>"IT"+index2</formula>
       </state>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -5967,7 +5896,6 @@
         <formula>"IT"+index2</formula>
       </state>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -6044,7 +5972,6 @@
         <formula>"IT"+index2</formula>
       </state>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -6121,7 +6048,6 @@
         <formula>"IT"+index2</formula>
       </state>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -6198,7 +6124,6 @@
         <listenToMemory>no</listenToMemory>
       </exampleNamedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -6281,7 +6206,6 @@
         <listenToMemory>no</listenToMemory>
       </exampleNamedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -6363,7 +6287,6 @@
         <listenToMemory>no</listenToMemory>
       </exampleNamedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -6445,7 +6368,6 @@
         <listenToMemory>no</listenToMemory>
       </exampleNamedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -6527,7 +6449,6 @@
         <listenToMemory>no</listenToMemory>
       </exampleNamedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -6604,7 +6525,6 @@
         <listenToMemory>no</listenToMemory>
       </exampleNamedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -6687,7 +6607,6 @@
         <listenToMemory>no</listenToMemory>
       </exampleNamedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -6769,7 +6688,6 @@
         <listenToMemory>no</listenToMemory>
       </exampleNamedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -6851,7 +6769,6 @@
         <listenToMemory>no</listenToMemory>
       </exampleNamedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -6933,7 +6850,6 @@
         <listenToMemory>no</listenToMemory>
       </exampleNamedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -7002,7 +6918,6 @@
       <stateLocalVariable />
       <stateFormula />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -7076,7 +6991,6 @@
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -7150,7 +7064,6 @@
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -7224,7 +7137,6 @@
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -7298,7 +7210,6 @@
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -7367,7 +7278,6 @@
       <stateLocalVariable />
       <stateFormula />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -7441,7 +7351,6 @@
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -7515,7 +7424,6 @@
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -7589,7 +7497,6 @@
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -7663,7 +7570,6 @@
       <stateLocalVariable>index2</stateLocalVariable>
       <stateFormula>"IT"+index2</stateFormula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -7722,7 +7628,6 @@
     <False class="jmri.jmrit.logixng.expressions.configurexml.FalseXml">
       <systemName>IQDE:AUTO:0095</systemName>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -7782,7 +7687,6 @@
       <systemName>IQDE:AUTO:0096</systemName>
       <comment>A comment</comment>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -7847,7 +7751,6 @@
       </Expressions>
       <formula />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -7913,7 +7816,6 @@
       </Expressions>
       <formula>n + 1</formula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -7978,7 +7880,6 @@
         <socketName>w7xyia9y2f</socketName>
       </HoldSocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -8045,7 +7946,6 @@
         <socketName>g12apvck3y</socketName>
       </HoldSocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -8108,7 +8008,6 @@
         <listenToMemory>no</listenToMemory>
       </namedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -8173,7 +8072,6 @@
         <listenToMemory>no</listenToMemory>
       </namedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -8238,7 +8136,6 @@
       <format />
       <DataList />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -8309,7 +8206,6 @@
         </Data>
       </DataList>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -8380,7 +8276,6 @@
         </Data>
       </DataList>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -8451,7 +8346,6 @@
         </Data>
       </DataList>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -8534,7 +8428,6 @@
         </Data>
       </DataList>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -8596,7 +8489,6 @@
         <socketName>pz8tvcfxbu</socketName>
       </Socket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -8659,7 +8551,6 @@
         <socketName>wdluapqp4h</socketName>
       </Socket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -8723,7 +8614,6 @@
         </Socket>
       </Expressions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -8788,7 +8678,6 @@
         </Socket>
       </Expressions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -8850,7 +8739,6 @@
         <socketName>jhoyxdnefy</socketName>
       </Socket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -8913,7 +8801,6 @@
         <socketName>ty7o8yzahv</socketName>
       </Socket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -8972,7 +8859,6 @@
     <True class="jmri.jmrit.logixng.expressions.configurexml.TrueXml">
       <systemName>IQDE:AUTO:0114</systemName>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -9032,7 +8918,6 @@
       <systemName>IQDE:AUTO:0115</systemName>
       <comment>A comment</comment>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -9098,7 +8983,6 @@
         </Socket>
       </Actions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
         </AbstractMaleSocket>
@@ -9916,7 +9800,6 @@
         </Socket>
       </Actions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -9984,7 +9867,6 @@
         <listenToMemory>no</listenToMemory>
       </state>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -10059,7 +9941,6 @@
         <formula>"IT"+index2</formula>
       </state>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -10134,7 +10015,6 @@
         <formula>"IT"+index2</formula>
       </state>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -10209,7 +10089,6 @@
         <formula>"IT"+index2</formula>
       </state>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -10284,7 +10163,6 @@
         <formula>"IT"+index2</formula>
       </state>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -10357,7 +10235,6 @@
         <listenToMemory>no</listenToMemory>
       </blockValueData>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="yes" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -10430,7 +10307,6 @@
         <listenToMemory>no</listenToMemory>
       </blockValueData>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -10503,7 +10379,6 @@
         <listenToMemory>no</listenToMemory>
       </blockValueData>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="yes" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>ThrowException</errorHandling>
           <LocalVariable>
@@ -10578,7 +10453,6 @@
         <listenToMemory>no</listenToMemory>
       </blockValueData>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>AbortExecution</errorHandling>
           <LocalVariable>
@@ -10653,7 +10527,6 @@
         <listenToMemory>no</listenToMemory>
       </blockValueData>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>AbortExecution</errorHandling>
           <LocalVariable>
@@ -10729,7 +10602,6 @@
         <listenToMemory>no</listenToMemory>
       </blockValueData>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>AbortExecution</errorHandling>
           <LocalVariable>
@@ -10805,7 +10677,6 @@
         <listenToMemory>no</listenToMemory>
       </blockValueData>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>AbortExecution</errorHandling>
           <LocalVariable>
@@ -10881,7 +10752,6 @@
         <listenToMemory>no</listenToMemory>
       </blockValueData>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>AbortExecution</errorHandling>
           <LocalVariable>
@@ -10956,7 +10826,6 @@
         <listenToMemory>no</listenToMemory>
       </blockValueData>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>AbortExecution</errorHandling>
           <LocalVariable>
@@ -11025,7 +10894,6 @@
         <listenToMemory>no</listenToMemory>
       </time>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -11095,7 +10963,6 @@
         <listenToMemory>no</listenToMemory>
       </time>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -11165,7 +11032,6 @@
         <listenToMemory>no</listenToMemory>
       </time>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -11235,7 +11101,6 @@
         <listenToMemory>no</listenToMemory>
       </time>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -11307,7 +11172,6 @@
       <dataLocalVariable />
       <dataFormula />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -11379,7 +11243,6 @@
       <dataLocalVariable />
       <dataFormula />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -11459,7 +11322,6 @@
       <dataLocalVariable />
       <dataFormula />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>AbortExecution</errorHandling>
           <LocalVariable>
@@ -11539,7 +11401,6 @@
       <dataLocalVariable />
       <dataFormula />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <LocalVariable>
@@ -11619,7 +11480,6 @@
       <dataLocalVariable />
       <dataFormula />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogErrorOnce</errorHandling>
           <LocalVariable>
@@ -11699,7 +11559,6 @@
       <dataLocalVariable />
       <dataFormula />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>ShowDialogBox</errorHandling>
           <LocalVariable>
@@ -11772,7 +11631,6 @@
       <dataLocalVariable />
       <dataFormula />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -11845,7 +11703,6 @@
       <dataLocalVariable />
       <dataFormula />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -11918,7 +11775,6 @@
       <dataLocalVariable />
       <dataFormula />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -11990,7 +11846,6 @@
       <dataLocalVariable />
       <dataFormula />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>ThrowException</errorHandling>
           <LocalVariable>
@@ -12056,7 +11911,6 @@
         <socketName>lwch5r5x9z</socketName>
       </IntensitySocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -12122,7 +11976,6 @@
         <socketName>a9nebpam2x</socketName>
       </IntensitySocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -12193,7 +12046,6 @@
         <socketName>a7ojx9h6td</socketName>
       </IntensitySocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>AbortExecution</errorHandling>
           <LocalVariable>
@@ -12264,7 +12116,6 @@
         <socketName>qgknx3y54l</socketName>
       </IntensitySocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <LocalVariable>
@@ -12335,7 +12186,6 @@
         <socketName>rsqu1tmpdh</socketName>
       </IntensitySocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogErrorOnce</errorHandling>
           <LocalVariable>
@@ -12406,7 +12256,6 @@
         <socketName>fpi5hehznd</socketName>
       </IntensitySocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>ShowDialogBox</errorHandling>
           <LocalVariable>
@@ -12469,7 +12318,6 @@
       <localVariableEvent />
       <localVariableNewValue />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -12539,7 +12387,6 @@
       <localVariableEvent />
       <localVariableNewValue />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -12609,7 +12456,6 @@
       <localVariableEvent>localVariableEvent</localVariableEvent>
       <localVariableNewValue>localVariableNewValue</localVariableNewValue>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -12679,7 +12525,6 @@
       <localVariableEvent />
       <localVariableNewValue />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -12749,7 +12594,6 @@
       <localVariableEvent />
       <localVariableNewValue />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -12819,7 +12663,6 @@
       <localVariableEvent />
       <localVariableNewValue />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -12889,7 +12732,6 @@
       <localVariableEvent />
       <localVariableNewValue />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -12959,7 +12801,6 @@
       <localVariableEvent />
       <localVariableNewValue />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -13029,7 +12870,6 @@
       <localVariableEvent />
       <localVariableNewValue />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -13098,7 +12938,6 @@
       <localVariableEvent />
       <localVariableNewValue />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -13169,7 +13008,6 @@
       <localVariableEvent />
       <localVariableNewValue />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -13240,7 +13078,6 @@
       <localVariableEvent />
       <localVariableNewValue />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -13311,7 +13148,6 @@
       <localVariableEvent />
       <localVariableNewValue />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -13382,7 +13218,6 @@
       <localVariableEvent />
       <localVariableNewValue />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -13453,7 +13288,6 @@
       <localVariableEvent />
       <localVariableNewValue />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -13544,7 +13378,6 @@
         </column>
       </table>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -13638,7 +13471,6 @@
         </column>
       </table>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -13734,7 +13566,6 @@
         </column>
       </table>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -13830,7 +13661,6 @@
         </column>
       </table>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -13926,7 +13756,6 @@
         </column>
       </table>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -14020,7 +13849,6 @@
         </column>
       </table>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -14128,7 +13956,6 @@
         </column>
       </table>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -14222,7 +14049,6 @@
         </column>
       </table>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -14316,7 +14142,6 @@
         </column>
       </table>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -14398,7 +14223,6 @@
         </column>
       </table>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -14486,7 +14310,6 @@
         </column>
       </table>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -14574,7 +14397,6 @@
         </column>
       </table>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -14662,7 +14484,6 @@
         </column>
       </table>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -14762,7 +14583,6 @@
         </column>
       </table>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -14850,7 +14670,6 @@
         </column>
       </table>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -14938,7 +14757,6 @@
         </column>
       </table>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -15015,7 +14833,6 @@
       <dataFormula />
       <oblockValue />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -15092,7 +14909,6 @@
       <dataFormula />
       <oblockValue />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -15169,7 +14985,6 @@
       <dataFormula />
       <oblockValue />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>ThrowException</errorHandling>
           <LocalVariable>
@@ -15248,7 +15063,6 @@
       <dataFormula />
       <oblockValue>ABC</oblockValue>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>AbortExecution</errorHandling>
           <LocalVariable>
@@ -15327,7 +15141,6 @@
       <dataFormula />
       <oblockValue />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>AbortExecution</errorHandling>
           <LocalVariable>
@@ -15407,7 +15220,6 @@
       <dataFormula />
       <oblockValue />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>AbortExecution</errorHandling>
           <LocalVariable>
@@ -15487,7 +15299,6 @@
       <dataFormula />
       <oblockValue />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogError</errorHandling>
           <LocalVariable>
@@ -15567,7 +15378,6 @@
       <dataFormula />
       <oblockValue />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>LogErrorOnce</errorHandling>
           <LocalVariable>
@@ -15646,7 +15456,6 @@
       <dataFormula />
       <oblockValue />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>ShowDialogBox</errorHandling>
           <LocalVariable>
@@ -15710,7 +15519,6 @@
         <listenToMemory>no</listenToMemory>
       </state>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -15775,7 +15583,6 @@
         <listenToMemory>no</listenToMemory>
       </state>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -15840,7 +15647,6 @@
         <listenToMemory>no</listenToMemory>
       </state>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -15912,7 +15718,6 @@
         <language>python</language>
       </scriptLanguage>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -15986,7 +15791,6 @@
         <language>python</language>
       </scriptLanguage>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -16059,7 +15863,6 @@
         <language>python</language>
       </scriptLanguage>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -16133,7 +15936,6 @@
         <language>python</language>
       </scriptLanguage>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -16207,7 +16009,6 @@
         <language>python</language>
       </scriptLanguage>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -16275,7 +16076,6 @@
         <listenToMemory>no</listenToMemory>
       </state>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -16351,7 +16151,6 @@
         <formula>"IT"+index2</formula>
       </state>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -16427,7 +16226,6 @@
         <formula>"IT"+index2</formula>
       </state>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -16503,7 +16301,6 @@
         <formula>"IT"+index2</formula>
       </state>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -16579,7 +16376,6 @@
         <formula>"IT"+index2</formula>
       </state>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -16648,7 +16444,6 @@
         <listenToMemory>no</listenToMemory>
       </state>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -16725,7 +16520,6 @@
         <listenToMemory>no</listenToMemory>
       </exampleNamedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -16808,7 +16602,6 @@
         <listenToMemory>no</listenToMemory>
       </exampleNamedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -16890,7 +16683,6 @@
         <listenToMemory>no</listenToMemory>
       </exampleNamedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -16972,7 +16764,6 @@
         <listenToMemory>no</listenToMemory>
       </exampleNamedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -17054,7 +16845,6 @@
         <listenToMemory>no</listenToMemory>
       </exampleNamedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -17131,7 +16921,6 @@
         <listenToMemory>no</listenToMemory>
       </exampleNamedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -17214,7 +17003,6 @@
         <listenToMemory>no</listenToMemory>
       </exampleNamedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -17296,7 +17084,6 @@
         <listenToMemory>no</listenToMemory>
       </exampleNamedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -17378,7 +17165,6 @@
         <listenToMemory>no</listenToMemory>
       </exampleNamedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -17460,7 +17246,6 @@
         <listenToMemory>no</listenToMemory>
       </exampleNamedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -17529,7 +17314,6 @@
       <soundLocalVariable />
       <soundFormula />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -17603,7 +17387,6 @@
       <soundLocalVariable>myOtherVar</soundLocalVariable>
       <soundFormula>c+d</soundFormula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -17677,7 +17460,6 @@
       <soundLocalVariable>myOtherVar</soundLocalVariable>
       <soundFormula>c+d</soundFormula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -17751,7 +17533,6 @@
       <soundLocalVariable>myOtherVar</soundLocalVariable>
       <soundFormula>c+d</soundFormula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -17825,7 +17606,6 @@
       <soundLocalVariable>myOtherVar</soundLocalVariable>
       <soundFormula>c+d</soundFormula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -17899,7 +17679,6 @@
         <socketName>lu8jtjsjw8</socketName>
       </LocoFunctionOnOffSocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -17974,7 +17753,6 @@
         <socketName>sijsqsb3yh</socketName>
       </LocoFunctionOnOffSocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -18051,7 +17829,6 @@
       <delayByLocalVariables>no</delayByLocalVariables>
       <delayLocalVariablePrefix />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -18129,7 +17906,6 @@
       <delayByLocalVariables>no</delayByLocalVariables>
       <delayLocalVariablePrefix />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -18215,7 +17991,6 @@
       <delayByLocalVariables>no</delayByLocalVariables>
       <delayLocalVariablePrefix />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -18280,7 +18055,6 @@
         </Socket>
       </Actions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -18345,7 +18119,6 @@
         </Socket>
       </Actions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -18413,7 +18186,6 @@
         <listenToMemory>no</listenToMemory>
       </state>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -18489,7 +18261,6 @@
         <formula>"IT"+index2</formula>
       </state>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -18565,7 +18336,6 @@
         <formula>"IT"+index2</formula>
       </state>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -18641,7 +18411,6 @@
         <formula>"IT"+index2</formula>
       </state>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -18717,7 +18486,6 @@
         <formula>"IT"+index2</formula>
       </state>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -18786,7 +18554,6 @@
         <listenToMemory>no</listenToMemory>
       </state>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -18864,7 +18631,6 @@
       <trainIdName />
       <controlAutoTrain>Halt</controlAutoTrain>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -18942,7 +18708,6 @@
       <trainIdName />
       <controlAutoTrain>Halt</controlAutoTrain>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -19020,7 +18785,6 @@
       <trainIdName />
       <controlAutoTrain>Halt</controlAutoTrain>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>ThrowException</errorHandling>
           <LocalVariable>
@@ -19100,7 +18864,6 @@
       <trainIdName>ABC</trainIdName>
       <controlAutoTrain>Halt</controlAutoTrain>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>AbortExecution</errorHandling>
           <LocalVariable>
@@ -19180,7 +18943,6 @@
       <trainIdName />
       <controlAutoTrain>Resume</controlAutoTrain>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>AbortExecution</errorHandling>
           <LocalVariable>
@@ -19260,7 +19022,6 @@
       <trainIdName />
       <controlAutoTrain>Halt</controlAutoTrain>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>AbortExecution</errorHandling>
           <LocalVariable>
@@ -19341,7 +19102,6 @@
       <trainIdName />
       <controlAutoTrain>Halt</controlAutoTrain>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>AbortExecution</errorHandling>
           <LocalVariable>
@@ -19422,7 +19182,6 @@
       <trainIdName />
       <controlAutoTrain>Halt</controlAutoTrain>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>AbortExecution</errorHandling>
           <LocalVariable>
@@ -19503,7 +19262,6 @@
       <trainIdName />
       <controlAutoTrain>Halt</controlAutoTrain>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>AbortExecution</errorHandling>
           <LocalVariable>
@@ -19583,7 +19341,6 @@
       <trainIdName />
       <controlAutoTrain>Halt</controlAutoTrain>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>AbortExecution</errorHandling>
           <LocalVariable>
@@ -19647,7 +19404,6 @@
       </namedBean>
       <Parameters />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -19770,7 +19526,6 @@
         </Parameter>
       </Parameters>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -19835,7 +19590,6 @@
       </Expressions>
       <formula />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -19901,7 +19655,6 @@
       </Expressions>
       <formula>n + 1</formula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -19966,7 +19719,6 @@
         <socketName>vfwweob5m5</socketName>
       </ActionSocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -20032,7 +19784,6 @@
         <socketName>hl13rri672</socketName>
       </ActionSocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -20097,7 +19848,6 @@
         <socketName>ic96q2hbud</socketName>
       </ActionSocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -20163,7 +19913,6 @@
         <socketName>md4vda81d6</socketName>
       </ActionSocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -20231,7 +19980,6 @@
         <listenToMemory>no</listenToMemory>
       </operation>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -20307,7 +20055,6 @@
         <formula>"IT"+index2</formula>
       </operation>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -20383,7 +20130,6 @@
         <formula>"IT"+index2</formula>
       </operation>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -20459,7 +20205,6 @@
         <formula>"IT"+index2</formula>
       </operation>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -20535,7 +20280,6 @@
         <formula>"IT"+index2</formula>
       </operation>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -20603,7 +20347,6 @@
         <listenToMemory>no</listenToMemory>
       </operation>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -20678,7 +20421,6 @@
         <formula>"IT"+index2</formula>
       </operation>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -20753,7 +20495,6 @@
         <formula>"IT"+index2</formula>
       </operation>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -20828,7 +20569,6 @@
         <formula>"IT"+index2</formula>
       </operation>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -20903,7 +20643,6 @@
         <formula>"IT"+index2</formula>
       </operation>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -20972,7 +20711,6 @@
       <unit>MilliSeconds</unit>
       <resetIfAlreadyStarted>no</resetIfAlreadyStarted>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -21042,7 +20780,6 @@
       <unit>MilliSeconds</unit>
       <resetIfAlreadyStarted>yes</resetIfAlreadyStarted>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -21113,7 +20850,6 @@
       <resetIfAlreadyStarted>yes</resetIfAlreadyStarted>
       <useIndividualTimers>yes</useIndividualTimers>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -21183,7 +20919,6 @@
       <unit>MilliSeconds</unit>
       <resetIfAlreadyStarted>yes</resetIfAlreadyStarted>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -21253,7 +20988,6 @@
       <unit>MilliSeconds</unit>
       <resetIfAlreadyStarted>yes</resetIfAlreadyStarted>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -21324,7 +21058,6 @@
         <socketName>yi5j36gpi5</socketName>
       </DoSocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -21396,7 +21129,6 @@
         <socketName>uerxutuxfr</socketName>
       </DoSocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -21468,7 +21200,6 @@
         </Socket>
       </Actions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -21541,7 +21272,6 @@
         </Socket>
       </Actions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -21614,7 +21344,6 @@
         </Socket>
       </Actions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -21679,7 +21408,6 @@
         <socketName>gm282fpv6v</socketName>
       </ActionSocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -21746,7 +21474,6 @@
         <systemName>IQDB:AUTO:0001</systemName>
       </ActionSocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -21810,7 +21537,6 @@
       <format />
       <DataList />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -21880,7 +21606,6 @@
         </Data>
       </DataList>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -21950,7 +21675,6 @@
         </Data>
       </DataList>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -22020,7 +21744,6 @@
         </Data>
       </DataList>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -22102,7 +21825,6 @@
         </Data>
       </DataList>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -22163,7 +21885,6 @@
       <includeGlobalVariables>yes</includeGlobalVariables>
       <expandArraysAndMaps>no</expandArraysAndMaps>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -22225,7 +21946,6 @@
       <includeGlobalVariables>yes</includeGlobalVariables>
       <expandArraysAndMaps>no</expandArraysAndMaps>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -22289,7 +22009,6 @@
         </Socket>
       </Actions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -22354,7 +22073,6 @@
         </Socket>
       </Actions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -22434,7 +22152,6 @@
       <startImmediately>yes</startImmediately>
       <runContinuously>no</runContinuously>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -22528,7 +22245,6 @@
       <startImmediately>no</startImmediately>
       <runContinuously>yes</runContinuously>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -22593,7 +22309,6 @@
         </Socket>
       </Actions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -22658,7 +22373,6 @@
         </Socket>
       </Actions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -22733,7 +22447,6 @@
       <multiLine>no</multiLine>
       <DataList />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -22816,7 +22529,6 @@
         </Data>
       </DataList>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -22877,7 +22589,6 @@
       <includeGlobalVariables>yes</includeGlobalVariables>
       <expandArraysAndMaps>no</expandArraysAndMaps>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -22960,7 +22671,6 @@
         </Data>
       </DataList>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -23041,7 +22751,6 @@
         </Data>
       </DataList>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -23134,7 +22843,6 @@
         </Data>
       </DataList>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -23198,7 +22906,6 @@
         <listenToMemory>no</listenToMemory>
       </shutdownOperation>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -23263,7 +22970,6 @@
         <listenToMemory>no</listenToMemory>
       </shutdownOperation>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -23328,7 +23034,6 @@
         <listenToMemory>no</listenToMemory>
       </shutdownOperation>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -23393,7 +23098,6 @@
         <listenToMemory>no</listenToMemory>
       </shutdownOperation>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -23458,7 +23162,6 @@
         <listenToMemory>no</listenToMemory>
       </shutdownOperation>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -23531,7 +23234,6 @@
         <socketName>f2yy1htw11</socketName>
       </Socket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -23607,7 +23309,6 @@
         <systemName>IQDA:AUTO:0189</systemName>
       </Socket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -23671,7 +23372,6 @@
         </Socket>
       </Actions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -23750,7 +23450,6 @@
         <systemName>IQDA:AUTO:0191</systemName>
       </Socket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -23814,7 +23513,6 @@
         </Socket>
       </Actions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -23894,7 +23592,6 @@
         <systemName>IQDE:AUTO:0010</systemName>
       </LocoFunctionOnOffSocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -23969,7 +23666,6 @@
         <listenToMemory>no</listenToMemory>
       </timerUnit>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -24045,7 +23741,6 @@
         <listenToMemory>no</listenToMemory>
       </timerUnit>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -24122,7 +23817,6 @@
         <listenToMemory>no</listenToMemory>
       </timerUnit>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -24199,7 +23893,6 @@
         <listenToMemory>no</listenToMemory>
       </timerUnit>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -24276,7 +23969,6 @@
         <listenToMemory>no</listenToMemory>
       </timerUnit>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -24344,7 +24036,6 @@
         <listenToMemory>no</listenToMemory>
       </operation>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -24413,7 +24104,6 @@
         <listenToMemory>no</listenToMemory>
       </operation>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -24487,7 +24177,6 @@
         </Socket>
       </Actions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -24554,7 +24243,6 @@
         <systemName>IQAA:AUTO:0001</systemName>
       </ActionSocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -24621,7 +24309,6 @@
         <systemName>IQAA:AUTO:0002</systemName>
       </ActionSocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -24688,7 +24375,6 @@
         <systemName>IQAA:AUTO:0003</systemName>
       </ActionSocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -24755,7 +24441,6 @@
         <systemName>IQAA:AUTO:0004</systemName>
       </ActionSocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -24821,7 +24506,6 @@
         <socketName>nengzsesfy</socketName>
       </ActionSocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -24887,7 +24571,6 @@
         <socketName>do9su42izz</socketName>
       </ActionSocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -24953,7 +24636,6 @@
         <socketName>at5i7ym4cr</socketName>
       </ActionSocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -25019,7 +24701,6 @@
         <socketName>xxkctl2jgd</socketName>
       </ActionSocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -25086,7 +24767,6 @@
         <systemName>IQSA:AUTO:0001</systemName>
       </ActionSocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -25153,7 +24833,6 @@
         <systemName>IQSA:AUTO:0002</systemName>
       </ActionSocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -25220,7 +24899,6 @@
         <systemName>IQSA:AUTO:0003</systemName>
       </ActionSocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -25287,7 +24965,6 @@
         <systemName>IQSA:AUTO:0004</systemName>
       </ActionSocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -25353,7 +25030,6 @@
         <socketName>j4q6jw3to8</socketName>
       </ActionSocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -25419,7 +25095,6 @@
         <socketName>ja6wjipcjv</socketName>
       </ActionSocket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -25497,7 +25172,6 @@
         </Socket>
       </Actions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalBooleanActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalBooleanActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -25562,7 +25236,6 @@
         </Socket>
       </Actions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalBooleanActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalBooleanActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -25624,7 +25297,6 @@
         <socketName>gi7k5cdexk</socketName>
       </Socket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalBooleanActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalBooleanActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -25687,7 +25359,6 @@
         <socketName>gc1ytd8lme</socketName>
       </Socket>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalBooleanActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalBooleanActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -25752,7 +25423,6 @@
         <listenToMemory>no</listenToMemory>
       </namedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleAnalogExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleAnalogExpressionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -25815,7 +25485,6 @@
         <listenToMemory>no</listenToMemory>
       </namedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleAnalogExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleAnalogExpressionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -25878,7 +25547,6 @@
         <listenToMemory>no</listenToMemory>
       </namedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleAnalogExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleAnalogExpressionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -25938,7 +25606,6 @@
       <systemName>IQAE:AUTO:0004</systemName>
       <value>0.0</value>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleAnalogExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleAnalogExpressionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -25999,7 +25666,6 @@
       <comment>A comment</comment>
       <value>12.44</value>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleAnalogExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleAnalogExpressionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -26062,7 +25728,6 @@
         <listenToMemory>no</listenToMemory>
       </namedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleAnalogExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleAnalogExpressionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -26127,7 +25792,6 @@
         <listenToMemory>no</listenToMemory>
       </namedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleAnalogExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleAnalogExpressionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -26192,7 +25856,6 @@
       </Expressions>
       <formula />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleAnalogExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleAnalogExpressionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -26258,7 +25921,6 @@
       </Expressions>
       <formula>sin(a)*2 + 14</formula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleAnalogExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleAnalogExpressionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -26318,7 +25980,6 @@
       <systemName>IQAE:AUTO:0010</systemName>
       <type>SystemClock</type>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleAnalogExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleAnalogExpressionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -26379,7 +26040,6 @@
       <comment>A comment</comment>
       <type>FastClock</type>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleAnalogExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleAnalogExpressionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -26444,7 +26104,6 @@
         <listenToMemory>no</listenToMemory>
       </namedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleAnalogActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleAnalogActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -26509,7 +26168,6 @@
         <listenToMemory>no</listenToMemory>
       </namedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleAnalogActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleAnalogActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -26573,7 +26231,6 @@
         </Socket>
       </Actions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleAnalogActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleAnalogActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -26638,7 +26295,6 @@
         </Socket>
       </Actions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleAnalogActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleAnalogActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -26700,7 +26356,6 @@
       <systemName>IQSE:AUTO:0001</systemName>
       <value />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleStringExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleStringExpressionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -26761,7 +26416,6 @@
       <comment>A comment</comment>
       <value>Some string</value>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleStringExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleStringExpressionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -26824,7 +26478,6 @@
         <listenToMemory>no</listenToMemory>
       </namedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleStringExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleStringExpressionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -26889,7 +26542,6 @@
         <listenToMemory>no</listenToMemory>
       </namedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleStringExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleStringExpressionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -26954,7 +26606,6 @@
       </Expressions>
       <formula />
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleStringExpressionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleStringExpressionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -27020,7 +26671,6 @@
       </Expressions>
       <formula>sin(a)*2 + 14</formula>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleStringExpressionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleStringExpressionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -27085,7 +26735,6 @@
         <listenToMemory>no</listenToMemory>
       </namedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleStringActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleStringActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -27150,7 +26799,6 @@
         <listenToMemory>no</listenToMemory>
       </namedBean>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleStringActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleStringActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -27214,7 +26862,6 @@
         </Socket>
       </Actions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleStringActionSocketXml" />
         <AbstractMaleSocket enabled="no" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleStringActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
@@ -27279,7 +26926,6 @@
         </Socket>
       </Actions>
       <MaleSocket>
-        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleStringActionSocketXml" />
         <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleStringActionSocketXml">
           <errorHandling>Default</errorHandling>
           <LocalVariable>
