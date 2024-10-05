@@ -13823,7 +13823,7 @@ public class TrainBuilderTest extends OperationsTestCase {
     @Test
     public void testAutoHPT() {
         Assert.assertEquals("check default", 6, Setup.getMaxNumberEngines());
-        Assert.assertEquals("confirm default of 1 HPT", 1, Setup.getHorsePowerPerTon());
+        Assert.assertEquals("confirm default of 1 HPT", 1, Setup.getHorsePowerPerTon(), 0.1);
 
         // create 5 locations with tracks, Route =
         // Acton-Boston-Chelmsford-Danvers-Essex
@@ -14031,7 +14031,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("check default", 6, Setup.getMaxNumberEngines());
         String carTypes[] = Bundle.getMessage("carTypeNames").split(",");
 
-        Assert.assertEquals("confirm default of 1 HPT", 1, Setup.getHorsePowerPerTon());
+        Assert.assertEquals("confirm default of 1 HPT", 1, Setup.getHorsePowerPerTon(), 0.1);
 
         // create 5 locations with tracks, Route =
         // Acton-Boston-Chelmsford-Danvers-Essex
@@ -14180,7 +14180,7 @@ public class TrainBuilderTest extends OperationsTestCase {
     @Test
     public void testAutoHptEngineChanges() {
 
-        Assert.assertEquals("confirm default of 1 HPT", 1, Setup.getHorsePowerPerTon());
+        Assert.assertEquals("confirm default of 1 HPT", 1, Setup.getHorsePowerPerTon(), 0.1);
 
         // create 5 locations with tracks, Route =
         // Acton-Boston-Chelmsford-Danvers-Essex
@@ -14342,7 +14342,7 @@ public class TrainBuilderTest extends OperationsTestCase {
     @Test
     public void testAutoHptConsistChanges() {
 
-        Assert.assertEquals("confirm default of 1 HPT", 1, Setup.getHorsePowerPerTon());
+        Assert.assertEquals("confirm default of 1 HPT", 1, Setup.getHorsePowerPerTon(), 0.1);
 
         // create 5 locations with tracks, Route =
         // Acton-Boston-Chelmsford-Danvers-Essex
@@ -14521,7 +14521,7 @@ public class TrainBuilderTest extends OperationsTestCase {
      */
     @Test
     public void testAutoHptConsistSwap() {
-        Assert.assertEquals("confirm default of 1 HPT", 1, Setup.getHorsePowerPerTon());
+        Assert.assertEquals("confirm default of 1 HPT", 1, Setup.getHorsePowerPerTon(), 0.1);
 
         // create 5 locations with tracks, Route =
         // Acton-Boston-Chelmsford-Danvers-Essex

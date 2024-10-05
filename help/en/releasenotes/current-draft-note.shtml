@@ -457,8 +457,9 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>Changed "Wait" to travel time in the route edit window</li>
-            <li>New feature, you can now add or remove locomotives in a train's route</li>
+            <li>Changed "Wait" to travel time in the route edit window.</li>
+            <li>New feature, you can now add or remove locomotives in a train's route.</li>
+            <li>HPT (Horse Power per Ton) in the Setting window can now accept decimal numbers.</li>
         </ul>
 
    <h3>Panel Editor</h3>

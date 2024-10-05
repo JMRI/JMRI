@@ -198,7 +198,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private int traindir = EAST + WEST + NORTH + SOUTH;
     private int maxTrainLength = 1000; // maximum train length
     private int maxEngineSize = 6; // maximum number of engines that can be assigned to a train
-    private int horsePowerPerTon = 1; // Horsepower per ton
+    private double horsePowerPerTon = 1; // Horsepower per ton
     private int carMoves = 5; // default number of moves when creating a route
     private String carTypes = DESCRIPTIVE;
     private String ownerName = NONE;
@@ -675,11 +675,11 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         return getDefault().maxEngineSize;
     }
 
-    public static void setHorsePowerPerTon(int value) {
+    public static void setHorsePowerPerTon(double value) {
         getDefault().horsePowerPerTon = value;
     }
 
-    public static int getHorsePowerPerTon() {
+    public static double getHorsePowerPerTon() {
         return getDefault().horsePowerPerTon;
     }
 
@@ -1883,7 +1883,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         values.setAttribute(Xml.TRAIN_DIRECTION, Integer.toString(getTrainDirection()));
         values.setAttribute(Xml.TRAIN_LENGTH, Integer.toString(getMaxTrainLength()));
         values.setAttribute(Xml.MAX_ENGINES, Integer.toString(getMaxNumberEngines()));
-        values.setAttribute(Xml.HPT, Integer.toString(getHorsePowerPerTon()));
+        values.setAttribute(Xml.HPT, Double.toString(getHorsePowerPerTon()));
         values.setAttribute(Xml.SCALE, Integer.toString(getScale()));
         values.setAttribute(Xml.CAR_TYPES, getCarTypes());
         values.setAttribute(Xml.SWITCH_TIME, Integer.toString(getSwitchTime()));
@@ -2156,7 +2156,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 String value = a.getValue();
                 log.debug("HPT: {}", value);
                 try {
-                    setHorsePowerPerTon(Integer.parseInt(value));
+                    setHorsePowerPerTon(Double.parseDouble(value));
                 } catch (NumberFormatException ee) {
                     log.error("Train HPT ({}) isn't a valid number", a.getValue());
                 }
