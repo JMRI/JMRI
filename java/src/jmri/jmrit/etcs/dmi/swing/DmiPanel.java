@@ -205,7 +205,7 @@ public class DmiPanel extends JPanel {
      * Set the speed value to be displayed by the dial and in centre of dial.
      * @param speed no unit specified.
      */
-    public void setActualSpeed( int speed ) {
+    public void setActualSpeed( float speed ) {
         ThreadingUtil.runOnGUI( () -> panelB.setActualSpeed(speed) );
     }
 
@@ -364,7 +364,7 @@ public class DmiPanel extends JPanel {
      * A negative value hides the icon.
      * @param spd the Limited Supervision Speed.
      */
-    public void setLimitedSupervisionSpeed(int spd) {
+    public void setLimitedSupervisionSpeed(float spd) {
         ThreadingUtil.runOnGUI( () -> panelA.setLimitedSupervisionSpeed(spd) );
     }
 
@@ -374,7 +374,7 @@ public class DmiPanel extends JPanel {
      * Values displayed to nearest 10m.
      * @param distance the distance to set.
      */
-    public void setDistanceToTarget(int distance){
+    public void setDistanceToTarget(float distance){
         ThreadingUtil.runOnGUI( () -> panelA.setDistanceToTarget(distance) );
     }
 
