@@ -96,7 +96,7 @@ public abstract class AbstractPanelServlet extends HttpServlet {
         String sessionId = PermissionServlet.getSessionId(request);
         if (! InstanceManager.getDefault(PermissionManager.class)
                 .hasAtLeastRemotePermission(sessionId, EditorPermissions.EDITOR_PERMISSION,
-                        EditorPermissions.EditorPermissionEnum.Read)) {
+                        EditorPermissions.EditorPermissionEnum.View)) {
             PermissionServlet.permissionDenied(request, response);
             return;
         }

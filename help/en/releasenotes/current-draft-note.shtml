@@ -484,7 +484,7 @@
             <li>If you change permissions, you need to restart JMRI for
                 the changes to take effect.</li>
             <li>A new permission <strong>Panel permission</strong> is
-                added. If the user doesn't have at least <strong>Read</strong>
+                added. If the user doesn't have at least <strong>View</strong>
                 permission, the panel will be empty with the text
                 <strong>Permission denied</strong>.</li>
             <li>The JMRI web server now has support for permissions. The

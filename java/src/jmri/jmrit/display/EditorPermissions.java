@@ -68,6 +68,14 @@ public class EditorPermissions {
 
         @Override
         public PermissionValue valueOf(String value) {
+            // Temporary fix due to change during 5.9.5 development.
+            // Can be removed once 5.9.5 is merged.
+            if ("Read".equals(value)) value = "View";
+            if ("ReadWrite".equals(value)) value = "ViewControl";
+            if ("ReadWriteEdit".equals(value)) value = "ViewControlEdit";
+            // Temporary fix due to change during 5.9.5 development.
+            // Can be removed once 5.9.5 is merged.
+
             return EditorPermissionEnum.valueOf(value);
         }
 
@@ -78,7 +86,7 @@ public class EditorPermissions {
 
         @Override
         public PermissionValue getDefaultPermission(Role role) {
-            return EditorPermissionEnum.ReadWriteEdit;
+            return EditorPermissionEnum.ViewControlEdit;
         }
 
         @Override
@@ -97,9 +105,9 @@ public class EditorPermissions {
     public static enum EditorPermissionEnum implements PermissionValue {
         Default(true, Bundle.getMessage("EditorPermissions_EditorPermission_Default")),
         None(false, Bundle.getMessage("EditorPermissions_EditorPermission_None")),
-        Read(false, Bundle.getMessage("EditorPermissions_EditorPermission_Read")),
-        ReadWrite(false, Bundle.getMessage("EditorPermissions_EditorPermission_ReadWrite")),
-        ReadWriteEdit(false, Bundle.getMessage("EditorPermissions_EditorPermission_ReadWriteEdit"));
+        View(false, Bundle.getMessage("EditorPermissions_EditorPermission_View")),
+        ViewControl(false, Bundle.getMessage("EditorPermissions_EditorPermission_ViewControl")),
+        ViewControlEdit(false, Bundle.getMessage("EditorPermissions_EditorPermission_ViewControlEdit"));
 
         final boolean _isDefault;
         final String _text;
