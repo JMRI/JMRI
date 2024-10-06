@@ -31,7 +31,7 @@ public class DefaultPermissionManager implements PermissionManager {
             new DefaultUser(Bundle.getMessage("PermissionManager_User_Admin").toLowerCase(),
                     "jmri", 100, "ADMIN", new Role[]{DefaultRole.ROLE_ADMIN, DefaultRole.ROLE_STANDARD_USER});
 
-    private final Map<String, Role> _roles = new HashMap<>();
+    private final Map<String, DefaultRole> _roles = new HashMap<>();
     private final Map<String, DefaultUser> _users = new HashMap<>();
     private final Set<PermissionOwner> _owners = new HashSet<>();
     private final Set<Permission> _permissions = new HashSet<>();
@@ -43,6 +43,32 @@ public class DefaultPermissionManager implements PermissionManager {
     private boolean _allowEmptyPasswords = false;
     private User _currentUser = USER_GUEST;
 
+
+    DefaultPermissionManager() {
+        // Do nothing. The class is initialized by the method init().
+    }
+
+    DefaultPermissionManager(DefaultPermissionManager source) {
+        _permissionsEnabled = source._permissionsEnabled;
+        _allowEmptyPasswords = source._allowEmptyPasswords;
+        _owners.addAll(source._owners);
+        _permissions.addAll(source._permissions);
+        _permissionClassNames.putAll(source._permissionClassNames);
+        for (var entry : source._roles.entrySet()) {
+            _roles.put(entry.getKey(), new DefaultRole(entry.getValue()));
+        }
+        for (var entry : source._users.entrySet()) {
+            _users.put(entry.getKey(), new DefaultUser(entry.getValue()));
+        }
+    }
+
+    /**
+     * Return a copy of this PermissionManager.
+     * @return the copy
+     */
+    public DefaultPermissionManager getTemporaryInstance() {
+        return new DefaultPermissionManager(this);
+    }
 
     synchronized DefaultPermissionManager init() {
         _roles.put(DefaultRole.ROLE_GUEST.getName(), DefaultRole.ROLE_GUEST);
@@ -86,8 +112,8 @@ public class DefaultPermissionManager implements PermissionManager {
         return Collections.unmodifiableSet(set);
     }
 
-    private Role getSystemRole(String systemName) {
-        for (Role role : _roles.values()) {
+    private DefaultRole getSystemRole(String systemName) {
+        for (DefaultRole role : _roles.values()) {
             if (role.isSystemRole() && role.getSystemName().equals(systemName)) {
                 return role;
             }
@@ -122,7 +148,7 @@ public class DefaultPermissionManager implements PermissionManager {
                 List<Element> roleElementList = root.getChild("Roles").getChildren("Role");
                 for (Element roleElement : roleElementList) {
                     Element systemNameElement = roleElement.getChild("SystemName");
-                    Role role;
+                    DefaultRole role;
                     if (systemNameElement != null) {
                         role = getSystemRole(systemNameElement.getValue());
                         if (role == null) {
@@ -141,7 +167,7 @@ public class DefaultPermissionManager implements PermissionManager {
                         Permission permission = _permissionClassNames.get(className);
                         if (permission != null) {
                             PermissionValue value = permission.valueOf(permissionElement.getChild("Enabled").getValue());
-                            ((DefaultRole)role).setPermissionWithoutCheck(permission, value);
+                            role.setPermissionWithoutCheck(permission, value);
                         } else {
                             log.error("Permission class {} does not exists", className);
                         }
@@ -293,7 +319,7 @@ public class DefaultPermissionManager implements PermissionManager {
         if (_users.containsKey(name)) {
             throw new RoleAlreadyExistsException();
         }
-        Role role = new DefaultRole(name);
+        DefaultRole role = new DefaultRole(name);
         _roles.put(name, role);
         return role;
     }
@@ -429,12 +455,17 @@ public class DefaultPermissionManager implements PermissionManager {
 
     @Override
     public synchronized String getCurrentUserName() {
-        return _currentUser.getUserName();
+        return _currentUser != null ? _currentUser.getUserName() : null;
     }
 
     @Override
     public synchronized boolean isAGuestUser(User user) {
         return user == USER_GUEST || user == REMOTE_USER_GUEST;
+    }
+
+    @Override
+    public synchronized boolean isCurrentUserPermittedToChangePassword() {
+        return _currentUser != null && _currentUser.isPermittedToChangePassword();
     }
 
     @Override

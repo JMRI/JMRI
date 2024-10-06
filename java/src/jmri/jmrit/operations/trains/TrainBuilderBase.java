@@ -502,16 +502,41 @@ public class TrainBuilderBase extends TrainCommon {
                             _train.getSecondLegNumberEngines(), _train.getSecondLegEngineModel(),
                             _train.getSecondLegEngineRoad()));
         }
+        if ((_train.getSecondLegOptions() & Train.ADD_ENGINES) == Train.ADD_ENGINES) {
+            addLine(_buildReport, ONE,
+                    Bundle.getMessage("buildTrainAddEngines", _train.getSecondLegNumberEngines(),
+                            _train.getSecondLegStartLocationName(), _train.getSecondLegEngineModel(),
+                            _train.getSecondLegEngineRoad()));
+        }
+        if ((_train.getSecondLegOptions() & Train.REMOVE_ENGINES) == Train.REMOVE_ENGINES) {
+            addLine(_buildReport, ONE,
+                    Bundle.getMessage("buildTrainRemoveEngines", _train.getSecondLegNumberEngines(),
+                            _train.getSecondLegStartLocationName(), _train.getSecondLegEngineModel(),
+                            _train.getSecondLegEngineRoad()));
+        }
         if ((_train.getSecondLegOptions() & Train.HELPER_ENGINES) == Train.HELPER_ENGINES) {
             addLine(_buildReport, ONE,
                     Bundle.getMessage("buildTrainHelperEngines", _train.getSecondLegNumberEngines(),
                             _train.getSecondLegStartLocationName(), _train.getSecondLegEndLocationName(),
                             _train.getSecondLegEngineModel(), _train.getSecondLegEngineRoad()));
         }
+
         if ((_train.getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES) {
             addLine(_buildReport, ONE,
                     Bundle.getMessage("buildTrainEngineChange", _train.getThirdLegStartLocationName(),
                             _train.getThirdLegNumberEngines(), _train.getThirdLegEngineModel(),
+                            _train.getThirdLegEngineRoad()));
+        }
+        if ((_train.getThirdLegOptions() & Train.ADD_ENGINES) == Train.ADD_ENGINES) {
+            addLine(_buildReport, ONE,
+                    Bundle.getMessage("buildTrainAddEngines", _train.getThirdLegNumberEngines(),
+                            _train.getThirdLegStartLocationName(), _train.getThirdLegEngineModel(),
+                            _train.getThirdLegEngineRoad()));
+        }
+        if ((_train.getThirdLegOptions() & Train.REMOVE_ENGINES) == Train.REMOVE_ENGINES) {
+            addLine(_buildReport, ONE,
+                    Bundle.getMessage("buildTrainRemoveEngines", _train.getThirdLegNumberEngines(),
+                            _train.getThirdLegStartLocationName(), _train.getThirdLegEngineModel(),
                             _train.getThirdLegEngineRoad()));
         }
         if ((_train.getThirdLegOptions() & Train.HELPER_ENGINES) == Train.HELPER_ENGINES) {

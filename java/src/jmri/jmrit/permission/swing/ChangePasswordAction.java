@@ -32,10 +32,11 @@ public class ChangePasswordAction extends JmriAbstractAction {
 
     private void checkPermission() {
         var permissionManager = InstanceManager.getDefault(PermissionManager.class);
+
         if (permissionManager.isEnabled()) {
             setEnabled(permissionManager.isLoggedIn());
             permissionManager.addLoginListener((isLogin) -> {
-                setEnabled(isLogin);
+                setEnabled(isLogin && permissionManager.isCurrentUserPermittedToChangePassword());
             });
         } else {
             setEnabled(false);

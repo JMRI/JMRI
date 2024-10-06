@@ -49,6 +49,9 @@ public class Xml {
     static final String PRINT_OPTIONS = "printOptions"; // NOI18N
     static final String DISABLE_PRINT_IF_CUSTOM = "disablePrintIfCustom"; // NOI18N
 
+    static final String SPEED_HPT = "speedHpt";
+    static final String MPH = "MPH";
+
     // Setup.java
     static final String OPERATIONS = "operations"; // NOI18N
     static final String RAIL_ROAD = "railRoad"; // NOI18N

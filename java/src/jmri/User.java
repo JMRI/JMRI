@@ -17,6 +17,12 @@ public interface User {
 
     void setPassword(String newPassword);
 
+    /**
+     * Is the user allowed to change his password?
+     * @return true if the user is allowed to change his password, false otherwise.
+     */
+    boolean isPermittedToChangePassword();
+
     boolean changePassword(String oldPassword, String newPassword);
 
     String getName();

@@ -317,7 +317,7 @@
 
         <h4>Tam Valley Depot</h4>
             <ul>
-                <li></li>
+                <li>Updated the QuadLN_S decoder definition to support new features in version 3.4 firmware.</li>
             </ul>
 
         <h4>TAMS</h4>
@@ -457,7 +457,9 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>Changed "Wait" to travel time in the route edit window</li>
+            <li>Changed "Wait" to travel time in the route edit window.</li>
+            <li>New feature, you can now add or remove locomotives in a train's route.</li>
+            <li>HPT (Horse Power per Ton) in the Setting window can now accept decimal numbers.</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -479,6 +481,8 @@
                 roles remains but the permissions has changed. As a
                 result, you might need to set the permissions for each
                 role again.</li>
+            <li>If you change permissions, you need to restart JMRI for
+                the changes to take effect.</li>
             <li>A new permission <strong>Panel permission</strong> is
                 added. If the user doesn't have at least <strong>Read</strong>
                 permission, the panel will be empty with the text
