@@ -505,14 +505,14 @@
 
   <xi:include href="http://jmri.org/xml/decoders/tcs/wow_dual_f0_f12.xml"/>
   <variable item="Dual function F13" CV="T2CV.4.14" default="0" mask="XVXXXXXXXXXXXXXX">
-  <tooltip>for fxns F0F-F14, set bit to have sound and light active in both modes</tooltip>
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  <tooltip>for fxns F0F-F14, set bit to have sound and light active in both modes</tooltip>
     <label>Dual function F13</label>
   </variable>
   <variable item="Dual function F14" CV="T2CV.4.14" default="0" mask="VXXXXXXXXXXXXXXX">
-  <tooltip>for fxns F0F-F14, set bit to have sound and light active in both modes</tooltip>
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Dual function F14</label>
+  <tooltip>for fxns F0F-F14, set bit to have sound and light active in both modes</tooltip>
+   <label>Dual function F14</label>
   </variable>
 
   <variable item="Chuff rate adjustment" CV="T2CV.4.16" default="100">
