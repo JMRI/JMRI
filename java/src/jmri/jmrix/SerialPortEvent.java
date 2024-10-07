@@ -5,16 +5,8 @@ package jmri.jmrix;
  *
  * @author Daniel Bergqvist (C) 2024
  */
-public class SerialPortEvent {
+public interface SerialPortEvent {
 
-    private final com.fazecast.jSerialComm.SerialPortEvent event;
-
-    SerialPortEvent(com.fazecast.jSerialComm.SerialPortEvent event) {
-        this.event = event;
-    }
-
-    public int getEventType() {
-        return event.getEventType();
-    }
+    int getEventType();
 
 }

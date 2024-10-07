@@ -136,7 +136,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @return the serial port object for later use
      */
     public static SerialPort activatePort(String systemPrefix, String portName, org.slf4j.Logger log, int stop_bits, SerialPort.Parity parity) {
-        return SerialPort.activatePort(systemPrefix, portName, log, stop_bits, parity);
+        return jmri.jmrix.jserialcomm.JSerialPort.activatePort(systemPrefix, portName, log, stop_bits, parity);
     }
 
     final protected void setComPortTimeouts(SerialPort serialPort, Blocking blocking, int timeout) {
@@ -185,7 +185,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * @return the port names in the form they can later be used to open the port
      */
     public static Vector<String> getActualPortNames() {
-        return SerialPort.getActualPortNames();
+        return jmri.jmrix.jserialcomm.JSerialPort.getActualPortNames();
     }
 
     /**
