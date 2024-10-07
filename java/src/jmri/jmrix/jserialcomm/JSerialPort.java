@@ -128,6 +128,11 @@ public class JSerialPort implements SerialPort {
     }
 
     @Override
+    public Parity getParity() {
+        return Parity.getParity(serialPort.getParity()); // constants are defined with values for the specific port class
+    }
+
+    @Override
     public void setDTR() {
         this.serialPort.setDTR();
     }

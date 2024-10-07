@@ -5,6 +5,7 @@ import java.io.*;
 import java.util.Vector;
 
 import jmri.SystemConnectionMemo;
+import jmri.jmrix.fakeport.FakeInputStream;
 
 /**
  * Provide an abstract base for *PortController classes.
@@ -24,7 +25,9 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         super(connectionMemo);
     }
 
-    protected SerialPort currentSerialPort = null;
+    protected volatile SerialPort currentSerialPort = null;
+    private final ReplaceableInputStream inputStream = new ReplaceableInputStream();
+    private final ReplaceableOutputStream outputStream = new ReplaceableOutputStream();
 
     /**
      * Standard error handling for jmri.jmrix.purejavacomm port-busy case.
@@ -391,7 +394,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             log.error("getInputStream called before open, stream not available");
             return null;
         }
-        return new DataInputStream(currentSerialPort.getInputStream());
+        inputStream.replaceStream(currentSerialPort.getInputStream());
+        return new DataInputStream(inputStream);
     }
 
     // When PureJavaComm is removed, set this to 'final' to find
@@ -401,8 +405,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         if (!opened) {
             log.error("getOutputStream called before open, stream not available");
         }
-
-        return new DataOutputStream(currentSerialPort.getOutputStream());
+        outputStream.replaceStream(currentSerialPort.getOutputStream());
+        return new DataOutputStream(outputStream);
     }
 
 
@@ -636,6 +640,46 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      */
     @Override
     protected void resetupConnection(){}
+
+    /**
+     * Is the serial port open?
+     * The LocoNet simulator uses this class but doesn't open the port.
+     * @return true if the port is open, false otherwise
+     */
+    public boolean isPortOpen() {
+        return currentSerialPort != null;
+    }
+
+    /**
+     * Replace the serial port with a fake serial port and close the old
+     * serial port.
+     * Note that you can only replace the port once. This call is used when
+     * you want to close the port and reopen it for some special task, for
+     * example upload firmware.
+     */
+    public void replacePortWithFakePort() {
+        log.warn("Replacing serial port with fake serial port: {}", currentSerialPort.getDescriptivePortName());
+        SerialPort oldSerialPort = currentSerialPort;
+        SerialPort serialPort = new jmri.jmrix.fakeport.FakeSerialPort();
+        inputStream.replaceStream(new FakeInputStream());
+        outputStream.replaceStream(OutputStream.nullOutputStream());
+        currentSerialPort = serialPort;
+        oldSerialPort.closePort();
+    }
+
+    /**
+     * Get a string with the serial port settings.
+     * @return the settings as a string
+     */
+    public String getPortSettingsString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Baudrate: ").append(currentSerialPort.getBaudRate()).append(", ");
+        sb.append("FlowControl: ").append(currentSerialPort.getFlowControlSettings()).append(", ");
+        sb.append("Num data bits: ").append(currentSerialPort.getNumDataBits()).append(", ");
+        sb.append("Num stop bits: ").append(currentSerialPort.getNumStopBits()).append(", ");
+        sb.append("Parity").append(currentSerialPort.getParity().name());
+        return sb.toString();
+    }
 
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractSerialPortController.class);

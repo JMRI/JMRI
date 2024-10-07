@@ -66,6 +66,8 @@ public interface SerialPort {
 
     void setParity(Parity parity);
 
+    Parity getParity();
+
     void setDTR();
 
     void clearDTR();
