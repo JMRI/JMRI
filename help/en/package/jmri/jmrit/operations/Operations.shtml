@@ -789,8 +789,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         button at the bottom left of the <a href="#Trains">Trains</a> window. Be sure to select the
         route you created for your first train. Leave all of the train checkboxes alone which means
         the train will service all car and locomotive types. Leave the <a href="#TrainRequires">Optional
-          Train Requirements</a> for locomotives and caboose area alone for now. Save the train, close
-        the window, and return to the Trains window. Press the <a href="#BuildingTrains">Build</a>
+          locomotive requirements</a> and <a href="#OptionalLastCar">Optional last car in train
+          requirements</a> for locomotives and caboose area alone for now. Save the train, close the
+        window, and return to the Trains window. Press the <a href="#BuildingTrains">Build</a>
         button for the train. It should build. Now pressing the "Print" or "Preview" button will
         produce a <a href="#PrintingManifests">Manifest</a> for your train depending on the state of
         "Preview" checkbox at the bottom of the <a href="#Trains">Trains</a> window. Review the
@@ -836,18 +837,19 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         track located at the start of the route. Note that if you want two or more locomotives
         servicing your train, that the locomotives must be in a <a href="#LocomotivesAdd">consist</a>.
         Note that the last location in your route must have a track that will service the locomotive
-        <a href="#LocomotiveModels">type</a> or the build will fail. Now change the train
-        requirements to require one or more locomotives.
+        <a href="#LocomotiveModels">type</a> or the build will fail. Now change the train <a
+          href="#TrainRequires">requirements</a> to require one or more locomotives.
       </p>
 
       <p>
         If you want a caboose or car with FRED for your train, first configure some of the cars to
         be the last car in the train by selecting the "Caboose" or "FRED" <a
           href="#CabooseFredHazardous">checkbox</a> in the <a href="#CarsEdit">Edit Car</a> window.
-        Now change the optional train requirements radio button to "Caboose" or "FRED" in the <a
-          href="#TrainEdit">Edit Train</a> window. Place the caboose on a track at the first
-        location in your train's route. Be sure that the last location in your train's route has a
-        track that will accept the caboose or the train will not build properly.
+        Now change the <a href="#OptionalLastCar">Optional last car in train requirements </a> radio
+        button to "Caboose" or "FRED" in the <a href="#TrainEdit">Edit Train</a> window. Place the
+        caboose on a track at the first location in your train's route. Be sure that the last
+        location in your train's route has a track that will accept the caboose or the train will
+        not build properly.
       </p>
 
       <p>
@@ -3140,8 +3142,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         model, or road; the program will search all staging tracks at the departure location for a
         train meeting those requirements. If you set the locomotive requirements to 0, the program
         will select the next available train from staging; and will ignore the number of locomotives
-        leaving that staging track. See <a href="#TrainRequires">Optional Train Requirements</a> for
-        more info.
+        leaving that staging track. See <a href="#TrainRequires">Optional locomotive
+          requirements</a> for more info.
       </p>
 
       <p>
@@ -5163,7 +5165,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h5 id="BuildlocoConsist">Build loco consist from single locos</h5>
       This option when selected will dynamically build a locomotive consist for you using locos that
       aren't in a consist. For example, say you request a consist of three locomotives in the edit
-      train window's <a href="#TrainRequires">Optional train requirements</a>. The program when
+      train window's <a href="#TrainRequires">Optional locomotive requirements</a>. The program when
       building a train, will first search for a consist of three locos that meet the type, model and
       road requirements for the train. If the program can't find a three loco consist, it will
       attempt to find three non-consisted locos that meet the train's requirements. For some
