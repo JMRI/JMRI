@@ -87,7 +87,7 @@ class DemoPanel extends JmriPanel {
         c.gridy = 5;
         _textArea = new JTextArea();
         _textArea.setColumns(50);
-        _textArea.setRows(50);
+        _textArea.setRows(30);
         add(_textArea, c);
 
         _locoNetConnection.addActionListener((e)->{
