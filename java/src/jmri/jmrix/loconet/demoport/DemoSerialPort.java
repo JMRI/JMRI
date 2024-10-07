@@ -87,7 +87,7 @@ public class DemoSerialPort extends AbstractSerialPortController {
             }
             _outputStream.flush();
         } catch (IOException ex) {
-            log.error(ex.getMessage());
+            log.error("Exception: {}", ex.getMessage());
         }
     }
 
@@ -135,7 +135,7 @@ public class DemoSerialPort extends AbstractSerialPortController {
                 } catch (InterruptedIOException ex) {
                     // Do nothing, just ignore the error
                 } catch (IOException ex) {
-                    log.error("IOException: {}", ex.getMessage());
+                    log.error("Exception: {}", ex.getMessage());
                     return;
                 }
             }
