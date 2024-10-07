@@ -75,6 +75,9 @@ public class RouteEditFrameTest extends OperationsTestCase {
         RouteEditFrame f = new RouteEditFrame();
         f.initComponents(null, train);
         
+        // Add some locations to the route
+        JUnitOperationsUtil.loadFiveLocations();
+
         // confirm title is "Add Route"
         Assert.assertEquals("Title", Bundle.getMessage("TitleRouteAdd"), f.getTitle());
         f.routeNameTextField.setText("New Test Route");
