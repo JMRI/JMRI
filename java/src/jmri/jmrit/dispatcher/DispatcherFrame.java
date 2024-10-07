@@ -1820,7 +1820,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
         //check here to see if block is already assigned to an allocated section
         // or crosses an allocated section or occupied section.
-        if (checkBlocksNotInAllocatedSection(s, ar) != null) {
+        if (checkBlocksNotInAllocatedSection(s, ar, at) != null) {
             return null;
         }
         // Programming
@@ -1950,7 +1950,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 Section se = intermediateSections.get(i);
                 if (se.getState() == Section.FREE  && se.getOccupancy() == Section.UNOCCUPIED) {
                     //If the section state is free, we need to look to see if any of the blocks are used else where
-                    Section conflict = checkBlocksNotInAllocatedSection(se, null);
+                    Section conflict = checkBlocksNotInAllocatedSection(se, null, at);
                     if (conflict != null) {
                         //We have a conflicting path
                         //We might need to find out if the section which the block is allocated to is one in our transit, and if so is it running in the same direction.
@@ -2264,22 +2264,37 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         return _XOverList;
     }
 
-
     /**
      * Checks for a block in allocated section, except one
      * @param b - The Block
      * @param ignoreSection - ignore this section, can be null
+     * @param activeTrain - only check this trains blocks can be null
      * @return true is The Block is being used in a section.
      */
-    protected boolean checkForBlockInAllocatedSection ( Block b, Section ignoreSection ) {
+    protected boolean checkForBlockInAllocatedSection ( Block b, Section ignoreSection, ActiveTrain activeTrain ) {
         for ( AllocatedSection as : allocatedSections) {
-            if (ignoreSection == null || as.getSection() != ignoreSection) {
+            if (activeTrain == null && (ignoreSection == null || as.getSection() != ignoreSection)) {
                 if (as.getSection().getBlockList().contains(b)) {
+                    log.trace("[No Active Train]:Block [{}] is allocated to [{}]",b.getDisplayName(),as.getSection().getDisplayName());
+                    return true;
+                }
+            } else if (activeTrain != null && (ignoreSection == null || as.getSection() != ignoreSection)) {
+                if (as.getActiveTrain() == activeTrain && as.getSection().getBlockList().contains(b)) {
+                    log.trace("[{}]:Block [{}] is allocated to [{}]",activeTrain.getActiveTrainName(),b.getDisplayName(),as.getSection().getDisplayName());
                     return true;
                 }
             }
         }
         return false;
+    }
+
+    protected String getActiveTrainInBlock(Block b) {
+        for (AllocatedSection as : allocatedSections) {
+            if (as.getSection().getBlockList().contains(b)) {
+                return as.getActiveTrainName();
+            }
+        }
+        return null;
     }
 
     /*
@@ -2288,7 +2303,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * Additional blocks can be added during this process that need to checked for occupancy as they were not
      * known during establishment of the route.
      */
-    protected Section checkBlocksNotInAllocatedSection(Section s, AllocationRequest ar) {
+    protected Section checkBlocksNotInAllocatedSection(Section s, AllocationRequest ar, ActiveTrain at) {
         for (AllocatedSection as : allocatedSections) {
             if (as.getSection() != s) {
                 List<Block> blas = as.getSection().getBlockList();
@@ -2376,9 +2391,35 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                             bls.add(lx.getLayoutBlockC().getBlock());
                             break;
                         } else {
-                            log.error("In XOver [{}] cannot allocate only one of fours switchs, must allocate two.",
-                                    lx.getTurnout().getDisplayName());
-                            return as.getSection();
+                            // We are only allocating a single block - check that a block is not already allocated
+                            if (bls.contains(lx.getLayoutBlock().getBlock())
+                                    || bls.contains(lx.getLayoutBlockC().getBlock())) {
+                                // check diagonal already allocated to this train
+                                if (checkForBlockInAllocatedSection( lx.getLayoutBlock().getBlock(),null, at)
+                                        || checkForBlockInAllocatedSection( lx.getLayoutBlockC().getBlock(),null, at)) {
+                                    if (getActiveTrainInBlock(lx.getLayoutBlockB().getBlock()) != null
+                                            && getActiveTrainInBlock(lx.getLayoutBlockD().getBlock()) != null
+                                            && getActiveTrainInBlock(lx.getLayoutBlockB().getBlock()).equals(getActiveTrainInBlock(lx.getLayoutBlockD().getBlock())) ) {
+                                        bls.add(lx.getLayoutBlockB().getBlock());
+                                        bls.add(lx.getLayoutBlockD().getBlock());
+                                    }
+                                }
+                            } else if (bls.contains(lx.getLayoutBlockB().getBlock())
+                                    || bls.contains(lx.getLayoutBlockD().getBlock())) {
+                                // check diagonal already allocated to this train
+                                if (checkForBlockInAllocatedSection( lx.getLayoutBlockB().getBlock(),null, at)
+                                        || checkForBlockInAllocatedSection( lx.getLayoutBlockD().getBlock(),null, at)) {
+                                    if (getActiveTrainInBlock(lx.getLayoutBlock().getBlock()) != null
+                                            && getActiveTrainInBlock(lx.getLayoutBlockC().getBlock()) != null
+                                            && getActiveTrainInBlock(lx.getLayoutBlock().getBlock()).equals(getActiveTrainInBlock(lx.getLayoutBlockC().getBlock())) ) {
+                                        bls.add(lx.getLayoutBlock().getBlock());
+                                        bls.add(lx.getLayoutBlockC().getBlock());
+                                    }
+                                }
+                            }
+                            //log.warn("In XOver [{}] cannot allocate only one of fours switchs, must allocate two.",
+                            //        lx.getTurnout().getDisplayName());
+                            break;
                         }
                     }
                 }
