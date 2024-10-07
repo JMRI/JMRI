@@ -289,7 +289,7 @@ public class TrainBuilderBase extends TrainCommon {
         if (_train.isBuildConsistEnabled() ^ !enabled) {
             addLine(_buildReport, FIVE, Bundle.getMessage("BuildConsist"));
             if (enabled) {
-                addLine(_buildReport, FIVE, Bundle.getMessage("BuildConsistHPT", Setup.getHorsePowerPerTon()));
+                addLine(_buildReport, SEVEN, Bundle.getMessage("BuildConsistHPT", Setup.getHorsePowerPerTon()));
             }
         }
         addLine(_buildReport, FIVE, BLANK_LINE);

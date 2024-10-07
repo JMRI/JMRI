@@ -221,6 +221,11 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
             log.debug("route add location button activated");
             if (locationBox.getSelectedItem() != null) {
                 addNewRouteLocation();
+            } else {
+                JmriJOptionPane.showMessageDialog(this,
+                        Bundle.getMessage("SelectLocation"),
+                        Bundle.getMessage("SelectLocation"),
+                        JmriJOptionPane.INFORMATION_MESSAGE);
             }
         }
         if (ae.getSource() == saveRouteButton) {
