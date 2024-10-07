@@ -510,7 +510,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li></li>
+            <li>On roster media pane (as well as functions panel), images can be opened by double clicking on the panel or via the contextual menu. Direct images drag'n drop from any aplication is also supported, a png file will be created from the drag'n drop content.</li>
         </ul>
 
     <h3>Routes</h3>

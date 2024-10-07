@@ -78,7 +78,8 @@
           <li>After storing image on your computer open the Roster Media Pane, then open Windows
           Explorer or File Manager for your system and drag and drop the image file into the large
           black box. You may also save the image to your Desktop and drag and drop to Roster Media
-          from there. DO NOT try to drag and drop from a website.</li>
+          from there. The image file can also be opened by double clicking on the panel (the large 
+          black box), or via the contextual menu (right clik on the panel)</li>
 
           <li style="list-style: none">Roster images are stored in the &lt;JMRI Preferences
           folder&gt;/resources. When an image is updated or removed it is not removed from this
@@ -98,7 +99,7 @@
 
         <p><strong>Image to be used as icon for that roster, head to the right:</strong> similarly,
         there is a small black box which can be filled with a picture to be used as an icon for
-        roster entry identification. The instructions are the also similar:</p>
+        roster entry identification. The instructions are similar.</p>
       </blockquote>
 
       <div style="margin-left: 4em">
