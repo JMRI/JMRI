@@ -449,6 +449,10 @@
           <li>A bug is fixed that caused problem with storing a table
               and panel file if the LogixNG preference
               <strong>Install debugger</strong> is unselected.</li>
+          <li>The action <strong>Throttle</strong> now has the option
+              <strong>Stop loco then switching loco</strong>. If it's
+              selected, the loco is stopped before switching to another
+              loco.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
