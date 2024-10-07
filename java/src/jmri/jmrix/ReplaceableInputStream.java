@@ -59,12 +59,6 @@ public class ReplaceableInputStream extends InputStream {
 
     /** {@inheritDoc} */
     @Override
-    public void skipNBytes(long n) throws IOException {
-        _stream.skipNBytes(n);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public int available() throws IOException {
         return _stream.available();
     }
