@@ -311,7 +311,6 @@ public class ArchitectureTest {
         .that()
 
         // all the standard serial access should be confined to here:
-        .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController$SerialPort").and()
         .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController$SerialPortEvent")
 
