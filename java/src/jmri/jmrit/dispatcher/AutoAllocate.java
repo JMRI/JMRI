@@ -294,10 +294,10 @@ public class AutoAllocate implements Runnable {
                                         log.debug("{}: Forward section [{}] is not unoccupied", trainName,
                                                 sS.getDisplayName(USERSYS));
                                         areForwardsFree = false;
-                                    } else if (_dispatcher.checkBlocksNotInAllocatedSection(sS, ar) != null) {
+                                    } else if (_dispatcher.checkBlocksNotInAllocatedSection(sS, ar, activeTrain) != null) {
                                         log.debug("{}: Forward section [{}] is in conflict with [{}]",
                                                 trainName, sS.getUserName(),
-                                                _dispatcher.checkBlocksNotInAllocatedSection(sS, ar));
+                                                _dispatcher.checkBlocksNotInAllocatedSection(sS, ar, activeTrain));
                                         areForwardsFree = false;
                                     } else if (checkBlocksNotInReservedSection(activeTrain, sS) != null) {
                                         log.debug("{}: Forward section [{}] is in conflict with [{}]",
@@ -377,7 +377,7 @@ public class AutoAllocate implements Runnable {
                                     _dispatcher.getSignalType() == DispatcherFrame.SECTIONSALLOCATED ||
                                     (_dispatcher.getSignalType() == DispatcherFrame.SIGNALMAST &&
                                             _dispatcher.checkBlocksNotInAllocatedSection(ar.getSection(),
-                                                    ar) == null))) {
+                                                    ar, activeTrain) == null))) {
                         // requested Section is currently free and not
                         // occupied
                         List<ActiveTrain> activeTrainsList = _dispatcher.getActiveTrainsList();
@@ -593,7 +593,7 @@ public class AutoAllocate implements Runnable {
                     (_dispatcher.getSignalType() == DispatcherFrame.SIGNALHEAD ||
                             _dispatcher.getSignalType() == DispatcherFrame.SECTIONSALLOCATED ||
                             (_dispatcher.getSignalType() == DispatcherFrame.SIGNALMAST &&
-                                    _dispatcher.checkBlocksNotInAllocatedSection(sList.get(i), ar) == null))) {
+                                    _dispatcher.checkBlocksNotInAllocatedSection(sList.get(i), ar, at) == null))) {
                 return sList.get(i);
             }
         }

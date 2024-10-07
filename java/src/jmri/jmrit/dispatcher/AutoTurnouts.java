@@ -10,6 +10,7 @@ import jmri.Transit;
 import jmri.Turnout;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
+import jmri.jmrit.display.layoutEditor.LayoutDoubleXOver;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
@@ -281,7 +282,26 @@ public class AutoTurnouts {
                         // turnout is not set correctly
                         if (set) {
                             // setting has been requested, is Section free and Block unoccupied
-                            if ((s.getState() == Section.FREE) && (curBlock.getState() != Block.OCCUPIED)) {
+                            if (turnoutList.get(i).getObject() instanceof LayoutDoubleXOver) {
+                                LayoutDoubleXOver lds = (LayoutDoubleXOver) turnoutList.get(i).getObject();
+                                if ((lds.getLayoutBlock().getBlock().getState() == Block.OCCUPIED)
+                                        || (lds.getLayoutBlockB().getBlock().getState() == Block.OCCUPIED)
+                                        || (lds.getLayoutBlockC().getBlock().getState() == Block.OCCUPIED)
+                                        || (lds.getLayoutBlockD().getBlock().getState() == Block.OCCUPIED)) {
+                                    log.debug("{}: turnout {} cannot be set to {} DoubleXOver occupied.", at.getTrainName(), to.getDisplayName(USERSYS),
+                                            (setting == Turnout.CLOSED ? closedText : thrownText));
+                                    turnoutsOK = false;
+                                }
+                                if ((_dispatcher.checkForBlockInAllocatedSection(lds.getLayoutBlock().getBlock(), s, null))
+                                        || (_dispatcher.checkForBlockInAllocatedSection(lds.getLayoutBlockB().getBlock(), s, null))
+                                        || (_dispatcher.checkForBlockInAllocatedSection(lds.getLayoutBlockC().getBlock(), s, null))
+                                        || (_dispatcher.checkForBlockInAllocatedSection(lds.getLayoutBlockD().getBlock(), s, null))) {
+                                    log.debug("{}: turnout {} cannot be set to {} DoubleXOver already allocated to another train.", at.getTrainName(), to.getDisplayName(USERSYS),
+                                            (setting == Turnout.CLOSED ? closedText : thrownText));
+                                    turnoutsOK = false;
+                                }
+                            }
+                            if ((turnoutsOK) && (s.getState() == Section.FREE) && (curBlock.getState() != Block.OCCUPIED)) {
                                 // send setting command
                                 log.debug("{}: turnout {} commanded to {}", at.getTrainName(), to.getDisplayName(USERSYS),
                                         (setting == Turnout.CLOSED ? closedText : thrownText));
