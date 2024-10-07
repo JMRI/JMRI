@@ -16,7 +16,7 @@ import jmri.util.swing.WindowInterface;
  */
 
 // Uncomment the line below to test this class
-@org.openide.util.lookup.ServiceProvider(service = jmri.jmrit.swing.ToolsMenuAction.class)
+//@org.openide.util.lookup.ServiceProvider(service = jmri.jmrit.swing.ToolsMenuAction.class)
 
 public class DemoSerialPortAction extends JmriAbstractAction implements ToolsMenuAction {
 
