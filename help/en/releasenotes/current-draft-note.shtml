@@ -446,6 +446,9 @@
               automatically when the tables and panel file is loaded,
               despite the <strong>Start timer immediately on load</strong>
               setting was selected for the timer.</li>
+          <li>A bug is fixed that caused problem with storing a table
+              and panel file if the LogixNG preference
+              <strong>Install debugger</strong> is unselected.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -457,8 +460,9 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>Changed "Wait" to travel time in the route edit window</li>
-            <li>New feature, you can now add or remove locomotives in a train's route</li>
+            <li>Changed "Wait" to travel time in the route edit window.</li>
+            <li>New feature, you can now add or remove locomotives in a train's route.</li>
+            <li>HPT (Horse Power per Ton) in the Setting window can now accept decimal numbers.</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -483,7 +487,7 @@
             <li>If you change permissions, you need to restart JMRI for
                 the changes to take effect.</li>
             <li>A new permission <strong>Panel permission</strong> is
-                added. If the user doesn't have at least <strong>Read</strong>
+                added. If the user doesn't have at least <strong>View</strong>
                 permission, the panel will be empty with the text
                 <strong>Permission denied</strong>.</li>
             <li>The JMRI web server now has support for permissions. The

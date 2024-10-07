@@ -165,17 +165,17 @@
     <label xml:lang="it">Correzione Decellazione Consist</label>
     <tooltip xml:lang="it">Valori oltre 128 incrementano correzzione, minori di 128 decrementano</tooltip>
   </variable>
-  <variable item="Advanced Group 2 Option 12" CV="28" default="0" mask="XXXXXXXV">
+  <variable item="Advanced Group 2 Option 12" CV="28" default="0" mask="XXXXXXXV" exclude="1666,1667,1668">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>RailCom Enable Unsolicited Decoder Initiated Transmission</label>
     <tooltip>NOTE: A value of 8 must be added to CV29 to Enable RailCom</tooltip>
   </variable>
-  <variable item="Advanced Group 2 Option 13" CV="28" default="0" mask="XXXXXXVX">
+  <variable item="Advanced Group 2 Option 13" CV="28" default="0" mask="XXXXXXVX" exclude="1666,1667,1668">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>RailCom Enable Initiated Broadcast Transmission using Asymmetrical DCC Signal</label>
     <tooltip>NOTE: A value of 8 must be added to CV29 to Enable RailCom</tooltip>
   </variable>
-  <variable item="Advanced Group 2 Option 14" CV="28" default="0" mask="XXXXXVXX">
+  <variable item="Advanced Group 2 Option 14" CV="28" default="0" mask="XXXXXVXX" exclude="1666,1667,1668">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>RailCom Enable Initiated Broadcast Transmission using Signal Controlled Influence Signal</label>
     <tooltip>NOTE: A value of 8 must be added to CV29 to Enable RailCom</tooltip>
@@ -207,7 +207,7 @@
     <tooltip>'4' bit. Allows the loco to run on DC</tooltip>
     <tooltip xml:lang="it">'4' bit. Permette alla loco di andare in DC</tooltip>
   </variable>
-  <variable CV="29" mask="XXXXVXXX" default="0" item="Advanced Group 2 Option 11">
+  <variable CV="29" mask="XXXXVXXX" default="0" item="Advanced Group 2 Option 11" exclude="1666,1667,1668">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Enable RailCom</label>
   </variable>

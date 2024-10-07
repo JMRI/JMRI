@@ -2197,12 +2197,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <p>
         The "Locations" window shows all of the places that your trains can work. For each location
-        the window shows the type of tracks at that location, the total length of all tracks at that
-        location, the amount of track used by your rolling stock, the quantity of rolling stock, and
-        the number of pick ups and set outs of your rolling stock that are scheduled for that
-        location. The <a href="#Yardmaster">Yardmaster</a> button produces a window <a
-          href="#SwitchList">(Switch List)</a> that allows you to see the scheduled pick ups and set
-        outs by train. Only trains that have work for the location are available.
+        the window shows the type of tracks at that location, the number of tracks, the total length
+        of all tracks at that location, the amount of track used by your rolling stock, the quantity
+        of rolling stock, and the number of pick ups and set outs of your rolling stock that are
+        scheduled for that location. The <a href="#Yardmaster">Yardmaster</a> button produces a
+        window <a href="#SwitchList">(Switch List)</a> that allows you to see the scheduled pick ups
+        and set outs by train. Only trains that have work for the location are available.
       </p>
       <p>
         If the <a href="#EnableIdentificationTagFields">Enable ID Tag</a> option has been selected,
@@ -4713,7 +4713,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         The grade is optional and is used to determine how many locomotives the train will require
         for that segment when using the train <a href="#TrainRequires">Auto</a> locomotive
         assignment feature. Enter the maximum grade that the train will encounter between the two
-        locations.
+        locations. The program when determining the required HPT for a grade uses the prototypical
+        formula "HPT = Speed x % Grade / 12". The speed when determining the HPT is set to 36 MPH,
+        which means that a 1% grade will require 3 HPT.
       </p>
 
       <h4 id="RouteIconCoordinates">Train Icon Coordinates</h4>
@@ -5217,10 +5219,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h4 id="OptionalTrainRequirements">Optional Train Requirements (Locomotive or Caboose
         Changes en Route)</h4>
       You can have up to two locomotive changes while the train is en route. Select "Locomotive
-      change" where you want the change to happen in your route, and how many new locomotives should
-      be assigned to the train. You can optionally select the new locomotives model and road. At the
-      locomotive change location, the previously assigned locomotives will be removed from the
-      train.
+      change" and where you want the change to happen in your route, along with the number of new
+      locomotives that should be assigned to the train. You can optionally select the new
+      locomotives model and road. At the locomotive change location, the previously assigned
+      locomotives will be removed from the train.
 
       <p>There's also the option to add or remove locomotives in the train's route. Select "Add
         Locomotives" if you want to add locomotives to your train. Select "Remove Locomotives" if

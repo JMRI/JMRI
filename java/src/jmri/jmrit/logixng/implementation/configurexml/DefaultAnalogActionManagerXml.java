@@ -47,8 +47,8 @@ public class DefaultAnalogActionManagerXml extends AbstractManagerXml {
                     List<Element> elements = new ArrayList<>();
                     // The male socket may be embedded in other male sockets
                     MaleAnalogActionSocket a = action;
+                    elements.add(storeMaleSocket(a));
                     while (!(a instanceof DefaultMaleAnalogActionSocket)) {
-                        elements.add(storeMaleSocket(a));
                         a = (MaleAnalogActionSocket) a.getObject();
                     }
                     Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(a.getObject());

@@ -1041,7 +1041,6 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
             remove1Engine.setEnabled(false);
             remove2Engine.setEnabled(false);
         }
-
     }
 
     private void createEngine1Panel() {

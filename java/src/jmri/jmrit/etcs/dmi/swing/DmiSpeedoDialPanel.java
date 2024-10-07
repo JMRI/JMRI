@@ -26,7 +26,7 @@ import javax.swing.JPanel;
  */
 public class DmiSpeedoDialPanel extends JPanel {
 
-    private int speed = 0;
+    private float speed = 0;
     private float targetAdviceSpeed = -1; // unset
     private int maxSpeed = 140;
     private int majorSpeedGap = 20; // every 20 mph from 0
@@ -270,7 +270,7 @@ public class DmiSpeedoDialPanel extends JPanel {
         g2.fillOval(-dotSize, -dotSize, dotSize *2, dotSize*2);
 
         // display the speed value in centre of the centre circle
-        String speedString = Integer.toString(speed);
+        String speedString = getSpeedString(speed);
         Font digitsSizedFont = new Font(DmiPanel.FONT_NAME, Font.BOLD, 22);
         g2.setFont(digitsSizedFont);
         g2.setColor( centreCircleAndDialColor==DmiPanel.RED ? Color.WHITE : Color.BLACK);
@@ -279,6 +279,21 @@ public class DmiSpeedoDialPanel extends JPanel {
             g2.drawString(speedString, -digitsFontM.stringWidth(speedString) / 2 , 7);
         } else { // right-align
             g2.drawString(speedString, 18-digitsFontM.stringWidth(speedString) , 7);
+        }
+    }
+
+    /**
+     * Get a String for the Speed value.
+     * Speeds are displayed to nearest whole number.
+     * If the speed is non-zero, the minimum displayable speed is 1 .
+     * @param speed the loco speed.
+     * @return formatted String.
+     */
+    private String getSpeedString(float speed) {
+        if (speed > 0f) { // round to nearest whole number
+            return String.valueOf(Math.max(1, Math.round(speed)));
+        } else {
+            return "0";
         }
     }
 
@@ -349,7 +364,7 @@ public class DmiSpeedoDialPanel extends JPanel {
         if (speed > maxSpeed) {
             log.debug("add code here to move scale up");
         }
-        this.speed = Math.round(speed);
+        this.speed = speed;
         repaint();
     }
 
