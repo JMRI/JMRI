@@ -446,6 +446,9 @@
               automatically when the tables and panel file is loaded,
               despite the <strong>Start timer immediately on load</strong>
               setting was selected for the timer.</li>
+          <li>A bug is fixed that caused problem with storing a table
+              and panel file if the LogixNG preference
+              <strong>Install debugger</strong> is unselected.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
