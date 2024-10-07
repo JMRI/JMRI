@@ -4,9 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.Nonnull;
 
@@ -22,7 +20,8 @@ import jmri.util.TypeConversionUtil;
  *
  * @author Daniel Bergqvist (C) 2022
  */
-public class LogixNG_SelectDouble implements VetoableChangeListener {
+public class LogixNG_SelectDouble
+        implements ReplaceableNamedBean, VetoableChangeListener {
 
     private final AbstractBase _base;
     private final InUse _inUse;
@@ -341,6 +340,35 @@ public class LogixNG_SelectDouble implements VetoableChangeListener {
                 }
             }
         }
+    }
+
+    @Override
+    @SuppressWarnings("unchecked") // Due to type erasure
+    public void getGetAndReplaceNamedBeans(List<GetAndReplaceNamedBean> list) {
+        if (_memoryHandle != null) {
+            var memoryItem = new GetAndReplaceNamedBean() {
+                @Override
+                public NamedBeanType getType() {
+                    return NamedBeanType.Memory;
+                }
+
+                @Override
+                public NamedBeanHandle<? extends NamedBean> get() {
+                    return LogixNG_SelectDouble.this._memoryHandle;
+                }
+
+                @Override
+                public void replace(NamedBeanHandle<? extends NamedBean> newBean) {
+                    if (!(newBean.getBean() instanceof Memory)) {
+                        throw new IllegalArgumentException("Bean must be a Memory");
+                    }
+                    LogixNG_SelectDouble.this.setMemory((NamedBeanHandle<Memory>) newBean);
+                }
+            };
+            list.add(memoryItem);
+        }
+
+        _selectTable.getGetAndReplaceNamedBeans(list);
     }
 
 

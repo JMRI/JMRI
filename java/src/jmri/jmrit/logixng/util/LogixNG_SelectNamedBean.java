@@ -20,7 +20,8 @@ import jmri.util.TypeConversionUtil;
  *
  * @author Daniel Bergqvist (C) 2022
  */
-public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableChangeListener {
+public class LogixNG_SelectNamedBean<E extends NamedBean>
+        implements ReplaceableNamedBean, VetoableChangeListener {
 
     private final AbstractBase _base;
     private final InUse _inUse;
@@ -44,6 +45,9 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
 
 
     public LogixNG_SelectNamedBean(AbstractBase base, Class<E> clazz, Manager<E> manager, PropertyChangeListener listener) {
+        if (NamedBeanType.getTypeFromClass(clazz) == null) {
+            log.error("Class {} has no NamedBeanType", clazz.getName());
+        }
         _base = base;
         _inUse = () -> true;
         _class = clazz;
@@ -141,6 +145,10 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
             _manager.removeVetoableChangeListener(this);
             _handle = null;
         }
+    }
+
+    public Class<E> getClazz() {
+        return _class;
     }
 
     public E getBean() {
@@ -472,6 +480,58 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
         if (_handle != null && bean.equals(_handle.getBean())) {
             report.add(new NamedBeanUsageReport(type.toString(), cdl, base.getLongDescription()));
         }
+    }
+
+    @Override
+    @SuppressWarnings("unchecked") // Due to type erasure
+    public void getGetAndReplaceNamedBeans(List<GetAndReplaceNamedBean> list) {
+        if (_handle != null) {
+            var namedBeanItem = new GetAndReplaceNamedBean() {
+                @Override
+                public NamedBeanType getType() {
+                    return NamedBeanType.getTypeFromClass(LogixNG_SelectNamedBean.this._class);
+                }
+
+                @Override
+                public NamedBeanHandle<? extends NamedBean> get() {
+                    return LogixNG_SelectNamedBean.this._handle;
+                }
+
+                @Override
+                public void replace(NamedBeanHandle<? extends NamedBean> newBean) {
+                    if (! LogixNG_SelectNamedBean.this._class.isAssignableFrom(newBean.getBean().getClass())) {
+                        throw new IllegalArgumentException("Bean must be of the correct class");
+                    }
+                    LogixNG_SelectNamedBean.this.setNamedBean((NamedBeanHandle<E>) newBean);
+                }
+            };
+            list.add(namedBeanItem);
+        }
+
+        if (_memoryHandle != null) {
+            var memoryItem = new GetAndReplaceNamedBean() {
+                @Override
+                public NamedBeanType getType() {
+                    return NamedBeanType.Memory;
+                }
+
+                @Override
+                public NamedBeanHandle<? extends NamedBean> get() {
+                    return LogixNG_SelectNamedBean.this._memoryHandle;
+                }
+
+                @Override
+                public void replace(NamedBeanHandle<? extends NamedBean> newBean) {
+                    if (!(newBean.getBean() instanceof Memory)) {
+                        throw new IllegalArgumentException("Bean must be a Memory");
+                    }
+                    LogixNG_SelectNamedBean.this.setMemory((NamedBeanHandle<Memory>) newBean);
+                }
+            };
+            list.add(memoryItem);
+        }
+
+        _selectTable.getGetAndReplaceNamedBeans(list);
     }
 
     public static enum Type {
