@@ -702,7 +702,7 @@
             <decVal max="100"/>
             <label>Arriving Station Announcements</label>
          </variable>
-         <xi:include href="http://jmri.org/xml/decoders/tcs/wowSteamCV.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/wowSteamCV046.xml"/>
       </variables>
       <resets>
         <mode>PAGEMODE</mode>
@@ -725,7 +725,6 @@
       </resets>
    </decoder>
    <xi:include href="http://jmri.org/xml/programmers/parts/BasicSpeedControlTrimPane.xml"/>
-   <xi:include href="http://jmri.org/xml/decoders/tcs/wow_dual_f0_f12.xml"/>
    <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Momentum.xml"/>
    <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Brake.xml"/>
    <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_TCS_4_6.xml"/>
