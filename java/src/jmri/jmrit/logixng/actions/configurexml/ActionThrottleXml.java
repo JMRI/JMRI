@@ -109,6 +109,11 @@ public class ActionThrottleXml extends jmri.managers.configurexml.AbstractNamedB
                     .addContent(p.getMemo().getSystemPrefix()));
         }
 
+        if (!p.isStopLocoWhenSwitchingLoco()) {
+            element.addContent(new Element("stopLocoWhenSwitchingLoco")
+                    .addContent("no"));
+        }
+
         return element;
     }
 
@@ -174,6 +179,11 @@ public class ActionThrottleXml extends jmri.managers.configurexml.AbstractNamedB
                     break;
                 }
             }
+        }
+
+        Element stopLocoWhenSwitchingLoco = shared.getChild("stopLocoWhenSwitchingLoco");
+        if (stopLocoWhenSwitchingLoco != null) {
+            h.setStopLocoWhenSwitchingLoco("yes".equals(stopLocoWhenSwitchingLoco.getTextTrim()));
         }
 
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
