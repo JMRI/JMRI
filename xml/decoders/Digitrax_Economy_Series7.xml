@@ -18,21 +18,29 @@
   <!-- Version 0 - New Series 7 Economy Digitrax decoders -->
   <decoder>
     <family name="Economy Series 7 with FX3, silent" mfg="Digitrax" lowVersionID="204" highVersionID="204" comment="">
-      <model model="DN147A0" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
+      <model model="DN147A0" numOuts="4" numFns="4" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
       </model>
-      <model model="DN147A1" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
+      <model model="DN147A1" numOuts="4" numFns="4" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
       </model>
-      <model model="DN147K0A" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
+      <model model="DN147K0A" numOuts="4" numFns="4" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
       </model>
-      <model model="DN147K0B" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
+      <model model="DN147K0B" numOuts="4" numFns="4" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
       </model>
-      <model model="DN147K0D" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
+      <model model="DN147K0D" numOuts="4" numFns="4" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
       </model>
-      <model model="DN147K0E" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
+      <model model="DN147K0E" numOuts="4" numFns="4" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
       </model>
-      <model model="DN147K1C" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
+      <model model="DN147K1C" numOuts="4" numFns="4" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
       </model>
-      <model model="DN147K2" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
+      <model model="DN147K2" numOuts="4" numFns="4" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
+      </model>
+      <model model="DN167K0A" numOuts="6" numFns="6" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
+      </model>
+      <model model="DN167K0B" numOuts="6" numFns="6" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
+      </model>
+      <model model="DN167K0D" numOuts="6" numFns="6" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
+      </model>
+      <model model="DN167K0E" numOuts="6" numFns="6" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes" transpRead="yes"/>
