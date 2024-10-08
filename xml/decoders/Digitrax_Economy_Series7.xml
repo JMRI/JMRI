@@ -18,21 +18,21 @@
   <!-- Version 0 - New Series 7 Economy Digitrax decoders -->
   <decoder>
     <family name="Economy Series 7 with FX3, silent" mfg="Digitrax" lowVersionID="204" highVersionID="204" comment="">
-      <model model="DN147A0" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="9pin" comment="">
+      <model model="DN147A0" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
       </model>
-      <model model="DN147A1" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="9pin" comment="">
+      <model model="DN147A1" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
       </model>
-      <model model="DN147K0A" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="9pin" comment="">
+      <model model="DN147K0A" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
       </model>
-      <model model="DN147K0B" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="9pin" comment="">
+      <model model="DN147K0B" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
       </model>
-      <model model="DN147K0D" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="9pin" comment="">
+      <model model="DN147K0D" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
       </model>
-      <model model="DN147K0E" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="9pin" comment="">
+      <model model="DN147K0E" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
       </model>
-      <model model="DN147K1C" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="9pin" comment="">
+      <model model="DN147K1C" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
       </model>
-      <model model="DN147K2" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="9pin" comment="">
+      <model model="DN147K2" numOuts="2" numFns="5" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes" transpRead="yes"/>
@@ -50,8 +50,6 @@
       <xi:include href="http://jmri.org/xml/decoders/digitrax/functionmap.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/fxCVs.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/bemf.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv61Series6.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv62.63LightingOptions.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
