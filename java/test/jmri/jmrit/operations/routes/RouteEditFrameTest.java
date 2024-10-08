@@ -75,6 +75,9 @@ public class RouteEditFrameTest extends OperationsTestCase {
         RouteEditFrame f = new RouteEditFrame();
         f.initComponents(null, train);
         
+        // Add some locations to the route
+        JUnitOperationsUtil.loadFiveLocations();
+
         // confirm title is "Add Route"
         Assert.assertEquals("Title", Bundle.getMessage("TitleRouteAdd"), f.getTitle());
         f.routeNameTextField.setText("New Test Route");
@@ -85,6 +88,29 @@ public class RouteEditFrameTest extends OperationsTestCase {
         
         Assert.assertFalse("Add Route Button", f.addRouteButton.isEnabled());
         
+        JUnitUtil.dispose(f);
+    }
+
+    /*
+     * Test that info message appears when adding location and none selected
+     */
+    @Test
+    public void testRouteEditFrameNoSelection() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        RouteEditFrame f = new RouteEditFrame();
+        f.setTitle("Test Add Route Frame");
+        f.initComponents(null);
+
+        f.routeNameTextField.setText("New Test Route");
+        f.commentTextField.setText("New Text Route Comment");
+        JemmyUtil.enterClickAndLeave(f.addRouteButton);
+
+        JUnitOperationsUtil.loadFiveLocations();
+
+        // no location selected
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.addLocationButton);
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("SelectLocation"), Bundle.getMessage("ButtonOK"));
+
         JUnitUtil.dispose(f);
     }
 
