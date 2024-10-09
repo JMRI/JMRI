@@ -561,7 +561,7 @@ abstract public class AbstractPortController implements PortAdapter {
      * @throws IOException if the stream is e.g. closed due to failure to open the port completely
      */
      @SuppressFBWarnings(value = "SR_NOT_CHECKED", justification = "skipping all, don't care what skip() returns")
-     protected static void purgeStream(@Nonnull java.io.InputStream serialStream) throws IOException {
+     public static void purgeStream(@Nonnull java.io.InputStream serialStream) throws IOException {
         int count = serialStream.available();
         log.debug("input stream shows {} bytes available", count);
         while (count > 0) {

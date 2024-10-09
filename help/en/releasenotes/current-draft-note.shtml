@@ -651,5 +651,10 @@
                 Group. If there is any problem, it could case JMRI to
                 not quit properly, not restart properly or leave Java
                 running when JMRI has quit.</li>
+            <li>It's now possible for a class in JMRI to replace the
+                serial port on the fly, without the rest of JMRI noticing
+                it. It's useful for example for a firmware uploader that
+                needs exclusive access to the serial port. For an
+                example, see jmri.jmrix.loconet.demoport.DemoSerialPortAction.</li>
         </ul>
 

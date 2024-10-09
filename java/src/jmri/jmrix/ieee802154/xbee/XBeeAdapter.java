@@ -7,7 +7,9 @@ import java.util.Arrays;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-import jmri.jmrix.AbstractSerialPortController.SerialPortDataListener;
+import jmri.jmrix.SerialPort;
+import jmri.jmrix.SerialPortDataListener;
+import jmri.jmrix.SerialPortEvent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
