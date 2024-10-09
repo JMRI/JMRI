@@ -29,7 +29,12 @@ public class NceSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
     public void testValidateSystemNameFormat() {
         Assert.assertEquals("NS4:3", l.validateSystemNameFormat("NS4:3"));
         Assert.assertEquals("NS50", l.validateSystemNameFormat("NS50"));
-        Assert.assertEquals("NS0", l.validateSystemNameFormat("NS0"));
+        try {
+            l.validateSystemNameFormat("NS0");
+            Assert.fail("Expected exception not thrown");
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals("\"NS0\" must use an AIU address from 1 to 63", ex.getMessage());
+        }
         try {
             l.validateSystemNameFormat("NS0:0");
             Assert.fail("Expected exception not thrown");
