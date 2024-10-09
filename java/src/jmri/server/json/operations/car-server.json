@@ -192,10 +192,10 @@
         },
         "weight": {
             "type": "number",
-            "description": "Weight of car in onces"
+            "description": "Adjusted weight of car in tons"
         },
         "weightTons": {
-            "type": "number",
+            "type": "string",
             "description": "Weight of car in tons"
         }
     },
