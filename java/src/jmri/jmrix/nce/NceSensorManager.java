@@ -55,7 +55,8 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     private final int aiuCabIdMax;
     private NceAIU[] aiuArray = null;   // P
     private int[] activeAIUs = null;    // P
-    private int activeAIUMax = 0;       // last+1 element used of activeAIUs P
+    private int activeAIUMax = 0;       // last+1 element used of activeAIUs
+    private static final int MINPIN = 1;    // only pins 1 - 14 used on NCE AIU
     private static final int MAXPIN = 14;    // only pins 1 - 14 used on NCE AIU
 
     /**
@@ -399,7 +400,8 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
                 aiucab = Integer.parseInt(curAddress.substring(0, seperator));
                 pin = Integer.parseInt(curAddress.substring(seperator + 1));
             } catch (NumberFormatException ex) {
-                throw new JmriException("Unable to convert "+curAddress+" into the cab and pin format of nn:xx");
+                throw new JmriException(
+                    Bundle.getMessage(Locale.ENGLISH, "CreateSystemNameBadColonFormat", curAddress));
             }
             iName = (aiucab - 1) * 16 + pin - 1;
 
@@ -408,17 +410,20 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
             try {
                 iName = Integer.parseInt(curAddress);
             } catch (NumberFormatException ex) {
-                throw new JmriException("Hardware Address passed "+curAddress+" should be a number or the cab and pin format of nn:xx");
+                throw new JmriException(
+                    Bundle.getMessage(Locale.ENGLISH, "CreateSystemNameBadValueFormat", curAddress));
             }
             pin = iName % 16 + 1;
             aiucab = iName / 16 + 1;
         }
         // only pins 1 through 14 are valid
-        if (pin == 0 || pin > MAXPIN) {
-            throw new JmriException("Sensor pin number "+pin+" for address "+curAddress+" is out of range; only pin numbers 1 - 14 are valid");
+        if (pin < MINPIN || pin > MAXPIN) {
+            throw new JmriException(
+                Bundle.getMessage(Locale.ENGLISH, "CreateSystemNameBadPinValue", pin, curAddress, MINPIN, MAXPIN));
         }
         if (aiucab < aiuCabIdMin || aiucab > aiuCabIdMax) {
-            throw new JmriException("AIU number "+aiucab+" for address "+curAddress+" is out of range; only AIU "+aiuCabIdMin+" - "+aiuCabIdMax+" are valid");
+            throw new JmriException(
+                Bundle.getMessage(Locale.ENGLISH, "CreateSystemNameBadPinValue", aiucab, curAddress, aiuCabIdMin, aiuCabIdMin));
         }
         return prefix + typeLetter() + iName;
     }
@@ -475,7 +480,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         }
         try {
             num = Integer.parseInt(parts[1]);
-            if (num < 1 || num > MAXPIN) {
+            if (num < MINPIN || num > MAXPIN) {
                 throw new NamedBean.BadSystemNameException(
                         Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameBadAIUPin", name),
                         Bundle.getMessage(locale, "InvalidSystemNameBadAIUPin", name));
