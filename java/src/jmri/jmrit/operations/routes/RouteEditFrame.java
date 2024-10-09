@@ -195,7 +195,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         menuBar.add(toolMenu);
         loadToolMenu();
         setJMenuBar(menuBar);
-        addHelpMenu("package.jmri.jmrit.operations.Operations_EditRoute", true); // NOI18N
+        addHelpMenu("package.jmri.jmrit.operations.Operations_AddRoute", true); // NOI18N
 
         // get notified if combo box gets modified
         InstanceManager.getDefault(LocationManager.class).addPropertyChangeListener(this);
@@ -221,6 +221,11 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
             log.debug("route add location button activated");
             if (locationBox.getSelectedItem() != null) {
                 addNewRouteLocation();
+            } else {
+                JmriJOptionPane.showMessageDialog(this,
+                        Bundle.getMessage("SelectLocation"),
+                        Bundle.getMessage("SelectLocation"),
+                        JmriJOptionPane.INFORMATION_MESSAGE);
             }
         }
         if (ae.getSource() == saveRouteButton) {
@@ -314,19 +319,19 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         if (!checkName(Bundle.getMessage("add"))) {
             return;
         }
-        Route route = routeManager.newRoute(routeNameTextField.getText());
-        routeModel.initTable(this, routeTable, route);
-        _route = route;
+        _route = routeManager.newRoute(routeNameTextField.getText());
+        routeModel.initTable(this, routeTable, _route);
         enableButtons(true);
         // assign route to a train?
         if (_train != null) {
-            _train.setRoute(route);
+            _train.setRoute(_route);
         }
         if (_route != null) {
             _route.addPropertyChangeListener(this);
         }
         saveRoute();
         loadToolMenu();
+        selectFirstLocationComboBox();
     }
 
     private boolean saveRoute() {
@@ -407,6 +412,12 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         showDepartTime.setEnabled(enabled);
         // the inverse!
         addRouteButton.setEnabled(!enabled);
+    }
+
+    private void selectFirstLocationComboBox() {
+        if (locationBox.getItemCount() > 1) {
+            locationBox.setSelectedIndex(1);
+        }
     }
 
     @Override

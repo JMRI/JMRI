@@ -71,7 +71,7 @@ public class JmriJFrameWithPermissions extends JmriJFrame {
     private void switchContentPaneAndMenu() {
         if (! InstanceManager.getDefault(PermissionManager.class)
                 .hasAtLeastPermission(EditorPermissions.EDITOR_PERMISSION,
-                        EditorPermissions.EditorPermissionEnum.Read)) {
+                        EditorPermissions.EditorPermissionEnum.View)) {
             super.getGlassPane().setVisible(false);
             super.setContentPane(_hiddenPane);
             super.setJMenuBar(_hiddenMenuBar);
@@ -81,7 +81,7 @@ public class JmriJFrameWithPermissions extends JmriJFrame {
             super.getGlassPane().setVisible(
                     ! InstanceManager.getDefault(PermissionManager.class)
                             .hasAtLeastPermission(EditorPermissions.EDITOR_PERMISSION,
-                                    EditorPermissions.EditorPermissionEnum.ReadWrite)
+                                    EditorPermissions.EditorPermissionEnum.ViewControl)
             );
         }
         // Save the bounds before pack() since pack() might resize the panel

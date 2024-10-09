@@ -47,8 +47,8 @@ public class DefaultDigitalActionManagerXml extends AbstractManagerXml {
                     List<Element> elements = new ArrayList<>();
                     // The male socket may be embedded in other male sockets
                     MaleDigitalActionSocket a = action;
+                    elements.add(storeMaleSocket(a));
                     while (!(a instanceof DefaultMaleDigitalActionSocket)) {
-                        elements.add(storeMaleSocket(a));
                         a = (MaleDigitalActionSocket) a.getObject();
                     }
                     Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(a.getObject());

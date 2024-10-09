@@ -446,6 +446,13 @@
               automatically when the tables and panel file is loaded,
               despite the <strong>Start timer immediately on load</strong>
               setting was selected for the timer.</li>
+          <li>A bug is fixed that caused problem with storing a table
+              and panel file if the LogixNG preference
+              <strong>Install debugger</strong> is unselected.</li>
+          <li>The action <strong>Throttle</strong> now has the option
+              <strong>Stop loco then switching loco</strong>. If it's
+              selected, the loco is stopped before switching to another
+              loco.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -484,7 +491,7 @@
             <li>If you change permissions, you need to restart JMRI for
                 the changes to take effect.</li>
             <li>A new permission <strong>Panel permission</strong> is
-                added. If the user doesn't have at least <strong>Read</strong>
+                added. If the user doesn't have at least <strong>View</strong>
                 permission, the panel will be empty with the text
                 <strong>Permission denied</strong>.</li>
             <li>The JMRI web server now has support for permissions. The
@@ -507,7 +514,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li></li>
+            <li>On roster media pane (as well as functions panel), images can be opened by double clicking on the panel or via the contextual menu. Direct images drag'n drop from any aplication is also supported, a png file will be created from the drag'n drop content.</li>
         </ul>
 
     <h3>Routes</h3>
