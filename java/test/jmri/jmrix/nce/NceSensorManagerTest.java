@@ -57,7 +57,7 @@ public class NceSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
             l.validateSystemNameFormat("NS14");
             Assert.fail("Expected exception not thrown");
         } catch (IllegalArgumentException ex) {
-            Assert.assertEquals("\"NS14\" must use an AIU pin from 1 to 14", ex.getMessage());
+            Assert.assertEquals("\"NS14\" must use an AIU address from 1 to 63", ex.getMessage());
         }
         try {
             l.validateSystemNameFormat("NS47");
