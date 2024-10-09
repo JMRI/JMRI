@@ -29,6 +29,12 @@ public class NceSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
     protected int getNumToTest2() {
         return 45;
     }
+
+    @Override
+    protected String getASystemNameWithNoPrefix() {
+        return "32";
+    }
+    
     @Test
     public void testNceSensorCreate() {
         Assert.assertNotNull("exists", l);
