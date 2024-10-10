@@ -666,12 +666,8 @@ public class JsonOperationsHttpService extends JsonHttpService {
         rs.setComment(data.path(COMMENT).asText(rs.getComment()));
         rs.setOwnerName(data.path(OWNER).asText(rs.getOwnerName()));
         rs.setBuilt(data.path(BUILT).asText(rs.getBuilt()));
-        if (data.path(WEIGHT).isValueNode()) {
-            rs.setWeight(Double.toString(data.path(WEIGHT).asDouble()));
-        }
-        if (data.path(WEIGHT_TONS).isValueNode()) {
-            rs.setWeightTons(Double.toString(data.path(WEIGHT_TONS).asDouble()));
-        }
+
+        rs.setWeightTons(data.path(WEIGHT_TONS).asText());
         rs.setRfid(data.path(RFID).asText(rs.getRfid()));
         rs.setLength(Integer.toString(data.path(LENGTH).asInt(rs.getLengthInteger())));
         rs.setOutOfService(data.path(OUT_OF_SERVICE).asBoolean(rs.isOutOfService()));
