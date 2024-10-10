@@ -423,7 +423,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         }
         if (aiucab < aiuCabIdMin || aiucab > aiuCabIdMax) {
             throw new JmriException(
-                Bundle.getMessage(Locale.ENGLISH, "CreateSystemNameBadPinValue", aiucab, curAddress, aiuCabIdMin, aiuCabIdMin));
+                Bundle.getMessage(Locale.ENGLISH, "CreateSystemNameBadAIUValue", aiucab, curAddress, aiuCabIdMin, aiuCabIdMin));
         }
         return prefix + typeLetter() + iName;
     }
