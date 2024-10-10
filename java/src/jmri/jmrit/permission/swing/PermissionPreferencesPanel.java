@@ -125,7 +125,7 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
 
         JButton addUserButton = new JButton(Bundle.getMessage("PermissionPreferencesPanel_AddUser"));
         addUserButton.addActionListener((evt) -> {
-            new AddUserDialog(getFrame(), (user) -> {
+            new AddUserDialog(_temporaryPermissionManager, getFrame(), (user) -> {
                 // Find the index of the new user
                 userList.clear();
                 userList.addAll(_temporaryPermissionManager.getUsers());
@@ -366,7 +366,8 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
         JButton changePasswordButton = new JButton(Bundle.getMessage("PermissionPreferencesPanel_ChangePassword"));
         changePasswordButton.setEnabled(!_temporaryPermissionManager.isAGuestUser(user));
         changePasswordButton.addActionListener((evt) -> {
-            new ChangeUserPasswordDialog(getFrame(), user, ()->{_dirty = true;})
+            new ChangeUserPasswordDialog(
+                    _temporaryPermissionManager, getFrame(), user, ()->{_dirty = true;})
                     .setVisible(true);
         });
         userPanel.add(changePasswordButton);

@@ -15,12 +15,17 @@ import jmri.util.swing.JmriJOptionPane;
  */
 public class ChangeUserPasswordDialog extends JDialog {
 
+    private final PermissionManager _mngr;
     private final JPasswordField _passwordTextField;
     private final JPasswordField _secondPasswordTextField;
 
 
-    public ChangeUserPasswordDialog(Frame owner, User user, Runnable passwordChangedRunnable) {
+    public ChangeUserPasswordDialog(
+            PermissionManager mngr, Frame owner, User user, Runnable passwordChangedRunnable) {
+
         super(owner, Bundle.getMessage("ChangeUserPasswordDialog_ChangePasswordTitle"), true);
+
+        this._mngr = mngr;
 
         JPanel contentPanel = new JPanel();
         rootPane.getContentPane().add(contentPanel);
@@ -87,12 +92,10 @@ public class ChangeUserPasswordDialog extends JDialog {
     }
 
     private boolean okPressed(User user) {
-        PermissionManager mngr = InstanceManager.getDefault(PermissionManager.class);
-
         String passwd1 = new String(_passwordTextField.getPassword());
         String passwd2 = new String(_secondPasswordTextField.getPassword());
 
-        if (passwd1.isBlank() && !mngr.isAllowEmptyPasswords()) {
+        if (passwd1.isBlank() && !_mngr.isAllowEmptyPasswords()) {
             JmriJOptionPane.showMessageDialog(null,
                     Bundle.getMessage("AddUserDialog_PasswordEmpty"),
                     jmri.Application.getApplicationName(),

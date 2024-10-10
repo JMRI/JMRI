@@ -19,6 +19,7 @@ public class AddUserDialog extends JDialog {
         void userAdded(User user);
     }
 
+    private final PermissionManager _mngr;
     private final UserAdded _userAdded;
     private final JTextField _usernameTextField;
     private final JPasswordField _passwordTextField;
@@ -27,9 +28,10 @@ public class AddUserDialog extends JDialog {
     private final JTextField _commentTextField;
 
 
-    public AddUserDialog(Frame owner, UserAdded userAdded) {
+    public AddUserDialog(PermissionManager mngr, Frame owner, UserAdded userAdded) {
         super(owner, Bundle.getMessage("AddUserDialog_AddUserTitle"), true);
 
+        this._mngr = mngr;
         this._userAdded = userAdded;
 
         JPanel contentPanel = new JPanel();
@@ -107,8 +109,6 @@ public class AddUserDialog extends JDialog {
     }
 
     private boolean okPressed() {
-        PermissionManager mngr = InstanceManager.getDefault(PermissionManager.class);
-
         String username = _usernameTextField.getText();
         String passwd1 = new String(_passwordTextField.getPassword());
         String passwd2 = new String(_secondPasswordTextField.getPassword());
@@ -131,7 +131,7 @@ public class AddUserDialog extends JDialog {
             return false;
         }
 
-        if (passwd1.isBlank() && !mngr.isAllowEmptyPasswords()) {
+        if (passwd1.isBlank() && !_mngr.isAllowEmptyPasswords()) {
             JmriJOptionPane.showMessageDialog(null,
                     Bundle.getMessage("AddUserDialog_PasswordEmpty"),
                     jmri.Application.getApplicationName(),
@@ -156,7 +156,7 @@ public class AddUserDialog extends JDialog {
         }
 
         try {
-            User user = mngr.addUser(_usernameTextField.getText(), passwd1);
+            User user = _mngr.addUser(_usernameTextField.getText(), passwd1);
             user.setName(name);
             user.setComment(comment);
             _userAdded.userAdded(user);
