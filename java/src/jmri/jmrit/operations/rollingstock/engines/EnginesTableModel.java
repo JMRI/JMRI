@@ -408,8 +408,6 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
             case LENGTH_COLUMN:
             case MOVES_COLUMN:
                 return Integer.class;
-            case LAST_COLUMN:
-                return Object.class; // to disable sorting
             default:
                 return String.class;
         }
@@ -509,7 +507,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
             case RFID_COLUMN:
                 return eng.getRfid();
             case LAST_COLUMN:
-                return eng.getLastDate();
+                return eng.getSortDate();
             case DCC_ADDRESS_COLUMN:
                 return eng.getDccAddress();
             case COMMENT_COLUMN:

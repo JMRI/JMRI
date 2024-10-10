@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.beans.PropertyChangeListener;
 import java.io.*;
 import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import org.jdom2.Element;
@@ -96,7 +97,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     protected String _serviceStatus = NONE; // status only if train is being built
     protected int _statusCode = CODE_UNKNOWN;
     protected int _oldStatusCode = CODE_UNKNOWN;
-    protected String _statusTerminatedDate = NONE;
+    protected Date _date; // date for last status change for this train
     protected int _statusCarsRequested = 0;
     protected String _tableRowColorName = NONE; // color of row in Trains table
     protected String _tableRowColorResetName = NONE; // color of row in Trains table when reset
@@ -791,6 +792,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         String oldStatus = getStatus();
         int oldCode = getStatusCode();
         _statusCode = code;
+        setDate(Calendar.getInstance().getTime());
         // always fire property change for train en route
         if (oldCode != getStatusCode() || code == CODE_TRAIN_EN_ROUTE) {
             setDirtyAndFirePropertyChange(STATUS_CHANGED_PROPERTY, oldStatus, getStatus());
@@ -869,7 +871,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 return Bundle.getMessage(locale, "StatusPartialBuilt", this.getNumberCarsWorked(),
                         this.getNumberCarsRequested()); // NOI18N
             case CODE_TERMINATED:
-                return Bundle.getMessage(locale, "StatusTerminated", this.getTerminationDate()); // NOI18N
+                return Bundle.getMessage(locale, "StatusTerminated", this.getSortDate()); // NOI18N
             case CODE_TRAIN_EN_ROUTE:
                 return Bundle.getMessage(locale, "StatusEnRoute", this.getNumberCarsInTrain(), this.getTrainLength(),
                         Setup.getLengthUnit().toLowerCase(), this.getTrainWeight()); // NOI18N
@@ -888,7 +890,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             case CODE_PARTIAL_BUILT:
                 return getStatusCode() + "||" + this.getNumberCarsRequested(); // NOI18N
             case CODE_TERMINATED:
-                return getStatusCode() + "||" + this.getTerminationDate(); // NOI18N
+                return getStatusCode() + "||" + this.getSortDate(); // NOI18N
             default:
                 return Integer.toString(getStatusCode());
         }
@@ -1980,12 +1982,24 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         return _statusCarsRequested;
     }
 
-    public void setTerminationDate(String date) {
-        _statusTerminatedDate = date;
+    public void setDate(Date date) {
+        _date = date;
     }
 
-    public String getTerminationDate() {
-        return _statusTerminatedDate;
+    public String getSortDate() {
+        if (_date == null) {
+            return NONE;
+        }
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); // NOI18N
+        return format.format(_date);
+    }
+
+    public String getDate() {
+        if (_date == null) {
+            return NONE;
+        }
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss"); // NOI18N
+        return format.format(_date);
     }
 
     /**
@@ -3549,7 +3563,6 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             runScripts(getMoveScripts());
         } else {
             log.debug("Train ({}) terminated", getName());
-            setTerminationDate(TrainCommon.getDate(false));
             setStatusCode(CODE_TERMINATED);
             setBuilt(false);
             // run termination scripts
@@ -3906,7 +3919,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             _leadEngineId = a.getValue();
         }
         if ((a = e.getAttribute(Xml.TERMINATION_DATE)) != null) {
-            _statusTerminatedDate = a.getValue();
+            _date = TrainCommon.convertStringToDate(a.getValue());
         }
         if ((a = e.getAttribute(Xml.REQUESTED_CARS)) != null) {
             try {
@@ -3931,10 +3944,6 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             } else if (status.startsWith(PARTIAL_BUILT)) {
                 _statusCode = CODE_PARTIAL_BUILT;
             } else if (status.startsWith(TERMINATED)) {
-                String[] splitStatus = status.split(" ");
-                if (splitStatus.length > 1) {
-                    _statusTerminatedDate = splitStatus[1];
-                }
                 _statusCode = CODE_TERMINATED;
             } else if (status.startsWith(TRAIN_EN_ROUTE)) {
                 _statusCode = CODE_TRAIN_EN_ROUTE;
@@ -4121,7 +4130,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             e.setAttribute(Xml.LEAD_ENGINE, getLeadEngine().getId());
         }
         e.setAttribute(Xml.STATUS, getStatus());
-        e.setAttribute(Xml.TERMINATION_DATE, getTerminationDate());
+        e.setAttribute(Xml.TERMINATION_DATE, getDate());
         e.setAttribute(Xml.REQUESTED_CARS, Integer.toString(getNumberCarsRequested()));
         e.setAttribute(Xml.STATUS_CODE, Integer.toString(getStatusCode()));
         e.setAttribute(Xml.OLD_STATUS_CODE, Integer.toString(getOldStatusCode()));
