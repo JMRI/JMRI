@@ -804,6 +804,11 @@ LogixNG: IQ:AUTO:0001
       If there is more than one connection, other connections <strong><em>might</em></strong>
       support a throttle.</p>
 
+      <p><span class="since">since 5.9.5</span>When enabled, the <strong>Stop loco when switching loco</strong>
+      option stops the loco before switching to another loco.  This is the default and was the
+      previous behavior. <em><strong>Warning:</strong> When the option is disabled and and a loco
+      change occurs, the previous loco will continue running until some other process tells it to stop.</em></p>
+
       <div style="margin-left: 2em">
         <a href="images/chapter5/throttle_action.png"><img src="images/chapter5/throttle_action.png"
         alt="Chapter 5 throttle action"></a>
