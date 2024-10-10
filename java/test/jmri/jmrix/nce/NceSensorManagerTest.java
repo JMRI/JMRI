@@ -1,9 +1,13 @@
 package jmri.jmrix.nce;
 
+import jmri.ProvidingManager;
+import jmri.Sensor;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import java.beans.PropertyVetoException;
 
 /**
  * JUnit tests for the NceAIU class.
@@ -34,6 +38,17 @@ public class NceSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
     protected String getASystemNameWithNoPrefix() {
         return "32";
     }
+    
+    @Test
+    @Override
+    public void testRegisterDuplicateSystemName() throws PropertyVetoException,
+            NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        ProvidingManager<Sensor> m = l;
+        String s1 = getSystemName(getNumToTest1());
+        String s2 = getSystemName(getNumToTest2());
+        testRegisterDuplicateSystemName(m, s1, s2);
+    }
+
     
     @Test
     public void testNceSensorCreate() {
