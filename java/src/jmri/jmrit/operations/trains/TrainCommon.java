@@ -1953,6 +1953,32 @@ public class TrainCommon {
         return TrainCommon.getDate(calendar.getTime());
     }
 
+    public static Date convertStringToDate(String date) {
+        if (!date.isBlank()) {
+            // create a date object from the string.
+            try {
+                // try MM/dd/yyyy HH:mm:ss.
+                SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss"); // NOI18N
+                return formatter.parse(date);
+            } catch (java.text.ParseException pe1) {
+                // try the old 12 hour format (no seconds).
+                try {
+                    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mmaa"); // NOI18N
+                    return formatter.parse(date);
+                } catch (java.text.ParseException pe2) {
+                    try {
+                        // try 24hour clock.
+                        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm"); // NOI18N
+                        return formatter.parse(date);
+                    } catch (java.text.ParseException pe3) {
+                        log.debug("Not able to parse date: {}", date);
+                    }
+                }
+            }
+        }
+        return null; // there was no date specified.
+    }
+
     /**
      * Pads out a string by adding spaces to the end of the string, and will
      * remove characters from the end of the string if the string exceeds the
