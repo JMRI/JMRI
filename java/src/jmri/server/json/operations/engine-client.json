@@ -120,11 +120,11 @@
         },
         "weight": {
             "type": "number",
-            "description": "Weight of car in onces"
+            "description": "Weight of engine in tons"
         },
         "weightTons": {
-            "type": "number",
-            "description": "Weight of car in tons"
+            "type": "string",
+            "description": "Weight of engine in tons"
         }
     },
     "additionalProperties": false,
