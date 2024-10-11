@@ -416,7 +416,7 @@ public class PrintCarRosterFrame extends OperationsFrame {
                 built = padAttribute(car.getBuilt().trim(), Control.max_len_string_built_name);
             }
             if (printCarLast.isSelected()) {
-                last = padAttribute(car.getLastDate().split(" ")[0], 10);
+                last = padAttribute(car.getSortDate().split(" ")[0], 10);
             }
             if (printCarWait.isSelected()) {
                 wait = padAttribute(Integer.toString(car.getWait()), 4);

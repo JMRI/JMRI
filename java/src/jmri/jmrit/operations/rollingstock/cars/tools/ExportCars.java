@@ -133,7 +133,7 @@ public class ExportCars extends XmlFile {
                         car.getTypeExtensions(),
                         car.getWait(),
                         car.getPickupScheduleName(),
-                        car.getLastDate(),
+                        car.getSortDate(),
                         car.getReturnWhenEmptyDestinationName(),
                         LOCATION_TRACK_SEPARATOR,
                         car.getReturnWhenEmptyDestTrackName(),

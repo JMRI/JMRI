@@ -239,7 +239,7 @@ public class PrintEngineRosterFrame extends OperationsFrame {
                     .getSelectedIndex() == _etf.enginesModel.SORTBY_DCC_ADDRESS) {
                 dccAddress = padAttribute(engine.getDccAddress(), 5);
             } else if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_LAST) {
-                last = padAttribute(engine.getLastDate(), lastLength);
+                last = padAttribute(engine.getSortDate(), lastLength);
             } else if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_VALUE) {
                 value = padAttribute(engine.getValue(), Control.max_len_string_attibute);
             } else if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_RFID) {

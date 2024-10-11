@@ -105,7 +105,7 @@ public class ExportEngines extends XmlFile {
                         engine.getTrackName(),
                         engine.getConsistName(),
                         engine.getMoves(),
-                        engine.getLastDate(),
+                        engine.getSortDate(),
                         engine.getValue(),
                         engine.getHp(),
                         engine.getWeightTons(),
