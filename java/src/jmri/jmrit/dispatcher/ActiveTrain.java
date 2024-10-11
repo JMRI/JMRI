@@ -837,7 +837,7 @@ public class ActiveTrain implements PropertyChangeProvider {
             as.getSection().suppressNameUpdate(false);
         }
         for (Block b: as.getSection().getBlockList()) {
-            if (!InstanceManager.getDefault(DispatcherFrame.class).checkForBlockInAllocatedSection(b, as.getSection())) {
+            if (!InstanceManager.getDefault(DispatcherFrame.class).checkForBlockInAllocatedSection(b, as.getSection(), null)) {
                 String userName = b.getUserName();
                 if (userName != null) {
                     LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(userName);
