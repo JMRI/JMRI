@@ -126,8 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Fix a problem when CDI contains "immediate" slider hints</li>
-                <li>Slider hints now control tick spacing, instead of number of ticks.</li>
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -217,7 +216,7 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li>Added 12 new DN147 and DN167 definitions</li>
+                <li></li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -317,7 +316,7 @@
 
         <h4>Tam Valley Depot</h4>
             <ul>
-                <li>Updated the QuadLN_S decoder definition to support new features in version 3.4 firmware.</li>
+                <li></li>
             </ul>
 
         <h4>TAMS</h4>
@@ -406,7 +405,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>Do not release any allocated section from a train if the position of the train is not known.</li>
+             <li></li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -424,7 +423,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>Improved zoom menu selection matching.</li>
+            <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -441,18 +440,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>A bug is fixed in the <strong>Timer</strong> action. The
-              bug caused the timer to <strong>not</strong> start
-              automatically when the tables and panel file is loaded,
-              despite the <strong>Start timer immediately on load</strong>
-              setting was selected for the timer.</li>
-          <li>A bug is fixed that caused problem with storing a table
-              and panel file if the LogixNG preference
-              <strong>Install debugger</strong> is unselected.</li>
-          <li>The action <strong>Throttle</strong> now has the option
-              <strong>Stop loco then switching loco</strong>. If it's
-              selected, the loco is stopped before switching to another
-              loco.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -464,9 +452,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>Changed "Wait" to travel time in the route edit window.</li>
-            <li>New feature, you can now add or remove locomotives in a train's route.</li>
-            <li>HPT (Horse Power per Ton) in the Setting window can now accept decimal numbers.</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -475,33 +461,15 @@
             <li></li>
         </ul>
 
-    <h3>Preferences</h3>
-        <a id="Preferences" name="Preferences"></a>
+    <h3>Permissions</h3>
+        <a id="Permissions" name="Permissions"></a>
         <ul>
             <li></li>
         </ul>
 
-    <h3>Permissions</h3>
-        <a id="Permissions" name="Permissions"></a>
+    <h3>Preferences</h3>
+        <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li>The permission system has been improved. Users and
-                roles remains but the permissions has changed. As a
-                result, you might need to set the permissions for each
-                role again.</li>
-            <li>If you change permissions, you need to restart JMRI for
-                the changes to take effect.</li>
-            <li>A new permission <strong>Panel permission</strong> is
-                added. If the user doesn't have at least <strong>View</strong>
-                permission, the panel will be empty with the text
-                <strong>Permission denied</strong>.</li>
-            <li>The JMRI web server now has support for permissions. The
-                user can login and logout using the web server. Note
-                that the web server has the guest user <strong>remote guest</strong>
-                instead of the usual <strong>guest</strong> user. The
-                remote guest user has by defaul the <strong>Remote guest</strong>
-                role. This allows you to have different permissions for
-                web access than local access for users that have not
-                logged in.</li>
             <li></li>
         </ul>
 
@@ -514,7 +482,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li>On roster media pane (as well as functions panel), images can be opened by double clicking on the panel or via the contextual menu. Direct images drag'n drop from any aplication is also supported, a png file will be created from the drag'n drop content.</li>
+            <li></li>
         </ul>
 
     <h3>Routes</h3>
@@ -636,25 +604,14 @@
         </ul>
 
    <h3>Z21 Server</h3>
-        <a id="z21" name="z21"></a>
+        <a id="Z21" name="Z21"></a>
         <ul>
-            <li>Fix an error that causes occasional crashes.</li>
+            <li></li>
         </ul>
-
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Some cleanup has been done to JMRI. It shouldn't affect
-                the users, but if it does, please report it on the
-                <a href="https://groups.io/g/jmriusers/topics">JMRI Users Groups.io</a>
-                Group. If there is any problem, it could case JMRI to
-                not quit properly, not restart properly or leave Java
-                running when JMRI has quit.</li>
-            <li>It's now possible for a class in JMRI to replace the
-                serial port on the fly, without the rest of JMRI noticing
-                it. It's useful for example for a firmware uploader that
-                needs exclusive access to the serial port. For an
-                example, see jmri.jmrix.loconet.demoport.DemoSerialPortAction.</li>
+            <li></li>
         </ul>
 
