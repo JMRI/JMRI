@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.9.3plus+jake+20240913T0724Z+R44c481606af on Fri Sep 13 09:24:30 CEST 2024-->
-  <decoderIndex version="613">
+  <!--Written by JMRI version 5.9.4plus+jake+20241011T1041Z+R8a364c8bb16 on Fri Oct 11 06:42:02 EDT 2024-->
+  <decoderIndex version="615">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -2765,6 +2765,20 @@
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
         </model>
+      </family>
+      <family name="Economy Series 7 with FX3, silent" mfg="Digitrax" lowVersionID="204" highVersionID="204" comment="" file="Digitrax_Economy_Series7.xml">
+        <model model="DN147A0" numOuts="4" numFns="4" comment="" />
+        <model model="DN147A1" numOuts="4" numFns="4" comment="" />
+        <model model="DN147K0A" numOuts="4" numFns="4" comment="" />
+        <model model="DN147K0B" numOuts="4" numFns="4" comment="" />
+        <model model="DN147K0D" numOuts="4" numFns="4" comment="" />
+        <model model="DN147K0E" numOuts="4" numFns="4" comment="" />
+        <model model="DN147K1C" numOuts="4" numFns="4" comment="" />
+        <model model="DN147K2" numOuts="4" numFns="4" comment="" />
+        <model model="DN167K0A" numOuts="6" numFns="6" comment="" />
+        <model model="DN167K0B" numOuts="6" numFns="6" comment="" />
+        <model model="DN167K0D" numOuts="6" numFns="6" comment="" />
+        <model model="DN167K0E" numOuts="6" numFns="6" comment="" />
       </family>
       <family name="Kato" mfg="Digitrax" lowVersionID="51" highVersionID="51" file="Digitrax_Kato_EM13.xml">
         <model model="EM13" numOuts="0" numFns="10" productID="EM13" comment="Kato Motor Decoder EM13 made by Digitrax" />
@@ -26313,7 +26327,7 @@
         </functionlabels>
       </family>
       <family name="WOW Steam Sound Set 4" mfg="Train Control Systems" file="TCS_WOW_steam04.xml">
-        <model model="WOW Steam 101 SS4" numOuts="6" numFns="14" lowVersionID="4" highVersionID="4" productID="1666">
+        <model model="WOW Steam 101 SS4" numOuts="6" numFns="14" lowVersionID="4" highVersionID="4" productID="1154">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -26325,7 +26339,7 @@
           <output name="Motor" />
           <output name="Brake" />
         </model>
-        <model model="WOW Steam 121 SS4" numOuts="6" numFns="14" lowVersionID="4" highVersionID="4" productID="1667">
+        <model model="WOW Steam 121 SS4" numOuts="6" numFns="14" lowVersionID="4" highVersionID="4" productID="1155">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -26337,7 +26351,7 @@
           <output name="Motor" />
           <output name="Brake" />
         </model>
-        <model model="WOW Steam 501 SS4" numOuts="8" numFns="14" lowVersionID="4" highVersionID="4" productID="1668">
+        <model model="WOW Steam 501 SS4" numOuts="8" numFns="14" lowVersionID="4" highVersionID="4" productID="1156">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -26373,6 +26387,71 @@
           <functionlabel num="18" lockable="true">Blow down</functionlabel>
           <functionlabel num="19" lockable="true">Ash dump</functionlabel>
           <functionlabel num="20" lockable="true">Water fill</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="WOW Steam Sound Set 4.6" mfg="Train Control Systems" file="TCS_WOW_steam046.xml">
+        <model model="WOW Steam 101 SS4.6" numOuts="6" numFns="14" lowVersionID="4" productID="1666">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <output name="4" label="Purple" />
+          <output name="5" label="Brown" />
+          <output name="6" label="Pink" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="Brake" />
+        </model>
+        <model model="WOW Steam 121 SS4.6" numOuts="6" numFns="14" lowVersionID="4" productID="1667">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <output name="4" label="Purple" />
+          <output name="5" label="Brown" />
+          <output name="6" label="Pink" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="Brake" />
+        </model>
+        <model model="WOW Steam 501 SS4.6" numOuts="8" numFns="14" lowVersionID="4" productID="1668">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <output name="4" label="Purple" />
+          <output name="5" label="Brown" />
+          <output name="6" label="Pink" />
+          <output name="7" label="Pnk/Pur" />
+          <output name="8" label="Grn/Brn" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="Brake" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Whistle Playable</functionlabel>
+          <functionlabel num="3" lockable="true">Whistle Short</functionlabel>
+          <functionlabel num="4" lockable="true">Whistle Grade X Quill </functionlabel>
+          <functionlabel num="5" lockable="true">Cylinder Cocks On/Off</functionlabel>
+          <functionlabel num="6" lockable="true">Brake Release</functionlabel>
+          <functionlabel num="7" lockable="true">Train Brake</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Rotate Sound Function</functionlabel>
+          <functionlabel num="10" lockable="true">Johnson Bar Up</functionlabel>
+          <functionlabel num="11" lockable="true">Johnson Bar Down</functionlabel>
+          <functionlabel num="12" lockable="true">Injector</functionlabel>
+          <functionlabel num="13" lockable="true">Air Pump</functionlabel>
+          <functionlabel num="14" lockable="true">Blower</functionlabel>
+          <functionlabel num="15" lockable="true">Momentum Mode Selection</functionlabel>
+          <functionlabel num="16" lockable="true">Idling Sounds On/Off</functionlabel>
+          <functionlabel num="17" lockable="true">Coal Shovelling</functionlabel>
+          <functionlabel num="18" lockable="true">Blow Down</functionlabel>
+          <functionlabel num="19" lockable="true">Ash Dump</functionlabel>
+          <functionlabel num="20" lockable="true">Water Filling</functionlabel>
+          <functionlabel num="26" lockable="true">Departing Station Announcements</functionlabel>
+          <functionlabel num="27" lockable="true">Arriving Station Announcements</functionlabel>
         </functionlabels>
       </family>
       <family name="Jan 2000" mfg="Train Control Systems" comment="TCS FW Starting January 2000. Only shows models not upgraded to higher FW versions." file="TCS_X-Jan2000.xml">
