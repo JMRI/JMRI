@@ -269,7 +269,7 @@ This section describes in detail the process for creating the release note for a
 - Check if any section headings were added to the release-note fragment
 
 ```
-        diff help/en/releasenotes/current-draft-note.shtml help/en/releasenotes/jmri5.7-master.shtml | grep '^>'
+        diff help/en/releasenotes/current-draft-note.shtml help/en/releasenotes/jmri5.9-master.shtml | grep '<h'
 ```
 
    If there were, update the master copy
@@ -316,7 +316,6 @@ This section describes in detail the process for creating the release note for a
 ```
         open 'https://github.com/JMRI/JMRI/pulls?utf8=✓&q=is%3Apr+is%3Amerged+no%3Amilestone++merged%3A%3E2022-05-24+'
 ```
-
 For each, if it doesn't have the right milestone set, add the current milestone.’
 
 ====================================================================================
@@ -326,12 +325,12 @@ For each, if it doesn't have the right milestone set, add the current milestone.
 ```
         git checkout master
         git pull
-        sed -i.bak s/5.9.3-SNAPSHOT/5.9.5-SNAPSHOT/g pom.xml
+        sed -i.bak s/5.9.4-SNAPSHOT/5.9.5-SNAPSHOT/g pom.xml
 ```
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field now, so check the numbers in the following line)
 ```
-        sed -i.bak s/release.build=3/release.build=4/g release.properties
+        sed -i.bak s/release.build=4/release.build=5/g release.properties
 ```
  - Check that both those edits left 5.9.5 defined in the two files
  
