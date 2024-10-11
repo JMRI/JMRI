@@ -42,6 +42,20 @@ public class JmriJFrameWithPermissions extends JmriJFrame {
      * the user doesn't have permission to view the panel.
      */
     private void setupContentPaneAndMenu() {
+        _contentPane.setLayout(new BorderLayout() {
+            /* This BorderLayout subclass maps a null constraint to CENTER.
+             * Although the reference BorderLayout also does this, some VMs
+             * throw an IllegalArgumentException.
+             */
+            @Override
+            public void addLayoutComponent(Component comp, Object constraints) {
+                if (constraints == null) {
+                    constraints = BorderLayout.CENTER;
+                }
+                super.addLayoutComponent(comp, constraints);
+            }
+        });
+
         if (!InstanceManager.getDefault(PermissionManager.class).isEnabled()) {
             return;
         }
