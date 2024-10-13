@@ -196,6 +196,7 @@ public class Xml {
     static final String ENGINE_NUMBER = "engineNumber"; // NOI18N
     static final String TYPE = "type"; // NOI18N
     static final String MODEL = "model"; // NOI18N
+    static final String HP = "hp"; // NOI18N
     static final String LENGTH = "length"; // NOI18N
     static final String WEIGHT = "weight"; // NOI18N
     static final String LOAD = "load"; // NOI18N

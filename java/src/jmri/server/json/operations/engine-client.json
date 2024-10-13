@@ -81,6 +81,10 @@
             "type": "string",
             "description": "The model of engine"
         },
+        "hp": {
+            "type": "string",
+            "description": "The HP of engine"
+        },
         "outOfService": {
             "type": "boolean",
             "description": "True if out of service; false otherwise"

@@ -243,6 +243,9 @@ public class HtmlTrainCommon extends TrainCommon {
         if (attribute.equals(Setup.MODEL)) {
             return engine.getModel();
         }
+        if (attribute.equals(Setup.HP)) {
+            return engine.getHp();
+        }
         if (attribute.equals(Setup.CONSIST)) {
             return engine.getConsistName();
         }

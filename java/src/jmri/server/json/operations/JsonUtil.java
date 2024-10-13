@@ -87,6 +87,7 @@ public class JsonUtil {
      */
     public ObjectNode getEngine(Engine engine, ObjectNode data, Locale locale) {
         data.put(JSON.MODEL, engine.getModel());
+        data.put(JSON.HP, engine.getHp());
         data.put(JsonConsist.CONSIST, engine.getConsistName());
         return data;
     }

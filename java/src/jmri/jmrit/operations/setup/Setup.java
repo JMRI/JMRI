@@ -130,6 +130,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static final String MODEL = Bundle.getMessage("Model");
     public static final String LENGTH = Bundle.getMessage("Length");
     public static final String WEIGHT = Bundle.getMessage("Weight");
+    public static final String HP = Bundle.getMessage("HP");
     public static final String LOAD = Bundle.getMessage("Load");
     public static final String LOAD_TYPE = Bundle.getMessage("Load_Type");
     public static final String COLOR = Bundle.getMessage("Color");
@@ -178,14 +179,14 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
             COLOR, KERNEL, KERNEL_SIZE, OWNER, DIVISION, TRACK, LOCATION, DESTINATION, DEST_TRACK, FINAL_DEST, FINAL_DEST_TRACK,
             COMMENT, DROP_COMMENT, PICKUP_COMMENT, RWE };
     
-    private static final String[] ENGINE_ATTRIBUTES = { ROAD, NUMBER, TYPE, MODEL, LENGTH, WEIGHT, CONSIST, OWNER,
+    private static final String[] ENGINE_ATTRIBUTES = {ROAD, NUMBER, TYPE, MODEL, LENGTH, WEIGHT, HP, CONSIST, OWNER,
             TRACK, LOCATION, DESTINATION, COMMENT, DCC_ADDRESS };
     /*
      * The print Manifest and switch list user selectable options are stored in the
      * xml file using the English translations.
      */
     private static final String[] KEYS = {"Road", "Number", "Type", "Model", "Length", "Weight", "Load", "Load_Type",
-            "Color", "Track", "Destination", "Dest&Track", "Final_Dest", "FD&Track", "Location", "Consist",
+            "HP", "Color", "Track", "Destination", "Dest&Track", "Final_Dest", "FD&Track", "Location", "Consist",
             "DCC_Address", "Kernel", "Kernel_Size", "Owner", "Division", "RWE", "Comment", "SetOut_Msg", "PickUp_Msg",
             "Hazardous", "Tab", "Tab2", "Tab3"};
 
