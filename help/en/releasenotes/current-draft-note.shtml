@@ -86,7 +86,8 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>LocoNet Monitor gives better information when reading 
+                    7th-generation Accessory Device CVs via LocoNet.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -614,4 +615,3 @@
         <ul>
             <li></li>
         </ul>
-
