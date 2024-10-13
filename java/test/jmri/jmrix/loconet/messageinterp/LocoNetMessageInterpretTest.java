@@ -2,9 +2,12 @@ package jmri.jmrix.loconet.messageinterp;
 
 import jmri.jmrix.loconet.*;
 import jmri.util.JUnitUtil;
+import jmri.util.StringUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -2802,7 +2805,7 @@ public class LocoNetMessageInterpretTest {
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xB4, 0x6D, 0x7F, 0x59});
-        Assert.assertEquals(" Immediate Packet test 02", "LONG_ACK: the Send IMM Packet command was accepted.\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+        Assert.assertEquals(" Immediate Packet test 02", "LONG_ACK: the Send IMM Packet command was accepted, or return of 127 (0x7f) to an IMM Packet 'Read'.\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x34, 0x07, 0x4F, 0x2D, 0x28, 0x00, 0x00, 0x1F});
         Assert.assertEquals(" Immediate Packet test 03", "Send packet immediate: Locomotive 4013 set F9=Off, F10=Off, F11=Off, F12=On.\n",
@@ -2865,7 +2868,7 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xB4, 0x6D, 0x7F, 0x59});
         Assert.assertEquals(" Immediate Packet test 15",
-                "LONG_ACK: the Send IMM Packet command was accepted.\n",
+                "LONG_ACK: the Send IMM Packet command was accepted, or return of 127 (0x7f) to an IMM Packet 'Read'.\n",
             LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x51, 0x03, 0x7F, 0x04, 0x3D, 0x7F, 0x7E, 0x73});
@@ -7006,6 +7009,69 @@ public class LocoNetMessageInterpretTest {
         
     }
     
+    @Test
+    public void testOpcLongAckData() {
+        LocoNetMessage m;
+        String s;
+        // Test all 256 data responses to "reading" a Digitrax Accessory Decoder's CV
+        for (int i = 0; i < 256; ++i){
+            s = "";
+            m = new LocoNetMessage(
+                    new int[] {LnConstants.OPC_LONG_ACK, 0x6D + ((i >= 128)?1:0), i & 0x7F, 0});
+
+            switch (i) {
+                case 0:
+                    s = "LONG_ACK: the Send IMM Packet command was rejected, the buffer is full/busy, or return of 128 (0x80) to an IMM Packet 'Read'.\n";
+                    break;
+                case 1:
+                    s = "Long_ACK: Uhlenbrock IB-COM / Intellibox II CV programming request was accepted, or return of 129 (0x81) to an IMM Packet 'Read'.\n";
+                    break;
+                case 2:
+                    s = "Long_ACK: LNCV CV is Read Only, or return of 127 (0x7f) to an IMM Packet 'Read', or return of 130 (0x82) to an IMM Packet 'Read'.\n";
+                    break;
+                case 3:
+                    s = "Long_ACK: LNCV Value out of bounds, or return of 131 (0x83) to an IMM Packet 'Read'.\n";
+                    break;
+                case 127:
+                    s = "LONG_ACK: the Send IMM Packet command was accepted, or return of 127 (0x7f) to an IMM Packet 'Read'.\n";
+                    break;
+//                case 255:
+//                    s = "Unknown response to Send IMM Packet value 0x7F, or return of 255 (0xFF) to an IMM Packet Read.\ncontents: B4 6D 7F 00\n";
+//                    break;
+                default:
+                    s = "";
+                    break;
+            }
+            if ((i >= 128) && (s.length() == 0)) {
+                s = "LONG_ACK: the Lim Master responded to the Send IMM Packet command with ";
+                s += i & 0x7f;
+                s += " (0x" + StringUtil.twoHexFromInt(i & 0x7f) + ").\n";
+            } 
+            if ((i <128) && (s.length() == 0)) {
+                s = "LONG_ACK: Unknown response to Send IMM Packet value 0x";
+                s += StringUtil.twoHexFromInt(i & 0x7f);
+                s += ", or return of ";
+                s += i + 0x80;
+                s += " (0x";
+                s += StringUtil.twoHexFromInt(i + 0x80);
+                s += ") to an IMM Packet Read.";
+                s += "\ncontents: B4 6D ";
+                s += StringUtil.twoHexFromInt(i & 0x7f) + " 00\n";
+            }
+
+            Assert.assertEquals("Verify data "+i+": ",
+                    s, LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
+        }
+
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
@@ -7015,5 +7081,6 @@ public class LocoNetMessageInterpretTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+    private final static Logger log = LoggerFactory.getLogger(LocoNetMessageInterpretTest.class);
 
 }

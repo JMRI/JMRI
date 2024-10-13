@@ -3,6 +3,7 @@ package jmri.jmrix.loconet.messageinterp;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import jmri.InstanceManager;
 import jmri.NmraPacket;
@@ -740,6 +741,16 @@ public class LocoNetMessageInterpret {
             default:
                 break;
         } // end switch over opcode type
+        
+        // Add in "extras"
+        String s = LnMessageInterpExtensionService.getInstance().
+                getInterpretation(
+                        l, turnoutPrefix, 
+                        sensorPrefix, 
+                        reporterPrefix);
+        if (s != null) {
+            return s;
+        }
         return Bundle.getMessage("LN_MSG_UNKNOWN_MESSAGE") +
                 Bundle.getMessage("LN_MONITOR_MESSAGE_RAW_HEX_INFO", l.toString());
     }
@@ -1951,7 +1962,10 @@ public class LocoNetMessageInterpret {
                 } else {
                     return Bundle.getMessage("LN_MSG_LONG_ACK_OPC_IMM_UNKNOWN",
                             Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(ack1)))+
+                                    StringUtil.twoHexFromInt(ack1)),
+                                    128+ack1,
+                                    StringUtil.twoHexFromInt(128+ack1)
+                    )+
                                 Bundle.getMessage("LN_MONITOR_MESSAGE_RAW_HEX_INFO", l.toString());
                 }
 
