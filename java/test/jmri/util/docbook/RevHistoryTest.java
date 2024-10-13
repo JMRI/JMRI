@@ -14,7 +14,7 @@ public class RevHistoryTest {
 
     @Test
     public void testCtor() {
-        new RevHistory();
+        Assertions.assertNotNull(new RevHistory());
     }
 
     @Test

@@ -1,14 +1,9 @@
 package jmri.jmrit.operations.setup;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.IOException;
+import java.util.Date;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -17,10 +12,7 @@ import javax.swing.border.TitledBorder;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.util.swing.ExceptionContext;
-import jmri.util.swing.ExceptionDisplayFrame;
-import jmri.util.swing.JmriJOptionPane;
-import jmri.util.swing.UnexpectedExceptionContext;
+import jmri.util.swing.*;
 
 public class RestoreDialog extends JDialog {
 
@@ -185,6 +177,8 @@ public class RestoreDialog extends JDialog {
         // Not implemented yet.
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification = "I18N of Info Message")
     protected void do_restoreButton_actionPerformed(ActionEvent e) {
         log.debug("restore button activated");
 
@@ -205,6 +199,10 @@ public class RestoreDialog extends JDialog {
             backup.deleteOperationsFiles();
 
             setName = ((BackupSet) comboBox.getSelectedItem()).getSetName();
+            Date date = ((BackupSet) comboBox.getSelectedItem()).getLastModifiedDate();
+            String sd = String.format("%s", date);
+
+            log.info(Bundle.getMessage("InfoRestoringSet", setName, sd));
 
             // The restore method should probably be overloaded to accept a
             // BackupSet instead of a simple string. Later.

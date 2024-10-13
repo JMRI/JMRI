@@ -40,7 +40,7 @@ import org.apache.logging.log4j.core.config.Configurator;
  * logs are stored in the JMRI preferences directory.</dd>
  * </dl>
  * <p>
- * See also jmri.util.TestingLoggerConfiguration in the Test code for 
+ * See also jmri.util.TestingLoggerConfiguration in the Test code for
  * Tests Logging Setup.
  * @author Bob Jacobsen Copyright 2009, 2010
  * @author Randall Wood Copyright 2014, 2020
@@ -63,7 +63,7 @@ public class Log4JUtil {
      * <li>Start log4j.
      * <li>Initialize a default exception handler.
      * </ul>
-     * 
+     *
      */
     static public void initLogging() {
         initLogging(System.getProperty(SYS_PROP_LCF_LOCATION, DEFAULT_LCF_NAME));
@@ -104,7 +104,7 @@ public class Log4JUtil {
         // Need to do this before initialising log4j so that the new
         // stdout and stderr streams are set up and usable by the ConsoleAppender
         if (!GraphicsEnvironment.isHeadless()) {
-            SystemConsole.create();
+            SystemConsole.getInstance();
         }
 
         // initialize the java.util.logging to log4j bridge

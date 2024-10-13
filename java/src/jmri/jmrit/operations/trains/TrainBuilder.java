@@ -207,12 +207,9 @@ public class TrainBuilder extends TrainBuilderCars {
         if ((_train.getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
                 _train.getSecondLegStartRouteLocation() != null) {
             engineTerminatesFirstLeg = _train.getSecondLegStartRouteLocation();
-        }
-        if ((_train.getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
+        } else if ((_train.getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
                 _train.getThirdLegStartRouteLocation() != null) {
-            if ((_train.getSecondLegOptions() & Train.CHANGE_ENGINES) != Train.CHANGE_ENGINES) {
-                engineTerminatesFirstLeg = _train.getThirdLegStartRouteLocation();
-            }
+            engineTerminatesFirstLeg = _train.getThirdLegStartRouteLocation();
         }
 
         // determine if train is departing staging
@@ -543,13 +540,15 @@ public class TrainBuilder extends TrainBuilderCars {
             if (size > 0) {
                 if (JmriJOptionPane.showConfirmDialog(null,
                         Bundle.getMessage("buildCarsResetTrain", size, trainName),
-                        Bundle.getMessage("buildResetTrain"), JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
+                        Bundle.getMessage("buildResetTrain"),
+                        JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                     _train.setStatusCode(Train.CODE_TRAIN_RESET);
                 }
             } else if ((size = engineManager.getList(_train).size()) > 0) {
                 if (JmriJOptionPane.showConfirmDialog(null,
                         Bundle.getMessage("buildEnginesResetTrain", size, trainName),
-                        Bundle.getMessage("buildResetTrain"), JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
+                        Bundle.getMessage("buildResetTrain"),
+                        JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                     _train.setStatusCode(Train.CODE_TRAIN_RESET);
                 }
             }

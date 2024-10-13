@@ -48,8 +48,8 @@ public class DefaultStringActionManagerXml extends AbstractManagerXml {
                     List<Element> elements = new ArrayList<>();
                     // The male socket may be embedded in other male sockets
                     MaleStringActionSocket a = action;
+                    elements.add(storeMaleSocket(a));
                     while (!(a instanceof DefaultMaleStringActionSocket)) {
-                        elements.add(storeMaleSocket(a));
                         a = (MaleStringActionSocket) a.getObject();
                     }
                     Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(a.getObject());

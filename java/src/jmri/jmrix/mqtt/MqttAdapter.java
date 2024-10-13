@@ -119,7 +119,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         MqttConnectOptions mqttConnOpts = new MqttConnectOptions();
         mqttConnOpts.setCleanSession(true);
         mqttConnOpts.setMaxInflight(100);
-        
+
         if ( getOptionState(MQTT_USERNAME_OPTION) != null
                 && ! getOptionState(MQTT_USERNAME_OPTION).isEmpty()) {
             mqttConnOpts.setUserName(getOptionState(MQTT_USERNAME_OPTION));
@@ -178,7 +178,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
             clientID = clientID + clientIDsuffix;
 
             log.info("Connection {} is using a clientID of \"{}\"", getSystemPrefix(), clientID);
-            
+
             String tempdirName = jmri.util.FileUtil.getExternalFilename(jmri.util.FileUtil.PROFILE);
             log.debug("will use {} as temporary directory", tempdirName);
 
@@ -413,7 +413,9 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     protected void closeConnection(){
        log.debug("Closing MqttAdapter");
         try {
-            mqttClient.disconnect();
+            if (mqttClient != null) {
+                mqttClient.disconnect();
+            }
         }
         catch (Exception exception) {
             log.error("MqttEventListener exception: ", exception);

@@ -22,19 +22,19 @@ public class SerialPort {
     public static final int FLOWCONTROL_RTSCTS_IN = 1;
     public static final int FLOWCONTROL_RTSCTS_OUT = 2;
 
-    private AbstractSerialPortController.SerialPort _serialPort;
+    private jmri.jmrix.SerialPort _serialPort;
     private SerialPortEventListener _eventListener;
     private boolean _threadStarted = false;
     private Thread _inputThread;
     private volatile boolean _notifyOnDataAvailable;
 
-    public SerialPort(AbstractSerialPortController.SerialPort serialPort) {
+    public SerialPort(jmri.jmrix.SerialPort serialPort) {
         this._serialPort = serialPort;
 
         Runnable runnable = () -> {
             final int TIMEOUT = Integer.getInteger("purejavacomm.pollperiod", 10);
             InputStream inputStream = _serialPort.getInputStream();
-            
+
             while (true) {
                 try {
                     while (_notifyOnDataAvailable && (_eventListener != null)
@@ -60,17 +60,17 @@ public class SerialPort {
     private void setParity(int parity) {
         switch (parity) {
             case PARITY_NONE:
-                _serialPort.setParity(AbstractSerialPortController.Parity.NONE);
+                _serialPort.setParity(jmri.jmrix.SerialPort.Parity.NONE);
                 break;
-                
+
             case PARITY_EVEN:
-                _serialPort.setParity(AbstractSerialPortController.Parity.EVEN);
+                _serialPort.setParity(jmri.jmrix.SerialPort.Parity.EVEN);
                 break;
-                
+
             case PARITY_ODD:
-                _serialPort.setParity(AbstractSerialPortController.Parity.ODD);
+                _serialPort.setParity(jmri.jmrix.SerialPort.Parity.ODD);
                 break;
-            
+
             default:
                 throw new IllegalArgumentException("Unknown parity: "+Integer.toString(parity));
         }
@@ -106,11 +106,11 @@ public class SerialPort {
             case FLOWCONTROL_NONE:
                 _serialPort.setFlowControl(AbstractSerialPortController.FlowControl.NONE);
                 break;
-                
+
             case (FLOWCONTROL_RTSCTS_IN | FLOWCONTROL_RTSCTS_OUT):
                 _serialPort.setFlowControl(AbstractSerialPortController.FlowControl.RTSCTS);
                 break;
-            
+
             default:
                 throw new IllegalArgumentException("Unknown flow control mode: "+Integer.toString(mode));
         }

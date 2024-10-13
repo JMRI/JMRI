@@ -462,6 +462,7 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup1() {
     }
 
@@ -470,6 +471,7 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup2() {
     }
 
@@ -478,6 +480,7 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup3() {
     }
 
@@ -486,6 +489,7 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup4() {
     }
 
@@ -494,6 +498,7 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup5() {
     }
 

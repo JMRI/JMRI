@@ -13,14 +13,9 @@ import jmri.*;
 import jmri.swing.RowSorterUtil;
 import jmri.util.AlphanumComparator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+public abstract class AbstractTableTabAction<E extends NamedBean> extends AbstractTableAction<E> {
 
-abstract public class AbstractTableTabAction<E extends NamedBean> extends AbstractTableAction<E> {
-
-    protected JPanel dataPanel;
     protected JTabbedPane dataTabs;
-
     protected boolean init = false;
 
     public AbstractTableTabAction(String s) {
@@ -29,52 +24,46 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
 
     @Override
     protected void createModel() {
-        dataPanel = new JPanel();
         dataTabs = new JTabbedPane();
-        dataPanel.setLayout(new BorderLayout());
         Manager<E> mgr = getManager();
         if (mgr instanceof jmri.managers.AbstractProxyManager) {
             // build the list, with default at start and internal at end (if present)
             jmri.managers.AbstractProxyManager<E> proxy = (jmri.managers.AbstractProxyManager<E>) mgr;
 
-            tabbedTableArray.add(new TabbedTableItem<>(Bundle.getMessage("All"), true, mgr, getNewTableAction("All"))); // NOI18N
+            tabbedTableArray.add(new TabbedTableItem<>(
+                Bundle.getMessage("All"), true, mgr, getNewTableAction("All"))); // NOI18N
 
             proxy.getDisplayOrderManagerList().stream().map(manager -> {
                 String manuName = manager.getMemo().getUserName();
-                TabbedTableItem<E> itemModel = new TabbedTableItem<>(manuName, true, manager, getNewTableAction(manuName)); // connection name to display in Tab
-                return itemModel;
-            }).forEachOrdered(itemModel -> {
-                tabbedTableArray.add(itemModel);
-            });
+                return new TabbedTableItem<>(
+                    manuName, true, manager, getNewTableAction(manuName)); // connection name to display in Tab
+            }).forEachOrdered(itemModel -> tabbedTableArray.add(itemModel));
 
         } else {
             Manager<E> man = getManager();
             String manuName = ( man!=null ? man.getMemo().getUserName() : "Unknown Manager");
-            tabbedTableArray.add(new TabbedTableItem<E>(manuName, true, getManager(), getNewTableAction(manuName)));
+            tabbedTableArray.add(new TabbedTableItem<>(manuName, true, getManager(), getNewTableAction(manuName)));
         }
         for (int x = 0; x < tabbedTableArray.size(); x++) {
             AbstractTableAction<E> table = tabbedTableArray.get(x).getAAClass();
             table.addToPanel(this);
-            dataTabs.addTab(tabbedTableArray.get(x).getItemString(), null, tabbedTableArray.get(x).getPanel(), null);
+            dataTabs.addTab(tabbedTableArray.get(x).getItemString(),  tabbedTableArray.get(x).getPanel());
         }
-        dataTabs.addChangeListener((ChangeEvent evt) -> {
-            setMenuBar(f);
-        });
-        dataPanel.add(dataTabs, BorderLayout.CENTER);
+        dataTabs.addChangeListener((ChangeEvent evt) -> setMenuBar(f));
         init = true;
     }
 
     @Override
-    abstract protected Manager<E> getManager();
+    protected abstract Manager<E> getManager();
 
-    abstract protected AbstractTableAction<E> getNewTableAction(String choice);
+    protected abstract AbstractTableAction<E> getNewTableAction(String choice);
 
     @Override
-    public JPanel getPanel() {
+    public JComponent getPanel() {
         if (!init) {
             createModel();
         }
-        return dataPanel;
+        return dataTabs;
     }
 
     protected ArrayList<TabbedTableItem<E>> tabbedTableArray = new ArrayList<>();
@@ -85,7 +74,7 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
     }
 
     @Override
-    abstract protected String helpTarget();
+    protected abstract String helpTarget();
 
     @Override
     protected void addPressed(ActionEvent e) {
@@ -114,7 +103,7 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
     }
 
     public void addToBottomBox(JComponent c, String str) {
-        tabbedTableArray.forEach((table) -> {
+        tabbedTableArray.forEach( table -> {
             String item = table.getItemString();
             if (item != null && item.equals(str)) {
                 table.addToBottomBox(c);
@@ -141,21 +130,17 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
         super.dispose();
     }
 
-    static protected class TabbedTableItem<E extends NamedBean> extends AbstractTableAction.TableItem<E> {  // E comes from the parent
+    protected static class TabbedTableItem<E extends NamedBean> extends AbstractTableAction.TableItem<E> {  // E comes from the parent
 
         final String itemText;
 
-        private JScrollPane dataScroll;
-        final Box bottomBox;
+        final JPanel bottomBox;
         private boolean addToFrameRan = false;
         final Manager<E> manager;
 
-        private int bottomBoxIndex; // index to insert extra stuff
-        static final int BOTTOM_STRUT_WIDTH = 20;
-
         private boolean standardModel = true;
 
-        final JPanel dataPanel = new JPanel();
+        private final JPanel tabPanel;
 
         @SuppressWarnings("unchecked")
         public TabbedTableItem(String choice, boolean stdModel, Manager<E> manager, @Nonnull AbstractTableAction<E> tableAction) {
@@ -168,10 +153,12 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
 
             //If a panel model is used, it should really add to the bottom box
             //but it can be done this way if required.
-            bottomBox = Box.createHorizontalBox();
-            bottomBox.add(Box.createHorizontalGlue());
-            bottomBoxIndex = 0;
-            dataPanel.setLayout(new BorderLayout());
+            tabPanel = new JPanel();
+            tabPanel.setLayout(new BorderLayout());
+
+            bottomBox = new JPanel();
+            bottomBox.setLayout(new jmri.util.swing.WrapLayout(jmri.util.swing.WrapLayout.LEFT,20,5));
+
             if (stdModel) {
                 createDataModel();
             } else {
@@ -185,7 +172,7 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
             dataModel = tableAction.getTableDataModel();
             TableRowSorter<BeanTableDataModel<E>> sorter = new TableRowSorter<>(dataModel);
             dataTable = dataModel.makeJTable(dataModel.getMasterClassName() + ":" + getItemString(), dataModel, sorter);
-            dataScroll = new JScrollPane(dataTable);
+            JScrollPane dataScroll = new JScrollPane(dataTable);
 
             RowSorterUtil.setSortOrder(sorter, BeanTableDataModel.SYSNAMECOL, SortOrder.ASCENDING);
 
@@ -202,13 +189,11 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
             dataScroll.getViewport().setPreferredSize(dataTableSize);
 
             // set preferred scrolling options
-            dataScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-            dataScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+            dataScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+            dataScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-            //dataPanel.setLayout(new BoxLayout(dataPanel, BoxLayout.Y_AXIS));
-            dataPanel.add(dataScroll, BorderLayout.CENTER);
-
-            dataPanel.add(bottomBox, BorderLayout.SOUTH);
+            tabPanel.add(dataScroll, BorderLayout.CENTER);
+            tabPanel.add(bottomBox, BorderLayout.SOUTH);
 
             includeAddButton(tableAction.includeAddButton());
 
@@ -217,8 +202,8 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
         }
 
         final void addPanelModel() {
-            dataPanel.add(tableAction.getPanel(), BorderLayout.CENTER);
-            dataPanel.add(bottomBox, BorderLayout.SOUTH);
+            tabPanel.add(tableAction.getPanel(), BorderLayout.CENTER);
+            tabPanel.add(bottomBox, BorderLayout.SOUTH);
         }
 
         public boolean getStandardTableModel() {
@@ -229,8 +214,8 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
             return itemText;
         }
 
-        public JPanel getPanel() {
-            return dataPanel;
+        public JComponent getPanel() {
+            return tabPanel;
         }
 
         public boolean getAdditionsToFrameDone() {
@@ -241,27 +226,13 @@ abstract public class AbstractTableTabAction<E extends NamedBean> extends Abstra
             addToFrameRan = true;
         }
 
-        
-
         @Override
         protected void addToBottomBox(JComponent comp) {
-            try {
-                bottomBox.add(Box.createHorizontalStrut(BOTTOM_STRUT_WIDTH), bottomBoxIndex);
-                ++bottomBoxIndex;
-                bottomBox.add(comp, bottomBoxIndex);
-                ++bottomBoxIndex;
-            } catch (java.lang.IllegalArgumentException ex) {
-                log.error("Could not add to bottom box.", ex);
-            }
+            bottomBox.add(comp);
         }
 
-        @Override
-        protected void dispose() {
-            super.dispose();
-            dataScroll = null;
-        }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractTableTabAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractTableTabAction.class);
 
 }

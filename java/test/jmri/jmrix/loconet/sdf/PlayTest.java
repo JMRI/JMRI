@@ -11,8 +11,8 @@ import org.junit.jupiter.api.*;
 public class PlayTest {
 
     @Test
-    public void testCtor() {
-        new Play((byte) 0, (byte) 0);
+    public void testPlayCtor() {
+        Assertions.assertNotNull( new Play((byte) 0, (byte) 0) );
     }
 
     @Test
@@ -77,6 +77,16 @@ public class PlayTest {
         Assert.assertEquals("Brk 2", 2, p.getWaveBrkFlags());
         Assert.assertEquals("Brk 0", "loop_GLOBAL", p.wavebrkFlagsVal());
 
+    }
+
+    @BeforeEach
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }

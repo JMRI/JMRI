@@ -779,7 +779,7 @@ public class DecoderIndexFile extends XmlFile {
                 family.setAttribute("file", fileName);
 
                 // drop the decoder implementation content
-                family.removeAttribute("comment");
+                    // comment is kept so it displays
                 // don't remove "outputs" due to use by ESU function map pane
                 // family.removeChildren("output");
                 // family.removeChildren("functionlabels");
@@ -791,7 +791,7 @@ public class DecoderIndexFile extends XmlFile {
                     element.removeAttribute("maxTotalCurrent");
                     element.removeAttribute("formFactor");
                     element.removeAttribute("connector");
-                    element.removeAttribute("comment");
+                    // comment is kept so it displays
                     element.removeAttribute("nmraWarrant");
                     element.removeAttribute("nmraWarrantStart");
 

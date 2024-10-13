@@ -138,10 +138,16 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
 
     DelayQueue<Memo> queue = new DelayQueue<Memo>();
 
+    /**
+     * Constant for the name of the Service Thread.
+     * Requires the connection UserName prepending.
+     */
+    public static final String SERVICE_THREAD_NAME = " LocoNetThrottledTransmitter";
+
     private void attachServiceThread() {
         theServiceThread = new ServiceThread();
         theServiceThread.setPriority(Thread.NORM_PRIORITY);
-        theServiceThread.setName("LocoNetThrottledTransmitter"); // NOI18N
+        theServiceThread.setName( memo.getUserName() + SERVICE_THREAD_NAME);
         theServiceThread.setDaemon(true);
         theServiceThread.start();
     }

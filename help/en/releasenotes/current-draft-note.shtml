@@ -405,8 +405,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>For trains with HEAD ONLY detection release sections by length.</li>
-             <li>When train exits section leave coloured as allocated until released.</li>
+             <li></li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -458,6 +457,12 @@
 
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
+        <ul>
+            <li></li>
+        </ul>
+
+    <h3>Permissions</h3>
+        <a id="Permissions" name="Permissions"></a>
         <ul>
             <li></li>
         </ul>
@@ -594,6 +599,12 @@
 
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
+        <ul>
+            <li></li>
+        </ul>
+
+   <h3>Z21 Server</h3>
+        <a id="Z21" name="Z21"></a>
         <ul>
             <li></li>
         </ul>

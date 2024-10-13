@@ -45,7 +45,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
     JRadioButton addLocAtMiddle = new JRadioButton(Bundle.getMessage("Middle"));
     JRadioButton addLocAtBottom = new JRadioButton(Bundle.getMessage("Bottom"));
 
-    JRadioButton showWait = new JRadioButton(Bundle.getMessage("Wait"));
+    JRadioButton showTravel = new JRadioButton(Bundle.getMessage("TravelTime"));
     JRadioButton showDepartTime = new JRadioButton(Bundle.getMessage("DepartTime"));
 
     // text field
@@ -142,7 +142,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         JPanel pWait = new JPanel();
         pWait.setLayout(new GridBagLayout());
         pWait.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Display")));
-        addItem(pWait, showWait, 0, 1);
+        addItem(pWait, showTravel, 0, 1);
         addItem(pWait, showDepartTime, 1, 1);
 
         p2.add(pLoc);
@@ -184,9 +184,9 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         addRadioButtonAction(addLocAtBottom); // to clear table row sorting
 
         ButtonGroup groupTime = new ButtonGroup();
-        groupTime.add(showWait);
+        groupTime.add(showTravel);
         groupTime.add(showDepartTime);
-        addRadioButtonAction(showWait);
+        addRadioButtonAction(showTravel);
         addRadioButtonAction(showDepartTime);
         setTimeWaitRadioButtons();
 
@@ -195,7 +195,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         menuBar.add(toolMenu);
         loadToolMenu();
         setJMenuBar(menuBar);
-        addHelpMenu("package.jmri.jmrit.operations.Operations_EditRoute", true); // NOI18N
+        addHelpMenu("package.jmri.jmrit.operations.Operations_AddRoute", true); // NOI18N
 
         // get notified if combo box gets modified
         InstanceManager.getDefault(LocationManager.class).addPropertyChangeListener(this);
@@ -221,6 +221,11 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
             log.debug("route add location button activated");
             if (locationBox.getSelectedItem() != null) {
                 addNewRouteLocation();
+            } else {
+                JmriJOptionPane.showMessageDialog(this,
+                        Bundle.getMessage("SelectLocation"),
+                        Bundle.getMessage("SelectLocation"),
+                        JmriJOptionPane.INFORMATION_MESSAGE);
             }
         }
         if (ae.getSource() == saveRouteButton) {
@@ -271,7 +276,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 
     @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
-        routeModel.setWait(showWait.isSelected());
+        routeModel.setWait(showTravel.isSelected());
     }
 
     private void addNewRouteLocation() {
@@ -314,19 +319,19 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         if (!checkName(Bundle.getMessage("add"))) {
             return;
         }
-        Route route = routeManager.newRoute(routeNameTextField.getText());
-        routeModel.initTable(this, routeTable, route);
-        _route = route;
+        _route = routeManager.newRoute(routeNameTextField.getText());
+        routeModel.initTable(this, routeTable, _route);
         enableButtons(true);
         // assign route to a train?
         if (_train != null) {
-            _train.setRoute(route);
+            _train.setRoute(_route);
         }
         if (_route != null) {
             _route.addPropertyChangeListener(this);
         }
         saveRoute();
         loadToolMenu();
+        selectFirstLocationComboBox();
     }
 
     private boolean saveRoute() {
@@ -403,10 +408,16 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         saveRouteButton.setEnabled(enabled);
         deleteRouteButton.setEnabled(enabled);
         routeTable.setEnabled(enabled);
-        showWait.setEnabled(enabled);
+        showTravel.setEnabled(enabled);
         showDepartTime.setEnabled(enabled);
         // the inverse!
         addRouteButton.setEnabled(!enabled);
+    }
+
+    private void selectFirstLocationComboBox() {
+        if (locationBox.getItemCount() > 1) {
+            locationBox.setSelectedIndex(1);
+        }
     }
 
     @Override
@@ -428,13 +439,13 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
     // if the route has a departure time in the first location set the
     // showDepartTime radio button
     private void setTimeWaitRadioButtons() {
-        showWait.setSelected(true);
+        showTravel.setSelected(true);
         if (_route != null) {
             RouteLocation rl = _route.getDepartsRouteLocation();
             if (rl != null && !rl.getDepartureTime().equals(RouteLocation.NONE)) {
                 showDepartTime.setSelected(true);
             }
-            routeModel.setWait(showWait.isSelected());
+            routeModel.setWait(showTravel.isSelected());
         }
     }
 

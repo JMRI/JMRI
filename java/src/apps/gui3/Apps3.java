@@ -51,7 +51,7 @@ public abstract class Apps3 extends AppsBase {
         // Initialise system console
         // Put this here rather than in apps.AppsBase as this is only relevant
         // for GUI applications - non-gui apps will use STDOUT & STDERR
-        SystemConsole.create();
+        SystemConsole.getInstance();
 
         splash(true);
 

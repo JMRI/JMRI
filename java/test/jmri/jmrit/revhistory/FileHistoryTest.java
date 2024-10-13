@@ -14,7 +14,7 @@ public class FileHistoryTest{
 
     @Test
     public void testCtor() {
-        new FileHistory();
+        Assertions.assertNotNull( new FileHistory() );
     }
 
     @Test

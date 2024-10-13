@@ -580,8 +580,6 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case MOVES_COLUMN:
             case WAIT_COLUMN:
                 return Integer.class;
-            case LAST_COLUMN:
-                return Object.class; // to disable sorting
             default:
                 return String.class;
         }
@@ -713,7 +711,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case PICKUP_COLUMN:
                 return car.getPickupScheduleName();
             case LAST_COLUMN:
-                return car.getLastDate();
+                return car.getSortDate();
             case COMMENT_COLUMN:
                 return car.getComment();
             case SET_COLUMN:

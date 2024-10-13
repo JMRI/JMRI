@@ -102,7 +102,7 @@ public abstract class TrainCustomCommon {
             FileUtil.appendTextToFile(csvNamesFile, csvFile.getAbsolutePath());
             log.debug("Queuing file {} to list", csvFile.getAbsolutePath());
         } catch (IOException e) {
-            log.error("Unable to write to {}", csvNamesFile, e);
+            log.error("Unable to write to {}, {}", csvNamesFile, e.getLocalizedMessage());
             return false;
         }
         return true;
@@ -151,7 +151,7 @@ public abstract class TrainCustomCommon {
                 process = Runtime.getRuntime().exec(cmd, null,
                         InstanceManager.getDefault(OperationsManager.class).getFile(getDirectoryName()));
             } catch (IOException e) {
-                log.error("Unable to execute {}", getFileName(), e);
+                log.error("Unable to execute: {}, {}", getFileName(), e.getLocalizedMessage());
             }
         } else {
             String[] cmd = {"open", getFileName(), mcAppArg}; // NOI18N
@@ -159,7 +159,7 @@ public abstract class TrainCustomCommon {
                 process = Runtime.getRuntime().exec(cmd, null,
                         InstanceManager.getDefault(OperationsManager.class).getFile(getDirectoryName()));
             } catch (IOException e) {
-                log.error("Unable to execute {}", getFileName(), e);
+                log.error("Unable to execute {}, {}", getFileName(), e.getLocalizedMessage());
             }
         }
         fileCount = 0;

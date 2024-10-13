@@ -4,7 +4,6 @@ import jmri.InstanceManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -15,7 +14,7 @@ public class AbstractSignalHeadManagerTest extends AbstractManagerTestBase<jmri.
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists",l);
+        Assertions.assertNotNull( l, "exists");
     }
 
     @BeforeEach
@@ -30,14 +29,14 @@ public class AbstractSignalHeadManagerTest extends AbstractManagerTestBase<jmri.
         JUnitUtil.tearDown();
     }
     
-    // No manager-specific system name validation at present
     @Test
     @Override
+    @Disabled("No manager-specific system name validation at present")
     public void testMakeSystemNameWithNoPrefixNotASystemName() {}
     
-    // No manager-specific system name validation at present
     @Test
     @Override
+    @Disabled("No manager-specific system name validation at present")
     public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     // private final static Logger log = LoggerFactory.getLogger(AbstractSignalHeadManagerTest.class);

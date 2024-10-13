@@ -3,8 +3,6 @@ package jmri.jmrit.logix;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-
-import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
@@ -19,7 +17,7 @@ public class WarrantTableModelTest {
 
         WarrantTableFrame f = WarrantTableFrame.getDefault();
         WarrantTableModel t = new WarrantTableModel(f);
-        assertThat(t).withFailMessage("exists").isNotNull();
+        Assertions.assertNotNull( t, "exists");
         JUnitUtil.dispose(f);
     }
 

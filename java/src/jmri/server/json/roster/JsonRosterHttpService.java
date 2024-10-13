@@ -280,8 +280,13 @@ public class JsonRosterHttpService extends JsonHttpService {
         RosterEntry entry;
         try {
             entry = Roster.getDefault().getEntryForId(name);
-        } catch (NullPointerException ex) {
-            throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, JsonRoster.ROSTER_ENTRY, name), id);
+        } catch (NullPointerException ex) { // there may not be a default Profile set
+            throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage
+                (locale, JsonException.ERROR_NOT_FOUND, JsonRoster.ROSTER_ENTRY, name), id);
+        }
+        if ( entry == null ) {
+            throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage
+                (locale, JsonException.ERROR_NOT_FOUND, JsonRoster.ROSTER_ENTRY, name), id);
         }
         if (data.path(JsonRoster.ATTRIBUTES).isArray()) {
             List<String> toKeep = new ArrayList<>();

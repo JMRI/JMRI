@@ -69,14 +69,14 @@ public class DefaultLogixManagerTest extends AbstractManagerTestBase<jmri.LogixM
         Assert.assertNull(m.createNewLogix(l1.getSystemName(),""));
     }
 
-    // No manager-specific system name validation at present
     @Test
     @Override
+    @Disabled("No manager-specific system name validation at present")
     public void testMakeSystemNameWithNoPrefixNotASystemName() {}
 
-    // No manager-specific system name validation at present
     @Test
     @Override
+    @Disabled("No manager-specific system name validation at present")
     public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     @BeforeEach

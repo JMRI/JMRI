@@ -16,7 +16,9 @@ public class TurnoutSectionTest {
 
     @Test
     public void testConstruction() {
-        new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", station);
+        TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N",
+            "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", station);
+        Assertions.assertNotNull(t);
     }
 
     @Test
@@ -25,7 +27,9 @@ public class TurnoutSectionTest {
         normSensor.setState(Sensor.INACTIVE);
         revSensor.setState(Sensor.INACTIVE);
 
-        new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", station);
+        TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N",
+            "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", station);
+        Assertions.assertNotNull(t);
 
         // initialization sets indicators to follow actual turnout state
         Assert.assertEquals(Turnout.THROWN, layoutTurnout.getKnownState());
@@ -38,7 +42,9 @@ public class TurnoutSectionTest {
     public void testLayoutMonitoring() throws JmriException {
         layoutTurnout.setCommandedState(Turnout.THROWN);
 
-        new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N", "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", station);
+        TurnoutSection t = new TurnoutSection("Sec 1 Layout TO", "Sec1 TO 1 N",
+             "Sec1 TO 1 R", "Sec1 TO 1 N", "Sec1 TO 1 R", station);
+        Assertions.assertNotNull(t);
 
         layoutTurnout.setCommandedState(Turnout.CLOSED);
 

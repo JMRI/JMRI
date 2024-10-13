@@ -11,6 +11,7 @@ abstract public class AbstractUsbConnectionConfigTestBase extends jmri.jmrix.Abs
 
     @Test
     @Override
+    @jmri.util.junit.annotations.NotApplicable("libusb is not always available")
     public void testLoadDetails(){
        // don't try to load details on connections that use libusb, since it
        // is not always available.

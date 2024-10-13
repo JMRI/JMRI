@@ -321,16 +321,8 @@ public class JsonUtil {
         node.put(JsonOperations.CAR_TYPE, type[0]);
         node.put(JsonOperations.CAR_SUB_TYPE, type.length == 2 ? type[1] : "");
         node.put(JSON.LENGTH, rs.getLengthInteger());
-        try {
-            node.put(JsonOperations.WEIGHT, Double.parseDouble(rs.getWeight()));
-        } catch (NumberFormatException ex) {
-            node.put(JsonOperations.WEIGHT, 0.0);
-        }
-        try {
-            node.put(JsonOperations.WEIGHT_TONS, Double.parseDouble(rs.getWeightTons()));
-        } catch (NumberFormatException ex) {
-            node.put(JsonOperations.WEIGHT_TONS, 0.0);
-        }
+        node.put(JsonOperations.WEIGHT, rs.getAdjustedWeightTons());
+        node.put(JsonOperations.WEIGHT_TONS, rs.getWeightTons());
         node.put(JSON.COLOR, rs.getColor());
         node.put(JSON.OWNER, rs.getOwnerName());
         node.put(JsonOperations.BUILT, rs.getBuilt());

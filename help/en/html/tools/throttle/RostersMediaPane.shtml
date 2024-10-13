@@ -80,7 +80,8 @@
       <ul>
         <li><b>fn</b> is the function number</li>
         <li><b>label</b> is the text for that function entry</li>
-        <li><b>visible</b> is that function button visible on throttle UI</li>
+        <li><b>visible</b> is that function button visible on throttle UI (only applies when a label exists, else see the "Hide undefined Roster function buttons"
+            on <a href="ThrottlesPreferencesPane.shtml">the global throttle preferences screen</a>)</li>
         <li><b>latch</b> checked means this is a latchable (lockable) function, unchecked means momentary (toggle switch vs momentary switch)</li>
         <li><b>off</b> is the function off icon</li>
         <li><b>on</b> is the function on icon</li>

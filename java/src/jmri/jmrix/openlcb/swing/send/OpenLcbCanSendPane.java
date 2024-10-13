@@ -1,5 +1,7 @@
 package jmri.jmrix.openlcb.swing.send;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
@@ -9,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
@@ -29,7 +32,9 @@ import jmri.util.swing.WrapLayout;
 import org.openlcb.*;
 import org.openlcb.can.AliasMap;
 import org.openlcb.implementations.MemoryConfigurationService;
+import org.openlcb.swing.EventIdTextField;
 import org.openlcb.swing.NodeSelector;
+import org.openlcb.swing.MemorySpaceSelector;
 
 /**
  * User interface for sending OpenLCB CAN frames to exercise the system
@@ -59,15 +64,16 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
     final JTextField srcAliasField = new JTextField(4);
     NodeSelector nodeSelector;
-    final JTextField sendEventField = new JTextField("02 03 04 05 06 07 00 01 ");     // NOI18N
+    final JFormattedTextField sendEventField = EventIdTextField.getEventIdTextField();// NOI18N
     final JTextField datagramContentsField = new JTextField("20 61 00 00 00 00 08");  // NOI18N
     final JTextField configNumberField = new JTextField("40");                        // NOI18N
     final JTextField configAddressField = new JTextField("000000");                   // NOI18N
     final JTextField readDataField = new JTextField(60);
     final JTextField writeDataField = new JTextField(60);
-    final JComboBox<String> addrSpace = new JComboBox<>(new String[]{"CDI", "All", "Config", "None"});
+    final MemorySpaceSelector addrSpace = new MemorySpaceSelector(0xFF);
     final JComboBox<String> validitySelector = new JComboBox<String>(new String[]{"Unknown", "Valid", "Invalid"});
-
+    JButton cdiButton;
+    
     Connection connection;
     AliasMap aliasMap;
     NodeID srcNodeID;
@@ -105,7 +111,13 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         mcs = memo.get(MemoryConfigurationService.class);
         store = memo.get(MimicNodeStore.class);
         nodeSelector = new NodeSelector(store);
+        nodeSelector.addActionListener (new ActionListener () {
+            public void actionPerformed(ActionEvent e) {
+                setCdiButton();
+            }
+        });
 
+        // start window layout
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // handle single-packet part
@@ -164,7 +176,6 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
         // event messages 
         add(new JSeparator());
-        sendEventField.setColumns(24);
         
         var insert = new JPanel();
         insert.setLayout(new WrapLayout());
@@ -191,8 +202,6 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         b = new JButton("Send Event Produced");
         b.addActionListener(this::sendEventPerformed);
         pane2.add(b);
-        //pane2.add(new JLabel("Event ID (8 bytes):"));
-        //pane2.add(sendEventField);
 
         // addressed messages
         add(new JSeparator());
@@ -251,12 +260,41 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         writeDataField.setText("00 00");   // NOI18N
         pane2.add(writeDataField);
 
-        b = new JButton("Open CDI Config Tool");
-        add(b);
-        b.addActionListener(e -> openCdiPane());
+        cdiButton = new JButton("Open CDI Config Tool");
+        add(cdiButton);
+        cdiButton.addActionListener(e -> openCdiPane());
+        cdiButton.setToolTipText("If this button is disabled, please select another node.");
+        setCdiButton(); // get initial state
 
+        // listen for mimic store changes to set CDI button
+        store.addPropertyChangeListener(e -> {
+            setCdiButton();
+        });
+        jmri.util.ThreadingUtil.runOnGUIDelayed( ()->{ 
+            setCdiButton(); 
+        }, 500);
     }
 
+    /**
+     * Set whether Open CDI button is enabled based on whether
+     * the selected node has CDI in its PIP
+     */
+    protected void setCdiButton() {
+        var nodeID = nodeSelector.getSelectedNodeID();
+        if (nodeID == null) { 
+            cdiButton.setEnabled(false);
+            return;
+        }
+        var pip = store.getProtocolIdentification(nodeID);
+        if (pip == null || pip.getProtocols() == null) { 
+            cdiButton.setEnabled(false);
+            return;
+        }
+        cdiButton.setEnabled(
+            pip.getProtocols()
+                .contains(org.openlcb.ProtocolIdentification.Protocol.ConfigurationDescription));
+    }
+    
     private JPanel getSendSinglePacketJPanel() {
         JPanel outer = new JPanel();
         outer.setLayout(new BoxLayout(outer, BoxLayout.X_AXIS));
@@ -341,7 +379,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     }
 
     NodeID destNodeID() {
-        return nodeSelector.getSelectedItem();
+        return nodeSelector.getSelectedNodeID();
     }
 
     EventID eventID() {
@@ -415,7 +453,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     }
 
     public void readPerformed(java.awt.event.ActionEvent e) {
-        int space = 0xFF - addrSpace.getSelectedIndex();
+        int space = addrSpace.getMemorySpace();
         long addr = Integer.parseInt(configAddressField.getText(), 16);
         int length = Integer.parseInt(configNumberField.getText());
         mcs.requestRead(destNodeID(), space, addr,
@@ -435,7 +473,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     }
 
     public void writePerformed(java.awt.event.ActionEvent e) {
-        int space = 0xFF - addrSpace.getSelectedIndex();
+        int space = addrSpace.getMemorySpace();
         long addr = Integer.parseInt(configAddressField.getText(), 16);
         byte[] content = jmri.util.StringUtil.bytesFromHexString(writeDataField.getText());
         mcs.requestWrite(destNodeID(), space, addr, content, new MemoryConfigurationService.McsWriteHandler() {
@@ -613,7 +651,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     }
 
     // private data
-    private TrafficController tc = null; //was CanInterface
+    private TrafficController tc = null; // was CanInterface
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OpenLcbCanSendPane.class);
 
 }

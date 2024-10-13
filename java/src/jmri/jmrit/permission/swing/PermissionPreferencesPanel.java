@@ -9,12 +9,12 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import jmri.*;
+import jmri.PermissionsSystemAdmin;
 import jmri.jmrit.permission.DefaultPermissionManager;
-import jmri.swing.PreferencesPanel;
+import jmri.swing.*;
 import jmri.util.swing.JmriJOptionPane;
 
 import org.openide.util.lookup.ServiceProvider;
-
 
 /**
  * Preferences panel for Permission manager.
@@ -24,7 +24,7 @@ import org.openide.util.lookup.ServiceProvider;
 @ServiceProvider(service = PreferencesPanel.class)
 public class PermissionPreferencesPanel extends JPanel implements PreferencesPanel {
 
-    private final DefaultPermissionManager permissionManager;
+    private final DefaultPermissionManager _temporaryPermissionManager;
     private final Map<User, UserFields> _userFieldsMap = new HashMap<>();
     private boolean _dirty = false;
 
@@ -33,7 +33,7 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
         if (!(mngr instanceof DefaultPermissionManager)) {
             throw new RuntimeException("PermissionManager is not of type DefaultPermissionManager");
         }
-        permissionManager = (DefaultPermissionManager)mngr;
+        _temporaryPermissionManager = ((DefaultPermissionManager)mngr).getTemporaryInstance();
         initGUI();
     }
 
@@ -42,7 +42,7 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
         JTabbedPane rolesTabbedPane = new JTabbedPane();
         JTabbedPane usersTabbedPane = new JTabbedPane();
 
-        List<Role> roleList = new ArrayList<>(permissionManager.getRoles());
+        List<Role> roleList = new ArrayList<>(_temporaryPermissionManager.getRoles());
         roleList.sort((a,b) -> {
             if (a.getPriority() != b.getPriority()) {
                 return Integer.compare(b.getPriority(), a.getPriority());
@@ -50,7 +50,7 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
             return a.getName().toLowerCase().compareTo(b.getName().toLowerCase());
         });
 
-        List<User> userList = new ArrayList<>(permissionManager.getUsers());
+        List<User> userList = new ArrayList<>(_temporaryPermissionManager.getUsers());
         userList.sort((a,b) -> {
             if (a.getPriority() != b.getPriority()) {
                 return Integer.compare(b.getPriority(), a.getPriority());
@@ -70,18 +70,28 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
 
         JCheckBox enablePermissionManagerCheckBox = new JCheckBox(Bundle.getMessage(
                 "PermissionPreferencesPanel_EnablePermissionManager"));
-        enablePermissionManagerCheckBox.setSelected(permissionManager.isEnabled());
+        enablePermissionManagerCheckBox.setSelected(_temporaryPermissionManager.isEnabled());
         enablePermissionManagerCheckBox.addActionListener((evt) -> {
-            permissionManager.setEnabled(enablePermissionManagerCheckBox.isSelected());
-            _dirty = true;
+            if (enablePermissionManagerCheckBox.isSelected()) {
+                // Ask for confirmation before turning Permission Manager on
+                if (JmriJOptionPane.YES_OPTION == JmriJOptionPane.showConfirmDialog(null, Bundle.getMessage("PermissionPreferencesPanel_WarnStartPermissions"), Bundle.getMessage("WarningTitle"), JmriJOptionPane.YES_NO_OPTION)) {
+                    _temporaryPermissionManager.setEnabled(enablePermissionManagerCheckBox.isSelected());
+                    _dirty = true;
+                } else {
+                    enablePermissionManagerCheckBox.setSelected(false);
+                }
+            } else {
+                _temporaryPermissionManager.setEnabled(false);
+                _dirty = true;
+            }
         });
         settingsPanel.add(enablePermissionManagerCheckBox);
 
         JCheckBox allowEmptyPasswordsCheckBox = new JCheckBox(Bundle.getMessage(
                 "PermissionPreferencesPanel_AllowEmptyPasswords"));
-        allowEmptyPasswordsCheckBox.setSelected(permissionManager.isAllowEmptyPasswords());
+        allowEmptyPasswordsCheckBox.setSelected(_temporaryPermissionManager.isAllowEmptyPasswords());
         allowEmptyPasswordsCheckBox.addActionListener((evt) -> {
-            permissionManager.setAllowEmptyPasswords(allowEmptyPasswordsCheckBox.isSelected());
+            _temporaryPermissionManager.setAllowEmptyPasswords(allowEmptyPasswordsCheckBox.isSelected());
             _dirty = true;
         });
         settingsPanel.add(allowEmptyPasswordsCheckBox);
@@ -115,10 +125,10 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
 
         JButton addUserButton = new JButton(Bundle.getMessage("PermissionPreferencesPanel_AddUser"));
         addUserButton.addActionListener((evt) -> {
-            new AddUserDialog(getFrame(), (user) -> {
+            new AddUserDialog(_temporaryPermissionManager, getFrame(), (user) -> {
                 // Find the index of the new user
                 userList.clear();
-                userList.addAll(permissionManager.getUsers());
+                userList.addAll(_temporaryPermissionManager.getUsers());
                 userList.sort((a,b) -> {
                     if (a.getPriority() != b.getPriority()) {
                         return Integer.compare(b.getPriority(), a.getPriority());
@@ -134,6 +144,7 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
         });
         usersPanel.add(addUserButton);
 
+        usersPanel.add(Box.createGlue());
 
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.addTab(Bundle.getMessage("PermissionPreferencesPanel_Roles"),
@@ -183,11 +194,11 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
         }
 
         try {
-            Role role = permissionManager.addRole(roleName);
+            Role role = _temporaryPermissionManager.addRole(roleName);
 
             // Find the index of the new role
             roleList.clear();
-            roleList.addAll(permissionManager.getRoles());
+            roleList.addAll(_temporaryPermissionManager.getRoles());
             roleList.sort((a,b) -> {
                 if (a.getPriority() != b.getPriority()) {
                     return Integer.compare(b.getPriority(), a.getPriority());
@@ -214,31 +225,50 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
 
     private JPanel getRolePanel(Role role, JTabbedPane rolesTabbedPane,
             JTabbedPane usersTabbedPane, List<Role> roleList, List<User> userList) {
+
         JPanel rolePanel = new JPanel();
-        rolePanel.setLayout(new BoxLayout(rolePanel, BoxLayout.PAGE_AXIS));
+        rolePanel.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridwidth = 3;
+        c.gridheight = 1;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.anchor = java.awt.GridBagConstraints.WEST;
 
         JLabel roleLabel = new JLabel("<html><font size=\"+1\"><b>"+role.getName()+"</b></font></html>");
         roleLabel.setBorder(new EmptyBorder(4,4,0,4));
-        rolePanel.add(roleLabel);
+        rolePanel.add(roleLabel, c);
+        c.gridy++;
 
-        for (PermissionOwner owner : permissionManager.getOwners()) {
-            JPanel ownerPanel = new JPanel();
-            ownerPanel.setLayout(new BoxLayout(ownerPanel, BoxLayout.PAGE_AXIS));
+        List<PermissionOwner> owners = new ArrayList<>(_temporaryPermissionManager.getOwners());
+        owners.sort((a,b) -> {return a.getName().compareTo(b.getName());});
+        for (PermissionOwner owner : owners) {
 
             JLabel ownerLabel = new JLabel("<html><font size=\"0.5\"><b>"+owner.getName()+"</b></font></html>");
             ownerLabel.setBorder(new EmptyBorder(15,4,4,4));
-            rolePanel.add(ownerLabel);
+            rolePanel.add(ownerLabel, c);
+            c.gridy++;
 
-            for (Permission permission : permissionManager.getPermissions(owner)) {
-                JCheckBox checkBox = new JCheckBox(permission.getName());
-                checkBox.setSelected(role.hasPermission(permission));
-                checkBox.addActionListener((evt) -> {
-                    role.setPermission(permission, checkBox.isSelected());
-                    _dirty = true;
-                });
-                ownerPanel.add(checkBox);
+            List<Permission> permissions = new ArrayList<>(_temporaryPermissionManager.getPermissions(owner));
+            permissions.sort((a,b) -> { return a.getName().compareTo(b.getName()); });
+            for (Permission permission : permissions) {
+                PermissionSwing permissionSwing =
+                        PermissionSwingTools.getPermissionSwingForClass(permission);
+                JLabel label = permissionSwing.getLabel(permission);
+                if (label != null) {
+                    c.gridwidth = 1;
+                    c.gridx = 0;
+                    rolePanel.add(label, c);
+                    c.gridx = 1;
+                    rolePanel.add(Box.createHorizontalStrut(5), c);
+                    c.gridx = 2;
+                }
+                rolePanel.add(permissionSwing.getComponent(
+                        role, permission, this::setDirtyFlag), c);
+                c.gridy++;
+                c.gridx = 0;
+                c.gridwidth = 3;
             }
-            rolePanel.add(ownerPanel);
         }
 
         rolePanel.add(Box.createVerticalStrut(10));
@@ -250,7 +280,7 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
                             Bundle.getMessage("PermissionPreferencesPanel_RemoveRoleTitle"),
                             JmriJOptionPane.YES_NO_OPTION)) {
                 try {
-                    permissionManager.removeRole(role.getName());
+                    _temporaryPermissionManager.removeRole(role.getName());
                     rolesTabbedPane.remove(roleList.indexOf(role));
                     roleList.remove(role);
                     reloadUsersTabbedPane(usersTabbedPane, roleList, userList);
@@ -264,9 +294,17 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
         if (role.isSystemRole()) {
             removeRoleButton.setEnabled(false);
         }
-        rolePanel.add(removeRoleButton);
+        c.gridy++;
+        rolePanel.add(Box.createVerticalStrut(5), c);
+        c.gridy++;
+        c.anchor = GridBagConstraints.CENTER;
+        rolePanel.add(removeRoleButton, c);
 
         return rolePanel;
+    }
+
+    private void setDirtyFlag() {
+        _dirty = true;
     }
 
     private void reloadUsersTabbedPane(JTabbedPane usersTabbedPane,
@@ -326,9 +364,10 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
         userPanel.add(Box.createVerticalStrut(10));
 
         JButton changePasswordButton = new JButton(Bundle.getMessage("PermissionPreferencesPanel_ChangePassword"));
-        changePasswordButton.setEnabled(!permissionManager.isGuestUser(user));
+        changePasswordButton.setEnabled(!_temporaryPermissionManager.isAGuestUser(user));
         changePasswordButton.addActionListener((evt) -> {
-            new ChangeUserPasswordDialog(getFrame(), user, ()->{_dirty = true;})
+            new ChangeUserPasswordDialog(
+                    _temporaryPermissionManager, getFrame(), user, ()->{_dirty = true;})
                     .setVisible(true);
         });
         userPanel.add(changePasswordButton);
@@ -341,7 +380,7 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
                             Bundle.getMessage("PermissionPreferencesPanel_RemoveUserTitle"),
                             JmriJOptionPane.YES_NO_OPTION)) {
                 try {
-                    permissionManager.removeUser(user.getUserName());
+                    _temporaryPermissionManager.removeUser(user.getUserName());
                     usersTabbedPane.remove(userList.indexOf(user));
                     userList.remove(user);
                     _dirty = true;
@@ -399,7 +438,7 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
             entry.getKey().setName(entry.getValue()._nameTextField.getText());
             entry.getKey().setComment(entry.getValue()._commentTextField.getText());
         }
-        permissionManager.storePermissionSettings();
+        _temporaryPermissionManager.storePermissionSettings();
         _dirty = false;
     }
 
@@ -427,7 +466,8 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
     public BooleanSupplier getIsEnabled() {
         return () -> {
             return InstanceManager.getDefault(PermissionManager.class)
-                    .checkPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PERMISSIONS);
+                    .ensureAtLeastPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES,
+                            BooleanPermission.BooleanValue.TRUE);
         };
     }
 

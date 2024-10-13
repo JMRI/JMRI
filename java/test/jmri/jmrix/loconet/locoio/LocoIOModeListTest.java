@@ -21,18 +21,18 @@ public class LocoIOModeListTest {
 
     @Test
     public void test() {
-        new LocoIOModeList() {  // just have to create it to test it via initializer
+        Assertions.assertNotNull( new LocoIOModeList() {  // just have to create it to test it via initializer
             {
                 /*
                  * This used to be in main class file, so we run
                  * it as an initializer
                  */
                 log.debug("Starting test sequence"); // NOI18N
-                for (int i = 0; i <= modeList.size() - 1; i++) {
-                    LocoIOMode m = modeList.elementAt(i);
+                for (int ii = 0; ii <= modeList.size() - 1; ii++) {
+                    LocoIOMode m = modeList.elementAt(ii);
 
                     int hadError = 0;
-                    for (i = 1; i <= 2047; i++) {
+                    for (int i = 1; i <= 2047; i++) {
                         int svA = m.getSV();
                         int v1A = addressToValue1(m, i);
                         int v2A = addressToValue2(m, i);
@@ -74,7 +74,7 @@ public class LocoIOModeListTest {
                 }
                 log.debug("Finished test sequence\n"); // NOI18N
             }
-        };
+        });
     }
 
     @BeforeEach

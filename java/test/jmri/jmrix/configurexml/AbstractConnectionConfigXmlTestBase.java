@@ -21,6 +21,7 @@ abstract public class AbstractConnectionConfigXmlTestBase extends jmri.configure
     @Test
     public void getInstanceTest() {
         ((AbstractConnectionConfigXml)xmlAdapter).getInstance();
+        ((AbstractConnectionConfigXml)xmlAdapter).dispose();
     }
 
     @Test
@@ -60,7 +61,7 @@ abstract public class AbstractConnectionConfigXmlTestBase extends jmri.configure
     }
 
     /**
-     * Validate the common details for ConnectionConfig match the values in 
+     * Validate the common details for ConnectionConfig match the values in
      * the xml element.
      *
      * @param cc connection configuration object
@@ -72,21 +73,21 @@ abstract public class AbstractConnectionConfigXmlTestBase extends jmri.configure
           Assert.assertNotNull(cc.getAdapter().getSystemConnectionMemo().getUserName());
           Assert.assertEquals("UserName", cc.getAdapter().getSystemConnectionMemo().getUserName(), e.getAttribute("userName").getValue());
           Assert.assertEquals("SystemPrefix", cc.getAdapter().getSystemConnectionMemo().getSystemPrefix(), e.getAttribute("systemPrefix").getValue());
-       } 
+       }
        if (cc.getAdapter().getManufacturer() != null) {
           Assert.assertEquals("Manufacturer", cc.getAdapter().getManufacturer(),e.getAttribute("manufacturer").getValue());
        }
        Assert.assertEquals("disabled", cc.getAdapter().getDisabled(), e.getAttribute("disabled").getValue().equals("yes"));
        testReconnectXml(cc,e);
     }
-    
+
     protected void testReconnectXml(ConnectionConfig cc,Element e){
         Assert.assertEquals("reconnectMaxAttempts", cc.getAdapter().getReconnectMaxAttempts(), Integer.parseInt( e.getAttribute("reconnectMaxAttempts").getValue()));
         Assert.assertEquals("reconnectMaxInterval", cc.getAdapter().getReconnectMaxInterval(), Integer.parseInt(e.getAttribute("reconnectMaxInterval").getValue()));
     }
 
     /**
-     * Validate the connection specific details for ConnectionConfig match 
+     * Validate the connection specific details for ConnectionConfig match
      * the values in the xml element.
      *
      * @param cc connection configuration object

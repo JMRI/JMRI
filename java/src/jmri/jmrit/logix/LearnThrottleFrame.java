@@ -4,12 +4,14 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
 import javax.swing.ButtonGroup;
 import javax.swing.JDesktopPane;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
+
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -30,7 +32,7 @@ import jmri.util.JmriJFrame;
  *
  * @author Pete Cressman Copyright 2009, 2020
  */
-public class LearnThrottleFrame extends JmriJFrame { //implements java.beans.PropertyChangeListener {
+public class LearnThrottleFrame extends JmriJFrame {
 
     private final WarrantFrame _warrantFrame;
     private PowerManager powerMgr = null;
@@ -82,7 +84,7 @@ public class LearnThrottleFrame extends JmriJFrame { //implements java.beans.Pro
     }
 
     private void initGUI() {
-        setTitle("Throttle");
+        setTitle(Bundle.getMessage("ThrottleTitle"));
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {

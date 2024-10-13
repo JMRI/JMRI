@@ -165,7 +165,7 @@ public class IdToolPane extends jmri.util.swing.JmriPanel
      */
     void pushedGetButton(ActionEvent e) {
         setRunning(true);
-        farID = nodeSelector.getSelectedItem();
+        farID = nodeSelector.getSelectedNodeID();
         service.requestRead(farID, space, 0, CHUNKSIZE, cbr);  // assume starting address is zero
     }
 

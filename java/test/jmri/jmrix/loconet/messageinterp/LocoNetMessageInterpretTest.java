@@ -3404,11 +3404,10 @@ public class LocoNetMessageInterpretTest {
                 "Unable to parse LocoNet message. contents: ED 1F 01 49 42 40 71 00 00 40 70 00 00 00 00 20 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n",
             LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
-        /*
-*/
     }
 
     @Test
+    @Disabled("Test requires further development")
     public void testPlayableWhistleMessages() {
     }
 

@@ -158,7 +158,7 @@ public class PrintLocationsFrame extends OperationsFrame {
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
         } catch (IOException we) {
-            log.error("Error printing PrintLocationAction", we);
+            log.error("Error printing PrintLocationAction: {}", we.getLocalizedMessage());
         }
     }
 
@@ -714,7 +714,7 @@ public class PrintLocationsFrame extends OperationsFrame {
                 writer.write(getStagingInfo(track));
                 writer.write(NEW_LINE);
             } catch (IOException we) {
-                log.error("Error printing PrintLocationAction", we);
+                log.error("Error printing PrintLocationAction: {}", we.getLocalizedMessage());
             }
         }
     }

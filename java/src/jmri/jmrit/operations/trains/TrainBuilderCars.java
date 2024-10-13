@@ -1357,8 +1357,9 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                             Bundle.getMessage("buildTrackTooShort", car.getFinalDestination().getName(),
                                     car.getFinalDestinationTrack().getName(), car.toString()));
                 }
+                _warnings++;
                 addLine(_buildReport, SEVEN,
-                        Bundle.getMessage("buildRemovingFinalDestinaton", car.getFinalDestination().getName(),
+                        Bundle.getMessage("buildWarningRemovingFinalDest", car.getFinalDestination().getName(),
                                 car.getFinalDestinationTrack().getName(), car.toString()));
                 car.setFinalDestination(null);
                 car.setFinalDestinationTrack(null);

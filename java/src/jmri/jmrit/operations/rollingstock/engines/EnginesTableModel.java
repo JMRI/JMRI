@@ -33,25 +33,26 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     private static final int ROAD_COLUMN = 1;
     private static final int MODEL_COLUMN = 2;
     private static final int HP_COLUMN = 3;
-    private static final int TYPE_COLUMN = 4;
-    private static final int LENGTH_COLUMN = 5;
-    private static final int CONSIST_COLUMN = 6;
-    private static final int LOCATION_COLUMN = 7;
-    private static final int RFID_WHERE_LAST_SEEN_COLUMN = 8;
-    private static final int RFID_WHEN_LAST_SEEN_COLUMN = 9;
-    private static final int DESTINATION_COLUMN = 10;
-    private static final int PREVIOUS_LOCATION_COLUMN = 11;
-    private static final int TRAIN_COLUMN = 12;
-    private static final int MOVES_COLUMN = 13;
-    private static final int BUILT_COLUMN = 14;
-    private static final int OWNER_COLUMN = 15;
-    private static final int VALUE_COLUMN = 16;
-    private static final int RFID_COLUMN = 17;
-    private static final int LAST_COLUMN = 18;
-    private static final int DCC_ADDRESS_COLUMN = 19;
-    private static final int COMMENT_COLUMN = 20;
-    private static final int SET_COLUMN = 21;
-    private static final int EDIT_COLUMN = 22;
+    private static final int WEIGHT_COLUMN = 4;
+    private static final int TYPE_COLUMN = 5;
+    private static final int LENGTH_COLUMN = 6;
+    private static final int CONSIST_COLUMN = 7;
+    private static final int LOCATION_COLUMN = 8;
+    private static final int RFID_WHERE_LAST_SEEN_COLUMN = 9;
+    private static final int RFID_WHEN_LAST_SEEN_COLUMN = 10;
+    private static final int DESTINATION_COLUMN = 11;
+    private static final int PREVIOUS_LOCATION_COLUMN = 12;
+    private static final int TRAIN_COLUMN = 13;
+    private static final int MOVES_COLUMN = 14;
+    private static final int BUILT_COLUMN = 15;
+    private static final int OWNER_COLUMN = 16;
+    private static final int VALUE_COLUMN = 17;
+    private static final int RFID_COLUMN = 18;
+    private static final int LAST_COLUMN = 19;
+    private static final int DCC_ADDRESS_COLUMN = 20;
+    private static final int COMMENT_COLUMN = 21;
+    private static final int SET_COLUMN = 22;
+    private static final int EDIT_COLUMN = 23;
 
     private static final int HIGHEST_COLUMN = EDIT_COLUMN + 1;
 
@@ -293,7 +294,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 
     // Default engines frame table column widths, starts with Number column and ends with Edit
     private final int[] _enginesTableColumnWidths =
-            {60, 60, 65, 50, 65, 35, 75, 190, 190, 190, 140, 190, 65, 50, 50, 50, 50, 100, 130, 50, 100, 65, 70};
+            {60, 60, 65, 50, 65, 65, 35, 75, 190, 190, 190, 140, 190, 65, 50, 50, 50, 50, 100, 130, 50, 100, 65, 70};
 
     void initTable() {
         // Use XTableColumnModel so we can control which columns are visible
@@ -357,6 +358,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                 return Bundle.getMessage("Type");
             case LENGTH_COLUMN:
                 return Bundle.getMessage("Len");
+            case WEIGHT_COLUMN:
+                return Bundle.getMessage("Weight");
             case CONSIST_COLUMN:
                 return Bundle.getMessage("Consist");
             case LOCATION_COLUMN:
@@ -405,8 +408,6 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
             case LENGTH_COLUMN:
             case MOVES_COLUMN:
                 return Integer.class;
-            case LAST_COLUMN:
-                return Object.class; // to disable sorting
             default:
                 return String.class;
         }
@@ -452,6 +453,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                 }
                 return eng.getTypeName();
             }
+            case WEIGHT_COLUMN:
+                return eng.getWeightTons();
             case CONSIST_COLUMN: {
                 if (eng.isLead()) {
                     return eng.getConsistName() + "*";
@@ -504,7 +507,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
             case RFID_COLUMN:
                 return eng.getRfid();
             case LAST_COLUMN:
-                return eng.getLastDate();
+                return eng.getSortDate();
             case DCC_ADDRESS_COLUMN:
                 return eng.getDccAddress();
             case COMMENT_COLUMN:

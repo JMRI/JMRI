@@ -125,14 +125,14 @@ public class DefaultIdTagManagerTest extends AbstractProvidingManagerTestBase<Id
         Assert.assertFalse("Non-matching IdTag returned via provideTag by tag ID", t1.equals(m.provideIdTag("0413275FCA")));
     }
     
-    // No manager-specific system name validation at present
     @Test
     @Override
+    @Disabled("No manager-specific system name validation at present")
     public void testMakeSystemNameWithNoPrefixNotASystemName() {}
 
-    // No manager-specific system name validation at present    
     @Test
     @Override
+    @Disabled("No manager-specific system name validation at present")
     public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     @BeforeEach
