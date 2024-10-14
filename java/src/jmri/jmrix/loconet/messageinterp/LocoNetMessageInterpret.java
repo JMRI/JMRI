@@ -3,7 +3,6 @@ package jmri.jmrix.loconet.messageinterp;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Locale;
 
 import jmri.InstanceManager;
 import jmri.NmraPacket;
