@@ -1443,7 +1443,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h4>Use all Trains when Routing</h4>
       The option "Use all Trains when Routing" when selected instructs the program to use all of
       your trains to route a car. If you only want the router to use the trains that you've selected
-      in the "Build" column of the "Trains" window, then deselect this option.
+      in the "Build" column of the <a href="#Trains">Trains</a> window, then deselect this option.
 
       <h4>Enable EXTREME Track Destination Restrictions when Routing</h4>
       The last routing option "Enable EXTREME Track Destination Restrictions when Routing" is
@@ -4942,15 +4942,16 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         One of the most important buttons is the "Save Builds" button. When pressed, the program
         saves all the files that have been modified by building and moving your trains. Pressing
         this button allows you to shut down the program and resume exactly where you left the
-        program. If you attempt to close the "Trains" window before pressing the "Save Builds"
-        button, a warning will pop up asking you to save your files. Note that if you enabled <a
-          href="#AutoSave">Auto Save</a> no warning will appear and the program will automatically
-        save your files.
+        program. If you attempt to close the <a href="#Trains">Trains</a> window before pressing the
+        "Save Builds" button, a warning will pop up asking you to save your files. Note that if you
+        enabled <a href="#AutoSave">Auto Save</a> no warning will appear and the program will
+        automatically save your files.
       </p>
 
       <h3 id="TrainEdit">Add or Edit Train</h3>
-      Press the "Add Train" button at the bottom left of the "Trains" window to create a new train.
-      Use the "Edit" button in the "Trains" window table to modify an existing train.
+      Press the "Add Train" button at the bottom left of the <a href="#Trains">Trains</a> window to
+      create a new train. Use the "Edit" button in the <a href="#Trains">Trains</a> window table to
+      modify an existing train.
 
       <p>
         <img src="images/EditTrain.png" alt="">
@@ -5338,10 +5339,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h3 id="TrainsTools">Trains Tools</h3>
       <img src="images/TrainsPaneMenu.png" alt="Operations Trains window Tools Menu">
       <p>
-        In the upper left side of the "Trains" window is the "Tools" menu. The first three items; <a
-          href="#SettingsOptions">Options</a>, <a href="#PrintOptions">Manifest Print Options</a>,
-        and <a href="#BuildReportDetails">Build Report Options</a> can also be accessed from the <a
-          href="#Settings">Settings</a> Tools menu.
+        In the upper left side of the <a href="#Trains">Trains</a> window is the "Tools" menu. The
+        first three items; <a href="#SettingsOptions">Options</a>, <a href="#PrintOptions">Manifest
+          Print Options</a>, and <a href="#BuildReportDetails">Build Report Options</a> can also be
+        accessed from the <a href="#Settings">Settings</a> Tools menu.
       </p>
 
       <h4 id="ModifyTrainsByCarType">Modify Trains by Car Type</h4>
@@ -5405,13 +5406,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </p>
 
       <h4 id="TrainsTableColors">Train Row Color</h4>
-      OperationsPro&trade; gives you two options for color coding the rows in the "Trains" window.
-      You can manually color code your trains, or you can have the program automatically set a
-      train's row color based on the status of the train. For example you could tell the program you
-      want the row colored red if a train fails to build. You can also when using the "Auto" option
-      define a unique color for each train when they are <a href="#TrainReset">reset</a>. Before
-      switching to "Auto", select the reset row colors for your various trains. You can find this
-      feature under "Tools" in the "Trains" window.
+      OperationsPro&trade; gives you two options for color coding the rows in the <a href="#Trains">Trains</a>
+      window. You can manually color code your trains, or you can have the program automatically set
+      a train's row color based on the status of the train. For example you could tell the program
+      you want the row colored red if a train fails to build. You can also when using the "Auto"
+      option define a unique color for each train when they are <a href="#TrainReset">reset</a>.
+      Before switching to "Auto", select the reset row colors for your various trains. You can find
+      this feature under "Tools" in the <a href="#Trains">Trains</a> window.
 
       <h4 id="TrainsCopyTrain">Copy Train</h4>
       This tool allows you to copy an existing train. Enter a new name for the train you wish to
@@ -5720,10 +5721,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         You can also create custom switch lists. Place the programs in the
         JMRI/Your_Profile_Name.jmri/operations/csvSwitchList directory. You can configure the name
         of the Excel program by opening the "Switch List by Location" window using the "Switch
-        Lists" button at the bottom of the "Trains" window. Then under "Tools" in the "Switch List
-        by Location" window, select "Setup Java or Excel Program (Manifest Creator)". You must also
-        enable the creation of CSV switch list files, see <a href="#ManifestOptions">Options</a>
-        "Generate CSV Switch Lists" for more information.
+        Lists" button at the bottom of the <a href="#Trains">Trains</a> window. Then under "Tools"
+        in the "Switch List by Location" window, select "Setup Java or Excel Program (Manifest
+        Creator)". You must also enable the creation of CSV switch list files, see <a
+          href="#ManifestOptions">Options</a> "Generate CSV Switch Lists" for more information.
       </p>
 
       <h4 id="ExportTrains">Export Trains</h4>
@@ -6025,14 +6026,14 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h2 id="BuildingTrains">Building Trains</h2>
       To build one train, press the "Build" button in the row for the desired train in the <a
         href="#Trains">Trains</a> window. The button will become "Print" or "Preview" after the
-      train is built depending on the state of the "Preview" checkbox located at the bottom of the
-      "Trains" window. If you want to review how the train was built, select the "Build Reports"
-      checkbox before pressing the "Print" or "Preview" button for the desired train. If the
-      "Preview" checkbox is selected, the program will generate the <a href="#BuildReports">Build
-        Report</a> and Manifest and present them in preview windows. If you want to build several trains
-      without having to press individual buttons for each train, select the trains that you want
-      built and press the "Build" button found at the bottom of the trains window. The program will
-      then build Manifests for all of the selected trains.
+      train is built depending on the state of the "Preview" checkbox located at the bottom of the <a
+        href="#Trains">Trains</a> window. If you want to review how the train was built, select the
+      "Build Reports" checkbox before pressing the "Print" or "Preview" button for the desired
+      train. If the "Preview" checkbox is selected, the program will generate the <a
+        href="#BuildReports">Build Report</a> and Manifest and present them in preview windows. If
+      you want to build several trains without having to press individual buttons for each train,
+      select the trains that you want built and press the "Build" button found at the bottom of the
+      trains window. The program will then build Manifests for all of the selected trains.
       <p>
         If a train fails to build, the "Action" button will change its text to "Report". Pressing
         "Report" will print or preview the <a href="#BuildReports">build report</a> for this train.
@@ -6374,10 +6375,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         <img src="images/SwitchList.png" alt="">
       </p>
 
-      <p>Press the "Switch Lists" button found at the bottom of the "Trains" window if you want
-        a switch list for a given location. A menu will appear that allows you to select which
-        locations to preview or print. Once you've determined which locations you want to print or
-        preview, press the "Save" button to keep your selections.</p>
+      <p>
+        Press the "Switch Lists" button found at the bottom of the <a href="#Trains">Trains</a>
+        window if you want a switch list for a given location. A menu will appear that allows you to
+        select which locations to preview or print. Once you've determined which locations you want
+        to print or preview, press the "Save" button to keep your selections.
+      </p>
       <a id="SwitchListByLocation"></a> <img src="images/SwitchListMenu.png" alt="">
       <p>The "Print Switch List Changes" button will become active after you've printed out your
         switch lists, and a change occurs to one of your locations due to building a new train.
@@ -6431,7 +6434,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         be difficult to use. It's a bit complicated, so here's the order you need to do things:</p>
 
       <ul>
-        <li>Press the "Switch Lists" button found at the bottom the "Trains" window.</li>
+        <li>Press the "Switch Lists" button found at the bottom the <a href="#Trains">Trains</a>
+          window.
+        </li>
 
         <li>Select which locations you want switch lists for in the "Switch Lists by Location"
           window.</li>

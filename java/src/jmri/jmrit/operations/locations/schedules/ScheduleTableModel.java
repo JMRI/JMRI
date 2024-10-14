@@ -120,8 +120,6 @@ public class ScheduleTableModel extends OperationsTableModel implements Property
         tcm.getColumn(DOWN_COLUMN).setCellEditor(buttonEditor);
         tcm.getColumn(DELETE_COLUMN).setCellRenderer(buttonRenderer);
         tcm.getColumn(DELETE_COLUMN).setCellEditor(buttonEditor);
-        _table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
-        _table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
 
         // set column preferred widths
         _table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(35);
