@@ -16,6 +16,7 @@ public class TrainManifestHeaderText {
     private static String engine_number = Bundle.getMessage("Number");
     private static String type = Bundle.getMessage("Type");
     private static String model = Bundle.getMessage("Model");
+    private static String hp = Bundle.getMessage("HP");
     private static String length = Bundle.getMessage("Length");
     private static String weight = Bundle.getMessage("Weight");
     private static String load = Bundle.getMessage("Load");
@@ -76,6 +77,14 @@ public class TrainManifestHeaderText {
 
     public static void setStringHeader_Model(String s) {
         model = s;
+    }
+
+    public static String getStringHeader_Hp() {
+        return hp;
+    }
+
+    public static void setStringHeader_Hp(String s) {
+        hp = s;
     }
 
     public static String getStringHeader_Length() {
@@ -271,6 +280,10 @@ public class TrainManifestHeaderText {
             e.addContent(values = new Element(Xml.MODEL));
             values.setAttribute(Xml.TEXT, getStringHeader_Model());
         }
+        if (!getStringHeader_Hp().equals(Bundle.getMessage("HP"))) {
+            e.addContent(values = new Element(Xml.HP));
+            values.setAttribute(Xml.TEXT, getStringHeader_Hp());
+        }
         if (!getStringHeader_Length().equals(Bundle.getMessage("Length"))) {
             e.addContent(values = new Element(Xml.LENGTH));
             values.setAttribute(Xml.TEXT, getStringHeader_Length());
@@ -388,6 +401,11 @@ public class TrainManifestHeaderText {
         if (emts.getChild(Xml.MODEL) != null) {
             if ((a = emts.getChild(Xml.MODEL).getAttribute(Xml.TEXT)) != null) {
                 setStringHeader_Model(a.getValue());
+            }
+        }
+        if (emts.getChild(Xml.HP) != null) {
+            if ((a = emts.getChild(Xml.HP).getAttribute(Xml.TEXT)) != null) {
+                setStringHeader_Hp(a.getValue());
             }
         }
         if (emts.getChild(Xml.LENGTH) != null) {

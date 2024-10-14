@@ -1398,6 +1398,8 @@ public class TrainCommon {
         if (attribute.equals(Setup.MODEL)) {
             return padAndTruncateIfNeeded(splitStringLeftParenthesis(engine.getModel()),
                     InstanceManager.getDefault(EngineModels.class).getMaxNameLength());
+        } else if (attribute.equals(Setup.HP)) {
+            return padAndTruncateIfNeeded(engine.getHp(), 5);
         } else if (attribute.equals(Setup.CONSIST)) {
             return padAndTruncateIfNeeded(engine.getConsistName(),
                     InstanceManager.getDefault(ConsistManager.class).getMaxNameLength());
@@ -1800,6 +1802,9 @@ public class TrainCommon {
             } else if (attribute.equals(Setup.MODEL)) {
                 buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Model(),
                         InstanceManager.getDefault(EngineModels.class).getMaxNameLength()) + SPACE);
+            } else if (attribute.equals(Setup.HP)) {
+                buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Hp(),
+                        5) + SPACE);
             } else if (attribute.equals(Setup.CONSIST)) {
                 buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Consist(),
                         InstanceManager.getDefault(ConsistManager.class).getMaxNameLength()) + SPACE);
