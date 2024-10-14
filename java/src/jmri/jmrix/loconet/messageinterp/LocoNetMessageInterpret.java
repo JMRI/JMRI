@@ -742,15 +742,6 @@ public class LocoNetMessageInterpret {
                 break;
         } // end switch over opcode type
 
-        // Add in "extras"
-        String s = LnMessageInterpExtensionService.getInstance().
-                getInterpretation(
-                        l, turnoutPrefix,
-                        sensorPrefix,
-                        reporterPrefix);
-        if (s != null) {
-            return s;
-        }
         return Bundle.getMessage("LN_MSG_UNKNOWN_MESSAGE") +
                 Bundle.getMessage("LN_MONITOR_MESSAGE_RAW_HEX_INFO", l.toString());
     }
