@@ -6,8 +6,6 @@ import jmri.util.StringUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
@@ -7066,6 +7064,5 @@ public class LocoNetMessageInterpretTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-    private final static Logger log = LoggerFactory.getLogger(LocoNetMessageInterpretTest.class);
 
 }
