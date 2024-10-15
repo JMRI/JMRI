@@ -86,7 +86,10 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>LocoNet Monitor gives better information when some 
+                    responses were reporting "unrecognized message" for 
+                    CV reads of LocoNet-connected Digitrax 7th-generation 
+                    Accessory devices.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -614,4 +617,3 @@
         <ul>
             <li></li>
         </ul>
-
