@@ -459,6 +459,17 @@ public class DefaultPermissionManager implements PermissionManager {
     }
 
     @Override
+    public synchronized boolean isAGuestUser(String username) {
+        DefaultUser user = _users.get(username);
+        if (user != null) {
+            String systemUsername = user.getSystemUsername();
+            return USER_GUEST.getSystemUsername().equals(systemUsername)
+                    || REMOTE_USER_GUEST.getSystemUsername().equals(systemUsername);
+        }
+        return false;
+    }
+
+    @Override
     public synchronized boolean isAGuestUser(User user) {
         if (user instanceof DefaultUser) {
             String systemUsername = ((DefaultUser)user).getSystemUsername();

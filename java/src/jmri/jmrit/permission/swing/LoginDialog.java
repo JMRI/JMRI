@@ -2,7 +2,6 @@ package jmri.jmrit.permission.swing;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
-import java.util.Objects;
 
 import javax.swing.*;
 
@@ -64,8 +63,8 @@ public class LoginDialog extends JDialog {
         JButton buttonOK = new JButton(Bundle.getMessage("ButtonOK"));    // NOI18N
         buttonPanel.add(buttonOK);
         buttonOK.addActionListener((ActionEvent e) -> {
-            if (Objects.equals(_usernameTextField.getText(),
-                    Bundle.getMessage("PermissionManager_User_Guest").toLowerCase())) {
+            PermissionManager mngr = InstanceManager.getDefault(PermissionManager.class);
+            if (mngr.isAGuestUser(_usernameTextField.getText())) {
                 // default guest user does log in
                 JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("LoginAction_GuestMessage"),
@@ -73,7 +72,7 @@ public class LoginDialog extends JDialog {
                         JmriJOptionPane.ERROR_MESSAGE);
             } else {
                 String password = new String(_passwordTextField.getPassword());
-                if (InstanceManager.getDefault(PermissionManager.class).login(_usernameTextField.getText(), password)) {
+                if (mngr.login(_usernameTextField.getText(), password)) {
 
                     JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("LoginAction_UserLoggedIn"), jmri.Application.getApplicationName(), JmriJOptionPane.INFORMATION_MESSAGE);
                     dispose();

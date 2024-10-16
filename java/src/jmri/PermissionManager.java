@@ -141,6 +141,13 @@ public interface PermissionManager {
     boolean isCurrentUserPermittedToChangePassword();
 
     /**
+     * Is the user 'username' the guest user?
+     * @param username the username to check
+     * @return true if 'username' is the guest user
+     */
+    boolean isAGuestUser(String username);
+
+    /**
      * Is the user 'user' the guest user?
      * @param user the user to check
      * @return true if 'user' is the guest user
