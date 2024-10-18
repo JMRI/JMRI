@@ -1399,7 +1399,8 @@ public class TrainCommon {
             return padAndTruncateIfNeeded(splitStringLeftParenthesis(engine.getModel()),
                     InstanceManager.getDefault(EngineModels.class).getMaxNameLength());
         } else if (attribute.equals(Setup.HP)) {
-            return padAndTruncateIfNeeded(engine.getHp(), 5);
+            return padAndTruncateIfNeeded(engine.getHp(), 5) +
+                    (Setup.isPrintHeadersEnabled() ? "" : TrainManifestHeaderText.getStringHeader_Hp());
         } else if (attribute.equals(Setup.CONSIST)) {
             return padAndTruncateIfNeeded(engine.getConsistName(),
                     InstanceManager.getDefault(ConsistManager.class).getMaxNameLength());
@@ -1519,7 +1520,8 @@ public class TrainCommon {
                         InstanceManager.getDefault(CarLengths.class).getMaxNameLength());
             } else if (attribute.equals(Setup.WEIGHT)) {
                 return padAndTruncateIfNeeded(Integer.toString(rs.getAdjustedWeightTons()),
-                        Control.max_len_string_weight_name);
+                        Control.max_len_string_weight_name) +
+                        (Setup.isPrintHeadersEnabled() ? "" : TrainManifestHeaderText.getStringHeader_Weight());
             } else if (attribute.equals(Setup.COLOR)) {
                 return padAndTruncateIfNeeded(rs.getColor(),
                         InstanceManager.getDefault(CarColors.class).getMaxNameLength());
