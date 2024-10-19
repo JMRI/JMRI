@@ -43,7 +43,7 @@
       </model>
       <model model="DN167K0E" numOuts="6" numFns="6" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
       </model>
-      <model model="DN167n18" numOuts="6" numFns="6" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="" comment="Next18">
+      <model model="DN167n18" numOuts="6" numFns="6" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="Next18" comment="Next18">
       </model>
       <model model="DH127D" numOuts="2" numFns="4" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="9pin" comment="HO-Scale, wired">
       </model>
