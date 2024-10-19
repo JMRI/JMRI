@@ -17,7 +17,7 @@ import jmri.jmrit.logixng.util.parser.ParserException;
  *
  * @author Daniel Bergqvist (C) 2023
  */
-public class LogixNG_SelectCharset {
+public class LogixNG_SelectCharset implements ReplaceableNamedBean {
 
     public static final List<Charset> STANDARD_CHARSETS = getStandardCharsets();
 
@@ -163,6 +163,11 @@ public class LogixNG_SelectCharset {
      * Unregister listeners if this object needs that.
      */
     public void unregisterListeners() {
+    }
+
+    @Override
+    public void getGetAndReplaceNamedBeans(List<GetAndReplaceNamedBean> list) {
+        _selectUserSpecifiedCharset.getGetAndReplaceNamedBeans(list);
     }
 
 

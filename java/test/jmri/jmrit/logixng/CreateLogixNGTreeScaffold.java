@@ -14,7 +14,6 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.actions.*;
-import jmri.jmrit.logixng.actions.ActionListenOnBeans.NamedBeanReference;
 import jmri.jmrit.logixng.expressions.*;
 import jmri.jmrit.logixng.util.*;
 import jmri.jmrit.logixng.util.parser.ParserException;
@@ -5966,7 +5965,7 @@ public class CreateLogixNGTreeScaffold {
 
         TransitScaffold.initTransits();
 
-//        JUnitUtil.initLogixNGManager();
+        JUnitUtil.initLogixNGManager();
 
         CreateLogixNGTreeScaffold.setUpCalled(true);
     }
