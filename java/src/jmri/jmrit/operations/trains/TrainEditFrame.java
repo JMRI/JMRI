@@ -858,12 +858,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         if (engineModel == null) {
             return;
         }
-        roadEngineBox.removeAllItems();
-        roadEngineBox.addItem(NONE);
-        List<String> roads = InstanceManager.getDefault(EngineManager.class).getEngineRoadNames(engineModel);
-        for (String roadName : roads) {
-            roadEngineBox.addItem(roadName);
-        }
+        InstanceManager.getDefault(EngineManager.class).updateEngineRoadComboBox(engineModel, roadEngineBox);
         if (_train != null) {
             roadEngineBox.setSelectedItem(_train.getEngineRoad());
         }

@@ -95,6 +95,8 @@ public class TrainRoadOptionsFrameTest extends OperationsTestCase {
     @Test
     public void testSaveLocoRoad() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // need some locos
+        JUnitOperationsUtil.loadTrains();
         TrainRoadOptionsFrame f = new TrainRoadOptionsFrame();
         Assert.assertNotNull("exists", f);
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
@@ -103,44 +105,46 @@ public class TrainRoadOptionsFrameTest extends OperationsTestCase {
         f.initComponents(trainEditFrame);
         Assert.assertTrue("Save button enabled", f.saveTrainButton.isEnabled());
 
-        // only accept "AA" road
+        // only accept "PU" road for locos
         JemmyUtil.enterClickAndLeave(f.locoRoadNameInclude);
+        f.comboBoxLocoRoads.setSelectedItem("PU");
         JemmyUtil.enterClickAndLeave(f.addLocoRoadButton);
         JemmyUtil.enterClickAndLeave(f.saveTrainButton);
-        Assert.assertTrue("Train accepts AA road", train.isLocoRoadNameAccepted("AA"));
-        Assert.assertTrue("Train accepts AA road for cars", train.isCarRoadNameAccepted("AA"));
+        Assert.assertTrue("Train accepts PU road", train.isLocoRoadNameAccepted("PU"));
         Assert.assertFalse("Train does not accepts SP road", train.isLocoRoadNameAccepted("SP"));
 
-        // delete "AA" road
-        f.comboBoxLocoRoads.setSelectedItem("AA");
+        // delete "PU" road
+        f.comboBoxLocoRoads.setSelectedItem("PU");
         JemmyUtil.enterClickAndLeave(f.deleteLocoRoadButton);
         JemmyUtil.enterClickAndLeave(f.saveTrainButton);
-        Assert.assertFalse("Train does not accepts AA road", train.isLocoRoadNameAccepted("AA"));
-        Assert.assertTrue("Train accepts AA road for cars", train.isCarRoadNameAccepted("AA"));
+        Assert.assertFalse("Train does not accepts PU road", train.isLocoRoadNameAccepted("PU"));
+        Assert.assertTrue("Train accepts PU road for cars", train.isCarRoadNameAccepted("PU"));
         
-        // each add road name bumps the road name displayed order AA, ACL, ADCX
+        // each add road name bumps the road name displayed order PU, SP, UP
         JemmyUtil.enterClickAndLeave(f.addLocoRoadButton);
         JemmyUtil.enterClickAndLeave(f.saveTrainButton);
-        Assert.assertTrue("Train accepts ACL road", train.isLocoRoadNameAccepted("ACL"));
+        Assert.assertFalse("Train does not accepts PU road", train.isLocoRoadNameAccepted("PU"));
+        Assert.assertTrue("Train accepts SP road", train.isLocoRoadNameAccepted("SP"));
+        Assert.assertTrue("Train accepts PU road for cars", train.isCarRoadNameAccepted("PU"));
 
         // delete all
         JemmyUtil.enterClickAndLeave(f.deleteLocoAllRoadsButton);
         JemmyUtil.enterClickAndLeave(f.saveTrainButton);
-        Assert.assertFalse("Train does not accepts ACL road", train.isLocoRoadNameAccepted("ACL"));
+        Assert.assertFalse("Train does not accepts SP road", train.isLocoRoadNameAccepted("SP"));
         Assert.assertTrue("Train accepts ACL road for cars", train.isCarRoadNameAccepted("ACL"));
 
         // accept all roads
         JemmyUtil.enterClickAndLeave(f.locoRoadNameAll);
         JemmyUtil.enterClickAndLeave(f.saveTrainButton);
-        Assert.assertTrue("Train accepts AA road", train.isLocoRoadNameAccepted("AA"));
+        Assert.assertTrue("Train accepts SP road", train.isLocoRoadNameAccepted("SP"));
 
-        // exclude "ADCX" road
+        // exclude "UP" road
         JemmyUtil.enterClickAndLeave(f.locoRoadNameExclude);
         JemmyUtil.enterClickAndLeave(f.addLocoRoadButton);
         JemmyUtil.enterClickAndLeave(f.saveTrainButton);
-        Assert.assertFalse("Train does not accepts ADCX road", train.isLocoRoadNameAccepted("ADCX"));
+        Assert.assertFalse("Train does not accepts UP road", train.isLocoRoadNameAccepted("UP"));
         Assert.assertTrue("Train accepts AA road", train.isLocoRoadNameAccepted("AA"));
-        Assert.assertTrue("Train accepts ADCX road for cars", train.isCarRoadNameAccepted("ADCX"));
+        Assert.assertTrue("Train accepts UP road for cars", train.isCarRoadNameAccepted("UP"));
         Assert.assertTrue("Train accepts SP road", train.isLocoRoadNameAccepted("SP"));
 
         JUnitUtil.dispose(f);
