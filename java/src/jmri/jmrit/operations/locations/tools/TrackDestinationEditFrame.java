@@ -82,6 +82,12 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
         p1.add(pTrackName);
         p1.add(pLocationName);
 
+        // row 2 only for C/I and Staging
+        JPanel pFD = new JPanel();
+        pFD.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Options")));
+        pFD.add(onlyCarsWithFD);
+        pFD.setMaximumSize(new Dimension(2000, 200));
+
         // row 3
         JPanel p3 = new JPanel();
         p3.setLayout(new BoxLayout(p3, BoxLayout.Y_AXIS));
@@ -98,13 +104,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 
         p3.add(pRadioButtons);
         
-        // row 4 only for C/I and Staging
-        JPanel pFD = new JPanel();
-        pFD.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Options")));
-        pFD.add(onlyCarsWithFD);
-        pFD.setMaximumSize(new Dimension(2000, 200));
-
-        // row 5
+        // row 4
         panelDestinations.setLayout(new GridBagLayout());
         paneDestinations.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Destinations")));
 
@@ -113,19 +113,18 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
         bGroup.add(destinationsInclude);
         bGroup.add(destinationsExclude);
 
-        // row 12
+        // row last
         JPanel panelButtons = new JPanel();
         panelButtons.setLayout(new GridBagLayout());
         panelButtons.setBorder(BorderFactory.createTitledBorder(""));
         panelButtons.setMaximumSize(new Dimension(2000, 200));
 
-        // row 13
         addItem(panelButtons, checkDestinationsButton, 0, 0);
         addItem(panelButtons, saveButton, 1, 0);
 
         getContentPane().add(p1);
-        getContentPane().add(pane3);
         getContentPane().add(pFD);
+        getContentPane().add(pane3);
         getContentPane().add(paneDestinations);
         getContentPane().add(panelButtons);
 

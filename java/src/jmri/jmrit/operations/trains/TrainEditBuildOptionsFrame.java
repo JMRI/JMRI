@@ -1004,12 +1004,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
         if (engineModel == null) {
             return;
         }
-        box.removeAllItems();
-        box.addItem(NONE);
-        List<String> roads = InstanceManager.getDefault(EngineManager.class).getEngineRoadNames(engineModel);
-        for (String road : roads) {
-            box.addItem(road);
-        }
+        InstanceManager.getDefault(EngineManager.class).updateEngineRoadComboBox(engineModel, box);
     }
 
     private void updateReturnToStagingCheckbox() {

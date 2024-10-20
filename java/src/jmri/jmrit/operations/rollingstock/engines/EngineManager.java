@@ -3,6 +3,8 @@ package jmri.jmrit.operations.rollingstock.engines;
 import java.beans.PropertyChangeEvent;
 import java.util.*;
 
+import javax.swing.JComboBox;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -142,6 +144,15 @@ public class EngineManager extends RollingStockManager<Engine>
         }
         java.util.Collections.sort(names);
         return names;
+    }
+
+    public void updateEngineRoadComboBox(String engineModel, JComboBox<String> roadEngineBox) {
+        roadEngineBox.removeAllItems();
+        roadEngineBox.addItem(NONE);
+        List<String> roads = getEngineRoadNames(engineModel);
+        for (String roadName : roads) {
+            roadEngineBox.addItem(roadName);
+        }
     }
 
     int _commentLength = 0;

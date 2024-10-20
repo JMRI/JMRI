@@ -1,26 +1,21 @@
 package jmri.jmrit.operations.trains;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
+import java.awt.*;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of a train's road options
@@ -64,7 +59,7 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
 
     // combo boxes
     JComboBox<String> comboBoxCarRoads = InstanceManager.getDefault(CarRoads.class).getComboBox();
-    JComboBox<String> comboBoxLocoRoads = InstanceManager.getDefault(CarRoads.class).getComboBox();
+    JComboBox<String> comboBoxLocoRoads = new JComboBox<String>();
 
     public static final String DISPOSE = "dispose"; // NOI18N
 
@@ -219,9 +214,11 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
         updateCarRoadNames();
         updateLocoRoadNames();
 
-        // get notified if car roads, roads, and owners gets modified
+        // get notified if car types or roads gets modified
         InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
         InstanceManager.getDefault(CarRoads.class).addPropertyChangeListener(this);
+        // get notified if there's a change in the engine roster
+        InstanceManager.getDefault(EngineManager.class).addPropertyChangeListener(this);
 
         initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
     }
@@ -411,7 +408,7 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
 
     private void updateRoadComboBoxes() {
         InstanceManager.getDefault(CarRoads.class).updateComboBox(comboBoxCarRoads);
-        InstanceManager.getDefault(CarRoads.class).updateComboBox(comboBoxLocoRoads);
+        InstanceManager.getDefault(EngineManager.class).updateEngineRoadComboBox(NONE, comboBoxLocoRoads);
     }
 
     @Override
@@ -430,7 +427,8 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
-        if (e.getPropertyName().equals(CarRoads.CARROADS_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(CarRoads.CARROADS_CHANGED_PROPERTY)
+                || e.getPropertyName().equals(RollingStockManager.LISTLENGTH_CHANGED_PROPERTY)) {
             updateRoadComboBoxes();
             updateCarRoadNames();
         }
