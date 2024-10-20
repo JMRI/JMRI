@@ -86,9 +86,9 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>LocoNet Monitor gives better information when some 
-                    responses were reporting "unrecognized message" for 
-                    CV reads of LocoNet-connected Digitrax 7th-generation 
+                <li>LocoNet Monitor gives better information when some
+                    responses were reporting "unrecognized message" for
+                    CV reads of LocoNet-connected Digitrax 7th-generation
                     Accessory devices.</li>
             </ul>
 
@@ -426,7 +426,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>Fix slip turnout control circle colors when using closed/thrown colors.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
