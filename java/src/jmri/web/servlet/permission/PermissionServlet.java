@@ -1,6 +1,7 @@
 package jmri.web.servlet.permission;
 
 import java.io.*;
+import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 
 import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
@@ -74,6 +75,8 @@ public class PermissionServlet extends HttpServlet {
                 }
             }
 
+            PermissionManager mngr = InstanceManager.getDefault(PermissionManager.class);
+
             String username = null;
             String password = null;
 
@@ -81,11 +84,11 @@ public class PermissionServlet extends HttpServlet {
                 String[] parts = param.split("=");
                 switch (parts[0]) {
                     case "username":
-                        username = parts[1];
+                        username = URLDecoder.decode(parts[1], StandardCharsets.UTF_8);
                         break;
                     case "password":
                         if (parts.length > 1)
-                            password = parts[1];
+                            password = URLDecoder.decode(parts[1], StandardCharsets.UTF_8);
                         else
                             password = "";
                         break;
@@ -97,13 +100,18 @@ public class PermissionServlet extends HttpServlet {
             if (username != null && password != null) {
                 // log.warn("Login with {} and {}", username, password);
 
+                if (mngr.isAGuestUser(username)) {
+                    String message = Bundle.getMessage("GuestMessage");
+                    sendPage("Response.html", message, request, response);
+                    return;
+                }
+
                 String sessId = PermissionServlet.getSessionId(request);
                 if (sessId == null) sessId = "";
 
                 StringBuilder sessionId = new StringBuilder(sessId);
 
-                boolean result = InstanceManager.getDefault(PermissionManager.class)
-                        .remoteLogin(sessionId, request.getLocale(), username, password);
+                boolean result = mngr.remoteLogin(sessionId, request.getLocale(), username, password);
 
                 if (result) {
                     setSessionId(sessionId.toString(), response);
