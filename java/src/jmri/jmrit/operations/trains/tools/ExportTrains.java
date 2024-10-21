@@ -67,8 +67,9 @@ public class ExportTrains extends XmlFile {
             fileOut.printRecord(Bundle.getMessage("Name"), Bundle.getMessage("Description"), Bundle.getMessage("Time"),
                     Bundle.getMessage("Route"), Bundle.getMessage("Departs"), Bundle.getMessage("Terminates"),
                     Bundle.getMessage("Status"), Bundle.getMessage("Comment"), Bundle.getMessage("LocoTypes"),
-                    Bundle.getMessage("CarTypes"), Bundle.getMessage("RoadOption"), Bundle.getMessage("Roads"),
-                    Bundle.getMessage("RoadOption"), Bundle.getMessage("Roads"),
+                    Bundle.getMessage("CarTypes"), Bundle.getMessage("RoadOption"), Bundle.getMessage("RoadsCar"),
+                    Bundle.getMessage("RoadOption"), Bundle.getMessage("RoadsCaboose"), Bundle.getMessage("RoadOption"),
+                    Bundle.getMessage("RoadsLoco"),
                     Bundle.getMessage("LoadOption"), Bundle.getMessage("Loads"), Bundle.getMessage("OwnerOption"),
                     Bundle.getMessage("Owners"), Bundle.getMessage("Built"),
                     Bundle.getMessage("NormalModeWhenBuilding"), Bundle.getMessage("AllowCarsToReturn"),
@@ -92,7 +93,8 @@ public class ExportTrains extends XmlFile {
                         train.getTrainDepartsName(), train.getTrainTerminatesName(), train.getStatus(),
                         train.getComment(), TrainCommon.formatStringToCommaSeparated(train.getLocoTypeNames()),
                         TrainCommon.formatStringToCommaSeparated(train.getCarTypeNames()), getCarRoadOption(train),
-                        getCarRoads(train), getLocoRoadOption(train), getLocoRoads(train), getLoadOption(train),
+                        getCarRoads(train), getCabooseRoadOption(train), getCabooseRoads(train),
+                        getLocoRoadOption(train), getLocoRoads(train), getLoadOption(train),
                         getLoads(train), getOwnerOption(train), getOwners(train), getBuilt(train),
                         train.isBuildTrainNormalEnabled() ? Bundle.getMessage("ButtonYes") : "",
                         train.isAllowReturnToStagingEnabled() ? Bundle.getMessage("ButtonYes") : "",
@@ -211,6 +213,26 @@ public class ExportTrains extends XmlFile {
         }
     }
     
+    private String getCabooseRoadOption(Train train) {
+        String roadOption = Bundle.getMessage("AcceptAll");
+        if (train.getCabooseRoadOption().equals(Train.INCLUDE_ROADS)) {
+            roadOption = Bundle.getMessage(
+                    "AcceptOnly") + " " + train.getCabooseRoadNames().length + " " + Bundle.getMessage("Roads");
+        } else if (train.getCabooseRoadOption().equals(Train.EXCLUDE_ROADS)) {
+            roadOption = Bundle.getMessage(
+                    "Exclude") + " " + train.getCabooseRoadNames().length + " " + Bundle.getMessage("Roads");
+        }
+        return roadOption;
+    }
+
+    private String getCabooseRoads(Train train) {
+        if (train.getCabooseRoadOption().equals(Train.ALL_ROADS)) {
+            return "";
+        } else {
+            return TrainCommon.formatStringToCommaSeparated(train.getCabooseRoadNames());
+        }
+    }
+
     private String getLocoRoadOption(Train train) {
         String roadOption = Bundle.getMessage("AcceptAll");
         if (train.getLocoRoadOption().equals(Train.INCLUDE_ROADS)) {

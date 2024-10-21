@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.*;
+import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
@@ -153,6 +154,7 @@ public class EngineManager extends RollingStockManager<Engine>
         for (String roadName : roads) {
             roadEngineBox.addItem(roadName);
         }
+        OperationsPanel.padComboBox(roadEngineBox);
     }
 
     int _commentLength = 0;

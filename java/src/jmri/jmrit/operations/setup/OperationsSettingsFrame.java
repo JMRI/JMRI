@@ -27,8 +27,10 @@ public class OperationsSettingsFrame extends OperationsFrame {
         toolMenu.add(new OptionAction());
         toolMenu.add(new PrintOptionAction());
         toolMenu.add(new BuildReportOptionAction());
+        toolMenu.addSeparator();
         toolMenu.add(new BackupFilesAction());
         toolMenu.add(new RestoreFilesAction());
+        toolMenu.addSeparator();
         toolMenu.add(new LoadDemoAction());
         toolMenu.add(new ResetAction());
         toolMenu.add(new ManageBackupsAction());
