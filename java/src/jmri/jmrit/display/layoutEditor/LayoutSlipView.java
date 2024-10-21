@@ -1112,11 +1112,11 @@ public class LayoutSlipView extends LayoutTurnoutView {
             } else if (stateA != Turnout.CLOSED) {
                 g2.setColor(foregroundColor);
             }
-            Point2D rightCircleCenter = getCoordsRight();
+            Point2D leftCircleCenter = getCoordsLeft();
             if (layoutEditor.isTurnoutFillControlCircles()) {
-                g2.fill(trackControlCircleAt(rightCircleCenter));
+                g2.fill(trackControlCircleAt(leftCircleCenter));
             } else {
-                g2.draw(trackControlCircleAt(rightCircleCenter));
+                g2.draw(trackControlCircleAt(leftCircleCenter));
             }
             if (stateA != Turnout.CLOSED) {
                 g2.setColor(foregroundColor);
@@ -1134,11 +1134,11 @@ public class LayoutSlipView extends LayoutTurnoutView {
                 g2.setColor(foregroundColor);
             }
             // drawHidden left/right turnout control circles
-            Point2D leftCircleCenter = getCoordsLeft();
+            Point2D rightCircleCenter = getCoordsRight();
             if (layoutEditor.isTurnoutFillControlCircles()) {
-                g2.fill(trackControlCircleAt(leftCircleCenter));
+                g2.fill(trackControlCircleAt(rightCircleCenter));
             } else {
-                g2.draw(trackControlCircleAt(leftCircleCenter));
+                g2.draw(trackControlCircleAt(rightCircleCenter));
             }
             if (stateB != Turnout.CLOSED) {
                 g2.setColor(foregroundColor);
