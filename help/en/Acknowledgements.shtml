@@ -803,7 +803,8 @@
         throttle when running Linux, added improved alignment options to the PanelEditor, improved
         adding text labels and worked on the MQTT coding.</li>
 
-        <li>Dan Mycio, who provided information on TCS hardware and software.
+        <li>Dan Mycio, who provided information on TCS hardware and software and
+        updated the WOW Steam 4.6 decoder definitions.</li>
 
         <li>Robert Myers provided <a href="https://www.jmri.org/install/OLPC_XO.shtml">instructions for
         installing JMRI on an OLPC XO laptop</a> <a id="N"></a>

@@ -84,25 +84,6 @@
 			<display item="Dual function F14" format="checkbox"/>
 		</column>
     </row>
-    <label>
-			<text>   </text>
-		</label>
-    <label>
-		  <text>Rule 17 Function Mapping</text>
-	  </label>
-    <label>
-      <text> </text>
-    </label>
-    <row>
-		<column>
-			<display item="F7 controls output Rule 17" format="checkbox"/>
-			<display item="F8 controls output Rule 17" format="checkbox"/>
-			<display item="F9 controls output Rule 17" format="checkbox"/>
-			<display item="F10 controls output Rule 17" format="checkbox"/>
-			<display item="F11 controls output Rule 17" format="checkbox"/>
-			<display item="F12 controls output Rule 17" format="checkbox"/>
-		</column>
-    </row>
   </column>
   <name xml:lang="it">TCS</name>
 </pane>

@@ -29,14 +29,8 @@
 		<enumChoice choice="0-6-0 Air Pump Type 1" value="11"/>
 		<enumChoice choice="0-6-0 Air Pump Type 2" value="12"/>
 	</enumChoiceGroup>
-	<enumChoiceGroup>
-		<name>Ash Dump</name>
-		<enumChoice choice="Ash Pan Cleaning" value="13"/>
-	</enumChoiceGroup>
-	<enumChoiceGroup>
-		<name>Bell</name>
-		<enumChoice choice="Bell" value="14"/>
-	</enumChoiceGroup>
+	<enumChoice choice="Ash Pan Cleaning" value="13"/>
+	<enumChoice choice="Bell" value="14"/>
 	<enumChoiceGroup>
 		<name>Blow Down</name>
 		<enumChoice choice="Blow Down 1" value="65"/>
@@ -55,21 +49,14 @@
 	</enumChoiceGroup>
 	<enumChoiceGroup>
 		<name>Brake Squeal</name>
-		<enumChoice choice="Brake Squeal Function" value="72"/>
+		<enumChoice choice="Train Brake Function" value="72"/>
 	</enumChoiceGroup>
 	<enumChoiceGroup>
 		<name>Coupler Clank</name>
 		<enumChoice choice="Coupling" value="9462"/>
 		<enumChoice choice="Uncoupling" value="9463"/>
 	</enumChoiceGroup>
-	<enumChoiceGroup>
-		<name>Cylinder Cocks</name>
-		<enumChoice choice="Cylinder Cocks On/Off" value="9464"/>
-	</enumChoiceGroup>
-	<enumChoiceGroup>
-		<name>Direction Change</name>
-		<enumChoice choice="Power Reverser" value="9494"/>
-	</enumChoiceGroup>
+	<enumChoice choice="Cylinder Cocks On/Off" value="9464"/>
 	<enumChoiceGroup>
 		<name>Generator</name>
 		<enumChoice choice="Generator 1" value="9574"/>
@@ -102,13 +89,10 @@
 		<enumChoice choice="Switching/Mainline Momentum Function" value="9589"/>
 		<enumChoice choice="Switching/Mainline Momentum Function (Inverted)" value="9590"/>
 	</enumChoiceGroup>
-	<enumChoiceGroup>
-		<name>Mute</name>
-		<enumChoice choice="Mute Function" value="9591"/>
-	</enumChoiceGroup>
+	<enumChoice choice="Mute" value="9591"/>
 	<enumChoiceGroup>
 		<name>TCS Rotate Function</name>
-		<enumChoice choice="Rotate Whistle, Bell, Chuff Function" value="9787"/>
+		<enumChoice choice="Rotate Whistle, Bell, Chuff Feature" value="9787"/>
 	</enumChoiceGroup>
 	<enumChoiceGroup>
 		<name>Safety</name>
@@ -127,32 +111,14 @@
 		<enumChoice choice="Station Arrival Announcements" value="9874"/>
 		<enumChoice choice="Station Departure Announcements" value="9880"/>
 	</enumChoiceGroup>
+	<enumChoice choice="Water Filling" value="9965"/>
 	<enumChoiceGroup>
-		<name>Water Fill</name>
-		<enumChoice choice="Water Filling" value="9965"/>
-	</enumChoiceGroup>
-	<enumChoiceGroup>
-		<name>Whistle - Forward</name>
-		<enumChoice choice="Forward Move Whistle Quill" value="9495"/>
-	</enumChoiceGroup>
-	<enumChoiceGroup>
-		<name>Whistle - Playable</name>
+		<name>Whistle</name>
 		<enumChoice choice="Playable Whistle" value="9966"/>
-	</enumChoiceGroup>
-	<enumChoiceGroup>
-		<name>Whistle - Grade X Quill</name>
-		<enumChoice choice="Grade Crossing Quill" value="10045"/>
-	</enumChoiceGroup>
-	<enumChoiceGroup>
-		<name>Whistle - Reverse</name>
-		<enumChoice choice="Reverse Move Whistle Quill" value="9593"/>
-	</enumChoiceGroup>
-	<enumChoiceGroup>
-		<name>Whistle - Short</name>
 		<enumChoice choice="Short Whistle Blast" value="10282"/>
-	</enumChoiceGroup>
-	<enumChoiceGroup>
-		<name>Whistle - Stop</name>
+		<enumChoice choice="Grade Crossing Quill" value="10045"/>
+		<enumChoice choice="Forward Move Whistle Quill" value="9495"/>
+		<enumChoice choice="Reverse Move Whistle Quill" value="9593"/>
 		<enumChoice choice="Stop Whistle Quill" value="9886"/>
 	</enumChoiceGroup>
 	<enumChoice choice="None" value="65535"/>

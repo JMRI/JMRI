@@ -458,22 +458,17 @@
 		<tooltip>The speed at which Random sounds will stop playing (speed of zero stops random sounds from playing)</tooltip>
 		<label>Random Sound Cutout Speed Step</label>
 	</variable>
+	<variable item="Sound Setting 45" CV="T2CV.4.45" default="15" mask="VVVVVVVVVVVVVVVV">
+        <decVal max="126"/>
+        <label>DCC Mode Automatic Bell Cutout Speed</label>
+        <tooltip>Speed step (of 126) at and above which the DCC Mode Auto Bell will not play when enabled. Valid range of values is 2 to 126.</tooltip>
+    </variable>
   <variable item="Brake grinding noise start speed" CV="T2CV.4.13" default="15" >
     <decVal max="126"/>
     <!--    label applied in pane-->
   </variable>
 
   <xi:include href="http://jmri.org/xml/decoders/tcs/wow_dual_f0_f12.xml"/>
-  <variable item="Dual function F13" CV="T2CV.4.14" default="0" mask="XVXXXXXXXXXXXXXX">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-  <tooltip>for fxns F0F-F14, set bit to have sound and light active in both modes</tooltip>
-    <label>Dual function F13</label>
-  </variable>
-  <variable item="Dual function F14" CV="T2CV.4.14" default="0" mask="VXXXXXXXXXXXXXXX">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-  <tooltip>for fxns F0F-F14, set bit to have sound and light active in both modes</tooltip>
-   <label>Dual function F14</label>
-  </variable>
 
   <variable item="Chuff rate adjustment" CV="T2CV.4.16" default="100">
 	<decVal max="200"/>
