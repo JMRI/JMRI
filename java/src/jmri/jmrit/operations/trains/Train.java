@@ -70,7 +70,11 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     protected Track _departureTrack; // the departure track from staging
     protected Track _terminationTrack; // the termination track into staging
     protected String _carRoadOption = ALL_ROADS;// train car road name restrictions
+    protected List<String> _carRoadList = new ArrayList<>();
+    protected String _cabooseRoadOption = ALL_ROADS;// train caboose road name restrictions
+    protected List<String> _cabooseRoadList = new ArrayList<>();
     protected String _locoRoadOption = ALL_ROADS;// train engine road name restrictions
+    protected List<String> _locoRoadList = new ArrayList<>();
     protected int _requires = NO_CABOOSE_OR_FRED; // train requirements, caboose, FRED
     protected String _numberEngines = "0"; // number of engines this train requires
     protected String _engineRoad = NONE; // required road name for engines assigned to this train
@@ -83,11 +87,9 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     protected String _loadOption = ALL_LOADS;// train load restrictions
     protected String _ownerOption = ALL_OWNERS;// train owner name restrictions
     protected List<String> _buildScripts = new ArrayList<>(); // list of script pathnames to run before train is built
-    protected List<String> _afterBuildScripts = new ArrayList<>(); // list of script pathnames to run after train is
-                                                                   // built
+    protected List<String> _afterBuildScripts = new ArrayList<>(); // script pathnames to run after train is built
     protected List<String> _moveScripts = new ArrayList<>(); // list of script pathnames to run when train is moved
-    protected List<String> _terminationScripts = new ArrayList<>(); // list of script pathnames to run when train is
-                                                                    // terminated
+    protected List<String> _terminationScripts = new ArrayList<>(); // script pathnames to run when train is terminated
     protected String _railroadName = NONE; // optional railroad name for this train
     protected String _logoPathName = NONE; // optional manifest logo for this train
     protected boolean _showTimes = true; // when true, show arrival and departure times for this train
@@ -1127,8 +1129,6 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, old, option);
     }
 
-    List<String> _carRoadList = new ArrayList<>();
-
     protected void setCarRoadNames(String[] roads) {
         setRoadNames(roads, _carRoadList);
     }
@@ -1200,6 +1200,96 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     }
 
     /**
+     * Get how this train deals with caboose road names.
+     *
+     * @return ALL_ROADS INCLUDE_ROADS EXCLUDE_ROADS
+     */
+    public String getCabooseRoadOption() {
+        return _cabooseRoadOption;
+    }
+
+    /**
+     * Set how this train deals with caboose road names.
+     *
+     * @param option ALL_ROADS INCLUDE_ROADS EXCLUDE_ROADS
+     */
+    public void setCabooseRoadOption(String option) {
+        String old = _cabooseRoadOption;
+        _cabooseRoadOption = option;
+        setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, old, option);
+    }
+
+    protected void setCabooseRoadNames(String[] roads) {
+        setRoadNames(roads, _cabooseRoadList);
+    }
+
+    /**
+     * Provides a list of caboose road names that the train will either service
+     * or exclude. See setCabooseRoadOption
+     *
+     * @return Array of sorted road names as Strings
+     */
+    public String[] getCabooseRoadNames() {
+        String[] roads = _cabooseRoadList.toArray(new String[0]);
+        if (_cabooseRoadList.size() > 0) {
+            Arrays.sort(roads);
+        }
+        return roads;
+    }
+
+    /**
+     * Add a caboose road name that the train will either service or exclude.
+     * See setCabooseRoadOption
+     *
+     * @param road The string road name.
+     * @return true if road name was added, false if road name wasn't in the
+     *         list.
+     */
+    public boolean addCabooseRoadName(String road) {
+        if (_cabooseRoadList.contains(road)) {
+            return false;
+        }
+        _cabooseRoadList.add(road);
+        log.debug("train ({}) add caboose road {}", getName(), road);
+        setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, _cabooseRoadList.size() - 1, _cabooseRoadList.size());
+        return true;
+    }
+
+    /**
+     * Delete a caboose road name that the train will either service or exclude.
+     * See setRoadOption
+     *
+     * @param road The string road name to delete.
+     * @return true if road name was removed, false if road name wasn't in the
+     *         list.
+     */
+    public boolean deleteCabooseRoadName(String road) {
+        if (_cabooseRoadList.remove(road)) {
+            log.debug("train ({}) delete caboose road {}", getName(), road);
+            setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, _cabooseRoadList.size() + 1, _cabooseRoadList.size());
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Determine if train will service a specific road name for a caboose.
+     *
+     * @param road the road name to check.
+     * @return true if train will service this road name.
+     */
+    public boolean isCabooseRoadNameAccepted(String road) {
+        if (_cabooseRoadOption.equals(ALL_ROADS)) {
+            return true;
+        }
+        if (_cabooseRoadOption.equals(INCLUDE_ROADS)) {
+            return _cabooseRoadList.contains(road);
+        }
+        // exclude!
+        return !_cabooseRoadList.contains(road);
+    }
+
+    /**
      * Get how this train deals with locomotive road names.
      *
      * @return ALL_ROADS INCLUDE_ROADS EXCLUDE_ROADS
@@ -1218,8 +1308,6 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         _locoRoadOption = option;
         setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, old, option);
     }
-
-    List<String> _locoRoadList = new ArrayList<>();
 
     protected void setLocoRoadNames(String[] roads) {
         setRoadNames(roads, _locoRoadList);
@@ -1259,7 +1347,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      *         list.
      */
     public boolean addLocoRoadName(String road) {
-        if (_locoRoadList.contains(road)) {
+        if (road.isBlank() || _locoRoadList.contains(road)) {
             return false;
         }
         _locoRoadList.add(road);
@@ -1306,6 +1394,9 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         if (newRoad != null) {
             if (deleteCarRoadName(oldRoad)) {
                 addCarRoadName(newRoad);
+            }
+            if (deleteCabooseRoadName(oldRoad)) {
+                addCabooseRoadName(newRoad);
             }
             if (deleteLocoRoadName(oldRoad)) {
                 addLocoRoadName(newRoad);
@@ -1657,7 +1748,8 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         }
         if (!isBuiltDateAccepted(car.getBuilt()) ||
                 !isOwnerNameAccepted(car.getOwnerName()) ||
-                !isCarRoadNameAccepted(car.getRoadName())) {
+                (!car.isCaboose() && !isCarRoadNameAccepted(car.getRoadName())) ||
+                (car.isCaboose() && !isCabooseRoadNameAccepted(car.getRoadName()))) {
             addLine(buildReport, Bundle.getMessage("trainCanNotServiceCar",
                     getName(), car.toString()));
             return false;
@@ -3748,6 +3840,22 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             setCarRoadNames(roads);
         }
 
+        if ((a = e.getAttribute(Xml.CABOOSE_ROAD_OPTION)) != null) {
+            _cabooseRoadOption = a.getValue();
+        }
+        // new way of reading caboose roads using elements
+        if (e.getChild(Xml.CABOOSE_ROADS) != null) {
+            List<Element> carRoads = e.getChild(Xml.CABOOSE_ROADS).getChildren(Xml.CAR_ROAD);
+            String[] roads = new String[carRoads.size()];
+            for (int i = 0; i < carRoads.size(); i++) {
+                Element road = carRoads.get(i);
+                if ((a = road.getAttribute(Xml.NAME)) != null) {
+                    roads[i] = a.getValue();
+                }
+            }
+            setCabooseRoadNames(roads);
+        }
+
         if ((a = e.getAttribute(Xml.LOCO_ROAD_OPTION)) != null) {
             _locoRoadOption = a.getValue();
         }
@@ -4159,6 +4267,19 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             String[] roads = getCarRoadNames();
             // new way of saving road names
             Element eRoads = new Element(Xml.CAR_ROADS);
+            for (String road : roads) {
+                Element eRoad = new Element(Xml.CAR_ROAD);
+                eRoad.setAttribute(Xml.NAME, road);
+                eRoads.addContent(eRoad);
+            }
+            e.addContent(eRoads);
+        }
+        // save list of caboose roads for this train
+        if (!getCabooseRoadOption().equals(ALL_ROADS)) {
+            e.setAttribute(Xml.CABOOSE_ROAD_OPTION, getCabooseRoadOption());
+            String[] roads = getCabooseRoadNames();
+            // new way of saving road names
+            Element eRoads = new Element(Xml.CABOOSE_ROADS);
             for (String road : roads) {
                 Element eRoad = new Element(Xml.CAR_ROAD);
                 eRoad.setAttribute(Xml.NAME, road);

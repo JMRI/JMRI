@@ -246,7 +246,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
             <li><a href="#TrackTools">Track Tools</a>
               <ul>
-                <li><a href="#CopyTrack">Copy Track</a></li>
+                
 
                 <li><a href="#LoadOptions">Load Options</a>
                   <ul>
@@ -261,13 +261,15 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
                 <li><a href="#AlternateTrack">Alternate Track or "Off Spot"</a></li>
 
-                <li><a href="#ChangeTrackType">Change Track Type</a></li>
-
                 <li><a href="#PlannedPickUps">Planned Pick Ups</a></li>
 
                 <li><a href="#TrackWorkComments">Manifest Comments</a></li>
 
                 <li><a href="#TrackDestinations">Track Destinations</a></li>
+                
+                <li><a href="#ChangeTrackType">Change Track Type</a></li>
+                
+                <li><a href="#CopyTrack">Copy Track</a></li>
 
                 <li><a href="#ShowCars">Show Cars</a></li>
 

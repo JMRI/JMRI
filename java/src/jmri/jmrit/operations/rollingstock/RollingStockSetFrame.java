@@ -331,14 +331,18 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                     return false;
                 }
                 // determine if train services this rs's road
-                if (rs.getClass() == Car.class && !train.isCarRoadNameAccepted(rs.getRoadName())) {
-                    JmriJOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
-                            "rsTrainNotServRoad"), new Object[]{rs.getRoadName(), train.getName()}), getRb()
-                                    .getString("rsNotMove"),
-                            JmriJOptionPane.ERROR_MESSAGE);
-                    // prevent rs from being picked up and delivered
-                    setRouteLocationAndDestination(rs, train, null, null);
-                    return false;
+                if (rs.getClass() == Car.class) {
+                    Car car = (Car) rs;
+                    if (!car.isCaboose() && !train.isCarRoadNameAccepted(car.getRoadName()) ||
+                            car.isCaboose() && !train.isCabooseRoadNameAccepted(car.getRoadName())) {
+                        JmriJOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
+                                "rsTrainNotServRoad"), new Object[]{rs.getRoadName(), train.getName()}), getRb()
+                                        .getString("rsNotMove"),
+                                JmriJOptionPane.ERROR_MESSAGE);
+                        // prevent rs from being picked up and delivered
+                        setRouteLocationAndDestination(rs, train, null, null);
+                        return false;
+                    }
                 }
                 // determine if train services this rs's built date
                 if (!train.isBuiltDateAccepted(rs.getBuilt())) {
