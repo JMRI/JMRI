@@ -25,13 +25,6 @@
     <row>
 		<column>
 			<row>
-				<display item="Volume Group 0" layout="above" label=""/>
-				<label>
-					<text> </text>
-				</label>
-				<display item="Volume Group 0" layout="above" format="hslider"/>
-			</row>
-			<row>
 				<display item="Volume Group 1" layout="above" label=""/>
 				<label>
 					<text> </text>

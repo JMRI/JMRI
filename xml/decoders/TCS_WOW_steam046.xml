@@ -117,7 +117,7 @@
          <xi:include href="http://jmri.org/xml/decoders/tcs/CV1_CV99_wow.xml"/>
          <xi:include href="http://jmri.org/xml/decoders/tcs/CV100_CV187_wow.xml"/>
          <xi:include href="http://jmri.org/xml/decoders/tcs/CV177_CV182_wow.xml"/>
-         <variable item="Sound Option 4" CV="248" default="4" readOnly="yes">
+         <variable item="Sound Option 4" CV="248" default="6" readOnly="yes">
             <decVal/>
             <label>Sound Set</label>
          </variable>
@@ -321,23 +321,59 @@
             <decVal max="100"/>
             <label>Global volume</label>
          </variable>
-         <variable item="Sound Option 2" CV="T2CV.4.11" default="1" mask="VVVVVVVVVVVVVVVV">
+         <variable item="Sound Option 2" CV="T2CV.4.11" default="0" mask="VVVVVVVVVVVVVVVV">
             <enumVal>
-               <enumChoice choice="Baldwin 10 Wheeler"/>
-               <enumChoice choice="C&amp;T K27 #463"/>
-               <enumChoice choice="C&amp;T K27 #463 Alternate"/>
-               <enumChoice choice="C&amp;T K36 #484"/>
-               <enumChoice choice="C&amp;T K36 #484 Reverb"/>
-               <enumChoice choice="Heavy Steam (Strasburg #475)"/>
-               <enumChoice choice="Medium Steam (NKP #765)"/>
-               <enumChoice choice="Light Steam (Williams Grove PRR #643)"/>
-               <enumChoice choice="Reading &amp; Northern #425"/>
+               <enumChoice choice="Chuffinity Chuffset 1 | 0-4-0ST Vulcan Iron Works Type 1"/>
+               <enumChoice choice="Chuffinity Chuffset 2 | K-36 Narrow-Gauge Type 1"/>
+               <enumChoice choice="Chuffinity Chuffset 3 | K-36 Narrow-Gauge Type 2"/>
+               <enumChoice choice="Chuffinity Chuffset 4 | 4-6-0 Baldwin Ten-wheeler"/>
+               <enumChoice choice="Chuffinity Chuffset 5 | 4-6-2 Baldwin Pacific"/>
+               <enumChoice choice="Chuffinity Chuffset 6 | 2-8-4 Lima Locomotive Works Berkshire"/>
+               <enumChoice choice="Chuffinity Chuffset 7 | 0-4-0ST Narrow-gauge"/>
+               <enumChoice choice="Chuffinity Chuffset 8 | 4-6-0 Rogers Locomotive &amp; Machine Works Sierra"/>
+               <enumChoice choice="Chuffinity Chuffset 9 | 2-8-0 Baldwin Consolidation"/>
+			   <enumChoice choice="Chuffinity Chuffset 10 | 0-4-0T Vulcan Iron Works Type 1"/>
+			   <enumChoice choice="Chuffinity Chuffset 11 | 3-cylinder Shay"/>
+			   <enumChoice choice="Chuffinity Chuffset 12 | 2-8-0 ALCo Mogul"/>
+			   <enumChoice choice="Chuffinity Chuffset 13 | 0-6-0ST Vulcan Iron Works Type 2"/>
             </enumVal>
-            <label>Steam locomotive type</label>
+            <label>Steam Locomotive Type</label>
          </variable>
          <variable item="Sound Group 5 Checkbox 1" CV="T2CV.4.12" default="1" mask="XXXXXXXXXXXXXXXV">
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-            <label>Snifter Valves enable</label>
+            <label>Enable Snifter Valves</label>
+         </variable>
+         <variable item="Sound Group 5 Checkbox 2" CV="T2CV.4.12" default="1" mask="XXXXXXXXXXXXXXVX">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+            <label>Enable Rod Clank</label>
+         </variable>
+         <variable item="Sound Group 5 Checkbox 3" CV="T2CV.4.12" default="1" mask="XXXXXXXXXXXXXVXX">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+            <label>Enable Idling Sounds</label>
+         </variable>
+         <variable item="Sound Group 5 Checkbox 4" CV="T2CV.4.12" default="0" mask="XXXXXXXXXXXXVXXX">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+            <label>Enable DCC Mode Automatic Bell</label>
+         </variable>
+         <variable item="Sound Group 5 Checkbox 5" CV="T2CV.4.12" default="0" mask="XXXVXXXXXXXXXXXX">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+            <label>Disable DCC Mode Auto Bell in Reverse</label>
+         </variable>
+         <variable item="Sound Group 5 Checkbox 6" CV="T2CV.4.12" default="0" mask="XXXXXXXXXXXVXXXX">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+            <label>Enable Automatic Forward Quill</label>
+         </variable>
+         <variable item="Sound Group 5 Checkbox 7" CV="T2CV.4.12" default="0" mask="XXXXXXXXXXVXXXXX">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+            <label>Enable Automatic Reverse Quill</label>
+         </variable>
+         <variable item="Sound Group 5 Checkbox 8" CV="T2CV.4.12" default="0" mask="XXXXXXXXXVXXXXXX">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+            <label>Enable Automatic Stop Quill</label>
+         </variable>
+         <variable item="Sound Group 6 Checkbox 1" CV="T2CV.4.12" default="1" mask="XXXXXXXXVXXXXXXX">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+            <label>Enable Power Reverser Sound</label>
          </variable>
          <variable item="Sound Option 5" CV="T2CV.4.17" default="0" mask="VVVVVVVVVVVVVVVV">
             <enumVal>
@@ -349,7 +385,7 @@
             </enumVal>
             <label>Rod Clank Set</label>
          </variable>
-         <variable item="Sound Group 7 Checkbox 1" CV="T2CV.4.19" default="1" mask="XXXXXXXXXXXXXXXV">
+         <variable item="Sound Group 7 Checkbox 1" CV="T2CV.4.19" default="0" mask="XXXXXXXXXXXXXXXV">
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
             <label>Chuff Cam</label>
          </variable>
@@ -357,13 +393,17 @@
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
             <label>Mute on Startup</label>
          </variable>
+		 <variable item="Sound Group 7 Checkbox 4" CV="T2CV.4.19" default="1" mask="XXXXXXXXXXXXVXXX">
+            <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+            <label>Allow Articulate Chuff to Slip</label>
+         </variable>
 		 <variable item="Sound Group 7 Checkbox 5" CV="T2CV.4.19" default="1" mask="XXXXXXXXXXXVXXXX">
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-            <label>Rotate Whistle Auditory Feedback</label>
+            <label>Enable Rotate Whistle Auditory Feedback</label>
          </variable>
-		 		 <variable item="Sound Group 7 Checkbox 6" CV="T2CV.4.19" default="1" mask="XXXXXXXXXXVXXXXX">
+		 <variable item="Sound Group 7 Checkbox 6" CV="T2CV.4.19" default="1" mask="XXXXXXXXXXVXXXXX">
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-            <label>Light Mode and Sound Mode Auditory Feedback</label>
+            <label>Enable Light Mode and Sound Mode Auditory Feedback</label>
          </variable>
          <variable item="Sound Group 7 Checkbox 8" CV="T2CV.4.19" default="1" mask="XXXXXXXXVXXXXXXX">
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
@@ -374,7 +414,7 @@
                <enumChoice choice="Non Articulated"/>
                <enumChoice choice="Articulated"/>
             </enumVal>
-            <label>Articulation type</label>
+            <label>Articulation Type</label>
          </variable>
          <variable item="Sound Group 8 Checkbox 3" CV="T2CV.4.19" default="0" mask="XXXXXVXXXXXXXXXX">
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
@@ -386,13 +426,13 @@
          </variable>
          <variable item="Sound Group 8 Checkbox 5" CV="T2CV.4.19" default="1" mask="XXXVXXXXXXXXXXXX">
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-            <label>Switching and Mainline momentum Feedback</label>
+            <label>Enable Momentum Mode Selection Auditory Feedback</label>
          </variable>
          <variable item="Sound Group 8 Checkbox 6" CV="T2CV.4.19" default="1" mask="XXVXXXXXXXXXXXXX">
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
             <label>Johnson Bar Feedback</label>
          </variable>
-         <variable item="Sound Group 8 Checkbox 7" CV="T2CV.4.19" default="1" mask="XVXXXXXXXXXXXXXX">
+         <variable item="Sound Group 8 Checkbox 7" CV="T2CV.4.19" default="0" mask="XVXXXXXXXXXXXXXX">
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
             <label>Function Pagination</label>
             <tooltip>Enabling this setting will allow all 28 functions to be controlled using only the first ten buttons on the throttle</tooltip>
@@ -483,7 +523,7 @@
          <variable item="Sound Group 6 Checkbox 8" CV="T2CV.4.25" default="0" mask="XXXXXXXXVXXXXXXX">
             <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
             <label>Play Quills in Random Order</label>
-            <tooltip>If checked, each secessive press of quick button with play random quill sound, unchecked will play in order</tooltip>
+            <tooltip>If checked, each successive press of quick button with play random quill sound, unchecked will play in order</tooltip>
          </variable>
          <variable item="Sound Option 7" CV="T2CV.4.26" default="1" mask="VVVVVVVVVVVVVVVV">
             <enumVal>
@@ -610,29 +650,25 @@
             <decVal max="255"/>
          </variable>
          <!--Volume groups -->
-         <variable item="Volume Group 0" CV="T3CV.6.0.0" default="45">
-            <decVal max="100"/>
-            <label>Generator</label>
-         </variable>
          <variable item="Volume Group 1" CV="T3CV.6.0.1" default="45">
             <decVal max="100"/>
-            <label>Bell</label>
+            <label>Air Pump</label>
          </variable>
          <variable item="Volume Group 2" CV="T3CV.6.0.2" default="100">
             <decVal max="100"/>
-            <label>Whistle Playable</label>
+            <label>Ash Dump</label>
          </variable>
          <variable item="Volume Group 3" CV="T3CV.6.0.3" default="40">
             <decVal max="100"/>
-            <label>Whistle Short</label>
+            <label>Bell</label>
          </variable>
          <variable item="Volume Group 4" CV="T3CV.6.0.4" default="100">
             <decVal max="100"/>
-            <label>Whistle Grade X Quill</label>
+            <label>Blow Down</label>
          </variable>
          <variable item="Volume Group 5" CV="T3CV.6.0.5" default="20">
             <decVal max="100"/>
-            <label>Cylinder Cocks On/Off</label>
+            <label>Blower</label>
          </variable>
          <variable item="Volume Group 6" CV="T3CV.6.0.6" default="30">
             <decVal max="100"/>
@@ -640,65 +676,89 @@
          </variable>
          <variable item="Volume Group 7" CV="T3CV.6.0.7" default="50">
             <decVal max="100"/>
-            <label>Train Brake</label>
+            <label>Train Brake Squeal</label>
          </variable>
          <variable item="Volume Group 8" CV="T3CV.6.0.8" default="100">
             <decVal max="100"/>
-            <label>Mute</label>
+            <label>Chuff</label>
          </variable>
          <variable item="Volume Group 9" CV="T3CV.6.0.9" default="40">
             <decVal max="100"/>
-            <label>Rotate Sound Function</label>
+            <label>Coupler Clank</label>
          </variable>
          <variable item="Volume Group 10" CV="T3CV.6.0.10" default="40">
             <decVal max="100"/>
-            <label>Johnson Bar Up</label>
+            <label>Cylinder Cocks</label>
          </variable>
          <variable item="Volume Group 11" CV="T3CV.6.0.11" default="30">
             <decVal max="100"/>
+            <label>Power Reverser</label>
+         </variable>
+         <variable item="Volume Group 12" CV="T3CV.6.0.13" default="20">
+            <decVal max="100"/>
+            <label>Generator</label>
+         </variable>
+         <variable item="Volume Group 13" CV="T3CV.6.0.14" default="10">
+            <decVal max="100"/>
+            <label>Idling Sounds</label>
+         </variable>
+         <variable item="Volume Group 14" CV="T3CV.6.0.15" default="20">
+            <decVal max="100"/>
+            <label>Injectors</label>
+         </variable>
+         <variable item="Volume Group 15" CV="T3CV.6.0.16" default="15">
+            <decVal max="100"/>
             <label>Johnson Bar Down</label>
          </variable>
-         <variable item="Volume Group 12" CV="T3CV.6.0.12" default="100">
+         <variable item="Volume Group 16" CV="T3CV.6.0.17" default="15">
             <decVal max="100"/>
-            <label>Injector</label>
+            <label>Johnson Bar Up</label>
          </variable>
-         <variable item="Volume Group 13" CV="T3CV.6.0.13" default="20">
+		 <variable item="Volume Group 17" CV="T3CV.6.0.21" default="25">
             <decVal max="100"/>
-            <label>Air Pump</label>
+            <label>Rod Clank</label>
          </variable>
-         <variable item="Volume Group 14" CV="T3CV.6.0.14" default="10">
+		 <variable item="Volume Group 18" CV="T3CV.6.0.23" default="60">
             <decVal max="100"/>
-            <label>Blower</label>
+            <label>Safeties</label>
          </variable>
-         <variable item="Volume Group 15" CV="T3CV.6.0.15" default="20">
+		 <variable item="Volume Group 19" CV="T3CV.6.0.24" default="15">
             <decVal max="100"/>
-            <label>Momentum Mode Selection</label>
+            <label>Shoveling Sounds</label>
          </variable>
-         <variable item="Volume Group 16" CV="T3CV.6.0.16" default="15">
+		 <variable item="Volume Group 20" CV="T3CV.6.0.25" default="20">
             <decVal max="100"/>
-            <label>Idling Sounds On/Off</label>
+            <label>Snifter Valves</label>
          </variable>
-         <variable item="Volume Group 17" CV="T3CV.6.0.17" default="15">
+		 <variable item="Volume Group 21" CV="T3CV.6.0.30" default="100">
             <decVal max="100"/>
-            <label>Coal Shovelling</label>
+            <label>Whistle - Playable</label>
          </variable>
-         <variable item="Volume Group 18" CV="T3CV.6.0.18" default="15">
+		 <variable item="Volume Group 22" CV="T3CV.6.0.31" default="100">
             <decVal max="100"/>
-            <label>Blow Down</label>
+            <label>Whistle Grade X Quill</label>
          </variable>
-         <variable item="Volume Group 19" CV="T3CV.6.0.19" default="15">
+		 <variable item="Volume Group 23" CV="T3CV.6.0.32" default="100">
             <decVal max="100"/>
-            <label>Ash Dump</label>
+            <label>Whistle Short Blast</label>
          </variable>
-         <variable item="Volume Group 20" CV="T3CV.6.0.20" default="50">
+		 <variable item="Volume Group 24" CV="T3CV.6.0.12" default="100">
             <decVal max="100"/>
-            <label>Water Filling</label>
+            <label>Whistle Forward Quill</label>
          </variable>
-         <variable item="Volume Group 26" CV="T3CV.6.0.26" default="15">
+		 <variable item="Volume Group 25" CV="T3CV.6.0.28" default="100">
+            <decVal max="100"/>
+            <label>Whistle Stop Blast</label>
+         </variable>
+		 <variable item="Volume Group 26" CV="T3CV.6.0.20" default="100">
+            <decVal max="100"/>
+            <label>Whistle Reverse Quill</label>
+         </variable>
+         <variable item="Volume Group 27" CV="T3CV.6.0.26" default="15">
             <decVal max="100"/>
             <label>Departing Station Announcements</label>
          </variable>
-         <variable item="Volume Group 27" CV="T3CV.6.0.27" default="20">
+         <variable item="Volume Group 28" CV="T3CV.6.0.27" default="20">
             <decVal max="100"/>
             <label>Arriving Station Announcements</label>
          </variable>
