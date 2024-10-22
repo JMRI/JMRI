@@ -5268,9 +5268,15 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         "Use car type and load" checkbox if you want this feature.</p>
 
       <h4 id="TrainRoadOptions">Train Road Options</h4>
-      You can control the roads that the train will service. Select under the "Edit
-      Train&rArr;Tools&rArr;Train Road Options". This will bring up a new window with several
-      options.
+
+      You can control the car, caboose, and locomotive roads that the train will service. Select
+      under the "Edit Train&rArr;Tools&rArr;Train Road Options". This will bring up a new window
+      with several options.
+
+      <p>
+      <img src="images/TrainRoadOptions.png" alt="">
+      </p>
+
       <p>If the train will service any road, select the "Accept all" radio button. If you want
         to accept only some roads, select "Accept only" radio button. Then use the menu of roads and
         "Add Road" button to make a list of roads that the train will service. To remove a road from
@@ -5281,9 +5287,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         this train will not service.</p>
 
       <p>You can use the "hyphen" feature to create unique road names. For example, say you
-        wanted a certain SP caboose to only ride this train. You could create a new road name, for
-        example "SP-special", assign that road name to the caboose, and exclude the road name from
-        the other trains. Your Manifest would continue to show the caboose road name as "SP".</p>
+        wanted a certain SP boxcars to only ride this train. You could create a new road name, for
+        example "SP-special", assign that road name to the boxcars, and exclude the road name from
+        the other trains. Your Manifest would continue to show the boxcar road name as "SP".</p>
 
       <h4 id="TrainManifestOptions">Train Manifest Options</h4>
       You can optionally have a unique railroad name and logo for each train in your roster. You can
