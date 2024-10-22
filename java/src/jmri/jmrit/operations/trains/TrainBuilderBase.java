@@ -590,6 +590,14 @@ public class TrainBuilderBase extends TrainCommon {
         }
     }
 
+    protected void showTrainCabooseRoads() {
+        if (!_train.getCabooseRoadOption().equals(Train.ALL_ROADS)) {
+            addLine(_buildReport, FIVE, BLANK_LINE);
+            addLine(_buildReport, FIVE, Bundle.getMessage("buildTrainCabooseRoads", _train.getName(),
+                    _train.getCabooseRoadOption(), formatStringToCommaSeparated(_train.getCabooseRoadNames())));
+        }
+    }
+
     protected void showTrainCarTypes() {
         addLine(_buildReport, FIVE, BLANK_LINE);
         addLine(_buildReport, FIVE, Bundle.getMessage("buildTrainServicesCarTypes", _train.getName()));
@@ -859,9 +867,11 @@ public class TrainBuilderBase extends TrainCommon {
 
             // non-lead cars in a kernel are not checked
             if (car.getKernel() == null || car.isLead()) {
-                if (!_train.isCarRoadNameAccepted(car.getRoadName())) {
+                if (!car.isCaboose() && !_train.isCarRoadNameAccepted(car.getRoadName()) ||
+                        car.isCaboose() && !_train.isCabooseRoadNameAccepted(car.getRoadName())) {
                     addLine(_buildReport, SEVEN, Bundle.getMessage("buildExcludeCarWrongRoad", car.toString(),
-                            car.getLocationName(), car.getTrackName(), car.getTypeName(), car.getRoadName()));
+                            car.getLocationName(), car.getTrackName(), car.getTypeName(), car.getTypeExtensions(),
+                            car.getRoadName()));
                     _carList.remove(car);
                     i--;
                     continue;
@@ -1828,7 +1838,7 @@ public class TrainBuilderBase extends TrainCommon {
                     return false;
                 }
                 // does the train accept the car road from the staging track?
-                if (!_train.isCarRoadNameAccepted(car.getRoadName())) {
+                if (!car.isCaboose() && !_train.isCarRoadNameAccepted(car.getRoadName())) {
                     addLine(_buildReport, THREE,
                             Bundle.getMessage("buildStagingDepartCarRoad", departStageTrack.getName(), car.toString(),
                                     car.getRoadName(), _train.getName()));
@@ -2054,7 +2064,7 @@ public class TrainBuilderBase extends TrainCommon {
         }
         // now determine if roads accepted by train are also accepted by staging
         // track
-        // TODO should we be checking loco road names?
+        // TODO should we be checking caboose and loco road names?
         for (String road : InstanceManager.getDefault(CarRoads.class).getNames()) {
             if (_train.isCarRoadNameAccepted(road)) {
                 if (!terminateStageTrack.isRoadNameAccepted(road)) {

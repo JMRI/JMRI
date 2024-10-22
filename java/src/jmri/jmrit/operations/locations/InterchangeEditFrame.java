@@ -29,7 +29,7 @@ public class InterchangeEditFrame extends TrackEditFrame {
 
         super.initComponents(location, track);
 
-        _toolMenu.insert(new TrackDestinationEditAction(this), TOOL_MENU_OFFSET);
+        _toolMenu.insert(new TrackDestinationEditAction(this), 0);
         _toolMenu.insert(new ChangeTrackTypeAction(this), TOOL_MENU_OFFSET + 1);
         addHelpMenu("package.jmri.jmrit.operations.Operations_Interchange", true); // NOI18N
 

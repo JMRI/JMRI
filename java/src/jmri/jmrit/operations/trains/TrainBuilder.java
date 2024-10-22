@@ -89,6 +89,7 @@ public class TrainBuilder extends TrainBuilderCars {
         determineIfTrainDepartsStagingAndAddEngines(); // add engines if staging
         addEnginesToTrain(); // 1st, 2nd and 3rd engine swaps in a train's route
         showTrainCarRoads(); // show car roads that this train will service
+        showTrainCabooseRoads(); // show caboose roads that this train will service
         showTrainCarTypes(); // show car types that this train will service
         showTrainLoadNames(); // show load names that this train will service
         getCarList(); // remove unwanted cars

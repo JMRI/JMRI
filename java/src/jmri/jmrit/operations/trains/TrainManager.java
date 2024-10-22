@@ -311,8 +311,23 @@ public class TrainManager extends PropertyChangeSupport
     }
     
     /**
-     * Used to determine if a train has any restrictions with regard to Locomotive
+     * Used to determine if a train has any restrictions with regard to caboose
      * roads.
+     * 
+     * @return true if there's a restriction
+     */
+    public boolean isCabooseRoadRestricted() {
+        for (Train train : getList()) {
+            if (!train.getCabooseRoadOption().equals(Train.ALL_ROADS)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Used to determine if a train has any restrictions with regard to
+     * Locomotive roads.
      * 
      * @return true if there's a restriction
      */
@@ -815,6 +830,7 @@ public class TrainManager extends PropertyChangeSupport
         // set road, load, and owner options
         newTrain.setCarRoadOption(train.getCarRoadOption());
         newTrain.setCarRoadNames(train.getCarRoadNames());
+        newTrain.setCabooseRoadNames(train.getCabooseRoadNames());
         newTrain.setLocoRoadOption(train.getLocoRoadOption());
         newTrain.setLocoRoadNames(train.getLocoRoadNames());
         newTrain.setLoadOption(train.getLoadOption());
