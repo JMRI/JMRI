@@ -65,6 +65,13 @@ public class LocoBufferAdapter extends LnPortController {
     @Override
     public String openPort(String portName, String appName) {
         // get and open the primary port
+        if (mPort.startsWith("pipe:") || mPort.startsWith("iopipe:")) {
+            // do nothing here its done when getting datastreams
+            opened = true;
+
+            return null; // indicates OK return
+        }
+
         currentSerialPort = activatePort(portName, log);
         if (currentSerialPort == null) {
             log.error("failed to connect LocoBuffer to {}", portName);
