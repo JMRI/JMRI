@@ -2,6 +2,7 @@ package jmri.jmrit.display.layoutEditor.configurexml;
 
 import java.awt.Color;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,7 @@ import jmri.util.ColorUtil;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
+
 
 /**
  * This module handles configuration for display.TrackSegment objects for a
@@ -61,6 +63,13 @@ public class TrackSegmentViewXml extends LayoutTrackViewXml {
             if (view.isCircle()) {
                 element.setAttribute("angle",   "" + (view.getAngle()));
                 element.setAttribute("hideConLines", (view.hideConstructionLines() ? "yes" : "no"));
+
+                // Include the center of circular arc.
+                // This provides the data to avoid truncated arcs caused by a the LE drawing clip region.
+                Point2D pt = view.getCentreSeg();
+                DecimalFormat twoDecFormat = new DecimalFormat("#.##");
+                element.setAttribute("centerX", ""+Float.valueOf(twoDecFormat.format(pt.getX())));
+                element.setAttribute("centerY", ""+Float.valueOf(twoDecFormat.format(pt.getY())));
             }
         }
 
@@ -554,6 +563,15 @@ public class TrackSegmentViewXml extends LayoutTrackViewXml {
         loadLogixNG_Data(lv, element);
 
         p.addLayoutTrack(lt, lv);
+
+        // Get arc center value if defined.  This provides an additional data point for the LE drawing clip region.
+        var cx = getAttributeDoubleValue(element, "centerX", 0.0);
+        var cy = getAttributeDoubleValue(element, "centerY", 0.0);
+        if (cx != 0.0 && cy != 0.0) {
+            var arcCenter = new Rectangle2D.Double(0, 0, cx, cy);
+            p.unionToPanelBounds(arcCenter);
+
+        }
     }
 
     static final EnumIO<HitPointType> htpMap = new EnumIoNamesNumbers<>(HitPointType.class);

@@ -1809,6 +1809,8 @@
       <xs:attribute name="bezier" type="yesNoType"></xs:attribute>
       <xs:attribute name="angle" type="xs:float"></xs:attribute>
       <xs:attribute name="hideConLines" type="yesNoType"></xs:attribute>
+      <xs:attribute name="centerX" type="xs:float"></xs:attribute>
+      <xs:attribute name="centerY" type="xs:float"></xs:attribute>
     </xs:complexType>
 
     <xs:simpleType name="HitPointType">
