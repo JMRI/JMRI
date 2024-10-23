@@ -87,7 +87,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      */
     @Override
     public void connect() throws java.io.IOException {
-        if (mPort.startsWith("pipe:")) {
+        if (mPort.startsWith("pipe:") || mPort.startsWith("iopipe:")) {
             // do nothing here its done when getting datastreams
             return;
         }
@@ -404,10 +404,18 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
                 try {
                     return  new DataInputStream(new FileInputStream(mPort.substring(5)));
                 } catch (FileNotFoundException fnf) {
-                    log.error("getOutputStream exception: {}", fnf.getMessage());
+                    log.error("getInputStream exception: {}", fnf.getMessage());
                 }
                 return null;
             }
+        if (mPort.startsWith("iopipe:")   ) {
+            try {
+                return  new DataInputStream(new FileInputStream(mPort.substring(7).concat("_IN")));
+            } catch (FileNotFoundException fnf) {
+                log.error("getInputStream exception: {}", fnf.getMessage());
+            }
+            return null;
+        }
 
         if (!opened) {
             log.error("getInputStream called before open, stream not available");
@@ -417,6 +425,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         return new DataInputStream(inputStream);
     }
 
+    
     // When PureJavaComm is removed, set this to 'final' to find
     // identical implementations in the subclasses - but note simulators are now overriding
     @Override
@@ -429,6 +438,15 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
                 return null;
             }
         }
+        if (mPort.startsWith("iopipe:")   ) {
+            try {
+                return  new DataOutputStream(new FileOutputStream(mPort.substring(7).concat("_OUT")));
+            } catch (FileNotFoundException fnf) {
+                log.error("getOutputStream exception: {}", fnf.getMessage());
+            }
+            return null;
+        }
+
         if (!opened) {
             log.error("getOutputStream called before open, stream not available");
         }
