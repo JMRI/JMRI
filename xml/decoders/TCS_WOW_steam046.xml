@@ -12,32 +12,7 @@
 <!--FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!--for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-   <version author="Michael Mosher" version="1" lastUpdated="20160610"/>
-   <version author="Michael Mosher" version="2" lastUpdated="20160805"/>
-   <!--Fix defualt values CV4.9 & 4.21 & 4.37                             -->
-   <version author="Michael Mosher" version="3" lastUpdated="20161021"/>
-   <!--Fix defualt values 4.37                             -->
-   <version author="Michael Mosher" version="4" lastUpdated="20170110"/>
-   <!--Add CV1.34 & 4.38 & 4.40                             -->
-	<version author="Michael Mosher" version="5" lastUpdated="20170317"/>
-	<!-- update factory resets -->
-	<version author="Michael Mosher" version="6" lastUpdated="20170616"/>
-	<!-- update names of CV 4.30,31,33,34 -->
-	<version author="Michael Mosher" version="7" lastUpdated="20170808"/>
-	<!-- update volume groups -->
-	<version author="Michael Mosher" version="8" lastUpdated="20180727"/>
-	<!-- add read me pane -->
-	<version author="Michael Mosher" version="9" lastUpdated="20180917"/>
-	<!-- change default values for sound functions with no sound mapped to 65535 -->
-	<version author="Michael Mosher" version="10" lastUpdated="20191111"/>
-	<!-- Add CV 177-181 & new bit in CV182 -->
-	<version author="Konrad Malkowski" version="11" lastUpdated="20220622"/>
-	<!-- Ensure productID matches what JRMI computes -->
-   <version author="Konrad Malkowski" version="12" lastUpdated="20230305"/>
-	<!-- Remove individual volume panes -->
-   <version author="Peter Ulvestad" version="13" lastUpdated="20231015"/>
-	<!-- update factory resets (added full reset) -->
-   <version author="Konrad Malkowski and Dan Mycio" version="14" lastUpdated="20240728"/>
+   <version author="Konrad Malkowski and Dan Mycio" version="1" lastUpdated="20240728"/>
 	<!-- adapt wow steam 4 to wow steam4.6 -->
    <decoder>
       <family name="WOW Steam Sound Set 4.6" mfg="Train Control Systems">
