@@ -404,7 +404,8 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>A problem where the Simple CV programmer would sometimes
+                fail to display the proper options has been fixed.</li>
         </ul>
 
    <h3>Dispatcher</h3>

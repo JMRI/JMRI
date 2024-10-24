@@ -423,6 +423,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
             shortAddrButton.setVisible(true);
             longAddrButton.setText(Bundle.getMessage("AccessoryAddress"));
             longAddrButton.setToolTipText(Bundle.getMessage("ToolTipAccessoryAddress"));
+            longAddrButton.setVisible(true);
             offsetAddrCheckBox.setVisible(false);
             addressLabel.setText(Bundle.getMessage("AddressLabel"));
             if (longAddrButton.isSelected()) {
@@ -466,6 +467,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
             shortAddrButton.setVisible(true);
             longAddrButton.setText(Bundle.getMessage("LongAddress"));
             longAddrButton.setToolTipText(Bundle.getMessage("ToolTipLongAddress"));
+            longAddrButton.setVisible(true);
             offsetAddrCheckBox.setVisible(false);
             addressLabel.setText(Bundle.getMessage("AddressLabel"));
             if (longAddrButton.isSelected()) {
