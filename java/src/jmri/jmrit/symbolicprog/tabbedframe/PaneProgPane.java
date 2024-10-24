@@ -657,6 +657,8 @@ public class PaneProgPane extends javax.swing.JPanel
         setToRead(justChanges, true);
         varListIndex = 0;
         cvListIterator = cvList.iterator();
+        cvReadSoFar = 0 ;
+        cvReadStartTime = System.currentTimeMillis();
     }
 
     /**
@@ -802,6 +804,10 @@ public class PaneProgPane extends javax.swing.JPanel
         }
     }
 
+    // keep track of multi reads.
+    long  cvReadSoFar;
+    long  cvReadStartTime;
+
     /**
      * If there are any more read operations to be done on this pane, do the
      * next one.
@@ -839,8 +845,10 @@ public class PaneProgPane extends javax.swing.JPanel
         if (log.isDebugEnabled()) {
             log.debug("nextRead scans {} CVs", cvList.size());
         }
+
         while (cvListIterator != null && cvListIterator.hasNext()) {
             int cvNum = cvListIterator.next();
+            cvReadSoFar++;
             CvValue cv = _cvModel.getCvByRow(cvNum);
             if (log.isDebugEnabled()) {
                 log.debug("nextRead cv index {} state {}", cvNum, cv.getState());
@@ -858,7 +866,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 _programmingCV.addPropertyChangeListener(this);
                 // and make the read request
                 // _programmingCV.setToRead(false);  // CVs set this themselves
-                _programmingCV.read(_cvModel.getStatusLabel());
+                _programmingCV.read(_cvModel.getStatusLabel(), cvReadSoFar, cvList.size(), cvReadStartTime);
                 log.debug("return from starting CV read");
                 // the request may have instantateously been satisfied...
                 return true;  // only make one request at a time!
