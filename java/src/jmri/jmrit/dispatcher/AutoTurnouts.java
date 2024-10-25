@@ -270,7 +270,7 @@ public class AutoTurnouts {
                 }
                 // When set is false we are checking the state regardless of whether they can be trusted or not.
                 // It is only when set is true that we send commands regardless of state.
-                if (!trustKnownTurnouts && !set) {
+                if (!trustKnownTurnouts && set) {
                     if (checkTurnoutsCanBeSet(turnoutList.get(i).getObject(), setting, s, curBlock, at)) {
                         log.debug("{}: setting turnout {} to {}", at.getTrainName(), to.getDisplayName(USERSYS),
                                 (setting == Turnout.CLOSED ? closedText : thrownText));
