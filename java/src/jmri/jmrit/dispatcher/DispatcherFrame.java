@@ -2253,10 +2253,12 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         for (var panel : editorManager.getAll(LayoutEditor.class)) {
             for (Block blk: s.getBlockList()) {
                 LayoutBlock lb = lbm.getLayoutBlock(blk);
-                List<LayoutTurnout> turnoutsInBlock = panel.getConnectivityUtil().getAllTurnoutsThisBlock(lb);
-                for (LayoutTurnout lt: turnoutsInBlock) {
-                    if (lt.isTurnoutTypeXover() && !_XOverList.contains(lt)) {
-                        _XOverList.add(lt);
+                if (lb != null ) {
+                    List<LayoutTurnout> turnoutsInBlock = panel.getConnectivityUtil().getAllTurnoutsThisBlock(lb);
+                    for (LayoutTurnout lt: turnoutsInBlock) {
+                        if (lt.isTurnoutTypeXover() && !_XOverList.contains(lt)) {
+                            _XOverList.add(lt);
+                        }
                     }
                 }
             }
@@ -2454,7 +2456,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                                     ar.setWaitingOnBlock(b);
                                 }
                                 return as.getSection();
-                            };
+                            }
                         } else if (as.getSection().getOccupancy() != Section.FREE) {
                             if (ar != null) {
                                 ar.setWaitingOnBlock(b);
