@@ -129,7 +129,10 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Fixed a bug were immediate-mode sliders would sometimes
+                    not automatically write their contents when changed, 
+                    leaving people to have to push the "Write" button.
+                </li>
             </ul>
 
         <h4>Powerline</h4>
