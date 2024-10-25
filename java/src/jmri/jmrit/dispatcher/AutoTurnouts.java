@@ -268,42 +268,26 @@ public class AutoTurnouts {
                 if (turnoutList.get(i).getObject() instanceof LayoutSlip) {
                     setting = ((LayoutSlip) turnoutList.get(i).getObject()).getTurnoutState(turnoutList.get(i).getExpectedState());
                 }
-                // check or ignore current setting based on flag, set in Options
-                if (!trustKnownTurnouts) {
-                    log.debug("{}: setting turnout {} to {}", at.getTrainName(), to.getDisplayName(USERSYS),
-                            (setting == Turnout.CLOSED ? closedText : thrownText));
-                    to.setCommandedState(setting);
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException ex) {
-                    }  //TODO: move this to separate thread
+                // When set is false we are checking the state regardless of whether they can be trusted or not.
+                // It is only when set is true that we send commands regardless of state.
+                if (!trustKnownTurnouts && !set) {
+                    if (checkTurnoutsCanBeSet(turnoutList.get(i).getObject(), setting, s, curBlock, at)) {
+                        log.debug("{}: setting turnout {} to {}", at.getTrainName(), to.getDisplayName(USERSYS),
+                                (setting == Turnout.CLOSED ? closedText : thrownText));
+                        to.setCommandedState(setting);
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException ex) {
+                        } //TODO: Check if this is needed, shouldnt turnout delays be handled at a lower level.
+                    }
                 } else {
                     if (to.getKnownState() != setting) {
                         // turnout is not set correctly
                         if (set) {
                             // setting has been requested, is Section free and Block unoccupied
-                            if (turnoutList.get(i).getObject() instanceof LayoutDoubleXOver) {
-                                LayoutDoubleXOver lds = (LayoutDoubleXOver) turnoutList.get(i).getObject();
-                                if ((lds.getLayoutBlock().getBlock().getState() == Block.OCCUPIED)
-                                        || (lds.getLayoutBlockB().getBlock().getState() == Block.OCCUPIED)
-                                        || (lds.getLayoutBlockC().getBlock().getState() == Block.OCCUPIED)
-                                        || (lds.getLayoutBlockD().getBlock().getState() == Block.OCCUPIED)) {
-                                    log.debug("{}: turnout {} cannot be set to {} DoubleXOver occupied.", at.getTrainName(), to.getDisplayName(USERSYS),
-                                            (setting == Turnout.CLOSED ? closedText : thrownText));
-                                    turnoutsOK = false;
-                                }
-                                if ((_dispatcher.checkForBlockInAllocatedSection(lds.getLayoutBlock().getBlock(), s, null))
-                                        || (_dispatcher.checkForBlockInAllocatedSection(lds.getLayoutBlockB().getBlock(), s, null))
-                                        || (_dispatcher.checkForBlockInAllocatedSection(lds.getLayoutBlockC().getBlock(), s, null))
-                                        || (_dispatcher.checkForBlockInAllocatedSection(lds.getLayoutBlockD().getBlock(), s, null))) {
-                                    log.debug("{}: turnout {} cannot be set to {} DoubleXOver already allocated to another train.", at.getTrainName(), to.getDisplayName(USERSYS),
-                                            (setting == Turnout.CLOSED ? closedText : thrownText));
-                                    turnoutsOK = false;
-                                }
-                            }
-                            if ((turnoutsOK) && (s.getState() == Section.FREE) && (curBlock.getState() != Block.OCCUPIED)) {
+                            if (checkTurnoutsCanBeSet(turnoutList.get(i).getObject(), setting, s, curBlock, at)) {
                                 // send setting command
-                                log.debug("{}: turnout {} commanded to {}", at.getTrainName(), to.getDisplayName(USERSYS),
+                                log.debug("{}: turnout {} commanded to {}", at.getTrainName(), to.getDisplayName(),
                                         (setting == Turnout.CLOSED ? closedText : thrownText));
                                 to.setCommandedState(setting);
                                 try {
@@ -317,29 +301,8 @@ public class AutoTurnouts {
                             turnoutsOK = false;
                         }
                     } else {
-                        log.debug("{}: turnout {} already {}, skipping", at.getTrainName(), to.getDisplayName(USERSYS),
+                        log.debug("{}: turnout {} already {}, skipping", at.getTrainName(), to.getDisplayName(),
                                 (setting == Turnout.CLOSED ? closedText : thrownText));
-                    }
-                }
-                if (turnoutList.get(i).getObject() instanceof LayoutSlip) {
-                    //Look at the state of the second turnout in the slip
-                    setting = ((LayoutSlip) turnoutList.get(i).getObject()).getTurnoutBState(turnoutList.get(i).getExpectedState());
-                    to = ((LayoutSlip) turnoutList.get(i).getObject()).getTurnoutB();
-                    if (!trustKnownTurnouts) {
-                        to.setCommandedState(setting);
-                    } else if (to.getKnownState() != setting) {
-                        // turnout is not set correctly
-                        if (set) {
-                            // setting has been requested, is Section free and Block unoccupied
-                            if ((s.getState() == Section.FREE) && (curBlock.getState() != Block.OCCUPIED)) {
-                                // send setting command
-                                to.setCommandedState(setting);
-                            } else {
-                                turnoutsOK = false;
-                            }
-                        } else {
-                            turnoutsOK = false;
-                        }
                     }
                 }
             }
@@ -375,6 +338,37 @@ public class AutoTurnouts {
             return turnoutListForAllocatedSection;
         }
         return null;
+    }
+
+    /*
+     * Check that the turnout is safe to change.
+     */
+    private boolean checkTurnoutsCanBeSet(LayoutTurnout layoutTurnout, int setting, Section s, Block b, ActiveTrain at) {
+        if (layoutTurnout instanceof LayoutDoubleXOver) {
+            LayoutDoubleXOver lds = (LayoutDoubleXOver) layoutTurnout;
+            if ((lds.getLayoutBlock().getBlock().getState() == Block.OCCUPIED)
+                    || (lds.getLayoutBlockB().getBlock().getState() == Block.OCCUPIED)
+                    || (lds.getLayoutBlockC().getBlock().getState() == Block.OCCUPIED)
+                    || (lds.getLayoutBlockD().getBlock().getState() == Block.OCCUPIED)) {
+                log.debug("{}: turnout {} cannot be set to {} DoubleXOver occupied.",
+                        at.getTrainName(),layoutTurnout.getTurnout().getDisplayName(),
+                        (setting == Turnout.CLOSED ? closedText : thrownText));
+                return(false);
+            }
+            if ((_dispatcher.checkForBlockInAllocatedSection(lds.getLayoutBlock().getBlock(), s, null))
+                    || (_dispatcher.checkForBlockInAllocatedSection(lds.getLayoutBlockB().getBlock(), s, null))
+                    || (_dispatcher.checkForBlockInAllocatedSection(lds.getLayoutBlockC().getBlock(), s, null))
+                    || (_dispatcher.checkForBlockInAllocatedSection(lds.getLayoutBlockD().getBlock(), s, null))) {
+                log.debug("{}: turnout {} cannot be set to {} DoubleXOver already allocated to another train.",
+                        at.getTrainName(), layoutTurnout.getTurnout().getDisplayName(),
+                        (setting == Turnout.CLOSED ? closedText : thrownText));
+                return(false);
+            }
+        }
+        if (s.getState() == Section.FREE && b.getState() != Block.OCCUPIED) {
+            return true;
+        }
+        return false;
     }
 
     private final static Logger log = LoggerFactory.getLogger(AutoTurnouts.class);
