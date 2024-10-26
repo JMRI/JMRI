@@ -182,7 +182,7 @@
       bottom.</p>
 
       <p>2. Move the cursor around inside the blank panel. Note that as you move, coordinates are
-      displayed at the upper left of the tool bar--<em>x</em> (horizontal) and <em>y</em>
+      displayed at the upper right of the tool bar--<em>x</em> (horizontal) and <em>y</em>
       (vertical). (This is to aid in aligning items as you draw them.) Move the cursor over the
       radio buttons, check boxes and entry fields in the tool bar, noting that each has a tool
       tip.</p>
