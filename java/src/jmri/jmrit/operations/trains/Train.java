@@ -3059,13 +3059,22 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     public synchronized boolean build() {
         reset();
         // check to see if any other trains are building
-        while (InstanceManager.getDefault(TrainManager.class).isAnyTrainBuilding()) {
+        int count = 1200; // wait up to 120 seconds
+        while (InstanceManager.getDefault(TrainManager.class).isAnyTrainBuilding() && count > 0) {
+            count--;
             try {
                 wait(100); // 100 msec
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 log.error("Thread unexpectedly interrupted", e);
             }
+        }
+        // timed out?
+        if (count <= 0) {
+            log.warn("Build timeout for train ({})", getName());
+            setBuildFailed(true);
+            setStatusCode(CODE_BUILD_FAILED);
+            return false;
         }
         // run before build scripts
         runScripts(getBuildScripts());
