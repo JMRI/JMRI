@@ -5012,6 +5012,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
           of Locomotives</a>.
       </p>
 
+      <p>
+        The <a href="#TrainRoadOptions">Train Road Options</a> can be used to limit which locomotive
+        roads a train is allowed to use.
+      </p>
+
       <h4 id="AutoHPT">Auto and Auto HPT</h4>
       There are two other options available when requesting locomotives, "Auto" and "Auto HPT".
       "Auto" calculates the maximum number of cars that could be assigned to a train, and does a
@@ -5043,6 +5048,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       remove a caboose anywhere in the train's route, see <a href="#OptionalTrainRequirements">Optional
         Train Requirements (Locomotive or Caboose Changes en Route)</a> under <a
         href="#TrainBuildOptions">Train Build Options</a> for more info.
+
+      <p>
+        The <a href="#TrainRoadOptions">Train Road Options</a> can be used to limit which caboose
+        roads a train is allowed to use.
+      </p>
 
       <h4>Train Comment</h4>
       You can enter an optional comment for your train that will appear on your Manifests.

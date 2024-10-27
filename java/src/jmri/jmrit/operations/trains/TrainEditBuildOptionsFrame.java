@@ -921,6 +921,13 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
                 (remove2Engine.isSelected() && !checkModel(modelEngine2Box, numEngines2Box, roadEngine2Box))) {
             return false;
         }
+        if (!checkCabooseRoad(roadCaboose1Box, change1Caboose)) {
+            return false;
+        }
+        if (!checkCabooseRoad(roadCaboose2Box, change2Caboose)) {
+            return false;
+        }
+
         return true;
     }
 
@@ -944,6 +951,18 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
                     Bundle.getMessage("NoLocosModel", model),
                     Bundle.getMessage("TrainWillNotBuild", _train.getName()),
                     JmriJOptionPane.WARNING_MESSAGE);
+        }
+        return true;
+    }
+
+    private boolean checkCabooseRoad(JComboBox<String> roadCabooseBox, JRadioButton cabooseRadioButton) {
+        String road = (String) roadCabooseBox.getSelectedItem();
+        if (!road.equals(NONE) && cabooseRadioButton.isSelected() && !_train.isCabooseRoadNameAccepted(road)) {
+            JmriJOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("TrainNotCabooseRoad", _train.getName(), road),
+                    Bundle.getMessage("TrainWillNotBuild", _train.getName()),
+                    JmriJOptionPane.WARNING_MESSAGE);
+            return false;
         }
         return true;
     }
