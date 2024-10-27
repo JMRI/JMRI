@@ -45,7 +45,15 @@ public enum SpeedStepMode {
     }
 
     public final String name;
+
+    /**
+     * The Number of steps, e.g. 126 for DCC 128
+     */
     public final int numSteps;
+
+     /**
+     * The increment between steps, e.g. 1 / 126 for DCC 128
+     */
     public final float increment;
     public final String description;
 
