@@ -151,7 +151,7 @@ public class RosterSpeedProfile {
      * @param mms MilliMetres per second
      * @return scale speed in units specified by Warrant Preferences,
      *         unchanged if Warrant preferences are not a speed.
-     * @deprecated use {@link #mmsToScaleSpeed(float mms)}
+     * @deprecated use {@link #mmsToScaleSpeed(float mms, boolean factorFastClock)}
      */
     @Deprecated (since="5.9.6",forRemoval=true)
     public float MMSToScaleSpeed(float mms) {
@@ -737,8 +737,6 @@ public class RosterSpeedProfile {
 
         calculateStepDetails(speed, distance);
     }
-
-    private int extraTime = 0;
 
     private List<SpeedSetting> testSteps = new ArrayList<>();
     private boolean profileInTestMode = false;
