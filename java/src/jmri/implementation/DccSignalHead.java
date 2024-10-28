@@ -154,15 +154,6 @@ public class DccSignalHead extends AbstractSignalHead {
                 c.sendAltAccSignalDecoderPkt(dccSignalDecoderAddress, aspect, packetSendCount);
 
             }
-//             byte[] sigPacket;
-//             if (useAddressOffSet) {
-//                 sigPacket = NmraPacket.accSignalDecoderPkt(dccSignalDecoderAddress, aspect);
-//             } else {
-//                 sigPacket = NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, aspect);
-//             }
-//             if (sigPacket != null) {
-//                 c.sendPacket(sigPacket, packetSendCount);
-//             }
         }
     }
 

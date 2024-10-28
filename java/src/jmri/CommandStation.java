@@ -58,7 +58,7 @@ public interface CommandStation {
      * As a shortcut, and to allow for command station types
      * that cannot sent generic packets to the rails, we
      * provide this method to specifically send
-     * the alternat form of Accessory Signal Decoder Packets.
+     * the alternate form of Accessory Signal Decoder Packets.
      * <p>
      * It's equivalent to calling 
      * {@link NmraPacket#altAccSignalDecoderPkt}
