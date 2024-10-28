@@ -60,7 +60,7 @@ public class OlcbCommandStation implements CommandStation {
         NodeID srcNodeID = memo.get(OlcbInterface.class).getNodeId();
         
         int num = address-1+4;        
-        var content = new byte[]{0x01, 0x01, 0x00, 0x02, 0x01, (byte)((num/256)&0xFF), (byte)(num&0xff), (byte) aspect};
+        var content = new byte[]{0x01, 0x01, 0x02, 0x00, 0x01, (byte)((num/256)&0xFF), (byte)(num&0xff), (byte) aspect};
         EventID eventID = new EventID(content);
         Message m = new ProducerConsumerEventReportMessage(srcNodeID, eventID);
         for (int i = 0; i<count; i++) {
@@ -70,9 +70,8 @@ public class OlcbCommandStation implements CommandStation {
 
     @Override
     public void sendAltAccSignalDecoderPkt(int address, int aspect, int count) {
-        // OpenLCB/LCC does not define (and does not need) a separate
-        // alternative addressing space
-        sendAccSignalDecoderPkt(address, aspect, count);
+        // The alternate space is +4 from the regular space
+        sendAccSignalDecoderPkt(address+4, aspect, count);
     }
 
     private final static Logger log = LoggerFactory.getLogger(OlcbCommandStation.class);
