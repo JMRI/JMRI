@@ -308,6 +308,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private double xOverHWid = LayoutTurnout.xOverHWidDefault;
     private double xOverShort = LayoutTurnout.xOverShortDefault;
     private boolean useDirectTurnoutControl = false; // Uses Left click for closing points, Right click for throwing.
+    private boolean immediateFeedback = false; // Highlight mouse press/drag area, good for touchscreens
 
     // saved state of options when panel was loaded or created
     private boolean savedEditMode = true;
@@ -1958,11 +1959,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             // get the window specific saved zoom user preference
             InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
                 Object zoomProp = prefsMgr.getProperty(getWindowFrameRef(), "zoom");
-
                 log.debug("{} zoom is {}", getWindowFrameRef(), zoomProp);
-
-                if (zoomProp
-                        != null) {
+                if (zoomProp != null) {
                     setZoom((Double) zoomProp);
                 }
             }
@@ -2172,7 +2170,6 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * @param zoomFactor eg. 0.5 ( 1/2 zoom ), 1.0 ( no zoom ), 2.0 ( 2x zoom )
      */
     private void selectZoomMenuItem(double zoomFactor) {
-
         double zoom = zoomFactor * 100;
 
         // put zoomFactor on 100% increments
@@ -2974,6 +2971,16 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         _lastY = _anchorY;
         calcLocation(event);
 
+        if (!isEditable() && immediateFeedback) {
+            if (_highlightcomponent == null) {
+                // TODO: rectangle size based on turnout circle size
+                _highlightcomponent = new Rectangle(xLoc - 20, yLoc - 20, 40, 40);
+            } else {
+                _highlightcomponent.setLocation(xLoc - 20, yLoc - 20);
+            }
+            redrawPanel();
+        }
+
         // TODO: Add command-click on nothing to pan view?
         if (isEditable()) {
             boolean prevSelectionActive = selectionActive;
@@ -3502,6 +3509,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     public void mouseReleased(JmriMouseEvent event) {
         super.setToolTip(null);
 
+        if (!isEditable() && _highlightcomponent != null && immediateFeedback) {
+            _highlightcomponent = null;
+            redrawPanel();
+        }
+
         // initialize mouse position
         calcLocation(event);
 
@@ -3996,6 +4008,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     public void mouseClicked(@Nonnull JmriMouseEvent event) {
         // initialize mouse position
         calcLocation(event);
+
+        if (!isEditable() && _highlightcomponent != null && immediateFeedback) {
+            _highlightcomponent = null;
+            redrawPanel();
+        }
 
         // if alt modifier is down invert the snap to grid behaviour
         snapToGridInvert = event.isAltDown();
@@ -4836,6 +4853,16 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     public void mouseDragged(@Nonnull JmriMouseEvent event) {
         // initialize mouse position
         calcLocation(event);
+
+        if (!isEditable() && immediateFeedback) {
+            if (_highlightcomponent == null) {
+                // TODO: rectangle size based on turnout circle size
+                _highlightcomponent = new Rectangle(xLoc - 20, yLoc - 20, 40, 40);
+            } else {
+                _highlightcomponent.setLocation(xLoc - 20, yLoc - 20);
+            }
+            redrawPanel();
+        }
 
         // ignore this event if still at the original point
         if ((!isDragging) && (xLoc == getAnchorX()) && (yLoc == getAnchorY())) {
@@ -8010,6 +8037,14 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     // TODO: Java standard pattern for boolean getters is "isShowHelpBar()"
     public boolean getDirectTurnoutControl() {
         return useDirectTurnoutControl;
+    }
+
+    public void setImmediateFeedback(boolean imm) {
+        immediateFeedback = imm;
+    }
+
+    public boolean isImmediateFeedback() {
+        return immediateFeedback;
     }
 
     // final initialization routine for loading a LayoutEditor
