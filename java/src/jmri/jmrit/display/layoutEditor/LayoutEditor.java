@@ -3509,13 +3509,15 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     public void mouseReleased(JmriMouseEvent event) {
         super.setToolTip(null);
 
-        if (!isEditable() && _highlightcomponent != null && immediateFeedback) {
-            _highlightcomponent = null;
-            redrawPanel();
-        }
-
         // initialize mouse position
         calcLocation(event);
+
+        if (!isEditable() && _highlightcomponent != null && immediateFeedback) {
+            _highlightcomponent = null;
+            // see if we moused up on an object
+            checkControls(true);
+            redrawPanel();
+        }
 
         // if alt modifier is down invert the snap to grid behaviour
         snapToGridInvert = event.isAltDown();
