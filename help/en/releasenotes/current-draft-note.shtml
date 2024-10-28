@@ -131,8 +131,11 @@
             <ul>
                 <li>Fixed a bug were immediate-mode sliders would sometimes
                     not automatically write their contents when changed, 
-                    leaving people to have to push the "Write" button.
-                </li>
+                    leaving people to have to push the "Write" button.</li>
+                <li>OpenLCB and LCC connections now support "DCC Decoder Decoder"
+                    Signal Heads.</li>
+                <li>The OpenLCB and LCC implementations have started to provide a CommandStation
+                    object with limited capability.</li>
             </ul>
 
         <h4>Powerline</h4>
