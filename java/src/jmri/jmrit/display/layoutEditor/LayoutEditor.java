@@ -3668,6 +3668,19 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 t.setState(Turnout.CLOSED);
             } else {
                 t.toggleTurnout();
+                if (immediateFeedback && !t.isDisabled()) {
+                    // flash the turnout circle a few times so the user knows it's being toggled
+                    javax.swing.Timer timer = new javax.swing.Timer(150, null);
+                    timer.addActionListener(new ActionListener(){
+                        int count = 1;
+                        public void actionPerformed(ActionEvent ae){
+                          if(count % 2 == 1) t.setDisabled(true);
+                          else t.setDisabled(false);
+                          if(++count > 8) timer.stop();
+                        }
+                    });
+                    timer.start();
+                }
             }
         } else if ((selectedObject != null) && ((selectedHitPointType == HitPointType.SLIP_LEFT)
                 || (selectedHitPointType == HitPointType.SLIP_RIGHT))
