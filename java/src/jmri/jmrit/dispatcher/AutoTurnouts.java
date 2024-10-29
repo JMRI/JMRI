@@ -305,6 +305,27 @@ public class AutoTurnouts {
                                 (setting == Turnout.CLOSED ? closedText : thrownText));
                     }
                 }
+                if (turnoutList.get(i).getObject() instanceof LayoutSlip) {
+                    //Look at the state of the second turnout in the slip
+                    setting = ((LayoutSlip) turnoutList.get(i).getObject()).getTurnoutBState(turnoutList.get(i).getExpectedState());
+                    to = ((LayoutSlip) turnoutList.get(i).getObject()).getTurnoutB();
+                    if (!trustKnownTurnouts) {
+                        to.setCommandedState(setting);
+                    } else if (to.getKnownState() != setting) {
+                        // turnout is not set correctly
+                        if (set) {
+                            // setting has been requested, is Section free and Block unoccupied
+                            if ((s.getState() == Section.FREE) && (curBlock.getState() != Block.OCCUPIED)) {
+                                // send setting command
+                                to.setCommandedState(setting);
+                            } else {
+                                turnoutsOK = false;
+                            }
+                        } else {
+                            turnoutsOK = false;
+                        }
+                    }
+                }
             }
             if (turnoutsOK) {
                 // move to next Block if any
