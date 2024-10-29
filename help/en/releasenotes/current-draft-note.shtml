@@ -385,7 +385,11 @@
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li></li>
+            <li>The "Scale" operation on icons has been 
+                changed to a relative scaling from the current size.
+                For example, if you've scaled an icon by 150% already,
+                and request a rescaling by 200%, the icon will end up
+                at 300%.  Previously, this would work inconsistently.</li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
@@ -433,6 +437,11 @@
         <a id="LE" name="LE"></a>
         <ul>
             <li>Fix slip turnout control circle colors when using closed/thrown colors.</li>
+            <li>The "Scale" operation on icons has been 
+                changed to a relative scaling from the current size.
+                For example, if you've scaled an icon by 150% already,
+                and request a rescaling by 200%, the icon will end up
+                at 300%.  Previously, this would work inconsistently.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -467,7 +476,11 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+            <li>The "Scale" operation on icons has been 
+                changed to a relative scaling from the current size.
+                For example, if you've scaled an icon by 150% already,
+                and request a rescaling by 200%, the icon will end up
+                at 300%.  Previously, this would work inconsistently.</li>
         </ul>
 
     <h3>Permissions</h3>
