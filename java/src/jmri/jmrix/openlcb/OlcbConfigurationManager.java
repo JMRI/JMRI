@@ -159,6 +159,8 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
                 getLightManager()
         );
 
+        InstanceManager.store(getCommandStation(), jmri.CommandStation.class);
+        
         if (getProgrammerManager().isAddressedModePossible()) {
             InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
         }
@@ -248,6 +250,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (type.equals(jmri.AddressedProgrammerManager.class)) {
             return true;
         }
+        if (type.equals(jmri.CommandStation.class)) {
+            return true;
+        }
         if (type.equals(AliasMap.class)) {
             return true;
         }
@@ -307,6 +312,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         }
         if (T.equals(jmri.AddressedProgrammerManager.class)) {
             return (T) getProgrammerManager();
+        }
+        if (T.equals(jmri.CommandStation.class)) {
+            return (T) getCommandStation();
         }
         if (T.equals(AliasMap.class)) {
             return (T) aliasMap;
@@ -402,6 +410,18 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             reporterManager = new OlcbReporterManager(adapterMemo);
         }
         return reporterManager;
+    }
+
+    protected OlcbCommandStation commandStation;
+
+    public OlcbCommandStation getCommandStation() {
+        if (adapterMemo.getDisabled()) {
+            return null;
+        }
+        if (commandStation == null) {
+            commandStation = new OlcbCommandStation(adapterMemo);
+        }
+        return commandStation;
     }
 
     @Override
