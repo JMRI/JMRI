@@ -113,11 +113,14 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
      * @param rs The RollingStock to load.
      */
     public void register(T rs) {
-        if (!_hashTable.contains(rs)) {
+        if (!_hashTable.containsKey(rs.getId())) {
             int oldSize = _hashTable.size();
             rs.addPropertyChangeListener(this);
             _hashTable.put(rs.getId(), rs);
             firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _hashTable.size());
+        } else {
+            log.error("Duplicate rolling stock id: ({})", rs.getId());
+            rs.dispose();
         }
     }
 
