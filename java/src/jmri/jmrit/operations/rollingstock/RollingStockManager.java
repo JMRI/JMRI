@@ -593,7 +593,12 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
             @SuppressWarnings("unchecked")
             T rs = (T) evt.getSource(); // unchecked cast to T  
             _hashTable.remove(evt.getOldValue());
-            _hashTable.put(rs.getId(), rs);
+            if (_hashTable.containsKey(rs.getId())) {
+                log.error("Duplicate rolling stock id: ({})", rs.getId());
+                rs.dispose();
+            } else {
+                _hashTable.put(rs.getId(), rs);
+            }
             // fire so listeners that rebuild internal lists get signal of change in id, even without change in size
             firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, _hashTable.size(), _hashTable.size());
         }
