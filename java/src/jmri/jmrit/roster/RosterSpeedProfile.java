@@ -95,7 +95,9 @@ public class RosterSpeedProfile {
      * @param value true/false
      */
     protected void setTestMode(boolean value) {
-        profileInTestMode = value;
+        synchronized (this){
+            profileInTestMode = value;
+        }
         testSteps = new ArrayList<>();
     }
 
@@ -151,11 +153,23 @@ public class RosterSpeedProfile {
      * @param mms MilliMetres per second
      * @return scale speed in units specified by Warrant Preferences,
      *         unchanged if Warrant preferences are not a speed.
-     * @deprecated use {@link #mmsToScaleSpeed(float mms, boolean factorFastClock)}
+     * @deprecated use {@link #mmsToScaleSpeed(float mms}
      */
     @Deprecated (since="5.9.6",forRemoval=true)
     public float MMSToScaleSpeed(float mms) {
         jmri.util.LoggingUtil.deprecationWarning(log, "MMSToScaleSpeed");
+        return mmsToScaleSpeed(mms);
+    }
+
+    /**
+     * Returns the scale speed as a numeric.
+     * If Warrant preferences are not a speed, value returns unchanged.
+     * Does not factor Fast Clock ratio.
+     * @param mms MilliMetres per second
+     * @return scale speed in units specified by Warrant Preferences,
+     *         unchanged if Warrant preferences are not a speed.
+     */
+    public float mmsToScaleSpeed(float mms) {
         return mmsToScaleSpeed(mms, false);
     }
 
