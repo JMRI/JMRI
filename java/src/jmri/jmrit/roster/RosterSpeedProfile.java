@@ -153,7 +153,7 @@ public class RosterSpeedProfile {
      * @param mms MilliMetres per second
      * @return scale speed in units specified by Warrant Preferences,
      *         unchanged if Warrant preferences are not a speed.
-     * @deprecated use {@link #mmsToScaleSpeed(float mms}
+     * @deprecated use {@link #mmsToScaleSpeed(float mms)}
      */
     @Deprecated (since="5.9.6",forRemoval=true)
     public float MMSToScaleSpeed(float mms) {
