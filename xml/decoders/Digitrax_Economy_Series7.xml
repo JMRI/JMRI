@@ -17,6 +17,8 @@
   <!-- Version 0 - New Series 7 Economy Digitrax decoders -->
   <version author="Peter Ulvestad" version="1" lastUpdated="20241019"/>
   <!-- Version 1 - Added DH187, DH127 and DN167n18 models -->
+  <version author="Peter Ulvestad" version="2" lastUpdated="20241030"/>
+  <!-- Version 2 - Added missing CVs -->
   <decoder>
     <family name="Economy Series 7 with FX3, silent" mfg="Digitrax" lowVersionID="204" highVersionID="204" comment="">
       <model model="DN147A0" numOuts="4" numFns="4" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="DropIn" comment="">
@@ -74,17 +76,23 @@
       <xi:include href="http://jmri.org/xml/decoders/digitrax/mfgVersionId.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/motorDriveFreq.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv21.22.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/cv29NDOT.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/cv29analog.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/functionmap.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/fxCVs.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv54.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/bemf.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv61Series6.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/cv62.63LightingOptions.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="8">
