@@ -4179,10 +4179,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       located to the right of the load menu.
 
       <h4 id="ReturnWhenEmpty">Return When Empty</h4>
-      You can also optionally enter the location and track that you want the car to return to when
-      the car's load status becomes empty. You can also replace the car's default empty "E" load
-      with one from the return when empty (RWE) load menu. Only custom loads that are type <a
-        href="#LoadType">Empty</a> are shown in the combo box. When you specify a custom RWE load
+      You can optionally enter the location and track that you want the car to return to when the
+      car's load status becomes empty. Independent of the location and track fields, you can replace
+      the car's default empty "E" load with one from the return when empty (RWE) load menu. Only
+      custom loads that are type
+      <a href="#LoadType">Empty</a> are shown in the combo box. When you specify a custom RWE load
       for a car, the program will use the RWE load instead of the default empty "E" load in all
       cases where the "E" load would normally occur. Note that the RWE load also overrides the
       generation of custom loads out of staging since the "E" load isn't used by the program for
@@ -4193,13 +4194,14 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         destination and RWE load become active.</p>
 
       <h4 id="ReturnWhenLoaded">Return When Loaded</h4>
-      You can also optionally enter the location and track that you want the car to return to when
-      the car's load status becomes loaded. You can also replace the car's default load "L" with one
-      from the return when loaded (RWL) load menu. Only custom loads that are type <a
-        href="#LoadType">Load</a> are shown in the combo box. When you specify a custom RWL load for
-      a car, the program will use the RWL load instead of the default "L" load in all cases where
-      the "L" load would normally occur. When a car arrives into staging and has the "E" load and
-      the option to swap load names is enabled, the program will activate the RWL load and
+      You can optionally enter the location and track that you want the car to return to when the
+      car's load status becomes loaded. Independent of the location and track fields, you can also
+      replace the car's default load "L" with one from the return when loaded (RWL) load menu. Only
+      custom loads that are type
+      <a href="#LoadType">Load</a> are shown in the combo box. When you specify a custom RWL load
+      for a car, the program will use the RWL load instead of the default "L" load in all cases
+      where the "L" load would normally occur. When a car arrives into staging and has the "E" load
+      and the option to swap load names is enabled, the program will activate the RWL load and
       addresses. Also when a car arrives into staging and has a custom load type of empty and the
       option to remove custom load names is enabled, the program will activate the RWL load and
       addresses.
