@@ -80,8 +80,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     /* Preferences setup */
     final String _storeModeCheck = this.getClass().getName() + ".StoreMode";
+    final String _viewModeCheck = this.getClass().getName() + ".SplitView";
     private final UserPreferencesManager _pm;
     private JCheckBox _compactOption = new JCheckBox(Bundle.getMessage("StoreMode"));
+    private boolean _splitView = false;
 
     private boolean _dirty = false;
     private int _logicRow = -1;     // The last selected row, -1 for none
@@ -129,11 +131,16 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private JButton _exportButton;
     private JButton _importButton;
 
+    // File menu
     private JMenuItem _refreshItem;
     private JMenuItem _storeItem;
     private JMenuItem _exportItem;
     private JMenuItem _importItem;
     private JMenuItem _loadItem;
+
+    // View menu
+    private JRadioButtonMenuItem _viewSingle = new JRadioButtonMenuItem(Bundle.getMessage("MenuSingle"));
+    private JRadioButtonMenuItem _viewSplit = new JRadioButtonMenuItem(Bundle.getMessage("MenuSplit"));
 
     // CDI Names
     private static String INPUT_NAME = "Logic Inputs.Group I%s(%s).Input Description";
@@ -3174,8 +3181,40 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         _storeItem.setEnabled(false);
         _exportItem.setEnabled(false);
 
+        var viewMenu = new JMenu(Bundle.getMessage("MenuView"));
+
+        // Create a radio button menu group
+        ButtonGroup viewButtonGroup = new ButtonGroup();
+
+        _viewSingle.setActionCommand("SINGLE");
+        _viewSingle.addItemListener(this::setViewMode);
+        viewMenu.add(_viewSingle);
+        viewButtonGroup.add(_viewSingle);
+
+        _viewSplit.setActionCommand("SPLIT");
+        _viewSplit.addItemListener(this::setViewMode);
+        viewMenu.add(_viewSplit);
+        viewButtonGroup.add(_viewSplit);
+
+        _splitView = _pm.getSimplePreferenceState(_viewModeCheck);
+        if (_splitView) {
+            _viewSplit.setSelected(true);
+        } else {
+            _viewSingle.setSelected(true);
+        }
+
         retval.add(fileMenu);
+        retval.add(viewMenu);
+
         return retval;
+    }
+
+    private void setViewMode(ItemEvent e) {
+        if (e.getStateChange() == ItemEvent.SELECTED) {
+            var button = (JRadioButtonMenuItem) e.getItem();
+            _splitView = "SPLIT".equals(button.getActionCommand());
+            _pm.setSimplePreferenceState(_viewModeCheck, _splitView);
+        }
     }
 
     @Override
