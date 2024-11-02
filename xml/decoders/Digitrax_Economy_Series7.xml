@@ -103,4 +103,5 @@
       </factReset>
     </resets>
   </decoder>
+  <xi:include href="http://jmri.org/xml/decoders/digitrax/PaneDigitrax.xml"/>
 </decoder-config>
