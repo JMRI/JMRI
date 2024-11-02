@@ -22,6 +22,7 @@ import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.FileUtil;
+import jmri.util.JmriJFrame;
 import jmri.util.swing.JComboBoxUtil;
 import jmri.util.swing.JmriJFileChooser;
 import jmri.util.swing.JmriJOptionPane;
@@ -83,7 +84,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     final String _viewModeCheck = this.getClass().getName() + ".SplitView";
     private final UserPreferencesManager _pm;
     private JCheckBox _compactOption = new JCheckBox(Bundle.getMessage("StoreMode"));
-    private boolean _splitView = false;
+    private boolean _splitView;
 
     private boolean _dirty = false;
     private int _logicRow = -1;     // The last selected row, -1 for none
@@ -117,7 +118,14 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private JTable _receiverTable;
     private JTable _transmitterTable;
 
-    private JTabbedPane _detailTabs;
+    private JTabbedPane _detailTabs;    // Editor tab and table tabs when in single mode.
+    private JTabbedPane _tableTabs;     // Table tabs when in split mode.
+    private JmriJFrame _tableFrame;     // Second window when using split mode.
+
+    private JScrollPane _inputPanel;
+    private JScrollPane _outputPanel;
+    private JScrollPane _receiverPanel;
+    private JScrollPane _transmitterPanel;
 
     private JPanel _editButtons;
     private JButton _addButton;
@@ -130,6 +138,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private JButton _storeButton;
     private JButton _exportButton;
     private JButton _importButton;
+    private JButton _loadButton;
 
     // File menu
     private JMenuItem _refreshItem;
@@ -173,6 +182,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     public StlEditorPane() {
         _pm = InstanceManager.getDefault(UserPreferencesManager.class);
+        _splitView = _pm.getSimplePreferenceState(_viewModeCheck);
     }
 
     @Override
@@ -197,6 +207,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         _storeButton = new JButton(Bundle.getMessage("ButtonStore"));
         _exportButton = new JButton(Bundle.getMessage("ButtonExport"));
         _importButton = new JButton(Bundle.getMessage("ButtonImport"));
+        _loadButton = new JButton(Bundle.getMessage("ButtonLoad"));
 
         _refreshButton.setEnabled(false);
         _storeButton.setEnabled(false);
@@ -211,6 +222,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         _storeButton.addActionListener(this::pushedStoreButton);
         _exportButton.addActionListener(this::pushedExportButton);
         _importButton.addActionListener(this::pushedImportButton);
+        _loadButton.addActionListener(this::loadBackupData);
 
         _editButtons = new JPanel();
         _editButtons.add(_addButton);
@@ -222,6 +234,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         footer.add(_editButtons, BorderLayout.WEST);
 
         var dataButtons = new JPanel();
+        dataButtons.add(_loadButton);
         dataButtons.add(_importButton);
         dataButtons.add(_exportButton);
         dataButtons.add(new JLabel(" | "));
@@ -267,14 +280,15 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         // Define the center section of the window which consists of 5 tabs
         _detailTabs = new JTabbedPane();
 
+        // Build the scroll panels.
         _detailTabs.add(Bundle.getMessage("ButtonG"), buildLogicPanel());  // NOI18N
-        _detailTabs.add(Bundle.getMessage("ButtonI"), buildInputPanel());  // NOI18N
-        _detailTabs.add(Bundle.getMessage("ButtonQ"), buildOutputPanel());  // NOI18N
-        _detailTabs.add(Bundle.getMessage("ButtonY"), buildReceiverPanel());  // NOI18N
-        _detailTabs.add(Bundle.getMessage("ButtonZ"), buildTransmitterPanel());  // NOI18N
+        // The table versions are added to the main panel or a tables panel based on the split mode.
+        _inputPanel = buildInputPanel();
+        _outputPanel = buildOutputPanel();
+        _receiverPanel = buildReceiverPanel();
+        _transmitterPanel = buildTransmitterPanel();
 
         _detailTabs.addChangeListener(this::tabSelected);
-
         _detailTabs.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
 
         add(_detailTabs, BorderLayout.CENTER);
@@ -1355,6 +1369,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         _exportItem.setEnabled(true);
         _refreshItem.setEnabled(true);
         _storeItem.setEnabled(true);
+
+        if (_splitView) {
+            _tableTabs.repaint();
+        }
     }
 
     private void pushedRefreshButton(ActionEvent e) {
@@ -1643,6 +1661,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         _exportButton.setEnabled(true);
         _exportItem.setEnabled(true);
+
+        if (_splitView) {
+            _tableTabs.repaint();
+        }
     }
 
     private String getLineValue(String line) {
@@ -1755,6 +1777,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         _groupTable.setRowSelectionInterval(0, 0);
 
         _groupTable.repaint();
+
+        if (_splitView) {
+            _tableTabs.repaint();
+        }
     }
 
     private void importGroupLogic() {
@@ -3196,7 +3222,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         viewMenu.add(_viewSplit);
         viewButtonGroup.add(_viewSplit);
 
-        _splitView = _pm.getSimplePreferenceState(_viewModeCheck);
+        // Select the current view
         if (_splitView) {
             _viewSplit.setSelected(true);
         } else {
@@ -3214,6 +3240,58 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             var button = (JRadioButtonMenuItem) e.getItem();
             _splitView = "SPLIT".equals(button.getActionCommand());
             _pm.setSimplePreferenceState(_viewModeCheck, _splitView);
+            if (_splitView) {
+                splitTabs();
+            } else if (!_splitView && _detailTabs.getTabCount() == 1) {
+                mergeTabs();
+            }
+        }
+    }
+
+    private void splitTabs() {
+        if (_detailTabs.getTabCount() == 5) {
+            _detailTabs.remove(4);
+            _detailTabs.remove(3);
+            _detailTabs.remove(2);
+            _detailTabs.remove(1);
+        }
+
+        if (_tableTabs == null) {
+            _tableTabs = new JTabbedPane();
+        }
+
+        _tableTabs.add(Bundle.getMessage("ButtonI"), _inputPanel);  // NOI18N
+        _tableTabs.add(Bundle.getMessage("ButtonQ"), _outputPanel);  // NOI18N
+        _tableTabs.add(Bundle.getMessage("ButtonY"), _receiverPanel);  // NOI18N
+        _tableTabs.add(Bundle.getMessage("ButtonZ"), _transmitterPanel);  // NOI18N
+
+        _tableTabs.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+
+        var tablePanel = new JPanel();
+        tablePanel.setLayout(new BorderLayout());
+        tablePanel.add(_tableTabs, BorderLayout.CENTER);
+
+        if (_tableFrame == null) {
+            _tableFrame = new JmriJFrame(Bundle.getMessage("TitleTables"));
+            _tableFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        }
+        _tableFrame.add(tablePanel);
+        _tableFrame.pack();
+        _tableFrame.setVisible(true);
+    }
+
+    private void mergeTabs() {
+        if (_tableTabs != null) {
+            _tableTabs.removeAll();
+        }
+
+        _detailTabs.add(Bundle.getMessage("ButtonI"), _inputPanel);  // NOI18N
+        _detailTabs.add(Bundle.getMessage("ButtonQ"), _outputPanel);  // NOI18N
+        _detailTabs.add(Bundle.getMessage("ButtonY"), _receiverPanel);  // NOI18N
+        _detailTabs.add(Bundle.getMessage("ButtonZ"), _transmitterPanel);  // NOI18N
+
+        if (_tableFrame != null) {
+            _tableFrame.setVisible(false);
         }
     }
 
