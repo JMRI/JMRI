@@ -405,10 +405,10 @@ public class TrainManager extends PropertyChangeSupport
         if (train == null) {
             _id++;
             train = new Train(Integer.toString(_id), name);
-            Integer oldSize = Integer.valueOf(getNumEntries());
+            int oldSize = getNumEntries();
             _trainHashTable.put(train.getId(), train);
             setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
-                    Integer.valueOf(getNumEntries()));
+                    getNumEntries());
         }
         return train;
     }
@@ -419,14 +419,14 @@ public class TrainManager extends PropertyChangeSupport
      * @param train The Train to be added.
      */
     public void register(Train train) {
-        Integer oldSize = Integer.valueOf(getNumEntries());
+        int oldSize = getNumEntries();
         _trainHashTable.put(train.getId(), train);
         // find last id created
         int id = Integer.parseInt(train.getId());
         if (id > _id) {
             _id = id;
         }
-        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(getNumEntries()));
+        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, getNumEntries());
     }
 
     /**
@@ -439,9 +439,9 @@ public class TrainManager extends PropertyChangeSupport
             return;
         }
         train.dispose();
-        Integer oldSize = Integer.valueOf(getNumEntries());
+        int oldSize = getNumEntries();
         _trainHashTable.remove(train.getId());
-        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(getNumEntries()));
+        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, getNumEntries());
     }
 
     public void replaceLoad(String type, String oldLoadName, String newLoadName) {
