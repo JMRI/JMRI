@@ -124,7 +124,7 @@ if ready:
     # Write each line from the "lines" list to the output file, finish with the final xml line.
     with open(outputFileName, 'w') as outfile:
         for line in lines:
-            outfile.write(line.replace(':AUTO:', '$' + newKeyword + ':'))
+            outfile.write(line.decode("utf-8").replace(':AUTO:', '$' + newKeyword + ':').encode("utf-8"))
         outfile.write('</layout-config>\n')
 
     log.info('Export completed, AUTO replaced by {}, file {} has been created'.format(newKeyword, outputFileName))
