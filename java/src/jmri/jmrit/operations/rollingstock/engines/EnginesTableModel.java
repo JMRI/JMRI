@@ -218,6 +218,10 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         return -1;
     }
 
+    public Engine getEngineAtIndex(int index) {
+        return engineList.get(index);
+    }
+
     private void updateList() {
         // first, remove listeners from the individual objects
         removePropertyChangeEngines();
