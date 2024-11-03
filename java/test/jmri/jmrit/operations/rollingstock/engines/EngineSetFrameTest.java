@@ -117,6 +117,7 @@ public class EngineSetFrameTest extends OperationsTestCase {
     
     @Test
     public void testEditConsistButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData();
 
         EngineSetFrame f = new EngineSetFrame();
