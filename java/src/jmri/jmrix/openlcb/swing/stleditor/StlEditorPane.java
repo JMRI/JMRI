@@ -235,6 +235,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         var dataButtons = new JPanel();
         dataButtons.add(_loadButton);
+        dataButtons.add(new JLabel(" | "));
         dataButtons.add(_importButton);
         dataButtons.add(_exportButton);
         dataButtons.add(new JLabel(" | "));

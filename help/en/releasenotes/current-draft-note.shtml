@@ -130,12 +130,15 @@
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
                 <li>Fixed a bug were immediate-mode sliders would sometimes
-                    not automatically write their contents when changed, 
+                    not automatically write their contents when changed,
                     leaving people to have to push the "Write" button.</li>
                 <li>OpenLCB and LCC connections now support "DCC Signal Decoder"
                     Signal Heads.</li>
                 <li>The OpenLCB and LCC implementations have started to provide a CommandStation
                     object with limited capability.</li>
+                <li>STL Editor: Provide an alternate view where the IQYZ tables are in a separate
+                    window. This makes it possible to see the table content while working on the
+                    STL logic.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -388,7 +391,7 @@
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li>The "Scale" operation on icons has been 
+            <li>The "Scale" operation on icons has been
                 changed to a relative scaling from the current size.
                 For example, if you've scaled an icon by 150% already,
                 and request a rescaling by 200%, the icon will end up
@@ -440,7 +443,7 @@
         <a id="LE" name="LE"></a>
         <ul>
             <li>Fix slip turnout control circle colors when using closed/thrown colors.</li>
-            <li>The "Scale" operation on icons has been 
+            <li>The "Scale" operation on icons has been
                 changed to a relative scaling from the current size.
                 For example, if you've scaled an icon by 150% already,
                 and request a rescaling by 200%, the icon will end up
@@ -479,7 +482,7 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li>The "Scale" operation on icons has been 
+            <li>The "Scale" operation on icons has been
                 changed to a relative scaling from the current size.
                 For example, if you've scaled an icon by 150% already,
                 and request a rescaling by 200%, the icon will end up
