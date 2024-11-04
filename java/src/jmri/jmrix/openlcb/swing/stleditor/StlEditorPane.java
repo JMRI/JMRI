@@ -3243,7 +3243,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             _pm.setSimplePreferenceState(_viewModeCheck, _splitView);
             if (_splitView) {
                 splitTabs();
-            } else if (!_splitView && _detailTabs.getTabCount() == 1) {
+            } else if (_detailTabs.getTabCount() == 1) {
                 mergeTabs();
             }
         }
