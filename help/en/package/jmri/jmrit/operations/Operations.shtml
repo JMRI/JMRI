@@ -246,7 +246,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
             <li><a href="#TrackTools">Track Tools</a>
               <ul>
-                
+
 
                 <li><a href="#LoadOptions">Load Options</a>
                   <ul>
@@ -266,9 +266,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#TrackWorkComments">Manifest Comments</a></li>
 
                 <li><a href="#TrackDestinations">Track Destinations</a></li>
-                
+
                 <li><a href="#ChangeTrackType">Change Track Type</a></li>
-                
+
                 <li><a href="#CopyTrack">Copy Track</a></li>
 
                 <li><a href="#ShowCars">Show Cars</a></li>
@@ -378,6 +378,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                     <li><a href="#LocomotiveRoster">Print</a></li>
                     <li><a href="#LocomotiveRoster">Preview</a></li>
                   </uL></li>
+                <li><a href="#SetEngines">Set Locomotives (Modify Multiple Locos)</a></li>
                 <li><a href="#SynchronizeWithNCEConsists">Synchronize with NCE Consists</a></li>
               </ul>
             <li><a href="#LocomotivesSet">Set Locomotive</a></li>
@@ -4182,13 +4183,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       You can optionally enter the location and track that you want the car to return to when the
       car's load status becomes empty. Independent of the location and track fields, you can replace
       the car's default empty "E" load with one from the return when empty (RWE) load menu. Only
-      custom loads that are type
-      <a href="#LoadType">Empty</a> are shown in the combo box. When you specify a custom RWE load
-      for a car, the program will use the RWE load instead of the default empty "E" load in all
-      cases where the "E" load would normally occur. Note that the RWE load also overrides the
-      generation of custom loads out of staging since the "E" load isn't used by the program for
-      this car. However, if a car does arrive into staging with the RWE load name, the program will
-      set the load name to the default "E", and not use the RWE addresses.
+      custom loads that are type <a href="#LoadType">Empty</a> are shown in the combo box. When you
+      specify a custom RWE load for a car, the program will use the RWE load instead of the default
+      empty "E" load in all cases where the "E" load would normally occur. Note that the RWE load
+      also overrides the generation of custom loads out of staging since the "E" load isn't used by
+      the program for this car. However, if a car does arrive into staging with the RWE load name,
+      the program will set the load name to the default "E", and not use the RWE addresses.
       <p>Note that manually changing the load name will not cause the Return When Empty (RWE)
         destination to become active, only when the car is set out by the program will the RWE
         destination and RWE load become active.</p>
@@ -4197,14 +4197,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       You can optionally enter the location and track that you want the car to return to when the
       car's load status becomes loaded. Independent of the location and track fields, you can also
       replace the car's default load "L" with one from the return when loaded (RWL) load menu. Only
-      custom loads that are type
-      <a href="#LoadType">Load</a> are shown in the combo box. When you specify a custom RWL load
-      for a car, the program will use the RWL load instead of the default "L" load in all cases
-      where the "L" load would normally occur. When a car arrives into staging and has the "E" load
-      and the option to swap load names is enabled, the program will activate the RWL load and
-      addresses. Also when a car arrives into staging and has a custom load type of empty and the
-      option to remove custom load names is enabled, the program will activate the RWL load and
-      addresses.
+      custom loads that are type <a href="#LoadType">Load</a> are shown in the combo box. When you
+      specify a custom RWL load for a car, the program will use the RWL load instead of the default
+      "L" load in all cases where the "L" load would normally occur. When a car arrives into staging
+      and has the "E" load and the option to swap load names is enabled, the program will activate
+      the RWL load and addresses. Also when a car arrives into staging and has a custom load type of
+      empty and the option to remove custom load names is enabled, the program will activate the RWL
+      load and addresses.
       <p>Note that manually changing the load name will not cause the Return When Loaded (RWL)
         destination to become active, only when the car is set out by the program will the RWL
         destination and RWL load name become active.</p>
@@ -4543,6 +4542,29 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       "Location", this allows you to quickly verify your locomotive locations before or after an
       operations session.
 
+      <h4 id="SetEngines">Set Locomotives (Modify Multiple Locos)</h4>
+
+      If you want to change the status, location, consist, destinations or train assignment for a
+      group of locomotives use the "Set Locomotives" tool found under "Tools" in the <a
+        href="#Locomotives">Locomotives</a> window. The tool works the same way as the <a
+        href="#LocomotivesSet">Set Locomotive</a> as described below, except that multiple
+      locomotives are modified. Select the locomotives you want to change in the table by
+      highlighting them, and then select "Set Locomotives" from the Tools menu. Note that you can use
+      the "Control" or "Ctrl" key on your keyboard to select individual locomotives in the table,
+      and the "Shift" key allows you to select a range of locomotives. Use "Ctrl A" to select all of
+      the locomotives in the table. The first locomotive in the table becomes the default, and when
+      you press the "Apply" button, all of the other selected locomotives will have the same
+      settings as the default locomotive.
+
+      <p>When using the "Set Locomotives" tool, all locomotives selected in the Locomotives
+        window will have the same values once you press the "Apply" button. However, if you want to
+        change only one or two of the fields shown in the Set Locomotives window, select the ignore
+        checkbox for the fields you don't want changed by the "Apply" button. Only the fields that
+        don't have the "ignore" selected will change.</p>
+
+      <p>After making your changes, be sure to press "Save" in the Locomotives window if you
+        want to keep your changes.</p>
+
       <h4 id="SynchronizeWithNCEConsists">Synchronize with NCE Consists</h4>
       If you are using NCE as your DCC command station, you can have the program synchronize your
       consist numbers with your locomotives. The program will read all of the consists out of the
@@ -4553,10 +4575,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       Consists" under the "Tools" from the "Locomotives" menu.
 
       <h3 id="LocomotivesSet">Set Locomotive</h3>
-      After creating a locomotive, you can set the locomotive's location, and optionally the
-      locomotive's destination and train. Normally the locomotive's destination and assigned train
-      are generated by the program, but you can use these fields to force a locomotive to a specific
-      location using a specified train.
+      After creating a locomotive, you can set the locomotive's location, consist, and optionally
+      the locomotive's destination and train. Normally the locomotive's destination and assigned
+      train are generated by the program, but you can use these fields to force a locomotive to a
+      specific location using a specified train.
 
       <p style="page-break-after: always">
         <a href="#toc">[Click to go back to TOC]</a>
@@ -5286,7 +5308,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       with several options.
 
       <p>
-      <img src="images/TrainRoadOptions.png" alt="">
+        <img src="images/TrainRoadOptions.png" alt="">
       </p>
 
       <p>If the train will service any road, select the "Accept all" radio button. If you want
