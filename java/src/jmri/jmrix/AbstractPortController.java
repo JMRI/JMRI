@@ -255,14 +255,14 @@ abstract public class AbstractPortController implements PortAdapter {
             PASSWORD
         }
 
-        String currentValue = null;
+        private String currentValue = null;
 
         /**
          * As a heuristic, we consider the 1st non-null
          * currentValue as the configured value. Changes away from that
          * mark an Option object as "dirty".
          */
-        String configuredValue = null;
+        private String configuredValue = null;
 
         String displayText;
         String[] options;
@@ -290,18 +290,18 @@ abstract public class AbstractPortController implements PortAdapter {
         }
 
         void configure(String value) {
-            log.trace("Option.configure({}) with \"{}\", \"{}\"", value, configuredValue, currentValue);
-            if (configuredValue == null ) {
-                configuredValue = value;
+            log.trace("Option.configure({}) with \"{}\", \"{}\"", value, getConfiguredValue(), getCurrentValue());
+            if (getConfiguredValue() == null ) {
+                setConfiguredValue(value);
             }
-            currentValue = value;
+            setCurrentValue(value);
         }
 
         String getCurrent() {
-            if (currentValue == null) {
+            if (getCurrentValue() == null) {
                 return options[0];
             }
-            return currentValue;
+            return getCurrentValue();
         }
 
         String[] getOptions() {
@@ -321,7 +321,23 @@ abstract public class AbstractPortController implements PortAdapter {
         }
 
         boolean isDirty() {
-            return (currentValue != null && !currentValue.equals(configuredValue));
+            return (getCurrentValue() != null && !getCurrentValue().equals(getConfiguredValue()));
+        }
+
+        public String getCurrentValue() {
+            return currentValue;
+        }
+
+        public void setCurrentValue(String currentValue) {
+            this.currentValue = currentValue;
+        }
+
+        public String getConfiguredValue() {
+            return configuredValue;
+        }
+
+        public void setConfiguredValue(String configuredValue) {
+            this.configuredValue = configuredValue;
         }
     }
 
