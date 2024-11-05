@@ -81,7 +81,8 @@
 
         <h4>Lenz XPressNet</h4>
             <ul>
-                <li></li>
+                <li>Throttles are now fully released by JMRI when not required, which resolves an issue with
+                Roster Last Operated and Operating Duration fields not being updated.</li>
             </ul>
 
         <h4>LocoNet</h4>
