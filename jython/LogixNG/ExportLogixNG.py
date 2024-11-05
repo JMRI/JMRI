@@ -127,7 +127,7 @@ if ready:
             outfile.write(line.decode("utf-8", "replace").replace(':AUTO:', '$' + newKeyword + ':').encode("utf-8"))
         outfile.write('</layout-config>\n')
 
-    log.info('Export completed, AUTO replaced by {}, file {} has been created'.format(newKeyword, outputFileName))
+    log.info('Export completed, AUTO replaced by {}, file {} has been created'.format(newKeyword.encode("ascii", "replace"), outputFileName.encode("ascii", "replace")))
 else:
     log.warn('Export aborted due to incomplete input')
 
