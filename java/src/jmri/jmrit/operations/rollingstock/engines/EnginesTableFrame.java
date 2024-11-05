@@ -10,6 +10,7 @@ import javax.swing.table.TableColumnModel;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.rollingstock.engines.tools.EnginesSetFrameAction;
 import jmri.jmrit.operations.rollingstock.engines.tools.NceConsistEngineAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -189,6 +190,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new EngineRosterMenu(Bundle.getMessage("TitleEngineRoster"), EngineRosterMenu.MAINMENU, this));
+        toolMenu.add(new EnginesSetFrameAction(enginesTable));
         toolMenu.add(new NceConsistEngineAction());
         menuBar.add(toolMenu);
         menuBar.add(new jmri.jmrit.operations.OperationsMenu());
