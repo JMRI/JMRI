@@ -139,6 +139,7 @@
                 <li>STL Editor: Provide an alternate view where the IQYZ tables are in a separate
                     window. This makes it possible to see the table content while working on the
                     STL logic.</li>
+                <li>Improved how UTF-8 is handled in CDI display.
             </ul>
 
         <h4>Powerline</h4>
