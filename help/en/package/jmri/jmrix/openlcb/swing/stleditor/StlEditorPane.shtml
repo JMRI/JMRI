@@ -194,6 +194,16 @@ etc.
       <h4>File Buttons</h4>
 
       <dl>
+        <dt>Load Backup</dt>
+        <dd>
+          <p>The <strong>Load Backup</strong> button extracts the STL data from a CDI backup file.</p>
+
+          <div style="margin-left: 2em">
+            <a href="images/load_backup.png"><img src=
+            "images/load_backup.png" alt="stl load backup"></a>
+          </div>
+        </dd>
+
         <dt>Import</dt>
         <dd>
           <p>Import a CSV file set from a directory in the user files location. If the current data
@@ -353,14 +363,18 @@ E1:CLR//Right C
         "images/file_menu.png" alt="stl file menu"></a>
       </div>
 
-      <p>The file menu also has a <strong>Load a CDI Backup file</strong> item.  This extracts the
-      STL data from a CDI backup file.</p>
+      <h3>View Menu</h3>
+
+      <p>The STL Editor data consists of a tab for the group logic and four tabs for the IQYZ tables.
+      The tabs can be contained in a single window or the the IQYZ tabs can be in a separate window.</p>
 
       <div style="margin-left: 2em">
-        <a href="images/load_backup.png"><img src=
-        "images/load_backup.png" alt="stl load backup"></a>
+        <a href="images/view_menu.png"><img src=
+        "images/view_menu.png" alt="stl view menu"></a>
       </div>
 
+      <p>The <strong>View</strong> menu is used to select the single window mode or the separate
+      table mode.</p>
 
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
