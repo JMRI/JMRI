@@ -49,7 +49,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     private static final int DEPARTS_COLUMN = ROUTE_COLUMN + 1;
     private static final int TERMINATES_COLUMN = DEPARTS_COLUMN + 1;
     private static final int CURRENT_COLUMN = TERMINATES_COLUMN + 1;
-    private static final int STATUS_COLUMN = CURRENT_COLUMN + 1;
+    private static final int CARS_COLUMN = CURRENT_COLUMN + 1;
+    private static final int STATUS_COLUMN = CARS_COLUMN + 1;
     private static final int ACTION_COLUMN = STATUS_COLUMN + 1;
     private static final int EDIT_COLUMN = ACTION_COLUMN + 1;
 
@@ -124,7 +125,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
     // Train frame table column widths, starts with id column and ends with edit
     private final int[] _tableColumnWidths =
-            {50, 50, 50, 72, 100, 140, 50, 50, 50, 50, 50, 50, 120, 120, 120, 120, 120, 90,
+            {50, 50, 50, 72, 100, 140, 50, 50, 50, 50, 50, 50, 120, 120, 120, 120, 50, 120, 90,
             70};
 
     void initTable() {
@@ -226,6 +227,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 return CURRENTCOLUMNNAME;
             case TERMINATES_COLUMN:
                 return TERMINATESCOLUMNNAME;
+            case CARS_COLUMN:
+                return Bundle.getMessage("Cars");
             case STATUS_COLUMN:
                 return STATUSCOLUMNNAME;
             case ACTION_COLUMN:
@@ -243,6 +246,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             case BUILDBOX_COLUMN:
                 return Boolean.class;
             case ID_COLUMN:
+            case CARS_COLUMN:
                 return Integer.class;
             case TIME_COLUMN:
             case NAME_COLUMN:
@@ -337,6 +341,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                     return train.getTrainTerminatesName() + " (" + train.getTerminationTrack().getName() + ")";
                 }
             }
+            case CARS_COLUMN:
+                return train.getNumberCarsInTrain();
             case STATUS_COLUMN:
                 return train.getStatus();
             case BUILD_COLUMN: {

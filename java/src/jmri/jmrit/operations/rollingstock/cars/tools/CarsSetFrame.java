@@ -44,8 +44,7 @@ public class CarsSetFrame extends CarSetFrame {
         setTitle(Bundle.getMessage("TitleSetCars"));
         // modify Save button text to "Apply";
         saveButton.setText(Bundle.getMessage("ButtonApply"));
-        // disable edit load button if no cars selected
-        editLoadButton.setEnabled(false);
+
         // show ignore checkboxes
         ignoreStatusCheckBox.setVisible(true);
         ignoreLocationCheckBox.setVisible(true);
