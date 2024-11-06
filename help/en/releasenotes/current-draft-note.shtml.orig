@@ -424,10 +424,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>Add minimum reliable operating throttle setting.
-             calculate adjusted throttle as throttle * factor then apply max and min limits.
-             Use Max speed from the roster entry, if available, as default.
-             Refactor ActivateTrain to push the final validation and train creation into dispatcher.</li>
+             <li></li>
         </ul>
 
     <h3>Dispatcher System</h3>

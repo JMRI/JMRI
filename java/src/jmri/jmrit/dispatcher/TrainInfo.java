@@ -72,7 +72,8 @@ public class TrainInfo {
 
     // instance variables for automatic operation
     private float speedFactor = 1.0f;
-    private float maxSpeed = 0.6f;
+    private float maxSpeed = 1.0f;
+    private float minReliableOperatingSpeed = 0.0f;
     private String rampRate = Bundle.getMessage("RAMP_NONE");
     private TrainDetection trainDetection = TrainDetection.TRAINDETECTION_HEADONLY;
     private boolean runInReverse = false;
@@ -542,6 +543,14 @@ public class TrainInfo {
 
     public Float getMaxSpeed() {
         return maxSpeed;
+    }
+
+    public void setMinReliableOperatingSpeed(float f) {
+        minReliableOperatingSpeed = f;
+    }
+
+    public float getMinReliableOperatingSpeed() {
+        return minReliableOperatingSpeed;
     }
 
     public void setRampRate(String s) {

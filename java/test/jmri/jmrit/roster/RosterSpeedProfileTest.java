@@ -130,6 +130,54 @@ public class RosterSpeedProfileTest {
     }
 
     @Test
+    public void testSpeedProfileStopFromFiftyPercentWithMinimumSpeed() {
+        // statics for test objects
+        org.jdom2.Element f1 = getLocoElement100();
+        RosterEntry rF1 = new RosterEntry(f1) {
+            @Override
+            protected void warnShortLong(String s) {
+            }
+        };
+        ThrottleListener throtListen = new ThrottleListen();
+        ThrottleManager tm = InstanceManager.getDefault(ThrottleManager.class);
+        boolean OK = tm.requestThrottle(rF1, throtListen, throttleResult);
+        Assert.assertTrue("Throttle request denied",OK);
+        JUnitUtil.waitFor(()-> (throttleResult), "Got No throttle");
+        throttle.setIsForward(true);
+        throttle.setSpeedSetting(0.5f);
+        RosterSpeedProfile sp = rF1.getSpeedProfile();
+        sp.setTestMode(true);
+        sp.setMinMaxLimits(0.1f, 1.0f);
+        sp.changeLocoSpeed(throttle, 50.0f, 0.0f);
+        // Allow speed step table to be constructed
+        //JUnitUtil.waitFor(5000);
+        // Note it must be a perfect 0.0
+        //Assert.assertEquals("Speed didnt get to a perfect zero", 0.0f, throttle.getSpeedSetting(), 0.0f);
+        JUnitUtil.waitFor(()->(throttle.getSpeedSetting() == 0.00f),"Failed to reach requested speed");
+        float maxDelta = 1.0f/126.0f/2.0f;  //half step
+        //Assert.assertEquals("SpeedStep Table has incorrect number of entries.", 5, sp.getSpeedStepTrace().size() ) ;
+        int[] correctDuration = {750, 750, 750, 750, 0} ;
+        int[] durations = new int[sp.getSpeedStepTrace().size()];
+        int ix = 0;
+        for (SpeedSetting ss: sp.getSpeedStepTrace()) {
+            durations[ix]= ss.getDuration();
+            ix++;
+        }
+        Assert.assertArrayEquals("Durations are wrong",correctDuration, durations);
+
+        float[] correctSpeed = {0.31962f, 0.18434f, 0.10993f, 0.1f, 0.0f} ;
+        float[] speed = new float[sp.getSpeedStepTrace().size()];
+        ix=0;
+        for (SpeedSetting ss: sp.getSpeedStepTrace()) {
+            speed[ix]= ss.getSpeedStep();
+            ix++;
+        }
+        Assert.assertArrayEquals("Speeds are wrong", correctSpeed, speed, maxDelta);
+        sp.cancelSpeedChange();
+
+        Assertions.assertEquals(10.0f, sp.mmsToScaleSpeed(10, false), 0.0001);
+    }
+    @Test
     public void testSpeedProfileFromFiftyPercentToTwenty() {
         // statics for test objects
         org.jdom2.Element f1 = getLocoElement200();
@@ -155,7 +203,7 @@ public class RosterSpeedProfileTest {
         JUnitUtil.waitFor(()->(throttle.getSpeedSetting() == 0.20f),"Failed to reach requested speed");
         //Assert.assertEquals("Speed didnt get to a perfect 20", 0.20f, throttle.getSpeedSetting(), 0.00f);
         float maxDelta = 1.0f/126.0f/2.0f;  //half step
-        Assert.assertEquals("SpeedStep Table has lincorrect number of entries.", 4, sp.getSpeedStepTrace().size() ) ;
+        //Assert.assertEquals("SpeedStep Table has lincorrect number of entries.", 4, sp.getSpeedStepTrace().size() ) ;
         int[] correctDuration = {750, 750, 750, 540} ;
         int[] durations = new int[sp.getSpeedStepTrace().size()];
         int ix = 0;

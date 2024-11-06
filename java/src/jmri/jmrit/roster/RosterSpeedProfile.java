@@ -573,6 +573,10 @@ public class RosterSpeedProfile {
 
     private float extraDelay = 0.0f;
 
+    private float minReliableOperatingSpeed = 0.0f;
+
+    private float maxOperatingSpeed = 1.0f;
+
     private NamedBean referenced = null;
 
     private javax.swing.Timer stopTimer = null;
@@ -591,6 +595,8 @@ public class RosterSpeedProfile {
         distanceRemaining = 0;
         desiredSpeedStep = -1;
         extraDelay = 0.0f;
+        minReliableOperatingSpeed = 0.0f;
+        maxOperatingSpeed = 1.0f;
         referenced = null;
         synchronized (this) {
             distanceTravelled = 0;
@@ -601,6 +607,11 @@ public class RosterSpeedProfile {
 
     public void setExtraInitialDelay(float eDelay) {
         extraDelay = eDelay;
+    }
+
+    public void setMinMaxLimits(float minReliableOperatingSpeed, float maxOperatingSpeed) {
+        this.minReliableOperatingSpeed = minReliableOperatingSpeed;
+        this.maxOperatingSpeed = maxOperatingSpeed;
     }
 
     /**
@@ -714,10 +725,16 @@ public class RosterSpeedProfile {
      *
      * @param t        the throttle to set
      * @param distance the distance in meters
-     * @param speed    the speed to set
+     * @param requestedSpeed    the speed to set
      */
-    public void changeLocoSpeed(DccThrottle t, float distance, float speed) {
-        log.debug("Call to change speed over specific distance float {} distance {}", speed, distance);
+    public void changeLocoSpeed(DccThrottle t, float distance, float requestedSpeed) {
+        float speed = 0.0f;
+        log.debug("Call to change speed over specific distance float {} distance {}", requestedSpeed, distance);
+        if (requestedSpeed  > maxOperatingSpeed) {
+            speed = maxOperatingSpeed;
+        } else {
+            speed = requestedSpeed;
+        }
         if (Float.compare(speed, t.getSpeedSetting()) == 0) {
             log.debug("Throttle and request speed setting are the same {} {} so will quit", speed, t.getSpeedSetting());
             //Already at correct speed setting
@@ -749,13 +766,23 @@ public class RosterSpeedProfile {
             log.debug("Going for deceleration");
         }
 
-        calculateStepDetails(speed, distance);
+        float adjSpeed = speed;
+        boolean andStop = false;
+        if (speed <= 0.0 && minReliableOperatingSpeed > 0.0f) {
+            andStop = true;
+        }
+        if (speed < minReliableOperatingSpeed) {
+            adjSpeed = minReliableOperatingSpeed;
+        }
+        log.debug("Speed[{}] adjSpeed[{}] MinSpeed[{}]",
+                speed,adjSpeed, minReliableOperatingSpeed);
+        calculateStepDetails(adjSpeed, distance, andStop);
     }
 
     private List<SpeedSetting> testSteps = new ArrayList<>();
     private boolean profileInTestMode = false;
 
-    void calculateStepDetails(float speedStep, float distance) {
+    void calculateStepDetails(float speedStep, float distance, boolean andStop) {
 
         float stepIncrement = _throttle.getSpeedIncrement();
         log.debug("Desired Speed Step {} asked for {}", desiredSpeedStep, speedStep);
@@ -872,11 +899,18 @@ public class RosterSpeedProfile {
             }
             log.debug("Speed Step current {} speed to set {}", _throttle.getSpeedSetting(), calculatingStep);
 
-            SpeedSetting ss = new SpeedSetting(calculatingStep, timePerStep);
+            SpeedSetting ss = new SpeedSetting(calculatingStep, timePerStep, andStop);
             synchronized (this) {
                 stepQueue.addLast(ss);
                 if (profileInTestMode) {
                     testSteps.add(ss);
+                }
+                if (andStop && calculated) {
+                    ss = new SpeedSetting( 0.0f, 0, andStop);
+                    stepQueue.addLast(ss);
+                    if (profileInTestMode) {
+                        testSteps.add(ss);
+                    }
                 }
             }
             if (stopTimer == null) { //If this is the first time round then kick off the speed change
@@ -892,7 +926,7 @@ public class RosterSpeedProfile {
             }
             if (calculatedDistance <= 0 && !calculated) {
                 log.warn("distance remaining is now 0, but we have not reached desired speed setting {} v {}", desiredSpeedStep, calculatingStep);
-                ss = new SpeedSetting(desiredSpeedStep, 10);
+                ss = new SpeedSetting(desiredSpeedStep, 10, andStop);
                 synchronized (this) {
                     stepQueue.addLast(ss);
                 }
@@ -947,7 +981,11 @@ public class RosterSpeedProfile {
         }
         SpeedSetting ss = stepQueue.getFirst();
         if (ss.getDuration() == 0) {
-            _throttle.setSpeedSetting(desiredSpeedStep);
+            if (ss.getAndStop()) {
+                _throttle.setSpeedSetting(0.0f);
+            } else {
+                _throttle.setSpeedSetting(desiredSpeedStep);
+            }
             finishChange();
             return;
         }
@@ -974,10 +1012,12 @@ public class RosterSpeedProfile {
 
         private float step = 0.0f;
         private int duration = 0;
+        private boolean andStop;
 
-        SpeedSetting(float step, int duration) {
+        SpeedSetting(float step, int duration, boolean andStop) {
             this.step = step;
             this.duration = duration;
+            this.andStop = andStop;
         }
 
         float getSpeedStep() {
@@ -986,6 +1026,10 @@ public class RosterSpeedProfile {
 
         int getDuration() {
             return duration;
+        }
+
+        boolean getAndStop() {
+            return andStop;
         }
     }
 
