@@ -139,6 +139,8 @@
                 <li>STL Editor: Provide an alternate view where the IQYZ tables are in a separate
                     window. This makes it possible to see the table content while working on the
                     STL logic.</li>
+                <li>STL Editor: Implement a view option to provide a preview of the generated
+                STL logic.</li>
             </ul>
 
         <h4>Powerline</h4>
