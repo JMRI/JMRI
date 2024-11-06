@@ -82,9 +82,11 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     /* Preferences setup */
     final String _storeModeCheck = this.getClass().getName() + ".StoreMode";
     final String _viewModeCheck = this.getClass().getName() + ".SplitView";
+    final String _previewModeCheck = this.getClass().getName() + ".Preview";
     private final UserPreferencesManager _pm;
     private JCheckBox _compactOption = new JCheckBox(Bundle.getMessage("StoreMode"));
     private boolean _splitView;
+    private boolean _stlPreview;
 
     private boolean _dirty = false;
     private int _logicRow = -1;     // The last selected row, -1 for none
@@ -121,6 +123,8 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private JTabbedPane _detailTabs;    // Editor tab and table tabs when in single mode.
     private JTabbedPane _tableTabs;     // Table tabs when in split mode.
     private JmriJFrame _tableFrame;     // Second window when using split mode.
+    private JmriJFrame _previewFrame;   // Window for displaying the generated STL content.
+    private JTextArea _stlTextArea;
 
     private JScrollPane _inputPanel;
     private JScrollPane _outputPanel;
@@ -150,6 +154,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     // View menu
     private JRadioButtonMenuItem _viewSingle = new JRadioButtonMenuItem(Bundle.getMessage("MenuSingle"));
     private JRadioButtonMenuItem _viewSplit = new JRadioButtonMenuItem(Bundle.getMessage("MenuSplit"));
+    private JRadioButtonMenuItem _viewPreview = new JRadioButtonMenuItem(Bundle.getMessage("MenuPreview"));
 
     // CDI Names
     private static String INPUT_NAME = "Logic Inputs.Group I%s(%s).Input Description";
@@ -183,6 +188,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     public StlEditorPane() {
         _pm = InstanceManager.getDefault(UserPreferencesManager.class);
         _splitView = _pm.getSimplePreferenceState(_viewModeCheck);
+        _stlPreview = _pm.getSimplePreferenceState(_previewModeCheck);
     }
 
     @Override
@@ -721,6 +727,11 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                     Bundle.getMessage("TitleOverflow"),
                     JmriJOptionPane.ERROR_MESSAGE);
             log.error("The line overflowed, content truncated:  {}", overflow);
+        }
+
+        if (_stlPreview) {
+            _stlTextArea.setText(Bundle.getMessage("PreviewHeader", groupRow.getName()));
+            _stlTextArea.append(longLine);
         }
     }
 
@@ -3230,6 +3241,18 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             _viewSingle.setSelected(true);
         }
 
+        viewMenu.addSeparator();
+
+        _viewPreview.addItemListener(this::setPreview);
+        viewMenu.add(_viewPreview);
+
+        // Set the current preview menu item state
+        if (_stlPreview) {
+            _viewPreview.setSelected(true);
+        } else {
+            _viewPreview.setSelected(false);
+        }
+
         retval.add(fileMenu);
         retval.add(viewMenu);
 
@@ -3294,6 +3317,35 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         if (_tableFrame != null) {
             _tableFrame.setVisible(false);
         }
+    }
+
+    private void setPreview(ItemEvent e) {
+        if (e.getStateChange() == ItemEvent.SELECTED) {
+            _stlPreview = true;
+
+            _stlTextArea = new JTextArea();
+            _stlTextArea.setEditable(false);
+            _stlTextArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+
+            var previewPanel = new JPanel();
+            previewPanel.setLayout(new BorderLayout());
+            previewPanel.add(_stlTextArea, BorderLayout.CENTER);
+
+            if (_previewFrame == null) {
+                _previewFrame = new JmriJFrame(Bundle.getMessage("TitlePreview"));
+                _previewFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+            }
+            _previewFrame.add(previewPanel);
+            _previewFrame.pack();
+            _previewFrame.setVisible(true);
+        } else {
+            _stlPreview = false;
+
+            if (_previewFrame != null) {
+                _previewFrame.setVisible(false);
+            }
+        }
+        _pm.setSimplePreferenceState(_previewModeCheck, _stlPreview);
     }
 
     @Override

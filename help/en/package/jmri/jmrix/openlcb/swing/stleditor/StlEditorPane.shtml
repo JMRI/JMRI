@@ -328,29 +328,33 @@ E1:CLR//Right C
 
       <dl>
         <dt>Add</dt>
-        <dd>Add a blank row to the end of the list.</dd>
+        <dd><p>Add a blank row to the end of the list.</p></dd>
 
         <dt>Insert</dt>
-        <dd>Add a blank row <strong>above</strong> the selected row.</dd>
+        <dd><p>Add a blank row <strong>above</strong> the selected row.</p></dd>
 
         <dt>Move Up</dt>
-        <dd>Move the selected row up.</dd>
+        <dd><p>Move the selected row up.</p></dd>
 
         <dt>Move Down</dt>
-        <dd>Move the selected row down.</dd>
+        <dd><p>Move the selected row down.</p></dd>
 
         <dt>Delete</dt>
-        <dd>Delete the selected row.</dd>
+        <dd><p>Delete the selected row.</p></dd>
 
         <dt>Percent</dt>
-        <dd>Do the PLC encode process and calculate the utilization.  The calculation will be
+        <dd><p>Do the PLC encode process and calculate the utilization.  The calculation will be
         based on the <strong>Compact store mode</strong> selection. If the resulting code is more
         that 255 bytes, a dialog is displayed.  It shows the data that would be truncated during a
-        store.
+        store.</p>
+
         <div style="margin-left: 2em">
           <a href="images/encode_overflow.png"><img src=
           "images/encode_overflow.png" alt="stl encode overflow"></a>
         </div>
+
+        <p>If the <strong>View &rArr; STL Preview</strong> menu item is enabled, the preview content
+        will be refreshed.</p>
         </dd>
       </dl>
 
@@ -363,18 +367,41 @@ E1:CLR//Right C
         "images/file_menu.png" alt="stl file menu"></a>
       </div>
 
-      <h3>View Menu</h3>
+      <h3>View Menu<span class="since">since 5.9.6</span></h3>
 
-      <p>The STL Editor data consists of a tab for the group logic and four tabs for the IQYZ tables.
-      The tabs can be contained in a single window or the the IQYZ tabs can be in a separate window.</p>
+      <p>The <strong>View</strong> menu provides a choice of STL Editor layouts and an option to
+      preview the generated STL logic.</p>
 
       <div style="margin-left: 2em">
         <a href="images/view_menu.png"><img src=
         "images/view_menu.png" alt="stl view menu"></a>
       </div>
 
-      <p>The <strong>View</strong> menu is used to select the single window mode or the separate
-      table mode.</p>
+      <dl>
+        <dt>Single Window</dt>
+        <dd><p>The <strong>STL Editor</strong> tab and the tabs for the <strong>IQYZ</strong> tables
+        are in the main STL Editor window.</p></dd>
+
+        <dt>Separate Tables Window</dt>
+        <dd><p>The <strong>IQYZ</strong> tabs are moved to a second window while the STL Editor tab
+        remains in the main STL Editor window. The tables window cannot be closed while the
+        <strong>Separate Tables Window</strong> option is selected.  The window is hidden when the
+        <strong>Single Window</strong> option is selected.</p></dd>
+
+        <dt>STL Preview</dt>
+        <dd><p>The preview option displays the generated STL logic for the current <strong>Group</strong>
+        in a separate window.  The window cannot be closed but will be hidden when the option is not
+        active.  The content is refreshed when the <strong>Percent</strong> button is pressed or a
+        different group is selected from the <strong>Group</strong> list.  After a <strong>Store</strong>,
+        it will contain the STL logic for the last group.</p>
+
+        <div style="margin-left: 2em">
+          <a href="images/stl_preview.png"><img class="image-border" src=
+          "images/stl_preview.png" alt="stl preview"></a>
+        </div>
+        </dd>
+      </dl>
+
 
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
