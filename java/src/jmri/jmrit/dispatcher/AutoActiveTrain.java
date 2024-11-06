@@ -2049,30 +2049,42 @@ public class AutoActiveTrain implements ThrottleListener {
         private javax.swing.Timer rampingTimer;
 
         private void rampToTarget() {
+            // target already adjusted.
             log.debug("RampToTarget[{}]current[{}]", getTargetSpeed(), throttle.getSpeedSetting());
             stepQueue = new LinkedList<>();
             if (throttle.getSpeedSetting() <= getTargetSpeed()) {
                 // Up
                 float newSpeed = throttle.getSpeedSetting();
+                if (newSpeed < minReliableOperatingSpeed) {
+                    stepQueue.add(new SpeedSetting(minReliableOperatingSpeed, throttleInterval));
+                    newSpeed = minReliableOperatingSpeed;
+                }
                 while (newSpeed < getTargetSpeed()) {
                     newSpeed += speedIncrement;
                     if (newSpeed > getTargetSpeed()) {
                         newSpeed = getTargetSpeed();
                     }
-                    log.trace("NewSpeedUp[{}]",newSpeed);
+                    log.trace("NewSpeedUp[{}]", newSpeed);
                     stepQueue.add(new SpeedSetting(newSpeed, throttleInterval));
                 }
             } else {
                 // Down
-                    float newSpeed = throttle.getSpeedSetting();
-                    while (newSpeed > getTargetSpeed()) {
-                        newSpeed -= speedIncrement;
-                        if (newSpeed < getTargetSpeed()) {
-                            newSpeed = getTargetSpeed();
-                        }
-                        log.trace("NewSpeedDown[{}]",newSpeed);
-                        stepQueue.add(new SpeedSetting(newSpeed, throttleInterval));
+                boolean andStop = false;
+                if (getTargetSpeed() <= 0.0f) {
+                    andStop = true;
+                }
+                float newSpeed = throttle.getSpeedSetting();
+                while (newSpeed > getTargetSpeed()) {
+                    newSpeed -= speedIncrement;
+                    if (newSpeed < getTargetSpeed()) {
+                        newSpeed = getTargetSpeed();
                     }
+                    log.trace("NewSpeedDown[{}]", newSpeed);
+                    stepQueue.add(new SpeedSetting(newSpeed, throttleInterval));
+                }
+                if (andStop) {
+                    stepQueue.add(new SpeedSetting(0.0f, throttleInterval));
+                }
             }
             if (rampingTimer == null) { //If this is the first time round then kick off the speed change
                 setNextStep();
