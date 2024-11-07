@@ -1824,7 +1824,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                     if (debugFlag) {
                         log.debug("Car ({}) does not have a destination", car.toString());
                     }
-                    return true;
+                    return true; // done
                 }
                 // now check car's destination
                 return isServiceableDestination(buildReport, car, rLoc, rLocations);
@@ -1862,33 +1862,26 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                     rldest.isDropAllowed() &&
                     rldest.getMaxCarMoves() > 0 &&
                     !isLocationSkipped(rldest.getId()) &&
-                    ((car.getDestination().getTrainDirections() & rldest.getTrainDirection()) != 0 ||
-                            isLocalSwitcher()) &&
                     (!Setup.isCheckCarDestinationEnabled() ||
                             car.getTrack().isDestinationAccepted(car.getDestination()))) {
-                // found a destination, now check destination track
+                // found the car's destination
+                // check track and train direction
+                if ((car.getDestination().getTrainDirections() & rldest.getTrainDirection()) == 0 &&
+                        !isLocalSwitcher()) {
+                    addLine(buildReport, Bundle.getMessage("trainCanNotServiceCarDestination",
+                            getName(), car.toString(), car.getDestinationName(), rldest.getId(),
+                            rldest.getTrainDirectionString()));
+                    continue;
+                }
+                //check destination track
                 if (car.getDestinationTrack() != null) {
                     if (!isServicableTrack(buildReport, car, rldest, car.getDestinationTrack())) {
                         continue;
                     }
-                } else if (rldest.getLocation().isStaging() &&
-                        getStatusCode() == CODE_BUILDING &&
-                        getTerminationTrack() != null &&
-                        getTerminationTrack().getLocation() == rldest.getLocation()) {
-                    if (debugFlag) {
-                        log.debug("Car ({}) destination is staging, check train ({}) termination track ({})",
-                                car.toString(), getName(), getTerminationTrack().getName());
-                    }
-                    String status = car.checkDestination(getTerminationTrack().getLocation(), getTerminationTrack());
-                    if (!status.equals(Track.OKAY)) {
-                        addLine(buildReport,
-                                Bundle.getMessage("trainCanNotDeliverToStaging",
-                                        getName(), car.toString(),
-                                        getTerminationTrack().getLocation().getName(),
-                                        getTerminationTrack().getName(), status));
-                        setServiceStatus(status);
-                        continue;
-                    }
+                    // car doesn't have a destination track
+                    // car going to staging?
+                } else if (!isCarToStaging(buildReport, rldest, car)) {
+                    continue;
                 } else {
                     if (debugFlag) {
                         log.debug("Find track for car ({}) at destination ({})", car.toString(),
@@ -1921,21 +1914,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                     }
                 }
                 // restriction to only carry cars to terminal?
-                // ignore send to terminal if a local move
-                if (isSendCarsToTerminalEnabled() &&
-                        !car.isLocalMove() &&
-                        !car.getSplitLocationName()
-                                .equals(TrainCommon.splitString(getTrainDepartsName())) &&
-                        !car.getSplitDestinationName()
-                                .equals(TrainCommon.splitString(getTrainTerminatesName()))) {
-                    if (debugFlag) {
-                        log.debug("option send cars to terminal is enabled");
-                    }
-                    addLine(buildReport,
-                            Bundle.getMessage("trainCanNotCarryCarOption",
-                                    getName(), car.toString(), car.getLocationName(),
-                                    car.getTrackName(), car.getDestinationName(),
-                                    car.getDestinationTrackName()));
+                if (!isOnlyToTerminal(buildReport, car)) {
                     continue;
                 }
                 // don't allow local move when car is in staging
@@ -1955,68 +1934,28 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                             Bundle.getMessage("trainCanReturnCarToStaging",
                                     getName(), car.toString(), car.getDestinationName(),
                                     car.getDestinationTrackName()));
-                    return true;
+                    return true; // done
                 }
-                // is this a local move?
-                if (!isLocalSwitcher() &&
-                        !isAllowLocalMovesEnabled() &&
-                        !car.isCaboose() &&
-                        !car.hasFred() &&
-                        !car.isPassenger() &&
-                        car.isLocalMove()) {
-                    if (debugFlag) {
-                        log.debug("Local move not allowed");
-                    }
-                    addLine(buildReport, Bundle.getMessage("trainCanNotPerformLocalMove",
-                            getName(), car.toString(), car.getLocationName()));
+                // is this a local move allowed?
+                if (!isLocalMove(buildReport, car)) {
                     continue;
                 }
                 // Can cars travel from origin to terminal?
-                if (!isAllowThroughCarsEnabled() &&
-                        TrainCommon.splitString(getTrainDepartsName())
-                                .equals(rLoc.getSplitName()) &&
-                        TrainCommon.splitString(getTrainTerminatesName())
-                                .equals(rldest.getSplitName()) &&
-                        !TrainCommon.splitString(getTrainDepartsName())
-                                .equals(TrainCommon.splitString(getTrainTerminatesName())) &&
-                        !isLocalSwitcher() &&
-                        !car.isCaboose() &&
-                        !car.hasFred() &&
-                        !car.isPassenger()) {
-                    if (debugFlag) {
-                        log.debug("Through car ({}) not allowed", car.toString());
-                    }
-                    addLine(buildReport, Bundle.getMessage("trainDoesNotCarryOriginTerminal",
-                            getName(), car.getLocationName(), car.getDestinationName()));
+                if (!isTravelOriginToTerminalOkay(buildReport, rLoc, rldest, car)) {
                     continue;
                 }
                 // check to see if moves are available
-                if (getStatusCode() == CODE_BUILDING && rldest.getMaxCarMoves() - rldest.getCarMoves() <= 0) {
-                    setServiceStatus(Bundle.getMessage("trainNoMoves",
-                            getName(), getRoute().getName(), rldest.getId(), rldest.getName()));
-                    if (debugFlag) {
-                        log.debug("No available moves for destination {}", rldest.getName());
-                    }
-                    addLine(buildReport, getServiceStatus());
+                if (!isRouteMovesAvailable(buildReport, rldest)) {
                     continue;
                 }
                 if (debugFlag) {
                     log.debug("Car ({}) can be dropped by train ({}) to ({}, {})", car.toString(), getName(),
                             car.getDestinationName(), car.getDestinationTrackName());
                 }
-                return true;
+                return true; // done
             }
             // check to see if train length is okay
-            if (getStatusCode() == CODE_BUILDING && rldest.getTrainLength() + length > rldest.getMaxTrainLength()) {
-                setServiceStatus(Bundle.getMessage("trainExceedsMaximumLength",
-                        getName(), getRoute().getName(), rldest.getId(), rldest.getMaxTrainLength(),
-                        Setup.getLengthUnit().toLowerCase(), rldest.getName(), car.toString(),
-                        rldest.getTrainLength() + length - rldest.getMaxTrainLength()));
-                if (debugFlag) {
-                    log.debug("Car ({}) exceeds maximum train length {} when departing ({})", car.toString(),
-                            rldest.getMaxTrainLength(), rldest.getName());
-                }
-                addLine(buildReport, getServiceStatus());
+            if (!isTrainLengthOkay(buildReport, car, rldest, length)) {
                 return false;
             }
         }
@@ -2026,6 +1965,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     }
 
     private boolean isServicableTrack(PrintWriter buildReport, Car car, RouteLocation rldest, Track track) {
+        // train and track direction
         if ((track.getTrainDirections() & rldest.getTrainDirection()) == 0 && !isLocalSwitcher()) {
             addLine(buildReport, Bundle.getMessage("buildCanNotDropRsUsingTrain",
                     car.toString(), rldest.getTrainDirectionString(), track.getName()));
@@ -2035,6 +1975,119 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             addLine(buildReport, Bundle.getMessage("buildCanNotDropTrain",
                     car.toString(), getName(), track.getTrackTypeName(), track.getLocation().getName(),
                     track.getName()));
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isCarToStaging(PrintWriter buildReport, RouteLocation rldest, Car car) {
+        if (rldest.getLocation().isStaging() &&
+                getStatusCode() == CODE_BUILDING &&
+                getTerminationTrack() != null &&
+                getTerminationTrack().getLocation() == rldest.getLocation()) {
+            if (debugFlag) {
+                log.debug("Car ({}) destination is staging, check train ({}) termination track ({})",
+                        car.toString(), getName(), getTerminationTrack().getName());
+            }
+            String status = car.checkDestination(getTerminationTrack().getLocation(), getTerminationTrack());
+            if (!status.equals(Track.OKAY)) {
+                addLine(buildReport,
+                        Bundle.getMessage("trainCanNotDeliverToStaging",
+                                getName(), car.toString(),
+                                getTerminationTrack().getLocation().getName(),
+                                getTerminationTrack().getName(), status));
+                setServiceStatus(status);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean isOnlyToTerminal(PrintWriter buildReport, Car car) {
+        // ignore send to terminal if a local move
+        if (isSendCarsToTerminalEnabled() &&
+                !car.isLocalMove() &&
+                !car.getSplitLocationName()
+                        .equals(TrainCommon.splitString(getTrainDepartsName())) &&
+                !car.getSplitDestinationName()
+                        .equals(TrainCommon.splitString(getTrainTerminatesName()))) {
+            if (debugFlag) {
+                log.debug("option send cars to terminal is enabled");
+            }
+            addLine(buildReport,
+                    Bundle.getMessage("trainCanNotCarryCarOption",
+                            getName(), car.toString(), car.getLocationName(),
+                            car.getTrackName(), car.getDestinationName(),
+                            car.getDestinationTrackName()));
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isLocalMove(PrintWriter buildReport, Car car) {
+        if (!isLocalSwitcher() &&
+                !isAllowLocalMovesEnabled() &&
+                !car.isCaboose() &&
+                !car.hasFred() &&
+                !car.isPassenger() &&
+                car.isLocalMove()) {
+            if (debugFlag) {
+                log.debug("Local move not allowed");
+            }
+            addLine(buildReport, Bundle.getMessage("trainCanNotPerformLocalMove",
+                    getName(), car.toString(), car.getLocationName()));
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isTravelOriginToTerminalOkay(PrintWriter buildReport, RouteLocation rLoc, RouteLocation rldest,
+            Car car) {
+        if (!isAllowThroughCarsEnabled() &&
+                TrainCommon.splitString(getTrainDepartsName())
+                        .equals(rLoc.getSplitName()) &&
+                TrainCommon.splitString(getTrainTerminatesName())
+                        .equals(rldest.getSplitName()) &&
+                !TrainCommon.splitString(getTrainDepartsName())
+                        .equals(TrainCommon.splitString(getTrainTerminatesName())) &&
+                !isLocalSwitcher() &&
+                !car.isCaboose() &&
+                !car.hasFred() &&
+                !car.isPassenger()) {
+            if (debugFlag) {
+                log.debug("Through car ({}) not allowed", car.toString());
+            }
+            addLine(buildReport, Bundle.getMessage("trainDoesNotCarryOriginTerminal",
+                    getName(), car.getLocationName(), car.getDestinationName()));
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isRouteMovesAvailable(PrintWriter buildReport, RouteLocation rldest) {
+        if (getStatusCode() == CODE_BUILDING && rldest.getMaxCarMoves() - rldest.getCarMoves() <= 0) {
+            setServiceStatus(Bundle.getMessage("trainNoMoves",
+                    getName(), getRoute().getName(), rldest.getId(), rldest.getName()));
+            if (debugFlag) {
+                log.debug("No available moves for destination {}", rldest.getName());
+            }
+            addLine(buildReport, getServiceStatus());
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isTrainLengthOkay(PrintWriter buildReport, Car car, RouteLocation rldest, int length) {
+        if (getStatusCode() == CODE_BUILDING && rldest.getTrainLength() + length > rldest.getMaxTrainLength()) {
+            setServiceStatus(Bundle.getMessage("trainExceedsMaximumLength",
+                    getName(), getRoute().getName(), rldest.getId(), rldest.getMaxTrainLength(),
+                    Setup.getLengthUnit().toLowerCase(), rldest.getName(), car.toString(),
+                    rldest.getTrainLength() + length - rldest.getMaxTrainLength()));
+            if (debugFlag) {
+                log.debug("Car ({}) exceeds maximum train length {} when departing ({})", car.toString(),
+                        rldest.getMaxTrainLength(), rldest.getName());
+            }
+            addLine(buildReport, getServiceStatus());
             return false;
         }
         return true;
