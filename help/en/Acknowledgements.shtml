@@ -67,6 +67,9 @@
 
         <li>Kevin Appleby, who provided a script to do serial transfers from the Light table</li>
 
+        <li>Daniel Applebaum, <!-- danapple -->
+        who provided an update to better handle device symlinks.</li>
+
         <li>Chris Atkins helped improve the <a href=
         "https://www.jmri.org/help/en/html/tools/scripting/Python.shtml#newJython">instructions for using
         a separate jython install</a>
