@@ -100,7 +100,8 @@ public class AutoActiveTrain implements ThrottleListener {
     // persistent instance variables (saved with train info)
     private int _rampRate = RAMP_NONE; // default Ramp Rate
     private float _speedFactor = 1.0f; // default speed factor
-    private float _maxSpeed = 0.6f;    // default maximum train speed
+    private float _maxSpeed = 1.0f;    // default maximum train speed
+    private float _minReliableOperatingSpeed = 0.0f;
     //private TrainDetection _trainDetection = TrainDetection.TRAINDETECTION_NONE; // true if all train cars show occupancy
     private boolean _runInReverse = false;    // true if the locomotive should run through Transit in reverse
     private boolean _soundDecoder = false;    // true if locomotive has a sound decoder
@@ -188,6 +189,22 @@ public class AutoActiveTrain implements ThrottleListener {
         _maxSpeed = speed;
     }
 
+    /**
+     * gets the lowest speed as a percentage of throttle that the loco reliably operates.
+     * @return percentage throttle
+     */
+    public float getMinReliableOperatingSpeed() {
+        return _minReliableOperatingSpeed;
+    }
+
+    /**
+     * Sets the lowest speed as a percentage of throttle that the loco reliably operates.
+     * @param speed percentage of throttle.
+     */
+    public void setMinReliableOperatingSpeed(float speed) {
+        _minReliableOperatingSpeed = speed;
+    }
+
 /**
  * @deprecated Use {@code ActiveTrain.setTrainDetection(TrainDetection value } insteadUse 
  * @param set True if entire train is detectable
@@ -195,7 +212,7 @@ public class AutoActiveTrain implements ThrottleListener {
     @Deprecated (since="5.7.6",forRemoval=true)
     public void setResistanceWheels(boolean set) {
         if (set) {
-           _activeTrain.setTrainDetection(TrainDetection.TRAINDETECTION_WHOLETRAIN);
+            _activeTrain.setTrainDetection(TrainDetection.TRAINDETECTION_WHOLETRAIN);
         } else {
             _activeTrain.setTrainDetection(TrainDetection.TRAINDETECTION_HEADONLY);
         }
@@ -371,6 +388,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 setEngineDirection();
                 _autoEngineer.setRamping(_currentRampRate, dispatcher.getFullRampTime(),
                         dispatcher.getMinThrottleInterval(), _currentRampRate);
+                _autoEngineer.setSpeedLimits(_minReliableOperatingSpeed, _maxSpeed, _speedFactor);
             }
             if (_resumingAutomatic) {
                 _resumingAutomatic = false;
@@ -1552,7 +1570,7 @@ public class AutoActiveTrain implements ThrottleListener {
         if (useSpeedProfile) {
             float throttleSetting = _activeTrain.getRosterEntry().getSpeedProfile()
                     .getThrottleSettingFromSignalMapSpeed(speed, getForward());
-            return applyMaxThrottleAndFactor(throttleSetting);
+            return throttleSetting;
         }
         if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALMAST) {
             float mls;
@@ -1563,27 +1581,12 @@ public class AutoActiveTrain implements ThrottleListener {
                 mls = InstanceManager.getDefault(DispatcherFrame.class).getMaximumLineSpeed();
             }
             float throttleSetting = (speed / mls);
-            return applyMaxThrottleAndFactor(throttleSetting);
+            return throttleSetting;
         } else {
-            return applyMaxThrottleAndFactor(speed/100.0f);
+            return speed/100.0f;
         }
     }
 
-    /**
-     *
-     * @param throttleSetting the throttle setting that would normally be set
-     * @return the adjusted throttle setting after applying Max Throttle and Percentage throttle settings
-     */
-    private synchronized float applyMaxThrottleAndFactor(float throttleSetting) {
-        if (throttleSetting > 0.0f) {
-            if (throttleSetting > _maxSpeed) {
-                return _maxSpeed * _speedFactor;
-            }
-            return (throttleSetting * _speedFactor); //adjust for train's Speed Factor
-        } else {
-            return throttleSetting;
-        }
-    }
 
     /**
      * sets the throttle based on an index number into _speedRatio array
@@ -1607,7 +1610,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 // we are going to ramp up  / down using section length and speed profile
                 _autoEngineer.setTargetSpeed(_currentAllocatedSection.getLengthRemaining(_currentBlock) * _stopBySpeedProfileAdjust, speedState);
             } else {
-                setTargetSpeed(applyMaxThrottleAndFactor(_speedRatio[speedState]));
+                setTargetSpeed(_speedRatio[speedState]);
             }
         } else if (stopBySpeedProfile) {
             // we are going to stop by profile
@@ -1629,7 +1632,7 @@ public class AutoActiveTrain implements ThrottleListener {
                         speedState);
                 if (throttleSetting > 0.009 && _currentRampRate != RAMP_SPEEDPROFILE && _useSpeedProfile) {
                     cancelStopInCurrentSection();
-                    setTargetSpeed(applyMaxThrottleAndFactor(throttleSetting)); // apply speed factor and max
+                    setTargetSpeed(throttleSetting); // apply speed factor and max
                 } else if (throttleSetting > 0.009) {
                     cancelStopInCurrentSection();
                     _autoEngineer.setTargetSpeed(_currentAllocatedSection.getLengthRemaining(_currentBlock)  * _stopBySpeedProfileAdjust , throttleSetting);
@@ -1670,7 +1673,7 @@ public class AutoActiveTrain implements ThrottleListener {
         float decSpeed = (speed / mls);
         if (decSpeed > 0.0f) {
             cancelStopInCurrentSection();
-            setTargetSpeed(applyMaxThrottleAndFactor(decSpeed));
+            setTargetSpeed(decSpeed);
         } else {
             setTargetSpeed(0.0f);
             _autoEngineer.setHalt(true);
@@ -1929,6 +1932,9 @@ public class AutoActiveTrain implements ThrottleListener {
         private float targetSpeed;
         private RosterEntry rosterEntry;
         private int throttleInterval;
+        private float minReliableOperatingSpeed;
+        private float maxSpeed;
+        private float speedFactor;
 
         public void setRamping(int ramping, int fullRampTime, int minThrottleInterval, int rampRate) {
             this.ramping = ramping;
@@ -1948,11 +1954,11 @@ public class AutoActiveTrain implements ThrottleListener {
         }
 
         public void setTargetSpeed(float speed) {
-            log.debug("Set TargetSpeed[{}]",speed);
             stopAllTimers();
-            targetSpeed = speed;
+            targetSpeed = applyMaxThrottleAndFactor(speed);
+            log.debug("setTargetSpeed: Set Speed[{}] adjusted to TargetSpeed[{}] ",speed,targetSpeed);
             if (ramping == RAMP_NONE || ramping == RAMP_SPEEDPROFILE ) {
-                throttle.setSpeedSetting(speed);
+                throttle.setSpeedSetting(targetSpeed);
             } else {
                 rampToTarget();
             }
@@ -1961,6 +1967,25 @@ public class AutoActiveTrain implements ThrottleListener {
         public float getTargetSpeed(){
             return(targetSpeed);
         }
+
+        /**
+        *
+        * @param throttleSetting the throttle setting that would normally be set
+        * @return the adjusted throttle setting after applying Max Throttle and Percentage throttle settings
+        */
+       private float applyMaxThrottleAndFactor(float throttleSetting) {
+           if (throttleSetting > 0.0f) {
+               if ((throttleSetting * speedFactor) > maxSpeed) {
+                   return maxSpeed;
+               }
+               if ((throttleSetting * speedFactor) < minReliableOperatingSpeed) {
+                   return minReliableOperatingSpeed;
+               }
+               return (throttleSetting * speedFactor); //adjust for train's Speed Factor
+           } else {
+               return throttleSetting;
+           }
+       }
 
         /**
          * Flag from user's control.
@@ -1973,11 +1998,26 @@ public class AutoActiveTrain implements ThrottleListener {
             }
         }
 
+        /**
+         * Set the limits and adjustment factore for train speed.
+         * Active train will calculate the required setting and it will be adjusted if not 0.0f
+         * required setting * speed Factor  then test for less than max and greater than min.
+         * @param minReliableOperatingSpeed lowest throttle % train will reliably move.
+         * @param maxSpeed max throttle % for train.
+         * @param speedFactor multiplier
+         */
+        public void setSpeedLimits(float minReliableOperatingSpeed, float maxSpeed, float speedFactor) {
+            this.minReliableOperatingSpeed = minReliableOperatingSpeed;
+            this.maxSpeed = maxSpeed;
+            this.speedFactor = speedFactor;
+        }
+
         public void setTargetSpeed(float distance, float speed) {
             log.debug("Set Target Speed[{}] with distance{{}] from speed[{}]",speed,distance,throttle.getSpeedSetting());
             stopAllTimers();
             if (rosterEntry != null) {
                 rosterEntry.getSpeedProfile().setExtraInitialDelay(1500f);
+                rosterEntry.getSpeedProfile().setMinMaxLimits(minReliableOperatingSpeed, maxSpeed);
                 rosterEntry.getSpeedProfile().changeLocoSpeed(_throttle, distance, speed);
                 speedProfileStoppingIsRunning = true;
                 targetSpeed = speed;
@@ -2009,30 +2049,42 @@ public class AutoActiveTrain implements ThrottleListener {
         private javax.swing.Timer rampingTimer;
 
         private void rampToTarget() {
+            // target already adjusted.
             log.debug("RampToTarget[{}]current[{}]", getTargetSpeed(), throttle.getSpeedSetting());
             stepQueue = new LinkedList<>();
             if (throttle.getSpeedSetting() <= getTargetSpeed()) {
                 // Up
                 float newSpeed = throttle.getSpeedSetting();
+                if (newSpeed < minReliableOperatingSpeed) {
+                    stepQueue.add(new SpeedSetting(minReliableOperatingSpeed, throttleInterval));
+                    newSpeed = minReliableOperatingSpeed;
+                }
                 while (newSpeed < getTargetSpeed()) {
                     newSpeed += speedIncrement;
                     if (newSpeed > getTargetSpeed()) {
                         newSpeed = getTargetSpeed();
                     }
-                    log.trace("NewSpeedUp[{}]",newSpeed);
+                    log.trace("NewSpeedUp[{}]", newSpeed);
                     stepQueue.add(new SpeedSetting(newSpeed, throttleInterval));
                 }
             } else {
                 // Down
-                    float newSpeed = throttle.getSpeedSetting();
-                    while (newSpeed > getTargetSpeed()) {
-                        newSpeed -= speedIncrement;
-                        if (newSpeed < getTargetSpeed()) {
-                            newSpeed = getTargetSpeed();
-                        }
-                        log.trace("NewSpeedDown[{}]",newSpeed);
-                        stepQueue.add(new SpeedSetting(newSpeed, throttleInterval));
+                boolean andStop = false;
+                if (getTargetSpeed() <= 0.0f) {
+                    andStop = true;
+                }
+                float newSpeed = throttle.getSpeedSetting();
+                while (newSpeed > getTargetSpeed()) {
+                    newSpeed -= speedIncrement;
+                    if (newSpeed < getTargetSpeed()) {
+                        newSpeed = getTargetSpeed();
                     }
+                    log.trace("NewSpeedDown[{}]", newSpeed);
+                    stepQueue.add(new SpeedSetting(newSpeed, throttleInterval));
+                }
+                if (andStop) {
+                    stepQueue.add(new SpeedSetting(0.0f, throttleInterval));
+                }
             }
             if (rampingTimer == null) { //If this is the first time round then kick off the speed change
                 setNextStep();
@@ -2097,7 +2149,7 @@ public class AutoActiveTrain implements ThrottleListener {
         public synchronized void setSpeedImmediate(float speed) {
             log.trace("{}: setting speed directly to {}%", _activeTrain.getTrainName(), (int) (speed * 100));
             stopAllTimers();
-            targetSpeed = speed;
+            targetSpeed = applyMaxThrottleAndFactor(speed);
             throttle.setSpeedSetting(targetSpeed);
         }
 
