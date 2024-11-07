@@ -1783,18 +1783,34 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         // now find the car in the train's route
         List<RouteLocation> rLocations = route.getLocationsBySequenceList();
         for (RouteLocation rLoc : rLocations) {
-            if (rLoc.getName().equals(car.getLocationName()) &&
-                    rLoc.isPickUpAllowed() &&
-                    rLoc.getMaxCarMoves() > 0 &&
-                    !isLocationSkipped(rLoc.getId()) &&
-                    ((car.getLocation().getTrainDirections() & rLoc.getTrainDirection()) != 0 || isLocalSwitcher())) {
-
-                if (((car.getTrack().getTrainDirections() & rLoc.getTrainDirection()) == 0 && !isLocalSwitcher()) ||
-                        !car.getTrack().isPickupTrainAccepted(this)) {
+            if (rLoc.getName().equals(car.getLocationName())) {
+                if (!rLoc.isPickUpAllowed() || rLoc.getMaxCarMoves() <= 0 || isLocationSkipped(rLoc.getId())) {
+                    addLine(buildReport, Bundle.getMessage("trainCanNotServiceCarFrom",
+                            getName(), car.toString(), car.getLocationName(), car.getTrackName(), rLoc.getId()));
+                    continue;
+                }
+                // check train and car's location direction
+                if ((car.getLocation().getTrainDirections() & rLoc.getTrainDirection()) == 0 && !isLocalSwitcher()) {
                     addLine(buildReport,
-                            Bundle.getMessage("trainCanNotServiceCarFrom",
+                            Bundle.getMessage("trainCanNotServiceCarLocation",
                                     getName(), car.toString(), car.getLocationName(), car.getTrackName(),
-                                    rLoc.getId()));
+                                    rLoc.getId(), car.getLocationName(), rLoc.getTrainDirectionString()));
+                    continue;
+                }
+                // check train and car's track direction
+                if ((car.getTrack().getTrainDirections() & rLoc.getTrainDirection()) == 0 && !isLocalSwitcher()) {
+                    addLine(buildReport,
+                            Bundle.getMessage("trainCanNotServiceCarTrack",
+                                    getName(), car.toString(), car.getLocationName(), car.getTrackName(),
+                                    rLoc.getId(), car.getTrackName(), rLoc.getTrainDirectionString()));
+                    continue;
+                }
+                // can train pull this car?
+                if (!car.getTrack().isPickupTrainAccepted(this)) {
+                    addLine(buildReport,
+                            Bundle.getMessage("trainCanNotServiceCarPickup",
+                                    getName(), car.toString(), car.getLocationName(), car.getTrackName(),
+                                    rLoc.getId(), car.getTrackName(), getName()));
                     continue;
                 }
                 if (debugFlag) {
@@ -1812,9 +1828,6 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 }
                 // now check car's destination
                 return isServiceableDestination(buildReport, car, rLoc, rLocations);
-            } else if (rLoc.getName().equals(car.getLocationName())) {
-                addLine(buildReport, Bundle.getMessage("trainCanNotServiceCarFrom",
-                        getName(), car.toString(), car.getLocationName(), car.getTrackName(), rLoc.getId()));
             }
         }
         if (debugFlag) {
