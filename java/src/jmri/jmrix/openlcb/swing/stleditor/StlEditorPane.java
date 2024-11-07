@@ -26,6 +26,9 @@ import jmri.util.JmriJFrame;
 import jmri.util.swing.JComboBoxUtil;
 import jmri.util.swing.JmriJFileChooser;
 import jmri.util.swing.JmriJOptionPane;
+import jmri.util.swing.JmriMouseAdapter;
+import jmri.util.swing.JmriMouseEvent;
+import jmri.util.swing.JmriMouseListener;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import static org.openlcb.MimicNodeStore.NodeMemo.UPDATE_PROP_SIMPLE_NODE_IDENT;
@@ -126,6 +129,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private JmriJFrame _previewFrame;   // Window for displaying the generated STL content.
     private JTextArea _stlTextArea;
 
+    private JScrollPane _logicScrollPane;
     private JScrollPane _inputPanel;
     private JScrollPane _outputPanel;
     private JScrollPane _receiverPanel;
@@ -330,7 +334,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         // Create scroll pane
         var model = new LogicModel();
         _logicTable = new JTable(model);
-        var logicScrollPane = new JScrollPane(_logicTable);
+        _logicScrollPane = new JScrollPane(_logicTable);
 
         // resize columns
         for (int i = 0; i < _logicTable.getColumnCount(); i++) {
@@ -349,7 +353,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         selectionModel.addListSelectionListener(this::handleLogicRowSelection);
 
-        var logicPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, buildGroupPanel(), logicScrollPane);
+        var logicPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, buildGroupPanel(), _logicScrollPane);
         logicPanel.setDividerSize(10);
         logicPanel.setResizeWeight(.10);
         logicPanel.setDividerLocation(150);
@@ -371,6 +375,12 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         _inputTable.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
 
+        var selectionModel = _inputTable.getSelectionModel();
+        selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        var copyRowListener = new CopyRowListener();
+        _inputTable.addMouseListener(JmriMouseListener.adapt(copyRowListener));
+
         return scrollPane;
     }
 
@@ -387,6 +397,12 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         _outputTable.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+
+        var selectionModel = _outputTable.getSelectionModel();
+        selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        var copyRowListener = new CopyRowListener();
+        _outputTable.addMouseListener(JmriMouseListener.adapt(copyRowListener));
 
         return scrollPane;
     }
@@ -405,6 +421,12 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         _receiverTable.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
 
+        var selectionModel = _receiverTable.getSelectionModel();
+        selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        var copyRowListener = new CopyRowListener();
+        _receiverTable.addMouseListener(JmriMouseListener.adapt(copyRowListener));
+
         return scrollPane;
     }
 
@@ -422,6 +444,12 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         _transmitterTable.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
 
+        var selectionModel = _transmitterTable.getSelectionModel();
+        selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        var copyRowListener = new CopyRowListener();
+        _transmitterTable.addMouseListener(JmriMouseListener.adapt(copyRowListener));
+
         return scrollPane;
     }
 
@@ -430,6 +458,49 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             _editButtons.setVisible(true);
         } else {
             _editButtons.setVisible(false);
+        }
+    }
+
+    private class CopyRowListener extends JmriMouseAdapter {
+        @Override
+        public void mouseClicked(JmriMouseEvent e) {
+            if (_logicRow < 0) {
+                return;
+            }
+
+            if (!e.isShiftDown()) {
+                return;
+            }
+
+            var currentTab = -1;
+            if (_detailTabs.getTabCount() == 5) {
+                currentTab = _detailTabs.getSelectedIndex();
+            } else {
+                currentTab = _tableTabs.getSelectedIndex() + 1;
+            }
+
+            var sourceName = "";
+            switch (currentTab) {
+                case 1:
+                    sourceName = _inputList.get(_inputTable.getSelectedRow()).getName();
+                    break;
+                case 2:
+                    sourceName = _outputList.get(_outputTable.getSelectedRow()).getName();
+                    break;
+                case 3:
+                    sourceName = _receiverList.get(_receiverTable.getSelectedRow()).getName();
+                    break;
+                case 4:
+                    sourceName = _transmitterList.get(_transmitterTable.getSelectedRow()).getName();
+                    break;
+                default:
+                    log.debug("CopyRowListener: Invalid tab number: {}", currentTab);
+                    return;
+            }
+
+            _groupList.get(_groupRow)._logicList.get(_logicRow).setName(sourceName);
+            _logicTable.revalidate();
+            _logicScrollPane.repaint();
         }
     }
 

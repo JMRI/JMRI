@@ -142,7 +142,9 @@
                     STL logic.</li>
                 <li>STL Editor: Implement a view option to provide a preview of the generated
                     STL logic.</li>
-                <li>Improved how UTF-8 is handled in CDI display.
+                <li>STL Editor: Implement shift-click to copy a name from a table row to the current
+                    logic row.</li>
+                <li>Improved how UTF-8 is handled in CDI display.</li>
             </ul>
 
         <h4>Powerline</h4>
