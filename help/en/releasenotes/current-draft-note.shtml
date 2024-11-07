@@ -81,7 +81,8 @@
 
         <h4>Lenz XPressNet</h4>
             <ul>
-                <li></li>
+                <li>Throttles are now fully released by JMRI when not required, which resolves an issue with
+                Roster Last Operated and Operating Duration fields not being updated.</li>
             </ul>
 
         <h4>LocoNet</h4>
@@ -140,7 +141,8 @@
                     window. This makes it possible to see the table content while working on the
                     STL logic.</li>
                 <li>STL Editor: Implement a view option to provide a preview of the generated
-                STL logic.</li>
+                    STL logic.</li>
+                <li>Improved how UTF-8 is handled in CDI display.
             </ul>
 
         <h4>Powerline</h4>
@@ -325,7 +327,7 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li></li>
+                <li>Athearn ECO & TSU2 add new models</li>
             </ul>
 
         <h4>Tam Valley Depot</h4>

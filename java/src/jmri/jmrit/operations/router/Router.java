@@ -524,7 +524,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             }
             if (_addtoReportVeryDetailed) {
                 addLine(_buildReport, SEVEN, Bundle.getMessage("RouterTrainCanTransport",
-                        secondTrain.getName(), car.toString(), Track.getTrackTypeName(trackType),
+                        secondTrain.getName(), car.toString(), testCar.getTrack().getTrackTypeName(),
                         testCar.getLocationName(), testCar.getTrackName(), testCar.getDestinationName(),
                         testCar.getDestinationTrackName()));
             }
@@ -600,7 +600,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 if (_addtoReportVeryDetailed) {
                     addLine(_buildReport, SEVEN,
                             Bundle.getMessage("RouterTrainCanTransport", firstTrain.getName(), car.toString(),
-                                    Track.getTrackTypeName(trackType),
+                                    testCar.getTrack().getTrackTypeName(),
                                     testCar.getLocationName(), testCar.getTrackName(), testCar.getDestinationName(),
                                     testCar.getDestinationTrackName()));
                 }
