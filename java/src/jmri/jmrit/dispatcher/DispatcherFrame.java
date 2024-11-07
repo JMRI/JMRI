@@ -151,6 +151,14 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             }
         }
     }
+    
+    @Override
+    public void dispose( ) {
+        super.dispose();
+        if (autoAllocate != null) {
+            autoAllocate.setAbort();
+        }
+    }
 
     /**
      * Constants for the override type
