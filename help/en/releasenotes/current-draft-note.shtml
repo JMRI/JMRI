@@ -506,7 +506,18 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li></li>
+            <li>Linux & Mac: When finding available serial ports, JMRI now looks for symbolic
+              links in /dev even when the purejavacomm.portnamepattern system property is not specified.
+              Such symlinks can be used to provide a stable filename for a USB serial port.  For instance:
+              <pre>
+              $ ls -l /dev/serial/by-id/
+              total 0
+              lrwxrwxrwx 1 root root 13 Nov  7 10:32 usb-RR-CirKits_LocoBuffer-USB_FTV8GN2E-if00-port0 -> ../../ttyUSB1
+              $ sudo ln -s /dev/serial/by-id/usb-RR-CirKits_LocoBuffer-USB_FTV8GN2E-if00-port0 /dev/LocoBuffer
+              </pre>
+              Then the Preferences panel will present 'LocoBuffer' as an available serial port, and it will remain
+              available even if the port is later mapped to ttyUSB2, etc.
+            </li>
         </ul>
 
     <h3>Resources</h3>
