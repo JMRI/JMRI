@@ -93,6 +93,11 @@ etc.
       definitions, Mn.n memory variables, etc. The <strong>Comment</strong> column is for comments.
       Note:  Comments take up a lot of room.</p>
 
+      <p><span class="since">since 5.9.6</span>A friendly name from the IQYZ tables can be copied
+      using a <strong>shift-click</strong> on a table row.  Hold the shift key and then click on a
+      table row.  The name field in the logic table will be added/replaced.  Make sure the correct
+      logic row has been selected before doing the copy from a table row.</p>
+
       <div style="margin-left: 2em">
         <a href="images/editor_tab.png"><img src=
         "images/editor_tab.png" alt="stl editor tab"></a>
