@@ -327,7 +327,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                         statusLabel.setText(Bundle.getMessage("StatSettingSpeed", "2 (vStart)"));
                         logger.info("Setting CV 2 (vStart) to {} KPH ({} MPH)", String.valueOf(targetStartSpeedKPH), String.valueOf(Speed.kphToMph(targetStartSpeedKPH)));
                         setThrottle(true, 1);
-                        setSpeedMatchStateTimerDuration(8000);
+                        setSpeedMatchStateTimerDuration(15000);
                         stepDuration = 1;
                     } else {
                         setSpeedMatchError(targetStartSpeedKPH);
@@ -356,6 +356,8 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
 
                             lastVStart = vStart;
                             writeVStart(vStart);
+                            
+                            setSpeedMatchStateTimerDuration(8000);
                         }
                     }
                 }

@@ -18,11 +18,11 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
 
     //<editor-fold defaultstate="collapsed" desc="Constants">
     //PID Controller Values
-    protected final float Kp = 0.275f;
+    protected final float Kp = 0.75f;
     protected final float Ti = 240;
     protected final float Td = 5;
     protected final float Ki = Kp / Ti;
-    protected final float Kd = Kp * Td;
+    //protected final float Kd = Kp * Td;
 
     //Other Constants
     protected final int INITIAL_MOMENTUM = 0;
@@ -445,7 +445,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
     //<editor-fold defaultstate="collapsed" desc="Instance Variables">
     protected float speedMatchIntegral = 0;
     protected float speedMatchDerivative = 0;
-    protected float lastSpeedMatchError = 0;
+    //protected float lastSpeedMatchError = 0;
     protected float speedMatchError = 0;
 
     protected boolean trimReverseSpeed;
@@ -644,6 +644,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
      * @param speedTarget - target speed in KPH
      */
     protected void setSpeedMatchError(float speedTarget) {
+        //lastSpeedMatchError = speedMatchError;
         speedMatchError = speedTarget - currentSpeedKPH;
     }
 
@@ -657,9 +658,9 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
      */
     protected int getNextSpeedMatchValue(int lastValue, int max, int min) {
         speedMatchIntegral += speedMatchError;
-        speedMatchDerivative = speedMatchError - lastSpeedMatchError;
+        //speedMatchDerivative = speedMatchError - lastSpeedMatchError;
 
-        int value = (lastValue + Math.round((Kp * speedMatchError) + (Ki * speedMatchIntegral) + (Kd * speedMatchDerivative)));
+        int value = (lastValue + Math.round((Kp * speedMatchError) + (Ki * speedMatchIntegral))); //+ (Kd * speedMatchDerivative)));
 
         if (value > max) {
             value = max;
@@ -676,7 +677,7 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
     protected void resetSpeedMatchError() {
         speedMatchIntegral = 0;
         speedMatchDerivative = 0;
-        lastSpeedMatchError = 0;
+        //lastSpeedMatchError = 0;
         speedMatchError = 0;
     }
     //</editor-fold>

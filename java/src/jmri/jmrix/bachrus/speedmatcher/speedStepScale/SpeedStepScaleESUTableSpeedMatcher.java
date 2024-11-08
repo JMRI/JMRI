@@ -353,7 +353,7 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
                         statusLabel.setText(Bundle.getMessage("StatSettingSpeed", SpeedMatcherCV.VSTART.getName()));
                         logger.info("Setting CV {} to {} KPH ({} MPH)", SpeedMatcherCV.VSTART.getName(), String.valueOf(targetVStartSpeedKPH), String.valueOf(Speed.kphToMph(targetVStartSpeedKPH)));
                         setThrottle(true, 1);
-                        setSpeedMatchStateTimerDuration(8000);
+                        setSpeedMatchStateTimerDuration(15000);
                         stepDuration = 1;
                     } else {
                         setSpeedMatchError(targetVStartSpeedKPH);
@@ -372,6 +372,8 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
 
                             lastVStart = vStart;
                             writeVStart(vStart);
+                        
+                            setSpeedMatchStateTimerDuration(8000);
                         }
                     }
                 }
