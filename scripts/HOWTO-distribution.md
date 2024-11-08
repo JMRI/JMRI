@@ -94,7 +94,7 @@ While doing the release, it might be useful to have [GitHub Desktop](https://git
 
 - Update this note by executing the following line in your JMRI repository directory while you _don't_ have this file open in an editor. There are more details in the update-HOWTO.sh comments; arguments when you run it should be last release, this release you're making, the next release; you may need to update what's below:
 ```
-  ./scripts/update-HOWTO.sh 5.9.6 5.9.7 5.9.7
+  ./scripts/update-HOWTO.sh 5.9.6 5.9.7 5.9.8
 ```
 (if you have this file open in an editor, refresh the contents from disk after running the script)
 then manually update the end of that line above in this document to be this version being made today, next version to be made later, one after that; i.e. when starting to do *.4, the arguments _after_ you edit it here are *.4 *.5 *.6
@@ -316,7 +316,7 @@ This section describes in detail the process for creating the release note for a
 ```
         open 'https://github.com/JMRI/JMRI/pulls?utf8=✓&q=is%3Apr+is%3Amerged+no%3Amilestone++merged%3A%3E2022-05-24+'
 ```
-For each, if it doesn't have the right milestone set, add the current milestone.’
+For each, if it doesn't have the right milestone set, add the current milestone which you’ll find under the ‘closed’ tab.
 
 ====================================================================================
 ## Update Development Release Number on Master Branch to This Release Number
@@ -325,12 +325,12 @@ For each, if it doesn't have the right milestone set, add the current milestone.
 ```
         git checkout master
         git pull
-        sed -i.bak s/5.9.4-SNAPSHOT/5.9.6-SNAPSHOT/g pom.xml
+        sed -i.bak s/5.9.5-SNAPSHOT/5.9.6-SNAPSHOT/g pom.xml
 ```
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field now, so check the numbers in the following line)
 ```
-        sed -i.bak s/release.build=4/release.build=5/g release.properties
+        sed -i.bak s/release.build=5/release.build=6/g release.properties
 ```
  - Check that both those edits left 5.9.6 defined in the two files
  
@@ -338,7 +338,7 @@ For each, if it doesn't have the right milestone set, add the current milestone.
         git commit -m"5.9.6 until next release" release.properties pom.xml
 ```
 
- - Recreate the Software BOM. For instructions on how to install `spdx-sbom-generator` see the [project page](https://github.com/opensbom-generator/spdx-sbom-generator). Note that a large number of changes from the previous version of the `lib/bom-Java-Maven.spdx` file are expected:  The bill of materials is processed in parallel, and the output order depends on which Maven repository respond quickest.
+ - Recreate the Software BOM. For instructions on how to install `spdx-sbom-generator` see the [project page](https://github.com/opensbom-generator/spdx-sbom-generator). Note that a large number of changes from the previous version of the `lib/bom-Java-Maven.spdx` file are expected:  The bill of materials is processed in parallel, and the output order depends on which Maven repository responded quickest.
 ```
         spdx-sbom-generator -o lib
         git commit -m"SBOM update for 5.9.6" lib/bom-Java-Maven.spdx
