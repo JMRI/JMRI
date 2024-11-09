@@ -110,7 +110,7 @@ public class ExportCars extends XmlFile {
                     Bundle.getMessage("Track"),
                     Bundle.getMessage("SchId"),
                     Bundle.getMessage("RFID_Tag"),
-                    Bundle.getMessage("RoutePath"));
+                    Bundle.getMessage("Route"));
 
             // store car attributes
             for (Car car : _carList) {
