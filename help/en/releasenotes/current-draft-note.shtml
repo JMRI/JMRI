@@ -81,16 +81,12 @@
 
         <h4>Lenz XPressNet</h4>
             <ul>
-                <li>Throttles are now fully released by JMRI when not required, which resolves an issue with
-                Roster Last Operated and Operating Duration fields not being updated.</li>
+                <li></li>
             </ul>
 
         <h4>LocoNet</h4>
             <ul>
-                <li>LocoNet Monitor gives better information when some
-                    responses were reporting "unrecognized message" for
-                    CV reads of LocoNet-connected Digitrax 7th-generation
-                    Accessory devices.</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -130,19 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Fixed a bug were immediate-mode sliders would sometimes
-                    not automatically write their contents when changed,
-                    leaving people to have to push the "Write" button.</li>
-                <li>OpenLCB and LCC connections now support "DCC Signal Decoder"
-                    Signal Heads.</li>
-                <li>The OpenLCB and LCC implementations have started to provide a CommandStation
-                    object with limited capability.</li>
-                <li>STL Editor: Provide an alternate view where the IQYZ tables are in a separate
-                    window. This makes it possible to see the table content while working on the
-                    STL logic.</li>
-                <li>STL Editor: Implement a view option to provide a preview of the generated
-                    STL logic.</li>
-                <li>Improved how UTF-8 is handled in CDI display.
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -232,7 +216,7 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li>Added new DH187, DH127 and DN167n18 models</li>
+                <li></li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -327,7 +311,7 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li>Athearn ECO & TSU2 add new models</li>
+                <li></li>
             </ul>
 
         <h4>Tam Valley Depot</h4>
@@ -342,9 +326,7 @@
 
         <h4>TCS</h4>
             <ul>
-                <li>The decoder definitions for the TCS WOW Steam version 4.6
-                    <a href="https://groups.io/g/TCS-Users/message/14774">have been improved</a>.
-                    </li>
+                <li></li>
             </ul>
 
         <h4>Team Digital</h4>
@@ -395,11 +377,7 @@
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li>The "Scale" operation on icons has been
-                changed to a relative scaling from the current size.
-                For example, if you've scaled an icon by 150% already,
-                and request a rescaling by 200%, the icon will end up
-                at 300%.  Previously, this would work inconsistently.</li>
+            <li></li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
@@ -421,17 +399,13 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>A problem where the Simple CV programmer would sometimes
-                fail to display the proper options has been fixed.</li>
+            <li></li>
         </ul>
 
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>Add minimum reliable operating throttle setting.
-             Calculate adjusted throttle as throttle * factor then apply max and min limits.
-             Use Max speed from the roster entry, if available, as default.
-             Refactor ActivateTrain to push the final validation and train creation into dispatcher.</li>
+             <li></li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -449,12 +423,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>Fix slip turnout control circle colors when using closed/thrown colors.</li>
-            <li>The "Scale" operation on icons has been
-                changed to a relative scaling from the current size.
-                For example, if you've scaled an icon by 150% already,
-                and request a rescaling by 200%, the icon will end up
-                at 300%.  Previously, this would work inconsistently.</li>
+            <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -483,18 +452,13 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>New feature, you can now control which caboose road names a train can use.</li>
-            <li>New tool, "Set Locomotives", allows you to change a group of locomotives.
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li>The "Scale" operation on icons has been
-                changed to a relative scaling from the current size.
-                For example, if you've scaled an icon by 150% already,
-                and request a rescaling by 200%, the icon will end up
-                at 300%.  Previously, this would work inconsistently.</li>
+            <li></li>
         </ul>
 
     <h3>Permissions</h3>
@@ -650,3 +614,4 @@
         <ul>
             <li></li>
         </ul>
+
