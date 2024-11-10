@@ -242,42 +242,42 @@
     <label xml:lang="it">Riduz.EMF per pulsante controllo Motore</label>
     <tooltip xml:lang="it">Diminuzione EMF se attivo il pulsante controllo Motore, valori 0-255</tooltip>
   </variable>
-  <variable item="FL(f) controls output Motor" CV="134" mask="XXXXXXXV" minOut="1">
+  <variable item="FL(f) controls output Motor" CV="134" mask="XXXXXXXV" minOut="1" exclude="1666,1667,1668">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output Motor</label>
     <label xml:lang="it">Luci(in avanti) controlla uscita Motore</label>
   </variable>
-  <variable item="FL(r) controls output Motor" CV="134" mask="XXXXXXVX" minOut="1" default="1">
+  <variable item="FL(r) controls output Motor" CV="134" mask="XXXXXXVX" minOut="1" default="1" exclude="1666,1667,1668">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(r) controls output Motor</label>
     <label xml:lang="it">Luci(in retro) controlla uscita Motore</label>
   </variable>
-  <variable item="F1 controls output Motor" CV="134" mask="XXXXXVXX" minOut="1">
+  <variable item="F1 controls output Motor" CV="134" mask="XXXXXVXX" minOut="1" exclude="1666,1667,1668">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1 controls output Motor</label>
    <label xml:lang="it">F1 controlla uscita Motore</label>
   </variable>
-  <variable item="F2 controls output Motor" CV="134" mask="XXXXVXXX" minOut="1">
+  <variable item="F2 controls output Motor" CV="134" mask="XXXXVXXX" minOut="1" exclude="1666,1667,1668">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2 controls output Motor</label>
     <label xml:lang="it">F2 controlla uscita Motore</label>
   </variable>
-  <variable item="F3 controls output Motor" CV="134" mask="XXXVXXXX" minOut="1">
+  <variable item="F3 controls output Motor" CV="134" mask="XXXVXXXX" minOut="1" exclude="1666,1667,1668">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3 controls output Motor</label>
     <label xml:lang="it">F3 controlla uscita Motore</label>
   </variable>
-  <variable item="F4 controls output Motor" CV="134" mask="XXVXXXXX" minOut="1">
+  <variable item="F4 controls output Motor" CV="134" mask="XXVXXXXX" minOut="1" exclude="1666,1667,1668">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4 controls output Motor</label>
     <label xml:lang="it">F4 controlla uscita Motore</label>
   </variable>
-  <variable item="F5 controls output Motor" CV="134" mask="XVXXXXXX" minOut="1">
+  <variable item="F5 controls output Motor" CV="134" mask="XVXXXXXX" minOut="1" exclude="1666,1667,1668">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5 controls output Motor</label>
     <label xml:lang="it">F5 controlla uscita Motore</label>
   </variable>
-  <variable item="F6 controls output Motor" CV="134" mask="VXXXXXXX" minOut="1">
+  <variable item="F6 controls output Motor" CV="134" mask="VXXXXXXX" minOut="1" exclude="1666,1667,1668">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6 controls output Motor</label>
     <label xml:lang="it">F6 controlla uscita Motore</label>
@@ -388,6 +388,30 @@
     <label>Reverse Light Dim Brightness</label>
     <label xml:lang="it">Luminosità Smorzam.Luci Retro</label>
     <tooltip xml:lang="it">16 = 50% per bulbi incandescenti, 2-6 per LEDs</tooltip>
+  </variable>
+  <variable item="F7 controls output Rule 17" CV="158" mask="XXXXXVXX" minOut="1" include="1666,1667,1668" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F7 controls output Rule 17</label>
+  </variable>
+  <variable item="F8 controls output Rule 17" CV="158" mask="XXXXVXXX" minOut="1" include="1666,1667,1668">
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F8 controls output Rule 17</label>
+  </variable>
+  <variable item="F9 controls output Rule 17" CV="158" mask="XXXVXXXX" minOut="1" include="1666,1667,1668">
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F9 controls output Rule 17</label>
+  </variable>
+  <variable item="F10 controls output Rule 17" CV="158" mask="XXVXXXXX" minOut="1" include="1666,1667,1668">
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F10 controls output Rule 17</label>
+  </variable>
+  <variable item="F11 controls output Rule 17" CV="158" mask="XVXXXXXX" minOut="1" include="1666,1667,1668">
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F11 controls output Rule 17</label>
+  </variable>
+  <variable item="F12 controls output Rule 17" CV="158" mask="VXXXXXXX" minOut="1" include="1666,1667,1668">
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F12 controls output Rule 17</label>
   </variable>
   <variable item="EMF Option 1" CV="182" mask="XXXXXXXV" default="0">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>

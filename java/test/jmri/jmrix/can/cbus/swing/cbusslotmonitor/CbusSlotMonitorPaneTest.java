@@ -10,7 +10,6 @@ import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import org.netbeans.jemmy.operators.*;
 
@@ -20,9 +19,9 @@ import org.netbeans.jemmy.operators.*;
  * @author Paul Bender Copyright (C) 2016
  * @author Steve Young Copyright (C) 2019
  */
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class CbusSlotMonitorPaneTest extends jmri.util.swing.JmriPanelTest {
 
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testTableUpdates() {
         
@@ -97,6 +96,7 @@ public class CbusSlotMonitorPaneTest extends jmri.util.swing.JmriPanelTest {
         // jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),("Pause Test"));
         
         smPanel.dispose();
+        JUnitUtil.dispose(f);
         
     }
 

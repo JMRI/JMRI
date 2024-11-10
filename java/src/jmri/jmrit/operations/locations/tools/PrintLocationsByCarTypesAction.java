@@ -11,9 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.davidflanagan.HardcopyWriter;
@@ -89,7 +87,7 @@ public class PrintLocationsByCarTypesAction extends AbstractAction {
         } catch (HardcopyWriter.PrintCanceledException we) {
             log.debug("Print cancelled");
         } catch (IOException we) {
-            log.error("Error printing PrintLocationAction", we);
+            log.error("Error printing PrintLocationAction: {}", we.getLocalizedMessage());
         }
     }
 

@@ -1,5 +1,8 @@
 package jmri.jmrit.operations;
 
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.LocationManagerXml;
@@ -13,8 +16,6 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
 
 /**
  * Tests to make sure the demo files load and the managers are properly
@@ -44,15 +45,15 @@ public class XmlLoadTest extends OperationsTestCase {
      * Private function to actually run the test
      *
      * @param directory String directory location of the files to load
-     * 
+     *
      * @param locs number of locations expected after load
-     * 
+     *
      * @param routes number of routes expected after load
-     * 
+     *
      * @param trains number of trains expected after load
-     * 
+     *
      * @param cars number of cars expected after load
-     * 
+     *
      * @param engines number of engines expected after load
      */
     private void runTest(String directory, int locs, int routes, int trains,
@@ -108,7 +109,6 @@ public class XmlLoadTest extends OperationsTestCase {
         Assert.assertEquals("Number of Cars", cars, InstanceManager.getDefault(CarManager.class).getList().size());
         Assert.assertEquals("Number of Engines", engines,
                 InstanceManager.getDefault(EngineManager.class).getList().size());
-
     }
 
     // from here down is testing infrastructure

@@ -42,7 +42,7 @@ public final class ActionThrottle extends AbstractDigitalAction
     private final FemaleDigitalExpressionSocket _locoDirectionSocket;
     private final FemaleAnalogExpressionSocket _locoFunctionSocket;
     private final FemaleDigitalExpressionSocket _locoFunctionOnOffSocket;
-    boolean _isActive = false;
+    private boolean _stopLocoWhenSwitchingLoco = true;
 
 
     public ActionThrottle(String sys, String user) {
@@ -122,8 +122,10 @@ public final class ActionThrottle extends AbstractDigitalAction
         if (newLocoAddress != currentLocoAddress) {
 
             if (_throttle != null) {
-                // Stop the loco
-                _throttle.setSpeedSetting(0);
+                if (_stopLocoWhenSwitchingLoco) {
+                    // Stop the loco
+                    _throttle.setSpeedSetting(0);
+                }
                 // Release the loco
                 _throttleManager.releaseThrottle(_throttle, _throttleListener);
                 _throttle = null;
@@ -485,6 +487,14 @@ public final class ActionThrottle extends AbstractDigitalAction
             // This shouldn't happen and is a runtime error if it does.
             throw new RuntimeException("socket is already connected");
         }
+    }
+
+    public boolean isStopLocoWhenSwitchingLoco() {
+        return _stopLocoWhenSwitchingLoco;
+    }
+
+    public void setStopLocoWhenSwitchingLoco(boolean value) {
+        _stopLocoWhenSwitchingLoco = value;
     }
 
     /** {@inheritDoc} */

@@ -134,6 +134,8 @@ public abstract class AppsBase {
     protected void configureProfile() {
         String profileFilename;
         FileUtil.createDirectory(FileUtil.getPreferencesPath());
+        // Load permission manager
+        InstanceManager.getDefault(PermissionManager.class);
         // Needs to be declared final as we might need to
         // refer to this on the Swing thread
         File profileFile;

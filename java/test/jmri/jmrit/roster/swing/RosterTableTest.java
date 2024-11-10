@@ -5,10 +5,10 @@ import javax.swing.JFrame;
 import jmri.InstanceManager;
 import jmri.jmrit.roster.*;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 import jmri.util.gui.GuiLafPreferencesManager;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import org.netbeans.jemmy.operators.*;
 
@@ -28,7 +28,7 @@ public class RosterTableTest {
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfHeadless
     public void testDisplaysOk() {
         RosterTable t = new RosterTable();
         JFrame frame = new JFrame("RosterTableTest testDisplaysOk");
@@ -56,14 +56,13 @@ public class RosterTableTest {
         to.waitCell("value 22", 1, 11); // key a column value 1
         to.waitCell("", 2, 11); // key a column value 1
 
-        // new JButtonOperator(jfo,"Not A Button");
-        jfo.requestClose();
+        JUnitUtil.dispose(jfo.getWindow());
         jfo.waitClosed();
 
     }
     
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfHeadless
     public void testDateEditable(){
 
         Roster.getDefault().getEntry(0).deleteAttribute("KeyA");
@@ -95,10 +94,8 @@ public class RosterTableTest {
         // to.changeCellObject(2, 10, "H");
         // row 2 cell 10 populates with new Date as H cannot be parsed
 
-        jfo.requestClose();
+        JUnitUtil.dispose(jfo.getWindow());
         jfo.waitClosed();
-
-        // new JButtonOperator(jfo,"Not A Button");
 
     }
 

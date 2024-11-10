@@ -287,6 +287,11 @@ public class AllocatedSection {
         } else if (mSection.getOccupancy() == Section.UNOCCUPIED) {
             if (mEntered) {
                 mExited = true;
+                // set colour to still allocated.
+                // release will reset the colour to unoccupied.
+                if (InstanceManager.getDefault(DispatcherFrame.class).getExtraColorForAllocated()) {
+                    mSection.setAlternateColorFromActiveBlock(true);
+                }
             }
         }
         if (mActiveTrain.getAutoActiveTrain() != null) {

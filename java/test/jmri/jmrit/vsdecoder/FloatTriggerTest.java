@@ -14,6 +14,7 @@ import org.junit.jupiter.api.*;
 public class FloatTriggerTest {
 
     @Test
+    @Disabled("Test requires further development")
     public void testStateConstants() {
         // Maybe check the enums here?
     }

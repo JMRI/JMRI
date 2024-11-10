@@ -1,5 +1,6 @@
 package jmri.jmrix.sprog.serialdriver;
 
+import jmri.jmrix.*;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 import jmri.jmrix.sprog.SprogPortController;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
@@ -153,6 +154,11 @@ public class SerialDriverAdapter extends SprogPortController {
 
     @Override
     public void dispose() {
+        // if we've started a traffic controller, dispose of it
+        if (this.getSystemConnectionMemo() != null) {
+            if ( (this.getSystemConnectionMemo()).getSprogTrafficController() != null)
+                (this.getSystemConnectionMemo()).getSprogTrafficController().dispose();
+        }
         super.dispose();
     }
 

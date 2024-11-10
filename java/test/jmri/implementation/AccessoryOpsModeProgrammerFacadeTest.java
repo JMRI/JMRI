@@ -9,11 +9,10 @@ import jmri.InstanceManager;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.progdebugger.ProgDebugger;
+import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test the AccessoryOpsModeProgrammerFacade class.
@@ -86,18 +85,17 @@ public class AccessoryOpsModeProgrammerFacadeTest {
         ProgDebugger dp = new ProgDebugger(isLong, addr);
         // Create a facade over the base programmer and also a listener for the facade.
         Programmer p = new AccessoryOpsModeProgrammerFacade(dp, addrType, 0, dp);
-        ProgListener l = new ProgListener() {
-            @Override
-            public void programmingOpReply(int value, int status) {
-                log.debug("callback value={} status={}", value, status);
-                replied = true;
-                readValue = value;
-            }
+        ProgListener l = (int value1, int status) -> {
+            log.debug("callback value={} status={}", value1, status);
+            replied = true;
+            readValue = value1;
         };
 
         // Write to the facade programmer.
         p.writeCV(cv, value, l);
         waitReply();
+
+        Assertions.assertEquals(value, readValue);
 
         // Check that the write did not through to the base programmer.
         Assert.assertTrue("target not directly written", !dp.hasBeenWritten(value));
@@ -135,9 +133,9 @@ public class AccessoryOpsModeProgrammerFacadeTest {
         return retString;
     }
 
-    MockCommandStation mockCS;
-    int readValue = -2;
-    boolean replied = false;
+    private MockCommandStation mockCS;
+    private int readValue = -2;
+    private boolean replied = false;
 
     synchronized void waitReply() throws InterruptedException {
         while (!replied) {
@@ -148,17 +146,20 @@ public class AccessoryOpsModeProgrammerFacadeTest {
 
     @BeforeEach
     public void setUp() throws Exception {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        InstanceManager.setDefault(CommandStation.class, mockCS = new MockCommandStation());
+        JUnitUtil.setUp();
+        mockCS = new MockCommandStation();
+        InstanceManager.setDefault(CommandStation.class, mockCS);
         mockCS.lastPacket = null;
+        replied = false;
+        readValue = -2;
     }
 
     @AfterEach
     public void tearDown() throws Exception {
-        jmri.util.JUnitUtil.tearDown();
+        mockCS = null;
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AccessoryOpsModeProgrammerFacadeTest.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AccessoryOpsModeProgrammerFacadeTest.class);
 
 }

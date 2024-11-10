@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.jmrit.catalog.NamedIcon;
@@ -57,9 +58,8 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
     public WarrantTableModel(WarrantTableFrame frame) {
         super();
         _frame = frame;
-        _manager = InstanceManager
-                .getDefault(jmri.jmrit.logix.WarrantManager.class);
-        _manager.addPropertyChangeListener(this); // for adds and deletes
+        _manager = InstanceManager.getDefault(WarrantManager.class);
+        _manager.addPropertyChangeListener(WarrantTableModel.this); // for adds and deletes
         _warList = new ArrayList<>();
         _warNX = new ArrayList<>();
     }
@@ -565,11 +565,10 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
     }
 
     private void showMessageDialog(String msg) {
-        ThreadingUtil.runOnGUIEventually(() -> {
+        ThreadingUtil.runOnGUIEventually(() ->
             JmriJOptionPane.showMessageDialog(_frame, msg,
                     Bundle.getMessage("WarningTitle"),
-                    JmriJOptionPane.WARNING_MESSAGE);
-        });
+                    JmriJOptionPane.WARNING_MESSAGE));
     }
 
     private void openWarrantFrame(Warrant warrant) {
@@ -616,8 +615,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
 
     private String frameRunTrain(Warrant w, int mode) {
         return jmri.util.ThreadingUtil.runOnGUIwithReturn(() -> {
-            String m = _frame.runTrain(w, mode);
-            return m;
+            return ( _frame.runTrain(w, mode));
         });
     }
 
@@ -634,7 +632,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
     }
 
     private void fireTableUpdate() {
-        ThreadingUtil.runOnGUIEventually(()-> fireTableDataChanged());
+        ThreadingUtil.runOnGUIEventually(this::fireTableDataChanged);
     }
 
     private void fireTableRowDeleted(Warrant w, int row, boolean all) {
@@ -654,6 +652,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
 
     private String _lastProperty;
     private long _propertyTime;
+
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         String property = e.getPropertyName();
@@ -733,7 +732,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
                     fireTableRowDeleted(bean, row, false);
                 }
             } else if (property.equals("RampDone")) {
-                boolean halt = ((Boolean) e.getOldValue()).booleanValue();
+                boolean halt = ((Boolean) e.getOldValue());
                 String speed = (String) e.getNewValue();
                 if (halt || speed.equals(Warrant.EStop))  {
                     setFrameStatusText(Bundle.getMessage("RampHalt",
@@ -749,10 +748,11 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
                 setFrameStatusText(Bundle.getMessage("RampBegin", bean.getTrainName(),
                         reason, blkName), myGreen, true);
             } else if (property.equals("ReadyToRun")) {
-                setFrameStatusText(Bundle.getMessage("TrainReady", bean.getTrainName(), bean.getCurrentBlockName()), myGreen, true);
+                setFrameStatusText(Bundle.getMessage("TrainReady",
+                    bean.getTrainName(), bean.getCurrentBlockName()), myGreen, true);
             } else if (property.equals("controlChange")) {
                 String blkName = bean.getCurrentBlockName();
-                int newCntrl = ((Integer) e.getNewValue()).intValue();
+                int newCntrl = ((Integer) e.getNewValue());
                 setFrameStatusText(Bundle.getMessage("controlChange", bean.getTrainName(),
                         Bundle.getMessage(Warrant.CNTRL_CMDS[newCntrl]), blkName),
                         myGold, true);
@@ -765,7 +765,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
                 } else {
                     stateStr = ((String) e.getOldValue());
                 }
-                int newCntrl = ((Integer) e.getNewValue()).intValue();
+                int newCntrl = ((Integer) e.getNewValue());
                 setFrameStatusText(Bundle.getMessage("controlFailed",
                         bean.getTrainName(), stateStr,
                         Bundle.getMessage(Warrant.CNTRL_CMDS[newCntrl])),
@@ -791,9 +791,10 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
                 setFrameStatusText(Bundle.getMessage("ThrottleFail",
                         bean.getTrainName(), e.getNewValue()), Color.red, true);
             }
-            if (log.isDebugEnabled())
+            if (log.isDebugEnabled()) {
                 log.debug("propertyChange of \"{}\" done for warrant \"{}\"",
                         property, bean.getDisplayName());
+            }
         }
     }
 

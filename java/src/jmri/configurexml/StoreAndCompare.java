@@ -47,13 +47,43 @@ public class StoreAndCompare extends AbstractAction {
         requestStoreIfNeeded();
     }
 
-    public static void requestStoreIfNeeded() {
+    /**
+     * Check if data has changed and if so, if the user has permission to store.
+     * @return true if user wants to abort shutdown, false otherwise
+     */
+    public static boolean checkPermissionToStoreIfNeeded() {
+        if (InstanceManager.getDefault(PermissionManager.class)
+                .hasAtLeastPermission(LoadAndStorePermissionOwner.STORE_XML_FILE_PERMISSION,
+                        BooleanPermission.BooleanValue.TRUE)) {
+            // User has permission to store. No need to abort.
+            return false;
+        }
+
         if (Application.getApplicationName().equals("PanelPro")) {
             if (_preferences.isStoreCheckEnabled()) {
                 if (dataHasChanged() && !GraphicsEnvironment.isHeadless()) {
-                    jmri.configurexml.swing.StoreAndCompareDialog.showDialog();
+                    return jmri.configurexml.swing.StoreAndCompareDialog.showAbortShutdownDialogPermissionDenied();
                 }
             }
+        }
+
+        // If here, no need to abort.
+        return false;
+    }
+
+    public static void requestStoreIfNeeded() {
+        if (!InstanceManager.getDefault(PermissionManager.class)
+                .hasAtLeastPermission(LoadAndStorePermissionOwner.STORE_XML_FILE_PERMISSION,
+                        BooleanPermission.BooleanValue.TRUE)) {
+            // User has not permission to store.
+            return;
+        }
+        if (Application.getApplicationName().equals("PanelPro") &&_preferences.isStoreCheckEnabled()) {
+            jmri.util.ThreadingUtil.runOnGUI(() -> {
+                if (dataHasChanged() && !GraphicsEnvironment.isHeadless()) {
+                    jmri.configurexml.swing.StoreAndCompareDialog.showDialog();
+                }
+            });
         }
     }
 

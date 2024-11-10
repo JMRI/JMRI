@@ -300,6 +300,9 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                     if (traininfo.getAttribute("maxspeed") != null) {
                         tInfo.setMaxSpeed(Float.parseFloat(traininfo.getAttribute("maxspeed").getValue()));
                     }
+                    if (traininfo.getAttribute("minreliableoperatingspeed") != null) {
+                        tInfo.setMinReliableOperatingSpeed(Float.parseFloat(traininfo.getAttribute("minreliableoperatingspeed").getValue()));
+                    }
                     if (traininfo.getAttribute("ramprate") != null) {
                         tInfo.setRampRate(traininfo.getAttribute("ramprate").getValue());
                     }
@@ -556,6 +559,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         // here save items related to automatically running active trains
         traininfo.setAttribute("speedfactor", Float.toString(tf.getSpeedFactor()));
         traininfo.setAttribute("maxspeed", Float.toString(tf.getMaxSpeed()));
+        traininfo.setAttribute("minreliableoperatingspeed", Float.toString(tf.getMinReliableOperatingSpeed()));
         traininfo.setAttribute("ramprate", tf.getRampRate());
         traininfo.setAttribute("runinreverse", "" + (tf.getRunInReverse() ? "yes" : "no"));
         traininfo.setAttribute("sounddecoder", "" + (tf.getSoundDecoder() ? "yes" : "no"));

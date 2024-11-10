@@ -2,7 +2,9 @@ package jmri.util.swing;
 
 import java.awt.Container;
 import java.beans.PropertyChangeListener;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.Action;
@@ -11,8 +13,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.UIManager;
+
 import jmri.util.SystemType;
 import jmri.util.jdom.LocaleSelector;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,20 +72,43 @@ public class JMenuUtil extends GuiUtilBase {
             }
         }
         JMenu menu = new JMenu(name);
-        ArrayList<Integer> mnemonicList = new ArrayList<Integer>();
+        ArrayList<Integer> mnemonicList = new ArrayList<>();
         for (Object item : main.getChildren("node")) {
             JMenuItem menuItem = null;
             Element child = (Element) item;
-            if (child.getChildren("node").size() == 0) {  // leaf
+            if (child.getChildren("node").isEmpty()) {  // leaf
                 if ((child.getText().trim()).equals("separator")) {
                     addSep = true;
                 } else {
+
+                    boolean optional = true;
+                    var instanceManagerOptionalClassElement = child.getChild("instanceManagerOptionalClass");
+                    var optionalFunctionElement = child.getChild("optionalFunction");
+
+                    if (instanceManagerOptionalClassElement != null
+                            && optionalFunctionElement != null) {
+
+                        var instanceManagerOptional = instanceManagerOptionalClassElement.getText();
+                        var optionalFunction = optionalFunctionElement.getText();
+                        Object o = jmri.InstanceManager.getDefault(instanceManagerOptional);
+                        try {
+                            var method = o.getClass().getDeclaredMethod(optionalFunction);
+                            Object result = method.invoke(o);
+                            if (result instanceof Boolean) {
+                                optional = (Boolean) result;
+                            }
+                        } catch (NoSuchMethodException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException e) {
+                            log.error("Error during loading of menu", e);
+                        }
+                    }
+
                     if (!(SystemType.isMacOSX()
                             && UIManager.getLookAndFeel().isNativeLookAndFeel()
                             && ((child.getChild("adapter") != null
                             && child.getChild("adapter").getText().equals("apps.gui3.tabbedpreferences.TabbedPreferencesAction"))
                             || (child.getChild("current") != null
-                            && child.getChild("current").getText().equals("quit"))))) {
+                            && child.getChild("current").getText().equals("quit"))))
+                            && optional) {
                         if (addSep) {
                             menu.addSeparator();
                             addSep = false;

@@ -17,8 +17,12 @@ public class DCCppAdapter extends DCCppSerialPortController {
 
     public DCCppAdapter() {
         super();
+        //add configuration option and set the default value
         option1Name = "StartUpDelay";
-        options.put(option1Name, new Option("Wait at startup : ", validStartupDelays));
+        options.put(option1Name, new Option("Wait at startup: ", validStartupDelays));
+        options.get(option1Name).setCurrentValue("10 seconds");
+        options.get(option1Name).setConfiguredValue("10 seconds");
+
         this.manufacturerName = jmri.jmrix.dccpp.DCCppConnectionTypeList.DCCPP;
     }
 
@@ -57,7 +61,7 @@ public class DCCppAdapter extends DCCppSerialPortController {
         DCCppTrafficController packets = new SerialDCCppPacketizer(new DCCppCommandStation());
 
         String selectedStartupDelay = getOptionState(option1Name);
-        packets.startUpDelay = validStartupDelayValues[0];  // Default to the first option
+        packets.startUpDelay = validStartupDelayValues[2]; //provide for a default if the stored value not found 
         for (int i=0; i < validStartupDelayValues.length; i++) {
             if (selectedStartupDelay.equals(validStartupDelays[i])) {
                 packets.startUpDelay = validStartupDelayValues[i];

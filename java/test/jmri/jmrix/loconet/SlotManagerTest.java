@@ -166,11 +166,8 @@ public class SlotManagerTest {
     @Test
     public void testGetSlotSend() {
         testSlot = null;
-        SlotListener p2 = new SlotListener() {
-            @Override
-            public void notifyChangedSlot(LocoNetSlot l) {
-                testSlot = l;
-            }
+        SlotListener p2 = (LocoNetSlot l) -> {
+            testSlot = l;
         };
         slotmanager.slotFromLocoAddress(0x2134, p2);
         Assert.assertEquals("slot request message",
@@ -178,7 +175,7 @@ public class SlotManagerTest {
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
         Assert.assertEquals("hash length", 1, slotmanager.mLocoAddrHash.size());
         Assert.assertEquals("key present", true,
-                slotmanager.mLocoAddrHash.containsKey(Integer.valueOf(0x2134)));
+                slotmanager.mLocoAddrHash.containsKey(0x2134));
         Assert.assertEquals("value present", true,
                 slotmanager.mLocoAddrHash.contains(p2));
     }
@@ -186,11 +183,8 @@ public class SlotManagerTest {
     @Test
     public void testGetSlotRcv() {
         testSlot = null;
-        SlotListener p2 = new SlotListener() {
-            @Override
-            public void notifyChangedSlot(LocoNetSlot l) {
-                testSlot = l;
-            }
+        SlotListener p2 = (LocoNetSlot l) -> {
+            testSlot = l;
         };
         slotmanager.slotFromLocoAddress(0x2134, p2);
         // echo of the original message
@@ -227,9 +221,8 @@ public class SlotManagerTest {
     @Test
     public void testReadCVPaged() throws jmri.ProgrammerException {
         String CV1 = "12";
-        ProgListener p2 = null;
         slotmanager.setMode(ProgrammingMode.PAGEMODE);
-        slotmanager.readCV(CV1, p2);
+        slotmanager.readCV(CV1, lstn);
         Assert.assertEquals("read message",
                 "EF 0E 7C 23 00 00 00 00 00 0B 00 7F 7F 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
@@ -238,9 +231,8 @@ public class SlotManagerTest {
     @Test
     public void testReadCVRegister() throws jmri.ProgrammerException {
         String CV1 = "2";
-        ProgListener p2 = null;
         slotmanager.setMode(ProgrammingMode.REGISTERMODE);
-        slotmanager.readCV(CV1, p2);
+        slotmanager.readCV(CV1, lstn);
         Assert.assertEquals("read message",
                 "EF 0E 7C 13 00 00 00 00 00 01 00 7F 7F 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
@@ -277,6 +269,7 @@ public class SlotManagerTest {
         log.debug("checking..");
         Assert.assertEquals("reply status", 0, status);
         Assert.assertEquals("reply value", 35, value);
+        Assert.assertTrue( "timer stopped", stoppedTimer );
 
         log.debug(".... end testReadCVDirect ...");
     }
@@ -330,6 +323,7 @@ public class SlotManagerTest {
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis, slotmanager);
         LnProgrammerManager t = new LnProgrammerManager(memo);
         var programmer = t.getAddressedProgrammer(true, 11010);
+        Assert.assertNotNull(programmer);
 
         String CV1 = "2";
         programmer.setMode(LnProgrammerManager.LOCONETOPSBOARD);
@@ -367,6 +361,7 @@ public class SlotManagerTest {
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis, slotmanager);
         LnProgrammerManager t = new LnProgrammerManager(memo);
         var programmer = t.getAddressedProgrammer(true, 11010);
+        Assert.assertNotNull(programmer);
 
         String CV1 = "2";
         // programmer.setMode(LnProgrammerManager.LOCONETOPSBOARD);
@@ -397,8 +392,7 @@ public class SlotManagerTest {
     @Test
     public void testReadCVOpsModeLong() throws jmri.ProgrammerException {
         String CV1 = "12";
-        ProgListener p2 = null;
-        slotmanager.readCVOpsMode(CV1, p2, 4 * 128 + 0x23, true);
+        slotmanager.readCVOpsMode(CV1, lstn, 4 * 128 + 0x23, true);
         Assert.assertEquals("read message",
                 "EF 0E 7C 2F 00 04 23 00 00 0B 00 7F 7F 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
@@ -407,8 +401,7 @@ public class SlotManagerTest {
     @Test
     public void testReadCVOpsModeShort() throws jmri.ProgrammerException {
         String CV1 = "12";
-        ProgListener p2 = null;
-        slotmanager.readCVOpsMode(CV1, p2, 22, false);
+        slotmanager.readCVOpsMode(CV1, lstn, 22, false);
         Assert.assertEquals("read message",
                 "EF 0E 7C 2F 00 00 16 00 00 0B 00 7F 7F 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
@@ -418,9 +411,8 @@ public class SlotManagerTest {
     public void testWriteCVPaged() throws jmri.ProgrammerException {
         String CV1 = "12";
         int val2 = 34;
-        ProgListener p3 = null;
         slotmanager.setMode(ProgrammingMode.PAGEMODE);
-        slotmanager.writeCV(CV1, val2, p3);
+        slotmanager.writeCV(CV1, val2, lstn);
         Assert.assertEquals("write message",
                 "EF 0E 7C 63 00 00 00 00 00 0B 22 7F 7F 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
@@ -430,9 +422,8 @@ public class SlotManagerTest {
     public void testWriteCVRegister() throws jmri.ProgrammerException {
         String CV1 = "2";
         int val2 = 34;
-        ProgListener p3 = null;
         slotmanager.setMode(ProgrammingMode.REGISTERMODE);
-        slotmanager.writeCV(CV1, val2, p3);
+        slotmanager.writeCV(CV1, val2, lstn);
         Assert.assertEquals("write message",
                 "EF 0E 7C 53 00 00 00 00 00 01 22 7F 7F 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
@@ -442,9 +433,8 @@ public class SlotManagerTest {
     public void testWriteCVDirect() throws jmri.ProgrammerException {
         String CV1 = "12";
         int val2 = 34;
-        ProgListener p3 = null;
         slotmanager.setMode(ProgrammingMode.DIRECTBYTEMODE);
-        slotmanager.writeCV(CV1, val2, p3);
+        slotmanager.writeCV(CV1, val2, lstn);
         Assert.assertEquals("write message",
                 "EF 0E 7C 6B 00 00 00 00 00 0B 22 7F 7F 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
@@ -634,8 +624,7 @@ public class SlotManagerTest {
     public void testWriteCVOpsShortAddr() throws jmri.ProgrammerException {
         String CV1 = "12";
         int val2 = 34;
-        ProgListener p3 = null;
-        slotmanager.writeCVOpsMode(CV1, val2, p3, 22, false);
+        slotmanager.writeCVOpsMode(CV1, val2, lstn, 22, false);
         Assert.assertEquals("write message",
                 "EF 0E 7C 67 00 00 16 00 00 0B 22 7F 7F 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
@@ -1168,11 +1157,8 @@ public class SlotManagerTest {
     @Test
     public void testSlotMessageOpcPktImmFunctions() {
         testSlot = null;
-        SlotListener p2 = new SlotListener() {
-            @Override
-            public void notifyChangedSlot(LocoNetSlot l) {
-                testSlot = l;
-            }
+        SlotListener p2 = (LocoNetSlot l) -> {
+            testSlot = l;
         };
         slotmanager.slotFromLocoAddress(4121, p2);
         Assert.assertEquals("number of transmitted messages so far (a)", 1, lnis.outbound.size());
@@ -1181,7 +1167,7 @@ public class SlotManagerTest {
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
         Assert.assertEquals("hash length", 1, slotmanager.mLocoAddrHash.size());
         Assert.assertEquals("key present", true,
-                slotmanager.mLocoAddrHash.containsKey(Integer.valueOf(4121)));
+                slotmanager.mLocoAddrHash.containsKey(4121));
         Assert.assertEquals("value present", true,
                 slotmanager.mLocoAddrHash.contains(p2));
         Assert.assertNull("check testSlot still null (a)", testSlot);
@@ -1284,11 +1270,8 @@ public class SlotManagerTest {
     public void testForwardMessageToSlotExceptions() {
         Assert.assertEquals("check 'slot in use' count is zero", 0, slotmanager.getInUseCount());
         testSlot = null;
-        SlotListener p2 = new SlotListener() {
-            @Override
-            public void notifyChangedSlot(LocoNetSlot l) {
-                testSlot = l;
-            }
+        SlotListener p2 = (LocoNetSlot l) -> {
+            testSlot = l;
         };
         slotmanager.slotFromLocoAddress(4120, p2);
         Assert.assertEquals("number of transmitted messages so far (a)", 1, lnis.outbound.size());
@@ -1457,7 +1440,7 @@ public class SlotManagerTest {
         // Set slot 5 common, request slot 5
         slotmanager.message(new LocoNetMessage(new int[]{0xB5, 0x05, 0x17, 0x00}));
         JUnitUtil.waitFor(() -> {
-            return lnis.outbound.size() > 0;
+            return !lnis.outbound.isEmpty();
         }, "Requests slot read 5 after delay");
         Assert.assertEquals("Request read slot 5",
                 "BB 05 00 00",
@@ -1477,7 +1460,7 @@ public class SlotManagerTest {
         // slot move 1 > 2 read 1 after delay.
         slotmanager.message(new LocoNetMessage(new int[]{0xba, 0x01, 0x02, 0x00}));
         JUnitUtil.waitFor(() -> {
-            return lnis.outbound.size() > 0;
+            return !lnis.outbound.isEmpty();
         }, "Requests slot read 1 after delay");
         Assert.assertEquals("Request read slot 1",
                 "BB 01 00 00",
@@ -1489,7 +1472,7 @@ public class SlotManagerTest {
         // slot Link 3 > 4 read 4 after delay.
         slotmanager.message(new LocoNetMessage(new int[]{0xb8, 0x03, 0x04, 0x00}));
         JUnitUtil.waitFor(() -> {
-            return lnis.outbound.size() > 0;
+            return !lnis.outbound.isEmpty();
         }, "Requests slot read 4 after delay");
         Assert.assertEquals("Request read slot 4",
                 "BB 04 00 00",
@@ -1501,24 +1484,24 @@ public class SlotManagerTest {
         // slot unLink 6 from 7 read 7 after delay.
         slotmanager.message(new LocoNetMessage(new int[]{0xb9, 0x06, 0x07, 0x00}));
         JUnitUtil.waitFor(() -> {
-            return lnis.outbound.size() > 0;
+            return !lnis.outbound.isEmpty();
         }, "Requests slot read 7 after delay");
         Assert.assertEquals("Request read slot 7",
                 "BB 07 00 00",
                 lnis.outbound.elementAt(0).toString());
     }
 
-    LocoNetInterfaceScaffold lnis;
-    SlotManager slotmanager;
-    int status;
-    int value;
-    boolean startedShortTimer = false;
-    boolean startedLongTimer = false;
-    boolean stoppedTimer = false;
+    private LocoNetInterfaceScaffold lnis;
+    private SlotManager slotmanager;
+    private int status;
+    private int value;
+    private boolean startedShortTimer = false;
+    private boolean startedLongTimer = false;
+    private boolean stoppedTimer = false;
 
-    ProgListener lstn;
+    private ProgListener lstn;
     
-    int releaseTestDelay;
+    private int releaseTestDelay;
     
     @BeforeEach
     public void setUp() {
@@ -1556,19 +1539,18 @@ public class SlotManagerTest {
         
         releaseTestDelay = Math.max(slotmanager.serviceModeReplyDelay, slotmanager.opsModeReplyDelay)+75; 
 
-        lstn = new ProgListener(){
-            @Override
-            public void programmingOpReply(int val, int stat) {
-                log.debug("   reply val: {} status: {}", val, stat);
-                status = stat;
-                value = val;
-            }
+        lstn = (int val, int stat) -> {
+            log.debug("   reply val: {} status: {}", val, stat);
+            status = stat;
+            value = val;
         };
     }
 
     @AfterEach
     public void tearDown() {
         slotmanager.dispose();
+        lnis.dispose();
+        JUnitUtil.waitThreadTerminated(slotmanager.getUserName() + SlotManager.READ_ALL_SLOTS_THREADNAME);
         JUnitUtil.tearDown();
     }
 

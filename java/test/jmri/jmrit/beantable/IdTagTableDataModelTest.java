@@ -32,6 +32,7 @@ public class IdTagTableDataModelTest extends AbstractBeanTableDataModelBase<IdTa
      */
     @Override
     @Test
+    @Disabled("Test in superclass sensitive to run order")
     public void testGetRowCount(){
     }
 

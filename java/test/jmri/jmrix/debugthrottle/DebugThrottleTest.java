@@ -3,6 +3,7 @@ package jmri.jmrix.debugthrottle;
 import jmri.SpeedStepMode;
 import jmri.SystemConnectionMemo;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.NotApplicable;
 
 import org.mockito.Mockito;
 import org.junit.jupiter.api.*;
@@ -188,6 +189,7 @@ public class DebugThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @NotApplicable("DebugThrottle does not send Functions")
     public void testSendFunctionGroup1() {
     }
 
@@ -196,6 +198,7 @@ public class DebugThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @NotApplicable("DebugThrottle does not send Functions")
     public void testSendFunctionGroup2() {
     }
 
@@ -204,6 +207,7 @@ public class DebugThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @NotApplicable("DebugThrottle does not send Functions")
     public void testSendFunctionGroup3() {
     }
 

@@ -7,6 +7,8 @@ import jmri.util.*;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
 
+import org.netbeans.jemmy.operators.JFrameOperator;
+
 /**
  *
  * @author Paul Bender Copyright (C) 2017
@@ -25,7 +27,11 @@ public class HexFileFrameTest {
             f.setAdapter(p);
             f.initComponents();
             f.configure();
-       });
+            f.setVisible(true);
+        });
+
+        JFrameOperator jfo = new JFrameOperator(f.getTitle());
+        Assertions.assertNotNull(jfo);
 
         ThreadingUtil.runOnGUI( ()-> {
             f.dispose();
@@ -34,6 +40,7 @@ public class HexFileFrameTest {
         p.dispose();
         f.sourceThread.stop();
         f.sourceThread.join();
+        f.packets.terminateThreads();
         f.dispose();
  }
 

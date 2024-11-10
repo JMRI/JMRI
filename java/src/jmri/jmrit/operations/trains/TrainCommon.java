@@ -1398,6 +1398,9 @@ public class TrainCommon {
         if (attribute.equals(Setup.MODEL)) {
             return padAndTruncateIfNeeded(splitStringLeftParenthesis(engine.getModel()),
                     InstanceManager.getDefault(EngineModels.class).getMaxNameLength());
+        } else if (attribute.equals(Setup.HP)) {
+            return padAndTruncateIfNeeded(engine.getHp(), 5) +
+                    (Setup.isPrintHeadersEnabled() ? "" : TrainManifestHeaderText.getStringHeader_Hp());
         } else if (attribute.equals(Setup.CONSIST)) {
             return padAndTruncateIfNeeded(engine.getConsistName(),
                     InstanceManager.getDefault(ConsistManager.class).getMaxNameLength());
@@ -1517,7 +1520,8 @@ public class TrainCommon {
                         InstanceManager.getDefault(CarLengths.class).getMaxNameLength());
             } else if (attribute.equals(Setup.WEIGHT)) {
                 return padAndTruncateIfNeeded(Integer.toString(rs.getAdjustedWeightTons()),
-                        Control.max_len_string_weight_name);
+                        Control.max_len_string_weight_name) +
+                        (Setup.isPrintHeadersEnabled() ? "" : TrainManifestHeaderText.getStringHeader_Weight());
             } else if (attribute.equals(Setup.COLOR)) {
                 return padAndTruncateIfNeeded(rs.getColor(),
                         InstanceManager.getDefault(CarColors.class).getMaxNameLength());
@@ -1800,6 +1804,9 @@ public class TrainCommon {
             } else if (attribute.equals(Setup.MODEL)) {
                 buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Model(),
                         InstanceManager.getDefault(EngineModels.class).getMaxNameLength()) + SPACE);
+            } else if (attribute.equals(Setup.HP)) {
+                buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Hp(),
+                        5) + SPACE);
             } else if (attribute.equals(Setup.CONSIST)) {
                 buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Consist(),
                         InstanceManager.getDefault(ConsistManager.class).getMaxNameLength()) + SPACE);
@@ -1951,6 +1958,32 @@ public class TrainCommon {
             }
         }
         return TrainCommon.getDate(calendar.getTime());
+    }
+
+    public static Date convertStringToDate(String date) {
+        if (!date.isBlank()) {
+            // create a date object from the string.
+            try {
+                // try MM/dd/yyyy HH:mm:ss.
+                SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss"); // NOI18N
+                return formatter.parse(date);
+            } catch (java.text.ParseException pe1) {
+                // try the old 12 hour format (no seconds).
+                try {
+                    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mmaa"); // NOI18N
+                    return formatter.parse(date);
+                } catch (java.text.ParseException pe2) {
+                    try {
+                        // try 24hour clock.
+                        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm"); // NOI18N
+                        return formatter.parse(date);
+                    } catch (java.text.ParseException pe3) {
+                        log.debug("Not able to parse date: {}", date);
+                    }
+                }
+            }
+        }
+        return null; // there was no date specified.
     }
 
     /**

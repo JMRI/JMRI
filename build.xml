@@ -147,7 +147,7 @@
         <pathelement location="${libdir}/jlfgr-1_0.jar"/>
         <pathelement location="${libdir}/joal.jar"/>
         <pathelement location="${libdir}/jsoup-1.15.3.jar"/>
-        <pathelement location="${libdir}/jython-standalone-2.7.2.jar"/>
+        <pathelement location="${libdir}/jython-standalone-2.7.4.jar"/>
         <pathelement location="${libdir}/slf4j-api-2.0.7.jar"/><!-- sl4fj API -->
         <pathelement location="${libdir}/jul-to-slf4j-2.0.7.jar"/><!-- java.util.logging to sl4fj -->
         <pathelement location="${libdir}/log4j-slf4j2-impl-2.20.0.jar"/><!-- sl4fj to log4j2 -->
@@ -270,7 +270,7 @@
         <!-- SpotBugs annotations -->
         <pathelement location="${libdir}/jcip-annotations-1.0.jar"/>
         <pathelement location="${libdir}/jsr305.jar"/>
-        <pathelement location="${libdir}/spotbugs-annotations-4.7.3.jar"/>
+        <pathelement location="${libdir}/spotbugs-annotations-4.8.6.jar"/>
     </path>
 
     <!-- path to run regular executables -->
@@ -298,14 +298,13 @@
     <path id="test.class.path">
         <pathelement location="${jartarget}"/>
         <path refid="compile.class.path"/>
-        <pathelement location="${libdir}/mockito-core-3.5.11.jar"/>
-        <pathelement location="${libdir}/mockito-inline-3.5.11.jar"/>
-        <pathelement location="${libdir}/mockito-junit-jupiter-3.5.11.jar"/>
-        <pathelement location="${libdir}/byte-buddy-1.10.14.jar"/>
-        <pathelement location="${libdir}/byte-buddy-agent-1.10.14.jar"/>
+        <pathelement location="${libdir}/mockito-core-5.12.0.jar"/>
+        <pathelement location="${libdir}/mockito-junit-jupiter-5.12.0.jar"/>
+        <pathelement location="${libdir}/byte-buddy-1.14.15.jar"/>
+        <pathelement location="${libdir}/byte-buddy-agent-1.14.15.jar"/>
         <pathelement location="${libdir}/cglib-nodep-2.2.2.jar"/>
         <pathelement location="${libdir}/javassist-3.20.0-GA.jar"/>
-        <pathelement location="${libdir}/objenesis-2.2.jar"/>
+        <pathelement location="${libdir}/objenesis-3.3.jar"/>
         <pathelement location="${libdir}/jemmy-2.3.1.1-RELEASE125.jar"/>
         <pathelement location="${libdir}/system-rules-1.16.0.jar"/>
         <!-- cucumber and it's dependencies -->
@@ -2077,7 +2076,7 @@
             </bottom>
 
             <!-- <link href="http://java.sun.com/products/javacomm/reference/api/"/> redirected to next line -->
-            <link href="https://docs.oracle.com/cd/E17802_01/products/products/javacomm/reference/api/" />
+            <!-- <link href="https://docs.oracle.com/cd/E17802_01/products/products/javacomm/reference/api/" /> redirection issue as of 2024-09-16 -->
 
             <link href="https://fazecast.github.io/jSerialComm/javadoc" />
             
@@ -2090,7 +2089,7 @@
             <link href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>
 
             <link href="https://docs.oracle.com/en/java/javase/11/docs/api/"/>
-            <link href="http://www.jdom.org/docs/apidocs/"/>
+            <!-- <link href="http://www.jdom.org/docs/apidocs/"/> domain responding with a 403 forbidden access 2024-09-16 -->
             <link href="https://commons.apache.org/proper/commons-csv/apidocs/"/>
             <link href="https://logging.apache.org/log4j/1.x/apidocs/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
@@ -2184,14 +2183,14 @@
             </bottom>
 
             <!-- <link href="http://java.sun.com/products/javacomm/reference/api/"/> redirected to next line -->
-            <link href="https://docs.oracle.com/cd/E17802_01/products/products/javacomm/reference/api/" />
+            <!-- <link href="https://docs.oracle.com/cd/E17802_01/products/products/javacomm/reference/api/" /> redirection issue as of 2024-09-16 -->
 
             <link href="https://fazecast.github.io/jSerialComm/javadoc" />
 
             <link href="https://www.javadoc.io/doc/org.openlcb/openlcb/latest/" />
 
             <link href="http://docs.oracle.com/en/java/javase/11/docs/api/"/>
-            <link href="http://www.jdom.org/docs/apidocs/"/>
+            <!-- <link href="http://www.jdom.org/docs/apidocs/"/> domain responding with a 403 forbidden access 2024-09-16 -->
             <link href="https://commons.apache.org/proper/commons-csv/apidocs/"/>
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>

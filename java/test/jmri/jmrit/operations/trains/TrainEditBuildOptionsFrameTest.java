@@ -110,6 +110,33 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
         Assert.assertEquals("allow local moves", false, t.isAllowLocalMovesEnabled());
         Assert.assertEquals("allow through cars", false, t.isAllowThroughCarsEnabled());
 
+        JUnitUtil.dispose(trainEditFrame);
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testTrainEditBuildOptionsFrame2() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // test build options
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        Train t = tmanager.newTrain("Test Train New Name");
+
+        // Add a route to this train
+        Route route = InstanceManager.getDefault(RouteManager.class).newRoute("Test Train Route");
+        route.addLocation(InstanceManager.getDefault(LocationManager.class).newLocation("Test Train Location A"));
+        route.addLocation(InstanceManager.getDefault(LocationManager.class).newLocation("Test Train Location B"));
+        route.addLocation(InstanceManager.getDefault(LocationManager.class).newLocation("Test Train Location C"));
+        t.setRoute(route);
+
+        TrainEditFrame trainEditFrame = new TrainEditFrame(t);
+        trainEditFrame.setLocation(0, 0); // entire panel must be visible for tests to work properly
+        trainEditFrame.setTitle("Test Build Options Train Frame");
+
+        TrainEditBuildOptionsFrame f = new TrainEditBuildOptionsFrame();
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
+        f.initComponents(trainEditFrame);
+        f.setTitle("Test Train Build Options");
+
         // test car owner options
         JemmyUtil.enterClickAndLeave(f.ownerNameExclude);
 
@@ -151,6 +178,36 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
         Assert.assertEquals("train car built after all", "", t.getBuiltStartYear());
         Assert.assertEquals("train car built before all", "", t.getBuiltEndYear());
 
+        JUnitUtil.dispose(trainEditFrame);
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testTrainEditBuildOptionsFrame3() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // test build options
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        Train t = tmanager.newTrain("Test Train New Name");
+
+        // Add a route to this train
+        Route route = InstanceManager.getDefault(RouteManager.class).newRoute("Test Train Route");
+        route.addLocation(InstanceManager.getDefault(LocationManager.class).newLocation("Test Train Location A"));
+        route.addLocation(InstanceManager.getDefault(LocationManager.class).newLocation("Test Train Location B"));
+        route.addLocation(InstanceManager.getDefault(LocationManager.class).newLocation("Test Train Location C"));
+        t.setRoute(route);
+
+        // require caboose at departure
+        t.setRequirements(Train.CABOOSE);
+
+        TrainEditFrame trainEditFrame = new TrainEditFrame(t);
+        trainEditFrame.setLocation(0, 0); // entire panel must be visible for tests to work properly
+        trainEditFrame.setTitle("Test Build Options Train Frame");
+
+        TrainEditBuildOptionsFrame f = new TrainEditBuildOptionsFrame();
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
+        f.initComponents(trainEditFrame);
+        f.setTitle("Test Train Build Options");
+
         // test optional loco and caboose changes
         JemmyUtil.enterClickAndLeave(f.change1Engine);
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveTrainButton);
@@ -175,6 +232,14 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
         Assert.assertEquals("loco 1 number of engines", "3", t.getSecondLegNumberEngines());
         Assert.assertEquals("loco 1 model", "FT", t.getSecondLegEngineModel());
         Assert.assertEquals("loco 1 road", "UP", t.getSecondLegEngineRoad());
+
+        JemmyUtil.enterClickAndLeave(f.add1Engine);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        Assert.assertEquals("loco 1 add", Train.ADD_ENGINES, t.getSecondLegOptions());
+
+        JemmyUtil.enterClickAndLeave(f.remove1Engine);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        Assert.assertEquals("loco 1 remove", Train.REMOVE_ENGINES, t.getSecondLegOptions());
 
         JemmyUtil.enterClickAndLeave(f.modify1Caboose);
 
@@ -240,6 +305,14 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
         Assert.assertEquals("loco 2 number of engines", "3", t.getThirdLegNumberEngines());
         Assert.assertEquals("loco 2 model", "FT", t.getThirdLegEngineModel());
         Assert.assertEquals("loco 2 road", "UP", t.getThirdLegEngineRoad());
+
+        JemmyUtil.enterClickAndLeave(f.add2Engine);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        Assert.assertEquals("loco 2 add", Train.ADD_ENGINES, t.getThirdLegOptions());
+
+        JemmyUtil.enterClickAndLeave(f.remove2Engine);
+        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        Assert.assertEquals("loco 2 remove", Train.REMOVE_ENGINES, t.getThirdLegOptions());
 
         JemmyUtil.enterClickAndLeave(f.modify2Caboose);
 

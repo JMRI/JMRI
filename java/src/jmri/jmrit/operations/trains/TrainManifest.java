@@ -32,7 +32,7 @@ public class TrainManifest extends TrainCommon {
 
     String messageFormatText = ""; // the text being formated in case there's an exception
 
-    public TrainManifest(Train train) {
+    public TrainManifest(Train train) throws BuildFailedException {
         // create manifest file
         File file = InstanceManager.getDefault(TrainManagerXml.class).createTrainManifestFile(train.getName());
         PrintWriter fileOut;
@@ -42,8 +42,8 @@ public class TrainManifest extends TrainCommon {
                     new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)),
                     true);
         } catch (IOException e) {
-            log.error("Can not open train manifest file: {}", file.getName());
-            return;
+            log.error("Can not open train manifest file: {}", e.getLocalizedMessage());
+            throw new BuildFailedException(e);
         }
 
         try {

@@ -59,8 +59,9 @@ public class SprogPortControllerTest extends jmri.jmrix.AbstractSerialPortContro
     @Override
     @AfterEach
     public void tearDown(){
-       stcs.dispose();
-       JUnitUtil.tearDown();
+        Assertions.assertNotNull(stcs);
+        stcs.dispose();
+        JUnitUtil.tearDown();
     }
 
 }

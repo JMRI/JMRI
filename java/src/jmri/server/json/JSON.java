@@ -340,6 +340,10 @@ public final class JSON {
      */
     public static final String MODEL = "model"; // NOI18N
     /**
+     * {@value #HP}
+     */
+    public static final String HP = "hp"; // NOI18N
+    /**
      * {@value #ROAD}
      */
     public static final String ROAD = "road"; // NOI18N

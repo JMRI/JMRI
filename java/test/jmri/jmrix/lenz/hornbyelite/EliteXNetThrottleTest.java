@@ -341,6 +341,7 @@ public class EliteXNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup1() {
     }
 
@@ -349,6 +350,7 @@ public class EliteXNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup2() {
     }
 
@@ -357,6 +359,7 @@ public class EliteXNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup3() {
     }
 
@@ -365,6 +368,7 @@ public class EliteXNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup4() {
     }
 
@@ -373,6 +377,7 @@ public class EliteXNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup5() {
     }
 
@@ -393,6 +398,8 @@ public class EliteXNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void tearDown() {
         memo.getXNetTrafficController().terminateThreads();
         memo.dispose();
+        memo = null;
+        instance = null;
         JUnitUtil.tearDown();
     }
 

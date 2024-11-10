@@ -283,7 +283,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
             fileOut.flush();
             fileOut.close();
         } catch (IOException e) {
-            log.error("Can not open CSV switch list file: {}", file.getName());
+            log.error("Can not open CSV switch list file: {}", e.getLocalizedMessage());
             return null;
         }
         return file;
@@ -337,7 +337,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
             fileOut.flush();
             fileOut.close();
         } catch (IOException e) {
-            log.error("Can not open CSV switch list file: {}", file.getName());
+            log.error("Can not open CSV switch list file: {}", e.getLocalizedMessage());
         }
     }
 

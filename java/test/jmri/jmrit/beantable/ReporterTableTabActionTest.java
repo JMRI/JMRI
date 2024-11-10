@@ -1,9 +1,5 @@
 package jmri.jmrit.beantable;
 
-import java.awt.GraphicsEnvironment;
-
-import javax.swing.JFrame;
-
 import jmri.InstanceManager;
 
 import jmri.Reporter;
@@ -15,8 +11,8 @@ import jmri.managers.ProxyReporterManager;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -45,26 +41,26 @@ public class ReporterTableTabActionTest extends AbstractTableTabActionBase {
     public void testIncludeAddButton() {
         Assert.assertTrue("Default include add button", a.includeAddButton());
     }
-    
+
     @Test
+    @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
     public void testMultiSystemTabs(){
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         JUnitUtil.resetInstanceManager();
         // Not returning null v4.23.4ish
         // Assert.assertNull("No Manager at start",InstanceManager.getNullableDefault(ReporterManager.class));
-    
+
         ProxyReporterManager l = new ProxyReporterManager(); // has 2 systems: IR, JR
         l.addManager(new InternalReporterManager(new InternalSystemConnectionMemo("J", "Juliet")));
         l.addManager(new InternalReporterManager(new InternalSystemConnectionMemo("I", "India")));
         InstanceManager.setReporterManager(l);
-        
+
         // Test that Proxy Reporter Manager has Juliet, India, and nothing else.
         ReporterManager plm = InstanceManager.getDefault(ReporterManager.class);
         if (!(plm instanceof AbstractProxyManager)) {
             Assert.fail("Instance ReporterManager Not a proxy Reporter Manager");
         }
-        
+
         try {
             @SuppressWarnings("unchecked")
             AbstractProxyManager<Reporter> proxy = (AbstractProxyManager<Reporter>) plm;
@@ -79,48 +75,48 @@ public class ReporterTableTabActionTest extends AbstractTableTabActionBase {
         } catch (ClassCastException e){
             Assert.fail("catch Instance Reporter Manager Not a proxy Reporter Manager");
         }
-        
-        
+
+
         InstanceManager.getDefault(ReporterManager.class).provideReporter("IR1");
         InstanceManager.getDefault(ReporterManager.class).provideReporter("IR2");
         InstanceManager.getDefault(ReporterManager.class).provideReporter("IR3");
         InstanceManager.getDefault(ReporterManager.class).provideReporter("IR4");
         InstanceManager.getDefault(ReporterManager.class).provideReporter("IR5");
-        
+
         InstanceManager.getDefault(ReporterManager.class).provideReporter("JR8");
         InstanceManager.getDefault(ReporterManager.class).provideReporter("JR9");
-        
+
         TabbedReporterTableFrame sf = new TabbedReporterTableFrame();
         sf.initTables();
         sf.initComponents();
         sf.pack();
-        sf.setVisible(true);
-        
-        JFrame f = JFrameOperator.waitJFrame(sf.getTitle(), true, true);
-        JFrameOperator jfo = new JFrameOperator(f);
+
+        jmri.util.ThreadingUtil.runOnGUI( () -> sf.setVisible(true) );
+
+        JFrameOperator jfo = new JFrameOperator(sf.getTitle());
         JTabbedPaneOperator tabOperator = new JTabbedPaneOperator(jfo);
         Assert.assertEquals("3 manager tabs",3, tabOperator.getTabCount());
-        
+
         tabOperator.selectPage("All");
         new org.netbeans.jemmy.QueueTool().waitEmpty();
         JTableOperator controltbl = new JTableOperator(jfo, 0);
         Assert.assertEquals("All tab 7 Reporters",7, controltbl.getRowCount());
-        
+
         tabOperator.selectPage("Juliet");
         new org.netbeans.jemmy.QueueTool().waitEmpty();
         controltbl = new JTableOperator(jfo, 0);
         Assert.assertEquals("Juliet tab 2 Reporters",2, controltbl.getRowCount());
-        
+
         tabOperator.selectPage("India");
         new org.netbeans.jemmy.QueueTool().waitEmpty();
         controltbl = new JTableOperator(jfo, 0);
         Assert.assertEquals("India tab 5 Reporters",5, controltbl.getRowCount());
-        
-        // jmri.util.swing.JemmyUtil.pressButton(jfo, "Not a Button, pause test");
+
         jfo.requestClose();
-    
+        jfo.waitClosed();
+
     }
-    
+
     private static class TabbedReporterTableFrame extends ListedTableFrame<Reporter> {
         
         public TabbedReporterTableFrame(){
@@ -138,8 +134,8 @@ public class ReporterTableTabActionTest extends AbstractTableTabActionBase {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
         helpTarget = "package.jmri.jmrit.beantable.ReporterTable"; 
         a = new ReporterTableTabAction();
     }

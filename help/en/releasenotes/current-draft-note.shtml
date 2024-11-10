@@ -16,27 +16,12 @@
 
         <h4>Bachrus Speedo</h4>
             <ul>
-                <li>Revamped the Bachrus speed matcher to support configuration and different styles of speedmatching</li>
-				<li>Added ability to manually read and set a locomotive's momentum</li>
-				<li>Basic Speed matcher
-					<ul>
-						<li>Matches a locomotive to the given starting and top speeds</li>
-						<li>Can use the basic motor control CVs, the speed table, or ESU's speed table</li>
-						<li>Can configure if and how long the locomotive is warmed up and whether reverse is trimmed to match forward</li>
-					</ul>
-				</li>
-				<li>Speed Step Scale Speed matcher
-					<ul>
-						<li>Matches a locomotive to the speed step in 128 speed step mode (for example, locomotive goes 11 mph or kph at speed step 11 in 128 speed step mode) up to the given max speed</li>
-						<li>Can use the speed table or ESU's speed table</li>
-						<li>Can configure if and how long the locomotive is warmed up and whether reverse is trimmed to match forward</li>
-					</ul>
-				</li>
+                <li></li>
             </ul>
 
         <h4><a href="http://bidib.org/index_e.html">BiDiB</a></h4>
             <ul>
-                <li>BiDiB now uses JSerialComm instead of PureJavaComm - no user impact.</li>
+                <li></li>
             </ul>
 
         <h4>CBUS</h4>
@@ -121,7 +106,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li>Set the max-in-flight number to 100 to avoid overflow errors.</li>
+                <li></li>
             </ul>
 
         <h4>MRC</h4>
@@ -141,13 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Updates the OpenLCB library so that
-                    <ul>
-                        <li>You can write configuration information to a node 
-                            even if one or more items are out of range.</li>
-                        <li>The new &lt;action&gt; element in CDI 
-                            will be properly displayed.</li>
-                    <ul>
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -362,7 +341,7 @@
 
         <h4>Trix Modelleisenbahn</h4>
             <ul>
-                <li>New definition for the Trix Sound BR23 (22230) decoder</li>
+                <li></li>
             </ul>
 
         <h4>Uhlenbrock</h4>
@@ -482,6 +461,12 @@
             <li></li>
         </ul>
 
+    <h3>Permissions</h3>
+        <a id="Permissions" name="Permissions"></a>
+        <ul>
+            <li></li>
+        </ul>
+
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
@@ -591,7 +576,7 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li>new parameter ("protect=yes") to treat web-panel as read-only</li>
+            <li></li>
         </ul>
 
    <h3>Web Server</h3>
@@ -614,6 +599,12 @@
 
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
+        <ul>
+            <li></li>
+        </ul>
+
+   <h3>Z21 Server</h3>
+        <a id="Z21" name="Z21"></a>
         <ul>
             <li></li>
         </ul>

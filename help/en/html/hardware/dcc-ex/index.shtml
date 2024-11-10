@@ -207,11 +207,12 @@
 
         <li>Select "DCC++ Ethernet" from the second selection box ("System Connection").</li>
 
-        <li>Input the IP Address and Port Number of the EX-CommandStation.</li>
+        <li>Input the IP Address or Host Name of the EX-CommandStation.</li>
+        
+        <li>Check the "Additional Connection Settings" and verify that the Port is set to "2560" (DCC-EX default)</li>
 
-        <li>Click "Save". You'll be asked if it's OK for the program to quit, click "Yes".</li>
+        <li>Click "Save". You'll be prompted to Restart, click "Restart".</li>
 
-        <li>Restart the program. You should be up and running.</li>
       </ol>
 
       <h3>Connecting a 2nd JMRI instance to an EX-CommandStation using DCC++ Over TCP</h3>

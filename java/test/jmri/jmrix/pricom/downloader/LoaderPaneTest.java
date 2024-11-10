@@ -12,7 +12,7 @@ public class LoaderPaneTest {
 
     @Test
     public void testCreate() {
-        new LoaderPane();
+        Assertions.assertNotNull( new LoaderPane() );
     }
 
     @Test

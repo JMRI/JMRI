@@ -345,6 +345,7 @@ public class MrcThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup1() {
     }
 
@@ -353,6 +354,7 @@ public class MrcThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup2() {
     }
 
@@ -361,6 +363,7 @@ public class MrcThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup3() {
     }
 
@@ -369,6 +372,7 @@ public class MrcThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup4() {
     }
 
@@ -377,14 +381,17 @@ public class MrcThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup5() {
     }
+
+    private MrcSystemConnectionMemo memo;
 
     @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        MrcSystemConnectionMemo memo = new MrcSystemConnectionMemo();
+        memo = new MrcSystemConnectionMemo();
         MrcInterfaceScaffold tc = new MrcInterfaceScaffold();
         memo.setMrcTrafficController(tc);
         jmri.InstanceManager.store(memo, MrcSystemConnectionMemo.class);
@@ -395,6 +402,9 @@ public class MrcThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @AfterEach
     @Override
     public void tearDown() {
+        memo.dispose();
+        memo = null;
+        instance = null;
         JUnitUtil.tearDown();
     }
 

@@ -46,10 +46,12 @@
                 <li><a href="/help/en/html/tools/TimeTable.shtml">Timetable</a>
                 <li><a href="/help/en/html/tools/vsd/index.shtml">Virtual Sound Decoder</a>
                 <li><a href="/help/en/package/jmri/jmrit/whereused/WhereUsed.shtml">Where Used</a>
+                <li><a href="/help/en/package/jmri/jmrit/permission/PermissionManager.shtml">Permissions</a>
               </ul>
             </li>
 
             <li><i><a href="/help/en/html/tools/index.shtml#systemSpecificTools">System-specific...</a></i>
+            <li><i><a href="/help/en/html/tools/WebServerTools.shtml">Web server tools...</a></i>
           </ul>
         </dd>
 <!-- /SidebarTools.shtml -->

@@ -800,7 +800,7 @@ TemporaryDir</a>.
       with annotation based extensions. Extensions may
       be applied at the class level, the method level, and sometimes to individual fields. The
       following is a list of a few extensions we have utilized in testing JMRI.
-      <ol>
+      <ul>
         <li>
           <a href=
           "https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/io/TempDir.html"><code>@org.junit.jupiter.api.io.Tempdir</code></a>
@@ -819,7 +819,8 @@ TemporaryDir</a>.
           <code>@Test</code> annotated methods within the class. <a href=
           "#tempFileCreation">described previously</a>
         </li>
-      </ol>
+        <li><code>@Disabled</code>, <code>@DisabledIfHeadless</code> and <code>@DisabledIfSystemProperty</code> are discussed below.</li>
+      </ul>
 
       
       <h3 id="control">Tools for Controlling JUnit tests</h3>
@@ -828,20 +829,20 @@ TemporaryDir</a>.
         <li>
           <a href=
           "https://junit.org/junit5/docs/current/user-guide/#writing-tests-tagging-and-filtering">Tags
-          and Filters</a> - useful ones in our case could be headless/not headless, hardware
+          and Filters</a> - useful ones in our case could be hardware
           specific (loco buffer attached, NCE PowerPro attached, etc)
         </li>
 
         <li>JUnit 5 provides a collection of <a href=
         "https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/condition/package-summary.html">
-          conditional annotations</a>. JMRI makes extensive use of <a href=
+          conditional annotations</a>.
+
+         JMRI makes extensive use of <a href=
           "https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/condition/DisabledIfSystemProperty.html">
-          <code>@DisabledIfSystemProperty</code></a> to conditionally ignore a test. For example, a
-          test that would fail in a headless environment should be ignored in headless mode. Adding
-          the following annotation to the test method<br>
-          <code>@DisabledIfSystemProperty( named = "java.awt.headless", matches = "true")</code><br>
-          will cause the test to be ignored in headless mode. If a whole class is to be disabled in
-          headless mode, this same annotation may be applied to the test class.
+          <code>@DisabledIfSystemProperty</code></a> to conditionally ignore a test.
+          For example, to skip many of the Jython Script tests,<br>
+          <code>@DisabledIfSystemProperty(named = "jmri.skipjythontests", matches = "true")</code><br>
+          will cause the tests to be ignored if the <code>jmri.skipjythontests</code> system property is set true.
         </li>
 
         <li>
@@ -862,9 +863,7 @@ argument. <code>@Disabled</code> without an argument will compile, but Jenkins w
 error.
           <p>Also note the <code>@jmri.util.junit.annotations.ToDo</code>
           annotation</a> which indicates that this needs work and provides some more information
-          about what needs to be done. The <code>@ToDo</code> is required when an empty test is
-          provided to ensure that the parent class test doesn't run, but the parent class is
-          applicable to the class under test.</p>
+          about what needs to be done.</p>
 
           <p>In general, we'd rather have working tests rather than ignored ones, so we track the
           number that have been ignored in a Jenkins job, see the image to the right.</p>
@@ -887,6 +886,10 @@ error.
           Tests</a> page shows the trend line for disabled tests. Click on the image to get
           details.</p>
         </li>
+        <li>If a Test is annotated with <code>@Disabled</code>,
+            <code>@DisabledIfHeadless</code> ( and the system is Headless ) or 
+            <code>@NotApplicable</code>, the setUp and tearDown methods
+            for that Test will not be called, speeding up test runs.<br/></li>
       </ul>
       
       <h3 id="AssertJ">AssertJ Tools</h3>
@@ -906,11 +909,10 @@ error.
       it's been displayed!</p>
 
       <p>Because we run tests in "headless" mode during the <a href=
-      "ContinuousIntegration.shtml">continuous integration builds</a>, it's important that tests
-      needing access to the screen are annotated with:</p>
+      "ContinuousIntegration.shtml">continuous integration builds</a>, it's important that test methods
+      or classes needing access to the screen are annotated with:</p>
 
-      <pre><code>@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")</code></pre>
-      <p>This will only run the setUp, test and tearDown methods when a display is available.<br/>
+      <pre><code><strong>@jmri.util.junit.annotations.DisabledIfHeadless</strong></code></pre>
 
       <p>GUI tests should close windows when they're done, and in general clean up after
       themselves. If you want to keep windows around so you can manipulate them, e.g. for manual

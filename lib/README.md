@@ -137,9 +137,9 @@ which checks the dates of the control files to make sure they've been updated wh
 - from https://mvnrepository.com/artifact/org.slf4j/jul-to-slf4j/2.0.7
 
 ##### openlcb.jar
- - 0.7.37 from https://repo.maven.apache.org/maven2/org/openlcb/openlcb/0.7.35/openlcb-0.7.37.jar
- - plus PRs through 267 from https://github.com/openlcb/OpenLCB_Java/pulls?q=is%3Apr+is%3Amerged
-
+ - 0.8.1 from https://repo.maven.apache.org/maven2/org/openlcb/openlcb/0.8.1/openlcb-0.8.1.jar
+ - including PR #275 and #277 as of 2024-11-05
+ 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
 
@@ -379,9 +379,9 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - version 1.15.3
 - used to rebuild Help metadata
 
-##### objenesis-2.2.jar
-- version 2.2
-- initially used to mock an XBee Connection for testing.
+##### objenesis-3.3.jar
+- version 3.3
+- Mockito dependency
 
 ##### opentest4j-1.2.0.jar
 - version 1.2.0
@@ -436,8 +436,9 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - Jars from https://search.maven.org/search?q=g:com.tngtech.archunit
 - version 1.0.0-rc1
 
-##### byte-buddy-1.10.14
-- version 1.10.14
+##### byte-buddy-1.14.15
+- version 1.14.15
+- Mockito dependency
 
 ##### checker-framework directory and contents
 - The Checker Framework 2.0.1 (1-Jun-2016)
@@ -485,8 +486,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 
 ##### junit-vintage-engine-5.9.1.jar
 
-##### mockito-core mockito-inline mockito-junit-jupiter
-- version 3.5.11
+##### mockito-core mockito-junit-jupiter
+- version 5.12.0
 
 ##### OpenIDE Utilities
 - org-openide-util-lookup-RELEASE150.jar
@@ -524,10 +525,10 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - From FindBugs 3.0.0 from http://findbugs.sourceforge.net
 - Only needed at compile/build time, not runtime
 
-##### spotbugs-annotations-4.7.3.jar
-- From SpotBugs 4.7.3
+##### spotbugs-annotations-4.8.6.jar
+- From SpotBugs 4.8.6
 - Only needed at compile/build time, not runtime
-- https://mvnrepository.com/artifact/com.github.spotbugs/spotbugs-annotations/4.7.3
+- https://mvnrepository.com/artifact/com.github.spotbugs/spotbugs-annotations/4.8.6
 
 ##### picocontainer-2.15.jar
 - version 2.15

@@ -21,9 +21,6 @@ import jmri.swing.ManagerComboBox;
 import jmri.util.swing.TriStateJCheckBox;
 import jmri.util.swing.XTableColumnModel;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Swing action to create and register a NamedBeanTable GUI.
  *
@@ -185,7 +182,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
     public void setMenuBar(BeanTableFrame<E> f) {
     }
 
-    public JPanel getPanel() {
+    public JComponent getPanel() {
         return null;
     }
 
@@ -196,6 +193,10 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
     protected void configureTable(JTable table){
     }
 
+    /**
+     * Dispose of the BeanTableDataModel ( if present ),
+     * which removes the DataModel property change listeners from Beans.
+     */
     public void dispose() {
         if (m != null) {
             m.dispose();
@@ -347,18 +348,19 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
                         true,false);
     }
 
-    static protected class TableItem<E extends NamedBean> implements TableColumnModelListener {  // E comes from the parent
-        
+    protected static class TableItem<E extends NamedBean> implements TableColumnModelListener {  // E comes from the parent
+
         BeanTableDataModel<E> dataModel;
         JTable dataTable;
         final AbstractTableAction<E> tableAction;
         BeanTableFrame<E> beanTableFrame;
-        
+
         void setTableFrame(BeanTableFrame<E> frame){
             beanTableFrame = frame;
         }
 
-        final TriStateJCheckBox propertyVisible = new TriStateJCheckBox(Bundle.getMessage("ShowSystemSpecificProperties"));
+        final TriStateJCheckBox propertyVisible =
+            new TriStateJCheckBox(Bundle.getMessage("ShowSystemSpecificProperties"));
 
         public TableItem(@Nonnull AbstractTableAction<E> tableAction) {
             this.tableAction = tableAction;
@@ -368,7 +370,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
         public AbstractTableAction<E> getAAClass() {
             return tableAction;
         }
-        
+
         public JTable getDataTable() {
             return dataTable;
         }
@@ -384,23 +386,20 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
                 propertyVisible.setToolTipText(Bundle.getMessage
                         ("ShowSystemSpecificPropertiesToolTip"));
                 addToBottomBox(propertyVisible);
-                propertyVisible.addActionListener((ActionEvent e) -> {
-                    dataModel.setPropertyColumnsVisible(dataTable, propertyVisible.isSelected());
-                });
+                propertyVisible.addActionListener((ActionEvent e) ->
+                    dataModel.setPropertyColumnsVisible(dataTable, propertyVisible.isSelected()));
             }
             fireColumnsUpdated(); // init bottom buttons
             dataTable.getColumnModel().addColumnModelListener(this);
 
         }
-        
+
         void includeAddButton(boolean includeAddButton){
-        
+
             if (includeAddButton) {
                 JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
                 addToBottomBox(addButton );
-                addButton.addActionListener((ActionEvent e1) -> {
-                    tableAction.addPressed(e1);
-                });
+                addButton.addActionListener(tableAction::addPressed);
             }
         }
 
@@ -509,6 +508,6 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
     }
     
     
-    private static final Logger log = LoggerFactory.getLogger(AbstractTableAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractTableAction.class);
 
 }

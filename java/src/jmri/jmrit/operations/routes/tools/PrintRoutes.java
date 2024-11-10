@@ -73,7 +73,7 @@ public class PrintRoutes {
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
         } catch (IOException e1) {
-            log.error("Exception in print routes");
+            log.error("Exception in print routes: {}", e1.getLocalizedMessage());
         }
     }
 
@@ -89,7 +89,7 @@ public class PrintRoutes {
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
         } catch (IOException e1) {
-            log.error("Exception in print routes");
+            log.error("Exception in print routes: {}", e1.getLocalizedMessage());
         }
     }
 
@@ -106,7 +106,7 @@ public class PrintRoutes {
                 SPACE +
                 Bundle.getMessage("Drops") +
                 SPACE +
-                Bundle.getMessage("Wait") +
+                Bundle.getMessage("Travel") +
                 TAB +
                 Bundle.getMessage("Length") +
                 TAB +

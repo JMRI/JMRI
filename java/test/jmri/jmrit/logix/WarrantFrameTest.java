@@ -10,6 +10,7 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.JLabelOperator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -74,13 +75,18 @@ public class WarrantFrameTest {
         t.setName("WarrantFrameTest Answer Question stop train");
         t.start();
         
-        WarrantFrame warrantFrame= new WarrantFrame(startW, endW);
+        WarrantFrame warrantFrame = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new WarrantFrame(startW, endW);
+        });
         assertNotNull(warrantFrame,"JoinWFrame exits");
 
         JUnitUtil.waitFor( () -> !t.isAlive(), "dialogue stop train in block east main? answered");
 
-        warrantFrame._userNameBox.setText("WestBoundLocal");
         JFrameOperator editFrame = new JFrameOperator(warrantFrame);
+
+        JLabelOperator jlo = new JLabelOperator(editFrame, Bundle.getMessage("LabelUserName"));
+        ((javax.swing.JTextField) jlo.getLabelFor()).setText("WestBoundLocal");
+
         JemmyUtil.pressButton(editFrame, Bundle.getMessage("ButtonSave"));
 
         Warrant w = _warrantMgr.getWarrant("WestBoundLocal");
@@ -116,11 +122,16 @@ public class WarrantFrameTest {
         clickDialog.setName("WarrantFrameTest click Question No");
         clickDialog.start();
 
-        WarrantFrame warrantFrame= new WarrantFrame(startW, endW);
+        WarrantFrame warrantFrame = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new WarrantFrame(startW, endW);
+        });
         assertNotNull(warrantFrame,"JoinWFrame exists");
 
-        warrantFrame._userNameBox.setText("WestBound");
         JFrameOperator editFrame = new JFrameOperator(warrantFrame);
+
+        JLabelOperator jlo = new JLabelOperator(editFrame, Bundle.getMessage("LabelUserName"));
+        ((javax.swing.JTextField) jlo.getLabelFor()).setText("WestBound");
+
         JemmyUtil.pressButton(editFrame, Bundle.getMessage("ButtonSave"));
 
         JUnitUtil.waitFor(() -> !clickDialog.isAlive(),"QuestionTitle ButtonNo clicked");
@@ -141,9 +152,8 @@ public class WarrantFrameTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        JUnitUtil.resetInstanceManager();
-        JUnitUtil.initConfigureManager();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initRosterConfigManager();
         JUnitUtil.initWarrantManager();
         JUnitUtil.initDebugThrottleManager();

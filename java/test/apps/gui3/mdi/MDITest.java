@@ -1,14 +1,16 @@
 package apps.gui3.mdi;
 
-import apps.AppsBase;
+import java.io.File;
+import java.io.IOException;
 
-import java.awt.GraphicsEnvironment;
+import apps.AppsBase;
 
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
+import org.junit.jupiter.api.io.TempDir;
+
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  *
@@ -19,8 +21,8 @@ import org.junit.Assume;
 public class MDITest {
 
     @Test
+    @jmri.util.junit.annotations.DisabledIfHeadless
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         String[] args = {"DecoderProConfig3.xml"};
         AppsBase a = new MDI(args) {
             // force the application to not actually start.
@@ -50,16 +52,42 @@ public class MDITest {
                 JUnitUtil.initDebugThrottleManager();
             }
         };
-        Assert.assertNotNull(a);
+        Assertions.assertNotNull(a);
+
+        JFrameOperator wizardOperator = new JFrameOperator("DecoderPro Wizard");
+        Assertions.assertNotNull(wizardOperator);
+
+        jmri.util.swing.JemmyUtil.pressButton(wizardOperator, "Cancel");
+
+        // struggles to find Frame in Win CI
+        // JFrameOperator jfo = new JFrameOperator("JMRI GUI3 Demo");
+        // Assertions.assertNotNull(jfo);
+
         // shutdown the application
-        AppsBase.handleQuit();
+        jmri.InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).setEnableStoreCheck(false);
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+
+        //   jfo.requestClose(); // fails to close
+        Assertions.assertFalse(AppsBase.handleQuit());
+
+        JUnitUtil.waitFor( () ->
+            ((jmri.managers.DefaultShutDownManager)jmri.InstanceManager.getDefault(
+            jmri.ShutDownManager.class)).isShutDownComplete(),"Shutdown complete");
+
+        // JUnitUtil.disposeFrame("JMRI GUI3 Demo", false, true); // still leaves Frame present ?
+
     }
 
     @BeforeEach
-    public void setUp() {
+    public void setUp(@TempDir File folder) {
         JUnitUtil.setUp();
         JUnitUtil.resetApplication();
-        JUnitUtil.resetProfileManager();
+        try {
+            JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
+        } catch (IOException ioe) {
+            Assertions.fail("failed to reset the profile", ioe);
+        }
+        jmri.InstanceManager.setDefault(jmri.ShutDownManager.class, new jmri.util.MockShutDownManager());
     }
 
     @AfterEach

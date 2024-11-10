@@ -339,7 +339,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                     cTab = CurrentTab.SENSOR;
                     addButton.setText(Bundle.getMessage("ButtonAddX", Bundle.getMessage("BeanNameSensor")));
                     addButton.setToolTipText(Bundle.getMessage("ToolTipButtonMSFAdd"));
-                    saveButton.setText(Bundle.getMessage("ButtonSaveX", Bundle.getMessage("Sensors")));                    
+                    saveButton.setText(Bundle.getMessage("ButtonSaveX", Bundle.getMessage("Sensors")));
                     saveButton.setToolTipText(Bundle.getMessage("ToolTipButtonMSFSave"));
                     log.debug("Current Tab is: {}", tabbedPane.getSelectedIndex());
             }
@@ -356,7 +356,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
 
         bottomPanelRight.add(versionLabel);
         bottomPanelRight.add(closeButton);
-        bottomPanel.add(bottomPanelRight, BorderLayout.EAST);   
+        bottomPanel.add(bottomPanelRight, BorderLayout.EAST);
 
         this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
         this.getContentPane().add(tabbedPane);
@@ -372,59 +372,59 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
         this.getJMenuBar().add(fileMenu);
 
         JMenu mSend = new JMenu(Bundle.getMessage("MenuSend"));
-        JMenuItem iRequestDefs = new JMenuItem(Bundle.getMessage("RequestDefs"));       
+        JMenuItem iRequestDefs = new JMenuItem(Bundle.getMessage("RequestDefs"));
         iRequestDefs.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.SENSOR_CMD)), null); 
-                _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.TURNOUT_CMD)), null); 
-                _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.OUTPUT_CMD)), null); 
-                _tc.sendDCCppMessage(DCCppMessage.makeTurnoutIDsMsg(), null); 
+                _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.SENSOR_CMD)), null);
+                _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.TURNOUT_CMD)), null);
+                _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.OUTPUT_CMD)), null);
+                _tc.sendDCCppMessage(DCCppMessage.makeTurnoutIDsMsg(), null);
             }
         });
         mSend.add(iRequestDefs);
 
-        JMenuItem iRequestStates = new JMenuItem(Bundle.getMessage("RequestStates"));       
+        JMenuItem iRequestStates = new JMenuItem(Bundle.getMessage("RequestStates"));
         iRequestStates.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.READ_CS_STATUS)), null); 
+                _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.READ_CS_STATUS)), null);
             }
         });
         mSend.add(iRequestStates);
 
-        JMenuItem iSaveToEeprom = new JMenuItem(Bundle.getMessage("SaveToEEPROM"));       
+        JMenuItem iSaveToEeprom = new JMenuItem(Bundle.getMessage("SaveToEEPROM"));
         iSaveToEeprom.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.WRITE_TO_EEPROM_CMD)), null); 
+                _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.WRITE_TO_EEPROM_CMD)), null);
             }
         });
         mSend.add(iSaveToEeprom);
 
-        JMenuItem iEraseEeprom = new JMenuItem(Bundle.getMessage("ClearEEPROM"));       
+        JMenuItem iEraseEeprom = new JMenuItem(Bundle.getMessage("ClearEEPROM"));
         iEraseEeprom.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.CLEAR_EEPROM_CMD)), null); 
+                _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.CLEAR_EEPROM_CMD)), null);
             }
         });
         mSend.add(iEraseEeprom);
 
-        JMenuItem iReadLocoId = new JMenuItem(Bundle.getMessage("ReadLocoId"));       
+        JMenuItem iReadLocoId = new JMenuItem(Bundle.getMessage("ReadLocoId"));
         iReadLocoId.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.PROG_READ_CV)), null); 
+                _tc.sendDCCppMessage(new DCCppMessage(String.valueOf(DCCppConstants.PROG_READ_CV)), null);
             }
         });
         mSend.add(iReadLocoId);
 
-        JMenuItem iTrackManagerCmd = new JMenuItem(Bundle.getMessage("TrackManagerCmd"));       
+        JMenuItem iTrackManagerCmd = new JMenuItem(Bundle.getMessage("TrackManagerCmd"));
         iTrackManagerCmd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                _tc.sendDCCppMessage(DCCppMessage.makeTrackManagerRequestMsg(), null); 
+                _tc.sendDCCppMessage(DCCppMessage.makeTrackManagerRequestMsg(), null);
             }
         });
         mSend.add(iTrackManagerCmd);
@@ -480,18 +480,18 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
             v.add((r.getOutputListIFlagInt() & 0x04) == 4); // (bool) Force High
             outputModel.insertData(v, false);
             outputSorter.sort();
-        } else if (r.isStatusReply()) { 
-            DCCppCommandStation cs = _tc.getCommandStation(); 
+        } else if (r.isStatusReply()) {
+            DCCppCommandStation cs = _tc.getCommandStation();
             //enable or disable some tabs based on support by command station
             if (cs.isServoTurnoutCreationSupported()) {
                 tabbedPane.setEnabledAt(SERVOTURNOUT_TAB_NUM, true);
                 tabbedPane.setEnabledAt(VPINTURNOUT_TAB_NUM,  true);
             } else {
                 tabbedPane.setEnabledAt(SERVOTURNOUT_TAB_NUM, false);
-                tabbedPane.setEnabledAt(VPINTURNOUT_TAB_NUM,  false);                
+                tabbedPane.setEnabledAt(VPINTURNOUT_TAB_NUM,  false);
             }
             //populate the version line
-            String v = cs.getStationType() + " " + cs.getVersion() + " " + cs.getBuild(); 
+            String v = cs.getStationType() + " " + cs.getVersion() + " " + cs.getBuild();
             if (v.length() > 40) {
                 v = ""; //don't try to show really long version strings here
             }
@@ -692,7 +692,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                             sensorModel.setDirtyRow(row, false);
                         }
                     }
-                    _tc.sendDCCppMessage(DCCppMessage.makeSensorListMsg(), this); //request updated definitions list 
+                    _tc.sendDCCppMessage(DCCppMessage.makeSensorListMsg(), this); //request updated definitions list
                     break;
                 case DCCTURNOUT:
                     for (int i = 0; i < dccTurnoutModel.getRowData().size(); i++) {
@@ -726,8 +726,8 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                     if (_tc.getCommandStation().isTurnoutIDsMessageRequired()) {
                         _tc.sendDCCppMessage(DCCppMessage.makeTurnoutIDsMsg(), this);
                     } else {
-                        _tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), this); 
-                    }                    
+                        _tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), this);
+                    }
                     break;
                 case SERVOTURNOUT:
                     for (int i = 0; i < servoTurnoutModel.getRowData().size(); i++) {
@@ -763,8 +763,8 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                     if (_tc.getCommandStation().isTurnoutIDsMessageRequired()) {
                         _tc.sendDCCppMessage(DCCppMessage.makeTurnoutIDsMsg(), this);
                     } else {
-                        _tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), this); 
-                    }                    
+                        _tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), this);
+                    }
                     break;
                 case VPINTURNOUT:
                     for (int i = 0; i < vpinTurnoutModel.getRowData().size(); i++) {
@@ -798,8 +798,8 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                     if (_tc.getCommandStation().isTurnoutIDsMessageRequired()) {
                         _tc.sendDCCppMessage(DCCppMessage.makeTurnoutIDsMsg(), this);
                     } else {
-                        _tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), this); 
-                    }                    
+                        _tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), this);
+                    }
                     break;
                 case OUTPUT:
                     for (int i = 0; i < outputModel.getRowData().size(); i++) {
@@ -832,7 +832,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
                             outputModel.setDirtyRow(row, false);
                         }
                     }
-                    _tc.sendDCCppMessage(DCCppMessage.makeOutputListMsg(), this); //request updated definitions list 
+                    _tc.sendDCCppMessage(DCCppMessage.makeOutputListMsg(), this); //request updated definitions list
                     break;
                 default:
                     break;
@@ -875,7 +875,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
 
         // If clicked while changes not saved to BaseStation, offer
         // the option of saving.
-        if (sensorModel.isDirty() || dccTurnoutModel.isDirty() || servoTurnoutModel.isDirty() 
+        if (sensorModel.isDirty() || dccTurnoutModel.isDirty() || servoTurnoutModel.isDirty()
                 || vpinTurnoutModel.isDirty() || outputModel.isDirty()) {
             int value = JmriJOptionPane.showConfirmDialog(null, Bundle.getMessage("FieldMCFSaveDialogConfirmMessage"),
                     Bundle.getMessage("ConfirmSaveDialogTitle"),
@@ -1141,7 +1141,7 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
      * type that can be returned from the TableModel classes for the column that
      * includes the Delete buttons.
      */
-    class ButtonEditor extends DefaultCellEditor {
+    private static class ButtonEditor extends DefaultCellEditor {
 
         protected JButton button;
         private String label;
