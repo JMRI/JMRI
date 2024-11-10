@@ -234,11 +234,11 @@
         <label>Consist Address Active For F12</label>
         <label xml:lang="cs">Adresa soupravy aktivní pro F12</label>
       </variable>
-      <variable item="Consist Address Active For F13-F20" CV="22" mask="XVXXXXXX" default="0">
+      <variable item="Consist Address Active For F13" CV="22" mask="XVXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F13-F20</label>
       </variable>
-      <variable item="Consist Address Active For F21-F28" CV="22" mask="VXXXXXXX" default="0">
+      <variable item="Consist Address Active For F21" CV="22" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F21-F28</label>
       </variable>
@@ -1574,7 +1574,7 @@
       </variable>
       
 <!-- AUX2 effect configuration -->
-      <variable item="AUX2 First Function" CV="156" default="3">
+      <variable item="AUX2 First Function" CV="156" default="4">
         <decVal min="0" max="255" />
         <tooltip>First function number which turn on AUX2</tooltip>
       </variable>
@@ -1624,7 +1624,7 @@
       </variable>
             
 <!-- AUX3 effect configuration -->
-      <variable item="AUX3 First Function" CV="168" default="3">
+      <variable item="AUX3 First Function" CV="168" default="5">
         <decVal min="0" max="255" />
         <tooltip>First function number which turn on AUX3</tooltip>
       </variable>
@@ -1674,7 +1674,7 @@
       </variable>
       
 <!-- AUX4 effect configuration -->
-      <variable item="AUX4 First Function" CV="180" default="4">
+      <variable item="AUX4 First Function" CV="180" default="6">
         <decVal min="0" max="255" />
         <tooltip>First function number which turn on AUX4</tooltip>
       </variable>
@@ -1724,7 +1724,7 @@
       </variable>  
       
 <!-- AUX5 effect configuration -->
-      <variable item="AUX5 First Function" CV="192" default="5">
+      <variable item="AUX5 First Function" CV="192" default="4">
         <decVal min="0" max="255" />
         <tooltip>First function number which turn on AUX5</tooltip>
       </variable>
@@ -1774,7 +1774,7 @@
       </variable>          
                   
 <!-- AUX6 effect configuration -->
-      <variable item="AUX6 First Function" CV="204" default="6">
+      <variable item="AUX6 First Function" CV="204" default="4">
         <decVal min="0" max="255" />
         <tooltip>First function number which turn on AUX6</tooltip>
       </variable>
@@ -1978,20 +1978,30 @@
                     </griditem>
                     <griditem gridx="0" gridy="3">
                         <label>
-                            <text>AUX3</text>
+                            <text>AUX1</text>
                         </label>
                     </griditem>
                     <griditem gridx="0" gridy="4">
                         <label>
-                            <text>AUX4</text>
+                            <text>AUX2</text>
                         </label>
                     </griditem>
                     <griditem gridx="0" gridy="5">
                         <label>
-                            <text>AUX5</text>
+                            <text>AUX3</text>
                         </label>
                     </griditem>
                     <griditem gridx="0" gridy="6">
+                        <label>
+                            <text>AUX4</text>
+                        </label>
+                    </griditem>
+                    <griditem gridx="0" gridy="7">
+                        <label>
+                            <text>AUX5</text>
+                        </label>
+                    </griditem>
+                    <griditem gridx="0" gridy="8">
                         <label>
                             <text>AUX6</text>
                         </label>
@@ -2033,39 +2043,57 @@
                         <display item="RL Function Turn Off" label=""/>
                     </griditem>
                     <griditem gridx="1" gridy="3">
-                        <display item="AUX3 First Function"  label=""/>
+                        <display item="AUX1 First Function"  label=""/>
                     </griditem>
                     <griditem gridx="2" gridy="3">
-                        <display item="AUX3 Second Function"  label=""/>
+                        <display item="AUX1 Second Function"  label=""/>
                     </griditem>
                     <griditem gridx="3" gridy="3">
-                        <display item="AUX3 Function Turn Off" label=""/>
+                        <display item="AUX1 Function Turn Off" label=""/>
                     </griditem>
                      <griditem gridx="1" gridy="4">
-                        <display item="AUX4 First Function"  label=""/>
+                        <display item="AUX2 First Function"  label=""/>
                     </griditem>
                     <griditem gridx="2" gridy="4">
-                        <display item="AUX4 Second Function"  label=""/>
+                        <display item="AUX2 Second Function"  label=""/>
                     </griditem>
                     <griditem gridx="3" gridy="4">
-                        <display item="AUX4 Function Turn Off" label=""/>
+                        <display item="AUX2 Function Turn Off" label=""/>
                     </griditem>
                     <griditem gridx="1" gridy="5">
-                        <display item="AUX5 First Function"  label=""/>
+                        <display item="AUX3 First Function"  label=""/>
                     </griditem>
                     <griditem gridx="2" gridy="5">
-                        <display item="AUX5 Second Function"  label=""/>
+                        <display item="AUX3 Second Function"  label=""/>
                     </griditem>
                     <griditem gridx="3" gridy="5">
-                        <display item="AUX5 Function Turn Off" label=""/>
+                        <display item="AUX3 Function Turn Off" label=""/>
                     </griditem>
-                    <griditem gridx="1" gridy="6">
-                        <display item="AUX6 First Function"  label=""/>
+                     <griditem gridx="1" gridy="6">
+                        <display item="AUX4 First Function"  label=""/>
                     </griditem>
                     <griditem gridx="2" gridy="6">
-                        <display item="AUX6 Second Function"  label=""/>
+                        <display item="AUX4 Second Function"  label=""/>
                     </griditem>
                     <griditem gridx="3" gridy="6">
+                        <display item="AUX4 Function Turn Off" label=""/>
+                    </griditem>
+                    <griditem gridx="1" gridy="7">
+                        <display item="AUX5 First Function"  label=""/>
+                    </griditem>
+                    <griditem gridx="2" gridy="7">
+                        <display item="AUX5 Second Function"  label=""/>
+                    </griditem>
+                    <griditem gridx="3" gridy="7">
+                        <display item="AUX5 Function Turn Off" label=""/>
+                    </griditem>
+                    <griditem gridx="1" gridy="8">
+                        <display item="AUX6 First Function"  label=""/>
+                    </griditem>
+                    <griditem gridx="2" gridy="8">
+                        <display item="AUX6 Second Function"  label=""/>
+                    </griditem>
+                    <griditem gridx="3" gridy="8">
                         <display item="AUX6 Function Turn Off" label=""/>
                     </griditem>          
                  </grid>
@@ -2136,6 +2164,8 @@
           </label>   
           <display item="FL Effect" />
           <display item="RL Effect" />
+          <display item="AUX1 Effect" />
+          <display item="AUX2 Effect" />
           <display item="AUX3 Effect" />
           <display item="AUX4 Effect" />
           <display item="AUX5 Effect" />
@@ -2198,20 +2228,30 @@
             </griditem>
             <griditem gridx="3" gridy="0">
                 <label>
-                    <text>AUX3</text>
+                    <text>AUX1</text>
                 </label>
             </griditem>
             <griditem gridx="4" gridy="0">
                 <label>
-                    <text>AUX4</text>
+                    <text>AUX2</text>
                 </label>
             </griditem>
             <griditem gridx="5" gridy="0">
                 <label>
-                    <text>AUX5</text>
+                    <text>AUX3</text>
                 </label>
             </griditem>
             <griditem gridx="6" gridy="0">
+                <label>
+                    <text>AUX4</text>
+                </label>
+            </griditem>
+            <griditem gridx="7" gridy="0">
+                <label>
+                    <text>AUX5</text>
+                </label>
+            </griditem>
+            <griditem gridx="8" gridy="0">
                 <label>
                     <text>AUX6</text>
                 </label>
@@ -2224,15 +2264,21 @@
                 <display item="RL Light Intensity"  label=""/>
             </griditem>
             <griditem gridx="3" gridy="1">
-                <display item="AUX3 Light Intensity" label=""/>
+                <display item="AUX1 Light Intensity" label=""/>
             </griditem>
             <griditem gridx="4" gridy="1">
-                <display item="AUX4 Light Intensity" label=""/>
+                <display item="AUX2 Light Intensity" label=""/>
             </griditem>
             <griditem gridx="5" gridy="1">
-                <display item="AUX5 Light Intensity" label=""/>
+                <display item="AUX3 Light Intensity" label=""/>
             </griditem>
             <griditem gridx="6" gridy="1">
+                <display item="AUX4 Light Intensity" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="1">
+                <display item="AUX5 Light Intensity" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="1">
                 <display item="AUX6 Light Intensity" label=""/>
             </griditem>
 
@@ -2243,15 +2289,21 @@
                 <display item="RL Blink Period"  label=""/>
             </griditem>
             <griditem gridx="3" gridy="2">
-                <display item="AUX3 Blink Period" label=""/>
+                <display item="AUX1 Blink Period" label=""/>
             </griditem>
             <griditem gridx="4" gridy="2">
-                <display item="AUX4 Blink Period" label=""/>
+                <display item="AUX2 Blink Period" label=""/>
             </griditem>
             <griditem gridx="5" gridy="2">
-                <display item="AUX5 Blink Period" label=""/>
+                <display item="AUX3 Blink Period" label=""/>
             </griditem>
             <griditem gridx="6" gridy="2">
+                <display item="AUX4 Blink Period" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="2">
+                <display item="AUX5 Blink Period" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="2">
                 <display item="AUX6 Blink Period" label=""/>
             </griditem>
 
@@ -2262,15 +2314,21 @@
                 <display item="RL Blink Pulse Length"  label=""/>
             </griditem>
             <griditem gridx="3" gridy="3">
-                <display item="AUX3 Blink Pulse Length" label=""/>
+                <display item="AUX1 Blink Pulse Length" label=""/>
             </griditem>
             <griditem gridx="4" gridy="3">
-                <display item="AUX4 Blink Pulse Length" label=""/>
+                <display item="AUX2 Blink Pulse Length" label=""/>
             </griditem>
             <griditem gridx="5" gridy="3">
-                <display item="AUX5 Blink Pulse Length" label=""/>
+                <display item="AUX3 Blink Pulse Length" label=""/>
             </griditem>
             <griditem gridx="6" gridy="3">
+                <display item="AUX4 Blink Pulse Length" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="3">
+                <display item="AUX5 Blink Pulse Length" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="3">
                 <display item="AUX6 Blink Pulse Length" label=""/>
             </griditem>
 
@@ -2281,15 +2339,21 @@
                 <display item="RL Blink Pause Length"  label=""/>
             </griditem>
             <griditem gridx="3" gridy="4">
-                <display item="AUX3 Blink Pause Length" label=""/>
+                <display item="AUX1 Blink Pause Length" label=""/>
             </griditem>
             <griditem gridx="4" gridy="4">
-                <display item="AUX4 Blink Pause Length" label=""/>
+                <display item="AUX2 Blink Pause Length" label=""/>
             </griditem>
             <griditem gridx="5" gridy="4">
-                <display item="AUX5 Blink Pause Length" label=""/>
+                <display item="AUX3 Blink Pause Length" label=""/>
             </griditem>
             <griditem gridx="6" gridy="4">
+                <display item="AUX4 Blink Pause Length" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="4">
+                <display item="AUX5 Blink Pause Length" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="4">
                 <display item="AUX6 Blink Pause Length" label=""/>
             </griditem>
 
@@ -2300,15 +2364,21 @@
                 <display item="RL Blink Repetition Time"  label=""/>
             </griditem>
             <griditem gridx="3" gridy="5">
-                <display item="AUX3 Blink Repetition Time" label=""/>
+                <display item="AUX1 Blink Repetition Time" label=""/>
             </griditem>
             <griditem gridx="4" gridy="5">
-                <display item="AUX4 Blink Repetition Time" label=""/>
+                <display item="AUX2 Blink Repetition Time" label=""/>
             </griditem>
             <griditem gridx="5" gridy="5">
-                <display item="AUX5 Blink Repetition Time" label=""/>
+                <display item="AUX3 Blink Repetition Time" label=""/>
             </griditem>
             <griditem gridx="6" gridy="5">
+                <display item="AUX4 Blink Repetition Time" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="5">
+                <display item="AUX5 Blink Repetition Time" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="5">
                 <display item="AUX6 Blink Repetition Time" label=""/>
             </griditem>
 
@@ -2319,15 +2389,21 @@
                 <display item="RL Turn ON Delay"  label=""/>
             </griditem>
             <griditem gridx="3" gridy="6">
-                <display item="AUX3 Turn ON Delay" label=""/>
+                <display item="AUX1 Turn ON Delay" label=""/>
             </griditem>
             <griditem gridx="4" gridy="6">
-                <display item="AUX4 Turn ON Delay" label=""/>
+                <display item="AUX2 Turn ON Delay" label=""/>
             </griditem>
             <griditem gridx="5" gridy="6">
-                <display item="AUX5 Turn ON Delay" label=""/>
+                <display item="AUX3 Turn ON Delay" label=""/>
             </griditem>
             <griditem gridx="6" gridy="6">
+                <display item="AUX4 Turn ON Delay" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="6">
+                <display item="AUX5 Turn ON Delay" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="6">
                 <display item="AUX6 Turn ON Delay" label=""/>
             </griditem>
 
@@ -2344,9 +2420,15 @@
                 <display item="AUX4 Turn OFF Delay" label=""/>
             </griditem>
             <griditem gridx="5" gridy="7">
-                <display item="AUX5 Turn OFF Delay" label=""/>
+                <display item="AUX3 Turn OFF Delay" label=""/>
             </griditem>
             <griditem gridx="6" gridy="7">
+                <display item="AUX4 Turn OFF Delay" label=""/>
+            </griditem>
+            <griditem gridx="7" gridy="7">
+                <display item="AUX5 Turn OFF Delay" label=""/>
+            </griditem>
+            <griditem gridx="8" gridy="7">
                 <display item="AUX6 Turn OFF Delay" label=""/>
             </griditem>         
         </grid>
@@ -2378,6 +2460,7 @@
     </column>
              
   </pane>
+
    
 <!-- Advanced Pane - with SPP, SUSI, Function State, RailCom Settings -->         
   <pane>
