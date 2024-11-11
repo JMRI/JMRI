@@ -326,7 +326,7 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
                         setSpeedMatchError(speedMatchMaxSpeedKPH);
 
                         if (Math.abs(speedMatchError) < ALLOWED_SPEED_MATCH_ERROR) {
-                            initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_VSTART, 3);
+                            initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_VSTART);
                         } else {
                             vHigh = getNextSpeedMatchValue(lastVHigh, VHIGH_MAX, VHIGH_MIN);
 
@@ -372,8 +372,6 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
 
                             lastVStart = vStart;
                             writeVStart(vStart);
-                        
-                            setSpeedMatchStateTimerDuration(8000);
                         }
                     }
                 }
@@ -401,7 +399,7 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
                     }
 
                     if (initSpeedTableStep.getSpeedStep() < 2) {
-                        initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH, 3);
+                        initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH);
                     }
                 }
                 break;

@@ -299,7 +299,7 @@ public class BasicESUTableSpeedMatcher extends BasicSpeedMatcher {
                         setSpeedMatchError(targetVHighSpeedKPH);
 
                         if (Math.abs(speedMatchError) < ALLOWED_SPEED_MATCH_ERROR) {
-                            initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_VSTART, 3);
+                            initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_VSTART);
                         } else {
                             vHigh = getNextSpeedMatchValue(lastVHigh, VHIGH_MAX, VHIGH_MIN);
 
@@ -344,8 +344,6 @@ public class BasicESUTableSpeedMatcher extends BasicSpeedMatcher {
 
                             lastVStart = vStart;
                             writeVStart(vStart);
-                                         
-                            setSpeedMatchStateTimerDuration(8000);
                         }
                     }
                 }

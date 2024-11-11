@@ -654,7 +654,14 @@ public abstract class SpeedMatcher implements ThrottleListener, ProgListener {
         if ((speedMatchError < 0 && speedMatcherValueDelta >= 0) || (speedMatchError >= 0 && speedMatcherValueDelta < 0)) {
             speedMatcherValueDelta = -speedMatcherValueDelta;
             if (attempt > 1) {
-                speedMatcherValueDelta = Math.max(1, speedMatcherValueDelta/3);
+                if (speedMatcherValueDelta >= 0)
+                {
+                    speedMatcherValueDelta = Math.max(1, speedMatcherValueDelta/3);
+                }
+                else
+                {
+                    speedMatcherValueDelta = Math.min(-1, speedMatcherValueDelta/3);
+                }
             }
         }
         

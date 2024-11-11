@@ -547,7 +547,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
             statusLabel.setText(Bundle.getMessage("StatSettingSpeed", speedStep.getCV() + " (Speed Step " + String.valueOf(speedStep.getSpeedStep()) + ")"));
             logger.info("Setting CV {} (speed step {}) to {} KPH ({} MPH)", speedStep.getCV(), speedStep.getSpeedStep(), String.valueOf(targetSpeedKPH), String.valueOf(Speed.kphToMph(targetSpeedKPH)));
             setThrottle(true, speedStep.getSpeedStep());
-            setSpeedMatchStateTimerDuration(8000);
+            setSpeedMatchStateTimerDuration(speedStep == SpeedTableStep.STEP1 ? 15000 : 8000);
             stepDuration = 1;
         } else {
             setSpeedMatchError(targetSpeedKPH);

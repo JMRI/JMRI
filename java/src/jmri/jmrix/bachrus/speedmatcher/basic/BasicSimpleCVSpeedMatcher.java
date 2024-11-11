@@ -264,7 +264,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                         setSpeedMatchError(targetTopSpeedKPH);
 
                         if (Math.abs(speedMatchError) < ALLOWED_SPEED_MATCH_ERROR) {
-                            initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_VMID, 3);
+                            initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_VMID);
                         } else {
                             vHigh = getNextSpeedMatchValue(lastVHigh, VHIGH_MAX, VHIGH_MIN);
 
@@ -301,7 +301,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                         setSpeedMatchError(targetMidSpeedKPH);
 
                         if (Math.abs(speedMatchError) < ALLOWED_SPEED_MATCH_ERROR) {
-                            initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_VSTART, 3);
+                            initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_VSTART);
                         } else {
                             vMid = getNextSpeedMatchValue(lastVMid, vMidMax, VMID_MIN);
 
@@ -356,8 +356,6 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
 
                             lastVStart = vStart;
                             writeVStart(vStart);
-                            
-                            setSpeedMatchStateTimerDuration(8000);
                         }
                     }
                 }

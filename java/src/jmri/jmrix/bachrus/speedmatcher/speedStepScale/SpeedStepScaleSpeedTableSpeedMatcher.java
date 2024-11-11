@@ -475,7 +475,7 @@ public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMat
 
             writeSpeedTableStep(speedMatchSpeedTableStep, speedMatchCVValue);
 
-            setSpeedMatchStateTimerDuration(8000);
+            setSpeedMatchStateTimerDuration(speedMatchSpeedTableStep == SpeedTableStep.STEP1 ? 15000: 8000);
             stepDuration = 1;
         } else {
             setSpeedMatchError(speedStepTargetSpeedKPH);
