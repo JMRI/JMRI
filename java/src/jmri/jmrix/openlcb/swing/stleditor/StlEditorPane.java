@@ -83,13 +83,12 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private MimicNodeStore _store;
 
     /* Preferences setup */
-    final String _storeModeCheck = this.getClass().getName() + ".StoreMode";
     final String _viewModeCheck = this.getClass().getName() + ".SplitView";
     final String _previewModeCheck = this.getClass().getName() + ".Preview";
     private final UserPreferencesManager _pm;
-    private JCheckBox _compactOption = new JCheckBox(Bundle.getMessage("StoreMode"));
     private boolean _splitView;
     private boolean _stlPreview;
+    private String _storeMode;
 
     private boolean _dirty = false;
     private int _logicRow = -1;     // The last selected row, -1 for none
@@ -159,6 +158,9 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private JRadioButtonMenuItem _viewSingle = new JRadioButtonMenuItem(Bundle.getMessage("MenuSingle"));
     private JRadioButtonMenuItem _viewSplit = new JRadioButtonMenuItem(Bundle.getMessage("MenuSplit"));
     private JRadioButtonMenuItem _viewPreview = new JRadioButtonMenuItem(Bundle.getMessage("MenuPreview"));
+    private JRadioButtonMenuItem _viewReadable = new JRadioButtonMenuItem(Bundle.getMessage("MenuStoreLINE"));
+    private JRadioButtonMenuItem _viewCompact = new JRadioButtonMenuItem(Bundle.getMessage("MenuStoreCLNE"));
+    private JRadioButtonMenuItem _viewCompressed = new JRadioButtonMenuItem(Bundle.getMessage("MenuStoreCOMP"));
 
     // CDI Names
     private static String INPUT_NAME = "Logic Inputs.Group I%s(%s).Input Description";
@@ -193,6 +195,13 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         _pm = InstanceManager.getDefault(UserPreferencesManager.class);
         _splitView = _pm.getSimplePreferenceState(_viewModeCheck);
         _stlPreview = _pm.getSimplePreferenceState(_previewModeCheck);
+
+        var mode = _pm.getProperty(this.getClass().getName(), "StoreMode");
+        if (mode == null) {
+            _storeMode = "LINE";
+        } else {
+            _storeMode = (String) mode;
+        }
     }
 
     @Override
@@ -275,15 +284,8 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         nodeSelector.add(_nodeBox);
 
-        //Setup up store mode checkbox
-        var storeMode = new JPanel();
-        _compactOption.setToolTipText(Bundle.getMessage("StoreModeTip"));
-        _compactOption.setSelected(_pm.getSimplePreferenceState(_storeModeCheck));
-        storeMode.add(_compactOption);
-
         var header = new JPanel();
         header.setLayout(new BorderLayout());
-        header.add(storeMode, BorderLayout.EAST);
         header.add(nodeSelector, BorderLayout.CENTER);
 
         add(header, BorderLayout.NORTH);
@@ -710,8 +712,11 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                         row = first;
                         name = _transmitterList.get(row).getName() + "~" + second;
                         break;
+                    case "M":
+                        // No friendly name
+                        break;
                     default:
-                        log.error("Variable '{}' has an invalid first letter (IQYZ)", variable);
+                        log.error("Variable '{}' has an invalid first letter (IQYZM)", variable);
                }
             }
         }
@@ -721,7 +726,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     private void encode(GroupRow groupRow) {
         String longLine = "";
-        String separator = (_compactOption.isSelected()) ? "" : " ";
+        String separator = (_storeMode.equals("LINE")) ? " " : "";
 
         var logicList = groupRow.getLogicList();
         for (var row : logicList) {
@@ -780,9 +785,14 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             if (!row.getComment().isEmpty()) {
                 var comment = row.getComment().trim();
                 sb.append(separator + "//" + separator + comment);
+                if (_storeMode.equals("COMP")) {
+                    sb.append("\n");
+                }
             }
 
-            sb.append("\n");
+            if (!_storeMode.equals("COMP")) {
+                sb.append("\n");
+            }
 
             longLine = longLine + sb.toString();
         }
@@ -818,7 +828,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     private boolean isTimerVar(String name) {
         var match = PARSE_TIMERVAR.matcher(name);
-        return match.find();
+        if (match.find()) {
+            return (match.group(1).equals(name));
+        }
+        return false;
     }
 
     /**
@@ -1058,6 +1071,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             index--;
         }
         _messages.add(Bundle.getMessage("ErrNoOper", index, line));
+        log.error("findOperator: {} :: {}", index, line);
         return null;
     }
 
@@ -3324,6 +3338,41 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             _viewPreview.setSelected(false);
         }
 
+        viewMenu.addSeparator();
+
+        // Create a radio button menu group
+        ButtonGroup viewStoreGroup = new ButtonGroup();
+
+        _viewReadable.setActionCommand("LINE");
+        _viewReadable.addItemListener(this::setViewStoreMode);
+        viewMenu.add(_viewReadable);
+        viewButtonGroup.add(_viewReadable);
+
+        _viewCompact.setActionCommand("CLNE");
+        _viewCompact.addItemListener(this::setViewStoreMode);
+        viewMenu.add(_viewCompact);
+        viewButtonGroup.add(_viewCompact);
+
+        _viewCompressed.setActionCommand("COMP");
+        _viewCompressed.addItemListener(this::setViewStoreMode);
+        viewMenu.add(_viewCompressed);
+        viewButtonGroup.add(_viewCompressed);
+
+        // Select the current store mode
+        switch (_storeMode) {
+            case "LINE":
+                _viewReadable.setSelected(true);
+                break;
+            case "CLNE":
+                _viewCompact.setSelected(true);
+                break;
+            case "COMP":
+                _viewCompressed.setSelected(true);
+                break;
+            default:
+                log.error("Invalid store mode: {}", _storeMode);
+        }
+
         retval.add(fileMenu);
         retval.add(viewMenu);
 
@@ -3419,10 +3468,23 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         _pm.setSimplePreferenceState(_previewModeCheck, _stlPreview);
     }
 
+    private void setViewStoreMode(ItemEvent e) {
+        if (e.getStateChange() == ItemEvent.SELECTED) {
+            var button = (JRadioButtonMenuItem) e.getItem();
+            var cmd = button.getActionCommand();
+            _storeMode = cmd;
+            _pm.setProperty(this.getClass().getName(), "StoreMode", cmd);
+        }
+    }
+
     @Override
     public void dispose() {
-        _pm.setSimplePreferenceState(_storeModeCheck, _compactOption.isSelected());
-        // and complete this
+        if (_tableFrame != null) {
+            _tableFrame.dispose();
+        }
+        if (_previewFrame != null) {
+            _previewFrame.dispose();
+        }
         super.dispose();
     }
 
