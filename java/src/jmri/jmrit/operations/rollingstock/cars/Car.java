@@ -683,7 +683,7 @@ public class Car extends RollingStock {
 
     /**
      * Updates all cars in a kernel. After the update, the cars will all have
-     * the same final destination, load, and next load.
+     * the same final destination, load, and route path.
      */
     public void updateKernel() {
         if (isLead()) {
@@ -692,6 +692,7 @@ public class Car extends RollingStock {
                 car.setFinalDestination(getFinalDestination());
                 car.setFinalDestinationTrack(getFinalDestinationTrack());
                 car.setLoadGeneratedFromStaging(isLoadGeneratedFromStaging());
+                car.setRoutePath(getRoutePath());
                 if (InstanceManager.getDefault(CarLoads.class).containsName(car.getTypeName(), getLoadName())) {
                     car.setLoadName(getLoadName());
                 }
