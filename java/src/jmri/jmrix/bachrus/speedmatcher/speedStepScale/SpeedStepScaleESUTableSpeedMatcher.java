@@ -326,7 +326,7 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
                         setSpeedMatchError(speedMatchMaxSpeedKPH);
 
                         if (Math.abs(speedMatchError) < ALLOWED_SPEED_MATCH_ERROR) {
-                            initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_VSTART);
+                            initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_VSTART, 3);
                         } else {
                             vHigh = getNextSpeedMatchValue(lastVHigh, VHIGH_MAX, VHIGH_MIN);
 
@@ -359,6 +359,7 @@ public class SpeedStepScaleESUTableSpeedMatcher extends SpeedStepScaleSpeedMatch
                         setSpeedMatchError(targetVStartSpeedKPH);
 
                         if (Math.abs(speedMatchError) < ALLOWED_SPEED_MATCH_ERROR) {
+                            setThrottle(true, 28);
                             initNextSpeedMatcherState(SpeedMatcherState.RE_INIT_SPEED_TABLE);
                         } else {
                             vStart = getNextSpeedMatchValue(lastVStart, vStartMax, VSTART_MIN);

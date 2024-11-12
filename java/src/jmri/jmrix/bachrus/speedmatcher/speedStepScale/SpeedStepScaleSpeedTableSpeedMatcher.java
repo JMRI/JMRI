@@ -491,7 +491,12 @@ public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMat
                 speedMatchSpeedTableStep = speedMatchSpeedTableStep.getPrevious();
 
                 if (speedMatchSpeedTableStep != null) {
-                    initNextSpeedMatcherState(speedMatcherState);
+                    if (speedMatchSpeedTableStep == SpeedTableStep.STEP1) {
+                        initNextSpeedMatcherState(speedMatcherState, 3);
+                    }
+                    else {
+                        initNextSpeedMatcherState(speedMatcherState);
+                    }
                 } else {
                     initNextSpeedMatcherState(nextState);
                 }

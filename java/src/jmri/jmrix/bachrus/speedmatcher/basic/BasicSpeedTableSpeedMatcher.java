@@ -335,7 +335,7 @@ public class BasicSpeedTableSpeedMatcher extends BasicSpeedMatcher {
                     writeSpeedTableStep(initSpeedTableStep, step10CVValue);
 
                     if (initSpeedTableStep == SpeedTableStep.STEP1) {
-                        initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_STEP1);
+                        initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_STEP1, 3);
                     } else {
                         initSpeedTableStep = initSpeedTableStep.getPrevious();
                     }

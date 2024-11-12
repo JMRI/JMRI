@@ -301,7 +301,7 @@ public class BasicSimpleCVSpeedMatcher extends BasicSpeedMatcher {
                         setSpeedMatchError(targetMidSpeedKPH);
 
                         if (Math.abs(speedMatchError) < ALLOWED_SPEED_MATCH_ERROR) {
-                            initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_VSTART);
+                            initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_VSTART, 3);
                         } else {
                             vMid = getNextSpeedMatchValue(lastVMid, vMidMax, VMID_MIN);
 
