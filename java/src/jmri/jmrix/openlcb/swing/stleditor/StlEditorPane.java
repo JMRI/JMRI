@@ -83,7 +83,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private MimicNodeStore _store;
 
     /* Preferences setup */
-    final String _viewModeCheck = this.getClass().getName() + ".SplitView";
     final String _previewModeCheck = this.getClass().getName() + ".Preview";
     private final UserPreferencesManager _pm;
     private boolean _splitView;
@@ -193,8 +192,15 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     public StlEditorPane() {
         _pm = InstanceManager.getDefault(UserPreferencesManager.class);
-        _splitView = _pm.getSimplePreferenceState(_viewModeCheck);
         _stlPreview = _pm.getSimplePreferenceState(_previewModeCheck);
+
+        var view = _pm.getProperty(this.getClass().getName(), "ViewMode");
+        if (view == null) {
+            _splitView = false;
+        } else {
+            _splitView = "SPLIT".equals((String) view);
+
+        }
 
         var mode = _pm.getProperty(this.getClass().getName(), "StoreMode");
         if (mode == null) {
@@ -760,7 +766,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 var name = row.getName().trim();
 
                 if (jumpLabel) {
-                    sb.append(" " + name + " ");
+                    sb.append(" " + name + "\n");
                     jumpLabel = false;
                 } else if (isMemory(name)) {
                     sb.append(separator + name);
@@ -3346,17 +3352,17 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         _viewReadable.setActionCommand("LINE");
         _viewReadable.addItemListener(this::setViewStoreMode);
         viewMenu.add(_viewReadable);
-        viewButtonGroup.add(_viewReadable);
+        viewStoreGroup.add(_viewReadable);
 
         _viewCompact.setActionCommand("CLNE");
         _viewCompact.addItemListener(this::setViewStoreMode);
         viewMenu.add(_viewCompact);
-        viewButtonGroup.add(_viewCompact);
+        viewStoreGroup.add(_viewCompact);
 
         _viewCompressed.setActionCommand("COMP");
         _viewCompressed.addItemListener(this::setViewStoreMode);
         viewMenu.add(_viewCompressed);
-        viewButtonGroup.add(_viewCompressed);
+        viewStoreGroup.add(_viewCompressed);
 
         // Select the current store mode
         switch (_storeMode) {
@@ -3382,8 +3388,9 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private void setViewMode(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.SELECTED) {
             var button = (JRadioButtonMenuItem) e.getItem();
-            _splitView = "SPLIT".equals(button.getActionCommand());
-            _pm.setSimplePreferenceState(_viewModeCheck, _splitView);
+            var cmd = button.getActionCommand();
+            _splitView = "SPLIT".equals(cmd);
+            _pm.setProperty(this.getClass().getName(), "ViewMode", cmd);
             if (_splitView) {
                 splitTabs();
             } else if (_detailTabs.getTabCount() == 1) {
