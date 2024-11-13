@@ -3453,6 +3453,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             _stlTextArea = new JTextArea();
             _stlTextArea.setEditable(false);
             _stlTextArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+            _stlTextArea.setMargin(new Insets(5,10,0,0));
 
             var previewPanel = new JPanel();
             previewPanel.setLayout(new BorderLayout());
