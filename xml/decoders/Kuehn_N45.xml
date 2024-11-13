@@ -985,7 +985,7 @@
       <label xml:lang="de">Kurzzeitspeicher deaktiviert</label>
       <label xml:lang="cs">Deaktivace krátkodobé paměti</label>
       <tooltip xml:lang="de">wenn "ein" ist der Kurzzeitspeicher des Decoders deaktiviert</tooltip>
-      <tooltip xml:lang="cs">Pokud "Zapnuto" je jrátkodobá pamět deaktivována.</tooltip>
+      <tooltip xml:lang="cs">Pokud "Zapnuto" je krátkodobá pamět deaktivována.</tooltip>
     </variable>
     <variable CV="113" default="0" item="Global lighting option 1">
     <decVal min="0" max="9"/>
