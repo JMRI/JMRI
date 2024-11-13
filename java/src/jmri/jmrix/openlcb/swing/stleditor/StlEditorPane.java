@@ -198,7 +198,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         if (view == null) {
             _splitView = false;
         } else {
-            _splitView = "SPLIT".equals((String) view);
+            _splitView = "SPLIT".equals(view);
 
         }
 
