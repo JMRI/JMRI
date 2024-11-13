@@ -129,7 +129,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Add a Send SNIP Request button to the Send tool.</li>
             </ul>
 
         <h4>Powerline</h4>
