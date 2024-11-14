@@ -1,5 +1,8 @@
 package jmri.jmrix;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.*;
+
 import jmri.util.JmriJFrame;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
@@ -85,6 +88,22 @@ public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelT
             return getFrameTextONGUIThread().equals("");
         }, "frame text");
         assertEquals("", getFrameTextONGUIThread());
+    }
+
+    @Test
+    @DisabledIfHeadless
+    public void testCopyToClipboardButton() {
+        assertDoesNotThrow( () -> ThreadingUtil.runOnGUI( () -> pane.initComponents() ));
+
+        Clipboard systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        // reset clipboard from any previous tests
+        systemClipboard.setContents(new StringSelection(""), null);
+
+        setFrameTextOnGUIThread("text in Log");
+        ThreadingUtil.runOnGUI( () -> pane.copyToClipBoardButtonActionPerformed(null));
+
+        JUnitUtil.waitFor( () -> ((String)systemClipboard.getData(DataFlavor.stringFlavor))
+            .contains("text in Log"), "log text not moved to clipboard");
     }
 
     @Test

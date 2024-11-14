@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>JMRI: Basic Enhanced Signaling Definition</title>
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+
+      <h1>JMRI: Basic Enhanced Signaling Definition</h1>
+      This directory contains basic signaling definitions understood by many model railroaders.
+      They don't model any specific prototype, but are similar to transition era ARR signaling
+      techniques. This "basic-enhanced" definition is based on the "basic" definition and brings
+      the following enhancements:
+
+      <ol>
+        <li>Addition of "Advanced Approach" aspect.</li>
+        <li>Addition of a 3-head mast.</li>
+        <li>All mast image files collected together under the "basic-enhanced" directory.</li>
+        <li>Mast image files renamed to indicated displayed light color rather than a rule number
+          <ul>
+            <li>In the case of multi-head masts, colors are arranged top to bottom in filename.</li>
+            <li>The light colors are represented as:
+              <ul>
+                <li>R = Red</li>
+                <li>Y = Yellow</li>
+                <li>FY = Flashing Yellow (with suffix to indicate animated or static gif)</li>
+                <li>G = Green</li>
+              </ul>
+            </li>
+            <li> Example: "SL-2-high-G-R.gif" for a Searchlight two head high mast in Green over 
+              Red appearance.
+            </li>
+          </ul>
+        </li>
+
+      </ol>
+
+      <p>See the <a href="aspects.xml">aspect page</a>.</p>
+
+      <p><u><b>USAGE INFORMATION:</b></u>  When using the basic-enhanced signal system with Signal
+        Mast Logic (SML) set the Global Thrown speed to Limited.  On Panel Pro window, navigate to 
+        Tools>Tables>Turnouts page, select Speeds>Defaults... and selecting "Limited" from the 
+        Thrown Speed pulldown.  By default, JMRI sets at the Global Thrown speed to "Restricted" 
+        and the Global Closed speed to "Normal."
+      </p>
+
+      <p><u><b>USING SPEED TO SELECT SECONDARY DIVERGING ASPECTS:</b></u> When using the three-head 
+        mast contained in this basic-enhanced signal system with SML, set the speed of the diverging 
+        route to be signaled by the bottom head to "Medium".  This is easily accomplished by creating 
+        a dummy block whose speed is set to "Medium" and including it in that route's logic with a 
+        test setting of "Any State".  The dummy block is not part of the actual layout and does not 
+        need to be placed on the layout panel.
+      </p>
+
+      <p>In JMRI, a route is either Normal or Diverging.  If a route contains even one turnout in 
+        Thrown state, then that entire route is Diverging.  If a route contains two turnouts or two 
+        crossovers, that means there are two diverging paths.  SML uses a route's speed to 
+        determine which head on a mast is used to signal the second diverging path.  In the case 
+        of the three head mast contained in the basic-enhanced signal system, the bottom head has 
+        its speed set to Medium (slower than Limited) and is intended to signal this two-turnout 
+        case.  It can be used to indicate the route will take the second of two successive, closely 
+        spaced turnouts, or that the route passes through both closely spaced crossovers, as in the 
+        case of a  three-track crossover move.  Usage of the dummy block set to Medium speed as 
+        discussed above is an easy method to inform SML to use the bottom head to signal this 
+        secondary route.
+
+      </p>
+
+      <p><u><b>DISCUSSION ON ROUTE SPEED:</b></u>  The speed of a given route between two Signal 
+        Masts is equal to the slowest speed assigned to any element in the route.  When a block is 
+        created, JMRI assigns the Global Normal speed to it.  By default this is "Normal" speed.  
+        When a turnout is created, JMRI assigns the Global Normal speed to its Closed path and the 
+        Global Thrown speed to its Thrown path.  These by default are "Normal" and "Restricting", 
+        respectively.  The usage recommendation for the basic-enhanced signal system is the set the 
+        Global Thrown speed to "Limited."  See above for instructions.  If a route between two masts 
+        contains blocks and turnouts that are all Closed, then the speed of that route is the Global 
+        Normal speed.  If a route contains a turnout in the Thrown state, the speed of that route is 
+        the Global Thrown speed.  A route's speed can be modified individually by overriding the 
+        defaults.  JMRI provides several options for doing this. For example, the speeds for 
+        an element in the route, such as a turnout's path or a block, can be individually set, 
+        or a virtual element can be created and included in that route to set the route's speed.  
+        Remember that the slowest speed of any element in the route sets the speed of the entire 
+        route.  The speed names (Restricted, Medium, etc) and their relative magnitude are found 
+        in file xml/signals/signalSpeeds.xml located under the JMRI install directory.
+      </p>  
+
+      <p>Signal Mast definitions:</p>
+
+      <ul>
+        <li>
+          <a href="appearance-one-searchlight-high.xml">Single searchlight high signal</a>
+        </li>
+
+        <li>
+          <a href="appearance-two-searchlight-high.xml">Double searchlight high signal</a>
+        </li>
+
+        <li>
+          <a href="appearance-three-searchlight-high.xml">Triple Searchlight high signal</a>
+        </li>
+
+        <li>
+          <a href="appearance-one-searchlight-low.xml">Single searchlight low signal</a>
+        </li>
+
+        <li>
+          <a href="appearance-two-searchlight-low.xml">Double searchlight low signal</a>
+        </li>
+
+      </ul>
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/main.js"></script>
+</body>
+</html>
