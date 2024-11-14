@@ -693,6 +693,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
             if (!ignoreFinalDestinationCheckBox.isSelected()) {
                 car.setFinalDestination(_car.getFinalDestination());
                 car.setFinalDestinationTrack(_car.getFinalDestinationTrack());
+                car.setRoutePath(_car.getRoutePath());
             }
             // update car load
             if (!ignoreLoadCheckBox.isSelected() && carLoads.containsName(car.getTypeName(), _car.getLoadName())) {

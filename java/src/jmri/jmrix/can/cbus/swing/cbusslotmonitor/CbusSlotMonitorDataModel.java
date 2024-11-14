@@ -29,6 +29,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
 
     private final TextAreaFIFO tablefeedback;
     private final TrafficController tc;
+    private final CanSystemConnectionMemo memo;
     private final ArrayList<CbusSlotMonitorSession> _mainArray;
 
     protected int _contype=0; //  pane console message type
@@ -49,10 +50,12 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     public static final int SPEED_STEP_COLUMN = 7;
     public static final int LOCO_CONSIST_COLUMN = 8;
     public static final int FLAGS_COLUMN = 9;
+    public static final int KILL_SESSION_COLUMN = 10;
+    public static final int LAUNCH_THROTTLE = 11;
 
-    public static final int MAX_COLUMN = 10;
+    public static final int MAX_COLUMN = 12;
 
-    static final int[] CBUSSLOTMONINITIALCOLS = {0,1,2,4,5,6,9};
+    static final int[] CBUSSLOTMONINITIALCOLS = {0,1,2,4,5,6,9,10,11};
 
     /**
      * Create a New CbusSlotMonitorDataModel.
@@ -68,7 +71,8 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         // connect to the CanInterface
         tc = memo.getTrafficController();
         addTc(tc);
-        log.info("Starting {} CbusSlotMonitorDataModel", memo.getUserName());
+        this.memo = memo;
+        log.debug("Starting {} CbusSlotMonitorDataModel", memo.getUserName());
 
     }
 
@@ -87,7 +91,9 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         ("Any Functions set to ON"),
         ("Speed Steps"),
         null, // consist id
-        null // flags
+        null, // flags
+        Bundle.getMessage("ReleaseTip"),  // send KLOC
+        Bundle.getMessage("LaunchThrottleTip")
 
     }; // Length = number of items in array should (at least) match number of columns
 
@@ -132,6 +138,10 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
                 return Bundle.getMessage("OPC_FL"); // Flags
             case FUNCTION_LIST:
                 return Bundle.getMessage("Functions");
+            case KILL_SESSION_COLUMN:
+                return Bundle.getMessage("Release");
+            case LAUNCH_THROTTLE:
+                return Bundle.getMessage("ThrottleTitle");
             default:
                 return "unknown"; // NOI18N
         }
@@ -156,6 +166,8 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
             case LOCO_COMMANDED_SPEED_COLUMN:
                 return String.class;
             case ESTOP_COLUMN:
+            case KILL_SESSION_COLUMN:
+            case LAUNCH_THROTTLE:
                 return JButton.class;
             default:
                 return null;
@@ -169,7 +181,11 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case ESTOP_COLUMN:
+                return _mainArray.get(row).getSessionId() > 0;
+            case LAUNCH_THROTTLE:
                 return true;
+            case KILL_SESSION_COLUMN:
+                return isJmriManagedThrottle(_mainArray.get(row).getLocoAddr());
             default:
                 return false;
         }
@@ -200,11 +216,21 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
             case LOCO_COMMANDED_SPEED_COLUMN:
                 return _mainArray.get(row).getCommandedSpeed();
             case ESTOP_COLUMN:
-                return new NamedIcon("resources/icons/throttles/estop.png", "resources/icons/throttles/estop.png");
+                if ( _mainArray.get(row).getSessionId() > 0 ) { // is active session
+                    return new NamedIcon("resources/icons/throttles/estop.png", "resources/icons/throttles/estop.png");
+                }
+                return null; // disables button if action is not possible
             case FUNCTION_LIST:
                 return _mainArray.get(row).getFunctionString();
             case SPEED_STEP_COLUMN:
                 return _mainArray.get(row).getSpeedSteps();
+            case KILL_SESSION_COLUMN:
+                if ( isJmriManagedThrottle(_mainArray.get(row).getLocoAddr()) ) {
+                    return Bundle.getMessage("Release");
+                }
+                return null; // disables button if action is not possible
+            case LAUNCH_THROTTLE:
+                return Bundle.getMessage("ThrottleTitle");
             default:
                 log.error("internal state inconsistent with table request for row {} col {}", row, col);
                 return null;
@@ -221,6 +247,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
             case SESSION_ID_COLUMN:
                 _mainArray.get(row).setSessionId( (Integer) value );
                 updateGui(row,col);
+                updateGui(row, KILL_SESSION_COLUMN);
                 break;
             case LOCO_CONSIST_COLUMN:
                 _mainArray.get(row).setConsistId( (Integer) value );
@@ -249,6 +276,18 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
             case SPEED_STEP_COLUMN:
                 _mainArray.get(row).setSpeedSteps( (String) value );
                 updateGui(row,col);
+                break;
+            case KILL_SESSION_COLUMN:
+                CanMessage msg = new CanMessage(2, tc.getCanid());
+                CbusMessage.setPri(msg, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
+                msg.setOpCode(CbusConstants.CBUS_KLOC);
+                msg.setElement(1, _mainArray.get(row).getSessionId());
+                tc.sendCanMessage(msg, null);
+                break;
+            case LAUNCH_THROTTLE:
+                var tf = InstanceManager.getDefault(jmri.jmrit.throttle.ThrottleFrameManager.class).createThrottleFrame();
+                tf.toFront();
+                tf.getAddressPanel().setCurrentAddress(_mainArray.get(row).getLocoAddr() );
                 break;
             default:
                 log.warn("Failed to set value at column {}",col);
@@ -859,6 +898,11 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
      */
     public void addToLog(int cbuserror, String cbustext){
         ThreadingUtil.runOnGUI( ()-> tablefeedback.append( System.lineSeparator()+cbustext));
+    }
+
+    private boolean isJmriManagedThrottle(LocoAddress addr) {
+        ThrottleManager tm = memo.getFromMap(ThrottleManager.class);
+        return tm != null && tm.getThrottleUsageCount(addr) > 0;
     }
 
     /**
