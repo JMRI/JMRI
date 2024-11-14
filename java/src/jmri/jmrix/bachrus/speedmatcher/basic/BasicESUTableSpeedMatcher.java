@@ -267,7 +267,7 @@ public class BasicESUTableSpeedMatcher extends BasicSpeedMatcher {
                 } else {
                     nextState = SpeedMatcherState.FORWARD_SPEED_MATCH_VHIGH;
                 }
-                initNextSpeedMatcherState(nextState);
+                initNextSpeedMatcherState(nextState, 30);
                 break;
             }
 
@@ -276,7 +276,7 @@ public class BasicESUTableSpeedMatcher extends BasicSpeedMatcher {
                 statusLabel.setText(Bundle.getMessage("StatForwardWarmUp", warmUpForwardSeconds - stepDuration));
 
                 if (stepDuration >= warmUpForwardSeconds) {
-                    initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_VHIGH);
+                    initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_VHIGH, 30);
                 } else {
                     if (stepDuration == 0) {
                         setSpeedMatchStateTimerDuration(5000);
@@ -299,7 +299,7 @@ public class BasicESUTableSpeedMatcher extends BasicSpeedMatcher {
                         setSpeedMatchError(targetVHighSpeedKPH);
 
                         if (Math.abs(speedMatchError) < ALLOWED_SPEED_MATCH_ERROR) {
-                            initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_VSTART);
+                            initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_VSTART, 3);
                         } else {
                             vHigh = getNextSpeedMatchValue(lastVHigh, VHIGH_MAX, VHIGH_MIN);
 
@@ -325,7 +325,7 @@ public class BasicESUTableSpeedMatcher extends BasicSpeedMatcher {
                         statusLabel.setText(Bundle.getMessage("StatSettingSpeed", SpeedMatcherCV.VSTART.getName()));
                         logger.info("Setting CV {} to {} KPH ({} MPH)", SpeedMatcherCV.VSTART.getName(), String.valueOf(targetVStartSpeedKPH), String.valueOf(Speed.kphToMph(targetVStartSpeedKPH)));
                         setThrottle(true, 1);
-                        setSpeedMatchStateTimerDuration(8000);
+                        setSpeedMatchStateTimerDuration(15000);
                         stepDuration = 1;
                     } else {
                         setSpeedMatchError(targetVStartSpeedKPH);
@@ -624,17 +624,28 @@ public class BasicESUTableSpeedMatcher extends BasicSpeedMatcher {
     }
 
     /**
-     * Sets up the speed match state by clearing the speed match error, clearing
-     * the step duration, setting the timer duration, and setting the next state
+     * Sets up the speed match state by resetting the speed matcher with a value delta of 10,
+     * clearing the step duration, setting the timer duration, and setting the next state
      *
-     * @param nextState - next SpeedMatcherState to set
+     * @param nextState next SpeedMatcherState to set
      */
     protected void initNextSpeedMatcherState(SpeedMatcherState nextState) {
-        resetSpeedMatchError();
+        initNextSpeedMatcherState(nextState, 10); 
+    }
+    
+    /**
+     * Sets up the speed match state by resetting the speed matcher with the given value delta,
+     * clearing the step duration, setting the timer duration, and setting the next state
+     *
+     * @param nextState next SpeedMatcherState to set
+     * @param speedMatchValueDelta the value delta to use when resetting the speed matcher
+     */
+    protected void initNextSpeedMatcherState(SpeedMatcherState nextState, int speedMatchValueDelta) {
+        resetSpeedMatcher(speedMatchValueDelta);
         stepDuration = 0;
         speedMatcherState = nextState;
         setSpeedMatchStateTimerDuration(1800);
-    }
+    }    
     //</editor-fold>
 
     //debugging logger
