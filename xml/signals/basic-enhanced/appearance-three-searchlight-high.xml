@@ -14,7 +14,7 @@
 
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
-	    <personname>
+      <personname>
         <firstname>John</firstname>
         <surname>Purcell</surname>
       </personname>
@@ -23,17 +23,21 @@
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
-        <revnumber>1.0</revnumber>
-        <date>2024-02-13</date>
-        <authorinitials>JDP</authorinitials>
-        <revremark>Initial version.  Adding Advanced Approach and 3-head mast to "basic" to create "enhanced-basid" signal system.</revremark>
+      <revnumber>1.0</revnumber>
+      <date>2024-11-14</date>
+      <authorinitials>JDP</authorinitials>
+      <revremark>Initial release for use in new "basic-enhanced" signal system</revremark>
     </revision>
   </revhistory>
 
   <aspecttable>basic-enhanced</aspecttable>
   <name>Triple searchlight high signal</name>
   <reference>(similar to basic signals described in various magazine articles)</reference>
-  <description>A three-headed signal for use where two successive crossovers are too close to be separately signaled.  Secondary Diverging indicates diverging through two consecutive crossovers</description>
+  <description>A three-headed signal inspired by masts used in the "basic" signal system.
+    This mast adds a third head and an Advanced Approach appearance.  This mast can be used
+    where two divergent paths exist (e.g. two turnouts) that are too close to be signaled
+    by separate masts.
+  </description>
 
   <appearances>
 
@@ -42,7 +46,7 @@
       <show>green</show>
       <show>red</show>
       <show>red</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-G-R-R.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-G-R-R.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -50,7 +54,7 @@
       <show>yellow</show>
       <show>red</show>
       <show>red</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-Y-R-R.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-Y-R-R.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -58,8 +62,8 @@
       <show>flashyellow</show>
       <show>red</show>
       <show>red</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-FY-R-R-animated.gif</imagelink>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-FY-R-R-static.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-FY-R-R-animated.gif</imagelink>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-FY-R-R-static.gif</imagelink>
     </appearance>    
 
     <appearance>
@@ -67,7 +71,7 @@
       <show>red</show>
       <show>red</show>
       <show>red</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-R-R-R.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-R-R-R.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -75,7 +79,7 @@
       <show>red</show>
       <show>green</show>
       <show>red</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-R-G-R.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-R-G-R.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -83,7 +87,7 @@
       <show>red</show>
       <show>red</show>
       <show>green</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-R-R-G.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-R-R-G.gif</imagelink>
     </appearance>    
 
     <appearance>
@@ -91,7 +95,7 @@
       <show>red</show>
       <show>yellow</show>
       <show>red</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-R-Y-R.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-R-Y-R.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -99,8 +103,8 @@
       <show>red</show>
       <show>flashyellow</show>
       <show>red</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-R-FY-R-animated.gif</imagelink>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-R-FY-R-static.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-R-FY-R-animated.gif</imagelink>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-R-FY-R-static.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -108,7 +112,7 @@
       <show>red</show>
       <show>red</show>
       <show>yellow</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-R-R-Y.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-R-R-Y.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -116,8 +120,8 @@
       <show>red</show>
       <show>red</show>
       <show>flashyellow</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-R-R-FY-animated.gif</imagelink>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-R-R-FY-static.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-R-R-FY-animated.gif</imagelink>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-R-R-FY-static.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -125,7 +129,7 @@
       <show>dark</show>
       <show>dark</show>
       <show>dark</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-dark.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-dark.gif</imagelink>
     </appearance>
 
   </appearances>
@@ -138,7 +142,7 @@
 
     <held>
       <aspect>Stop</aspect>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-held.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-3-high/SL-3-high-held.gif</imagelink>
     </held>
     <dark>
       <aspect>Unlit</aspect>

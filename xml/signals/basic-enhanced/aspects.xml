@@ -3,7 +3,7 @@
 <aspecttable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/aspecttable.xsd">
 
   <name>Basic Enhanced Model Signals</name>
-  <date>2024-10-26</date>
+  <date>2024-11-12</date>
   <reference>Enhanced Basic signals known by many modelers</reference>
 
   <copyright xmlns="http://docbook.org/ns/docbook">
@@ -48,10 +48,10 @@
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
-      <revnumber>1</revnumber>
-      <date>2024-10-26</date>
+      <revnumber>1.0</revnumber>
+      <date>2024-11-14</date>
       <authorinitials>JDP</authorinitials>
-      <revremark>Initial version, based on "basic" signal system in JMRI</revremark>
+      <revremark>Initial release for new "basic-enhanced" signal system</revremark>
     </revision>
 
   </revhistory>
@@ -142,6 +142,11 @@
     </aspect>
     
   </aspects>
+
+  <imagetypes>
+    <imagetype type="aspects" />
+    <imagetype type="noflash" />
+  </imagetypes>
 
   <appearancefiles>
     <appearancefile href="appearance-one-searchlight-high.xml" />

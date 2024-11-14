@@ -40,24 +40,10 @@
   <revhistory xmlns="http://docbook.org/ns/docbook">
 
     <revision>
-      <revnumber>2.2</revnumber>
-      <date>2016-04-01</date>
-      <authorinitials>MST</authorinitials>
-      <revremark>Add low appearances</revremark>
-    </revision>
-
-    <revision>
-      <revnumber>2.3</revnumber>
-      <date>2016-05-05</date>
-      <authorinitials>MST</authorinitials>
-      <revremark>Add Held and Dark specific appearances</revremark>
-    </revision>
-
-    <revision>
-      <revnumber>2.4</revnumber>
-      <date>2024-04-13</date>
+      <revnumber>1.0</revnumber>
+      <date>2024-11-14</date>
       <authorinitials>JDP</authorinitials>
-      <revremark>Revise for use in new basic-enhanced signal system</revremark>
+      <revremark>Initial release for use in new "basic-enhanced" signal system</revremark>
     </revision>
 
   </revhistory>
@@ -65,39 +51,41 @@
   <aspecttable>basic-enhanced</aspecttable>
   <name>Single searchlight low signal</name>
   <reference>(similar to basic signals described in various magazine articles)</reference>
-  <description>A simple signal for use as e.g. a block signal</description>
+  <description>A simple signal mast based on similar mast used in the "basic" signal system, but
+    with addition of an Advanced Approach appearance.
+  </description>
 
   <appearances>
 
     <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-low/SL-1-low-G.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-low/SL-1-low-G.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-low/SL-1-low-Y.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-low/SL-1-low-Y.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Advanced Approach</aspectname>
       <show>flashyellow</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-low/SL-1-low-FY-animated.gif</imagelink>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-low/SL-1-low-FY-static.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-low/SL-1-low-FY-animated.gif</imagelink>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-low/SL-1-low-FY-static.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-low/SL-1-low-R.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-low/SL-1-low-R.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Unlit</aspectname>
       <show>dark</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-low/SL-1-low-dark.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-low/SL-1-low-dark.gif</imagelink>
     </appearance>
 
   </appearances>
@@ -111,7 +99,7 @@
 
     <held>
       <aspect>Stop</aspect>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-low/SL-1-low-held.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-low/SL-1-low-held.gif</imagelink>
     </held>
 
     <dark>

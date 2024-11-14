@@ -38,24 +38,10 @@
   <revhistory xmlns="http://docbook.org/ns/docbook">
 
     <revision>
-      <revnumber>1</revnumber>
-      <date>2009-12-28</date>
-      <authorinitials>RGJ</authorinitials>
-      <revremark>Initial version</revremark>
-    </revision>
-
-    <revision>
-      <revnumber>1.1</revnumber>
-      <date>2011-06-13</date>
-      <authorinitials>KWD</authorinitials>
-      <revremark>Add Aspect Mapping and Specific Aspects</revremark>
-    </revision>
-
-    <revision>
-      <revnumber>1.2</revnumber>
-      <date>2011-06-13</date>
+      <revnumber>1.0</revnumber>
+      <date>2024-11-14</date>
       <authorinitials>JDP</authorinitials>
-      <revremark>Revise for use in new "basic-enhanced" signal system</revremark>
+      <revremark>Initial release for use in new "basic-enhanced" signal system</revremark>
     </revision>
 
   </revhistory>
@@ -63,7 +49,10 @@
   <aspecttable>basic-enhanced</aspecttable>
   <name>Double searchlight high signal</name>
   <reference>(similar to basic signals described in various magazine articles)</reference>
-  <description>A two-headed signal for use at e.g. simple/single turnouts</description>
+  <description>A simple two-headed signal mast for use at simple/single turnouts.
+    This signal mast based on similar mast used in the "basic" signal system, but
+    with addition of an Advanced Approach appearance.
+  </description>
 
   <appearances>
 
@@ -71,58 +60,58 @@
       <aspectname>Clear</aspectname>
       <show>green</show>
       <show>red</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-high/SL-2-high-G-R.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-high/SL-2-high-G-R.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <show>red</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-high/SL-2-high-Y-R.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-high/SL-2-high-Y-R.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Advanced Approach</aspectname>
       <show>flashyellow</show>
       <show>red</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-high/SL-2-high-FY-R-animated.gif</imagelink>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-high/SL-2-high-FY-R-static.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-high/SL-2-high-FY-R-animated.gif</imagelink>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-high/SL-2-high-FY-R-static.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
       <show>red</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-high/SL-2-high-R-R.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-high/SL-2-high-R-R.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Diverging Clear</aspectname>
       <show>red</show>
       <show>green</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-high/SL-2-high-R-G.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-high/SL-2-high-R-G.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Diverging Approach</aspectname>
       <show>red</show>
       <show>yellow</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-high/SL-2-high-R-Y.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-high/SL-2-high-R-Y.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Diverging Advanced Approach</aspectname>
       <show>red</show>
       <show>flashyellow</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-high/SL-2-high-R-FY-animated.gif</imagelink>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-high/SL-2-high-R-FY-static.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-high/SL-2-high-R-FY-animated.gif</imagelink>
+      <imagelink type="noflash">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-high/SL-2-high-R-FY-static.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Unlit</aspectname>
       <show>dark</show>
       <show>dark</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-high/SL-2-high-dark.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-high/SL-2-high-dark.gif</imagelink>
     </appearance>
 
   </appearances>
@@ -133,7 +122,7 @@
      </danger>
     <held>
       <aspect>Stop</aspect>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-high/SL-2-high-held.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-2-high/SL-2-high-held.gif</imagelink>
     </held>
     <dark>
       <aspect>Unlit</aspect>

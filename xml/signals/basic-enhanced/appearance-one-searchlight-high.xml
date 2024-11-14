@@ -40,24 +40,10 @@
   <revhistory xmlns="http://docbook.org/ns/docbook">
 
     <revision>
-      <revnumber>1</revnumber>
-      <date>2009-12-28</date>
-      <authorinitials>RGJ</authorinitials>
-      <revremark>Initial version</revremark>
-    </revision>
-
-    <revision>
-      <revnumber>1.1</revnumber>
-      <date>2011-06-13</date>
-      <authorinitials>KWD</authorinitials>
-      <revremark>Add Aspect Mapping and Specific Aspects</revremark>
-    </revision>
-
-    <revision>
-      <revnumber>1.2</revnumber>
-      <date>2011-06-13</date>
+      <revnumber>1.0</revnumber>
+      <date>2024-11-14</date>
       <authorinitials>JDP</authorinitials>
-      <revremark>Revise for use in new "basic-enhanced" signal system</revremark>
+      <revremark>Initial release for use in new "basic-enhanced" signal system</revremark>
     </revision>
 
   </revhistory>
@@ -65,20 +51,22 @@
   <aspecttable>basic-enhanced</aspecttable>
   <name>Single searchlight high signal</name>
   <reference>(similar to basic signals described in various magazine articles)</reference>
-  <description>A simple signal for use as e.g. a block signal</description>
+  <description>A simple signal mast based on similar mast used in the "basic" signal system, but
+    with addition of an Advanced Approach appearance.
+  </description>
   
   <appearances>
 
     <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-high/SL-1-high-G.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-high/SL-1-high-G.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-high/SL-1-high-Y.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-high/SL-1-high-Y.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -91,13 +79,13 @@
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-high/SL-1-high-R.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-high/SL-1-high-R.gif</imagelink>
     </appearance>
     
     <appearance>
       <aspectname>Unlit</aspectname>
       <show>dark</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-high/SL-1-high-dark.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-high/SL-1-high-dark.gif</imagelink>
     </appearance>
 
 
@@ -112,7 +100,7 @@
 
     <held>
       <aspect>Stop</aspect>
-      <imagelink>../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-high/SL-1-high-held.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/basic-enhanced/SL-1-high/SL-1-high-held.gif</imagelink>
     </held>
 
     <dark>
