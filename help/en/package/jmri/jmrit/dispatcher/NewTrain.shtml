@@ -84,6 +84,8 @@
       selection and again save your new train information, before clicking the
       <strong>Create</strong> button.</p>
 
+      <p>Use <strong>Save As Defaults</strong> to have the form load as it is set now when creating a new train.</p>
+
       <p class="noted">If the transit assigned to a train info file is changed, such as adding or
       removing sections, the train info file will need to be updated.  This can done by loading and
       then saving the affected train info file.</p>
@@ -108,7 +110,7 @@
           <p>Click the <strong>New Train...</strong> button in the <strong><a href=
           "Dispatcher.shtml">Dispatcher</a></strong> window, or the <strong>Create New Train</strong> menu item
           from the dispatcher menu in a Layout Editor Panel, to bring up the window shown below.</p>
-          <img src="images/NewTrainWindow.png" height="573" width="489" alt="new train window">
+          <img src="images/NewTrainWindow.png" alt="new train window">
         </li>
 
         <li>
@@ -175,7 +177,7 @@
             be detected. Sections will only be reused after the tail has passed.
             </li>
 
-            <li><strong>Head Only</strong> Only the head of the train can be detected. The same as
+            <li><a id="trainDetectionHeadOnly"></a><strong>Head Only</strong> Only the head of the train can be detected. The same as
             <strong>Head and Tail</strong> with the addition that section or any part of the section may not be
             reused if occupied.</li>
           </ul>
@@ -286,26 +288,38 @@
         </li>
 
         <li>
-          <p>In the <strong>Loco Speed Correction:</strong> field, enter a percentage (10 - 150%)
+          <p><a id="locospeedcorrection"/></a>In the <strong>Loco Speed Correction:</strong> field, enter a percentage (10 - 200%)
           to modify all train speed settings. If the locomotive runs <em>normally</em>, enter 100%.
-          If the locomotive runs slower than normal, enter a factor between 100 and 150%. If the
+          If the locomotive runs slower than normal, enter a factor between 100 and 200%. If the
           locomotive runs faster than normal, enter a factor less than 100%. This factor is
-          designed to allow the user to compensate for differences between locomotives. The entered
-          Correection factor multiplies all speed settings immediately before the speed is sent to
-          the locomotive.</p>
+          designed to allow the user to compensate for differences between locomotives.
+          <br>The Correction factor is applied to all speed/throttle settings <strong>before</strong> they are adjusted for
+          the Minimum Throttle and Maximum Throttle.
+          <br>The default is 100.</p>
         </li>
 
         <li>
-          <p>In the <strong>Default Maximum Speed:</strong> field, enter a number (10 - 100%) to
-          limit the maximum speed the Active Train will run. For example, entering 60% will limit
-          the maximum speed to 60% of the possible speed setting. Maximum Speed can be used to make
-          certain Active Trains, for example a local freight, to run slower than signals alone
-          would determine. The Maximum Speed entered here is the starting value for the Maximum
-          Speed. The Maximum Speed may be changed while running the train automatically by setting
-          up <strong><a href="../beantable/ViewSpecialActions.shtml">Actions</a></strong> in the
-          Transit. <strong>Actions</strong> that change the Maximum Speed can be used, for example,
-          to slow an automatically running Active Train when it passes through a town on the
-          layout.</p>
+          <p>In the <strong>Maximum Throttle:</strong> field, enter a number (10 - 100%) to
+          limit the maximum throttle for the Active Train. This does not scale the throttle setting across
+          the entire range, it only limits the maximum value. To scale the throttle setting though the entire
+          range use <strong><a href="#locospeedcorrection">Loco Speed Correction</a></strong>.
+          <br>The Maximum Throttle entered here is the starting value for the Maximum Throttle it can be adjusted during
+          a transit. see <strong><a href="../beantable/ViewSpecialActions.shtml">Actions</a></strong> in the
+          Transit. <strong>Actions</strong> This can be used, for example, to slow an automatically running Active Train
+          when it passes through a town on the layout.
+          <br>This must be at least 10 greater than the Minimum Throttle setting.
+          <br>If a Roster entry is used the default is the Maximum set there, else the Maximum is 100. </p>
+        </li>
+
+        <li>
+          <p>In the <strong>Minimum Throttle:</strong> field, enter a number (0 - 90%) to set
+          the Minimum Throttle setting to be used by the Active Train.
+          When starting from zero the first throttle setting applied will be at least this.
+          When stopping the train using Ramping or a Speed Profile the last step before Zero will at
+          least this value.
+          Use this to deal with locos that have settings below this value that though they may work they do not work reliably.
+          <br>This must be at least 10 less than the Maximum Throttle setting.
+          <br>The default is zero.</p>
         </li>
 
         <li>
@@ -364,17 +378,19 @@
         </li>
 
         <li>
-          <a id="trainlength"></a>
-          <p>Enter the maximum length the train can have while traversing the Transit in the
-          <strong>Maximum Train Length:</strong> field. The length should be entered in scale feet
-          or scale meters, depending upon the dimension selection in the <strong><a href=
-          "Options.shtml">Dispatcher Options</a></strong> accessed from Dispatcher's
-          <strong>Options</strong> menu. Entering a reasonable value for the maximum length of the
-          train is important for deciding if a train will fit in a Section when stopping the train
-          (see above). When NOT stopping by Speed Profile, if the length of the train does not fit
-          in a Block when stopping it is stopped immediately. Otherwise it is stopped as soon as
+          <p><a id="trainlength"></a><strong>Maximum Train Length</strong>. Enter the maximum length
+          the train can have while traversing the Transit. The length can be entered in Actual
+          (measured with a ruler on the layout), inches or centimeters, or, scale (measured in real life),
+          feet or meters.
+		  <br>The default scale units as set in the <strong><a href="Options.shtml">Dispatcher Options</a></strong>
+          accessed from Dispatcher's <strong>Options</strong> menu. The converse value is calculated
+          and displayed to the right. You do not have to update the value if the layout scale or the
+          base layout measurements are changed to or from metric.
+          <br>It is important to enter a reasonable value for the maximum length as it used during stopping
+          or releasing sections <strong><a href="#trainDetectionHeadOnly">HEADONLY</a></strong>. When stopping but NOT stopping by Speed Profile or Stopping Sensor, if the length 
+          of the train does not fit in a Block it is stopped immediately. Eise it is stopped as soon as
           the preceding Block goes UNOCCUPIED. Remember this uses <em>debounce timings</em>, which
-          -if large- can result in the train overrunning the block if it only just fits.<br>
+          -if large- can result in the train over running the block if it only just fits.<br>
           See also <strong><a href="#trainDetectionOptions">Train Detection</a></strong></p>
         </li>
 
