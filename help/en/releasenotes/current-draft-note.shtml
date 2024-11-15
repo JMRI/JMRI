@@ -129,6 +129,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
+                <li>STL Editor: Add store mode selections to the View menu, update help page.</li>
                 <li>Add a Send SNIP Request button to the Send tool.</li>
             </ul>
 
