@@ -23,6 +23,10 @@
       that the correct aspects are displayed. As per the prototype no account is taken of turnout
       position when assessing the aspect to be displayed.</p>
 
+      <p>This signaling system implements a 
+          <a href="../../../help/en/html/tools/signaling/AspectSignaling.shtml#RouteSpeed">
+              "Speed signaled"</a> system.</p>
+
       <p>Signal Mast definitions:</p>
 
       <ul>

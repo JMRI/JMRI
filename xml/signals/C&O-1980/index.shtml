@@ -29,10 +29,14 @@
       approach aspect.</p>
 
       <p>For best results it is recommended you set up your layout on the layout editor, create the
-      necessary blocks. When setting up the bocks, set the speed of the block. The signal system
-      will use this speed to pick between the possible siganls aspects.</p>
+      necessary blocks. When setting up the blocks, set the speed of the block. The signal system
+      will use this speed to pick between the possible signals aspects.</p>
 
       <p>See the <a href="aspects.xml">aspect page</a>.</p>
+
+      <p>This signaling system implements a 
+          <a href="../../../help/en/html/tools/signaling/AspectSignaling.shtml#RouteSpeed">
+              "Speed signaled"</a> system.</p>
 
       <p>Signal Mast definitions:</p>
 

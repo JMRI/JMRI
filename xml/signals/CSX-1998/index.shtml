@@ -18,6 +18,10 @@
       Rules - 281-298, January 1998.
       <p>See the <a href="aspects.xml">aspect page</a>.</p>
 
+      <p>This signaling system implements a 
+          <a href="../../../help/en/html/tools/signaling/AspectSignaling.shtml#RouteSpeed">
+              "Speed signaled"</a> system.</p>
+      
       <p>Signal Mast definitions:</p>
 
       <ul>
