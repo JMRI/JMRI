@@ -267,7 +267,7 @@ public class DispatcherTrainInfoFileTest {
 
     @AfterEach
     public void tearDown() {
-	Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitUtil.dispose(d);
         JUnitUtil.clearShutDownManager();
         JUnitUtil.resetWindows(false,false);
