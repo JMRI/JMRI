@@ -27,6 +27,61 @@
       <p>The picture to the right shows an example, Rule 282 from the 1946 AAR rule book (Aspect:
       Approach Medium).</p>
 
+      <a id="RouteSpeed"></a>
+      <h2>"Route" signaling versus "Speed" signaling</h2>
+      In U.S signaling, there are two basic "signaling systems": "Route signaling" 
+      and "Speed signaling".
+      
+      <p>"Route signaling" 
+      uses some "Aspects" that define "Indications" that apply <em>only</em> to 
+      the "normal" route, and other "Aspects" that define "Indications" that apply
+      <em>only</em> to the "diverging" (i.e. not-normal) route.  "Speed signaling",
+      on the other hand, uses "Aspects" that do not specify a route, but do provide
+      a maximum speed through the block or blocks governed, regardless of route.
+
+      <H3>How to tell: "Route signaling" vs. "Speed signaling"?</h3>
+      
+      <p>"Route signaling" will generally use a term like "diverging route" in some 
+        of a signal system's "Indication"s.  This will typically be seen in the 
+        system's two-headed and three-headed signal masts.  Typically, a 
+        "normal" route thru one (or more!) switch(es) "normal" will be "cleared" with the top 
+        head as "other than red", regardless of the colors shown on the lower heads.
+        Typically, an "other-than-normal" route (typically any one or more 
+        switches in the route set as "diverging") will be cleared with the top 
+        head as red and one or more of the other heads as "not red".
+        <p>In "Route signaling", the engineer <em>needs</em> to understand how 
+            the train can be handled, including what maximum speed the 
+            actually-selected route can allow.  This implies that the engineer 
+            <em>will</em> have a detailed-knowledge of the railroad's "Timetable",
+            and will operate the train appropriately.
+            <p>Prototype US railroads, largely in the Western US, 
+            tended to use "Route signaling".
+        <p>"Speed Signaling" is different.  The "speed signaling" signal does not 
+            give much "hint" of the current route, but it <em>does</em> show that 
+            the current route may be traversed per the instructions in the 
+            "Indication", at the speed(s) as described in that "Indication".
+            
+            "Speed signaling" will generally use a term like "normal", "limited", 
+            "medium", and "slow" in the signal system's "Indication"s.  The various 
+            speeds are "encoded" in the ways in which a mast's heads are displayed, 
+            <em>without</em> regard to the position(s) of any switch in the route.
+            The signal system determines the appropriate speed(s) for the active 
+            route, and displays an appropriate aspect given the allowable speed(s)
+            in the current (and sometimes one or two blocks "in advance").
+        <p>Prototype US railroads, largely in the Eastern US, tended to use 
+            "Speed signaling".  More recently, some US railroads have been moving 
+            "Speed signaling" to "Route signaling" signals (with all of the 
+            challenges that implies).
+        <p>JMRI supports "Route signaling" systems and "Speed signaling" systems.
+            JMRI supports a "Route signaling" system (typically) whereby some 
+            "Aspect"s apply to a "Normal" route, and other "Aspect"s apply to a 
+            "Diverging" route.  JMRI supports "Speed signaling" systems (typically) 
+            through routes that support <em>any</em> route but with a <em>specific</em> 
+            maximum specified speed.  
+        <p>(A JMRI signaling system may be implemented which does not quite 
+            follow these guidelines; the person who did the coding of the 
+            signaling system's "rules" thought that they had a valid reason to 
+            implement an exception to those guidelines.)
       <h2>JMRI Support for Aspect Signaling</h2>
 
       <p>A collection of plain instructions let you set up <a href="SignalingSetup.shtml">Signaling

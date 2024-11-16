@@ -123,10 +123,17 @@ The <code>&lt;description&gt;</code>, <code>&lt;reference&gt;</code> and
 
       <p>The <code>&lt;route&gt;</code> element, if present, should simply be entered as
       'Diverging', 'Normal' or 'Either'. If the element is omitted or left blank then it is taken
-      as being 'Normal'. The <code>&lt;route&gt;</code> element indicates that this specific Aspect
-      is used when a turnout has been thrown in the path ahead. The Signal Mast Logic logic uses
-      this element to help determine which aspect should be displayed where there are multiple
-      possible Aspects.</p>
+      as being 'Normal'. The <code>&lt;route&gt;</code> element may be used to indicate that this 
+      specific Aspect is used when a turnout has a specific position ('Normal' or 'Diverging') in 
+      the path ahead, or whether the aspect does not care whether the turnout(s) in the route are 
+      in either position. The Signal Mast Logic logic uses this element to help determine which 
+      aspect should be displayed where there are multiple possible Aspects. For a signaling system 
+      that uses "Speed signaling", the system's "Aspect"s will usually define the 
+      <code>&lt;route&gt;</code> element as 'Either', for <em>all</em> aspects.  For a signaling 
+      system that uses "Route signaling", the system's "Aspect"s may use any of the available 
+      options for the <code>&lt;route&gt;</code> value.  See 
+      <a href="AspectSignaling.shtml#RouteSpeed"> this discussion</a> for some general information
+      on "Route" and "Speed" signaling.</p>
 
       <p>The <code>&lt;dccAspect&gt;</code> element, if present, is the default DCC signal
       accessory decoder ID for that aspect. These values are then used to populate the aspect IDs
