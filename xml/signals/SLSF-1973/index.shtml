@@ -22,11 +22,15 @@
       <p>Per Frisco rule 280, dwarf signals display the same indication as high signals.</p>
 
       <p>Selected pages from the 1957 St. Louis San Francisco Railway Company publication "Rules of
-      the Transportation Department" are avaialble on the <a href=
+      the Transportation Department" are available on the <a href=
       "http://www.frisco.org/vb/showthread.php?t=290">Frisco Modelers and Information Group
       website</a>.</p>
 
       <p>See the <a href="aspects.xml">aspect page</a>.</p>
+
+      <p>This signaling system implements a 
+          <a href="../../../help/en/html/tools/signaling/AspectSignaling.shtml#RouteSpeed">
+              "Route signaled"</a> system.</p>
 
       <p>Signal Mast definitions:</p>
 

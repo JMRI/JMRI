@@ -34,6 +34,10 @@
 
       <p>See the <a href="aspects.xml">Aspects page</a>.</p>
 
+      <p>This signaling system implements a 
+          <a href="../../../help/en/html/tools/signaling/AspectSignaling.shtml#RouteSpeed">
+              "Route signaled"</a> system.</p>
+      
       <p>Signal Mast definitions:</p>
 
       <ul>

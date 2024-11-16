@@ -154,6 +154,10 @@
       <p>See the <a href="aspects.xml">Aspects page</a> for full details of the available masts and
       aspects.</p>
 
+      <p>This signaling system implements a 
+          <a href="../../../help/en/html/tools/signaling/AspectSignaling.shtml#RouteSpeed">
+              "Route signaled"</a> system.</p>
+
       <p>Searchlight Signal Mast definitions:</p>
 
       <ul>

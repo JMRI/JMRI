@@ -30,10 +30,10 @@
       Digital SHD2 can drive the entire signal off 4 outputs.</p>
 
       <p>The rule book illustrates two versions of the NW CPL dwarf. Early versions of this style
-      dwarf had the arc from 12 to 3-o-clock position. Due to clearnance issues, the arc was change
+      dwarf had the arc from 12 to 3-o-clock position. Due to clearance issues, the arc was change
       to the 9 to 12-o-clock position. I don't know if this changed the aspects the signal could
       display. I am assuming that either version could display the up to 4 aspects. There is a stop
-      and proceed version that includes a numbner plate. The left lower red light is mapped to
+      and proceed version that includes a number plate. The left lower red light is mapped to
       lunar based on the later version of the signal.</p>
 
       <h3>Color Light, Search Light, and Semaphore Signals</h3>
@@ -48,6 +48,10 @@
       set of aspects with two arms in locations that would typically take three.</p>
 
       <p>See the <a href="aspects.xml">aspect page</a>.</p>
+
+      <p>This signaling system implements a 
+          <a href="../../../help/en/html/tools/signaling/AspectSignaling.shtml#RouteSpeed">
+              "Route signaled"</a> system.</p>
 
       <p>Signal Mast definitions:</p>
 
