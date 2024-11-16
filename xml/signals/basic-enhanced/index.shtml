@@ -88,10 +88,6 @@
         in file xml/signals/signalSpeeds.xml located under the JMRI install directory.
       </p>  
 
-      <p>This signaling system implements a 
-          <a href="../../../help/en/html/tools/signaling/AspectSignaling.shtml#RouteSpeed">
-              "Route signaled"</a> system.</p>
-
       <p>Signal Mast definitions:</p>
 
       <ul>
