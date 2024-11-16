@@ -23,10 +23,6 @@
       Generally speaking only the full mast is required since on the prototype B&amp;O system
       nearly all signal masts are the same but with unused lamps left off.</p>
 
-      <p>This signaling system implements a 
-          <a href="../../../help/en/html/tools/signaling/AspectSignaling.shtml#RouteSpeed">
-              "Speed signaled"</a> system.</p>
-
       <p>Signal Mast definitions:</p>
 
       <ul>

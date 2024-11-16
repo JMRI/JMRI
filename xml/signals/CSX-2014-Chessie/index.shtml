@@ -34,10 +34,6 @@
       <p>See the <a href="aspects.xml">aspect page</a> to see the aspect that can be displayed with
       the defined masts listed below.</p>
 
-      <p>This signaling system implements a 
-          <a href="../../../help/en/html/tools/signaling/AspectSignaling.shtml#RouteSpeed">
-              "Speed signaled"</a> system.</p>
-
       <p>Signal Mast definitions:</p>
 
       <ul>
