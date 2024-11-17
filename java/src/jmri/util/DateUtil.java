@@ -36,7 +36,7 @@ public class DateUtil {
     /**
      * Return a julian date representation of the given GregorianCalendar date.
      * for reference, see: http://aa.usno.navy.mil/faq/docs/JD_Formula.php
-     * @param cal
+     * @param cal the GregorianCalendar to convert.
      * @return julianDate representation of the date represented by cal.
      */
     public static long julianDayFromCalendar(java.util.GregorianCalendar cal) {
