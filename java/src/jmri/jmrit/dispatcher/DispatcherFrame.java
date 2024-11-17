@@ -151,7 +151,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             }
         }
     }
-    
+
     @Override
     public void dispose( ) {
         super.dispose();
@@ -306,7 +306,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             log.warn("TrainName [{}] already in use",
                     trainNameToUse);
             throw new IllegalArgumentException(Bundle.getMessage("Error24",trainNameToUse));
-            
         }
         ActiveTrain at = createActiveTrain(info.getTransitId(), trainNameToUse, tSource,
                 info.getStartBlockId(), info.getStartBlockSeq(), info.getDestinationBlockId(),
@@ -356,7 +355,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 aat.setRampRate(AutoActiveTrain.getRampRateFromName(info.getRampRate()));
                 aat.setRunInReverse(info.getRunInReverse());
                 aat.setSoundDecoder(info.getSoundDecoder());
-                aat.setMaxTrainLength(info.getMaxTrainLength());
+                aat.setMaxTrainLength(info.getMaxTrainLengthScaleMeters(),getScale().getScaleFactor());
                 aat.setStopBySpeedProfile(info.getStopBySpeedProfile());
                 aat.setStopBySpeedProfileAdjust(info.getStopBySpeedProfileAdjust());
                 aat.setUseSpeedProfile(info.getUseSpeedProfile());
@@ -1202,7 +1201,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         allocateNextRequestedForTrain(at);
     }
 
-    // allocate the next section for an ActiveTrain 
+    // allocate the next section for an ActiveTrain
     protected void allocateNextRequestedForTrain(ActiveTrain at) {
         // set up an Allocation Request
         Section next = at.getNextSectionToAllocate();

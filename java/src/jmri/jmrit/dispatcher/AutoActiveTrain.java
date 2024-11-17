@@ -102,10 +102,9 @@ public class AutoActiveTrain implements ThrottleListener {
     private float _speedFactor = 1.0f; // default speed factor
     private float _maxSpeed = 1.0f;    // default maximum train speed
     private float _minReliableOperatingSpeed = 0.0f;
-    //private TrainDetection _trainDetection = TrainDetection.TRAINDETECTION_NONE; // true if all train cars show occupancy
     private boolean _runInReverse = false;    // true if the locomotive should run through Transit in reverse
     private boolean _soundDecoder = false;    // true if locomotive has a sound decoder
-    private volatile float _maxTrainLength = 200.0f; // default train length (scale feet/meters)
+    private long _MaxTrainLength = 600; // default train length mm.
     private float _stopBySpeedProfileAdjust = 1.0f;
     private boolean _stopBySpeedProfile = false;
     private boolean _useSpeedProfile = true;
@@ -234,20 +233,22 @@ public class AutoActiveTrain implements ThrottleListener {
         _soundDecoder = set;
     }
 
-    public float getMaxTrainLength() {
-        return _maxTrainLength;
+    /**
+     * 
+     * @return train length in MM.
+     */
+    public long getMaxTrainLengthMM() {
+        return _MaxTrainLength;
     }
 
-    public int getMaxTrainLengthMM() {
-        double dMM = _maxTrainLength * dispatcher.getScale().getScaleFactor();
-        if (dispatcher.getUseScaleMeters()) {
-            return (int)(dMM  * 1000.0);
-        }
-        return (int)(dMM / 0.00328084);
-    }
-
-    public void setMaxTrainLength(float length) {
-        _maxTrainLength = length;
+    /**
+     * Set Train length in Scale Meters
+     * @param length length of train in meterd
+     * @param scaleFactor as supplied by scale object
+     */
+    public void setMaxTrainLength(double length, double scaleFactor) {
+        _MaxTrainLength =  (long) (length * 1000.0 * scaleFactor);
+        log.trace("setMaxTrainLength[{}]",_MaxTrainLength);
     }
 
     public void setUseSpeedProfile(boolean tf) {
@@ -370,10 +371,10 @@ public class AutoActiveTrain implements ThrottleListener {
             _activeTrain.setMode(ActiveTrain.DISPATCHED);
             return;
         }
-        log.debug("{}: New AutoEngineer, address={}, length={}, factor={}, useSpeedProfile={}",
+        log.debug("{}: New AutoEngineer, address={}, length (mm)={}, factor={}, useSpeedProfile={}",
                 _activeTrain.getTrainName(),
                 _throttle.getLocoAddress(),
-                getMaxTrainLength(), _speedFactor, _useSpeedProfile);
+                getMaxTrainLengthMM(), _speedFactor, _useSpeedProfile);
         // get off this thread ASAP, some throttles does not completely initialize
         // until this thread finishes
         jmri.util.ThreadingUtil.runOnLayoutDelayed(() -> {
@@ -1295,20 +1296,20 @@ public class AutoActiveTrain implements ThrottleListener {
             }
         } else if (_useSpeedProfile && _stopBySpeedProfile) {
             log.debug("{}: Section [{}] Section Length[{}] Max Train Length [{}] StopBySpeedProfile [{}]. setStopNow", _activeTrain.getTrainName(),
-                    _currentAllocatedSection.getSection().getDisplayName(USERSYS), _currentAllocatedSection.getLength(), _maxTrainLength, _stopBySpeedProfile);
+                    _currentAllocatedSection.getSection().getDisplayName(USERSYS), _currentAllocatedSection.getActualLength(), getMaxTrainLengthMM(), _stopBySpeedProfile);
             // stopping by speed profile uses section length to stop
             setTargetSpeedState(STOP_SPEED,useSpeedProfile);
-        } else if (_currentAllocatedSection.getLength()  < _maxTrainLength) {
+        } else if (_currentAllocatedSection.getActualLength()  < getMaxTrainLengthMM()) {
             log.debug("{}: Section [{}] Section Length[{}] Max Train Length [{}]. setStopNow({})",
                     _activeTrain.getTrainName(),
                     _currentAllocatedSection.getSection().getDisplayName(USERSYS),
-                    _currentAllocatedSection.getLength(),
-                    _maxTrainLength, _stopBySpeedProfile);
+                    _currentAllocatedSection.getActualLength(),
+                    getMaxTrainLengthMM(), _stopBySpeedProfile);
             // train will not fit comfortably in the Section, stop it immediately
             setStopNow();
         } else if (_activeTrain.getTrainDetection() == TrainDetection.TRAINDETECTION_WHOLETRAIN) {
             log.debug("{}: train will fit in [{}] ({}>={}), stop when prev block clears.", _activeTrain.getTrainName(),
-                    _currentAllocatedSection.getSection().getDisplayName(USERSYS), _currentAllocatedSection.getLength(), _maxTrainLength);
+                    _currentAllocatedSection.getSection().getDisplayName(USERSYS), _currentAllocatedSection.getActualLength(), getMaxTrainLengthMM());
             // train will fit in current allocated Section and has resistance wheels
             // try to stop by watching Section Block occupancy
             if (_currentAllocatedSection.getSection().getNumBlocks() == 1) {
@@ -1339,7 +1340,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 } else if (exitBlock == enterBlock) {
                     // entry and exit are from the same Block
                     if ((_previousBlock != null) && (_previousBlock.getState() == Block.OCCUPIED)
-                            && (getBlockLength(exitBlock) > _maxTrainLength)) {
+                            && (getBlockLength(exitBlock) > getMaxTrainLengthMM())) {
                         _stoppingBlock = _previousBlock;
                         setStopByBlockOccupancy(false);
                     } else {
@@ -1358,7 +1359,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     }
                     int tstLength = getBlockLength(tstBlock);
                     int tstBlockSeq = _currentAllocatedSection.getSection().getBlockSequenceNumber(tstBlock);
-                    while ((tstLength < _maxTrainLength) && (tstBlock != enterBlock)) {
+                    while ((tstLength < getMaxTrainLengthMM()) && (tstBlock != enterBlock)) {
                         int newSeqNumber;
                         if (_currentAllocatedSection.getDirection() == Section.REVERSE) {
                             newSeqNumber = tstBlockSeq + 1;
@@ -1369,7 +1370,7 @@ public class AutoActiveTrain implements ThrottleListener {
                         tstBlockSeq = newSeqNumber;
                         tstLength += getBlockLength(tstBlock);
                     }
-                    if (_maxTrainLength > tstLength) {
+                    if (getMaxTrainLengthMM() > tstLength) {
                         setStopNow();
                     } else if (tstBlock == enterBlock) {
                         // train fits, but needs all available Blocks
@@ -1684,11 +1685,12 @@ public class AutoActiveTrain implements ThrottleListener {
         if (b == null) {
             return (0);
         }
-        float fLength = b.getLengthMm() / (float) InstanceManager.getDefault(DispatcherFrame.class).getScale().getScaleFactor();
-        if (InstanceManager.getDefault(DispatcherFrame.class).getUseScaleMeters()) {
-            return (int) (fLength * 0.001f);
-        }
-        return (int) (fLength * 0.00328084f);
+        return (int) b.getLengthMm();
+//        float fLength = b.getLengthMm() / (float) InstanceManager.getDefault(DispatcherFrame.class).getScale().getScaleFactor();
+//        if (InstanceManager.getDefault(DispatcherFrame.class).getUseScaleMeters()) {
+//            return (int) (fLength * 0.001f);
+//        }
+//        return (int) (fLength * 0.00328084f);
     }
 
     /**
