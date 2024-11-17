@@ -50,6 +50,23 @@ public class DateUtilTest {
         Assert.assertEquals("Julian Day", 2440588, DateUtil.julianDayFromCalendar(testCal));
     }
 
+    @Test
+    public void testUserDurationFromSeconds(){
+        Assertions.assertEquals("- 00:01:01", DateUtil.userDurationFromSeconds(-61));
+        Assertions.assertEquals("00:00:00", DateUtil.userDurationFromSeconds(0));
+        Assertions.assertEquals("00:00:01", DateUtil.userDurationFromSeconds(1));
+        Assertions.assertEquals("00:00:59", DateUtil.userDurationFromSeconds(59));
+        Assertions.assertEquals("00:01:00", DateUtil.userDurationFromSeconds(60));
+        Assertions.assertEquals("00:01:01", DateUtil.userDurationFromSeconds(61));
+        Assertions.assertEquals("00:10:01", DateUtil.userDurationFromSeconds(601));
+        Assertions.assertEquals("01:00:01", DateUtil.userDurationFromSeconds(3601));
+        Assertions.assertEquals("12:34:56", DateUtil.userDurationFromSeconds(45296));
+        Assertions.assertEquals("23:59:59", DateUtil.userDurationFromSeconds(86399));
+        Assertions.assertEquals("1 00:00:00", DateUtil.userDurationFromSeconds(86400));
+        Assertions.assertEquals("12 03:45:01", DateUtil.userDurationFromSeconds(1050301));
+        Assertions.assertEquals("- 12 03:45:01", DateUtil.userDurationFromSeconds(-1050301));
+    }
+
     @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
