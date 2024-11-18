@@ -1,10 +1,7 @@
 package jmri.jmrit.operations.trains.tools;
 
-import java.awt.GraphicsEnvironment;
-
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -26,25 +23,20 @@ public class ExportTrainLineupsTest extends OperationsTestCase {
     }
 
     @Test
+    @jmri.util.junit.annotations.DisabledIfHeadless
     public void testCreateFile() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ExportTrainLineups exportTrains = new ExportTrainLineups();
         Assert.assertNotNull("exists", exportTrains);
 
         JUnitOperationsUtil.initOperationsData();
-        
+
         // built trains increase coverage
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         Train train = tmanager.getTrainByName("STF");
         Assert.assertTrue(train.build());
 
         // next should cause export complete dialog to appear
-        Thread export = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                exportTrains.writeOperationsTrainsFile();
-            }
-        });
+        Thread export = new Thread(exportTrains::writeOperationsTrainsFile);
         export.setName("Export Trains"); // NOI18N
         export.start();
 
@@ -54,9 +46,11 @@ public class ExportTrainLineupsTest extends OperationsTestCase {
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), Bundle.getMessage("ButtonOK"));
 
+        jmri.util.JUnitUtil.waitFor(() -> !export.isAlive(), "wait for export to complete");
+
         java.io.File file = new java.io.File(ExportTrainLineups.defaultOperationsFilename());
         Assert.assertTrue("Confirm file creation", file.exists());
-        
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
     }

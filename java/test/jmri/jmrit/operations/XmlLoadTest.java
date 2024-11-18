@@ -32,6 +32,8 @@ public class XmlLoadTest extends OperationsTestCase {
     @Test
     public void testDemoLoad() {
         runTest("java/test/jmri/jmrit/operations/xml/DemoFiles/", 12, 12, 10, 210, 19);
+        jmri.jmrit.operations.setup.AutoSave.stop();
+        JUnitUtil.waitThreadTerminated("Operations Auto Save");
     }
 
     // load a set of operations files with trains that have been built.
@@ -39,6 +41,8 @@ public class XmlLoadTest extends OperationsTestCase {
     @Test
     public void testDemoWithBuildLoad() {
         runTest("java/test/jmri/jmrit/operations/xml/DemoFilesWithBuiltTrains/", 12, 12, 10, 210, 19);
+        jmri.jmrit.operations.setup.AutoSave.stop();
+        JUnitUtil.waitThreadTerminated("Operations Auto Save");
     }
 
     /*
