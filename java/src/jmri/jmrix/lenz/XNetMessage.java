@@ -1999,19 +1999,6 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
             } else {
                     text = toString();
             }
-            // Accessory Info Request message
-        } else if (getElement(0) == XNetConstants.ACC_INFO_REQ) {
-            String nibblekey=(((getElement(2) & 0x01) == 0x01) ? "FeedbackEncoderUpperNibble" : "FeedbackEncoderLowerNibble");
-            text = Bundle.getMessage("XNetMessageFeedbackRequest",
-                       getElement(1),
-                       Bundle.getMessage(nibblekey));
-        } else if (getElement(0) == XNetConstants.ACC_OPER_REQ) {
-            String messageKey =(((getElement(2) & 0x08) == 0x08) ? "XNetMessageAccessoryDecoderOnRequest" : "XNetMessageAccessoryDecoderOffRequest");
-            int baseaddress = getElement(1);
-            int subaddress = ((getElement(2) & 0x06) >> 1);
-            int address = (baseaddress * 4) + subaddress + 1;
-            int output = (getElement(2) & 0x01);
-            text = Bundle.getMessage(messageKey,address, baseaddress,subaddress,output);
         } else if (getElement(0) == XNetConstants.ALL_ESTOP) {
             text = Bundle.getMessage("XNetMessageRequestEmergencyStop");
         } else {
