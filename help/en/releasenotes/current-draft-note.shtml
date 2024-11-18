@@ -26,7 +26,10 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>Command Station Monitor :
+                <br>Button added to release JMRI-managed loco sessions,
+                <br>this can be handy when developing Jython scripts that fail to release the Throttle.
+                <br>Button added to launch a new JMRI Throttle for a loco session.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -126,8 +129,8 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Fix a problem when CDI contains "immediate" slider hints</li>
-                <li>Slider hints now control tick spacing, instead of number of ticks.</li>
+                <li>STL Editor: Add store mode selections to the View menu, update help page.</li>
+                <li>Add a Send SNIP Request button to the Send tool.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -337,7 +340,7 @@
 
         <h4>Technologistic (train-O-matic)</h4>
             <ul>
-                <li></li>
+                <li>Added support for the FD II (version 2) function decoder family.</li>
             </ul>
 
         <h4>Trix Modelleisenbahn</h4>
@@ -406,7 +409,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>Do not release any allocated section from a train if the position of the train is not known.</li>
+             <li></li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -424,7 +427,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>Improved zoom menu selection matching.</li>
+            <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -441,11 +444,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>A bug is fixed in the <strong>Timer</strong> action. The
-              bug caused the timer to <strong>not</strong> start
-              automatically when the tables and panel file is loaded,
-              despite the <strong>Start timer immediately on load</strong>
-              setting was selected for the timer.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -457,7 +456,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>Changed "Wait" to travel time in the route edit window</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -466,31 +465,15 @@
             <li></li>
         </ul>
 
-    <h3>Preferences</h3>
-        <a id="Preferences" name="Preferences"></a>
+    <h3>Permissions</h3>
+        <a id="Permissions" name="Permissions"></a>
         <ul>
             <li></li>
         </ul>
 
-    <h3>Permissions</h3>
-        <a id="Permissions" name="Permissions"></a>
+    <h3>Preferences</h3>
+        <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li>The permission system has been improved. Users and
-                roles remains but the permissions has changed. As a
-                result, you might need to set the permissions for each
-                role again.</li>
-            <li>A new permission <strong>Panel permission</strong> is
-                added. If the user doesn't have at least <strong>Read</strong>
-                permission, the panel will be empty with the text
-                <strong>Permission denied</strong>.</li>
-            <li>The JMRI web server now has support for permissions. The
-                user can login and logout using the web server. Note
-                that the web server has the guest user <strong>remote guest</strong>
-                instead of the usual <strong>guest</strong> user. The
-                remote guest user has by defaul the <strong>Remote guest</strong>
-                role. This allows you to have different permissions for
-                web access than local access for users that have not
-                logged in.</li>
             <li></li>
         </ul>
 
@@ -525,7 +508,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li></li>
+                <li>basic-enhanced</li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -625,20 +608,14 @@
         </ul>
 
    <h3>Z21 Server</h3>
-        <a id="z21" name="z21"></a>
+        <a id="Z21" name="Z21"></a>
         <ul>
-            <li>Fix an error that causes occasional crashes.</li>
+            <li></li>
         </ul>
-
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Some cleanup has been done to JMRI. It shouldn't affect
-                the users, but if it does, please report it on the
-                <a href="https://groups.io/g/jmriusers/topics">JMRI Users Groups.io</a>
-                Group. If there is any problem, it could case JMRI to
-                not quit properly, not restart properly or leave Java
-                running when JMRI has quit.</li>
+            <li></li>
         </ul>
 

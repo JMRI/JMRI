@@ -68,7 +68,7 @@ import org.slf4j.LoggerFactory;
 public class LocoNetMessageInterpret {
     private static final String Ln_Off = Bundle.getMessage("LN_MSG_OFF");
     private static final String Ln_On  = Bundle.getMessage("LN_MSG_ON");
-    
+
     /**
      * Format the message into a text string.
      * <p>
@@ -740,6 +740,7 @@ public class LocoNetMessageInterpret {
             default:
                 break;
         } // end switch over opcode type
+
         return Bundle.getMessage("LN_MSG_UNKNOWN_MESSAGE") +
                 Bundle.getMessage("LN_MONITOR_MESSAGE_RAW_HEX_INFO", l.toString());
     }
@@ -1951,7 +1952,10 @@ public class LocoNetMessageInterpret {
                 } else {
                     return Bundle.getMessage("LN_MSG_LONG_ACK_OPC_IMM_UNKNOWN",
                             Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(ack1)))+
+                                    StringUtil.twoHexFromInt(ack1)),
+                                    128+ack1,
+                                    StringUtil.twoHexFromInt(128+ack1)
+                    )+
                                 Bundle.getMessage("LN_MONITOR_MESSAGE_RAW_HEX_INFO", l.toString());
                 }
 
@@ -3994,7 +3998,6 @@ public class LocoNetMessageInterpret {
                 }
             } else {
                 // immediate packet not addressed to a multi-function (mobile) decoder
-                log.debug("got Here 1.");
             }
             if ((mobileDecoderAddress >= 0)
                     && (nmraInstructionType == 1)
@@ -4101,14 +4104,14 @@ public class LocoNetMessageInterpret {
                     // Unknown
                     if ((packetInt[0] & 0xC0) == 0x80 ) {
                         /*
-                        * 2.4.7 Extended Decoder Control Packet address for 
+                        * 2.4.7 Extended Decoder Control Packet address for
                         * operations mode programming and Aspect Setting.
                         * 10AAAAAA 0 0AAA0AA1
                         * Packets 3 bytes in length are Accessory Aspect packets (2.4.3)
                         *  {preamble} 10AAAAAA 0 0AAA0AA1 0 XXXXXXXX 0 EEEEEEEE 1
-                        * Please note that the use of 0 in bit 3 of byte 2 is to 
-                        * ensure that this packet cannot be confused with the 
-                        * legacy accessory-programming packets. The resulting packet 
+                        * Please note that the use of 0 in bit 3 of byte 2 is to
+                        * ensure that this packet cannot be confused with the
+                        * legacy accessory-programming packets. The resulting packet
                         * would be:
                         * {preamble} 10AAAAAA 0 0AAA0AA1 0 (1110CCVV 0 VVVVVVVV 0 DDDDDDDD) 0 EEEEEEEE 1
                         * A5 43 00
@@ -4152,7 +4155,7 @@ public class LocoNetMessageInterpret {
                             * 2.3.7.2 Configuration Variable Access Instruction - Short Form
                             * This instruction has the format of:
                             * {instruction bytes} = 1111GGGG 0 DDDDDDDD 0 DDDDDDDD
-                            * The 8 bit data DDDDDDDD is placed in the configuration 
+                            * The 8 bit data DDDDDDDD is placed in the configuration
                             * variable identified by GGGG according
                             */
                             log.debug("Is an Short-form Extended Accessory Ops-mode CV access");
@@ -4160,21 +4163,21 @@ public class LocoNetMessageInterpret {
                         if ((packetInt[2] & 0xf0) == 0xe0) {
                             /*
                             * 2.3.7.3 Configuration Variable Access Instruction - Long Form
-                            * The long form allows the direct manipulation of all CVs8. This 
-                            * instruction is valid both when the Digital Decoder has its 
-                            * long address active and short address active. Digital Decoders 
-                            * shall not act on this instruction if sent to its consist 
-                            * address. 
+                            * The long form allows the direct manipulation of all CVs8. This
+                            * instruction is valid both when the Digital Decoder has its
+                            * long address active and short address active. Digital Decoders
+                            * shall not act on this instruction if sent to its consist
+                            * address.
                             *
-                            * The format of the instructions using Direct CV 
+                            * The format of the instructions using Direct CV
                             * addressing is:
                             *   {instruction bytes}= 1110GGVV 0 VVVVVVVV 0 DDDDDDDD
                             *
-                            * The actual Configuration Variable desired is selected 
-                            * via the 10-bit address with the 2-bit address (VV) in 
-                            * the first data byte being the most significant bits of 
-                            * the address. The Configuration variable being addressed 
-                            * is the provided 10-bit address plus 1. For example, to 
+                            * The actual Configuration Variable desired is selected
+                            * via the 10-bit address with the 2-bit address (VV) in
+                            * the first data byte being the most significant bits of
+                            * the address. The Configuration variable being addressed
+                            * is the provided 10-bit address plus 1. For example, to
                             * address CV1 the 10 bit address is "00 00000000".
                             *
                             * The defined values for Instruction type (CC) are:
@@ -4192,11 +4195,11 @@ public class LocoNetMessageInterpret {
                                     /*
                                      * Type = "01" VERIFY BYTE
                                      *
-                                     * The contents of the Configuration Variable as indicated 
-                                     * by the 10-bit address are compared with the data byte 
-                                     * (DDDDDDDD). If the decoder successfully receives this 
-                                     * packet and the values are identical, the Digital 
-                                     * Decoder shall respond with the contents of the CV as 
+                                     * The contents of the Configuration Variable as indicated
+                                     * by the 10-bit address are compared with the data byte
+                                     * (DDDDDDDD). If the decoder successfully receives this
+                                     * packet and the values are identical, the Digital
+                                     * Decoder shall respond with the contents of the CV as
                                      * the Decoder Response Transmission, if enabled.
                                     */
                                     log.debug("CV # {}, Verify Byte: {}", cvnum, packetInt[4]);
@@ -4207,38 +4210,38 @@ public class LocoNetMessageInterpret {
                                     /*
                                      * Type = "10" BIT MANIPULATION.
                                      *
-                                     * The bit manipulation instructions use a special 
-                                     * format for the data byte (DDDDDDDD): 111FDBBB, where 
-                                     * BBB represents the bit position within the CV, 
-                                     * D contains the value of the bit to be verified 
-                                     * or written, and F describes whether the 
-                                     * operation is a verify bit or a write bit 
+                                     * The bit manipulation instructions use a special
+                                     * format for the data byte (DDDDDDDD): 111FDBBB, where
+                                     * BBB represents the bit position within the CV,
+                                     * D contains the value of the bit to be verified
+                                     * or written, and F describes whether the
+                                     * operation is a verify bit or a write bit
                                      * operation.
-                                     * 
+                                     *
                                      * F = "1" : WRITE BIT
                                      * F = "0" : VERIFY BIT
-                                     * The VERIFY BIT and WRITE BIT instructions operate 
-                                     * in a manner similar to the VERIFY BYTE and WRITE 
-                                     * BYTE instructions (but operates on a single bit). 
-                                     * Using the same criteria as the VERIFY BYTE 
-                                     * instruction, an operations mode acknowledgment 
-                                     * will be generated in response to a VERIFY BIT 
-                                     * instruction if appropriate. Using the same 
-                                     * criteria as the WRITE BYTE instruction, a 
-                                     * configuration variable access acknowledgment 
-                                     * will be generated in response to the second 
+                                     * The VERIFY BIT and WRITE BIT instructions operate
+                                     * in a manner similar to the VERIFY BYTE and WRITE
+                                     * BYTE instructions (but operates on a single bit).
+                                     * Using the same criteria as the VERIFY BYTE
+                                     * instruction, an operations mode acknowledgment
+                                     * will be generated in response to a VERIFY BIT
+                                     * instruction if appropriate. Using the same
+                                     * criteria as the WRITE BYTE instruction, a
+                                     * configuration variable access acknowledgment
+                                     * will be generated in response to the second
                                      * identical WRITE BIT instruction if appropriate.
                                      */
                                     if ((packetInt[4]& 0xE0) != 0xE0) {
                                         break;
                                     }
-                                    log.debug("CV # {}, Bit Manipulation: {} {} (of bits 0-7) with {}", 
+                                    log.debug("CV # {}, Bit Manipulation: {} {} (of bits 0-7) with {}",
                                             cvnum, (packetInt[4] & 0x10) == 0x10 ? "Write" : "Verify",
                                             (packetInt[4] & 0x7),
                                             (packetInt[4] >> 3) & 0x1);
-                                    
-                                    // "Extended Accessory Decoder CV Bit {} bit, 
-                                    // Address {}, CV {}, bit # {} (of bits 0-7) 
+
+                                    // "Extended Accessory Decoder CV Bit {} bit,
+                                    // Address {}, CV {}, bit # {} (of bits 0-7)
                                     // with value {}.\n"
                                     return Bundle.getMessage("LN_MSG_EXTEND_ACCY_CV_BIT_ACCESS",
                                             ((packetInt[4] & 0x10) == 0x10 ? "Write" : "Verify"),
@@ -4250,13 +4253,13 @@ public class LocoNetMessageInterpret {
                                      * Type = "11" WRITE BYTE
                                      *
                                      * The contents of the Configuration Variable as indicated by the 10-bit
-                                     * address are replaced by the data byte (DDDDDDDD). Two identical 
-                                     * packets are needed before the decoder shall modify a 
+                                     * address are replaced by the data byte (DDDDDDDD). Two identical
+                                     * packets are needed before the decoder shall modify a
                                      * configuration variable. These two packets need not be back
-                                     * to back on the track. However any other packet to the same 
-                                     * decoder will invalidate the write operation. (This includes 
-                                     * broadcast packets.) If the decoder successfully receives 
-                                     * this second identical packet, it shall respond with a 
+                                     * to back on the track. However any other packet to the same
+                                     * decoder will invalidate the write operation. (This includes
+                                     * broadcast packets.) If the decoder successfully receives
+                                     * this second identical packet, it shall respond with a
                                      * configuration variable access acknowledgment.
                                      */
                                     log.debug("CV # {}, Write Byte: {}", cvnum, packetInt[4]);
@@ -4265,7 +4268,7 @@ public class LocoNetMessageInterpret {
                                 case 0x0:
                                 default:
                                     // GG=00 Reserved for future use
-                                    log.debug("CV # {}, Reserved (GG=0); {}", cvnum, packetInt[4]);    
+                                    log.debug("CV # {}, Reserved (GG=0); {}", cvnum, packetInt[4]);
                             }
                         } else if (packetInt.length == 3) {
                             int addr = getExtendedAccessoryAddressFromDCCPacket(packetInt);
@@ -4338,7 +4341,7 @@ public class LocoNetMessageInterpret {
                 ((( ~ packetInt[1]) & 0x70) << 4)
                 + ((packetInt[1] & 0x06) >> 1));
     }
-    
+
     private static String interpretOpcPr3Mode(LocoNetMessage l) {
         /*
          * Sets the operating mode of the PR3 device, if present.
@@ -4807,7 +4810,7 @@ public class LocoNetMessageInterpret {
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_PM74");
             case LnConstants.RE_IPL_DIGITRAX_HOST_SE74:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_SE74");
-                
+
 
             default:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_UNKNOWN", type);
@@ -5007,9 +5010,9 @@ public class LocoNetMessageInterpret {
     /**
      * Interprets an Enhanced Slot Report message in the "Query Mode" range of
      * slot numbers.
-     * 
+     *
      * Only the primary slot numbers are interpreted, not any "aliases".
-     * 
+     *
      * @param l Enhanced Slot report LocoNetMessage to be interpreted
      * @param slot
      * @return String showing interpretation.
@@ -5019,7 +5022,7 @@ public class LocoNetMessageInterpret {
        String detailInfo = "";
        switch (slot) {
            case 248:
-                
+
                 baseInfo = interpretExtendedSlot_StatusData_Base_Detail(l, slot); // Basic Identifying information
                 detailInfo = interpretExtendedSlot_Query_Mode_248(l);  // Flags
 
@@ -5051,7 +5054,7 @@ public class LocoNetMessageInterpret {
     /**
      * Interpret the base information in bytes 16,18,19
      * for slots 249,250,251, but not 248.
-     * 
+     *
      * @param l LocoNetMessage to be interpreted
      * @param slot slot number
      * @return formatted message
@@ -5061,7 +5064,7 @@ public class LocoNetMessageInterpret {
         int hwSerial = ((l.getElement(19) & 0x3f) * 128 ) + l.getElement(18);
         String serNumHex = "0000"+Integer.toHexString(hwSerial).toUpperCase();
         serNumHex = serNumHex.substring(serNumHex.length()-4);
-        
+
         return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_BASE",
                 hwType,
                 hwSerial + "(0x" + serNumHex + ")");
@@ -5069,7 +5072,7 @@ public class LocoNetMessageInterpret {
 
     /**
      * Interpret slot 248 base details.
-     * 
+     *
      * @param l LocoNetMessage to be interpreted
      * @param slot slot number
      * @return formatted message
@@ -5082,7 +5085,7 @@ public class LocoNetMessageInterpret {
         int hwSerial = ((l.getElement(19) & 0x3f) * 128 ) + l.getElement(18);
         String serNumHex = "0000"+Integer.toHexString(hwSerial).toUpperCase();
         serNumHex = serNumHex.substring(serNumHex.length()-4);
-        
+
         float hwVersion = ((float)(l.getElement(17) & 0x78) / 8 ) + ((float)(l.getElement(17) & 0x07) / 10 ) ;
         float swVersion = ((float)(l.getElement(16) & 0x78) / 8 ) + ((float)(l.getElement(16) & 0x07) / 10 ) ;
         return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_BASEDETAIL",
@@ -5094,16 +5097,16 @@ public class LocoNetMessageInterpret {
     private static String queryOnOff(int val, int bit) {
         return (((val & 1 << bit) == 1 << bit)?Ln_On:Ln_Off);
     }
-    
+
     /**
      * Interprets _some_ of the data in Query Mode report of slot 248 (and aliases!)
      * - "Flags" info.
-     * 
+     *
      * @param l LocoNetMessage to be interpreted
      * @return formatted message
      */
     private static String interpretExtendedSlot_Query_Mode_248(LocoNetMessage l) {
-        
+
         int b = l.getElement(4);
         String lnetVmin = Bundle.getMessage("LNET_QUERY_LNETVMIN", queryOnOff(b, 6));
         String overTemp = Bundle.getMessage("LNET_QUERY_OVERTEMP", queryOnOff(b, 5));
@@ -5127,7 +5130,7 @@ public class LocoNetMessageInterpret {
     /**
      * Interprets _some_ of the data in Query Mode report of slot 249 (and aliases!)
      * - "Electrical" info.
-     * 
+     *
      * @param l LocoNetMessage to be interpreted
      * @return formatted message
      */
@@ -5150,7 +5153,7 @@ public class LocoNetMessageInterpret {
     /**
      * Interprets _some_ of the data in Query Mode report of slot 250 (and aliases!)
      * - "Slots" info.
-     * 
+     *
      * @param l LocoNetMessage to be interpreted
      * @return formatted message
      */
@@ -5168,7 +5171,7 @@ public class LocoNetMessageInterpret {
     /**
      * Interprets _some_ of the data in Query Mode report of slot 251 (and aliases!)
      * - "LocoNet message" info.
-     * 
+     *
      * @param l LocoNetMessage to be interpreted
      * @return formatted message
      */
@@ -5176,7 +5179,7 @@ public class LocoNetMessageInterpret {
         int msgTotal = (l.getElement(4) + ( l.getElement(5) * 128)) ;
         int msgErrors = (l.getElement(6) + ( l.getElement(7) * 128)) ;
         int sleeps = (l.getElement(10) + ( l.getElement(11) * 128));
-        
+
         return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_LOCONET",
                 msgTotal, msgErrors, sleeps);
     }
@@ -5184,7 +5187,7 @@ public class LocoNetMessageInterpret {
     /**
      * Interprets _some_ of the data in Query Mode report of slot 252 (and aliases!)
      * - "DCC status" info.
-     * 
+     *
      * @param l LocoNetMessage to be interpreted
      * @return formatted message
      */
@@ -5195,12 +5198,10 @@ public class LocoNetMessageInterpret {
         return Bundle.getMessage("LN_MSG_OPC_EXP_QUERY_LOCONET_STAT2_LOCONET",
                 flt, arv, dst);
     }
-    
+
     private static final String ds54sensors[] = {"AuxA", "SwiA", "AuxB", "SwiB", "AuxC", "SwiC", "AuxD", "SwiD"};    // NOI18N
     private static final String ds64sensors[] = {"A1", "S1", "A2", "S2", "A3", "S3", "A4", "S4"};                    // NOI18N
     private static final String se8csensors[] = {"DS01", "DS02", "DS03", "DS04", "DS05", "DS06", "DS07", "DS08"};    // NOI18N
 
     private final static Logger log = LoggerFactory.getLogger(LocoNetMessageInterpret.class);
-
-
 }

@@ -41,14 +41,16 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     private static final int DESCRIPTION_COLUMN = NAME_COLUMN + 1;
     private static final int BUILT_COLUMN = DESCRIPTION_COLUMN + 1;
     private static final int CAR_ROAD_COLUMN = BUILT_COLUMN + 1;
-    private static final int LOCO_ROAD_COLUMN = CAR_ROAD_COLUMN + 1;
+    private static final int CABOOSE_ROAD_COLUMN = CAR_ROAD_COLUMN + 1;
+    private static final int LOCO_ROAD_COLUMN = CABOOSE_ROAD_COLUMN + 1;
     private static final int LOAD_COLUMN = LOCO_ROAD_COLUMN + 1;
     private static final int OWNER_COLUMN = LOAD_COLUMN + 1;
     private static final int ROUTE_COLUMN = OWNER_COLUMN + 1;
     private static final int DEPARTS_COLUMN = ROUTE_COLUMN + 1;
     private static final int TERMINATES_COLUMN = DEPARTS_COLUMN + 1;
     private static final int CURRENT_COLUMN = TERMINATES_COLUMN + 1;
-    private static final int STATUS_COLUMN = CURRENT_COLUMN + 1;
+    private static final int CARS_COLUMN = CURRENT_COLUMN + 1;
+    private static final int STATUS_COLUMN = CARS_COLUMN + 1;
     private static final int ACTION_COLUMN = STATUS_COLUMN + 1;
     private static final int EDIT_COLUMN = ACTION_COLUMN + 1;
 
@@ -122,7 +124,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     // Train frame table column widths, starts with id column and ends with edit
-    private final int[] _tableColumnWidths = {50, 50, 50, 72, 100, 140, 50, 50, 50, 50, 50, 120, 120, 120, 120, 120, 90,
+    private final int[] _tableColumnWidths =
+            {50, 50, 50, 72, 100, 140, 50, 50, 50, 50, 50, 50, 120, 120, 120, 120, 50, 120, 90,
             70};
 
     void initTable() {
@@ -159,6 +162,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         tcm.setColumnVisible(tcm.getColumnByModelIndex(TIME_COLUMN), _sort == SORTBYTIME);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(BUILT_COLUMN), trainManager.isBuiltRestricted());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(CAR_ROAD_COLUMN), trainManager.isCarRoadRestricted());
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(CABOOSE_ROAD_COLUMN), trainManager.isCabooseRoadRestricted());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LOCO_ROAD_COLUMN), trainManager.isLocoRoadRestricted());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN), trainManager.isLoadRestricted());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OWNER_COLUMN), trainManager.isOwnerRestricted());
@@ -206,9 +210,11 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             case BUILT_COLUMN:
                 return Bundle.getMessage("Built");
             case CAR_ROAD_COLUMN:
-                return Bundle.getMessage("RoadCar");
+                return Bundle.getMessage("RoadsCar");
+            case CABOOSE_ROAD_COLUMN:
+                return Bundle.getMessage("RoadsCaboose");
             case LOCO_ROAD_COLUMN:
-                return Bundle.getMessage("Road");
+                return Bundle.getMessage("RoadsLoco");
             case LOAD_COLUMN:
                 return Bundle.getMessage("Load");
             case OWNER_COLUMN:
@@ -221,6 +227,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 return CURRENTCOLUMNNAME;
             case TERMINATES_COLUMN:
                 return TERMINATESCOLUMNNAME;
+            case CARS_COLUMN:
+                return Bundle.getMessage("Cars");
             case STATUS_COLUMN:
                 return STATUSCOLUMNNAME;
             case ACTION_COLUMN:
@@ -238,12 +246,14 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             case BUILDBOX_COLUMN:
                 return Boolean.class;
             case ID_COLUMN:
+            case CARS_COLUMN:
                 return Integer.class;
             case TIME_COLUMN:
             case NAME_COLUMN:
             case DESCRIPTION_COLUMN:
             case BUILT_COLUMN:
             case CAR_ROAD_COLUMN:
+            case CABOOSE_ROAD_COLUMN:
             case LOCO_ROAD_COLUMN:
             case LOAD_COLUMN:
             case OWNER_COLUMN:
@@ -300,6 +310,10 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             case CAR_ROAD_COLUMN:
                 return getModifiedString(train.getCarRoadNames().length, train.getCarRoadOption().equals(Train.ALL_ROADS),
                         train.getCarRoadOption().equals(Train.INCLUDE_ROADS));
+            case CABOOSE_ROAD_COLUMN:
+                return getModifiedString(train.getCabooseRoadNames().length,
+                        train.getCabooseRoadOption().equals(Train.ALL_ROADS),
+                        train.getCabooseRoadOption().equals(Train.INCLUDE_ROADS));
             case LOCO_ROAD_COLUMN:
                 return getModifiedString(train.getLocoRoadNames().length, train.getLocoRoadOption().equals(Train.ALL_ROADS),
                         train.getLocoRoadOption().equals(Train.INCLUDE_ROADS));
@@ -327,6 +341,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                     return train.getTrainTerminatesName() + " (" + train.getTerminationTrack().getName() + ")";
                 }
             }
+            case CARS_COLUMN:
+                return train.getNumberCarsInTrain();
             case STATUS_COLUMN:
                 return train.getStatus();
             case BUILD_COLUMN: {

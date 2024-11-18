@@ -311,9 +311,8 @@ public class ArchitectureTest {
         .that()
 
         // all the standard serial access should be confined to here:
-        .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController$SerialPort").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.AbstractSerialPortController$SerialPortEvent")
+        .doNotHaveFullyQualifiedName("jmri.jmrix.jserialcomm.JSerialPort").and()
+        .doNotHaveFullyQualifiedName("jmri.jmrix.jserialcomm.JSerialPortEvent")
 
         .should().accessClassesThat().resideInAPackage("com.fazecast.jSerialComm..");
 

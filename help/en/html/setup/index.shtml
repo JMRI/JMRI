@@ -73,15 +73,23 @@
 
         <li>Version 4.25.6 thru 4.26 requires Java 8 or Java 11 (recommended).</li>
 
-        <li>Version 4.99.x and beyond: REQUIRES <strong>JAVA 11 ONLY</strong>.  See <a href="https://www.jmri.org/java/index.shtml">our Java instructions</a>
-         page on getting Java 11.</li>
+        <li>Version 4.99.x thru 5.8 requires Java 11.</li>
+
+        <li>Versions 5.9.1 onwards, requires Java 11 or Java 17 (recommended).  
+        See <a href="https://www.jmri.org/java/index.shtml">our Java instructions</a>
+        page on getting Java.</li>
+
       </ul>
 
-      <p>As of JMRI 4.20, JMRI is only fully supported when running on Java release 8 or 11.  As of JMRI 4.99.1,
-      JMRI is only fully supported when running on Java release 11 as noted above.
-      Some problems have been encountered while using a Java version beyond Java 11 and support is offered
-      only on a "best effort" basis.  Some issues may only be
-      addressable by using a supported version.</p>
+      <p>As of production release JMRI 5.0, JMRI is fully supported when running on Java release 11 as 
+      noted above. Some problems have been encountered while using a Java version beyond Java 11 and 
+      support is offered only on a "best effort" basis. Some issues may only be addressable by using a 
+      supported version.</p>
+
+      <p>As of test release JMRI 5.9.1, JMRI is fully supported when running on Java release 17 as noted 
+      above. Some problems have been encountered while using a Java version beyond Java 17 and support 
+      is offered only on a "best effort" basis. Some issues may only be addressable by using a supported 
+      version.</p>
 
       <h2 id="startprog">Starting the program</h2>
 

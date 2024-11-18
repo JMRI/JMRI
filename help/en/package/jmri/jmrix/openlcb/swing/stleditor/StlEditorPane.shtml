@@ -47,9 +47,10 @@ etc.
       <strong><em>changed</em></strong> output variables are sent to the LCC network.</p>
 
       <p>The <strong>STL Editor</strong> consists of a LCC node selector, five data tabs, a number
-      of toolbar buttons and a <strong>File</strong> menu. The basic mode is to select a LCC node
-      which loads the logic data.  The node selector only shows Tower LCC+Q nodes.  When changes
-      have been made, they can be stored using the <a href="#storeButton">Store button</a>.</p>
+      of toolbar buttons and <strong>File</strong> and <strong>View</strong> menus. The basic mode
+      is to select a LCC node which loads the logic data.  The node selector only shows Tower LCC+Q
+      nodes.  When changes have been made, they can be stored using the <a href="#storeButton">Store</a>
+      button.</p>
 
       <p>Offline work is supported by exporting and importing the content using a CSV file set. This
       is a set of five files stored in a selected directory in the user files location.  Each
@@ -92,6 +93,32 @@ etc.
       output, receiver, transmitter) tables. Other "names" include labels for jump operators, timer
       definitions, Mn.n memory variables, etc. The <strong>Comment</strong> column is for comments.
       Note:  Comments take up a lot of room.</p>
+
+      <div class="noted">
+
+        <p>The friendly names assigned to the IQYZ tables would normally be the JMRI user names.
+        There are some limitations.  The names in the IQ tables have to be unique.  This
+        also applies to the names in YZ tables. For example, a JMRI sensor button with the user name
+        "Turnout 1" (I table) is used to set a JMRI turnout also with the user name "Turnout 1" (Q
+        table). A possible solution is to use "T-Turnout 1" as the Q table name.  For signal mast
+        aspects in the Q table, using a colon between the mast name and the aspect works nicely.
+        For example, mastname:Clear.</p>
+
+        <p>Note: The friendly names are only used for documentation in the CDI and by the STL Editor
+        to map names to the IQYZ table entries. There is no direct relationship to the actual JMRI
+        table names.</p>
+
+        <p>There are few reserved names in STL.  One of them is the timer variable.  This is the
+        letter <strong>T</strong> followed by a number from 0 to 63.  Using this as a IQYZ name or
+        in a comment will cause issues.  For example, don't create a comment such as
+        "Set T1 closed".</p>
+
+      </div>
+
+      <p><span class="since">since 5.9.6</span>A friendly name from the IQYZ tables can be copied
+      using a <strong>shift-click</strong> on a table row.  Hold the shift key and then click on a
+      table row.  The name field in the logic table will be added/replaced.  Make sure the correct
+      logic row has been selected before doing the copy from a table row.</p>
 
       <div style="margin-left: 2em">
         <a href="images/editor_tab.png"><img src=
@@ -167,7 +194,7 @@ etc.
       <p>The actual receiver variable names consist of the row number and the speed number, such as
       <strong>Y0.7</strong>.  That is the "Clear" speed for the first circuit.  For the STL Editor,
       the <strong>Yn.n</strong> names are converted to the friendly name with a tilde and the speed
-      number, such as <em>Right-EB-Circuit~7</em>.</p>
+      number, such as <em>SM-Alpha-Beta-1:Circuit~7</em>.</p>
 
       <div style="margin-left: 2em">
         <a href="images/receivers_tab.png"><img src=
@@ -194,6 +221,16 @@ etc.
       <h4>File Buttons</h4>
 
       <dl>
+        <dt>Load Backup</dt>
+        <dd>
+          <p>The <strong>Load Backup</strong> button extracts the STL data from a CDI backup file.</p>
+
+          <div style="margin-left: 2em">
+            <a href="images/load_backup.png"><img src=
+            "images/load_backup.png" alt="stl load backup"></a>
+          </div>
+        </dd>
+
         <dt>Import</dt>
         <dd>
           <p>Import a CSV file set from a directory in the user files location. If the current data
@@ -237,32 +274,8 @@ etc.
           bytes, the encoding error dialog is shown (See the percent button).</p>
 
           <p><span class="since">since 5.9.1</span>The content will be store based on the
-          <strong>Compact store mode</strong> selection. This is selected using the checkbox in the
-          upper right corner of the editor window.  When unchecked, the data is stored in the node
-          with spaces between that data items and a separate line for each statement.  This is a
-          readable format.  See the example at the top of the page.</p>
-
-          <p>When checked, the data is stored without most of spaces.</p>
-
-          <pre style="margin-left: 2em">
-CLR//Right B
-=Q0.0
-=Q0.1
-=Q0.2
-OI0.4
-OI0.5
-OI1.1
-=Q0.2
-JCE1
-AY0.0
-=Q0.1
-JCE1
-=Q0.0
-E1:CLR//Right C
-          </pre>
-
-          <p>This format provides more room for PLC statements.
-          </p>
+          selected store mode in the <strong>View</strong> menu.  The default is
+          <strong>Store as readable lines</strong>.</p>
 
           <p>Only changed data is stored.  The store completion dialog will be displayed when done.</p>
 
@@ -318,29 +331,33 @@ E1:CLR//Right C
 
       <dl>
         <dt>Add</dt>
-        <dd>Add a blank row to the end of the list.</dd>
+        <dd><p>Add a blank row to the end of the list.</p></dd>
 
         <dt>Insert</dt>
-        <dd>Add a blank row <strong>above</strong> the selected row.</dd>
+        <dd><p>Add a blank row <strong>above</strong> the selected row.</p></dd>
 
         <dt>Move Up</dt>
-        <dd>Move the selected row up.</dd>
+        <dd><p>Move the selected row up.</p></dd>
 
         <dt>Move Down</dt>
-        <dd>Move the selected row down.</dd>
+        <dd><p>Move the selected row down.</p></dd>
 
         <dt>Delete</dt>
-        <dd>Delete the selected row.</dd>
+        <dd><p>Delete the selected row.</p></dd>
 
         <dt>Percent</dt>
-        <dd>Do the PLC encode process and calculate the utilization.  The calculation will be
-        based on the <strong>Compact store mode</strong> selection. If the resulting code is more
-        that 255 bytes, a dialog is displayed.  It shows the data that would be truncated during a
-        store.
+        <dd><p>Do the PLC encode process and calculate the utilization.  The calculation will be
+        based on the selected store mode in the <strong>View</strong> menu. If the resulting code is
+        more that 255 bytes, a dialog is displayed.  It shows the data that would be truncated
+        during a store.</p>
+
         <div style="margin-left: 2em">
           <a href="images/encode_overflow.png"><img src=
           "images/encode_overflow.png" alt="stl encode overflow"></a>
         </div>
+
+        <p>If the <strong>View &rArr; STL Preview</strong> menu item is enabled, the preview content
+        will be refreshed.</p>
         </dd>
       </dl>
 
@@ -353,13 +370,75 @@ E1:CLR//Right C
         "images/file_menu.png" alt="stl file menu"></a>
       </div>
 
-      <p>The file menu also has a <strong>Load a CDI Backup file</strong> item.  This extracts the
-      STL data from a CDI backup file.</p>
+      <h3>View Menu<span class="since">since 5.9.7</span></h3>
+
+      <p>The <strong>View</strong> menu provides a choice of STL Editor layouts, an option to
+      preview the generated STL logic and three options for storing the STL in the
+      <strong>Tower LCC+Q</strong> node.</p>
 
       <div style="margin-left: 2em">
-        <a href="images/load_backup.png"><img src=
-        "images/load_backup.png" alt="stl load backup"></a>
+        <a href="images/view_menu.png"><img src=
+        "images/view_menu.png" alt="stl view menu"></a>
       </div>
+
+      <dl>
+        <dt>Single Window</dt>
+        <dd>
+          <p>The <strong>STL Editor</strong> tab and the tabs for the <strong>IQYZ</strong> tables
+          are in the main STL Editor window.</p>
+        </dd>
+
+        <dt>Separate Tables Window</dt>
+        <dd>
+          <p>The <strong>IQYZ</strong> tabs are moved to a second window while the STL Editor tab
+          remains in the main STL Editor window. The tables window cannot be closed while the
+          <strong>Separate Tables Window</strong> option is selected.  The window is hidden when the
+          <strong>Single Window</strong> option is selected.</p>
+        </dd>
+
+        <dt>STL Preview</dt>
+        <dd>
+          <p>The preview option displays the generated STL logic for the current <strong>Group</strong>
+          in a separate window.  The window cannot be closed but will be hidden when the option is not
+          active.  The content is refreshed when the <strong>Percent</strong> button is pressed or a
+          different group is selected from the <strong>Group</strong> list.  After a <strong>Store</strong>,
+          it will contain the STL logic for the last group.</p>
+
+          <p>Preview examples are shown below.</p>
+        </dd>
+
+        <dt>Store as readable lines</dt>
+        <dd>
+          <p>The STL is stored as individual lines and spaces to make the output easier to read.</p>
+
+          <div style="margin-left: 2em">
+            <a href="images/readable_preview.png"><img class="image-border" src=
+            "images/readable_preview.png" alt="readable preview"></a>
+          </div>
+        </dd>
+
+        <dt>Store as compact lines</dt>
+        <dd>
+          <p>The STL is stored as individual lines without extra spaces.</p>
+
+          <div style="margin-left: 2em">
+            <a href="images/compact_preview.png"><img class="image-border" src=
+            "images/compact_preview.png" alt="compact preview"></a>
+          </div>
+        </dd>
+
+        <dt>Store compressed</dt>
+        <dd>
+          <p>The STL is stored with only the content.  There are natural line breaks after comments
+          and jump labels.</p>
+
+          <div style="margin-left: 2em">
+            <a href="images/compressed_preview.png"><img class="image-border" src=
+            "images/compressed_preview.png" alt="compressed preview"></a>
+          </div>
+        </dd>
+
+      </dl>
 
 
       <!--#include virtual="/help/en/parts/Footer.shtml" -->

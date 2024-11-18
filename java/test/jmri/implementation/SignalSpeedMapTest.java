@@ -1,5 +1,7 @@
 package jmri.implementation;
 
+import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
 
@@ -88,18 +90,18 @@ public class SignalSpeedMapTest {
 
     @BeforeEach
     public void setUp() throws Exception {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalLightManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initIdTagManager();
+        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initIdTagManager();
         map = new SignalSpeedMap();
     }
 
     @AfterEach
     public void tearDown() throws Exception {
         map = null;
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 }

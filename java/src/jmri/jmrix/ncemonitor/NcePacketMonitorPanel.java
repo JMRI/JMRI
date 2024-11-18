@@ -8,8 +8,9 @@ import java.util.Vector;
 import javax.swing.*;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import jmri.jmrix.AbstractSerialPortController;
-import jmri.jmrix.AbstractSerialPortController.SerialPort;
+import jmri.jmrix.SerialPort;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.swing.NcePanelInterface;
 
@@ -483,7 +484,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         int parity = modelParityValues[modelValue];
         int baudrate = modelBaudRates[modelValue];
         activeSerialPort = AbstractSerialPortController.activatePort(
-                null, portName, log, numStopBits, AbstractSerialPortController.Parity.getParity(parity));
+                null, portName, log, numStopBits, SerialPort.Parity.getParity(parity));
 
         activeSerialPort.setNumDataBits(numDataBits);
         activeSerialPort.setBaudRate(baudrate);

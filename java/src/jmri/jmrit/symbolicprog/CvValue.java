@@ -286,6 +286,9 @@ public class CvValue extends AbstractValue implements ProgListener {
     private boolean _confirm = false;
 
     public void read(JLabel status) {
+        read(status,0,0,0);
+    }
+    public void read(JLabel status, long number, long total, long cvReadStartTime) {
         log.debug("read call with Cv number {} and programmer {}", _num, mProgrammer); // NOI18N
 
         setToRead(false);
@@ -293,10 +296,24 @@ public class CvValue extends AbstractValue implements ProgListener {
         _status = status;
 
         if (status != null) {
-            status.setText(
-                    java.text.MessageFormat.format(
-                            Bundle.getMessage("StateReadingCV"),
-                            new Object[]{"" + _num}));
+            if (total == 0) {
+                status.setText(
+                        java.text.MessageFormat.format(
+                                Bundle.getMessage("StateReadingCV"),
+                                new Object[]{"" + _num}));
+
+            } else {
+                long remaining = ((System.currentTimeMillis() - cvReadStartTime) / number * (total - number)) / 1000;
+                String units = "seconds";
+                if (remaining > 60) {
+                    remaining = remaining / 60;
+                    units = "minutes";
+                }
+                status.setText(
+                        java.text.MessageFormat.format(
+                                Bundle.getMessage("StateReadingCVincltime"),
+                                new Object[]{"" + _num, number, total, remaining, units}));
+            }
         }
 
         if (mProgrammer != null) {

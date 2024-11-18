@@ -1,8 +1,6 @@
 package jmri.jmrit.operations.setup;
 
-import org.jdom2.Attribute;
-import org.jdom2.DataConversionException;
-import org.jdom2.Element;
+import org.jdom2.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,6 +82,8 @@ public class Control {
 
     public static boolean disablePrintingIfCustom = false;
 
+    public static int speedHpt = 36;
+
     // must synchronize changes with operation-config.dtd
     public static Element store() {
         Element values;
@@ -125,6 +125,9 @@ public class Control {
         // print control
         e.addContent(values = new Element(Xml.PRINT_OPTIONS));
         values.setAttribute(Xml.DISABLE_PRINT_IF_CUSTOM, disablePrintingIfCustom ? Xml.TRUE : Xml.FALSE);
+        // HPT speed for calculations
+        e.addContent(values = new Element(Xml.SPEED_HPT));
+        values.setAttribute(Xml.MPH, Integer.toString(speedHpt));
 
         return e;
     }
@@ -216,6 +219,17 @@ public class Control {
             Attribute format;
             if ((format = ePrintOptions.getAttribute(Xml.DISABLE_PRINT_IF_CUSTOM)) != null) {
                 disablePrintingIfCustom = format.getValue().equals(Xml.TRUE);
+            }
+        }
+        Element eSpeedHtp = eControl.getChild(Xml.SPEED_HPT);
+        if (eSpeedHtp != null) {
+            Attribute a;
+            if ((a = eSpeedHtp.getAttribute(Xml.MPH)) != null) {
+                try {
+                    speedHpt = a.getIntValue();
+                } catch (DataConversionException e1) {
+                    log.error("HPT speed in MPH ({}) isn't a number", a.getValue());
+                }
             }
         }
     }

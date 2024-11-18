@@ -277,7 +277,7 @@ public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMat
                     
                     actualMaxSpeedField.setText(String.format("%.1f", speedMatchMaxSpeed));
                     
-                    initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_STEP28);
+                    initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_STEP28, 30);
                 }
                 break;
 
@@ -475,7 +475,7 @@ public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMat
 
             writeSpeedTableStep(speedMatchSpeedTableStep, speedMatchCVValue);
 
-            setSpeedMatchStateTimerDuration(8000);
+            setSpeedMatchStateTimerDuration(speedMatchSpeedTableStep == SpeedTableStep.STEP1 ? 15000: 8000);
             stepDuration = 1;
         } else {
             setSpeedMatchError(speedStepTargetSpeedKPH);
@@ -491,7 +491,12 @@ public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMat
                 speedMatchSpeedTableStep = speedMatchSpeedTableStep.getPrevious();
 
                 if (speedMatchSpeedTableStep != null) {
-                    initNextSpeedMatcherState(speedMatcherState);
+                    if (speedMatchSpeedTableStep == SpeedTableStep.STEP1) {
+                        initNextSpeedMatcherState(speedMatcherState, 3);
+                    }
+                    else {
+                        initNextSpeedMatcherState(speedMatcherState);
+                    }
                 } else {
                     initNextSpeedMatcherState(nextState);
                 }
@@ -526,13 +531,24 @@ public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMat
     }
 
     /**
-     * Sets up the speed match state by clearing the speed match error, clearing
-     * the step duration, setting the timer duration, and setting the next state
+     * Sets up the speed match state by resetting the speed matcher with a value delta of 10,
+     * clearing the step duration, setting the timer duration, and setting the next state
      *
      * @param nextState next SpeedMatcherState to set
      */
     protected void initNextSpeedMatcherState(SpeedMatcherState nextState) {
-        resetSpeedMatchError();
+        initNextSpeedMatcherState(nextState, 10); 
+    }
+    
+    /**
+     * Sets up the speed match state by resetting the speed matcher with the given value delta,
+     * clearing the step duration, setting the timer duration, and setting the next state
+     *
+     * @param nextState next SpeedMatcherState to set
+     * @param speedMatchValueDelta the value delta to use when resetting the speed matcher
+     */
+    protected void initNextSpeedMatcherState(SpeedMatcherState nextState, int speedMatchValueDelta) {
+        resetSpeedMatcher(speedMatchValueDelta);
         stepDuration = 0;
         speedMatcherState = nextState;
         setSpeedMatchStateTimerDuration(1800);

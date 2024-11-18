@@ -95,7 +95,7 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
         // load fields
         maxLengthTextField.setText(Integer.toString(Setup.getMaxTrainLength()));
         maxEngineSizeTextField.setText(Integer.toString(Setup.getMaxNumberEngines()));
-        hptTextField.setText(Integer.toString(Setup.getHorsePowerPerTon()));
+        hptTextField.setText(Double.toString(Setup.getHorsePowerPerTon()));
         switchTimeTextField.setText(Integer.toString(Setup.getSwitchTime()));
         travelTimeTextField.setText(Integer.toString(Setup.getTravelTime()));
         panelTextField.setText(Setup.getPanelName());
@@ -411,7 +411,7 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
         }
 
         try {
-            Integer.parseInt(hptTextField.getText());
+            Double.parseDouble(hptTextField.getText());
         } catch (NumberFormatException e) {
             JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("HPT"), Bundle.getMessage("CanNotAcceptNumber"),
                     JmriJOptionPane.ERROR_MESSAGE);
@@ -502,7 +502,7 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
         }
         Setup.setTrainDirection(direction);
         Setup.setMaxNumberEngines(Integer.parseInt(maxEngineSizeTextField.getText()));
-        Setup.setHorsePowerPerTon(Integer.parseInt(hptTextField.getText()));
+        Setup.setHorsePowerPerTon(Double.parseDouble(hptTextField.getText()));
         // set switch time
         Setup.setSwitchTime(Integer.parseInt(switchTimeTextField.getText()));
         // set travel time

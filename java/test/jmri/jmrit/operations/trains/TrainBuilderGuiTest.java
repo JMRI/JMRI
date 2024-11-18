@@ -9,22 +9,15 @@ import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.Kernel;
-import jmri.jmrit.operations.rollingstock.cars.KernelManager;
+import jmri.jmrit.operations.locations.*;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
+import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
-import jmri.util.ThreadingUtil;
 
 /**
  * Tests for the Operations Trains GUI class
@@ -47,9 +40,6 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
 
         JUnitOperationsUtil.initOperationsData();
         Setup.setStagingPromptFromEnabled(true);
-
-        // two sets of cars in staging
-        JUnitOperationsUtil.initOperationsData();
 
         Train train2 = tmanager.getTrainById("2");
 

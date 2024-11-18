@@ -128,9 +128,24 @@ public interface PermissionManager {
 
     /**
      * Get the current username.
-     * @return the username of the user that's currently logged in.
+     * @return the username of the user that's currently logged in or null if
+     *         no user is logged in.
      */
     String getCurrentUserName();
+
+    /**
+     * Is the current user allowed to change his password?
+     * @return true if a user has logged in and that user is permitted to change
+     *              his password, false otherwise
+     */
+    boolean isCurrentUserPermittedToChangePassword();
+
+    /**
+     * Is the user 'username' the guest user?
+     * @param username the username to check
+     * @return true if 'username' is the guest user
+     */
+    boolean isAGuestUser(String username);
 
     /**
      * Is the user 'user' the guest user?

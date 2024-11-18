@@ -230,7 +230,7 @@
 
 <!ATTLIST display showTrackMoves		(true | false ) "false">
 
-<!ELEMENT manifestHeaderTextStrings (road | number | engineNumber | type | model
+<!ELEMENT manifestHeaderTextStrings (road | number | engineNumber | type | model | hp
 | length | load | color | track | destination | dest_Track | finalDest | fd_Track | location | consist
 | kernel | owner | rwe | comment | setOut_msg | pickUp_msg | hazardous | weight | load_type | dcc_addr
 | division)*>
@@ -240,6 +240,7 @@
 <!ELEMENT engineNumber EMPTY>
 <!ELEMENT type EMPTY>
 <!ELEMENT model EMPTY>
+<!ELEMENT hp EMPTY>
 <!ELEMENT length EMPTY>
 <!ELEMENT load EMPTY>
 <!ELEMENT color EMPTY>
@@ -264,6 +265,7 @@
 <!ATTLIST engineNumber text		CDATA #IMPLIED>
 <!ATTLIST type text				CDATA #IMPLIED>
 <!ATTLIST model text			CDATA #IMPLIED>
+<!ATTLIST hp text				CDATA #IMPLIED>
 <!ATTLIST length text			CDATA #IMPLIED>
 <!ATTLIST load text				CDATA #IMPLIED>
 <!ATTLIST color text			CDATA #IMPLIED>
@@ -372,7 +374,7 @@
 <!ATTLIST switchListTrack text			CDATA #IMPLIED>
 <!ATTLIST holdCar text					CDATA #IMPLIED>
 
-<!ELEMENT control (backwardCompatibility | maximumStringLengths | reports | actions | printOptions)*>
+<!ELEMENT control (backwardCompatibility | maximumStringLengths | reports | actions | printOptions | speedHpt)*>
 
 <!ELEMENT backwardCompatibility EMPTY>
 <!ATTLIST backwardCompatibility saveUsingPre_2013_Format	(true | false ) "false">
@@ -417,3 +419,6 @@
 
 <!ELEMENT printOptions EMPTY>
 <!ATTLIST printOptions disablePrintIfCustom (true | false ) "false">
+
+<!ELEMENT speedHpt EMPTY>
+<!ATTLIST speedHpt MPH CDATA #IMPLIED>

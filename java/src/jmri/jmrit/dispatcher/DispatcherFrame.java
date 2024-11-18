@@ -152,6 +152,14 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
     }
 
+    @Override
+    public void dispose( ) {
+        super.dispose();
+        if (autoAllocate != null) {
+            autoAllocate.setAbort();
+        }
+    }
+
     /**
      * Constants for the override type
      */
@@ -218,7 +226,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
     /**
      * Loads a train into the Dispatcher
-     *
+     * returns an integer. Messages written to log.
      * @param info  a completed TrainInfo class.
      * @param overRideType  "NONE", "USER", "ROSTER" or "OPERATIONS"
      * @param overRideValue  "" , dccAddress, RosterEntryName or Operations
@@ -226,14 +234,35 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * @return 0 good, -1 failure
      */
     public int loadTrainFromTrainInfo(TrainInfo info, String overRideType, String overRideValue) {
+        try {
+            loadTrainFromTrainInfoThrowsException( info, overRideType, overRideValue);
+            return 0;
+        } catch (IllegalArgumentException ex) {
+            return -1;
+        }
+    }
+
+    /**
+     * Loads a train into the Dispatcher
+     * throws IllegalArgumentException on errors
+     * @param info  a completed TrainInfo class.
+     * @param overRideType  "NONE", "USER", "ROSTER" or "OPERATIONS"
+     * @param overRideValue  "" , dccAddress, RosterEntryName or Operations
+     *            trainName.
+     * @throws IllegalArgumentException validation errors.
+     */
+    public void loadTrainFromTrainInfoThrowsException(TrainInfo info, String overRideType, String overRideValue)
+                throws IllegalArgumentException {
 
         log.debug("loading train:{}, startblockname:{}, destinationBlockName:{}", info.getTrainName(),
                 info.getStartBlockName(), info.getDestinationBlockName());
         // create a new Active Train
 
         //set updefaults from traininfo
-        int tSource = ActiveTrain.ROSTER;
-        if (info.getTrainFromTrains()) {
+        int tSource = 0;
+        if (info.getTrainFromRoster()) {
+            tSource = ActiveTrain.ROSTER;
+        } else if (info.getTrainFromTrains()) {
             tSource = ActiveTrain.OPERATIONS;
         } else if (info.getTrainFromUser()) {
             tSource = ActiveTrain.USER;
@@ -268,11 +297,15 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             default:
                 /* just leave as in traininfo */
         }
+        if (tSource == 0) {
+            log.warn("Invalid Trains From [{}]",
+                    tSource);
+            throw new IllegalArgumentException(Bundle.getMessage("Error21"));
+        }
         if (!isTrainFree(trainNameToUse)) {
             log.warn("TrainName [{}] already in use",
                     trainNameToUse);
-            return -1;
-            
+            throw new IllegalArgumentException(Bundle.getMessage("Error24",trainNameToUse));
         }
         ActiveTrain at = createActiveTrain(info.getTransitId(), trainNameToUse, tSource,
                 info.getStartBlockId(), info.getStartBlockSeq(), info.getDestinationBlockId(),
@@ -288,7 +321,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 } else {
                     log.warn("Roster Entry '{}' not found, could not create ActiveTrain '{}'",
                             trainNameToUse, info.getTrainName());
-                    return -1;
+                    throw new IllegalArgumentException(Bundle.getMessage("Error40",rosterIDToUse));
                 }
             }
             at.setTrainDetection(info.getTrainDetection());
@@ -318,20 +351,18 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 AutoActiveTrain aat = new AutoActiveTrain(at);
                 aat.setSpeedFactor(info.getSpeedFactor());
                 aat.setMaxSpeed(info.getMaxSpeed());
+                aat.setMinReliableOperatingSpeed(info.getMinReliableOperatingSpeed());
                 aat.setRampRate(AutoActiveTrain.getRampRateFromName(info.getRampRate()));
                 aat.setRunInReverse(info.getRunInReverse());
                 aat.setSoundDecoder(info.getSoundDecoder());
-                aat.setMaxTrainLength(info.getMaxTrainLength());
+                aat.setMaxTrainLength(info.getMaxTrainLengthScaleMeters(),getScale().getScaleFactor());
                 aat.setStopBySpeedProfile(info.getStopBySpeedProfile());
                 aat.setStopBySpeedProfileAdjust(info.getStopBySpeedProfileAdjust());
                 aat.setUseSpeedProfile(info.getUseSpeedProfile());
                 getAutoTrainsFrame().addAutoActiveTrain(aat);
                 if (!aat.initialize()) {
                     log.error("ERROR initializing autorunning for train {}", at.getTrainName());
-                    JmriJOptionPane.showMessageDialog(dispatcherFrame, Bundle.getMessage(
-                            "Error27", at.getTrainName()), Bundle.getMessage("MessageTitle"),
-                            JmriJOptionPane.INFORMATION_MESSAGE);
-                    return -1;
+                    throw new IllegalArgumentException(Bundle.getMessage("Error27",at.getTrainName()));
                 }
             }
             allocateNewActiveTrain(at);
@@ -339,16 +370,15 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
         } else {
             log.warn("failed to create Active Train '{}'", info.getTrainName());
-            return -1;
+            throw new IllegalArgumentException(Bundle.getMessage("Error48",info.getTrainName()));
         }
-        return 0;
     }
 
     protected enum TrainsFrom {
         TRAINSFROMROSTER,
         TRAINSFROMOPS,
         TRAINSFROMUSER,
-        TRAINSFROMSETLATER;
+        TRAINSFROMSETLATER
     }
 
     // Dispatcher options (saved to disk if user requests, and restored if present)
@@ -837,6 +867,21 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         return true;
     }
 
+    /**
+     * Check DCC not already in use
+     * @param addr DCC address.
+     * @return true / false
+     */
+    public boolean isAddressFree(int addr) {
+        for (int j = 0; j < activeTrainsList.size(); j++) {
+            ActiveTrain at = activeTrainsList.get(j);
+            if (addr == Integer.parseInt(at.getDccAddress())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private void handleATSelectionChanged(ActionEvent e) {
         atSelectedIndex = atSelectBox.getSelectedIndex();
         initializeExtraComboBox();
@@ -1156,7 +1201,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         allocateNextRequestedForTrain(at);
     }
 
-    // allocate the next section for an ActiveTrain 
+    // allocate the next section for an ActiveTrain
     protected void allocateNextRequestedForTrain(ActiveTrain at) {
         // set up an Allocation Request
         Section next = at.getNextSectionToAllocate();

@@ -1,5 +1,6 @@
 package jmri.jmrix.sprog.serialdriver;
 
+import jmri.jmrix.*;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 import jmri.jmrix.sprog.SprogPortController;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;

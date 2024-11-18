@@ -39,7 +39,7 @@
 	<!-- update factory resets (added full reset) -->
    <decoder>
       <family name="WOW Steam Sound Set 4" mfg="Train Control Systems">
-         <model model="WOW Steam 101 SS4" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="9pin" lowVersionID="4" highVersionID="4" productID="1666">
+         <model model="WOW Steam 101 SS4" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="9pin" lowVersionID="4" highVersionID="4" productID="1154">
             <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
             <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
             <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
@@ -52,7 +52,7 @@
             <output name="Brake"/>
             <size length="1.35" width="0.66" height="0.22" units="inches"/>
          </model>
-         <model model="WOW Steam 121 SS4" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="21pin" lowVersionID="4" highVersionID="4" productID="1667">
+         <model model="WOW Steam 121 SS4" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="21pin" lowVersionID="4" highVersionID="4" productID="1155">
             <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
             <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
             <output name="3" label="Green" connection="plug" maxcurrent="100 mA"/>
@@ -65,7 +65,7 @@
             <output name="Brake"/>
             <size length="1.28" width="0.69" height="0.22" units="inches"/>
          </model>
-         <model model="WOW Steam 501 SS4" numOuts="8" numFns="14" maxMotorCurrent="5A" formFactor="screw" lowVersionID="4" highVersionID="4" productID="1668">
+         <model model="WOW Steam 501 SS4" numOuts="8" numFns="14" maxMotorCurrent="5A" formFactor="screw" lowVersionID="4" highVersionID="4" productID="1156">
             <output name="1" label="White" connection="other"/>
             <output name="2" label="Yellow" connection="other"/>
             <output name="3" label="Green" connection="other"/>

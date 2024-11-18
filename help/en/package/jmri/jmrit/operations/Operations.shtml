@@ -246,7 +246,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
             <li><a href="#TrackTools">Track Tools</a>
               <ul>
-                <li><a href="#CopyTrack">Copy Track</a></li>
+
 
                 <li><a href="#LoadOptions">Load Options</a>
                   <ul>
@@ -261,13 +261,15 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
                 <li><a href="#AlternateTrack">Alternate Track or "Off Spot"</a></li>
 
-                <li><a href="#ChangeTrackType">Change Track Type</a></li>
-
                 <li><a href="#PlannedPickUps">Planned Pick Ups</a></li>
 
                 <li><a href="#TrackWorkComments">Manifest Comments</a></li>
 
                 <li><a href="#TrackDestinations">Track Destinations</a></li>
+
+                <li><a href="#ChangeTrackType">Change Track Type</a></li>
+
+                <li><a href="#CopyTrack">Copy Track</a></li>
 
                 <li><a href="#ShowCars">Show Cars</a></li>
 
@@ -376,6 +378,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                     <li><a href="#LocomotiveRoster">Print</a></li>
                     <li><a href="#LocomotiveRoster">Preview</a></li>
                   </uL></li>
+                <li><a href="#SetEngines">Set Locomotives (Modify Multiple Locos)</a></li>
                 <li><a href="#SynchronizeWithNCEConsists">Synchronize with NCE Consists</a></li>
               </ul>
             <li><a href="#LocomotivesSet">Set Locomotive</a></li>
@@ -789,8 +792,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         button at the bottom left of the <a href="#Trains">Trains</a> window. Be sure to select the
         route you created for your first train. Leave all of the train checkboxes alone which means
         the train will service all car and locomotive types. Leave the <a href="#TrainRequires">Optional
-          Train Requirements</a> for locomotives and caboose area alone for now. Save the train, close
-        the window, and return to the Trains window. Press the <a href="#BuildingTrains">Build</a>
+          locomotive requirements</a> and <a href="#OptionalLastCar">Optional last car in train
+          requirements</a> for locomotives and caboose area alone for now. Save the train, close the
+        window, and return to the Trains window. Press the <a href="#BuildingTrains">Build</a>
         button for the train. It should build. Now pressing the "Print" or "Preview" button will
         produce a <a href="#PrintingManifests">Manifest</a> for your train depending on the state of
         "Preview" checkbox at the bottom of the <a href="#Trains">Trains</a> window. Review the
@@ -836,18 +840,19 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         track located at the start of the route. Note that if you want two or more locomotives
         servicing your train, that the locomotives must be in a <a href="#LocomotivesAdd">consist</a>.
         Note that the last location in your route must have a track that will service the locomotive
-        <a href="#LocomotiveModels">type</a> or the build will fail. Now change the train
-        requirements to require one or more locomotives.
+        <a href="#LocomotiveModels">type</a> or the build will fail. Now change the train <a
+          href="#TrainRequires">requirements</a> to require one or more locomotives.
       </p>
 
       <p>
         If you want a caboose or car with FRED for your train, first configure some of the cars to
         be the last car in the train by selecting the "Caboose" or "FRED" <a
           href="#CabooseFredHazardous">checkbox</a> in the <a href="#CarsEdit">Edit Car</a> window.
-        Now change the optional train requirements radio button to "Caboose" or "FRED" in the <a
-          href="#TrainEdit">Edit Train</a> window. Place the caboose on a track at the first
-        location in your train's route. Be sure that the last location in your train's route has a
-        track that will accept the caboose or the train will not build properly.
+        Now change the <a href="#OptionalLastCar">Optional last car in train requirements </a> radio
+        button to "Caboose" or "FRED" in the <a href="#TrainEdit">Edit Train</a> window. Place the
+        caboose on a track at the first location in your train's route. Be sure that the last
+        location in your train's route has a track that will accept the caboose or the train will
+        not build properly.
       </p>
 
       <p>
@@ -1441,7 +1446,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h4>Use all Trains when Routing</h4>
       The option "Use all Trains when Routing" when selected instructs the program to use all of
       your trains to route a car. If you only want the router to use the trains that you've selected
-      in the "Build" column of the "Trains" window, then deselect this option.
+      in the "Build" column of the <a href="#Trains">Trains</a> window, then deselect this option.
 
       <h4>Enable EXTREME Track Destination Restrictions when Routing</h4>
       The last routing option "Enable EXTREME Track Destination Restrictions when Routing" is
@@ -2197,12 +2202,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <p>
         The "Locations" window shows all of the places that your trains can work. For each location
-        the window shows the type of tracks at that location, the total length of all tracks at that
-        location, the amount of track used by your rolling stock, the quantity of rolling stock, and
-        the number of pick ups and set outs of your rolling stock that are scheduled for that
-        location. The <a href="#Yardmaster">Yardmaster</a> button produces a window <a
-          href="#SwitchList">(Switch List)</a> that allows you to see the scheduled pick ups and set
-        outs by train. Only trains that have work for the location are available.
+        the window shows the type of tracks at that location, the number of tracks, the total length
+        of all tracks at that location, the amount of track used by your rolling stock, the quantity
+        of rolling stock, and the number of pick ups and set outs of your rolling stock that are
+        scheduled for that location. The <a href="#Yardmaster">Yardmaster</a> button produces a
+        window <a href="#SwitchList">(Switch List)</a> that allows you to see the scheduled pick ups
+        and set outs by train. Only trains that have work for the location are available.
       </p>
       <p>
         If the <a href="#EnableIdentificationTagFields">Enable ID Tag</a> option has been selected,
@@ -2782,13 +2787,14 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       edit schedule window "Tools&rArr;Options". A new window should appear with two options, the
       ability to control how many car loads the program will generate from staging, and if the spur
       has an alternate track. The first option, "Percentage of custom loads generated by staging",
-      has a default value of 100% which means only generate enough cars to fill 100% of the
-      available track space. If you only want half of your car loads to come from staging, set the
-      value to 50%, and if you want staging to never generate a custom load car for the spur, set
-      the value to 0%. Sometimes it is appropriate to overload a spur with cars or have cars "en
-      route" to the spur, if you want this, increase the value up to 1000%. BTW 1000% means send 10
-      times the available space in cars to this spur. If you enter this value, you hopefully have 10
-      times the spur's available track space in a storage yard that is near by!
+      has a default value of 100% which means only generate enough cars to fill 100% of the spur's
+      available track space. If your spur can handle two or more cars, and you only want half of
+      your car loads to come from staging, set the value to 50%, and if you want staging to never
+      generate a custom load car for the spur, set the value to 0%. Sometimes it is appropriate to
+      overload a spur with cars or have cars "en route" to the spur, if you want this, increase the
+      value up to 1000%. BTW 1000% means send 10 times the available space in cars to this spur. If
+      you enter this value, you hopefully have 10 times the spur's available track space in a
+      storage yard that is near by!
 
       <h4>Alternate Track (Off Spot)</h4>
       The second option under "Tools&rArr;Options" in the schedule window is the ability to specify
@@ -3139,8 +3145,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         model, or road; the program will search all staging tracks at the departure location for a
         train meeting those requirements. If you set the locomotive requirements to 0, the program
         will select the next available train from staging; and will ignore the number of locomotives
-        leaving that staging track. See <a href="#TrainRequires">Optional Train Requirements</a> for
-        more info.
+        leaving that staging track. See <a href="#TrainRequires">Optional locomotive
+          requirements</a> for more info.
       </p>
 
       <p>
@@ -4174,30 +4180,30 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       located to the right of the load menu.
 
       <h4 id="ReturnWhenEmpty">Return When Empty</h4>
-      You can also optionally enter the location and track that you want the car to return to when
-      the car's load status becomes empty. You can also replace the car's default empty "E" load
-      with one from the return when empty (RWE) load menu. Only custom loads that are type <a
-        href="#LoadType">Empty</a> are shown in the combo box. When you specify a custom RWE load
-      for a car, the program will use the RWE load instead of the default empty "E" load in all
-      cases where the "E" load would normally occur. Note that the RWE load also overrides the
-      generation of custom loads out of staging since the "E" load isn't used by the program for
-      this car. However, if a car does arrive into staging with the RWE load name, the program will
-      set the load name to the default "E", and not use the RWE addresses.
+      You can optionally enter the location and track that you want the car to return to when the
+      car's load status becomes empty. Independent of the location and track fields, you can replace
+      the car's default empty "E" load with one from the return when empty (RWE) load menu. Only
+      custom loads that are type <a href="#LoadType">Empty</a> are shown in the combo box. When you
+      specify a custom RWE load for a car, the program will use the RWE load instead of the default
+      empty "E" load in all cases where the "E" load would normally occur. Note that the RWE load
+      also overrides the generation of custom loads out of staging since the "E" load isn't used by
+      the program for this car. However, if a car does arrive into staging with the RWE load name,
+      the program will set the load name to the default "E", and not use the RWE addresses.
       <p>Note that manually changing the load name will not cause the Return When Empty (RWE)
         destination to become active, only when the car is set out by the program will the RWE
         destination and RWE load become active.</p>
 
       <h4 id="ReturnWhenLoaded">Return When Loaded</h4>
-      You can also optionally enter the location and track that you want the car to return to when
-      the car's load status becomes loaded. You can also replace the car's default load "L" with one
-      from the return when loaded (RWL) load menu. Only custom loads that are type <a
-        href="#LoadType">Load</a> are shown in the combo box. When you specify a custom RWL load for
-      a car, the program will use the RWL load instead of the default "L" load in all cases where
-      the "L" load would normally occur. When a car arrives into staging and has the "E" load and
-      the option to swap load names is enabled, the program will activate the RWL load and
-      addresses. Also when a car arrives into staging and has a custom load type of empty and the
-      option to remove custom load names is enabled, the program will activate the RWL load and
-      addresses.
+      You can optionally enter the location and track that you want the car to return to when the
+      car's load status becomes loaded. Independent of the location and track fields, you can also
+      replace the car's default load "L" with one from the return when loaded (RWL) load menu. Only
+      custom loads that are type <a href="#LoadType">Load</a> are shown in the combo box. When you
+      specify a custom RWL load for a car, the program will use the RWL load instead of the default
+      "L" load in all cases where the "L" load would normally occur. When a car arrives into staging
+      and has the "E" load and the option to swap load names is enabled, the program will activate
+      the RWL load and addresses. Also when a car arrives into staging and has a custom load type of
+      empty and the option to remove custom load names is enabled, the program will activate the RWL
+      load and addresses.
       <p>Note that manually changing the load name will not cause the Return When Loaded (RWL)
         destination to become active, only when the car is set out by the program will the RWL
         destination and RWL load name become active.</p>
@@ -4536,6 +4542,29 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       "Location", this allows you to quickly verify your locomotive locations before or after an
       operations session.
 
+      <h4 id="SetEngines">Set Locomotives (Modify Multiple Locos)</h4>
+
+      If you want to change the status, location, consist, destinations or train assignment for a
+      group of locomotives use the "Set Locomotives" tool found under "Tools" in the <a
+        href="#Locomotives">Locomotives</a> window. The tool works the same way as the <a
+        href="#LocomotivesSet">Set Locomotive</a> as described below, except that multiple
+      locomotives are modified. Select the locomotives you want to change in the table by
+      highlighting them, and then select "Set Locomotives" from the Tools menu. Note that you can use
+      the "Control" or "Ctrl" key on your keyboard to select individual locomotives in the table,
+      and the "Shift" key allows you to select a range of locomotives. Use "Ctrl A" to select all of
+      the locomotives in the table. The first locomotive in the table becomes the default, and when
+      you press the "Apply" button, all of the other selected locomotives will have the same
+      settings as the default locomotive.
+
+      <p>When using the "Set Locomotives" tool, all locomotives selected in the Locomotives
+        window will have the same values once you press the "Apply" button. However, if you want to
+        change only one or two of the fields shown in the Set Locomotives window, select the ignore
+        checkbox for the fields you don't want changed by the "Apply" button. Only the fields that
+        don't have the "ignore" selected will change.</p>
+
+      <p>After making your changes, be sure to press "Save" in the Locomotives window if you
+        want to keep your changes.</p>
+
       <h4 id="SynchronizeWithNCEConsists">Synchronize with NCE Consists</h4>
       If you are using NCE as your DCC command station, you can have the program synchronize your
       consist numbers with your locomotives. The program will read all of the consists out of the
@@ -4546,10 +4575,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       Consists" under the "Tools" from the "Locomotives" menu.
 
       <h3 id="LocomotivesSet">Set Locomotive</h3>
-      After creating a locomotive, you can set the locomotive's location, and optionally the
-      locomotive's destination and train. Normally the locomotive's destination and assigned train
-      are generated by the program, but you can use these fields to force a locomotive to a specific
-      location using a specified train.
+      After creating a locomotive, you can set the locomotive's location, consist, and optionally
+      the locomotive's destination and train. Normally the locomotive's destination and assigned
+      train are generated by the program, but you can use these fields to force a locomotive to a
+      specific location using a specified train.
 
       <p style="page-break-after: always">
         <a href="#toc">[Click to go back to TOC]</a>
@@ -4713,7 +4742,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         The grade is optional and is used to determine how many locomotives the train will require
         for that segment when using the train <a href="#TrainRequires">Auto</a> locomotive
         assignment feature. Enter the maximum grade that the train will encounter between the two
-        locations.
+        locations. The program when determining the required HPT for a grade uses the prototypical
+        formula "HPT = Speed x % Grade / 12". The speed when determining the HPT is set to 36 MPH,
+        which means that a 1% grade will require 3 HPT.
       </p>
 
       <h4 id="RouteIconCoordinates">Train Icon Coordinates</h4>
@@ -4937,15 +4968,16 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         One of the most important buttons is the "Save Builds" button. When pressed, the program
         saves all the files that have been modified by building and moving your trains. Pressing
         this button allows you to shut down the program and resume exactly where you left the
-        program. If you attempt to close the "Trains" window before pressing the "Save Builds"
-        button, a warning will pop up asking you to save your files. Note that if you enabled <a
-          href="#AutoSave">Auto Save</a> no warning will appear and the program will automatically
-        save your files.
+        program. If you attempt to close the <a href="#Trains">Trains</a> window before pressing the
+        "Save Builds" button, a warning will pop up asking you to save your files. Note that if you
+        enabled <a href="#AutoSave">Auto Save</a> no warning will appear and the program will
+        automatically save your files.
       </p>
 
       <h3 id="TrainEdit">Add or Edit Train</h3>
-      Press the "Add Train" button at the bottom left of the "Trains" window to create a new train.
-      Use the "Edit" button in the "Trains" window table to modify an existing train.
+      Press the "Add Train" button at the bottom left of the <a href="#Trains">Trains</a> window to
+      create a new train. Use the "Edit" button in the <a href="#Trains">Trains</a> window table to
+      modify an existing train.
 
       <p>
         <img src="images/EditTrain.png" alt="">
@@ -5004,6 +5036,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
           of Locomotives</a>.
       </p>
 
+      <p>
+        The <a href="#TrainRoadOptions">Train Road Options</a> can be used to limit which locomotive
+        roads a train is allowed to use.
+      </p>
+
       <h4 id="AutoHPT">Auto and Auto HPT</h4>
       There are two other options available when requesting locomotives, "Auto" and "Auto HPT".
       "Auto" calculates the maximum number of cars that could be assigned to a train, and does a
@@ -5035,6 +5072,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       remove a caboose anywhere in the train's route, see <a href="#OptionalTrainRequirements">Optional
         Train Requirements (Locomotive or Caboose Changes en Route)</a> under <a
         href="#TrainBuildOptions">Train Build Options</a> for more info.
+
+      <p>
+        The <a href="#TrainRoadOptions">Train Road Options</a> can be used to limit which caboose
+        roads a train is allowed to use.
+      </p>
 
       <h4>Train Comment</h4>
       You can enter an optional comment for your train that will appear on your Manifests.
@@ -5160,7 +5202,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h5 id="BuildlocoConsist">Build loco consist from single locos</h5>
       This option when selected will dynamically build a locomotive consist for you using locos that
       aren't in a consist. For example, say you request a consist of three locomotives in the edit
-      train window's <a href="#TrainRequires">Optional train requirements</a>. The program when
+      train window's <a href="#TrainRequires">Optional locomotive requirements</a>. The program when
       building a train, will first search for a consist of three locos that meet the type, model and
       road requirements for the train. If the program can't find a three loco consist, it will
       attempt to find three non-consisted locos that meet the train's requirements. For some
@@ -5217,10 +5259,20 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h4 id="OptionalTrainRequirements">Optional Train Requirements (Locomotive or Caboose
         Changes en Route)</h4>
       You can have up to two locomotive changes while the train is en route. Select "Locomotive
-      change" where you want the change to happen in your route, and how many new locomotives should
-      be assigned to the train. You can optionally select the new locomotives model and road. At the
-      locomotive change location, the previously assigned locomotives will be removed from the
-      train.
+      change" and where you want the change to happen in your route, along with the number of new
+      locomotives that should be assigned to the train. You can optionally select the new
+      locomotives model and road. At the locomotive change location, the previously assigned
+      locomotives will be removed from the train.
+
+      <p>There's also the option to add or remove locomotives in the train's route. Select "Add
+        Locomotives" if you want to add locomotives to your train. Select "Remove Locomotives" if
+        you want to remove locomotives from your train. Select the location and number of
+        locomotives you want added or removed, and optionally the model and road. The program will
+        add locomotives at the location selected. When using the "Remove Locomotives" option, the
+        program will assign additional locomotives at the start of the train's route and drop them
+        off at the selected location. The "Remove Locomotives" option isn't available when the train
+        departs staging.</p>
+
       <p>OperationsPro&trade; also gives you three options with regards to the train's caboose.
         The first option, "Remove caboose", will set out the caboose if one was assigned to the
         train. The train will then depart the specified location without a caboose. The second
@@ -5250,9 +5302,15 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         "Use car type and load" checkbox if you want this feature.</p>
 
       <h4 id="TrainRoadOptions">Train Road Options</h4>
-      You can control the roads that the train will service. Select under the "Edit
-      Train&rArr;Tools&rArr;Train Road Options". This will bring up a new window with several
-      options.
+
+      You can control the car, caboose, and locomotive roads that the train will service. Select
+      under the "Edit Train&rArr;Tools&rArr;Train Road Options". This will bring up a new window
+      with several options.
+
+      <p>
+        <img src="images/TrainRoadOptions.png" alt="">
+      </p>
+
       <p>If the train will service any road, select the "Accept all" radio button. If you want
         to accept only some roads, select "Accept only" radio button. Then use the menu of roads and
         "Add Road" button to make a list of roads that the train will service. To remove a road from
@@ -5263,9 +5321,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         this train will not service.</p>
 
       <p>You can use the "hyphen" feature to create unique road names. For example, say you
-        wanted a certain SP caboose to only ride this train. You could create a new road name, for
-        example "SP-special", assign that road name to the caboose, and exclude the road name from
-        the other trains. Your Manifest would continue to show the caboose road name as "SP".</p>
+        wanted a certain SP boxcars to only ride this train. You could create a new road name, for
+        example "SP-special", assign that road name to the boxcars, and exclude the road name from
+        the other trains. Your Manifest would continue to show the boxcar road name as "SP".</p>
 
       <h4 id="TrainManifestOptions">Train Manifest Options</h4>
       You can optionally have a unique railroad name and logo for each train in your roster. You can
@@ -5323,10 +5381,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h3 id="TrainsTools">Trains Tools</h3>
       <img src="images/TrainsPaneMenu.png" alt="Operations Trains window Tools Menu">
       <p>
-        In the upper left side of the "Trains" window is the "Tools" menu. The first three items; <a
-          href="#SettingsOptions">Options</a>, <a href="#PrintOptions">Manifest Print Options</a>,
-        and <a href="#BuildReportDetails">Build Report Options</a> can also be accessed from the <a
-          href="#Settings">Settings</a> Tools menu.
+        In the upper left side of the <a href="#Trains">Trains</a> window is the "Tools" menu. The
+        first three items; <a href="#SettingsOptions">Options</a>, <a href="#PrintOptions">Manifest
+          Print Options</a>, and <a href="#BuildReportDetails">Build Report Options</a> can also be
+        accessed from the <a href="#Settings">Settings</a> Tools menu.
       </p>
 
       <h4 id="ModifyTrainsByCarType">Modify Trains by Car Type</h4>
@@ -5390,13 +5448,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </p>
 
       <h4 id="TrainsTableColors">Train Row Color</h4>
-      OperationsPro&trade; gives you two options for color coding the rows in the "Trains" window.
-      You can manually color code your trains, or you can have the program automatically set a
-      train's row color based on the status of the train. For example you could tell the program you
-      want the row colored red if a train fails to build. You can also when using the "Auto" option
-      define a unique color for each train when they are <a href="#TrainReset">reset</a>. Before
-      switching to "Auto", select the reset row colors for your various trains. You can find this
-      feature under "Tools" in the "Trains" window.
+      OperationsPro&trade; gives you two options for color coding the rows in the <a href="#Trains">Trains</a>
+      window. You can manually color code your trains, or you can have the program automatically set
+      a train's row color based on the status of the train. For example you could tell the program
+      you want the row colored red if a train fails to build. You can also when using the "Auto"
+      option define a unique color for each train when they are <a href="#TrainReset">reset</a>.
+      Before switching to "Auto", select the reset row colors for your various trains. You can find
+      this feature under "Tools" in the <a href="#Trains">Trains</a> window.
 
       <h4 id="TrainsCopyTrain">Copy Train</h4>
       This tool allows you to copy an existing train. Enter a new name for the train you wish to
@@ -5705,10 +5763,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         You can also create custom switch lists. Place the programs in the
         JMRI/Your_Profile_Name.jmri/operations/csvSwitchList directory. You can configure the name
         of the Excel program by opening the "Switch List by Location" window using the "Switch
-        Lists" button at the bottom of the "Trains" window. Then under "Tools" in the "Switch List
-        by Location" window, select "Setup Java or Excel Program (Manifest Creator)". You must also
-        enable the creation of CSV switch list files, see <a href="#ManifestOptions">Options</a>
-        "Generate CSV Switch Lists" for more information.
+        Lists" button at the bottom of the <a href="#Trains">Trains</a> window. Then under "Tools"
+        in the "Switch List by Location" window, select "Setup Java or Excel Program (Manifest
+        Creator)". You must also enable the creation of CSV switch list files, see <a
+          href="#ManifestOptions">Options</a> "Generate CSV Switch Lists" for more information.
       </p>
 
       <h4 id="ExportTrains">Export Trains</h4>
@@ -6010,14 +6068,14 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h2 id="BuildingTrains">Building Trains</h2>
       To build one train, press the "Build" button in the row for the desired train in the <a
         href="#Trains">Trains</a> window. The button will become "Print" or "Preview" after the
-      train is built depending on the state of the "Preview" checkbox located at the bottom of the
-      "Trains" window. If you want to review how the train was built, select the "Build Reports"
-      checkbox before pressing the "Print" or "Preview" button for the desired train. If the
-      "Preview" checkbox is selected, the program will generate the <a href="#BuildReports">Build
-        Report</a> and Manifest and present them in preview windows. If you want to build several trains
-      without having to press individual buttons for each train, select the trains that you want
-      built and press the "Build" button found at the bottom of the trains window. The program will
-      then build Manifests for all of the selected trains.
+      train is built depending on the state of the "Preview" checkbox located at the bottom of the <a
+        href="#Trains">Trains</a> window. If you want to review how the train was built, select the
+      "Build Reports" checkbox before pressing the "Print" or "Preview" button for the desired
+      train. If the "Preview" checkbox is selected, the program will generate the <a
+        href="#BuildReports">Build Report</a> and Manifest and present them in preview windows. If
+      you want to build several trains without having to press individual buttons for each train,
+      select the trains that you want built and press the "Build" button found at the bottom of the
+      trains window. The program will then build Manifests for all of the selected trains.
       <p>
         If a train fails to build, the "Action" button will change its text to "Report". Pressing
         "Report" will print or preview the <a href="#BuildReports">build report</a> for this train.
@@ -6359,10 +6417,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         <img src="images/SwitchList.png" alt="">
       </p>
 
-      <p>Press the "Switch Lists" button found at the bottom of the "Trains" window if you want
-        a switch list for a given location. A menu will appear that allows you to select which
-        locations to preview or print. Once you've determined which locations you want to print or
-        preview, press the "Save" button to keep your selections.</p>
+      <p>
+        Press the "Switch Lists" button found at the bottom of the <a href="#Trains">Trains</a>
+        window if you want a switch list for a given location. A menu will appear that allows you to
+        select which locations to preview or print. Once you've determined which locations you want
+        to print or preview, press the "Save" button to keep your selections.
+      </p>
       <a id="SwitchListByLocation"></a> <img src="images/SwitchListMenu.png" alt="">
       <p>The "Print Switch List Changes" button will become active after you've printed out your
         switch lists, and a change occurs to one of your locations due to building a new train.
@@ -6416,7 +6476,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         be difficult to use. It's a bit complicated, so here's the order you need to do things:</p>
 
       <ul>
-        <li>Press the "Switch Lists" button found at the bottom the "Trains" window.</li>
+        <li>Press the "Switch Lists" button found at the bottom the <a href="#Trains">Trains</a>
+          window.
+        </li>
 
         <li>Select which locations you want switch lists for in the "Switch Lists by Location"
           window.</li>

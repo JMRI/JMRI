@@ -11,8 +11,7 @@ import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
+import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
 
 /**
@@ -116,6 +115,32 @@ public class EngineSetFrameTest extends OperationsTestCase {
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
     
+    @Test
+    public void testEditConsistButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JUnitOperationsUtil.initOperationsData();
+
+        EngineSetFrame f = new EngineSetFrame();
+        f.initComponents();
+        EngineManager eManager = InstanceManager.getDefault(EngineManager.class);
+        Engine e3 = eManager.getByRoadAndNumber("PC", "5016");
+        f.load(e3);
+
+        JemmyUtil.enterClickAndLeave(f.editConsistButton);
+        JUnitUtil.waitFor(() -> {
+            return JmriJFrame.getFrame("Edit Locomotive Consist") != null;
+        }, "not null");
+        JmriJFrame lef = JmriJFrame.getFrame("Edit Locomotive Consist");
+        Assert.assertNotNull(lef);
+
+        // for test coverage
+        JemmyUtil.enterClickAndLeave(f.editConsistButton);
+
+        JUnitUtil.dispose(f);
+        lef = JmriJFrame.getFrame("Edit Locomotive Consist");
+        Assert.assertNull(lef);
+    }
+
     @Test
     public void testCloseWindowOnSave() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());

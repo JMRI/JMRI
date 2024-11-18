@@ -85,6 +85,10 @@
             "type": "string",
             "description": "The model of engine"
         },
+        "hp": {
+            "type": "string",
+            "description": "The HP of engine"
+        },
         "outOfService": {
             "type": "boolean",
             "description": "True if out of service; false otherwise"
@@ -131,11 +135,11 @@
         },
         "weight": {
             "type": "number",
-            "description": "Weight of car in onces"
+            "description": "Weight of engine in tons"
         },
         "weightTons": {
-            "type": "number",
-            "description": "Weight of car in tons"
+            "type": "string",
+            "description": "Weight of engine in tons"
         }
     },
     "additionalProperties": false,
@@ -151,6 +155,7 @@
         "length",
         "location",
         "model",
+        "hp",
         "outOfService",
         "owner",
         "rfid",

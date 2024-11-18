@@ -289,7 +289,7 @@ public class TrainBuilderBase extends TrainCommon {
         if (_train.isBuildConsistEnabled() ^ !enabled) {
             addLine(_buildReport, FIVE, Bundle.getMessage("BuildConsist"));
             if (enabled) {
-                addLine(_buildReport, FIVE, Bundle.getMessage("BuildConsistHPT", Setup.getHorsePowerPerTon()));
+                addLine(_buildReport, SEVEN, Bundle.getMessage("BuildConsistHPT", Setup.getHorsePowerPerTon()));
             }
         }
         addLine(_buildReport, FIVE, BLANK_LINE);
@@ -502,16 +502,41 @@ public class TrainBuilderBase extends TrainCommon {
                             _train.getSecondLegNumberEngines(), _train.getSecondLegEngineModel(),
                             _train.getSecondLegEngineRoad()));
         }
+        if ((_train.getSecondLegOptions() & Train.ADD_ENGINES) == Train.ADD_ENGINES) {
+            addLine(_buildReport, ONE,
+                    Bundle.getMessage("buildTrainAddEngines", _train.getSecondLegNumberEngines(),
+                            _train.getSecondLegStartLocationName(), _train.getSecondLegEngineModel(),
+                            _train.getSecondLegEngineRoad()));
+        }
+        if ((_train.getSecondLegOptions() & Train.REMOVE_ENGINES) == Train.REMOVE_ENGINES) {
+            addLine(_buildReport, ONE,
+                    Bundle.getMessage("buildTrainRemoveEngines", _train.getSecondLegNumberEngines(),
+                            _train.getSecondLegStartLocationName(), _train.getSecondLegEngineModel(),
+                            _train.getSecondLegEngineRoad()));
+        }
         if ((_train.getSecondLegOptions() & Train.HELPER_ENGINES) == Train.HELPER_ENGINES) {
             addLine(_buildReport, ONE,
                     Bundle.getMessage("buildTrainHelperEngines", _train.getSecondLegNumberEngines(),
                             _train.getSecondLegStartLocationName(), _train.getSecondLegEndLocationName(),
                             _train.getSecondLegEngineModel(), _train.getSecondLegEngineRoad()));
         }
+
         if ((_train.getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES) {
             addLine(_buildReport, ONE,
                     Bundle.getMessage("buildTrainEngineChange", _train.getThirdLegStartLocationName(),
                             _train.getThirdLegNumberEngines(), _train.getThirdLegEngineModel(),
+                            _train.getThirdLegEngineRoad()));
+        }
+        if ((_train.getThirdLegOptions() & Train.ADD_ENGINES) == Train.ADD_ENGINES) {
+            addLine(_buildReport, ONE,
+                    Bundle.getMessage("buildTrainAddEngines", _train.getThirdLegNumberEngines(),
+                            _train.getThirdLegStartLocationName(), _train.getThirdLegEngineModel(),
+                            _train.getThirdLegEngineRoad()));
+        }
+        if ((_train.getThirdLegOptions() & Train.REMOVE_ENGINES) == Train.REMOVE_ENGINES) {
+            addLine(_buildReport, ONE,
+                    Bundle.getMessage("buildTrainRemoveEngines", _train.getThirdLegNumberEngines(),
+                            _train.getThirdLegStartLocationName(), _train.getThirdLegEngineModel(),
                             _train.getThirdLegEngineRoad()));
         }
         if ((_train.getThirdLegOptions() & Train.HELPER_ENGINES) == Train.HELPER_ENGINES) {
@@ -562,6 +587,14 @@ public class TrainBuilderBase extends TrainCommon {
             addLine(_buildReport, FIVE, BLANK_LINE);
             addLine(_buildReport, FIVE, Bundle.getMessage("buildTrainRoads", _train.getName(),
                     _train.getCarRoadOption(), formatStringToCommaSeparated(_train.getCarRoadNames())));
+        }
+    }
+
+    protected void showTrainCabooseRoads() {
+        if (!_train.getCabooseRoadOption().equals(Train.ALL_ROADS)) {
+            addLine(_buildReport, FIVE, BLANK_LINE);
+            addLine(_buildReport, FIVE, Bundle.getMessage("buildTrainCabooseRoads", _train.getName(),
+                    _train.getCabooseRoadOption(), formatStringToCommaSeparated(_train.getCabooseRoadNames())));
         }
     }
 
@@ -834,9 +867,11 @@ public class TrainBuilderBase extends TrainCommon {
 
             // non-lead cars in a kernel are not checked
             if (car.getKernel() == null || car.isLead()) {
-                if (!_train.isCarRoadNameAccepted(car.getRoadName())) {
+                if (!car.isCaboose() && !_train.isCarRoadNameAccepted(car.getRoadName()) ||
+                        car.isCaboose() && !_train.isCabooseRoadNameAccepted(car.getRoadName())) {
                     addLine(_buildReport, SEVEN, Bundle.getMessage("buildExcludeCarWrongRoad", car.toString(),
-                            car.getLocationName(), car.getTrackName(), car.getTypeName(), car.getRoadName()));
+                            car.getLocationName(), car.getTrackName(), car.getTypeName(), car.getTypeExtensions(),
+                            car.getRoadName()));
                     _carList.remove(car);
                     i--;
                     continue;
@@ -1803,7 +1838,7 @@ public class TrainBuilderBase extends TrainCommon {
                     return false;
                 }
                 // does the train accept the car road from the staging track?
-                if (!_train.isCarRoadNameAccepted(car.getRoadName())) {
+                if (!car.isCaboose() && !_train.isCarRoadNameAccepted(car.getRoadName())) {
                     addLine(_buildReport, THREE,
                             Bundle.getMessage("buildStagingDepartCarRoad", departStageTrack.getName(), car.toString(),
                                     car.getRoadName(), _train.getName()));
@@ -2029,7 +2064,7 @@ public class TrainBuilderBase extends TrainCommon {
         }
         // now determine if roads accepted by train are also accepted by staging
         // track
-        // TODO should we be checking loco road names?
+        // TODO should we be checking caboose and loco road names?
         for (String road : InstanceManager.getDefault(CarRoads.class).getNames()) {
             if (_train.isCarRoadNameAccepted(road)) {
                 if (!terminateStageTrack.isRoadNameAccepted(road)) {

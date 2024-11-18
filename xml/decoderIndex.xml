@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.9.3plus+jake+20240913T0724Z+R44c481606af on Fri Sep 13 09:24:30 CEST 2024-->
-  <decoderIndex version="613">
+  <!--Written by JMRI version 5.9.5plus+jake+20241108T1305Z+R6f6be4df60a on Fri Nov 08 08:05:51 EST 2024-->
+  <decoderIndex version="617">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -2765,6 +2765,31 @@
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
         </model>
+      </family>
+      <family name="Economy Series 7 with FX3, silent" mfg="Digitrax" lowVersionID="204" highVersionID="204" comment="" file="Digitrax_Economy_Series7.xml">
+        <model model="DN147A0" numOuts="4" numFns="4" comment="" />
+        <model model="DN147A1" numOuts="4" numFns="4" comment="" />
+        <model model="DN147K0A" numOuts="4" numFns="4" comment="" />
+        <model model="DN147K0B" numOuts="4" numFns="4" comment="" />
+        <model model="DN147K0D" numOuts="4" numFns="4" comment="" />
+        <model model="DN147K0E" numOuts="4" numFns="4" comment="" />
+        <model model="DN147K1C" numOuts="4" numFns="4" comment="" />
+        <model model="DN147K2" numOuts="4" numFns="4" comment="" />
+        <model model="DN167K0A" numOuts="6" numFns="6" comment="" />
+        <model model="DN167K0B" numOuts="6" numFns="6" comment="" />
+        <model model="DN167K0D" numOuts="6" numFns="6" comment="" />
+        <model model="DN167K0E" numOuts="6" numFns="6" comment="" />
+        <model model="DN167n18" numOuts="6" numFns="6" comment="Next18" />
+        <model model="DH127D" numOuts="2" numFns="4" comment="HO-Scale, wired" />
+        <model model="DH127MT" numOuts="2" numFns="4" comment="HO-Scale, with NMRA 21MTC interface" />
+        <model model="DH127P" numOuts="2" numFns="4" comment="HO-Scale, with Medium Plug on Long Harness" />
+        <model model="DH127PS" numOuts="2" numFns="4" comment="HO-Scale, with Medium Plug on Short Harness" />
+        <model model="DH187A0" numOuts="6" numFns="8" comment="HO-Scale, dropin Athearn, Kato and others" />
+        <model model="DH187D" numOuts="6" numFns="8" comment="HO-Scale, wired" />
+        <model model="DH187MT" numOuts="6" numFns="8" comment="HO-Scale, with NMRA 21MTC interface" />
+        <model model="DH187K0" numOuts="6" numFns="8" comment="HO-Scale, dropin Kato" />
+        <model model="DH187P" numOuts="6" numFns="6" comment="HO-Scale, with Medium Plug on Long Harness" />
+        <model model="DH187PS" numOuts="6" numFns="6" comment="HO-Scale, with Medium Plug on Short Harness" />
       </family>
       <family name="Kato" mfg="Digitrax" lowVersionID="51" highVersionID="51" file="Digitrax_Kato_EM13.xml">
         <model model="EM13" numOuts="0" numFns="10" productID="EM13" comment="Kato Motor Decoder EM13 made by Digitrax" />
@@ -16043,7 +16068,7 @@
       </family>
       <family name="Econami Diesel OEM Athearn" mfg="SoundTraxx (Throttle-Up)" lowVersionID="70" file="SoundTraxx_Eco_Diesel_OEM_Athearn.xml">
         <model model="ECO-RTR F59PHI" numOuts="4" numFns="30" productID="6201" comment="Model E5000.001BR" />
-        <model model="ECO-RTR F59PHI 2" numOuts="4" numFns="30" productID="6299" comment="Model ?" />
+        <model model="ECO-RTR F59PHI 2" numOuts="4" numFns="30" productID="6299" comment="Model E5000.001" />
         <model model="ECO-200 SD38" numOuts="4" numFns="30" productID="6150" comment="Model E9900.001B" />
         <model model="ECO-RTR SD38" numOuts="4" numFns="30" productID="6226" comment="Model E0101.001B" />
         <model model="ECO-200 SD38 w/DB" numOuts="4" numFns="30" productID="6151" comment="Model E9900.002B" />
@@ -16052,16 +16077,47 @@
         <model model="ECO-21PNEM SD38 1" numOuts="6" numFns="30" productID="6418" comment="Model 21E0101.001" />
         <model model="ECO-21PNEM SD38 3" numOuts="6" numFns="30" productID="6419" comment="Model 21E0101.003" />
         <model model="ECO-21PNEM SD38 5" numOuts="6" numFns="30" productID="6120" comment="Model 21E0101.005" />
+        <model model="ECO-RTR SD39 1" numOuts="4" numFns="30" productID="6277" comment="Model E0100.001" />
+        <model model="ECO-RTR SD39 2" numOuts="4" numFns="30" productID="6278" comment="Model E0100.002" />
+        <model model="ECO-RTR SD39 4" numOuts="4" numFns="30" productID="6279" comment="Model E0100.004" />
+        <model model="ECO-RTR SD39 8" numOuts="4" numFns="30" productID="6281" comment="Model E0100.008" />
+        <model model="ECO-RTR SD39 9" numOuts="4" numFns="30" productID="6282" comment="Model E0100.009" />
+        <model model="ECO-21PNEM SD39 2" numOuts="6" numFns="30" productID="6429" comment="Model 21E0100.002" />
+        <model model="ECO-21PNEM SD39 3" numOuts="6" numFns="30" productID="6430" comment="Model 21E0100.003" />
+        <model model="ECO-21PNEM SD39 4" numOuts="6" numFns="30" productID="6431" comment="Model 21E0100.004" />
+        <model model="ECO-21PNEM SD39 10" numOuts="6" numFns="30" productID="6432" comment="Model 21E0100.010" />
+        <model model="ECO-21PNEM SD39 11" numOuts="6" numFns="30" productID="6433" comment="Model 21E0100.011" />
+        <model model="ECO-RTR SD39-2 12" numOuts="4" numFns="30" productID="6259" comment="Model E0100.012" />
         <model model="ECO-RTR SD40" numOuts="4" numFns="30" productID="6238" comment="Model E0102.001" />
-        <model model="ECO-21PNEM SD40" numOuts="6" numFns="30" productID="6384" comment="Model 21E0102.xxx" />
-        <model model="ECO-RTR SD40 w/ditch" numOuts="4" numFns="30" productID="6351" comment="Model E0102.011" />
         <model model="ECO-RTR SD40 w/gyra" numOuts="4" numFns="30" productID="6239" comment="Model E0102.005" />
+        <model model="ECO-RTR SD40 w/ditch" numOuts="4" numFns="30" productID="6351" comment="Model E0102.011" />
+        <model model="ECO-RTR SD40/SD40-2 6" numOuts="4" numFns="30" productID="6250" comment="Model E0102.006" />
+        <model model="ECO-21PNEM SD40" numOuts="6" numFns="30" productID="6384" comment="Model 21E0102.001" />
+        <model model="ECO-21PNEM SD40 16" numOuts="6" numFns="30" productID="6393" comment="Model 21E0102.016" />
+        <model model="ECO-21PNEM SD40 17" numOuts="6" numFns="30" productID="6394" comment="Model 21E0102.017" />
+        <model model="ECO-21PNEM SD40R/SD40 18" numOuts="6" numFns="30" productID="6395" comment="Model 21E0102.018" />
         <model model="ECO-RTR SD40-2" numOuts="4" numFns="30" productID="6177" comment="Model E0102.???B" />
         <model model="ECO-RTR SD40-2 w/DB" numOuts="4" numFns="30" productID="6165" comment="Model E0102.002B" />
+        <model model="ECO-RTR SD40-2 2" numOuts="4" numFns="30" productID="6256" comment="Model E0102.002" />
+        <model model="ECO-RTR SD40-2 9" numOuts="4" numFns="30" productID="6257" comment="Model E0102.009" />
+        <model model="ECO-RTR SD40-2 10" numOuts="4" numFns="30" productID="6258" comment="Model E0102.010" />
+        <model model="ECO-21PNEM SD40-2 2" numOuts="6" numFns="30" productID="6385" comment="Model 21E0102.002" />
+        <model model="ECO-21PNEM SD40M-2 4" numOuts="6" numFns="30" productID="9392" comment="Model 21E0102.004" />
+        <model model="ECO-21PNEM SD40-2 13" numOuts="6" numFns="30" productID="6387" comment="Model 21E0102.013" />
+        <model model="ECO-21PNEM SD40-2 14" numOuts="6" numFns="30" productID="6388" comment="Model 21E0102.014" />
+        <model model="ECO-21PNEM SD40-2 15" numOuts="6" numFns="30" productID="9389" comment="Model 21E0102.015" />
         <model model="ECO-RTR SD40T-2 w/gyra" numOuts="4" numFns="30" productID="6240" comment="Model E????.???" />
+        <model model="ECO-RTR SD40T-2 8" numOuts="4" numFns="30" productID="6241" comment="Model E0102.002" />
+        <model model="ECO-21PNEM SD40T-2 5" numOuts="6" numFns="30" productID="6415" comment="Model 21E0102.005" />
+        <model model="ECO-21PNEM SD40T-2 7" numOuts="6" numFns="30" productID="6416" comment="Model 21E0102.007" />
+        <model model="ECO-21PNEM SD40T-2 19" numOuts="6" numFns="30" productID="6396" comment="Model 21E0102.019" />
+        <model model="ECO-21PNEM SD40T-2 20" numOuts="6" numFns="30" productID="6417" comment="Model 21E0102.020" />
         <model model="ECO-RTR SD45 w/DB" numOuts="4" numFns="30" productID="6157" comment="Model E0103.001B" />
         <model model="ECO-200 SD45 w/DB" numOuts="4" numFns="30" productID="6149" comment="Model E9901.001B" />
-        <model model="ECO-RTR SD50 w/beacon" numOuts="4" numFns="30" productID="6222" comment="Model E???" />
+        <model model="ECO-RTR SD50 w/beacon" numOuts="4" numFns="30" productID="6222" comment="Model E0104.001B" />
+        <model model="ECO-21PNEM SD60 1" numOuts="6" numFns="30" productID="6380" comment="Model 21E0204.001" />
+        <model model="ECO-21PNEM SD60 2" numOuts="6" numFns="30" productID="6381" comment="Model 21E0204.002" />
+        <model model="ECO-21PNEM SD60 3" numOuts="6" numFns="30" productID="9382" comment="Model 21E0204.003" />
         <output name="3" label="  FX3  " />
         <output name="4" label="  FX4  " />
         <output name="5" label="Airhorn| ">
@@ -17226,6 +17282,7 @@
         </functionlabels>
       </family>
       <family name="Tsunami2 Diesel OEM Genesis" mfg="SoundTraxx (Throttle-Up)" lowVersionID="71" file="SoundTraxx_Tsu2_Diesel_OEM_Genesis.xml">
+        <model model="TSU-21PNEM8 RS-3 1" numOuts="8" numFns="30" productID="6451" comment="Model 21T1500.001" />
         <model model="TSU-GN2208 DDA40X 1" numOuts="8" numFns="30" productID="6377" comment="Model 8T0208.001" />
         <model model="TSU-GN2208 DDA40X 2" numOuts="8" numFns="30" productID="6378" comment="Model 8T0208.002" />
         <model model="TSU-GN2208 DDA40X 3" numOuts="8" numFns="30" productID="6379" comment="Model 8T0208.003" />
@@ -17366,7 +17423,18 @@
         <model model="TSU-21PNEM8 MP15AC 3" numOuts="8" numFns="30" productID="6423" comment="Model 21T0201.003" />
         <model model="TSU-21PNEM8 MP15AC 4" numOuts="8" numFns="30" productID="6424" comment="Model 21T0201.004" />
         <model model="TSU-21PNEM8 MP15AC 5" numOuts="8" numFns="30" productID="6425" comment="Model 21T0201.005" />
-        <model model="TSU-21PNEM8 SD40T-2" numOuts="8" numFns="30" productID="6453" comment="Model 21T????.???" />
+        <model model="TSU-21PNEM8 SW1000/SW1500 6" numOuts="8" numFns="30" productID="6445" comment="Model 21T0201.007" />
+        <model model="TSU-21PNEM8 SW1500 7" numOuts="8" numFns="30" productID="6446" comment="Model 21T0201.007" />
+        <model model="TSU-21PNEM8 SD40 9" numOuts="8" numFns="30" productID="6460" comment="Model 21T0205.009" />
+        <model model="TSU-21PNEM8 SD40 15" numOuts="8" numFns="30" productID="6444" comment="Model 21T0204.015" />
+        <model model="TSU-21PNEM8 SD40 17" numOuts="8" numFns="30" productID="6458" comment="Model 21T0204.017" />
+        <model model="TSU-21PNEM8 SD40R 18" numOuts="8" numFns="30" productID="6459" comment="Model 21T0204.018" />
+        <model model="TSU-21PNEM8 SD40-2 12" numOuts="8" numFns="30" productID="6441" comment="Model 21T0204.012" />
+        <model model="TSU-21PNEM8 SD40-2 13" numOuts="8" numFns="30" productID="6442" comment="Model 21T0204.013" />
+        <model model="TSU-21PNEM8 SD40-2/SD40T-2 8" numOuts="8" numFns="30" productID="6440" comment="Model 21T0204.008" />
+        <model model="TSU-21PNEM8 SD40-2/SD40T-2 14" numOuts="8" numFns="30" productID="6443" comment="Model 21T0204.014" />
+        <model model="TSU-21PNEM8 SD40T-2" numOuts="8" numFns="30" productID="6453" comment="Model 21T0204.003" />
+        <model model="TSU-21PNEM8 SD40T-2 16" numOuts="8" numFns="30" productID="6454" comment="Model 21T0204.016" />
         <model model="TSU-GN2200 SDP40F w/gyra" numOuts="6" numFns="30" productID="6189" comment="Model T0207.001" />
         <model model="TSU-GN2208 SDP40F w/gyra" numOuts="8" numFns="30" productID="6229" comment="Model 8T0207.001" />
         <model model="TSU-GN2200 SDF40-2 w/beacon" numOuts="6" numFns="30" productID="6190" comment="Model T0207.002" />
@@ -26313,7 +26381,7 @@
         </functionlabels>
       </family>
       <family name="WOW Steam Sound Set 4" mfg="Train Control Systems" file="TCS_WOW_steam04.xml">
-        <model model="WOW Steam 101 SS4" numOuts="6" numFns="14" lowVersionID="4" highVersionID="4" productID="1666">
+        <model model="WOW Steam 101 SS4" numOuts="6" numFns="14" lowVersionID="4" highVersionID="4" productID="1154">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -26325,7 +26393,7 @@
           <output name="Motor" />
           <output name="Brake" />
         </model>
-        <model model="WOW Steam 121 SS4" numOuts="6" numFns="14" lowVersionID="4" highVersionID="4" productID="1667">
+        <model model="WOW Steam 121 SS4" numOuts="6" numFns="14" lowVersionID="4" highVersionID="4" productID="1155">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -26337,7 +26405,7 @@
           <output name="Motor" />
           <output name="Brake" />
         </model>
-        <model model="WOW Steam 501 SS4" numOuts="8" numFns="14" lowVersionID="4" highVersionID="4" productID="1668">
+        <model model="WOW Steam 501 SS4" numOuts="8" numFns="14" lowVersionID="4" highVersionID="4" productID="1156">
           <output name="1" label="White" />
           <output name="2" label="Yellow" />
           <output name="3" label="Green" />
@@ -26373,6 +26441,71 @@
           <functionlabel num="18" lockable="true">Blow down</functionlabel>
           <functionlabel num="19" lockable="true">Ash dump</functionlabel>
           <functionlabel num="20" lockable="true">Water fill</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="WOW Steam Sound Set 4.6" mfg="Train Control Systems" file="TCS_WOW_steam046.xml">
+        <model model="WOW Steam 101 SS4.6" numOuts="6" numFns="14" lowVersionID="4" productID="1666">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <output name="4" label="Purple" />
+          <output name="5" label="Brown" />
+          <output name="6" label="Pink" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="Brake" />
+        </model>
+        <model model="WOW Steam 121 SS4.6" numOuts="6" numFns="14" lowVersionID="4" productID="1667">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <output name="4" label="Purple" />
+          <output name="5" label="Brown" />
+          <output name="6" label="Pink" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="Brake" />
+        </model>
+        <model model="WOW Steam 501 SS4.6" numOuts="8" numFns="14" lowVersionID="4" productID="1668">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <output name="4" label="Purple" />
+          <output name="5" label="Brown" />
+          <output name="6" label="Pink" />
+          <output name="7" label="Pnk/Pur" />
+          <output name="8" label="Grn/Brn" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="Brake" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Whistle Playable</functionlabel>
+          <functionlabel num="3" lockable="true">Whistle Short</functionlabel>
+          <functionlabel num="4" lockable="true">Whistle Grade X Quill </functionlabel>
+          <functionlabel num="5" lockable="true">Cylinder Cocks On/Off</functionlabel>
+          <functionlabel num="6" lockable="true">Brake Release</functionlabel>
+          <functionlabel num="7" lockable="true">Train Brake</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Rotate Sound Function</functionlabel>
+          <functionlabel num="10" lockable="true">Johnson Bar Up</functionlabel>
+          <functionlabel num="11" lockable="true">Johnson Bar Down</functionlabel>
+          <functionlabel num="12" lockable="true">Injector</functionlabel>
+          <functionlabel num="13" lockable="true">Air Pump</functionlabel>
+          <functionlabel num="14" lockable="true">Blower</functionlabel>
+          <functionlabel num="15" lockable="true">Momentum Mode Selection</functionlabel>
+          <functionlabel num="16" lockable="true">Idling Sounds On/Off</functionlabel>
+          <functionlabel num="17" lockable="true">Coal Shovelling</functionlabel>
+          <functionlabel num="18" lockable="true">Blow Down</functionlabel>
+          <functionlabel num="19" lockable="true">Ash Dump</functionlabel>
+          <functionlabel num="20" lockable="true">Water Filling</functionlabel>
+          <functionlabel num="26" lockable="true">Departing Station Announcements</functionlabel>
+          <functionlabel num="27" lockable="true">Arriving Station Announcements</functionlabel>
         </functionlabels>
       </family>
       <family name="Jan 2000" mfg="Train Control Systems" comment="TCS FW Starting January 2000. Only shows models not upgraded to higher FW versions." file="TCS_X-Jan2000.xml">

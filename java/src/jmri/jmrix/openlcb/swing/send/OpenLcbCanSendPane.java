@@ -215,6 +215,11 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         b = new JButton("Send PIP Request");
         b.addActionListener(this::sendRequestPip);
         pane2.add(b);
+        b = new JButton("Send SNIP Request");
+        b.addActionListener(this::sendRequestSnip);
+        pane2.add(b);
+
+        add(new JSeparator());
 
         pane2 = new JPanel();
         pane2.setLayout(new WrapLayout());
@@ -333,7 +338,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     @Override
     public String getTitle() {
         if (memo != null) {
-            return (memo.getUserName() + " Send Can Frame");
+            return (memo.getUserName() + " Send CAN Frames and OpenLCB Messages");
         }
         return "Send CAN Frames and OpenLCB Messages";
     }
@@ -404,6 +409,11 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
     public void sendRequestPip(java.awt.event.ActionEvent e) {
         Message m = new ProtocolIdentificationRequestMessage(srcNodeID, destNodeID());
+        connection.put(m, null);
+    }
+
+    public void sendRequestSnip(java.awt.event.ActionEvent e) {
+        Message m = new SimpleNodeIdentInfoRequestMessage(srcNodeID, destNodeID());
         connection.put(m, null);
     }
 

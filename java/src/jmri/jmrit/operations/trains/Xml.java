@@ -39,8 +39,10 @@ public class Xml {
     static final String LOCO_TYPE = "locoType"; // NOI18N
     static final String CAR_ROAD_OPERATION = "carRoadOperation"; // NOI18N should have been option not operation
     static final String CAR_ROAD_OPTION = "carRoadOption"; // NOI18N
+    static final String CABOOSE_ROAD_OPTION = "cabooseRoadOption"; // NOI18N
     static final String LOCO_ROAD_OPTION = "locoRoadOption"; // NOI18N
     static final String CAR_ROADS = "carRoads"; // NOI18N
+    static final String CABOOSE_ROADS = "cabooseRoads"; // NOI18N
     static final String LOCO_ROADS = "locoRoads"; // NOI18N
     static final String CAR_ROAD = "carRoad"; // NOI18N
     static final String LOCO_ROAD = "locoRoad"; // NOI18N
@@ -196,6 +198,7 @@ public class Xml {
     static final String ENGINE_NUMBER = "engineNumber"; // NOI18N
     static final String TYPE = "type"; // NOI18N
     static final String MODEL = "model"; // NOI18N
+    static final String HP = "hp"; // NOI18N
     static final String LENGTH = "length"; // NOI18N
     static final String WEIGHT = "weight"; // NOI18N
     static final String LOAD = "load"; // NOI18N

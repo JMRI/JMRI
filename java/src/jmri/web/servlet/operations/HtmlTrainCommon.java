@@ -243,6 +243,9 @@ public class HtmlTrainCommon extends TrainCommon {
         if (attribute.equals(Setup.MODEL)) {
             return engine.getModel();
         }
+        if (attribute.equals(Setup.HP)) {
+            return engine.getHp();
+        }
         if (attribute.equals(Setup.CONSIST)) {
             return engine.getConsistName();
         }
@@ -261,6 +264,8 @@ public class HtmlTrainCommon extends TrainCommon {
             return rs.getTypeName().split(TrainCommon.HYPHEN)[0];
         } else if (attribute.equals(Setup.LENGTH)) {
             return rs.getLength();
+        } else if (attribute.equals(Setup.WEIGHT)) {
+            return Integer.toString(rs.getAdjustedWeightTons());
         } else if (attribute.equals(Setup.COLOR)) {
             return rs.getColor();
         } else if (attribute.equals(Setup.LOCATION) && (isPickup || isLocal)

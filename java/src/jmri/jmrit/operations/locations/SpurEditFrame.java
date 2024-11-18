@@ -55,7 +55,7 @@ public class SpurEditFrame extends TrackEditFrame {
 
         super.initComponents(location, track);
 
-        _toolMenu.insert(new AlternateTrackAction(this), TOOL_MENU_OFFSET);
+        _toolMenu.insert(new AlternateTrackAction(this), 0);
         _toolMenu.insert(new ChangeTrackTypeAction(this), TOOL_MENU_OFFSET + 1);
         addHelpMenu("package.jmri.jmrit.operations.Operations_Spurs", true); // NOI18N
 
