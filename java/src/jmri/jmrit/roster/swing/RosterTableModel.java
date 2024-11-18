@@ -19,9 +19,6 @@ import jmri.jmrit.roster.RosterIconFactory;
 import jmri.jmrit.roster.rostergroup.RosterGroup;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Table data model for display of Roster variable values.
  * <p>
@@ -176,6 +173,9 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
         if (RosterEntry.ATTRIBUTE_LAST_OPERATED.equals( getAttributeKey(col))) {
             return Date.class;
         }
+        if (RosterEntry.ATTRIBUTE_OPERATING_DURATION.equals( getAttributeKey(col))) {
+            return Integer.class;
+        }
         return String.class;
     }
 
@@ -281,6 +281,15 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
                 return null;
             }
         }
+        if ( RosterEntry.ATTRIBUTE_OPERATING_DURATION.equals( attributeKey) ) {
+            try {
+                return Integer.valueOf(value);
+            }
+            catch (NumberFormatException e) {
+                log.debug("could not format duration ( String integer of total seconds ) in {}", value, e);
+            }
+            return 0;
+        }
         return (value == null ? "" : value);
     }
 
@@ -339,7 +348,8 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
 
     public int getPreferredWidth(int column) {
         int retval = 20; // always take some width
-        retval = Math.max(retval, new JLabel(getColumnName(column)).getPreferredSize().width + 15);  // leave room for sorter arrow
+        retval = Math.max(retval, new JLabel(getColumnName(column))
+            .getPreferredSize().width + 15);  // leave room for sorter arrow
         for (int row = 0; row < getRowCount(); row++) {
             if (getColumnClass(column).equals(String.class)) {
                 retval = Math.max(retval, new JLabel(getValueAt(row, column).toString()).getPreferredSize().width);
@@ -353,13 +363,11 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     }
 
     public final void setRosterGroup(String rosterGroup) {
-        Roster.getDefault().getEntriesInGroup(this.rosterGroup).forEach((re) -> {
-            re.removePropertyChangeListener(this);
-        });
+        Roster.getDefault().getEntriesInGroup(this.rosterGroup).forEach( re ->
+            re.removePropertyChangeListener(this));
         this.rosterGroup = rosterGroup;
-        Roster.getDefault().getEntriesInGroup(rosterGroup).forEach((re) -> {
-            re.addPropertyChangeListener(this);
-        });
+        Roster.getDefault().getEntriesInGroup(rosterGroup).forEach( re ->
+            re.addPropertyChangeListener(this));
         fireTableDataChanged();
     }
 
@@ -395,10 +403,10 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     // drop listeners
     public void dispose() {
         Roster.getDefault().removePropertyChangeListener(this);
-        Roster.getDefault().getEntriesInGroup(this.rosterGroup).forEach((re) -> {
-            re.removePropertyChangeListener(this);
-        });
+        Roster.getDefault().getEntriesInGroup(this.rosterGroup).forEach( re ->
+            re.removePropertyChangeListener(this) );
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RosterTableModel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RosterTableModel.class);
+
 }
