@@ -1,10 +1,12 @@
 package jmri.jmrit.roster.swing;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import jmri.InstanceManager;
 import jmri.jmrit.roster.*;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 import jmri.util.junit.annotations.DisabledIfHeadless;
 import jmri.util.gui.GuiLafPreferencesManager;
 
@@ -34,7 +36,7 @@ public class RosterTableTest {
         JFrame frame = new JFrame("RosterTableTest testDisplaysOk");
         frame.add(t);
 
-        jmri.util.ThreadingUtil.runOnGUI(() -> {
+        ThreadingUtil.runOnGUI(() -> {
             frame.pack();
             frame.setVisible(true);
         } );
@@ -73,7 +75,7 @@ public class RosterTableTest {
         JFrame frame = new JFrame("RosterTableTest testDateEditable");
         frame.add(t);
 
-        jmri.util.ThreadingUtil.runOnGUI(() -> {
+        ThreadingUtil.runOnGUI(() -> {
             frame.pack();
             frame.setVisible(true);
         } );
@@ -93,6 +95,44 @@ public class RosterTableTest {
         to.getQueueTool().waitEmpty();
         // to.changeCellObject(2, 10, "H");
         // row 2 cell 10 populates with new Date as H cannot be parsed
+
+        JUnitUtil.dispose(jfo.getWindow());
+        jfo.waitClosed();
+
+    }
+
+    @Test
+    @DisabledIfHeadless
+    public void testOperatingDurationEditable(){
+
+        Roster.getDefault().getEntry(0).deleteAttribute("KeyA");
+        Roster.getDefault().getEntry(1).deleteAttribute("KeyA");
+        Roster.getDefault().getEntry(0).putAttribute(RosterEntry.ATTRIBUTE_OPERATING_DURATION, "1");
+
+        RosterTable t = new RosterTable(true);
+        JFrame frame = new JFrame("RosterTableTest testDurationEditable");
+        frame.add(t);
+
+        ThreadingUtil.runOnGUI(() -> {
+            frame.pack();
+            frame.setVisible(true);
+        } );
+
+        JFrameOperator jfo = new JFrameOperator(frame.getTitle());
+        assertNotNull(jfo);
+
+        JTableOperator to = new JTableOperator(jfo);
+        assertNotNull(to);
+
+        int durationCol = 10;
+
+        JLabel c = (JLabel) to.prepareRenderer(to.getCellRenderer(0, durationCol), 0, durationCol);
+        assertEquals(Bundle.getMessage("DurationViewTip"), c.getToolTipText());
+        assertEquals("00:00:01", c.getText());
+
+        to.setValueAt("123456", 0, durationCol);
+        c = (JLabel) to.prepareRenderer(to.getCellRenderer(0, durationCol), 0, durationCol);
+        assertEquals("1 10:17:36", c.getText());
 
         JUnitUtil.dispose(jfo.getWindow());
         jfo.waitClosed();

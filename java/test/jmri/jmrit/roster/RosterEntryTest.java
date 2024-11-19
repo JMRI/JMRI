@@ -147,6 +147,21 @@ public class RosterEntryTest {
     }
 
     @Test
+    public void testFromExistingEntry() throws JDOMException, IOException {
+
+        RosterEntry re = new RosterEntry(RosterEntry.fromFile(
+            new File("java/test/jmri/jmrit/roster/ACL1012-Schema.xml")),"New pID");
+        Assertions.assertNotNull(re);
+        Assertions.assertEquals( "New pID", re.getId());
+        Assertions.assertNull( re.getFileName(), "no file name");
+        Assertions.assertEquals( "1012", re.getDccAddress(), "DCC Address");
+        Assertions.assertEquals( "Atlantic Coast Line", re.getRoadName(), "road name");
+        Assertions.assertEquals( "1012", re.getRoadNumber(), "road number");
+        Assertions.assertEquals( "Synch Diesel Sound 1812 - N Scale Atlas Short Board Dropin", re.getDecoderModel());
+        Assertions.assertEquals( "Brilliance Sound Decoders", re.getDecoderFamily(), "family");
+    }
+
+    @Test
     public void testStoreFunctionLabel() {
         RosterEntry r = new RosterEntry("file here");
 
@@ -480,6 +495,12 @@ public class RosterEntryTest {
         Assert.assertNotNull("bar", e.getChild("attributepairs")
                 .getChild("keyvaluepair")
                 .getChild("value").getText());
+    }
+
+    @Test
+    public void testToString() {
+        Assertions.assertEquals("[RosterEntry: id 3 file here SP 431 Athearn   14  35 91    ]",
+            RosterEntryImplementations.id3().toString());
     }
 
     @BeforeEach
