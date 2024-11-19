@@ -604,7 +604,9 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>The limit for VSDecoders is now 8 instead of 4.</li>
+            <li>The sound buttons sorting in the VSD Manager window is now as in config.xml.</li>
+            <li>If the sound buttons exeed 8, a second row is displayed.</li>
         </ul>
 
    <h3>Z21 Server</h3>
