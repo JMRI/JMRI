@@ -1,13 +1,11 @@
 package jmri.jmrit.operations.routes;
 
 import java.awt.Dimension;
-import java.awt.GraphicsEnvironment;
 import java.util.List;
 
 import javax.swing.JComboBox;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.Test;
 import org.netbeans.jemmy.operators.*;
 
@@ -26,11 +24,11 @@ import jmri.util.swing.JemmyUtil;
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class RouteEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         RouteEditFrame t = new RouteEditFrame();
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
@@ -38,7 +36,6 @@ public class RouteEditFrameTest extends OperationsTestCase {
     
     @Test
     public void testRouteNameTooLong() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // The default route name is too long
         Route route = JUnitOperationsUtil.createFiveLocationRoute();
@@ -52,7 +49,6 @@ public class RouteEditFrameTest extends OperationsTestCase {
     
     @Test
     public void testRouteNameMissing() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         RouteEditFrame f = new RouteEditFrame();
         f.initComponents(null);
@@ -67,8 +63,7 @@ public class RouteEditFrameTest extends OperationsTestCase {
      */
     @Test
     public void testNewRoute() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         TrainManager tManager = InstanceManager.getDefault(TrainManager.class);
         Train train = tManager.newTrain("Test Train");
 
@@ -96,7 +91,7 @@ public class RouteEditFrameTest extends OperationsTestCase {
      */
     @Test
     public void testRouteEditFrameNoSelection() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         RouteEditFrame f = new RouteEditFrame();
         f.setTitle("Test Add Route Frame");
         f.initComponents(null);
@@ -116,7 +111,7 @@ public class RouteEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testRouteEditFrame() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         RouteEditFrame f = new RouteEditFrame();
         f.setTitle("Test Add Route Frame");
         f.initComponents(null);
@@ -188,7 +183,6 @@ public class RouteEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testRouteLocationComment() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // create a route
         Route route = JUnitOperationsUtil.createFiveLocationRoute();
@@ -231,7 +225,6 @@ public class RouteEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testRouteLocationDelete() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // create a route
         Route route = JUnitOperationsUtil.createFiveLocationRoute();
@@ -262,7 +255,6 @@ public class RouteEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testButtonDown() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // create a route
         Route route = JUnitOperationsUtil.createFiveLocationRoute();
@@ -294,7 +286,6 @@ public class RouteEditFrameTest extends OperationsTestCase {
     
     @Test
     public void testButtonUp() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // create a route
         Route route = JUnitOperationsUtil.createFiveLocationRoute();
@@ -331,7 +322,6 @@ public class RouteEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testWait() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // create a route
         Route route = JUnitOperationsUtil.createFiveLocationRoute();
@@ -356,7 +346,7 @@ public class RouteEditFrameTest extends OperationsTestCase {
         JFrameOperator jfo = new JFrameOperator(f);
         JTableOperator tbl = new JTableOperator(jfo);
 
-        Assert.assertEquals("Travel Time", 4, tbl.getValueAt(0, tbl.findColumn(Bundle.getMessage("Travel"))));
+        Assert.assertEquals("Travel Time", 4, (int)tbl.getValueAt(0, tbl.findColumn(Bundle.getMessage("Travel"))));
         tbl.setValueAt(20, 0, tbl.findColumn(Bundle.getMessage("Travel")));
         JemmyUtil.enterClickAndLeave(f.saveRouteButton);
         // wait = travel - time
@@ -367,7 +357,6 @@ public class RouteEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testDeputureTime() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // create a route
         Route route = JUnitOperationsUtil.createFiveLocationRoute();
@@ -399,7 +388,6 @@ public class RouteEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testMaxMoves() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // create a route
         Route route = JUnitOperationsUtil.createFiveLocationRoute();
@@ -426,7 +414,6 @@ public class RouteEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testSetXY() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // create a route
         Route route = JUnitOperationsUtil.createFiveLocationRoute();
@@ -458,7 +445,6 @@ public class RouteEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testGrade() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // create a route
         Route route = JUnitOperationsUtil.createFiveLocationRoute();
@@ -486,7 +472,6 @@ public class RouteEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testMaxTrainLength() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // create a route
         Route route = JUnitOperationsUtil.createFiveLocationRoute();
@@ -513,7 +498,6 @@ public class RouteEditFrameTest extends OperationsTestCase {
     
     @Test
     public void testMinTrainLength() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // create a route
         Route route = JUnitOperationsUtil.createFiveLocationRoute();
@@ -529,14 +513,16 @@ public class RouteEditFrameTest extends OperationsTestCase {
         // confirm default value
         Assert.assertEquals("Max Length", 1000, rl.getMaxTrainLength());
         
-        JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("WarningTooShort"), Bundle.getMessage("ButtonCancel"));           
+        Thread t = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("WarningTooShort"), Bundle.getMessage("ButtonCancel"));
         JFrameOperator jfo = new JFrameOperator(f);
         JTableOperator tbl = new JTableOperator(jfo);
-        tbl.setValueAt(499, 0, tbl.findColumn(Bundle.getMessage("MaxLength")));   
+        tbl.setValueAt(499, 0, tbl.findColumn(Bundle.getMessage("MaxLength")));
+        JUnitUtil.waitFor(() -> !t.isAlive(),"TooShort Cancel dialog");
         Assert.assertEquals("Old Max Length", 1000, rl.getMaxTrainLength());
         
-        JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("WarningTooShort"), Bundle.getMessage("ButtonOK"));
+        Thread tt = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("WarningTooShort"), Bundle.getMessage("ButtonOK"));
         tbl.setValueAt(499, 0, tbl.findColumn(Bundle.getMessage("MaxLength")));
+        JUnitUtil.waitFor(() -> !tt.isAlive(),"TooShort OK dialog");
         Assert.assertEquals("New Max Length", 499, rl.getMaxTrainLength());
 
         JUnitUtil.dispose(f);
@@ -544,7 +530,7 @@ public class RouteEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testRouteEditFrameRead() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         JUnitOperationsUtil.loadFiveRoutes();
         RouteManager rManager = InstanceManager.getDefault(RouteManager.class);
         Route route = rManager.getRouteByName("Test Route C");
@@ -560,7 +546,7 @@ public class RouteEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testCloseWindowOnSave() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         RouteManager rManager = InstanceManager.getDefault(RouteManager.class);
         Route route = rManager.newRoute("Test Route");
         RouteEditFrame f = new RouteEditFrame();
