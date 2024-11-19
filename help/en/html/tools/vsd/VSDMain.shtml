@@ -280,7 +280,7 @@
       <p>Another prerequisite is to add the Action "Start Virtual Sound Decoder Manager" to your
       JMRI Preferences Start Up.</p>
 
-      <p>The number of Roster Entries for Auto-Loading is limited to four.</p>
+      <p>The number of Roster Entries for Auto-Loading is limited to eight.</p>
 
       <p><em>Note:</em> A change of the Auto-Load mode only becomes effective after a restart of
       the VSDecoder Manager.</p>
