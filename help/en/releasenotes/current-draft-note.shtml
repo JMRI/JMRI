@@ -131,6 +131,8 @@
             <ul>
                 <li>STL Editor: Add store mode selections to the View menu, update help page.</li>
                 <li>Add a Send SNIP Request button to the Send tool.</li>
+                <li>Implement recent changes to the CDI display. This will allow
+                    node implementors to make simpler configuration dialogs.</li>
             </ul>
 
         <h4>Powerline</h4>
