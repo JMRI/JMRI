@@ -3429,6 +3429,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       from acquiring all of the track's length. Next select a pool name for the track and press
       "Save". The bottom of the pool window will show the other tracks that are in the track's pool.
       The program on restart, will automatically delete any pools that aren't assigned to a track.
+      
       <p>A "pool" can be used to share track space with two or more industries. For example,
         let's say you have a spur that services two industries, and it can hold four 50' cars, or is
         roughly 220' feet long. Now you could enter into operations a track length of say 110' for
@@ -3461,7 +3462,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <p>Note that the program normally selects a departure track out of staging by usage. If
         you prefer to have your trains depart staging based on the order they've arrived, you would
-        use the staging pooling feature for your set of staging tracks.</p>
+        use the staging pooling feature for your set of staging tracks. If you're only interested in
+        the order train depart staging (FIFO or LIFO) and not sharing track space, you would set the
+        minimums for each staging track to their actual length.</p>
 
       <p>Another use of a "pool" is with regard to schedules. For the power user, you might find
         that a single schedule assigned to a spur doesn't quite do what you want. But if the track
