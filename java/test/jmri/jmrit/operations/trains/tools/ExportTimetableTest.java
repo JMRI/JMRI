@@ -1,10 +1,7 @@
 package jmri.jmrit.operations.trains.tools;
 
-import java.awt.GraphicsEnvironment;
-
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitOperationsUtil;
@@ -24,20 +21,15 @@ public class ExportTimetableTest extends OperationsTestCase {
     }
 
     @Test
+    @jmri.util.junit.annotations.DisabledIfHeadless
     public void testCreateFile() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ExportTimetable exportTimetable = new ExportTimetable();
         Assert.assertNotNull("exists", exportTimetable);
 
         JUnitOperationsUtil.initOperationsData();
 
         // next should cause export complete dialog to appear
-        Thread export = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                exportTimetable.writeOperationsTimetableFile();
-            }
-        });
+        Thread export = new Thread(exportTimetable::writeOperationsTimetableFile);
         export.setName("Export Trains"); // NOI18N
         export.start();
 
@@ -47,9 +39,10 @@ public class ExportTimetableTest extends OperationsTestCase {
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), Bundle.getMessage("ButtonOK"));
 
+        jmri.util.JUnitUtil.waitFor(() -> !export.isAlive(), "wait for export to complete");
+
         java.io.File file = new java.io.File(ExportTimetable.defaultOperationsFilename());
         Assert.assertTrue("Confirm file creation", file.exists());
-        
 
     }
 

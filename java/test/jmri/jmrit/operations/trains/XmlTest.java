@@ -664,10 +664,11 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("Move script", 0, t3.getMoveScripts().size());
         Assert.assertEquals("Termination script", 0, t3.getTerminationScripts().size());
 
+        jmri.util.JUnitUtil.waitThreadTerminated("Startup Scripts"); // TrainManager.java
+
     }
 
     // from here down is testing infrastructure
-    // Ensure minimal setup for log4J
     @Override
     @BeforeEach
     public void setUp() {
