@@ -40,6 +40,8 @@ import jmri.TransitSection;
 import jmri.jmrit.dispatcher.TaskAllocateRelease.TaskAction;
 import jmri.jmrit.dispatcher.ActiveTrain.TrainDetection;
 import jmri.jmrit.display.EditorManager;
+import jmri.jmrit.display.layoutEditor.LayoutBlock;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
@@ -1861,8 +1863,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 }
             }
         }
-        //check here to see if block is already assigned to an allocated section;
-        if (checkBlocksNotInAllocatedSection(s, ar) != null) {
+        //check here to see if block is already assigned to an allocated section
+        // or crosses an allocated section or occupied section.
+        if (checkBlocksNotInAllocatedSection(s, ar, at) != null) {
             return null;
         }
         // Programming
@@ -1992,7 +1995,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 Section se = intermediateSections.get(i);
                 if (se.getState() == Section.FREE  && se.getOccupancy() == Section.UNOCCUPIED) {
                     //If the section state is free, we need to look to see if any of the blocks are used else where
-                    Section conflict = checkBlocksNotInAllocatedSection(se, null);
+                    Section conflict = checkBlocksNotInAllocatedSection(se, null, at);
                     if (conflict != null) {
                         //We have a conflicting path
                         //We might need to find out if the section which the block is allocated to is one in our transit, and if so is it running in the same direction.
@@ -2286,16 +2289,45 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         return _levelXingList;
     }
 
+    /*
+     * returns a list of double XOvers  (0 to n) in a list of blocks
+     */
+    private List<LayoutTurnout> containedDoubleXOver( Section s ) {
+        List<LayoutTurnout> _XOverList = new ArrayList<>();
+        LayoutBlockManager lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
+        for (var panel : editorManager.getAll(LayoutEditor.class)) {
+            for (Block blk: s.getBlockList()) {
+                LayoutBlock lb = lbm.getLayoutBlock(blk);
+                if (lb != null ) {
+                    List<LayoutTurnout> turnoutsInBlock = panel.getConnectivityUtil().getAllTurnoutsThisBlock(lb);
+                    for (LayoutTurnout lt: turnoutsInBlock) {
+                        if (lt.isTurnoutTypeXover() && !_XOverList.contains(lt)) {
+                            _XOverList.add(lt);
+                        }
+                    }
+                }
+            }
+        }
+        return _XOverList;
+    }
+
     /**
      * Checks for a block in allocated section, except one
      * @param b - The Block
      * @param ignoreSection - ignore this section, can be null
+     * @param activeTrain - only check this trains blocks can be null
      * @return true is The Block is being used in a section.
      */
-    protected boolean checkForBlockInAllocatedSection ( Block b, Section ignoreSection ) {
+    protected boolean checkForBlockInAllocatedSection ( Block b, Section ignoreSection, ActiveTrain activeTrain ) {
         for ( AllocatedSection as : allocatedSections) {
-            if (ignoreSection == null || as.getSection() != ignoreSection) {
+            if (activeTrain == null && (ignoreSection == null || as.getSection() != ignoreSection)) {
                 if (as.getSection().getBlockList().contains(b)) {
+                    log.trace("[No Active Train]:Block [{}] is allocated to [{}]",b.getDisplayName(),as.getSection().getDisplayName());
+                    return true;
+                }
+            } else if (activeTrain != null && (ignoreSection == null || as.getSection() != ignoreSection)) {
+                if (as.getActiveTrain() == activeTrain && as.getSection().getBlockList().contains(b)) {
+                    log.trace("[{}]:Block [{}] is allocated to [{}]",activeTrain.getActiveTrainName(),b.getDisplayName(),as.getSection().getDisplayName());
                     return true;
                 }
             }
@@ -2303,10 +2335,22 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         return false;
     }
 
+    protected String getActiveTrainInBlock(Block b) {
+        for (AllocatedSection as : allocatedSections) {
+            if (as.getSection().getBlockList().contains(b)) {
+                return as.getActiveTrainName();
+            }
+        }
+        return null;
+    }
+
     /*
-     * This is used to determine if the blocks in a section we want to allocate are already allocated to a section, or if they are now free.
+     * This is used to determine if the blocks in a section we want to allocate are already allocated to
+     * another train.
+     * Additional blocks can be added during this process that need to checked for occupancy as they were not
+     * known during establishment of the route.
      */
-    protected Section checkBlocksNotInAllocatedSection(Section s, AllocationRequest ar) {
+    protected Section checkBlocksNotInAllocatedSection(Section s, AllocationRequest ar, ActiveTrain at) {
         for (AllocatedSection as : allocatedSections) {
             if (as.getSection() != s) {
                 List<Block> blas = as.getSection().getBlockList();
@@ -2353,10 +2397,74 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                         Block bAC = lx.getLayoutBlockAC().getBlock();
                         Block bBD = lx.getLayoutBlockBD().getBlock();
                         if (!bls.contains(bAC)) {
+                            if (bAC.getState() != Block.UNOCCUPIED) {
+                                return as.getSection();
+                            }
                             bls.add(bAC);
                         }
                         if (!bls.contains(bBD)) {
+                            if (bBD.getState() != Block.UNOCCUPIED) {
+                                return as.getSection();
+                            }
                             bls.add(bBD);
+                        }
+                    }
+                    for (LayoutTurnout lx : containedDoubleXOver(s)) {
+                        if ((bls.contains(lx.getLayoutBlock().getBlock()) &&
+                                bls.contains(lx.getLayoutBlockB().getBlock())) ||
+                                (bls.contains(lx.getLayoutBlockD().getBlock()) &&
+                                        bls.contains(lx.getLayoutBlockC().getBlock()))) {
+                            // going A to B or B to A or D to C or C to D
+                            // No special special checks
+                            break;
+                        } else if (bls.contains(lx.getLayoutBlock().getBlock()) &&
+                                bls.contains(lx.getLayoutBlockC().getBlock())) {
+                            // going A to C or C to A
+                            if (getActiveTrainInBlock(lx.getLayoutBlockB().getBlock()) != null
+                                    && getActiveTrainInBlock(lx.getLayoutBlockD().getBlock()) != null
+                                    && getActiveTrainInBlock(lx.getLayoutBlockB().getBlock()).equals(getActiveTrainInBlock(lx.getLayoutBlockD().getBlock()))) {
+                                bls.add(lx.getLayoutBlockD().getBlock());
+                                bls.add(lx.getLayoutBlockB().getBlock());
+                            }
+                            break;
+                        } else if (bls.contains(lx.getLayoutBlockD().getBlock()) &&
+                                bls.contains(lx.getLayoutBlockB().getBlock())) {
+                            // going D to B or B to D
+                            if (getActiveTrainInBlock(lx.getLayoutBlock().getBlock()) != null
+                                    && getActiveTrainInBlock(lx.getLayoutBlockC().getBlock()) != null
+                                    && getActiveTrainInBlock(lx.getLayoutBlock().getBlock()).equals(getActiveTrainInBlock(lx.getLayoutBlockC().getBlock()))) {
+                                bls.add(lx.getLayoutBlock().getBlock());
+                                bls.add(lx.getLayoutBlockC().getBlock());
+                            }
+                            break;
+                        } else {
+                            // We are only allocating a single block - check that a block is not already allocated
+                            if (bls.contains(lx.getLayoutBlock().getBlock())
+                                    || bls.contains(lx.getLayoutBlockC().getBlock())) {
+                                // check diagonal already allocated to this train
+                                if (checkForBlockInAllocatedSection( lx.getLayoutBlock().getBlock(),null, at)
+                                        || checkForBlockInAllocatedSection( lx.getLayoutBlockC().getBlock(),null, at)) {
+                                    if (getActiveTrainInBlock(lx.getLayoutBlockB().getBlock()) != null
+                                            && getActiveTrainInBlock(lx.getLayoutBlockD().getBlock()) != null
+                                            && getActiveTrainInBlock(lx.getLayoutBlockB().getBlock()).equals(getActiveTrainInBlock(lx.getLayoutBlockD().getBlock())) ) {
+                                        bls.add(lx.getLayoutBlockB().getBlock());
+                                        bls.add(lx.getLayoutBlockD().getBlock());
+                                    }
+                                }
+                            } else if (bls.contains(lx.getLayoutBlockB().getBlock())
+                                    || bls.contains(lx.getLayoutBlockD().getBlock())) {
+                                // check diagonal already allocated to this train
+                                if (checkForBlockInAllocatedSection( lx.getLayoutBlockB().getBlock(),null, at)
+                                        || checkForBlockInAllocatedSection( lx.getLayoutBlockD().getBlock(),null, at)) {
+                                    if (getActiveTrainInBlock(lx.getLayoutBlock().getBlock()) != null
+                                            && getActiveTrainInBlock(lx.getLayoutBlockC().getBlock()) != null
+                                            && getActiveTrainInBlock(lx.getLayoutBlock().getBlock()).equals(getActiveTrainInBlock(lx.getLayoutBlockC().getBlock())) ) {
+                                        bls.add(lx.getLayoutBlock().getBlock());
+                                        bls.add(lx.getLayoutBlockC().getBlock());
+                                    }
+                                }
+                            }
+                            break;
                         }
                     }
                 }
@@ -2365,6 +2473,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     if (blas.contains(b)) {
                         if (as.getActiveTrain().getTrainDetection() == TrainDetection.TRAINDETECTION_HEADONLY) {
                             // no clue where the tail is some must assume this block still in use.
+                            if (ar != null) {
+                                ar.setWaitingOnBlock(b);
+                            }
                             return as.getSection();
                         }
                         if (as.getActiveTrain().getTrainDetection() == TrainDetection.TRAINDETECTION_HEADANDTAIL) {
@@ -2372,38 +2483,24 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                             // if there is a section that exited but occupied the tail is there
                             for (AllocatedSection tas : allocatedSections) {
                                 if (tas.getActiveTrain() == as.getActiveTrain() && tas.getExited() && tas.getSection().getOccupancy() == Section.OCCUPIED ) {
+                                    if (ar != null) {
+                                        ar.setWaitingOnBlock(b);
+                                    }
                                     return as.getSection();
                                 }
                             }
                         } else if (as.getActiveTrain().getTrainDetection() != TrainDetection.TRAINDETECTION_WHOLETRAIN) {
+                            if (ar != null) {
+                                ar.setWaitingOnBlock(b);
+                            }
                             return as.getSection();
                         }
                         if (as.getSection().getOccupancy() == Block.OCCUPIED) {
-                            //The next check looks to see if the block has already been passed or not and therefore ready for allocation.
-                            if (as.getSection().getState() == Section.FORWARD) {
-                                for (int i = 0; i < blas.size(); i++) {
-                                    //The block we get to is occupied therefore the subsequent blocks have not been entered
-                                    if (blas.get(i).getState() == Block.OCCUPIED) {
-                                        if (ar != null) {
-                                            ar.setWaitingOnBlock(b);
-                                        }
-                                        return as.getSection();
-                                    } else if (blas.get(i) == b) {
-                                        break;
-                                    }
+                            if (!hasBlockBeenPassed(ar, as, blas, b)) {
+                                if (ar != null) {
+                                    ar.setWaitingOnBlock(b);
                                 }
-                            } else {
-                                for (int i = blas.size() - 1; i >= 0; i--) {
-                                    //The block we get to is occupied therefore the subsequent blocks have not been entered
-                                    if (blas.get(i).getState() == Block.OCCUPIED) {
-                                        if (ar != null) {
-                                            ar.setWaitingOnBlock(b);
-                                        }
-                                        return as.getSection();
-                                    } else if (blas.get(i) == b) {
-                                        break;
-                                    }
-                                }
+                                return as.getSection();
                             }
                         } else if (as.getSection().getOccupancy() != Section.FREE) {
                             if (ar != null) {
@@ -2416,6 +2513,36 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             }
         }
         return null;
+    }
+
+    private boolean hasBlockBeenPassed(AllocationRequest ar, AllocatedSection as, List<Block> blas, Block b) {
+        //The next check looks to see if the block has already been passed or not and therefore ready for allocation.
+        if (as.getSection().getState() == Section.FORWARD) {
+            for (int i = 0; i < blas.size(); i++) {
+                //The block we get to is occupied therefore the subsequent blocks have not been entered
+                if (blas.get(i).getState() == Block.OCCUPIED) {
+                    if (ar != null) {
+                        ar.setWaitingOnBlock(b);
+                    }
+                    return false;
+                } else if (blas.get(i) == b) {
+                    break;
+                }
+            }
+        } else {
+            for (int i = blas.size() - 1; i >= 0; i--) {
+                //The block we get to is occupied therefore the subsequent blocks have not been entered
+                if (blas.get(i).getState() == Block.OCCUPIED) {
+                    if (ar != null) {
+                        ar.setWaitingOnBlock(b);
+                    }
+                    return false;
+                } else if (blas.get(i) == b) {
+                    break;
+                }
+            }
+        }
+        return true;
     }
 
     // automatically make a choice of next section
