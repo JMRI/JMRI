@@ -508,7 +508,10 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>basic-enhanced</li>
+                <li>There's a new 
+                    <a href="https://www.jmri.org/xml/signals/basic-enhanced/">basic-enhanced signal system</a>.</li>
+                <li>The 
+                    <a href="https://www.jmri.org/xml/signals/FS-1987/">FS-1987 signal system</a> was improved.</li>
             </ul>
 
         <h4>Signal Heads</h4>
