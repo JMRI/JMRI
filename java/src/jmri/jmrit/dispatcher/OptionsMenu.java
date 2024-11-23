@@ -40,6 +40,10 @@ import jmri.util.swing.JmriJOptionPane;
  */
 public class OptionsMenu extends JMenu {
 
+    // Empty constructor for class based preferences when "Skip message in future?" is enabled.
+    public OptionsMenu() {
+    }
+
     public OptionsMenu(DispatcherFrame f) {
         dispatcher = f;
         this.setText(Bundle.getMessage("MenuOptions"));
