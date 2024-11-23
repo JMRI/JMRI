@@ -105,7 +105,7 @@
       <variable item="Output A dimming" CV="51" comment="Controls how front headlights dim" mask="XXXXXVXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Output A can dim</label>
-        <comment>Controls how front headlights dim</comment>
+        <comment>Controls whether front headlights dim</comment>
       </variable>
       <variable item="Output A is Gyrolight" CV="51" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -142,7 +142,7 @@
       <variable item="Output B dimming" CV="57" comment="Controls how back headlights dims" mask="XXXXXVXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Output B can dim</label>
-        <comment>Controls how back headlights dims</comment>
+        <comment>Controls whether back headlights dim</comment>
       </variable>
       <variable item="Output B is Gyrolight" CV="57" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -268,6 +268,9 @@
     <name>Atlas</name>
     <column>
       <display item="Directional Headlights"/>
+      <label>
+        <text> </text>
+      </label>
       <label>
         <text>Output A</text>
       </label>
