@@ -502,7 +502,8 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li><strong>WiThrottleList.py</strong> is a sample script that shows how to access the
+            WiThrottle session list.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -605,7 +606,8 @@
    <h3>WiThrottle Server</h3>
         <a id="WS" name="WS"></a>
         <ul>
-            <li></li>
+            <li>The <strong>getThrottleList()</strong> public method has been added to
+            jmri.jmrit.withrottle.UserInterface for Jython access.</li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
