@@ -39,17 +39,21 @@
       <variable CV="3" item="Accel" default="1" comment="Range 1-255">
         <decVal max="255"/>
         <label>Acceleration momentum</label>
-        <label xml:lang="it">Accellerazione (0-255)</label>
-        <label xml:lang="fr">Accelération (0-255)</label>
-        <label xml:lang="de">Anfahrverzögerung (0-255)</label>
+        <label xml:lang="it">Accellerazione (1-255)</label>
+        <label xml:lang="fr">Accelération (1-255)</label>
+        <label xml:lang="de">Anfahrverzögerung (1-255)</label>
+        <label xml:lang="nl">Versnelling (1-255)</label>
+        <label xml:lang="es">Aceleración (1-255)</label>
         <comment>Range 1-255</comment>
       </variable>
       <variable CV="4" item="Decel" default="1" comment="Range 1-255">
         <decVal max="255"/>
         <label>Brake momentum</label>
-        <label xml:lang="it">Decellerazione (0-255)</label>
-        <label xml:lang="fr">Décélération (0-255)</label>
-        <label xml:lang="de">Bremszeit (0-255)</label>
+        <label xml:lang="it">Decellerazione (1-255)</label>
+        <label xml:lang="fr">Décélération (1-255)</label>
+        <label xml:lang="de">Bremszeit (1-255)</label>
+        <label xml:lang="nl">Remvertraging (1-255)</label>
+        <label xml:lang="es">Desaceleración</label>
         <comment>Range 1-255</comment>
       </variable>
       <variable CV="7" item="Decoder Version" readOnly="yes">
@@ -58,6 +62,8 @@
         <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
+        <label xml:lang="nl">Decoderversie: </label>
+        <label xml:lang="es">Verción del decodificador: </label>
       </variable>
       <variable CV="8" readOnly="yes" item="Manufacturer" default="127" comment="Atlas - 127">
         <decVal/>
@@ -65,6 +71,8 @@
         <label xml:lang="it">ID Costruttore: </label>
         <label xml:lang="fr">ID constructeur: </label>
         <label xml:lang="de">Hersteller ID: </label>
+        <label xml:lang="nl">Fabrikant-ID: </label>
+        <label xml:lang="es">ID del fabricante: </label>
         <comment>Atlas - 127</comment>
         <comment xml:lang="it">Atlas - 127</comment>
       </variable>
