@@ -994,13 +994,23 @@ public class AutoActiveTrain implements ThrottleListener {
                     // .getSpeed(InstanceManager.getDefault(DispatcherFrame.class).getStoppingSpeedName());
                     _activeTrain.setStatus(ActiveTrain.RUNNING);
             }
-            // If the train has no _currentAllocatedSection it is in a first block outside transit.
-            if (_currentAllocatedSection != null ) {
-                for (Block block : _currentAllocatedSection.getSection().getBlockList()) {
-                    float speed = getSpeedFromBlock(block);
-                    if (speed > 0 && speed < newSpeed) {
-                        newSpeed = speed;
+            // get slowest speed of any entered and not released section.
+            // This then covers off HEADONLY.
+            for (AllocatedSection asE : _activeTrain.getAllocatedSectionList()) {
+                if (asE.getEntered()) {
+                    for (Block b : asE.getSection().getBlockList()) {
+                        if (getSpeedFromBlock(b) < newSpeed) {
+                            newSpeed = getSpeedFromBlock(b);
+                        }
                     }
+                }
+            }
+            // see if needs to slow for next block.
+            if (newSpeed > 0 && _nextBlock != null) {
+                float speed = getSpeedFromBlock(_nextBlock);
+                if (speed < newSpeed) {
+                    // slow for next block
+                    newSpeed = speed;
                 }
             }
         }
