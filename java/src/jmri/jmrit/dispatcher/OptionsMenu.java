@@ -409,6 +409,22 @@ public class OptionsMenu extends JMenu {
         initializeMenu();
     }
 
+    /**
+     * Get the class description for the UserMessagePreferencesPane.
+     * @return The class description
+     */
+    public String getClassDescription() {
+        return Bundle.getMessage("OptionWindowItem");
+    }
+
+    /**
+     * Set the item details for the UserMessagePreferencesPane.
+     */
+    public void setMessagePreferencesDetails() {
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                setPreferenceItemDetails(OptionsMenu.class.getName(), "remindSaveDispatcherOptions", Bundle.getMessage("HideSaveReminder"));  // NOI18N
+    }
+
     private void cancelOptions(ActionEvent e) {
         optionsFrame.setVisible(false);
         optionsFrame.dispose(); // prevent this window from being listed in the Window menu.
