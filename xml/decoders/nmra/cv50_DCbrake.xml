@@ -56,9 +56,9 @@
             <choice>Loco runs under DC analog voltage control</choice>
             <choice xml:lang="cs">Lokomotiva používá pro řízení analogové stejnosměrné napětí</choice>
             <choice xml:lang="fr">Loco roule sous contrôle analogique</choice>
-            <choice xml:lang="de">Lok fahrt unter DC Analogspannung</choice>
+            <choice xml:lang="de">Lok läuft unter DC Analogspannung</choice>
             <choice xml:lang="it">Loco va in Analogico</choice>
-            <choice xml:lang="nl">Lok rijd onder DC analoog spanning</choice>
+            <choice xml:lang="nl">Loc rijdt onder DC analoog spanning</choice>
             <choice xml:lang="es">La locomotora funciona con control de voltaje analógico de CC</choice>
           </enumChoice>
           <enumChoice choice="Loco brakes to a stop using momentum set in CV4">
