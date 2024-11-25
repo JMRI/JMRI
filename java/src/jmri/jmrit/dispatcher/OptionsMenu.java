@@ -40,6 +40,10 @@ import jmri.util.swing.JmriJOptionPane;
  */
 public class OptionsMenu extends JMenu {
 
+    // Empty constructor for class based preferences when "Skip message in future?" is enabled.
+    public OptionsMenu() {
+    }
+
     public OptionsMenu(DispatcherFrame f) {
         dispatcher = f;
         this.setText(Bundle.getMessage("MenuOptions"));
@@ -403,6 +407,22 @@ public class OptionsMenu extends JMenu {
                         OptionsMenu.class.getName(),
                         "remindSaveDispatcherOptions"); // NOI18N
         initializeMenu();
+    }
+
+    /**
+     * Get the class description for the UserMessagePreferencesPane.
+     * @return The class description
+     */
+    public String getClassDescription() {
+        return Bundle.getMessage("OptionWindowItem");
+    }
+
+    /**
+     * Set the item details for the UserMessagePreferencesPane.
+     */
+    public void setMessagePreferencesDetails() {
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                setPreferenceItemDetails(OptionsMenu.class.getName(), "remindSaveDispatcherOptions", Bundle.getMessage("HideSaveReminder"));  // NOI18N
     }
 
     private void cancelOptions(ActionEvent e) {
