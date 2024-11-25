@@ -659,7 +659,6 @@ public class ActivateTrainFrame extends JmriJFrame {
         autoRunBox.setSelected(false);
         loadAtStartupBox.setSelected(false);
         initializeFreeTransitsCombo(new ArrayList<Transit>());
-        nextTrain.addItem("");
         refreshNextTrainCombo();
         setTrainsFromOptions(trainInfo.getTrainsFrom());
         initiateFrame.pack();
@@ -673,7 +672,8 @@ public class ActivateTrainFrame extends JmriJFrame {
         if (nextTrain.getSelectedIndex() > 0) {
             saveEntry=nextTrain.getSelectedItem();
         }
-        nextTrain.removeAll();
+        nextTrain.removeAllItems();
+        nextTrain.addItem(" ");
         for (String file: _tiFile.getTrainInfoFileNames()) {
             nextTrain.addItem(file);
         }
@@ -1132,61 +1132,15 @@ public class ActivateTrainFrame extends JmriJFrame {
     }
 
     private void saveTrainInfo(ActionEvent e) {
-        try {
-            dialogToTrainInfo(trainInfo);
-        } catch (IllegalArgumentException ide) {
-            JmriJOptionPane.showMessageDialog(initiateFrame, ide.getMessage(),
-                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        // get file name
-        String eName = "";
-        eName = JmriJOptionPane.showInputDialog(initiateFrame,
-                Bundle.getMessage("EnterFileName") + " :", _trainInfoName);
-        if (eName == null) {  //Cancel pressed
-            return;
-        }
-        if (eName.length() < 1) {
-            JmriJOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage("Error25"),
-                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        String fileName = normalizeXmlFileName(eName);
-        _trainInfoName = fileName;
-        // check if train info file name is in use
-        String[] names = _tiFile.getTrainInfoFileNames();
-        if (names.length > 0) {
-            boolean found = false;
-            for (int i = 0; i < names.length; i++) {
-                if (fileName.equals(names[i])) {
-                    found = true;
-                }
-            }
-            if (found) {
-                // file by that name is already present
-                int selectedValue = JmriJOptionPane.showOptionDialog(initiateFrame,
-                        Bundle.getMessage("Question3", fileName),
-                        Bundle.getMessage("WarningTitle"), JmriJOptionPane.DEFAULT_OPTION,
-                        JmriJOptionPane.QUESTION_MESSAGE, null,
-                        new Object[]{Bundle.getMessage("ButtonReplace"),Bundle.getMessage("ButtonNo")},
-                        Bundle.getMessage("ButtonNo"));
-                if (selectedValue != 0 ) { // array position 0 , replace not selected
-                    return;   // return without writing if "No" response
-                }
-            }
-        }
-        // write the Train Info file
-        try {
-            _tiFile.writeTrainInfo(trainInfo, fileName);
-        } //catch (org.jdom2.JDOMException jde) {
-        // log.error("JDOM exception writing Train Info: "+jde);
-        //}
-        catch (java.io.IOException ioe) {
-            log.error("IO exception writing Train Info", ioe);
-        }
+        saveTrainInfo(false);
+        refreshNextTrainCombo();
     }
 
     private void saveTrainInfoAsTemplate(ActionEvent e) {
+        saveTrainInfo(true);
+    }
+
+    private void saveTrainInfo(boolean asTemplate) {
         try {
             dialogToTrainInfo(trainInfo);
         } catch (IllegalArgumentException ide) {
@@ -1195,7 +1149,24 @@ public class ActivateTrainFrame extends JmriJFrame {
             return;
         }
         // get file name
-        String fileName = normalizeXmlFileName(nameOfTemplateFile);
+        String fileName;
+        if (asTemplate) {
+            fileName = normalizeXmlFileName(nameOfTemplateFile);
+        } else {
+            String eName = "";
+            eName = JmriJOptionPane.showInputDialog(initiateFrame,
+                    Bundle.getMessage("EnterFileName") + " :", _trainInfoName);
+            if (eName == null) {  //Cancel pressed
+                return;
+            }
+            if (eName.length() < 1) {
+                JmriJOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage("Error25"),
+                        Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            fileName = normalizeXmlFileName(eName);
+            _trainInfoName = fileName;
+        }
         // check if train info file name is in use
         String[] names = _tiFile.getTrainInfoFileNames();
         if (names.length > 0) {

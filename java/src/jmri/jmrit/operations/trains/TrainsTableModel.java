@@ -120,6 +120,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         _frame = frame;
         // allow row color to be controlled
         table.setDefaultRenderer(Object.class, new MyTableCellRenderer());
+        table.setDefaultRenderer(Integer.class, new MyTableCellRenderer());
         initTable();
     }
 

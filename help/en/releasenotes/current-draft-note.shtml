@@ -131,6 +131,10 @@
             <ul>
                 <li>STL Editor: Add store mode selections to the View menu, update help page.</li>
                 <li>Add a Send SNIP Request button to the Send tool.</li>
+                <li>Implement recent changes to the CDI spec underlying the node configuration display. 
+                    This will allow node implementors to make simpler configuration dialogs.</li>
+                <li>Fixed a bug where the node configuration display would sometimes
+                    be drawn with overlapping characters or extra white space.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -498,7 +502,8 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li><strong>WiThrottleList.py</strong> is a sample script that shows how to access the
+            WiThrottle session list.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -508,7 +513,10 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>basic-enhanced</li>
+                <li>There's a new 
+                    <a href="https://www.jmri.org/xml/signals/basic-enhanced/">basic-enhanced signal system</a>.</li>
+                <li>The 
+                    <a href="https://www.jmri.org/xml/signals/FS-1987/">FS-1987 signal system</a> was improved.</li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -598,13 +606,16 @@
    <h3>WiThrottle Server</h3>
         <a id="WS" name="WS"></a>
         <ul>
-            <li></li>
+            <li>The <strong>getThrottleList()</strong> public method has been added to
+            jmri.jmrit.withrottle.UserInterface for Jython access.</li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>The limit for VSDecoders is now 8 instead of 4.</li>
+            <li>The sound buttons sorting in the VSD Manager window is now as in config.xml.</li>
+            <li>If the sound buttons exeed 8, a second row is displayed.</li>
         </ul>
 
    <h3>Z21 Server</h3>

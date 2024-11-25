@@ -338,7 +338,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                             if (!track.isTypeNameAccepted(type)) {
                                 continue;
                             }
-                            if (track.isLoadNameAccepted(load)) {
+                            if (track.isLoadNameAndCarTypeAccepted(load, type)) {
                                 continue checkLoads;
                             }
                         }

@@ -59,6 +59,12 @@
        <authorinitials>PDB</authorinitials>
        <revremark>Fourth version for Italian Signal System - amended aspect mapping</revremark>
      </revision>
+     <revision>
+       <revnumber>6</revnumber>
+       <date>2024-11-18</date>
+       <authorinitials>PDB</authorinitials>
+       <revremark>Fourth version for Italian Signal System - amended aspect mapping</revremark>
+     </revision>
   </revhistory>
 
 <aspecttable>FS 1987</aspecttable>
@@ -430,8 +436,14 @@ Signal Rules “Regolamento Segnali” of the Italian State Railways (“Ferrovi
 
     <aspectMapping>
       <advancedAspect>Rosso-Giallo-Giallo</advancedAspect>
+      <ourAspect>Giallo-Verde</ourAspect>
       <ourAspect>Rosso-Giallo-Verde</ourAspect>
     </aspectMapping>
 
+    <aspectMapping>
+      <advancedAspect>Rosso-Giallo-Verde</advancedAspect>
+      <ourAspect>Giallo-Verde</ourAspect>
+      <ourAspect>Rosso-Giallo-Verde</ourAspect>
+    </aspectMapping>
   </aspectMappings>
 </appearancetable>
