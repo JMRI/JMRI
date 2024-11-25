@@ -21,7 +21,7 @@ import jmri.jmrit.operations.setup.*;
 /**
  * Logs train movements and status to a file.
  *
- * @author Daniel Boudreau Copyright (C) 2010, 2013
+ * @author Daniel Boudreau Copyright (C) 2010, 2013, 2024
  */
 public class TrainLogger extends XmlFile implements InstanceManagerAutoDefault, PropertyChangeListener {
 
@@ -84,14 +84,35 @@ public class TrainLogger extends XmlFile implements InstanceManagerAutoDefault, 
         fileOut(line);
     }
 
+    ResourceBundle rb = ResourceBundle
+            .getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
+
+    /*
+     * Adds a status line to the log file whenever the trains file is saved.
+     */
+    private void storeFileSaved() {
+        if (_fileLogger == null) {
+            return;
+        }
+        List<Object> line = Arrays.asList(new Object[]{
+                Bundle.getMessage("TrainLogger"), // train name
+                "", // train description
+                "", // current location
+                "", // next location name
+                Setup.isAutoSaveEnabled() ? rb.getString("AutoSave") : Bundle.getMessage("Manual"), // status
+                Bundle.getMessage("TrainsSaved"), // build messages
+                getTime()});
+        fileOut(line);
+    }
+
     private List<Object> getHeader() {
         return Arrays.asList(new Object[]{Bundle.getMessage("Name"),
-            Bundle.getMessage("Description"),
-            Bundle.getMessage("Current"),
-            Bundle.getMessage("NextLocation"),
-            Bundle.getMessage("Status"),
-            Bundle.getMessage("BuildMessages"),
-            Bundle.getMessage("DateAndTime")});
+                Bundle.getMessage("Description"),
+                Bundle.getMessage("Current"),
+                Bundle.getMessage("NextLocation"),
+                Bundle.getMessage("Status"),
+                Bundle.getMessage("BuildMessages"),
+                Bundle.getMessage("DateAndTime")});
     }
 
     /*
@@ -142,8 +163,8 @@ public class TrainLogger extends XmlFile implements InstanceManagerAutoDefault, 
 
     @Override
     public void propertyChange(PropertyChangeEvent e) {
-        if (e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)) {
             if (Control.SHOW_PROPERTY) {
                 log.debug("Train logger sees property change for train {}", e.getSource());
             }
@@ -155,6 +176,9 @@ public class TrainLogger extends XmlFile implements InstanceManagerAutoDefault, 
                 removeTrainListeners();
                 addTrainListeners();
             }
+        }
+        if (e.getPropertyName().equals(TrainManager.TRAINS_SAVED_PROPERTY)) {
+            storeFileSaved();
         }
     }
 

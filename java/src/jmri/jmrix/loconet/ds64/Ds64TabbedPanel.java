@@ -3081,7 +3081,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         }
     }
 
-    private class JRadioButtonWithInteger extends JRadioButton {
+    private static class JRadioButtonWithInteger extends JRadioButton {
 
         public int index;
 
@@ -3091,17 +3091,17 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         }
     }
 
-    
+
     /**
      * Copy from the GUI OpSw tab to the GUI Basics tab
      */
     protected void copyOpswToBasic() {
         // copy over values from OpSw tab to the Basics tab
         outputType.setSelectedIndex(opsw[1]?1:0);
-        
+
         delayTime.setSelectedIndex(
             (opsw[2]?1:0) + (opsw[3]?2:0) + (opsw[4]?4:0) + (opsw[5]?8:0));
-        
+
         outputStates.setSelectedIndex(opsw[6]?1:0);
         isWritingResetOpSw = opsw[7];
         startupDelay.setSelectedIndex(opsw[8]?1:0);
@@ -3117,7 +3117,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         output4CrossbuckFlasherCheckBox.setSelected(opsw[20]);
         localSensorType.setSelectedIndex(opsw[21]?1:0);
     }
-    
+
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Ds64TabbedPanel.class);
 
 }

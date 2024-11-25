@@ -5,16 +5,12 @@ import java.awt.GraphicsEnvironment;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.Test;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JRadioButtonOperator;
-import org.netbeans.jemmy.operators.JTableOperator;
+import org.netbeans.jemmy.operators.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.divisions.Division;
-import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
+import jmri.util.*;
 
 /**
  * Tests for the Operations Locations GUI class
@@ -144,7 +140,7 @@ public class LocationsTableFrameTest extends OperationsTestCase {
         JTableOperator tbl = new JTableOperator(jfo);
         tbl.clickOnCell(4, tbl.findColumn(Bundle.getMessage("Action")));
         
-        String yardMasterFrameName = Bundle.getMessage("Yardmaster") + " (Test Loc E)";
+        String yardMasterFrameName = Bundle.getMessage("Yardmaster") + " Test Loc E";
 
         // confirm Yardmaster frame creation
         JUnitUtil.waitFor(() -> {

@@ -179,6 +179,10 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
                 for (Map.Entry<Integer, CbusThrottle> entry : softThrottles.entrySet()) {
                     CbusThrottle throttle = entry.getValue();
                     if (throttle.getHandle() == handle) {
+                        // stop Throttle from sending keep-alives
+                        throttle.throttleDispose();
+                        // remove from abstract list
+                        forceDisposeThrottle(throttle.getLocoAddress());
                         // Remove the Throttle from the managed list
                         softThrottles.remove(throttle.getHandle());
                     }

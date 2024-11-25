@@ -8,6 +8,9 @@
   <name xml:lang="cs">Soupravy</name>
   <name xml:lang="nl">Multi-tractie</name>
   <column>
+        <label>
+          <text>   </text>
+        </label>
     <row>
       <column>
         <display item="Consist Address" tooltip="Sets the multiple unit (consist) address">
@@ -369,5 +372,8 @@
         </display>
       </column>
     </row>
+        <label>
+          <text>   </text>
+        </label>
   </column>
 </pane>

@@ -1,29 +1,18 @@
 package jmri.jmrix.ncemonitor;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.Vector;
 
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
+import javax.swing.*;
 
-//import javax.swing.JToggleButton;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+import jmri.jmrix.AbstractSerialPortController;
+import jmri.jmrix.SerialPort;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.swing.NcePanelInterface;
-
-import com.fazecast.jSerialComm.SerialPort;
 
 /**
  * Simple GUI for access to an NCE monitor card
@@ -37,7 +26,7 @@ import com.fazecast.jSerialComm.SerialPort;
  */
 @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC", justification = "serialStream is access from separate thread, and this class isn't used much")
 public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements NcePanelInterface {
-    
+
     Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
     NceSystemConnectionMemo memo = null;
@@ -119,7 +108,15 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         x.append(Bundle.getMessage("Title"));
         return x.toString();
     }
-    
+
+    /**
+     * The minimum frame size for font size 16
+     */
+    @Override
+    public Dimension getMinimumDimension() {
+        return new Dimension(500, 500);
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -202,7 +199,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             p.add(dupFilterCheckBox);
             p2.add(p);
         }   // end dup group
-        
+
         {   // begin verbose group
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
@@ -441,7 +438,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
             log.error("Interrupted output: ", e);
         }
     }
-    
+
     /**
      * Enable/Disable options depending on port open/closed status
      * @param isOpen enables/disables buttons/checkbox when connection is open/closed
@@ -480,11 +477,35 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
     void openPortButtonActionPerformed(java.awt.event.ActionEvent e) {
         //log.info("Open button pushed");
         // can't change this anymore
-        String openStatus = openPort((String) portBox.getSelectedItem(), validModelValues[modelBox.getSelectedIndex()], "JMRI");
-        if (openStatus != null) {
-            log.debug("Open Returned: {}", openStatus);
-            return;
+        String portName = (String) portBox.getSelectedItem();
+        int modelValue = validModelValues[modelBox.getSelectedIndex()];
+        int numDataBits = modelBitValues[modelValue];
+        int numStopBits = modelStopValues[modelValue];
+        int parity = modelParityValues[modelValue];
+        int baudrate = modelBaudRates[modelValue];
+        activeSerialPort = AbstractSerialPortController.activatePort(
+                null, portName, log, numStopBits, SerialPort.Parity.getParity(parity));
+
+        activeSerialPort.setNumDataBits(numDataBits);
+        activeSerialPort.setBaudRate(baudrate);
+
+        // set RTS high, DTR high
+        activeSerialPort.setRTS(); // not connected in some serial ports and adapters
+        activeSerialPort.setDTR(); // pin 1 in DIN8; on main connector, this is DTR
+
+        // get and save stream
+        serialStream = new DataInputStream(activeSerialPort.getInputStream());
+        ostream = activeSerialPort.getOutputStream();
+
+        // report status?
+        if (log.isInfoEnabled()) {
+            log.info("Port {} {} opened at {} baud, sees DTR: {} RTS: {} DSR: {} CTS: {} DCD: {}",
+                    portName, activeSerialPort.getDescriptivePortName(),
+                    activeSerialPort.getBaudRate(), activeSerialPort.getDTR(),
+                    activeSerialPort.getRTS(), activeSerialPort.getDSR(), activeSerialPort.getCTS(),
+                    activeSerialPort.getDCD());
         }
+
         // start the reader
         readerThread = new Thread(new Reader());
         readerThread.start();
@@ -515,7 +536,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         // enable buttons
         enableDisableWhenOpen(false);
     }
-    
+
     Thread readerThread;
 
     /*
@@ -536,59 +557,6 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
 
     public Vector<String> getPortNames() {
         return jmri.jmrix.AbstractSerialPortController.getActualPortNames();
-    }
-
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SR_NOT_CHECKED",
-                                        justification="this is for skip-chars while loop: no matter how many, we're skipping")
-    public synchronized String openPort(String portName, int modelValue, String appName) {
-        // open the port, check ability to set moderators
-
-        // get and open the primary port
-        activeSerialPort = com.fazecast.jSerialComm.SerialPort.getCommPort(portName);
-        activeSerialPort.openPort();
-        
-        // set it for communication
-        activeSerialPort.setNumDataBits(modelBitValues[modelValue]);
-        activeSerialPort.setNumStopBits(modelStopValues[modelValue]);
-        activeSerialPort.setParity(modelParityValues[modelValue]);
-        activeSerialPort.setBaudRate(modelBaudRates[modelValue]);
-        
-        // set RTS high, DTR high
-        activeSerialPort.setRTS(); // not connected in some serial ports and adapters
-        activeSerialPort.setDTR(); // pin 1 in DIN8; on main connector, this is DTR
-
-        // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
-        activeSerialPort.setFlowControl(com.fazecast.jSerialComm.SerialPort.FLOW_CONTROL_DISABLED);
-
-        // set timeout
-        activeSerialPort.setComPortTimeouts(com.fazecast.jSerialComm.SerialPort.TIMEOUT_READ_BLOCKING, 0, 0);
-
-        // get and save stream
-        serialStream = new DataInputStream(activeSerialPort.getInputStream());
-        ostream = activeSerialPort.getOutputStream();
-
-        // purge contents, if any
-        try {
-            int count = serialStream.available();
-            log.debug("input stream shows {} bytes available", count);
-            while (count > 0) {
-                serialStream.skip(count);
-                count = serialStream.available();
-            }
-        } catch (IOException e) {
-            log.error("problem purging port at startup", e);
-        }
-
-        // report status?
-        if (log.isInfoEnabled()) {
-            log.info("Port {} {} opened at {} baud, sees DTR: {} RTS: {} DSR: {} CTS: {} DCD: {}", 
-                    portName, activeSerialPort.getDescriptivePortName(),
-                    activeSerialPort.getBaudRate(), activeSerialPort.getDTR(), 
-                    activeSerialPort.getRTS(), activeSerialPort.getDSR(), activeSerialPort.getCTS(),
-                    activeSerialPort.getDCD());
-        }
-
-        return null; // indicates OK return
     }
 
     DataInputStream serialStream = null;

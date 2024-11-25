@@ -89,6 +89,15 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
         }
     }
 
+    public boolean hasRandomItem() {
+        for (ScheduleItem si : getItemsByIdList()) {
+            if (!si.getRandom().equals(ScheduleItem.NONE)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Adds a car type to the end of this schedule
      * 
@@ -316,89 +325,88 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
      * @return SCHEDULE_OKAY if schedule okay, otherwise an error message.
      */
     public String checkScheduleValid(Track track) {
-        String status = SCHEDULE_OKAY;
         List<ScheduleItem> scheduleItems = getItemsBySequenceList();
         if (scheduleItems.size() == 0) {
             return Bundle.getMessage("empty");
         }
+        String status = SCHEDULE_OKAY;
         for (ScheduleItem si : scheduleItems) {
-            // check train schedules
-            if (!si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) &&
-                    InstanceManager.getDefault(TrainScheduleManager.class)
-                            .getScheduleById(si.getSetoutTrainScheduleId()) == null) {
-                status = Bundle.getMessage("NotValid", si.getSetoutTrainScheduleId());
+            status = checkScheduleItemValid(si, track);
+            if (!status.equals(SCHEDULE_OKAY)) {
                 break;
             }
-            if (!si.getPickupTrainScheduleId().equals(ScheduleItem.NONE) &&
-                    InstanceManager.getDefault(TrainScheduleManager.class)
-                            .getScheduleById(si.getPickupTrainScheduleId()) == null) {
-                status = Bundle.getMessage("NotValid", si.getPickupTrainScheduleId());
-                break;
+        }
+        return status;
+    }
+
+    public String checkScheduleItemValid(ScheduleItem si, Track track) {
+        String status = SCHEDULE_OKAY;
+        // check train schedules
+        if (!si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) &&
+                InstanceManager.getDefault(TrainScheduleManager.class)
+                        .getScheduleById(si.getSetoutTrainScheduleId()) == null) {
+            status = Bundle.getMessage("NotValid", si.getSetoutTrainScheduleId());
+        }
+        else if (!si.getPickupTrainScheduleId().equals(ScheduleItem.NONE) &&
+                InstanceManager.getDefault(TrainScheduleManager.class)
+                        .getScheduleById(si.getPickupTrainScheduleId()) == null) {
+            status = Bundle.getMessage("NotValid", si.getPickupTrainScheduleId());
+        }
+        else if (!track.getLocation().acceptsTypeName(si.getTypeName())) {
+            status = Bundle.getMessage("NotValid", si.getTypeName());
+        }
+        else if (!track.isTypeNameAccepted(si.getTypeName())) {
+            status = Bundle.getMessage("NotValid", si.getTypeName());
+        }
+        // check roads, accepted by track, valid road, and there's at least
+        // one car with that road
+        else if (!si.getRoadName().equals(ScheduleItem.NONE) &&
+                (!track.isRoadNameAccepted(si.getRoadName()) ||
+                        !InstanceManager.getDefault(CarRoads.class).containsName(si.getRoadName()) ||
+                        InstanceManager.getDefault(CarManager.class).getByTypeAndRoad(si.getTypeName(),
+                                si.getRoadName()) == null)) {
+            status = Bundle.getMessage("NotValid", si.getRoadName());
+        }
+        // check loads
+        else if (!si.getReceiveLoadName().equals(ScheduleItem.NONE) &&
+                (!track.isLoadNameAndCarTypeAccepted(si.getReceiveLoadName(), si.getTypeName()) ||
+                        !InstanceManager.getDefault(CarLoads.class).getNames(si.getTypeName())
+                                .contains(si.getReceiveLoadName()))) {
+            status = Bundle.getMessage("NotValid", si.getReceiveLoadName());
+        }
+        else if (!si.getShipLoadName().equals(ScheduleItem.NONE) &&
+                !InstanceManager.getDefault(CarLoads.class).getNames(si.getTypeName()).contains(si.getShipLoadName())) {
+            status = Bundle.getMessage("NotValid", si.getShipLoadName());
+        }
+        // check destination
+        else if (si.getDestination() != null &&
+                (!si.getDestination().acceptsTypeName(si.getTypeName()) ||
+                        InstanceManager.getDefault(LocationManager.class)
+                                .getLocationById(si.getDestination().getId()) == null)) {
+            status = Bundle.getMessage("NotValid", si.getDestination());
+        }
+        // check destination track
+        else if (si.getDestination() != null && si.getDestinationTrack() != null) {
+            if (!si.getDestination().isTrackAtLocation(si.getDestinationTrack())) {
+                status = Bundle.getMessage("NotValid",
+                        si.getDestinationTrack() + " (" + Bundle.getMessage("Track") + ")");
+
             }
-            if (!track.getLocation().acceptsTypeName(si.getTypeName())) {
-                status = Bundle.getMessage("NotValid", si.getTypeName());
-                break;
+            else if (!si.getDestinationTrack().isTypeNameAccepted(si.getTypeName())) {
+                status = Bundle.getMessage("NotValid",
+                        si.getDestinationTrack() + " (" + Bundle.getMessage("Type") + ")");
+
             }
-            if (!track.isTypeNameAccepted(si.getTypeName())) {
-                status = Bundle.getMessage("NotValid", si.getTypeName());
-                break;
+            else if (!si.getRoadName().equals(ScheduleItem.NONE) &&
+                    !si.getDestinationTrack().isRoadNameAccepted(si.getRoadName())) {
+                status = Bundle.getMessage("NotValid",
+                        si.getDestinationTrack() + " (" + Bundle.getMessage("Road") + ")");
             }
-            // check roads, accepted by track, valid road, and there's at least
-            // one car with
-            // that road
-            if (!si.getRoadName().equals(ScheduleItem.NONE) &&
-                    (!track.isRoadNameAccepted(si.getRoadName()) ||
-                            !InstanceManager.getDefault(CarRoads.class).containsName(si.getRoadName()) ||
-                            InstanceManager.getDefault(CarManager.class).getByTypeAndRoad(si.getTypeName(),
-                                    si.getRoadName()) == null)) {
-                status = Bundle.getMessage("NotValid", si.getRoadName());
-                break;
-            }
-            // check loads
-            List<String> loads = InstanceManager.getDefault(CarLoads.class).getNames(si.getTypeName());
-            if (!si.getReceiveLoadName().equals(ScheduleItem.NONE) &&
-                    (!track.isLoadNameAndCarTypeAccepted(si.getReceiveLoadName(), si.getTypeName()) ||
-                            !loads.contains(si.getReceiveLoadName()))) {
-                status = Bundle.getMessage("NotValid", si.getReceiveLoadName());
-                break;
-            }
-            if (!si.getShipLoadName().equals(ScheduleItem.NONE) && !loads.contains(si.getShipLoadName())) {
-                status = Bundle.getMessage("NotValid", si.getShipLoadName());
-                break;
-            }
-            // check destination
-            if (si.getDestination() != null &&
-                    (!si.getDestination().acceptsTypeName(si.getTypeName()) ||
-                            InstanceManager.getDefault(LocationManager.class)
-                                    .getLocationById(si.getDestination().getId()) == null)) {
-                status = Bundle.getMessage("NotValid", si.getDestination());
-                break;
-            }
-            // check destination track
-            if (si.getDestination() != null && si.getDestinationTrack() != null) {
-                if (!si.getDestination().isTrackAtLocation(si.getDestinationTrack())) {
-                    status = Bundle.getMessage("NotValid",
-                            si.getDestinationTrack() + " (" + Bundle.getMessage("Track") + ")");
-                    break;
-                }
-                if (!si.getDestinationTrack().isTypeNameAccepted(si.getTypeName())) {
-                    status = Bundle.getMessage("NotValid",
-                            si.getDestinationTrack() + " (" + Bundle.getMessage("Type") + ")");
-                    break;
-                }
-                if (!si.getRoadName().equals(ScheduleItem.NONE) &&
-                        !si.getDestinationTrack().isRoadNameAccepted(si.getRoadName())) {
-                    status = Bundle.getMessage("NotValid",
-                            si.getDestinationTrack() + " (" + Bundle.getMessage("Road") + ")");
-                    break;
-                }
-                if (!si.getShipLoadName().equals(ScheduleItem.NONE) &&
-                        !si.getDestinationTrack().isLoadNameAndCarTypeAccepted(si.getShipLoadName(),
-                                si.getTypeName())) {
-                    status = Bundle.getMessage("NotValid",
-                            si.getDestinationTrack() + " (" + Bundle.getMessage("Load") + ")");
-                    break;
-                }
+            else if (!si.getShipLoadName().equals(ScheduleItem.NONE) &&
+                    !si.getDestinationTrack().isLoadNameAndCarTypeAccepted(si.getShipLoadName(),
+                            si.getTypeName())) {
+                status = Bundle.getMessage("NotValid",
+                        si.getDestinationTrack() + " (" + Bundle.getMessage("Load") + ")");
             }
         }
         return status;
@@ -430,7 +438,7 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
         }
         // first check to see if the schedule services car type
         if (!checkScheduleAttribute(Track.TYPE, car.getTypeName(), car)) {
-            return Track.SCHEDULE + " " + Bundle.getMessage("scheduleNotType", getName(), car.getTypeName());
+            return Bundle.getMessage("scheduleNotType", Track.SCHEDULE, getName(), car.getTypeName());
         }
 
         // search schedule for a match
@@ -446,8 +454,8 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
                 log.debug("Found item match ({}) car ({}) type ({}) load ({}) ship ({}) destination ({}, {})",
                         si.getId(), car.toString(), car.getTypeName(), si.getReceiveLoadName(), si.getShipLoadName(),
                         si.getDestinationName(), si.getDestinationTrackName()); // NOI18N
-                car.setScheduleItemId(si.getId()); // remember which item was a
-                                                   // match
+                // remember which item was a match
+                car.setScheduleItemId(si.getId());
                 return Track.OKAY;
             } else {
                 if (debugFlag) {
@@ -459,13 +467,13 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
             log.debug("No Match");
         }
         car.setScheduleItemId(Car.NONE); // clear the car's schedule id
-        return Track.SCHEDULE + " " + Bundle.getMessage("matchMessage", getName());
+        return Bundle.getMessage("matchMessage", Track.SCHEDULE, getName(),
+                hasRandomItem() ? Bundle.getMessage("Random") : "");
     }
 
     public String checkScheduleItem(ScheduleItem si, Car car, Track track) {
         // if car is already assigned to this schedule item allow it to be
-        // dropped off
-        // on the wrong day (car arrived late)
+        // dropped off on the wrong day (car arrived late)
         if (!car.getScheduleItemId().equals(si.getId()) &&
                 !si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) &&
                 !InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId()
@@ -473,60 +481,23 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
             TrainSchedule trainSch = InstanceManager.getDefault(TrainScheduleManager.class)
                     .getScheduleById(si.getSetoutTrainScheduleId());
             if (trainSch != null) {
-                return Track.SCHEDULE +
-                        " (" +
-                        getName() +
-                        ") " +
-                        Bundle.getMessage("requestCarOnly") +
-                        " (" +
-                        trainSch.getName() +
-                        ")";
+                return Bundle.getMessage("requestCarOnly", Track.SCHEDULE, getName(), Track.TYPE, si.getTypeName(),
+                        trainSch.getName());
             }
         }
-        // Check for correct car type, road, load
+        // Check for correct car type
         if (!car.getTypeName().equals(si.getTypeName())) {
-            return Track.SCHEDULE +
-                    " (" +
-                    getName() +
-                    ") " +
-                    Bundle.getMessage("requestCar") +
-                    " " +
-                    Track.TYPE +
-                    " (" +
-                    si.getTypeName() +
-                    ")";
+            return Bundle.getMessage("requestCarType", Track.SCHEDULE, getName(), Track.TYPE, si.getTypeName());
         }
+        // Check for correct car road
         if (!si.getRoadName().equals(ScheduleItem.NONE) && !car.getRoadName().equals(si.getRoadName())) {
-            return Track.SCHEDULE +
-                    " (" +
-                    getName() +
-                    ") " +
-                    Bundle.getMessage("requestCar") +
-                    " " +
-                    Track.TYPE +
-                    " (" +
-                    si.getTypeName() +
-                    ") " +
-                    Track.ROAD +
-                    " (" +
-                    si.getRoadName() +
-                    ")";
+            return Bundle.getMessage("requestCar", Track.SCHEDULE, getName(), Track.TYPE, si.getTypeName(), Track.ROAD,
+                    si.getRoadName());
         }
+        // Check for correct car load
         if (!si.getReceiveLoadName().equals(ScheduleItem.NONE) && !car.getLoadName().equals(si.getReceiveLoadName())) {
-            return Track.SCHEDULE +
-                    " (" +
-                    getName() +
-                    ") " +
-                    Bundle.getMessage("requestCar") +
-                    " " +
-                    Track.TYPE +
-                    " (" +
-                    si.getTypeName() +
-                    ") " +
-                    Track.LOAD +
-                    " (" +
-                    si.getReceiveLoadName() +
-                    ")";
+            return Bundle.getMessage("requestCar", Track.SCHEDULE, getName(), Track.TYPE, si.getTypeName(), Track.LOAD,
+                    si.getReceiveLoadName());
         }
         // don't try the random feature if car is already assigned to this
         // schedule item

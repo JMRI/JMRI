@@ -76,6 +76,11 @@ public class EngineManagerXml extends OperationsXml implements InstanceManagerAu
             return;
         }
 
+        if (!root.getName().equals("operations-config")) {
+            log.warn("OperationsPro engine file corrupted");
+            return;
+        }
+        
         InstanceManager.getDefault(EngineModels.class).load(root);
         InstanceManager.getDefault(EngineTypes.class).load(root);
         InstanceManager.getDefault(EngineLengths.class).load(root);

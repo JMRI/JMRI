@@ -570,6 +570,8 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      *
      * @param profile The profile to get the locale from
      */
+    @SuppressWarnings("deprecation")    // The constructor Locale(String) is deprecated since version 19
+                                        // The replacement Locale.of(String) isn't available before version 19
     public static void setLocaleMinimally(Profile profile) {
         // en is default if a locale preference has not been set
         String name = ProfileUtils.getPreferences(profile, GuiLafPreferencesManager.class, true).get("locale", "en");

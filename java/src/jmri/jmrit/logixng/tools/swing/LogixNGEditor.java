@@ -44,6 +44,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
     LogixNG_Manager _logixNG_Manager = null;
     LogixNG _curLogixNG = null;
 
+    ConditionalNG_Manager _conditionalNG_Manager = null;
     ConditionalNGEditor _treeEdit = null;
     ConditionalNGDebugger _debugger = null;
 
@@ -73,6 +74,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         this.beanTableDataModel = m;
         _logixNG_Manager = InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
         _curLogixNG = _logixNG_Manager.getBySystemName(sName);
+        _conditionalNG_Manager = InstanceManager.getDefault(jmri.jmrit.logixng.ConditionalNG_Manager.class);
         makeEditLogixNGWindow();
     }
 
@@ -445,14 +447,16 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
 
         // make an Add Item Frame
         if (showAddLogixNGFrame()) {
+            if (!checkConditionalNGSysName()) {
+                return;
+            }
             if (_systemName.getText().isEmpty() && _autoSystemName.isSelected()) {
                 _systemName.setText(InstanceManager.getDefault(ConditionalNG_Manager.class).getAutoSystemName());
             }
 
             // Create ConditionalNG
             _curConditionalNG =
-                    InstanceManager.getDefault(ConditionalNG_Manager.class)
-                            .createConditionalNG(_curLogixNG, _systemName.getText(), _addUserName.getText());
+                    _conditionalNG_Manager.createConditionalNG(_curLogixNG, _systemName.getText(), _addUserName.getText());
 
             if (_curConditionalNG == null) {
                 // should never get here unless there is an assignment conflict
@@ -466,6 +470,44 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             _showReminder = true;
             makeEditConditionalNGWindow();
         }
+    }
+
+    /**
+     * Check validity of ConditionalNG system name.
+     * <p>
+     * Fixes name if it doesn't start with "IQC" or is missing the $ for alpha suffixes.
+     *
+     * @return false if the name fails the NameValidity check
+     */
+    boolean checkConditionalNGSysName() {
+        if (_autoSystemName.isSelected()) {
+            return true;
+        }
+
+        var sName = _systemName.getText().trim();
+        var prefix = _conditionalNG_Manager.getSubSystemNamePrefix();
+
+        if (!sName.isEmpty() && !sName.startsWith(prefix)) {
+            var isNumber = sName.matches("^\\d+$");
+            var hasDollar = sName.startsWith("$");
+
+            var newName = new StringBuilder(prefix);
+            if (!isNumber && !hasDollar) {
+                newName.append("$");
+            }
+            newName.append(sName);
+            sName = newName.toString();
+        }
+
+        if (_conditionalNG_Manager.validSystemNameFormat(sName) != jmri.Manager.NameValidity.VALID) {
+            JmriJOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("Error_SystemName_Format", sName), Bundle.getMessage("ErrorTitle"), // NOI18N
+                    JmriJOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        _systemName.setText(sName);
+        return true;
     }
 
     /**
@@ -752,7 +794,8 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         public static final int SNAME_COLUMN = 0;
         public static final int UNAME_COLUMN = SNAME_COLUMN + 1;
         public static final int THREAD_COLUMN = UNAME_COLUMN + 1;
-        public static final int STARTUP_COLUMN = THREAD_COLUMN + 1;
+        public static final int ENABLED_COLUMN = THREAD_COLUMN + 1;
+        public static final int STARTUP_COLUMN = ENABLED_COLUMN + 1;
         public static final int BUTTON_COLUMN = STARTUP_COLUMN + 1;
         public static final int BUTTON_DEBUG_COLUMN = BUTTON_COLUMN + 1;
         public static final int BUTTON_DELETE_COLUMN = BUTTON_DEBUG_COLUMN + 1;
@@ -827,7 +870,8 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                     || (c == BUTTON_EDIT_THREADS_COLUMN)) {
                 return JButton.class;
             }
-            if (c == STARTUP_COLUMN) {
+            if (c == STARTUP_COLUMN
+                    || c == ENABLED_COLUMN) {
                 return Boolean.class;
             }
             return String.class;
@@ -847,6 +891,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         public boolean isCellEditable(int r, int c) {
             if (!_inReorderMode) {
                 return ((c == UNAME_COLUMN)
+                        || (c == ENABLED_COLUMN)
                         || (c == STARTUP_COLUMN)
                         || (c == BUTTON_COLUMN)
                         || ((c == BUTTON_DEBUG_COLUMN) && InstanceManager.getDefault(LogixNGPreferences.class).getInstallDebugger())
@@ -867,6 +912,8 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                     return Bundle.getMessage("ColumnSystemName");  // NOI18N
                 case UNAME_COLUMN:
                     return Bundle.getMessage("ColumnUserName");  // NOI18N
+                case ENABLED_COLUMN:
+                    return Bundle.getMessage("ColumnHeadEnabled");  // NOI18N
                 case THREAD_COLUMN:
                     return Bundle.getMessage("ConditionalNG_Table_ColumnThreadName");  // NOI18N
                 case STARTUP_COLUMN:
@@ -892,6 +939,8 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                     return new JTextField(6).getPreferredSize().width;
                 case UNAME_COLUMN:
                     return new JTextField(17).getPreferredSize().width;
+                case ENABLED_COLUMN:
+                    return new JTextField(5).getPreferredSize().width;
                 case THREAD_COLUMN:
                     return new JTextField(10).getPreferredSize().width;
                 case STARTUP_COLUMN:
@@ -911,6 +960,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
 
         @Override
         public Object getValueAt(int r, int col) {
+            ConditionalNG c;
             int rx = r;
             if ((rx > _numConditionalNGs) || (_curLogixNG == null)) {
                 return null;
@@ -934,14 +984,19 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                     return Bundle.getMessage("ConditionalNG_Table_ButtonEditThreads");  // NOI18N
                 case SNAME_COLUMN:
                     return _curLogixNG.getConditionalNG(rx);
-                case UNAME_COLUMN: {
+                case UNAME_COLUMN:
                     //log.debug("ConditionalNGTableModel: {}", _curLogixNG.getConditionalNGByNumberOrder(rx));  // NOI18N
-                    ConditionalNG c = _curLogixNG.getConditionalNG(rx);
+                    c = _curLogixNG.getConditionalNG(rx);
                     if (c != null) {
                         return c.getUserName();
                     }
                     return "";
-                }
+                case ENABLED_COLUMN:
+                    c = _curLogixNG.getConditionalNG(rx);
+                    if (c != null) {
+                        return c.isEnabled();
+                    }
+                    return null;
                 case THREAD_COLUMN:
                     if (_showStartupThreads) {
                         return LogixNG_Thread.getThread(
@@ -951,7 +1006,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                         return _curLogixNG.getConditionalNG(r).getCurrentThread().getThreadName();
                     }
                 case STARTUP_COLUMN:
-                    ConditionalNG c = _curLogixNG.getConditionalNG(rx);
+                    c = _curLogixNG.getConditionalNG(rx);
                     if (c != null) {
                         return c.isExecuteAtStartup();
                     }
@@ -1063,10 +1118,16 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                     break;
                 case SNAME_COLUMN:
                     throw new IllegalArgumentException("System name cannot be changed");
-                case UNAME_COLUMN: {
+                case UNAME_COLUMN:
                     changeUserName(value, row);
                     break;
-                }
+                case ENABLED_COLUMN:
+                    ConditionalNG c = _curLogixNG.getConditionalNG(row);
+                    if (c != null) {
+                        boolean v = c.isEnabled();
+                        c.setEnabled(!v);
+                    }
+                    break;
                 default:
                     throw new IllegalArgumentException("Unknown column");
             }

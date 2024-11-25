@@ -149,7 +149,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.display.logixng.ActionLayoutTurnout.class);
         classes.add(jmri.jmrit.display.logixng.ActionPositionable.class);
         classes.add(jmri.jmrit.display.logixng.ActionPositionableByClass.class);
-        classes.add(jmri.jmrit.display.logixng.WindowToFront.class);
+        classes.add(jmri.jmrit.display.logixng.WindowManagement.class);
         map.put(CategoryDisplay.DISPLAY, classes);
 
         classes = new ArrayList<>();
@@ -159,6 +159,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.logixng.actions.ActionListenOnBeansLocalVariable.class);
         classes.add(jmri.jmrit.logixng.actions.ActionListenOnBeansTable.class);
         classes.add(jmri.jmrit.logixng.actions.ActionShutDownTask.class);
+        classes.add(jmri.jmrit.logixng.actions.ExecuteAction.class);
         classes.add(jmri.jmrit.logixng.actions.JsonDecode.class);
         classes.add(jmri.jmrit.logixng.actions.Logix.class);
         classes.add(jmri.jmrit.logixng.actions.LogData.class);

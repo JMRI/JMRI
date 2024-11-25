@@ -7,6 +7,7 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
 /**
@@ -134,20 +135,57 @@ public class TrainBuilderEngines extends TrainBuilderBase {
             }
         }
 
-        // load engines at the start of the route for this train
         if (_train.getLeadEngine() == null) {
+            // option to remove locos from the train
+            if ((_train.getSecondLegOptions() & Train.REMOVE_ENGINES) == Train.REMOVE_ENGINES &&
+                    _train.getSecondLegStartRouteLocation() != null) {
+                addLine(_buildReport, THREE, BLANK_LINE);
+                addLine(_buildReport, THREE,
+                        Bundle.getMessage("buildTrainRemoveEngines", _train.getSecondLegNumberEngines(),
+                                _train.getSecondLegStartLocationName(), _train.getSecondLegEngineModel(),
+                                _train.getSecondLegEngineRoad()));
+                if (getEngines(_train.getSecondLegNumberEngines(), _train.getSecondLegEngineModel(),
+                        _train.getSecondLegEngineRoad(), _train.getTrainDepartsRouteLocation(),
+                        _train.getSecondLegStartRouteLocation())) {
+                } else if (getConsist(_train.getSecondLegNumberEngines(), _train.getSecondLegEngineModel(),
+                        _train.getSecondLegEngineRoad(), _train.getTrainDepartsRouteLocation(),
+                        _train.getSecondLegStartRouteLocation())) {
+                } else {
+                    throw new BuildFailedException(Bundle.getMessage("buildErrorEngines",
+                            _train.getSecondLegNumberEngines(), _train.getTrainDepartsName(),
+                            _train.getSecondLegStartRouteLocation().getLocation().getName()));
+                }
+            }
+            if ((_train.getThirdLegOptions() & Train.REMOVE_ENGINES) == Train.REMOVE_ENGINES &&
+                    _train.getThirdLegStartRouteLocation() != null) {
+                addLine(_buildReport, THREE, BLANK_LINE);
+                addLine(_buildReport, THREE,
+                        Bundle.getMessage("buildTrainRemoveEngines", _train.getThirdLegNumberEngines(),
+                                _train.getThirdLegStartLocationName(), _train.getThirdLegEngineModel(),
+                                _train.getThirdLegEngineRoad()));
+                if (getEngines(_train.getThirdLegNumberEngines(), _train.getThirdLegEngineModel(),
+                        _train.getThirdLegEngineRoad(), _train.getTrainDepartsRouteLocation(),
+                        _train.getThirdLegStartRouteLocation())) {
+                } else if (getConsist(_train.getThirdLegNumberEngines(), _train.getThirdLegEngineModel(),
+                        _train.getThirdLegEngineRoad(), _train.getTrainDepartsRouteLocation(),
+                        _train.getThirdLegStartRouteLocation())) {
+                } else {
+                    throw new BuildFailedException(Bundle.getMessage("buildErrorEngines",
+                            _train.getThirdLegNumberEngines(), _train.getTrainDepartsName(),
+                            _train.getThirdLegStartRouteLocation().getLocation().getName()));
+                }
+            }
+            // load engines at the start of the route for this train
             addLine(_buildReport, THREE, BLANK_LINE);
             if (getEngines(_train.getNumberEngines(), _train.getEngineModel(), _train.getEngineRoad(),
                     _train.getTrainDepartsRouteLocation(), engineTerminatesFirstLeg)) {
-                _secondLeadEngine = _lastEngine; // when adding a caboose later
-                                                 // in the route, no engine
-                                                 // change
+                // when adding a caboose later in the route, no engine change
+                _secondLeadEngine = _lastEngine;
                 _thirdLeadEngine = _lastEngine;
             } else if (getConsist(_train.getNumberEngines(), _train.getEngineModel(), _train.getEngineRoad(),
                     _train.getTrainDepartsRouteLocation(), engineTerminatesFirstLeg)) {
-                _secondLeadEngine = _lastEngine; // when adding a caboose later
-                                                 // in the route, no engine
-                                                 // change
+                // when adding a caboose later in the route, no engine change
+                _secondLeadEngine = _lastEngine;
                 _thirdLeadEngine = _lastEngine;
             } else {
                 throw new BuildFailedException(Bundle.getMessage("buildErrorEngines", _train.getNumberEngines(),
@@ -156,12 +194,20 @@ public class TrainBuilderEngines extends TrainBuilderBase {
         }
 
         // First engine change in route?
-        if ((_train.getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES) {
+        if ((_train.getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES ||
+                (_train.getSecondLegOptions() & Train.ADD_ENGINES) == Train.ADD_ENGINES) {
             addLine(_buildReport, THREE, BLANK_LINE);
-            addLine(_buildReport, THREE,
-                    Bundle.getMessage("buildTrainEngineChange", _train.getSecondLegStartLocationName(),
-                            _train.getSecondLegNumberEngines(), _train.getSecondLegEngineModel(),
-                            _train.getSecondLegEngineRoad()));
+            if ((_train.getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES) {
+                addLine(_buildReport, THREE,
+                        Bundle.getMessage("buildTrainEngineChange", _train.getSecondLegStartLocationName(),
+                                _train.getSecondLegNumberEngines(), _train.getSecondLegEngineModel(),
+                                _train.getSecondLegEngineRoad()));
+            } else {
+                addLine(_buildReport, THREE,
+                        Bundle.getMessage("buildTrainAddEngines", _train.getSecondLegNumberEngines(),
+                                _train.getSecondLegStartLocationName(), _train.getSecondLegEngineModel(),
+                                _train.getSecondLegEngineRoad()));
+            }
             if (getEngines(_train.getSecondLegNumberEngines(), _train.getSecondLegEngineModel(),
                     _train.getSecondLegEngineRoad(), _train.getSecondLegStartRouteLocation(),
                     engineTerminatesSecondLeg)) {
@@ -179,12 +225,20 @@ public class TrainBuilderEngines extends TrainBuilderBase {
             }
         }
         // Second engine change in route?
-        if ((_train.getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES) {
+        if ((_train.getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES ||
+                (_train.getThirdLegOptions() & Train.ADD_ENGINES) == Train.ADD_ENGINES) {
             addLine(_buildReport, THREE, BLANK_LINE);
-            addLine(_buildReport, THREE,
-                    Bundle.getMessage("buildTrainEngineChange", _train.getThirdLegStartLocationName(),
-                            _train.getThirdLegNumberEngines(), _train.getThirdLegEngineModel(),
-                            _train.getThirdLegEngineRoad()));
+            if ((_train.getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES) {
+                addLine(_buildReport, THREE,
+                        Bundle.getMessage("buildTrainEngineChange", _train.getThirdLegStartLocationName(),
+                                _train.getThirdLegNumberEngines(), _train.getThirdLegEngineModel(),
+                                _train.getThirdLegEngineRoad()));
+            } else {
+                addLine(_buildReport, THREE,
+                        Bundle.getMessage("buildTrainAddEngines", _train.getThirdLegNumberEngines(),
+                                _train.getThirdLegStartLocationName(), _train.getThirdLegEngineModel(),
+                                _train.getThirdLegEngineRoad()));
+            }
             if (getEngines(_train.getThirdLegNumberEngines(), _train.getThirdLegEngineModel(),
                     _train.getThirdLegEngineRoad(), _train.getThirdLegStartRouteLocation(),
                     _train.getTrainTerminatesRouteLocation())) {
@@ -249,7 +303,7 @@ public class TrainBuilderEngines extends TrainBuilderBase {
                         leadEngine.getDestinationName(), _train.getTrainHorsePower(leadEngine.getRouteLocation()),
                         Setup.getHorsePowerPerTon()));
         // now determine the HP needed for this train
-        int hpNeeded = 0;
+        double hpNeeded = 0;
         int hpAvailable = 0;
         Route route = _train.getRoute();
         if (route != null) {
@@ -288,10 +342,9 @@ public class TrainBuilderEngines extends TrainBuilderBase {
                 if (_train.getTrainHorsePower(rl) > hpAvailable)
                     hpAvailable = _train.getTrainHorsePower(rl);
                 int weight = rl.getTrainWeight();
-                int hpRequired = (int) ((36 * rl.getGrade() / 12) * weight);
+                double hpRequired = (Control.speedHpt * rl.getGrade() / 12) * weight;
                 if (hpRequired < Setup.getHorsePowerPerTon() * weight)
-                    hpRequired = Setup.getHorsePowerPerTon() * weight; // minimum
-                                                                       // HPT
+                    hpRequired = Setup.getHorsePowerPerTon() * weight; // min HPT
                 if (hpRequired > hpNeeded) {
                     addLine(_buildReport, SEVEN,
                             Bundle.getMessage("buildReportTrainHpNeeds", weight, _train.getNumberCarsInTrain(rl),
@@ -303,11 +356,11 @@ public class TrainBuilderEngines extends TrainBuilderBase {
         if (hpNeeded > hpAvailable) {
             addLine(_buildReport, ONE,
                     Bundle.getMessage("buildAssignedHpNotEnough", leadEngine.toString(), hpAvailable, hpNeeded));
-            getNewEngine(hpNeeded, leadEngine, model, road);
+            getNewEngine((int) hpNeeded, leadEngine, model, road);
         } else if (hpAvailable > 2 * hpNeeded) {
             addLine(_buildReport, ONE,
                     Bundle.getMessage("buildAssignedHpTooMuch", leadEngine.toString(), hpAvailable, hpNeeded));
-            getNewEngine(hpNeeded, leadEngine, model, road);
+            getNewEngine((int) hpNeeded, leadEngine, model, road);
         } else {
             log.debug("Keeping engine ({}) it meets the train's HP requirement", leadEngine.toString());
         }
@@ -375,23 +428,24 @@ public class TrainBuilderEngines extends TrainBuilderBase {
                 if (departingStaging) {
                     continue;
                 }
-                int weight = rl.getTrainWeight();
+                double weight = rl.getTrainWeight();
                 if (weight > 0) {
                     double hptMinimum = Setup.getHorsePowerPerTon();
-                    double hptGrade = (36 * rl.getGrade() / 12);
-                    int hp = _train.getTrainHorsePower(rl);
-                    int hpt = hp / weight;
+                    double hptGrade = (Control.speedHpt * rl.getGrade() / 12);
+                    double hp = _train.getTrainHorsePower(rl);
+                    double hpt = hp / weight;
                     if (hptGrade > hptMinimum) {
                         hptMinimum = hptGrade;
                     }
                     if (hptMinimum > hpt) {
                         int addHp = (int) (hptMinimum * weight - hp);
                         if (addHp > extraHpNeeded) {
-                            hpAvailable = hp;
+                            hpAvailable = (int) hp;
                             extraHpNeeded = addHp;
                             rlNeedHp = rl;
                         }
-                        addLine(_buildReport, SEVEN, Bundle.getMessage("buildAddLocosStatus", weight, hp, rl.getGrade(),
+                        addLine(_buildReport, SEVEN,
+                                Bundle.getMessage("buildAddLocosStatus", weight, hp, Control.speedHpt, rl.getGrade(),
                                 hpt, hptMinimum, rl.getName(), rl.getId()));
                         addLine(_buildReport, FIVE,
                                 Bundle.getMessage("buildTrainRequiresAddHp", addHp, rl.getName(), hptMinimum));

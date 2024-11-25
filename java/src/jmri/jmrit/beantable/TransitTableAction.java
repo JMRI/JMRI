@@ -1854,7 +1854,9 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         log.debug("setWhat code = {}", code);
         switch (code) {
             case TransitSectionAction.TERMINATETRAIN:
+            case TransitSectionAction.FORCEALLOCATEPASSSAFESECTION:
                 break;
+                
             case TransitSectionAction.LOADTRAININFO:
                 rosterComboBox.update();
                 String[] names = new TrainInfoFile().getTrainInfoFileNames();
@@ -2196,6 +2198,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             case TransitSectionAction.STARTBELL:
             case TransitSectionAction.STOPBELL:
             case TransitSectionAction.TERMINATETRAIN:
+            case TransitSectionAction.FORCEALLOCATEPASSSAFESECTION:
                 break;
             case TransitSectionAction.LOADTRAININFO:
                 if (trainInfoComboBox.getSelectedIndex() < 0 ) {
@@ -2401,6 +2404,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 return rbx.getString("TerminateTrain");
             case TransitSectionAction.LOADTRAININFO:
                 return rbx.getString("LoadTrainInfo");
+            case TransitSectionAction.FORCEALLOCATEPASSSAFESECTION:
+                return rbx.getString("ForcePassNextSafe");
             case TransitSectionAction.PAUSE:
                 return rbx.getString("Pause");
             case TransitSectionAction.SETMAXSPEED:
@@ -2447,6 +2452,9 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         }
         if (s.equals(rbx.getString("TerminateTrain"))) {
             return TransitSectionAction.TERMINATETRAIN;
+        }
+        if (s.equals(rbx.getString("ForcePassNextSafe"))) {
+            return TransitSectionAction.FORCEALLOCATEPASSSAFESECTION;
         }
         if (s.equals(rbx.getString("LoadTrainInfo"))) {
             return TransitSectionAction.LOADTRAININFO;
@@ -2689,6 +2697,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 return rbx.getString("EStopFull");
             case TransitSectionAction.TERMINATETRAIN:
                 return rbx.getString("TerminateTrain");
+            case TransitSectionAction.FORCEALLOCATEPASSSAFESECTION:
+                return rbx.getString("ForcePassNextSafe");
             case TransitSectionAction.LOADTRAININFO:
                 switch (tWhatData2) {
                     case TransitSectionAction.LOCOADDRESSTYPEROSTER:

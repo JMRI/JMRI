@@ -2,6 +2,11 @@ package jmri.implementation;
 
 import java.util.*;
 import javax.annotation.*;
+
+import jmri.NamedBean;
+import jmri.NamedBeanHandle;
+import jmri.NamedBeanUsageReport;
+
 import jmri.InstanceManager;
 import jmri.SignalAppearanceMap;
 import jmri.SignalMast;
@@ -289,4 +294,36 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
         return Bundle.getMessage("BeanNameSignalMast");
     }
 
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            if (bean instanceof jmri.Turnout) {
+                if (this instanceof jmri.implementation.TurnoutSignalMast) {
+                    var m = (jmri.implementation.TurnoutSignalMast) this;
+                    var t = (jmri.Turnout) bean;
+                    if (m.isTurnoutUsed(t)) {
+                        report.add(new NamedBeanUsageReport("SignalMastTurnout"));  // NOI18N
+                    }
+                } else if (this instanceof jmri.implementation.MatrixSignalMast) {
+                    var m = (jmri.implementation.MatrixSignalMast) this;
+                    var t = (jmri.Turnout) bean;
+                    if (m.isTurnoutUsed(t)) {
+                        report.add(new NamedBeanUsageReport("SignalMastTurnout"));  // NOI18N
+                    }
+                }
+            } else if (bean instanceof jmri.SignalHead) {
+                if (this instanceof jmri.implementation.SignalHeadSignalMast) {
+                    var m = (jmri.implementation.SignalHeadSignalMast) this;
+                    var h = (jmri.SignalHead) bean;
+                    for (NamedBeanHandle<jmri.SignalHead> handle : m.getHeadsUsed()) {
+                        if (h.equals(handle.getBean())) {
+                            report.add(new NamedBeanUsageReport("SignalMastSignalHead"));  // NOI18N
+                        }
+                    }
+                }
+            }
+        }
+        return report;
+    }
 }

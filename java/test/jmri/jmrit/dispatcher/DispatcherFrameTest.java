@@ -175,7 +175,7 @@ public class DispatcherFrameTest {
 
     @AfterEach
     public void tearDown() throws Exception {
-        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 }

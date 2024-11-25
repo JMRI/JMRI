@@ -137,9 +137,9 @@ which checks the dates of the control files to make sure they've been updated wh
 - from https://mvnrepository.com/artifact/org.slf4j/jul-to-slf4j/2.0.7
 
 ##### openlcb.jar
- - 0.7.35 from https://repo.maven.apache.org/maven2/org/openlcb/openlcb/0.7.35/openlcb-0.7.35.jar
- - plus PR #253 from https://github.com/openlcb/OpenLCB_Java/pull/253
-
+ - 0.8.1 from https://repo.maven.apache.org/maven2/org/openlcb/openlcb/0.8.1/openlcb-0.8.1.jar
+ - including PR #279 as of 2024-11-22
+ 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
 
@@ -379,9 +379,9 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - version 1.15.3
 - used to rebuild Help metadata
 
-##### objenesis-2.2.jar
-- version 2.2
-- initially used to mock an XBee Connection for testing.
+##### objenesis-3.3.jar
+- version 3.3
+- Mockito dependency
 
 ##### opentest4j-1.2.0.jar
 - version 1.2.0
@@ -401,6 +401,34 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - version 2.6
 - batik related
 
+##### BiDiB protocol implementation: jbidibc-*-2.0.18.jar, bidibwizard-*-2.0.18.jar
+- version 2.0.18
+- bidibwizard*.jar supports the BiDiB connection simulation
+
+##### commons-collections4-4.4.jar
+- version 4.4
+- used by jbidibc/bidibwizard
+
+##### eventbus-1.4.jar
+- version 1.4
+- used by jbidibc/bidibwizard
+
+##### javax.activation-api-1.2.0.jar
+- version 1.2.0
+- used by jbidibc/bidibwizard
+
+##### jaxb-api-2.3.1.jar, jaxb-core-2.3.0.1.jar, jaxb-impl-2.3.2.jar
+- version 2.3
+- used by jbidibc/bidibwizard
+
+##### jgoodies-binding-2.13.0.jar
+- version 2.13.0
+- used by jbidibc/bidibwizard
+
+##### jgoodies-common-1.8.1.jar
+- version 1.8.1
+- used by jbidibc/bidibwizard
+
 ## For unit tests & development work only:
 
 ##### ArchUnit: archunit-*.jar, archunit-junit5-api-*.jar, archunit-junit5-engine-*.jar, archunit-junit5-engine-api*.jar
@@ -408,8 +436,9 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - Jars from https://search.maven.org/search?q=g:com.tngtech.archunit
 - version 1.0.0-rc1
 
-##### byte-buddy-1.10.14
-- version 1.10.14
+##### byte-buddy-1.14.15
+- version 1.14.15
+- Mockito dependency
 
 ##### checker-framework directory and contents
 - The Checker Framework 2.0.1 (1-Jun-2016)
@@ -457,8 +486,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 
 ##### junit-vintage-engine-5.9.1.jar
 
-##### mockito-core mockito-inline mockito-junit-jupiter
-- version 3.5.11
+##### mockito-core mockito-junit-jupiter
+- version 5.12.0
 
 ##### OpenIDE Utilities
 - org-openide-util-lookup-RELEASE150.jar
@@ -496,10 +525,10 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - From FindBugs 3.0.0 from http://findbugs.sourceforge.net
 - Only needed at compile/build time, not runtime
 
-##### spotbugs-annotations-4.7.3.jar
-- From SpotBugs 4.7.3
+##### spotbugs-annotations-4.8.6.jar
+- From SpotBugs 4.8.6
 - Only needed at compile/build time, not runtime
-- https://mvnrepository.com/artifact/com.github.spotbugs/spotbugs-annotations/4.7.3
+- https://mvnrepository.com/artifact/com.github.spotbugs/spotbugs-annotations/4.8.6
 
 ##### picocontainer-2.15.jar
 - version 2.15

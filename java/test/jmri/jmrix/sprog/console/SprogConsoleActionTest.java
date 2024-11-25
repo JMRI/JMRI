@@ -1,12 +1,8 @@
 package jmri.jmrix.sprog.console;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  * Test simple functioning of SprogConsoleAction.
@@ -15,12 +11,11 @@ import org.junit.Assume;
  */
 public class SprogConsoleActionTest {
 
-
     @Test
+    @jmri.util.junit.annotations.DisabledIfHeadless
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
         SprogConsoleAction action = new SprogConsoleAction("SPROG Action Test", new jmri.jmrix.sprog.SprogSystemConnectionMemo());
-        Assert.assertNotNull("exists", action);
+        Assertions.assertNotNull( action, "exists");
     }
 
     @BeforeEach
@@ -29,6 +24,8 @@ public class SprogConsoleActionTest {
     }
 
     @AfterEach
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
 }

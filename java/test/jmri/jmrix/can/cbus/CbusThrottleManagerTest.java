@@ -402,9 +402,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         m = new CanMessage( new int[]{CbusConstants.CBUS_KLOC, 1 },0x12 );
         ((CbusThrottleManager)tm).message(m);
 
-        m = new CanMessage( new int[]{CbusConstants.CBUS_DSPD, 1, 11 },0x12 );
-        ((CbusThrottleManager)tm).message(m);
-        Assert.assertEquals("msg speed change ignored as session cancelled",(-1.0f),(float) tm.getThrottleInfo(addr,Throttle.SPEEDSETTING),0.1f);
+        Assertions.assertNull( tm.getThrottleInfo(addr,Throttle.SPEEDSETTING), "session cancelled");
 
     }
 
@@ -917,6 +915,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         ncbtm.reply(r);
         JUnitUtil.waitFor(()->{return !(t1.isAlive());}, "checkCanErrorDialog finished");
         JUnitAppender.assertErrorMessageStartsWith(Bundle.getMessage("ERR_CAN_BUS_ERROR"));
+        JUnitUtil.resetWindows(false, false); // nameless invisible frame created by creating a dialog with a null parent
     }
 
     @Test
@@ -934,6 +933,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         ncbtm.reply(r);
         JUnitUtil.waitFor(()->{return !(t1.isAlive());}, "checkCbusInvalidRequestDialog finished");
         JUnitAppender.assertErrorMessageStartsWith(Bundle.getMessage("ERR_INVALID_REQUEST"));
+        JUnitUtil.resetWindows(false, false); // nameless invisible frame created by creating a dialog with a null parent
     }
 
     @Test

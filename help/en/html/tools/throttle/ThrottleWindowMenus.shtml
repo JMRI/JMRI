@@ -27,16 +27,17 @@
       will load inner windows properties, and Jynstruments if any.<br>
 
       <h3>Save current throttle</h3>
-      This menu entry allows to save the current Throttle window layout; it will save inner windows
-      of the current throttle properties, and Jynstruments if any.
-      <ul>   
+      This menu entry allows to save the current Throttle window layout; it will save inner windows properties
+      of the current throttle, and Jynstruments if any.
+      <ul>      
       <li>If the current throttle is linked to a locomotive that has a roster entry, this menu entry
       will create (or update) a throttle file for that Roster entry in &lt;JMRI Preferences
       Folder&gt;/throttle/ABC.xml where ABC is the Roster ID.<br>
-      <i>Note that when saving a Throttle linked to a Roster Entry, Function Buttons customization 
-      won't be saved in that file, they have to be exported to the Roster Entry (from the Edit menu, see below).</i>
+      Note that when saving a Throttle linked to a Roster Entry, function buttons customization 
+      won't be saved in the throttle file, they will be exported to the Roster Entry (same action as 
+      Export current throttles customization to roster in the Edit menu).
       </li>
-      <li>Else if the Throttle layout was loaded through a throttle file, that file will be overwrote.</li>    
+      <li>Else if the Throttle layout was loaded through a throttle file, that file will be overwriten.</li>    
       <li>Else the Throttle layout will be saved into a throttle file in &lt;JMRI Preferences
       Folder&gt;/throttle/XYZ.xml where XYZ is the throttle address.<br></li>
       </ul>

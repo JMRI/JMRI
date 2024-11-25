@@ -83,7 +83,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
 
     private final static String PREFIX = "IAS";
 
-    @SuppressWarnings("OverridableMethodCallInConstructor")
+//    @SuppressWarnings("OverridableMethodCallInConstructor")
     public AudioSourceFrame(String title, AudioTableDataModel model) {
         super(title, model);
         layoutFrame();

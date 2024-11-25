@@ -4,11 +4,13 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -20,13 +22,13 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
+
 import jmri.InstanceManager;
 import jmri.jmrit.beantable.EnablingCheckboxRenderer;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.jmrit.roster.RosterSpeedProfile.SpeedStep;
-import jmri.util.JmriJFrame;
 import jmri.util.table.ButtonEditor;
 
 /**
@@ -36,12 +38,11 @@ import jmri.util.table.ButtonEditor;
  */
 public class MergePrompt extends JDialog {
 
-    Map<String, Boolean> _candidates;   // merge candidate choices
+    private final Map<String, Boolean> _candidates;   // merge candidate choices
 //    HashMap<String, RosterSpeedProfile> _mergeProfiles;  // candidate's speedprofile
-    Map<String, Map<Integer, Boolean>> _anomalyMap;
-    JPanel _viewPanel;
-    JmriJFrame _anomolyFrame;
-    static int STRUT = 20;
+    private final Map<String, Map<Integer, Boolean>> _anomalyMap;
+    private JPanel _viewPanel;
+    private static final int STRUT = 20;
 
     MergePrompt(String name, Map<String, Boolean> cand, Map<String, Map<Integer, Boolean>> anomalies) {
         super();
@@ -106,7 +107,7 @@ public class MergePrompt extends JDialog {
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
         mainPanel.add(description);
         mainPanel.add(pane);
-        if (_anomalyMap != null && _anomalyMap.size() > 0) {
+        if (_anomalyMap != null && !_anomalyMap.isEmpty()) {
             mainPanel.add(makeAnomalyPanel());
         }
         mainPanel.add(panel);
@@ -127,59 +128,12 @@ public class MergePrompt extends JDialog {
         Dimension screen = getToolkit().getScreenSize();
         setLocation(screen.width / 3, screen.height / 4);
         setAlwaysOnTop(true);
-        setVisible(true);
     }
 
     private void noMerge() {
         for (Map.Entry<String, Boolean> ent : _candidates.entrySet()) {
             _candidates.put(ent.getKey(), false);
         }
-    }
-
-    private void showProfiles(String id) {
-        if (_viewPanel != null) {
-            getContentPane().remove(_viewPanel);
-        }
-        invalidate();
-        _viewPanel = makeViewPanel(id);
-        if (_viewPanel == null) {
-            return;
-        }
-        getContentPane().add(_viewPanel);
-        pack();
-        setVisible(true);
-    }
-
-    private JPanel makeViewPanel(String id) {
-        RosterEntry entry = Roster.getDefault().getEntryForId(id);
-        if (entry == null) {
-            return null;
-        }
-        JPanel viewPanel = new JPanel();
-        viewPanel.setLayout(new BoxLayout(viewPanel, BoxLayout.PAGE_AXIS));
-        viewPanel.add(Box.createGlue());
-        JPanel panel = new JPanel();
-        panel.add(MergePrompt.makeEditInfoPanel(entry));
-        viewPanel.add(panel);
-
-        JPanel spPanel = new JPanel();
-        spPanel.setLayout(new BoxLayout(spPanel, BoxLayout.LINE_AXIS));
-        spPanel.add(Box.createGlue());
-
-        RosterSpeedProfile speedProfile = entry.getSpeedProfile();
-        if (speedProfile != null ){
-            spPanel.add(makeSpeedProfilePanel("rosterSpeedProfile", speedProfile,  false, null));
-            spPanel.add(Box.createGlue());
-        }
-
-        WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
-        RosterSpeedProfile mergeProfile =  manager.getMergeProfile(id);
-        Map<Integer, Boolean> anomaly = MergePrompt.validateSpeedProfile(mergeProfile);
-        spPanel.add(makeSpeedProfilePanel("mergedSpeedProfile", mergeProfile, true, anomaly));
-        spPanel.add(Box.createGlue());
-
-        viewPanel.add(spPanel);
-        return viewPanel;
     }
 
     static JPanel makeEditInfoPanel(RosterEntry entry) {
@@ -223,6 +177,7 @@ public class MergePrompt extends JDialog {
         panel.add(speedPanel);
         return panel;
     }
+
     /**
      * Check that non zero value are ascending for both forward and reverse
      * speeds. Omit anomalies.
@@ -238,7 +193,7 @@ public class MergePrompt extends JDialog {
         }
         TreeMap<Integer, SpeedStep> rosterTree = speedProfile.getProfileSpeeds();
         float lastForward = 0;
-        Integer lastKey = Integer.valueOf(0);
+        Integer lastKey = 0;
         Iterator<Map.Entry<Integer, SpeedStep>> iter = rosterTree.entrySet().iterator();
         while (iter.hasNext()) {
             Map.Entry<Integer, SpeedStep> entry = iter.next();
@@ -268,7 +223,7 @@ public class MergePrompt extends JDialog {
 
         rosterTree = speedProfile.getProfileSpeeds();
         float lastReverse = 0;
-        lastKey = Integer.valueOf(0);
+        lastKey = 0;
         iter = rosterTree.entrySet().iterator();
         while (iter.hasNext()) {
             Map.Entry<Integer, SpeedStep> entry = iter.next();
@@ -298,17 +253,17 @@ public class MergePrompt extends JDialog {
         return anomalies;
     }
 
-    class MergeTableModel extends javax.swing.table.AbstractTableModel {
+    private class MergeTableModel extends javax.swing.table.AbstractTableModel {
 
         static final int MERGE_COL = 0;
         static final int ID_COL = 1;
         static final int VIEW_COL = 2;
         static final int NUMCOLS = 3;
 
-        ArrayList<Map.Entry<String, Boolean>> candidateArray = new ArrayList<>();
+        final ArrayList<Map.Entry<String, Boolean>> candidateArray = new ArrayList<>();
 
         MergeTableModel(Map<String, Boolean> map) {
-            Iterator<java.util.Map.Entry<String, Boolean>> iter = map.entrySet().iterator();
+            Iterator<Map.Entry<String, Boolean>> iter = map.entrySet().iterator();
             while (iter.hasNext()) {
                 candidateArray.add(iter.next());
             }
@@ -317,7 +272,7 @@ public class MergePrompt extends JDialog {
         boolean hasAnomaly(int row) {
             Map.Entry<String, Boolean> entry = candidateArray.get(row);
             Map<Integer, Boolean> anomaly = _anomalyMap.get(entry.getKey());
-            return(anomaly != null && anomaly.size() > 0);
+            return(anomaly != null && !anomaly.isEmpty());
         }
 
         @Override
@@ -377,10 +332,7 @@ public class MergePrompt extends JDialog {
 
         @Override
         public boolean isCellEditable(int row, int col) {
-            if (col == ID_COL) {
-                return false;
-            }
-            return true;
+            return col != ID_COL;
         }
 
         @Override
@@ -425,9 +377,56 @@ public class MergePrompt extends JDialog {
                     break;
             }
         }
+
+        private void showProfiles(String id) {
+            if (_viewPanel != null) {
+                getContentPane().remove(_viewPanel);
+            }
+            invalidate();
+            _viewPanel = makeViewPanel(id);
+            if (_viewPanel == null) {
+                return;
+            }
+            getContentPane().add(_viewPanel);
+            pack();
+            setVisible(true);
+        }
+
+        private JPanel makeViewPanel(String id) {
+            RosterEntry entry = Roster.getDefault().getEntryForId(id);
+            if (entry == null) {
+                return null;
+            }
+            JPanel viewPanel = new JPanel();
+            viewPanel.setLayout(new BoxLayout(viewPanel, BoxLayout.PAGE_AXIS));
+            viewPanel.add(Box.createGlue());
+            JPanel panel = new JPanel();
+            panel.add(MergePrompt.makeEditInfoPanel(entry));
+            viewPanel.add(panel);
+
+            JPanel spPanel = new JPanel();
+            spPanel.setLayout(new BoxLayout(spPanel, BoxLayout.LINE_AXIS));
+            spPanel.add(Box.createGlue());
+
+            RosterSpeedProfile speedProfile = entry.getSpeedProfile();
+            if (speedProfile != null ){
+                spPanel.add(makeSpeedProfilePanel("rosterSpeedProfile", speedProfile,  false, null));
+                spPanel.add(Box.createGlue());
+            }
+
+            WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
+            RosterSpeedProfile mergeProfile =  manager.getMergeProfile(id);
+            Map<Integer, Boolean> anomaly = MergePrompt.validateSpeedProfile(mergeProfile);
+            spPanel.add(makeSpeedProfilePanel("mergedSpeedProfile", mergeProfile, true, anomaly));
+            spPanel.add(Box.createGlue());
+
+            viewPanel.add(spPanel);
+            return viewPanel;
+        }
+
     }
 
-    public static class ButtonCellRenderer extends DefaultTableCellRenderer {
+    private static class ButtonCellRenderer extends DefaultTableCellRenderer {
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
@@ -446,4 +445,5 @@ public class MergePrompt extends JDialog {
     }
 
 //    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MergePrompt.class);
+
 }

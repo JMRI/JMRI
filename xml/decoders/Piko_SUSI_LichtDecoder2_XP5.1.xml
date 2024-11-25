@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022, 2023, 2024 All rights reserved                      -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+	<version author="Ulrich Gerlach" version="1" lastUpdated="2024-04-01"/>
+	<!-- Version 1 - Only for Piko SUSI Light Controller KM ML4000 -->
+	<!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
+	<decoder>
+		<family name="PIKO SUSI Lichtdekoder V2 (XP5.1)" mfg="PIKO" lowVersionID="0" highVersionID="15" comment="Decoders not sorted (necessarily) in numerical order">
+			<!-- to be checked by hardware owner -->
+			<model show="no" model="PIKO SUSI LC2" numOuts="22" numFns="31" maxMotorCurrent="1.0A" formFactor="N" connector="SUSI" productID="PIKO_SUSI_LC2" lowVersionID="0" comment="Piko ML4000 SUSI Lichtdekoder (XP5.1)">
+				<output name="1" label="A1" connection="wire" maxcurrent="50 mA"/>
+				<output name="2" label="A2" connection="plug" maxcurrent="50 mA"/>
+				<output name="3" label="A3" connection="plug" maxcurrent="50 mA"/>
+				<output name="4" label="A4" connection="plug" maxcurrent="50 mA"/>
+				<output name="5" label="A5" connection="plug" maxcurrent="50 mA"/>
+				<output name="6" label="A6" connection="plug" maxcurrent="50 mA"/>
+				<output name="7" label="A7" connection="plug" maxcurrent="50 mA"/>
+				<output name="2" label="A8" connection="plug" maxcurrent="50 mA"/>
+				<output name="3" label="A9" connection="plug" maxcurrent="50 mA"/>
+				<output name="4" label="A10" connection="plug" maxcurrent="50 mA"/>
+				<output name="5" label="A11" connection="plug" maxcurrent="50 mA"/>
+				<output name="6" label="A12" connection="plug" maxcurrent="50 mA"/>
+				<output name="7" label="A13" connection="plug" maxcurrent="50 mA"/>
+				<size length="1" width="1" height="1" units="mm"/>
+			</model>
+			<model model="PIKO ML4000 SUSI LC2" numOuts="22" numFns="31" maxMotorCurrent="1.0A" formFactor="N" connector="SUSI" productID="PIKO_ML4000_SUSI_LC2" lowVersionID="0" comment="Piko ML4000 SUSI Lichtdekoder (XP5.1)">
+				<output name="1" label="A1" connection="wire" maxcurrent="50 mA"/>
+				<output name="2" label="A2" connection="plug" maxcurrent="50 mA"/>
+				<output name="3" label="A3" connection="plug" maxcurrent="50 mA"/>
+				<output name="4" label="A4" connection="plug" maxcurrent="50 mA"/>
+				<output name="5" label="A5" connection="plug" maxcurrent="50 mA"/>
+				<output name="6" label="A6" connection="plug" maxcurrent="50 mA"/>
+				<output name="7" label="A7" connection="plug" maxcurrent="50 mA"/>
+				<output name="2" label="A8" connection="plug" maxcurrent="50 mA"/>
+				<output name="3" label="A9" connection="plug" maxcurrent="50 mA"/>
+				<output name="4" label="A10" connection="plug" maxcurrent="50 mA"/>
+				<output name="5" label="A11" connection="plug" maxcurrent="50 mA"/>
+				<output name="6" label="A12" connection="plug" maxcurrent="50 mA"/>
+				<output name="7" label="A13" connection="plug" maxcurrent="50 mA"/>
+				<size length="1" width="1" height="1" units="mm"/>
+				<functionlabels>
+					<functionlabel num="0" lockable="true">
+						<text>Headlights</text>
+						<text xml:lang="de">Spitzenlicht</text>
+					</functionlabel>
+					<functionlabel num="1" lockable="true"> </functionlabel>
+					<functionlabel num="2" lockable="true"> </functionlabel>
+					<functionlabel num="3" lockable="false"> </functionlabel>
+					<functionlabel num="4" lockable="false"> </functionlabel>
+					<functionlabel num="5" lockable="false"> </functionlabel>
+					<functionlabel num="6" lockable="false"> </functionlabel>
+					<functionlabel num="7" lockable="true">Headlight Dimmer</functionlabel>
+					<functionlabel num="8" lockable="false"> </functionlabel>
+					<functionlabel num="9" lockable="false">Indicators + Markers Lights (multi steps)</functionlabel>
+					<functionlabel num="10" lockable="true">Dual White Gyralite</functionlabel>
+					<functionlabel num="11" lockable="true">Red Gyralite</functionlabel>
+					<functionlabel num="12" lockable="true"> </functionlabel>
+					<functionlabel num="13" lockable="true">Cab Interior Light</functionlabel>
+					<functionlabel num="14" lockable="true">Engine Room Light</functionlabel>
+					<functionlabel num="15" lockable="false">Lighting Double Traction (multi steps)</functionlabel>
+					<functionlabel num="16" lockable="false"> </functionlabel>
+					<functionlabel num="17" lockable="true"> </functionlabel>
+					<functionlabel num="18" lockable="true"> </functionlabel>
+					<functionlabel num="19" lockable="true"> </functionlabel>
+					<functionlabel num="20" lockable="true"> </functionlabel>
+					<functionlabel num="21" lockable="false"> </functionlabel>
+					<functionlabel num="22" lockable="false"> </functionlabel>
+					<functionlabel num="23" lockable="false"> </functionlabel>
+					<functionlabel num="24" lockable="true"> </functionlabel>
+					<functionlabel num="25" lockable="true">Control Stand Light</functionlabel>
+					<functionlabel num="26" lockable="false"> </functionlabel>
+					<functionlabel num="27" lockable="true"> </functionlabel>
+					<functionlabel num="28" lockable="true"> m </functionlabel>
+				</functionlabels>
+			</model>
+		</family>
+		<programming direct="yes" paged="no" register="no" ops="yes">
+			<capability>
+				<name>Indexed CV access</name>
+				<parameter name="PI">1021</parameter>
+				<parameter name="cvFirst">true</parameter>
+			</capability>
+			<capability>
+				<name>Ops Mode Delayed Programming</name>
+				<parameter name="Delay">1000</parameter>
+			</capability>
+		</programming>
+		<variables>
+			<!-- CV 1, 17, 29 bit 5 -->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+			<variable item="Manufacturer" CV="980.1021=0" readOnly="yes" default="162">
+				<decVal/>
+				<label>"Manufacturer ID:" </label>
+				<label xml:lang="it">ID Costruttore: </label>
+				<label xml:lang="fr">ID constructeur: </label>
+				<label xml:lang="de">Hersteller ID: </label>
+				<label xml:lang="nl">Fabrikant-ID: </label>
+				<label xml:lang="cs">ID výrobce: </label>
+			</variable>
+			<variable item="Decoder Version" CV="981.1021=0" readOnly="yes" default="2">
+				<decVal/>
+				<label>Manufacturer Version No: </label>
+				<label xml:lang="it">Versione Decoder: </label>
+				<label xml:lang="fr">Version décodeur: </label>
+				<label xml:lang="de">Decoder Version: </label>
+				<label xml:lang="nl">Versie van decoder: </label>
+				<label xml:lang="cs">Verze dekodéru: </label>
+			</variable>
+			<!-- Interner Lichtdecoder CV897 - 1024 -->
+			<xi:include href="http://jmri.org/xml/decoders/piko/cv897-1024_LC2_v5.1.xml"/>
+		</variables>
+		<resets>
+			<factReset label="Reset Default SUSI Light Controller" CV="1019.1021=0" default="255">
+				<label xml:lang="de">Reset Werkseinstellungen SUSI Lichtdecoder (CV1019 = 255)</label>
+				<label xml:lang="cs">Reset</label>
+			</factReset>
+			<factReset label="Outputs Test Mode" CV="1018.1021=0" default="128">
+				<label xml:lang="de">Test Modus: Alle Ausgänge ein- und ausschalten (CV1018 = 128)</label>
+				<label xml:lang="cs">Test</label>
+			</factReset>
+		</resets>
+	</decoder>
+	<!-- special panes -->
+	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoLichtDecoder_LC2_v5.1.xml"/>
+</decoder-config>
+

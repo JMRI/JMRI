@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import jmri.AddressedProgrammer;
 import jmri.AddressedProgrammerManager;
 import jmri.Consist;
@@ -20,9 +21,8 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.CvValue;
 import jmri.jmrit.symbolicprog.VariableTableModel;
+
 import org.jdom2.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This is the Default DCC consist. It utilizes the fact that IF a Command
@@ -92,9 +92,7 @@ public class DccConsist implements Consist, ProgListener {
         }
         for (int i = (consistList.size() - 1); i >= 0; i--) {
             DccLocoAddress loco = consistList.get(i);
-            if (log.isDebugEnabled()) {
-                log.debug("Deleting Locomotive: {}",loco);
-            }
+            log.debug("Deleting Locomotive: {}",loco);
             try {
                 remove(loco);
             } catch (Exception ex) {
@@ -134,7 +132,8 @@ public class DccConsist implements Consist, ProgListener {
         return consistAddress;
     }
 
-    /* is this address allowed?
+    /**
+     * Is this address allowed?
      * Since address 00 is an analog locomotive, we can't program CV19
      * to include it in a consist, but all other addresses are ok.
      */
@@ -147,7 +146,8 @@ public class DccConsist implements Consist, ProgListener {
         }
     }
 
-    /* is there a size limit for this consist?
+    /**
+     * Is there a size limit for this consist?
      * For Decoder Assisted Consists, returns -1 (no limit)
      * return 0 for any other consist type.
      */
@@ -182,87 +182,84 @@ public class DccConsist implements Consist, ProgListener {
     @Override
     public boolean getLocoDirection(DccLocoAddress address) {
         if (consistType == ADVANCED_CONSIST) {
-            Boolean Direction = consistDir.get(address);
-            return (Direction);
+            Boolean direction = consistDir.get(address);
+            return (direction);
         } else {
             notifyUnsupportedConsistType();
         }
         return false;
     }
 
-    /*
+    /**
      * Add a Locomotive to an Advanced Consist
-     *  @param address is the Locomotive address to add to the locomotive
-     *  @param directionNormal is True if the locomotive is traveling
+     * @param address is the Locomotive address to add to the locomotive
+     * @param directionNormal is True if the locomotive is traveling
      *        the same direction as the consist, or false otherwise.
      */
     @Override
-    public void add(DccLocoAddress LocoAddress, boolean directionNormal) {
+    public void add(DccLocoAddress address, boolean directionNormal) {
         if (consistType == ADVANCED_CONSIST) {
-            Boolean Direction = directionNormal;
-            if (!(consistList.contains(LocoAddress))) {
-                consistList.add(LocoAddress);
+            if (!(consistList.contains(address))) {
+                consistList.add(address);
             }
-            consistDir.put(LocoAddress, Direction);
-            addToAdvancedConsist(LocoAddress, directionNormal);
+            consistDir.put(address, directionNormal);
+            addToAdvancedConsist(address, directionNormal);
             //set the value in the roster entry for CV19
-            setRosterEntryCVValue(LocoAddress);
+            setRosterEntryCVValue(address);
         } else {
             notifyUnsupportedConsistType();
         }
     }
 
-    /*
+    /**
      * Restore a Locomotive to an Advanced Consist, but don't write to
      * the command station.  This is used for restoring the consist
      * from a file or adding a consist read from the command station.
-     *  @param address is the Locomotive address to add to the locomotive
-     *  @param directionNormal is True if the locomotive is traveling
+     * @param address is the Locomotive address to add to the locomotive
+     * @param directionNormal is True if the locomotive is traveling
      *        the same direction as the consist, or false otherwise.
      */
     @Override
-    public void restore(DccLocoAddress LocoAddress, boolean directionNormal) {
+    public void restore(DccLocoAddress address, boolean directionNormal) {
         if (consistType == ADVANCED_CONSIST) {
-            Boolean Direction = directionNormal;
-            if (!(consistList.contains(LocoAddress))) {
-                consistList.add(LocoAddress);
+            if (!(consistList.contains(address))) {
+                consistList.add(address);
             }
-            consistDir.put(LocoAddress, Direction);
+            consistDir.put(address, directionNormal);
         } else {
             notifyUnsupportedConsistType();
         }
     }
 
-    /*
-     *  Remove a Locomotive from this Consist
-     *  @param address is the Locomotive address to add to the locomotive
+    /**
+     * Remove a Locomotive from this Consist.
+     * @param address is the Locomotive address to add to the locomotive
      */
     @Override
-    public void remove(DccLocoAddress LocoAddress) {
+    public void remove(DccLocoAddress address) {
         if (consistType == ADVANCED_CONSIST) {
             //reset the value in the roster entry for CV19
-            resetRosterEntryCVValue(LocoAddress);
-            consistDir.remove(LocoAddress);
-            consistList.remove(LocoAddress);
-            consistPosition.remove(LocoAddress);
-            consistRoster.remove(LocoAddress);
-            removeFromAdvancedConsist(LocoAddress);
+            resetRosterEntryCVValue(address);
+            consistDir.remove(address);
+            consistList.remove(address);
+            consistPosition.remove(address);
+            consistRoster.remove(address);
+            removeFromAdvancedConsist(address);
         } else {
             notifyUnsupportedConsistType();
         }
     }
 
-
-    /*
-     *  Add a Locomotive to an Advanced Consist
+    /**
+     *  Add a Locomotive to an Advanced Consist.
      *  @param address is the Locomotive address to add to the locomotive
      *  @param directionNormal is True if the locomotive is traveling
      *        the same direction as the consist, or false otherwise.
      */
-    protected void addToAdvancedConsist(DccLocoAddress LocoAddress, boolean directionNormal) {
+    protected void addToAdvancedConsist(DccLocoAddress address, boolean directionNormal) {
         AddressedProgrammer opsProg = opsProgManager 
-                .getAddressedProgrammer(LocoAddress.isLongAddress(),
-                        LocoAddress.getNumber());
+                .getAddressedProgrammer(address.isLongAddress(),
+                        address.getNumber());
         if (opsProg == null) {
             log.error("Can't make consisting change because no programmer exists; this is probably a configuration error in the preferences");
             return;
@@ -288,14 +285,14 @@ public class DccConsist implements Consist, ProgListener {
                 .releaseAddressedProgrammer(opsProg);
     }
 
-    /*
+    /**
      *  Remove a Locomotive from an Advanced Consist
      *  @param address is the Locomotive address to remove from the consist
      */
-    protected void removeFromAdvancedConsist(DccLocoAddress LocoAddress) {
+    protected void removeFromAdvancedConsist(DccLocoAddress address) {
         AddressedProgrammer opsProg = InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)
-                .getAddressedProgrammer(LocoAddress.isLongAddress(),
-                        LocoAddress.getNumber());
+                .getAddressedProgrammer(address.isLongAddress(),
+                        address.getNumber());
         if (opsProg == null) {
             log.error("Can't make consisting change because no programmer exists; this is probably a configuration error in the preferences");
             return;
@@ -312,8 +309,8 @@ public class DccConsist implements Consist, ProgListener {
                 .releaseAddressedProgrammer(opsProg);
     }
 
-    /*
-     *  Set the position of a locomotive within the consist
+    /**
+     *  Set the position of a locomotive within the consist.
      *  @param address is the Locomotive address
      *  @param position is a constant representing the position within
      *         the consist.
@@ -323,8 +320,8 @@ public class DccConsist implements Consist, ProgListener {
         consistPosition.put(address, position);
     }
 
-    /*
-     * Get the position of a locomotive within the consist
+    /**
+     * Get the position of a locomotive within the consist.
      * @param address is the Locomotive address of interest
      */
     @Override
@@ -347,10 +344,10 @@ public class DccConsist implements Consist, ProgListener {
     }
 
     /**
-     * Set the roster entry of a locomotive within the consist
+     * Set the roster entry of a locomotive within the consist.
      *
      * @param address  is the Locomotive address
-     * @param rosterId is the roster Identifer of the associated roster entry.
+     * @param rosterId is the roster Identifier of the associated roster entry.
      */
     @Override
     public void setRosterId(DccLocoAddress address, String rosterId) {
@@ -377,35 +374,35 @@ public class DccConsist implements Consist, ProgListener {
             return null;
         }
     }
-            
-   /**
-    * Update the value in the roster entry for CV19 for the specified
-    * address
-    *
-    * @param address is the Locomotive address we are updating.
-    */
-   protected void setRosterEntryCVValue(DccLocoAddress address){
-      updateRosterCV(address,getLocoDirection(address),this.consistAddress.getNumber());
-   }
 
-   /**
-    * Set the value in the roster entry's value for for CV19 to 0
-    *
-    * @param address is the Locomotive address we are updating.
-    */
-   protected void resetRosterEntryCVValue(DccLocoAddress address){
-      updateRosterCV(address,getLocoDirection(address),0);
-   }
+    /**
+     * Update the value in the roster entry for CV19 for the specified
+     * address
+     *
+     * @param address is the Locomotive address we are updating.
+     */
+    protected void setRosterEntryCVValue(DccLocoAddress address){
+        updateRosterCV(address,getLocoDirection(address),this.consistAddress.getNumber());
+    }
 
-   /**
-    * If allowed by the preferences, Update the CV19 value in the 
-    * specified address's roster entry, if the roster entry is known.
-    *
-    * @param address is the Locomotive address we are updating.
-    * @param direction the direction to set.
-    * @param value the numeric value of the consist address. 
-    */
-   protected void updateRosterCV(DccLocoAddress address,Boolean direction,int value){
+    /**
+     * Set the value in the roster entry's value for for CV19 to 0
+     *
+     * @param address is the Locomotive address we are updating.
+     */
+    protected void resetRosterEntryCVValue(DccLocoAddress address){
+        updateRosterCV(address,getLocoDirection(address),0);
+    }
+
+    /**
+     * If allowed by the preferences, Update the CV19 value in the 
+     * specified address's roster entry, if the roster entry is known.
+     *
+     * @param address is the Locomotive address we are updating.
+     * @param direction the direction to set.
+     * @param value the numeric value of the consist address. 
+     */
+    protected void updateRosterCV(DccLocoAddress address,Boolean direction,int value){
         if(!InstanceManager.getDefault(ConsistPreferencesManager.class).isUpdateCV19()){
            log.trace("Consist Manager updates of CV19 are disabled in preferences");
            return;
@@ -445,17 +442,15 @@ public class DccConsist implements Consist, ProgListener {
             log.debug("selected loco uses decoder {} {}",decoderFamily,decoderModel);
         }
         // locate a decoder like that.
-        List<DecoderFile> l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, decoderFamily, null, null, null, decoderModel);
-        if (log.isDebugEnabled()) {
-            log.debug("found {} matches",l.size());
-        }
+        List<DecoderFile> l = InstanceManager.getDefault(DecoderIndexFile.class).
+            matchingDecoderList(null, decoderFamily, null, null, null, decoderModel);
+        log.debug("found {} matches",l.size());
         if (l.isEmpty()) {
             log.debug("Loco uses {} {} decoder, but no such decoder defined",decoderFamily,decoderModel );
             // fall back to use just the decoder name, not family
-            l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, null, null, null, decoderModel);
-            if (log.isDebugEnabled()) {
-                log.debug("found {} matches without family key",l.size());
-            }
+            l = InstanceManager.getDefault(DecoderIndexFile.class).
+                matchingDecoderList(null, null, null, null, null, decoderModel);
+            log.debug("found {} matches without family key",l.size());
         }
         if (!l.isEmpty()) {
             DecoderFile d = l.get(0);
@@ -494,42 +489,41 @@ public class DccConsist implements Consist, ProgListener {
         }
     }
 
-    /*
-     * Add a Listener for consist events
-     * @param Listener is a consistListener object
+    /**
+     * Add a Listener for consist events.
+     * @param listener is a consistListener object
      */
     @Override
-    public void addConsistListener(ConsistListener Listener) {
-        if (!listeners.contains(Listener)) {
-            listeners.add(Listener);
+    public void addConsistListener(ConsistListener listener) {
+        if (!listeners.contains(listener)) {
+            listeners.add(listener);
         }
     }
 
-    /*
+    /**
      * Remove a Listener for consist events
-     * @param Listener is a consistListener object
+     * @param listener is a consistListener object
      */
     @Override
-    public void removeConsistListener(ConsistListener Listener) {
-        if (listeners.contains(Listener)) {
-            listeners.remove(Listener);
+    public void removeConsistListener(ConsistListener listener) {
+        if (listeners.contains(listener)) {
+            listeners.remove(listener);
         }
     }
 
-    // Get and set the
-    /*
-     * Set the text ID associated with the consist
-     * @param String is a string identifier for the consist
+    /**
+     * Set the text ID associated with the consist.
+     * @param id is a string identifier for the consist.
      */
     @Override
-    public void setConsistID(String ID) {
-        consistID = ID;
+    public void setConsistID(String id) {
+        consistID = id;
     }
 
-    /*
-     * Get the text ID associated with the consist
-     * @return String identifier for the consist
-     *         default value is the string Identifier for the
+    /**
+     * Get the text ID associated with the consist.
+     * @return String identifier for the consist.
+     *         Default value is the string Identifier for the
      *         consist address.
      */
     @Override
@@ -537,7 +531,7 @@ public class DccConsist implements Consist, ProgListener {
         return consistID;
     }
 
-    /*
+    /**
      * Reverse the order of locomotives in the consist and flip
      * the direction bits of each locomotive.
      */
@@ -577,7 +571,7 @@ public class DccConsist implements Consist, ProgListener {
         this.notifyConsistListeners(consistAddress, ConsistListener.OK);
     }
 
-    /*
+    /**
      * Restore the consist to the command station.
      */
     @Override
@@ -593,26 +587,25 @@ public class DccConsist implements Consist, ProgListener {
         this.notifyConsistListeners(consistAddress, ConsistListener.OK);
     }
 
-    /*
+    /**
      * Notify all listener objects of a status change.
-     * @param LocoAddress is the address of any specific locomotive the
+     * @param locoAddress is the address of any specific locomotive the
      *       status refers to.
-     * @param ErrorCode is the status code to send to the
+     * @param errorCode is the status code to send to the
      *       consistListener objects
      */
     @SuppressWarnings("unchecked")
-    protected void notifyConsistListeners(DccLocoAddress LocoAddress, int ErrorCode) {
+    protected void notifyConsistListeners(DccLocoAddress locoAddress, int errorCode) {
         // make a copy of the listener vector to notify.
         ArrayList<ConsistListener> v;
         synchronized (this) {
             v = (ArrayList<ConsistListener>) listeners.clone();
         }
         log.debug("Sending Status code: {} to {} listeners for Address {}",
-                ErrorCode,
-                v.size(), LocoAddress);
+            errorCode, v.size(), locoAddress);
         // forward to all listeners
         v.forEach(client -> {
-            client.consistReply(LocoAddress, ErrorCode);
+            client.consistReply(locoAddress, errorCode);
         });
     }
 
@@ -624,6 +617,6 @@ public class DccConsist implements Consist, ProgListener {
         notifyConsistListeners(new DccLocoAddress(0, false), ConsistListener.OPERATION_SUCCESS);
     }
 
-    private static final  Logger log = LoggerFactory.getLogger(DccConsist.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DccConsist.class);
 
 }

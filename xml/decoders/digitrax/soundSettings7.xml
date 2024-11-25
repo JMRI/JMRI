@@ -11,6 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
+<!-- revised - obsolete features           John McMasters (2024-04-23)      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2023</year>
@@ -139,7 +140,7 @@
       </variable>
       <variable CV="162" item="Sound Setting 9" default="35"   include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
        <decVal max="64"/>
-       <label>Injector Volume</label>
+       <label>Air Letoff / Injector Volume</label>
        <label xml:lang="it">Injector Volume</label>
 	  </variable>
 	  <variable CV="189" item="Sound Setting 10" default="35"   include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
@@ -150,8 +151,8 @@
       </variable>
 	  <variable CV="182" item="Sound Setting 11" default="40"   include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
        <decVal max="64"/>
-       <label>Letoff Volume</label>
-       <label xml:lang="it">Letoff Volume</label>
+       <label>Air sounds Volume</label>
+       <label xml:lang="it">Air sounds Volume</label>
        <tooltip>18-63</tooltip>
       </variable>
 	  
@@ -174,14 +175,14 @@
   </variable>
   <variable CV="173" item="Sound Setting 15" default="50"   include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
     <decVal max="64"/>
-    <label>Safety Volume</label>
+    <label>Safety / Blow-down Volume</label>
     <label xml:lang="it">Safety Volume</label>
     <tooltip>28-62</tooltip>
   </variable>
   <variable CV="174" item="Sound Setting 16" default="50"   include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
     <decVal max="64"/>
-    <label>Popoff Volume</label>
-    <label xml:lang="it">Popoff Volume</label>
+    <label>Air Feature Volume</label>
+    <label xml:lang="it">Air Feature Volume</label>
     <tooltip>28-62</tooltip>
   </variable>
   <variable CV="175" item="Sound Setting 17" default="23"   include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
@@ -204,27 +205,27 @@
   </variable>
   <variable CV="178" item="Sound Setting 20" default="30"   include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
     <decVal max="64"/>
-    <label>Boiler Volume</label>
-    <label xml:lang="it">Boiler Volume</label>
+    <label>Flange / Boiler Volume</label>
+    <label xml:lang="it">Flange / Boiler Volume</label>
     <tooltip>18-63</tooltip>
   </variable>
 
   <variable CV="168" item="Sound Setting 21" default="32"   include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
     <decVal max="64"/>
-    <label>Stoker/Oil Pump Volume</label>
+    <label>Sander / Stoker Volume</label>
     <label xml:lang="it">Volume Gener. Stoker/Pompa Olio</label>
     <tooltip>11-63</tooltip>
   </variable>
   
   <variable CV="179" item="Sound Setting 22" default="40"    include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
     <decVal max="64"/>
-    <label>Dynamic brake Volume</label>
-    <label xml:lang="it">Dynamic Brake Volume</label>
+    <label>Dynamic brake / Dynamo Volume</label>
+    <label xml:lang="it">Dynamic Brake / Dynamo Volume</label>
     <tooltip>18-63</tooltip>
   </variable>
   <variable CV="180" item="Sound Setting 23" default="49"   include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
     <decVal max="64"/>
-    <label>Steam Blowdown/Safety vol</label>
+    <label>Steam Blowdown / Safety vol</label>
     <label xml:lang="it">Steam Blowdown/Safety vol</label>
     <tooltip>18-63</tooltip>
   </variable>
@@ -236,7 +237,7 @@
   </variable>
   <variable CV="183" item="Sound Setting 25" default="40"   include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
     <decVal max="64"/>
-    <label>Water fill/Coal Fill Volume</label>
+    <label>Water fill / Coal Fill Volume</label>
     <tooltip>18-63</tooltip>
   </variable>
   
@@ -312,9 +313,9 @@
 
 	<variable CV="161" item="Sound Setting 37"  default="50"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
      <decVal max="96"/>
-     <label>Pump Run time</label>
-     <label xml:lang="it">Pump Run Time</label>
-     <tooltip> Oil Pump Run Time</tooltip>
+     <label>Not Used</label>
+     <label xml:lang="it">Not Used</label>
+     <tooltip> Pump Run Time</tooltip>
 	</variable>
   <variable CV="163" item="Sound Setting 38" default="52"   include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
     <decVal max="96"/>
@@ -325,7 +326,7 @@
     <decVal max="96"/>
     <label>Air Pump Cycle Time</label>
     <label xml:lang="it">Air Pump Cycle Time</label>
-    <tooltip>10-64</tooltip>
+    <tooltip>Level in the guage 10-64</tooltip>
   </variable>
   <variable CV="165" item="Sound Setting 40" default="48"  include="SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
     <decVal max="96"/>

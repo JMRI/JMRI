@@ -106,7 +106,7 @@ public class JmriPreferencesProviderTest {
      * Test of findCNBForPackage method, of class JmriPreferencesProvider.
      */
     @Test
-    @SuppressWarnings("deprecated") // Package.getPackage()
+//    @SuppressWarnings("deprecation") // Package.getPackage()
     public void testFindCNBForPackage() {
         ClassLoader cl = getClass().getClassLoader();
         Assertions.assertNotNull(cl);

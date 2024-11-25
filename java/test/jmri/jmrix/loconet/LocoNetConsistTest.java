@@ -12,14 +12,13 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2016,2017
  */
-
 public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestBase {
 
     // infrastructure objects, populated by setUp;
-    LocoNetInterfaceScaffold lnis;
-    SlotManager slotmanager;
-    LocoNetSystemConnectionMemo memo;
-    LnThrottleManager ltm;
+    private LocoNetInterfaceScaffold lnis;
+    private SlotManager slotmanager;
+    private LocoNetSystemConnectionMemo memo;
+    private LnThrottleManager ltm;
 
     //utility function, handle slot messages required to suppress
     // errors from the LnThrottleManager after constructor call.
@@ -49,9 +48,10 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
         slotmanager.message(m2);
     }
 
-    @Test public void testCtor2() {
+    @Test
+    public void testCtor2() {
         // DccLocoAddress constructor test.
-        LocoNetConsist c = new LocoNetConsist(new DccLocoAddress(3, false),memo);
+        c = new LocoNetConsist(new DccLocoAddress(3, false),memo);
         ReturnSlotInfo();
         Assert.assertNotNull(c);
     }
@@ -71,31 +71,34 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
     }
 
     @Override
-    @Test public void checkAddressAllowedBad(){
+    @Test
+    @jmri.util.junit.annotations.NotApplicable("LocoNet CS consists allow any valid address")
+    public void checkAddressAllowedBad(){
         // LocoNet CS consists allow any valid address, so this test is empty
     }
 
-    @Test public void checkAddressAllowedGoodAdvanced(){
-        LocoNetConsist c = new LocoNetConsist(3,memo);
+    @Test
+    public void checkAddressAllowedGoodAdvanced(){
         ReturnSlotInfo();
         c.setConsistType(jmri.Consist.ADVANCED_CONSIST);
         Assert.assertTrue("AddressAllowed", c.isAddressAllowed(new jmri.DccLocoAddress(200,true)));
     }
 
-    @Test public void checkAddressAllowedBadAdvanced(){
-        LocoNetConsist c = new LocoNetConsist(3,memo);
+    @Test
+    public void checkAddressAllowedBadAdvanced(){
         ReturnSlotInfo();
         c.setConsistType(jmri.Consist.ADVANCED_CONSIST);
         Assert.assertFalse("AddressAllowed", c.isAddressAllowed(new jmri.DccLocoAddress(0,false)));
     }
 
-    @Test public void checkSizeLimitCS(){
+    @Test
+    public void checkSizeLimitCS(){
         c.setConsistType(jmri.Consist.CS_CONSIST);
         Assert.assertEquals("CS Consist Limit",-1,c.sizeLimit());
     }
 
-    @Test public void checkGetLocoDirectionCS(){
-        LocoNetConsist c = new LocoNetConsist(3,memo);
+    @Test
+    public void checkGetLocoDirectionCS(){
         ReturnSlotInfo();
         c.setConsistType(jmri.Consist.CS_CONSIST);
         jmri.DccLocoAddress A = new jmri.DccLocoAddress(200,true);
@@ -137,7 +140,7 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
         m.setElement(9, 0x01);
         slotmanager.slot(4).setSlot(m);
         } catch(LocoNetException lne) {
-          Assert.fail("failed to add addresses to slot during setup");
+            Assertions.fail("failed to add addresses to slot during setup", lne);
         }
         c = new LocoNetConsist(3,memo);
         ReturnSlotInfo();

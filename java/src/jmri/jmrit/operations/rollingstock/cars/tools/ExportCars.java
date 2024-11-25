@@ -16,8 +16,7 @@ import jmri.util.swing.JmriJOptionPane;
 /**
  * Exports the car roster into a comma delimited file (CSV).
  *
- * @author Daniel Boudreau Copyright (C) 2010, 2011, 2016
- *
+ * @author Daniel Boudreau Copyright (C) 2010, 2011, 2016, 2024
  */
 public class ExportCars extends XmlFile {
 
@@ -49,7 +48,8 @@ public class ExportCars extends XmlFile {
             }
             writeFile(defaultOperationsFilename());
         } catch (IOException e) {
-            log.error("Exception while writing the new CSV operations file, may not be complete", e);
+            log.error("Exception while writing the new CSV operations file, may not be complete: {}",
+                    e.getLocalizedMessage());
         }
     }
 
@@ -108,7 +108,9 @@ public class ExportCars extends XmlFile {
                     Bundle.getMessage("FinalDestination"),
                     LOCATION_TRACK_SEPARATOR,
                     Bundle.getMessage("Track"),
-                    Bundle.getMessage( "RFID_Tag"));
+                    Bundle.getMessage("SchId"),
+                    Bundle.getMessage("RFID_Tag"),
+                    Bundle.getMessage("Route"));
 
             // store car attributes
             for (Car car : _carList) {
@@ -132,7 +134,7 @@ public class ExportCars extends XmlFile {
                         car.getTypeExtensions(),
                         car.getWait(),
                         car.getPickupScheduleName(),
-                        car.getLastDate(),
+                        car.getSortDate(),
                         car.getReturnWhenEmptyDestinationName(),
                         LOCATION_TRACK_SEPARATOR,
                         car.getReturnWhenEmptyDestTrackName(),
@@ -141,7 +143,7 @@ public class ExportCars extends XmlFile {
                         LOCATION_TRACK_SEPARATOR,
                         car.getReturnWhenLoadedDestTrackName(),
                         car.getReturnWhenLoadedLoadName(),
-                        car.getDivision(),
+                        car.getDivisionName(),
                         car.getTrainName(),
                         car.getDestinationName(),
                         LOCATION_TRACK_SEPARATOR,
@@ -149,7 +151,9 @@ public class ExportCars extends XmlFile {
                         car.getFinalDestinationName(),
                         LOCATION_TRACK_SEPARATOR,
                         car.getFinalDestinationTrackName(),
-                        car.getRfid());
+                        car.getScheduleItemId(),
+                        car.getRfid(),
+                        car.getRoutePath());
             }
             fileOut.flush();
             fileOut.close();
@@ -158,7 +162,7 @@ public class ExportCars extends XmlFile {
                 _carList.size(), defaultOperationsFilename()), Bundle.getMessage("ExportComplete"),
                     JmriJOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
-            log.error("Can not open export cars CSV file: {}", file.getName());
+            log.error("Can not open export cars CSV file: {}", e.getLocalizedMessage());
             JmriJOptionPane.showMessageDialog(null,
                     Bundle.getMessage("ExportedCarsToFile",
                             0, defaultOperationsFilename()),

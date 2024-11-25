@@ -41,6 +41,8 @@ public class PrintEngineRosterFrame extends OperationsFrame {
     EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
     LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
+    JCheckBox printLocosWithLocation = new JCheckBox(Bundle.getMessage("PrintLocosWithLocation"));
+
     JComboBox<String> sortByComboBox = new JComboBox<>();
     JComboBox<String> manifestOrientationComboBox = new JComboBox<>();
     JComboBox<Integer> fontSizeComboBox = new JComboBox<>();
@@ -73,6 +75,12 @@ public class PrintEngineRosterFrame extends OperationsFrame {
         OperationsPanel.loadFontSizeComboBox(fontSizeComboBox);
         fontSizeComboBox.setSelectedItem(Control.reportFontSize);
 
+        JPanel pPanel = new JPanel();
+        pPanel.setLayout(new GridBagLayout());
+        JScrollPane panePanel = new JScrollPane(pPanel);
+        panePanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("PrintOptions")));
+        addItemLeft(pPanel, printLocosWithLocation, 0, 0);
+
         JPanel pButtons = new JPanel();
         pButtons.setLayout(new GridBagLayout());
         pButtons.add(okayButton);
@@ -83,6 +91,7 @@ public class PrintEngineRosterFrame extends OperationsFrame {
         getContentPane().add(pSortBy);
         getContentPane().add(pOrientation);
         getContentPane().add(pFontSize);
+        getContentPane().add(panePanel);
         getContentPane().add(pButtons);
 
         if (_isPreview) {
@@ -92,7 +101,7 @@ public class PrintEngineRosterFrame extends OperationsFrame {
         }
         loadSortByComboBox(sortByComboBox);
 
-        initMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight250));
+        initMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight300));
     }
 
     @Override
@@ -131,14 +140,14 @@ public class PrintEngineRosterFrame extends OperationsFrame {
             numberCharPerLine = writer.getCharactersPerLine();
 
             // create header
-            writer.write(createHeader());
+            write(writer, createHeader());
 
             printRoster(writer);
 
             // and force completion of the printing
             writer.close();
         } catch (IOException we) {
-            log.error("Error printing ConsistRosterEntry", we);
+            log.error("Error printing ConsistRosterEntry: {}", we.getLocalizedMessage());
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
         }
@@ -209,7 +218,9 @@ public class PrintEngineRosterFrame extends OperationsFrame {
 
         List<Engine> engines = _etf.enginesModel.getEngineList(sortByComboBox.getSelectedIndex());
         for (Engine engine : engines) {
-
+            if (printLocosWithLocation.isSelected() && engine.getLocation() == null) {
+                continue;
+            }
             String destination = "";
             // engine number, road, model, type, and length are always printed
             number = padAttribute(engine.getNumber(), Control.max_len_string_print_road_number);
@@ -239,7 +250,7 @@ public class PrintEngineRosterFrame extends OperationsFrame {
                     .getSelectedIndex() == _etf.enginesModel.SORTBY_DCC_ADDRESS) {
                 dccAddress = padAttribute(engine.getDccAddress(), 5);
             } else if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_LAST) {
-                last = padAttribute(engine.getLastDate(), lastLength);
+                last = padAttribute(engine.getSortDate(), lastLength);
             } else if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_VALUE) {
                 value = padAttribute(engine.getValue(), Control.max_len_string_attibute);
             } else if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_RFID) {
@@ -283,11 +294,15 @@ public class PrintEngineRosterFrame extends OperationsFrame {
                     last +
                     comment +
                     destination;
-            if (s.length() > numberCharPerLine) {
-                s = s.substring(0, numberCharPerLine);
-            }
-            writer.write(s + NEW_LINE);
+            write(writer, s);
         }
+    }
+
+    private void write(HardcopyWriter writer, String s) throws IOException {
+        if (s.length() > numberCharPerLine) {
+            s = s.substring(0, numberCharPerLine);
+        }
+        writer.write(s + NEW_LINE);
     }
 
     private String padAttribute(String attribute, int length) {

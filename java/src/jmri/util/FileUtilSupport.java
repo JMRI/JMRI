@@ -85,7 +85,7 @@ public class FileUtilSupport extends Bean {
     // default instance
     volatile private static FileUtilSupport defaultInstance = null;
 
-    public FileUtilSupport() {
+    private FileUtilSupport() {
         super(false);
     }
 

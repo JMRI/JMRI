@@ -1,11 +1,10 @@
 package jmri.swing;
 
 import jmri.util.JUnitUtil;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Java6Assertions.assertThat;
-import static org.assertj.core.api.Java6Assertions.catchThrowable;
+import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *  Base Tests for implementations of the PreferencesPanel interface.
@@ -29,71 +28,67 @@ abstract public class PreferencesPanelTestBase<P extends PreferencesPanel> {
 
     @Test
     public void testCtor(){
-        assertThat(prefsPanel).isNotNull();
+        assertNotNull( prefsPanel );
     }
 
     @Test
     public void getPreferencesItem() {
-        assertThat(prefsPanel.getPreferencesItem()).isNotNull();
+        assertNotNull( prefsPanel.getPreferencesItem() );
     }
 
     @Test
     public void getPreferencesItemText() {
-        assertThat(prefsPanel.getPreferencesItemText()).isNotNull();
+        assertNotNull( prefsPanel.getPreferencesItemText() );
     }
 
     @Test
     public void getTabbedPreferencesTitle() {
-        Throwable thrown = catchThrowable( () -> prefsPanel.getTabbedPreferencesTitle());
-        assertThat(thrown).isNull();
+        assertDoesNotThrow( prefsPanel::getTabbedPreferencesTitle );
     }
 
     @Test
     public void getLabelKey() {
-        Throwable thrown = catchThrowable(() -> prefsPanel.getLabelKey());
-        assertThat(thrown).isNull();
+        assertDoesNotThrow( prefsPanel::getLabelKey );
     }
 
     @Test
     public void getPreferencesComponent() {
-        assertThat(prefsPanel.getPreferencesComponent()).isNotNull();
+        assertNotNull( prefsPanel.getPreferencesComponent() );
     }
 
     @Test
     public void isPersistant() {
-        assertThat(prefsPanel.isPersistant()).isFalse();
+        assertFalse( prefsPanel.isPersistant() );
     }
 
     @Test
     public void getPreferencesTooltip() {
-        Throwable thrown = catchThrowable( () -> prefsPanel.getPreferencesTooltip());
-        assertThat(thrown).isNull();
+        assertDoesNotThrow( prefsPanel::getPreferencesTooltip );
     }
 
     @Test
     public void savePreferences() {
-        Throwable thrown = catchThrowable( () -> prefsPanel.savePreferences());
-        assertThat(thrown).isNull();
+        assertDoesNotThrow( prefsPanel::savePreferences );
     }
 
     @Test
     public void isDirty() {
-        assertThat(prefsPanel.isDirty()).isFalse();
+        assertFalse( prefsPanel.isDirty() );
     }
 
     @Test
     public void isRestartRequired() {
-        assertThat(prefsPanel.isRestartRequired()).isFalse();
+        assertFalse( prefsPanel.isRestartRequired() );
     }
 
     @Test
     public void isPreferencesValid() {
-        assertThat(prefsPanel.isPreferencesValid()).isTrue();
+        assertTrue( prefsPanel.isPreferencesValid() );
     }
 
     @Test
     public void getSortOrder() {
-        assertThat(prefsPanel.getSortOrder()).isGreaterThan(0);
+        assertTrue( prefsPanel.getSortOrder() > 0 );
     }
 
 }

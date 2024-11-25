@@ -109,10 +109,18 @@ public class LnOverTcpPacketizer extends LnPacketizer {
         public void run() {
 
             String rxLine;
-            while (true) {  // loop permanently, program close will exit
+            while (! Thread.interrupted()) {  // loop permanently, program close will exit
                 try {
-                    // start by looking for a complete line
+                    // Start by looking for a complete line.
+                    // This will block until input is returned, even if the thread is interrupted.
                     rxLine = istream.readLine();
+                    if (Thread.interrupted()) {
+                        // This indicates normal termination of the thread
+                        // followed by some input being provided by readLine above.
+                        // We return immediately to end the thread, rather than
+                        // processing the no-long-relevant input.
+                        return;
+                    }
                     if (rxLine == null) {
                         log.warn("run: input stream returned null, exiting loop");
                         return;

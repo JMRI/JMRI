@@ -1,9 +1,6 @@
 package jmri.jmrit.beantable;
 
-import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
@@ -20,7 +17,7 @@ import jmri.UserPreferencesManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
 import jmri.jmrit.logixng.tools.swing.DeleteBean;
-import jmri.util.FileUtil;
+import jmri.jmrit.logixng.tools.swing.LogixNGBrowseWindow;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -47,14 +44,6 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     private static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.logixng.LogixNGBundle");
     private static final ResourceBundle rbx2 = ResourceBundle.getBundle("jmri.jmrit.logixng.tools.swing.LogixNGSwingBundle");
 
-    // Browser Options
-    static final String PRINT_LINE_NUMBERS_OPTION = "jmri.jmrit.logixng.PrintLineNumbers";
-    static final String PRINT_ERROR_HANDLING_OPTION = "jmri.jmrit.logixng.ErrorHandling";
-    static final String PRINT_NOT_CONNECTED_OPTION = "jmri.jmrit.logixng.NotConnectedSockets";
-    static final String PRINT_LOCAL_VARIABLES_OPTION = "jmri.jmrit.logixng.LocalVariables";
-    static final String PRINT_SYSTEM_NAMES_OPTION = "jmri.jmrit.logixng.SystemNames";
-
-    JTextArea _textContent;
     DeleteBean<E> deleteBean = new DeleteBean<>(getManager());
 
     /**
@@ -92,7 +81,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
     protected boolean browseMonoSpace() { return false; }
 
-    protected abstract String getBeanText(E bean);
+    protected abstract String getBeanText(E bean, Base.PrintTreeSettings printTreeSettings);
 
     protected abstract String getBrowserTitle();
 
@@ -137,7 +126,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     public void setMenuBar(BeanTableFrame<E> f) {
         JMenu menu = new JMenu(Bundle.getMessage("MenuOptions"));  // NOI18N
         menu.setMnemonic(KeyEvent.VK_O);
-        javax.swing.JMenuBar menuBar = f.getJMenuBar();
+        JMenuBar menuBar = f.getJMenuBar();
         int pos = menuBar.getMenuCount() - 1;  // count the number of menus to insert the TableMenus before 'Window' and 'Help'
         int offset = 1;
         log.debug("setMenuBar number of menu items = {}", pos);  // NOI18N
@@ -213,8 +202,6 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     // Current focus variables
     protected E _curNamedBean = null;
     int conditionalRowNumber = 0;
-
-    protected final Base.PrintTreeSettings _printTreeSettings = new Base.PrintTreeSettings();
 
     // Add E Variables
     JmriJFrame addLogixNGFrame = null;
@@ -440,27 +427,39 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     }
 
     /**
-     * Check validity of bean system name.
+     * Check validity of various LogixNG system names.
      * <p>
-     * Fixes name if it doesn't start with "IQ".
+     * Fixes name if it doesn't start with the appropriate prefix or the $ for alpha suffixes
      *
-     * @return false if name has length &lt; 1 after displaying a dialog
+     * @return false if the name fails the NameValidity check
      */
     boolean checkLogixNGSysName() {
-        String sName = _systemName.getText();
-        if ((sName.length() < 1)) {
-            // Entered system name is blank or too short
-            JmriJOptionPane.showMessageDialog(addLogixNGFrame,
-                    Bundle.getMessage("LogixNGError8"), Bundle.getMessage("ErrorTitle"), // NOI18N
+        if (_autoSystemName.isSelected()) {
+            return true;
+        }
+
+        var sName = _systemName.getText().trim();
+        var prefix = getManager().getSubSystemNamePrefix();
+
+        if (!sName.isEmpty() && !sName.startsWith(prefix)) {
+            var isNumber = sName.matches("^\\d+$");
+            var hasDollar = sName.startsWith("$");
+
+            var newName = new StringBuilder(prefix);
+            if (!isNumber && !hasDollar) {
+                newName.append("$");
+            }
+            newName.append(sName);
+            sName = newName.toString();
+        }
+
+        if (getManager().validSystemNameFormat(sName) != jmri.Manager.NameValidity.VALID) {
+            JmriJOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("LogixNGError8", sName), Bundle.getMessage("ErrorTitle"), // NOI18N
                     JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if ((sName.length() < 2) || (sName.charAt(0) != 'I')
-                || (sName.charAt(1) != 'Q')) {
-            // System name does not begin with IQ:, prefix IQ: to it
-            String s = sName;
-            sName = "IQ" + s;  // NOI18N
-        }
+
         _systemName.setText(sName);
         return true;
     }
@@ -709,218 +708,26 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     void browserPressed(String sName) {
         // bean was found, create the window
         _curNamedBean = getManager().getBySystemName(sName);
-        getPrintTreeSettings();
-        makeBrowserWindow();
-    }
 
-    void getPrintTreeSettings() {
-        // Set options
-        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
-            _printTreeSettings._printLineNumbers = prefMgr.getSimplePreferenceState(PRINT_LINE_NUMBERS_OPTION);
-            _printTreeSettings._printErrorHandling = prefMgr.getSimplePreferenceState(PRINT_ERROR_HANDLING_OPTION);
-            _printTreeSettings._printNotConnectedSockets = prefMgr.getSimplePreferenceState(PRINT_NOT_CONNECTED_OPTION);
-            _printTreeSettings._printLocalVariables = prefMgr.getSimplePreferenceState(PRINT_LOCAL_VARIABLES_OPTION);
-            _printTreeSettings._printSystemNames = prefMgr.getSimplePreferenceState(PRINT_SYSTEM_NAMES_OPTION);
-        });
-    }
-
-    /**
-     * Update text in the browser window.
-     */
-    void updateBrowserText() {
-        if (_textContent != null) {
-            _textContent.setText(getBeanText(_curNamedBean));
+        if (_curNamedBean == null) {
+            // This should never happen but SpotBugs complains about it.
+            throw new RuntimeException("_curNamedBean is null");
         }
-    }
 
-    /**
-     * Create and initialize the conditionalNGs browser window.
-     */
-    void makeBrowserWindow() {
-        JmriJFrame condBrowserFrame = new JmriJFrame(this.getBrowserTitle(), false, true);
-
-        condBrowserFrame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosed(WindowEvent e) {
-                _textContent = null;
-            }
-        });
-
-        Container contentPane = condBrowserFrame.getContentPane();
-        contentPane.setLayout(new BorderLayout());
-
-        // bean header information
-        JPanel topPanel = new JPanel();
-        String tStr = Bundle.getMessage("BrowserLogixNG") + " " + _curNamedBean.getSystemName() + "    " // NOI18N
+        String title = Bundle.getMessage("BrowserLogixNG") + " " + _curNamedBean.getSystemName() + "    " // NOI18N
                 + _curNamedBean.getUserName() + "    "
                 + (isEnabled(_curNamedBean)
                         ? Bundle.getMessage("BrowserEnabled") // NOI18N
                         : Bundle.getMessage("BrowserDisabled"));  // NOI18N
-        topPanel.add(new JLabel(tStr));
-        contentPane.add(topPanel, BorderLayout.NORTH);
 
-        // Build the conditionalNGs listing
-        _textContent = new JTextArea(this.getBeanText(_curNamedBean));
-        if (browseMonoSpace()) {
-            _textContent.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
-        }
-        JScrollPane scrollPane = new JScrollPane(_textContent);
-        contentPane.add(scrollPane);
-
-        JPanel bottomPanel = new JPanel();
-        bottomPanel.setLayout(new BorderLayout());
-        JButton helpBrowse = new JButton(Bundle.getMessage("MenuHelp"));   // NOI18N
-        bottomPanel.add(helpBrowse, BorderLayout.WEST);
-        helpBrowse.addActionListener((ActionEvent e) -> {
-            JmriJOptionPane.showMessageDialog(condBrowserFrame,
-                    Bundle.getMessage("LogixNG_Browse_HelpText"),   // NOI18N
-                    Bundle.getMessage("BrowserHelpTitle"),  // NOI18N
-                    JmriJOptionPane.INFORMATION_MESSAGE);
-        });
-
-        JPanel settingsPanel = getSettingsPanel();
-        bottomPanel.add(settingsPanel, BorderLayout.CENTER);
-
-        JButton saveBrowse = new JButton(Bundle.getMessage("BrowserSaveButton"));   // NOI18N
-        saveBrowse.setToolTipText(Bundle.getMessage("BrowserSaveButtonHint"));      // NOI18N
-        bottomPanel.add(saveBrowse, BorderLayout.EAST);
-        saveBrowse.addActionListener((ActionEvent e) -> {
-            saveBrowserPressed();
-        });
-        contentPane.add(bottomPanel, BorderLayout.SOUTH);
-
-        condBrowserFrame.pack();
-        condBrowserFrame.setVisible(true);
-    }  // makeBrowserWindow
-
-    JFileChooser userFileChooser = new jmri.util.swing.JmriJFileChooser(FileUtil.getUserFilesPath());
-
-    /**
-     * Save the bean browser window content to a text file.
-     */
-    void saveBrowserPressed() {
-        userFileChooser.setApproveButtonText(Bundle.getMessage("BrowserSaveDialogApprove"));  // NOI18N
-        userFileChooser.setDialogTitle(Bundle.getMessage("BrowserSaveDialogTitle"));  // NOI18N
-        userFileChooser.rescanCurrentDirectory();
-        // Default to logixNG system name.txt
-        String suggestedFileName = _curNamedBean.getSystemName().replace(':', '_') + ".txt";
-        userFileChooser.setSelectedFile(new File(suggestedFileName));  // NOI18N
-        int retVal = userFileChooser.showSaveDialog(null);
-        if (retVal != JFileChooser.APPROVE_OPTION) {
-            log.debug("Save browser content stopped, no file selected");  // NOI18N
-            return;  // give up if no file selected or cancel pressed
-        }
-        File file = userFileChooser.getSelectedFile();
-        log.debug("Save browser content to '{}'", file);  // NOI18N
-
-        if (file.exists()) {
-            Object[] options = {Bundle.getMessage("BrowserSaveDuplicateReplace"),  // NOI18N
-                    Bundle.getMessage("BrowserSaveDuplicateAppend"),  // NOI18N
-                    Bundle.getMessage("ButtonCancel")};               // NOI18N
-            int selectedOption = JmriJOptionPane.showOptionDialog(null,
-                    Bundle.getMessage("BrowserSaveDuplicatePrompt", file.getName()), // NOI18N
-                    Bundle.getMessage("BrowserSaveDuplicateTitle"),   // NOI18N
-                    JmriJOptionPane.DEFAULT_OPTION,
-                    JmriJOptionPane.WARNING_MESSAGE,
-                    null, options, options[0]);
-            if (selectedOption == 2 || selectedOption == -1) {
-                log.debug("Save browser content stopped, file replace/append cancelled");  // NOI18N
-                return;  // Cancel selected or dialog box closed
-            }
-            if (selectedOption == 0) {
-                FileUtil.delete(file);  // Replace selected
-            }
-        }
-
-        // Create the file content
-        String tStr = Bundle.getMessage("BrowserLogixNG") + " " + _curNamedBean.getSystemName() + "    "  // NOI18N
-                + _curNamedBean.getUserName() + "    "
-                + (isEnabled(_curNamedBean)
-                        ? Bundle.getMessage("BrowserEnabled")    // NOI18N
-                        : Bundle.getMessage("BrowserDisabled"));  // NOI18N
-        try {
-            // Add bean Header inforation first
-            FileUtil.appendTextToFile(file, tStr);
-            FileUtil.appendTextToFile(file, "-".repeat(tStr.length()));
-            FileUtil.appendTextToFile(file, "");
-            FileUtil.appendTextToFile(file, _textContent.getText());
-        } catch (IOException e) {
-            log.error("Unable to write browser content to '{}'", file, e);  // NOI18N
-        }
-    }
-
-    protected JPanel getSettingsPanel() {
-        JPanel checkBoxPanel = new JPanel();
-
-        JCheckBox printLineNumbers = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintLineNumbers"));
-        printLineNumbers.setSelected(_printTreeSettings._printLineNumbers);
-        printLineNumbers.addChangeListener((event) -> {
-            if (_printTreeSettings._printLineNumbers != printLineNumbers.isSelected()) {
-                _printTreeSettings._printLineNumbers = printLineNumbers.isSelected();
-                InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
-                    prefMgr.setSimplePreferenceState(PRINT_LINE_NUMBERS_OPTION, printLineNumbers.isSelected());
+        LogixNGBrowseWindow browseWindow =
+                new LogixNGBrowseWindow(Bundle.getMessage("LogixNG_Browse_Title"));
+        browseWindow.getPrintTreeSettings();
+        boolean showSettingsPanel = this instanceof LogixNGTableAction || this instanceof LogixNGModuleTableAction;
+        browseWindow.makeBrowserWindow(browseMonoSpace(), showSettingsPanel, title, _curNamedBean.getSystemName(),
+                (printTreeSettings) -> {
+                        return AbstractLogixNGTableAction.this.getBeanText(_curNamedBean, printTreeSettings);
                 });
-                updateBrowserText();
-            }
-        });
-
-        JCheckBox printErrorHandling = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintErrorHandling"));
-        printErrorHandling.setSelected(_printTreeSettings._printErrorHandling);
-        printErrorHandling.addChangeListener((event) -> {
-            if (_printTreeSettings._printErrorHandling != printErrorHandling.isSelected()) {
-                _printTreeSettings._printErrorHandling = printErrorHandling.isSelected();
-                InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
-                    prefMgr.setSimplePreferenceState(PRINT_ERROR_HANDLING_OPTION, printErrorHandling.isSelected());
-                });
-                updateBrowserText();
-            }
-        });
-
-        JCheckBox printNotConnectedSockets = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintNotConnectedSocket"));
-        printNotConnectedSockets.setSelected(_printTreeSettings._printNotConnectedSockets);
-        printNotConnectedSockets.addChangeListener((event) -> {
-            if (_printTreeSettings._printNotConnectedSockets != printNotConnectedSockets.isSelected()) {
-                _printTreeSettings._printNotConnectedSockets = printNotConnectedSockets.isSelected();
-                updateBrowserText();
-                InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class).ifPresent((prefMgr) -> {
-                    prefMgr.setSimplePreferenceState(PRINT_NOT_CONNECTED_OPTION, printNotConnectedSockets.isSelected());
-                });
-            }
-        });
-
-        JCheckBox printLocalVariables = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintLocalVariables"));
-        printLocalVariables.setSelected(_printTreeSettings._printLocalVariables);
-        printLocalVariables.addChangeListener((event) -> {
-            if (_printTreeSettings._printLocalVariables != printLocalVariables.isSelected()) {
-                _printTreeSettings._printLocalVariables = printLocalVariables.isSelected();
-                updateBrowserText();
-                InstanceManager.getOptionalDefault(jmri.UserPreferencesManager.class).ifPresent((prefMgr) -> {
-                    prefMgr.setSimplePreferenceState(PRINT_LOCAL_VARIABLES_OPTION, printLocalVariables.isSelected());
-                });
-            }
-        });
-
-        JCheckBox printSystemNames = new JCheckBox(Bundle.getMessage("LogixNG_Browse_PrintSystemNames"));
-        printSystemNames.setSelected(_printTreeSettings._printSystemNames);
-        printSystemNames.addChangeListener((event) -> {
-            if (_printTreeSettings._printSystemNames != printSystemNames.isSelected()) {
-                _printTreeSettings._printSystemNames = printSystemNames.isSelected();
-                InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
-                    prefMgr.setSimplePreferenceState(PRINT_SYSTEM_NAMES_OPTION, printSystemNames.isSelected());
-                });
-                updateBrowserText();
-            }
-        });
-
-        if (this instanceof LogixNGTableAction || this instanceof LogixNGModuleTableAction) {
-            checkBoxPanel.add(printLineNumbers);
-            checkBoxPanel.add(printErrorHandling);
-            checkBoxPanel.add(printNotConnectedSockets);
-            checkBoxPanel.add(printLocalVariables);
-            checkBoxPanel.add(printSystemNames);
-        }
-
-        return checkBoxPanel;
     }
 
 

@@ -1,26 +1,20 @@
 package jmri.jmrit.operations.trains;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.setup.Setup;
+import java.awt.*;
+import java.util.List;
+
+import javax.swing.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.InstanceManager;
+import jmri.jmrit.operations.*;
+import jmri.jmrit.operations.rollingstock.RollingStockManager;
+import jmri.jmrit.operations.rollingstock.cars.*;
+import jmri.jmrit.operations.rollingstock.engines.EngineManager;
+import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Frame for user edit of a train's road options
@@ -36,6 +30,10 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
     JPanel panelCarRoads = new JPanel();
     JScrollPane paneCarRoads = new JScrollPane(panelCarRoads);
     
+    JPanel pCabooseRoadControls = new JPanel();
+    JPanel panelCabooseRoads = new JPanel();
+    JScrollPane paneCabooseRoads = new JScrollPane(panelCabooseRoads);
+
     JPanel pLocoRoadControls = new JPanel();
     JPanel panelLocoRoads = new JPanel();
     JScrollPane paneLocoRoads = new JScrollPane(panelLocoRoads);
@@ -48,6 +46,11 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
     JButton addCarRoadButton = new JButton(Bundle.getMessage("AddRoad"));
     JButton deleteCarRoadButton = new JButton(Bundle.getMessage("DeleteRoad"));
     JButton deleteCarAllRoadsButton = new JButton(Bundle.getMessage("DeleteAll"));
+
+    JButton addCabooseRoadButton = new JButton(Bundle.getMessage("AddRoad"));
+    JButton deleteCabooseRoadButton = new JButton(Bundle.getMessage("DeleteRoad"));
+    JButton deleteCabooseAllRoadsButton = new JButton(Bundle.getMessage("DeleteAll"));
+
     JButton addLocoRoadButton = new JButton(Bundle.getMessage("AddRoad"));
     JButton deleteLocoRoadButton = new JButton(Bundle.getMessage("DeleteRoad"));
     JButton deleteLocoAllRoadsButton = new JButton(Bundle.getMessage("DeleteAll"));
@@ -58,13 +61,19 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
     JRadioButton carRoadNameAll = new JRadioButton(Bundle.getMessage("AcceptAll"));
     JRadioButton carRoadNameInclude = new JRadioButton(Bundle.getMessage("AcceptOnly"));
     JRadioButton carRoadNameExclude = new JRadioButton(Bundle.getMessage("Exclude"));
+
+    JRadioButton cabooseRoadNameAll = new JRadioButton(Bundle.getMessage("AcceptAll"));
+    JRadioButton cabooseRoadNameInclude = new JRadioButton(Bundle.getMessage("AcceptOnly"));
+    JRadioButton cabooseRoadNameExclude = new JRadioButton(Bundle.getMessage("Exclude"));
+
     JRadioButton locoRoadNameAll = new JRadioButton(Bundle.getMessage("AcceptAll"));
     JRadioButton locoRoadNameInclude = new JRadioButton(Bundle.getMessage("AcceptOnly"));
     JRadioButton locoRoadNameExclude = new JRadioButton(Bundle.getMessage("Exclude"));
 
     // combo boxes
     JComboBox<String> comboBoxCarRoads = InstanceManager.getDefault(CarRoads.class).getComboBox();
-    JComboBox<String> comboBoxLocoRoads = InstanceManager.getDefault(CarRoads.class).getComboBox();
+    JComboBox<String> comboBoxCabooseRoads = new JComboBox<String>();
+    JComboBox<String> comboBoxLocoRoads = new JComboBox<String>();
 
     public static final String DISPOSE = "dispose"; // NOI18N
 
@@ -128,14 +137,49 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
 
         // row 4
         panelCarRoads.setLayout(new GridBagLayout());
-        paneCarRoads.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Roads")));
+        paneCarRoads.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("RoadsCar")));
 
         ButtonGroup carRoadGroup = new ButtonGroup();
         carRoadGroup.add(carRoadNameAll);
         carRoadGroup.add(carRoadNameInclude);
         carRoadGroup.add(carRoadNameExclude);
         
-        // row 5 Engine Roads
+        // row 5 Caboose Roads
+        JPanel pCabooseRoad = new JPanel();
+        pCabooseRoad.setLayout(new BoxLayout(pCabooseRoad, BoxLayout.Y_AXIS));
+        JScrollPane paneCaboose = new JScrollPane(pCabooseRoad);
+        paneCaboose.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("CabooseRoadsTrain")));
+        paneCaboose.setMaximumSize(new Dimension(2000, 400));
+
+        JPanel pCabooseRoadRadioButtons = new JPanel();
+        pCabooseRoadRadioButtons.setLayout(new FlowLayout());
+
+        pCabooseRoadRadioButtons.add(cabooseRoadNameAll);
+        pCabooseRoadRadioButtons.add(cabooseRoadNameInclude);
+        pCabooseRoadRadioButtons.add(cabooseRoadNameExclude);
+
+        pCabooseRoadControls.setLayout(new FlowLayout());
+
+        pCabooseRoadControls.add(comboBoxCabooseRoads);
+        pCabooseRoadControls.add(addCabooseRoadButton);
+        pCabooseRoadControls.add(deleteCabooseRoadButton);
+        pCabooseRoadControls.add(deleteCabooseAllRoadsButton);
+
+        pCabooseRoadControls.setVisible(false);
+
+        pCabooseRoad.add(pCabooseRoadRadioButtons);
+        pCabooseRoad.add(pCabooseRoadControls);
+
+        // row 6
+        panelCabooseRoads.setLayout(new GridBagLayout());
+        paneCabooseRoads.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("RoadsCaboose")));
+
+        ButtonGroup cabooseRoadGroup = new ButtonGroup();
+        cabooseRoadGroup.add(cabooseRoadNameAll);
+        cabooseRoadGroup.add(cabooseRoadNameInclude);
+        cabooseRoadGroup.add(cabooseRoadNameExclude);
+
+        // row 7 Engine Roads
         JPanel pLocoRoad = new JPanel();
         pLocoRoad.setLayout(new BoxLayout(pLocoRoad, BoxLayout.Y_AXIS));
         JScrollPane paneLoco = new JScrollPane(pLocoRoad);
@@ -161,9 +205,9 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
         pLocoRoad.add(pLocoRoadRadioButtons);
         pLocoRoad.add(pLocoRoadControls);
 
-        // row 4
+        // row 8
         panelLocoRoads.setLayout(new GridBagLayout());
-        paneLocoRoads.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Roads")));
+        paneLocoRoads.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("RoadsLoco")));
 
         ButtonGroup locoRoadGroup = new ButtonGroup();
         locoRoadGroup.add(locoRoadNameAll);
@@ -182,6 +226,8 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
         getContentPane().add(p1);
         getContentPane().add(paneCar);
         getContentPane().add(paneCarRoads);
+        getContentPane().add(paneCaboose);
+        getContentPane().add(paneCabooseRoads);
         getContentPane().add(paneLoco);
         getContentPane().add(paneLocoRoads);
         getContentPane().add(panelButtons);
@@ -197,6 +243,14 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
         addRadioButtonAction(carRoadNameInclude);
         addRadioButtonAction(carRoadNameExclude);
         
+        addButtonAction(deleteCabooseRoadButton);
+        addButtonAction(deleteCabooseAllRoadsButton);
+        addButtonAction(addCabooseRoadButton);
+
+        addRadioButtonAction(cabooseRoadNameAll);
+        addRadioButtonAction(cabooseRoadNameInclude);
+        addRadioButtonAction(cabooseRoadNameExclude);
+
         addButtonAction(deleteLocoRoadButton);
         addButtonAction(deleteLocoAllRoadsButton);
         addButtonAction(addLocoRoadButton);
@@ -217,11 +271,15 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
         addHelpMenu("package.jmri.jmrit.operations.Operations_TrainRoadOptions", true); // NOI18N
         updateRoadComboBoxes();
         updateCarRoadNames();
+        updateCabooseRoadNames();
         updateLocoRoadNames();
 
-        // get notified if car roads, roads, and owners gets modified
+        // get notified if car types or roads gets modified
         InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
         InstanceManager.getDefault(CarRoads.class).addPropertyChangeListener(this);
+        // get notified if there's a change in the engine roster
+        InstanceManager.getDefault(EngineManager.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarManager.class).addPropertyChangeListener(this);
 
         initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
     }
@@ -251,6 +309,25 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
             if (ae.getSource() == deleteCarAllRoadsButton) {
                 deleteAllCarRoads();
             }
+            // cabooses
+            if (ae.getSource() == addCabooseRoadButton) {
+                String roadName = (String) comboBoxCabooseRoads.getSelectedItem();
+                if (_train.addCabooseRoadName(roadName)) {
+                    updateCabooseRoadNames();
+                }
+                selectNextItemComboBox(comboBoxCabooseRoads);
+            }
+            if (ae.getSource() == deleteCabooseRoadButton) {
+                String roadName = (String) comboBoxCabooseRoads.getSelectedItem();
+                if (_train.deleteCabooseRoadName(roadName)) {
+                    updateCabooseRoadNames();
+                }
+                selectNextItemComboBox(comboBoxCabooseRoads);
+            }
+            if (ae.getSource() == deleteCabooseAllRoadsButton) {
+                deleteAllCabooseRoads();
+            }
+            // locos
             if (ae.getSource() == addLocoRoadButton) {
                 String roadName = (String) comboBoxLocoRoads.getSelectedItem();
                 if (_train.addLocoRoadName(roadName)) {
@@ -258,6 +335,7 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
                 }
                 selectNextItemComboBox(comboBoxLocoRoads);
             }
+
             if (ae.getSource() == deleteLocoRoadButton) {
                 String roadName = (String) comboBoxLocoRoads.getSelectedItem();
                 if (_train.deleteLocoRoadName(roadName)) {
@@ -287,6 +365,20 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
                 _train.setCarRoadOption(Train.EXCLUDE_LOADS);
                 updateCarRoadNames();
             }
+
+            if (ae.getSource() == cabooseRoadNameAll) {
+                _train.setCabooseRoadOption(Train.ALL_LOADS);
+                updateCabooseRoadNames();
+            }
+            if (ae.getSource() == cabooseRoadNameInclude) {
+                _train.setCabooseRoadOption(Train.INCLUDE_LOADS);
+                updateCabooseRoadNames();
+            }
+            if (ae.getSource() == cabooseRoadNameExclude) {
+                _train.setCabooseRoadOption(Train.EXCLUDE_LOADS);
+                updateCabooseRoadNames();
+            }
+
             if (ae.getSource() == locoRoadNameAll) {
                 _train.setLocoRoadOption(Train.ALL_LOADS);
                 updateLocoRoadNames();
@@ -350,6 +442,40 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
         panelCarRoads.revalidate();
     }
     
+    private void updateCabooseRoadNames() {
+        log.debug("Update caboose road names");
+        panelCabooseRoads.removeAll();
+        if (_train != null) {
+            // set radio button
+            cabooseRoadNameAll.setSelected(_train.getCabooseRoadOption().equals(Train.ALL_LOADS));
+            cabooseRoadNameInclude.setSelected(_train.getCabooseRoadOption().equals(Train.INCLUDE_ROADS));
+            cabooseRoadNameExclude.setSelected(_train.getCabooseRoadOption().equals(Train.EXCLUDE_ROADS));
+
+            pCabooseRoadControls.setVisible(!cabooseRoadNameAll.isSelected());
+
+            if (!cabooseRoadNameAll.isSelected()) {
+                int x = 0;
+                int y = 0; // vertical position in panel
+
+                for (String roadName : _train.getCabooseRoadNames()) {
+                    JLabel road = new JLabel();
+                    road.setText(roadName);
+                    addItemTop(panelCabooseRoads, road, x++, y);
+                    // limit the number of roads per line
+                    if (x > NUMBER_ROADS_PER_LINE) {
+                        y++;
+                        x = 0;
+                    }
+                }
+                revalidate();
+            }
+        } else {
+            cabooseRoadNameAll.setSelected(true);
+        }
+        panelCabooseRoads.repaint();
+        panelCabooseRoads.revalidate();
+    }
+
     private void updateLocoRoadNames() {
         log.debug("Update loco road names");
         panelLocoRoads.removeAll();
@@ -393,6 +519,15 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
         updateCarRoadNames();
     }
     
+    private void deleteAllCabooseRoads() {
+        if (_train != null) {
+            for (String road : _train.getCabooseRoadNames()) {
+                _train.deleteCabooseRoadName(road);
+            }
+        }
+        updateCabooseRoadNames();
+    }
+
     private void deleteAllLocoRoads() {
         if (_train != null) {
             for (String road : _train.getLocoRoadNames()) {
@@ -411,7 +546,17 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
 
     private void updateRoadComboBoxes() {
         InstanceManager.getDefault(CarRoads.class).updateComboBox(comboBoxCarRoads);
-        InstanceManager.getDefault(CarRoads.class).updateComboBox(comboBoxLocoRoads);
+        updateCabooseRoadComboBox();
+        InstanceManager.getDefault(EngineManager.class).updateEngineRoadComboBox(NONE, comboBoxLocoRoads);
+    }
+
+    private void updateCabooseRoadComboBox() {
+        comboBoxCabooseRoads.removeAllItems();
+        List<String> roads = InstanceManager.getDefault(CarManager.class).getCabooseRoadNames();
+        for (String road : roads) {
+            comboBoxCabooseRoads.addItem(road);
+        }
+        OperationsPanel.padComboBox(comboBoxCabooseRoads);
     }
 
     @Override
@@ -430,9 +575,12 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
-        if (e.getPropertyName().equals(CarRoads.CARROADS_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(CarRoads.CARROADS_CHANGED_PROPERTY)
+                || e.getPropertyName().equals(RollingStockManager.LISTLENGTH_CHANGED_PROPERTY)) {
             updateRoadComboBoxes();
             updateCarRoadNames();
+            updateCabooseRoadNames();
+            updateLocoRoadNames();
         }
     }
 

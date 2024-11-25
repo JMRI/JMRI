@@ -53,7 +53,8 @@ public class ExportEngines extends XmlFile {
             }
             writeFile(defaultOperationsFilename());
         } catch (IOException e) {
-            log.error("Exception while writing the new CSV operations file, may not be complete", e);
+            log.error("Exception while writing the new CSV operations file, may not be complete: {}",
+                    e.getLocalizedMessage());
         }
     }
 
@@ -104,7 +105,7 @@ public class ExportEngines extends XmlFile {
                         engine.getTrackName(),
                         engine.getConsistName(),
                         engine.getMoves(),
-                        engine.getLastDate(),
+                        engine.getSortDate(),
                         engine.getValue(),
                         engine.getHp(),
                         engine.getWeightTons(),
@@ -119,7 +120,7 @@ public class ExportEngines extends XmlFile {
                     engineList.size(), defaultOperationsFilename()), Bundle.getMessage("ExportComplete"),
                     JmriJOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
-            log.error("Can not open export engines CSV file: {}", file.getName());
+            log.error("Can not open export engines CSV file: {}", e.getLocalizedMessage());
             JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("ExportedEnginesToFile",
                     0, defaultOperationsFilename()), Bundle.getMessage("ExportFailed"),
                     JmriJOptionPane.ERROR_MESSAGE);

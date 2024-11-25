@@ -4,9 +4,7 @@ import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.jmrix.sprog.SprogTrafficControlScaffold;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Test simple functioning of SprogSlotMonDataModel 
@@ -19,11 +17,11 @@ public class SprogSlotMonDataModelTest {
     private SprogSystemConnectionMemo m = null;
 
     @Test
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @jmri.util.junit.annotations.DisabledIfHeadless
     public void testCtor() {
         int numSlots = m.getNumSlots();
         SprogSlotMonDataModel action = new SprogSlotMonDataModel(numSlots, 8, m);
-        Assert.assertNotNull("exists", action);
+        Assertions.assertNotNull( action, "exists");
     }
 
     @BeforeEach
@@ -39,7 +37,7 @@ public class SprogSlotMonDataModelTest {
     public void tearDown() {
         m.getSlotThread().interrupt();
         m.dispose();
-        JUnitUtil.waitFor(() -> { return !m.getSlotThread().isAlive(); });
+        JUnitUtil.waitThreadTerminated(m.getSlotThread().getName());
         stcs.dispose();
         JUnitUtil.tearDown();
     }

@@ -304,7 +304,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
 
         private final StartupActionsManager manager;
 
-        @SuppressWarnings("LeakingThisInConstructor")
+//        @SuppressWarnings("LeakingThisInConstructor")
         public TableModel(StartupActionsManager manager) {
             this.manager = manager;
             this.manager.addPropertyChangeListener(this);

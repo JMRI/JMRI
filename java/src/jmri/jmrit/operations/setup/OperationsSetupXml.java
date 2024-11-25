@@ -70,6 +70,12 @@ public class OperationsSetupXml extends OperationsXml implements InstanceManager
             log.debug("{} file could not be read", name);
             return;
         }
+        
+        if (!root.getName().equals("operations-config")) {
+            log.warn("OperationsPro settings file corrupted");
+            return;
+        }
+        
         Setup.load(root);
         // load manifest header text strings
         TrainManifestHeaderText.load(root);

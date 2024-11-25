@@ -65,6 +65,13 @@ should not be changed. See Javadoc for jmri.web.servlet.ServletHelper#getNavBar(
                         <li><a href="/tables/type">Alle typen</a></li>                        
                     </ul>
                 </li>               
+                <li class="dropdown context-permissions">
+                    <a href="/permission" class="dropdown-toggle" data-toggle="dropdown">Permission <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/permission/login">Login</a></li>
+                        <li><a href="/permission/logout">Log out</a></li>
+                    </ul>
+                </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li id="navbar-power" data-power="readonly" class="disabled"><a href="#" class="visible-xs"><!-- I18N -->Stromversorgung unbekannt</a><button type="button" class="btn navbar-btn disabled btn-warning hidden-xs"><span class="glyphicon glyphicon-off"></span></button></li>
@@ -132,7 +139,8 @@ navigation bar silently attempts a reconnection and does not use this dialog.
                 <!--
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 -->
-                <h4 class="modal-title" id="modal-websocket-reconnecting-label"><!-- I18N -->Versuche Wiederverbindung mit <!-- Railroad name %1$s --></h4>
+                <h4 class="modal-title" id="modal-websocket-reconnecting-label"><!-- I18N -->Probeer opnieuw te
+                  verbinden met <!-- Railroad name %1$s --></h4>
             </div>
             <div class="modal-body">
                 <p><!-- I18N -->De WebSocket Verbinding met <!-- Railroad name %1$s --> via JMRI is verbroken.</p>

@@ -2,9 +2,10 @@
  *  panel Servlet - Draw JMRI panels on browser screen
  *    Retrieves panel xml from JMRI and builds panel client-side from that xml, including
  *    click functions.  Sends and listens for changes to panel elements using the JSON WebSocket server.
- *    If no parm passed, page will list links to available panels.
+ *    If no parm "name" passed, page will list links to available panels.
+ *	  Include parm protect=yes to treat panel as read-only
  *  Approach:  Read panel's xml and create widget objects in the browser with all needed attributes.
- *    There are 4 "widgetFamily"s: text, icon, drawn and switch.  States are handled by storing member's
+ *    There are 5 "widgetFamily"s: text, input, icon, drawn and switch.  States are handled by storing member's
  *    iconX, textX, cssX where X is the state.  The corresponding members are "shown" whenever the state changes.
  *    CSS classes are used throughout to attach events to correct widgets, as well as control appearance.
  *    The JSON type is used to send changes to JSON server and to listen for changes made elsewhere.
@@ -12,7 +13,7 @@
  *    Switch widgets are handled by drawing directly on an individual javascript "canvas", placed in a flexbox layout.
  *
  *  See java/src/jmri/server/json/JsonNamedBeanSocketService.java#onMessage() for GET method that adds a listener.
- *  See JMRI Web Server - Panel Servlet in help/en/html/web/PanelServlet.shtmlHelp for an example description of
+ *  See JMRI Web Server - Panel Servlet in help/en/html/web/PanelServlet.shtml for an example description of
  *  the interaction between the Web Servlets, the Web Browser and the JMRI application.
  *
  *  TODO: show error dialog while retrying connection
@@ -21,12 +22,12 @@
  *  TODO: update drawn track on color and width changes (would need to create system objects to reflect these chgs)
  *  TODO: research movement of locoicons ("promote" locoicon to system entity in JMRI?, add panel-level listeners?)
  *  TODO: deal with mouseleave, mouseout, touchout, etc. Slide off Stop button on rb1 for example.
- *  TODO: handle inputs/selection on various memory widgets
- *  TODO: alignment of memoryIcons without fixed width is very different.  Recommended workaround is to use fixed width.
- *  TODO:    ditto for sensorIcons with text
+ *  TODO: handle memoryComboIcon
+ *  TODO: alignment of text sensorIcons without fixed width is very different.  Recommended workaround is to use fixed width.
  *  TODO: add support for slipturnouticon (one2beros)
  *  TODO: handle (and test) disableWhenOccupied for layoutslip
  *  TODO: handle block color and track widths for turntable raytracks
+ *  TODO: fix JMRI WARN about username on memoryicons
  *
  **********************************************************************************************/
 
@@ -53,6 +54,10 @@ var $unknownColor = 'gray';
 var $showUserName = 'no';
 var DOWNEVENT = 'touchstart mousedown';  // check both touch and mouse events
 var UPEVENT = 'touchend mouseup';
+var BLUR = 'blur';
+var KEYUP = 'keyup';
+var CHANGE = 'change';
+
 var SIZE = 3;               // default factor for circles
 
 var UNKNOWN = '0';          // constants to match JSON Server state names
@@ -184,8 +189,14 @@ function processPanelXML($returnedData, $success, $xhr) {
     $($panel[0].attributes).each(function() {
         $gPanel[this.name] = this.value;
     });
-    $("#panel-area").width($gPanel.panelwidth);
-    $("#panel-area").height($gPanel.panelheight);
+    $("#panel-area").width($gPanel.width);
+    $("#panel-area").height($gPanel.height);
+
+    //override "Allow Layout Control" attribute when protect parm set to "yes"
+    var protect = getParameterByName("protect");
+    if (protect == "yes") {
+        $gPanel["controlling"] = "no";
+    }
 
     // insert the canvas layer and set up context used by LayoutEditor "drawn" objects, set some defaults
     if ($gPanel.paneltype == "LayoutPanel") {
@@ -193,8 +204,6 @@ function processPanelXML($returnedData, $success, $xhr) {
     }
 
     // set up context used by SwitchboardEditor "beanswitch" objects, set some defaults
-    var $swWidthPx;
-    var $swHeightPx;
     if ($gPanel.paneltype == "Switchboard") {
         $("#panel-area").width("100%"); // reset to fill the (mobile) screen
         $("#panel-area").height("100%"); // reset to fill the (mobile) screen
@@ -251,6 +260,11 @@ function processPanelXML($returnedData, $success, $xhr) {
             //default various css attributes to not-set, then set in later code as needed
             var $hoverText = "";
 
+            //set value as JMRI would if "Allow Layout Control" turned off
+            if ($gPanel.controlling != "yes") {
+                $widget['forcecontroloff'] = "true";
+            }
+
             // add and normalize the various type-unique values, from the various spots they are stored
             // icon names based on states returned from JSON server,
             $widget['state'] = UNKNOWN; //initial state is unknown
@@ -261,6 +275,7 @@ function processPanelXML($returnedData, $success, $xhr) {
             }
             $widget["id"] = "widget-" + $gUnique(); //set id to a unique value (since same element can be in multiple widgets)
             $widget['widgetFamily'] = $getWidgetFamily($widget, this);
+            $widget['extraAttributes'] = ""; //some type-specific attrs
             var $jc = "";
             if (isDefined($widget["class"])) {
                 var $ta = $widget["class"].split('.'); //get last part of java class name for a css class
@@ -277,6 +292,11 @@ function processPanelXML($returnedData, $success, $xhr) {
             if ($widget.hidden == "yes") {
                 $widget.classes += " hidden ";
             }
+            if (isDefined($widget.showtooltip) && $widget.showtooltip == "true") { //set tooltip for custom tooltip
+                var ht = $(this).find('tooltip').text();
+                if (ht != "") $widget['hoverText'] = ht;
+            } 
+
             // set additional values in this widget
             switch ($widget.widgetFamily) {
                 case "icon" :
@@ -579,7 +599,6 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['name'] = $widget.memory; //normalize name
                             $widget.jsonType = "memory"; // JSON object type
                             $widget['state'] = null; //set initial state to null
-                            $widget['iconnull']="/web/images/transparent_19x16.png"; //transparent image for null value
                             var memorystates = $(this).find('memorystate');
                             memorystates.each(function(i, item) {  //get any memorystates defined
                                 //store icon url in "iconXX" where XX is the state to match
@@ -676,6 +695,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                     break;
 
                 case "text" :
+                case "input" :
                     $widget['styles'] = $getTextCSSFromObj($widget);
                     switch ($widget.widgetType) {
                         case "audioicon" :
@@ -749,15 +769,6 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget["systemName"] = $widget.name;
                             jmri.getMemory($widget["systemName"]);
                             break;
-                        case "memoryicon" :
-                            $widget['name'] = $widget.memory; //normalize name
-                            $widget.jsonType = "memory"; // JSON object type
-                            $widget['text'] = $widget.memory; //use name for initial text
-                            $widget['state'] = $widget.memory; //use name for initial state as well
-                            if (isUndefined($widget["systemName"]))
-                                $widget["systemName"] = $widget.name;
-                            jmri.getMemory($widget["systemName"]);
-                            break;
                         case "reportericon" :
                             $widget['name'] = $widget.reporter; //normalize name
                             $widget.jsonType = "reporter"; // JSON object type
@@ -773,13 +784,32 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['state'] = $widget.name; //use name for initial state as well
                             jmri.getBlock($widget["systemName"]);
                             break;
+                        case "memoryicon" :
                         case "memoryInputIcon" :
                         case "memoryComboIcon" :
+                            if ($widget.class.indexOf("MemorySpinnerIcon") >= 0) {  //fix for JMRI's bad element naming for this one
+                                $widget.widgetType = "memorySpinnerIcon";
+                                $widget.widgetFamily = "input";
+                                $widget.classes = $widget.classes.replace("memoryicon text", "memorySpinnerIcon input");
+                                $widget['extraAttributes'] = "type='number' min='0' max='100'"; 
+                            }
                             $widget['name'] = $widget.memory; //normalize name
                             $widget.jsonType = "memory"; // JSON object type
                             $widget['text'] = $widget.memory; //use name for initial text
                             $widget['state'] = $widget.memory; //use name for initial state as well
-                            $widget.styles['border'] = "1px solid black" //add border for looks (temporary)
+                            if (isUndefined($widget.styles.width)) { //set missing width
+                                if (isDefined($widget.colWidth)) { 
+                                    $widget.styles['width'] = $widget.colWidth + "em";
+                                } else {
+                                    $widget.styles['width'] = "5em";
+                                }
+                            }
+                            var items = $(this).find('itemList').children('item');
+                            $widget['items'] = [];
+                            items.each(function(i, item) {  //get any itemlist defined
+                                 //store item list in items array
+                                $widget.items[item.attributes['index'].value] = item.textContent;
+                            });                            
                             if (isUndefined($widget["systemName"]))
                                 $widget["systemName"] = $widget.name;
                             jmri.getMemory($widget["systemName"]);
@@ -800,8 +830,28 @@ function processPanelXML($returnedData, $success, $xhr) {
                     }
                     $gWidgets[$widget.id] = $widget; //store widget in persistent array
 
-                    $("#panel-area").append("<div id=" + $widget.id + " class='" + $widget.classes + "'>" +
-                        $widget.text + "</div>");
+                    var $hoverText = "";  //add html for hoverText (custom tooltip) if populated
+                    if (isDefined($widget.hoverText)) {
+                        $hoverText = " title='" + $widget.hoverText + "' alt='" + $widget.hoverText + "' ";
+                    }
+
+                    if ($widget.widgetFamily=="input") {
+                        if ($widget.widgetType=="memoryComboIcon") {
+                            var s = "<select id=" + $widget.id + " class='" + $widget.classes + 
+                                "' value='" + $widget.text + "' " + $widget.extraAttributes + $hoverText + " >";
+                            $($widget.items).each(function(i, item) {
+                                s += " <option value='"+ item + "'>" + item + "</option>";
+                            });
+                            s +="</select>";
+                            $("#panel-area").append(s);
+                        } else {                        
+                            $("#panel-area").append("<input id=" + $widget.id + " class='" + $widget.classes + 
+                                "' value='" + $widget.text + "' " + $widget.extraAttributes + $hoverText + " >");
+                        }                        
+                    } else {
+                        $("#panel-area").append("<div id=" + $widget.id + " class='" + $widget.classes + $hoverText + "'>" +
+                            $widget.text + "</div>");
+                    }
                     $("#panel-area>#" + $widget.id).css($widget.styles); // apply style array to widget
                     $setWidgetPosition($("#panel-area>#" + $widget.id));
                     break;
@@ -1381,6 +1431,13 @@ function processPanelXML($returnedData, $success, $xhr) {
             sendElementChange($gWidgets[this.id].jsonType, $gWidgets[this.id].systemName, INACTIVE);  //send inactive on up
         });
 
+        //check for update keys and update when needed
+        $('input.input').bind(KEYUP, $handleInputKeyUp);
+        //update when leaving the input
+        $('input.input').bind(BLUR, $handleInputBlur);
+        //and update when select input is changed
+        $('select.input').bind(CHANGE, $handleInputBlur);
+
         // Switchboard All Off/All On buttons
         $(".lightswitch#allOff").bind(UPEVENT, $handleClickAllOff); // all Lights Off
         $(".lightswitch#allOn").bind(UPEVENT, $handleClickAllOn); // all Lights On
@@ -1638,6 +1695,27 @@ function $handleClickAllOff(e) { // click button on Switchboards
             sendElementChange($widget.jsonType, $widget.systemName, THROWN);
         }
     });
+};
+
+//update memory or restore the value when certain keystrokes occur
+function $handleInputKeyUp(e) {
+    if (e.keyCode == 13 || e.keyCode == 9) { //on [Enter] or [Tab], send new value to server
+        var newVal = $(this).val();
+        var $id = $(this).attr('id');
+        var $widget = $gWidgets[$id];
+        jmri.setMemory($widget.systemName, newVal);
+    } else if (e.keyCode == 27) { //on [Escape], restore the previous value
+        var oldValue = $(this).data("oldValue")
+        $(this).val(oldValue);        
+    }
+};
+
+//update memory when the focus is lost
+function $handleInputBlur(e) {
+    var newVal = $(this).val();
+    var $id = $(this).attr('id');
+    var $widget = $gWidgets[$id];
+    jmri.setMemory($widget.systemName, newVal);
 };
 
 // End of Click Handling functions
@@ -2106,6 +2184,10 @@ var $setWidgetState = function($id, $newState, data) {
                 }
                 $reDrawIcon($widget);
                 break;
+            case "input" :
+                $('#' + $id).val($newState);                //update the input
+                $('#' + $id).data("oldValue", $newState);   //save the current value if needed for [Escape]
+                break;
             case "text" :
                 if ($widget.jsonType == "memory" || $widget.jsonType == "block" || $widget.jsonType == "reporter" ) {
                     if ($widget.widgetType == "fastclock") {
@@ -2384,12 +2466,15 @@ var $getWidgetFamily = function($widget, $element) {
     switch ($widget.widgetType) {
         case "locoicon" :
         case "trainicon" :
-        case "memoryComboIcon" :
-        case "memoryInputIcon" :
         case "fastclock" :
         case "BlockContentsIcon" :
         case "reportericon" :
             return "text";
+            break;
+        case "memorySpinnerIcon" :
+        case "memoryComboIcon" :
+        case "memoryInputIcon" :
+            return "input";
             break;
         case "positionablelabel" :
         case "audioicon" :
@@ -2501,7 +2586,7 @@ $(document).ready(function() {
     }
     // setup the functional menu items
     $("#navbar-panel-reload > a").attr("href", location.href);
-    $("#navbar-panel-xml > a").attr("href", location.href + "?format=xml");
+    $("#navbar-panel-xml > a").attr("href", location.pathname + "?format=xml");
     // show panel thumbnails if no panel name
     listPanels(panelName);
     if (panelName === null || typeof (panelName) === undefined) {
@@ -2896,8 +2981,8 @@ function $drawTrackSegment($widget) {
         $width = $gPanel.mainlinetrackwidth;
     }
 
-    //set trackcolor based on blockcolor
-    var $color = $gPanel.defaulttrackcolor;
+    var $color = $getTrackColor($widget);
+
     var $blk = $gBlks[$widget.blockname];
     if (isDefined($blk)) {
         $color = $blk.blockcolor;
@@ -3072,7 +3157,7 @@ function $drawTurntable($widget) {
         var $t1 = [];
         $t1['x'] = $t.x - (($t.x - $txcen) * f);
         $t1['y'] = $t.y - (($t.y - $tycen) * f);
-        $drawLine($t1.x, $t1.y, $t.x, $t.y, $gPanel.defaulttrackcolor, $gPanel.sidelinetrackwidth);
+        $drawLine($t1.x, $t1.y, $t.x, $t.y, $getTrackColor($widget), $gPanel.sidelinetrackwidth);
 
         if (isDefined(item.attributes.turnout) && ($gPanel.controlling == "yes")) {
             // var turnout = item.attributes.turnout.value;
@@ -3100,7 +3185,7 @@ function $drawTurntable($widget) {
             $t2['x'] = $txcen - ($tr * Math.sin($angle));
             $t2['y'] = $tycen + ($tr * Math.cos($angle));
             if (drawFlag) {
-                $drawLine($t1.x, $t1.y, $t2.x, $t2.y, $gPanel.defaulttrackcolor, $gPanel.sidelinetrackwidth);
+                $drawLine($t1.x, $t1.y, $t2.x, $t2.y, $getTrackColor($widget), $gPanel.sidelinetrackwidth);
             } else {
                 $drawLine($t1.x, $t1.y, $t2.x, $t2.y, $gPanel.backgroundcolor, $gPanel.sidelinetrackwidth);
             }
@@ -3108,8 +3193,8 @@ function $drawTurntable($widget) {
     });
 
     var $turntablecirclelinewidth = 2; //matches LayoutTurntableView.java
-    $drawCircle($txcen, $tycen, $tr, $gPanel.defaulttrackcolor, $turntablecirclelinewidth);
-    $drawCircle($txcen, $tycen, $tr / 4, $gPanel.defaulttrackcolor, $turntablecirclelinewidth);
+    $drawCircle($txcen, $tycen, $tr, $getTrackColor($widget), $turntablecirclelinewidth);
+    $drawCircle($txcen, $tycen, $tr / 4, $getTrackColor($widget), $turntablecirclelinewidth);
 }   //$drawTurntable
 
 //draw a LevelXing (pass in widget)
@@ -3118,44 +3203,11 @@ function $drawLevelXing($widget) {
     if ($widget.hidden == "yes") {
         return;
     }
-    //get track widths
-    var $widthAC = $gPanel.sidelinetrackwidth;
-    if (isDefined($gWidgets[$widget.connectaname])) {
-        if ($gWidgets[$widget.connectaname].mainline == "yes") {
-            $widthAC = $gPanel.mainlinetrackwidth;
-        }
-    }
-    if (isDefined($gWidgets[$widget.connectcname])) {
-        if ($gWidgets[$widget.connectcname].mainline == "yes") {
-            $widthAC = $gPanel.mainlinetrackwidth;
-        }
-    }
-
-    var $widthBD = $gPanel.sidelinetrackwidth;
-    if (isDefined($gWidgets[$widget.connectbname])) {
-        if ($gWidgets[$widget.connectbname].mainline == "yes") {
-            $widthBD = $gPanel.mainlinetrackwidth;
-        }
-    }
-    if (isDefined($gWidgets[$widget.connectdname])) {
-        if ($gWidgets[$widget.connectdname].mainline == "yes") {
-            $widthBD = $gPanel.mainlinetrackwidth;
-        }
-    }
-
-    //  set trackcolor and width based on block
-    var $colorAC = $gPanel.defaulttrackcolor;
-    var $blkAC = $gBlks[$widget.blocknameac];
-    if (isDefined($blkAC)) {
-        $colorAC = $blkAC.blockcolor;
-        $widthAC = $gPanel.sidelineblockwidth;
-    }
-    var $colorBD = $gPanel.defaulttrackcolor;
-    var $blkBD = $gBlks[$widget.blocknamebd];
-    if (isDefined($blkBD)) {
-        $colorBD = $blkBD.blockcolor;
-        $widthBD = $gPanel.sidelineblockwidth;
-    }
+    //set colors and widths based on connected segments and blocks
+    var $colorAC = $getLegColor($gWidgets[$widget.connectaname], $widget.blocknameac);
+    var $colorBD = $getLegColor($gWidgets[$widget.connectbname], $widget.blocknamebd);
+    var $widthAC = $getLegWidth($gWidgets[$widget.connectaname], $widget.blocknameac);
+    var $widthBD = $getLegWidth($gWidgets[$widget.connectbname], $widget.blocknamebd);
 
     //retrieve the points
     var cen = [$widget.xcen, $widget.ycen];
@@ -3173,72 +3225,33 @@ function $drawLevelXing($widget) {
 
 //draw a Turnout (pass in widget)
 //  see LayoutTurnout.draw()
+// colors and widths based on side vs main then block color, turnout can be all one block, or several blocks
 function $drawTurnout($widget) {
     //if set to hidden, don't draw anything
     if ($widget.hidden == "yes") {
         return;
     }
-
-    //get widths
-    var $sideWidth = $gPanel.sidelinetrackwidth;
-    var $mainWidth = $gPanel.mainlinetrackwidth;
-    var $widthA = $sideWidth;
-    if (isDefined($gWidgets[$widget.connectaname])) {
-        if ($gWidgets[$widget.connectaname].mainline == "yes") {
-            $widthA = $mainWidth;
-        }
-    }
-    var $widthB = $sideWidth;
-    if (isDefined($gWidgets[$widget.connectbname])) {
-        if ($gWidgets[$widget.connectbname].mainline == "yes") {
-            $widthB = $mainWidth;
-        }
-    }
-    var $widthC = $sideWidth;
-    if (isDefined($gWidgets[$widget.connectcname])) {
-        if ($gWidgets[$widget.connectcname].mainline == "yes") {
-            $widthC = $mainWidth;
-        }
-    }
-    var $widthD = $sideWidth;
-    if (isDefined($gWidgets[$widget.connectdname])) {
-        if ($gWidgets[$widget.connectdname].mainline == "yes") {
-            $widthD = $mainWidth;
-        }
-    }
-
-    //get colors
+ 
+    //set erase color and width
     var $eraseColor = $gPanel.backgroundcolor;
-    var $trackColor = $gPanel.defaulttrackcolor;
+    var $eraseWidth = $gPanel.mainlinetrackwidth;
+ 
+    //set colors and widths based on connected segments and blocks
+    var $colorA = $getLegColor($gWidgets[$widget.connectaname], $widget.blockname);
+    var $colorB = $getLegColor($gWidgets[$widget.connectbname], 
+        ($widget.blockbname ? $widget.blockbname : $widget.blockname)); //use bname if set
+    var $colorC = $getLegColor($gWidgets[$widget.connectcname], 
+        ($widget.blockcname ? $widget.blockcname : $widget.blockname)); //use cname if set
+    var $colorD = $getLegColor($gWidgets[$widget.connectdname], 
+        ($widget.blockdname ? $widget.blockdname : $widget.blockname)); //use dname if set
 
-    //set track colors and widths based on block colors, use A if others not populated
-    var $colorA = $trackColor;
-    var $blkA = $gBlks[$widget.blockname];
-    if (isDefined($blkA)) {
-        $colorA = $blkA.blockcolor;
-        $widthA = $gPanel.sidelineblockwidth;
-    }
-    var $colorB = $colorA;
-    var $widthB = $widthA;
-    var $blkB = $gBlks[$widget.blockbname];
-    if (isDefined($blkB)) {
-        $colorB = $blkB.blockcolor;
-        $widthB = $gPanel.sidelineblockwidth;
-    }
-    var $colorC = $colorA;
-    var $widthC = $widthA;
-    var $blkC = $gBlks[$widget.blockcname];
-    if (isDefined($blkC)) {
-        $colorC = $blkC.blockcolor;
-        $widthC = $gPanel.sidelineblockwidth;
-    }
-    var $colorD = $colorA;
-    var $widthD = $widthA;
-    var $blkD = $gBlks[$widget.blockdname];
-    if (isDefined($blkD)) {
-        $colorD = $blkD.blockcolor;
-        $widthD = $gPanel.sidelineblockwidth;
-    }
+    var $widthA = $getLegWidth($gWidgets[$widget.connectaname], $widget.blockname);
+    var $widthB = $getLegWidth($gWidgets[$widget.connectbname], 
+        ($widget.blockbname ? $widget.blockbname : $widget.blockname)); //use bname if set
+    var $widthC = $getLegWidth($gWidgets[$widget.connectcname], 
+        ($widget.blockcname ? $widget.blockcname : $widget.blockname)); //use cname if set
+    var $widthD = $getLegWidth($gWidgets[$widget.connectdname], 
+        ($widget.blockdname ? $widget.blockdname : $widget.blockname)); //use dname if set
 
     var cen = [$widget.xcen * 1, $widget.ycen * 1]
     var a = $getPoint($widget.ident + ".TURNOUT_A");
@@ -3258,13 +3271,13 @@ function $drawTurnout($widget) {
             if ($widget.state == $widget.continuing) {
                 $drawLineP(cen, c, $eraseColor, $widthC); //erase center to C (diverging leg)
                 if ($gPanel.turnoutdrawunselectedleg == 'yes') {
-                    $drawLineP(c, $point_midpoint(cen, c), $colorB, $widthC); //C to midC (diverging leg)
+                    $drawLineP(c, $point_midpoint(cen, c), $colorC, $widthC); //C to midC (diverging leg)
                 }
                 $drawLineP(cen, b, $colorB, $widthB); //center to B (straight leg)
             } else {
                     $drawLineP(cen, b, $eraseColor, $widthB); //erase center to B (straight leg)
                 if ($gPanel.turnoutdrawunselectedleg == 'yes') {
-                    $drawLineP(b, $point_midpoint(cen, b), $colorC, $widthB); //B to midB (straight leg)
+                    $drawLineP(b, $point_midpoint(cen, b), $colorB, $widthB); //B to midB (straight leg)
                 }
                 $drawLineP(cen, c, $colorC, $widthC); //center to C (diverging leg)
             }
@@ -3281,11 +3294,11 @@ function $drawTurnout($widget) {
         var cd = $point_midpoint(c, d);
 
         if ($widget.state == CLOSED || $widget.state == THROWN) {
-            $drawLineP(a, b, $eraseColor, $mainWidth);      //erase A to B
-            $drawLineP(c, d, $eraseColor, $mainWidth);      //erase C to D
-            $drawLineP(ab, cd, $eraseColor, $mainWidth);    //erase midAB to midDC
-            $drawLineP(a, c, $eraseColor, $mainWidth);      //erase A to C
-            $drawLineP(b, d, $eraseColor, $mainWidth);      //erase B to D
+            $drawLineP(a, b, $eraseColor, $eraseWidth);      //erase A to B
+            $drawLineP(c, d, $eraseColor, $eraseWidth);      //erase C to D
+            $drawLineP(ab, cd, $eraseColor, $eraseWidth);    //erase midAB to midDC
+            $drawLineP(a, c, $eraseColor, $eraseWidth);      //erase A to C
+            $drawLineP(b, d, $eraseColor, $eraseWidth);      //erase B to D
             if ($widget.state == $widget.continuing) {
                 //draw closed legs
                 $drawLineP(a, ab, $colorA, $widthA);    //A to mid ab
@@ -3396,6 +3409,57 @@ function $drawTurnout($widget) {
     }
 }   // function $drawTurnout($widget)
 
+// compute width of turnout leg based on connected segment, then block type
+function $getLegWidth(cs, bn) {
+    var width = $gPanel.sidelinetrackwidth;
+    if (isDefined(cs)) {
+        if (cs.mainline == "yes") {
+            width = $gPanel.mainlinetrackwidth;
+        }
+        var blk = $gBlks[bn];
+        if (isDefined(blk)) {
+            if (cs.mainline=="yes") {        
+                width = $gPanel.mainlineblockwidth;;
+            } else {
+                width = $gPanel.sidelineblockwidth;;
+            }
+        }
+    }
+    return width;
+}
+
+// compute color of turnout leg based on connected segment, then its block color
+function $getLegColor(cs, bn) {
+    var color = $gPanel.defaulttrackcolor;
+    if (isDefined(cs)) {
+        if (isDefined($gPanel.mainRailColor) && (cs.mainline == "yes")) {
+            color = $gPanel.mainRailColor;
+        } else {
+            if (isDefined($gPanel.sideRailColor)) {
+                color = $gPanel.sideRailColor;
+            }
+        }
+        var blk = $gBlks[bn];
+        if (isDefined(blk)) {
+            color = blk.blockcolor;
+        }
+    }
+    return color;
+       
+}   // function $getLegColor()
+
+//set trackcolor by default, then main/side
+var $getTrackColor = function(e) {
+    var color = $gPanel.defaulttrackcolor;
+    if (isDefined($gPanel.mainRailColor) && (e.mainline == "yes")) {
+        color = $gPanel.mainRailColor;
+    }
+    if (isDefined($gPanel.sideRailColor) && (e.mainline != "yes")) {
+        color = $gPanel.sideRailColor;
+    }
+    return color;
+}
+
 //draw a Slip (pass in widget)
 //  see LayoutSlip.draw()
 function $drawSlip($widget) {
@@ -3445,7 +3509,7 @@ function $drawSlip($widget) {
     var d = $getPoint($widget.ident + SLIP_D);
 
     var $eraseColor = $gPanel.backgroundcolor;
-    var $trackColor = $gPanel.defaulttrackcolor;
+    var $trackColor = $getTrackColor($widget);
 
     var $blkA = $gBlks[$widget.blockname];
     var $colorA = isDefined($blkA) ? $blkA.blockcolor : $trackColor;

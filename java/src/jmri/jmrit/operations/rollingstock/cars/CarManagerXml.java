@@ -85,6 +85,11 @@ public class CarManagerXml extends OperationsXml implements InstanceManagerAutoD
             log.debug("{} file could not be read", name);
             return;
         }
+        
+        if (!root.getName().equals("operations-config")) {
+            log.warn("OperationsPro car file corrupted");
+            return;
+        }
 
         InstanceManager.getDefault(CarRoads.class).load(root);
         InstanceManager.getDefault(CarTypes.class).load(root);

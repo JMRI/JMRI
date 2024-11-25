@@ -227,8 +227,10 @@ public class AutoAllocate implements Runnable {
                                 ar.getSection().getDisplayName());
                         // if the last allocated section is safe but not
                         // occupied short cut out of here
-                        if (arCurrentTransitSection.isSafe() &&
-                                activeTrain.getLastAllocatedSection().getOccupancy() != Section.OCCUPIED) {
+                        if ( (activeTrain.getLastAllocOverrideSafe() == null ||
+                                    ( activeTrain.getLastAllocOverrideSafe() != arCurrentTransitSection.getSection()))
+                                && arCurrentTransitSection.isSafe()
+                                && activeTrain.getLastAllocatedSection().getOccupancy() != Section.OCCUPIED) {
                             log.debug("Allocating Train [{}] has not arrived at Passing Point",
                                     trainName);
                             continue;
@@ -771,6 +773,8 @@ public class AutoAllocate implements Runnable {
             if (allocateBySafeSections &&
                     (curAS != null) &&
                     ((curAS.getSection().getOccupancy() != jmri.Section.OCCUPIED) &&
+                            (ar.getActiveTrain().getLastAllocOverrideSafe() == null ||
+                                    ( ar.getActiveTrain().getLastAllocOverrideSafe() != curAS.getSection())) &&
                             ar.getActiveTrain().getTransit()
                                     .getTransitSectionFromSectionAndSeq(curAS.getSection(), curSeq).isSafe())) {
                 // last allocated section exists and is not occupied but is a

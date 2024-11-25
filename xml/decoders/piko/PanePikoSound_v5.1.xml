@@ -10,7 +10,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
 	<copyright xmlns="http://docbook.org/ns/docbook">
 		<year>2022</year>
 		<holder>JMRI</holder>
@@ -54,8 +54,14 @@
 			<authorinitials>UG</authorinitials>
 			<revremark>Add English translations</revremark>
 		</revision>
+		<revision>
+			<revnumber>5</revnumber>
+			<date>2024-04-01</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Add Decoder ML4000</revremark>
+		</revision>
 	</revhistory>
-	<name>Sound Volume</name>
+	<name>Sound Levels</name>
 	<name xml:lang="ca">Volum de so</name>
 	<name xml:lang="cs">Hladiny zvuku</name>
 	<name xml:lang="da">Lydstyrker</name>
@@ -63,7 +69,7 @@
 	<name xml:lang="fr">Volume des Sons</name>
 	<name xml:lang="it">Livelli dei Suoni</name>
 	<name xml:lang="nl">Geluidvolume</name>
-	<group exclude="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16">
+	<group exclude="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16,PIKO56627-22">
 		<!--Piko SmartDecoder XP5.1-->
 		<label>
 			<text>CV Bank not available for this Piko SmartDecoder</text>
@@ -74,7 +80,7 @@
 			</label>
 		</row>
 	</group>
-	<group include="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16">
+	<group include="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16,PIKO56627-22">
 		<!--Piko SmartDecoder XP5.1-->
 		<group include="PIKO SmartDecoder XP5.1 (version 1.1+)">
 			<label>

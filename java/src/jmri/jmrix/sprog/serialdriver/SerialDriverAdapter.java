@@ -1,5 +1,6 @@
 package jmri.jmrix.sprog.serialdriver;
 
+import jmri.jmrix.*;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 import jmri.jmrix.sprog.SprogPortController;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
@@ -72,14 +73,14 @@ public class SerialDriverAdapter extends SprogPortController {
         setFlowControl(currentSerialPort, FlowControl.NONE);
 
         // add Sprog Traffic Controller as event listener
-        currentSerialPort.addDataListener( new com.fazecast.jSerialComm.SerialPortDataListener() {
-            @Override 
+        currentSerialPort.addDataListener( new SerialPortDataListener() {
+            @Override
             public int getListeningEvents() {
                 log.trace("getListeningEvents");
-                return com.fazecast.jSerialComm.SerialPort.LISTENING_EVENT_DATA_AVAILABLE;
+                return SerialPort.LISTENING_EVENT_DATA_AVAILABLE;
             }
             @Override
-            public void serialEvent(com.fazecast.jSerialComm.SerialPortEvent event) {
+            public void serialEvent(SerialPortEvent event) {
                 log.trace("serial event start");
                 // invoke
                 getSystemConnectionMemo().getSprogTrafficController().handleOneIncomingReply();
@@ -97,7 +98,7 @@ public class SerialDriverAdapter extends SprogPortController {
     }
 
     /**
-     * Set the flow control. This method hide the 
+     * Set the flow control. This method hide the
      * actual serial port behind this object
      * @param flow Set flow control to RTS/CTS when true
      */
@@ -153,6 +154,11 @@ public class SerialDriverAdapter extends SprogPortController {
 
     @Override
     public void dispose() {
+        // if we've started a traffic controller, dispose of it
+        if (this.getSystemConnectionMemo() != null) {
+            if ( (this.getSystemConnectionMemo()).getSprogTrafficController() != null)
+                (this.getSystemConnectionMemo()).getSprogTrafficController().dispose();
+        }
         super.dispose();
     }
 

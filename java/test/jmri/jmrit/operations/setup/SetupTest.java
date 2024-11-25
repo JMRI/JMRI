@@ -90,9 +90,9 @@ public class SetupTest extends OperationsTestCase {
     
     @Test
     public void testEngineMessageComboBox() {
-        Assert.assertEquals("default size", 14, Setup.getEngineMessageComboBox().getItemCount());
+        Assert.assertEquals("default size", 15, Setup.getEngineMessageComboBox().getItemCount());
         Setup.setTabEnabled(true);
-        Assert.assertEquals("with tabs", 17, Setup.getEngineMessageComboBox().getItemCount());
+        Assert.assertEquals("with tabs", 18, Setup.getEngineMessageComboBox().getItemCount());
     }
     
     @Test

@@ -6,7 +6,7 @@ import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.TableRowOrColumn;
 import jmri.jmrit.logixng.actions.ActionCreateBeansFromTable;
-import jmri.jmrit.logixng.actions.NamedBeanType;
+import jmri.jmrit.logixng.NamedBeanType;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 
 import org.jdom2.Attribute;

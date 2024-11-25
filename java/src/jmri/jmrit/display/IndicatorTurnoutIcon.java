@@ -18,9 +18,6 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.ThreadingUtil;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * An icon to display a status and state of a color coded turnout.<p>
  * This responds to only KnownState, leaving CommandedState to some other
@@ -425,7 +422,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         _status = _pathUtil.getStatus(block, state);
         log.debug("setStatus _status= {} state= {} block= \"{}\"", _status, state, block.getDisplayName());
         if ((state & (OBlock.OCCUPIED | OBlock.RUNNING)) != 0) {
-            ThreadingUtil.runOnLayoutEventually(() -> {
+            ThreadingUtil.runOnGUIEventually(() -> {
                 _pathUtil.setLocoIcon(block, getLocation(), getSize(), _editor);
                 repaint();
             });
@@ -522,5 +519,6 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IndicatorTurnoutIcon.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(IndicatorTurnoutIcon.class);
+
 }

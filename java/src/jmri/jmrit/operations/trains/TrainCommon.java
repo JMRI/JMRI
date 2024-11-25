@@ -228,52 +228,64 @@ public class TrainCommon {
                 continue;
             }
             trackNames.add(track.getSplitName()); // use a track name once
-            // block pick up cars, except for passenger cars
-            for (RouteLocation rld : train.getTrainBlockingOrder()) {
-                for (Car car : carList) {
-                    if (Setup.isSortByTrackNameEnabled() &&
-                            !track.getSplitName().equals(car.getSplitTrackName())) {
-                        continue;
-                    }
-                    // Block cars
-                    // caboose or FRED is placed at end of the train
-                    // passenger cars are already blocked in the car list
-                    // passenger cars with negative block numbers are placed at
-                    // the front of the train, positive numbers at the end of
-                    // the train.
-                    if (isNextCar(car, rl, rld)) {
-                        // determine if header is to be printed
-                        if (_printPickupHeader && !car.isLocalMove()) {
-                            printPickupCarHeader(file, isManifest, !IS_TWO_COLUMN_TRACK);
-                            _printPickupHeader = false;
-                            // check to see if the other headers are needed. If
-                            // they are identical, not needed
-                            if (getPickupCarHeader(isManifest, !IS_TWO_COLUMN_TRACK)
-                                    .equals(getDropCarHeader(isManifest, !IS_TWO_COLUMN_TRACK))) {
-                                _printSetoutHeader = false;
-                            }
-                            if (getPickupCarHeader(isManifest, !IS_TWO_COLUMN_TRACK)
-                                    .equals(getLocalMoveHeader(isManifest))) {
-                                _printLocalMoveHeader = false;
-                            }
-                        }
-                        // use truncated format if there's a switch list
-                        boolean isTruncate = Setup.isPrintTruncateManifestEnabled() &&
-                                rl.getLocation().isSwitchListEnabled();
 
-                        if (car.isUtility()) {
-                            pickupUtilityCars(file, carList, car, isTruncate, isManifest);
-                        } else if (isManifest && isTruncate) {
-                            pickUpCarTruncated(file, car, isManifest);
-                        } else {
-                            pickUpCar(file, car, isManifest);
-                        }
-                        _pickupCars = true;
+            // car pick ups
+            blockCarsPickups(file, train, carList, rl, track, isManifest);
+
+            // now do car set outs and local moves
+            // group local moves first?
+            blockCarsSetoutsAndMoves(file, train, carList, rl, track, isManifest, false,
+                    Setup.isGroupCarMovesEnabled());
+            // set outs or both
+            blockCarsSetoutsAndMoves(file, train, carList, rl, track, isManifest, true,
+                    !Setup.isGroupCarMovesEnabled());
+
+            if (!Setup.isSortByTrackNameEnabled()) {
+                break; // done
+            }
+        }
+    }
+
+    private void blockCarsPickups(PrintWriter file, Train train, List<Car> carList, RouteLocation rl,
+            Track track, boolean isManifest) {
+        // block pick up cars, except for passenger cars
+        for (RouteLocation rld : train.getTrainBlockingOrder()) {
+            for (Car car : carList) {
+                if (Setup.isSortByTrackNameEnabled() &&
+                        !track.getSplitName().equals(car.getSplitTrackName())) {
+                    continue;
+                }
+                // Block cars
+                // caboose or FRED is placed at end of the train
+                // passenger cars are already blocked in the car list
+                // passenger cars with negative block numbers are placed at
+                // the front of the train, positive numbers at the end of
+                // the train.
+                if (isNextCar(car, rl, rld)) {
+                    // determine if pick up header is needed
+                    printPickupCarHeader(file, car, isManifest, !IS_TWO_COLUMN_TRACK);
+
+                    // use truncated format if there's a switch list
+                    boolean isTruncate = Setup.isPrintTruncateManifestEnabled() &&
+                            rl.getLocation().isSwitchListEnabled();
+
+                    if (car.isUtility()) {
+                        pickupUtilityCars(file, carList, car, isTruncate, isManifest);
+                    } else if (isManifest && isTruncate) {
+                        pickUpCarTruncated(file, car, isManifest);
+                    } else {
+                        pickUpCar(file, car, isManifest);
                     }
+                    _pickupCars = true;
                 }
             }
-            // now do set outs and local moves
-            for (Car car : carList) {
+        }
+    }
+
+    private void blockCarsSetoutsAndMoves(PrintWriter file, Train train, List<Car> carList, RouteLocation rl,
+            Track track, boolean isManifest, boolean isSetout, boolean isLocalMove) {
+        for (Car car : carList) {
+            if (!car.isLocalMove() && isSetout || car.isLocalMove() && isLocalMove) {
                 if (Setup.isSortByTrackNameEnabled() &&
                         car.getRouteLocation() != null &&
                         car.getRouteDestination() == rl) {
@@ -284,32 +296,8 @@ public class TrainCommon {
                     }
                 }
                 if (car.getRouteDestination() == rl && car.getDestinationTrack() != null) {
-                    if (_printSetoutHeader && !car.isLocalMove()) {
-                        printDropCarHeader(file, isManifest, !IS_TWO_COLUMN_TRACK);
-                        _printSetoutHeader = false;
-                        // check to see if the other headers are needed. If they
-                        // are identical, not needed
-                        if (getPickupCarHeader(isManifest, !IS_TWO_COLUMN_TRACK)
-                                .equals(getDropCarHeader(isManifest, !IS_TWO_COLUMN_TRACK))) {
-                            _printPickupHeader = false;
-                        }
-                        if (getDropCarHeader(isManifest, !IS_TWO_COLUMN_TRACK).equals(getLocalMoveHeader(isManifest))) {
-                            _printLocalMoveHeader = false;
-                        }
-                    }
-                    if (_printLocalMoveHeader && car.isLocalMove()) {
-                        printLocalCarMoveHeader(file, isManifest);
-                        _printLocalMoveHeader = false;
-                        // check to see if the other headers are needed. If they
-                        // are identical, not needed
-                        if (getPickupCarHeader(isManifest, !IS_TWO_COLUMN_TRACK)
-                                .equals(getLocalMoveHeader(isManifest))) {
-                            _printPickupHeader = false;
-                        }
-                        if (getDropCarHeader(isManifest, !IS_TWO_COLUMN_TRACK).equals(getLocalMoveHeader(isManifest))) {
-                            _printSetoutHeader = false;
-                        }
-                    }
+                    // determine if drop or move header is needed
+                    printDropOrMoveCarHeader(file, car, isManifest, !IS_TWO_COLUMN_TRACK);
 
                     // use truncated format if there's a switch list
                     boolean isTruncate = Setup.isPrintTruncateManifestEnabled() &&
@@ -325,9 +313,6 @@ public class TrainCommon {
                     }
                     _dropCars = true;
                 }
-            }
-            if (!Setup.isSortByTrackNameEnabled()) {
-                break; // done
             }
         }
     }
@@ -349,7 +334,6 @@ public class TrainCommon {
         return isNextCar(car, rl, rld, false);
     }
         
-        
     public static boolean isNextCar(Car car, RouteLocation rl, RouteLocation rld, boolean isIgnoreTrack) {
         Train train = car.getTrain();
         if (train != null &&
@@ -369,6 +353,52 @@ public class TrainCommon {
             return true;
         }
         return false;
+    }
+
+    private void printPickupCarHeader(PrintWriter file, Car car, boolean isManifest, boolean isTwoColumnTrack) {
+        if (_printPickupHeader && !car.isLocalMove()) {
+            printPickupCarHeader(file, isManifest, !IS_TWO_COLUMN_TRACK);
+            _printPickupHeader = false;
+            // check to see if the other headers are needed. If
+            // they are identical, not needed
+            if (getPickupCarHeader(isManifest, !IS_TWO_COLUMN_TRACK)
+                    .equals(getDropCarHeader(isManifest, !IS_TWO_COLUMN_TRACK))) {
+                _printSetoutHeader = false;
+            }
+            if (getPickupCarHeader(isManifest, !IS_TWO_COLUMN_TRACK)
+                    .equals(getLocalMoveHeader(isManifest))) {
+                _printLocalMoveHeader = false;
+            }
+        }
+    }
+
+    private void printDropOrMoveCarHeader(PrintWriter file, Car car, boolean isManifest, boolean isTwoColumnTrack) {
+        if (_printSetoutHeader && !car.isLocalMove()) {
+            printDropCarHeader(file, isManifest, !IS_TWO_COLUMN_TRACK);
+            _printSetoutHeader = false;
+            // check to see if the other headers are needed. If they
+            // are identical, not needed
+            if (getPickupCarHeader(isManifest, !IS_TWO_COLUMN_TRACK)
+                    .equals(getDropCarHeader(isManifest, !IS_TWO_COLUMN_TRACK))) {
+                _printPickupHeader = false;
+            }
+            if (getDropCarHeader(isManifest, !IS_TWO_COLUMN_TRACK).equals(getLocalMoveHeader(isManifest))) {
+                _printLocalMoveHeader = false;
+            }
+        }
+        if (_printLocalMoveHeader && car.isLocalMove()) {
+            printLocalCarMoveHeader(file, isManifest);
+            _printLocalMoveHeader = false;
+            // check to see if the other headers are needed. If they
+            // are identical, not needed
+            if (getPickupCarHeader(isManifest, !IS_TWO_COLUMN_TRACK)
+                    .equals(getLocalMoveHeader(isManifest))) {
+                _printPickupHeader = false;
+            }
+            if (getDropCarHeader(isManifest, !IS_TWO_COLUMN_TRACK).equals(getLocalMoveHeader(isManifest))) {
+                _printSetoutHeader = false;
+            }
+        }
     }
 
     /**
@@ -1368,6 +1398,9 @@ public class TrainCommon {
         if (attribute.equals(Setup.MODEL)) {
             return padAndTruncateIfNeeded(splitStringLeftParenthesis(engine.getModel()),
                     InstanceManager.getDefault(EngineModels.class).getMaxNameLength());
+        } else if (attribute.equals(Setup.HP)) {
+            return padAndTruncateIfNeeded(engine.getHp(), 5) +
+                    (Setup.isPrintHeadersEnabled() ? "" : TrainManifestHeaderText.getStringHeader_Hp());
         } else if (attribute.equals(Setup.CONSIST)) {
             return padAndTruncateIfNeeded(engine.getConsistName(),
                     InstanceManager.getDefault(ConsistManager.class).getMaxNameLength());
@@ -1487,7 +1520,8 @@ public class TrainCommon {
                         InstanceManager.getDefault(CarLengths.class).getMaxNameLength());
             } else if (attribute.equals(Setup.WEIGHT)) {
                 return padAndTruncateIfNeeded(Integer.toString(rs.getAdjustedWeightTons()),
-                        Control.max_len_string_weight_name);
+                        Control.max_len_string_weight_name) +
+                        (Setup.isPrintHeadersEnabled() ? "" : TrainManifestHeaderText.getStringHeader_Weight());
             } else if (attribute.equals(Setup.COLOR)) {
                 return padAndTruncateIfNeeded(rs.getColor(),
                         InstanceManager.getDefault(CarColors.class).getMaxNameLength());
@@ -1770,6 +1804,9 @@ public class TrainCommon {
             } else if (attribute.equals(Setup.MODEL)) {
                 buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Model(),
                         InstanceManager.getDefault(EngineModels.class).getMaxNameLength()) + SPACE);
+            } else if (attribute.equals(Setup.HP)) {
+                buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Hp(),
+                        5) + SPACE);
             } else if (attribute.equals(Setup.CONSIST)) {
                 buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Consist(),
                         InstanceManager.getDefault(ConsistManager.class).getMaxNameLength()) + SPACE);
@@ -1921,6 +1958,32 @@ public class TrainCommon {
             }
         }
         return TrainCommon.getDate(calendar.getTime());
+    }
+
+    public static Date convertStringToDate(String date) {
+        if (!date.isBlank()) {
+            // create a date object from the string.
+            try {
+                // try MM/dd/yyyy HH:mm:ss.
+                SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss"); // NOI18N
+                return formatter.parse(date);
+            } catch (java.text.ParseException pe1) {
+                // try the old 12 hour format (no seconds).
+                try {
+                    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mmaa"); // NOI18N
+                    return formatter.parse(date);
+                } catch (java.text.ParseException pe2) {
+                    try {
+                        // try 24hour clock.
+                        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm"); // NOI18N
+                        return formatter.parse(date);
+                    } catch (java.text.ParseException pe3) {
+                        log.debug("Not able to parse date: {}", date);
+                    }
+                }
+            }
+        }
+        return null; // there was no date specified.
     }
 
     /**

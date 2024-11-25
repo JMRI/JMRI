@@ -194,7 +194,7 @@ public class DefaultLogixNG extends AbstractNamedBean
     private void checkIfActiveAndEnabled() {
         if (isActive()) {
             registerListeners();
-            execute(true);
+            execute(true, true);
         } else {
             unregisterListeners();
         }
@@ -328,6 +328,12 @@ public class DefaultLogixNG extends AbstractNamedBean
 
     /** {@inheritDoc} */
     @Override
+    public boolean isActivated() {
+        return _isActive;
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public void execute() {
         for (ConditionalNG_Entry entry : _conditionalNG_Entries) {
             entry._conditionalNG.execute();
@@ -337,8 +343,17 @@ public class DefaultLogixNG extends AbstractNamedBean
     /** {@inheritDoc} */
     @Override
     public void execute(boolean allowRunDelayed) {
+        execute(allowRunDelayed, false);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void execute(boolean allowRunDelayed, boolean isStartup) {
         for (ConditionalNG_Entry entry : _conditionalNG_Entries) {
-            entry._conditionalNG.execute(allowRunDelayed);
+            ConditionalNG cng = entry._conditionalNG;
+            if (cng.isEnabled() && (!isStartup || cng.isExecuteAtStartup())) {
+                cng.execute(allowRunDelayed);
+            }
         }
     }
 
@@ -401,6 +416,12 @@ public class DefaultLogixNG extends AbstractNamedBean
         }
         writer.append(currentIndent);
         writer.append(getLongDescription(locale));
+        if (isInline()) {
+            writer.append(" ::: ").append(Bundle.getMessage("Inline"));
+        }
+        if (settings._printDisabled && !isEnabled()) {
+            writer.append(" ::: ").append(Bundle.getMessage("Disabled"));
+        }
         writer.println();
     }
 

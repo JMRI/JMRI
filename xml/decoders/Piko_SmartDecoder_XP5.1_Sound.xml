@@ -18,26 +18,28 @@
 	<version author="Ulrich Gerlach" version="4" lastUpdated="2023-10-20"/>
 	<version author="Ulrich Gerlach" version="5" lastUpdated="2023-10-20"/>
 	<version author="Ulrich Gerlach" version="6" lastUpdated="2023-12-03"/>
+	<version author="Ulrich Gerlach" version="7" lastUpdated="2024-03-27"/>
 	<!-- Version 1 - For Piko SmartDecoder XP5.1 Sound from FW 1.2.0. Copied and adapted from PIKO40501-18.xml Uses common parts -->
 	<!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
 	<!-- Version 2 - Updated lowVersionID, changed CV7-8 to use include file -->
 	<!-- Version 2.1 - Updated lowVersionID, This decoder definition is valid from VersionID=2 -->
 	<!-- Version 3 - For Piko SmartDecoder XP5.1 Sound. Add PIKO46551-18 decoder (BR 93) -->
 	<!-- Version 4 - For Piko SmartDecoder XP5.1 Sound. Add PIKO46505-18 decoder neutral (FW 1.8.0) -->
-	<!-- Version 5 - Obsolete, replaced by Piko_SmartDecoder_XP5.1_Sound_v1.5 or Piko_SmartDecoder_XP5.1_Sound_v1.8 -->
+	<!-- Version 5 - Obsolete version, replaced by Piko_SmartDecoder_XP5.1_Sound_v1.5 or Piko_SmartDecoder_XP5.1_Sound_v1.8 -->
 	<!-- Version 6 - Add English translations -->
+	<!-- Version 7 - highVersionID -->
 	<!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
 	<decoder>
-		<family name="PIKO SmartDecoder XP5.1 (old - not use)" mfg="PIKO" lowVersionID="3" highVersionID="15" comment="Decoders not sorted (necessarily) in numerical order">
+		<family name="PIKO SmartDecoder XP5.1 (old - not use)" mfg="PIKO" lowVersionID="3" highVersionID="9" comment="Decoders not sorted (necessarily) in numerical order">
 			<!-- to be checked by hardware owner -->
-			<model model="PIKO46550-18" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46550-18" lowVersionID="5" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 83.10 TT Next18 plug (Plus) (FW 1.5.0)" replacementModel="PIKO46550-18 BR83-TT V1.5" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
+			<model show="no" model="PIKO46550-18" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46550-18" lowVersionID="5" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 83.10 TT Next18 plug (Plus) (FW 1.5.0)" replacementModel="PIKO46550-18 BR83-TT V1.5" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.5+)">
 				<output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
 				<output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
 				<output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
 				<output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
 				<size length="21.5" width="10.5" height="3.7" units="mm"/>
 			</model>
-			<model model="PIKO46551-18" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46551-18" lowVersionID="8" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 93 TT Next18 plug (Plus) (FW 1.8.0)" replacementModel="PIKO46551-18 BR93-TT V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
+			<model show="no" model="PIKO46551-18" numOuts="4" numFns="68" maxMotorCurrent="1.0A" formFactor="N" connector="Next18" productID="PIKO46551-18" lowVersionID="8" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 93 TT Next18 plug (Plus) (FW 1.8.0)" replacementModel="PIKO46551-18 BR93-TT V1.8" replacementFamily="query:PIKO SmartDecoder XP5.1 (version 1.8+)">
 				<output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
 				<output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
 				<output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
@@ -121,8 +123,8 @@
 				<decVal max="255"/>
 				<label>Global volume for mfx control centers (CV 63)</label>
 				<label xml:lang="de">Globale Lautstärke für mfx-Zentralen (CV 63)</label>
-				<tooltip>Auxiliary CV = CV 257 on Bank 17</tooltip>
-				<tooltip xml:lang="de">Hilfs-CV = CV 257 von Bank 17</tooltip>
+				<tooltip>Auxiliary CV = CV 257 on Bank 16</tooltip>
+				<tooltip xml:lang="de">Hilfs-CV = CV 257 von Bank 16</tooltip>
 			</variable>
 			<!-- CV 66 -->
 			<xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim128.xml"/>

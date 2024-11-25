@@ -15,6 +15,7 @@
 
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no" >
     <version author="Petr Šídlo sidlo64@hotmail.com" version="1" lastUpdated="20200125"/>
+    <version version="2" author="Petr Šídlo sidlo64@hotmail.com" lastUpdated="20240810"/>
     <!-- Accessory decoder  -->
     <!-- Description of circuit diagram https://sites.google.com/site/sidloweb/elektrika/22-uni16ard -->
     <!-- Program description https://sites.google.com/site/sidloweb/elektrika/31-ard-8scom-tc-4vyh-12v -->
@@ -24,6 +25,7 @@
 
         <family name="dccdoma.cz" mfg="Public-domain and DIY" >
             <model model="ARD-8SCOM-4VYH-TC" lowVersionID="10" highVersionID="19" productID="16843521" maxInputVolts="24V AC" maxTotalCurrent="0.2A" numOuts="16" connector="other" />
+            <model model="ARD-8SCOM-4VYH-TC-2" lowVersionID="20" highVersionID="29" productID="16843521" maxInputVolts="24V AC" maxTotalCurrent="0.2A" numOuts="16" connector="other" />
         </family>
     
         <programming direct="yes" paged="yes" register="no" ops="no" />
@@ -85,6 +87,22 @@
         <tooltip xml:lang="cs">Adresa dekodéru návěstidla. CV36 - LSB. CV37 - MSB.</tooltip>
       </variable>
 
+      <variable item="Use OutputPower Off" CV="38" default="1" include="ARD-8SCOM-4VYH-TC-2" >
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Use OutputPower=Off</label>
+        <label xml:lang="cs">Použít OutputPower=Vypnuto</label>
+        <tooltip>Decoder will respond to DCC command with attribute OutputPower = Off.</tooltip>
+        <tooltip xml:lang="cs">Dekodér bude reagovat na DCC příkaz s atributem OutputPower = Vypnuto.</tooltip>
+      </variable>
+    
+      <variable item="Running In Queue" CV="39" default="1" include="ARD-8SCOM-4VYH-TC-2" >
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Running In Queue</label>
+        <label xml:lang="cs">Spouštět ve frontě</label>
+        <tooltip>Turnouts will be thrown successively one by one.</tooltip>
+        <tooltip xml:lang="cs">Výhybky budou přehazovány postupně jedna po druhé.</tooltip>
+      </variable>
+    
       <variable CV="42" item="Bit period" default="20" >
         <decVal min="4" max="30" />
         <label>Bit period:</label>
@@ -2259,6 +2277,8 @@
             <display item="Addressing" />
             <display item="Start delay" />
             <display item="Bit period" />
+            <display item="Use OutputPower Off" format="checkbox" />
+            <display item="Running In Queue" format="checkbox" />
             <display item="Key" />
             <display item="Lock" />
         </column>

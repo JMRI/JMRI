@@ -32,10 +32,10 @@ public class ToolsMenu extends JMenu {
 
     ConnectionConfig serModeProCon = null;
     ConnectionConfig opsModeProCon = null;
-    
+
     AbstractAction serviceAction = new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(Bundle.getMessage("MenuItemDecoderProServiceProgrammer"));
     AbstractAction opsAction = new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(Bundle.getMessage("MenuItemDecoderProOpsModeProgrammer"));
-        
+
     public ToolsMenu(String name) {
         this();
         setText(name);
@@ -46,7 +46,7 @@ public class ToolsMenu extends JMenu {
         super();
 
         setText(Bundle.getMessage("MenuTools"));
-        
+
         JMenu programmerMenu = new JMenu(Bundle.getMessage("MenuProgrammers"));
         programmerMenu.add(new jmri.jmrit.simpleprog.SimpleProgAction());
         programmerMenu.add(serviceAction);
@@ -173,12 +173,12 @@ public class ToolsMenu extends JMenu {
 
         add(new JSeparator());
         JMenu serverMenu = new JMenu(Bundle.getMessage("MenuServers"));
+        serverMenu.add(new jmri.web.server.WebServerAction());
         serverMenu.add(new jmri.jmrit.withrottle.WiThrottleCreationAction());
         serverMenu.add(new Z21serverCreationAction());
-        serverMenu.add(new jmri.web.server.WebServerAction());
         serverMenu.add(new JSeparator());
-        serverMenu.add(new jmri.jmris.srcp.JmriSRCPServerAction());
         serverMenu.add(new jmri.jmris.simpleserver.SimpleServerAction());
+        serverMenu.add(new jmri.jmris.srcp.JmriSRCPServerAction());
         add(serverMenu);
 
         add(new JSeparator());
@@ -239,7 +239,7 @@ public class ToolsMenu extends JMenu {
      * available.
      *
      * Adapted from similar named function in @link jmri.jmrit.roster.swing.RosterFrame.java
-     * 
+     *
      * @param evt the triggering event; if not null and if a removal of a
      *            ProgrammerManager, care will be taken not to trigger the
      *            automatic creation of a new ProgrammerManager
@@ -332,5 +332,5 @@ public class ToolsMenu extends JMenu {
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(jmri.jmrit.ToolsMenu.class);
-    
+
 }

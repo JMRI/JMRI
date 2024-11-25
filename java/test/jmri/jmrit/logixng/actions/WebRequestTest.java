@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import jmri.jmrit.logixng.NamedBeanType;
+
 import java.io.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
@@ -8,6 +10,7 @@ import java.util.ArrayList;
 import javax.net.ssl.HttpsURLConnection;
 
 import jmri.*;
+import jmri.configurexml.ShutdownPreferences;
 import static jmri.configurexml.StoreAndCompare.checkFile;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionTurnout;
@@ -17,11 +20,7 @@ import jmri.jmrit.logixng.util.LineEnding;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.*;
 
-import org.junit.After;
-import org.junit.Assume;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test WebRequest
@@ -174,7 +173,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 
         JUnitAppender.assertWarnMessageStartsWith("Log local variables:");
         JUnitAppender.assertWarnMessageStartsWith("Name: turnout, Value: MiamiWest");
-        JUnitAppender.assertWarnMessageStartsWith("Name: bean, Value: IT3");
+        JUnitAppender.assertWarnMessageStartsWith("Name: bean, Value: TorontoFirst");
         JUnitAppender.assertWarnMessageStartsWith("Global variables:");
         JUnitAppender.assertWarnMessageStartsWith("Global Name: responseCode, value: 200");
         JUnitAppender.assertWarnMessageStartsWith("Global Name: reply, value: Turnout MiamiWest is thrown");
@@ -191,7 +190,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
 
         JUnitAppender.assertWarnMessageStartsWith("Log local variables:");
         JUnitAppender.assertWarnMessageStartsWith("Name: turnout, Value: Chicago32");
-        JUnitAppender.assertWarnMessageStartsWith("Name: bean, Value: IT3");
+        JUnitAppender.assertWarnMessageStartsWith("Name: bean, Value: TorontoFirst");
         JUnitAppender.assertWarnMessageStartsWith("Global variables:");
         JUnitAppender.assertWarnMessageStartsWith("Global Name: responseCode, value: 200");
         JUnitAppender.assertWarnMessageStartsWith("Global Name: reply, value: Turnout Chicago32 is thrown");
@@ -206,16 +205,16 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         torontoFirst.setState(Turnout.THROWN);
         Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
         Assert.assertEquals("Turnout TorontoFirst is thrown", _replyVariable.getValue());
-/*
-        JUnitAppender.assertWarnMessageStartsWith("Log local variables:");
-        JUnitAppender.assertWarnMessageStartsWith("Name: turnout, Value: TorontoFirst");
-        JUnitAppender.assertWarnMessageStartsWith("Name: bean, Value: IT3");
-        JUnitAppender.assertWarnMessageStartsWith("Global variables:");
-        JUnitAppender.assertWarnMessageStartsWith("Global Name: responseCode, value: 200");
-        JUnitAppender.assertWarnMessageStartsWith("Global Name: reply, value: Turnout TorontoFirst is thrown");
-        JUnitAppender.assertWarnMessageStartsWith("Global Name: cookies, value: null");
-        JUnitAppender.assertWarnMessageStartsWith("Log local variables done");
-*/
+
+        // Suppress instead of assert these messages since they will not be there if the JMRI web server is down
+        JUnitAppender.suppressWarnMessageStartsWith("Log local variables:");
+        JUnitAppender.suppressWarnMessageStartsWith("Name: turnout, Value: TorontoFirst");
+        JUnitAppender.suppressWarnMessageStartsWith("Name: bean, Value: IT3");
+        JUnitAppender.suppressWarnMessageStartsWith("Global variables:");
+        JUnitAppender.suppressWarnMessageStartsWith("Global Name: responseCode, value: 200");
+        JUnitAppender.suppressWarnMessageStartsWith("Global Name: reply, value: Turnout TorontoFirst is thrown");
+        JUnitAppender.suppressWarnMessageStartsWith("Global Name: cookies, value: null");
+        JUnitAppender.suppressWarnMessageStartsWith("Log local variables done");
     }
 
     private void setupThrowTurnoutsConditionalNG() throws SocketAlreadyConnectedException, ParserException {
@@ -529,6 +528,8 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
                     new File(FileUtil.getProgramPath() + "help/en/html/tools/logixng/reference/WebRequestExample/" + "WebRequest.xml");
 
             try {
+                // Ignore Timebase changes
+                InstanceManager.getDefault(ShutdownPreferences.class).setIgnoreTimebase(true);
                 // Note: The comparision is made with the first xml file that doesn't have the header comment.
                 dataHasChanged = checkFile(fileInDocumentationFolder, firstFile);
             } catch (FileNotFoundException e) {
@@ -580,7 +581,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initLogixNGManager();
-        jmri.jmrit.logixng.actions.NamedBeanType.reset();
+        jmri.jmrit.logixng.NamedBeanType.reset();
 
         _category = Category.ITEM;
         _isExternal = true;

@@ -122,4 +122,10 @@ public interface ConditionalAction {
     public NamedBeanHandle<?> getNamedBean();
 
     public NamedBean getBean();
+
+    /**
+     * Dispose this ConditionalAction.
+     */
+    public void dispose();
+
 }

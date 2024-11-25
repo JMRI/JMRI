@@ -138,8 +138,11 @@ public class ExpressionLightSwing extends AbstractDigitalExpressionSwing {
         try {
             if (_tabbedPaneLightState.getSelectedComponent() == _panelLightStateReference) {
                 expression.setStateReference(_lightStateReferenceTextField.getText());
+            } else if (_tabbedPaneLightState.getSelectedComponent() == _panelLightStateFormula) {
+                expression.setStateAddressing(NamedBeanAddressing.Formula);
+                expression.setStateFormula(_lightStateFormulaTextField.getText());
             }
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | ParserException e) {
             errorMessages.add(e.getMessage());
         }
 

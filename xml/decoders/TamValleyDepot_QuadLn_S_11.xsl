@@ -239,11 +239,34 @@
     </variables>
 </xsl:template>
 
-<xsl:template name="AllAspectGroups">
+<xsl:template name="FirstAspectGroups">
   <xsl:param name="CV1" select="657"/>
   <xsl:param name="CV2" select="59"/>
   <xsl:param name="CV3" select="537"/>
   <xsl:param name="index" select="1"/>
+
+  <xsl:if test="24 >= $index">
+    <xsl:call-template name="OneAspectGroup">
+      <xsl:with-param name="CV1" select="$CV1"/>
+      <xsl:with-param name="CV2" select="$CV2"/>
+      <xsl:with-param name="CV3" select="$CV3"/>
+      <xsl:with-param name="index" select="$index"/>
+    </xsl:call-template>
+    <!-- iterate until done -->
+    <xsl:call-template name="FirstAspectGroups">
+      <xsl:with-param name="CV1" select="$CV1 +1"/>
+      <xsl:with-param name="CV2" select="$CV2 +4"/>
+      <xsl:with-param name="CV3" select="$CV3 +2"/>
+      <xsl:with-param name="index" select="$index+1"/>
+    </xsl:call-template>
+  </xsl:if>
+</xsl:template>
+
+<xsl:template name="SecondAspectGroups">
+  <xsl:param name="CV1" select="681"/>
+  <xsl:param name="CV2" select="155"/>
+  <xsl:param name="CV3" select="585"/>
+  <xsl:param name="index" select="25"/>
 
   <xsl:if test="48 >= $index">
     <xsl:call-template name="OneAspectGroup">
@@ -253,7 +276,7 @@
       <xsl:with-param name="index" select="$index"/>
     </xsl:call-template>
     <!-- iterate until done -->
-    <xsl:call-template name="AllAspectGroups">
+    <xsl:call-template name="SecondAspectGroups">
       <xsl:with-param name="CV1" select="$CV1 +1"/>
       <xsl:with-param name="CV2" select="$CV2 +4"/>
       <xsl:with-param name="CV3" select="$CV3 +2"/>
@@ -262,7 +285,7 @@
   </xsl:if>
 </xsl:template>
 
-<!-- LED group 2-12 .................................................................. -->
+<!-- LED group 1-24 .................................................................. -->
 <xsl:template name="OneLEDGroup">
     <xsl:param name="CV1"/>
     <xsl:param name="CV2"/>
@@ -309,7 +332,7 @@
   <xsl:param name="CV2" select="513"/>
   <xsl:param name="CV3" select="537"/>
   <xsl:param name="index" select="1"/>
-  <!-- next line controls count -->
+
   <xsl:if test="24 >= $index">
     <xsl:call-template name="OneLEDGroup">
       <xsl:with-param name="CV1" select="$CV1"/>
@@ -327,21 +350,49 @@
   </xsl:if>
 </xsl:template>
 
-<!-- Servo Group 1-8 .................................................................. -->
-<xsl:template name="OneServoGroup">
+<!-- Turnout Group 1-16 .................................................................. -->
+<xsl:template name="OneTurnoutGroup">
     <xsl:param name="CV1"/>
     <xsl:param name="CV2"/>
     <xsl:param name="CV3"/>
     <xsl:param name="CV4"/>
     <xsl:param name="CV5"/>
+    <xsl:param name="TURN_ADDR"/>
+    <xsl:param name="LOCK_ADDR"/>
     <xsl:param name="index"/>
+    <xsl:param name="pin"/>
     
-    <variable item="Servo{$index} Addr" CV="2,3" mask="VVVVVVVV XXXXXVVV" default="0">
-        <splitVal offset="{$index}" /> 
-    </variable>
-    <variable item="Lock{$index} Addr" CV="13,14" mask="VVVVVVVV XXXXXVVV" default="100">
-        <splitVal offset="{$index}" />
-    </variable>
+    <variables>
+		<qualifier>
+			<variableref>Version</variableref>
+			<relation>lt</relation>
+			<value>51</value>
+		</qualifier>
+        <variable item="Servo{$index} Addr" CV="2,3" mask="VVVVVVVV XXXXXVVV" default="0">
+            <splitVal offset="{$index}" /> 
+        </variable>
+        <variable item="Lock{$index} Addr" CV="13,14" mask="VVVVVVVV XXXXXVVV" default="100">
+            <splitVal offset="{$index}" />
+        </variable>
+    </variables>
+    <variables>
+		<qualifier>
+			<variableref>Version</variableref>
+			<relation>ge</relation>
+			<value>51</value>
+		</qualifier>
+        <variable item="Turn33{$index} Addr" CV="{$TURN_ADDR},{$TURN_ADDR+1}" mask="VVVVVVVV XXXXXVVV" default="0">
+            <splitVal offset="{$pin}" /> 
+        </variable>
+        <variable item="Lock33{$index} Addr" CV="{$LOCK_ADDR},{$LOCK_ADDR+1}" mask="VVVVVVVV XXXXXVVV" default="100">
+            <qualifier>
+                <variableref>Lock Span</variableref>
+                <relation>eq</relation>
+                <value>0</value>
+            </qualifier>
+            <splitVal offset="{$pin}" />
+        </variable>
+    </variables>
 
     <variable item="Servo{$index} RapidStart" CV="{$CV1}" mask="VVXXXXXX" default="0" include="Quad-LN_S_v1">
         <xi:include href="http://jmri.org/xml/decoders/tvd/RapidStart.xml"/>
@@ -457,60 +508,146 @@
     </variable>
 </xsl:template>
 
-<xsl:template name="AllServoGroups">
+<xsl:template name="ServoTurnoutGroups">
   <xsl:param name="CV1" select="257"/>
   <xsl:param name="CV2" select="265"/>
   <xsl:param name="CV3" select="273"/>
   <xsl:param name="CV4" select="289"/>
   <xsl:param name="CV5" select="305"/>
+  <xsl:param name="SERVO_TURN_ADDR" select="33"/>
+  <xsl:param name="SERVO_LOCK_ADDR" select="41"/>
   <xsl:param name="index" select="1"/>
+  <xsl:param name="pin" select="1"/>
 
-  <xsl:if test="8 >= $index">
-    <xsl:call-template name="OneServoGroup">
+  <xsl:if test="4 >= $index">
+    <xsl:call-template name="OneTurnoutGroup">
       <xsl:with-param name="CV1" select="$CV1"/>
       <xsl:with-param name="CV2" select="$CV2"/>
       <xsl:with-param name="CV3" select="$CV3"/>
       <xsl:with-param name="CV4" select="$CV4"/>
       <xsl:with-param name="CV5" select="$CV5"/>
+      <xsl:with-param name="TURN_ADDR" select="$SERVO_TURN_ADDR"/>
+      <xsl:with-param name="LOCK_ADDR" select="$SERVO_LOCK_ADDR"/>
       <xsl:with-param name="index" select="$index"/>
+      <xsl:with-param name="pin" select="$pin"/>
     </xsl:call-template>
     <!-- iterate until done -->
-    <xsl:call-template name="AllServoGroups">
+    <xsl:call-template name="ServoTurnoutGroups">
       <xsl:with-param name="CV1" select="$CV1+1"/>
       <xsl:with-param name="CV2" select="$CV2+1"/>
       <xsl:with-param name="CV3" select="$CV3+2"/>
       <xsl:with-param name="CV4" select="$CV4+2"/>
       <xsl:with-param name="CV5" select="$CV5+2"/>
       <xsl:with-param name="index" select="$index+1"/>
+      <xsl:with-param name="pin" select="$pin+1"/>
     </xsl:call-template>
   </xsl:if>
 </xsl:template>
 
-<xsl:template name="AllHexServoGroups">
+<xsl:template name="MainTurnoutGroups">
+  <xsl:param name="CV1" select="261"/>
+  <xsl:param name="CV2" select="269"/>
+  <xsl:param name="CV3" select="281"/>
+  <xsl:param name="CV4" select="297"/>
+  <xsl:param name="CV5" select="313"/>
+  <xsl:param name="MAIN_TURN_ADDR" select="35"/>
+  <xsl:param name="MAIN_LOCK_ADDR" select="43"/>
+  <xsl:param name="index" select="5"/>
+  <xsl:param name="pin" select="1"/>
+  
+  <xsl:if test="8 >= $index">
+    <xsl:call-template name="OneTurnoutGroup">
+      <xsl:with-param name="CV1" select="$CV1"/>
+      <xsl:with-param name="CV2" select="$CV2"/>
+      <xsl:with-param name="CV3" select="$CV3"/>
+      <xsl:with-param name="CV4" select="$CV4"/>
+      <xsl:with-param name="CV5" select="$CV5"/>
+      <xsl:with-param name="TURN_ADDR" select="$MAIN_TURN_ADDR"/>
+      <xsl:with-param name="LOCK_ADDR" select="$MAIN_LOCK_ADDR"/>
+      <xsl:with-param name="index" select="$index"/>
+      <xsl:with-param name="pin" select="$pin"/>
+    </xsl:call-template>
+    <!-- iterate until done -->
+    <xsl:call-template name="MainTurnoutGroups">
+      <xsl:with-param name="CV1" select="$CV1+1"/>
+      <xsl:with-param name="CV2" select="$CV2+1"/>
+      <xsl:with-param name="CV3" select="$CV3+2"/>
+      <xsl:with-param name="CV4" select="$CV4+2"/>
+      <xsl:with-param name="CV5" select="$CV5+2"/>
+      <xsl:with-param name="index" select="$index+1"/>
+      <xsl:with-param name="pin" select="$pin+1"/>
+    </xsl:call-template>
+  </xsl:if>
+</xsl:template>
+
+<xsl:template name="AuxTurnoutGroups">
   <xsl:param name="CV1" select="381"/>
   <xsl:param name="CV2" select="389"/>
   <xsl:param name="CV3" select="397"/>
   <xsl:param name="CV4" select="413"/>
   <xsl:param name="CV5" select="429"/>
+  <xsl:param name="AUX_TURN_ADDR" select="37"/>
+  <xsl:param name="AUX_LOCK_ADDR" select="45"/>
   <xsl:param name="index" select="9"/>
+  <xsl:param name="pin" select="1"/>
 
-  <xsl:if test="16 >= $index">
-    <xsl:call-template name="OneServoGroup">
+  <xsl:if test="12 >= $index">
+    <xsl:call-template name="OneTurnoutGroup">
       <xsl:with-param name="CV1" select="$CV1"/>
       <xsl:with-param name="CV2" select="$CV2"/>
       <xsl:with-param name="CV3" select="$CV3"/>
       <xsl:with-param name="CV4" select="$CV4"/>
       <xsl:with-param name="CV5" select="$CV5"/>
+      <xsl:with-param name="TURN_ADDR" select="$AUX_TURN_ADDR"/>
+      <xsl:with-param name="LOCK_ADDR" select="$AUX_LOCK_ADDR"/>
       <xsl:with-param name="index" select="$index"/>
+      <xsl:with-param name="pin" select="$pin"/>
     </xsl:call-template>
     <!-- iterate until done -->
-    <xsl:call-template name="AllHexServoGroups">
+    <xsl:call-template name="AuxTurnoutGroups">
       <xsl:with-param name="CV1" select="$CV1+1"/>
       <xsl:with-param name="CV2" select="$CV2+1"/>
       <xsl:with-param name="CV3" select="$CV3+2"/>
       <xsl:with-param name="CV4" select="$CV4+2"/>
       <xsl:with-param name="CV5" select="$CV5+2"/>
       <xsl:with-param name="index" select="$index+1"/>
+      <xsl:with-param name="pin" select="$pin+1"/>
+    </xsl:call-template>
+  </xsl:if>
+</xsl:template>
+
+<xsl:template name="ExpTurnoutGroups">
+  <xsl:param name="CV1" select="385"/>
+  <xsl:param name="CV2" select="393"/>
+  <xsl:param name="CV3" select="405"/>
+  <xsl:param name="CV4" select="421"/>
+  <xsl:param name="CV5" select="437"/>
+  <xsl:param name="EXP_TURN_ADDR" select="39"/>
+  <xsl:param name="EXP_LOCK_ADDR" select="47"/>
+  <xsl:param name="index" select="13"/>
+  <xsl:param name="pin" select="1"/>
+
+  <xsl:if test="16 >= $index">
+    <xsl:call-template name="OneTurnoutGroup">
+      <xsl:with-param name="CV1" select="$CV1"/>
+      <xsl:with-param name="CV2" select="$CV2"/>
+      <xsl:with-param name="CV3" select="$CV3"/>
+      <xsl:with-param name="CV4" select="$CV4"/>
+      <xsl:with-param name="CV5" select="$CV5"/>
+      <xsl:with-param name="TURN_ADDR" select="$EXP_TURN_ADDR"/>
+      <xsl:with-param name="LOCK_ADDR" select="$EXP_LOCK_ADDR"/>
+      <xsl:with-param name="index" select="$index"/>
+      <xsl:with-param name="pin" select="$pin"/>
+    </xsl:call-template>
+    <!-- iterate until done -->
+    <xsl:call-template name="ExpTurnoutGroups">
+      <xsl:with-param name="CV1" select="$CV1+1"/>
+      <xsl:with-param name="CV2" select="$CV2+1"/>
+      <xsl:with-param name="CV3" select="$CV3+2"/>
+      <xsl:with-param name="CV4" select="$CV4+2"/>
+      <xsl:with-param name="CV5" select="$CV5+2"/>
+      <xsl:with-param name="index" select="$index+1"/>
+      <xsl:with-param name="pin" select="$pin+1"/>
     </xsl:call-template>
   </xsl:if>
 </xsl:template>
@@ -527,12 +664,32 @@
     <xsl:param name="CV7"/>
     <xsl:param name="index"/>
     
-    <variable item="Main IO{$Offset} Addr" CV="9,10" mask="VVVVVVVV XXXXVVVV" default="0">
-        <splitVal offset="{$Offset}" /> 
-   </variable>
-    <variable item="Aux IO{$Offset} Addr" CV="15,16" mask="VVVVVVVV XXXXVVVV" default="4">
-        <splitVal offset="{$Offset}" /> 
-    </variable>
+    <variables>
+		<qualifier>
+			<variableref>Version</variableref>
+			<relation>lt</relation>
+			<value>51</value>
+		</qualifier>
+        <variable item="Main IO{$Offset} Addr" CV="9,10" mask="VVVVVVVV XXXXVVVV" default="0">
+            <splitVal offset="{$Offset}" /> 
+       </variable>
+        <variable item="Aux IO{$Offset} Addr" CV="15,16" mask="VVVVVVVV XXXXVVVV" default="4">
+            <splitVal offset="{$Offset}" /> 
+        </variable>
+    </variables>
+    <variables>
+		<qualifier>
+			<variableref>Version</variableref>
+			<relation>ge</relation>
+			<value>51</value>
+		</qualifier>
+        <variable item="Main IO33{$Offset} Addr" CV="51,52" mask="VVVVVVVV XXXXVVVV" default="0">
+            <splitVal offset="{$Offset}" /> 
+        </variable>
+        <variable item="Aux IO33{$Offset} Addr" CV="53,54" mask="VVVVVVVV XXXXVVVV" default="4">
+            <splitVal offset="{$Offset}" /> 
+        </variable>
+    </variables>
 
 <!-- Aux IO .................................................................. -->
     <variable item="GPIO{$index} Freeze" CV="{$CV1}" mask="VXXXXXXX" default="0">
@@ -831,6 +988,27 @@
             <display item="One Choice Enum" format="onradiobutton" layout="right">
                <label>SERVO <xsl:value-of select="$index"/>  TURNOUT</label>
             </display>
+           <label label=" "/>   
+           <display  item="Servo{$index} Addr" viewOnly="yes">
+              <tooltip>To change, adjust Turnout Base Addr on Quad-LN_S pane</tooltip>
+              <label>Address  LT</label>
+           </display>
+           <display  item="Lock{$index} Addr" viewOnly="yes">
+              <tooltip>To change, adjust Lock Base Addr on Quad-LN_S pane</tooltip>
+              <label>Lock  LT</label>
+           </display>
+           <display  item="Turn33{$index} Addr" viewOnly="yes">
+              <tooltip>To change, adjust Turnout Base Addr on Quad-LN_S pane</tooltip>
+              <label>Address  LT</label>
+           </display>
+           <display  item="Lock33{$index} Addr" viewOnly="yes">
+              <tooltip>To change, adjust Lock Base Addr on Quad-LN_S pane</tooltip>
+              <label>Lock  LT</label>
+           </display>
+           <display  item="SERVOLock33Span" viewOnly="yes">
+              <tooltip>To change, adjust Lock Base Addr on Quad-LN_S pane</tooltip>
+              <label>Lock  LT</label>
+           </display>
             <xsl:call-template name="ServoParams">
                <xsl:with-param name="index" select="$index"/>
             </xsl:call-template>
@@ -846,6 +1024,27 @@
             <display item="One Choice Enum" format="onradiobutton" layout="right">
                <label>MAIN <xsl:value-of select="$index - 4"/>  TURNOUT</label>
             </display>
+           <label label=" "/>   
+           <display  item="Servo{$index} Addr" viewOnly="yes">
+              <tooltip>To change, adjust Turnout Base Addr on Quad-LN_S pane</tooltip>
+              <label>Address  LT</label>
+           </display>
+           <display  item="Lock{$index} Addr" viewOnly="yes">
+              <tooltip>To change, adjust Lock Base Addr on Quad-LN_S pane</tooltip>
+              <label>Lock  LT</label>
+           </display>
+           <display  item="Turn33{$index} Addr" viewOnly="yes">
+              <tooltip>To change, adjust Turnout Base Addr on Quad-LN_S pane</tooltip>
+              <label>Address  LT</label>
+           </display>
+           <display  item="Lock33{$index} Addr" viewOnly="yes">
+              <tooltip>To change, adjust Lock Base Addr on Quad-LN_S pane</tooltip>
+              <label>Lock  LT</label>
+           </display>
+           <display  item="MAINLock33Span" viewOnly="yes">
+              <tooltip>To change, adjust Lock Base Addr on Quad-LN_S pane</tooltip>
+              <label>Lock  LT</label>
+           </display>
             <xsl:call-template name="ServoParams">
                <xsl:with-param name="index" select="$index"/>
             </xsl:call-template>
@@ -859,7 +1058,28 @@
             <display item="One Choice Enum" format="onradiobutton" layout="right">
                <label>AUX <xsl:value-of select="$index - 4"/>  TURNOUT</label>
             </display>
-            <xsl:call-template name="ServoParams">
+            <label label=" "/>   
+           <display  item="Servo{$index} Addr" viewOnly="yes">
+              <tooltip>To change, adjust Turnout Base Addr on Quad-LN_S pane</tooltip>
+              <label>Address  LT</label>
+           </display>
+           <display  item="Lock{$index} Addr" viewOnly="yes">
+              <tooltip>To change, adjust Lock Base Addr on Quad-LN_S pane</tooltip>
+              <label>Lock  LT</label>
+           </display>
+           <display  item="Turn33{$index+4} Addr" viewOnly="yes">
+              <tooltip>To change, adjust Turnout Base Addr on Quad-LN_S pane</tooltip>
+              <label>Address  LT</label>
+           </display>
+           <display  item="Lock33{$index+4} Addr" viewOnly="yes">
+              <tooltip>To change, adjust Lock Base Addr on Quad-LN_S pane</tooltip>
+              <label>Lock  LT</label>
+           </display>
+           <display  item="AUXLock33Span" viewOnly="yes">
+              <tooltip>To change, adjust Lock Base Addr on Quad-LN_S pane</tooltip>
+              <label>Lock  LT</label>
+           </display>
+           <xsl:call-template name="ServoParams">
                <xsl:with-param name="index" select="$index"/>
             </xsl:call-template>
          </column>
@@ -872,6 +1092,27 @@
             <display item="One Choice Enum" format="onradiobutton" layout="right">
                <label>EXP <xsl:value-of select="$index - 4"/>  TURNOUT </label>
             </display>
+           <label label=" "/>   
+           <display  item="Servo{$index} Addr" viewOnly="yes">
+              <tooltip>To change, adjust Turnout Base Addr on Quad-LN_S pane</tooltip>
+              <label>Address  LT</label>
+           </display>
+           <display  item="Lock{$index} Addr" viewOnly="yes">
+              <tooltip>To change, adjust Lock Base Addr on Quad-LN_S pane</tooltip>
+              <label>Lock  LT</label>
+           </display>
+           <display  item="Turn33{$index+8} Addr" viewOnly="yes">
+              <tooltip>To change, adjust Turnout Base Addr on Quad-LN_S pane</tooltip>
+              <label>Address  LT</label>
+           </display>
+           <display  item="Lock33{$index+8} Addr" viewOnly="yes">
+              <tooltip>To change, adjust Lock Base Addr on Quad-LN_S pane</tooltip>
+              <label>Lock  LT</label>
+           </display>
+           <display  item="EXPLock33Span" viewOnly="yes">
+              <tooltip>To change, adjust Lock Base Addr on Quad-LN_S pane</tooltip>
+              <label>Lock  LT</label>
+           </display>
             <xsl:call-template name="ServoParams">
                <xsl:with-param name="index" select="$index"/>
             </xsl:call-template>
@@ -887,6 +1128,27 @@
             <display item="One Choice Enum" format="onradiobutton" layout="right">
                <label>AUX <xsl:value-of select="$index - 8"/>  TURNOUT</label>
             </display>
+           <label label=" "/>   
+           <display  item="Servo{$index} Addr" viewOnly="yes">
+              <tooltip>To change, adjust Turnout Base Addr on Quad-LN_S pane</tooltip>
+              <label>Address  LT</label>
+           </display>
+           <display  item="Lock{$index} Addr" viewOnly="yes">
+              <tooltip>To change, adjust Lock Base Addr on Quad-LN_S pane</tooltip>
+              <label>Lock  LT</label>
+           </display>
+           <display  item="Turn33{$index} Addr" viewOnly="yes">
+              <tooltip>To change, adjust Turnout Base Addr on Quad-LN_S pane</tooltip>
+              <label>Address  LT</label>
+           </display>
+           <display  item="Lock33{$index} Addr" viewOnly="yes">
+              <tooltip>To change, adjust Lock Base Addr on Quad-LN_S pane</tooltip>
+              <label>Lock  LT</label>
+           </display>
+           <display  item="AUXLock33Span" viewOnly="yes">
+              <tooltip>To change, adjust Lock Base Addr on Quad-LN_S pane</tooltip>
+              <label>Lock  LT</label>
+           </display>
             <xsl:call-template name="ServoParams">
                <xsl:with-param name="index" select="$index"/>
             </xsl:call-template>
@@ -900,6 +1162,27 @@
             <display item="One Choice Enum" format="onradiobutton" layout="right">
                <label>EXP <xsl:value-of select="$index - 8"/>  TURNOUT</label>
             </display>
+           <label label=" "/>   
+           <display  item="Servo{$index} Addr" viewOnly="yes">
+              <tooltip>To change, adjust Turnout Base Addr on Quad-LN_S pane</tooltip>
+              <label>Address  LT</label>
+           </display>
+           <display  item="Lock{$index} Addr" viewOnly="yes">
+              <tooltip>To change, adjust Lock Base Addr on Quad-LN_S pane</tooltip>
+              <label>Lock  LT</label>
+           </display>
+           <display  item="Turn33{$index+4} Addr" viewOnly="yes">
+              <tooltip>To change, adjust Turnout Base Addr on Quad-LN_S pane</tooltip>
+              <label>Address  LT</label>
+           </display>
+           <display  item="Lock33{$index+4} Addr" viewOnly="yes">
+              <tooltip>To change, adjust Lock Base Addr on Quad-LN_S pane</tooltip>
+              <label>Lock  LT</label>
+           </display>
+           <display  item="EXPLock33Span" viewOnly="yes">
+              <tooltip>To change, adjust Lock Base Addr on Quad-LN_S pane</tooltip>
+              <label>Lock  LT</label>
+           </display>
             <xsl:call-template name="ServoParams">
                <xsl:with-param name="index" select="$index"/>
             </xsl:call-template>
@@ -910,6 +1193,27 @@
             <display item="One Choice Enum" format="onradiobutton" layout="right">
                <label>EXP <xsl:value-of select="$index - 12"/>  TURNOUT</label>
             </display>
+           <label label=" "/>   
+           <display  item="Servo{$index} Addr" viewOnly="yes">
+              <tooltip>To change, adjust Turnout Base Addr on Quad-LN_S pane</tooltip>
+              <label>Address  LT</label>
+           </display>
+           <display  item="Lock{$index} Addr" viewOnly="yes">
+              <tooltip>To change, adjust Lock Base Addr on Quad-LN_S pane</tooltip>
+              <label>Lock  LT</label>
+           </display>
+           <display  item="Turn33{$index} Addr" viewOnly="yes">
+              <tooltip>To change, adjust Turnout Base Addr on Quad-LN_S pane</tooltip>
+              <label>Address  LT</label>
+           </display>
+           <display  item="Lock33{$index} Addr" viewOnly="yes">
+              <tooltip>To change, adjust Lock Base Addr on Quad-LN_S pane</tooltip>
+              <label>Lock  LT</label>
+           </display>
+           <display  item="EXPLock33Span" viewOnly="yes">
+              <tooltip>To change, adjust Lock Base Addr on Quad-LN_S pane</tooltip>
+              <label>Lock  LT</label>
+           </display>
             <xsl:call-template name="ServoParams">
                <xsl:with-param name="index" select="$index"/>
             </xsl:call-template>
@@ -920,15 +1224,6 @@
 
 <xsl:template name="ServoParams">
     <xsl:param name="index"/>
-   <label label=" "/>   
-   <display  item="Servo{$index} Addr" viewOnly="yes">
-      <tooltip>To change, adjust Turnout Base Addr on Quad-LN_S pane</tooltip>
-      <label>Address  LT</label>
-   </display>
-   <display  item="Lock{$index} Addr" viewOnly="yes">
-      <tooltip>To change, adjust Lock Base Addr on Quad-LN_S pane</tooltip>
-      <label>Lock  LT</label>
-   </display>
    <label label=" "/>   
    <display item="One Choice Enum" format="onradiobutton" layout="right">
       <label>DRIVE</label>
@@ -1038,6 +1333,10 @@
             <tooltip>To change, adjust Main IO Base Addr on Quad-LN_S pane</tooltip>
             <label>Address   LS</label>
          </display>
+         <display  item="Main IO33{$index} Addr" viewOnly="yes">
+            <tooltip>To change, adjust Main IO Base Addr on Quad-LN_S pane</tooltip>
+            <label>Address   LS</label>
+         </display>
          <label label=" "/>   
          <display item="One Choice Enum" format="onradiobutton" layout="right">
             <label>INPUT</label>
@@ -1100,6 +1399,10 @@
          </display>
          <label label=" "/>   
          <display  item="Aux IO{$index} Addr" viewOnly="yes">
+            <tooltip>To change, adjust Aux IO Base Addr on Quad-LN_S pane</tooltip>
+            <label>Address   LS</label>
+         </display>
+         <display  item="Aux IO33{$index} Addr" viewOnly="yes">
             <tooltip>To change, adjust Aux IO Base Addr on Quad-LN_S pane</tooltip>
             <label>Address   LS</label>
          </display>
@@ -1786,19 +2089,41 @@
  <xsl:template match="variables">
    <variables>
      <xsl:copy-of select="node()"/>
-     <xsl:call-template name="AllServoGroups"/>
-     <xsl:call-template name="AllHexServoGroups"/>
+     <xsl:call-template name="ServoTurnoutGroups"/>
+     <xsl:call-template name="MainTurnoutGroups"/>
+     <xsl:call-template name="AuxTurnoutGroups"/>
+     <xsl:call-template name="ExpTurnoutGroups"/>
      <xsl:call-template name="AllIOGroups"/>
-     <xsl:call-template name="AllAspectGroups"/>
+     <xsl:call-template name="FirstAspectGroups"/>
+     <xsl:call-template name="SecondAspectGroups"/>
      <xsl:call-template name="AllLEDGroups"/>
      <xsl:call-template name="AllRouteGroups"/>
+     <variables>
+        <qualifier>
+            <variableref>Lock Span</variableref>
+            <relation>ne</relation>
+            <value>0</value>
+        </qualifier>
+        <variable item="SERVOLock33Span" CV="41,42" mask="VVVVVVVV XXXXXVVV" default="100">
+            <splitVal offset="1" /> 
+        </variable>
+        <variable item="MAINLock33Span" CV="43,44" mask="VVVVVVVV XXXXXVVV" default="100">
+            <splitVal offset="1" /> 
+        </variable>
+        <variable item="AUXLock33Span" CV="45,46" mask="VVVVVVVV XXXXXVVV" default="100">
+            <splitVal offset="1" /> 
+        </variable>
+        <variable item="EXPLock33Span" CV="47,48" mask="VVVVVVVV XXXXXVVV" default="100">
+            <splitVal offset="1" /> 
+        </variable>
+     </variables>
    </variables>
  </xsl:template>
 
  <!--install panes -->
  <xsl:template match="label[text='Decoder Transform File Version: x.xx.x']">
     <label>
-        <text>Decoder Transform File Version: 3.02.3</text>
+        <text>Decoder Transform File Version: 3.03.2</text>
     </label>
  </xsl:template>
 

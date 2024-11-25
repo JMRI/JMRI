@@ -1,8 +1,6 @@
 package jmri.server.json;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import jmri.Audio;
 
@@ -341,6 +339,10 @@ public final class JSON {
      * {@value #MODEL}
      */
     public static final String MODEL = "model"; // NOI18N
+    /**
+     * {@value #HP}
+     */
+    public static final String HP = "hp"; // NOI18N
     /**
      * {@value #ROAD}
      */
@@ -907,6 +909,18 @@ public final class JSON {
      * @since 5.0.0
      */
     public static final String RFID = "rfid"; // NOI18N
+    /**
+     * {@value #WHERELASTSEEN}
+     *
+     * @since 5.7.6
+     */
+    public static final String WHERELASTSEEN = "whereLastSeen"; // NOI18N
+    /**
+     * {@value #WHENLASTSEEN}
+     *
+     * @since 5.7.6
+     */
+    public static final String WHENLASTSEEN = "whenLastSeen"; // NOI18N
     /**
      * {@value #TIME}
      *

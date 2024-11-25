@@ -113,11 +113,14 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
      * @param rs The RollingStock to load.
      */
     public void register(T rs) {
-        if (!_hashTable.contains(rs)) {
+        if (!_hashTable.containsKey(rs.getId())) {
             int oldSize = _hashTable.size();
             rs.addPropertyChangeListener(this);
             _hashTable.put(rs.getId(), rs);
             firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _hashTable.size());
+        } else {
+            log.error("Duplicate rolling stock id: ({})", rs.getId());
+            rs.dispose();
         }
     }
 
@@ -149,9 +152,11 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
     }
 
     public void resetMoves() {
-        Enumeration<String> en = _hashTable.keys();
-        while (en.hasMoreElements()) {
-            T rs = getById(en.nextElement());
+        resetMoves(getList());
+    }
+
+    public void resetMoves(List<T> list) {
+        for (RollingStock rs : list) {
             rs.setMoves(0);
         }
     }
@@ -588,7 +593,12 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
             @SuppressWarnings("unchecked")
             T rs = (T) evt.getSource(); // unchecked cast to T  
             _hashTable.remove(evt.getOldValue());
-            _hashTable.put(rs.getId(), rs);
+            if (_hashTable.containsKey(rs.getId())) {
+                log.error("Duplicate rolling stock id: ({})", rs.getId());
+                rs.dispose();
+            } else {
+                _hashTable.put(rs.getId(), rs);
+            }
             // fire so listeners that rebuild internal lists get signal of change in id, even without change in size
             firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, _hashTable.size(), _hashTable.size());
         }

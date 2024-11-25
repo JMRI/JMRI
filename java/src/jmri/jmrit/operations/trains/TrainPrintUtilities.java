@@ -1,16 +1,12 @@
 package jmri.jmrit.operations.trains;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Frame;
+import java.awt.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
-import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
+import javax.swing.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -236,7 +232,7 @@ public class TrainPrintUtilities {
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
         } catch (IOException e) {
-            log.warn("Exception printing, ", e);
+            log.warn("Exception printing: {}", e.getLocalizedMessage());
         }
     }
 
@@ -295,9 +291,9 @@ public class TrainPrintUtilities {
             }
             out.close();
         } catch (FileNotFoundException e) {
-            log.error("Build file doesn't exist", e);
+            log.error("Build file doesn't exist: {}", e.getLocalizedMessage());
         } catch (IOException e) {
-            log.error("Can not create build report file", e);
+            log.error("Can not create build report file: {}", e.getLocalizedMessage());
         }
     }
 

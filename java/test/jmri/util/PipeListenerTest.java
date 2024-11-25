@@ -40,6 +40,11 @@ public class PipeListenerTest {
 
         JUnitUtil.waitFor(()->{return testString.equals(jta.getText());}, "find text after character write");
         t.stop();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            // Do nothing
+        }
     }
 
     @SuppressWarnings("deprecation")        // Thread.stop()
@@ -73,6 +78,11 @@ public class PipeListenerTest {
 
         JUnitUtil.waitFor(()->{return testString.equals(jta.getText());}, "find text after character write");
         t.stop();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            // Do nothing
+        }
     }
 
     @BeforeEach

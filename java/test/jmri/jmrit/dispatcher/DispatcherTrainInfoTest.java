@@ -1,5 +1,7 @@
 package jmri.jmrit.dispatcher;
 
+import jmri.jmrit.dispatcher.ActiveTrain.TrainDetection;
+import jmri.jmrit.dispatcher.ActiveTrain.TrainLengthUnits;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -37,10 +39,16 @@ public class DispatcherTrainInfoTest {
         ti.setSpeedFactor(0.8f);
         ti.setMaxSpeed(0.6f);
         ti.setRampRate("2");
-        ti.setResistanceWheels(true);
+        ti.setTrainDetection(TrainDetection.TRAINDETECTION_HEADONLY);
         ti.setRunInReverse(false);
         ti.setSoundDecoder(true);
-        ti.setMaxTrainLength(225);
+        ti.setMaxTrainLengthScaleMeters(1000);
+        Assert.assertEquals("setMaxTrainLengthScaleFeetFromMeters", 3280.84f, ti.getMaxTrainLengthScaleFeet(), 0.01f);
+        Assert.assertEquals("getMaxTrainLengthScaleMeters", 1000.0f, ti.getMaxTrainLengthScaleMeters(), 0.01f);
+        ti.setMaxTrainLengthScaleFeet(2000);
+        Assert.assertEquals("setMaxTrainLengthScaleMetersFromFeet", 609.6f, ti.getMaxTrainLengthScaleMeters(), 0.01f);
+        Assert.assertEquals("getMaxTrainLengthScaleFeet", 2000.0f, ti.getMaxTrainLengthScaleFeet(), 0.01f);
+        ti.setTrainLengthUnits(TrainLengthUnits.TRAINLENGTH_ACTUALINCHS);
         ti.setAllocationMethod(8);
         ti.setUseSpeedProfile(true);
         ti.setStopBySpeedProfile(true);
@@ -66,14 +74,14 @@ public class DispatcherTrainInfoTest {
         Assert.assertEquals("Speed Factor", ti.getSpeedFactor(), 0.8f, 0.0);
         Assert.assertEquals("Maximum Speed", ti.getMaxSpeed(), 0.6f, 0.0);
         Assert.assertEquals("Ramp Rate", ti.getRampRate(), "2");
-        Assert.assertTrue("Resistance Wheels", ti.getResistanceWheels());
+        Assert.assertEquals("Train Detection", ActiveTrain.TrainDetection.TRAINDETECTION_HEADONLY,ti.getTrainDetection());
         Assert.assertFalse("Run In Reverse", ti.getRunInReverse());
         Assert.assertTrue("Sound Decoder", ti.getSoundDecoder());
         Assert.assertEquals("Allocation Method", ti.getAllocationMethod(),8,0);
         Assert.assertTrue("Use Speed Profile", ti.getUseSpeedProfile());
         Assert.assertTrue("Stop By Speed Profile", ti.getStopBySpeedProfile());
         Assert.assertEquals("Stop By Speed Profile using percentage of block", ti.getStopBySpeedProfileAdjust(),0.5f, 0.0);
-
+        Assert.assertEquals("Train Length Units",ti.getTrainLengthUnits(),TrainLengthUnits.TRAINLENGTH_ACTUALINCHS);
     }
 
     @BeforeEach

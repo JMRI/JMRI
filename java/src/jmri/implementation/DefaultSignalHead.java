@@ -1,6 +1,9 @@
 package jmri.implementation;
 
-import java.util.Arrays;
+import java.util.*;
+
+import jmri.NamedBean;
+import jmri.NamedBeanUsageReport;
 
 /**
  * Default implementation of the basic logic of the SignalHead interface.
@@ -118,13 +121,13 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
     javax.swing.Timer timer = null;
     /**
      * On or off time of flashing signal.
-     * Public so that it can be overridden by 
+     * Public so that it can be overridden by
      * scripting (before first use)
      */
     public int delay = masterDelay;
 
     public static int masterDelay = 750;
-    
+
     /**
      * Start the timer that controls flashing.
      */
@@ -210,8 +213,19 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
     }
 
     @Override
-    boolean isTurnoutUsed(jmri.Turnout t) {
+    public boolean isTurnoutUsed(jmri.Turnout t) {
         return false;
     }
 
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null && bean instanceof jmri.Turnout) {
+            var t = (jmri.Turnout) bean;
+            if (isTurnoutUsed(t)) {
+                report.add(new NamedBeanUsageReport("SignalHeadTurnout"));  // NOI18N
+            }
+        }
+        return report;
+    }
 }

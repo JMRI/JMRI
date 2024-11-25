@@ -11,7 +11,8 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+<!-- revised - CV133,134 max               John McMasters (2024-04-23)      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2023</year>
     <holder>JMRI</holder>
@@ -367,42 +368,42 @@
         <label xml:lang="it">Tasso di Notch</label>
       </variable>
       <variable CV="133" item="Sound Option 18" tooltip="DRIVER dia in.(5/32 to 200/32 ratio (96=3:1))" default="69" include="SDXH167ExtS">
-        <decVal max="200"/>
+        <decVal max="128"/>
         <label>Steam Chuff/CAM Config</label>
         <label xml:lang="it">Configura Chuff-CAM</label>
       </variable>
       <variable CV="133" item="Sound Option 18" default="63" include="SDXH167Ext">
-        <decVal max="200"/>
+        <decVal max="128"/>
         <label>Steam Chuff/CAM-Driver Config</label>
         <label xml:lang="it">Configura Chuff-CAM</label>
       </variable>
       <variable CV="133" item="Sound Option 18" default="42" include="SDXH167ExtD">
-        <decVal max="200"/>
+        <decVal max="128"/>
         <label>Driver Dia Config</label>
         <label xml:lang="it">Configura Driver Dia</label>
       </variable>
 	  <variable CV="133" item="Sound Option 18" default="63" exclude="SDXH167ExtS">
-        <decVal max="200"/>
+        <decVal max="128"/>
         <label>Steam Chuff/CAM Config</label>
         <label xml:lang="it">Configura Chuff-CAM</label>
       </variable>
       <variable CV="134" item="Sound Option 19" tooltip="32=100%" default="23" include="SDXH167Ext">
-        <decVal max="128"/>
+        <decVal max="196"/>
         <label>Driver Gear Ratio Trim</label>
         <label xml:lang="it">Regola rapporto marcia Vapore</label>
       </variable>
       <variable CV="134" item="Sound Option 19" tooltip="32=100%" default="23" include="SDXH167ExtS">
-        <decVal max="128"/>
+        <decVal max="196"/>
         <label>Steam Gear Ratio Trim</label>
         <label xml:lang="it">Regola rapporto marcia Vapore</label>
       </variable>
       <variable CV="134" item="Sound Option 19" tooltip="32=100%" default="32" include="SDXH167ExtD">
-        <decVal max="128"/>
+        <decVal max="196"/>
         <label>Driver Gear Ratio Trim</label>
         <label xml:lang="it">Regola rapporto marcia Vapore</label>
       </variable>
       <variable CV="134" item="Sound Option 19" tooltip="32=100%" default="12"  exclude="SDXH167ExtS,SDXH167ExtD">
-        <decVal max="128"/>
+        <decVal max="196"/>
         <label>Steam Gear Ratio Trim</label>
         <label xml:lang="it">Regola rapporto marcia Vapore</label>
       </variable>

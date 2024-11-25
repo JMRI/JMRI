@@ -1,8 +1,6 @@
 package jmri.jmrit.operations.rollingstock;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.JComboBox;
 
@@ -12,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.beans.PropertyChangeSupport;
+import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.trains.TrainCommon;
 
 /**
@@ -121,6 +120,7 @@ public abstract class RollingStockAttribute extends PropertyChangeSupport {
     public JComboBox<String> getComboBox() {
         JComboBox<String> box = new JComboBox<>();
         updateComboBox(box);
+        OperationsPanel.padComboBox(box);
         return box;
     }
 

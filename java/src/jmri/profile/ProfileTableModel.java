@@ -13,7 +13,7 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ProfileTableModel extends AbstractTableModel implements PropertyChangeListener {
 
-    @SuppressWarnings("LeakingThisInConstructor")
+//    @SuppressWarnings("LeakingThisInConstructor")
     public ProfileTableModel() {
         ProfileManager.getDefault().addPropertyChangeListener(this);
     }

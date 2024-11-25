@@ -14,6 +14,7 @@
 
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no" >
     <version author="Petr Šídlo sidlo64@hotmail.com" version="1" lastUpdated="20230211"/>
+    <version version="2" author="Petr Šídlo sidlo64@hotmail.com" lastUpdated="20240803"/>
     <!-- Accessory decoder  -->
     <!-- Description of circuit diagram https://sites.google.com/site/sidloweb1/ -->
     <!-- e-shop http://dccdoma.eshop-zdarma.cz/ -->
@@ -22,6 +23,7 @@
 
         <family name="dccdoma.cz" mfg="Public-domain and DIY" >
             <model model="UNI16ARD-NAV-TC" lowVersionID="10" highVersionID="19" productID="16843013" maxInputVolts="24V AC" maxTotalCurrent="0.2A" numOuts="16" connector="other" />
+            <model model="UNI16ARD-NAV-TC-2" lowVersionID="20" highVersionID="29" productID="16843013" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
         </family>
     
         <programming direct="yes" paged="yes" register="no" ops="no" />
@@ -73,6 +75,14 @@
         <label xml:lang="cs">Adresování:</label>
         <tooltip>ROCO addressing is NMRA addressing + 4.</tooltip>
         <tooltip xml:lang="cs">ROCO adresování je NMRA adresování + 4.</tooltip>
+      </variable>
+    
+      <variable item="Use OutputPower Off" CV="38" default="1" include="UNI16ARD-NAV-TC-2" >
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Use OutputPower=Off</label>
+        <label xml:lang="cs">Použít OutputPower=Vypnuto</label>
+        <tooltip>Decoder will respond to DCC command with attribute OutputPower = Off.</tooltip>
+        <tooltip xml:lang="cs">Dekodér bude reagovat na DCC příkaz s atributem OutputPower = Vypnuto.</tooltip>
       </variable>
     
       <variable CV="40" item="Number of Signal" default="8">
@@ -1773,6 +1783,7 @@
         <column>
             <display item="Addressing" />
             
+            <display item="Use OutputPower Off" format="checkbox" />
             <display item="Key" />
             <display item="Lock" />
         </column>

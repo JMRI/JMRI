@@ -35,7 +35,7 @@ public class AutoTurnoutsTest {
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2024 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!-- Version 1 - Lolke H Bijlsma - Correct inplementation of CV114-116 per the different Lokommander versions -->
+
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+
+<!-- The V6 firmware implements CV114, 115 and 116 as decimal values representing the function number -->
+    
+<!-- CV114 -->
+      <variable item="Shunting Speed Active Function" CV="114" default="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-F1-F28.xml"/>
+        <label>Shunting Speed Active Function</label>
+        <label xml:lang="cs">Posunvací rychlost aktivuje</label>
+      </variable>
+      
+<!-- CV115 -->
+      <variable item="Switch Off Acceleration Deceleration Function" CV="115" default="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-F1-F28.xml"/>
+        <label>Switch Off Acceleration Deceleration Function</label>
+        <label xml:lang="cs">Zrychlení zpomalení vypne</label>
+      </variable>
+      
+<!-- CV116 -->
+      <variable item="Disable Constant Braking Distance Function" CV="116" default="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-F1-F28.xml"/>
+        <label>Disable Constant Braking Distance Function</label>
+        <label xml:lang="cs">Konstantní brzdnou dráhu vypne</label>
+      </variable>
+  
+</variables>

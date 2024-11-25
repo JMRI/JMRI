@@ -27,12 +27,11 @@ import jmri.util.swing.JmriMouseEvent;
 public class BlockContentsIcon extends MemoryIcon {
 
     private NamedIcon defaultIcon = null;
-    java.util.HashMap<String, NamedIcon> map = null;
     private NamedBeanHandle<Block> namedBlock;
 
     public BlockContentsIcon(String s, Editor editor) {
         super(s, editor);
-        resetDefaultIcon();
+        BlockContentsIcon.this.resetDefaultIcon();
         _namedIcon = defaultIcon;
         //By default all text objects are left justified
         _popupUtil.setJustification(LEFT);
@@ -297,6 +296,10 @@ public class BlockContentsIcon extends MemoryIcon {
     @Override
     public void doMouseClicked(JmriMouseEvent e) {
         if (e.getClickCount() == 2) { // double click?
+            if (!getEditor().isEditable() && isValueEditDisabled()) {
+                log.debug("Double click block value edit disabled");
+                return;
+            }
             editBlockValue();
         }
     }

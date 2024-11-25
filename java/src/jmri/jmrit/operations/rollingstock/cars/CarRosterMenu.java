@@ -56,7 +56,7 @@ public class CarRosterMenu extends JMenu {
         exportAction.setEnabled(false);
         AbstractAction deleteAction = new DeleteCarRosterAction(carsTableFrame);
         deleteAction.setEnabled(false);
-        AbstractAction resetMovesAction = new ResetCarMovesAction();
+        AbstractAction resetMovesAction = new ResetCarMovesAction(carsTableFrame);
         resetMovesAction.setEnabled(false);
 
         AbstractAction printAction = new PrintCarRosterAction(false, carsTableFrame);

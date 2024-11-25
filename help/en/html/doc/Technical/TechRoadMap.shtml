@@ -117,7 +117,7 @@
         </tr>
 
         <tr>
-          <td style="text-align:center">(Intended) 5.6</td>
+          <td style="text-align:center">5.6</td>
           <td>Production version, culmination of Fall 2023 series</td>
           <td style="text-align:center">Jan 2024</td>
           <td style="text-align:center"><b>11</b></td>
@@ -125,7 +125,7 @@
         </tr>
 
         <tr>
-          <td style="text-align:center">(Intended) 5.8</td>
+          <td style="text-align:center">5.8</td>
           <td>Production version, culmination of Spring 2024 series</td>
           <td style="text-align:center">June 2024</td>
           <td style="text-align:center"><b>11</b></td>
@@ -136,8 +136,16 @@
           <td style="text-align:center">(Intended) 5.10</td>
           <td>Production version, culmination of Fall 2024 series</td>
           <td style="text-align:center">Jan 2025</td>
-          <td style="text-align:center"><b>11</b></td>
-          <td style="text-align:center"><b>11</b></td>
+          <td style="text-align:center"><b>11 required<br/>17 recommended</b></td>
+          <td style="text-align:center"><b>11 or later</b></td>
+        </tr>
+
+        <tr>
+          <td style="text-align:center">(Intended) 5.12</td>
+          <td>Production version, culmination of Spring 2025 series</td>
+          <td style="text-align:center">June 2025</td>
+          <td style="text-align:center"><b>11 required<br/>17 recommended</b></td>
+          <td style="text-align:center"><b>11 or later</b></td>
         </tr>
 
 
@@ -155,11 +163,23 @@
       <p>In Spring 2022 the Java version required by JMRI moved forward, making
       <a href="https://www.jmri.org/releasenotes/jmri4.27.1.shtml">JMRI 4.27.1</a> the last JMRI version
       running on Java 8.<br>
-      Newer development releases 4.99.x will culminate in the June 2022 production releases
+      Newer development releases 4.99.x culminated in the June 2022 production releases
       requiring Java 11 and therefore being called JMRI 5.0.</p>
 
-      <p>Java 17 is the current LTS release.  JMRI is built and tests are run on it too,
-      but we don't recommend using it due to some remaining compatibility issues.</p>
+      <p>Java 17 is the LTS release after Java 11.  
+      Starting with the JMRI 5.9.* development series, 
+      Java 11 is still supported but Java 17 is recommended.
+      We recommend Java 17 to move the user installations forward for some future
+      migration, and because it's easier to install Java 17 on some OSs.</p>
+      
+      <p>Java 21 is the LTS release after Java 17.  We do not yet
+      recommend it because of some not-fully-understood compatibility
+      edge cases. It works for some people, but we're not yet certain
+      that it will work for all.
+      
+      <p>For more information on compatibility, see the
+      <a href="JVMCapabilities.shtml#compatibilty">compatibility discussion</a>.
+      
 
       <h4>Java Release and Operating System Support</h4>
       <p>More information on Java releases and the operating systems that support them can be found
@@ -168,23 +188,6 @@
       <p>Java installers are now available from multiple sources. Our
       <a href="/java/index.shtml">Java installer page</a> lists a number of them.</p>
 
-      <h2>Migration Notes</h2>
-
-      <p>This is a section of notes for various code migrations that are in progress or
-      contemplated. These don't directly affect JMRI users in the way that Java version changes do,
-      but they may affect external users of the JMRI libraries.</p>
-
-      <ul>
-        <li>USB access technology has advanced a lot since support for some basic libraries was
-        added to JMRI. At some point, we should replace those early library versions, but it will
-        break some user scripts.</li>
-
-        <li>Our <a href="Logging.shtml">logging methodology</a> is now a hybrid of native logging
-        (in some included libraries), Log4J 1.2.17 (logger in our code) and SLF4J (a logging abstraction
-        layer). We may choose to simplify that, but at least we have to move to another logger at
-        some point.
-        </li>
-      </ul>
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

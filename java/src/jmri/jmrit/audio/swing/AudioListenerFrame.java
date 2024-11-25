@@ -52,7 +52,7 @@ public class AudioListenerFrame extends AbstractAudioFrame {
 
     private final static String PREFIX = "IAL";
 
-    @SuppressWarnings("OverridableMethodCallInConstructor")
+//    @SuppressWarnings("OverridableMethodCallInConstructor")
     public AudioListenerFrame(String title, AudioTableDataModel model) {
         super(title, model);
         layoutFrame();

@@ -73,22 +73,10 @@ public class ProfileManager extends Bean {
     private static final Logger log = LoggerFactory.getLogger(ProfileManager.class);
 
     /**
-     * Create a new ProfileManager using the default catalog. In almost all
-     * cases, the use of {@link #getDefault()} is preferred.
+     * Create a new ProfileManager using the default catalog.
      */
-    public ProfileManager() {
-        this(new File(FileUtil.getPreferencesPath() + CATALOG));
-    }
-
-    /**
-     * Create a new ProfileManager. In almost all cases, the use of
-     * {@link #getDefault()} is preferred.
-     *
-     * @param catalog the list of know profiles as an XML file
-     */
-    // TODO: write Test cases using this.
-    public ProfileManager(File catalog) {
-        this.catalog = catalog;
+    private ProfileManager() {
+        this.catalog = new File(FileUtil.getPreferencesPath() + CATALOG);
         try {
             this.readProfiles();
             this.findProfiles();

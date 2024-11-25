@@ -211,6 +211,11 @@ public final class TypeConversionUtil {
             return !collection.isEmpty();
         }
 
+        if (value.getClass().isArray()) {
+            var array = ((Object[])value);
+            return array.length > 0;
+        }
+
         // JSON text node
         if (value instanceof com.fasterxml.jackson.databind.node.TextNode) {
             value = ((com.fasterxml.jackson.databind.node.TextNode)value).asText();

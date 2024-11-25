@@ -21,18 +21,18 @@ public class WaitHandlerTest {
     private transient boolean flag1;
     private transient boolean flag2;
 
-    static final int THREAD_DELAY = 200;   // time to delay thread under test
-    static final int TEST_DELAY = THREAD_DELAY + 250;  // time to wait for thread to complete
+    static final int THREAD_DELAY = 500;   // time to delay thread under test
 
-    transient long startTime;
-    transient long endTime;
+    private transient long startTime;
+    private transient long endTime;
 
     @Test
     public void testInlineWait() {
         startTime = Calendar.getInstance().getTimeInMillis();
 
         // delay the test thread itself
-        new WaitHandler(this, 50);
+        WaitHandler t = new WaitHandler(this, 50);
+        Assertions.assertNotNull(t);
 
         // check how long it took
         endTime = Calendar.getInstance().getTimeInMillis();
@@ -50,7 +50,8 @@ public class WaitHandlerTest {
             public void run() {
                 startTime = Calendar.getInstance().getTimeInMillis();
                 flag1 = true;
-                new WaitHandler(this, THREAD_DELAY);
+                WaitHandler t = new WaitHandler(this, THREAD_DELAY);
+                Assertions.assertNotNull(t);
                 endTime = Calendar.getInstance().getTimeInMillis();
                 flag2 = true;
             }
@@ -77,7 +78,8 @@ public class WaitHandlerTest {
             public void run() {
                 startTime = Calendar.getInstance().getTimeInMillis();
                 flag1 = true;
-                new WaitHandler(this, THREAD_DELAY);
+                WaitHandler t = new WaitHandler(this, THREAD_DELAY);
+                Assertions.assertNotNull(t);
                 endTime = Calendar.getInstance().getTimeInMillis();
                 flag2 = true;
             }
@@ -110,12 +112,14 @@ public class WaitHandlerTest {
             public void run() {
                 startTime = Calendar.getInstance().getTimeInMillis();
                 flag1 = true;
-                new WaitHandler(this, THREAD_DELAY) {
+
+                WaitHandler wh = new WaitHandler(this, THREAD_DELAY) {
                     @Override
                     public boolean wasSpurious() {
                         return true;
                     }
                 };
+                Assertions.assertNotNull(wh);
                 endTime = Calendar.getInstance().getTimeInMillis();
                 flag2 = true;
             }

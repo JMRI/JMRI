@@ -32,7 +32,7 @@ public class TableTest {
     }
 
     @Test
-    @SuppressWarnings("ResultOfMethodCallIgnored")  // This method test thrown exceptions
+//    @SuppressWarnings("ResultOfMethodCallIgnored")  // This method test thrown exceptions
     public void testExceptions() {
         Table t = new MyTable();
 

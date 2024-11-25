@@ -1,9 +1,7 @@
 package jmri.server.json.operations;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.beans.PropertyChangeEvent;
@@ -12,9 +10,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,19 +20,12 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.Kernel;
-import jmri.jmrit.operations.rollingstock.cars.KernelManager;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.server.json.JSON;
-import jmri.server.json.JsonException;
-import jmri.server.json.JsonMockConnection;
-import jmri.server.json.JsonRequest;
-import jmri.util.JUnitAppender;
-import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
+import jmri.server.json.*;
+import jmri.util.*;
 
 public class JsonOperationsSocketServiceTest {
 
@@ -229,6 +218,7 @@ public class JsonOperationsSocketServiceTest {
                 new JsonRequest(locale, JSON.V5, JSON.DELETE, 42));
         assertThat(manager.getById("GNWR45")).isNull();
         // capture error messages from using "unknown" engine model
+        JUnitAppender.assertErrorMessage("Rolling stock (GNWR 45) length () is not valid");
         JUnitAppender.assertErrorMessage("Rolling stock (GNWR 45) length () is not valid");
         JUnitAppender.assertErrorMessage("Rolling stock (GNWR 45) length () is not valid");
         JUnitAppender.assertErrorMessage("Rolling stock (GNWR 45) length () is not valid");

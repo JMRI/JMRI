@@ -17,10 +17,11 @@
 <!-- version 1.10 8 Mar 2021 Nigel Cliffe -  CV112 bit 5 tooltip correction -->
 <!-- version 1.11 1 Dec 2021 Ronald Kuhn -  Choice-Light4_v40 for v40.x -->
 <!-- version 1.12 31 Oct 2022 Ronald Kuhn -  decVal for CV#115 to max -->
+<!-- version 1.13 05 Apr 2024 Ronald Kuhn -  small sorting for more overview and correction of default values-->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
  <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
   <!-- Used unrelated item names used to place CV107-108 on the Lights pane -->
-  <variable CV="107" mask="XXXVVVVV" item="Function F0F option 1">
+  <variable CV="107" item="Function F0F option 1" mask="XXXVVVVV">
     <enumVal>
       <enumChoice choice="Not active">
         <choice>Not active</choice>
@@ -202,7 +203,7 @@
     <label xml:lang="cs">Vypnutí předních světel lokomotivy</label>
     <label xml:lang="de">Lvor aus</label>
   </variable>
-  <variable CV="107" mask="VVVXXXXX" item="Function F0F option 2">
+  <variable CV="107" item="Function F0F option 2" mask="VVVXXXXX">
     <enumVal>
       <enumChoice choice="None">
         <choice>None</choice>
@@ -258,7 +259,7 @@
     <label xml:lang="cs">Vypnutí funkčních výstupů vpřed lokomotivy</label>
     <label xml:lang="de">Lvor zusätzlich aus</label>
   </variable>
-  <variable CV="108" mask="XXXVVVVV" item="Function F0R option 1">
+  <variable CV="108" item="Function F0R option 1" mask="XXXVVVVV">
     <enumVal>
       <enumChoice choice="Not active">
         <choice>Not active</choice>
@@ -440,7 +441,7 @@
     <label xml:lang="cs">Vypnutí zadních světel lokomotivy</label>
     <label xml:lang="de">Lrück aus</label>
   </variable>
-  <variable CV="108" mask="VVVXXXXX" item="Function F0R option 2">
+  <variable CV="108" item="Function F0R option 2" mask="VVVXXXXX">
     <enumVal>
       <enumChoice choice="None">
         <choice>None</choice>
@@ -516,7 +517,7 @@
     <label xml:lang="cs">Charakteristiky kouře</label>
     <label xml:lang="de">Raucherzeugung</label>
   </variable>
-  <variable CV="112" item="Advanced Ack" mask="XXXXXXVX" default="1">
+  <variable CV="112" item="Advanced Ack" mask="XXXXXXVX" default="0">
     <enumVal>
       <enumChoice choice="Normal">
         <choice>Normal</choice>
@@ -621,7 +622,7 @@
     <label xml:lang="cs">Generování řetězců impulsů</label>
     <label xml:lang="de">F1-Pulskettenerzeugung (LGB)</label>
   </variable>
-  <variable CV="113" default="0" item="EMF Feedback Cutout" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable CV="113" item="EMF Feedback Cutout" default="0" exclude="179,184,228,226,232,235,247,MX689_v30">
     <decVal min="0" max="255"/>
     <label>EMF Feedback Cutoff Intensity</label>
     <label xml:lang="it">Intensità Taglio EMF</label>
@@ -935,7 +936,7 @@
     <label xml:lang="cs">Přizpůsobené zrychlení/zpomalení</label>
     <label xml:lang="de">Adaptives Beschleunigen/Bremsen</label>
   </variable>
-  <variable CV="124" default="0" mask="XXXXXXVV" item="Shunting Usage">
+  <variable CV="124" item="Shunting Usage" mask="XXXXXXVV" default="0">
     <enumVal>
       <enumChoice choice="no shunting">
         <choice>no shunting</choice>
@@ -1029,7 +1030,7 @@
     </enumVal>
     <label>SUSI</label>
   </variable>
-  <variable CV="125" mask="VVVVVVXX" item="Output 1 effect generated">
+  <variable CV="125" item="Output 1 effect generated" mask="VVVVVVXX" >
      <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
@@ -1042,14 +1043,14 @@
     <label xml:lang="cs">Generátor efektů předního světla</label>
     <label xml:lang="de">Lvor Effekt</label>
   </variable>
-  <variable CV="125" mask="XXXXXXVV" item="Output 1 behavior">
+  <variable CV="125" item="Output 1 behavior" mask="XXXXXXVV">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Front light behavior</label>
     <label xml:lang="it">Comportamento Luci frontali</label>
     <label xml:lang="cs">Chování předního světla</label>
     <label xml:lang="de">Lvor Verhalten</label>
   </variable>
-  <variable CV="126" mask="VVVVVVXX" item="Output 2 effect generated">
+  <variable CV="126" item="Output 2 effect generated" mask="VVVVVVXX">
      <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
@@ -1062,14 +1063,14 @@
     <label xml:lang="cs">Generátor efektů zadního světla</label>
     <label xml:lang="de">Lrück Effekt</label>
   </variable>
-  <variable CV="126" mask="XXXXXXVV" item="Output 2 behavior">
+  <variable CV="126" item="Output 2 behavior" mask="XXXXXXVV">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Rear light behavior</label>
     <label xml:lang="it">Comportamento Luci posteriori</label>
     <label xml:lang="cs">Chování zadního světla</label>
     <label xml:lang="de">Lrück Verhalten</label>
   </variable>
-  <variable CV="127" mask="VVVVVVXX" item="Output 3 effect generated">
+  <variable CV="127" item="Output 3 effect generated" mask="VVVVVVXX">
      <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
@@ -1082,14 +1083,14 @@
     <label xml:lang="cs">Generátor efektů funkčního výstupu 1</label>
     <label xml:lang="de">FA1 Effekt</label>
   </variable>
-  <variable CV="127" mask="XXXXXXVV" item="Output 3 behavior">
+  <variable CV="127" item="Output 3 behavior" mask="XXXXXXVV">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Function output 1 behavior</label>
     <label xml:lang="it">Comportamento uscita Funzione 1</label>
     <label xml:lang="cs">Chování funkčního výstupu 1</label>
     <label xml:lang="de">FA1 Verhalten</label>
   </variable>
-  <variable CV="128" mask="VVVVVVXX" item="Output 4 effect generated">
+  <variable CV="128" item="Output 4 effect generated" mask="VVVVVVXX">
      <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
@@ -1102,14 +1103,14 @@
     <label xml:lang="cs">Generátor efektů funkčního výstupu 2</label>
     <label xml:lang="de">FA2 Effekt</label>
   </variable>
-  <variable CV="128" mask="XXXXXXVV" item="Output 4 behavior">
+  <variable CV="128" item="Output 4 behavior" mask="XXXXXXVV">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Function output 2 behavior</label>
     <label xml:lang="it">Comportamento uscita Funzione 2</label>
     <label xml:lang="cs">Chování funkčního výstupu 2</label>
     <label xml:lang="de">FA2 Verhalten</label>
   </variable>
-  <variable CV="129" mask="VVVVVVXX" item="Output 5 effect generated" minOut="5">
+  <variable CV="129" item="Output 5 effect generated" mask="VVVVVVXX" minOut="5">
      <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
@@ -1122,14 +1123,14 @@
     <label xml:lang="cs">Generátor efektů funkčního výstupu 3</label>
     <label xml:lang="de">FA3 Effekt</label>
   </variable>
-  <variable CV="129" mask="XXXXXXVV" item="Output 5 behavior" minOut="5">
+  <variable CV="129" item="Output 5 behavior" mask="XXXXXXVV" minOut="5">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Function output 3 behavior</label>
     <label xml:lang="it">Comportamento uscita Funzione 3</label>
     <label xml:lang="cs">Chování funkčního výstupu 3</label>
     <label xml:lang="de">FA3 Verhalten</label>
   </variable>
-  <variable CV="130" mask="VVVVVVXX" item="Output 6 effect generated" minOut="6">
+  <variable CV="130" item="Output 6 effect generated" mask="VVVVVVXX" minOut="6">
      <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
@@ -1142,14 +1143,14 @@
     <label xml:lang="cs">Generátor efektů funkčního výstupu 4</label>
     <label xml:lang="de">FA4 Effekt</label>
   </variable>
-  <variable CV="130" mask="XXXXXXVV" item="Output 6 behavior" minOut="6">
+  <variable CV="130" item="Output 6 behavior" mask="XXXXXXVV" minOut="6">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Function output 4 behavior</label>
     <label xml:lang="it">Comportamento uscita Funzione 4</label>
     <label xml:lang="cs">Chování funkčního výstupu 4</label>
     <label xml:lang="de">FA4 Verhalten</label>
   </variable>
-  <variable CV="131" mask="VVVVVVXX" item="Output 7 effect generated" minOut="7">
+  <variable CV="131" item="Output 7 effect generated" mask="VVVVVVXX" minOut="7">
      <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
@@ -1162,14 +1163,14 @@
     <label xml:lang="cs">Generátor efektů funkčního výstupu 5</label>
     <label xml:lang="de">FA5 Effekt</label>
   </variable>
-  <variable CV="131" mask="XXXXXXVV" item="Output 7 behavior" minOut="7">
+  <variable CV="131" item="Output 7 behavior" mask="XXXXXXVV" minOut="7">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Function output 5 behavior</label>
     <label xml:lang="it">Comportamento uscita Funzione 5</label>
     <label xml:lang="cs">Chování funkčního výstupu 5</label>
     <label xml:lang="de">FA5 Verhalten</label>
   </variable>
-  <variable CV="132" mask="VVVVVVXX" item="Output 8 effect generated" minOut="8">
+  <variable CV="132" item="Output 8 effect generated" mask="VVVVVVXX" minOut="8">
      <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light1.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Light2.xml"/>
@@ -1182,7 +1183,7 @@
     <label xml:lang="cs">Generátor efektů funkčního výstupu 6</label>
     <label xml:lang="de">FA6 Effekt</label>
   </variable>
-  <variable CV="132" mask="XXXXXXVV" item="Output 8 behavior" minOut="8">
+  <variable CV="132" item="Output 8 behavior" mask="XXXXXXVV" minOut="8">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Function output 6 behavior</label>
     <label xml:lang="it">Comportamento uscita Funzione 6</label>
@@ -1427,14 +1428,14 @@
     <label xml:lang="cs">Zastavení řízené vzdáleností</label>
     <label xml:lang="de">Distanzgesteuerter Halt</label>
   </variable>
-  <variable CV="141" item="Distance controlled stopping Distance" default="0" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable CV="141" item="Distance controlled stopping Distance" default="20" exclude="179,184,228,226,232,235,247,MX689_v30">
     <decVal min="0" max="255"/>
     <label>Distance controlled stopping Distance</label>
     <label xml:lang="it">Controllo Distanza di Fermata</label>
     <label xml:lang="cs">Konstantní brzdná dráha</label>
     <label xml:lang="de">Distanzgesteuerter Halt - konstanter Bremsweg</label>
   </variable>
-  <variable CV="142" item="Distance controlled stopping speed correction (ABC)" default="12" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable CV="142" item="Distance controlled stopping speed correction (ABC)" default="5" exclude="179,184,228,226,232,235,247,MX689_v30">
     <decVal min="0" max="255"/>
     <label>Distance controlled stopping speed correction (ABC)</label>
     <label xml:lang="it">Correzione velocità Distanza di Fermata (ABC)</label>
@@ -1529,7 +1530,7 @@
     <label xml:lang="cs">Způsoby řízení motoru</label>
     <label xml:lang="de">Motor-Regelung</label>
   </variable>
-  <variable CV="146" default="0" item="Load Control" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable CV="146" item="Load Control" default="0" exclude="179,184,228,226,232,235,247,MX689_v30">
     <decVal min="0" max="255"/>
     <label>Motor Backlash Control</label>
     <label xml:lang="it">Controllo rinculo motore</label>
@@ -1539,28 +1540,28 @@
     <tooltip xml:lang="de">Ausgleich des Getriebe-Leerganges bei Richtungsumkehr</tooltip>
     <tooltip xml:lang="cs">Kompenzace vůle převodovky při změně směru</tooltip>
    </variable>
-  <variable CV="147" default="0" item="Total PWM Period" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable CV="147" item="Total PWM Period" default="0" exclude="179,184,228,226,232,235,247,MX689_v30">
     <decVal min="0" max="255"/>
     <label>EMF Extended Sample Time</label>
     <label xml:lang="it">Misura timeout EMK</label>
     <label xml:lang="cs">Měřící pauza EMK</label>
     <label xml:lang="de">EMK – Messlücke</label>
   </variable>
-  <variable CV="148" default="0" item="EMF Control Reference" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable CV="148" item="EMF Control Reference" default="0" exclude="179,184,228,226,232,235,247,MX689_v30">
     <decVal min="0" max="255"/>
     <label>Differential value</label>
     <label xml:lang="it">Valore differenziale</label>
     <label xml:lang="cs">Diferenciální složka</label>
     <label xml:lang="de">EMK - D-Wert</label>
   </variable>
-  <variable CV="149" mask="XXXXXXXV" default="0" item="EMF Enable" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable CV="149" item="EMF Enable" mask="XXXXXXXV" default="0" exclude="179,184,228,226,232,235,247,MX689_v30">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
     <label>Adaptive proportional value</label>
     <label xml:lang="it">Valore proprzionale adattabile</label>
     <label xml:lang="cs">Adaptivní proporcionální složka</label>
     <label xml:lang="de">EMK - P-Wert</label>
   </variable>
-  <variable CV="150" default="0" item="EMF Static Config" exclude="179,184,228,226,232,235,247,MX689_v30">
+  <variable CV="150" item="EMF Static Config" default="0" exclude="179,184,228,226,232,235,247,MX689_v30">
     <decVal min="0" max="255"/>
     <label>Regulation at full speed</label>
     <label xml:lang="it">Regolazione a velocità massima</label>

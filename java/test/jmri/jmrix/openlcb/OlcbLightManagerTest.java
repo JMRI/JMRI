@@ -127,9 +127,9 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         testRegisterDuplicateSystemName(l, s1, s2);
     }
 
-    // Test requires further setup
     @Override
     @Test
+    @Disabled("Test requires further setup")
     public void testCreate() {}
 
     @Override
@@ -145,7 +145,7 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     }
 
     @BeforeAll
-    @SuppressWarnings("deprecated") // OlcbInterface(NodeID, Connection)
+    @SuppressWarnings("deprecation") // OlcbInterface(NodeID, Connection)
     static public void preClassInit() {
        // this test is run separately because it leaves a lot of threads behind
         org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));

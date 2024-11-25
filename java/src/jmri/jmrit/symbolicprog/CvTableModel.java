@@ -72,6 +72,18 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         //addCV("1", false, false, false);
     }
 
+    public void setNoDecoder() {
+        for (var b : _readButtons) {
+            b.setEnabled(false);
+        }
+        for (var b : _writeButtons) {
+            b.setEnabled(false);
+        }
+        for (var b : _compareButtons) {
+            b.setEnabled(false);
+        }
+    }
+
     /**
      * Gives access to the programmer used to reach these CVs, so you can check
      * on mode, capabilities, etc.

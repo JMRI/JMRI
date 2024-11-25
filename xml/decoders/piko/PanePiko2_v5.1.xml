@@ -36,6 +36,12 @@
 			<authorinitials>UG</authorinitials>
 			<revremark>Add English translations</revremark>
 		</revision>
+		<revision>
+			<revnumber>3</revnumber>
+			<date>2024-03-27</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Extend to A7</revremark>
+		</revision>
 	</revhistory>
 	<name>Piko 2/2</name>
 	<column>
@@ -312,6 +318,23 @@
 			<griditem gridx="1" gridy="6" anchor="LINE_END">
 				<display item="Auto Off A2"/>
 			</griditem>
+			<group include="PIKO56505-22,PIKO56508-16">
+				<griditem gridx="1" gridy="7" anchor="LINE_END">
+					<display item="Auto Off A3"/>
+				</griditem>
+				<griditem gridx="1" gridy="8" anchor="LINE_END">
+					<display item="Auto Off A4"/>
+				</griditem>
+				<griditem gridx="1" gridy="9" anchor="LINE_END">
+					<display item="Auto Off A5"/>
+				</griditem>
+				<griditem gridx="1" gridy="10" anchor="LINE_END">
+					<display item="Auto Off A6"/>
+				</griditem>
+				<griditem gridx="1" gridy="11" anchor="LINE_END">
+					<display item="Auto Off A7"/>
+				</griditem>
+			</group>
 		</grid>
 	</column>
 </pane>

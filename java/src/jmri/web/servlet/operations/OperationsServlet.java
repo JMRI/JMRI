@@ -165,9 +165,9 @@ public class OperationsServlet extends HttpServlet {
                     train.getIconName(),
                     StringEscapeUtils.escapeHtml4(train.getDescription()),
                     Setup.isPrintValidEnabled() ? manifest.getValidity() : "",
-                    StringEscapeUtils.escapeHtml4(train.getComment()).replaceAll("\n", "<br>"),
+                    HtmlTrainCommon.convertToHTMLColor(StringEscapeUtils.escapeHtml4(train.getCommentWithColor())),
                     Setup.isPrintRouteCommentsEnabled() ? train.getRoute().getComment() : "",
-                    manifest.getLocations().replaceAll("\n", "<br>")
+                    HtmlTrainCommon.convertToHTMLColor(manifest.getLocations())
             ));
         } else if (JSON.JSON.equals(request.getParameter("format"))) {
             log.debug("Getting manifest JSON code for train {}", id);

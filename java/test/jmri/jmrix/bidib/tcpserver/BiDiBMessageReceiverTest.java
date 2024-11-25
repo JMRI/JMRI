@@ -13,6 +13,8 @@ import org.bidib.jbidibc.net.serialovertcp.NetBidibServerPlainTcpPort;
 
 import org.junit.jupiter.api.*;
 
+import static org.mockito.Mockito.mock;
+
 /**
  * Tests for the BiDiBMessageReceiver class
  * 
@@ -20,7 +22,7 @@ import org.junit.jupiter.api.*;
  */
 public class BiDiBMessageReceiverTest {
 
-    BiDiBSystemConnectionMemo memo;
+    private BiDiBSystemConnectionMemo memo;
 
     @Test
     public void testCTor() {
@@ -36,12 +38,13 @@ public class BiDiBMessageReceiverTest {
         Assertions.assertNotNull(r, "r exists");
         TcpServerNetMessageHandler h = new TcpServerNetMessageHandler(r);
         Assertions.assertNotNull(h, "h exists");
-        try {
-            NetBidibServerPlainTcpPort p = new NetBidibServerPlainTcpPort(42, null, h);
-            BiDiBMessageReceiver t = new BiDiBMessageReceiver(h, p);
-            Assertions.assertNotNull(t, "t exists");
-        }
-        catch (Exception e) {}
+
+        // use a Mocked NetBidibServerPlainTcpPort as creating a real one throws
+        // java.net.BindException: Permission denied (Bind failed) on CI runs
+        NetBidibServerPlainTcpPort p = mock(NetBidibServerPlainTcpPort.class);
+        BiDiBMessageReceiver t = new BiDiBMessageReceiver(h, p);
+        Assertions.assertNotNull(t, "t exists");
+
     }
 
     @BeforeEach
@@ -53,6 +56,10 @@ public class BiDiBMessageReceiverTest {
 
     @AfterEach
     public void tearDown() {
+        if ( memo != null ) {
+            memo.dispose();
+            memo = null;
+        }
         JUnitUtil.tearDown();
     }
 

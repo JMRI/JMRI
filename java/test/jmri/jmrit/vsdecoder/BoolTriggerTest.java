@@ -14,6 +14,7 @@ import org.junit.jupiter.api.*;
 public class BoolTriggerTest {
 
     @Test
+    @Disabled("Test requires further development")
     public void testStateConstants() {
         // Maybe check the enums here?
     }
@@ -132,6 +133,16 @@ public class BoolTriggerTest {
         Assert.assertEquals("xml target name", "test_target", uut.getTargetName());
         Assert.assertTrue("xml match value", uut.getMatchValue());
         Assert.assertEquals("xml action", Trigger.TargetAction.PLAY, uut.getTargetAction());
+    }
+
+    @BeforeEach
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }

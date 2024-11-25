@@ -42,6 +42,7 @@
                 <li><a href="/help/en/package/jmri/jmrit/logixng/ConditionalNGDebugger.shtml">LogixNG Debugger</a><span class="since">since 5.1.5</span>
                 <li><a href="/help/en/package/jmri/jmrit/logixng/InlineLogixNG.shtml">Inline LogixNG</a><span class="since">since 5.1.6</span>
                 <li><a href="/help/en/package/jmri/jmrit/logixng/LogixNGWhereUsed.shtml">LogixNG Where Used</a><span class="since">since 5.5.5</span>
+                <li><a href="/help/en/html/tools/logixng/ExportLogixNG.shtml">Export LogixNG</a><span class="since">since 5.9.3</span>
               </ul>
             </li>
           </ul>

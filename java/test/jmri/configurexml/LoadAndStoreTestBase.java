@@ -345,7 +345,8 @@ public class LoadAndStoreTestBase {
         File outFile = storeFile(file, this.saveType);
         checkFile(compFile, outFile);
 
-        JUnitAppender.suppressErrorMessage("systemName is already registered: ");
+        JUnitAppender.suppressErrorMessageStartsWith("systemName is already registered: ");
+
     }
 
     /**

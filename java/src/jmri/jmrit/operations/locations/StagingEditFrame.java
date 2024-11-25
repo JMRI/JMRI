@@ -64,7 +64,6 @@ public class StagingEditFrame extends TrackEditFrame {
         addItemLeft(p3, blockCarsCheckBox, 0, 0);
 
         // load tool tips
-        loadCheckBox.setToolTipText(Bundle.getMessage("TipIgnoresAlternate"));
         blockCarsCheckBox.setToolTipText(Bundle.getMessage("TipBlockByPickUp"));
 
         panelLoad.add(p1);
@@ -73,7 +72,7 @@ public class StagingEditFrame extends TrackEditFrame {
 
         super.initComponents(location, track);
 
-        _toolMenu.insert(new TrackDestinationEditAction(this), TOOL_MENU_OFFSET);
+        _toolMenu.insert(new TrackDestinationEditAction(this), 0);
         // place at end of menu
         _toolMenu.add(new SchedulesAndStagingAction());
         addHelpMenu("package.jmri.jmrit.operations.Operations_Staging", true); // NOI18N

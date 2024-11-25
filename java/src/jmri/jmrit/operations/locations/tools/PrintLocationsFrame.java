@@ -158,7 +158,7 @@ public class PrintLocationsFrame extends OperationsFrame {
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
         } catch (IOException we) {
-            log.error("Error printing PrintLocationAction", we);
+            log.error("Error printing PrintLocationAction: {}", we.getLocalizedMessage());
         }
     }
 
@@ -482,18 +482,18 @@ public class PrintLocationsFrame extends OperationsFrame {
             s = getLocationTypes(location);
             writer.write(s);
 
-            List<Track> yards = location.getTracksByNameList(Track.YARD);
-            if (yards.size() > 0) {
-                s = SPACES_3 + Bundle.getMessage("YardName") + NEW_LINE;
-                writer.write(s);
-                printTrackInfo(location, yards);
-            }
-
             List<Track> spurs = location.getTracksByNameList(Track.SPUR);
             if (spurs.size() > 0) {
                 s = SPACES_3 + Bundle.getMessage("SpurName") + NEW_LINE;
                 writer.write(s);
                 printTrackInfo(location, spurs);
+            }
+
+            List<Track> yards = location.getTracksByNameList(Track.YARD);
+            if (yards.size() > 0) {
+                s = SPACES_3 + Bundle.getMessage("YardName") + NEW_LINE;
+                writer.write(s);
+                printTrackInfo(location, yards);
             }
 
             List<Track> interchanges = location.getTracksByNameList(Track.INTERCHANGE);
@@ -699,6 +699,7 @@ public class PrintLocationsFrame extends OperationsFrame {
                         track.getName() +
                         getDirection(location.getTrainDirections() & track.getTrainDirections());
                 writer.write(s);
+                isAlternate(track);
                 writer.write(getTrackCarTypes(track));
                 writer.write(getTrackEngineTypes(track));
                 writer.write(getTrackRoads(track));
@@ -708,12 +709,13 @@ public class PrintLocationsFrame extends OperationsFrame {
                 writer.write(getSetOutTrains(track));
                 writer.write(getPickUpTrains(track));
                 writer.write(getDestinations(track));
+                writer.write(getTrackInfo(track));
                 writer.write(getSpurInfo(track));
                 writer.write(getSchedule(track));
                 writer.write(getStagingInfo(track));
                 writer.write(NEW_LINE);
             } catch (IOException we) {
-                log.error("Error printing PrintLocationAction", we);
+                log.error("Error printing PrintLocationAction: {}", we.getLocalizedMessage());
             }
         }
     }
@@ -1060,6 +1062,15 @@ public class PrintLocationsFrame extends OperationsFrame {
         return buf.toString();
     }
 
+    private String getTrackInfo(Track track) {
+        if (track.getPool() != null) {
+            StringBuffer buf =
+                    new StringBuffer(TAB + TAB + Bundle.getMessage("Pool") + ": " + track.getPoolName() + NEW_LINE);
+            return buf.toString();
+        }
+        return "";
+    }
+
     private String getSchedule(Track track) {
         // only spurs have schedules
         if (!track.isSpur() || track.getSchedule() == null) {
@@ -1084,6 +1095,12 @@ public class PrintLocationsFrame extends OperationsFrame {
                     NEW_LINE);
         }
         return buf.toString();
+    }
+
+    private void isAlternate(Track track) throws IOException {
+        if (track.isAlternate()) {
+            writer.write(TAB + TAB + Bundle.getMessage("AlternateTrack") + NEW_LINE);
+        }
     }
 
     private String getSpurInfo(Track track) {

@@ -123,6 +123,13 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
         }
         addPropertyChangeAllTrains();
 
+        // build menu
+        JMenuBar menuBar = new JMenuBar();
+        JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
+        toolMenu.add(new PrintTrainsServingLocationAction(this, false));
+        toolMenu.add(new PrintTrainsServingLocationAction(this, true));
+        menuBar.add(toolMenu);
+        setJMenuBar(menuBar);
         // add help menu to window
         addHelpMenu("package.jmri.jmrit.operations.Operations_ShowTrainsServicingThisLocation", true); // NOI18N
 
@@ -217,7 +224,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
         updateTrainPane();
     }
 
-    private String _carType = NONE;
+    String _carType = NONE;
 
     @Override
     public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {

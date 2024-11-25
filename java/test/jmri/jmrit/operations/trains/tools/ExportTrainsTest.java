@@ -1,11 +1,9 @@
 package jmri.jmrit.operations.trains.tools;
 
-import java.awt.GraphicsEnvironment;
 import java.io.File;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -28,8 +26,8 @@ public class ExportTrainsTest extends OperationsTestCase {
     }
 
     @Test
+    @jmri.util.junit.annotations.DisabledIfHeadless
     public void testCreateFile() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ExportTrains exportTrains = new ExportTrains();
         Assert.assertNotNull("exists", exportTrains);
 
@@ -50,6 +48,8 @@ public class ExportTrainsTest extends OperationsTestCase {
         }, "wait for prompt");
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), Bundle.getMessage("ButtonOK"));
+
+        jmri.util.JUnitUtil.waitFor(() -> !export.isAlive(), "wait for export to complete");
 
         File file = new File(ExportTrains.defaultOperationsFilename());
         Assert.assertTrue("Confirm file creation", file.exists());

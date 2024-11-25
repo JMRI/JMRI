@@ -64,7 +64,7 @@ public class ExpressionLinuxLinePower extends AbstractDigitalExpression
     private List<String> getLinuxPowerSupplies() throws IOException, NoPowerSuppliesException {
         List<String> powerSupplies = new ArrayList<>();
 
-        Process process = Runtime.getRuntime().exec("upower -e");
+        Process process = Runtime.getRuntime().exec(new String[]{"upower","-e"});
         try (BufferedReader buffer = new BufferedReader(new InputStreamReader(process.getInputStream())))  {
             String line;
             while ((line = buffer.readLine()) != null) {
@@ -83,7 +83,7 @@ public class ExpressionLinuxLinePower extends AbstractDigitalExpression
         boolean isPowerOnline = false;
 
         for (String powerSupply : getLinuxPowerSupplies()) {
-            Process process = Runtime.getRuntime().exec("upower -i " + powerSupply);
+            Process process = Runtime.getRuntime().exec(new String[]{"upower", "-i", powerSupply});
             try (BufferedReader buffer = new BufferedReader(new InputStreamReader(process.getInputStream())))  {
                 String line;
                 boolean linePowerFound = false;

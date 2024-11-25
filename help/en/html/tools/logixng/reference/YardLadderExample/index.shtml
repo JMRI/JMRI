@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>LogixNG Reference - Yard Ladder Example</title>
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="jmri LogixNG yard ladder example">
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>LogixNG Reference - Yard Ladder Example</h1>
+
+      <p>A staging yard contains four tracks accessed using a three turnout ladder. When a track
+      label is clicked, the turnouts will be changed to line the route.  The track labels are
+      internal sensors using a JMRI Sensor Group.  The sensor group will have one active sensor.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="yard-ladder-panel.png">
+        <img src="yard-ladder-panel.png" alt="yard ladder panel"></a>
+      </div>
+
+      <p>The logic for the ladder is based on a CSV table that defines the path for each staging
+      track.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="yard-ladder-table.png">
+        <img src="yard-ladder-table.png" alt="yard ladder table"></a>
+      </div>
+
+      <p>The LogixNG listens for changes to the sensor group members.  When a sensor becomes active,
+      the LogixNG uses the table information to set the route.  To support multiple staging yards,
+      use the LogixNG <a href="../chapter2.shtml">Clipboard</a> to clone the logic and change the
+      CSV table name in rows A1 and B1.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="yard-ladder-logixng.png">
+        <img src="yard-ladder-logixng.png" alt="yard ladder logixng"></a>
+      </div>
+
+      <h2>LogixNG Features</h2>
+
+      <dl>
+        <dt><a href="../chapter11.shtml#lob_table">Listen on beans - Table</a> :: A1</dt>
+        <dd>The track sensor names from the Track column are used to build a list of sensors to
+        trigger the logic.  These are the sensors in the Sensor Group.</dd>
+
+        <dt><a href="../chapter11.shtml#find_in_table">Find table row or column</a> :: B1</dt>
+        <dd>The active sensor is used to find the appropriate row in the table.  The cells in the
+        row are using to build a local variable <strong>Map</strong>, <strong><em>rowMap</em></strong>,
+        which has the column name as the key with the cell content as the value.</dd>
+
+        <dt><a href="../chapter5.shtml#foreach">For each</a> :: B2</dt>
+        <dd>For each is used to iterate through a list items, such as all the sensor.  In this case
+        the <strong>rowMap.keySet()</strong> formala is used.  <strong>keySet()</strong> is a Java
+        method which returns a list of keys from a Map.  In this example, the turnout names.</dd>
+
+        <dt><a href="../chapter5#if-then-else">If Then Else</a> :: C2</dt>
+        <dd>In addition to the <strong>Always execute</strong> option, the <strong>Evaluate needed
+        expressions</strong> option is used. If the stateName local variable is empty, the rest
+        of the formula is skipped since the expression is already false.</dd>
+
+        <dt><a href="../chapter8#lv_map">Local variable Map</a></dt>
+        <dd>The <strong>Find in table</strong> action converts the row of turnout states into a
+        local variable <strong>Map</strong>.  Each row of the map contains a key/value pair.  In
+        this example, the key is the column turnout name and the value is the Closed/Thrown/empty
+        state.</dd>
+
+        <dt><a href="../chapter9">Formulas</a></dt>
+        <dd>Formulas are used in B2, C1 and the <strong>If</strong> statement in C2.  The
+        <strong>If</strong> formula is similar to the Logix Antecedent but uses the Java syntax.</dd>
+
+      </dl>
+
+      <h2>Download</h2>
+
+      <p>File name:  <a href="yard-ladder-example.zip">yard-ladder-example.zip</a></p>
+
+      <p>Contents:</p>
+      <ul>
+        <li>yard-ladder-example.xml</li>
+        <li>yard-ladder.csv</li>
+      </ul>
+
+      <p>yard-ladder-example.xml configuration:</p>
+      <ul>
+        <li>The sensor table menu <strong>Defaults &rArr; Initial Sensor State</strong> is
+        <strong>Inactive</strong>.</li>
+        <li>The sensor group name is <strong>Ladder</strong>.</li>
+        <li>An initialization LogixNG sets the turnouts <strong>Closed</strong>.</li>
+      </ul>
+
+      <hr>
+
+      <p><a href="../index.shtml">Return to the Reference TOC</a>
+      </p>
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/help.js"></script>
+</body>
+</html>

@@ -198,6 +198,11 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
         log.error("method with two args invoked");
     }
 
+    @Override
+    protected void dispose() {
+        adapter.dispose();
+    }
+
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(AbstractNetworkConnectionConfigXml.class);
 

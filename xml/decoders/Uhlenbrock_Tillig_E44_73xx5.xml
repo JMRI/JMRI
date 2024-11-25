@@ -20,7 +20,7 @@
 	<decoder>
 		<family name="IntelliDrive2" mfg="Uhlenbrock Elektronik" comment="Decoders not sorted (necessarily) in numerical order">
 			<!-- to be checked by hardware owner -->
-			<model model="Tillig 66036" highVersionID="36" numOuts="8" numFns="28" maxMotorCurrent="0.8A" formFactor="TT" connector="Next18" productID="Tillig066036" comment="IntelliDrive2 Lokdecoder and RailCom(R) ohne Sound">
+			<model model="Tillig E44 + 66036 (73235)" highVersionID="36" numOuts="8" numFns="28" maxMotorCurrent="0.8A" formFactor="TT" connector="Next18" productID="Tillig066036" comment="IntelliDrive2 Lokdecoder and RailCom(R) ohne Sound">
 				<output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
 				<output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
 				<output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>

@@ -12,6 +12,7 @@ import org.jdom2.Element;
 
 import jmri.*;
 import jmri.beans.PropertyChangeSupport;
+import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
@@ -70,6 +71,7 @@ public class TrainManager extends PropertyChangeSupport
     public static final String ROW_COLOR_NAME_CHANGED_PROPERTY = "TrainsRowColorChange"; // NOI18N
     public static final String TRAINS_BUILT_CHANGED_PROPERTY = "TrainsBuiltChange"; // NOI18N
     public static final String TRAINS_SHOW_FULL_NAME_PROPERTY = "TrainsShowFullName"; // NOI18N
+    public static final String TRAINS_SAVED_PROPERTY = "TrainsSaved"; // NOI18N
 
     public TrainManager() {
     }
@@ -309,8 +311,23 @@ public class TrainManager extends PropertyChangeSupport
     }
     
     /**
-     * Used to determine if a train has any restrictions with regard to Locomotive
+     * Used to determine if a train has any restrictions with regard to caboose
      * roads.
+     * 
+     * @return true if there's a restriction
+     */
+    public boolean isCabooseRoadRestricted() {
+        for (Train train : getList()) {
+            if (!train.getCabooseRoadOption().equals(Train.ALL_ROADS)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Used to determine if a train has any restrictions with regard to
+     * Locomotive roads.
      * 
      * @return true if there's a restriction
      */
@@ -388,10 +405,10 @@ public class TrainManager extends PropertyChangeSupport
         if (train == null) {
             _id++;
             train = new Train(Integer.toString(_id), name);
-            Integer oldSize = Integer.valueOf(getNumEntries());
+            int oldSize = getNumEntries();
             _trainHashTable.put(train.getId(), train);
             setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
-                    Integer.valueOf(getNumEntries()));
+                    getNumEntries());
         }
         return train;
     }
@@ -402,14 +419,14 @@ public class TrainManager extends PropertyChangeSupport
      * @param train The Train to be added.
      */
     public void register(Train train) {
-        Integer oldSize = Integer.valueOf(getNumEntries());
+        int oldSize = getNumEntries();
         _trainHashTable.put(train.getId(), train);
         // find last id created
         int id = Integer.parseInt(train.getId());
         if (id > _id) {
             _id = id;
         }
-        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(getNumEntries()));
+        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, getNumEntries());
     }
 
     /**
@@ -422,9 +439,9 @@ public class TrainManager extends PropertyChangeSupport
             return;
         }
         train.dispose();
-        Integer oldSize = Integer.valueOf(getNumEntries());
+        int oldSize = getNumEntries();
         _trainHashTable.remove(train.getId());
-        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(getNumEntries()));
+        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, getNumEntries());
     }
 
     public void replaceLoad(String type, String oldLoadName, String newLoadName) {
@@ -478,9 +495,8 @@ public class TrainManager extends PropertyChangeSupport
     }
 
     /**
-     *
      * @param car         The car looking for a train.
-     * @param buildReport The build report for logging.
+     * @param buildReport The optional build report for logging.
      * @return Train that can service car from its current location to the its
      *         destination.
      */
@@ -489,10 +505,9 @@ public class TrainManager extends PropertyChangeSupport
     }
 
     /**
-     *
-     * @param car          The car looking for a train.
+     * @param car           The car looking for a train.
      * @param excludeTrains The trains not to try.
-     * @param buildReport  The build report for logging.
+     * @param buildReport   The optional build report for logging.
      * @return Train that can service car from its current location to the its
      *         destination.
      */
@@ -501,7 +516,7 @@ public class TrainManager extends PropertyChangeSupport
         addLine(buildReport, Bundle.getMessage("trainFindForCar", car.toString(), car.getLocationName(),
                 car.getTrackName(), car.getDestinationName(), car.getDestinationTrackName()));
 
-        main: for (Train train : getTrainsByIdList()) {
+        main: for (Train train : getTrainsByNameList()) {
             if (excludeTrains.contains(train)) {
                 continue;
             }
@@ -687,6 +702,7 @@ public class TrainManager extends PropertyChangeSupport
     public JComboBox<Train> getTrainComboBox() {
         JComboBox<Train> box = new JComboBox<>();
         updateTrainComboBox(box);
+        OperationsPanel.padComboBox(box);
         return box;
     }
 
@@ -814,6 +830,7 @@ public class TrainManager extends PropertyChangeSupport
         // set road, load, and owner options
         newTrain.setCarRoadOption(train.getCarRoadOption());
         newTrain.setCarRoadNames(train.getCarRoadNames());
+        newTrain.setCabooseRoadNames(train.getCabooseRoadNames());
         newTrain.setLocoRoadOption(train.getLocoRoadOption());
         newTrain.setLocoRoadNames(train.getLocoRoadNames());
         newTrain.setLoadOption(train.getLoadOption());
@@ -1236,6 +1253,7 @@ public class TrainManager extends PropertyChangeSupport
         for (Train train : getTrainsByIdList()) {
             trains.addContent(train.store());
         }
+        firePropertyChange(TRAINS_SAVED_PROPERTY, true, false);
     }
 
     /**

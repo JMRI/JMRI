@@ -131,7 +131,7 @@ public class LogixNGGlobalVariableTableAction extends AbstractLogixNGTableAction
 
     @SuppressWarnings("unchecked")  // Checked cast is not possible due to type erasure
     @Override
-    protected String getBeanText(GlobalVariable e) {
+    protected String getBeanText(GlobalVariable e, Base.PrintTreeSettings printTreeSettings) {
         var content = new StringBuilder(Bundle.getMessage("LogixNG_GlobalVar_Browse_Header",
                 e.getSystemName(),
                 e.getUserName(),
@@ -174,6 +174,11 @@ public class LogixNGGlobalVariableTableAction extends AbstractLogixNGTableAction
         return "LogixNGCreateGlobalVariableButtonHint";
     }
 
+    @Override
+    protected String helpTarget() {
+        return "package.jmri.jmrit.beantable.LogixNGGlobalVariables";  // NOI18N
+    }
+
     /**
      * Create or copy bean frame.
      *
@@ -185,8 +190,8 @@ public class LogixNGGlobalVariableTableAction extends AbstractLogixNGTableAction
     @Override
     protected JPanel makeAddFrame(String titleId, String startMessageId) {
         addLogixNGFrame = new JmriJFrame(Bundle.getMessage(titleId));
-//        addLogixNGFrame.addHelpMenu(
-//                "package.jmri.jmrit.beantable.LogixNGGlobalVariableTable", true);     // NOI18N
+        addLogixNGFrame.addHelpMenu(
+                "package.jmri.jmrit.beantable.LogixNGGlobalVariables", true);     // NOI18N
         addLogixNGFrame.setLocation(50, 30);
         Container contentPane = addLogixNGFrame.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));

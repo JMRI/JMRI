@@ -26,7 +26,10 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>Command Station Monitor :
+                <br>Button added to release JMRI-managed loco sessions,
+                <br>this can be handy when developing Jython scripts that fail to release the Throttle.
+                <br>Button added to launch a new JMRI Throttle for a loco session.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -126,15 +129,12 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Updated the OpenLCB_Java library ot version 0.7.35 with improvements:
-                    <ul>
-                        <li>Better display of frames with leading zeros on their aliases
-                        <li>Better handling of unexpected alias collisions.  These shouldn't
-                            actually happen if all goes well, but just in case it doesn't...
-                        <li>Adds support for the Verify Node Addressed message
-                    </ul>
-                </li>
-                <li>Additions for better conformance with OpenLCB standards</li>
+                <li>STL Editor: Add store mode selections to the View menu, update help page.</li>
+                <li>Add a Send SNIP Request button to the Send tool.</li>
+                <li>Implement recent changes to the CDI spec underlying the node configuration display. 
+                    This will allow node implementors to make simpler configuration dialogs.</li>
+                <li>Fixed a bug where the node configuration display would sometimes
+                    be drawn with overlapping characters or extra white space.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -344,7 +344,7 @@
 
         <h4>Technologistic (train-O-matic)</h4>
             <ul>
-                <li></li>
+                <li>Added support for the FD II (version 2) function decoder family.</li>
             </ul>
 
         <h4>Trix Modelleisenbahn</h4>
@@ -374,12 +374,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li>LIPLDNW1 (N, TT) light bar</li>
-                <li>LIPLDNY1 (N, TT) light bar</li>
-                <li>LIPLDHW1 (H0, TT) light bar</li>
-                <li>LIPLDHY1 (H0, TT) light bar</li>
-                <li>LIPLDGY1 (G, 1, 2) light bar</li>
-                <li>LIPLDGW1 (G, 1, 2) light bar</li>
+                <li></li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -387,14 +382,30 @@
                 <li></li>
             </ul>
 
-    <h3>DecoderPro</h3>
-        <a id="DecoderPro" name="DecoderPro"></a>
+    <h3>Control Panel Editor</h3>
+        <a id="CPE" name="CPE"></a>
+        <ul>
+            <li></li>
+        </ul>
+        <h4>Circuit Builder</h4>
+            <a id="CPE-CB" name="CPE-CB"></a>
+            <ul>
+                <li></li>
+            </ul>
+        <h4>Palette</h4>
+            <a id="CPE-P" name="CPE-P"></a>
+            <ul>
+                <li></li>
+            </ul>
+
+    <h3>CTC Tool</h3>
+        <a id="PE-CTC" name="PE-CTC"></a>
         <ul>
             <li></li>
         </ul>
 
-    <h3>CTC Tool</h3>
-        <a id="PE-CTC" name="PE-CTC"></a>
+    <h3>DecoderPro</h3>
+        <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
             <li></li>
         </ul>
@@ -437,62 +448,6 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>Conversion to boolean has changed. Before JMRI 5.7.5,
-              conversion from a string to boolean returned
-              <strong>True</strong> if the string was not empty, and
-              <strong>False</strong> if the string was empty. With JMRI 5.7.5,
-              this has changed so that a string that's <strong>true</strong>
-              (case insensitive) returns a boolean <strong>True</strong>
-              and a string that's <strong>false</strong> (case insensitive)
-              returns a boolean <strong>False</strong>. All other string
-              values throw an exception. The earlier behaviour was not
-              documented so it's unlikely that this affects users.<br>
-              The old behaviour was based on how Jython converts a string
-              to boolean. If you want the old behaviour, you can use the
-              LogixNG formula function <strong>boolJython()</strong>.</li>
-          <li>Local variables and Global variables can now be initialized
-              to boolean values as well. True or false. Case insensitive.</li>
-          <li>The action <strong>Log local variables</strong> now has the
-              option <strong>Show class name</strong>.If it is selected,
-              the name of the class will be shown after the value. This
-              is useful for debugging, when you want to know the type of
-              the value.</li>
-          <li>The LogixNG function <strong>int()</strong> previously returned a Java
-              <strong>Integer</strong> instead of a Java <strong>Long</strong>.
-              This bug is now corrected. It shouldn't affect any existing
-              LogixNGs. The difference between <strong>Integer</strong> and
-              <strong>Long</strong> is that <strong>Long</strong> can handle
-              much bigger integer values than <strong>Integer</strong>.</li>
-          <li>The LogixNG action <strong>Enable/Disable LogixNG</strong>
-              has been added.</li>
-          <li>LogixNG formulas now supports Java arrays as well, for example
-              if you use the Java method <strong>split()</strong> to split
-              a string. Example:
-              <br>
-              <pre>
-LogixNG: IQ:AUTO:0001
-    ConditionalNG: IQC:AUTO:0001
-        ! A
-            Many
-               ::: Local variable "a_b", init to String "Hello_World"
-               ::: Local variable "a", init to None ""
-               ::: Local variable "b", init to None ""
-               ::: Local variable "a_b_array", init to None ""
-                ! A1
-                    Digital Formula: a_b_array = a_b.split("\_")
-                ! A2
-                    Digital Formula: a = a_b_array[0]
-                ! A3
-                    Digital Formula: b = a_b_array[1]
-                ! A4
-                    Log local variables
-              </pre>
-              </li>
-          <li>The LogixNG action <strong>Set reporter</strong> has been
-              added.</li>
-          <li>The actions <strong>Listen on Beans ...</strong> have been
-              updated to fix a problem when several beans changes
-              state at the same time.</li>
           <li></li>
         </ul>
 
@@ -502,10 +457,10 @@ LogixNG: IQ:AUTO:0001
             <li></li>
         </ul>
 
-    <h3>Operations</h3>
+    <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>New feature allows users to quickly create a custom load for all car types.</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -514,21 +469,11 @@ LogixNG: IQ:AUTO:0001
             <li></li>
         </ul>
 
-    <h3>Control Panel Editor</h3>
-        <a id="CPE" name="CPE"></a>
+    <h3>Permissions</h3>
+        <a id="Permissions" name="Permissions"></a>
         <ul>
             <li></li>
         </ul>
-        <h4>Circuit Builder</h4>
-            <a id="CPE-CB" name="CPE-CB"></a>
-            <ul>
-                <li></li>
-            </ul>
-        <h4>Palette</h4>
-            <a id="CPE-P" name="CPE-P"></a>
-            <ul>
-                <li></li>
-            </ul>
 
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
@@ -545,7 +490,7 @@ LogixNG: IQ:AUTO:0001
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li></li>
+            <li>Improvements to Roster Table Operating Duration column.</li>
         </ul>
 
     <h3>Routes</h3>
@@ -557,7 +502,8 @@ LogixNG: IQ:AUTO:0001
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li><strong>WiThrottleList.py</strong> is a sample script that shows how to access the
+            WiThrottle session list.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -567,7 +513,10 @@ LogixNG: IQ:AUTO:0001
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li></li>
+                <li>There's a new 
+                    <a href="https://www.jmri.org/xml/signals/basic-enhanced/">basic-enhanced signal system</a>.</li>
+                <li>The 
+                    <a href="https://www.jmri.org/xml/signals/FS-1987/">FS-1987 signal system</a> was improved.</li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -642,6 +591,12 @@ LogixNG: IQ:AUTO:0001
             <li></li>
         </ul>
 
+   <h3>Web Server</h3>
+        <a id="server" name="server"></a>
+        <ul>
+            <li></li>
+        </ul>
+
     <h3>Where Used</h3>
         <a id="WhereUsed" name="WhereUsed"></a>
         <ul>
@@ -651,17 +606,20 @@ LogixNG: IQ:AUTO:0001
    <h3>WiThrottle Server</h3>
         <a id="WS" name="WS"></a>
         <ul>
-            <li></li>
-        </ul>
-
-   <h3>Web Server</h3>
-        <a id="server" name="server"></a>
-        <ul>
-            <li></li>
+            <li>The <strong>getThrottleList()</strong> public method has been added to
+            jmri.jmrit.withrottle.UserInterface for Jython access.</li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
+        <ul>
+            <li>The limit for VSDecoders is now 8 instead of 4.</li>
+            <li>The sound buttons sorting in the VSD Manager window is now as in config.xml.</li>
+            <li>If the sound buttons exeed 8, a second row is displayed.</li>
+        </ul>
+
+   <h3>Z21 Server</h3>
+        <a id="Z21" name="Z21"></a>
         <ul>
             <li></li>
         </ul>
@@ -669,7 +627,6 @@ LogixNG: IQ:AUTO:0001
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Improve handling of block values that contain IdTags 
-                across shutdown and startup.</li>
+            <li></li>
         </ul>
 

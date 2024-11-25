@@ -239,16 +239,18 @@ public class SchedulesAndStagingFrame extends OperationsFrame implements java.be
                 sch.removePropertyChangeListener(this);
                 sch.addPropertyChangeListener(this);
                 // determine if schedule is requesting car type and load
-                for (ScheduleItem si : sch.getItemsBySequenceList()) {
-                    if (spur.isLoadNameAccepted(load) &&
-                            si.getTypeName().equals(type) &&
-                            (si.getReceiveLoadName().equals(load) ||
-                                    (si.getReceiveLoadName().equals(ScheduleItem.NONE) &&
-                                            !generatedLoadsCheckBox.isSelected()))) {
-                        addItemLeft(locationsPanel, new JLabel(load), 4, x);
-                        addItemLeft(locationsPanel, new JLabel(location.getName() + " (" + spur.getName() + ")"), 5, x);
-                        addItemLeft(locationsPanel, new JLabel(spur.getLoadOptionString()), 6, x);
-                        addItemLeft(locationsPanel, new JLabel(sch.getName() + " " + si.getId()), 7, x++);
+                if (spur.isLoadNameAndCarTypeAccepted(load, type)) {
+                    for (ScheduleItem si : sch.getItemsBySequenceList()) {
+                        if (si.getTypeName().equals(type) &&
+                                (si.getReceiveLoadName().equals(load) ||
+                                        (si.getReceiveLoadName().equals(ScheduleItem.NONE) &&
+                                                !generatedLoadsCheckBox.isSelected()))) {
+                            addItemLeft(locationsPanel, new JLabel(load), 4, x);
+                            addItemLeft(locationsPanel, new JLabel(location.getName() + " (" + spur.getName() + ")"), 5,
+                                    x);
+                            addItemLeft(locationsPanel, new JLabel(spur.getLoadOptionString()), 6, x);
+                            addItemLeft(locationsPanel, new JLabel(sch.getName() + " " + si.getId()), 7, x++);
+                        }
                     }
                 }
             }

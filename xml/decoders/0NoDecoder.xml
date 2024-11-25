@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2024 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd"
+    showEmptyPanes="no">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2024</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>0</revnumber><date>2024-06-08</date><authorinitials>BJ</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+  </revhistory>
+  <decoder>
+    <family name="No Decoder" mfg="No Decoder">
+      <model model="No Decoder"/>
+    </family>
+    <programming nodecoder="yes" direct="no" paged="no" register="no" ops="no"/>
+    <variables>
+      <variable CV="1" comment="Short address" item="Short Address" default="0">
+        <shortAddressVal/>
+        <label>Primary Address</label>
+        <label xml:lang="cs">Základní adresa</label>
+        <label xml:lang="it">Indirizzo Primario</label>
+        <label xml:lang="fr">Adresse décodeur</label>
+        <label xml:lang="de">Basisadresse</label>
+        <label xml:lang="nl">Basisadres</label>
+        <label xml:lang="es">Dirección primaria</label>
+        <tooltip xml:lang="cs">Krátká adresa</tooltip>
+        <tooltip xml:lang="it">Indirizzo Corto</tooltip>
+        <tooltip xml:lang="fr">Adresse courte</tooltip>
+        <tooltip xml:lang="de">Kurze Adresse</tooltip>
+        <tooltip xml:lang="nl">Kort Adres</tooltip>
+        <tooltip xml:lang="es">Dirección corta</tooltip>
+        <tooltip xml:lang="de">Kurze Adresse</tooltip>
+      </variable>
+    </variables>
+  </decoder>
+</decoder-config>

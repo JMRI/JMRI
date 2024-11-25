@@ -11,7 +11,7 @@
 # Note that doing this twice isn't good, so perhaps we should 
 # come up with something a bit less brute force.
 
-sed -i .bak s/$2/$3/g scripts/HOWTO-distribution.md
+sed -i.bak s/$2/$3/g scripts/HOWTO-distribution.md
 
-sed -i .bak s/$1/$2/g scripts/HOWTO-distribution.md
+sed -i.bak s/$1/$2/g scripts/HOWTO-distribution.md
 

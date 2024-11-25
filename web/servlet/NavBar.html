@@ -37,6 +37,7 @@ should not be changed. See Javadoc for jmri.web.servlet.ServletHelper#getNavBar(
                     <a href="/operations" class="dropdown-toggle" data-toggle="dropdown">Operations <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="/operations/trains">Trains</a></li>
+                        <li><a href="/web/cars.html">Cars</a></li>
                         <li id="navbar-operations-train-divider" class="divider context-operations-only"></li>
                         <li id="navbar-operations-train" class="dropdown-header context-operations-only"></li>
                         <li id="navbar-operations-manifest" class="context-operations-only"><a href="#">Manifest</a></li>
@@ -57,11 +58,17 @@ should not be changed. See Javadoc for jmri.web.servlet.ServletHelper#getNavBar(
                         <li><a href="/tables/signalMast">Signal Masts</a></li>
                         <li><a href="/tables/signalHead">Signal Heads</a></li>
                         <li><a href="/tables/location">Locations</a></li>
-                        <li><a href="/tables/car">Cars</a></li>
                         <li><a href="/tables/engine">Engines</a></li>
                         <li><a href="/tables/idTag">ID Tags</a></li>
                         <li class="divider"></li>
                         <li><a href="/tables/type">All Types</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown context-permissions">
+                    <a href="/permission" class="dropdown-toggle" data-toggle="dropdown">Permission <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/permission/login">Login</a></li>
+                        <li><a href="/permission/logout">Log out</a></li>
                     </ul>
                 </li>
             </ul>

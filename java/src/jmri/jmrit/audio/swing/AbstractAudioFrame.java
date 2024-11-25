@@ -233,7 +233,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
             slider.setMaximum(Math.round(max * INT_PRECISION));
             slider.setMajorTickSpacing(iInterval);
             slider.setMinorTickSpacing(iInterval / minorTicks);
-            @SuppressWarnings("UseOfObsoleteCollectionType")
+//            @SuppressWarnings("UseOfObsoleteCollectionType")
             // Need to use Hashtable for JSlider labels
             Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
             for (int i = iMin; i <= iMax; i += iInterval) {

@@ -7,6 +7,8 @@
 -->
 <!-- version 1.2 - Ronald Kuhn - add german translation -->
 <!-- version 1.3 - Ronald Kuhn - exclusion for MX615 and MX616 -->
+<!-- version 1.4 - Ronald Kuhn - correction of some default values -->
+
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <variable item="Servo Protocol" CV="161" mask="XXXXXXXV" default="0" exclude="194,195">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NegPosPulse.xml"/>
@@ -76,7 +78,7 @@
     <label xml:lang="cs">Středová poloha servo 1</label>
     <label xml:lang="de">Mittelstellung</label>
   </variable>
-  <variable item="Servo 1 Rotation Speed" CV="165" default="30" exclude="194,195">
+  <variable item="Servo 1 Rotation Speed" CV="165" default="10" exclude="194,195">
     <decVal/>
     <label>Servo 1 Rotation Speed</label>
     <label xml:lang="it">Servo 1 Velocità rotazione</label>
@@ -104,7 +106,7 @@
     <label xml:lang="cs">Středová poloha servo 2</label>
     <label xml:lang="de">Mittelstellung</label>
   </variable>
-  <variable item="Servo 2 Rotation Speed" CV="169" default="30" exclude="194,195">
+  <variable item="Servo 2 Rotation Speed" CV="169" default="10" exclude="194,195">
     <decVal/>
     <label>Servo 2 Rotation Speed</label>
     <label xml:lang="it">Servo 2 Velocità rotazione</label>

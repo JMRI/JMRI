@@ -37,6 +37,12 @@
 			<authorinitials>UG</authorinitials>
 			<revremark>Add English translations</revremark>
 		</revision>
+		<revision>
+			<revnumber>4</revnumber>
+			<date>2024-03-27</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Extend to A7</revremark>
+		</revision>
 	</revhistory>
 	<variable item="Auto Off F0v" CV="180" default="6">
 		<decVal/>
@@ -59,11 +65,46 @@
 		<tooltip>automatic switch off of A1 after = CV value * 0,5 sec</tooltip>
 		<tooltip xml:lang="de">Automatisches Abschalten von A1 nach = CV-Wert * 0,5 sek</tooltip>
 	</variable>
-	<variable item="Auto Off  A2" CV="183" default="6">
+	<variable item="Auto Off A2" CV="183" default="6">
 		<decVal/>
 		<label>Time Auto Off A2 (CV 183)</label>
 		<label xml:lang="de">Zeit auto AUS  A2 (CV 183)</label>
 		<tooltip>automatic switch off of A2 after = CV value * 0,5 sec</tooltip>
 		<tooltip xml:lang="de">Automatisches Abschalten von A2 nach = CV-Wert * 0,5 sek</tooltip>
+	</variable>
+	<variable item="Auto Off A3" CV="184" default="6">
+		<decVal/>
+		<label>Time Auto Off A3 (CV 184)</label>
+		<label xml:lang="de">Zeit auto AUS  A3 (CV 184)</label>
+		<tooltip>automatic switch off of A3 after = CV value * 0,5 sec</tooltip>
+		<tooltip xml:lang="de">Automatisches Abschalten von A3 nach = CV-Wert * 0,5 sek</tooltip>
+	</variable>
+	<variable item="Auto Off A4" CV="185" default="6">
+		<decVal/>
+		<label>Time Auto Off A4 (CV 185)</label>
+		<label xml:lang="de">Zeit auto AUS  A4 (CV 185)</label>
+		<tooltip>automatic switch off of A4 after = CV value * 0,5 sec</tooltip>
+		<tooltip xml:lang="de">Automatisches Abschalten von A4 nach = CV-Wert * 0,5 sek</tooltip>
+	</variable>
+	<variable item="Auto Off A5" CV="186" default="6">
+		<decVal/>
+		<label>Time Auto Off A5 (CV 186)</label>
+		<label xml:lang="de">Zeit auto AUS  A5 (CV 186)</label>
+		<tooltip>automatic switch off of A5 after = CV value * 0,5 sec</tooltip>
+		<tooltip xml:lang="de">Automatisches Abschalten von A5 nach = CV-Wert * 0,5 sek</tooltip>
+	</variable>
+	<variable item="Auto Off A6" CV="187" default="6">
+		<decVal/>
+		<label>Time Auto Off A6 (CV 187)</label>
+		<label xml:lang="de">Zeit auto AUS  A6 (CV 187)</label>
+		<tooltip>automatic switch off of A6 after = CV value * 0,5 sec</tooltip>
+		<tooltip xml:lang="de">Automatisches Abschalten von A6 nach = CV-Wert * 0,5 sek</tooltip>
+	</variable>
+	<variable item="Auto Off A7" CV="188" default="6">
+		<decVal/>
+		<label>Time Auto Off A7 (CV 188)</label>
+		<label xml:lang="de">Zeit auto AUS  A7 (CV 188)</label>
+		<tooltip>automatic switch off of A7 after = CV value * 0,5 sec</tooltip>
+		<tooltip xml:lang="de">Automatisches Abschalten von A7 nach = CV-Wert * 0,5 sek</tooltip>
 	</variable>
 </variables>

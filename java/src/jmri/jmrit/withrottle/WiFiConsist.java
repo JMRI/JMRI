@@ -2,8 +2,6 @@ package jmri.jmrit.withrottle;
 
 import jmri.DccLocoAddress;
 import jmri.implementation.NmraConsist;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Brett Hoffman Copyright (C) 2010, 2011
@@ -48,7 +46,7 @@ public class WiFiConsist extends NmraConsist {
             conAddr = getConsistAddress().getNumber();
         }
         //  Use NMRA consist command to set consist address
-        byte packet[] = jmri.NmraPacket.consistControl(loco.getNumber(),
+        byte[] packet = jmri.NmraPacket.consistControl(loco.getNumber(),
                 loco.isLongAddress(),
                 conAddr,
                 dirNorm);
@@ -60,6 +58,6 @@ public class WiFiConsist extends NmraConsist {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WiFiConsist.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WiFiConsist.class);
 
 }

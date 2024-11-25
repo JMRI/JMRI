@@ -72,6 +72,8 @@ class ScheduleOptionsFrame extends OperationsFrame implements java.beans.Propert
         
         _track.getLocation().addPropertyChangeListener(this);
 
+        addHelpMenu("package.jmri.jmrit.operations.Operations_ControllingCarsToSpur", true); // NOI18N
+
         initMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight200));
         
     }
