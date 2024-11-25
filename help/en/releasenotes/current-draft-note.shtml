@@ -413,7 +413,10 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Speed Setting NoSignals.</li>
+             <li>  After setting speed by Sections ahead. Check Block speeds.</li>
+             <li>  If next block slower than current block set speed down before entering next block.</li>
+             <li>  Do not increase speed beyond the minimum speed of any occupied block.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
