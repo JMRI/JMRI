@@ -923,12 +923,26 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     public static class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
 
         public Default() {
-            super("Openlcb Event Table",
+            super("LCC Event Table",
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     EventTablePane.class.getName(),
                     jmri.InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));
         }
-    }
+        
+        public Default(String name, jmri.util.swing.WindowInterface iface) {
+            super(name,
+                    iface,
+                    EventTablePane.class.getName(),
+                    jmri.InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));        
+        }
 
+        public Default(String name, Icon icon, jmri.util.swing.WindowInterface iface) {
+            super(name,
+                    icon, iface,
+                    EventTablePane.class.getName(),
+                    jmri.InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));        
+        }
+    }
+    
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EventTablePane.class);
 }

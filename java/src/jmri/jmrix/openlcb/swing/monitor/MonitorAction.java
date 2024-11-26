@@ -15,4 +15,18 @@ public class MonitorAction extends jmri.jmrix.can.swing.CanNamedPaneAction {
                 MonitorPane.class.getName(),
                 jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
     }
+    
+    public MonitorAction(String name, jmri.util.swing.WindowInterface iface) {
+        super(name,
+                iface,
+                MonitorPane.class.getName(),
+                jmri.InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));        
+    }
+
+    public MonitorAction(String name, javax.swing.Icon icon, jmri.util.swing.WindowInterface iface) {
+        super(name,
+                icon, iface, 
+                MonitorPane.class.getName(),
+                jmri.InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));        
+    }
 }

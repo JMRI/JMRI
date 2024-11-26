@@ -3520,6 +3520,20 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                     StlEditorPane.class.getName(),
                     jmri.InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));
         }
+
+        public Default(String name, jmri.util.swing.WindowInterface iface) {
+            super(name,
+                    iface,
+                    StlEditorPane.class.getName(),
+                    jmri.InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));        
+        }
+
+        public Default(String name, Icon icon, jmri.util.swing.WindowInterface iface) {
+            super(name,
+                    icon, iface,
+                    StlEditorPane.class.getName(),
+                    jmri.InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));        
+        }
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StlEditorPane.class);
