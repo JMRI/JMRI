@@ -76,7 +76,7 @@ public class ChangeUserPasswordDialog extends JDialog {
                 dispose();
             }
         });
-        buttonOK.setToolTipText("ChangePasswordDialogOkButtonHint");      // NOI18N
+        buttonOK.setToolTipText(Bundle.getMessage("ChangePasswordDialogOkButtonHint"));      // NOI18N
 
         c.gridx = 0;
         c.gridy = 3;
