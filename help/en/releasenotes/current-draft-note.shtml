@@ -498,7 +498,14 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Added "SensorFromBxpa1ShortCircuit.py" and
+                "SensorFromBxp88ShortCircuit.py" scripts, which can create
+                JMRI "Internal" sensors that "follow" the LocoNet message
+                information that is created when the BXPA1 and BXP88
+                (respectively) send "Short Circuit" event LocoNet messages.</li>
+
+            <li>Updated the "SensorFromBxpa1AutoRev.py" script to do a better
+                job of watching for BXPA1 "Autoreverse" event LocoNet messages.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -618,4 +625,3 @@
         <ul>
             <li></li>
         </ul>
-
