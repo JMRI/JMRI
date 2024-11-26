@@ -414,7 +414,7 @@ public class TreeEditor extends TreeViewer {
             cancelRenameSocketPressed(null);
         });
 //        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
-        cancel.setToolTipText("CancelLogixButtonHint");      // NOI18N
+        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
 
         _renameSocketDialog.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -870,7 +870,7 @@ public class TreeEditor extends TreeViewer {
             }
         });
 //        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
-        cancel.setToolTipText("CancelLogixButtonHint");      // NOI18N
+        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
 
         panel5.add(button);
 
@@ -1044,7 +1044,7 @@ public class TreeEditor extends TreeViewer {
                 setPopupMenuLock(false);
             });
     //        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
-            cancel.setToolTipText("CancelLogixButtonHint");      // NOI18N
+            cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
 
             buttonPanel.add(_edit);
             _editLocalVariablesDialog.getRootPane().setDefaultButton(_edit);
@@ -1206,7 +1206,7 @@ public class TreeEditor extends TreeViewer {
                 setPopupMenuLock(false);
             });
     //        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
-            cancel.setToolTipText("CancelLogixButtonHint");      // NOI18N
+            cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
 
             buttonPanel.add(_edit);
             _changeUsernameDialog.getRootPane().setDefaultButton(_edit);

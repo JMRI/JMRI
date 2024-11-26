@@ -66,8 +66,6 @@ public class ChangeUserPasswordDialog extends JDialog {
         buttonCancel.addActionListener((ActionEvent e) -> {
             dispose();
         });
-//        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
-        buttonCancel.setToolTipText("CancelLogixButtonHint");      // NOI18N
 
         // OK
         JButton buttonOK = new JButton(Bundle.getMessage("ButtonOK"));    // NOI18N
@@ -78,8 +76,7 @@ public class ChangeUserPasswordDialog extends JDialog {
                 dispose();
             }
         });
-//        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
-        buttonOK.setToolTipText("CancelLogixButtonHint");      // NOI18N
+        buttonOK.setToolTipText("ChangePasswordDialogOkButtonHint");      // NOI18N
 
         c.gridx = 0;
         c.gridy = 3;

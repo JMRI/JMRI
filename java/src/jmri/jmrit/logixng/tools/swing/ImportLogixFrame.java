@@ -146,7 +146,7 @@ public final class ImportLogixFrame extends JmriJFrame {
             dispose();
         });
 //        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
-        _cancelDone.setToolTipText("CancelLogixButtonHint");      // NOI18N
+        _cancelDone.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
 //        panel5.setAlignmentX(LEFT_ALIGNMENT);
         contentPanel.add(panel5);
 

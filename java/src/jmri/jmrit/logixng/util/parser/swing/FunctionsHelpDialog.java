@@ -144,7 +144,7 @@ public class FunctionsHelpDialog implements jmri.InstanceManagerAutoDefault {
             cancelAddPressed(null);
         });
 //        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
-        cancel.setToolTipText("CancelLogixButtonHint");      // NOI18N
+        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
 
         _selectItemTypeDialog.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override

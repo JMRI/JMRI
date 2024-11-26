@@ -591,7 +591,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             dialog.dispose();
         });
 //        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
-        cancel.setToolTipText("CancelLogixButtonHint");      // NOI18N
+        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
 
         JButton create = new JButton(Bundle.getMessage("ButtonCreate"));  // NOI18N
         create.addActionListener((ActionEvent e2) -> {
