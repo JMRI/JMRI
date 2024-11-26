@@ -13,7 +13,7 @@
 #    "I" for JMRI's "Internal" object grouping
 #    "S" for "Sensor" (in the "Internal" object grouping)
 #    "PM" for "Power Management" effects
-#    "1a" for a source from a "BXP1a" device
+#    "1a" for a source from a "BXPA1" device
 #    "Reversed" to denote the sensor as reporting "autoreversing" state (Active
 #         means "Reversed", Inactive means "Normal")
 #    "X" is the BoardID number reported in the LocoNet message from the BXPA1 
@@ -130,6 +130,10 @@
 #     Listener implementation.
 #
 # Script version 1.0 created 30Mar2021 by Bob M.
+#
+# Script version 1.1 created 26Nov2024 by Bob M.
+#             - do a better job of watching for BXPA1 "Autoreverse" event 
+#               LocoNet messages.
 
 # Part 1: 
 
@@ -198,7 +202,9 @@ class Bxpa1ReverserStateListener(jmri.jmrix.loconet.LocoNetListener) :
         # LocoNet messages and deals with BXPA1 autoreversing messages.
 
         # Is this message an autoreversing message from a BPXA1 device?
-        if ((msg.getNumDataElements() == 6) and (msg.getElement(0) == 0xD0) and ((msg.getElement(1) & 0x60) == 0x60) and ((msg.getElement(3) & 0xF0) == 0x50) ) :
+        if ((msg.getNumDataElements() == 6) and (msg.getElement(0) == 0xD0) \
+            and ((msg.getElement(1) & 0x7E) == 0x62) \
+            and ((msg.getElement(3) & 0xF0) == 0x50) ) :
 
             # Yes, the message is for a BXPA1 autoreversing message!
             boardId = 1 + (msg.getElement(2) * 8) + (msg.getElement(3) & 0x7)
