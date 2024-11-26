@@ -187,5 +187,8 @@ public class AutomationManagerTest extends OperationsTestCase {
         
         // confirm two automations restored
         Assert.assertEquals("number of automations", 2,  automationManager.getSize());
+
+        jmri.util.JUnitUtil.waitThreadTerminated("Startup Scripts"); // TrainManager.java
+
     }
 }

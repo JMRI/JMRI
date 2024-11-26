@@ -115,11 +115,11 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
                 }
             }
             this.manualPortLabel.setText("<html>" + as + "</html>"); // NOI18N
-            
+
         } catch (SocketException ex) {
             log.warn("Unable to enumerate Network Interfaces: {}", ex.getMessage());
         }
-        
+
     }
 
     protected void createWindow() {
@@ -212,7 +212,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
 
         setVisible(true);
         setMinimumSize(new Dimension(400, 250));
-        
+
         rosterGroupSelector.addActionListener(new ActionListener() {
 
             @SuppressWarnings("unchecked")
@@ -265,6 +265,13 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
 
         // add help menu
         addHelpMenu("package.jmri.jmrit.withrottle.UserInterface", true);
+    }
+
+    /**
+     * Provide public access to the throttle list model for Jython
+     */
+    public WiThrottlesListModel getThrottleList() {
+        return withrottlesListModel;
     }
 
     @Override

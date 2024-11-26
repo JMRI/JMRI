@@ -1,10 +1,8 @@
 package jmri.jmrit.operations.trains;
 
-import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,11 +18,11 @@ import jmri.util.swing.JemmyUtil;
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class TrainEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
         TrainEditFrame f = new TrainEditFrame(train1);
         Assert.assertNotNull("exists", f);
@@ -33,7 +31,6 @@ public class TrainEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testTrainEditFrame() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainEditFrame trainEditFrame = new TrainEditFrame(null);
         trainEditFrame.setTitle("Test Edit Train Frame");
         ThreadingUtil.runOnGUI(() -> {
@@ -200,7 +197,6 @@ public class TrainEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testTrainEditFrameAddButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainEditFrame trainEditFrame = new TrainEditFrame(null);
         trainEditFrame.setTitle("Test Add Button Train Frame");
         // fill in name and description fields
@@ -243,7 +239,6 @@ public class TrainEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testTrainEditFrameAddButtonTrainNameTooLong() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainEditFrame trainEditFrame = new TrainEditFrame(null);
         trainEditFrame.setTitle("Test Add Button Train Frame");
         // fill in name and description fields
@@ -265,7 +260,6 @@ public class TrainEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testTrainEditFrameAddButtonTrainNameSpecialCharacter() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainEditFrame trainEditFrame = new TrainEditFrame(null);
         trainEditFrame.setTitle("Test Add Button Train Frame");
         // fill in name and description fields
@@ -293,7 +287,6 @@ public class TrainEditFrameTest extends OperationsTestCase {
      */
     @Test
     public void testTrainEditFrameSaveExistingTrain() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         Train train = tmanager.getTrainByName("Test_Train 1");
         Assert.assertNotNull(train);
@@ -317,7 +310,6 @@ public class TrainEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testTrainEditFrameSaveButton() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // create a train
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         Train train = tmanager.newTrain("Test Train Save Button");
@@ -456,7 +448,6 @@ public class TrainEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testTrainEditFrameNoRoute() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // create a train
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         Train train = tmanager.newTrain("Test Train No Route");
@@ -474,7 +465,6 @@ public class TrainEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testTrainEditFrameNoName() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // create a train
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         Train train = tmanager.newTrain("Test Train No Name");
@@ -504,7 +494,6 @@ public class TrainEditFrameTest extends OperationsTestCase {
      */
     @Test
     public void testTrainEditFrameDelete() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         Train train = tmanager.getTrainByName("Test_Train 1");
         Assert.assertNotNull(train);
@@ -534,7 +523,6 @@ public class TrainEditFrameTest extends OperationsTestCase {
      */
     @Test
     public void testTrainEditFrameReset() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JUnitOperationsUtil.initOperationsData();
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
@@ -570,7 +558,6 @@ public class TrainEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testCloseWindowOnSave() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Train train = new Train("TESTTRAINID", "TESTTRAINNAME");
         Route route = new Route("ROUTEID","ROUTENAME");
         train.setRoute(route);
