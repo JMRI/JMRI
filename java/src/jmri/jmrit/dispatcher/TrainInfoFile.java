@@ -12,6 +12,8 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter.EnumIO;
 import jmri.configurexml.AbstractXmlAdapter.EnumIoNamesNumbers;
 import jmri.jmrit.dispatcher.ActiveTrain.TrainDetection;
@@ -55,6 +57,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
     private Element root = null;
 
     static final EnumIO<ActiveTrain.TrainDetection> trainsdectionFromEnumMap = new EnumIoNamesNumbers<>(ActiveTrain.TrainDetection.class);
+    static final EnumIO<ActiveTrain.TrainLengthUnits> trainlengthFromEnumMap = new EnumIoNamesNumbers<>(ActiveTrain.TrainLengthUnits.class);
 
     /*
      *  Reads Dispatcher TrainInfo from a file in the user's preferences directory
@@ -329,8 +332,21 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                             tInfo.setSoundDecoder(false);
                         }
                     }
-                    if (traininfo.getAttribute("maxtrainlength") != null) {
-                        tInfo.setMaxTrainLength(Float.parseFloat(traininfo.getAttribute("maxtrainlength").getValue()));
+                    if (version > 5) {
+                        if (traininfo.getAttribute("trainlengthunits") != null) {
+                            tInfo.setTrainLengthUnits(trainlengthFromEnumMap.inputFromAttribute(traininfo.getAttribute("trainlengthunits")));
+                        }
+                    }
+                    if (traininfo.getAttribute("maxtrainlengthMeters") != null) {
+                        tInfo.setMaxTrainLengthScaleMeters(Float.parseFloat(traininfo.getAttribute("maxtrainlengthscalemeters").getValue()));
+                    } else {
+                        if (traininfo.getAttribute("maxtrainlength") != null) {
+                            if (InstanceManager.getDefault(DispatcherFrame.class).getUseScaleMeters()) {
+                                tInfo.setMaxTrainLengthScaleMeters(Float.parseFloat(traininfo.getAttribute("maxtrainlength").getValue()));
+                            } else {
+                                tInfo.setMaxTrainLengthScaleFeet(Float.parseFloat(traininfo.getAttribute("maxtrainlength").getValue()));
+                            }
+                        }
                     }
                     if (traininfo.getAttribute("terminatewhendone") != null) {
                         tInfo.setTerminateWhenDone(false);
@@ -486,7 +502,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         // save Dispatcher TrainInfo in xml format
         Element traininfo = new Element("traininfo");
         // write version number
-        traininfo.setAttribute("version", "6");
+        traininfo.setAttribute("version", "7");
         traininfo.setAttribute("transitname", tf.getTransitName());
         traininfo.setAttribute("transitid", tf.getTransitId());
         traininfo.setAttribute("trainname", tf.getTrainName());
@@ -563,7 +579,8 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         traininfo.setAttribute("ramprate", tf.getRampRate());
         traininfo.setAttribute("runinreverse", "" + (tf.getRunInReverse() ? "yes" : "no"));
         traininfo.setAttribute("sounddecoder", "" + (tf.getSoundDecoder() ? "yes" : "no"));
-        traininfo.setAttribute("maxtrainlength", Float.toString(tf.getMaxTrainLength()));
+        traininfo.setAttribute("maxtrainlengthscalemeters", Float.toString(tf.getMaxTrainLengthScaleMeters()));
+        traininfo.setAttribute("trainlengthunits", trainlengthFromEnumMap.outputFromEnum(tf.getTrainLengthUnits()));
         traininfo.setAttribute("usespeedprofile", "" + (tf.getUseSpeedProfile() ? "yes" : "no"));
         traininfo.setAttribute("stopbyspeedprofile", "" + (tf.getStopBySpeedProfile() ? "yes" : "no"));
         traininfo.setAttribute("stopbyspeedprofileadjust", Float.toString(tf.getStopBySpeedProfileAdjust()));

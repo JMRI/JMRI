@@ -883,8 +883,12 @@
         <li>Oscar A. Pruitt, who provided the implementation to support RFID readers using the
         EM-18 protocol</li>
 
-        <li>Gerry Pruss, who provided information on connecting to the QSI Programmer <a id=
-        "Q"></a> <a id="R"></a>
+        <li>John Purcell, <!-- purcelljGHR -->
+            who provided the basic enhanced signal system definition. 
+        </li>
+        
+        <li>Gerry Pruss, who provided information on connecting to the QSI Programmer 
+        <a id="Q"></a> <a id="R"></a>
         </li>
 
         <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3Abalazsracz+">Balazs Racz</a>, <!-- balazsracz -->
