@@ -43,14 +43,17 @@ import jmri.jmrit.roster.swing.*;
 // import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.jmrix.ActiveSystemsMenu;
 import jmri.jmrix.ConnectionConfig;
+import jmri.jmrix.ConnectionConfigManager;
 // import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.ConnectionStatus;
 // import jmri.profile.Profile;
 // import jmri.profile.ProfileManager;
+import jmri.swing.ConnectionLabel;
 import jmri.swing.JTablePersistenceManager;
 import jmri.swing.RowSorterUtil;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.openlcb.swing.TrafficStatusLabel;
 
 import jmri.util.FileUtil;
 import jmri.util.HelpUtil;
@@ -1420,9 +1423,17 @@ public class LccProFrame extends TwoPaneTBWindow  {
      * TODO This status bar needs sorting out properly
      */
     protected void statusBar() {
-        // TODO once we decide what's in the status bar...
-        addToStatusBox(new JLabel("Still need to fill out the status box"));
+        for (ConnectionConfig conn : InstanceManager.getDefault(ConnectionConfigManager.class)) {
+            if (!conn.getDisabled()) {
+                addToStatusBox(new ConnectionLabel(conn));
+            }
+        }
+        addToStatusBox(new TrafficStatusLabel(memo));
+
+        // TODO once we decide what else's in the status bar...
+//        addToStatusBox(new JLabel("Still need to fill out the status box"));
         
+
 //         addToStatusBox(serviceModeProgrammerLabel, null);
 //         addToStatusBox(operationsModeProgrammerLabel, null);
 //         JLabel programmerStatusLabel = new JLabel(Bundle.getMessage("ProgrammerStatus"));
