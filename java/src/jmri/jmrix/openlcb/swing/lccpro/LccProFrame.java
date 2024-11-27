@@ -429,7 +429,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
         return nodeDetailPanel;
     }
 
-    private boolean isUpdatingSelection = false;
+//     private boolean isUpdatingSelection = false;
 
     JComponent createTop() {
         Object selectedRosterGroup = prefsMgr.getProperty(getWindowFrameRef(), SELECTED_ROSTER_GROUP);

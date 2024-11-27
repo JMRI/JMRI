@@ -165,7 +165,11 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
                     return null;
                 }
             case UPGRADECOL:
-                return Bundle.getMessage("FieldUpgrade");
+                if (pip.hasProtocol(ProtocolIdentification.Protocol.FirmwareUpgrade)) {
+                    return Bundle.getMessage("FieldUpgrade");
+                } else {
+                    return null;
+                }
             default:
                 return "<unexpected column number>";
         }
@@ -191,7 +195,11 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
                 }
                 break;
             case UPGRADECOL:
-                log.info("Upgrade button pressed for {}, not functioning yet", nodememo.getNodeID().toString());
+                if (pip.hasProtocol(ProtocolIdentification.Protocol.FirmwareUpgrade)) {
+                    var node = nodememo.getNodeID();
+                    var action = new jmri.jmrix.openlcb.swing.downloader.LoaderPane.Default(node);
+                    action.actionPerformed(null);
+                }
                 break;
             default:
                 // TODO - fire the buttons
