@@ -53,7 +53,7 @@ abstract  class AbstractAutoTrainControl extends JPanel {
         }
         if (useOnTopOnSpeedChange) {
             Window x  =  SwingUtilities.getWindowAncestor(this);
-            log.info("OnTop");
+            log.trace("OnTop");
             x.setAlwaysOnTop(true);
             x.setAlwaysOnTop(false);
         }

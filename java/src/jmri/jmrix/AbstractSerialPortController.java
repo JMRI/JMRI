@@ -3,15 +3,13 @@ package jmri.jmrix;
 
 import java.io.*;
 import java.util.Vector;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 
 import jmri.SystemConnectionMemo;
 import jmri.jmrix.fakeport.FakeInputStream;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 /**
  * Provide an abstract base for *PortController classes.
