@@ -17,8 +17,61 @@
     <div id="mainContent">
       <h1>JMRI: LccPro</h1>
       
-      Content???? This file shows the top and bottom matter for a page <strong>with a side menu
-      bar</strong> (on the web), which comes from the "Sidebar" file in the same directory. 
+      <p><span class="since">Since <a href="http://jmri.org/releasenotes/jmri5.11.1.shtml">JMRI 5.11.1</a></span>
+      <strong>Note that LccTools is a work in progress.</strong> 
+      Feedback welcome!   
+      Help us improve this by 
+      <a href=https://groups.io/g/jmriusers">telling us</a>
+      what would make it more useful to you.
+      </p>   
+      
+      <p>
+      LccTools is a 
+      <a href="../../../../html/apps/index.shtml">JMRI application</a>
+      that focuses on configuring your LCC network.
+      </p>
+      
+      <a href="LccProMainWindow.png">
+      <img src="LccProMainWindow.png" 
+        class="floatRight" height="255" width="466" alt="LccPro main window"></a>
+
+      <p>
+      The main LccTools window is a table showing all the LCC nodes on your network.
+      Each row shows information about a single LCC node.
+      If the node supports it, there are "Configure" and "Upgrade"
+      buttons that will open functional windows for 
+      <a href="../../../jmri/jmrix/openlcb/swing/networktree/NetworkTreePane.shtml#configure">configuring the node</a>
+      and 
+      <a href="../../../jmri/jmrix/openlcb/swing/downloader/LoaderFrame.shtml">upgrading its firmware</a>
+      respectively.
+      </p>
+      
+      <p>
+      When you select a row, more information about that node is shown
+      on the lower left.
+      </p>
+      
+      <p>
+      Across the top is a tear-off set of buttons that will open
+      other LCC tools, including 
+      <ul>
+        <li>The
+            <a href="../../../jmri/jmrix/openlcb/swing/eventtable/EventTablePane.shtml">Event Table</a>
+        <li>The
+            <a href="../../../jmri/jmrix/AbstractMonFrame.shtml">LCC Traffic Monitor</a>
+        <li>The
+            <a href="../../../jmri/jmrix/openlcb/swing/stleditor/StlEditorPane.shtml">STL Editor</a>
+      </ul>
+      It also includes a "Refresh" button that will reload the table
+      and a "Help" button that will bring you to this page.
+      </p>
+      
+      <p>
+      Because LccTools is a work in progress, the lower right and 
+      bottom status bar regions are not working yet.  
+      <a href=https://groups.io/g/jmriusers">Suggestions</a> 
+      about what to put there would be appreciated!
+      </p>
       
       
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
