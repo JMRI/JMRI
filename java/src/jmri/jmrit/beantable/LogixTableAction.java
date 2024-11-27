@@ -541,7 +541,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     }
 
     /**
-     * Get the saved mode selection, default to the tranditional conditional
+     * Get the saved mode selection, default to the traditional conditional
      * list editor.
      * <p>
      * During the menu build process, the corresponding menu item is set to

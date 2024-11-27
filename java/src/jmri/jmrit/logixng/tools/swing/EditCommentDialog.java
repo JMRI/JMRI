@@ -65,7 +65,7 @@ public class EditCommentDialog {
         buttonCancel.addActionListener((ActionEvent e) -> {
             cancelPressed(null);
         });
-        buttonCancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
+        buttonCancel.setToolTipText(Bundle.getMessage("CancelCommentLogixNGButtonHint"));      // NOI18N
         
         // OK
         JButton buttonOK = new JButton(Bundle.getMessage("ButtonOK"));    // NOI18N
@@ -73,7 +73,7 @@ public class EditCommentDialog {
         buttonOK.addActionListener((ActionEvent e) -> {
             okPressed(null);
         });
-        buttonOK.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
+        buttonOK.setToolTipText(Bundle.getMessage("EditButtonHint"));      // NOI18N
         
         _editCommentDialog.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
