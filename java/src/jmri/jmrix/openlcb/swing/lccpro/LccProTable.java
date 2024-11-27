@@ -17,7 +17,7 @@ import java.util.Enumeration;
 import java.util.List;
 
 import javax.swing.*;
-import javax.swing.event.*;
+//import javax.swing.event.*;
 import javax.swing.table.*;
 
 import jmri.InstanceManager;
@@ -49,7 +49,7 @@ public class LccProTable extends JmriPanel {
     private JScrollPane dataScroll;
     private final XTableColumnModel columnModel = new XTableColumnModel();
 //    private RosterGroupSelector rosterGroupSource = null;
-    protected transient ListSelectionListener tableSelectionListener;
+//     protected transient ListSelectionListener tableSelectionListener;
 //     private RosterEntry[] selectedRosterEntries = null;
 //     private RosterEntry[] sortedRosterEntries = null;
 //     private RosterEntry re = null;
@@ -128,7 +128,7 @@ public class LccProTable extends JmriPanel {
 //                 moveTableViewToSelected();
 //             }
 //         };
-        dataTable.getSelectionModel().addListSelectionListener(tableSelectionListener);
+//         dataTable.getSelectionModel().addListSelectionListener(tableSelectionListener);
     }
 
     public JTable getTable() {
@@ -155,7 +155,7 @@ public class LccProTable extends JmriPanel {
             dataModel.dispose();
         }
         dataModel = null;
-        dataTable.getSelectionModel().removeListSelectionListener(tableSelectionListener);
+//         dataTable.getSelectionModel().removeListSelectionListener(tableSelectionListener);
         dataTable = null;
         super.dispose();
     }
@@ -339,6 +339,6 @@ public class LccProTable extends JmriPanel {
         }
     }
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LccProTable.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LccProTable.class);
 
 }

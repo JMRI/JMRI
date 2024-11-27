@@ -2,10 +2,8 @@ package jmri.jmrix.openlcb.swing.lccpro;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-// import java.text.ParseException;
-// import java.util.*;
 
-import javax.annotation.CheckForNull;
+// import javax.annotation.CheckForNull;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -191,7 +189,7 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
                     var actions = new jmri.jmrix.openlcb.swing.ClientActions(memo.get(org.openlcb.OlcbInterface.class), memo);
                     var node = nodememo.getNodeID();
                     var description = jmri.jmrix.openlcb.swing.networktree.NetworkTreePane.augmentedNodeName(nodememo);
-                    actions.openCdiWindow(node, description.toString());
+                    actions.openCdiWindow(node, description);
                 }
                 break;
             case UPGRADECOL:

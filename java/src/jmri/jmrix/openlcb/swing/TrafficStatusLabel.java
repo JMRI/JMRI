@@ -9,9 +9,6 @@ import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.ThreadingUtil;
 
-import org.openlcb.OlcbInterface;
-
-
 /**
  *
  * @author Bob Jacobsen

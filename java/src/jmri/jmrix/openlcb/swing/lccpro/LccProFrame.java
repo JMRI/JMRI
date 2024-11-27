@@ -2,22 +2,22 @@ package jmri.jmrix.openlcb.swing.lccpro;
 
 import java.awt.*;
 // import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+// import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
+// import java.awt.image.BufferedImage;
 import java.awt.datatransfer.Transferable;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 // import java.io.File;
-import java.io.IOException;
+// import java.io.IOException;
 // import java.text.DateFormat;
 import java.util.ArrayList;
 // import java.util.Arrays;
 // import java.util.List;
 
 import javax.annotation.CheckForNull;
-import javax.imageio.ImageIO;
+// import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 // import javax.swing.table.*;
@@ -55,7 +55,7 @@ import jmri.swing.RowSorterUtil;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.openlcb.swing.TrafficStatusLabel;
 
-import jmri.util.FileUtil;
+// import jmri.util.FileUtil;
 import jmri.util.HelpUtil;
 import jmri.util.WindowMenu;
 import jmri.util.datatransfer.RosterEntrySelection;
@@ -65,7 +65,7 @@ import jmri.util.swing.JmriMouseAdapter;
 import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.JmriMouseListener;
 // import jmri.util.swing.ResizableImagePanel;
-import jmri.util.swing.WindowInterface;
+// import jmri.util.swing.WindowInterface;
 import jmri.util.swing.multipane.TwoPaneTBWindow;
 // import jmri.util.table.ButtonEditor;
 // import jmri.util.table.ButtonRenderer;
@@ -524,7 +524,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
         // assemble roster/groups splitpane
         rosterGroupSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, groups, rosters);
         rosterGroupSplitPane.setOneTouchExpandable(true);
-        rosterGroupSplitPane.setResizeWeight(0); // emphasis rosters
+        rosterGroupSplitPane.setResizeWeight(0); // emphasize right side (nodes)
         Object w = prefsMgr.getProperty(getWindowFrameRef(), "rosterGroupPaneDividerLocation");
         if (w != null) {
             groupSplitPaneLocation = (Integer) w;
@@ -890,68 +890,68 @@ public class LccProFrame extends TwoPaneTBWindow  {
     public void remoteCalls(String[] args) {
         args[0] = args[0].toLowerCase();
         switch (args[0]) {
-            case "identifyloco":
-                startIdentifyLoco();
-                break;
-            case "printloco":
-                if (checkIfEntrySelected()) {
-                    printLoco(false);
-                }
-                break;
-            case "printpreviewloco":
-                if (checkIfEntrySelected()) {
-                    printLoco(true);
-                }
-                break;
-            case "exportloco":
-                if (checkIfEntrySelected()) {
+//             case "identifyloco":
+//                 startIdentifyLoco();
+//                 break;
+//             case "printloco":
+//                 if (checkIfEntrySelected()) {
+//                     printLoco(false);
+//                 }
+//                 break;
+//             case "printpreviewloco":
+//                 if (checkIfEntrySelected()) {
+//                     printLoco(true);
+//                 }
+//                break;
+//             case "exportloco":
+//                 if (checkIfEntrySelected()) {
 //                     exportLoco();
-                }
-                break;
-            case "basicprogrammer":
-                if (checkIfEntrySelected()) {
+//                 }
+//                break;
+//             case "basicprogrammer":
+//                 if (checkIfEntrySelected()) {
 //                     startProgrammer(null, re, programmer2);
-                }
-                break;
-            case "comprehensiveprogrammer":
-                if (checkIfEntrySelected()) {
+//                 }
+//                break;
+//             case "comprehensiveprogrammer":
+//                 if (checkIfEntrySelected()) {
 //                     startProgrammer(null, re, programmer1);
-                }
-                break;
-            case "editthrottlelabels":
-                if (checkIfEntrySelected()) {
+//                  }
+//                break;
+//             case "editthrottlelabels":
+//                 if (checkIfEntrySelected()) {
 //                     startProgrammer(null, re, "dp3" + File.separator + "ThrottleLabels");
-                }
-                break;
-            case "editrostermedia":
-                if (checkIfEntrySelected()) {
+//                 }
+//                break;
+//             case "editrostermedia":
+//                 if (checkIfEntrySelected()) {
 //                     startProgrammer(null, re, "dp3" + File.separator + "MediaPane");
-                }
-                break;
-            case "hiderosterimage":
+//                 }
+//                 break;
+//             case "hiderosterimage":
 //                hideRosterImage();
-                break;
+//                break;
+//             case "copyloco":
+//                 if (checkIfEntrySelected()) {
+//                     copyLoco();
+//                 }
+//                 break;
+//             case "deleteloco":
+//                 if (checkIfEntrySelected(true)) {
+//                    deleteLoco();
+//                 }
+//                 break;
+//             case "setprogservice":
+//                 service.setSelected(true);
+//                 break;
+//             case "setprogops":
+//                 ops.setSelected(true);
+//                 break;
+//             case "setprogedit":
+//                 edit.setSelected(true);
+//                 break;
             case "summarypane":
                 hideSummary();
-                break;
-            case "copyloco":
-                if (checkIfEntrySelected()) {
-//                     copyLoco();
-                }
-                break;
-            case "deleteloco":
-                if (checkIfEntrySelected(true)) {
-//                    deleteLoco();
-                }
-                break;
-            case "setprogservice":
-                service.setSelected(true);
-                break;
-            case "setprogops":
-                ops.setSelected(true);
-                break;
-            case "setprogedit":
-                edit.setSelected(true);
                 break;
             case "groupspane":
                 hideGroups();
@@ -1122,15 +1122,15 @@ public class LccProFrame extends TwoPaneTBWindow  {
         }
     }
 
-    /**
-     * Identify locomotive complete, act on it by setting the GUI. This will
-     * fire "GUI changed" events which will reset the decoder GUI.
-     *
-     * @param dccAddress address of locomotive
-     * @param isLong     true if address is long; false if short
-     * @param mfgId      manufacturer id as in decoder
-     * @param modelId    model id as in decoder
-     */
+//     /**
+//      * Identify locomotive complete, act on it by setting the GUI. This will
+//      * fire "GUI changed" events which will reset the decoder GUI.
+//      *
+//      * @param dccAddress address of locomotive
+//      * @param isLong     true if address is long; false if short
+//      * @param mfgId      manufacturer id as in decoder
+//      * @param modelId    model id as in decoder
+//      */
 //     protected void selectLoco(int dccAddress, boolean isLong, int mfgId, int modelId) {
 //         // raise the button again
 //         // idloco.setSelected(false);
@@ -1726,9 +1726,9 @@ public class LccProFrame extends TwoPaneTBWindow  {
                 showPopup(e);
                 return;
             }
-            if (e.getClickCount() == 2) {
+//             if (e.getClickCount() == 2) {
 //                 startProgrammer(null, re, programmer1);
-            }
+//             }
         }
     }
 
