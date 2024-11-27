@@ -7,6 +7,10 @@ import java.util.Vector;
 import jmri.SystemConnectionMemo;
 import jmri.jmrix.fakeport.FakeInputStream;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
 /**
  * Provide an abstract base for *PortController classes.
  * <p>
