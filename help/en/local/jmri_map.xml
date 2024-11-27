@@ -228,6 +228,7 @@
 <mapID target="package.apps.InstallTest.InstallTest" url="package/apps/InstallTest/InstallTest.shtml"/>
 <mapID target="package.apps.SystemConsole" url="package/apps/SystemConsole.shtml"/>
 <mapID target="package.apps.TabbedPreferences" url="package/apps/TabbedPreferences.shtml"/>
+<mapID target="package.apps.gui3.lccpro.LccPro" url="package/apps/gui3/lccpro/LccPro.shtml"/>
 <mapID target="package.apps.util.issuereporter.swing.IssueReporter" url="package/apps/util/issuereporter/swing/IssueReporter.shtml"/>
 <mapID target="package.jmri.configurexml.ErrorHandler" url="package/jmri/configurexml/ErrorHandler.shtml"/>
 <mapID target="package.jmri.jmrit.MemoryFrameAction" url="package/jmri/jmrit/MemoryFrameAction.shtml"/>

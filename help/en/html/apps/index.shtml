@@ -57,6 +57,13 @@
         </dt>
 
         <dd>A set of tools for using Audio with JMRI.</dd>
+
+        <dt>
+          <a href="../../package/apps/gui3/lccpro/LccPro.shtml">LccPro</a>
+        </dt>
+
+        <dd>A set of tools for configuring LCC nodes with JMRI.</dd>
+
       </dl>
 
       <h2 id="addapp">Additional Applications with JMRI Connections...</h2>
