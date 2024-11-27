@@ -15,9 +15,8 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-    
-    
       <h1>JMRI: LccPro</h1>
+      
       Content???? This file shows the top and bottom matter for a page <strong>with a side menu
       bar</strong> (on the web), which comes from the "Sidebar" file in the same directory. 
       

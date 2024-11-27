@@ -1,7 +1,7 @@
 package jmri.jmrix.openlcb.swing.lccpro;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
+// import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
@@ -9,30 +9,30 @@ import java.awt.datatransfer.Transferable;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.File;
+// import java.io.File;
 import java.io.IOException;
-import java.text.DateFormat;
+// import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+// import java.util.Arrays;
+// import java.util.List;
 
 import javax.annotation.CheckForNull;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.table.*;
+// import javax.swing.table.*;
 
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
-import jmri.Programmer;
+// import jmri.Programmer;
 import jmri.ShutDownManager;
 import jmri.UserPreferencesManager;
-import jmri.jmrit.decoderdefn.DecoderFile;
-import jmri.jmrit.decoderdefn.DecoderIndexFile;
-import jmri.jmrit.progsupport.ProgModeSelector;
+// import jmri.jmrit.decoderdefn.DecoderFile;
+// import jmri.jmrit.decoderdefn.DecoderIndexFile;
+// import jmri.jmrit.progsupport.ProgModeSelector;
 import jmri.jmrit.roster.*;
-import jmri.jmrit.roster.rostergroup.*;
+// import jmri.jmrit.roster.rostergroup.*;
 import jmri.jmrit.roster.swing.*;
 // import jmri.jmrit.symbolicprog.ProgrammerConfigManager;
 // import jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame;
@@ -43,10 +43,10 @@ import jmri.jmrit.roster.swing.*;
 // import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.jmrix.ActiveSystemsMenu;
 import jmri.jmrix.ConnectionConfig;
-import jmri.jmrix.ConnectionConfigManager;
+// import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.ConnectionStatus;
-import jmri.profile.Profile;
-import jmri.profile.ProfileManager;
+// import jmri.profile.Profile;
+// import jmri.profile.ProfileManager;
 import jmri.swing.JTablePersistenceManager;
 import jmri.swing.RowSorterUtil;
 
@@ -61,11 +61,11 @@ import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseAdapter;
 import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.JmriMouseListener;
-import jmri.util.swing.ResizableImagePanel;
+// import jmri.util.swing.ResizableImagePanel;
 import jmri.util.swing.WindowInterface;
 import jmri.util.swing.multipane.TwoPaneTBWindow;
-import jmri.util.table.ButtonEditor;
-import jmri.util.table.ButtonRenderer;
+// import jmri.util.table.ButtonEditor;
+// import jmri.util.table.ButtonRenderer;
 
 import org.openlcb.MimicNodeStore;
 
@@ -1207,7 +1207,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
 //         }
 //     }
 
-    /**
+    /*
      * Simple method to change over the programmer buttons.
      * <p>
      * TODO This should be implemented with the buttons in their own class etc.
@@ -1735,6 +1735,9 @@ public class LccProFrame extends TwoPaneTBWindow  {
         }
     }
 
+    /**
+     * Displays information about a specific node
+     */
     private static class NodeInfoPane extends JPanel {
         JLabel name = new JLabel();
         JLabel desc = new JLabel();
@@ -1812,18 +1815,18 @@ public class LccProFrame extends TwoPaneTBWindow  {
 //         }
 //     }
 
-    private static class CopyRosterItem extends CopyRosterItemAction {
-
-        CopyRosterItem(String pName, Component pWho, RosterEntry re) {
-            super(pName, pWho);
-            super.setExistingEntry(re);
-        }
-
-        @Override
-        protected boolean selectFrom() {
-            return true;
-        }
-     }
+//     private static class CopyRosterItem extends CopyRosterItemAction {
+// 
+//         CopyRosterItem(String pName, Component pWho, RosterEntry re) {
+//             super(pName, pWho);
+//             super.setExistingEntry(re);
+//         }
+// 
+//         @Override
+//         protected boolean selectFrom() {
+//             return true;
+//         }
+//      }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LccProFrame.class);
 

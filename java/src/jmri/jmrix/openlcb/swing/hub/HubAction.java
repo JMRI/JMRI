@@ -13,7 +13,7 @@ public class HubAction extends jmri.jmrix.can.swing.CanNamedPaneAction {
                 jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
     }
 
-    public HubAction(String name, jmri.util.swing.WindowInterface  iface) {
+    public HubAction(String name, WindowInterface  iface) {
         super(name,
                 iface,
                 HubPane.class.getName(),

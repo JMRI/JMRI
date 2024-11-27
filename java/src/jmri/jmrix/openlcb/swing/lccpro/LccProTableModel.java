@@ -2,8 +2,8 @@ package jmri.jmrix.openlcb.swing.lccpro;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.text.ParseException;
-import java.util.*;
+// import java.text.ParseException;
+// import java.util.*;
 
 import javax.annotation.CheckForNull;
 import javax.swing.Icon;

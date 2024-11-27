@@ -1,12 +1,8 @@
 package jmri.jmrix.openlcb.swing.lccpro;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import javax.swing.Icon;
-import javax.swing.WindowConstants;
 import jmri.InstanceManager;
-import jmri.UserPreferencesManager;
-import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 
@@ -37,7 +33,7 @@ public class RefreshAction extends JmriAbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        jmri.InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo.class)
+        InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo.class)
             .get(MimicNodeStore.class).refresh();
     }
 
