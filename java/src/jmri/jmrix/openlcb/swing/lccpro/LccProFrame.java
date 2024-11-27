@@ -67,6 +67,8 @@ import jmri.util.swing.multipane.TwoPaneTBWindow;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
+import org.openlcb.MimicNodeStore;
+
 /**
  * A window for LCC Network management.
  * <p>
@@ -86,6 +88,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
     protected JmriAbstractAction newWindowAction;
 
     CanSystemConnectionMemo memo;
+    MimicNodeStore nodestore;
     
     public LccProFrame(String name) {
         this(name,
@@ -106,6 +109,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
     public LccProFrame(String name, String menubarFile, String toolbarFile, CanSystemConnectionMemo memo) {
         super(name, menubarFile, toolbarFile);
         this.memo = memo;
+        this.nodestore = memo.get(MimicNodeStore.class);
         this.allowInFrameServlet = false;
 //         this.setBaseTitle(name);
         this.setTitle(name);
@@ -122,6 +126,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
     final JTextPane decoderModel = new JTextPane();
     final JRadioButton edit = new JRadioButton(Bundle.getMessage("EditOnly"));
     final JTextPane filename = new JTextPane();
+    final NodeInfoPane nodeInfoPane = new NodeInfoPane();
     JLabel firstHelpLabel;
     //int firstTimeAddedEntry = 0x00;
     int groupSplitPaneLocation = 0;
@@ -130,7 +135,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
     boolean hideRosterImage = false;
     final JTextPane id = new JTextPane();
     boolean inStartProgrammer = false;
-    ResizableImagePanel locoImage;
+//     ResizableImagePanel locoImage;
     JTextPane maxSpeed = new JTextPane();
     final JTextPane mfg = new JTextPane();
     final JTextPane model = new JTextPane();
@@ -152,7 +157,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
     transient RosterEntry re;
     final JTextPane roadName = new JTextPane();
     final JTextPane roadNumber = new JTextPane();
-    final JPanel rosterDetailPanel = new JPanel();
+    final JPanel nodeDetailPanel = new JPanel();
     PropertyChangeListener rosterEntryUpdateListener;
     JSplitPane rosterGroupSplitPane;
     final JButton rosterMedia = new JButton(Bundle.getMessage("LabelsAndMedia"));
@@ -163,7 +168,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
     final JLabel statusField = new JLabel();
     final Dimension summaryPaneDim = new Dimension(0, 170);
     final JButton throttleLabels = new JButton(Bundle.getMessage("ThrottleLabels"));
-    final JButton throttleLaunch = new JButton(Bundle.getMessage("Throttle"));
+//     final JButton throttleLaunch = new JButton(Bundle.getMessage("Throttle"));
 
     protected void additionsToToolBar() {
 //        getToolBar().add(new LargePowerManagerButton(true));
@@ -192,85 +197,91 @@ public class LccProFrame extends TwoPaneTBWindow  {
             firePropertyChange("closewindow", "setEnabled", true);
         }
     }
+    
+    // Create right side of the bottom panel
 
     JPanel bottomRight() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        ButtonGroup progMode = new ButtonGroup();
-        progMode.add(service);
-        progMode.add(ops);
-        progMode.add(edit);
-        service.setEnabled(false);
-        ops.setEnabled(false);
-        edit.setEnabled(true);
-        firePropertyChange("setprogservice", "setEnabled", false);
-        firePropertyChange("setprogops", "setEnabled", false);
-        firePropertyChange("setprogedit", "setEnabled", true);
-        ops.setOpaque(false);
-        service.setOpaque(false);
-        edit.setOpaque(false);
-        JPanel progModePanel = new JPanel();
-        GridLayout buttonLayout = new GridLayout(3, 1, 0, 0);
-        progModePanel.setLayout(buttonLayout);
-        progModePanel.add(service);
-        progModePanel.add(ops);
-        progModePanel.add(edit);
-        programModeListener = (ActionEvent e) -> updateProgMode();
-        service.addActionListener(programModeListener);
-        ops.addActionListener(programModeListener);
-        edit.addActionListener(programModeListener);
-        service.setVisible(false);
-        ops.setVisible(false);
-        panel.add(progModePanel);
-        JPanel buttonHolder = new JPanel(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-        c.weightx = 1.0;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.anchor = GridBagConstraints.NORTH;
-        c.gridx = 0;
-        c.ipady = 20;
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.gridy = 0;
-        c.insets = new Insets(2, 2, 2, 2);
-        buttonHolder.add(prog1Button, c);
-        c.weightx = 1;
-        c.fill = GridBagConstraints.NONE;
-        c.gridx = 0;
-        c.gridy = 1;
-        c.gridwidth = 1;
-        c.ipady = 0;
-        buttonHolder.add(rosterMedia, c);
-        c.weightx = 1.0;
-        c.fill = GridBagConstraints.NONE;
-        c.gridx = 1;
-        c.gridy = 1;
-        c.gridwidth = 1;
-        c.ipady = 0;
-        buttonHolder.add(throttleLaunch, c);
-        //buttonHolder.add(throttleLaunch);
-        panel.add(buttonHolder);
-        prog1Button.setEnabled(false);
-        prog1Button.addActionListener((ActionEvent e) -> {
-            log.debug("Open programmer pressed");
-            startProgrammer(null, re, programmer1);
-        });
 
-        rosterMedia.setEnabled(false);
-        rosterMedia.addActionListener((ActionEvent e) -> {
-            log.debug("Open Media pressed");
-            edit.setSelected(true);
-            startProgrammer(null, re, "dp3" + File.separator + "MediaPane");
-        });
-        throttleLaunch.setEnabled(false);
-        throttleLaunch.addActionListener((ActionEvent e) -> {
-            log.debug("Launch Throttle pressed");
-            if (!checkIfEntrySelected()) {
-                return;
-            }
+        panel.add(new JLabel("bottomRight, empty for now"));
+//         ButtonGroup progMode = new ButtonGroup();
+//         progMode.add(service);
+//         progMode.add(ops);
+//         progMode.add(edit);
+//         service.setEnabled(false);
+//         ops.setEnabled(false);
+//         edit.setEnabled(true);
+//         firePropertyChange("setprogservice", "setEnabled", false);
+//         firePropertyChange("setprogops", "setEnabled", false);
+//         firePropertyChange("setprogedit", "setEnabled", true);
+//         ops.setOpaque(false);
+//         service.setOpaque(false);
+//         edit.setOpaque(false);
+//         JPanel progModePanel = new JPanel();
+//         GridLayout buttonLayout = new GridLayout(3, 1, 0, 0);
+//         progModePanel.setLayout(buttonLayout);
+//         progModePanel.add(service);
+//         progModePanel.add(ops);
+//         progModePanel.add(edit);
+//         programModeListener = (ActionEvent e) -> updateProgMode();
+//         service.addActionListener(programModeListener);
+//         ops.addActionListener(programModeListener);
+//         edit.addActionListener(programModeListener);
+//         service.setVisible(false);
+//         ops.setVisible(false);
+//         panel.add(progModePanel);
+//         JPanel buttonHolder = new JPanel(new GridBagLayout());
+//         GridBagConstraints c = new GridBagConstraints();
+//         c.weightx = 1.0;
+//         c.fill = GridBagConstraints.HORIZONTAL;
+//         c.anchor = GridBagConstraints.NORTH;
+//         c.gridx = 0;
+//         c.ipady = 20;
+//         c.gridwidth = GridBagConstraints.REMAINDER;
+//         c.gridy = 0;
+//         c.insets = new Insets(2, 2, 2, 2);
+//         buttonHolder.add(prog1Button, c);
+//         c.weightx = 1;
+//         c.fill = GridBagConstraints.NONE;
+//         c.gridx = 0;
+//         c.gridy = 1;
+//         c.gridwidth = 1;
+//         c.ipady = 0;
+//         buttonHolder.add(rosterMedia, c);
+//         c.weightx = 1.0;
+//         c.fill = GridBagConstraints.NONE;
+//         c.gridx = 1;
+//         c.gridy = 1;
+//         c.gridwidth = 1;
+//         c.ipady = 0;
+//         
+//         buttonHolder.add(throttleLaunch, c);
+//         //buttonHolder.add(throttleLaunch);
+//         panel.add(buttonHolder);
+//         prog1Button.setEnabled(false);
+//         prog1Button.addActionListener((ActionEvent e) -> {
+//             log.debug("Open programmer pressed");
+//             startProgrammer(null, re, programmer1);
+//         });
+// 
+//         rosterMedia.setEnabled(false);
+//         rosterMedia.addActionListener((ActionEvent e) -> {
+//             log.debug("Open Media pressed");
+//             edit.setSelected(true);
+//             startProgrammer(null, re, "dp3" + File.separator + "MediaPane");
+//         });
+//         throttleLaunch.setEnabled(false);
+//         throttleLaunch.addActionListener((ActionEvent e) -> {
+//             log.debug("Launch Throttle pressed");
+//             if (!checkIfEntrySelected()) {
+//                 return;
+//             }
 //             ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
 //             tf.toFront();
 //             tf.getAddressPanel().setRosterEntry(re);
-        });
+//         });
+
         return panel;
     }
 
@@ -369,6 +380,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
 
     boolean checkIfEntrySelected(boolean allowMultiple) {
         // TODO the tollowing will have to be re-impleemented with selection logic
+        log.info("checkIfEntrySelected returns true");
 //         if ((re == null && !allowMultiple) || (this.getSelectedRosterEntries().length < 1)) {
 //             JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorNoSelection"));
 //             return false;
@@ -394,26 +406,27 @@ public class LccProFrame extends TwoPaneTBWindow  {
         }
     }
 
-    protected void copyLoco() {
-        CopyRosterItem act = new CopyRosterItem("Copy", this, re);
-        act.actionPerformed(null);
-    }
+//     protected void copyLoco() {
+//         CopyRosterItem act = new CopyRosterItem("Copy", this, re);
+//         act.actionPerformed(null);
+//     }
 
     JComponent createBottom() {
-        locoImage = new ResizableImagePanel(null, 240, 160);
-        locoImage.setBorder(BorderFactory.createLineBorder(Color.blue));
-        locoImage.setOpaque(true);
-        locoImage.setRespectAspectRatio(true);
-        rosterDetailPanel.setLayout(new BorderLayout());
-        rosterDetailPanel.add(locoImage, BorderLayout.WEST);
-        rosterDetailPanel.add(rosterDetails(), BorderLayout.CENTER);
-        rosterDetailPanel.add(bottomRight(), BorderLayout.EAST);
-        if (prefsMgr.getSimplePreferenceState(this.getClass().getName() + ".hideRosterImage")) {
-            locoImage.setVisible(false);
-            hideRosterImage = true;
-        }
+//         locoImage = new ResizableImagePanel(null, 240, 160);
+//         locoImage.setBorder(BorderFactory.createLineBorder(Color.blue));
+//         locoImage.setOpaque(true);
+//         locoImage.setRespectAspectRatio(true);
+        nodeDetailPanel.setLayout(new BorderLayout());
+//         rosterDetailPanel.add(locoImage, BorderLayout.WEST);
+//        rosterDetailPanel.add(rosterDetails(), BorderLayout.CENTER);
+        nodeDetailPanel.add(nodeInfoPane, BorderLayout.WEST);
+        nodeDetailPanel.add(bottomRight(), BorderLayout.EAST);
+//         if (prefsMgr.getSimplePreferenceState(this.getClass().getName() + ".hideRosterImage")) {
+//             locoImage.setVisible(false);
+//             hideRosterImage = true;
+//         }
         rosterEntryUpdateListener = (PropertyChangeEvent e) -> updateDetails();
-        return rosterDetailPanel;
+        return nodeDetailPanel;
     }
 
     private boolean isUpdatingSelection = false;
@@ -428,12 +441,19 @@ public class LccProFrame extends TwoPaneTBWindow  {
         // set up node table
         rtable = new LccProTable(memo);
         rosters.add(rtable, BorderLayout.CENTER);
-         // add selection listener
+         // add selection listener to display selected row
         rtable.getTable().getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
             JTable table = rtable.getTable();
             if (!e.getValueIsAdjusting()) {
             
             // TODO the following will need to be re-implemented for selecting nodes
+            if (table.getSelectedRow() >= 0) {
+                int row = table.convertRowIndexToModel(table.getSelectedRow());
+                log.debug("Selected: {}", row);
+                MimicNodeStore.NodeMemo nodememo = nodestore.getNodeMemos().toArray(new MimicNodeStore.NodeMemo[0])[row];
+                log.trace("   node: {}", nodememo.getNodeID().toString());
+                nodeInfoPane.update(nodememo);
+            }
             
 //                 if ((rtable.getSelectedRosterEntries().length == 1 ) && (table.getSelectedRow() >= 0)) {
 //                     log.debug("Selected row {}", table.getSelectedRow());
@@ -456,7 +476,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
             }
         });
  
-        //Set all the sort and width details of the table first.
+        // Set all the sort and width details of the table first.
         String rostertableref = getWindowFrameRef() + ":roster";
         rtable.getTable().setName(rostertableref);
 
@@ -513,7 +533,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
                 hideGroupsPane(true);
             }
         } else {
-            enableRosterGroupMenuItems(false);
+//             enableRosterGroupMenuItems(false);
         }
         PropertyChangeListener propertyChangeListener = (PropertyChangeEvent changeEvent) -> {
             JSplitPane sourceSplitPane = (JSplitPane) changeEvent.getSource();
@@ -541,7 +561,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
             if (e.getPropertyName().equals("RosterGroupAdded") && Roster.getDefault().getRosterGroupList().size() == 1) {
                 // if the pane is hidden, show it when 1st group is created
                 hideGroupsPane(false);
-                enableRosterGroupMenuItems(true);
+//                 enableRosterGroupMenuItems(true);
             } else if (!rtable.isVisible() && (e.getPropertyName().equals("saved"))) {
                 if (firstHelpLabel != null) {
                     firstHelpLabel.setVisible(false);
@@ -578,21 +598,21 @@ public class LccProFrame extends TwoPaneTBWindow  {
         boolean serviceSelected = service.isSelected();
         boolean opsSelected = ops.isSelected();
         edit.setSelected(true);
-        startProgrammer(null, re, "dp3" + File.separator + "MediaPane");
+//         startProgrammer(null, re, "dp3" + File.separator + "MediaPane");
         service.setSelected(serviceSelected);
         ops.setSelected(opsSelected);
     }
 
-    protected void enableRosterGroupMenuItems(boolean enable) {
-        firePropertyChange("groupspane", "setEnabled", enable);
-        firePropertyChange("grouptable", "setEnabled", enable);
-        firePropertyChange("deletegroup", "setEnabled", enable);
-    }
+//     protected void enableRosterGroupMenuItems(boolean enable) {
+//         firePropertyChange("groupspane", "setEnabled", enable);
+//         firePropertyChange("grouptable", "setEnabled", enable);
+//         firePropertyChange("deletegroup", "setEnabled", enable);
+//     }
 
-    protected void exportLoco() {
-        ExportRosterItem act = new ExportRosterItem(Bundle.getMessage("Export"), this, re);
-        act.actionPerformed(null);
-    }
+//     protected void exportLoco() {
+//         ExportRosterItem act = new ExportRosterItem(Bundle.getMessage("Export"), this, re);
+//         act.actionPerformed(null);
+//     }
 
     void formatTextAreaAsLabel(JTextPane pane) {
         pane.setOpaque(false);
@@ -768,7 +788,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
 
     protected void helpMenu(JMenuBar menuBar, final JFrame frame) {
         // create menu and standard items
-        JMenu helpMenu = HelpUtil.makeHelpMenu("package.apps.gui3.dp3.DecoderPro3", true);
+        JMenu helpMenu = HelpUtil.makeHelpMenu("package.apps.gui3.lccpro.LccPro", true);
         // use as main help menu
         menuBar.add(helpMenu);
     }
@@ -803,13 +823,13 @@ public class LccProFrame extends TwoPaneTBWindow  {
     }
 
     protected void hideRosterImage() {
-        hideRosterImage = !hideRosterImage;
-        //p.setSimplePreferenceState(DecoderPro3Window.class.getName()+".hideRosterImage",hideRosterImage);
-        if (hideRosterImage) {
-            locoImage.setVisible(false);
-        } else {
-            locoImage.setVisible(true);
-        }
+//         hideRosterImage = !hideRosterImage;
+//         //p.setSimplePreferenceState(DecoderPro3Window.class.getName()+".hideRosterImage",hideRosterImage);
+//         if (hideRosterImage) {
+//             locoImage.setVisible(false);
+//         } else {
+//             locoImage.setVisible(true);
+//         }
     }
 
     protected void hideSummary() {
@@ -896,27 +916,27 @@ public class LccProFrame extends TwoPaneTBWindow  {
                 break;
             case "exportloco":
                 if (checkIfEntrySelected()) {
-                    exportLoco();
+//                     exportLoco();
                 }
                 break;
             case "basicprogrammer":
                 if (checkIfEntrySelected()) {
-                    startProgrammer(null, re, programmer2);
+//                     startProgrammer(null, re, programmer2);
                 }
                 break;
             case "comprehensiveprogrammer":
                 if (checkIfEntrySelected()) {
-                    startProgrammer(null, re, programmer1);
+//                     startProgrammer(null, re, programmer1);
                 }
                 break;
             case "editthrottlelabels":
                 if (checkIfEntrySelected()) {
-                    startProgrammer(null, re, "dp3" + File.separator + "ThrottleLabels");
+//                     startProgrammer(null, re, "dp3" + File.separator + "ThrottleLabels");
                 }
                 break;
             case "editrostermedia":
                 if (checkIfEntrySelected()) {
-                    startProgrammer(null, re, "dp3" + File.separator + "MediaPane");
+//                     startProgrammer(null, re, "dp3" + File.separator + "MediaPane");
                 }
                 break;
             case "hiderosterimage":
@@ -927,7 +947,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
                 break;
             case "copyloco":
                 if (checkIfEntrySelected()) {
-                    copyLoco();
+//                     copyLoco();
                 }
                 break;
             case "deleteloco":
@@ -966,131 +986,131 @@ public class LccProFrame extends TwoPaneTBWindow  {
         }
     }
 
-    JPanel rosterDetails() {
-        JPanel panel = new JPanel();
-        GridBagLayout gbLayout = new GridBagLayout();
-        GridBagConstraints cL = new GridBagConstraints();
-        GridBagConstraints cR = new GridBagConstraints();
-        Dimension minFieldDim = new Dimension(30, 20);
-        cL.gridx = 0;
-        cL.gridy = 0;
-        cL.ipadx = 3;
-        cL.anchor = GridBagConstraints.EAST;
-        cL.insets = new Insets(0, 0, 0, 15);
-        JLabel row0Label = new JLabel(Bundle.getMessage("FieldID") + ":", JLabel.LEFT);
-        gbLayout.setConstraints(row0Label, cL);
-        panel.setLayout(gbLayout);
-        panel.add(row0Label);
-        cR.gridx = 1;
-        cR.gridy = 0;
-        cR.anchor = GridBagConstraints.WEST;
-        id.setMinimumSize(minFieldDim);
-        gbLayout.setConstraints(id, cR);
-        formatTextAreaAsLabel(id);
-        panel.add(id);
-        cL.gridy = 1;
-        JLabel row1Label = new JLabel(Bundle.getMessage("FieldRoadName") + ":", JLabel.LEFT);
-        gbLayout.setConstraints(row1Label, cL);
-        panel.add(row1Label);
-        cR.gridy = 1;
-        roadName.setMinimumSize(minFieldDim);
-        gbLayout.setConstraints(roadName, cR);
-        formatTextAreaAsLabel(roadName);
-        panel.add(roadName);
-        cL.gridy = 2;
-        JLabel row2Label = new JLabel(Bundle.getMessage("FieldRoadNumber") + ":");
-        gbLayout.setConstraints(row2Label, cL);
-        panel.add(row2Label);
-        cR.gridy = 2;
-        roadNumber.setMinimumSize(minFieldDim);
-        gbLayout.setConstraints(roadNumber, cR);
-        formatTextAreaAsLabel(roadNumber);
-        panel.add(roadNumber);
-        cL.gridy = 3;
-        JLabel row3Label = new JLabel(Bundle.getMessage("FieldManufacturer") + ":");
-        gbLayout.setConstraints(row3Label, cL);
-        panel.add(row3Label);
-        cR.gridy = 3;
-        mfg.setMinimumSize(minFieldDim);
-        gbLayout.setConstraints(mfg, cR);
-        formatTextAreaAsLabel(mfg);
-        panel.add(mfg);
-        cL.gridy = 4;
-        JLabel row4Label = new JLabel(Bundle.getMessage("FieldOwner") + ":");
-        gbLayout.setConstraints(row4Label, cL);
-        panel.add(row4Label);
-        cR.gridy = 4;
-        owner.setMinimumSize(minFieldDim);
-        gbLayout.setConstraints(owner, cR);
-        formatTextAreaAsLabel(owner);
-        panel.add(owner);
-        cL.gridy = 5;
-        JLabel row5Label = new JLabel(Bundle.getMessage("FieldModel") + ":");
-        gbLayout.setConstraints(row5Label, cL);
-        panel.add(row5Label);
-        cR.gridy = 5;
-        model.setMinimumSize(minFieldDim);
-        gbLayout.setConstraints(model, cR);
-        formatTextAreaAsLabel(model);
-        panel.add(model);
-        cL.gridy = 6;
-        JLabel row6Label = new JLabel(Bundle.getMessage("FieldDCCAddress") + ":");
-        gbLayout.setConstraints(row6Label, cL);
-        panel.add(row6Label);
-        cR.gridy = 6;
-        dccAddress.setMinimumSize(minFieldDim);
-        gbLayout.setConstraints(dccAddress, cR);
-        formatTextAreaAsLabel(dccAddress);
-        panel.add(dccAddress);
-        cL.gridy = 7;
-        cR.gridy = 7;
-        cL.gridy = 8;
-        cR.gridy = 8;
-        cL.gridy = 9;
-        JLabel row9Label = new JLabel(Bundle.getMessage("FieldDecoderFamily") + ":");
-        gbLayout.setConstraints(row9Label, cL);
-        panel.add(row9Label);
-        cR.gridy = 9;
-        decoderFamily.setMinimumSize(minFieldDim);
-        gbLayout.setConstraints(decoderFamily, cR);
-        formatTextAreaAsLabel(decoderFamily);
-        panel.add(decoderFamily);
-        cL.gridy = 10;
-        JLabel row10Label = new JLabel(Bundle.getMessage("FieldDecoderModel") + ":");
-        gbLayout.setConstraints(row10Label, cL);
-        panel.add(row10Label);
-        cR.gridy = 10;
-        decoderModel.setMinimumSize(minFieldDim);
-        gbLayout.setConstraints(decoderModel, cR);
-        formatTextAreaAsLabel(decoderModel);
-        panel.add(decoderModel);
-        cL.gridy = 11;
-        cR.gridy = 11;
-        cL.gridy = 12;
-        JLabel row12Label = new JLabel(Bundle.getMessage("FieldFilename") + ":");
-        gbLayout.setConstraints(row12Label, cL);
-        panel.add(row12Label);
-        cR.gridy = 12;
-        filename.setMinimumSize(minFieldDim);
-        gbLayout.setConstraints(filename, cR);
-        formatTextAreaAsLabel(filename);
-        panel.add(filename);
-        cL.gridy = 13;
-        /*
-         * JLabel row13Label = new
-         * JLabel(Bundle.getMessage("FieldDateUpdated")+":");
-         * gbLayout.setConstraints(row13Label,cL); panel.add(row13Label);
-         */
-        cR.gridy = 13;
-        /*
-         * filename.setMinimumSize(minFieldDim);
-         * gbLayout.setConstraints(dateUpdated,cR); panel.add(dateUpdated);
-         */
-        formatTextAreaAsLabel(dateUpdated);
-        JPanel retval = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        retval.add(panel);
-        return retval;
-    }
+//     JPanel rosterDetails() {
+//         JPanel panel = new JPanel();
+//         GridBagLayout gbLayout = new GridBagLayout();
+//         GridBagConstraints cL = new GridBagConstraints();
+//         GridBagConstraints cR = new GridBagConstraints();
+//         Dimension minFieldDim = new Dimension(30, 20);
+//         cL.gridx = 0;
+//         cL.gridy = 0;
+//         cL.ipadx = 3;
+//         cL.anchor = GridBagConstraints.EAST;
+//         cL.insets = new Insets(0, 0, 0, 15);
+//         JLabel row0Label = new JLabel(Bundle.getMessage("FieldID") + ":", JLabel.LEFT);
+//         gbLayout.setConstraints(row0Label, cL);
+//         panel.setLayout(gbLayout);
+//         panel.add(row0Label);
+//         cR.gridx = 1;
+//         cR.gridy = 0;
+//         cR.anchor = GridBagConstraints.WEST;
+//         id.setMinimumSize(minFieldDim);
+//         gbLayout.setConstraints(id, cR);
+//         formatTextAreaAsLabel(id);
+//         panel.add(id);
+//         cL.gridy = 1;
+//         JLabel row1Label = new JLabel(Bundle.getMessage("FieldRoadName") + ":", JLabel.LEFT);
+//         gbLayout.setConstraints(row1Label, cL);
+//         panel.add(row1Label);
+//         cR.gridy = 1;
+//         roadName.setMinimumSize(minFieldDim);
+//         gbLayout.setConstraints(roadName, cR);
+//         formatTextAreaAsLabel(roadName);
+//         panel.add(roadName);
+//         cL.gridy = 2;
+//         JLabel row2Label = new JLabel(Bundle.getMessage("FieldRoadNumber") + ":");
+//         gbLayout.setConstraints(row2Label, cL);
+//         panel.add(row2Label);
+//         cR.gridy = 2;
+//         roadNumber.setMinimumSize(minFieldDim);
+//         gbLayout.setConstraints(roadNumber, cR);
+//         formatTextAreaAsLabel(roadNumber);
+//         panel.add(roadNumber);
+//         cL.gridy = 3;
+//         JLabel row3Label = new JLabel(Bundle.getMessage("FieldManufacturer") + ":");
+//         gbLayout.setConstraints(row3Label, cL);
+//         panel.add(row3Label);
+//         cR.gridy = 3;
+//         mfg.setMinimumSize(minFieldDim);
+//         gbLayout.setConstraints(mfg, cR);
+//         formatTextAreaAsLabel(mfg);
+//         panel.add(mfg);
+//         cL.gridy = 4;
+//         JLabel row4Label = new JLabel(Bundle.getMessage("FieldOwner") + ":");
+//         gbLayout.setConstraints(row4Label, cL);
+//         panel.add(row4Label);
+//         cR.gridy = 4;
+//         owner.setMinimumSize(minFieldDim);
+//         gbLayout.setConstraints(owner, cR);
+//         formatTextAreaAsLabel(owner);
+//         panel.add(owner);
+//         cL.gridy = 5;
+//         JLabel row5Label = new JLabel(Bundle.getMessage("FieldModel") + ":");
+//         gbLayout.setConstraints(row5Label, cL);
+//         panel.add(row5Label);
+//         cR.gridy = 5;
+//         model.setMinimumSize(minFieldDim);
+//         gbLayout.setConstraints(model, cR);
+//         formatTextAreaAsLabel(model);
+//         panel.add(model);
+//         cL.gridy = 6;
+//         JLabel row6Label = new JLabel(Bundle.getMessage("FieldDCCAddress") + ":");
+//         gbLayout.setConstraints(row6Label, cL);
+//         panel.add(row6Label);
+//         cR.gridy = 6;
+//         dccAddress.setMinimumSize(minFieldDim);
+//         gbLayout.setConstraints(dccAddress, cR);
+//         formatTextAreaAsLabel(dccAddress);
+//         panel.add(dccAddress);
+//         cL.gridy = 7;
+//         cR.gridy = 7;
+//         cL.gridy = 8;
+//         cR.gridy = 8;
+//         cL.gridy = 9;
+//         JLabel row9Label = new JLabel(Bundle.getMessage("FieldDecoderFamily") + ":");
+//         gbLayout.setConstraints(row9Label, cL);
+//         panel.add(row9Label);
+//         cR.gridy = 9;
+//         decoderFamily.setMinimumSize(minFieldDim);
+//         gbLayout.setConstraints(decoderFamily, cR);
+//         formatTextAreaAsLabel(decoderFamily);
+//         panel.add(decoderFamily);
+//         cL.gridy = 10;
+//         JLabel row10Label = new JLabel(Bundle.getMessage("FieldDecoderModel") + ":");
+//         gbLayout.setConstraints(row10Label, cL);
+//         panel.add(row10Label);
+//         cR.gridy = 10;
+//         decoderModel.setMinimumSize(minFieldDim);
+//         gbLayout.setConstraints(decoderModel, cR);
+//         formatTextAreaAsLabel(decoderModel);
+//         panel.add(decoderModel);
+//         cL.gridy = 11;
+//         cR.gridy = 11;
+//         cL.gridy = 12;
+//         JLabel row12Label = new JLabel(Bundle.getMessage("FieldFilename") + ":");
+//         gbLayout.setConstraints(row12Label, cL);
+//         panel.add(row12Label);
+//         cR.gridy = 12;
+//         filename.setMinimumSize(minFieldDim);
+//         gbLayout.setConstraints(filename, cR);
+//         formatTextAreaAsLabel(filename);
+//         panel.add(filename);
+//         cL.gridy = 13;
+//         /*
+//          * JLabel row13Label = new
+//          * JLabel(Bundle.getMessage("FieldDateUpdated")+":");
+//          * gbLayout.setConstraints(row13Label,cL); panel.add(row13Label);
+//          */
+//         cR.gridy = 13;
+//         /*
+//          * filename.setMinimumSize(minFieldDim);
+//          * gbLayout.setConstraints(dateUpdated,cR); panel.add(dateUpdated);
+//          */
+//         formatTextAreaAsLabel(dateUpdated);
+//         JPanel retval = new JPanel(new FlowLayout(FlowLayout.LEFT));
+//         retval.add(panel);
+//         return retval;
+//     }
 
     void saveWindowDetails() {
         prefsMgr.setSimplePreferenceState(this.getClass().getName() + ".hideSummary", hideBottomPane);
@@ -1354,7 +1374,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
 //         ident.start();
     }
 
-    protected void startProgrammer(DecoderFile decoderFile, RosterEntry re, String filename) {
+//     protected void startProgrammer(DecoderFile decoderFile, RosterEntry re, String filename) {
 //         if (inStartProgrammer) {
 //             log.debug("Call to start programmer has been called twice when the first call hasn't opened");
 //             return;
@@ -1391,7 +1411,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
 //             setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 //         }
 //         inStartProgrammer = false;
-    }
+//     }
 
     /**
      * Create and display a status bar along the bottom edge of the Roster main
@@ -1710,23 +1730,87 @@ public class LccProFrame extends TwoPaneTBWindow  {
                 return;
             }
             if (e.getClickCount() == 2) {
-                startProgrammer(null, re, programmer1);
+//                 startProgrammer(null, re, programmer1);
             }
         }
     }
 
-    private static class ExportRosterItem extends ExportRosterItemAction {
+    private static class NodeInfoPane extends JPanel {
+        JLabel name = new JLabel();
+        JLabel desc = new JLabel();
+        JLabel nodeID = new JLabel();
+        JLabel mfg = new JLabel();
+        JLabel model = new JLabel();
+        JLabel hardver = new JLabel();
+        JLabel softver = new JLabel();
+        
+        public NodeInfoPane() {
+            var gbl = new jmri.util.javaworld.GridLayout2(7,2);
+            setLayout(gbl);
+            
+            var a = new JLabel("Name: ");
+            a.setHorizontalAlignment(SwingConstants.RIGHT);
+            add(a);
+            add(name);
 
-        ExportRosterItem(String pName, Component pWho, RosterEntry re) {
-            super(pName, pWho);
-            super.setExistingEntry(re);
+            a = new JLabel("Description: ");
+            a.setHorizontalAlignment(SwingConstants.RIGHT);
+            add(a);
+            add(desc);
+
+            a = new JLabel("Node ID: ");
+            a.setHorizontalAlignment(SwingConstants.RIGHT);
+            add(a);
+            add(nodeID);
+            
+            a = new JLabel("Manufacturer: ");
+            a.setHorizontalAlignment(SwingConstants.RIGHT);
+            add(a);
+            add(mfg);
+
+            a = new JLabel("Model: ");
+            a.setHorizontalAlignment(SwingConstants.RIGHT);
+            add(a);
+            add(model);
+
+            a = new JLabel("Hardware Version: ");
+            a.setHorizontalAlignment(SwingConstants.RIGHT);
+            add(a);
+            add(hardver);
+
+            a = new JLabel("Software Version: ");
+            a.setHorizontalAlignment(SwingConstants.RIGHT);
+            add(a);
+            add(softver);
+        }
+        
+        public void update(MimicNodeStore.NodeMemo nodememo) {
+            var snip = nodememo.getSimpleNodeIdent();
+            
+            name.setText(snip.getUserName());
+            desc.setText(snip.getUserDesc());
+            nodeID.setText(nodememo.getNodeID().toString());
+            mfg.setText(snip.getMfgName());
+            model.setText(snip.getModelName());
+            hardver.setText(snip.getHardwareVersion());
+            softver.setText(snip.getSoftwareVersion());
         }
 
-        @Override
-        protected boolean selectFrom() {
-            return true;
-        }
     }
+    
+
+//     private static class ExportRosterItem extends ExportRosterItemAction {
+// 
+//         ExportRosterItem(String pName, Component pWho, RosterEntry re) {
+//             super(pName, pWho);
+//             super.setExistingEntry(re);
+//         }
+// 
+//         @Override
+//         protected boolean selectFrom() {
+//             return true;
+//         }
+//     }
 
     private static class CopyRosterItem extends CopyRosterItemAction {
 
