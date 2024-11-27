@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
-import org.openlcb.MimicNodeStore;
+import org.openlcb.*;
 
 /**
  * Table data model for display of LCC node values.
@@ -35,7 +35,7 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
     public static final int CONFIGURECOL = 5;
     public static final int UPGRADECOL = 6;
     public static final int NUMCOL = UPGRADECOL + 1;
-    
+
     CanSystemConnectionMemo memo;
     MimicNodeStore nodestore;
     
@@ -144,7 +144,8 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
         MimicNodeStore.NodeMemo nodememo = nodestore.getNodeMemos().toArray(new MimicNodeStore.NodeMemo[0])[row];
         if (nodememo == null) return "<invalid node memo>";
         var snip = nodememo.getSimpleNodeIdent();
-        if (snip == null) return "<info not yet availble>";
+        if (snip == null) return "<snip info not yet availble>";
+        var pip = nodememo.getProtocolIdentification();
 
         switch (col) {
             case NAMECOL:
@@ -158,7 +159,11 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
             case SVERSIONCOL:
                 return snip.getSoftwareVersion();
             case CONFIGURECOL:
-                return Bundle.getMessage("FieldConfig");
+                if (pip.hasProtocol(ProtocolIdentification.Protocol.ConfigurationDescription)) {
+                    return Bundle.getMessage("FieldConfig");
+                } else {
+                    return null;
+                }
             case UPGRADECOL:
                 return Bundle.getMessage("FieldUpgrade");
             default:
@@ -174,13 +179,16 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
             log.error("Button pushed but no corresponding node for row {}", row);
             return;
         }
+        var pip = nodememo.getProtocolIdentification();
 
         switch (col) {
             case CONFIGURECOL:
-                var actions = new jmri.jmrix.openlcb.swing.ClientActions(memo.get(org.openlcb.OlcbInterface.class), memo);
-                var node = nodememo.getNodeID();
-                var description = jmri.jmrix.openlcb.swing.networktree.NetworkTreePane.augmentedNodeName(nodememo);
-                actions.openCdiWindow(node, description.toString());
+                if (pip.hasProtocol(ProtocolIdentification.Protocol.ConfigurationDescription)) {
+                    var actions = new jmri.jmrix.openlcb.swing.ClientActions(memo.get(org.openlcb.OlcbInterface.class), memo);
+                    var node = nodememo.getNodeID();
+                    var description = jmri.jmrix.openlcb.swing.networktree.NetworkTreePane.augmentedNodeName(nodememo);
+                    actions.openCdiWindow(node, description.toString());
+                }
                 break;
             case UPGRADECOL:
                 log.info("Upgrade button pressed for {}, not functioning yet", nodememo.getNodeID().toString());
