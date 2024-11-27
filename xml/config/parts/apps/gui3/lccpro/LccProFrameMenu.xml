@@ -17,6 +17,7 @@
     <name xml:lang="cs">Soubor</name>
     <name xml:lang="nl">Bestand</name>
     <mnemonic>f</mnemonic>
+    <!-- These first three only appear when permissions are enabled -->
     <node name="Login">
         <name xml:lang="cs">Přihlásit</name>
         <adapter>jmri.jmrit.permission.swing.LoginAction</adapter>
@@ -145,26 +146,18 @@
         <name xml:lang="fr">Cacher/Afficher Onglet Aperçu</name>
         <name xml:lang="it">Nascondi/Vedi Pannello</name>
         <name xml:lang="de">Zeige/Verbirge Übersicht</name>
-		    <name xml:lang="ca">Oculta/Mostra Panell de Sumari</name>
+		<name xml:lang="ca">Oculta/Mostra Panell de Sumari</name>
         <name xml:lang="cs">Skrýt/zobrazit stránku souhrnu</name>
         <name xml:lang="nl">Toon/Verberg Samenvattingsscherm</name>
         <current>summarypane</current>
         <type>checkbox</type>
-    </node>
-    <node name="Reset Window Sizes">
-        <name xml:lang="fr">Réinitialiser Dimensions Fenêtre</name>
-        <name xml:lang="it">Reset Dimensioni Finestra</name>
-        <name xml:lang="de">Setze Fensterabmessungen zurück</name>
-		    <name xml:lang="ca">Reinicia les mides de les finestres</name>
-        <name xml:lang="cs">Reset rozměry okna</name>
-        <name xml:lang="nl">Stel vensterafmetingen opnieuw in</name>
     </node>
     <node name="Reset Column Widths">
         <name xml:lang="fr">Réinitialiser Largeur Colonnes</name>
         <name xml:lang="it">Reset Larghezza Colonna</name>
         <name xml:lang="da">Nulstil Kolonne Brede</name>
         <name xml:lang="de">Setze Spaltenbreite zurück</name>
-		    <name xml:lang="ca">Reinicia l'amplada de les columnes</name>
+		<name xml:lang="ca">Reinicia l'amplada de les columnes</name>
         <name xml:lang="cs">Resetovat šířku sloupců</name>
         <name xml:lang="nl">Stel kolombreedtes opnieuw in</name>
         <mnemonic>w</mnemonic>
@@ -177,7 +170,7 @@
     <name xml:lang="it">Azioni</name>
     <name xml:lang="da">Værktøjer</name>
     <name xml:lang="de">Handlungen</name>
-	  <name xml:lang="ca">Accions</name>
+	<name xml:lang="ca">Accions</name>
     <name xml:lang="cs">Akce</name>
     <name xml:lang="nl">Acties</name>
     <mnemonic>a</mnemonic>

@@ -32,7 +32,7 @@
         <name xml:lang="cs">Nápověda</name>
         <name xml:lang="nl">Help</name>
         <icon>resources/icons/misc/gui3/help-browser.png</icon>
-        <help>package.apps.gui3.dp3.DecoderPro3</help>
+        <help>package.apps.gui3.lccpro.LccPro</help>
     </node>
 </nodes>
 
