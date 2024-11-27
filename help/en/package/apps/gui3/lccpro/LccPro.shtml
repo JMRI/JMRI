@@ -67,8 +67,13 @@
       </p>
       
       <p>
-      Because LccTools is a work in progress, the lower right and 
-      bottom status bar regions are not working yet.  
+      At the bottom of the window is a status bar containing the name of the currently
+      configured connection, and an indicator of whether that LCC connection
+      is currently active with traffic or not.
+      </p>
+      
+      <p>
+      Because LccTools is a work in progress, the lower right region is not populated yet.  
       <a href=https://groups.io/g/jmriusers">Suggestions</a> 
       about what to put there would be appreciated!
       </p>
