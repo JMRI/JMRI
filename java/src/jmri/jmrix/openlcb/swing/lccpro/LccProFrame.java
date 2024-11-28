@@ -231,12 +231,11 @@ public class LccProFrame extends TwoPaneTBWindow  {
                 // start search process
                 int count = rtable.getModel().getColumnCount();
                 for (int row = 0; row < count; row++) {
-                    String value = ((String)rtable.getModel().getValueAt(row, LccProTableModel.NAMECOL)).toLowerCase();
+                    String value = ((String)rtable.getTable().getValueAt(row, LccProTableModel.NAMECOL)).toLowerCase();
                     if (value.startsWith(search)) {
                         log.trace("  Hit value {} on {}", value, row);
-                        int modelrow = rtable.getTable().convertRowIndexToView(row);
-                        rtable.getTable().setRowSelectionInterval(modelrow, modelrow);
-                        rtable.getTable().scrollRectToVisible(rtable.getTable().getCellRect(modelrow,LccProTableModel.NAMECOL, true)); 
+                        rtable.getTable().setRowSelectionInterval(row, row);
+                        rtable.getTable().scrollRectToVisible(rtable.getTable().getCellRect(row,LccProTableModel.NAMECOL, true)); 
                         return;
                     }
                 }
