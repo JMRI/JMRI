@@ -204,7 +204,8 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                     r.setUserName(uName);
                 } else {
                     pref.showErrorMessage(Bundle.getMessage("ErrorTitle"),
-                            Bundle.getMessage("ErrorDuplicateUserName", uName), userNameError, "", false, true);
+                            Bundle.getMessage("ErrorDuplicateUserName", uName),
+                            getClassName(), "duplicateUserName", false, true);
                 }
             }
 
@@ -298,6 +299,13 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
     @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleReporterTable");
+    }
+
+    @Override
+    public void setMessagePreferencesDetails() {
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                setPreferenceItemDetails(getClassName(), "duplicateUserName", Bundle.getMessage("DuplicateUserNameWarn"));  // NOI18N
+        super.setMessagePreferencesDetails();
     }
 
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ReporterTableAction.class);
