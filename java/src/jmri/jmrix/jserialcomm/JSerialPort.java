@@ -243,7 +243,7 @@ public class JSerialPort implements SerialPort {
      * Open the port.
      *
      * @param systemPrefix the system prefix
-     * @param portName local system name for the desired port
+     * @param inputPortName local system name for the desired port
      * @param log Logger to use for errors, passed so that errors are logged from low-level class'
      * @param stop_bits The number of stop bits, either 1 or 2
      * @param parity one of the defined parity contants
