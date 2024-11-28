@@ -151,7 +151,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
      */
     @Override
     protected String getMasterClassName() {
-        return getClassName();
+        return jmri.jmrit.beantable.OBlockTableAction.class.getName();
     }
 
     protected List<OBlock> getBeanList() {
