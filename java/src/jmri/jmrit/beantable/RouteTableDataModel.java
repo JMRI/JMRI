@@ -36,7 +36,7 @@ public class RouteTableDataModel extends BeanTableDataModel<Route> {
         switch (col) {
             case VALUECOL: // no heading on "Edit"
             case SETCOL: // no heading on "Set"
-                return "";  
+                return "";
             case ENABLECOL:
                 return Bundle.getMessage("ColumnHeadEnabled");
             case LOCKCOL:
@@ -200,7 +200,8 @@ public class RouteTableDataModel extends BeanTableDataModel<Route> {
 
     @Override
     protected String getMasterClassName() {
-        return this.getClass().getName();
+        // Use the RouteTabelAction class to combine messages in Preferences -> Messages
+        return RouteTableAction.class.getName();
     }
 
     @Override
