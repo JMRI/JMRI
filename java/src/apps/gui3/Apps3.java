@@ -77,14 +77,18 @@ public abstract class Apps3 extends AppsBase {
             initMacOSXMenus();
         }
         if (((!configOK) || (!configDeferredLoadOK)) && (!preferenceFileExists)) {
-            FirstTimeStartUpWizardAction prefsAction = new FirstTimeStartUpWizardAction("Start Up Wizard");
-            prefsAction.setApp(this);
-            prefsAction.actionPerformed(null);
+            launchFirstTimeStartupWizard();
             return;
         }
         createAndDisplayFrame();
     }
 
+    public void launchFirstTimeStartupWizard() {
+        FirstTimeStartUpWizardAction prefsAction = new FirstTimeStartUpWizardAction("Start Up Wizard");
+        prefsAction.setApp(this);
+        prefsAction.actionPerformed(null);
+    }
+    
     /**
      * For compatability with adding in buttons to the toolbar using the
      * existing createbuttonmodel

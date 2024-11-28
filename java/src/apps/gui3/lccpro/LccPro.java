@@ -2,7 +2,13 @@ package apps.gui3.lccpro;
 
 import java.io.File;
 import javax.swing.AbstractAction;
+
+import apps.gui3.Apps3;
+import apps.gui3.FirstTimeStartUpWizard;
+import apps.gui3.FirstTimeStartUpWizardAction;
+
 import jmri.InstanceManager;
+import jmri.util.JmriJFrame;
 import jmri.util.FileUtil;
 
 /**
@@ -13,7 +19,7 @@ import jmri.util.FileUtil;
  *
  * @author Bob Jacobsen Copyright 2024
  */
-public class LccPro extends apps.gui3.Apps3 {
+public class LccPro extends Apps3 {
 
     private static String menuFile = null;
     private static String toolbarFile = null;
@@ -61,6 +67,32 @@ public class LccPro extends apps.gui3.Apps3 {
             }
         }
         return toolbarFile;
+    }
+
+    /**
+     * Provide a custom first-time wizard
+     */
+    @Override
+    public void launchFirstTimeStartupWizard() {
+        FirstTimeStartUpWizardAction prefsAction = new FirstTimeStartUpWizardAction("Start Up Wizard"){
+            @Override
+            public FirstTimeStartUpWizard makeWizard(JmriJFrame f, Apps3 app) {
+                f.setTitle("LccPro Wizard");
+                return new FirstTimeStartUpWizard(f, app){
+                    @Override
+                    protected void customizeConnection() {
+                        System.out.println(connectionConfigPane);
+                        connectionConfigPane.manuBox.setSelectedItem("LCC");
+                        connectionConfigPane.manuBox.setEnabled(false);
+                    }
+                    protected String firstPrompt() {
+                        return "Next you need to configure your LCC connection.\n\nThen select the serial port or enter in the IP address of the device";
+                    }
+                };
+            }      
+        };
+        prefsAction.setApp(this);
+        prefsAction.actionPerformed(null);
     }
 
     @Override

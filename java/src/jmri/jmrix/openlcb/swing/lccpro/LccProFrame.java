@@ -227,11 +227,11 @@ public class LccProFrame extends TwoPaneTBWindow  {
             public void keyReleased(KeyEvent keyEvent) {
                 // on release so the searchField has been updated
                 log.trace("keyTyped {} content {}", keyEvent.getKeyCode(), searchField.getText());
-                String search = searchField.getText();
+                String search = searchField.getText().toLowerCase();
                 // start search process
                 int count = rtable.getModel().getColumnCount();
                 for (int row = 0; row < count; row++) {
-                    String value = (String)rtable.getModel().getValueAt(row, LccProTableModel.NAMECOL);
+                    String value = ((String)rtable.getModel().getValueAt(row, LccProTableModel.NAMECOL)).toLowerCase();
                     if (value.startsWith(search)) {
                         log.trace("  Hit value {} on {}", value, row);
                         int modelrow = rtable.getTable().convertRowIndexToView(row);
