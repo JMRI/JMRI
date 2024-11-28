@@ -891,10 +891,6 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
         }
     }
 
-    private String getClassName() {
-        return this.getClass().getName();
-    }
-
     List<RouteTurnout> get_turnoutList() {
         return _turnoutList;
     }

@@ -91,7 +91,6 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
     private final String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     private JButton addButton;
     private final JLabel statusBarLabel = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
-    private final String userNameError = this.getClass().getName() + ".DuplicateUserName"; // only used in this package
     private Manager<Reporter> connectionChoice = null;
     private UserPreferencesManager pref;
     private SystemNameValidator hardwareAddressValidator;
