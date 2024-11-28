@@ -709,6 +709,7 @@ public class PrintLocationsFrame extends OperationsFrame {
                 writer.write(getSetOutTrains(track));
                 writer.write(getPickUpTrains(track));
                 writer.write(getDestinations(track));
+                writer.write(getTrackInfo(track));
                 writer.write(getSpurInfo(track));
                 writer.write(getSchedule(track));
                 writer.write(getStagingInfo(track));
@@ -1059,6 +1060,15 @@ public class PrintLocationsFrame extends OperationsFrame {
         }
         buf.append(NEW_LINE);
         return buf.toString();
+    }
+
+    private String getTrackInfo(Track track) {
+        if (track.getPool() != null) {
+            StringBuffer buf =
+                    new StringBuffer(TAB + TAB + Bundle.getMessage("Pool") + ": " + track.getPoolName() + NEW_LINE);
+            return buf.toString();
+        }
+        return "";
     }
 
     private String getSchedule(Track track) {

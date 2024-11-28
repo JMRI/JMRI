@@ -131,7 +131,7 @@
             <ul>
                 <li>STL Editor: Add store mode selections to the View menu, update help page.</li>
                 <li>Add a Send SNIP Request button to the Send tool.</li>
-                <li>Implement recent changes to the CDI spec underlying the node configuration display. 
+                <li>Implement recent changes to the CDI spec underlying the node configuration display.
                     This will allow node implementors to make simpler configuration dialogs.</li>
                 <li>Fixed a bug where the node configuration display would sometimes
                     be drawn with overlapping characters or extra white space.</li>
@@ -413,7 +413,11 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Speed Setting NoSignals.</li>
+             <li>  After setting speed by Sections ahead. Check Block speeds.</li>
+             <li>  If next block slower than current block set speed down before entering next block.</li>
+             <li>  Do not increase speed beyond the minimum speed of any occupied block.</li>
+             <li>When going from automatic to manual bypass auto-engineer limts.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -502,6 +506,14 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
+            <li>Added "SensorFromBxpa1ShortCircuit.py" and
+                "SensorFromBxp88ShortCircuit.py" scripts, which can create
+                JMRI "Internal" sensors that "follow" the LocoNet message
+                information that is created when the BXPA1 and BXP88
+                (respectively) send "Short Circuit" event LocoNet messages.</li>
+
+            <li>Updated the "SensorFromBxpa1AutoRev.py" script to do a better
+                job of watching for BXPA1 "Autoreverse" event LocoNet messages.</li>
             <li><strong>WiThrottleList.py</strong> is a sample script that shows how to access the
             WiThrottle session list.</li>
         </ul>
@@ -513,9 +525,9 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>There's a new 
+                <li>There's a new
                     <a href="https://www.jmri.org/xml/signals/basic-enhanced/">basic-enhanced signal system</a>.</li>
-                <li>The 
+                <li>The
                     <a href="https://www.jmri.org/xml/signals/FS-1987/">FS-1987 signal system</a> was improved.</li>
             </ul>
 
@@ -629,4 +641,3 @@
         <ul>
             <li></li>
         </ul>
-
