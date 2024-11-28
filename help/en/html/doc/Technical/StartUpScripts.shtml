@@ -91,6 +91,25 @@
         <dt>JMRI_USERHOME</dt>
         <dd>This specifies the location of an alternative user home directory</dd>
 
+        <dt>JMRI_HOSTNAME</dt>
+        <dd>When using a network connection, this overrides the host name
+            specified in the protocol.  Note that this is true for
+            <underline>all</underline> network connections, so if you 
+            have more than one network connection configured it's probably
+            not what you want.
+            This can be set as a Java system property
+            e.g. via the -D option, see below.</dd>
+
+        <dt>JMRI_SERIALPORT</dt>
+        <dd>When using a serial port connection, this overrides the serial port name
+            specified in the protocol.  Note that this is true for
+            <underline>all</underline> serial port connections, so if you 
+            have more than one serial port connection configured it's probably
+            not what you want.
+            This can be set as a Java system property
+            e.g. via the -D option, see below.</dd>
+</dd>
+
       </dl>
       If both JMRI_PREFSDIR and JMRI_USERHOME are defined, the location defined by JMRI_PREFSDIR
       will take precedence over the location defined by JMRI_USERHOME for determining the location
