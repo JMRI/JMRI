@@ -1,9 +1,10 @@
 package jmri.jmrix.openlcb.swing.lccpro;
 
 import java.awt.*;
+import java.awt.event.*;
 // import java.awt.event.ActionEvent;
 // import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
+// import java.awt.event.WindowEvent;
 // import java.awt.image.BufferedImage;
 import java.awt.datatransfer.Transferable;
 
@@ -207,7 +208,50 @@ public class LccProFrame extends TwoPaneTBWindow  {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        panel.add(new JLabel("bottomRight, empty for now"));
+        panel.add(new JLabel("Search Node Names:"));
+        var searchField = new JTextField() {
+            @Override
+            public Dimension getMaximumSize() {
+                Dimension size = super.getMaximumSize();
+                size.height = getPreferredSize().height;
+                return size;
+            } 
+        };
+        searchField.getDocument().putProperty("filterNewlines", Boolean.TRUE);
+        searchField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent keyEvent) {
+           }
+
+            @Override
+            public void keyReleased(KeyEvent keyEvent) {
+                // on release so the searchField has been updated
+                log.trace("keyTyped {} content {}", keyEvent.getKeyCode(), searchField.getText());
+                String search = searchField.getText();
+                // start search process
+                int count = rtable.getModel().getColumnCount();
+                for (int row = 0; row < count; row++) {
+                    String value = (String)rtable.getModel().getValueAt(row, LccProTableModel.NAMECOL);
+                    if (value.startsWith(search)) {
+                        log.trace("  Hit value {} on {}", value, row);
+                        int modelrow = rtable.getTable().convertRowIndexToView(row);
+                        rtable.getTable().setRowSelectionInterval(modelrow, modelrow);
+                        rtable.getTable().scrollRectToVisible(rtable.getTable().getCellRect(modelrow,LccProTableModel.NAMECOL, true)); 
+                        return;
+                    }
+                }
+                // here we didn't find anything
+                rtable.getTable().clearSelection();
+            }
+
+            @Override
+            public void keyPressed(KeyEvent keyEvent) {
+            }
+        });
+        panel.add(searchField);
+        panel.add(Box.createVerticalGlue());
+        panel.add(new JLabel("bottomRight needs more work"));
+        
 //         ButtonGroup progMode = new ButtonGroup();
 //         progMode.add(service);
 //         progMode.add(ops);
