@@ -207,10 +207,32 @@
         <name xml:lang="nl">Start Script...</name>
         <adapter>jmri.jmrit.jython.RunJythonScript</adapter>
     </node>
+    <node>separator</node><!-- separator -->
+    <node name="Clocks...">
+        <node name="Set Up Fast Clock...">
+            <adapter>jmri.jmrit.simpleclock.SimpleClockAction</adapter>
+        </node>
+        <node name="Show Nixie Clock">
+            <adapter>jmri.jmrit.nixieclock.NixieClockAction</adapter>
+        </node>
+        <node name="Show LCD Clock">
+            <adapter>jmri.jmrit.lcdclock.LcdClockAction</adapter>
+        </node>
+        <node name="Show Analog Clock">
+            <adapter>jmri.jmrit.analogclock.AnalogClockAction</adapter>
+        </node>
+        <node name="Show Pragotron Clock">
+            <adapter>jmri.jmrit.pragotronclock.PragotronClockAction</adapter>
+        </node>
+    </node>
   </node>
 
-<!---  <xi:include href="http://jmri.org/xml/config/parts/WindowsMenu.xml"/>
-  <xi:include href="http://jmri.org/xml/config/parts/HelpMenu.xml"/>-->
+<!--- 
+    The following are added automatically, and should not be active here.
+     
+    <xi:include href="http://jmri.org/xml/config/parts/WindowsMenu.xml"/><
+    <xi:include href="http://jmri.org/xml/config/parts/HelpMenu.xml"/>
+-->
 
 </nodes>
 
