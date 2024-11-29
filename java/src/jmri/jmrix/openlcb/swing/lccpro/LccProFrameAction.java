@@ -26,10 +26,12 @@ public class LccProFrameAction extends JmriAbstractAction {
     public LccProFrameAction(String s, WindowInterface wi, boolean allowQuit) {
         super(s, wi);
         this.allowQuit = allowQuit;
+        checkAndSetEnabled();
     }
 
     public LccProFrameAction(String s, Icon i, WindowInterface wi) {
         super(s, i, wi);
+        checkAndSetEnabled();
     }
 
     /**
@@ -37,8 +39,9 @@ public class LccProFrameAction extends JmriAbstractAction {
      * configured in user preferences
      */
     public LccProFrameAction() {
-        super(Bundle.getMessage("RosterFrameAction")); // NOI18N
+        super(Bundle.getMessage("LccProFrameAction")); // NOI18N
         allowQuit = false;
+        checkAndSetEnabled();
     }
 
     /**
@@ -49,10 +52,17 @@ public class LccProFrameAction extends JmriAbstractAction {
     public LccProFrameAction(String pName, boolean allowQuit) {
         super(pName);
         this.allowQuit = allowQuit;
+        checkAndSetEnabled();
     }
 
     boolean allowQuit = true;
 
+    void checkAndSetEnabled() {
+        // if there's no connection, disable this
+        var memo = jmri.InstanceManager.getNullableDefault(jmri.jmrix.can.CanSystemConnectionMemo.class);
+        setEnabled(memo != null);
+    }
+    
     @Override
     public void actionPerformed(ActionEvent event) {
         var mainFrame = new LccProFrame("LCC Pro");

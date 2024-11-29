@@ -31,6 +31,9 @@ public class OpenLcbMenu extends JMenu {
                 add(new CanNamedPaneAction(rb.getString(item.name), wi, item.load, memo));
             }
         }
+        
+        // LccPro is a self-contained frame, so it has to be added separately
+        add(new jmri.jmrix.openlcb.swing.lccpro.LccProFrameAction());
     }
 
     final Item[] panelItems = new Item[]{
