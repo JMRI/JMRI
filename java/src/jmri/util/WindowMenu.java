@@ -37,7 +37,9 @@ public class WindowMenu extends JMenu implements javax.swing.event.MenuListener 
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (parentFrame != null) {
-                    parentFrame.dispose();
+                    parentFrame.dispatchEvent(
+                              new java.awt.event.WindowEvent(parentFrame, 
+                                        java.awt.event.WindowEvent.WINDOW_CLOSING));
                  }
             }    
         });
