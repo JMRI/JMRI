@@ -58,6 +58,7 @@
         <adapter>jmri.jmrit.roster.swing.RosterFrameAction</adapter>
     </node>
     <node>separator</node><!-- separator -->
+<!--  This will be in the Windows menu eventually
     <node name="Close Window">
         <name xml:lang="fr">Fermer la Fenêtre</name>
         <name xml:lang="it">Chiudi</name>
@@ -68,6 +69,7 @@
         <mnemonic>c</mnemonic>
         <current>closewindow</current>
     </node>
+ -->
     <node name="Quit">
         <name xml:lang="fr">Quitter</name>
         <name xml:lang="it">Esci</name>
