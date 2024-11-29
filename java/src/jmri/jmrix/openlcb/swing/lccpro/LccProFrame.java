@@ -131,6 +131,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
     final JRadioButton edit = new JRadioButton(Bundle.getMessage("EditOnly"));
     final JTextPane filename = new JTextPane();
     final NodeInfoPane nodeInfoPane = new NodeInfoPane();
+    final NodePipPane nodePipPane = new NodePipPane();
     JLabel firstHelpLabel;
     //int firstTimeAddedEntry = 0x00;
     int groupSplitPaneLocation = 0;
@@ -467,7 +468,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
 //         rosterDetailPanel.add(locoImage, BorderLayout.WEST);
 //        rosterDetailPanel.add(rosterDetails(), BorderLayout.CENTER);
         nodeDetailPanel.add(nodeInfoPane);
-        nodeDetailPanel.add(new JLabel("Bottom Center to carry PIP information?"));
+        nodeDetailPanel.add(nodePipPane);
         nodeDetailPanel.add(bottomRight());
 //         if (prefsMgr.getSimplePreferenceState(this.getClass().getName() + ".hideRosterImage")) {
 //             locoImage.setVisible(false);
@@ -500,6 +501,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
                 MimicNodeStore.NodeMemo nodememo = nodestore.getNodeMemos().toArray(new MimicNodeStore.NodeMemo[0])[row];
                 log.trace("   node: {}", nodememo.getNodeID().toString());
                 nodeInfoPane.update(nodememo);
+                nodePipPane.update(nodememo);
             }
             
 //                 if ((rtable.getSelectedRosterEntries().length == 1 ) && (table.getSelectedRow() >= 0)) {
@@ -1771,7 +1773,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
     }
 
     /**
-     * Displays information about a specific node
+     * Displays SNIP information about a specific node
      */
     private static class NodeInfoPane extends JPanel {
         JLabel name = new JLabel();
@@ -1825,6 +1827,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
         public void update(MimicNodeStore.NodeMemo nodememo) {
             var snip = nodememo.getSimpleNodeIdent();
             
+            // update with current contents
             name.setText(snip.getUserName());
             desc.setText(snip.getUserDesc());
             nodeID.setText(nodememo.getNodeID().toString());
@@ -1834,6 +1837,36 @@ public class LccProFrame extends TwoPaneTBWindow  {
             softver.setText(snip.getSoftwareVersion());
         }
 
+    }
+    
+
+    /**
+     * Displays PIP information about a specific node
+     */
+    private static class NodePipPane extends JPanel {
+        
+        public NodePipPane () {
+            setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        }
+        
+        public void update(MimicNodeStore.NodeMemo nodememo) {
+            // remove existing content
+            removeAll();
+            // add heading
+            add(new JLabel("Supported Protocols:"));
+            // and display new content
+            var pip = nodememo.getProtocolIdentification();
+            var names = pip.getProtocolNames();
+            
+            for (String name : names) {
+                // make this name a bit more human-friendly
+                final String regex = "([a-z])([A-Z])";
+                final String replacement = "$1 $2";
+                var formattedName = "   "+name.replaceAll(regex, replacement);
+                add(new JLabel(formattedName));
+            }
+            validate();
+        }
     }
     
 
