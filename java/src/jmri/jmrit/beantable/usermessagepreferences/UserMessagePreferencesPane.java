@@ -24,6 +24,7 @@ import jmri.jmrit.beantable.LogixTableAction;
 import jmri.jmrit.beantable.MemoryTableAction;
 import jmri.jmrit.beantable.ReporterTableAction;
 import jmri.jmrit.beantable.RouteTableAction;
+import jmri.jmrit.beantable.SectionTableAction;
 import jmri.jmrit.beantable.SensorTableAction;
 import jmri.jmrit.beantable.SignalGroupTableAction;
 import jmri.jmrit.beantable.SignalHeadTableAction;
@@ -71,6 +72,7 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
         p.setClassDescription(ReporterTableAction.class.getName());
         p.setClassDescription(RouteTableAction.class.getName());
 
+        p.setClassDescription(SectionTableAction.class.getName());
         p.setClassDescription(SensorTableAction.class.getName());
         p.setClassDescription(SignalGroupTableAction.class.getName());
         p.setClassDescription(SignalHeadTableAction.class.getName());
@@ -97,6 +99,7 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
 
         ArrayList<String> preferenceClassList = p.getPreferencesClasses();
         for (String strClass : preferenceClassList) {
+
             JPanel classholder = new JPanel();
             classholder.setLayout(new BorderLayout());
 

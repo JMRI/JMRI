@@ -810,6 +810,22 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         dispose();
     }
 
+    /**
+     * Get the class description for the UserMessagePreferencesPane.
+     * @return The class description
+     */
+    public String getClassDescription() {
+        return "Fast Clock";
+    }
+
+    /**
+     * Set the item details for the UserMessagePreferencesPane.
+     */
+    public void setMessagePreferencesDetails() {
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                setPreferenceItemDetails(getClassName(), "remindSaveClock", "HideSaveReminder");  // NOI18N
+    }
+
     protected String getClassName() {
         // The class that is returned must have a default constructor,
         // a constructor with no parameters.
