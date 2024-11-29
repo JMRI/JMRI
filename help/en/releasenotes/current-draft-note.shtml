@@ -570,7 +570,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Added a startup action to trigger the show JMRI throttle list window action.</li>
         </ul>
 
     <h3>Timetable</h3>
