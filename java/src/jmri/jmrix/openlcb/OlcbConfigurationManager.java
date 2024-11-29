@@ -485,7 +485,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
             l.add((byte)4); // version byte
             addStringPart("JMRI", l, 40);  // mfg field; 40 char limit in Standard, not counting final null
-            addStringPart("PanelPro", l, 40);  // model
+            addStringPart(jmri.Application.getApplicationName(), l, 40);  // model
             String name = ProfileManager.getDefault().getActiveProfileName();
             if (name != null) {
                 addStringPart(name, l, 20); // hardware version
