@@ -207,6 +207,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
     JPanel bottomRight() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setAlignmentX(SwingConstants.LEFT);
 
         panel.add(new JLabel("Search Node Names:"));
         var searchField = new JTextField() {
@@ -399,19 +400,19 @@ public class LccProFrame extends TwoPaneTBWindow  {
 //             }
 //         });
 
-        String lastProg = (String) prefsMgr.getProperty(getWindowFrameRef(), "selectedProgrammer");
-        if (lastProg != null) {
-            if (lastProg.equals("service") && service.isEnabled()) {
-                service.setSelected(true);
-                updateProgMode();
-            } else if (lastProg.equals("ops") && ops.isEnabled()) {
-                ops.setSelected(true);
-                updateProgMode();
-            } else if (lastProg.equals("edit") && edit.isEnabled()) {
-                edit.setSelected(true);
-                updateProgMode();
-            }
-        }
+//         String lastProg = (String) prefsMgr.getProperty(getWindowFrameRef(), "selectedProgrammer");
+//         if (lastProg != null) {
+//             if (lastProg.equals("service") && service.isEnabled()) {
+//                 service.setSelected(true);
+//                 updateProgMode();
+//             } else if (lastProg.equals("ops") && ops.isEnabled()) {
+//                 ops.setSelected(true);
+//                 updateProgMode();
+//             } else if (lastProg.equals("edit") && edit.isEnabled()) {
+//                 edit.setSelected(true);
+//                 updateProgMode();
+//             }
+//         }
         if (frameInstances.size() > 1) {
             firePropertyChange("closewindow", "setEnabled", true);
             allowQuit(frameInstances.get(0).isAllowQuit());
@@ -462,11 +463,12 @@ public class LccProFrame extends TwoPaneTBWindow  {
 //         locoImage.setBorder(BorderFactory.createLineBorder(Color.blue));
 //         locoImage.setOpaque(true);
 //         locoImage.setRespectAspectRatio(true);
-        nodeDetailPanel.setLayout(new BorderLayout());
+        nodeDetailPanel.setLayout(new GridLayout(1,3));
 //         rosterDetailPanel.add(locoImage, BorderLayout.WEST);
 //        rosterDetailPanel.add(rosterDetails(), BorderLayout.CENTER);
-        nodeDetailPanel.add(nodeInfoPane, BorderLayout.WEST);
-        nodeDetailPanel.add(bottomRight(), BorderLayout.EAST);
+        nodeDetailPanel.add(nodeInfoPane);
+        nodeDetailPanel.add(new JLabel("Bottom Center to carry PIP information?"));
+        nodeDetailPanel.add(bottomRight());
 //         if (prefsMgr.getSimplePreferenceState(this.getClass().getName() + ".hideRosterImage")) {
 //             locoImage.setVisible(false);
 //             hideRosterImage = true;
@@ -492,7 +494,6 @@ public class LccProFrame extends TwoPaneTBWindow  {
             JTable table = rtable.getTable();
             if (!e.getValueIsAdjusting()) {
             
-            // TODO the following will need to be re-implemented for selecting nodes
             if (table.getSelectedRow() >= 0) {
                 int row = table.convertRowIndexToModel(table.getSelectedRow());
                 log.debug("Selected: {}", row);
@@ -1448,8 +1449,6 @@ public class LccProFrame extends TwoPaneTBWindow  {
     /**
      * Create and display a status bar along the bottom edge of the Roster main
      * pane.
-     * <p>
-     * TODO This status bar needs sorting out properly
      */
     protected void statusBar() {
         for (ConnectionConfig conn : InstanceManager.getDefault(ConnectionConfigManager.class)) {
@@ -1457,11 +1456,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
                 addToStatusBox(new ConnectionLabel(conn));
             }
         }
-        addToStatusBox(new TrafficStatusLabel(memo));
-
-        // TODO once we decide what else's in the status bar...
-//        addToStatusBox(new JLabel("Still need to fill out the status box"));
-        
+        addToStatusBox(new TrafficStatusLabel(memo));        
 
 //         addToStatusBox(serviceModeProgrammerLabel, null);
 //         addToStatusBox(operationsModeProgrammerLabel, null);

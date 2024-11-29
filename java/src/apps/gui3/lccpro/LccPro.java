@@ -81,7 +81,6 @@ public class LccPro extends Apps3 {
                 return new FirstTimeStartUpWizard(f, app){
                     @Override
                     protected void customizeConnection() {
-                        System.out.println(connectionConfigPane);
                         connectionConfigPane.manuBox.setSelectedItem("LCC");
                         connectionConfigPane.manuBox.setEnabled(false);
                     }
