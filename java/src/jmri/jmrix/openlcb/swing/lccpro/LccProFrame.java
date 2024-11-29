@@ -162,9 +162,14 @@ public class LccProFrame extends TwoPaneTBWindow  {
     transient RosterEntry re;
 //    final JTextPane roadName = new JTextPane();
 //    final JTextPane roadNumber = new JTextPane();
-    final JPanel nodeDetailPanel = new JPanel();
-    PropertyChangeListener rosterEntryUpdateListener;
+    // the three parts of the bottom half
+    final JPanel bottomPanel = new JPanel();
+    JSplitPane bottomLCPanel;  // left and center parts
+    JSplitPane bottomRPanel;  // right part
+    // main center window (TODO: rename this; TODO: Does this still need to be split?)
     JSplitPane rosterGroupSplitPane;
+    
+//    PropertyChangeListener rosterEntryUpdateListener;
     final JButton rosterMedia = new JButton(Bundle.getMessage("LabelsAndMedia"));
     LccProTable rtable;
 //     ConnectionConfig serModeProCon = null;
@@ -460,22 +465,24 @@ public class LccProFrame extends TwoPaneTBWindow  {
 //     }
 
     JComponent createBottom() {
-//         locoImage = new ResizableImagePanel(null, 240, 160);
-//         locoImage.setBorder(BorderFactory.createLineBorder(Color.blue));
-//         locoImage.setOpaque(true);
-//         locoImage.setRespectAspectRatio(true);
-        nodeDetailPanel.setLayout(new GridLayout(1,3));
-//         rosterDetailPanel.add(locoImage, BorderLayout.WEST);
-//        rosterDetailPanel.add(rosterDetails(), BorderLayout.CENTER);
-        nodeDetailPanel.add(nodeInfoPane);
-        nodeDetailPanel.add(nodePipPane);
-        nodeDetailPanel.add(bottomRight());
-//         if (prefsMgr.getSimplePreferenceState(this.getClass().getName() + ".hideRosterImage")) {
-//             locoImage.setVisible(false);
-//             hideRosterImage = true;
-//         }
-        rosterEntryUpdateListener = (PropertyChangeEvent e) -> updateDetails();
-        return nodeDetailPanel;
+        JPanel leftPanel = nodeInfoPane;
+        JPanel centerPanel = nodePipPane;
+        JPanel rightPanel = bottomRight();
+                
+        bottomLCPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, centerPanel);
+        bottomRPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, bottomLCPanel, rightPanel);
+
+        leftPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        centerPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        bottomLCPanel.setBorder(null);
+        
+        bottomLCPanel.setResizeWeight(0.67);  // determined empirically
+        bottomRPanel.setResizeWeight(0.75);   // TODO should be preserved in preferences
+        
+        bottomLCPanel.setOneTouchExpandable(true);
+        bottomRPanel.setOneTouchExpandable(true);
+        
+        return bottomRPanel;
     }
 
 //     private boolean isUpdatingSelection = false;
@@ -1847,6 +1854,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
         
         public NodePipPane () {
             setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+            add(new JLabel("Supported Protocols:"));
         }
         
         public void update(MimicNodeStore.NodeMemo nodememo) {
