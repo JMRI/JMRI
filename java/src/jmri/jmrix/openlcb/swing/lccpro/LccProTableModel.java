@@ -3,7 +3,6 @@ package jmri.jmrix.openlcb.swing.lccpro;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-// import javax.annotation.CheckForNull;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -116,8 +115,7 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
      * Note that the table can be set to be non-editable when constructed, in
      * which case this always returns false.
      *
-     * @return true if cell is editable in roster entry model and table allows
-     *         editing
+     * @return true if cell is editable 
      */
     @Override
     public boolean isCellEditable(int row, int col) {
