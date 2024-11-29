@@ -85,6 +85,7 @@ public class LccPro extends Apps3 {
                         connectionConfigPane.manuBox.setSelectedItem("LCC");
                         connectionConfigPane.manuBox.setEnabled(false);
                     }
+                    @Override
                     protected String firstPrompt() {
                         return "Next you need to configure your LCC connection.\n\nThen select the serial port or enter in the IP address of the device";
                     }
