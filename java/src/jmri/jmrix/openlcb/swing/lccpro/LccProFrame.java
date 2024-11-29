@@ -1860,6 +1860,8 @@ public class LccProFrame extends TwoPaneTBWindow  {
         public void update(MimicNodeStore.NodeMemo nodememo) {
             // remove existing content
             removeAll();
+            revalidate();
+            repaint();
             // add heading
             add(new JLabel("Supported Protocols:"));
             // and display new content
@@ -1873,7 +1875,6 @@ public class LccProFrame extends TwoPaneTBWindow  {
                 var formattedName = "   "+name.replaceAll(regex, replacement);
                 add(new JLabel(formattedName));
             }
-            validate();
         }
     }
     

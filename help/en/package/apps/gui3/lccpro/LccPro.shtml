@@ -18,7 +18,7 @@
       <h1>JMRI: LccPro</h1>
       
       <p><span class="since">Since <a href="http://jmri.org/releasenotes/jmri5.11.1.shtml">JMRI 5.11.1</a></span>
-      <strong>Note that LccTools is a work in progress.</strong> 
+      <strong>Note that LccPro is a work in progress.</strong> 
       Feedback welcome!   
       Help us improve this by 
       <a href=https://groups.io/g/jmriusers">telling us</a>
@@ -26,17 +26,17 @@
       </p>   
       
       <p>
-      LccTools is a 
+      LccPro is a 
       <a href="../../../../html/apps/index.shtml">JMRI application</a>
       that focuses on configuring your LCC network.
       </p>
       
       <a href="LccProMainWindow.png">
       <img src="LccProMainWindow.png" 
-        class="floatRight" height="255" width="466" alt="LccPro main window"></a>
+        class="floatRight" height="251" width="472" alt="LccPro main window"></a>
 
       <p>
-      The main LccTools window is a table showing all the LCC nodes on your network.
+      The main LccPro window is a table showing all the LCC nodes on your network.
       Each row shows information about a single LCC node.
       If the node supports it, there are "Configure" and "Upgrade"
       buttons that will open functional windows for 
@@ -48,8 +48,17 @@
       
       <p>
       When you select a row, more information about that node is shown
-      on the lower left.
+      on the lower left. The node's list of supported LCC protocols is
+      shown in the bottom-center panel.  You can resize those bottom
+      panels using the slider bars between them, and open or close them
+      using the small disclosure triangles on the slider bars.
       </p>
+      
+      <p>
+      In the bottom right is a search field.  Start typing there
+      and LccPro will select the first row in the table with a matching
+      name.  As you continue typing, this will narrow down to finally
+      matching just the right entry. The search ignores the lower vs upper case.
       
       <p>
       Across the top is a tear-off set of buttons that will open
@@ -73,7 +82,7 @@
       </p>
       
       <p>
-      Because LccTools is a work in progress, the lower right region is not populated yet.  
+      Because LccPro is a work in progress, the lower right region is not populated yet.  
       <a href=https://groups.io/g/jmriusers">Suggestions</a> 
       about what to put there would be appreciated!
       </p>
