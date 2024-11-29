@@ -10,14 +10,14 @@ public class HubAction extends jmri.jmrix.can.swing.CanNamedPaneAction {
         super("LCC Hub Control",
                 new JmriJFrameInterface(),
                 HubPane.class.getName(),
-                jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
+                jmri.InstanceManager.getNullableDefault(CanSystemConnectionMemo.class));
     }
 
     public HubAction(String name, WindowInterface  iface) {
         super(name,
                 iface,
                 HubPane.class.getName(),
-                jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
+                jmri.InstanceManager.getNullableDefault(CanSystemConnectionMemo.class));
     }
 
 }

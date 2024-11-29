@@ -35,20 +35,10 @@ import jmri.UserPreferencesManager;
 import jmri.jmrit.roster.*;
 // import jmri.jmrit.roster.rostergroup.*;
 import jmri.jmrit.roster.swing.*;
-// import jmri.jmrit.symbolicprog.ProgrammerConfigManager;
-// import jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame;
-// import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
-// import jmri.jmrit.symbolicprog.tabbedframe.PaneServiceProgFrame;
-// import jmri.jmrit.throttle.LargePowerManagerButton;
-// import jmri.jmrit.throttle.ThrottleFrame;
-// import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.jmrix.ActiveSystemsMenu;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
-// import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.ConnectionStatus;
-// import jmri.profile.Profile;
-// import jmri.profile.ProfileManager;
 import jmri.swing.ConnectionLabel;
 import jmri.swing.JTablePersistenceManager;
 import jmri.swing.RowSorterUtil;
@@ -56,7 +46,6 @@ import jmri.swing.RowSorterUtil;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.openlcb.swing.TrafficStatusLabel;
 
-// import jmri.util.FileUtil;
 import jmri.util.HelpUtil;
 import jmri.util.WindowMenu;
 import jmri.util.datatransfer.RosterEntrySelection;
@@ -65,11 +54,7 @@ import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseAdapter;
 import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.JmriMouseListener;
-// import jmri.util.swing.ResizableImagePanel;
-// import jmri.util.swing.WindowInterface;
 import jmri.util.swing.multipane.TwoPaneTBWindow;
-// import jmri.util.table.ButtonEditor;
-// import jmri.util.table.ButtonRenderer;
 
 import org.openlcb.MimicNodeStore;
 
@@ -96,7 +81,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
     
     public LccProFrame(String name) {
         this(name,
-            jmri.InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));
+            jmri.InstanceManager.getNullableDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));
     }
 
     public LccProFrame(String name, CanSystemConnectionMemo memo) {
@@ -107,15 +92,26 @@ public class LccProFrame extends TwoPaneTBWindow  {
     }
 
     public LccProFrame(String name, String menubarFile, String toolbarFile) {
-        this(name, menubarFile, toolbarFile, jmri.InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));
+        this(name, menubarFile, toolbarFile, jmri.InstanceManager.getNullableDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));
     }
 
     public LccProFrame(String name, String menubarFile, String toolbarFile, CanSystemConnectionMemo memo) {
         super(name, menubarFile, toolbarFile);
         this.memo = memo;
+        if (memo == null) {
+            // a functional LccFrame can't be created without an LCC ConnectionConfig
+            javax.swing.JOptionPane.showMessageDialog(this, "LccPro requires a configured LCC or OpenLCB connection, will quit now",
+               "LccPro", JOptionPane.ERROR_MESSAGE);
+            // and close the program
+            // This is justified because this should never happen in a properly
+            // configured system.
+            InstanceManager.getDefault(jmri.ShutDownManager.class).shutdown();
+            return;
+        }
         this.nodestore = memo.get(MimicNodeStore.class);
         this.allowInFrameServlet = false;
 //         this.setBaseTitle(name);
+        prefsMgr = InstanceManager.getDefault(UserPreferencesManager.class);
         this.setTitle(name);
         this.buildWindow();
 //         this.locoSelected(null);
@@ -342,7 +338,6 @@ public class LccProFrame extends TwoPaneTBWindow  {
         //Additions to the toolbar need to be added first otherwise when trying to hide bits up during the initialisation they remain on screen
         additionsToToolBar();
         frameInstances.add(this);
-        prefsMgr = InstanceManager.getDefault(UserPreferencesManager.class);
         getTop().add(createTop());
         getBottom().setMinimumSize(summaryPaneDim);
         getBottom().add(createBottom());
@@ -714,7 +709,9 @@ public class LccProFrame extends TwoPaneTBWindow  {
      */
     protected void setNewWindowAction(JmriAbstractAction newWindowAction) {
         this.newWindowAction = newWindowAction;
-        this.groups.setNewWindowMenuAction(newWindowAction);
+        if (groups != null) {
+            this.groups.setNewWindowMenuAction(newWindowAction);
+        }
     }
 
 //     @Override
@@ -1155,23 +1152,24 @@ public class LccProFrame extends TwoPaneTBWindow  {
 //     }
 
     void saveWindowDetails() {
-        prefsMgr.setSimplePreferenceState(this.getClass().getName() + ".hideSummary", hideBottomPane);
-        prefsMgr.setSimplePreferenceState(this.getClass().getName() + ".hideGroups", hideGroups);
-//         prefsMgr.setSimplePreferenceState(this.getClass().getName() + ".hideRosterImage", hideRosterImage);
-        prefsMgr.setProperty(getWindowFrameRef(), SELECTED_ROSTER_GROUP, groups.getSelectedRosterGroup());
-        String selectedProgMode = "edit";
-        if (service.isSelected()) {
-            selectedProgMode = "service";
-        }
-        if (ops.isSelected()) {
-            selectedProgMode = "ops";
-        }
-        prefsMgr.setProperty(getWindowFrameRef(), "selectedProgrammer", selectedProgMode);
-
-        if (rosterGroupSplitPane.getDividerLocation() > 2) {
-            prefsMgr.setProperty(getWindowFrameRef(), "rosterGroupPaneDividerLocation", rosterGroupSplitPane.getDividerLocation());
-        } else if (groupSplitPaneLocation > 2) {
-            prefsMgr.setProperty(getWindowFrameRef(), "rosterGroupPaneDividerLocation", groupSplitPaneLocation);
+        if (prefsMgr != null) {  // aborted startup doesn't set prefs manager
+            prefsMgr.setSimplePreferenceState(this.getClass().getName() + ".hideSummary", hideBottomPane);
+            prefsMgr.setSimplePreferenceState(this.getClass().getName() + ".hideGroups", hideGroups);
+            prefsMgr.setProperty(getWindowFrameRef(), SELECTED_ROSTER_GROUP, groups.getSelectedRosterGroup());
+            String selectedProgMode = "edit";
+            if (service.isSelected()) {
+                selectedProgMode = "service";
+            }
+            if (ops.isSelected()) {
+                selectedProgMode = "ops";
+            }
+            prefsMgr.setProperty(getWindowFrameRef(), "selectedProgrammer", selectedProgMode);
+    
+            if (rosterGroupSplitPane.getDividerLocation() > 2) {
+                prefsMgr.setProperty(getWindowFrameRef(), "rosterGroupPaneDividerLocation", rosterGroupSplitPane.getDividerLocation());
+            } else if (groupSplitPaneLocation > 2) {
+                prefsMgr.setProperty(getWindowFrameRef(), "rosterGroupPaneDividerLocation", groupSplitPaneLocation);
+            }
         }
     }
 

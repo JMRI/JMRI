@@ -926,21 +926,21 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             super("LCC Event Table",
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     EventTablePane.class.getName(),
-                    jmri.InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));
+                    jmri.InstanceManager.getNullableDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));
         }
         
         public Default(String name, jmri.util.swing.WindowInterface iface) {
             super(name,
                     iface,
                     EventTablePane.class.getName(),
-                    jmri.InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));        
+                    jmri.InstanceManager.getNullableDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));        
         }
 
         public Default(String name, Icon icon, jmri.util.swing.WindowInterface iface) {
             super(name,
                     icon, iface,
                     EventTablePane.class.getName(),
-                    jmri.InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));        
+                    jmri.InstanceManager.getNullableDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));        
         }
     }
     

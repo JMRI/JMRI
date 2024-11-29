@@ -3518,21 +3518,21 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             super("STL Editor",
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     StlEditorPane.class.getName(),
-                    jmri.InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));
+                    jmri.InstanceManager.getNullableDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));
         }
 
         public Default(String name, jmri.util.swing.WindowInterface iface) {
             super(name,
                     iface,
                     StlEditorPane.class.getName(),
-                    jmri.InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));        
+                    jmri.InstanceManager.getNullableDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));        
         }
 
         public Default(String name, Icon icon, jmri.util.swing.WindowInterface iface) {
             super(name,
                     icon, iface,
                     StlEditorPane.class.getName(),
-                    jmri.InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));        
+                    jmri.InstanceManager.getNullableDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));        
         }
     }
 
