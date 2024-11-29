@@ -121,7 +121,7 @@ public class EditThreadsDialog {
             _threadTableModel._threads.add(thread);
             _threadTableModel.fireTableRowsInserted(row, row);
         });
-//        addThread.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
+//        addThread.setToolTipText(Bundle.getMessage("LogixNG_CancelButtonHint"));      // NOI18N
         
         // Cancel
         JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));    // NOI18N
@@ -129,7 +129,7 @@ public class EditThreadsDialog {
         cancel.addActionListener((ActionEvent e) -> {
             abortPressed();
         });
-//        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
+        cancel.setToolTipText(Bundle.getMessage("LogixNG_CancelButtonHint"));      // NOI18N
         
         // OK
         JButton ok = new JButton(Bundle.getMessage("ButtonOK"));    // NOI18N

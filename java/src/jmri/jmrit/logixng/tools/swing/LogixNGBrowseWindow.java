@@ -111,7 +111,7 @@ public class LogixNGBrowseWindow extends JmriJFrame {
         helpBrowse.addActionListener((ActionEvent e) -> {
             JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("LogixNG_Browse_HelpText"),   // NOI18N
-                    Bundle.getMessage("BrowserHelpTitle"),  // NOI18N
+                    Bundle.getMessage("LogixNG_Browse_HelpTitle"),  // NOI18N
                     JmriJOptionPane.INFORMATION_MESSAGE);
         });
 

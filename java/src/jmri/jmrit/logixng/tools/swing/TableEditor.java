@@ -252,14 +252,12 @@ import jmri.util.JmriJFrame;
             cancelButton.addActionListener((e) -> {
                 finishDone();
             });
-//            done.setToolTipText(Bundle.getMessage("CancelButtonHint"));  // NOI18N
             // Bottom Buttons - Ok NamedTable
             JButton okButton = new JButton(Bundle.getMessage("ButtonOK"));  // NOI18N
             panel6.add(okButton);
             okButton.addActionListener((e) -> {
                 okPressed(e);
             });
-//            done.setToolTipText(Bundle.getMessage("OkButtonHint"));  // NOI18N
             // Delete NamedTable
             JButton delete = new JButton(Bundle.getMessage("ButtonDelete"));  // NOI18N
             panel6.add(delete);

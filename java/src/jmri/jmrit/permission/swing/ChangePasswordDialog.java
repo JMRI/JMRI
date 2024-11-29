@@ -40,7 +40,7 @@ public class ChangePasswordDialog extends JDialog {
         c.gridy = 1;
         contentPanel.add(new JLabel(Bundle.getMessage("ChangePasswordDialog_OldPassword")), c);
         c.gridy = 2;
-        contentPanel.add(new JLabel(Bundle.getMessage("AddUserDialog_Password")), c);
+        contentPanel.add(new JLabel(Bundle.getMessage("ChangePasswordDialog_NewPassword")), c);
         c.gridy = 3;
         contentPanel.add(new JLabel(Bundle.getMessage("AddUserDialog_PasswordAgain")), c);
 
@@ -63,14 +63,13 @@ public class ChangePasswordDialog extends JDialog {
         _secondPasswordTextField = new JPasswordField(20);
         contentPanel.add(_secondPasswordTextField, c);
 
+        // Cancel
         JPanel buttonPanel = new JPanel();
         JButton buttonCancel = new JButton(Bundle.getMessage("ButtonCancel"));    // NOI18N
         buttonPanel.add(buttonCancel);
         buttonCancel.addActionListener((ActionEvent e) -> {
             dispose();
         });
-//        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
-        buttonCancel.setToolTipText("CancelLogixButtonHint");      // NOI18N
 
         // OK
         JButton buttonOK = new JButton(Bundle.getMessage("ButtonOK"));    // NOI18N
@@ -80,8 +79,7 @@ public class ChangePasswordDialog extends JDialog {
                 dispose();
             }
         });
-//        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
-        buttonOK.setToolTipText("CancelLogixButtonHint");      // NOI18N
+        buttonOK.setToolTipText(Bundle.getMessage("ChangePasswordDialogOkButtonHint"));      // NOI18N
 
         c.gridx = 0;
         c.gridy = 4;
