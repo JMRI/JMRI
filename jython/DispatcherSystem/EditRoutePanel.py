@@ -985,10 +985,6 @@ class MyTableModel5 (DefaultTableModel):
                 for routelocation in self.route.getLocationsBySequenceList() \
                         if ".py" not in routelocation.getName()]
 
-        # [i for i,x in enumerate(testlist) if x == 1]
-
-        # ["foo", "bar", "baz"].index("bar")
-
         # print "routelocationsSequenceNumber_list", routelocationsSequenceNumber_list
         current_val = [[routelocation, sequenceNo] \
                          for [routelocation, sequenceNo] in routelocationsSequenceNumber_list \
