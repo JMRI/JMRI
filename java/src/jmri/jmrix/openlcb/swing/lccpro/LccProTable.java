@@ -25,7 +25,7 @@ import jmri.util.table.*;
  * Provide a table of LCC node entries as a JmriJPanel.
  * <p>
  * Despite the name, this is-a JPanel, not a JTable.  You
- * access the contained JTable with the {@link #table()} method.
+ * access the contained JTable with the {@link #getTable()} method.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2010, 2024
  * @author Randall Wood Copyright (C) 2013
@@ -93,10 +93,18 @@ public class LccProTable extends JmriPanel {
         dataTable.getTableHeader().addMouseListener(JmriMouseListener.adapt(mouseHeaderListener));
     }
 
+    /**
+     * A LccProTable is actually a JPanel 
+     * containing a JTable.  This returns
+     * that contained JTable.
+     */
     public JTable getTable() {
         return dataTable;
     }
 
+    /** 
+     * Provides the DataModel for the contained JTable.
+     */
     public LccProTableModel getModel() {
         return dataModel;
     }

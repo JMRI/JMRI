@@ -2,38 +2,22 @@ package jmri.jmrix.openlcb.swing.lccpro;
 
 import java.awt.*;
 import java.awt.event.*;
-// import java.awt.event.ActionEvent;
-// import java.awt.event.ActionListener;
-// import java.awt.event.WindowEvent;
-// import java.awt.image.BufferedImage;
 import java.awt.datatransfer.Transferable;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-// import java.io.File;
-// import java.io.IOException;
-// import java.text.DateFormat;
 import java.util.ArrayList;
-// import java.util.Arrays;
-// import java.util.List;
 
 import javax.annotation.CheckForNull;
-// import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
-// import javax.swing.table.*;
 
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
-// import jmri.Programmer;
 import jmri.ShutDownManager;
 import jmri.UserPreferencesManager;
-// import jmri.jmrit.decoderdefn.DecoderFile;
-// import jmri.jmrit.decoderdefn.DecoderIndexFile;
-// import jmri.jmrit.progsupport.ProgModeSelector;
 import jmri.jmrit.roster.*;
-// import jmri.jmrit.roster.rostergroup.*;
 import jmri.jmrit.roster.swing.*;
 import jmri.jmrix.ActiveSystemsMenu;
 import jmri.jmrix.ConnectionConfig;
@@ -477,16 +461,38 @@ public class LccProFrame extends TwoPaneTBWindow  {
         bottomLCPanel.setOneTouchExpandable(true);
         bottomRPanel.setOneTouchExpandable(true);
         
+        // load split locations from preferences
+        Object w = prefsMgr.getProperty(getWindowFrameRef(), "bottomLCPanelDividerLocation");
+        if (w != null) {
+            var splitPaneLocation = (Integer) w;
+            bottomLCPanel.setDividerLocation(splitPaneLocation);
+        }
+        w = prefsMgr.getProperty(getWindowFrameRef(), "bottomRPanelDividerLocation");
+        if (w != null) {
+            var splitPaneLocation = (Integer) w;
+            bottomRPanel.setDividerLocation(splitPaneLocation);
+        }
+
+        // add listeners that will store location preferences
+        bottomLCPanel.addPropertyChangeListener((PropertyChangeEvent changeEvent) -> {
+            String propertyName = changeEvent.getPropertyName();
+            if (propertyName.equals("dividerLocation")) {
+                prefsMgr.setProperty(getWindowFrameRef(), "bottomLCPanelDividerLocation", bottomLCPanel.getDividerLocation());
+            }
+        });
+        bottomRPanel.addPropertyChangeListener((PropertyChangeEvent changeEvent) -> {
+            String propertyName = changeEvent.getPropertyName();
+            if (propertyName.equals("dividerLocation")) {
+                prefsMgr.setProperty(getWindowFrameRef(), "bottomRPanelDividerLocation", bottomRPanel.getDividerLocation());
+            }
+        });
         return bottomRPanel;
     }
-
-//     private boolean isUpdatingSelection = false;
 
     JComponent createTop() {
         Object selectedRosterGroup = prefsMgr.getProperty(getWindowFrameRef(), SELECTED_ROSTER_GROUP);
         groups = new RosterGroupsPanel((selectedRosterGroup != null) ? selectedRosterGroup.toString() : null);
         groups.setNewWindowMenuAction(this.getNewWindowAction());
-//         setTitle(groups.getSelectedRosterGroup());
         final JPanel rosters = new JPanel();
         rosters.setLayout(new BorderLayout());
         // set up node table
@@ -495,35 +501,15 @@ public class LccProFrame extends TwoPaneTBWindow  {
          // add selection listener to display selected row
         rtable.getTable().getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
             JTable table = rtable.getTable();
-            if (!e.getValueIsAdjusting()) {
-            
-            if (table.getSelectedRow() >= 0) {
-                int row = table.convertRowIndexToModel(table.getSelectedRow());
-                log.debug("Selected: {}", row);
-                MimicNodeStore.NodeMemo nodememo = nodestore.getNodeMemos().toArray(new MimicNodeStore.NodeMemo[0])[row];
-                log.trace("   node: {}", nodememo.getNodeID().toString());
-                nodeInfoPane.update(nodememo);
-                nodePipPane.update(nodememo);
-            }
-            
-//                 if ((rtable.getSelectedRosterEntries().length == 1 ) && (table.getSelectedRow() >= 0)) {
-//                     log.debug("Selected row {}", table.getSelectedRow());
-//                     locoSelected(rtable.getModel().getValueAt(table.getRowSorter().convertRowIndexToModel(table.getSelectedRow()), RosterTableModel.IDCOL).toString());
-//                 } else if (rtable.getSelectedRosterEntries().length > 1) {
-//                     log.debug("Multiple selection");
-//                     locoSelected(null);
-//                 } else if ( (table.getSelectedRow() < 0) && (!isUpdatingSelection) ) {
-//                     isUpdatingSelection = true;
-//                     if (re != null) { // can be null with multiple selection
-//                         log.debug("Selected roster entry {}", re.getId());
-//                         if (!rtable.setSelection(re)) {
-//                             re = null; //nothng was found
-//                         }
-//                     }
-//                     updateDetails();
-//                     rtable.moveTableViewToSelected();
-//                     isUpdatingSelection = false;
-//                 } // leave last selected item visible if no selection
+            if (!e.getValueIsAdjusting()) {       
+                if (table.getSelectedRow() >= 0) {
+                    int row = table.convertRowIndexToModel(table.getSelectedRow());
+                    log.debug("Selected: {}", row);
+                    MimicNodeStore.NodeMemo nodememo = nodestore.getNodeMemos().toArray(new MimicNodeStore.NodeMemo[0])[row];
+                    log.trace("   node: {}", nodememo.getNodeID().toString());
+                    nodeInfoPane.update(nodememo);
+                    nodePipPane.update(nodememo);
+                }      
             }
         });
  
@@ -625,38 +611,6 @@ public class LccProFrame extends TwoPaneTBWindow  {
         return rosterGroupSplitPane;
     }
 
-//     protected void deleteLoco() {
-//         DeleteRosterItemAction act = new DeleteRosterItemAction("Delete", (WindowInterface) this);
-//         act.actionPerformed(null);
-//     }
-
-//     void editMediaButton() {
-//         //Because of the way that programmers work, we need to use edit mode for displaying the media pane, so that the read/write buttons do not appear.
-//         boolean serviceSelected = service.isSelected();
-//         boolean opsSelected = ops.isSelected();
-//         edit.setSelected(true);
-//         startProgrammer(null, re, "dp3" + File.separator + "MediaPane");
-//         service.setSelected(serviceSelected);
-//         ops.setSelected(opsSelected);
-//     }
-
-//     protected void enableRosterGroupMenuItems(boolean enable) {
-//         firePropertyChange("groupspane", "setEnabled", enable);
-//         firePropertyChange("grouptable", "setEnabled", enable);
-//         firePropertyChange("deletegroup", "setEnabled", enable);
-//     }
-
-//     protected void exportLoco() {
-//         ExportRosterItem act = new ExportRosterItem(Bundle.getMessage("Export"), this, re);
-//         act.actionPerformed(null);
-//     }
-
-//     void formatTextAreaAsLabel(JTextPane pane) {
-//         pane.setOpaque(false);
-//         pane.setEditable(false);
-//         pane.setBorder(null);
-//     }
-
     /*=============== Getters and Setters for core properties ===============*/
 
     /**
@@ -672,27 +626,6 @@ public class LccProFrame extends TwoPaneTBWindow  {
     public void setAllowQuit(boolean allowQuit) {
         allowQuit(allowQuit);
     }
-
-//     /**
-//      * @return the baseTitle
-//      */
-//     protected String getBaseTitle() {
-//         return baseTitle;
-//     }
-
-//    /**
-//     * @param baseTitle the baseTitle to set
-//     */
-//     protected final void setBaseTitle(String baseTitle) {
-//         String title = null;
-//         if (this.baseTitle == null) {
-//             title = this.getTitle();
-//         }
-//         this.baseTitle = baseTitle;
-//         if (title != null) {
-//             this.setTitle(title);
-//         }
-//     }
 
     /**
      * @return the newWindowAction
@@ -861,43 +794,10 @@ public class LccProFrame extends TwoPaneTBWindow  {
         }
     }
 
-//    protected void hideRosterImage() {
-//         hideRosterImage = !hideRosterImage;
-//         //p.setSimplePreferenceState(DecoderPro3Window.class.getName()+".hideRosterImage",hideRosterImage);
-//         if (hideRosterImage) {
-//             locoImage.setVisible(false);
-//         } else {
-//             locoImage.setVisible(true);
-//         }
-//    }
-
     protected void hideSummary() {
         boolean boo = !hideBottomPane;
         hideBottomPane(boo);
     }
-
-//     /**
-//      * An entry has been selected in the Roster Table, activate the bottom part
-//      * of the window.
-//      *
-//      * @param id ID of the selected roster entry
-//      */
-//     final void locoSelected(String id) {
-//         if (id != null) {
-//             log.debug("locoSelected ID {}", id);
-//             if (re != null) {
-//                 // we remove the propertychangelistener if we had a previously selected entry;
-//                 re.removePropertyChangeListener(rosterEntryUpdateListener);
-//             }
-//             // convert to roster entry
-//             re = Roster.getDefault().entryFromTitle(id);
-//             re.addPropertyChangeListener(rosterEntryUpdateListener);
-//         } else {
-//             log.debug("Multiple selection");
-//             re = null;
-//         }
-//         updateDetails();
-//     }
 
     protected void newWindow() {
         this.newWindow(this.getNewWindowAction());
@@ -907,28 +807,6 @@ public class LccProFrame extends TwoPaneTBWindow  {
         action.setWindowInterface(this);
         action.actionPerformed(null);
         firePropertyChange("closewindow", "setEnabled", true);
-    }
-
-    /**
-     * Prepare a roster entry to be printed, and display a selection list.
-     *
-     * @see jmri.jmrit.roster.PrintRosterEntry#printPanes(boolean)
-     * @param preview true if output should go to a Preview pane on screen, false
-     *            to output to a printer (dialog)
-     */
-    protected void printLoco(boolean preview) {
-//         log.debug("Selected entry: {}", re.getDisplayName());
-//         String programmer = "Basic";
-//         if (this.getProgrammerConfigManager().getDefaultFile() != null) {
-//             programmer = this.getProgrammerConfigManager().getDefaultFile();
-//         } else {
-//             log.error("programmer is NULL");
-//         }
-//         PrintRosterEntry pre = new PrintRosterEntry(re, this, "programmers" + File.separator + programmer + ".xml");
-//         // uses programmer set in prefs when printing a selected entry from (this) top Roster frame
-//         // compare with: jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame#printPanes(boolean)
-//         // as user expects to see more tabs on printout using Comprehensive or just 1 tab for Basic programmer
-//         pre.printPanes(preview);
     }
 
     /**
