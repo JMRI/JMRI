@@ -6777,6 +6777,14 @@ public class LocoNetMessageInterpretTest {
         Assert.assertEquals("read 6 Ext Accy Addr 8 CV 28", ""
                 + "Extended Accessory Decoder CV Verify: Address 8 CV 28, check if it is 0.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+        
+        // [ED 0B 7F 54 17 3C 6E 65 03 5E 4F] Extended Accessory Decoder CV 'Verify': Address 500 CV 260, check if it is 222.
+        l = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54,
+            0x17, 0x3C, 0x6E, 0x65, 0x03, 0x5E, 0x4F});
+
+        Assert.assertEquals("read 7 Ext Accy Addr 500 CV 260", ""
+                + "Extended Accessory Decoder CV Verify: Address 500 CV 260, check if it is 222.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
     }
 
 
@@ -6808,6 +6816,20 @@ public class LocoNetMessageInterpretTest {
             0x07, 0x00, 0x78, 0x6C, 0x0B, 0x00, 0x45});
         Assert.assertEquals("write 4: Ext Accy Addr 1 CV 12 to 0", ""
                 + "Extended Accessory Decoder CV Write: Address 1 CV 12 with 0.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        // [ED 0B 7F 51 15 3C 67 6D 03 5E 49] Extended Accessory Decoder CV 'Write': Address 500 CV 260, write 222.
+        l = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x51,
+            0x15, 0x3C, 0x67, 0x6D, 0x03, 0x5E, 0x49});
+        Assert.assertEquals("write 5: Ext Accy Addr 500 CV 260 to 222", ""
+                + "Extended Accessory Decoder CV Write: Address 500 CV 260 with 222.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+        
+        // [ED 0B 7F 54 17 3C 6E 6D 03 5E 47] DT602 form Extended Accessory Decoder CV 'Write': Address 500 CV 260, write 222. 
+        l = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54,
+            0x17, 0x3C, 0x6E, 0x6D, 0x03, 0x5E, 0x47});
+        Assert.assertEquals("write 6: Ext Accy Addr 500 CV 260 to 222", ""
+                + "Extended Accessory Decoder CV Write: Address 500 CV 260 with 222.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
     }
 
