@@ -639,5 +639,5 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Add Close button to menubar Window menu.</li>
         </ul>
