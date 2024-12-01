@@ -451,8 +451,13 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 case COL_EVENTID: return memo.eventID.toShortString();
                 case COL_EVENTNAME:
                     var tag = tagManager.getIdTag(OlcbConstants.tagPrefix+memo.eventID.toShortString());
-                    if (tag == null) return "";
-                    return tag.getUserName();
+                    if (tag != null) {
+                        return tag.getUserName();
+                    } else {
+                        // temporarily interpret eventID
+                        return jmri.jmrix.openlcb.swing.EventIdParser.parse(memo.eventID);
+                    }
+                    
                 case COL_PRODUCER_NODE:
                     return memo.producer != null ? memo.producer.toString() : "";
                 case COL_PRODUCER_NAME: return memo.producerName;
