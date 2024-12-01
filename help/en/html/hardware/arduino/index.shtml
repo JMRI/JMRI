@@ -20,8 +20,8 @@
       <img src="images/JMRIArduinoTitlepicBrackstone.jpg" alt="Benson Valley Railway" height="192"
       width="360">
       <p style="font-size:60%">Picture Credit: <a href=
-      "https://www.motorhomesites.org.uk/railway/JMRI_Arduino_Setup.php" target=
-      "_blank">http://www.motorhomesites.org.uk</a></p>
+      "https://web.archive.org/web/20220118050523/https://www.motorhomesites.org.uk/railway/JMRI_Arduino_Setup.php"
+       target="_blank">http://www.motorhomesites.org.uk</a> [ archived ]</p>
 
       <p><a href="https://en.wikipedia.org/wiki/Arduino" target="_blank">Arduino micro
       controllers</a> are special purpose computers that, with appropriate sensors and other
@@ -186,10 +186,10 @@
       the arduino C/MRI libraries and include it in your sketch (for example, the library by
       Michael Adams <a href="https://github.com/madleech/ArduinoCMRI" target="blank_">available on
       Github</a> ( see also <a href=
-      "https://www.motorhomesites.org.uk/railway/JMRI_Arduino_Setup.php" target="_blank">Stephen
-      Brackstone's website</a> for an example of its use). See also <a href=
-      "#example-CMRI">below</a> for a set of steps to get up and operating with an arduino as CMRI
-      node with JMRI.</p>
+      "https://web.archive.org/web/20220118050523/https://www.motorhomesites.org.uk/railway/JMRI_Arduino_Setup.php"
+      target="_blank" >Stephen Brackstone's website</a>  [ archived ] for an example of its use). 
+      See also <a href="#example-CMRI">below</a> for a set of steps to get up and operating with an arduino
+      as CMRI node with JMRI.</p>
 
       <p>Some notes of interest when programming your arduino as a CMRI node:</p>
 
@@ -275,8 +275,9 @@
       from multiple sources.</p>
 
       <p>See <a href=
-      "https://www.motorhomesites.org.uk/railway/JMRI_Two_Arduino_control_with_CMRI.php" target=
-      "_blank">Stephen Brackstone again</a> for a good description of how to do this setup.</p>
+      "https://web.archive.org/web/20220811002302/https://www.motorhomesites.org.uk/railway/JMRI_Two_Arduino_control_with_CMRI.php"
+      target="blank_">Stephen Brackstone again</a> [ archived ]
+      for a good description of how to do this setup.</p>
 
       <p>Then include a RS-485 library in your arduino sketch (for example, <a href=
       "https://github.com/madleech/Auto485" target="_blank">this one by Michael Adams</a>). Make
