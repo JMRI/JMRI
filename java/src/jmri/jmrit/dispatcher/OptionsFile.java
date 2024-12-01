@@ -156,6 +156,12 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
                             dispatcher.setTrustKnownTurnouts(true);
                         }
                     }
+                    if (options.getAttribute("useturnoutconnectiondelay") != null) {
+                        dispatcher.setTrustKnownTurnouts(false);
+                        if (options.getAttribute("useturnoutconnectiondelay").getValue().equals("yes")) {
+                            dispatcher.setUseTurnoutConnectionDelay(true);
+                        }
+                    }
                     if (options.getAttribute("minthrottleinterval") != null) {
                         String s = (options.getAttribute("minthrottleinterval")).getValue();
                         dispatcher.setMinThrottleInterval(Integer.parseInt(s));
@@ -269,6 +275,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
         options.setAttribute("autorelease", "" + (dispatcher.getAutoRelease() ? "yes" : "no"));
         options.setAttribute("autoturnouts", "" + (dispatcher.getAutoTurnouts() ? "yes" : "no"));
         options.setAttribute("trustknownturnouts", "" + (dispatcher.getTrustKnownTurnouts() ? "yes" : "no"));
+        options.setAttribute("useturnoutconnectiondelay", "" + (dispatcher.getUseTurnoutConnectionDelay() ? "yes" : "no"));
         options.setAttribute("minthrottleinterval", "" + (dispatcher.getMinThrottleInterval()));
         options.setAttribute("fullramptime", "" + (dispatcher.getFullRampTime()));
         options.setAttribute("hasoccupancydetection", "" + (dispatcher.getHasOccupancyDetection() ? "yes" : "no"));

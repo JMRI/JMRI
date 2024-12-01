@@ -58,11 +58,12 @@ public class AutoTurnouts {
      * @param nextSection the following section
      * @param at          the associated train
      * @param prevSection the prior section
+     * @param useTurnoutConnectionDelay true if the turnout connection delay should be applied
      * @return list of turnouts and their expected states if affected turnouts are correctly set; null otherwise.
      */
     protected List<LayoutTrackExpectedState<LayoutTurnout>> checkTurnoutsInSection(Section s, int seqNum, Section nextSection,
-            ActiveTrain at, Section prevSection) {
-        return turnoutUtil(s, seqNum, nextSection, at, false, false, prevSection);
+            ActiveTrain at, Section prevSection, boolean useTurnoutConnectionDelay) {
+        return turnoutUtil(s, seqNum, nextSection, at, false, false, prevSection, useTurnoutConnectionDelay);
     }
 
 
@@ -87,6 +88,7 @@ public class AutoTurnouts {
      * @param at                 the associated train
      * @param trustKnownTurnouts true to trust known turnouts
      * @param prevSection        the prior section
+     * @param useTurnoutConnectionDelay true if the turnout connection delay should be applied
      *
      * @return list of turnouts and their expected states if affected turnouts are correctly set or commands have been
      *         issued to set any that aren't set correctly; null if a needed
@@ -94,8 +96,8 @@ public class AutoTurnouts {
      *         occupied
      */
     protected List<LayoutTrackExpectedState<LayoutTurnout>> setTurnoutsInSection(Section s, int seqNum, Section nextSection,
-            ActiveTrain at, boolean trustKnownTurnouts,  Section prevSection) {
-        return turnoutUtil(s, seqNum, nextSection, at, trustKnownTurnouts, true, prevSection);
+            ActiveTrain at, boolean trustKnownTurnouts,  Section prevSection, boolean useTurnoutConnectionDelay) {
+        return turnoutUtil(s, seqNum, nextSection, at, trustKnownTurnouts, true, prevSection, useTurnoutConnectionDelay);
     }
 
     protected Turnout checkStateAgainstList(List<LayoutTrackExpectedState<LayoutTurnout>> turnoutList) {
@@ -129,7 +131,7 @@ public class AutoTurnouts {
      * finds.
      */
     private List<LayoutTrackExpectedState<LayoutTurnout>> turnoutUtil(Section s, int seqNum, Section nextSection,
-          ActiveTrain at, boolean trustKnownTurnouts, boolean set, Section prevSection ) {
+          ActiveTrain at, boolean trustKnownTurnouts, boolean set, Section prevSection, boolean useTurnoutConnectionDelay ) {
         // initialize response structure
         List<LayoutTrackExpectedState<LayoutTurnout>> turnoutListForAllocatedSection = new ArrayList<>();
         // validate input and initialize
@@ -271,7 +273,11 @@ public class AutoTurnouts {
                 if (!trustKnownTurnouts) {
                     log.debug("{}: setting turnout {} to {}", at.getTrainName(), to.getDisplayName(USERSYS),
                             (setting == Turnout.CLOSED ? closedText : thrownText));
-                    to.setCommandedState(setting);
+                    if (useTurnoutConnectionDelay) {
+                        to.setCommandedStateAtInterval(setting);
+                    } else {
+                        to.setCommandedState(setting);
+                    }
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException ex) {
@@ -285,7 +291,11 @@ public class AutoTurnouts {
                                 // send setting command
                                 log.debug("{}: turnout {} commanded to {}", at.getTrainName(), to.getDisplayName(USERSYS),
                                         (setting == Turnout.CLOSED ? closedText : thrownText));
-                                to.setCommandedState(setting);
+                                if (useTurnoutConnectionDelay) {
+                                    to.setCommandedStateAtInterval(setting);
+                                } else {
+                                    to.setCommandedState(setting);
+                                }
                                 try {
                                     Thread.sleep(100);
                                 } catch (InterruptedException ex) {
@@ -306,14 +316,22 @@ public class AutoTurnouts {
                     setting = ((LayoutSlip) turnoutList.get(i).getObject()).getTurnoutBState(turnoutList.get(i).getExpectedState());
                     to = ((LayoutSlip) turnoutList.get(i).getObject()).getTurnoutB();
                     if (!trustKnownTurnouts) {
-                        to.setCommandedState(setting);
+                        if (useTurnoutConnectionDelay) {
+                            to.setCommandedStateAtInterval(setting);
+                        } else {
+                            to.setCommandedState(setting);
+                        }
                     } else if (to.getKnownState() != setting) {
                         // turnout is not set correctly
                         if (set) {
                             // setting has been requested, is Section free and Block unoccupied
                             if ((s.getState() == Section.FREE) && (curBlock.getState() != Block.OCCUPIED)) {
                                 // send setting command
-                                to.setCommandedState(setting);
+                                if (useTurnoutConnectionDelay) {
+                                    to.setCommandedStateAtInterval(setting);
+                                } else {
+                                    to.setCommandedState(setting);
+                                }
                             } else {
                                 turnoutsOK = false;
                             }

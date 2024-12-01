@@ -131,6 +131,7 @@ public class OptionsMenu extends JMenu {
     JSpinner minThrottleIntervalSpinner = new JSpinner(new SpinnerNumberModel(100, 20, 1000, 1));
     JSpinner fullRampTimeSpinner = new JSpinner(new SpinnerNumberModel(5000, 1000, 20000, 1));
     JCheckBox trustKnownTurnoutsCheckBox = new JCheckBox(Bundle.getMessage("trustKnownTurnouts"));
+    JCheckBox useTurnoutConnectionDelayCheckBox = new JCheckBox(Bundle.getMessage("useTurnoutConnectionDelay"));
     JComboBox<String> stoppingSpeedBox = new JComboBox<>();
 
     String[] signalTypes = {Bundle.getMessage("SignalType1"), Bundle.getMessage("SignalType2"), Bundle.getMessage("SignalType3")};
@@ -336,6 +337,7 @@ public class OptionsMenu extends JMenu {
         autoAllocateCheckBox.setSelected(dispatcher.getAutoAllocate());
         autoTurnoutsCheckBox.setSelected(dispatcher.getAutoTurnouts());
         trustKnownTurnoutsCheckBox.setSelected(dispatcher.getTrustKnownTurnouts());
+        useTurnoutConnectionDelayCheckBox.setSelected(dispatcher.getUseTurnoutConnectionDelay());
         shortNameCheckBox.setSelected(dispatcher.getShortActiveTrainNames());
         nameInBlockCheckBox.setSelected(dispatcher.getShortNameInBlock());
         rosterInBlockCheckBox.setSelected(dispatcher.getRosterEntryInBlock());
@@ -376,6 +378,7 @@ public class OptionsMenu extends JMenu {
         dispatcher.setAutoTurnouts(autoTurnoutsCheckBox.isSelected());
         autoTurnoutsItem.setSelected(autoTurnoutsCheckBox.isSelected());
         dispatcher.setTrustKnownTurnouts(trustKnownTurnoutsCheckBox.isSelected());
+        dispatcher.setUseTurnoutConnectionDelay(useTurnoutConnectionDelayCheckBox.isSelected());
         dispatcher.setSignalType(signalTypeBox.getSelectedIndex());
         if (autoTurnoutsCheckBox.isSelected() && ((layoutEditorList.size() == 0)
                 || (!useConnectivityCheckBox.isSelected()))) {
