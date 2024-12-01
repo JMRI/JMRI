@@ -43,12 +43,6 @@ public class LogixTableActionTest extends AbstractTableActionBase<Logix> {
         return Bundle.getMessage("TitleLogixTable");  // NOI18N
     }
 
-    @Override
-    @Test
-    public void testGetClassDescription() {
-        Assert.assertEquals("Logix Table Action class description", Bundle.getMessage("TitleLogixTable"), a.getClassDescription());  // NOI18N
-    }
-
     /**
      * Check the return value of includeAddButton.
      * <p>

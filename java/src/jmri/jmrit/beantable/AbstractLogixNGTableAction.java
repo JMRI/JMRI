@@ -196,7 +196,6 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     protected AbstractLogixNGEditor<E> _editor = null;
 
     boolean _showReminder = false;
-    private boolean _checkEnabled = jmri.InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
     jmri.jmrit.picker.PickFrame _pickTables;
 
     // Current focus variables
