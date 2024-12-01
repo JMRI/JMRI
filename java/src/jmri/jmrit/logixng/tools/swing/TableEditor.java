@@ -475,7 +475,9 @@ import jmri.util.JmriJFrame;
     }
 
     protected String getClassName() {
-        return TableEditor.class.getName();
+        // The class that is returned must have a default constructor,
+        // a constructor with no parameters.
+        return jmri.jmrit.logixng.LogixNG_UserPreferences.class.getName();
     }
 
 

@@ -70,7 +70,7 @@ public class DeleteBean<E extends NamedBean> {
         getListenersRef.getListenerRefsIncludingChildren(x, listenerRefs);
         int listenerRefsCount = listenerRefs.size();
         log.debug("Delete with {}", listenerRefsCount);
-        if (p != null && p.getMultipleChoiceOption(className, "delete") == 0x02 && message.toString().isEmpty()) {
+        if (p != null && p.getMultipleChoiceOption(className, "deleteLogixNG") == 0x02 && message.toString().isEmpty()) {
             deleteTask.deleteBean(x);
         } else {
             final JDialog dialog = new JDialog((JFrame)null, modal);
@@ -141,7 +141,7 @@ public class DeleteBean<E extends NamedBean> {
 
             yesButton.addActionListener((ActionEvent e) -> {
                 if (remember.isSelected() && p != null) {
-                    p.setMultipleChoiceOption(className, "delete", 0x02);  // NOI18N
+                    p.setMultipleChoiceOption(className, "deleteLogixNG", 0x02);  // NOI18N
                 }
                 deleteTask.deleteBean(x);
                 reference.set(true);
