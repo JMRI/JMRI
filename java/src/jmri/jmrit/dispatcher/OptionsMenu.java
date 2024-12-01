@@ -204,12 +204,17 @@ public class OptionsMenu extends JMenu {
             p5.setLayout(new FlowLayout());
             p5.add(autoTurnoutsCheckBox);
             autoTurnoutsCheckBox.setToolTipText(Bundle.getMessage("AutoTurnoutsBoxHint"));
-            optionsPane.add(p5);
+            optionsPane.add(p5);  
             JPanel p16 = new JPanel();
             p16.setLayout(new FlowLayout());
             p16.add(trustKnownTurnoutsCheckBox);
             trustKnownTurnoutsCheckBox.setToolTipText(Bundle.getMessage("trustKnownTurnoutsHint"));
             optionsPane.add(p16);
+            JPanel p16a = new JPanel();
+            p16a.setLayout(new FlowLayout());
+            p16a.add(useTurnoutConnectionDelayCheckBox);
+            useTurnoutConnectionDelayCheckBox.setToolTipText(Bundle.getMessage("trustKnownTurnoutsHint"));
+            optionsPane.add(p16a);
             JPanel p6 = new JPanel();
             p6.setLayout(new FlowLayout());
             p6.add(shortNameCheckBox);

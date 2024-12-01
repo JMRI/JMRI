@@ -157,7 +157,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
                         }
                     }
                     if (options.getAttribute("useturnoutconnectiondelay") != null) {
-                        dispatcher.setTrustKnownTurnouts(false);
+                        dispatcher.setUseTurnoutConnectionDelay(false);
                         if (options.getAttribute("useturnoutconnectiondelay").getValue().equals("yes")) {
                             dispatcher.setUseTurnoutConnectionDelay(true);
                         }
