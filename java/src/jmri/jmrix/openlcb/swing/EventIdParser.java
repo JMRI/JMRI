@@ -13,7 +13,7 @@ public class EventIdParser {
        
        
     /**
-     * @returns "" if nothing interesting about the event    
+     * @return "" if nothing interesting about the event    
      */    
     static public String parse(EventID eventID) {
         String eid = eventID.toShortString().substring(0, 2);
