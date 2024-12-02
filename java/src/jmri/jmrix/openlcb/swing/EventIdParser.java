@@ -27,7 +27,7 @@ public class EventIdParser {
                     return trainSearch(eventID);
                 } 
                 // deliberately falling through
-            default:
+            default: //$FALL-THROUGH$
                 return "";
         }
     }
