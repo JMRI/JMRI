@@ -52,12 +52,6 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         return Bundle.getMessage("TitleLogixNGTable");  // NOI18N
     }
 
-    @Override
-    @Test
-    public void testGetClassDescription() {
-        Assert.assertEquals("LogixNG Table Action class description", Bundle.getMessage("TitleLogixNGTable"), a.getClassDescription());  // NOI18N
-    }
-
     /**
      * Check the return value of includeAddButton.
      * <p>
@@ -617,7 +611,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         Assert.assertEquals("Num childs are correct", 3,
             conditionalNG.getChild(0).getConnectedSocket().getChildCount());
 
-        JUnitUtil.waitFor(() -> 
+        JUnitUtil.waitFor(() ->
             conditionalNG.getChild(0).getConnectedSocket().getChild(0).getConnectedSocket() != null,
             "child0 socket not null");
 
