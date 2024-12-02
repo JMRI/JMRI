@@ -2,13 +2,9 @@ package jmri.jmrix.openlcb.swing;
 
 import org.openlcb.EventID;
 
-import jmri.util.JUnitUtil;
-
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.openlcb.NodeID;
-import org.openlcb.OlcbInterface;
-import org.openlcb.can.CanInterface;
+
 
 /**
  *

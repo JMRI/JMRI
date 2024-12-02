@@ -108,7 +108,7 @@ public class EventIdParser {
             function = "Stop";
         } else if (bothBytes == 0xF002) {  //
             function = "Start";
-        } else if (bothBytes == 0xF002) {  //
+        } else if (bothBytes == 0xF003) {  //
             function = "Date Rollover";
         } else if (highByteMasked < 24) {  // time
             String lowString = "00"+Integer.toString(lowByte);
