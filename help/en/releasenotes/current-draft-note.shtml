@@ -26,10 +26,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li>Command Station Monitor :
-                <br>Button added to release JMRI-managed loco sessions,
-                <br>this can be handy when developing Jython scripts that fail to release the Throttle.
-                <br>Button added to launch a new JMRI Throttle for a loco session.</li>
+                <li></li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -129,12 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>STL Editor: Add store mode selections to the View menu, update help page.</li>
-                <li>Add a Send SNIP Request button to the Send tool.</li>
-                <li>Implement recent changes to the CDI spec underlying the node configuration display.
-                    This will allow node implementors to make simpler configuration dialogs.</li>
-                <li>Fixed a bug where the node configuration display would sometimes
-                    be drawn with overlapping characters or extra white space.</li>
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -344,7 +336,7 @@
 
         <h4>Technologistic (train-O-matic)</h4>
             <ul>
-                <li>Added support for the FD II (version 2) function decoder family.</li>
+                <li></li>
             </ul>
 
         <h4>Trix Modelleisenbahn</h4>
@@ -413,12 +405,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>Speed Setting NoSignals.</li>
-             <li>  After setting speed by Sections ahead. Check Block speeds.</li>
-             <li>  If next block slower than current block set speed down before entering next block.</li>
-             <li>  Do not increase speed beyond the minimum speed of any occupied block.</li>
-             <li>When going from automatic to manual bypass auto-engineer limts.</li>
-             <li>Optionally use Connections Turnout Delay.</li>
+             <li></li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -453,11 +440,6 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>A bug is fixed in the LogixNG action <strong>Signal Mast</strong>.
-              The options <strong>Permissive Sml Disabled</strong>
-              and <strong>Permissive Sml Not Disabled</strong> caused
-              an error when storing and loading the tables and panels
-              file.</li>
           <li></li>
         </ul>
 
@@ -500,7 +482,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li>Improvements to Roster Table Operating Duration column.</li>
+            <li></li>
         </ul>
 
     <h3>Routes</h3>
@@ -512,16 +494,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Added "SensorFromBxpa1ShortCircuit.py" and
-                "SensorFromBxp88ShortCircuit.py" scripts, which can create
-                JMRI "Internal" sensors that "follow" the LocoNet message
-                information that is created when the BXPA1 and BXP88
-                (respectively) send "Short Circuit" event LocoNet messages.</li>
-
-            <li>Updated the "SensorFromBxpa1AutoRev.py" script to do a better
-                job of watching for BXPA1 "Autoreverse" event LocoNet messages.</li>
-            <li><strong>WiThrottleList.py</strong> is a sample script that shows how to access the
-            WiThrottle session list.</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -531,10 +504,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>There's a new
-                    <a href="https://www.jmri.org/xml/signals/basic-enhanced/">basic-enhanced signal system</a>.</li>
-                <li>The
-                    <a href="https://www.jmri.org/xml/signals/FS-1987/">FS-1987 signal system</a> was improved.</li>
+                <li></li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -576,7 +546,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li>Added a startup action to trigger the show JMRI throttle list window action.</li>
+            <li></li>
         </ul>
 
     <h3>Timetable</h3>
@@ -624,16 +594,13 @@
    <h3>WiThrottle Server</h3>
         <a id="WS" name="WS"></a>
         <ul>
-            <li>The <strong>getThrottleList()</strong> public method has been added to
-            jmri.jmrit.withrottle.UserInterface for Jython access.</li>
+            <li></li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>The limit for VSDecoders is now 8 instead of 4.</li>
-            <li>The sound buttons sorting in the VSD Manager window is now as in config.xml.</li>
-            <li>If the sound buttons exeed 8, a second row is displayed.</li>
+            <li></li>
         </ul>
 
    <h3>Z21 Server</h3>
@@ -645,5 +612,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Add Close button to menubar Window menu.</li>
+            <li></li>
         </ul>
+
