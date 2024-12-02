@@ -429,6 +429,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                     var eventID = new EventID(id);
                     var memo = new TripleMemo(
                                     eventID,
+                                    "",
                                     null,
                                     "",
                                     null,
@@ -448,7 +449,10 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             }
             var memo = memos.get(row);
             switch (col) {
-                case COL_EVENTID: return memo.eventID.toShortString();
+                case COL_EVENTID: 
+                    String retval = memo.eventID.toShortString();
+                    if (!memo.rangeSuffix.isEmpty()) retval += " - "+memo.rangeSuffix;
+                    return retval;
                 case COL_EVENTNAME:
                     var tag = tagManager.getIdTag(OlcbConstants.tagPrefix+memo.eventID.toShortString());
                     if (tag != null) {
@@ -582,8 +586,9 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
          * Record an event-producer pair
          * @param eventID Observed event
          * @param nodeID  Node that is known to produce the event
+         * @param rangeSuffix the range mask string or "" for single events
          */
-        void recordProducer(EventID eventID, NodeID nodeID) {
+        void recordProducer(EventID eventID, NodeID nodeID, String rangeSuffix) {
             log.debug("recordProducer of {} in {}", eventID, nodeID);
 
             // update if the model has been cleared
@@ -611,7 +616,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             TripleMemo sameNodeID = null;// cell with matching consumer                 // TODO: switch to int index for handle update below
             for (int i = 0; i < memos.size(); i++) {
                 var memo = memos.get(i);
-                if (memo.eventID.equals(eventID) ) {
+                if (memo.eventID.equals(eventID) && memo.rangeSuffix.equals(rangeSuffix) ) {
                     // if nodeID matches, already present; ignore
                     if (nodeID.equals(memo.producer)) {
                         // might be 2nd EventTablePane to process the data,
@@ -673,6 +678,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             // have to make a new one
             var memo = new TripleMemo(
                             eventID,
+                            rangeSuffix,
                             nodeID,
                             name,
                             null,
@@ -686,8 +692,9 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
          * Record an event-consumer pair
          * @param eventID Observed event
          * @param nodeID  Node that is known to consume the event
+         * @param rangeSuffix the range mask string or "" for single events
          */
-        void recordConsumer(EventID eventID, NodeID nodeID) {
+        void recordConsumer(EventID eventID, NodeID nodeID, String rangeSuffix) {
             log.debug("recordConsumer of {} in {}", eventID, nodeID);
 
             // update if the model has been cleared
@@ -714,7 +721,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             TripleMemo sameNodeID = null;// cell with matching consumer                 // TODO: switch to int index for handle update below
             for (int i = 0; i < memos.size(); i++) {
                 var memo = memos.get(i);
-                if (memo.eventID.equals(eventID) ) {
+                if (memo.eventID.equals(eventID) && memo.rangeSuffix.equals(rangeSuffix) ) {
                     // if nodeID matches, already present; ignore
                     if (nodeID.equals(memo.consumer)) {
                         // might be 2nd EventTablePane to process the data,
@@ -774,6 +781,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             log.trace("    make a new one");
             var memo = new TripleMemo(
                             eventID,
+                            rangeSuffix,
                             null,
                             "",
                             nodeID,
@@ -792,7 +800,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             log.trace("highlightProducer {} {}", eventID, nodeID);
             for (int i = 0; i < memos.size(); i++) {
                 var memo = memos.get(i);
-                if (eventID.equals(memo.eventID) && nodeID.equals(memo.producer)) {
+                if (eventID.equals(memo.eventID)  && memo.rangeSuffix.equals("") && nodeID.equals(memo.producer)) {
                     try {
                         var viewRow = sorter.convertRowIndexToView(i);
                         log.trace("highlight event ID {} row {} viewRow {}", eventID, i, viewRow);
@@ -814,7 +822,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             table.clearSelection(); // clear existing selections
             for (int i = 0; i < memos.size(); i++) {
                 var memo = memos.get(i);
-                if (eventID.equals(memo.eventID)) {
+                if (eventID.equals(memo.eventID) && memo.rangeSuffix.equals("") ) {
                     try {
                         var viewRow = sorter.convertRowIndexToView(i);
                         log.trace("highlight event ID {} row {} viewRow {}", eventID, i, viewRow);
@@ -831,7 +839,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
         boolean consumerPresent(EventID eventID) {
             for (var memo : memos) {
-                if (memo.eventID.equals(eventID) ) {
+                if (memo.eventID.equals(eventID) && memo.rangeSuffix.equals("") ) {
                     if (memo.consumer!=null) return true;
                 }
             }
@@ -840,7 +848,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
         boolean producerPresent(EventID eventID) {
             for (var memo : memos) {
-                if (memo.eventID.equals(eventID) ) {
+                if (memo.eventID.equals(eventID) && memo.rangeSuffix.equals("") ) {
                     if (memo.producer!=null) return true;
                 }
             }
@@ -848,16 +856,18 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         }
 
         static class TripleMemo {
-            EventID eventID;
-            // Event name is stored as an IdTag
+            final EventID eventID;
+            final String  rangeSuffix;
+            // Event name is stored as an IdTag elsewhere, set getValueAt(..)
             NodeID producer;
             String producerName;
             NodeID consumer;
             String consumerName;
 
-            TripleMemo(EventID eventID, NodeID producer, String producerName,
+            TripleMemo(EventID eventID, String rangeSuffix, NodeID producer, String producerName,
                         NodeID consumer, String consumerName) {
                 this.eventID = eventID;
+                this.rangeSuffix = rangeSuffix;
                 this.producer = producer;
                 this.producerName = producerName;
                 this.consumer = consumer;
@@ -887,7 +897,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         public void handleProducerConsumerEventReport(ProducerConsumerEventReportMessage msg, Connection sender){
             var nodeID = msg.getSourceNodeID();
             var eventID = msg.getEventID();
-            model.recordProducer(eventID, nodeID);
+            model.recordProducer(eventID, nodeID, "");
             model.highlightProducer(eventID, nodeID);
         }
 
@@ -900,7 +910,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         public void handleConsumerIdentified(ConsumerIdentifiedMessage msg, Connection sender){
             var nodeID = msg.getSourceNodeID();
             var eventID = msg.getEventID();
-            model.recordConsumer(eventID, nodeID);
+            model.recordConsumer(eventID, nodeID, "");
         }
 
         /**
@@ -912,7 +922,31 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         public void handleProducerIdentified(ProducerIdentifiedMessage msg, Connection sender){
             var nodeID = msg.getSourceNodeID();
             var eventID = msg.getEventID();
-            model.recordProducer(eventID, nodeID);
+            model.recordProducer(eventID, nodeID, "");
+        }
+
+        @Override
+        public void handleConsumerRangeIdentified(ConsumerRangeIdentifiedMessage msg, Connection sender){
+            final var nodeID = msg.getSourceNodeID();
+            final var eventID = msg.getEventID();
+            
+            final long rangeSuffix = jmri.jmrix.openlcb.swing.EventIdParser.rangeSuffix(eventID);
+            // have to set low part of event ID to 0's as it might be 1's
+            EventID zeroedEID = new EventID(eventID.toLong() & (~rangeSuffix));
+            
+            model.recordConsumer(zeroedEID, nodeID, (new EventID(eventID.toLong() | rangeSuffix)).toShortString());
+        }
+    
+        @Override
+        public void handleProducerRangeIdentified(ProducerRangeIdentifiedMessage msg, Connection sender){
+            final var nodeID = msg.getSourceNodeID();
+            final var eventID = msg.getEventID();
+            
+            final long rangeSuffix = jmri.jmrix.openlcb.swing.EventIdParser.rangeSuffix(eventID);
+            // have to set low part of event ID to 0's as it might be 1's
+            EventID zeroedEID = new EventID(eventID.toLong() & (~rangeSuffix));
+            
+            model.recordProducer(zeroedEID, nodeID, (new EventID(eventID.toLong() | rangeSuffix)).toShortString());
         }
 
         /*
