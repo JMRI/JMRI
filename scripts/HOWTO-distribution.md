@@ -391,7 +391,7 @@ Maintainers, please set the (next series, i.e. 5.9.8) milestone on pulls from no
 
 Jenkins will be creating files shortly at the [CI server](https://builds.jmri.org/jenkins/job/TestReleases/job/5.9.7/)
 
-If you're developing any additional (post-5.9.7) changes that you want in the JMRI 5.6 production release, please start from this branch, i.e. do `git fetch; git checkout release-5.9.7; git checkout -b myBranchName` to start your work.
+If you're developing any additional (post-5.9.7) changes that you want in the JMRI 5.8 production release, please start from this branch, i.e. do `git fetch; git checkout release-5.9.7; git checkout -b myBranchName` to start your work.
 ```
 
 
@@ -566,9 +566,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.9.7+R034280cd59.dmg](https://github.com/JMRI/JMRI/releases/download/v5.9.7/JMRI.5.9.7+R034280cd59.dmg) | ef7403c7b28b87e21fd595a9a08d3c400c3e47344b67d18701dbb48bf10719a9
-[JMRI.5.9.7+R034280cd59.exe](https://github.com/JMRI/JMRI/releases/download/v5.9.7/JMRI.5.9.7+R034280cd59.exe) | 942872d20a6b489120e10624f2e959f8840c226f5ba44f63d00cbea23f8476a3
-[JMRI.5.9.7+R034280cd59.tgz](https://github.com/JMRI/JMRI/releases/download/v5.9.7/JMRI.5.9.7+R034280cd59.tgz) | 2dec58b3dedeb097ab418927238c23b1cd1e6751733bde9034cee48b1d30c14b
+[JMRI.5.9.7+R846fde11b1.dmg](https://github.com/JMRI/JMRI/releases/download/v5.9.7/JMRI.5.9.7+R846fde11b1.dmg) | 4172544f85f3da6b5d257f2fc2bef7dd1e9671c771984bc80633fbbcdb387b3d
+[JMRI.5.9.7+R846fde11b1.exe](https://github.com/JMRI/JMRI/releases/download/v5.9.7/JMRI.5.9.7+R846fde11b1.exe) | 7950a2a5a185f398036fa6c6f48e972d7c95ef47b614276c424ddb25d03233de
+[JMRI.5.9.7+R846fde11b1.tgz](https://github.com/JMRI/JMRI/releases/download/v5.9.7/JMRI.5.9.7+R846fde11b1.tgz) | c63aa4bb8d5b4a420e770e78de3ccfcdafd3905d431971597d64f652a342f314
 
 ```
 
