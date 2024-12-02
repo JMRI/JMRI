@@ -452,6 +452,11 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li>A bug is fixed in the LogixNG action <strong>Signal Mast</strong>.
+              The options <strong>Permissive Sml Disabled</strong>
+              and <strong>Permissive Sml Not Disabled</strong> caused
+              an error when storing and loading the tables and panels
+              file.</li>
           <li></li>
         </ul>
 
