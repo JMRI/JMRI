@@ -6850,9 +6850,15 @@ public class LocoNetMessageInterpretTest {
         l = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x51, 
             0x0D, 0x3F, 0x47, 0x6F, 0x7F, 0x18, 0x4A});
         Assert.assertEquals("write 9: Ext Accy Addr 1024 CV 1024 to 24", ""
-                + "Extended Accessory Decoder CV Write: Address 1024 CV 1024 with 24.\n",
+                + "Extended Accessory Decoder CV Write: Address 1,024 CV 1,024 with 24.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
         
+        // [ED 0B 7F 54 17 3C 6E 6D 03 5E 47] Basic Accessory Decoder CV 'Write': Address 500 CV 260, write 222. 
+        l = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54,
+            0x17, 0x3C, 0x6E, 0x6D, 0x03, 0x5E, 0x47});
+        Assert.assertEquals("write 10: Ext Accy Addr 500 CV 260 to 222", ""
+                + "Extended Accessory Decoder CV Write: Address 500 CV 260 with 222.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));        
     }
 
     @Test
