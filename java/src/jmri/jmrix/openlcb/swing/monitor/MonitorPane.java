@@ -10,6 +10,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.swing.CanPanelInterface;
 import jmri.jmrix.openlcb.OlcbConstants;
 
+import org.openlcb.AddressedMessage;
 import org.openlcb.EventID;
 import org.openlcb.EventMessage;
 import org.openlcb.Message;
@@ -247,23 +248,49 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
                             sb.append(name);
                         }
                     }
+                    if (list.get(0) instanceof AddressedMessage) {
+                        ptr = olcbInterface.getNodeStore().findNode(((AddressedMessage)list.get(0)).getDestNodeID());
+                        if (ptr != null && ptr.getSimpleNodeIdent() != null) {
+                            String name = "";
+                            var ident = ptr.getSimpleNodeIdent();
+                            if (ident != null) {
+                                name = ident.getUserName();
+                                if (name.isEmpty()) {
+                                    name = ident.getMfgName()+" - "+ident.getModelName();
+                                }
+                            }
+                            if (!name.isBlank()) {
+                                sb.append("    Dest: ");
+                                sb.append(name);
+                            }
+                        }
+                    }
                 }
-                if ((eventCheckBox.isSelected() || eventAllCheckBox.isSelected()) && olcbInterface != null && msg instanceof EventMessage) {
+                if ((eventCheckBox.isSelected() || eventAllCheckBox.isSelected()) && olcbInterface != null 
+                        && msg instanceof EventMessage) {
                     EventID ev = ((EventMessage) msg).getEventID();
                     log.debug("event message with event {}", ev);
+
+                    var tag = tagManager.getIdTag(OlcbConstants.tagPrefix+ev.toShortString());
+                    String tagname = null;
+                    if (tag != null
+                            && (tagname = tag.getUserName()) != null) {
+                        if (! tagname.isEmpty()) {
+                            sb.append("\n   Name: ");
+                            sb.append(tagname);
+                        }
+                    }
+
+                    // check for time message
+                    if ((content[0] == 1) && (content[1] == 1) && (content[2] == 0) && (content[3] == 0) && (content[4] == 1)) {
+                        sb.append("\n    ");
+                        sb.append(formatTimeMessage(content));
+                    }
+
                     EventTable.EventTableEntry[] descr =
                             olcbInterface.getEventTable().getEventInfo(ev).getAllEntries();
                     if (descr.length > 0) {
-                        sb.append("\n  Event: ");
-                        var tag = tagManager.getIdTag(OlcbConstants.tagPrefix+ev.toShortString());
-                        String name;
-                        if (tag != null
-                                && (name = tag.getUserName()) != null) {
-                            if (! name.isEmpty()) {
-                                sb.append(name);
-                                sb.append("\n         ");
-                            }
-                        }
+                        sb.append("\n   Uses: ");
                         sb.append(descr[0].getDescription());
 
                         if (eventAllCheckBox.isSelected()) {
@@ -272,22 +299,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
                                 sb.append(descr[i].getDescription());
                             }
                         }
-                    } else {
-                        var tag = tagManager.getIdTag(OlcbConstants.tagPrefix+ev.toShortString());
-                        String name;
-                        if (tag != null
-                                && (name = tag.getUserName()) != null) {
-                            if (! name.isEmpty()) {
-                                sb.append("\n  Event: ");
-                                sb.append(name);
-                            }
-                        } else {
-                            if ((content[0] == 1) && (content[1] == 1) && (content[2] == 0) && (content[3] == 0) && (content[4] == 1)) {
-                                sb.append("\n  Event: ");
-                                sb.append(formatTimeMessage(content));
-                            }
-                        }
-                    }
+                    }                        
                 }
                 formatted = sb.toString();
             }
