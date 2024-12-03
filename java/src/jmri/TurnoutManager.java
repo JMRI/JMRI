@@ -266,10 +266,9 @@ public interface TurnoutManager extends ProvidingManager<Turnout>, NameIncrement
     LocalDateTime outputIntervalEnds();
 
     /**
-     * Should {@link #setCommandedState(int)} use
-     * {@link #setCommandedStateAtInterval(int)} to set turnouts?
+     * Should {@link #setCommandedState(int)} set turnouts at interval?
      *
-     * @return true if intervals should be use, false otherwise.
+     * @return true if set turnouts at interval, false otherwise.
      */
     default boolean isUseIntervals() {
         return false;
