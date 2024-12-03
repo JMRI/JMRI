@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.9.5plus+jake+20241108T1305Z+R6f6be4df60a on Fri Nov 08 08:05:51 EST 2024-->
-  <decoderIndex version="617">
+  <!--Written by JMRI version 5.9.6plus+jake+20241202T1607Z+R12805dc571f on Mon Dec 02 11:07:29 EST 2024-->
+  <decoderIndex version="621">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -27225,6 +27225,18 @@
           <output name="4" label="Aux2" />
           <output name="5" label="Aux3" />
           <output name="6" label="Aux4" />
+        </model>
+      </family>
+      <family name="Function Decoders" mfg="Tehnologistic (train-O-matic)" file="TrainOMatic_FD2.xml">
+        <model model="FD Micro II" numOuts="8" numFns="32" lowVersionID="1" highVersionID="7" productID="2010115,2010116,2010117,2010118,2010119,2010120,2010121">
+          <output name="1" />
+          <output name="2" />
+          <output name="3" label="Aux1" />
+          <output name="4" label="Aux2" />
+          <output name="5" label="Aux3" />
+          <output name="6" label="Aux4" />
+          <output name="7" label="Aux5" />
+          <output name="8" label="Aux6" />
         </model>
       </family>
       <family name="Lokommander 2 v3" mfg="Tehnologistic (train-O-matic)" file="TrainOMatic_Lokommander_2.xml">

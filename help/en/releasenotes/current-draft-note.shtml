@@ -26,10 +26,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li>Command Station Monitor :
-                <br>Button added to release JMRI-managed loco sessions,
-                <br>this can be handy when developing Jython scripts that fail to release the Throttle.
-                <br>Button added to launch a new JMRI Throttle for a loco session.</li>
+                <li></li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -129,12 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>STL Editor: Add store mode selections to the View menu, update help page.</li>
-                <li>Add a Send SNIP Request button to the Send tool.</li>
-                <li>Implement recent changes to the CDI spec underlying the node configuration display. 
-                    This will allow node implementors to make simpler configuration dialogs.</li>
-                <li>Fixed a bug where the node configuration display would sometimes
-                    be drawn with overlapping characters or extra white space.</li>
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -344,7 +336,7 @@
 
         <h4>Technologistic (train-O-matic)</h4>
             <ul>
-                <li>Added support for the FD II (version 2) function decoder family.</li>
+                <li></li>
             </ul>
 
         <h4>Trix Modelleisenbahn</h4>
@@ -490,7 +482,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li>Improvements to Roster Table Operating Duration column.</li>
+            <li></li>
         </ul>
 
     <h3>Routes</h3>
@@ -502,8 +494,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li><strong>WiThrottleList.py</strong> is a sample script that shows how to access the
-            WiThrottle session list.</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -513,10 +504,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>There's a new 
-                    <a href="https://www.jmri.org/xml/signals/basic-enhanced/">basic-enhanced signal system</a>.</li>
-                <li>The 
-                    <a href="https://www.jmri.org/xml/signals/FS-1987/">FS-1987 signal system</a> was improved.</li>
+                <li></li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -606,16 +594,13 @@
    <h3>WiThrottle Server</h3>
         <a id="WS" name="WS"></a>
         <ul>
-            <li>The <strong>getThrottleList()</strong> public method has been added to
-            jmri.jmrit.withrottle.UserInterface for Jython access.</li>
+            <li></li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>The limit for VSDecoders is now 8 instead of 4.</li>
-            <li>The sound buttons sorting in the VSD Manager window is now as in config.xml.</li>
-            <li>If the sound buttons exeed 8, a second row is displayed.</li>
+            <li></li>
         </ul>
 
    <h3>Z21 Server</h3>

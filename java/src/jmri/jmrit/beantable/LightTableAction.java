@@ -548,7 +548,6 @@ public class LightTableAction extends AbstractTableAction<Light> {
         }
     }
 
-
     // TODO: Move the next few static String methods to more appropriate place.
     // LightControl.java ?  Multiple Bundle property files will need changing.
 
@@ -631,6 +630,16 @@ public class LightTableAction extends AbstractTableAction<Light> {
     @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleLightTable");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setMessagePreferencesDetails() {
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                setPreferenceItemDetails(getClassName(), "remindSaveLight", Bundle.getMessage("HideSaveReminder"));  // NOI18N
+        super.setMessagePreferencesDetails();
     }
 
     /**

@@ -396,6 +396,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     private boolean _AutoRelease = false;
     private boolean _AutoTurnouts = false;
     private boolean _TrustKnownTurnouts = false;
+    private boolean _useTurnoutConnectionDelay = false;
     private boolean _ShortActiveTrainNames = false;
     private boolean _ShortNameInBlock = true;
     private boolean _RosterEntryInBlock = false;
@@ -2189,11 +2190,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         if (_AutoTurnouts || at.getAutoRun()) {
             // automatically set the turnouts for this section before allocation
             turnoutsOK = autoTurnouts.setTurnoutsInSection(s, sSeqNum, nextSection,
-                    at, _TrustKnownTurnouts, prevSection);
+                    at, _TrustKnownTurnouts, prevSection, _useTurnoutConnectionDelay);
         } else {
             // check that turnouts are correctly set before allowing allocation to proceed
             turnoutsOK = autoTurnouts.checkTurnoutsInSection(s, sSeqNum, nextSection,
-                    at, prevSection);
+                    at, prevSection, _useTurnoutConnectionDelay);
         }
         if (turnoutsOK == null) {
             if (_AutoAllocate) {
@@ -2838,6 +2839,14 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
     protected void setTrustKnownTurnouts(boolean set) {
         _TrustKnownTurnouts = set;
+    }
+
+    protected boolean getUseTurnoutConnectionDelay() {
+        return _useTurnoutConnectionDelay;
+    }
+
+    protected void setUseTurnoutConnectionDelay(boolean set) {
+        _useTurnoutConnectionDelay = set;
     }
 
     protected int getMinThrottleInterval() {
