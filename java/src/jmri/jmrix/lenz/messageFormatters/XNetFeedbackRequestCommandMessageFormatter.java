@@ -8,8 +8,6 @@ import jmri.jmrix.lenz.XPressNetMessageFormatter;
  * @author Paul Bender Copyright (C) 2024
  */
 public class XNetFeedbackRequestCommandMessageFormatter implements XPressNetMessageFormatter {
-    public XNetFeedbackRequestCommandMessageFormatter() {
-    }
 
     public Boolean handlesMessage(jmri.jmrix.Message m) {
         return m instanceof jmri.jmrix.lenz.XNetMessage && ((jmri.jmrix.lenz.XNetMessage) m).getElement(0) == XNetConstants.ACC_INFO_REQ;
