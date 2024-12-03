@@ -126,7 +126,15 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>There's a new LccPro JMRI application that's 
+                    targeted at making it easier to understand and 
+                    configure an LCC network.  See the
+                    <a href="http://jmri.org/help/en/package/apps/gui3/lccpro/LccPro.shtml">help page</a>
+                    for more information.</li>
+                <li>The Event Table now shows event ranges.
+                <li>The Event Table now shows the names of event IDs that are
+                    defined in the LCC Standards.
+                <li>A graphics issue on Linux in the configuration screens was fixed.
             </ul>
 
         <h4>Powerline</h4>
