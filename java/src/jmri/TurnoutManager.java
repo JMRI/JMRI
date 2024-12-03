@@ -268,7 +268,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout>, NameIncrement
     /**
      * Should turnouts be set at interval?
      *
-     * @return true if set turnouts at interval, false otherwise.
+     * @return true if turnouts should be set at interval, false otherwise.
      */
     default boolean isUseIntervals() {
         return false;
