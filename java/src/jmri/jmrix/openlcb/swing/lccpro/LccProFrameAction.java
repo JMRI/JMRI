@@ -6,7 +6,6 @@ import javax.swing.Icon;
 import javax.swing.WindowConstants;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
-import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 

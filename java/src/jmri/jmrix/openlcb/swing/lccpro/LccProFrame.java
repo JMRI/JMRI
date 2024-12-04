@@ -8,7 +8,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
-import javax.annotation.CheckForNull;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 
@@ -367,21 +366,6 @@ public class LccProFrame extends TwoPaneTBWindow  {
             rosterGroupSplitPane.setDividerLocation(groupSplitPaneLocation);
         }
         
-        PropertyChangeListener propertyChangeListener = (PropertyChangeEvent changeEvent) -> {
-            JSplitPane sourceSplitPane = (JSplitPane) changeEvent.getSource();
-            String propertyName = changeEvent.getPropertyName();
-            if (propertyName.equals(JSplitPane.LAST_DIVIDER_LOCATION_PROPERTY)) {
-                int current = sourceSplitPane.getDividerLocation();
-                hideGroups = current <= 1;
-                Integer last = (Integer) changeEvent.getNewValue();
-                if (current >= 2) {
-                    groupSplitPaneLocation = current;
-                } else if (last >= 2) {
-                    groupSplitPaneLocation = last;
-                }
-            }
-        };
-       
         log.trace("createTop returns {}", rosterGroupSplitPane);
         return rosterGroupSplitPane;
     }
