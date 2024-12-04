@@ -93,7 +93,7 @@ import org.openide.util.lookup.ServiceProvider;
  *        <dt><b>setMessagePreferenceDetails()</b></dt>
  *        <dd>This does not return anything directly.  It makes call backs using two methods.
  *          <dl>
- *            <dt>{@link #setMessageItemDetails(String, String, String, HashMap<Integer, String>, int)}</dt>
+ *            <dt>{@link #setMessageItemDetails(String, String, String, HashMap, int)}</dt>
  *            <dd>Descriptive information, the items for a combo box and the current selection are sent.
  *            This information is used to create the <b>multipleChoice</b> item.</dd>
  *
