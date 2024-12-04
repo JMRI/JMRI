@@ -135,6 +135,9 @@
                 <li>The Event Table now shows the names of event IDs that are
                     defined in the LCC Standards.
                 <li>A graphics issue on Linux in the configuration screens was fixed.
+                <li>Improved the Traffic Monitor display:  Now shows addressed message
+                    destinations; better alignment of messages on the screen; improved
+                    how event ID names and uses are displayed on event messages.
             </ul>
 
         <h4>Powerline</h4>
