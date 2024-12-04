@@ -6785,6 +6785,47 @@ public class LocoNetMessageInterpretTest {
         Assert.assertEquals("read 7 Ext Accy Addr 500 CV 260", ""
                 + "Extended Accessory Decoder CV Verify: Address 500 CV 260, check if it is 222.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+        
+        // [ED 0B 7F 54 17 3F 6E 64 10 03 03] Extended Accessory Decoder CV Verify: Address 512 CV 17, check if it is 131.
+        l = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x17, 0x3F, 0x6E, 0x64, 0x10, 0x03, 0x03});
+
+        Assert.assertEquals("read 8 Ext Accy Addr 512 CV 17", ""
+                + "Extended Accessory Decoder CV Verify: Address 512 CV 17, check if it is 131.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+        
+        // [ED 0B 7F 54 0F 3F 6E 64 00 00 08] Extended Accessory Decoder CV Verify: Address 512 CV 129, check if it is 0.
+        l = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x0F, 0x3F, 0x6E, 0x64, 0x00, 0x00, 0x08});
+
+        Assert.assertEquals("read 9 Ext Accy Addr 512 CV 129", ""
+                + "Extended Accessory Decoder CV Verify: Address 512 CV 129, check if it is 0.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+        
+        // [ED 0B 7F 54 07 3F 6E 65 00 00 01] Extended Accessory Decoder CV Verify: Address 512 CV 257, check if it is 0.
+        l = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x07, 0x3F, 0x6E, 0x65, 0x00, 0x00, 0x01});
+
+        Assert.assertEquals("read 10 Ext Accy Addr 512 CV 257", ""
+                + "Extended Accessory Decoder CV Verify: Address 512 CV 257, check if it is 0.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+        
+        // [ED 0B 7F 54 07 3F 6E 66 00 00 02] Extended Accessory Decoder CV Verify: Address 512 CV 513, check if it is 0.
+        l = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x07, 0x3F, 0x6E, 0x66, 0x00, 0x00, 0x02});
+
+        Assert.assertEquals("read 11 Ext Accy Addr 512 CV 513", ""
+                + "Extended Accessory Decoder CV Verify: Address 512 CV 513, check if it is 0.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+        
+        // [ED 0B 7F 54 0F 3F 6E 67 7F 00 74] Extended Accessory Decoder CV Verify: Address 512 CV 1,024, check if it is 0.
+        l = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x0F, 0x3F, 0x6E, 0x67, 0x7F, 0x00, 0x74});
+
+        Assert.assertEquals("read 12 Ext Accy Addr 512 CV 1024", ""
+                + "Extended Accessory Decoder CV Verify: Address 512 CV 1,024, check if it is 0.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+        
     }
 
 
@@ -6859,6 +6900,42 @@ public class LocoNetMessageInterpretTest {
         Assert.assertEquals("write 10: Ext Accy Addr 500 CV 260 to 222", ""
                 + "Extended Accessory Decoder CV Write: Address 500 CV 260 with 222.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));        
+        
+        // [ED 0B 7F 54 17 3F 6E 6C 02 7F 65] Basic Accessory Decoder CV Write: Address 512 CV 3 with 255.
+        l = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x17, 0x3F, 0x6E, 0x6C, 0x02, 0x7F, 0x65});
+        Assert.assertEquals("write 11: Ext Accy Addr 512 CV 3 to 255", ""
+                + "Extended Accessory Decoder CV Write: Address 512 CV 3 with 255.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));        
+        
+        // [ED 0B 7F 54 0F 3F 6E 6C 00 04 04] Basic Accessory Decoder CV Write: Address 512 CV 129 with 4.
+        l = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x0F, 0x3F, 0x6E, 0x6C, 0x00, 0x04, 0x04});
+        Assert.assertEquals("write 11: Ext Accy Addr 512 CV 129 to 4", ""
+                + "Extended Accessory Decoder CV Write: Address 512 CV 129 with 4.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));        
+        
+        // [ED 0B 7F 54 07 3F 6E 6D 00 02 0B] Basic Accessory Decoder CV Write: Address 512 CV 257 with 2.
+        l = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x07, 0x3F, 0x6E, 0x6D, 0x00, 0x02, 0x0B});
+        Assert.assertEquals("write 12: Ext Accy Addr 512 CV 257 to 2", ""
+                + "Extended Accessory Decoder CV Write: Address 512 CV 257 with 2.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));        
+        
+        // [ED 0B 7F 54 07 3F 6E 6E 00 01 0B] Basic Accessory Decoder CV Write: Address 512 CV 513 with 1.
+        l = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x07, 0x3F, 0x6E, 0x6E, 0x00, 0x01, 0x0B});
+        Assert.assertEquals("write 13: Ext Accy Addr 512 CV 513 to 1", ""
+                + "Extended Accessory Decoder CV Write: Address 512 CV 513 with 1.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));        
+        
+        // [ED 0B 7F 54 0F 3F 6E 6F 7F 00 7C] Extended Accessory Decoder CV Write: Address 512 CV 1,024 with 0.
+        l = new LocoNetMessage(new int[] {0xED, 0x0B, 0x7F, 0x54, 
+            0x0F, 0x3F, 0x6E, 0x6F, 0x7F, 0x00, 0x7C});
+        Assert.assertEquals("write 14: Ext Accy Addr 512 CV 1024 to 0", ""
+                + "Extended Accessory Decoder CV Write: Address 512 CV 1,024 with 0.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));        
+        
     }
 
     @Test
