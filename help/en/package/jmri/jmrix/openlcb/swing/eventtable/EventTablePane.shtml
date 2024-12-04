@@ -59,10 +59,30 @@
       <p>
       You can resize and sort the columns using the header row.
       <p>
+      The Event ID field usually shows a single Event ID.
+      If a node has declared that it produces or consumes
+      a range of event IDs, the range will be shown as its
+      lowest and highest included Event IDs.
+      <p>
+      The Event Name column will show an event name that you've given 
+      to this event ID.
+      If you haven't given the event ID a name, and if there is  
+      a well-known standard meaning defined for that event, that will be displayed.
+      <p>
+      You can enter names for events in the 2nd column.  Click on the cell
+      to open it for editing. Hit return when done.  These will be
+      saved automatically and loaded when you next start JMRI.
+      <p>
+      Pressing the "Names from Sensors" will fill in the event name column with the
+      user names from the corresponding JMRI Sensors.  Pressing the "Names from Turnouts"
+      button will fill in the event name column with the user names from the 
+      corresponding JMRI Turnouts.  Note that only empty entries will be filled;
+      this does not overwrite any existing names you've already defined.
+      <p>
       Pressing the "Update from Network" button will load the table from the network.
       This might take a couple seconds.  You should press it again
       after changes like adding nodes, changing their configuration, etc.
-      The table cannot detect those changes automatically.
+      The table cannot always detect those changes automatically.
       <p>
       If node names (4th and 6th columns) don't show up immediately, press
       "Update from Network" a second time.
@@ -77,10 +97,6 @@
       Note that the "Update from Network" button does a "Verify Events" operation
       on the network.  Some nodes consider this to be a start-of-day, power-up
       operation and might change the status of their outputs due to that.
-      <p>
-      You can enter names for events in the 2nd column.  Click on the cell
-      to open it for editing. Hit return when done.  These will be
-      saved automatically and loaded when you next start JMRI.
       <p>
       Checking the "Require label" box will display only events with labels.
       This lets you ignore events that you haven't labeled as interesting.
@@ -99,12 +115,6 @@
       <p>
       Entering an event ID in the find box and clicking "Find" will highlight every
       occurrence of that event.  The window will scroll to show the first one if needed.
-      <p>
-      Pressing the "Names from Sensors" will fill in the event name column with the
-      user names from the corresponding JMRI Sensors.  Pressing the "Names from Turnouts"
-      button will fill in the event name column with the user names from the 
-      corresponding JMRI Turnouts.  Note that only empty entries will be filled;
-      this does not overwrite any existing names.
 
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
