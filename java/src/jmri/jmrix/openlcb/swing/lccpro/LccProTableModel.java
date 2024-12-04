@@ -137,7 +137,10 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
     @Override
     public Object getValueAt(int row, int col) {
         log.trace("getValue({}, {})", row, col);
-        MimicNodeStore.NodeMemo nodememo = nodestore.getNodeMemos().toArray(new MimicNodeStore.NodeMemo[0])[row];
+        
+        var memoArray = nodestore.getNodeMemos().toArray(new MimicNodeStore.NodeMemo[0]);
+        if (row >= memoArray.length) return "";  // sometimes happens at startup
+        var nodememo = memoArray[row];
         if (nodememo == null) return "<invalid node memo>";
         var snip = nodememo.getSimpleNodeIdent();
         if (snip == null) return "<snip info not yet availble>";
