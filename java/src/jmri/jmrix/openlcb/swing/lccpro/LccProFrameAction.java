@@ -71,9 +71,6 @@ public class LccProFrameAction extends JmriAbstractAction {
             mainFrame.setSize(new Dimension(1024, 600));
             mainFrame.setPreferredSize(new Dimension(1024, 600));
         }
-        if (wi instanceof RosterGroupSelector) {
-            mainFrame.setSelectedRosterGroup(((RosterGroupSelector) wi).getSelectedRosterGroup());
-        }
         mainFrame.setVisible(true);
         mainFrame.setAllowQuit(allowQuit);
         mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
