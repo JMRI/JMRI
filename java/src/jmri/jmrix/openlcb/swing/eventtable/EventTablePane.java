@@ -459,7 +459,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                         return tag.getUserName();
                     } else {
                         // temporarily interpret eventID
-                        return jmri.jmrix.openlcb.swing.EventIdParser.parse(memo.eventID);
+                        return memo.eventID.parse();
                     }
                     
                 case COL_PRODUCER_NODE:
@@ -930,7 +930,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             final var nodeID = msg.getSourceNodeID();
             final var eventID = msg.getEventID();
             
-            final long rangeSuffix = jmri.jmrix.openlcb.swing.EventIdParser.rangeSuffix(eventID);
+            final long rangeSuffix = eventID.rangeSuffix();
             // have to set low part of event ID to 0's as it might be 1's
             EventID zeroedEID = new EventID(eventID.toLong() & (~rangeSuffix));
             
@@ -942,7 +942,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             final var nodeID = msg.getSourceNodeID();
             final var eventID = msg.getEventID();
             
-            final long rangeSuffix = jmri.jmrix.openlcb.swing.EventIdParser.rangeSuffix(eventID);
+            final long rangeSuffix = eventID.rangeSuffix();
             // have to set low part of event ID to 0's as it might be 1's
             EventID zeroedEID = new EventID(eventID.toLong() & (~rangeSuffix));
             
