@@ -575,7 +575,8 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>You can now export the contents of a table
+                to a CSV file from the File menu.</li>
         </ul>
 
    <h3>Warrants</h3>
@@ -623,6 +624,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>You can now export the contents of a table
+                to a CSV file from the File menu.</li>
         </ul>
 

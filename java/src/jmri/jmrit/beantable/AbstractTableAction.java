@@ -114,11 +114,6 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
         log.debug("columns updated {}",colsVisible);
     }
 
-    public BeanTableDataModel<E> getTableDataModel() {
-        createModel();
-        return m;
-    }
-
     public void setFrame(@Nonnull BeanTableFrame<E> frame) {
         f = frame;
     }
@@ -127,6 +122,23 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
         return f;
     }
 
+    /**
+     * Get the relevant data model for the current table.
+     * <p> This is overridden in the tabbed-table classes
+     * to return their own local data model.
+     * <p> Unlike {@link #getTableDataModel()}, this therefore
+     * doesn't attempt to (re)-create the model.
+     */
+    
+    public BeanTableDataModel<E> getDataModel() {
+        return m;
+    }
+   
+    final public BeanTableDataModel<E> getTableDataModel() {
+        createModel();
+        return m;
+    }
+ 
     /**
      * Allow subclasses to add to the frame without having to actually subclass
      * the BeanTableDataFrame.
