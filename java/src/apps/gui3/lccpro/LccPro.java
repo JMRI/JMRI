@@ -69,6 +69,15 @@ public class LccPro extends Apps3 {
         return toolbarFile;
     }
 
+    /** If we don't have the right kind of connection, launch the
+     * start up wizard.
+     */
+    @Override
+    protected boolean wizardLaunchCheck() {
+        var memo = jmri.InstanceManager.getNullableDefault(jmri.jmrix.can.CanSystemConnectionMemo.class);
+        return memo == null;
+    }
+
     /**
      * Provide a custom first-time wizard
      */
