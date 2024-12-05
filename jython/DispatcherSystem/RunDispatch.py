@@ -489,7 +489,7 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
         for thread in instance_list:
             thread_name = "" + thread.getName()
             if thread_name.startswith("running_route_"):
-                #determine the train nme
+                #determine the train name
                 train_name = self.determine_train_name(thread_name,thread)
                 #remove the train from the transit
                 #self.delete_transits()
@@ -506,8 +506,9 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
                         instance_list = [instance for instance in instance_list if instance != thread]
 
     def determine_train_name(self,thread_name, thread):
+        print "thread", thread     # this is the RunRoute class object
         route = thread
-        train_name = route.train_name_in
+        train_name = route.train_name
         return train_name
 
     def remove_train_from_transit(self, train_name):
@@ -1932,7 +1933,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                             penultimate_block.getUserName() == penultimate and \
                             section.getUserName().__contains__(":"):   # section is not first section from siding
                         list_of_sections.append(section)
-        if self.logLevel > -1: print "exiting get_section"
+        if self.logLevel > 1: print "exiting get_section"
         return list_of_sections
 
     def getLastBlockInAllowedDirection(self, e, first_station_block):
