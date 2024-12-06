@@ -136,23 +136,53 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         JPanel findpanel = new JPanel(); // keep button and text together
         buttonPanel.add(findpanel);
         
-        JButton find = new JButton("Find Event");
+        JLabel find = new JLabel("Find Event: ");
         findpanel.add(find);
-        find.addActionListener(this::findRequested);
 
         findID = EventIdTextField.getEventIdTextField();
         findID.addActionListener(this::findRequested);
+        findID.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent keyEvent) {
+           }
+
+            @Override
+            public void keyReleased(KeyEvent keyEvent) {
+                // on release so the searchField has been updated
+                log.trace("keyTyped {} content {}", keyEvent.getKeyCode(), findTextID.getText());
+                findRequested(null);
+            }
+
+            @Override
+            public void keyPressed(KeyEvent keyEvent) {
+            }
+        });
         findpanel.add(findID);
 
         findpanel = new JPanel();  // keep button and text together
         buttonPanel.add(findpanel);
 
-        JButton findText = new JButton("Find Name");
+        JLabel findText = new JLabel("Find Name: ");
         findpanel.add(findText);
-        findText.addActionListener(this::findTextRequested);
 
         findTextID = new JTextField(16);
         findTextID.addActionListener(this::findTextRequested);
+        findTextID.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent keyEvent) {
+           }
+
+            @Override
+            public void keyReleased(KeyEvent keyEvent) {
+                // on release so the searchField has been updated
+                log.trace("keyTyped {} content {}", keyEvent.getKeyCode(), findTextID.getText());
+                findTextRequested(null);
+            }
+
+            @Override
+            public void keyPressed(KeyEvent keyEvent) {
+            }
+        });
         findpanel.add(findTextID);        
         
         JButton sensorButton = new JButton("Names from Sensors");
@@ -264,8 +294,13 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
 
     public void findRequested(java.awt.event.ActionEvent e) {
-        log.debug("Request find event {}", findID.getText());
-        model.highlightEvent(new EventID(findID.getText()));
+        var text = findID.getText();
+        // take off trailing .00
+        text = text.replaceAll("(.00)*$", "");
+        log.debug("Request find event [{}]", text);
+        // just search event ID
+        table.clearSelection();
+        if (findTextSearch(text, EventTableDataModel.COL_EVENTID)) return;
     }
     
     public void findTextRequested(java.awt.event.ActionEvent e) {
@@ -283,9 +318,10 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     }
     
     protected boolean findTextSearch(String text, int column) {
+        text = text.toUpperCase();
         for (int row = 0; row < model.getRowCount(); row++) {
-            var value = table.getValueAt(row, column).toString();
-            if (value.contains(text)) {
+            var value = table.getValueAt(row, column).toString().toUpperCase();
+            if (value.startsWith(text)) {
                 table.changeSelection(row, column, false, false);
                 return true;
             }

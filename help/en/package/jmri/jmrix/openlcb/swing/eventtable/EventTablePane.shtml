@@ -14,11 +14,11 @@
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
     <h1>OpenLCB Event Table Frame</h1>
-      <a href="Event_Table.png">
       This provides a table view of the Events, Producers and Consumers
       in your OpenLCB network.
       <p>
-        <img src="Event_Table.png" width="1237" height="425""/></a>
+      <a href="Event_Table.png">
+        <img src="Event_Table.png" width="1037" height="461""/></a>
      <p>
       The primary purpose of the Event Table is three fold:
     <ul>
@@ -113,8 +113,15 @@
       If there's a lot of traffic, this can slow your
       computer down significantly, so only enable it when you want to use it.
       <p>
-      Entering an event ID in the find box and clicking "Find" will highlight every
-      occurrence of that event.  The window will scroll to show the first one if needed.
+      When you type in the "Find Event" box, the table will try to locate an
+      event that starts with what you've typed.  The first (top most) match will
+      be highlighted. If need be, the table will scroll to make that visible.
+      <p>
+      When you type in the "Find Name" box, the table will try to locate
+      an event, producer or consumer or configure path that starts with 
+      what you've typed.  Upper vs lower case is ignored.  The first
+      (top most) match will be highlighted.  If need be, the table will 
+      scroll to make that visible.
 
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
