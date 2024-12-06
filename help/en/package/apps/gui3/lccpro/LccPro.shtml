@@ -16,6 +16,8 @@
 
     <div id="mainContent">
       <h1>JMRI: LccPro</h1>
+      <img src="LccPro-128x128.png" 
+        class="floatRight" height="64" width="64" alt="LccPro logo" align="right"></a>
       
       <p><span class="since">Since <a href="http://jmri.org/releasenotes/jmri5.11.1.shtml">JMRI 5.11.1</a></span>
       <strong>Note that LccPro is a work in progress.</strong> 
