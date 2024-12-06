@@ -89,6 +89,11 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         table.setName("jmri.jmrix.openlcb.swing.eventtable.EventTablePane.table"); // for persistence
         table.setColumnSelectionAllowed(true);
         table.setRowSelectionAllowed(true);
+        
+        // render in fixed size font
+        var defaultFont = table.getFont();
+        var fixedFont = new Font(Font.MONOSPACED, Font.PLAIN, defaultFont.getSize());
+        table.setFont(fixedFont);
 
         var scrollPane = new JScrollPane(table);
 
