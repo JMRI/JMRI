@@ -131,13 +131,19 @@
                     configure an LCC network.  See the
                     <a href="http://jmri.org/help/en/package/apps/gui3/lccpro/LccPro.shtml">help page</a>
                     for more information.</li>
-                <li>The Event Table now shows event ranges.
-                <li>The Event Table now shows the names of event IDs that are
-                    defined in the LCC Standards.
+                <li>The Event Table has been improved:<ul>
+                    <li>It now shows event ranges.
+                    <li>It now automatically shows the names of event IDs that are
+                        defined in the LCC Standards if you haven't given them another name.
+                    <li>There's now a "Find Name" that searches for any cell in the name columns 
+                        containing a particular string.
+                </ul></li>
                 <li>A graphics issue on Linux in the configuration screens was fixed.
-                <li>Improved the Traffic Monitor display:  Now shows addressed message
-                    destinations; better alignment of messages on the screen; improved
-                    how event ID names and uses are displayed on event messages.
+                <li>Improved the Traffic Monitor display:  <ul>
+                    <li>Now shows addressed message destinations; 
+                    <li>better alignment of messages on the screen;
+                    <li>improved how event ID names and uses are displayed on event messages.
+                    </ul></li>
             </ul>
 
         <h4>Powerline</h4>

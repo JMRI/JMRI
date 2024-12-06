@@ -51,6 +51,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     JCheckBox popcorn;           // popcorn mode displays events in real time
 
     JFormattedTextField findID;
+    JTextField findTextID;
 
     private transient TableRowSorter<EventTableDataModel> sorter;
 
@@ -132,10 +133,10 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         });
         buttonPanel.add(popcorn);
 
-        JPanel findpanel = new JPanel();
+        JPanel findpanel = new JPanel(); // keep button and text together
         buttonPanel.add(findpanel);
         
-        JButton find = new JButton("Find");
+        JButton find = new JButton("Find Event");
         findpanel.add(find);
         find.addActionListener(this::findRequested);
 
@@ -143,6 +144,17 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         findID.addActionListener(this::findRequested);
         findpanel.add(findID);
 
+        findpanel = new JPanel();  // keep button and text together
+        buttonPanel.add(findpanel);
+
+        JButton findText = new JButton("Find Name");
+        findpanel.add(findText);
+        findText.addActionListener(this::findTextRequested);
+
+        findTextID = new JTextField(16);
+        findTextID.addActionListener(this::findTextRequested);
+        findpanel.add(findTextID);        
+        
         JButton sensorButton = new JButton("Names from Sensors");
         sensorButton.addActionListener(this::sensorRequested);
         buttonPanel.add(sensorButton);
@@ -254,6 +266,31 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     public void findRequested(java.awt.event.ActionEvent e) {
         log.debug("Request find event {}", findID.getText());
         model.highlightEvent(new EventID(findID.getText()));
+    }
+    
+    public void findTextRequested(java.awt.event.ActionEvent e) {
+        String text = findTextID.getText();
+        log.debug("Request find text {}", text);
+        // first search event name, then from config, then producer name, then consumer name
+        table.clearSelection();
+        if (findTextSearch(text, EventTableDataModel.COL_EVENTNAME)) return;
+        if (findTextSearch(text, EventTableDataModel.COL_CONTEXT_INFO)) return;
+        if (findTextSearch(text, EventTableDataModel.COL_PRODUCER_NAME)) return;
+        if (findTextSearch(text, EventTableDataModel.COL_CONSUMER_NAME)) return;
+        return;
+
+        //model.highlightEvent(new EventID(findID.getText()));
+    }
+    
+    protected boolean findTextSearch(String text, int column) {
+        for (int row = 0; row < model.getRowCount(); row++) {
+            var value = table.getValueAt(row, column).toString();
+            if (value.contains(text)) {
+                table.changeSelection(row, column, false, false);
+                return true;
+            }
+        }
+        return false;
     }
     
     public void sensorRequested(java.awt.event.ActionEvent e) {
