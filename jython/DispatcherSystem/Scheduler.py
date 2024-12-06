@@ -2024,7 +2024,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
 
         # note station_to and station_from are strings, while elements of route are locations
 
-        self.logLevel = 0
+        self.logLevel = 1
         if self.logLevel > 0: print "loglevel", self.logLevel
 
         if self.logLevel > 0: print "in init RunRoute"
@@ -2331,12 +2331,12 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
             current_minutes_mod_array = [current_minutes_mod]
         elif repeat_command == "Repeat every 20 mins":
             current_minutes_mod = current_minutes % 20
-            cmm20 = self.add_minutes_to_time(current_minutes_mod, 20)
-            cmm40 = self.add_minutes_to_time(current_minutes_mod, 40)
+            cmm20 = self.add_minutes(current_minutes_mod, 20)
+            cmm40 = self.add_minutes(current_minutes_mod, 40)
             current_minutes_mod_array = [current_minutes_mod, cmm20, cmm40]
         elif repeat_command == "Repeat every 30 mins":
             current_minutes_mod = current_minutes % 30
-            cmm30 = self.add_minutes_to_time(current_minutes_mod, 30)
+            cmm30 = self.add_minutes(current_minutes_mod, 30)
             current_minutes_mod_array = [current_minutes_mod, cmm30]
         elif repeat_command == "Repeat every Hour":
             current_minutes_mod = current_minutes
@@ -2382,10 +2382,13 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 0: print "time after wait", str(timebase.getTime())
         if self.logLevel > 0: print "waited till start time"
 
+    def add_minutes(self, min1, min2):
+        min = (int(min1) + int(min1) ) % 60
+        return min
 
     def add_minutes_to_time(self, time, minutes):
 
-        if self.logLevel > 0: print "z"
+        if self.logLevel > 0: print "z", time, minutes
 
         [time_hours, time_mins] = time.split(":")
 
