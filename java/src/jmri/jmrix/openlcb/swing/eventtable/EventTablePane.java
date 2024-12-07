@@ -356,7 +356,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     private void oneSensorToTag(boolean isActive, NamedBean bean, IdTagManager tagmgr) {
         var sensor = (OlcbSensor) bean;
         var sensorID = sensor.getEventID(isActive);
-        if (tagmgr.getIdTag(OlcbConstants.tagPrefix+sensorID.toShortString()) == null) {
+        if (! isEventNameTagPresent(sensorID.toShortString())) {
             // tag doesn't exist, make it.
             tagmgr.provideIdTag(OlcbConstants.tagPrefix+sensorID.toShortString())
                 .setUserName(sensor.getEventName(isActive));
@@ -378,7 +378,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     private void oneTurnoutToTag(boolean isThrown, NamedBean bean, IdTagManager tagmgr) {
         var turnout = (OlcbTurnout) bean;
         var turnoutID = turnout.getEventID(isThrown);
-        if (tagmgr.getIdTag(OlcbConstants.tagPrefix+turnoutID.toShortString()) == null) {
+        if (! isEventNameTagPresent(turnoutID.toShortString())) {
             // tag doesn't exist, make it.
             tagmgr.provideIdTag(OlcbConstants.tagPrefix+turnoutID.toShortString())
                 .setUserName(turnout.getEventName(isThrown));
@@ -472,8 +472,8 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                         continue;
                     }
                     // here we have a valid EventID, assign the name if currently blank
-                    String eventName = record.get(1);
-                    if (tagmgr.getIdTag(OlcbConstants.tagPrefix+eid.toShortString()) == null) {
+                    if (! isEventNameTagPresent(eventIDname)) {
+                        String eventName = record.get(1);
                         // tag doesn't exist, make it.
                         tagmgr.provideIdTag(OlcbConstants.tagPrefix+eid.toShortString())
                             .setUserName(eventName);
@@ -489,6 +489,20 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         }
     }
 
+    /**
+     * Check whether a Event Name tag is defined or not.
+     * Static so it can be easily accessed outside this class.
+     * Check for other uses before changing this.
+     * @param eventID EventID as dotted-hex string
+     * @returns true is the event name tag is present
+     */
+    public static boolean isEventNameTagPresent(String eventID) {
+        var tagmgr = InstanceManager.getDefault(IdTagManager.class);  // make this more efficient by making this a one-time static?
+        var tag = tagmgr.getIdTag(OlcbConstants.tagPrefix+eventID);
+        if (tag == null) return false;
+        return ! tag.getUserName().isEmpty();
+    }
+    
     /**
      * Set up filtering of displayed rows
      */

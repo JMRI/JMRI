@@ -279,6 +279,8 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
                     EventID ev = ((EventMessage) msg).getEventID();
                     log.debug("event message with event {}", ev);
 
+                    // this could be converted to EventTablePane.isEventNameTagPresent
+                    // but that would duplicate the retrieval of the bean and user name
                     var tag = tagManager.getIdTag(OlcbConstants.tagPrefix+ev.toShortString());
                     String tagname = null;
                     if (tag != null
