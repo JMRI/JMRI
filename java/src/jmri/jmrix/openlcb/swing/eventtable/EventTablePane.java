@@ -494,7 +494,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
      * Static so it can be easily accessed outside this class.
      * Check for other uses before changing this.
      * @param eventID EventID as dotted-hex string
-     * @returns true is the event name tag is present
+     * @return true is the event name tag is present
      */
     public static boolean isEventNameTagPresent(String eventID) {
         var tagmgr = InstanceManager.getDefault(IdTagManager.class);  // make this more efficient by making this a one-time static?
