@@ -56,7 +56,7 @@
     It is envisioned that the user re-export this reference documentation regularly
     as the network evolves rather than try to maintain the resulting document independently.
     </ul>
-      <p>
+      <p><a name="table"/>
       You can resize and sort the columns using the header row.
       <p>
       The Event ID field usually shows a single Event ID.
@@ -113,16 +113,31 @@
       If there's a lot of traffic, this can slow your
       computer down significantly, so only enable it when you want to use it.
       <p>
-      When you type in the "Find Event" box, the table will try to locate an
+      As you type in the "Find Event" box, the table will try to locate an
       event that starts with what you've typed.  The first (top most) match will
       be highlighted. If need be, the table will scroll to make that visible.
       <p>
-      When you type in the "Find Name" box, the table will try to locate
+      As you type in the "Find Name" box, the table will try to locate
       an event, producer or consumer or configure path that starts with 
       what you've typed.  Upper vs lower case is ignored.  The first
       (top most) match will be highlighted.  If need be, the table will 
       scroll to make that visible.
 
+    <p><a name="menu"/>
+        The File menu contains two items:
+        <ul>
+            <li>Save to CSV: This exports all columns of the current contents of the table
+                to a comma-separated variable (CSV) file.  
+                <p>The file will contain column
+                headers in its first row, followed by a row for every Event ID in the table,
+                including ones that are not currently visible.
+            <li>Read from CSV: Reads in Event IDs and event names from a CSV file,
+                then if that Event ID doesn't already have a name, assign the name from 
+                the file.  
+                <p>The file should have an Event ID such as 00.01.02.03.04.05.06.07
+                in the 1st column and the desired name in the second column.
+                A header row, if present, is ignored. 
+        </ul>
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>

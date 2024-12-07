@@ -131,12 +131,20 @@
                     configure an LCC network.  See the
                     <a href="http://jmri.org/help/en/package/apps/gui3/lccpro/LccPro.shtml">help page</a>
                     for more information.</li>
-                <li>The Event Table has been improved:<ul>
+                <li>The 
+                    <a href="http://jmri.org/help/en/package/jmri/jmrix/openlcb/swing/eventtable/EventTablePane.shtml">Event Table</a> 
+                    has been improved:<ul>
                     <li>It now shows event ranges.
                     <li>It now automatically shows the names of event IDs that are
                         defined in the LCC Standards if you haven't given them another name.
                     <li>There's now a "Find Name" that searches for any cell in the name columns 
                         containing a particular string.
+                    <li>The Find Event and Find Name search boxes update the search
+                        as you type.
+                    <li>The 
+                        <a href="http://jmri.org/help/en/package/jmri/jmrix/openlcb/swing/eventtable/EventTablePane.shtml#menu">File menu</a> 
+                        now contains a "Read from CSV..." item that lets you load event names
+                        from a comma-separated (CSV) file.
                 </ul></li>
                 <li>A graphics issue on Linux in the configuration screens was fixed.
                 <li>Improved the Traffic Monitor display:  <ul>

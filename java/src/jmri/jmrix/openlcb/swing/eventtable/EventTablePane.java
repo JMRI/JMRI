@@ -22,6 +22,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+import org.apache.commons.csv.CSVRecord;
 
 import org.openlcb.*;
 import org.openlcb.implementations.*;
@@ -225,14 +226,25 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         var retval = new ArrayList<JMenu>();
         var fileMenu = new JMenu("File");
         fileMenu.setMnemonic(KeyEvent.VK_F);
-        var csvItem = new JMenuItem("Save to CSV...", KeyEvent.VK_S);
+        
+        var csvWriteItem = new JMenuItem("Save to CSV...", KeyEvent.VK_S);
         KeyStroke ctrlSKeyStroke = KeyStroke.getKeyStroke("control S");
         if (jmri.util.SystemType.isMacOSX()) {
             ctrlSKeyStroke = KeyStroke.getKeyStroke("meta S");
         }
-        csvItem.setAccelerator(ctrlSKeyStroke);
-        csvItem.addActionListener(this::writeToCsvFile);
-        fileMenu.add(csvItem);
+        csvWriteItem.setAccelerator(ctrlSKeyStroke);
+        csvWriteItem.addActionListener(this::writeToCsvFile);
+        fileMenu.add(csvWriteItem);
+        
+        var csvReadItem = new JMenuItem("Read from CSV...", KeyEvent.VK_O);
+        KeyStroke ctrlOKeyStroke = KeyStroke.getKeyStroke("control O");
+        if (jmri.util.SystemType.isMacOSX()) {
+            ctrlOKeyStroke = KeyStroke.getKeyStroke("meta O");
+        }
+        csvReadItem.setAccelerator(ctrlOKeyStroke);
+        csvReadItem.addActionListener(this::readFromCsvFile);
+        fileMenu.add(csvReadItem);
+        
         retval.add(fileMenu);
         return retval;
     }
@@ -386,8 +398,8 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
         if (fileChooser == null) {
             fileChooser = new jmri.util.swing.JmriJFileChooser();
-            fileChooser.setDialogTitle("Save CSV file");
         }
+        fileChooser.setDialogTitle("Save CSV file");
         fileChooser.rescanCurrentDirectory();
         fileChooser.setSelectedFile(new File("eventtable.csv"));
 
@@ -421,6 +433,58 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 str.flush();
             } catch (IOException ex) {
                 log.error("Error writing file", ex);
+            }
+        }
+    }
+
+    /**
+     * Read event names from a CSV file
+     * @param e Needed for signature of method, but ignored here
+     */
+    public void readFromCsvFile(ActionEvent e) {
+
+        if (fileChooser == null) {
+            fileChooser = new jmri.util.swing.JmriJFileChooser();
+        }
+        fileChooser.setDialogTitle("Open CSV file");
+        fileChooser.rescanCurrentDirectory();
+
+        int retVal = fileChooser.showOpenDialog(this);
+
+        if (retVal == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            if (log.isDebugEnabled()) {
+                log.debug("start to read from CSV file {}", file);
+            }
+
+            try (Reader in = new FileReader(file)) {
+                Iterable<CSVRecord> records = CSVFormat.RFC4180.parse(in);
+                var tagmgr = InstanceManager.getDefault(IdTagManager.class);
+                
+                for (CSVRecord record : records) {
+                    String eventIDname = record.get(0);
+                     // Is the 1st column really an event ID
+                    EventID eid;
+                    try {
+                        eid = new EventID(eventIDname);
+                    } catch (IllegalArgumentException e1) {
+                        log.info("Column 0 doesn't contain an EventID: {}", eventIDname);
+                        continue;
+                    }
+                    // here we have a valid EventID, assign the name if currently blank
+                    String eventName = record.get(1);
+                    if (tagmgr.getIdTag(OlcbConstants.tagPrefix+eid.toShortString()) == null) {
+                        // tag doesn't exist, make it.
+                        tagmgr.provideIdTag(OlcbConstants.tagPrefix+eid.toShortString())
+                            .setUserName(eventName);
+                    }         
+                }
+                log.debug("File reading complete");
+                // cause the table to update
+                model.fireTableDataChanged();
+                
+            } catch (IOException ex) {
+                log.error("Error reading file", ex);
             }
         }
     }
