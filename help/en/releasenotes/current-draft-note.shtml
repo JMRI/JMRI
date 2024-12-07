@@ -149,8 +149,10 @@
                 <li>A graphics issue on Linux in the configuration screens was fixed.
                 <li>Improved the Traffic Monitor display:  <ul>
                     <li>Now shows addressed message destinations; 
-                    <li>better alignment of messages on the screen;
-                    <li>improved how event ID names and uses are displayed on event messages.
+                    <li>Better alignment of messages on the screen;
+                    <li>Improved how event ID names and uses are displayed on event messages.
+                    <li>Improved 
+                        <a href="http://jmri.org/help/en/package/jmri/jmrix/openlcb/swing/monitor/MonitorPane.shtml">help page</a>.
                     </ul></li>
             </ul>
 
@@ -456,6 +458,16 @@
                 <li></li>
             </ul>
 
+    <h3>LccPro</h3>
+        <a id="LccPro" name="LccPro"></a>
+        <ul>
+          <li>There's a new LccPro JMRI application that's 
+            targeted at making it easier to understand and 
+            configure an LCC network.  See the
+            <a href="http://jmri.org/help/en/package/apps/gui3/lccpro/LccPro.shtml">help page</a>
+            for more information.</li>
+        </ul>
+        
     <h3>Logix</h3>
         <a id="Logix" name="Logix"></a>
         <ul>
