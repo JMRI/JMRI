@@ -89,6 +89,14 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         return Bundle.getMessage("MonitorTitle");
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getHelpTarget() {
+        return "package.jmri.jmrix.openlcb.swing.monitor.MonitorPane"; // NOI18N
+    }
+
     @Override
     protected void init() {
     }
