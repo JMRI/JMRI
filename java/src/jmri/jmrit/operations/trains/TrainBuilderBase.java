@@ -360,28 +360,24 @@ public class TrainBuilderBase extends TrainCommon {
                                                      // for this location
                 // if a location is skipped, no car drops or pick ups
             } else if (_train.isLocationSkipped(rl.getId())) {
-                addLine(_buildReport, FIVE,
+                addLine(_buildReport, THREE,
                         Bundle.getMessage("buildLocSkippedMaxTrain", rl.getId(), rl.getName(),
                                 rl.getTrainDirectionString(), _train.getName(), rl.getMaxTrainLength(),
                                 Setup.getLengthUnit().toLowerCase()));
                 rl.setCarMoves(rl.getMaxCarMoves()); // don't allow car moves
-                                                     // for this location
-            } else if (!rl.isDropAllowed() && !rl.isPickUpAllowed()) {
-                addLine(_buildReport, FIVE,
-                        Bundle.getMessage("buildLocNoDropsOrPickups", rl.getId(), rl.getName(),
-                                rl.getTrainDirectionString(), rl.getMaxTrainLength(),
-                                Setup.getLengthUnit().toLowerCase()));
-                rl.setCarMoves(rl.getMaxCarMoves()); // don't allow car moves
-                                                     // for this location
-            } else {
-                // we're going to use this location, so initialize the route
-                // location
+                                                     // for this location            
+            } else {       
+                // we're going to use this location, so initialize
                 rl.setCarMoves(0); // clear the number of moves
-                requestedCarMoves += rl.getMaxCarMoves(); // add up the total
-                                                          // number of car moves
-                                                          // requested
+                // add up the total number of car moves requested
+                requestedCarMoves += rl.getMaxCarMoves(); 
                 // show the type of moves allowed at this location
-                if (location.isStaging() && rl.isPickUpAllowed() && rl == _train.getTrainDepartsRouteLocation()) {
+                if (!rl.isDropAllowed() && !rl.isPickUpAllowed()) {
+                    addLine(_buildReport, THREE,
+                            Bundle.getMessage("buildLocNoDropsOrPickups", rl.getId(), rl.getName(),
+                                    rl.getTrainDirectionString(), rl.getMaxTrainLength(),
+                                    Setup.getLengthUnit().toLowerCase()));
+                } else if (location.isStaging() && rl.isPickUpAllowed() && rl == _train.getTrainDepartsRouteLocation()) {
                     addLine(_buildReport, THREE,
                             Bundle.getMessage("buildStagingDeparts", rl.getId(), rl.getName(),
                                     rl.getTrainDirectionString(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
