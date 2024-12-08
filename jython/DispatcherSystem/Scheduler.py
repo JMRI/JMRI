@@ -2024,7 +2024,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
 
         # note station_to and station_from are strings, while elements of route are locations
 
-        self.logLevel = 1
+        self.logLevel = 0
         if self.logLevel > 0: print "loglevel", self.logLevel
 
         if self.logLevel > 0: print "in init RunRoute"
@@ -2383,7 +2383,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 0: print "waited till start time"
 
     def add_minutes(self, min1, min2):
-        min = (int(min1) + int(min1) ) % 60
+        min = (int(min1) + int(min2) ) % 60
         return min
 
     def add_minutes_to_time(self, time, minutes):
