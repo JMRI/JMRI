@@ -39,7 +39,6 @@ public class ClientActions {
     ShutDownTask shutDownTask;
     
     public void openCdiWindow(NodeID destNode, String description) {
-//        final java.util.ArrayList<JButton> readList = new java.util.ArrayList<>();
         final java.util.ArrayList<JButton> sensorButtonList = new java.util.ArrayList<>();
         final java.util.ArrayList<JButton> turnoutButtonList = new java.util.ArrayList<>();
 
@@ -99,7 +98,6 @@ public class ClientActions {
             private boolean haveButtons = false;
             @Override
             public JButton handleReadButton(JButton button) {
-//                readList.add(button);
                 return button;
             }
 

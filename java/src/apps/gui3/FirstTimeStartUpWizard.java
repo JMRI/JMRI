@@ -45,7 +45,7 @@ public class FirstTimeStartUpWizard implements Thread.UncaughtExceptionHandler {
     Image splashIm;
 
     jmri.util.JmriJFrame parent;
-    private final JmrixConfigPane connectionConfigPane = JmrixConfigPane.createNewPanel();
+    protected final JmrixConfigPane connectionConfigPane = JmrixConfigPane.createNewPanel();
 
     public FirstTimeStartUpWizard(jmri.util.JmriJFrame parent, apps.gui3.Apps3 app) {
         this.parent = parent;
@@ -61,6 +61,8 @@ public class FirstTimeStartUpWizard implements Thread.UncaughtExceptionHandler {
         mainWizardPanel.add(createEntryPanel(), BorderLayout.CENTER);
 
         mainWizardPanel.add(createButtonPanel(), BorderLayout.SOUTH);
+        
+        customizeConnection();
     }
 
     JLabel header = new JLabel();
@@ -74,6 +76,10 @@ public class FirstTimeStartUpWizard implements Thread.UncaughtExceptionHandler {
         return top;
     }
 
+    protected void customizeConnection() {
+        // for subclasses, e.g. from LccApp
+    }
+    
     JPanel createHelpPanel() {
         splashIm = Toolkit.getDefaultToolkit().getImage(FileUtil.findURL("resources/logo.gif", FileUtil.Location.INSTALLED));
         ImageIcon img = new ImageIcon(splashIm, "JMRI splash screen");
@@ -134,7 +140,7 @@ public class FirstTimeStartUpWizard implements Thread.UncaughtExceptionHandler {
         initalLocale = Locale.getDefault();
         p.add(doLocale());
 
-        p.add(formatText("<br>Enter in the default owner for all your loco roster entries<p>If you are part of group or club, where different people will be accessing DecoderPro, then you can leave this blank</p>"));
+        p.add(formatText("<br>Enter in the default owner for all your loco roster entries<p>If you are not part of group or club, where different people will be accessing DecoderPro, then you can leave this blank</p>"));
         JPanel p2 = new JPanel();
         p2.setLayout(new FlowLayout());
         p2.add(new JLabel(/*rb.getString("LabelDefaultOwner")*/"Default Owner"));
@@ -149,13 +155,17 @@ public class FirstTimeStartUpWizard implements Thread.UncaughtExceptionHandler {
         wizPage.add(new WizardPage(p, new JPanel(), "Set the Default Language and Owner"));
     }
 
+    protected String firstPrompt() {
+        return "First select the manufacturer of your DCC system\n\nFollowed by the type of connection being used.\n\nFinally select the serial port or enter in the IP address of the device";
+    }
+    
     void setConnection() {
 
         JPanel h = new JPanel();
         h.setLayout(new BoxLayout(h, BoxLayout.Y_AXIS));
         h.setMaximumSize(maxHelpFieldDim);
 
-        JTextArea text = new JTextArea("First select the manufacturer of your DCC system\n\nFollowed by the type of connection being used.\n\nFinally select the serial port or enter in the IP address of the device");
+        JTextArea text = new JTextArea(firstPrompt());
         text.setEditable(false);
         text.setLineWrap(true);
         text.setWrapStyleWord(true);
@@ -164,7 +174,7 @@ public class FirstTimeStartUpWizard implements Thread.UncaughtExceptionHandler {
         text.setMaximumSize(maxHelpFieldDim);
         h.add(text);
 
-        wizPage.add(new WizardPage(this.connectionConfigPane, h, "Select your DCC Connection"));
+        wizPage.add(new WizardPage(this.connectionConfigPane, h, "Select Your System Connection"));
     }
 
     void firstWelcome() {

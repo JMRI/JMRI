@@ -269,10 +269,15 @@
    <tocitem text="Displaying Panel Files " target="html.apps.PanelPro.ShowPanel"/>
 
   </tocitem>
+
   <tocitem text="SoundPro " target="html.apps.SoundPro.SoundPro">
    <tocitem text="Intro " target="html.apps.SoundPro.SoundPro"/>
-
   </tocitem>
+
+  <tocitem text="LccPro " target="package.apps.gui3.lccpro.LccPro">
+   <tocitem text="Intro " target="package.apps.gui3.lccpro.LccPro"/>
+  </tocitem>
+
   <tocitem text="Additional Applications with connections to JMRI " target="html.apps.index_addapp">
    <tocitem text="Manifest Creator " target="html.apps.ManifestCreator.index"/>
 

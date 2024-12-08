@@ -24,6 +24,10 @@ import jmri.util.AlphanumComparator;
 /**
  * Provide a JFrame to display a table of NamedBeans.
  * <p>
+ * This is used when a table is opened by itself, without
+ * being embedded in a selection frame.  Typically, this 
+ * happens when the table is opened from a startup action.
+ * <p>
  * This frame includes the table itself at the top, plus a "bottom area" for
  * things like an Add... button and checkboxes that control display options.
  * <p>
@@ -99,6 +103,12 @@ public class BeanTableFrame<E extends NamedBean> extends jmri.util.JmriJFrame {
             }
         });
 
+        JMenuItem exportItem = new JMenuItem(Bundle.getMessage("ExportTable"));
+        fileMenu.add(exportItem);
+        exportItem.addActionListener((ActionEvent e) -> {
+            dataModel.exportToCSV(null);
+        });
+
         setJMenuBar(menuBar);
 
         addHelpMenu(helpTarget, true);
@@ -142,6 +152,10 @@ public class BeanTableFrame<E extends NamedBean> extends jmri.util.JmriJFrame {
        bottomBox.add(comp);
     }
 
+    public JTable getTable() {
+        return dataTable;
+    }
+    
     @Override
     public void dispose() {
         if (dataModel != null) {

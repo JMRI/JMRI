@@ -50,7 +50,7 @@ public class RosterFrameAction extends JmriAbstractAction {
         this.allowQuit = allowQuit;
     }
 
-    boolean allowQuit = true;
+    boolean allowQuit = false;
 
     @Override
     public void actionPerformed(ActionEvent event) {

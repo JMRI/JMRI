@@ -1047,7 +1047,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     }
 
     void reportBogus(Element elem) {
-        log.error("Did not find a valid type in {}", elem.getChildren());
+        log.error("Did not find a valid type in {}", elem.getChildren(), new Exception("Force Traceback"));
     }
 
     /**

@@ -151,10 +151,18 @@
       <p>OpenLCB connection options are <a href="Connections.shtml">on a separate page</a>.</p>
 
       <h2 id="tools">JMRI OpenLCB Tools</h2>
+
+      
+      The <a href="../../../package/apps/gui3/lccpro/LccPro.shtml">LccPro</a>
+      application is optimized for configuring and controlling
+      an LCC network.  You can also use PanelPro to do this
+      through its LCC or OpenLCB menu.
+
       <img src="images/OpenLCBmenu.png" width="172" height="126" class="floatRight" alt="Menu">
-      <p>When JMRI is connected to a layout via this system, an <strong>OpenLCB</strong>
-      or <strong>LCC</strong> menu is
-      shown:</p>
+      
+      <p>The  <strong>OpenLCB</strong>
+      or <strong>LCC</strong> menu contains:
+      </p>
 
       <ul>
         <li>Traffic Monitor<br>

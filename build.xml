@@ -1244,6 +1244,15 @@
         </antcall>
     </target>
 
+    <target name="lccpro"
+            description="build and run LccPro app"
+            depends="debug, copyfiles">
+        <antcall target="-run-jmri-application">
+            <param name="application.classname" value="apps.gui3.lccpro.LccPro"/>
+            <param name="antargline" value="LccProConfig.xml"/>
+        </antcall>
+    </target>
+
     <target name="decoderpro"
             description="build and run DecoderPro (formerly DecoderPro 3) app"
             depends="debug, copyfiles">
@@ -2070,7 +2079,7 @@
             </doctitle>
             <bottom><![CDATA[Made from JMRI version ${release.version-string}
                     <br><i>Copyright &copy; ${jmri.copyright.year} JMRI Community.
-                    <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro and associated logos are our trademarks.</i>
+                    <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro, LccPro and associated logos are our trademarks.</i>
                        <br><a href="https://www.jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
                 ]]>
             </bottom>
@@ -2177,7 +2186,7 @@
             </doctitle>
             <bottom><![CDATA[Made from JMRI version ${release.version-string}
                     <br><i>Copyright &copy; ${jmri.copyright.year} JMRI Community.
-                    <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro and associated logos are our trademarks.</i>
+                    <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro, LccPro and associated logos are our trademarks.</i>
                        <br><a href="https://www.jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
                 ]]>
             </bottom>
@@ -2611,7 +2620,7 @@
                      excludes="help/en/manual/**,web/app/**" />
             <!-- use question marks for spaces in filename; Ant will split the list on commas and spaces -->
             <fileset dir="${dist.apps}"
-                     includes="DecoderPro.app/,PanelPro.app/,SoundPro.app/,JMRI?Demo.app/"/>
+                     includes="DecoderPro.app/,PanelPro.app/,SoundPro.app/,JMRI?Demo.app/,LccPro.app/"/>
             <fileset dir="scripts"
                      includes="default_lcf.xml,COPYING"/>
             <fileset dir="."
@@ -2638,6 +2647,7 @@
                 <include name="JMRI Demo.app/Contents/MacOS/StartJMRI"/>
                 <include name="PanelPro.app/Contents/MacOS/StartJMRI"/>
                 <include name="SoundPro.app/Contents/MacOS/StartJMRI"/>
+                <include name="LccPro.app/Contents/MacOS/StartJMRI"/>
             </fileset>
         </chmod>
         <mkdir dir="${dist.release}"/>
@@ -2717,6 +2727,7 @@
                 <exclude name="JMRI/DecoderPro"/>
                 <exclude name="JMRI/PanelPro"/>
                 <exclude name="JMRI/SoundPro"/>
+                <exclude name="JMRI/LccPro"/>
                 <exclude name="JMRI/InstallTest"/>
                 <exclude name="JMRI/JmriFaceless"/>
                 <exclude name="JMRI/CreateJmriApps.sh"/>
@@ -2725,6 +2736,7 @@
                 <include name="JMRI/DecoderPro"/>
                 <include name="JMRI/PanelPro"/>
                 <include name="JMRI/SoundPro"/>
+                <include name="JMRI/LccPro"/>
                 <include name="JMRI/InstallTest"/>
                 <include name="JMRI/JmriFaceless"/>
                 <include name="JMRI/CreateJmriApps.sh"/>
@@ -2798,6 +2810,7 @@
         <make-startup-script script.name="DecoderPro"   script.class="apps.gui3.dp3.DecoderPro3"/>
         <make-startup-script script.name="PanelPro"      script.class="apps.PanelPro.PanelPro"/>
         <make-startup-script script.name="SoundPro"      script.class="apps.SoundPro.SoundPro"/>
+        <make-startup-script script.name="LccPro"        script.class="apps.gui3.lccpro.LccPro"/>
         <make-startup-script script.name="InstallTest"   script.class="apps.InstallTest.InstallTest"/>
         <make-startup-script script.name="JmriFaceless"   script.class="apps.JmriFaceless"/>
     </target>
@@ -2807,6 +2820,7 @@
                                              script.icon="DecoderPro"/>
         <create-macosx-application-directory script.name="PanelPro"      script.class="apps.PanelPro.PanelPro"/>
         <create-macosx-application-directory script.name="SoundPro"      script.class="apps.SoundPro.SoundPro"/>
+        <create-macosx-application-directory script.name="LccPro"        script.class="apps.gui3.lccpro.LccPro"/>
         <create-macosx-application-directory script.name="InstallTest"   script.class="apps.InstallTest.InstallTest"/>
     </target>
 

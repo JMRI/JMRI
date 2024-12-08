@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import jmri.jmrit.MemoryContents;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.openlcb.swing.NodeSpecificFrame;
+import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WrapLayout;
 
 import org.openlcb.Connection;
@@ -226,6 +227,13 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         return nodeSelector.getSelectedNodeID();
     }
 
+    /**
+     * Set NodeID in the GUI
+     */
+    void setDestNodeID(NodeID nodeID) {
+        nodeSelector.setSelectedNodeID(nodeID);
+    }
+
     @Override
     protected void setDefaultFieldValues() {
         // currently, doesn't do anything, as just loading raw hex files.
@@ -276,11 +284,32 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     public static class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
 
         public Default() {
-            super("Openlcb Firmware Download",
+            super("LCC Firmware Download",
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     LoaderAction.class.getName(),
                     jmri.InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));
         }
+
+        /**
+         * Constructor that explicits sets the node to be upgraded
+         */
+        public Default(NodeID nodeID) {
+            super("LCC Firmware Download",
+                    new jmri.util.swing.sdi.JmriJFrameInterface(),
+                    LoaderPane.class.getName(),
+                    jmri.InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));
+            this.nodeID = nodeID;
+        }
+
+        NodeID nodeID;
+        
+        @Override
+        public JmriPanel makePanel() {
+            var panel = (LoaderPane) super.makePanel();
+            panel.setDestNodeID(nodeID);
+            return panel;
+        }
+        
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LoaderPane.class);

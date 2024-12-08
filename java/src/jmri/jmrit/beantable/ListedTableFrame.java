@@ -259,6 +259,19 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
             }
         });
 
+        JMenuItem exportItem = new JMenuItem(Bundle.getMessage("ExportTable"));
+        fileMenu.add(exportItem);
+        exportItem.addActionListener((ActionEvent e) -> {
+            if (item.getStandardTableModel()) {
+                item.getDataModel().exportToCSV(null);
+            } else {
+                // following goes through frame to avoid recreating data model
+                var model = item.getAAClass()
+                                    .getDataModel();
+                model.exportToCSV(null);
+            }
+        });
+
         JMenu viewMenu = new JMenu(Bundle.getMessage("MenuView"));
         menuBar.add(viewMenu);
         for (final TabbedTableItemListArray itemList : tabbedTableItemListArrayArray) {
@@ -464,6 +477,10 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
 
         JTable getDataTable() {
             return dataTable;
+        }
+
+        BeanTableDataModel<E> getDataModel() {
+            return dataModel;
         }
 
         public void addToBottomBox(Component comp) {

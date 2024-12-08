@@ -13,7 +13,7 @@ import org.junit.jupiter.api.*;
 public class BundleTest  {
 
     @Test public void testGoodKeys() {
-        Assert.assertEquals("Roster", Bundle.getMessage("MenuItemRoster"));
+        Assert.assertEquals("Open DecoderPro", Bundle.getMessage("MenuItemRoster"));
         Assert.assertEquals("Tools", Bundle.getMessage("MenuTools"));
         Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));
     }

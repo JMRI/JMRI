@@ -730,6 +730,18 @@
                     </li>
                       
                     <li>
+                        <a href="package/apps/gui3/lccpro/LccPro.shtml">LccPro </a>
+                        <ul>
+                               
+                            <li>
+                                <a href="package/apps/gui3/lccpro/LccPro.shtml">Intro </a>
+                                <ul></ul>
+                            </li>
+                              
+                        </ul>
+                    </li>
+                      
+                    <li>
                         <a href="html/apps/index.shtml#addapp">Additional Applications with connections to JMRI </a>
                         <ul>
                                

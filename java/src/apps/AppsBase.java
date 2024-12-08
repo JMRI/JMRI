@@ -20,9 +20,6 @@ import jmri.util.ThreadingUtil;
 
 import jmri.util.prefs.JmriPreferencesActionFactory;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import apps.util.Log4JUtil;
 
 /**
@@ -46,7 +43,6 @@ public abstract class AppsBase {
     protected boolean configDeferredLoadOK;
     protected boolean preferenceFileExists;
     static boolean preInit = false;
-    private final static Logger log = LoggerFactory.getLogger(AppsBase.class);
 
     /**
      * Initial actions before frame is created, invoked in the applications
@@ -238,12 +234,15 @@ public abstract class AppsBase {
         }
         if (sharedConfig != null) {
             file = sharedConfig;
+            log.trace("Try preferences from sharedConfig {}", file.getPath());
         } else if (!new File(getConfigFileName()).isAbsolute()) {
             // must be relative, but we want it to
             // be relative to the preferences directory
             file = new File(FileUtil.getUserFilesPath() + getConfigFileName());
+            log.trace("Try references from getUserFilesPath {}", file.getPath());
         } else {
             file = new File(getConfigFileName());
+            log.trace("Try references from getConfigFileName {}", file.getPath());
         }
         // don't try to load if doesn't exist, but mark as not OK
         if (!file.exists()) {
@@ -252,6 +251,7 @@ public abstract class AppsBase {
             log.info("No pre-existing config file found, searched for '{}'", file.getPath());
             return;
         }
+        log.debug("Found preferences file '{}'", file.getPath());
         preferenceFileExists = true;
 
         // ensure the UserPreferencesManager has loaded. Done on GUI
@@ -424,5 +424,5 @@ public abstract class AppsBase {
         }
     }
 
-
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AppsBase.class);
 }
