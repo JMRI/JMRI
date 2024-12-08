@@ -129,7 +129,6 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
      * <p> Unlike {@link #getTableDataModel()}, this therefore
      * doesn't attempt to (re)-create the model.
      */
-    
     public BeanTableDataModel<E> getDataModel() {
         return m;
     }
