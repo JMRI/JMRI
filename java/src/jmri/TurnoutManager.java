@@ -265,4 +265,13 @@ public interface TurnoutManager extends ProvidingManager<Turnout>, NameIncrement
     @Nonnull
     LocalDateTime outputIntervalEnds();
 
+    /**
+     * Should turnouts be set at interval?
+     *
+     * @return true if turnouts should be set at interval, false otherwise.
+     */
+    default boolean isUseIntervals() {
+        return false;
+    }
+
 }

@@ -156,14 +156,14 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         // set the mode names and values based on the static values.
         _validFeedbackNames = getModeNames();
         _validFeedbackModes = getModeValues();
-        
+
         // Register to get property change information from the superclass
         _stateListener = new XNetTurnoutStateListener(this);
         this.addPropertyChangeListener(_stateListener);
         // Finally, request the current state from the layout.
         tc.getFeedbackMessageCache().requestCachedStateFromLayout(this);
     }
-    
+
     /**
      * Set the mode information for XpressNet Turnouts.
      */
@@ -202,7 +202,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
      * This method overides {@link jmri.implementation.AbstractTurnout#setCommandedState(int)}.
      */
     @Override
-    public void setCommandedState(int s) {
+    public void setCommandedStateInternal(int s) {
         if (log.isDebugEnabled()) {
             log.debug("set commanded state for XNet turnout {} to {}", getSystemName(), s);
         }
@@ -514,7 +514,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                             }
                             break;
                         }
-                        case 0: 
+                        case 0:
                             log.debug("Turnout {} EXACT feedback mode - state change from feedback, CommandedState!=KnownState - motion complete", mNumber);
                             // The second case is that we receive a message about
                             // this turnout, and this turnout does not provide
@@ -530,9 +530,9 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
             }
         }
     }
-    
+
     /**
-     * Send an "Off" message to the decoder for this output. 
+     * Send an "Off" message to the decoder for this output.
      */
     @SuppressWarnings("deprecation")    // The method getId() from the type Thread is deprecated since version 19
                                         // The replacement Thread.threadId() isn't available before version 19
@@ -562,7 +562,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
      * accordingly.
      *
      * @param l  turnout feedback item
-     * 
+     *
      * @return 0 if address matches our turnout -1 otherwise
      */
     private synchronized boolean parseFeedbackMessage(FeedbackItem l) {
@@ -586,7 +586,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                 return false;
         }
     }
-    
+
     @Override
     public void dispose() {
         this.removePropertyChangeListener(_stateListener);
@@ -679,7 +679,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
             internalState = IDLE;
         }
     }
-    
+
     /**
      * Queue a message.
      * @param m Message to send
@@ -690,7 +690,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         log.debug("adding message {} to message queue.  Current Internal State {}",m,internalState);
         // put the message in the queue
         RequestMessage msg = new RequestMessage(m, s, l);
-        // the queue is unbounded; can't throw exceptions 
+        // the queue is unbounded; can't throw exceptions
         requestList.add(msg);
         // if the state is idle, trigger the message send
         if (internalState == IDLE ) {

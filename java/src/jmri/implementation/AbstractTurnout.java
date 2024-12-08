@@ -140,11 +140,29 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * appropriate, starts a TurnoutOperator to do its thing. If there is no
      * TurnoutOperator (not required or nothing suitable) then just tell the
      * layout and hope for the best.
+     * <P>
+     * Note that sub classes who wants to override this method must override
+     * the method {@link #setCommandedStateInternal(int)} instead.
      *
      * @param s commanded state to set
      */
     @Override
-    public void setCommandedState(int s) {
+    public final void setCommandedState(int s) {
+        if (InstanceManager.getDefault(TurnoutManager.class).isUseIntervals()) {
+            setCommandedStateAtInterval(s);
+        } else {
+            setCommandedStateInternal(s);
+        }
+    }
+
+    /**
+     * Internal method for setting the commanded state.
+     * It's used by {@link #setCommandedState(int)} and
+     * {@link #setCommandedStateAtInterval(int)}.
+     *
+     * @param s commanded state to set
+     */
+    protected void setCommandedStateInternal(int s) {
         log.debug("set commanded state for turnout {} to {}", getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME),
                 (s == Turnout.CLOSED ? closedText : thrownText));
         newCommandedState(s);
@@ -194,7 +212,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 try {
                     Thread.sleep(Math.max(0L, LocalDateTime.now().until(nextWait, ChronoUnit.MILLIS))); // nextWait might have passed in the meantime
                     log.debug("back from sleep, forward on {}", LocalDateTime.now());
-                    setCommandedState(s);
+                    setCommandedStateInternal(s);
                 } catch (InterruptedException ex) {
                     log.debug("setCommandedStateAtInterval(s) interrupted at {}", LocalDateTime.now());
                     Thread.currentThread().interrupt(); // retain if needed later
@@ -205,7 +223,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             thr.start();
         } else {
             log.debug("nextWait has passed");
-            setCommandedState(s);
+            setCommandedStateInternal(s);
         }
     }
 
