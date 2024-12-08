@@ -405,7 +405,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Provide more information when selecting traininfo file.</li>
         </ul>
 
     <h3>Dispatcher System</h3>

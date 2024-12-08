@@ -1,6 +1,7 @@
 package jmri.jmrit.dispatcher;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -633,6 +634,28 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
             return s1.compareTo(s2);
         });
         return names.toArray(new String[names.size()]);
+    }
+
+    /**
+     * Get the names of all current TrainInfo files. Returns list
+     * of files and some basic details for each file
+     *.
+     * @return names as an array or an empty array if none present
+     */
+    public List<TrainInfoFileSummary> getTrainInfoFileSummaries() {
+        List<TrainInfoFileSummary> summaries = new ArrayList<>();
+        for (String fileName : getTrainInfoFileNames()) {
+            try {
+                TrainInfo ti = readTrainInfo(fileName);
+                summaries.add(new TrainInfoFileSummary(fileName, ti.getTransitName(), ti.getTrainName(),
+                        ti.getStartBlockName(), ti.getDestinationBlockName(), ti.getDccAddress()));
+            } catch (org.jdom2.JDOMException ex) {
+                summaries.add(new TrainInfoFileSummary(fileName));
+            } catch (IOException ex) {
+                summaries.add(new TrainInfoFileSummary(fileName));
+            }
+        }
+        return summaries;
     }
 
     /**
