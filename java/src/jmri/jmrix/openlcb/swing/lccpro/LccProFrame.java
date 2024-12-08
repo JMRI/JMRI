@@ -79,7 +79,8 @@ public class LccProFrame extends TwoPaneTBWindow  {
                "LccPro", JOptionPane.ERROR_MESSAGE);
             // and close the program
             // This is justified because this should never happen in a properly
-            // configured system.
+            // built application:  The existence of an LCC/OpenLCB connection
+            // should have been checked long before reaching this point.
             InstanceManager.getDefault(jmri.ShutDownManager.class).shutdown();
             return;
         }

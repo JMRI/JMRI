@@ -222,12 +222,10 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
         return retval + 5;
     }
 
-
     // drop listeners
     public void dispose() {
-        // TODO - drop the listener for node changes
+        nodestore.removePropertyChangeListener(this);
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LccProTableModel.class);
-
 }
