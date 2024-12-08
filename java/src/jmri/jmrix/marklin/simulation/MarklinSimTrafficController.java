@@ -10,6 +10,11 @@ import jmri.jmrix.marklin.MarklinReply;
  */
 public class MarklinSimTrafficController extends jmri.jmrix.marklin.MarklinTrafficController {
 
+    public MarklinSimTrafficController() {
+        super();
+        defaultUserName = "Marklin Network Simulation";
+    }
+
     @Override
     protected void forwardMessage(jmri.jmrix.AbstractMRListener client, jmri.jmrix.AbstractMRMessage m) {
         ((MarklinListener) client).message((MarklinMessage) m);
@@ -23,11 +28,6 @@ public class MarklinSimTrafficController extends jmri.jmrix.marklin.MarklinTraff
     @Override
     public void sendMarklinMessage(MarklinMessage m, MarklinListener l ) {
         notifyMessage(m, l);
-    }
-
-    @Override
-    public String getUserName() {
-        return ( adaptermemo != null ? adaptermemo.getUserName() : "Marklin Network Simulation");
     }
 
 }
