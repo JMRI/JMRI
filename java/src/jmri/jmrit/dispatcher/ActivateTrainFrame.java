@@ -1,6 +1,9 @@
 package jmri.jmrit.dispatcher;
 
+import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,9 +27,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 import jmri.Block;
 import jmri.InstanceManager;
@@ -44,7 +51,7 @@ import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JComboBoxUtil;
 import jmri.util.swing.JmriJOptionPane;
-
+import javax.swing.JTable;
 /**
  * Displays the Activate New Train dialog and processes information entered
  * there.
@@ -1104,19 +1111,74 @@ public class ActivateTrainFrame extends JmriJFrame {
     }
 
     private void loadTrainInfo(ActionEvent e) {
-        String[] names = _tiFile.getTrainInfoFileNames();
-        if (names.length > 0) {
-            //prompt user to select a single train info filename from directory list
-            Object selName = JmriJOptionPane.showInputDialog(initiateFrame,
-                    Bundle.getMessage("LoadTrainChoice"), Bundle.getMessage("LoadTrainTitle"),
-                    JmriJOptionPane.QUESTION_MESSAGE, null, names, names[0]);
-            if ((selName == null) || (((String) selName).equals(""))) {
+        List<TrainInfoFileSummary> names = _tiFile.getTrainInfoFileSummaries();
+        if (names.size() > 0) {
+            JTable table = new JTable(){
+                @Override
+                public Dimension getPreferredScrollableViewportSize() {
+                  return new Dimension(super.getPreferredSize().width,
+                      super.getPreferredScrollableViewportSize().height);
+                }
+              };
+            DefaultTableModel tm = new DefaultTableModel(
+                    new Object[]{
+                            Bundle.getMessage("FileNameColumnTitle"),
+                            Bundle.getMessage("TrainColumnTitle"),
+                            Bundle.getMessage("TransitColumnTitle"),
+                            Bundle.getMessage("StartBlockColumnTitle"),
+                            Bundle.getMessage("EndBlockColumnTitle"),
+                            Bundle.getMessage("DccColumnTitleColumnTitle")
+                    }, 0) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    //all cells false
+                    return false;
+                }
+            };
+
+            table.setModel(tm);
+            for (TrainInfoFileSummary fs: names) {
+                tm.addRow(new Object[] {fs.getFileName(),fs.getTrainName(),
+                        fs.getTransitName(),fs.getStartBlockName()
+                        ,fs.getEndBlockName(),fs.getDccAddress()});
+            }
+            JPanel jp = new JPanel(new BorderLayout());
+            TableColumnModel columnModel = table.getColumnModel();
+            table.setAutoResizeMode( JTable.AUTO_RESIZE_OFF );
+            for (int column = 0; column < table.getColumnCount(); column++) {
+                int width = 30; // Min width
+                for (int row = 0; row < table.getRowCount(); row++) {
+                    TableCellRenderer renderer = table.getCellRenderer(row, column);
+                    Component comp = table.prepareRenderer(renderer, row, column);
+                    width = Math.max(comp.getPreferredSize().width +1 , width);
+                }
+                if(width > 300)
+                    width=300;
+                columnModel.getColumn(column).setPreferredWidth(width);
+            }
+            //jp.setPreferredSize(table.getPreferredSize());
+            jp.add(table);
+            JScrollPane sp = new JScrollPane(table,
+                            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            int optionSelected = JmriJOptionPane.showOptionDialog(initiateFrame,
+                    sp, Bundle.getMessage("LoadTrainTitle"), JmriJOptionPane.OK_CANCEL_OPTION, JmriJOptionPane.PLAIN_MESSAGE,
+                    null,null,null);
+            if (optionSelected != JmriJOptionPane.OK_OPTION) {
+                //Canceled
+                return;
+            }
+            if (table.getSelectedRow() < 0) {
+                return;
+            }
+            String selName = (String)table.getModel().getValueAt(table.getSelectedRow(),0);
+            if ((selName == null) || (selName.isEmpty())) {
                 return;
             }
             //read xml data from selected filename and move it into the new train dialog box
-            _trainInfoName = (String) selName;
+            _trainInfoName = selName;
             try {
-                trainInfo = _tiFile.readTrainInfo((String) selName);
+                trainInfo = _tiFile.readTrainInfo( selName);
                 if (trainInfo != null) {
                     // process the information just read
                     trainInfoToDialog(trainInfo);
