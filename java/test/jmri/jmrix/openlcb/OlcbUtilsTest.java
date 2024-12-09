@@ -28,7 +28,7 @@ public class OlcbUtilsTest {
         XpaSystemConnectionMemo xpaMemo = Mockito.mock(XpaSystemConnectionMemo.class);
         Mockito.when(xpaMemo.getSystemPrefix()).thenReturn("X");
         Assertions.assertFalse( OlcbUtils.isOlcbBean(new XpaTurnout(1,xpaMemo)));
-        Assertions.assertTrue( OlcbUtils.isOlcbBean(new OlcbLight("ML1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9")));
+        Assertions.assertTrue( OlcbUtils.isOlcbBean(new OlcbLight("M","1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", null)));
     }
 
 }

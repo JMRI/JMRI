@@ -140,7 +140,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         JLabel find = new JLabel("Find Event: ");
         findpanel.add(find);
 
-        findID = EventIdTextField.getEventIdTextField();
+        findID = new EventIdTextField();
         findID.addActionListener(this::findRequested);
         findID.addKeyListener(new KeyListener() {
             @Override

@@ -6,8 +6,10 @@ import java.util.regex.Pattern;
 import javax.annotation.CheckReturnValue;
 
 import jmri.NamedBean.BadSystemNameException;
+
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 
 import org.openlcb.EventID;
 
@@ -70,9 +72,10 @@ public final class OlcbAddress {
      * Construct from string without leading system or type letters
      * @param s hex coded string of address
      */
-    public OlcbAddress(String s) {
+    public OlcbAddress(String s, final CanSystemConnectionMemo memo) {
         // This is done manually, rather than via regular expressions, for performance reasons.
 
+        // check for special addressing forms
         if (s.startsWith("T")) {
             // leading T, so convert to numeric form from turnout number
             int from;
@@ -111,8 +114,30 @@ public final class OlcbAddress {
 
         // numeric address string format
         if (aString.contains(";")) {
-            // multi-part address; leave match false and aFrame null
+            // multi-part address; leave match false and aFrame null; only aString has content
             // will later be split up and parsed with #split() call
+            return;
+        }
+        
+        // check for name vs numeric address formats
+        
+        OlcbEventNameStore nameStore = null;
+        if (memo != null) { 
+            nameStore = memo.get(OlcbEventNameStore.class);
+        }
+        EventID eid;
+        if (nameStore != null && (eid = nameStore.getEventID(s)) != null) {
+            // name form
+            // load the event ID into the aFrame c.f. OlcbAddress(EventID) ctor
+            byte[] contents = eid.getContents();
+            aFrame = new int[contents.length];
+            int i = 0;
+            for (byte b : contents) {
+                aFrame[i++] = b;
+            }
+            match = true;
+            // leave aString as original argument
+            
         } else if (aString.contains(".")) {
             // dotted form, 7 dots
             String[] terms = s.split("\\.");
@@ -157,6 +182,11 @@ public final class OlcbAddress {
             return false;
         }
         OlcbAddress opp = (OlcbAddress) r;
+        if (this.aFrame == null || opp.aFrame == null) {
+            // one or the other has just a string, e.g A;B form.
+            // compare strings
+            return this.aString.equals(opp.aString);
+        }
         if (opp.aFrame.length != this.aFrame.length) {
             return false;
         }
@@ -253,7 +283,7 @@ public final class OlcbAddress {
      */
      @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
         justification = "Documented API, no resources to improve")
-    public OlcbAddress[] split() {
+    public OlcbAddress[] split(final CanSystemConnectionMemo memo) {
         // reject strings ending in ";"
         if (aString.endsWith(";")) {
             return null;
@@ -273,7 +303,7 @@ public final class OlcbAddress {
             // too expensive to do full regex check here, as this is used a lot in e.g. sorts
             // if (!getMatcher().reset(pStrings[i]).matches()) return null;
 
-            retval[i] = new OlcbAddress(pStrings[i]);
+            retval[i] = new OlcbAddress(pStrings[i], memo);
             if (!retval[i].match) {
                 return null;
             }
@@ -281,8 +311,8 @@ public final class OlcbAddress {
         return retval;
     }
 
-    public boolean checkSplit() {
-        return (split() != null);
+    public boolean checkSplit( final CanSystemConnectionMemo memo) {
+        return (split(memo) != null);
     }
 
     int[] elements() {
@@ -338,12 +368,12 @@ public final class OlcbAddress {
      */
     @Nonnull
     public static String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale,
-        @Nonnull String prefix) throws BadSystemNameException {
+        @Nonnull String prefix, final CanSystemConnectionMemo memo) throws BadSystemNameException {
         String oAddr = name.substring(prefix.length());
-        OlcbAddress a = new OlcbAddress(oAddr);
-        OlcbAddress[] v = a.split();
+        OlcbAddress a = new OlcbAddress(oAddr, memo);
+        OlcbAddress[] v = a.split(memo);
         if (v == null) {
-            throw new BadSystemNameException(locale,"InvalidSystemNameCustom","Did not find usable system name: " + name + " to a valid Olcb address");
+            throw new BadSystemNameException(locale,"InvalidSystemNameCustom","Did not find usable system name: " + name + " does not convert to a valid Olcb address");
         }
         switch (v.length) {
             case 1:
@@ -365,10 +395,10 @@ public final class OlcbAddress {
      */
     @Nonnull
     public static String validateSystemNameFormat2Part(@Nonnull String name, @Nonnull java.util.Locale locale,
-        @Nonnull String prefix) throws BadSystemNameException {
+        @Nonnull String prefix, final CanSystemConnectionMemo memo) throws BadSystemNameException {
         String oAddr = name.substring(prefix.length());
-        OlcbAddress a = new OlcbAddress(oAddr);
-        OlcbAddress[] v = a.split();
+        OlcbAddress a = new OlcbAddress(oAddr, memo);
+        OlcbAddress[] v = a.split(memo);
         if (v == null) {
             throw new BadSystemNameException(locale,"InvalidSystemNameCustom","Did not find usable system name: " + name + " to a valid Olcb address");
         }
@@ -388,11 +418,11 @@ public final class OlcbAddress {
      * @return true if suffixes match, else false.
      */
     @CheckReturnValue
-    public static int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2) {
+    public static int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, final CanSystemConnectionMemo memo) {
 
         // extract addresses
-        OlcbAddress[] array1 = new OlcbAddress(suffix1).split();
-        OlcbAddress[] array2 = new OlcbAddress(suffix2).split();
+        OlcbAddress[] array1 = new OlcbAddress(suffix1, memo).split(memo);
+        OlcbAddress[] array2 = new OlcbAddress(suffix2, memo).split(memo);
 
         // compare on content
         for (int i = 0; i < Math.min(array1.length, array2.length); i++) {

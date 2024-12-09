@@ -9,7 +9,6 @@ import jmri.NamedBean;
 import jmri.NamedBeanPropertyDescriptor;
 import jmri.managers.AbstractLightManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import org.openlcb.OlcbInterface;
 
 /**
  *
@@ -76,7 +75,7 @@ public class OlcbLightManager extends AbstractLightManager {
     @Nonnull
     protected Light createNewLight(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
-        OlcbLight l = new OlcbLight(getSystemPrefix(), addr, memo.get(OlcbInterface.class));
+        OlcbLight l = new OlcbLight(getSystemPrefix(), addr, (CanSystemConnectionMemo)memo);
         l.setUserName(userName);
         synchronized (pendingLights) {
             if (isLoading) {
@@ -126,7 +125,7 @@ public class OlcbLightManager extends AbstractLightManager {
             return false;
         }
         try {
-            OlcbAddress.validateSystemNameFormat(address,java.util.Locale.getDefault(),getSystemNamePrefix());
+            OlcbAddress.validateSystemNameFormat(address,java.util.Locale.getDefault(),getSystemNamePrefix(), (CanSystemConnectionMemo)memo);
         }
         catch ( jmri.NamedBean.BadSystemNameException ex ){
             throw new IllegalArgumentException(ex.getMessage());
@@ -142,7 +141,7 @@ public class OlcbLightManager extends AbstractLightManager {
     @Nonnull
     public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
         super.validateSystemNameFormat(name,locale);
-        name = OlcbAddress.validateSystemNameFormat(name,locale,getSystemNamePrefix());
+        name = OlcbAddress.validateSystemNameFormat(name,locale,getSystemNamePrefix(), (CanSystemConnectionMemo) memo);
         return name;
     }
     
