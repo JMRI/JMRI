@@ -10,8 +10,6 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 
 import org.openlcb.EventID;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 
@@ -21,24 +19,24 @@ import javax.annotation.Nonnull;
  * OpenLCB event messages have header information, plus an EventID in the data
  * part. JMRI maps these into address strings.
  * <p>
- * Forms:
+ * String forms:
  * <dl>
+ * <dt>Special case for DCC Turnout addressing:  Tnnn where nnn is a decimal number
+ *
  * <dt>Full hex string preceeded by "x"<dd>Needs to be pairs of digits: 0123,
  * not 123
+  *
  * <dt>Full 8 byte ID as pairs separated by "."
  * </dl>
+ * <p>
  * Note: the {@link #check()} routine does a full, expensive
  * validity check of the name.  All other operations
  * assume correctness, diagnose some invalid-format strings, but
  * may appear to successfully handle other invalid forms.
  *
- * @author Bob Jacobsen Copyright (C) 2008, 2010, 2018
+ * @author Bob Jacobsen Copyright (C) 2008, 2010, 2018, 2024
  */
-public class OlcbAddress {
-
-    // groups
-    static final int GROUP_FULL_HEX = 1; // xhhhhhh
-    static final int GROUP_DOT_HEX = 3; // dotted hex form
+public final class OlcbAddress {
 
     static final String singleAddressPattern = "([xX](\\p{XDigit}\\p{XDigit}){1,8})|((\\p{XDigit}?\\p{XDigit}.){7}\\p{XDigit}?\\p{XDigit})";
 
@@ -49,11 +47,9 @@ public class OlcbAddress {
         return hCode;
     }
 
-    String aString;
-    int[] aFrame = null;
-    boolean match = false;
-
-    static final int NODEFACTOR = 100000;
+    private String aString;         // String value of the address
+    private int[] aFrame = null;    // int[8] of event ID; if null, aString might be two addresses
+    private boolean match = false;  // true if address properly parsed; false (may) mean two-part address
 
     /**
      * Construct from OlcbEvent.
@@ -77,8 +73,8 @@ public class OlcbAddress {
     public OlcbAddress(String s) {
         // This is done manually, rather than via regular expressions, for performance reasons.
 
-        // check for leading T, if so convert to numeric form
         if (s.startsWith("T")) {
+            // leading T, so convert to numeric form from turnout number
             int from;
             try {
                 from = Integer.parseInt(s.substring(1));
@@ -92,7 +88,23 @@ public class OlcbAddress {
             long event = 0x0101020000FF0000L | (AAA << 9) | (aaaaaa << 3) | (DD << 1);
 
             s = String.format("%016X;%016X", event, event+1);
-            log.debug(" converted to {}", s);
+            log.trace(" Turnout form converted to {}", s);
+        } else if (s.startsWith("S")) {
+            // leading S, so convert to numeric form from sensor number
+            int from;
+            try {
+                from = Integer.parseInt(s.substring(1));
+            } catch (NumberFormatException e) {
+                from = 0;
+            }
+
+            from = 0xFFF & (from - 1); // 1 based name to 0 based network, 12 bit value
+            
+            long event1 = 0x0101020000FB0000L | from; // active/on
+            long event2 = 0x0101020000FA0000L | from; // inactive/off
+ 
+            s = String.format("%016X;%016X", event1, event2);
+            log.trace(" Sensor form converted to {}", s);
         }
 
         aString = s;
@@ -100,6 +112,7 @@ public class OlcbAddress {
         // numeric address string format
         if (aString.contains(";")) {
             // multi-part address; leave match false and aFrame null
+            // will later be split up and parsed with #split() call
         } else if (aString.contains(".")) {
             // dotted form, 7 dots
             String[] terms = s.split("\\.");
@@ -140,7 +153,7 @@ public class OlcbAddress {
         if (r == null) {
             return false;
         }
-        if (!(r.getClass().equals(this.getClass()))) {
+        if (!(r.getClass().equals(this.getClass()))) { // final class simplifies this
             return false;
         }
         OlcbAddress opp = (OlcbAddress) r;
@@ -159,7 +172,7 @@ public class OlcbAddress {
     public int hashCode() {
         int ret = 0;
         for (int value : this.aFrame) {
-            ret += value;
+            ret += value*8; // don't want to overflow int, do want to spread out
         }
         return ret;
     }
@@ -168,11 +181,11 @@ public class OlcbAddress {
         // if neither matched, just do a lexical sort
         if (!match && !opp.match) return aString.compareTo(opp.aString);
 
-        // match sorts before non-matched
+        // match (single address) sorts before non-matched (double address)
         if (match && !opp.match) return -1;
         if (!match && opp.match) return +1;
 
-        // usual case: comparing on content
+        // both matched, usual case: comparing on content
         for (int i = 0; i < Math.min(aFrame.length, opp.aFrame.length); i++) {
             if (aFrame[i] != opp.aFrame[i]) return Integer.signum(aFrame[i] - opp.aFrame[i]);
         }
@@ -277,10 +290,16 @@ public class OlcbAddress {
     }
 
     @Override
+    /**
+     * @return The string that was used to create this address
+     */
     public String toString() {
         return aString;
     }
 
+    /**
+     * @return The canonical form of 0x1122334455667788
+     */
     public String toCanonicalString() {
         String retval = "x";
         for (int value : aFrame) {
@@ -384,7 +403,7 @@ public class OlcbAddress {
         return Integer.signum(array1.length - array2.length);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbAddress.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbAddress.class);
 
 }
 

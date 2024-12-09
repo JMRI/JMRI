@@ -69,6 +69,11 @@
       INACTIVE shortly after. This can be used for events that indicate momentary things on the
       layout like "it's noon".</p>
 
+      <p>As a special case, layout sensors connected via a bridge to an OpenLCB network
+      can be addressed as e.g. MTS123. Note the S in the 3rd position for "Sensor addressing". JMRI will
+      then automatically generate the correct well-known events to represent active/on
+      and inactive/off for the sensor.
+
       <p>When "Show System-specific columns" is checked in the table, there are two additional
       columns shown that are specific to OpenLCB Sensors:
       <dl>
