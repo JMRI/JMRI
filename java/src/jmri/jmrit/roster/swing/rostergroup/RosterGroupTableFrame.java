@@ -41,12 +41,14 @@ public class RosterGroupTableFrame extends jmri.util.JmriJFrame {
         dataModel = model;
 
         dataTable = new JTable(dataModel);
+        
+        dataTable.setAutoCreateRowSorter(true);  // user can pick sort column
+        
         TableRowSorter<RosterGroupTableModel> sorter = new TableRowSorter<>(dataModel);
         dataTable.setRowSorter(sorter);
 
         sorter.setComparator(RosterGroupTableModel.IDCOL, new jmri.util.AlphanumComparator());
         sorter.toggleSortOrder(RosterGroupTableModel.IDCOL);
-        dataTable = new JTable(dataModel);
         
         dataScroll = new JScrollPane(dataTable);
 
