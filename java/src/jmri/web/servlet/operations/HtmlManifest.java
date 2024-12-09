@@ -315,6 +315,7 @@ public class HtmlManifest extends HtmlTrainCommon {
             return ""; // print nothing for local move, see dropCar()
         }
         StringBuilder builder = new StringBuilder();
+        builder.append("<span style=\"color: " + Setup.getPickupTextColor() + ";\">");
         builder.append(Setup.getPickupCarPrefix()).append(" ");
         for (String attribute : format) {
             if (!attribute.trim().isEmpty()) {
@@ -347,8 +348,10 @@ public class HtmlManifest extends HtmlTrainCommon {
     protected String dropCar(JsonNode car, String[] format, boolean isLocal) {
         StringBuilder builder = new StringBuilder();
         if (!isLocal) {
+            builder.append("<span style=\"color: " + Setup.getDropTextColor() + ";\">");
             builder.append(Setup.getDropCarPrefix()).append(" ");
         } else {
+            builder.append("<span style=\"color: " + Setup.getLocalTextColor() + ";\">");
             builder.append(Setup.getLocalPrefix()).append(" ");
         }
         log.debug("dropCar {}", car);
@@ -394,6 +397,7 @@ public class HtmlManifest extends HtmlTrainCommon {
 
     protected String dropEngine(JsonNode engine) {
         StringBuilder builder = new StringBuilder();
+        builder.append("<span style=\"color: " + Setup.getDropTextColor() + ";\">");
         builder.append(Setup.getDropEnginePrefix()).append(" ");
         for (String attribute : Setup.getDropEngineMessageFormat()) {
             if (!attribute.trim().isEmpty()) {
@@ -424,6 +428,7 @@ public class HtmlManifest extends HtmlTrainCommon {
 
     protected String pickupEngine(JsonNode engine) {
         StringBuilder builder = new StringBuilder();
+        builder.append("<span style=\"color: " + Setup.getPickupTextColor() + ";\">");
         builder.append(Setup.getPickupEnginePrefix()).append(" ");
         log.debug("PickupEngineMessageFormat: {}", (Object) Setup.getPickupEngineMessageFormat());
         for (String attribute : Setup.getPickupEngineMessageFormat()) {
