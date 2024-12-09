@@ -1,5 +1,7 @@
 package jmri.jmrix.marklin.simulation;
 
+import jmri.jmrix.marklin.MarklinListenerScaffold;
+import jmri.jmrix.marklin.MarklinMessage;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -10,17 +12,33 @@ import org.junit.jupiter.api.*;
  */
 public class MarklinSimTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
 
+    private MarklinSimTrafficController mtc = null;
+
+    @Test
+    public void testSendMarklinMessage() {
+        MarklinListenerScaffold mls = new MarklinListenerScaffold();
+        mtc.addMarklinListener(mls);
+        mtc.sendMarklinMessage( MarklinMessage.getEnableMain(), null);
+        Assertions.assertEquals(1, mls.getMarklinMessageList().size());
+        Assertions.assertEquals(MarklinMessage.getEnableMain(), mls.getMarklinMessageList().get(0));
+        mtc.removeMarklinListener(mls);
+        mtc.sendMarklinMessage( MarklinMessage.getKillMain(), null);
+        Assertions.assertEquals(1, mls.getMarklinMessageList().size());
+    }
+
     @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        tc = new MarklinSimTrafficController();
+        mtc = new MarklinSimTrafficController();
+        tc = mtc;
     }
 
     @AfterEach
     @Override
     public void tearDown() {
-        tc.terminateThreads();
+        mtc.dispose();
+        mtc = null;
         tc = null;
         JUnitUtil.tearDown();
     }
