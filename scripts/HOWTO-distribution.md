@@ -387,11 +387,11 @@ Jenkins will be creating files shortly at the [CI server](https://builds.jmri.or
 ```
 The release-5.9.7 branch has been created.
 
-Maintainers, please set the (next series, i.e. 5.9.8) milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
+Maintainers, please set the (next series, i.e. 5.11.1) milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
 
 Jenkins will be creating files shortly at the [CI server](https://builds.jmri.org/jenkins/job/TestReleases/job/5.9.7/)
 
-If you're developing any additional (post-5.9.7) changes that you want in the JMRI 5.8 production release, please start from this branch, i.e. do `git fetch; git checkout release-5.9.7; git checkout -b myBranchName` to start your work.
+If you're developing any additional (post-5.9.7) changes that you want in the JMRI 5.10 production release, please start from this branch, i.e. do `git fetch; git checkout release-5.9.7; git checkout -b myBranchName` to start your work.
 ```
 
 

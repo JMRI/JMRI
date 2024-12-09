@@ -35,13 +35,15 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
     global trains
     global time_last_train
 
-    def __init__(self, station_from_name, station_to_name, train_name, graph, stop_mode = None):
+    def __init__(self, station_from_name, station_to_name, train_name, graph, stop_mode = None, mode = "not_scheduling"):
         self.logLevel = 0
+        if self.logLevel > 0: print "station_from_name", station_from_name, "station_to_name",station_to_name, "train_name", train_name, "stop_mode", stop_mode
         self.station_from_name = station_from_name
         self.station_to_name = station_to_name
         self.train_name = train_name
         self.graph = graph
         self.stop_mode = stop_mode
+        self.mode = mode
 
     def setup(self):
         return True
@@ -52,29 +54,37 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 1: print "move between stations in the thread"
         if self.logLevel > 1: print"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 
-        self.move_between_stations(self.station_from_name, self.station_to_name, self.train_name, self.graph)
+        result = self.move_between_stations(self.station_from_name, self.station_to_name, self.train_name, self.graph, self.mode)
         return False
 
-    def move_between_stations(self, station_from_name, station_to_name, train_name, graph):
-        # print "move_between_stations"
+    def move_between_stations(self, station_from_name, station_to_name, train_name, graph, mode = "not_scheduling"):
+        if self.logLevel > 0: print "move_between_stations"
         if self.logLevel > 0: print "Moving from " + station_from_name + " to " + station_to_name
         i = 0
         if self.logLevel > 0: print "checking train in start block"
-        while self.check_train_in_start_block(train_name, station_from_name) == False:
-            if i > 2: # allow some time to recover
-                title = ""
-                msg = "Cannot run train, train not in start block\n" + \
-                      train_name + " should be in block " + station_from_name + \
-                      "\nmove it there manually and it might recover"
-                opt1 = "have moved train, try again"
-                opt2 = "cancel moving train"
-                reply = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
-                if reply == opt1:
-                    pass
-                else:  #opt2
-                    return
-            self.waitMsec(5000)
-            i += 1
+        # if mode != "scheduling":
+        #     while self.check_train_in_start_block(train_name, station_from_name) == False:
+        #         if i > 2: # allow some time to recover
+        #             title = ""
+        #             msg = "Cannot run train, train not in start block\n" + \
+        #                   train_name + " should be in block " + station_from_name + \
+        #                   "\nmove it there manually and it might recover"
+        #             opt1 = "have moved train, try again"
+        #             opt2 = "cancel moving train"
+        #             reply = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
+        #             if reply == opt1:
+        #                 pass
+        #             else:  #opt2
+        #                 return
+        #         self.waitMsec(5000)
+        #         i += 1
+        # else:
+        #     #scheduling
+        #     # want to wait for the scheduling margin before cancelling the schedule
+        #
+        #     # assume for now we are cancelling immediately
+        #     return False
+
         # print "move_between_stations a"
         if self.logLevel > 0: print "train is in start block"
         #need to look up the required transit in the graph
@@ -185,17 +195,20 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                 if result == False:
                     if str(train_name) in trains_dispatched:
                         trains_dispatched.remove(str(train_name))
-                if iter >= 1: #allow one retry without prompting
-                    msg = "Failure to dispatch train " + train + " retrying moving from " + from_name + " to " + to_name
-                    title = ""
-                    opt1 = "try again"
-                    opt2 = "cancel"
-                    reply = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
-                    if opt1:
-                        pass
-                    else:
-                        break
-                iter += 1
+                if mode != "scheduling":
+                    if iter >= 1: #allow one retry without prompting
+                        msg = "Failure to dispatch train " + train + " retrying moving from " + from_name + " to " + to_name
+                        title = ""
+                        opt1 = "try again"
+                        opt2 = "cancel"
+                        reply = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
+                        if opt1:
+                            pass
+                        else:
+                            break
+                    iter += 1
+                else:
+                    break
             # print "move_between_stations h"
             #store the current edge for next move
             train["edge"] = e
@@ -502,7 +515,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                 DF.terminateActiveTrain(active_train)
                 train_name == value
                 if train_name in trains:
-                    trains.remove(train_name)
+                    trains.pop(train_name)
             return False  #No train allocated
         else:
             DF = None
@@ -817,10 +830,6 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                 if self.logLevel > 0: print block.getUserName() , "is not clear (extracolor) value =", block.getSensor().getKnownState(), index
                 break
         if self.logLevel > 0: print "route_is_occupied", route_is_occupied; print
-        # if route_is_clear == False:
-        #     print "Train ON TRAINSIT",transit_name, " WAITING"
-
-        # print "trains_allocated", trains_allocated
 
         for train_name in trains_allocated:
             train = trains[train_name]
@@ -1336,8 +1345,6 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         #print "g.g_stopping.edgesOf(station_block_name)",g.g_stopping.edgesOf(station_block_name)
         break1 = False
         #print "no edges", g.g_stopping.edgeSet()
-        # for e in g.g_stopping.edgeSet():
-        #     print "e" , e
         for e in g.g_stopping.edgeSet():
             j+=1
             LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
