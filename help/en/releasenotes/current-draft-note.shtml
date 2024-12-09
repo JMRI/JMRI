@@ -154,6 +154,8 @@
                     <li>Improved 
                         <a href="http://jmri.org/help/en/package/jmri/jmrix/openlcb/swing/monitor/MonitorPane.shtml">help page</a>.
                     </ul></li>
+                <li>Sensors connected via a bridge can now be accessed via a "Snnn" 
+                    hardware address, similar to the "Tnnn" address used for Turnouts.
             </ul>
 
         <h4>Powerline</h4>
