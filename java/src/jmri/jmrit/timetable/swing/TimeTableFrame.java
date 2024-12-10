@@ -3054,7 +3054,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                     showInfoMessage( this, Bundle.getMessage("NodeEditTitle"), // NOI18N
                             Bundle.getMessage("NodeEditText"), // NOI18N
                             getClassName(),
-                            "SkipTimeTableEditMessage"); // NOI18N
+                            "SkipTimeTableEditMessage", true, false); // NOI18N
         }
     }
 

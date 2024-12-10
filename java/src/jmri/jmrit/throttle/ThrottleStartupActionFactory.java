@@ -19,13 +19,15 @@ public final class ThrottleStartupActionFactory extends AbstractStartupActionFac
             return Bundle.getMessage(locale, "StartupLoadDefaultXmlThrottlesLayoutAction");
         } else if (clazz.equals(ThrottleCreationAction.class)) {
             return Bundle.getMessage(locale, "MenuItemNewThrottle");
+        } else if (clazz.equals(ThrottlesListAction.class)) {
+            return Bundle.getMessage(locale, "ThrottleToolBarOpenThrottleListToolTip");
         }
         throw new IllegalArgumentException(clazz.getName() + " is not supported by " + this.getClass().getName());
     }
 
     @Override
     public Class<?>[] getActionClasses() {
-        return new Class[]{LoadDefaultXmlThrottlesLayoutAction.class, ThrottleCreationAction.class};
+        return new Class[]{LoadDefaultXmlThrottlesLayoutAction.class, ThrottleCreationAction.class, ThrottlesListAction.class};
     }
     
 }

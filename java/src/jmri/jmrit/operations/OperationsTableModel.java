@@ -22,6 +22,7 @@ public abstract class OperationsTableModel extends javax.swing.table.AbstractTab
         table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
         table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
         table.setDefaultRenderer(Object.class, new MyTableCellRenderer());
+        table.setDefaultRenderer(Integer.class, new MyTableCellRenderer());
     }
 
     protected Color getForegroundColor(int row) {

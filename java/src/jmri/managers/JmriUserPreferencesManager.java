@@ -950,7 +950,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
                     mc.getChildren("option").stream().forEach(option -> {
                         int value = 0;
                         try {
-                            option.getAttribute(VALUE).getIntValue();
+                            value = option.getAttribute(VALUE).getIntValue();
                         } catch (DataConversionException ex) {
                             log.error("failed to convert positional attribute");
                         }

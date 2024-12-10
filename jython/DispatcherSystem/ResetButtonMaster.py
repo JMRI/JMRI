@@ -911,7 +911,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         opt2 = "several routes"
         reply = self.od.customQuestionMessage2str(msg, title, opt1, opt2)
         if reply == opt1:
-            self.run_route()
+            self.run_route_1()
         else:
             self.run_routes()
         sensors.getSensor("runRouteSensor").setKnownState(INACTIVE)
@@ -969,7 +969,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             if self.logLevel > 0: print button_sensor_name + "= None"
         return button_sensor
 
-    def run_route(self):
+    def run_route_1(self):
         global trains_dispatched
         # list_items = ("Run Route", "Cancel")
         # title = "choose option"
@@ -1010,12 +1010,12 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             if self.od.CLOSED_OPTION == True:
                 return
             if s == opt1:
-                xx = [str(station_block_name) for station_block_name in g.station_block_list \
-                      if blocks.getBlock(station_block_name).getValue()==engine]
+                # xx = [str(station_block_name) for station_block_name in g.station_block_list \
+                #       if blocks.getBlock(station_block_name).getValue()==engine]
                 if opt1 == opt1a:
                     station_where_engine_is = [str(station_block_name) for station_block_name in g.station_block_list \
                                                if blocks.getBlock(station_block_name).getValue()==engine][0]
-                    list_items = [l for l in list_items if str(l.getName()).startswith(str(station_where_engine_is))]
+                    list_items = [l1 for l1 in list_items if str(l1.getName()).startswith(str(station_where_engine_is))]
                     s = opt1 = opt1b
                 else:
                     list_items = RouteManager.getRoutesByNameList()
@@ -1526,7 +1526,7 @@ class createandshowGUI2(TableModelListener):
             route_name = str(self.model.data[row][route_col])
             delay_val = str(self.model.data[row][delay_col])
             if train_name != "" and route_name != "" and delay_val != "":
-                self.run_route(row, self.model, self, self.class_ResetButtonMaster)
+                self.run_route_2(row, self.model, self, self.class_ResetButtonMaster)
             else:
                 msg = "not running route, train, route or delay is not set"
                 OptionDialog().displayMessage(msg,"")
@@ -1535,7 +1535,7 @@ class createandshowGUI2(TableModelListener):
             self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING))
 
 
-    def run_route(self, row, model, class_createandshowGUI2, class_ResetButtonMaster):
+    def run_route_2(self, row, model, class_createandshowGUI2, class_ResetButtonMaster):
         return
         [train_col, route_col, run_route_col, task_col, delay_col, repetition_col] = [0, 1, 2, 3, 4, 5]
         route_name = str(model.getValueAt(row, route_col))
@@ -1663,7 +1663,7 @@ class MyModelListener1(TableModelListener):
         elif column == 1:       # sections
             pass
         elif column == run_route_col:
-            class_createandshowGUI2.run_route(row, model, class_createandshowGUI2, class_ResetButtonMaster)
+            class_createandshowGUI2.run_route_2(row, model, class_createandshowGUI2, class_ResetButtonMaster)
 
 class ComboBoxCellRenderer1 (TableCellRenderer):
 

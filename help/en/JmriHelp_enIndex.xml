@@ -328,6 +328,8 @@
 
  <indexitem text="Layout Editor (Panels) " target="package.jmri.jmrit.display.LayoutEditor"/>
 
+ <indexitem text="LccPro " target="package.apps.gui3.lccpro.LccPro"/>
+
  <indexitem text="LDT Signals " target="html.tools.signaling.ldt.output"/>
 
  <indexitem text="Lenz XpressNet - Hardware, Connection, Tools " target="html.hardware.XPressNet.index"/>

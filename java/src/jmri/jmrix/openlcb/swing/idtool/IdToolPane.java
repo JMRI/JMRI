@@ -97,7 +97,7 @@ public class IdToolPane extends jmri.util.swing.JmriPanel
     @Override
     public String getTitle() {
         if (memo != null) {
-            return (memo.getUserName() + " ID Tool");
+            return (memo.getUserName() + " Ident Tool");
         }
         return getTitle(Bundle.getMessage("TitleIdTool"));
     }
@@ -180,7 +180,7 @@ public class IdToolPane extends jmri.util.swing.JmriPanel
     public static class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
 
         public Default() {
-            super("Openlcb ID Tool",
+            super("Openlcb Ident Tool",
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     IdToolPane.class.getName(),
                     jmri.InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));

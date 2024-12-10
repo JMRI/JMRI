@@ -839,7 +839,7 @@ public class VariableTableModelTest {
         String[] args = {"CV", "Name"};
         VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p)) {
             @Override
-            void reportBogus() {
+            void reportBogus(Element elem) {
             }
         };
 

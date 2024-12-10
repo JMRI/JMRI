@@ -436,7 +436,7 @@ public class TrainSwitchLists extends TrainCommon {
             for (Location loc : locationManager.getLocationsByNameList()) {
                 if (!loc.getSplitName().equals(location.getSplitName()))
                     continue;
-                for (Track track : loc.getTracksByNameList(null)) {
+                for (Track track : loc.getTracksByBlockingOrderList(null)) {
                     String trackName = track.getSplitName();
                     if (trackNames.contains(trackName))
                         continue;
