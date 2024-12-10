@@ -17,6 +17,7 @@ import jmri.util.JmriJFrame;
 import jmri.util.swing.WrapLayout;
 
 import org.openlcb.NodeID;
+import org.openlcb.EventID;
 import org.openlcb.OlcbInterface;
 import org.openlcb.cdi.impl.ConfigRepresentation;
 import org.openlcb.cdi.swing.CdiPanel;
@@ -204,6 +205,28 @@ public class ClientActions {
                 }
                 log.debug("make sensor MS{} [{}]", ev, mdesc);
             }
+
+            /** Convert a String into an EventID, doing any additional local
+             * dealiasing required.
+             * @param content Content to convert, e.g. from a text component
+             * @return eventID that represents the content
+             */
+             @Override
+             public EventID getEventIDFromString(String content) {
+                log.info("getEventIDFromString {} {}", content, new EventID(content));
+                return new EventID(content);
+             }
+    
+            /** Convert an EventID into a String, doing any additional local
+             * aliasing required.
+             * @param event EventID to convert, e.g. from reading a node
+             * @return local representation fo that EventID, often just the dotted hex
+             */
+             @Override
+             public String getStringFromEventID(EventID event) {
+                log.info("getStringFromEventID {}", event, memo);
+                return event.toShortString();  
+             }
 
             JPanel gpane = null;
             JTextField desc = null;
