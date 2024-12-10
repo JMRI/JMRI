@@ -1,4 +1,4 @@
-package jmri.jmrit.symbolicprog;
+package jmri.jmrit.z21server;
 
 import java.util.Locale;
 
@@ -13,9 +13,6 @@ public class BundleTest  {
 
     @Test
     public void testGoodKeys() {
-        Assertions.assertEquals("Read", Bundle.getMessage("ButtonRead"));
-        Assertions.assertEquals("Tools", Bundle.getMessage("MenuTools"));
-
         Assertions.assertEquals("(none)", Bundle.getMessage("none"));
         Assertions.assertEquals("No locomotive detected (301);", Bundle.getMessage("NoLocoDetected"));
         Assertions.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));
