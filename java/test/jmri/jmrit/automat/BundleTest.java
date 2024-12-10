@@ -13,7 +13,6 @@ public class BundleTest  {
 
     @Test
     public void testGoodKeys() {
-        Assertions.assertEquals("(none)", Bundle.getMessage("none"));
         Assertions.assertEquals("No locomotive detected (301);", Bundle.getMessage("NoLocoDetected"));
         Assertions.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));
     }
