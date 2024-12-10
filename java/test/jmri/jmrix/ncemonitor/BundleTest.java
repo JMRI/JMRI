@@ -1,5 +1,4 @@
-package jmri.jmrix.marklin;
-
+package jmri.jmrix.ncemonitor;
 
 import java.util.Locale;
 
@@ -12,7 +11,8 @@ import org.junit.jupiter.api.*;
  */
 public class BundleTest  {
 
-    @Test public void testGoodKeys() {
+    @Test
+    public void testGoodKeys() {
         Assertions.assertEquals("(none)", Bundle.getMessage("none"));
         Assertions.assertEquals("No locomotive detected (301);", Bundle.getMessage("NoLocoDetected"));
         Assertions.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));
