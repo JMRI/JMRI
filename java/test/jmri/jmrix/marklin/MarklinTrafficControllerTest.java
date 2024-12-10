@@ -14,7 +14,7 @@ public class MarklinTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCo
     @Override
     @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         tc = new MarklinTrafficController();
     }
     
