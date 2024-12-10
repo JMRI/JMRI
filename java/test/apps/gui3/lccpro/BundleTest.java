@@ -1,4 +1,4 @@
-package apps;
+package apps.gui3.lccpro;
 
 import java.util.Locale;
 
@@ -15,7 +15,6 @@ public class BundleTest  {
     public void testGoodKeys() {
         Assertions.assertEquals("No locomotive detected (301);", Bundle.getMessage("NoLocoDetected"));
         Assertions.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));
-        Assertions.assertEquals("File", Bundle.getMessage("MenuFile"));
     }
 
     @Test
