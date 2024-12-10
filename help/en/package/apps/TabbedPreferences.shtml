@@ -417,13 +417,30 @@
       <h2 id="Messages">Messages</h2>
 
       <div>
-        <a href="images/PrefsMessages.png"><img src="images/PrefsMessages.png" height="194" width=
-        "479" class="floatRight" alt="JMRI v4.17 Messages Prefs tab"></a>
-        <p>This allows you to change the way that information and warning messages are displayed in
-        JMRI.</p>
+        <p>Some of the message dialogs include an option to ignore the message in the future. They
+        provide a checkbox with either <em>Skip message in future?</em> or <em>Remember this setting
+        for next time?</em> as the description.  If the checkbox is selected, the dialog will no
+        longer appear. A second dialog is displayed with a reminder to use this preference to
+        re-display the suppressed message.  This reminder can also be suppressed.</p>
 
-        <p>It will also allow you to configure a default responses and the question being
-        displayed.</p>
+        <p>The Messages preference provides the ability to <strong>undo</strong> the selections.  It
+        can also be used to manually set the preferred settings.</p>
+
+        <p>The Messages preference will show 17 tabs, one for each standard item such sensor or
+        turnout.  Each tab will show the possible messages that can be displayed.  Active Messages
+        will have an active checkbox or the current combo box selection.  There is also a
+        <strong>Misc items</strong> tab for messages that are not related to the standard items.
+        With the exception of the fixed entry for <strong>User Preferences</strong> (the second
+        dialog), these will only be shown when active.</p>
+
+        <p>THe <strong>Misc items</strong> tab also includes the <strong>Tabs Option</strong>.  When
+        the option is selected, only the standard tabs with active messages are displayed.</p>
+
+        <div style="margin-left: 2em">
+          <a href="images/PrefsMessages.png"><img src="images/PrefsMessages.png"
+          alt="Messages Prefs tab"></a>
+        </div>
+
       </div>
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 

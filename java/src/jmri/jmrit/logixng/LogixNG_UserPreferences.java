@@ -10,6 +10,7 @@ import java.util.HashMap;
  */
 public class LogixNG_UserPreferences {
 
+    // A default constructor is required for JmriUserPreferencesManager
     public LogixNG_UserPreferences() {
     }
 
@@ -27,5 +28,8 @@ public class LogixNG_UserPreferences {
 
         jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setPreferenceItemDetails(
                 "jmri.jmrit.logixng.LogixNG_UserPreferences", "remindSaveLogixNG", Bundle.getMessage("HideSaveReminder"));
+
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setPreferenceItemDetails(
+                "jmri.jmrit.logixng.LogixNG_UserPreferences", "remindSaveReLoad", Bundle.getMessage("HideMoveUserReminder"));
     }
 }
