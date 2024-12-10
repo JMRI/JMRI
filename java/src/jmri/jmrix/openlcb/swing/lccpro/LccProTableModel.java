@@ -191,6 +191,10 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
                     var node = nodememo.getNodeID();
                     var description = jmri.jmrix.openlcb.swing.networktree.NetworkTreePane.augmentedNodeName(nodememo);
                     actions.openCdiWindow(node, description);
+                    // We want the table to retain focus while the CDI loads
+                    // This also removes the selection from this cell, so that cmd-`
+                    // no longer repeats the action of pressing the button
+                    forceFocus();
                 }
                 break;
             case UPGRADECOL:
@@ -206,6 +210,13 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
         }
     }
 
+    // to be filled in at construction time with e.g.
+    //      frame.toFront();
+    //      frame.requestFocus();
+    //
+    public void forceFocus() {
+    }
+    
     public int getPreferredWidth(int column) {
         int retval = 20; // always take some width
         retval = Math.max(retval, new JLabel(getColumnName(column))

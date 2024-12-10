@@ -40,7 +40,12 @@ public class LccProTable extends JmriPanel {
 
     public LccProTable(CanSystemConnectionMemo memo) {
         super();
-        dataModel = new LccProTableModel(memo);
+        dataModel = new LccProTableModel(memo) {
+            public void forceFocus() {
+                requestFocus();
+            }
+        };
+        
         sorter = new TableRowSorter<>(dataModel);
         dataTable = new JTable(dataModel);
         dataTable.setRowSorter(sorter);
