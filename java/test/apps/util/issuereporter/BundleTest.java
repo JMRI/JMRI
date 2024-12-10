@@ -1,4 +1,4 @@
-package apps;
+package apps.util.issuereporter;
 
 import java.util.Locale;
 
@@ -15,7 +15,6 @@ public class BundleTest  {
     public void testGoodKeys() {
         Assertions.assertEquals("No locomotive detected (301);", Bundle.getMessage("NoLocoDetected"));
         Assertions.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));
-        Assertions.assertEquals("File", Bundle.getMessage("MenuFile"));
     }
 
     @Test
@@ -27,7 +26,7 @@ public class BundleTest  {
     @Test
     public void testGoodKeyMessageArg() {
         Assertions.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout", new Object[]{}));
-        Assertions.assertEquals("File", Bundle.getMessage("MenuFile", new Object[]{}));
+        Assertions.assertEquals("About Test", Bundle.getMessage("TitleAbout", "Test"));
     }
 
     @Test

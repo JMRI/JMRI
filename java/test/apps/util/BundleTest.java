@@ -1,4 +1,4 @@
-package apps;
+package apps.util;
 
 import java.util.Locale;
 
@@ -27,7 +27,7 @@ public class BundleTest  {
     @Test
     public void testGoodKeyMessageArg() {
         Assertions.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout", new Object[]{}));
-        Assertions.assertEquals("File", Bundle.getMessage("MenuFile", new Object[]{}));
+        Assertions.assertEquals("About Test", Bundle.getMessage("TitleAbout", "Test"));
     }
 
     @Test
