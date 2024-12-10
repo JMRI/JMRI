@@ -9,6 +9,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.Timer;
+import javax.swing.text.JTextComponent;
 
 import jmri.ShutDownTask;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -19,6 +20,7 @@ import org.openlcb.NodeID;
 import org.openlcb.OlcbInterface;
 import org.openlcb.cdi.impl.ConfigRepresentation;
 import org.openlcb.cdi.swing.CdiPanel;
+import org.openlcb.swing.EventIdTextField;
 
 /**
  * Shared code for creating UI elements from different places in the application.
@@ -170,7 +172,7 @@ public class ClientActions {
             }
 
             @Override
-            public JFormattedTextField handleEventIdTextField(JFormattedTextField field) {
+            public JTextComponent handleEventIdTextField(EventIdTextField field) {
                 if (evt1 == null) {
                     evt1 = field;
                 } else if (evt2 == null) {
