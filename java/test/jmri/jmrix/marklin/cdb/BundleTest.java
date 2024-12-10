@@ -1,5 +1,4 @@
-package jmri.jmrix.marklin;
-
+package jmri.jmrix.marklin.cdb;
 
 import java.util.Locale;
 

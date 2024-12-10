@@ -1,8 +1,8 @@
-package jmri.jmrix.marklin;
-
+package jmri.jmrix.marklin.cdb.serialdriver;
 
 import java.util.Locale;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -20,7 +20,7 @@ public class BundleTest  {
 
     @Test
     public void testBadKey() {
-        var ex = Assertions.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT"));
+        var ex = Assert.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT"));
         Assertions.assertNotNull(ex);
     }
 
