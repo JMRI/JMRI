@@ -1,15 +1,18 @@
-package jmri.jmrix.can.cbus.swing.modules.sprogdcc;
+package jmri.jmrix.bachrus.speedmatcher.basic;
+
+import java.util.Locale;
 
 import org.junit.jupiter.api.*;
 
 /**
- * Test simple functioning of CbusNodeInfoPane
+ * Tests for the Bundle class
  *
- * @author Andrew Crosland Copyright (C) 2021
+ * @author Bob Jacobsen Copyright (C) 2012
  */
-public class BundleTest {
+public class BundleTest  {
 
-    @Test public void testGoodKeys() {
+    @Test
+    public void testGoodKeys() {
         Assertions.assertEquals("(none)", Bundle.getMessage("none"));
         Assertions.assertEquals("No locomotive detected (301);", Bundle.getMessage("NoLocoDetected"));
         Assertions.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));
@@ -21,7 +24,8 @@ public class BundleTest {
         Assertions.assertNotNull(ex);
     }
 
-    @Test public void testGoodKeyMessageArg() {
+    @Test
+    public void testGoodKeyMessageArg() {
         Assertions.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout", new Object[]{}));
         Assertions.assertEquals("About Test", Bundle.getMessage("TitleAbout", "Test"));
     }
@@ -33,13 +37,15 @@ public class BundleTest {
         Assertions.assertNotNull(ex);
     }
 
-    @Test public void testLocaleMessage() {
-        Assertions.assertEquals("Scambio", Bundle.getMessage(java.util.Locale.ITALY, "BeanNameTurnout"));
+    @Test
+    public void testLocaleMessage() {
+        Assertions.assertEquals("Scambio", Bundle.getMessage(Locale.ITALY, "BeanNameTurnout"));
     }
 
-    @Test public void testLocaleMessageArg() {
-        Assertions.assertEquals("Scambio", Bundle.getMessage(java.util.Locale.ITALY, "BeanNameTurnout", new Object[]{}));
-        Assertions.assertEquals("Informazioni su Test", Bundle.getMessage(java.util.Locale.ITALY, "TitleAbout", "Test"));
+    @Test
+    public void testLocaleMessageArg() {
+        Assertions.assertEquals("Scambio", Bundle.getMessage(Locale.ITALY, "BeanNameTurnout", new Object[]{}));
+        Assertions.assertEquals("Informazioni su Test", Bundle.getMessage(Locale.ITALY, "TitleAbout", "Test"));
     }
 
 }
