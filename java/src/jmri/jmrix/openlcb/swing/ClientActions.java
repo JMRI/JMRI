@@ -138,8 +138,8 @@ public class ClientActions {
                         }
 
                         final JTextField mdesc = desc;
-                        final JFormattedTextField mevt1 = evt1;
-                        final JFormattedTextField mevt2 = evt2;
+                        final JTextComponent mevt1 = evt1;
+                        final JTextComponent mevt2 = evt2;
                     });
                     button = new JButton(Bundle.getMessage("CdiPanelMakeTurnout"));
                     p.add(button);
@@ -156,8 +156,8 @@ public class ClientActions {
                         }
 
                         final JTextField mdesc = desc;
-                        final JFormattedTextField mevt1 = evt1;
-                        final JFormattedTextField mevt2 = evt2;
+                        final JTextComponent mevt1 = evt1;
+                        final JTextComponent mevt2 = evt2;
                     });
                     if (!haveButtons) {
                         haveButtons = true;
@@ -207,8 +207,8 @@ public class ClientActions {
 
             JPanel gpane = null;
             JTextField desc = null;
-            JFormattedTextField evt1 = null;
-            JFormattedTextField evt2 = null;
+            JTextComponent evt1 = null;
+            JTextComponent evt2 = null;
         };
         ConfigRepresentation rep = iface.getConfigForNode(destNode);
 
