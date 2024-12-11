@@ -23,7 +23,7 @@ public final class OlcbEventNameStore implements EventNameStore {
      * @return The name associated with that EventID or null
      */
     public String getEventName(EventID eventID) {
-        var tag = tagmgr.getIdTag(OlcbConstants.tagPrefix+eventID);
+        var tag = tagmgr.getBySystemName(OlcbConstants.tagPrefix+eventID.toShortString());
         if (tag == null) return null;
         var name = tag.getUserName();
         if (name == null || name.isEmpty()) return null;
