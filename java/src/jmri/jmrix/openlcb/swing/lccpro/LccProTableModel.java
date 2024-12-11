@@ -210,7 +210,7 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
         }
     }
 
-    // to be filled in at construction time with e.g.
+    // to be overridden at construction time with e.g.
     //      frame.toFront();
     //      frame.requestFocus();
     //
