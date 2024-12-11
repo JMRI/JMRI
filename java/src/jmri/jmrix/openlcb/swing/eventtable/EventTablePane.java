@@ -14,6 +14,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.openlcb.OlcbConstants;
 import jmri.jmrix.openlcb.OlcbSensor;
 import jmri.jmrix.openlcb.OlcbTurnout;
+import jmri.util.ThreadingUtil;
 
 import jmri.swing.JmriJTablePersistenceManager;
 import jmri.util.swing.MultiLineCellRenderer;
@@ -307,8 +308,8 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
     public void findRequested(java.awt.event.ActionEvent e) {
         var text = findID.getText();
-        // take off trailing .00
-        text = text.replaceAll("(.00)*$", "");
+        // take off all the trailing .00
+        text = text.strip().replaceAll("(.00)*$", "");
         log.debug("Request find event [{}]", text);
         // just search event ID
         table.clearSelection();
@@ -331,12 +332,19 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     
     protected boolean findTextSearch(String text, int column) {
         text = text.toUpperCase();
-        for (int row = 0; row < model.getRowCount(); row++) {
-            var value = table.getValueAt(row, column).toString().toUpperCase();
-            if (value.startsWith(text)) {
-                table.changeSelection(row, column, false, false);
-                return true;
+        try {
+            for (int row = 0; row < model.getRowCount(); row++) {
+                var cell = table.getValueAt(row, column);
+                if (cell == null) continue;
+                var value = cell.toString().toUpperCase();
+                if (value.startsWith(text)) {
+                    table.changeSelection(row, column, false, false);
+                    return true;
+                }
             }
+        } catch (RuntimeException e) {
+            // we get ArrayIndexOutOfBoundsException occasionally for no known reason
+            log.debug("unexpected AIOOBE");
         }
         return false;
     }
@@ -1051,10 +1059,12 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
          */
         @Override
         public void handleProducerConsumerEventReport(ProducerConsumerEventReportMessage msg, Connection sender){
-            var nodeID = msg.getSourceNodeID();
-            var eventID = msg.getEventID();
-            model.recordProducer(eventID, nodeID, "");
-            model.highlightProducer(eventID, nodeID);
+            ThreadingUtil.runOnGUIEventually(()->{
+                var nodeID = msg.getSourceNodeID();
+                var eventID = msg.getEventID();
+                model.recordProducer(eventID, nodeID, "");
+                model.highlightProducer(eventID, nodeID);
+            });
         }
 
         /**
@@ -1064,9 +1074,11 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
          */
         @Override
         public void handleConsumerIdentified(ConsumerIdentifiedMessage msg, Connection sender){
-            var nodeID = msg.getSourceNodeID();
-            var eventID = msg.getEventID();
-            model.recordConsumer(eventID, nodeID, "");
+            ThreadingUtil.runOnGUIEventually(()->{
+                var nodeID = msg.getSourceNodeID();
+                var eventID = msg.getEventID();
+                model.recordConsumer(eventID, nodeID, "");
+            });
         }
 
         /**
@@ -1076,33 +1088,39 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
          */
         @Override
         public void handleProducerIdentified(ProducerIdentifiedMessage msg, Connection sender){
-            var nodeID = msg.getSourceNodeID();
-            var eventID = msg.getEventID();
-            model.recordProducer(eventID, nodeID, "");
+            ThreadingUtil.runOnGUIEventually(()->{
+                var nodeID = msg.getSourceNodeID();
+                var eventID = msg.getEventID();
+                model.recordProducer(eventID, nodeID, "");
+            });
         }
 
         @Override
         public void handleConsumerRangeIdentified(ConsumerRangeIdentifiedMessage msg, Connection sender){
-            final var nodeID = msg.getSourceNodeID();
-            final var eventID = msg.getEventID();
-            
-            final long rangeSuffix = eventID.rangeSuffix();
-            // have to set low part of event ID to 0's as it might be 1's
-            EventID zeroedEID = new EventID(eventID.toLong() & (~rangeSuffix));
-            
-            model.recordConsumer(zeroedEID, nodeID, (new EventID(eventID.toLong() | rangeSuffix)).toShortString());
+            ThreadingUtil.runOnGUIEventually(()->{
+                final var nodeID = msg.getSourceNodeID();
+                final var eventID = msg.getEventID();
+                
+                final long rangeSuffix = eventID.rangeSuffix();
+                // have to set low part of event ID to 0's as it might be 1's
+                EventID zeroedEID = new EventID(eventID.toLong() & (~rangeSuffix));
+                
+                model.recordConsumer(zeroedEID, nodeID, (new EventID(eventID.toLong() | rangeSuffix)).toShortString());
+            });
         }
     
         @Override
         public void handleProducerRangeIdentified(ProducerRangeIdentifiedMessage msg, Connection sender){
-            final var nodeID = msg.getSourceNodeID();
-            final var eventID = msg.getEventID();
-            
-            final long rangeSuffix = eventID.rangeSuffix();
-            // have to set low part of event ID to 0's as it might be 1's
-            EventID zeroedEID = new EventID(eventID.toLong() & (~rangeSuffix));
-            
-            model.recordProducer(zeroedEID, nodeID, (new EventID(eventID.toLong() | rangeSuffix)).toShortString());
+            ThreadingUtil.runOnGUIEventually(()->{
+                final var nodeID = msg.getSourceNodeID();
+                final var eventID = msg.getEventID();
+                
+                final long rangeSuffix = eventID.rangeSuffix();
+                // have to set low part of event ID to 0's as it might be 1's
+                EventID zeroedEID = new EventID(eventID.toLong() & (~rangeSuffix));
+                
+                model.recordProducer(zeroedEID, nodeID, (new EventID(eventID.toLong() | rangeSuffix)).toShortString());
+            });
         }
 
         /*
