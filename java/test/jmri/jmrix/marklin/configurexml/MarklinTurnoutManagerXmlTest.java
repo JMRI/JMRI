@@ -2,7 +2,6 @@ package jmri.jmrix.marklin.configurexml;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -16,7 +15,7 @@ public class MarklinTurnoutManagerXmlTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("MarklinTurnoutManagerXml constructor",new MarklinTurnoutManagerXml());
+      Assertions.assertNotNull(new MarklinTurnoutManagerXml(), "MarklinTurnoutManagerXml constructor");
     }
 
     @BeforeEach
