@@ -28,6 +28,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
 
     // parent test that needs to be disabled if headless
     @Test
+    @Override
     @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testInfoMethods() {
         super.testInfoMethods();
