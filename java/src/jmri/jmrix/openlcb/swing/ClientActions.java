@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.Timer;
@@ -13,6 +12,8 @@ import javax.swing.text.JTextComponent;
 
 import jmri.ShutDownTask;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.openlcb.OlcbAddress;
+import jmri.jmrix.openlcb.OlcbEventNameStore;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.WrapLayout;
 
@@ -173,7 +174,10 @@ public class ClientActions {
             }
 
             @Override
-            public JTextComponent handleEventIdTextField(EventIdTextField field) {
+            public JTextComponent handleEventIdTextField(EventIdTextField input) {
+                var field = new JTextField(23);
+                EventIdTextField.configurePopUp(field);
+                 
                 if (evt1 == null) {
                     evt1 = field;
                 } else if (evt2 == null) {
@@ -213,8 +217,8 @@ public class ClientActions {
              */
              @Override
              public EventID getEventIDFromString(String content) {
-                log.info("getEventIDFromString {} {}", content, new EventID(content));
-                return new EventID(content);
+                var address = new OlcbAddress(content, memo);
+                return address.toEventID();
              }
     
             /** Convert an EventID into a String, doing any additional local
@@ -224,7 +228,13 @@ public class ClientActions {
              */
              @Override
              public String getStringFromEventID(EventID event) {
-                log.info("getStringFromEventID {}", event, memo);
+                var nameStore = memo.get(OlcbEventNameStore.class);
+                if (nameStore != null) {
+                    var name = nameStore.getEventName(event);
+                    if (name != null) {
+                        return name;
+                    }
+                }
                 return event.toShortString();  
              }
 

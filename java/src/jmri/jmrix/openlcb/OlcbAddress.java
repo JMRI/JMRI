@@ -70,11 +70,32 @@ public final class OlcbAddress {
 
     /**
      * Construct from string without leading system or type letters
-     * @param s hex coded string of address
+     * @param input hex coded string of address
      */
-    public OlcbAddress(String s, final CanSystemConnectionMemo memo) {
+    public OlcbAddress(String input, final CanSystemConnectionMemo memo) {
         // This is done manually, rather than via regular expressions, for performance reasons.
 
+        String s = input.strip();
+        
+        OlcbEventNameStore nameStore = null;
+        if (memo != null) { 
+            nameStore = memo.get(OlcbEventNameStore.class);
+        }
+        EventID eid;
+        if (nameStore != null && (eid = nameStore.getEventID(s)) != null) {
+            // name form
+            // load the event ID into the aFrame c.f. OlcbAddress(EventID) ctor
+            byte[] contents = eid.getContents();
+            aFrame = new int[contents.length];
+            int i = 0;
+            for (byte b : contents) {
+                aFrame[i++] = b;
+            }
+            match = true;
+            // leave aString as original argument
+            return;
+        }
+        
         // check for special addressing forms
         if (s.startsWith("T")) {
             // leading T, so convert to numeric form from turnout number
@@ -121,35 +142,23 @@ public final class OlcbAddress {
         
         // check for name vs numeric address formats
         
-        OlcbEventNameStore nameStore = null;
-        if (memo != null) { 
-            nameStore = memo.get(OlcbEventNameStore.class);
-        }
-        EventID eid;
-        if (nameStore != null && (eid = nameStore.getEventID(s)) != null) {
-            // name form
-            // load the event ID into the aFrame c.f. OlcbAddress(EventID) ctor
-            byte[] contents = eid.getContents();
-            aFrame = new int[contents.length];
-            int i = 0;
-            for (byte b : contents) {
-                aFrame[i++] = b;
-            }
-            match = true;
-            // leave aString as original argument
-            
-        } else if (aString.contains(".")) {
+        if (aString.contains(".")) {
             // dotted form, 7 dots
             String[] terms = s.split("\\.");
             if (terms.length != 8) {
                 log.debug("unexpected number of terms: {}, address is {}", terms.length, s);
             }
             int[] tFrame = new int[terms.length];
+            int i = -1;
             try {
-                for (int i = 0; i < terms.length; i++) {
-                    tFrame[i] = Integer.parseInt(terms[i], 16);
+                for (i = 0; i < terms.length; i++) {
+                    tFrame[i] = Integer.parseInt(terms[i].strip(), 16);
                 }
-            } catch (NumberFormatException ex) { return; } // leaving the string unparsed
+            } catch (NumberFormatException ex) {
+                // leaving the string unparsed
+                log.debug("failed to parse EventID \"{}\" at {} due to {}; might be a partial value", s, i, terms[i].strip());
+                return; 
+            } 
             aFrame = tFrame;
             match = true;
         } else {
@@ -164,7 +173,10 @@ public final class OlcbAddress {
                     String two = aString.substring(2 * i, 2 * i + 2);
                     tFrame[i] = Integer.parseInt(two, 16);
                 }
-            } catch (NumberFormatException ex) { return; }  // leaving the string unparsed
+            } catch (NumberFormatException ex) { 
+                log.debug("failed to parse EventID \"{}\"; might be a partial value", s);
+                return;
+            }  // leaving the string unparsed
             aFrame = tFrame;
             match = true;
         }
@@ -352,7 +364,11 @@ public final class OlcbAddress {
         return retval;
     }
 
+    /**
+     * @return null if no valid address was parsed earlier, e.g. there was a ; in the data
+     */
     public EventID toEventID() {
+        if (aFrame == null) return null;
         byte[] b = new byte[8];
         for (int i = 0; i < Math.min(8, aFrame.length); ++i) b[i] = (byte)aFrame[i];
         return new EventID(b);
