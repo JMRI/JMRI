@@ -26,7 +26,15 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
     @Override
     protected SignalMastAddPane getOTT() { return new OlcbSignalMastAddPane(); }
 
+    // parent test that needs to be disabled if headless
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    public void testInfoMethods() {
+        super.testInfoMethods();
+    }
+
+    @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testSetMast() {
         OlcbSignalMast s1 = new OlcbSignalMast("MF$olm:basic:one-searchlight($0001)", "user name");
         OlcbSignalMast s2 = new OlcbSignalMast("SF$olm:basic:one-low($0002)", "user name");
@@ -61,6 +69,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testCanHandleMast() {
         OlcbSignalMastAddPane vp = new OlcbSignalMastAddPane();
         SignalMast mast = new OlcbSignalMast("MF$olm:basic:one-searchlight($1)", "no user name"){
@@ -73,6 +82,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
     }
 
     @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testCreateMast() {
         OlcbSignalMastAddPane vp = new OlcbSignalMastAddPane();
         new OlcbSignalMast("MF$olm:basic:one-searchlight($1)", "no user name"){
