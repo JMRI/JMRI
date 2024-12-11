@@ -70,7 +70,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
              */
             @Override
             void extras() {
-                
+
                 addBottomButtons(this, dataTable);
             }
         };
@@ -255,6 +255,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
         options.put(0x02, Bundle.getMessage("DeleteAlways"));
         jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMessageItemDetails(getClassName(),
                 "deleteInUse", Bundle.getMessage("DeleteItemInUse"), options, 0x00);
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).setPreferenceItemDetails(getClassName(), "remindSaveReLoad", Bundle.getMessage("HideMoveUserReminder"));
     }
 
     protected abstract String getClassName();
@@ -503,7 +504,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
          */
         @Override
         public void columnMarginChanged(ChangeEvent e) {}
-        
+
         protected void dispose() {
             if (dataTable !=null ) {
                 dataTable.getColumnModel().removeColumnModelListener(this);
@@ -517,8 +518,8 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
         }
 
     }
-    
-    
+
+
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractTableAction.class);
 
 }
