@@ -386,17 +386,13 @@ public class MarklinThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSendFunctionGroup5() {
     }
 
-    private MarklinSystemConnectionMemo memo;
+    private MarklinSystemConnectionMemo memo = null;
 
     @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        MarklinTrafficController tc = new MarklinTrafficController(){
-           @Override
-           public void sendMarklinMessage(MarklinMessage m, MarklinListener reply) {
-           }
-        };
+        MarklinTrafficControlScaffold tc = new MarklinTrafficControlScaffold();
         memo = new MarklinSystemConnectionMemo(tc);
         memo.store(new MarklinThrottleManager(memo), ThrottleManager.class);
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, memo.get(ThrottleManager.class));

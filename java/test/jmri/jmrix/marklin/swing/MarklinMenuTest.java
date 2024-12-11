@@ -1,12 +1,8 @@
 package jmri.jmrix.marklin.swing;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  * Test simple functioning of MarklinMenu
@@ -15,12 +11,13 @@ import org.junit.Assume;
  */
 public class MarklinMenuTest {
 
-
     @Test
+    @jmri.util.junit.annotations.DisabledIfHeadless
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
-        MarklinMenu action = new MarklinMenu(new jmri.jmrix.marklin.MarklinSystemConnectionMemo());
-        Assert.assertNotNull("exists", action);
+        var memo = new jmri.jmrix.marklin.MarklinSystemConnectionMemo();
+        MarklinMenu action = new MarklinMenu(memo);
+        Assertions.assertNotNull( action, "exists");
+        memo.dispose();
     }
 
     @BeforeEach
@@ -30,5 +27,8 @@ public class MarklinMenuTest {
     }
 
     @AfterEach
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
 }
