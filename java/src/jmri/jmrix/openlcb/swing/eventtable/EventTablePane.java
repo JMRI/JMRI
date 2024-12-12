@@ -110,7 +110,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
         add(scrollPane);
 
-        var buttonPanel = new JPanel();
+        var buttonPanel = new JToolBar();
         buttonPanel.setLayout(new jmri.util.swing.WrapLayout());
 
         add(buttonPanel);
