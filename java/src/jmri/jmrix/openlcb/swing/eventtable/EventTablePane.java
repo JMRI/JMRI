@@ -166,6 +166,10 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             }
         });
         findpanel.add(findID);
+        JButton addButton = new JButton("Add");
+        addButton.addActionListener(this::addRequested);
+        addButton.setToolTipText("This adds the EventID to the left into the table.  Use when you don't find an event ID you want to name.");        
+        findpanel.add(addButton);
 
         findpanel = new JPanel();  // keep button and text together
         findpanel.setToolTipText("This finds matches in the event name, producer node name, consumer node name and also-known-as columns");
@@ -194,7 +198,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             }
         });
         findpanel.add(findTextID);        
-        
+
         JButton sensorButton = new JButton("Names from Sensors");
         sensorButton.addActionListener(this::sensorRequested);
         sensorButton.setToolTipText("This fills empty cells in the event name column from JMRI Sensor names");
@@ -357,6 +361,35 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
             log.debug("unexpected AIOOBE");
         }
         return false;
+    }
+    
+    public void addRequested(java.awt.event.ActionEvent e) {
+        var text = findID.getText();
+        EventID eventID = new EventID(text);
+        // first, add the event
+        var memo = new EventTableDataModel.TripleMemo(
+                            eventID,
+                            "",
+                            null,
+                            "",
+                            null,
+                            ""
+                        );
+        // check to see if already in there:
+        boolean found = false;
+        for (var check : model.memos) {
+            if (memo.eventID.equals(check.eventID)) {
+                found = true;
+                break;
+            }
+        }
+        if (! found) {
+            model.memos.add(memo);
+        }
+        model.fireTableDataChanged();
+        // now select that one
+        findRequested(e);
+        
     }
     
     public void sensorRequested(java.awt.event.ActionEvent e) {
