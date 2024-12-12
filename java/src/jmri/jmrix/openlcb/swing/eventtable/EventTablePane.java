@@ -11,7 +11,7 @@ import javax.swing.table.*;
 
 import jmri.*;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.openlcb.OlcbConstants;
+import jmri.jmrix.openlcb.OlcbEventNameStore;
 import jmri.jmrix.openlcb.OlcbSensor;
 import jmri.jmrix.openlcb.OlcbTurnout;
 import jmri.util.ThreadingUtil;
@@ -42,6 +42,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     protected CanSystemConnectionMemo memo;
     Connection connection;
     NodeID nid;
+    OlcbEventNameStore nameStore;
 
     MimicNodeStore store;
     EventTableDataModel model;
@@ -66,12 +67,13 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         this.memo = memo;
         this.connection = memo.get(Connection.class);
         this.nid = memo.get(NodeID.class);
-
+        this.nameStore = memo.get(OlcbEventNameStore.class);
+        
         store = memo.get(MimicNodeStore.class);
         EventTable stdEventTable = memo.get(OlcbInterface.class).getEventTable();
         if (stdEventTable == null) log.warn("no OLCB EventTable found");
 
-        model = new EventTableDataModel(store, stdEventTable);
+        model = new EventTableDataModel(store, stdEventTable, nameStore);
         sorter = new TableRowSorter<>(model);
 
 
@@ -352,44 +354,40 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     public void sensorRequested(java.awt.event.ActionEvent e) {
         // loop over sensors to find the OpenLCB ones
         var beans = InstanceManager.getDefault(SensorManager.class).getNamedBeanSet();
-        var tagmgr = InstanceManager.getDefault(IdTagManager.class);
         for (NamedBean bean : beans ) {
             if (bean instanceof OlcbSensor) {
-                oneSensorToTag(true,  bean, tagmgr); // active
-                oneSensorToTag(false, bean, tagmgr); // inactive
+                oneSensorToTag(true,  bean); // active
+                oneSensorToTag(false, bean); // inactive
             }
         }
     }
 
-    private void oneSensorToTag(boolean isActive, NamedBean bean, IdTagManager tagmgr) {
+    private void oneSensorToTag(boolean isActive, NamedBean bean) {
         var sensor = (OlcbSensor) bean;
         var sensorID = sensor.getEventID(isActive);
-        if (! isEventNameTagPresent(sensorID.toShortString())) {
-            // tag doesn't exist, make it.
-            tagmgr.provideIdTag(OlcbConstants.tagPrefix+sensorID.toShortString())
-                .setUserName(sensor.getEventName(isActive));
+        if (! isEventNamePresent(sensorID)) {
+            // add the association
+            nameStore.addMatch(sensorID, sensor.getEventName(isActive));
         }
     }
 
     public void turnoutRequested(java.awt.event.ActionEvent e) {
         // loop over turnouts to find the OpenLCB ones
         var beans = InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet();
-        var tagmgr = InstanceManager.getDefault(IdTagManager.class);
         for (NamedBean bean : beans ) {
             if (bean instanceof OlcbTurnout) {
-                oneTurnoutToTag(true,  bean, tagmgr); // thrown
-                oneTurnoutToTag(false, bean, tagmgr); // closed
+                oneTurnoutToTag(true,  bean); // thrown
+                oneTurnoutToTag(false, bean); // closed
             }
         }
     }
 
-    private void oneTurnoutToTag(boolean isThrown, NamedBean bean, IdTagManager tagmgr) {
+    private void oneTurnoutToTag(boolean isThrown, NamedBean bean) {
         var turnout = (OlcbTurnout) bean;
         var turnoutID = turnout.getEventID(isThrown);
-        if (! isEventNameTagPresent(turnoutID.toShortString())) {
-            // tag doesn't exist, make it.
-            tagmgr.provideIdTag(OlcbConstants.tagPrefix+turnoutID.toShortString())
-                .setUserName(turnout.getEventName(isThrown));
+        if (! isEventNamePresent(turnoutID)) {
+            // add the association
+            nameStore.addMatch(turnoutID, turnout.getEventName(isThrown));
         }
     }
     
@@ -467,7 +465,6 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
             try (Reader in = new FileReader(file)) {
                 Iterable<CSVRecord> records = CSVFormat.RFC4180.parse(in);
-                var tagmgr = InstanceManager.getDefault(IdTagManager.class);
                 
                 for (CSVRecord record : records) {
                     String eventIDname = record.get(0);
@@ -480,11 +477,9 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                         continue;
                     }
                     // here we have a valid EventID, assign the name if currently blank
-                    if (! isEventNameTagPresent(eventIDname)) {
+                    if (! isEventNamePresent(eid)) {
                         String eventName = record.get(1);
-                        // tag doesn't exist, make it.
-                        tagmgr.provideIdTag(OlcbConstants.tagPrefix+eid.toShortString())
-                            .setUserName(eventName);
+                        nameStore.addMatch(eid, eventName);
                     }         
                 }
                 log.debug("File reading complete");
@@ -499,16 +494,14 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
     /**
      * Check whether a Event Name tag is defined or not.
-     * Static so it can be easily accessed outside this class.
      * Check for other uses before changing this.
      * @param eventID EventID as dotted-hex string
      * @return true is the event name tag is present
      */
-    public static boolean isEventNameTagPresent(String eventID) {
-        var tagmgr = InstanceManager.getDefault(IdTagManager.class);  // make this more efficient by making this a one-time static?
-        var tag = tagmgr.getIdTag(OlcbConstants.tagPrefix+eventID);
-        if (tag == null) return false;
-        return ! tag.getUserName().isEmpty();
+    public boolean isEventNamePresent(EventID eventID) {
+        var name = nameStore.getEventName(eventID);
+        if (name == null) return false;
+        return ! name.isEmpty();
     }
     
     /**
@@ -552,10 +545,10 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
      */
     protected static class EventTableDataModel extends AbstractTableModel {
 
-        EventTableDataModel(MimicNodeStore store, EventTable stdEventTable) {
+        EventTableDataModel(MimicNodeStore store, EventTable stdEventTable, OlcbEventNameStore nameStore) {
             this.store = store;
             this.stdEventTable = stdEventTable;
-            tagManager = InstanceManager.getDefault(IdTagManager.class);
+            this.nameStore = nameStore;
 
             loadIdTagEventIDs();
         }
@@ -571,6 +564,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
         MimicNodeStore store;
         EventTable stdEventTable;
+        OlcbEventNameStore nameStore;
         IdTagManager tagManager;
         JTable table;
         TableRowSorter<EventTableDataModel> sorter;
@@ -585,13 +579,8 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
         void loadIdTagEventIDs() {
             // are there events in the IdTags? If so, add them
-            log.debug("Found {} tags", tagManager.getNamedBeanSet().size());
-            for (var tag: tagManager.getNamedBeanSet()) {
-                if (tag.getSystemName().startsWith(OlcbConstants.tagPrefix)) {
-                    var id = tag.getSystemName().replace(OlcbConstants.tagPrefix, "");
-                    log.trace("Found initial entry for {}", id);
-                    var eventID = new EventID(id);
-                    var memo = new TripleMemo(
+            for (var eventID: nameStore.getMatches()) {
+                var memo = new TripleMemo(
                                     eventID,
                                     "",
                                     null,
@@ -599,6 +588,15 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                                     null,
                                     ""
                                 );
+                // check to see if already in there:
+                boolean found = false;
+                for (var check : memos) {
+                    if (memo.eventID.equals(check.eventID)) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (! found) {
                     memos.add(memo);
                 }
             }
@@ -618,11 +616,11 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                     if (!memo.rangeSuffix.isEmpty()) retval += " - "+memo.rangeSuffix;
                     return retval;
                 case COL_EVENTNAME:
-                    var tag = tagManager.getIdTag(OlcbConstants.tagPrefix+memo.eventID.toShortString());
-                    if (tag != null) {
-                        return tag.getUserName();
+                    var name = nameStore.getEventName(memo.eventID);
+                    if (name != null) {
+                        return name;
                     } else {
-                        // temporarily interpret eventID
+                        // interpret eventID and return that
                         return memo.eventID.parse();
                     }
                     
@@ -674,8 +672,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 return;
             }
             var memo = memos.get(row);
-            var tag = tagManager.provideIdTag(OlcbConstants.tagPrefix+memo.eventID.toShortString());
-            tag.setUserName(value.toString());
+            nameStore.addMatch(memo.eventID, value.toString());
         }
 
         @Override
@@ -1022,7 +1019,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         static class TripleMemo {
             final EventID eventID;
             final String  rangeSuffix;
-            // Event name is stored as an IdTag elsewhere, set getValueAt(..)
+            // Event name is stored in an OlcbEventNameStore, see getValueAt()
             NodeID producer;
             String producerName;
             NodeID consumer;

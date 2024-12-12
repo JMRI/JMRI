@@ -42,6 +42,27 @@ public final class OlcbEventNameStore implements EventNameStore {
         return new EventID(eid);
     }
         
+    /**
+     * Create a new name <-> EventID association
+     * @param eventID
+     * @param name
+     */
+    public void addMatch(EventID eventID, String name) {
+        tagmgr.provideIdTag(OlcbConstants.tagPrefix+eventID.toShortString())
+            .setUserName(name);
+    }
+    
+    public java.util.Set<EventID> getMatches() {
+        var set = new java.util.HashSet<EventID>();
+        for (var tag: tagmgr.getNamedBeanSet()) {
+            if (tag.getSystemName().startsWith(OlcbConstants.tagPrefix)) {
+                var eid = tag.getSystemName().substring(OlcbConstants.tagPrefix.length());
+                set.add(new EventID(eid));
+            }
+        }
+        return set;
+        
+    }
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbEventNameStore.class);
 
 }
