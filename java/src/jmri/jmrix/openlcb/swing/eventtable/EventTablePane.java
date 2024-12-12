@@ -116,19 +116,22 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         add(buttonPanel);
 
         var updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
-        updateButton.addActionListener(this::sendRequestEvents);
+        updateButton.addActionListener(this::sendRequestEvents); 
+        updateButton.setToolTipText("Query the network and load results into the table");
         buttonPanel.add(updateButton);
 
         showRequiresLabel = new JCheckBox(Bundle.getMessage("BoxShowRequiresLabel"));
         showRequiresLabel.addActionListener((ActionEvent e) -> {
             filter();
         });
+        showRequiresLabel.setToolTipText("When checked, only events that you've given names will be shown");
         buttonPanel.add(showRequiresLabel);
 
         showRequiresMatch = new JCheckBox(Bundle.getMessage("BoxShowRequiresMatch"));
         showRequiresMatch.addActionListener((ActionEvent e) -> {
             filter();
         });
+        showRequiresMatch.setToolTipText("When checked, only events with both producers and consumers will be shown.");
         buttonPanel.add(showRequiresMatch);
 
         popcorn = new JCheckBox(Bundle.getMessage("BoxPopcorn"));
@@ -138,6 +141,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         buttonPanel.add(popcorn);
 
         JPanel findpanel = new JPanel(); // keep button and text together
+        findpanel.setToolTipText("This finds matches in the Event ID column");
         buttonPanel.add(findpanel);
         
         JLabel find = new JLabel("Find Event: ");
@@ -164,6 +168,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         findpanel.add(findID);
 
         findpanel = new JPanel();  // keep button and text together
+        findpanel.setToolTipText("This finds matches in the event name, producer node name, consumer node name and also-known-as columns");
         buttonPanel.add(findpanel);
 
         JLabel findText = new JLabel("Find Name: ");
@@ -171,6 +176,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
 
         findTextID = new JTextField(16);
         findTextID.addActionListener(this::findTextRequested);
+        findTextID.setToolTipText("This finds matches in the event name, producer node name, consumer node name and also-known-as columns");
         findTextID.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent keyEvent) {
@@ -191,10 +197,12 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         
         JButton sensorButton = new JButton("Names from Sensors");
         sensorButton.addActionListener(this::sensorRequested);
+        sensorButton.setToolTipText("This fills empty cells in the event name column from JMRI Sensor names");
         buttonPanel.add(sensorButton);
         
         JButton turnoutButton = new JButton("Names from Turnouts");
         turnoutButton.addActionListener(this::turnoutRequested);
+        turnoutButton.setToolTipText("This fills empty cells in the event name column from JMRI Turnout names");
         buttonPanel.add(turnoutButton);
 
         buttonPanel.setMaximumSize(buttonPanel.getPreferredSize());
@@ -620,8 +628,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                     if (name != null) {
                         return name;
                     } else {
-                        // interpret eventID and return that
-                        return memo.eventID.parse();
+                        return "";
                     }
                     
                 case COL_PRODUCER_NODE:
@@ -638,6 +645,14 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                     }
                     var height = lineIncrement/3; // for margins
                     var first = true;   // no \n before first line
+
+                    // interpret eventID and start with that if present
+                    String interp = memo.eventID.parse();
+                    if (interp != null && !interp.isEmpty()) {
+                        height += lineIncrement;
+                        result.append(interp);                        
+                        first = false;
+                    }
 
                     // scan the event info as available
                     for (var entry : stdEventTable.getEventInfo(memo.eventID).getAllEntries()) {
@@ -689,7 +704,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                 case COL_PRODUCER_NAME: return "Producer Node Name";
                 case COL_CONSUMER_NODE: return "Consumer Node";
                 case COL_CONSUMER_NAME: return "Consumer Node Name";
-                case COL_CONTEXT_INFO:  return "Path(s) from Configure Dialog";
+                case COL_CONTEXT_INFO:  return "Also Known As";
                 default: return "ERROR "+col;
             }
         }
