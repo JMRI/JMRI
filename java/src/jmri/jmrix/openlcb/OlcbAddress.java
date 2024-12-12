@@ -297,7 +297,7 @@ public final class OlcbAddress {
         justification = "Documented API, no resources to improve")
     public OlcbAddress[] split(final CanSystemConnectionMemo memo) {
         // reject strings ending in ";"
-        if (aString.endsWith(";")) {
+        if (aString == null || aString.endsWith(";")) {
             return null;
         }
 
