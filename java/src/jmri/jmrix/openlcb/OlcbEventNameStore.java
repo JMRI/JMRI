@@ -43,9 +43,9 @@ public final class OlcbEventNameStore implements EventNameStore {
     }
         
     /**
-     * Create a new name <-> EventID association
-     * @param eventID
-     * @param name
+     * Create a new name to/from EventID association
+     * @param eventID associated EventID
+     * @param name  associated name
      */
     public void addMatch(EventID eventID, String name) {
         tagmgr.provideIdTag(OlcbConstants.tagPrefix+eventID.toShortString())
