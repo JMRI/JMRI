@@ -156,6 +156,15 @@
                     </ul></li>
                 <li>Sensors connected via a bridge can now be accessed via a "Snnn" 
                     hardware address, similar to the "Tnnn" address used for Turnouts.
+                <li>You can now enter event IDs by name, in addition to by number:
+                    <ul>
+                    <li>When adding Turnouts/Sensors/Lights and setting aspect events
+                        for OpenLCB Signal Masts
+                    <li>When configuring a node using its CDI
+                    </ul>
+                    When a name has been entered, a tooltip will show the underlying
+                    numeric events.
+                <li>
             </ul>
 
         <h4>Powerline</h4>
