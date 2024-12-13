@@ -2,7 +2,6 @@ package jmri.jmrix.marklin.networkdriver;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class NetworkDriverAdapterTest {
     @Test
     public void testCTor() {
         NetworkDriverAdapter t = new NetworkDriverAdapter();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
