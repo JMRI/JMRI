@@ -319,6 +319,8 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
                 return connection;
             }
         });
+        InstanceManager.setDefault(jmri.jmrix.can.CanSystemConnectionMemo.class, memo);
+        
         memo1 = new OlcbSystemConnectionMemoScaffold("S");
         memo1.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
         memo1.setInterface(new OlcbInterface(nodeID1, connection) {
