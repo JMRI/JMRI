@@ -17,7 +17,12 @@ public class XNetProgReadMessageFormatter implements XPressNetMessageFormatter {
     @Override
     public Boolean handlesMessage(Message m) {
         return m instanceof XNetMessage &&
-            m.getElement(0) == XNetConstants.PROG_READ_REQUEST;
+            m.getElement(0) == XNetConstants.PROG_READ_REQUEST &&
+                (m.getElement(1) == XNetConstants.PROG_READ_MODE_REGISTER ||
+             m.getElement(1) == XNetConstants.PROG_READ_MODE_CV ||
+             m.getElement(1) == XNetConstants.PROG_READ_MODE_PAGED ||
+                        (m.getElement(1) >= XNetConstants.PROG_READ_MODE_CV_V36
+                        && m.getElement(1) <= XNetConstants.PROG_READ_MODE_CV_V36 + 3));
     }
 
     @Override

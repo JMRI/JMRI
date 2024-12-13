@@ -15,7 +15,7 @@ public class XNetOpsModeRequestMessageFormatter implements XPressNetMessageForma
     @Override
     public Boolean handlesMessage(Message m) {
         return m instanceof XNetMessage &&
-                (m.getElement(0)&0xF0 ) == (XNetConstants.OPS_MODE_PROG_REQ & 0xF0);
+                m.getElement(0)  == XNetConstants.OPS_MODE_PROG_REQ;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class XNetOpsModeRequestMessageFormatter implements XPressNetMessageForma
                     return getVerifyString(m);
                 }
             }
-        return m.toString();
+        throw new IllegalArgumentException("Unknown Ops Mode Request Type");
     }
 
     private static String getVerifyString(Message m) {

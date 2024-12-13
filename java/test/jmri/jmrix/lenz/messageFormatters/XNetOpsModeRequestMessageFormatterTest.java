@@ -1,6 +1,7 @@
 package jmri.jmrix.lenz.messageFormatters;
 
 import jmri.jmrix.lenz.XNetMessage;
+import org.junit.Ignore;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -16,14 +17,6 @@ public class XNetOpsModeRequestMessageFormatterTest {
         XNetMessage msg = XNetMessage.getWriteOpsModeCVMsg(0,5,29,5);
         Assertions.assertTrue(formatter.handlesMessage(msg), "Formatter Handles Message");
         Assertions.assertEquals("Operations Mode Programming Request: Byte Mode Write: 5 to CV 29 for Decoder Address 5", formatter.formatMessage(msg), "Monitor String");
-    }
-
-    @Test
-    public void testFormatNMRAOpsModeWriteByteMessage() {
-        XNetOpsModeRequestMessageFormatter formatter = new XNetOpsModeRequestMessageFormatter();
-        XNetMessage msg = XNetMessage.getNMRAXNetMsg(jmri.NmraPacket.opsCvWriteByte(2,false,29,32));
-        Assertions.assertTrue(formatter.handlesMessage(msg), "Formatter Handles Message");
-        Assertions.assertEquals("E5 30 02 EC 1C 20 07",formatter.formatMessage(msg));
     }
 
     @Test

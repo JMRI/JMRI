@@ -75,8 +75,7 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage {
 
         if(formatterList.isEmpty()) {
             try {
-                // ToDo: Once all the XPressNet the message formatters are in place, the path should be jmri.jmrix.
-                Reflections reflections = new Reflections("jmri.jmrix.roco.z21.messageFormatters");
+                Reflections reflections = new Reflections("jmri.jmrix");
                 Set<Class<? extends XPressNetMessageFormatter>> f = reflections.getSubTypesOf(XPressNetMessageFormatter.class);
                 for (Class<?> c : f) {
                     log.debug("Found formatter: {}", f.getClass().getName());

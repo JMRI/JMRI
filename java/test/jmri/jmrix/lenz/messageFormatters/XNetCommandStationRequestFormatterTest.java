@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests of XNetCommandStationRequestFrormatter class
+ * Tests of XNetCommandStationRequestFormatter class
  *
  * @author Paul Bender Copyright (C) 2024
  */

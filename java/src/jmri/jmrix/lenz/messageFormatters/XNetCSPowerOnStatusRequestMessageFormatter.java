@@ -8,7 +8,7 @@ public class XNetCSPowerOnStatusRequestMessageFormatter implements XPressNetMess
     public Boolean handlesMessage(jmri.jmrix.Message m) {
         return m instanceof jmri.jmrix.lenz.XNetMessage &&
                 ((jmri.jmrix.lenz.XNetMessage) m).getElement(0) == XNetConstants.CS_SET_POWERMODE &&
-        ((jmri.jmrix.lenz.XNetMessage) m).getElement(1) == XNetConstants.CS_SET_POWERMODE;
+                ((jmri.jmrix.lenz.XNetMessage) m).getElement(1) == XNetConstants.CS_SET_POWERMODE;
     }
 
     @Override
