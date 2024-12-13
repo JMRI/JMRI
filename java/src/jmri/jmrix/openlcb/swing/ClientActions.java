@@ -1,8 +1,8 @@
 package jmri.jmrix.openlcb.swing;
 
-import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -175,9 +175,9 @@ public class ClientActions {
 
             @Override
             public JTextComponent handleEventIdTextField(EventIdTextField input) {
-                var field = new JTextField(23);
-                EventIdTextField.configurePopUp(field);
-                 
+                var field = new NamedEventIdTextField(memo);  // return our own constructed field
+
+                // What does this field do entry for?
                 if (evt1 == null) {
                     evt1 = field;
                 } else if (evt2 == null) {
@@ -187,7 +187,7 @@ public class ClientActions {
                 }
                 return field;
             }
-
+            
             @Override
             public JTextField handleStringValue(JTextField value) {
                 desc = value;

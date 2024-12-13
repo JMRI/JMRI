@@ -377,14 +377,14 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                         );
         // check to see if already in there:
         boolean found = false;
-        for (var check : model.memos) {
+        for (var check : EventTableDataModel.memos) {
             if (memo.eventID.equals(check.eventID)) {
                 found = true;
                 break;
             }
         }
         if (! found) {
-            model.memos.add(memo);
+            EventTableDataModel.memos.add(memo);
         }
         model.fireTableDataChanged();
         // now select that one
