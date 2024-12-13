@@ -154,6 +154,13 @@ public final class OlcbTurnout extends jmri.implementation.AbstractTurnout {
         else return addrClosed.toEventID();
     }
     
+    @Override
+    @CheckReturnValue
+    @Nonnull
+    public String getRecommendedToolTip() {
+        return addrClosed.toDottedString()+";"+addrThrown.toDottedString();
+    }
+    
     /**
      * Updates event table entries when the user name changes.
      * @param s new user name

@@ -52,7 +52,7 @@ public final class OlcbAddress {
     private String aString;         // String value of the address
     private int[] aFrame = null;    // int[8] of event ID; if null, aString might be two addresses
     private boolean match = false;  // true if address properly parsed; false (may) mean two-part address
-
+    private boolean fromName = false; // true if this originate as an event name
     /**
      * Construct from OlcbEvent.
      *
@@ -92,6 +92,7 @@ public final class OlcbAddress {
                 aFrame[i++] = b;
             }
             match = true;
+            fromName = true;
             // leave aString as original argument
             return;
         }
@@ -356,6 +357,7 @@ public final class OlcbAddress {
      */
     public String toDottedString() {
         String retval = "";
+        if (aFrame == null) return retval;
         for (int value : aFrame) {
             if (!retval.isEmpty())
                 retval += ".";
@@ -374,6 +376,11 @@ public final class OlcbAddress {
         return new EventID(b);
     }
 
+    /**
+     * Was this parsed from a name (e.g. not explicit ID, not pair)
+     * @return true if constructed from an event name
+     */
+    public boolean isFromName() { return fromName; }
     /**
      * Validates Strings for OpenLCB format.
      * @param name   the system name to validate.

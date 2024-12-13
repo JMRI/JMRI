@@ -9,6 +9,7 @@ import org.openlcb.OlcbInterface;
 import org.openlcb.implementations.BitProducerConsumer;
 import org.openlcb.implementations.VersionedValueListener;
 
+import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
 /**
@@ -83,6 +84,13 @@ public final class OlcbLight extends AbstractLight {
         // A Light Control will have failed to set its state during xml load
         // as the LightListener is not present, so we re-activate any Light Controls
         activateLight();
+    }
+
+    @Override
+    @CheckReturnValue
+    @Nonnull
+    public String getRecommendedToolTip() {
+        return addrOn.toDottedString()+";"+addrOff.toDottedString();
     }
     
     /**

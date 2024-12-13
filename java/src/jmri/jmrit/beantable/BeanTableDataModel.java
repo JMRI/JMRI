@@ -1099,12 +1099,12 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         String tip = null;
         int column = COMMENTCOL;
         if (table.getName().contains("SignalGroup")) column = 2;
-        if (col == column) {
+//        if (col == column) {
             T nBean = getBySystemName(sysNameList.get(row));
             if (nBean != null) {
-                tip = formatToolTip(nBean.getComment());
+                tip = formatToolTip(nBean.getRecommendedToolTip());
             }
-        }
+//        }
         return tip;
     }
 

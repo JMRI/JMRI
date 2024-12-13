@@ -189,6 +189,22 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
     }
 
     /**
+     * Get a recommended text for a tooltip when displaying 
+     * the NamedBean, e.g. in a list or table.
+     *
+     * By default, this is the comment from the NamedBean, on the theory
+     * that the system name and/or user name are being displayed directly. 
+     * Specific system implementations may override that.
+     */
+    @CheckReturnValue
+    @Nonnull
+    default String getRecommendedToolTip() {
+        String retval = getComment();
+        if (retval == null) return "";
+        return retval;
+    }
+     
+    /**
      * Request a call-back when a bound property changes. Bound properties are
      * the known state, commanded state, user and system names.
      *
@@ -353,8 +369,8 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
      * These are not bound properties as yet, and don't throw events on
      * modification. Key must not be null.
      * <p>
-     * Prior to JMRI 4.3, the key was of Object type. It was constrained to
-     * String to make these more like normal Java Beans.
+     * The key is constrained to
+     * String to make these behave like normal Java Beans.
      *
      * @param key   the property to set
      * @param value the value of the property

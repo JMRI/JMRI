@@ -137,6 +137,13 @@ public final class OlcbSensor extends AbstractSensor {
         else return addrInactive.toEventID();
     }
 
+    @Override
+    @CheckReturnValue
+    @Nonnull
+    public String getRecommendedToolTip() {
+        return addrActive.toDottedString()+";"+addrInactive.toDottedString();
+    }
+
     /**
      * Updates event table entries when the user name changes.
      * @param s new user name
