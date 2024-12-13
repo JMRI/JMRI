@@ -7,8 +7,6 @@ import jmri.util.*;
 
 import org.junit.jupiter.api.*;
 
-import org.netbeans.jemmy.operators.JFrameOperator;
-
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
