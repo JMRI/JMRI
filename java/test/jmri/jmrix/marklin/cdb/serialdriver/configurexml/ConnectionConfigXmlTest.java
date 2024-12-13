@@ -17,13 +17,6 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
         jmri.util.JUnitAppender.suppressErrorMessage("No usable ports returned");
     }
 
-    @Test
-    @Override
-    public void loadTest() {
-        super.storeTest();
-        jmri.util.JUnitAppender.suppressErrorMessage("No usable ports returned");
-    }
-
     @BeforeEach
     @Override
     public void setUp() {
