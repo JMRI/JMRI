@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
  *
  * @author Paul Bender Copyright (C) 2016
  */
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class MarklinMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     @Test
