@@ -236,7 +236,7 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
         JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));    // NOI18N
         panel5.add(cancel);
         cancel.addActionListener(this::cancelAddPressed);
-        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
+        cancel.setToolTipText(Bundle.getMessage("CancelLogixNGModuleButtonHint"));      // NOI18N
 
         addLogixNGFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override

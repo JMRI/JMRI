@@ -9,7 +9,7 @@ import jmri.util.swing.*;
 
 
 /**
- * Let a user change his own password.
+ * Let a user change his/her own password.
  *
  * @author Daniel Bergqvist (C) 2024
  */

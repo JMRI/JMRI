@@ -118,7 +118,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
     private boolean isDirty = false;
 
     JComboBox<String> modeBox = new JComboBox<>();
-    JComboBox<String> manuBox = new JComboBox<>();
+    public JComboBox<String> manuBox = new JComboBox<>();
 
     JPanel details = new JPanel();
     String[] classConnectionNameList;

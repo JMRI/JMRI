@@ -303,7 +303,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
     String systemNameAuto = this.getClass().getName() + ".AutoSystemName";
 
     // Three [Addx...] buttons on tabbed bottom box handlers
-    
+
     @Override
     protected void addPressed(ActionEvent e) {
         log.warn("This should not have happened");
@@ -506,6 +506,15 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
     @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleOBlockTable");
+    }
+
+    @Override
+    public void setMessagePreferencesDetails() {
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                setPreferenceItemDetails(getClassName(), "duplicateUserName", Bundle.getMessage("HideDupUserError"));  // NOI18N
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                setPreferenceItemDetails(getClassName(), "duplicateSystemName", Bundle.getMessage("HideDupSysError"));  // NOI18N
+        super.setMessagePreferencesDetails();
     }
 
 //    @Override

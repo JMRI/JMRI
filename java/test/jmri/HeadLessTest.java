@@ -17,7 +17,7 @@ import static org.junit.platform.engine.discovery.ClassNameFilter.includeClassNa
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectPackage;
 
 /**
- * Invoke complete set of tests for the jmri package
+ * Invoke complete set of tests for the jmri and apps packages.
  *
  * <hr>
  * This file is part of JMRI.

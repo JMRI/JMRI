@@ -26,10 +26,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li>Command Station Monitor :
-                <br>Button added to release JMRI-managed loco sessions,
-                <br>this can be handy when developing Jython scripts that fail to release the Throttle.
-                <br>Button added to launch a new JMRI Throttle for a loco session.</li>
+                <li></li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -99,7 +96,7 @@
 
         <h4>Marklin CS2</h4>
             <ul>
-                <li></li>
+                <li>Added simulated CS2 Connection</li>
             </ul>
 
         <h4>MERG</h4>
@@ -129,12 +126,34 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>STL Editor: Add store mode selections to the View menu, update help page.</li>
-                <li>Add a Send SNIP Request button to the Send tool.</li>
-                <li>Implement recent changes to the CDI spec underlying the node configuration display. 
-                    This will allow node implementors to make simpler configuration dialogs.</li>
-                <li>Fixed a bug where the node configuration display would sometimes
-                    be drawn with overlapping characters or extra white space.</li>
+                <li>There's a new LccPro JMRI application that's 
+                    targeted at making it easier to understand and 
+                    configure an LCC network.  See the
+                    <a href="http://jmri.org/help/en/package/apps/gui3/lccpro/LccPro.shtml">help page</a>
+                    for more information.</li>
+                <li>The 
+                    <a href="http://jmri.org/help/en/package/jmri/jmrix/openlcb/swing/eventtable/EventTablePane.shtml">Event Table</a> 
+                    has been improved:<ul>
+                    <li>It now shows event ranges.
+                    <li>It now automatically shows the names of event IDs that are
+                        defined in the LCC Standards if you haven't given them another name.
+                    <li>There's now a "Find Name" that searches for any cell in the name columns 
+                        containing a particular string.
+                    <li>The Find Event and Find Name search boxes update the search
+                        as you type.
+                    <li>The 
+                        <a href="http://jmri.org/help/en/package/jmri/jmrix/openlcb/swing/eventtable/EventTablePane.shtml#menu">File menu</a> 
+                        now contains a "Read from CSV..." item that lets you load event names
+                        from a comma-separated (CSV) file.
+                </ul></li>
+                <li>A graphics issue on Linux in the configuration screens was fixed.
+                <li>Improved the Traffic Monitor display:  <ul>
+                    <li>Now shows addressed message destinations; 
+                    <li>Better alignment of messages on the screen;
+                    <li>Improved how event ID names and uses are displayed on event messages.
+                    <li>Improved 
+                        <a href="http://jmri.org/help/en/package/jmri/jmrix/openlcb/swing/monitor/MonitorPane.shtml">help page</a>.
+                    </ul></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -344,7 +363,7 @@
 
         <h4>Technologistic (train-O-matic)</h4>
             <ul>
-                <li>Added support for the FD II (version 2) function decoder family.</li>
+                <li></li>
             </ul>
 
         <h4>Trix Modelleisenbahn</h4>
@@ -407,17 +426,14 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>You can now choose how to sort the 
+                Roster Group Table.</li>
         </ul>
 
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>Speed Setting NoSignals.</li>
-             <li>  After setting speed by Sections ahead. Check Block speeds.</li>
-             <li>  If next block slower than current block set speed down before entering next block.</li>
-             <li>  Do not increase speed beyond the minimum speed of any occupied block.</li>
-             <li>When going from automatic to manual bypass auto-engineer limts.</li>
+             <li>Provide more information when selecting traininfo file.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -443,6 +459,16 @@
                 <li></li>
             </ul>
 
+    <h3>LccPro</h3>
+        <a id="LccPro" name="LccPro"></a>
+        <ul>
+          <li>There's a new LccPro JMRI application that's 
+            targeted at making it easier to understand and 
+            configure an LCC network.  See the
+            <a href="http://jmri.org/help/en/package/apps/gui3/lccpro/LccPro.shtml">help page</a>
+            for more information.</li>
+        </ul>
+        
     <h3>Logix</h3>
         <a id="Logix" name="Logix"></a>
         <ul>
@@ -482,7 +508,7 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li></li>
+            <li>Update <strong>Messages</strong> details. Describe the option to hide tabs without active messages.</li>
         </ul>
 
     <h3>Resources</h3>
@@ -494,7 +520,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li>Improvements to Roster Table Operating Duration column.</li>
+            <li></li>
         </ul>
 
     <h3>Routes</h3>
@@ -506,8 +532,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li><strong>WiThrottleList.py</strong> is a sample script that shows how to access the
-            WiThrottle session list.</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -517,10 +542,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>There's a new 
-                    <a href="https://www.jmri.org/xml/signals/basic-enhanced/">basic-enhanced signal system</a>.</li>
-                <li>The 
-                    <a href="https://www.jmri.org/xml/signals/FS-1987/">FS-1987 signal system</a> was improved.</li>
+                <li></li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -580,7 +602,8 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>You can now export the contents of a table
+                to a CSV file from the File menu.</li>
         </ul>
 
    <h3>Warrants</h3>
@@ -610,16 +633,13 @@
    <h3>WiThrottle Server</h3>
         <a id="WS" name="WS"></a>
         <ul>
-            <li>The <strong>getThrottleList()</strong> public method has been added to
-            jmri.jmrit.withrottle.UserInterface for Jython access.</li>
+            <li></li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>The limit for VSDecoders is now 8 instead of 4.</li>
-            <li>The sound buttons sorting in the VSD Manager window is now as in config.xml.</li>
-            <li>If the sound buttons exeed 8, a second row is displayed.</li>
+            <li></li>
         </ul>
 
    <h3>Z21 Server</h3>
@@ -631,6 +651,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>You can now export the contents of a table
+                to a CSV file from the File menu.</li>
         </ul>
 

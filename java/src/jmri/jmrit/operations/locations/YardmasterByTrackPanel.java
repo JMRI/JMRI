@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.locations;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
@@ -210,7 +211,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                         engine.addPropertyChangeListener(this);
                         rollingStock.add(engine);
                         JCheckBox checkBox = new JCheckBox(trainCommon.pickupEngine(engine));
-                        setCheckBoxFont(checkBox);
+                        setCheckBoxFont(checkBox, Setup.getPickupColor());
                         pPickups.add(checkBox);
                         pickupEngine = true;
                         checkBoxes.put(engine.getId() + "p", checkBox);
@@ -233,7 +234,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                         engine.addPropertyChangeListener(this);
                         rollingStock.add(engine);
                         JCheckBox checkBox = new JCheckBox(trainCommon.dropEngine(engine));
-                        setCheckBoxFont(checkBox);
+                        setCheckBoxFont(checkBox, Setup.getDropColor());
                         pSetouts.add(checkBox);
                         setoutEngine = true;
                         checkBoxes.put(engine.getId(), checkBox);
@@ -274,7 +275,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                             }
                             pickupCar = true;
                             JCheckBox checkBox = new JCheckBox(text);
-                            setCheckBoxFont(checkBox);
+                            setCheckBoxFont(checkBox, Setup.getPickupColor());
                             pPickups.add(checkBox);
                             checkBoxes.put(car.getId() + "p", checkBox);
                             pTrack.add(pTrain);
@@ -309,7 +310,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                         }
                         setoutCar = true;
                         JCheckBox checkBox = new JCheckBox(text);
-                        setCheckBoxFont(checkBox);
+                        setCheckBoxFont(checkBox, Setup.getDropColor());
                         pSetouts.add(checkBox);
                         checkBoxes.put(car.getId(), checkBox);
                         pTrack.add(pTrain);
@@ -349,7 +350,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                             setoutCar = true;
                         }
                         JCheckBox checkBox = new JCheckBox(text);
-                        setCheckBoxFont(checkBox);
+                        setCheckBoxFont(checkBox, Setup.getLocalColor());
                         pLocal.add(checkBox);
                         localCar = true;
                         checkBoxes.put(car.getId(), checkBox);
@@ -425,7 +426,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
 
                 }
                 JCheckBox checkBox = new JCheckBox(text);
-                setCheckBoxFont(checkBox);
+                setCheckBoxFont(checkBox, Color.black);
                 pHoldCars.add(checkBox);
                 checkBoxes.put(car.getId(), checkBox);
                 pTrack.add(pHoldCars);

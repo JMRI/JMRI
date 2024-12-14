@@ -802,7 +802,7 @@ public class ConditionalEditBase {
 
     // ------------ Utility Methods - Data Validation ------------
     /**
-     * Display reminder to save.
+     * Display reminder to save.  The class is set to LogixTableAction.
      */
     void showSaveReminder() {
         if (_showReminder && !_checkEnabled) {
@@ -810,7 +810,7 @@ public class ConditionalEditBase {
                 InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", // NOI18N
                                 Bundle.getMessage("MenuItemLogixTable")), // NOI18N
-                                getClassName(),
+                                "jmri.jmrit.beantable.LogixTableAction",
                                 "remindSaveLogix"); // NOI18N
             }
         }

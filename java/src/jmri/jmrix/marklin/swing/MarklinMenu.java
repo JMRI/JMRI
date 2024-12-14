@@ -2,11 +2,9 @@ package jmri.jmrix.marklin.swing;
 
 import javax.swing.JMenu;
 import jmri.jmrix.marklin.MarklinSystemConnectionMemo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * Create a "Systems" menu containing the Jmri Marklin-specific tools.
+ * Create a "Systems" menu containing the JMRI Marklin-specific tools.
  *
  * @author Kevin Dickerson
  */
@@ -31,21 +29,13 @@ public class MarklinMenu extends JMenu {
             }
         }
 
-        if (jmri.InstanceManager.getNullableDefault(jmri.jmrit.beantable.ListedTableFrame.class) == null) {
-            try {
-                new jmri.jmrit.beantable.ListedTableFrame<jmri.Turnout>();
-            } catch (java.lang.NullPointerException ex) {
-                log.error("Unable to register Marklin table");
-            }
-        }
-
     }
 
-    Item[] panelItems = new Item[]{
+    private static final Item[] panelItems = new Item[]{
         new Item("MenuItemMarklinMonitor", "jmri.jmrix.marklin.swing.monitor.MarklinMonPane"),
         new Item("MenuItemSendPacket", "jmri.jmrix.marklin.swing.packetgen.PacketGenPanel"),};
 
-    static class Item {
+    private static class Item {
 
         Item(String name, String load) {
             this.name = name;
@@ -56,6 +46,6 @@ public class MarklinMenu extends JMenu {
         String load;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MarklinMenu.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MarklinMenu.class);
 
 }

@@ -51,13 +51,13 @@ public class LoginDialog extends JDialog {
         _passwordTextField = new JPasswordField(20);
         contentPanel.add(_passwordTextField, c);
 
+        // Cancel
         JPanel buttonPanel = new JPanel();
         JButton buttonCancel = new JButton(Bundle.getMessage("ButtonCancel"));    // NOI18N
         buttonPanel.add(buttonCancel);
         buttonCancel.addActionListener((ActionEvent e) -> {
             dispose();
         });
-        //buttonCancel.setToolTipText(Bundle.getMessage("LoginCancelButtonHint");      // NOI18N
 
         // OK
         JButton buttonOK = new JButton(Bundle.getMessage("ButtonOK"));    // NOI18N
@@ -79,7 +79,7 @@ public class LoginDialog extends JDialog {
                 }
             }
         });
-        //buttonOK.setToolTipText(Bundle.getMessage("LoginOkButtonHint");      // NOI18N
+        buttonOK.setToolTipText(Bundle.getMessage("LoginOkButtonHint"));      // NOI18N
         getRootPane().setDefaultButton(buttonOK);
 
         c.gridx = 0;
