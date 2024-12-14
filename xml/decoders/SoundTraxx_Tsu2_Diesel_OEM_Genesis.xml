@@ -149,7 +149,7 @@
             <revnumber>17</revnumber>
             <date>2022-07-19</date>
             <authorinitials>JE</authorinitials>
-            <revremark>Revise CV51-56 FX references, set TSU2PaneLighting.xml, Revise CV201-208 sound event names to match tech manual</revremark>
+            <revremark>Revise CV51-56 FX references, set TSU2PaneLighting.xml</revremark>
         </revision>
         <revision>
             <revnumber>18</revnumber>
@@ -162,6 +162,12 @@
             <date>2024-01-17</date>
             <authorinitials>MM</authorinitials>
             <revremark>Add new models</revremark>
+        </revision>
+        <revision>
+            <revnumber>21</revnumber>
+            <date>2024-12-14</date>
+            <authorinitials>JE</authorinitials>
+            <revremark>Revise CV201-208 sound event names to match tech manual</revremark>
         </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
