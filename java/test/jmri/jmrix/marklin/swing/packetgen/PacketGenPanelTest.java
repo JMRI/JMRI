@@ -23,6 +23,7 @@ import org.netbeans.jemmy.operators.*;
  * @author Paul Bender Copyright (C) 2016
  * @author Steve Young Copyright (C) 2024
  */
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class PacketGenPanelTest extends jmri.util.swing.JmriPanelTest {
 
     @Test
