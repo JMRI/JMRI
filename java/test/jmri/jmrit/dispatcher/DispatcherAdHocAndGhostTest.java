@@ -9,7 +9,6 @@
     import jmri.InstanceManager;
     import jmri.Sensor;
     import jmri.SensorManager;
-    import jmri.SignalMastManager;
     import jmri.implementation.SignalSpeedMap;
     import jmri.jmrit.logix.WarrantPreferences;
     import jmri.util.FileUtil;
