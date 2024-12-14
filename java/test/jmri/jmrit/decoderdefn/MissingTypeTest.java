@@ -13,8 +13,6 @@ import org.jdom2.JDOMException;
 import org.jdom2.filter.ElementFilter;
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Checks for missing content in a <variable> element
@@ -25,7 +23,7 @@ import org.slf4j.LoggerFactory;
 public class MissingTypeTest {
 
     @Test
-    public void testForDuplicateModels() throws JDOMException, IOException {
+    public void testForMissingTypeElement() throws JDOMException, IOException {
         File dir = new File("xml/decoders/");
         File[] files = dir.listFiles();
         boolean failed = false;
@@ -57,16 +55,19 @@ public class MissingTypeTest {
         boolean failed = false;
         while (iter.hasNext()) {
             Element e = iter.next().clone();
+            
+            // ignore everything _except_ the type element
             e.removeContent(new ElementFilter("label"));
             e.removeContent(new ElementFilter("qualifier"));
             e.removeContent(new ElementFilter("comment"));
             e.removeContent(new ElementFilter("tooltip"));
             e.removeContent(new ElementFilter("defaultItem"));
+            
             if (e.getChildren().size() != 1) {
                 failed = true;
-                log.error(" failed in {}", file);
-                log.error("Children {}", e.getChildren());
-                for (Attribute a: e.getAttributes()) log.error("  Attr {}", a);
+                log.error("Test failed in file: {}", file);
+                log.error("  Element's remaining children {}", e.getChildren());
+                for (Attribute a: e.getAttributes()) log.error("     Attr {}", a);
             }            
         }
         return failed;
@@ -92,5 +93,5 @@ public class MissingTypeTest {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MissingTypeTest.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MissingTypeTest.class);
 }
