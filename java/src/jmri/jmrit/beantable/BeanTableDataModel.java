@@ -1097,13 +1097,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      */
     public String getCellToolTip(JTable table, int row, int col) {
         String tip = null;
-        int column = COMMENTCOL;
-        if (table.getName().contains("SignalGroup")) column = 2;
-        if (col == column) {
-            T nBean = getBySystemName(sysNameList.get(row));
-            if (nBean != null) {
-                tip = formatToolTip(nBean.getComment());
-            }
+        T nBean = getBySystemName(sysNameList.get(row));
+        if (nBean != null) {
+            tip = formatToolTip(nBean.getRecommendedToolTip());
         }
         return tip;
     }
@@ -1119,14 +1115,14 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     }
 
     /**
-     * Format a comment field as a tool tip string. Multi line comments are supported.
-     * @param comment The comment string.
+     * Format a tool tip string. Multi line tooltips are supported.
+     * @param tooltip The tooltip string to be formatted
      * @return a html formatted string or null if the comment is empty.
      */
-    protected String formatToolTip(String comment) {
+    protected String formatToolTip(String tooltip) {
         String tip = null;
-        if (comment != null && !comment.isEmpty()) {
-            tip = "<html>" + comment.replaceAll(System.getProperty("line.separator"), "<br>") + "</html>";
+        if (tooltip != null && !tooltip.isEmpty()) {
+            tip = "<html>" + tooltip.replaceAll(System.getProperty("line.separator"), "<br>") + "</html>";
         }
         return tip;
     }

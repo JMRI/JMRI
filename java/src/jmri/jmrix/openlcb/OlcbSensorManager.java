@@ -12,9 +12,6 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import org.openlcb.OlcbInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Manage the OpenLCB-specific Sensor implementation.
@@ -103,7 +100,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
             throw e;
         }
         // OK, make
-        OlcbSensor s = new OlcbSensor(getSystemPrefix(), addr, memo.get(OlcbInterface.class));
+        OlcbSensor s = new OlcbSensor(getSystemPrefix(), addr, (CanSystemConnectionMemo) memo);
         s.setUserName(userName);
 
         synchronized (pendingSensors) {
@@ -153,7 +150,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
         String tmpPrefix = prefix + typeLetter();
         String tmpSName  = tmpPrefix + curAddress;
         try {
-            OlcbAddress.validateSystemNameFormat(tmpSName,Locale.getDefault(),tmpPrefix);
+            OlcbAddress.validateSystemNameFormat(tmpSName,Locale.getDefault(),tmpPrefix, (CanSystemConnectionMemo) memo);
         }
         catch ( jmri.NamedBean.BadSystemNameException ex ){
             throw new JmriException(ex.getMessage());
@@ -198,11 +195,11 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     @Nonnull
     public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
         name = super.validateSystemNameFormat(name,locale);
-        name = OlcbAddress.validateSystemNameFormat(name,locale,getSystemNamePrefix());
+        name = OlcbAddress.validateSystemNameFormat(name,locale,getSystemNamePrefix(), (CanSystemConnectionMemo) memo);
         return name;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(OlcbSensorManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbSensorManager.class);
 
 }
 

@@ -179,7 +179,13 @@ public class DefaultIdTagManagerXml extends XmlFile {
     private String IDTAG_BASE_FILENAME = "IdTags.xml"; // NOI18N
 
     public String getIdTagFileName() {
-        return Application.getApplicationName() + IDTAG_BASE_FILENAME;
+        String appName = Application.getApplicationName();
+        if (appName.equals("LccPro")) appName = "PanelPro";
+        String retval = appName + IDTAG_BASE_FILENAME;
+        // as a special case, the LccPro application uses
+        // the PanelPro id tag files
+        jmri.util.LoggingUtil.infoOnce(log, "Using "+retval+" for tag storage");
+        return retval;
     }
 
     /**

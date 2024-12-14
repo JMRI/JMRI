@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.EventObject;
 import java.util.List;
 
 import javax.swing.*;
@@ -40,7 +41,13 @@ public class LccProTable extends JmriPanel {
 
     public LccProTable(CanSystemConnectionMemo memo) {
         super();
-        dataModel = new LccProTableModel(memo);
+        dataModel = new LccProTableModel(memo) {
+            @Override
+            public void forceFocus() {
+                requestFocus();
+            }
+        };
+        
         sorter = new TableRowSorter<>(dataModel);
         dataTable = new JTable(dataModel);
         dataTable.setRowSorter(sorter);
@@ -71,7 +78,12 @@ public class LccProTable extends JmriPanel {
         ButtonRenderer buttonRenderer = new ButtonRenderer();
         columnModel.getColumn(LccProTableModel.CONFIGURECOL).setCellRenderer(buttonRenderer);
         columnModel.getColumn(LccProTableModel.UPGRADECOL).setCellRenderer(buttonRenderer);
-        TableCellEditor buttonEditor = new ButtonEditor(new JButton());
+        TableCellEditor buttonEditor = new ButtonEditor(new JButton()){
+            // don't want keystrokes to repeatedly fire buttons
+            @Override
+            public void editingStarted(EventObject event) {
+            }
+        };
         dataTable.setDefaultEditor(JButton.class, buttonEditor);
 
         // general GUI config

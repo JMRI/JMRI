@@ -6,7 +6,7 @@ import jmri.NamedBean;
 import jmri.NamedBeanPropertyDescriptor;
 import jmri.Reporter;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import org.openlcb.OlcbInterface;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -104,7 +104,7 @@ public class OlcbReporterManager extends jmri.managers.AbstractReporterManager {
             throw e;
         }
         // OK, make
-        OlcbReporter s = new OlcbReporter(getSystemPrefix(), addr, memo.get(OlcbInterface.class));
+        OlcbReporter s = new OlcbReporter(getSystemPrefix(), addr, (CanSystemConnectionMemo) memo);
         s.setUserName(userName);
 
         synchronized (pendingReporters) {
@@ -149,7 +149,7 @@ public class OlcbReporterManager extends jmri.managers.AbstractReporterManager {
         String tmpPrefix = prefix + typeLetter();
         String tmpSName  = tmpPrefix + curAddress;
         try {
-            OlcbAddress.validateSystemNameFormat(tmpSName,Locale.getDefault(),tmpPrefix);
+            OlcbAddress.validateSystemNameFormat(tmpSName,Locale.getDefault(),tmpPrefix, (CanSystemConnectionMemo) memo);
         }
         catch ( NamedBean.BadSystemNameException ex ){
             throw new JmriException(ex.getMessage());
@@ -179,7 +179,7 @@ public class OlcbReporterManager extends jmri.managers.AbstractReporterManager {
      */
     public String incrementSystemName(String currentName) {
         String oAddr = currentName.substring(getSystemNamePrefix().length());
-        OlcbAddress a = new OlcbAddress(oAddr);
+        OlcbAddress a = new OlcbAddress(oAddr, (CanSystemConnectionMemo) memo);
         // Increments address elements 4-5-6 with overflow.
         int[] e = a.elements();
         int idx = 5;
@@ -213,7 +213,7 @@ public class OlcbReporterManager extends jmri.managers.AbstractReporterManager {
     @Nonnull
     public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) throws NamedBean.BadSystemNameException {
         name = super.validateSystemNameFormat(name,locale);
-        name = OlcbAddress.validateSystemNameFormat(name,locale,getSystemNamePrefix());
+        name = OlcbAddress.validateSystemNameFormat(name,locale,getSystemNamePrefix(), (CanSystemConnectionMemo) memo);
         return name;
     }
 

@@ -209,7 +209,8 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     NodeID nodeID;
     LoaderClient loaderClient;
     OlcbClockControl clockControl;
-
+    OlcbEventNameStore olcbEventNameStore = new OlcbEventNameStore();
+    
     OlcbInterface getInterface() {
         return olcbCanInterface.getInterface();
     }
@@ -284,6 +285,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (type.equals(ClockControl.class)) {
             return clockControl != null;
         }
+        if (type.equals(OlcbEventNameStore.class)) {
+            return true;
+        }
         return false; // nothing, by default
     }
 
@@ -349,6 +353,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         }
         if (T.equals(ClockControl.class)) {
             return (T) clockControl;
+        }
+        if (T.equals(OlcbEventNameStore.class)) {
+            return (T) olcbEventNameStore;
         }
         return null; // nothing, by default
     }
