@@ -857,35 +857,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         } else if (getElement(0) == XNetConstants.BC_EMERGENCY_STOP
                 && getElement(1) == XNetConstants.BC_EVERYTHING_STOP) {
             text = new StringBuilder(Bundle.getMessage("XNetReplyBCEverythingStop"));
-            /* Followed by Service Mode responses */
-        } else if (getElement(0) == XNetConstants.CS_SERVICE_MODE_RESPONSE) {
-            if (isDirectModeResponse()) {
-                text = new StringBuilder(Bundle.getMessage("XNetReplyServiceModeDirectResponse", getServiceModeCVNumber(), getServiceModeCVValue()));
-            } else if (isPagedModeResponse()) {
-                text = new StringBuilder(Bundle.getMessage("XNetReplyServiceModePagedResponse", getServiceModeCVNumber(), getServiceModeCVValue()));
-            } else if (getElement(1) == XNetConstants.CS_SOFTWARE_VERSION) {
-                String typeString;
-                switch (getElement(3)) {
-                    case 0x00:
-                        typeString = Bundle.getMessage("CSTypeLZ100");
-                        break;
-                    case 0x01:
-                        typeString = Bundle.getMessage("CSTypeLH200");
-                        break;
-                    case 0x02:
-                        typeString = Bundle.getMessage("CSTypeCompact");
-                        break;
-                    // GT 2007/11/6 - Added multiMaus
-                    case 0x10:
-                        typeString = Bundle.getMessage("CSTypeMultiMaus");
-                        break;
-                    default:
-                        typeString = "" + getElement(3);
-                }
-                text = new StringBuilder(Bundle.getMessage("XNetReplyCSVersion", (getElementBCD(2).floatValue()) / 10, typeString));
-            } else {
-                text = new StringBuilder(toString());
-            }
+
  /* We want to look at responses to specific requests made to the Command Station */
         } else if (getElement(0) == XNetConstants.CS_REQUEST_RESPONSE) {
             if (getElement(1) == XNetConstants.CS_STATUS_RESPONSE) {

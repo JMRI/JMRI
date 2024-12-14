@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import jmri.jmrix.MessageFormatter;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1148,42 +1147,8 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
             boolean f18,
             boolean f19,
             boolean f20) {
-        XNetMessage msg = new XNetMessage(6);
-        msg.setElement(0, XNetConstants.LOCO_OPER_REQ);
-        msg.setElement(1, XNetConstants.LOCO_SET_FUNC_GROUP4);
-        msg.setElement(2, LenzCommandStation.getDCCAddressHigh(address));
-        // set to the upper byte of the  DCC address
-        msg.setElement(3, LenzCommandStation.getDCCAddressLow(address));
-        // set to the lower byte of the DCC address
-        // Now, we need to figure out what to send in element 3
-        int element4value = 0;
-        if (f13) {
-            element4value += 1;
-        }
-        if (f14) {
-            element4value += 2;
-        }
-        if (f15) {
-            element4value += 4;
-        }
-        if (f16) {
-            element4value += 8;
-        }
-        if (f17) {
-            element4value += 16;
-        }
-        if (f18) {
-            element4value += 32;
-        }
-        if (f19) {
-            element4value += 64;
-        }
-        if (f20) {
-            element4value += 128;
-        }
-        msg.setElement(4, element4value);
-        msg.setParity(); // Set the parity bit
-        return msg;
+        return getFunctionGroupNOpsMsg(address, XNetConstants.LOCO_SET_FUNC_GROUP4,
+                f13, f14, f15, f16, f17, f18, f19, f20);
     }
 
     /**
@@ -1209,42 +1174,8 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
             boolean f18,
             boolean f19,
             boolean f20) {
-        XNetMessage msg = new XNetMessage(6);
-        msg.setElement(0, XNetConstants.LOCO_OPER_REQ);
-        msg.setElement(1, XNetConstants.LOCO_SET_FUNC_GROUP4_MOMENTARY);
-        msg.setElement(2, LenzCommandStation.getDCCAddressHigh(address));
-        // set to the upper byte of the  DCC address
-        msg.setElement(3, LenzCommandStation.getDCCAddressLow(address));
-        // set to the lower byte of the DCC address
-        // Now, we need to figure out what to send in element 3
-        int element4value = 0;
-        if (f13) {
-            element4value += 1;
-        }
-        if (f14) {
-            element4value += 2;
-        }
-        if (f15) {
-            element4value += 4;
-        }
-        if (f16) {
-            element4value += 8;
-        }
-        if (f17) {
-            element4value += 16;
-        }
-        if (f18) {
-            element4value += 32;
-        }
-        if (f19) {
-            element4value += 64;
-        }
-        if (f20) {
-            element4value += 128;
-        }
-        msg.setElement(4, element4value);
-        msg.setParity(); // Set the parity bit
-        return msg;
+        return getFunctionGroupNOpsMsg(address, XNetConstants.LOCO_SET_FUNC_GROUP4_MOMENTARY,
+                f13, f14, f15, f16, f17, f18, f19, f20);
     }
 
     /**
@@ -1270,42 +1201,8 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
             boolean f26,
             boolean f27,
             boolean f28) {
-        XNetMessage msg = new XNetMessage(6);
-        msg.setElement(0, XNetConstants.LOCO_OPER_REQ);
-        msg.setElement(1, XNetConstants.LOCO_SET_FUNC_GROUP5);
-        msg.setElement(2, LenzCommandStation.getDCCAddressHigh(address));
-        // set to the upper byte of the  DCC address
-        msg.setElement(3, LenzCommandStation.getDCCAddressLow(address));
-        // set to the lower byte of the DCC address
-        // Now, we need to figure out what to send in element 3
-        int element4value = 0;
-        if (f21) {
-            element4value += 1;
-        }
-        if (f22) {
-            element4value += 2;
-        }
-        if (f23) {
-            element4value += 4;
-        }
-        if (f24) {
-            element4value += 8;
-        }
-        if (f25) {
-            element4value += 16;
-        }
-        if (f26) {
-            element4value += 32;
-        }
-        if (f27) {
-            element4value += 64;
-        }
-        if (f28) {
-            element4value += 128;
-        }
-        msg.setElement(4, element4value);
-        msg.setParity(); // Set the parity bit
-        return msg;
+        return getFunctionGroupNOpsMsg(address, XNetConstants.LOCO_SET_FUNC_GROUP5,
+            f21, f22, f23, f24, f25, f26, f27, f28);
     }
 
     /**
@@ -1331,42 +1228,8 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
             boolean f26,
             boolean f27,
             boolean f28) {
-        XNetMessage msg = new XNetMessage(6);
-        msg.setElement(0, XNetConstants.LOCO_OPER_REQ);
-        msg.setElement(1, XNetConstants.LOCO_SET_FUNC_GROUP5_MOMENTARY);
-        msg.setElement(2, LenzCommandStation.getDCCAddressHigh(address));
-        // set to the upper byte of the  DCC address
-        msg.setElement(3, LenzCommandStation.getDCCAddressLow(address));
-        // set to the lower byte of the DCC address
-        // Now, we need to figure out what to send in element 3
-        int element4value = 0;
-        if (f21) {
-            element4value += 1;
-        }
-        if (f22) {
-            element4value += 2;
-        }
-        if (f23) {
-            element4value += 4;
-        }
-        if (f24) {
-            element4value += 8;
-        }
-        if (f25) {
-            element4value += 16;
-        }
-        if (f26) {
-            element4value += 32;
-        }
-        if (f27) {
-            element4value += 64;
-        }
-        if (f28) {
-            element4value += 128;
-        }
-        msg.setElement(4, element4value);
-        msg.setParity(); // Set the parity bit
-        return msg;
+        return getFunctionGroupNOpsMsg(address, XNetConstants.LOCO_SET_FUNC_GROUP5_MOMENTARY,
+            f21, f22, f23, f24, f25, f26, f27, f28);
     }
 
     // Generate a Function Group Operation Request message for some specific case.
@@ -1634,9 +1497,6 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                 log.error("Error instantiating formatter", e);
             }
         }
-
-        MessageFormatter formatter = formatterList.stream().filter(f -> f.handlesMessage(this)).findFirst().orElse(null);
-
 
         return formatterList.stream().filter(f -> f.handlesMessage(this)).findFirst().map(f -> f.formatMessage(this)).orElse(this.toString());
     }
