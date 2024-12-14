@@ -174,10 +174,6 @@
             <date>2024-12-14</date>
             <authorinitials>JE</authorinitials>
             <revremark>Revise CV201-208 sound event names to match tech manual</revremark>
-            <revnumber>20</revnumber>
-            <date>2024-10-23</date>
-            <authorinitials>MM</authorinitials>
-            <revremark>Add new models</revremark>
         </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
