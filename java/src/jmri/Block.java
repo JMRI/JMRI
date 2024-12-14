@@ -623,6 +623,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         return _permissiveWorking;
     }
 
+
     /**
      * Property name change fired when the Block Permissive Status changes.
      * The fired event includes
@@ -644,6 +645,37 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     }
 
     private boolean _permissiveWorking = false;
+
+    /**
+     * Get if Block is a ghost.
+     * Blocks default to non-ghost, i.e. false.
+     * @return true if ghost, else false.
+     */
+    public boolean getIsGhost() {
+        return _ghost;
+    }
+
+    /**
+     * Property name change fired when the Block ghost Status changes.
+     * The fired event includes
+     * old value: previous ghost status.
+     * new value: new ghost status.
+     */
+    public final static String GHOST_CHANGE = "BlockGhost"; // NOI18N
+
+    /**
+     * Set if the block is a ghost
+     * Fires propertyChange "BlockPermissiveWorking" when changed.
+     * @param w true permissive, false NOT permissive
+     */
+    public void setIsGhost(boolean w) {
+        if (_ghost != w) {
+            _ghost = w;
+            firePropertyChange(GHOST_CHANGE, !w, w); // NOI18N
+        }
+    }
+
+    private boolean _ghost = false;
 
     public float getSpeedLimit() {
         if ((_blockSpeed == null) || (_blockSpeed.isEmpty())) {

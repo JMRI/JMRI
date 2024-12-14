@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/dispatcher-traininfo.xsl" type="text/xsl"?>
+<!DOCTYPE traininfofile SYSTEM "/xml/DTD/dispatcher-traininfo.dtd">
+<traininfofile>
+  <!--Written by JMRI version 5.9.8-ClubBase-2024-202411260844+Rf25af9f on Fri Dec 13 20:57:11 EST 2024-->
+  <traininfo version="7" transitname="" transitid="" dynamictransit="yes" trainname="" trainusername="Three" rosterid="" dccaddress="3" trainintransit="no" startblockname="South Block" startblockid="South Block" startblockseq="1" endblockname="East Block" endblockid="East Block" endblockseq="-1" viablockname="West Block" trainfromroster="no" trainfromtrains="no" trainfromuser="yes" trainfromsetlater="no" priority="5" traindetection="TRAINDETECTION_WHOLETRAIN" resetwhendone="no" delayedrestart="no" reverseatend="no" reversedelayedrestart="no" terminatewhendone="no" departuretimehr="8" departuretimemin="0" traintype="&lt;none&gt;" autorun="yes" loadatstartup="no" allocatealltheway="no" allocationmethod="3" nexttrain="None" speedfactor="1.0" maxspeed="1.0" minreliableoperatingspeed="0.0" ramprate="None" runinreverse="no" sounddecoder="no" maxtrainlengthscalemeters="30.000002" trainlengthunits="TRAINLENGTH_SCALEFEET" usespeedprofile="no" stopbyspeedprofile="no" stopbyspeedprofileadjust="1.0" waittime="1.0" blockname="" />
+</traininfofile>
