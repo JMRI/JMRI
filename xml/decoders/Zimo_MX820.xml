@@ -93,7 +93,7 @@
       </variable>
 
 <!--                                                                        -->
-<!-- Definitions for cvs 1, 9 and 33 MUST come AFTER the splitvals (abve)   -->
+<!-- Definitions for cvs 1, 9 and 33 MUST come AFTER the splitvals (above)   -->
 <!--                                                                        -->
       <variable item="Low 6 bytes of Address" CV="1" mask="XXVVVVVV" comment="Decoder address (lower 6 bits)" default="1">
         <decVal min="1" max="63"/>
@@ -110,7 +110,7 @@
         <label>Zimo Sub Address CV33</label>
       </variable>
 <!--                                                                        -->
-<!-- Definitions for cvs 1, 9 and 33 MUST come AFTER the splitvals (abve)   -->
+<!-- Definitions for cvs 1, 9 and 33 MUST come AFTER the splitvals (above)   -->
 <!--                                                                        -->
 
       <variable item="Reverse Operation" CV="38" mask="XXXXXXXV" comment="Reverse Operation" default="0">
