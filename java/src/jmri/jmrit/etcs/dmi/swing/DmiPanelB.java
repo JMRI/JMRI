@@ -152,7 +152,7 @@ public class DmiPanelB extends JPanel {
         p.setCentreCircleAndDialColor(color);
     }
 
-    protected void setActualSpeed( int speed ) {
+    protected void setActualSpeed( float speed ) {
         p.update(speed);
     }
 
@@ -259,7 +259,7 @@ public class DmiPanelB extends JPanel {
                 b7Label.setToolTipText(Bundle.getMessage("SupervisedManoeuvre"));
                 break;
             default:
-                throw new IllegalArgumentException("Could not set Mode " + newMode);
+                log.error("Could not set Mode {}", newMode);
         }
     }
 

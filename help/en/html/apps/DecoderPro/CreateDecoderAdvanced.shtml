@@ -1018,7 +1018,7 @@ delay is 500 milliseconds.
       <p>Example:</p>
 
       <pre style="font-family: monospace;">
-  &lt;pane label="My Pane" include="ModelA,400"&gt;
+  &lt;pane include="ModelA,400"&gt;
     ...
   &lt;/pane&gt;
 </pre>

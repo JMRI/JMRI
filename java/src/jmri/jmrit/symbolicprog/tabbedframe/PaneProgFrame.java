@@ -52,6 +52,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     ArrayList<JMenu> extraMenuList = new ArrayList<>();
 
     Programmer mProgrammer;
+    boolean noDecoder = false;
 
     JMenuBar menuBar = new JMenuBar();
 
@@ -306,7 +307,10 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     void setProgrammingGui(JPanel bottom) {
         // see if programming mode is available
-        var tempModePane = getModePane();
+        JPanel tempModePane = null;
+        if (!noDecoder) {
+            tempModePane = getModePane();
+        }
         if (tempModePane != null) {
             // if so, configure programming part of GUI
             // add buttons
@@ -548,7 +552,8 @@ abstract public class PaneProgFrame extends JmriJFrame
         readAllButton.setToolTipText(Bundle.getMessage("TipReadAll"));
         // check with CVTable programmer to see if read is possible
         if (cvModel != null && cvModel.getProgrammer() != null
-                && !cvModel.getProgrammer().getCanRead()) {
+                && !cvModel.getProgrammer().getCanRead()
+                || noDecoder) {
             // can't read, disable the button
             readChangesButton.setEnabled(false);
             readAllButton.setEnabled(false);
@@ -681,6 +686,10 @@ abstract public class PaneProgFrame extends JmriJFrame
                     pickProgrammerMode(programming);
                     // reset the read buttons if the mode changes
                     enableReadButtons();
+                    if (noDecoder) {
+                        writeChangesButton.setEnabled(false);
+                        writeAllButton.setEnabled(false);
+                    }
                 } else {
                     log.debug("Skipping programmer setup because found no programmer element");
                 }
@@ -786,6 +795,11 @@ abstract public class PaneProgFrame extends JmriJFrame
         Attribute a;
 
         // set the programming attributes for DCC
+        if ((a = programming.getAttribute("nodecoder")) != null) {
+            if (a.getValue().equals("yes")) {
+                noDecoder = true;   // No decoder in the loco
+            }
+        }
         if ((a = programming.getAttribute("paged")) != null) {
             if (a.getValue().equals("no")) {
                 paged = false;
@@ -855,6 +869,8 @@ abstract public class PaneProgFrame extends JmriJFrame
         } else if (modes.contains(ProgrammingMode.REGISTERMODE) && register) {
             mProgrammer.setMode(ProgrammingMode.REGISTERMODE);
             log.debug("Set to REGISTERMODE");
+        } else if (noDecoder) {
+            log.debug("No decoder");
         } else {
             JmriJOptionPane.showMessageDialog(
                     this,
@@ -1081,7 +1097,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         if (log.isDebugEnabled()) {
             log.debug("Checking decoder dirty status. CV: {} variables:{}", cvModel.decoderDirty(), variableModel.decoderDirty());
         }
-        if (checkDirtyDecoder()) {
+        if (!noDecoder && checkDirtyDecoder()) {
             if (JmriJOptionPane.showConfirmDialog(this,
                     Bundle.getMessage("PromptCloseWindowNotWrittenDecoder"),
                     Bundle.getMessage("PromptChooseOne"),
@@ -1442,6 +1458,10 @@ abstract public class PaneProgFrame extends JmriJFrame
         // create a panel to hold columns
         PaneProgPane p = new PaneProgPane(this, name, pane, cvModel, variableModel, modelElem, _rosterEntry, programmerPane);
         p.setOpaque(true);
+        if (noDecoder) {
+            p.setNoDecoder();
+            cvModel.setNoDecoder();
+        }
         // how to handle the tab depends on whether it has contents and option setting
         int index;
         if (enableEmpty || !p.cvList.isEmpty() || !p.varList.isEmpty()) {
@@ -1571,6 +1591,10 @@ abstract public class PaneProgFrame extends JmriJFrame
     @Override
     public void enableButtons(boolean stat) {
         log.debug("enableButtons({})", stat);
+        if (noDecoder) {
+            // If we don't have a decoder, no read or write is possible
+            stat = false;
+        }
         if (stat) {
             enableReadButtons();
         } else {

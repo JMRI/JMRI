@@ -96,7 +96,7 @@
 
         <h4>Marklin CS2</h4>
             <ul>
-                <li></li>
+                <li>Added simulated CS2 Connection</li>
             </ul>
 
         <h4>MERG</h4>
@@ -126,7 +126,34 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>There's a new LccPro JMRI application that's 
+                    targeted at making it easier to understand and 
+                    configure an LCC network.  See the
+                    <a href="http://jmri.org/help/en/package/apps/gui3/lccpro/LccPro.shtml">help page</a>
+                    for more information.</li>
+                <li>The 
+                    <a href="http://jmri.org/help/en/package/jmri/jmrix/openlcb/swing/eventtable/EventTablePane.shtml">Event Table</a> 
+                    has been improved:<ul>
+                    <li>It now shows event ranges.
+                    <li>It now automatically shows the names of event IDs that are
+                        defined in the LCC Standards if you haven't given them another name.
+                    <li>There's now a "Find Name" that searches for any cell in the name columns 
+                        containing a particular string.
+                    <li>The Find Event and Find Name search boxes update the search
+                        as you type.
+                    <li>The 
+                        <a href="http://jmri.org/help/en/package/jmri/jmrix/openlcb/swing/eventtable/EventTablePane.shtml#menu">File menu</a> 
+                        now contains a "Read from CSV..." item that lets you load event names
+                        from a comma-separated (CSV) file.
+                </ul></li>
+                <li>A graphics issue on Linux in the configuration screens was fixed.
+                <li>Improved the Traffic Monitor display:  <ul>
+                    <li>Now shows addressed message destinations; 
+                    <li>Better alignment of messages on the screen;
+                    <li>Improved how event ID names and uses are displayed on event messages.
+                    <li>Improved 
+                        <a href="http://jmri.org/help/en/package/jmri/jmrix/openlcb/swing/monitor/MonitorPane.shtml">help page</a>.
+                    </ul></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -374,11 +401,21 @@
                 <li></li>
             </ul>
 
-    <h3>DecoderPro</h3>
-        <a id="DecoderPro" name="DecoderPro"></a>
+    <h3>Control Panel Editor</h3>
+        <a id="CPE" name="CPE"></a>
         <ul>
             <li></li>
         </ul>
+        <h4>Circuit Builder</h4>
+            <a id="CPE-CB" name="CPE-CB"></a>
+            <ul>
+                <li></li>
+            </ul>
+        <h4>Palette</h4>
+            <a id="CPE-P" name="CPE-P"></a>
+            <ul>
+                <li></li>
+            </ul>
 
     <h3>CTC Tool</h3>
         <a id="PE-CTC" name="PE-CTC"></a>
@@ -386,10 +423,17 @@
             <li></li>
         </ul>
 
+    <h3>DecoderPro</h3>
+        <a id="DecoderPro" name="DecoderPro"></a>
+        <ul>
+            <li>You can now choose how to sort the 
+                Roster Group Table.</li>
+        </ul>
+
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Provide more information when selecting traininfo file.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -415,6 +459,16 @@
                 <li></li>
             </ul>
 
+    <h3>LccPro</h3>
+        <a id="LccPro" name="LccPro"></a>
+        <ul>
+          <li>There's a new LccPro JMRI application that's 
+            targeted at making it easier to understand and 
+            configure an LCC network.  See the
+            <a href="http://jmri.org/help/en/package/apps/gui3/lccpro/LccPro.shtml">help page</a>
+            for more information.</li>
+        </ul>
+        
     <h3>Logix</h3>
         <a id="Logix" name="Logix"></a>
         <ul>
@@ -433,7 +487,7 @@
             <li></li>
         </ul>
 
-    <h3>Operations</h3>
+    <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
             <li></li>
@@ -445,26 +499,16 @@
             <li></li>
         </ul>
 
-    <h3>Control Panel Editor</h3>
-        <a id="CPE" name="CPE"></a>
+    <h3>Permissions</h3>
+        <a id="Permissions" name="Permissions"></a>
         <ul>
             <li></li>
         </ul>
-        <h4>Circuit Builder</h4>
-            <a id="CPE-CB" name="CPE-CB"></a>
-            <ul>
-                <li></li>
-            </ul>
-        <h4>Palette</h4>
-            <a id="CPE-P" name="CPE-P"></a>
-            <ul>
-                <li></li>
-            </ul>
 
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li></li>
+            <li>Update <strong>Messages</strong> details. Describe the option to hide tabs without active messages.</li>
         </ul>
 
     <h3>Resources</h3>
@@ -558,7 +602,8 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>You can now export the contents of a table
+                to a CSV file from the File menu.</li>
         </ul>
 
    <h3>Warrants</h3>
@@ -569,6 +614,12 @@
 
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
+        <ul>
+            <li></li>
+        </ul>
+
+   <h3>Web Server</h3>
+        <a id="server" name="server"></a>
         <ul>
             <li></li>
         </ul>
@@ -585,14 +636,14 @@
             <li></li>
         </ul>
 
-   <h3>Web Server</h3>
-        <a id="server" name="server"></a>
+   <h3>Virtual Sound Decoder</h3>
+        <a id="VSD" name="VSD"></a>
         <ul>
             <li></li>
         </ul>
 
-   <h3>Virtual Sound Decoder</h3>
-        <a id="VSD" name="VSD"></a>
+   <h3>Z21 Server</h3>
+        <a id="Z21" name="Z21"></a>
         <ul>
             <li></li>
         </ul>
@@ -600,6 +651,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>You can now export the contents of a table
+                to a CSV file from the File menu.</li>
         </ul>
 

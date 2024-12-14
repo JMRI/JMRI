@@ -71,7 +71,7 @@ public class TrainSwitchLists extends TrainCommon {
             fileOut = new PrintWriter(new BufferedWriter(
                     new OutputStreamWriter(new FileOutputStream(file, append), StandardCharsets.UTF_8)), true);
         } catch (IOException e) {
-            log.error("Can not open switchlist file: {}", file.getName());
+            log.error("Can not open switchlist file: {}", e.getLocalizedMessage());
             return;
         }
         try {
@@ -436,7 +436,7 @@ public class TrainSwitchLists extends TrainCommon {
             for (Location loc : locationManager.getLocationsByNameList()) {
                 if (!loc.getSplitName().equals(location.getSplitName()))
                     continue;
-                for (Track track : loc.getTracksByNameList(null)) {
+                for (Track track : loc.getTracksByBlockingOrderList(null)) {
                     String trackName = track.getSplitName();
                     if (trackNames.contains(trackName))
                         continue;

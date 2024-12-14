@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Permissions</title>
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="/Sidebar.shtml" -->
+
+    <div id="mainContent">
+      <span class="since">since 5.9.3</span>
+      <h1>Permissions</h1>
+
+      <p><strong>Permissions</strong> is used to protect sensitive parts of JMRI, for example
+      preventing the loading and storing of the <em>table content and panels</em> file by
+      unauthorized users.</p>
+
+      <ul>
+        <li><a href="#settings">Settings</a></li>
+        <li><a href="#defaultusers">Default users</a></li>
+        <li><a href="#defaultpermissions">Default permissions</a></li>
+        <li><a href="#lockedout">I have locked myself out! What do I do?</a></li>
+        <li><a href="#securingpreferences">Securing the preferences</a></li>
+        <li><a href="#connectionfailure">Connection failure during startup of JMRI</a></li>
+        <li><a href="#panelproshutdown">Permission failure during PanelPro shutdown</a></li>
+      </ul>
+
+      <h2 id="settings">Settings</h2>
+
+      <p><strong>Edit &rArr; Preferences &rArr; Permissions</strong> has the configuration for the
+      permission manager.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/permission-preferences.png"><img src="images/permission-preferences.png"
+         alt="permissions preferences dialog"></a>
+      </div>
+
+      <h3>Options</h3>
+      <dl>
+        <dt>Enable permission manager</dt>
+          <dd>If selected, the permission manager will be active. You need to restart JMRI for the
+          login/logout menu items to be available on the <strong>File</strong> menu. By default, the
+          permission manager is disabled.</dd>
+
+        <dt>Allow empty passwords</dt>
+          <dd>If selected, empty passwords are allowed. By default, empty passwords are not allowed.</dd>
+      </dl>
+
+      <h2 id="defaultusers">Default users</h2>
+
+      <h3>The current default users are</h3>
+      <table>
+          <tr><th>User</th><th>Password</th><th>Role</th></tr>
+          <tr><td>admin</td><td>jmri</td><td>Administrator</td></tr>
+          <tr><td>guest</td><td></td><td>Guest</td></tr>
+          <tr><td>remote guest</td><td></td><td>Remote guest</td></tr>
+      </table>
+      <p>These three users cannot be deleted. If you don't want to use the <strong>admin</strong> user,
+      you can unselect all the roles. It will then not have any permissions at all.</p>
+
+      <p>New users will get the <strong>Standard user</strong> role when created.</p>
+
+      <p>Note that the <strong>guest</strong> and <strong>remote guest</strong> users cannot have a
+      password.</p>
+
+      <h2 id="defaultpermissions">Default permissions</h2>
+      <h3>The current permissions are</h3>
+      <table>
+        <tr><th>Permission</th><th>Roles with this permission as standard</th></tr>
+        <tr><td>Edit preferences</td><td><strong>Administrator</strong></td></tr>
+        <tr><td>Edit permissions</td><td><strong>Administrator</strong></td></tr>
+        <tr><td>Change user's own password</td><td><strong>Administrator</strong> and <strong>Standard user</strong></td></tr>
+        <tr><td>Load table content and panels file</td><td><strong>Administrator</strong></td></tr>
+        <tr><td>Store table content and panels file</td><td><strong>Administrator</strong></td></tr>
+      </table>
+
+      <h3><span class="since">since 5.9.5</span>Panels</h3>
+
+      <p>The <strong>Panels</strong> permission can provide control of a set of panel actions.</p>
+
+      <p class="noted">The <strong>Panels</strong> permission is currently applied to all panels.
+      Future changes will include the ability assign specific roles to a panel.</p>
+
+      <dl>
+        <dt>Default</dt>
+        <dd>Not implemented yet.  When selected it defaults to <strong>None</strong></dd>
+
+        <dt>None</dt>
+        <dd>Displays a panel with only <strong>Permission denied Login to view the panel</strong>".</dd>
+
+        <dt>View</dt>
+        <dd>Displays a panel.  Clicking on the panel will display a <strong>Panel is read only</strong>
+        dialog.</dd>
+
+        <dt>View and control</dt>
+        <dd>Not implemented yet.  When selected it defaults to <strong>View, control and edit</strong>.</dd>
+
+        <dt>View, control and edit</dt>
+        <dd>Full access to the panel.  This is the initial setting for all roles.</dd>
+
+      </dl>
+
+      <h2 id="lockedout">I have locked myself out! What do I do?</h2>
+
+      <p>There are two options.</p>
+
+      <p>The simplest way is to delete the file <strong>.permissions.xml</strong> in the
+      PREFERENCES folder. Note: This is the <strong>Settings Location</strong> in <strong>Help &rArr;
+      File Locations</strong>.</p>
+
+      <p>By deleting the file, the permission configuration is removed.</p>
+
+      <p>The second option is to edit that file with a text editor or an xml editor. The beginning
+      of the file looks like this:</p>
+
+      <pre>
+&lt;Permissions&gt;
+  &lt;Settings&gt;
+    &lt;Enabled&gt;no&lt;/Enabled&gt;
+    &lt;AllowEmptyPasswords&gt;no&lt;/AllowEmptyPasswords&gt;
+  &lt;/Settings&gt;
+  ...
+&lt;/Permissions&gt;
+      </pre>
+
+      <p>Change <strong>&lt;Enabled&gt;yes&lt;/Enabled&gt;</strong> to
+      <strong>&lt;Enabled&gt;no&lt;/Enabled&gt;</strong>.
+      It disables permission checking but retains the permission configuration.
+      </p>
+
+      <h2 id="securingpreferences">Securing the preferences</h2>
+
+      <p>If an unauthorized user is able to delete or edit files on the computer running
+      JMRI, he might be able to disable the permissions and then override them. See the section
+      <strong>I have looked myself out!</strong> above.</p>
+
+      <p>If you want to protect from that, you could protect that file from being changed.
+      On Linux, it can be done by changing the owner of the file to <strong>root</strong> and to have
+      it read only for other users. This assumes that the OS user that runs JMRI does not have OS
+      administrative authority.</p>
+
+      <pre>
+sudo chown root ~/.jmri/.permissions.xml
+sudo chmod 644 ~/.jmri/.permissions.xml
+      </pre>
+
+      <p>On Linux the .permissions.xml file can deleted even when write access is denied.  To prevent
+      this, the <strong>.jmri</strong> parent directory also needs to be protected.  However, doing
+      so can result in JMRI errors.</p>
+
+      <h2 id="connectionfailure">Connection failure during startup of JMRI</h2>
+
+      <p>If JMRI is unable to connect to the layout during startup, a dialog is shown with the options
+      <strong>Quit PanelPro</strong>, <strong>Continue</strong> and <strong>Edit connections</strong>.
+      If the permission manager is enabled, a user with the Guest role probably doesn't have the permission
+      to edit the connections. In this case, select <strong>Continue</strong> to start JMRI. When you
+      do, a dialog will open with the message <strong>Permission denied</strong>. Ignore that, log
+      in with an authorized user and then open the preferences. Now edit the connection.</p>
+
+      <h2 id="panelproshutdown">Permission failure during PanelPro shutdown</h2>
+
+      <p>The normal PanelPro shutdown process checks for changes that have not been stored.  If
+      change detection is enabled, changes have been made and the user is not authorized to store
+      changes, a dialog is displayed.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/shutdown-abort.png"><img src="images/shutdown-abort.png"
+         alt="abort shutdown question"></a>
+      </div>
+
+      <p>If it is possible to login with the necessary authority, then click on <strong>Yes</strong>,
+      login and do the store process.  If not, click on <strong>No</strong>.</p>
+
+      <p>For production environments, change detection can be disabled. This will eliminate shutdown
+      issues.  See the <a href="../../../apps/TabbedPreferences.shtml#Shutdown">Shutdown</a>
+      preference.</p>
+
+
+
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/help.js"></script>
+</body>
+</html>

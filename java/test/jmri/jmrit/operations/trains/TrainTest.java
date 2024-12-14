@@ -328,74 +328,109 @@ public class TrainTest extends OperationsTestCase {
     public void testReplaceRoadName() {
         Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
 
-        // there are 7 road names that a train uses
+        // there are 9 places for road names
         train1.setCabooseRoad("A");
         train1.setEngineRoad("B");
-        Assert.assertTrue(train1.addCarRoadName("C"));
         train1.setSecondLegCabooseRoad("D");
         train1.setThirdLegCabooseRoad("E");
         train1.setSecondLegEngineRoad("F");
         train1.setThirdLegEngineRoad("G");
 
+        train1.setCarRoadOption(Train.INCLUDE_ROADS);
+        Assert.assertTrue(train1.addCarRoadName("C"));
+        train1.setCabooseRoadOption(Train.INCLUDE_ROADS);
+        Assert.assertTrue(train1.addCabooseRoadName("A"));
+        train1.setLocoRoadOption(Train.INCLUDE_ROADS);
+        Assert.assertTrue(train1.addLocoRoadName("F"));
+
         // confirm
         Assert.assertEquals("caboose road", "A", train1.getCabooseRoad());
         Assert.assertEquals("engine road", "B", train1.getEngineRoad());
-        Assert.assertEquals("rolling stock road", true, train1.isCarRoadNameAccepted("C"));
         Assert.assertEquals("Second Leg Caboose Road", "D", train1.getSecondLegCabooseRoad());
         Assert.assertEquals("Third Leg Caboose Road", "E", train1.getThirdLegCabooseRoad());
         Assert.assertEquals("Second Leg Engine Road", "F", train1.getSecondLegEngineRoad());
         Assert.assertEquals("Third Leg Engine Road", "G", train1.getThirdLegEngineRoad());
+
+        Assert.assertEquals("car road", true, train1.isCarRoadNameAccepted("C"));
+        Assert.assertEquals("car road", false, train1.isCarRoadNameAccepted("c"));
+        Assert.assertEquals("caboose road", true, train1.isCabooseRoadNameAccepted("A"));
+        Assert.assertEquals("caboose road", false, train1.isCabooseRoadNameAccepted("a"));
+        Assert.assertEquals("loco road", true, train1.isLocoRoadNameAccepted("F"));
+        Assert.assertEquals("loco road", false, train1.isLocoRoadNameAccepted("f"));
 
         train1.replaceRoad("A", "a");
 
         // confirm
         Assert.assertEquals("caboose road", "a", train1.getCabooseRoad());
         Assert.assertEquals("engine road", "B", train1.getEngineRoad());
-        Assert.assertEquals("rolling stock road", true, train1.isCarRoadNameAccepted("C"));
         Assert.assertEquals("Second Leg Caboose Road", "D", train1.getSecondLegCabooseRoad());
         Assert.assertEquals("Third Leg Caboose Road", "E", train1.getThirdLegCabooseRoad());
         Assert.assertEquals("Second Leg Engine Road", "F", train1.getSecondLegEngineRoad());
         Assert.assertEquals("Third Leg Engine Road", "G", train1.getThirdLegEngineRoad());
+
+        Assert.assertEquals("car road", true, train1.isCarRoadNameAccepted("C"));
+        Assert.assertEquals("car road", false, train1.isCarRoadNameAccepted("c"));
+        Assert.assertEquals("caboose road", true, train1.isCabooseRoadNameAccepted("a"));
+        Assert.assertEquals("caboose road", false, train1.isCabooseRoadNameAccepted("A"));
+        Assert.assertEquals("loco road", true, train1.isLocoRoadNameAccepted("F"));
+        Assert.assertEquals("loco road", false, train1.isLocoRoadNameAccepted("f"));
 
         train1.replaceRoad("B", "b");
 
         // confirm
         Assert.assertEquals("caboose road", "a", train1.getCabooseRoad());
         Assert.assertEquals("engine road", "b", train1.getEngineRoad());
-        Assert.assertEquals("rolling stock road", true, train1.isCarRoadNameAccepted("C"));
         Assert.assertEquals("Second Leg Caboose Road", "D", train1.getSecondLegCabooseRoad());
         Assert.assertEquals("Third Leg Caboose Road", "E", train1.getThirdLegCabooseRoad());
         Assert.assertEquals("Second Leg Engine Road", "F", train1.getSecondLegEngineRoad());
         Assert.assertEquals("Third Leg Engine Road", "G", train1.getThirdLegEngineRoad());
+
+        Assert.assertEquals("car road", true, train1.isCarRoadNameAccepted("C"));
+        Assert.assertEquals("car road", false, train1.isCarRoadNameAccepted("c"));
+        Assert.assertEquals("caboose road", true, train1.isCabooseRoadNameAccepted("a"));
+        Assert.assertEquals("caboose road", false, train1.isCabooseRoadNameAccepted("A"));
+        Assert.assertEquals("loco road", true, train1.isLocoRoadNameAccepted("F"));
+        Assert.assertEquals("loco road", false, train1.isLocoRoadNameAccepted("f"));
 
         train1.replaceRoad("C", "c");
 
         // confirm
         Assert.assertEquals("caboose road", "a", train1.getCabooseRoad());
         Assert.assertEquals("engine road", "b", train1.getEngineRoad());
-        Assert.assertEquals("rolling stock road", true, train1.isCarRoadNameAccepted("c"));
         Assert.assertEquals("Second Leg Caboose Road", "D", train1.getSecondLegCabooseRoad());
         Assert.assertEquals("Third Leg Caboose Road", "E", train1.getThirdLegCabooseRoad());
         Assert.assertEquals("Second Leg Engine Road", "F", train1.getSecondLegEngineRoad());
         Assert.assertEquals("Third Leg Engine Road", "G", train1.getThirdLegEngineRoad());
+
+        Assert.assertEquals("car road", true, train1.isCarRoadNameAccepted("c"));
+        Assert.assertEquals("car road", false, train1.isCarRoadNameAccepted("C"));
+        Assert.assertEquals("caboose road", true, train1.isCabooseRoadNameAccepted("a"));
+        Assert.assertEquals("caboose road", false, train1.isCabooseRoadNameAccepted("A"));
+        Assert.assertEquals("loco road", true, train1.isLocoRoadNameAccepted("F"));
+        Assert.assertEquals("loco road", false, train1.isLocoRoadNameAccepted("f"));
 
         train1.replaceRoad("D", "d");
 
         // confirm
         Assert.assertEquals("caboose road", "a", train1.getCabooseRoad());
         Assert.assertEquals("engine road", "b", train1.getEngineRoad());
-        Assert.assertEquals("rolling stock road", true, train1.isCarRoadNameAccepted("c"));
         Assert.assertEquals("Second Leg Caboose Road", "d", train1.getSecondLegCabooseRoad());
         Assert.assertEquals("Third Leg Caboose Road", "E", train1.getThirdLegCabooseRoad());
         Assert.assertEquals("Second Leg Engine Road", "F", train1.getSecondLegEngineRoad());
         Assert.assertEquals("Third Leg Engine Road", "G", train1.getThirdLegEngineRoad());
+
+        Assert.assertEquals("car road", true, train1.isCarRoadNameAccepted("c"));
+        Assert.assertEquals("car road", false, train1.isCarRoadNameAccepted("C"));
+        Assert.assertEquals("caboose road", true, train1.isCabooseRoadNameAccepted("a"));
+        Assert.assertEquals("caboose road", false, train1.isCabooseRoadNameAccepted("A"));
+        Assert.assertEquals("loco road", true, train1.isLocoRoadNameAccepted("F"));
+        Assert.assertEquals("loco road", false, train1.isLocoRoadNameAccepted("f"));
 
         train1.replaceRoad("E", "e");
 
         // confirm
         Assert.assertEquals("caboose road", "a", train1.getCabooseRoad());
         Assert.assertEquals("engine road", "b", train1.getEngineRoad());
-        Assert.assertEquals("rolling stock road", true, train1.isCarRoadNameAccepted("c"));
         Assert.assertEquals("Second Leg Caboose Road", "d", train1.getSecondLegCabooseRoad());
         Assert.assertEquals("Third Leg Caboose Road", "e", train1.getThirdLegCabooseRoad());
         Assert.assertEquals("Second Leg Engine Road", "F", train1.getSecondLegEngineRoad());
@@ -406,11 +441,17 @@ public class TrainTest extends OperationsTestCase {
         // confirm
         Assert.assertEquals("caboose road", "a", train1.getCabooseRoad());
         Assert.assertEquals("engine road", "b", train1.getEngineRoad());
-        Assert.assertEquals("rolling stock road", true, train1.isCarRoadNameAccepted("c"));
         Assert.assertEquals("Second Leg Caboose Road", "d", train1.getSecondLegCabooseRoad());
         Assert.assertEquals("Third Leg Caboose Road", "e", train1.getThirdLegCabooseRoad());
         Assert.assertEquals("Second Leg Engine Road", "f", train1.getSecondLegEngineRoad());
         Assert.assertEquals("Third Leg Engine Road", "G", train1.getThirdLegEngineRoad());
+
+        Assert.assertEquals("car road", true, train1.isCarRoadNameAccepted("c"));
+        Assert.assertEquals("car road", false, train1.isCarRoadNameAccepted("C"));
+        Assert.assertEquals("caboose road", true, train1.isCabooseRoadNameAccepted("a"));
+        Assert.assertEquals("caboose road", false, train1.isCabooseRoadNameAccepted("A"));
+        Assert.assertEquals("loco road", true, train1.isLocoRoadNameAccepted("f"));
+        Assert.assertEquals("loco road", false, train1.isLocoRoadNameAccepted("F"));
 
         train1.replaceRoad("G", "g");
 
@@ -4679,6 +4720,30 @@ public class TrainTest extends OperationsTestCase {
 
         // should be serviced by train
         Assert.assertTrue(train1.isServiceable(c1));
+
+        // test road name option
+        train1.setCarRoadOption(Train.EXCLUDE_ROADS);
+        train1.addCarRoadName("A");
+
+        // should be not be serviced by train
+        Assert.assertFalse(train1.isServiceable(c1));
+
+        train1.setCarRoadOption(Train.INCLUDE_ROADS);
+
+        // should be serviced by train
+        Assert.assertTrue(train1.isServiceable(c1));
+
+        // test caboose road name option
+        train1.setCabooseRoadOption(Train.EXCLUDE_ROADS);
+        train1.addCabooseRoadName("A");
+        // should be serviced by train
+        Assert.assertTrue(train1.isServiceable(c1));
+
+        // make car a caboose
+        c1.setCaboose(true);
+        // should be not be serviced by train
+        Assert.assertFalse(train1.isServiceable(c1));
+        c1.setCaboose(false);
 
         // give the car a destination
         Location chelmsford = lmanager.getLocationByName("Chelmsford");

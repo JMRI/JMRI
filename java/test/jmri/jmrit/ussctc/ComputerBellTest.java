@@ -15,7 +15,7 @@ public class ComputerBellTest {
 
     @Test
     public void testNullConstruction() {
-        new ComputerBell(null);
+        Assertions.assertNotNull( new ComputerBell(null) );
     }
 
     @BeforeEach

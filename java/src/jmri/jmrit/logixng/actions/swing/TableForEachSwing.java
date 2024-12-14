@@ -225,7 +225,8 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
             errorMessages.add("Cannot parse formula: " + e.getMessage());
             return false;
         }
-        return true;
+
+        return errorMessages.isEmpty();
     }
 
     /** {@inheritDoc} */

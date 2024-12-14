@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.locations.schedules;
 
+import java.awt.Color;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
@@ -13,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
+import jmri.jmrit.operations.OperationsTableModel;
 import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.setup.Control;
@@ -27,7 +29,7 @@ import jmri.util.table.ButtonRenderer;
  *
  * @author Daniel Boudreau Copyright (C) 2009, 2014
  */
-public class ScheduleTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
+public class ScheduleTableModel extends OperationsTableModel implements PropertyChangeListener {
     
     protected static final String POINTER = "    -->";
 
@@ -87,6 +89,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     List<ScheduleItem> _list = new ArrayList<>();
 
     protected void initTable(ScheduleEditFrame frame, JTable table, Schedule schedule, Location location, Track track) {
+        super.initTable(table);
         _schedule = schedule;
         _location = location;
         _track = track;
@@ -117,8 +120,6 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         tcm.getColumn(DOWN_COLUMN).setCellEditor(buttonEditor);
         tcm.getColumn(DELETE_COLUMN).setCellRenderer(buttonRenderer);
         tcm.getColumn(DELETE_COLUMN).setCellEditor(buttonEditor);
-        _table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
-        _table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
 
         // set column preferred widths
         _table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(35);
@@ -360,6 +361,15 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
             default:
                 break;
         }
+    }
+
+    @Override
+    protected Color getForegroundColor(int row) {
+        ScheduleItem si = _list.get(row);
+        if (!_schedule.checkScheduleItemValid(si, _track).equals(Schedule.SCHEDULE_OKAY)) {
+            return Color.red;
+        }
+        return super.getForegroundColor(row);
     }
 
     private String getCurrentPointer(ScheduleItem si) {

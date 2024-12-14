@@ -196,7 +196,6 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     protected AbstractLogixNGEditor<E> _editor = null;
 
     boolean _showReminder = false;
-    private boolean _checkEnabled = jmri.InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
     jmri.jmrit.picker.PickFrame _pickTables;
 
     // Current focus variables
@@ -427,27 +426,39 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     }
 
     /**
-     * Check validity of bean system name.
+     * Check validity of various LogixNG system names.
      * <p>
-     * Fixes name if it doesn't start with "IQ".
+     * Fixes name if it doesn't start with the appropriate prefix or the $ for alpha suffixes
      *
-     * @return false if name has length &lt; 1 after displaying a dialog
+     * @return false if the name fails the NameValidity check
      */
     boolean checkLogixNGSysName() {
-        String sName = _systemName.getText();
-        if ((sName.length() < 1)) {
-            // Entered system name is blank or too short
-            JmriJOptionPane.showMessageDialog(addLogixNGFrame,
-                    Bundle.getMessage("LogixNGError8"), Bundle.getMessage("ErrorTitle"), // NOI18N
+        if (_autoSystemName.isSelected()) {
+            return true;
+        }
+
+        var sName = _systemName.getText().trim();
+        var prefix = getManager().getSubSystemNamePrefix();
+
+        if (!sName.isEmpty() && !sName.startsWith(prefix)) {
+            var isNumber = sName.matches("^\\d+$");
+            var hasDollar = sName.startsWith("$");
+
+            var newName = new StringBuilder(prefix);
+            if (!isNumber && !hasDollar) {
+                newName.append("$");
+            }
+            newName.append(sName);
+            sName = newName.toString();
+        }
+
+        if (getManager().validSystemNameFormat(sName) != jmri.Manager.NameValidity.VALID) {
+            JmriJOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("LogixNGError8", sName), Bundle.getMessage("ErrorTitle"), // NOI18N
                     JmriJOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if ((sName.length() < 2) || (sName.charAt(0) != 'I')
-                || (sName.charAt(1) != 'Q')) {
-            // System name does not begin with IQ:, prefix IQ: to it
-            String s = sName;
-            sName = "IQ" + s;  // NOI18N
-        }
+
         _systemName.setText(sName);
         return true;
     }
@@ -619,31 +630,6 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     }
 
     /**
-     * Display reminder to save.
-     */
-    void showSaveReminder() {
-        if (_showReminder && !_checkEnabled) {
-            if (InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class) != null) {
-                InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemLogixNGTable")), // NOI18N
-                                getClassName(),
-                                "remindSaveLogix");  // NOI18N
-            }
-        }
-    }
-
-    @Override
-    public void setMessagePreferencesDetails() {
-        HashMap<Integer, String> options = new HashMap<>(3);
-        options.put(0x00, Bundle.getMessage("DeleteAsk"));      // NOI18N
-        options.put(0x01, Bundle.getMessage("DeleteNever"));    // NOI18N
-        options.put(0x02, Bundle.getMessage("DeleteAlways"));   // NOI18N
-        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMessageItemDetails(getClassName(), "delete", Bundle.getMessage("DeleteLogixNG"), options, 0x00);  // NOI18N
-        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setPreferenceItemDetails(getClassName(), "remindSaveLogixNG", Bundle.getMessage("HideSaveReminder"));  // NOI18N
-        super.setMessagePreferencesDetails();
-    }
-
-    /**
      * Respond to the Delete combo selection bean window delete request.
      *
      * @param sName system name of bean to be deleted
@@ -673,11 +659,6 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         if (x == null) return;  // This should never happen
 
         execute(x);
-    }
-
-    @Override
-    public String getClassDescription() {
-        return Bundle.getMessage("TitleLogixNGTable");        // NOI18N
     }
 
     @Override

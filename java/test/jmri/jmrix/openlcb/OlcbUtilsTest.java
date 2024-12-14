@@ -2,12 +2,8 @@ package jmri.jmrix.openlcb;
 
 import jmri.jmrix.xpa.XpaSystemConnectionMemo;
 import jmri.jmrix.xpa.XpaTurnout;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -27,12 +23,12 @@ public class OlcbUtilsTest {
     }
 
     @Test
-    void isOlcbBean() {
+    public void isOlcbBean() {
         // we can't use an anonymous bean for the false case, so we create a bean from another package.
         XpaSystemConnectionMemo xpaMemo = Mockito.mock(XpaSystemConnectionMemo.class);
         Mockito.when(xpaMemo.getSystemPrefix()).thenReturn("X");
-        assertThat(OlcbUtils.isOlcbBean(new XpaTurnout(1,xpaMemo))).isFalse();
-        assertThat(OlcbUtils.isOlcbBean(new OlcbLight("ML1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9"))).isTrue();
+        Assertions.assertFalse( OlcbUtils.isOlcbBean(new XpaTurnout(1,xpaMemo)));
+        Assertions.assertTrue( OlcbUtils.isOlcbBean(new OlcbLight("ML1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9")));
     }
 
 }

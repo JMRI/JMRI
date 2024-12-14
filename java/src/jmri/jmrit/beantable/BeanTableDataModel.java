@@ -552,7 +552,10 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 .setPreferredWidth((sample.getPreferredSize().width) + 4);
     }
 
-    synchronized public void dispose() {
+    /**
+     * Removes property change listeners from Beans.
+     */
+    public synchronized void dispose() {
         getManager().removePropertyChangeListener(this);
         if (sysNameList != null) {
             for (String s : sysNameList) {
@@ -674,6 +677,59 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         }
     }
 
+    /**
+     * Export the contents of table to a CSV file.
+     * <p> 
+     * The content is exported in column order from the table model
+     * <p>
+     * If the provided file name is null, the user will be 
+     * prompted with a file dialog.
+     */
+    @SuppressWarnings("unchecked") // have to run-time cast to JComboBox<Object> after check of JComboBox<?>
+    public void exportToCSV(java.io.File file) {
+
+        if (file == null) {
+            // prompt user for file
+            var chooser = new JFileChooser(jmri.util.FileUtil.getUserFilesPath());
+            int retVal = chooser.showSaveDialog(null);
+            if (retVal != JFileChooser.APPROVE_OPTION) {
+                log.info("Export to CSV abandoned");
+                return;  // give up if no file selected
+            }
+            file = chooser.getSelectedFile();
+        }        
+        
+        try {
+            var fileWriter = new java.io.FileWriter(file);
+            var bufferedWriter = new java.io.BufferedWriter(fileWriter);
+            var csvFile = new org.apache.commons.csv.CSVPrinter(bufferedWriter, 
+                                    org.apache.commons.csv.CSVFormat.DEFAULT);
+    
+            for (int i = 0; i < getColumnCount(); i++) {
+                csvFile.print(getColumnName(i));
+            }
+            csvFile.println();
+        
+            for (int i = 0; i < getRowCount(); i++) {
+                for (int j = 0; j < getColumnCount(); j++) {
+                    var value = getValueAt(i, j);
+                    if (value instanceof JComboBox<?>) {
+                        value = ((JComboBox<Object>)value).getSelectedItem().toString();
+                    }
+                    csvFile.print(value);
+                }
+                csvFile.println();
+            }
+    
+            csvFile.flush();
+            csvFile.close();
+
+        } catch (java.io.IOException e) {
+            log.error("Failed to write file",e);
+        }
+
+    }
+    
     /**
      * Create and configure a new table using the given model and row sorter.
      *

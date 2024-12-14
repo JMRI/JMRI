@@ -130,6 +130,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static final String MODEL = Bundle.getMessage("Model");
     public static final String LENGTH = Bundle.getMessage("Length");
     public static final String WEIGHT = Bundle.getMessage("Weight");
+    public static final String HP = Bundle.getMessage("HP");
     public static final String LOAD = Bundle.getMessage("Load");
     public static final String LOAD_TYPE = Bundle.getMessage("Load_Type");
     public static final String COLOR = Bundle.getMessage("Color");
@@ -178,14 +179,14 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
             COLOR, KERNEL, KERNEL_SIZE, OWNER, DIVISION, TRACK, LOCATION, DESTINATION, DEST_TRACK, FINAL_DEST, FINAL_DEST_TRACK,
             COMMENT, DROP_COMMENT, PICKUP_COMMENT, RWE };
     
-    private static final String[] ENGINE_ATTRIBUTES = { ROAD, NUMBER, TYPE, MODEL, LENGTH, WEIGHT, CONSIST, OWNER,
+    private static final String[] ENGINE_ATTRIBUTES = {ROAD, NUMBER, TYPE, MODEL, LENGTH, WEIGHT, HP, CONSIST, OWNER,
             TRACK, LOCATION, DESTINATION, COMMENT, DCC_ADDRESS };
     /*
      * The print Manifest and switch list user selectable options are stored in the
      * xml file using the English translations.
      */
     private static final String[] KEYS = {"Road", "Number", "Type", "Model", "Length", "Weight", "Load", "Load_Type",
-            "Color", "Track", "Destination", "Dest&Track", "Final_Dest", "FD&Track", "Location", "Consist",
+            "HP", "Color", "Track", "Destination", "Dest&Track", "Final_Dest", "FD&Track", "Location", "Consist",
             "DCC_Address", "Kernel", "Kernel_Size", "Owner", "Division", "RWE", "Comment", "SetOut_Msg", "PickUp_Msg",
             "Hazardous", "Tab", "Tab2", "Tab3"};
 
@@ -198,7 +199,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private int traindir = EAST + WEST + NORTH + SOUTH;
     private int maxTrainLength = 1000; // maximum train length
     private int maxEngineSize = 6; // maximum number of engines that can be assigned to a train
-    private int horsePowerPerTon = 1; // Horsepower per ton
+    private double horsePowerPerTon = 1; // Horsepower per ton
     private int carMoves = 5; // default number of moves when creating a route
     private String carTypes = DESCRIPTIVE;
     private String ownerName = NONE;
@@ -265,6 +266,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private boolean switchListDepartureTime = false; // when true, switch list shows train's departure time
     private boolean switchListRouteComment = true; // when true, switch list have route location comments
     private boolean trackSummary = true; // when true, print switch list track summary
+    private boolean groupCarMoves = false; // when true, car moves are grouped together
 
     private boolean switchListRealTime = true; // when true switch list only show work for built trains
     private boolean switchListAllTrains = true; // when true show all trains that visit the location
@@ -339,6 +341,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static final String ALLOW_CARS_TO_RETURN_PROPERTY_CHANGE = "allowCarsToReturnChange"; // NOI18N
     public static final String TRAIN_DIRECTION_PROPERTY_CHANGE = "setupTrainDirectionChange"; // NOI18N
     public static final String ROUTING_STAGING_PROPERTY_CHANGE = "setupRoutingStagingChange"; // NOI18N
+    public static final String TRAVEL_TIME_PROPERTY_CHANGE = "setupTravelTimeChange"; // NOI18N
 
     public static boolean isMainMenuEnabled() {
         InstanceManager.getDefault(OperationsSetupXml.class); // load file
@@ -673,11 +676,11 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         return getDefault().maxEngineSize;
     }
 
-    public static void setHorsePowerPerTon(int value) {
+    public static void setHorsePowerPerTon(double value) {
         getDefault().horsePowerPerTon = value;
     }
 
-    public static int getHorsePowerPerTon() {
+    public static double getHorsePowerPerTon() {
         return getDefault().horsePowerPerTon;
     }
 
@@ -835,6 +838,14 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
 
     public static boolean isSwitchListRouteLocationCommentEnabled() {
         return getDefault().switchListRouteComment;
+    }
+
+    public static void setGroupCarMoves(boolean b) {
+        getDefault().groupCarMoves = b;
+    }
+
+    public static boolean isGroupCarMovesEnabled() {
+        return getDefault().groupCarMoves;
     }
 
     public static void setSwitchListRealTime(boolean b) {
@@ -1006,7 +1017,9 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     }
 
     public static void setTravelTime(int minutes) {
+        int old = getTravelTime();
         getDefault().travelTime = minutes;
+        setDirtyAndFirePropertyChange(TRAVEL_TIME_PROPERTY_CHANGE, old, minutes);
     }
 
     public static int getTravelTime() {
@@ -1871,7 +1884,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         values.setAttribute(Xml.TRAIN_DIRECTION, Integer.toString(getTrainDirection()));
         values.setAttribute(Xml.TRAIN_LENGTH, Integer.toString(getMaxTrainLength()));
         values.setAttribute(Xml.MAX_ENGINES, Integer.toString(getMaxNumberEngines()));
-        values.setAttribute(Xml.HPT, Integer.toString(getHorsePowerPerTon()));
+        values.setAttribute(Xml.HPT, Double.toString(getHorsePowerPerTon()));
         values.setAttribute(Xml.SCALE, Integer.toString(getScale()));
         values.setAttribute(Xml.CAR_TYPES, getCarTypes());
         values.setAttribute(Xml.SWITCH_TIME, Integer.toString(getSwitchTime()));
@@ -1970,6 +1983,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         values.setAttribute(Xml.USE_EDITOR, isManifestEditorEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_CABOOSE_LOAD, isPrintCabooseLoadEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_PASSENGER_LOAD, isPrintPassengerLoadEnabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.GROUP_MOVES, isGroupCarMovesEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.HAZARDOUS_MSG, getHazardousMsg());
 
         // new format June 2014
@@ -2143,7 +2157,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 String value = a.getValue();
                 log.debug("HPT: {}", value);
                 try {
-                    setHorsePowerPerTon(Integer.parseInt(value));
+                    setHorsePowerPerTon(Double.parseDouble(value));
                 } catch (NumberFormatException ee) {
                     log.error("Train HPT ({}) isn't a valid number", a.getValue());
                 }
@@ -2591,6 +2605,11 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 String enable = a.getValue();
                 log.debug("manifest print passenger load: {}", enable);
                 setPrintPassengerLoadEnabled(enable.equals(Xml.TRUE));
+            }
+            if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.GROUP_MOVES)) != null) {
+                String enable = a.getValue();
+                log.debug("manifest group car moves: {}", enable);
+                setGroupCarMoves(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.HAZARDOUS_MSG)) != null) {
                 String message = a.getValue();

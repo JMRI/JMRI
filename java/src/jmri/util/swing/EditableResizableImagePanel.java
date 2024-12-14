@@ -2,15 +2,17 @@ package jmri.util.swing;
 
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.Arrays;
+import java.util.UUID;
 
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
 import jmri.util.FileUtil;
 import jmri.util.iharder.dnd.URIDrop;
@@ -18,7 +20,7 @@ import jmri.util.iharder.dnd.URIDrop;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EditableResizableImagePanel extends ResizableImagePanel implements URIDrop.Listener {
+public class EditableResizableImagePanel extends ResizableImagePanel implements URIDrop.ListenerExt {
 
     private transient MyMouseAdapter myMouseAdapter = null;
     private String dropFolder;
@@ -126,13 +128,22 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
 
         private JPopupMenu popUpMenu;
         private final JMenuItem removeMenuItem;
+        private final JMenuItem fileChooserItem;
+        private final EditableResizableImagePanel myPanel;
+        private JFileChooser fileChooser;
 
-        public MyMouseAdapter(ResizableImagePanel resizableImagePanel) {
+        public MyMouseAdapter(EditableResizableImagePanel resizableImagePanel) {
+            myPanel = resizableImagePanel;
             popUpMenu = new JPopupMenu();
+            fileChooserItem = new JMenuItem(Bundle.getMessage("OpenFile"));
+            fileChooserItem.addActionListener((ActionEvent e) -> {
+                showFileChooser();
+            });
             removeMenuItem = new JMenuItem(Bundle.getMessage("Remove"));
             removeMenuItem.addActionListener((ActionEvent e) -> {
-                resizableImagePanel.setImagePath(null);
+                myPanel.setImagePath(null);
             });
+            popUpMenu.add(fileChooserItem);
             popUpMenu.add(removeMenuItem);
         }
 
@@ -173,7 +184,26 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
 
         private void maybeShowPopup(JmriMouseEvent e) {
             if (e.isPopupTrigger()) {
-                popUpMenu.show(e.getComponent(), e.getX(), e.getY());
+                popUpMenu.show(e.getComponent(), e.getX(), e.getY());                
+            }
+            if (e.getClickCount() == 2 && e.getButton() == JmriMouseEvent.BUTTON1) {
+                showFileChooser();
+            }                    
+        }
+
+        private void showFileChooser() {            
+            if (fileChooser == null) {
+                fileChooser = new jmri.util.swing.JmriJFileChooser(); // NOI18N                
+            }
+            // Show dialog
+            fileChooser.rescanCurrentDirectory();
+            int retValue = fileChooser.showOpenDialog(myPanel);
+
+            // Process selection
+            if (retValue == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                java.net.URI[] fileNames = { file.toURI() };
+                myPanel.URIsDropped(fileNames);
             }
         }
     }
@@ -295,6 +325,29 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
             }
         }
         setImagePath(dest.getPath());
+    }
+    
+    /**
+     * Callback for the dnd listener
+     */
+    @Override
+    public void imageDropped(BufferedImage image) {
+        if (image == null) {
+            log.error("imageDropped: no image");
+            return;
+        }
+        if (dropFolder == null) {
+            log.error("imageDropped: no drop destination");
+            return;
+        }
+        File dest = new File(dropFolder + File.separatorChar + UUID.randomUUID()+".png");
+        try {
+            ImageIO.write(image, "png", dest);
+        } catch (IOException ex) {
+            log.error("imageDropped: error while writing destination file : {}", ex.getMessage());
+        }
+        setImagePath(dest.getPath());
+        
     }
 
     private final static Logger log = LoggerFactory.getLogger(EditableResizableImagePanel.class);

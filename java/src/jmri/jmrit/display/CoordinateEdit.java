@@ -588,16 +588,15 @@ public class CoordinateEdit extends JmriJFrame {
     public void initScale() {
         //int scale = (int)Math.round(pl.getScale()*100);
         oldD = pl.getScale();
-
+        log.debug("initScale oldD = {}", oldD);
+        log.trace("  pl = {}", pl);
         textX = new JLabel();
         textX.setText(MessageFormat.format(Bundle.getMessage("Scale"), oldD * 100));
         textX.setVisible(true);
 
         SpinnerNumberModel model = new SpinnerNumberModel(100.0, 10.0, 5000.0, 1.0);
         spinX = new JSpinner(model);
-        if (log.isDebugEnabled()) {
-            log.debug("scale%= {}", (int) Math.round(oldD * 100));
-        }
+        log.debug("scale%= {}", (int) Math.round(oldD * 100));
         spinX.setValue((int) Math.round(oldD * 100));
         spinX.setToolTipText(Bundle.getMessage("enterScale"));
         spinX.setMaximumSize(new Dimension(
@@ -608,7 +607,7 @@ public class CoordinateEdit extends JmriJFrame {
         addSpinItems(false);
 
         okButton.addActionListener(e -> {
-            double s = ((Number) spinX.getValue()).doubleValue() / 100;
+            double s = ((Number) spinX.getValue()).doubleValue() / 100 * pl.getScale();
             pl.getEditor().setSelectionsScale(s, pl);
             textX.setText(MessageFormat.format(Bundle.getMessage("Scale"), pl.getScale() * 100));
             dispose();
@@ -785,6 +784,8 @@ public class CoordinateEdit extends JmriJFrame {
 
     public void initZoom() {
         oldD = pl.getScale();
+        log.debug("initZoom oldD = {}", oldD);
+        log.trace("  pl = {}", pl);
 
         textX = new JLabel();
         textX.setText(MessageFormat.format(Bundle.getMessage("Scale"), oldD * 100));

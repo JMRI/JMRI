@@ -40,6 +40,7 @@ public class PrintOptionPanelTest extends OperationsTestCase {
         Assert.assertTrue(p.trackSummaryCheckBox.isSelected());
         Assert.assertTrue(p.routeLocationCheckBox.isSelected());
         Assert.assertFalse(p.switchListDepartureTimeCheckBox.isSelected());
+        Assert.assertFalse(p.groupCarMovesCheckBox.isSelected());
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PrintOptionPanelTest.class);

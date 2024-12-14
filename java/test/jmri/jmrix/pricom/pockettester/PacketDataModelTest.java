@@ -12,7 +12,7 @@ public class PacketDataModelTest {
 
     @Test
     public void testCreate() {
-        new PacketDataModel();
+        Assertions.assertNotNull( new PacketDataModel() );
     }
 
     @Test
@@ -47,4 +47,15 @@ public class PacketDataModelTest {
         f.asciiFormattedMessage(TestConstants.speed012A);
         Assert.assertEquals("Still two rows", 2, f.getRowCount());
     }
+
+    @BeforeEach
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
+    }
+
 }

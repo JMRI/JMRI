@@ -4,11 +4,9 @@ import javax.swing.Icon;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * Action to create and load a JmriPanel from just its name.
+ * Action to create and load a CAN-specific JmriPanel
  *
  * @author Bob Jacobsen Copyright (C) 2012
  */
@@ -62,6 +60,6 @@ public class CanNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
         return p;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CanNamedPaneAction.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CanNamedPaneAction.class);
 
 }

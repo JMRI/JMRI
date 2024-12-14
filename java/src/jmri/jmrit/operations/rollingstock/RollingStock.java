@@ -1056,8 +1056,21 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         if (getWhenLastSeen() == null) {
             return NONE; // return an empty string for the default date.
         }
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss"); // NOI18N
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); // NOI18N
         return format.format(getWhenLastSeen());
+    }
+
+    /**
+     * Provides the last date when this rolling stock was moved
+     *
+     * @return String yyyy/MM/dd HH:mm:ss
+     */
+    public String getSortDate() {
+        if (_lastDate.equals((new java.util.GregorianCalendar()).getGregorianChange())) {
+            return NONE; // return an empty string for the default date.
+        }
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); // NOI18N
+        return format.format(_lastDate);
     }
 
     /**
@@ -1100,33 +1113,13 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      * Sets the last date when this rolling stock was moved. This method is used
      * only for loading data from a file. Use setLastDate(Date) instead.
      *
-     * @param date MM/dd/yyyy HH:mm:ss
+     * @param date yyyy/MM/dd HH:mm:ss, MM/dd/yyyy HH:mm:ss, MM/dd/yyyy hh:mmaa,
+     *             or MM/dd/yyyy HH:mm
      */
     private void setLastDate(String date) {
-        if (date.equals(NONE)) {
-            return; // there was no date specified.
-        }
-        Date oldDate = _lastDate;
-        // create a date object from the value.
-        try {
-            // try the new format (with seconds).
-            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss"); // NOI18N
-            _lastDate = formatter.parse(date);
-        } catch (java.text.ParseException pe0) {
-            // try the old 12 hour format (no seconds).
-            try {
-                SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mmaa"); // NOI18N
-                _lastDate = formatter.parse(date);
-            } catch (java.text.ParseException pe1) {
-                try {
-                    // try 24hour clock.
-                    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm"); // NOI18N
-                    _lastDate = formatter.parse(date);
-                } catch (java.text.ParseException pe2) {
-                    log.warn("Not able to parse date: {} for rolling stock ({})", date, this);
-                    _lastDate = oldDate; // set the date back to what it was before
-                }
-            }
+        Date d = TrainCommon.convertStringToDate(date);
+        if (d != null) {
+            _lastDate = d;
         }
     }
 
@@ -1427,7 +1420,11 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
             setLastDate(a.getValue()); // uses the setLastDate(String) method.
         }
         if ((a = e.getAttribute(Xml.BLOCKING)) != null) {
-            _blocking = Integer.parseInt(a.getValue());
+            try {
+                _blocking = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException nfe) {
+                log.error("Blocking ({}) for rollingstock ({}) isn't a valid number!", a.getValue(), toString());
+            }
         }
         // check for rolling stock without a track assignment
         if (getLocation() != null && getTrack() == null && getTrain() == null) {
@@ -1435,8 +1432,6 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         }
         addPropertyChangeListeners();
     }
-
-//    boolean verboseStore = false;
 
     /**
      * Add XML elements to represent this Entry.
@@ -1487,12 +1482,6 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         if (!getLastRouteId().equals(NONE)) {
             e.setAttribute(Xml.LAST_ROUTE_ID, getLastRouteId());
         }
-//        if (verboseStore) {
-//            e.setAttribute(Xml.LOCATION, getLocationName());
-//            e.setAttribute(Xml.TRACK, getTrackName());
-//            e.setAttribute(Xml.DESTINATION, getDestinationName());
-//            e.setAttribute(Xml.DES_TRACK, getDestinationTrackName());
-//        }
         e.setAttribute(Xml.MOVES, Integer.toString(getMoves()));
         e.setAttribute(Xml.DATE, getLastDate());
         e.setAttribute(Xml.SELECTED, isSelected() ? Xml.TRUE : Xml.FALSE);

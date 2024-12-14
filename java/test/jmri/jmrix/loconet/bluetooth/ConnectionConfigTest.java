@@ -11,6 +11,20 @@ import org.junit.jupiter.api.*;
  **/
 public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionConfigTestBase  {
 
+    @Test
+    @Override
+    public void testLoadDetails(){
+        jmri.util.ThreadingUtil.runOnGUI( () -> {
+            // verify no exceptions thrown
+            Assertions.assertDoesNotThrow( () -> {
+                cc.loadDetails(new javax.swing.JPanel());});
+            // a bluetooth device may be present but disabled
+            jmri.util.JUnitAppender.suppressErrorMessageStartsWith("Unable to use bluetooth device");
+            // load details MAY produce an error message if no ports are found.
+            jmri.util.JUnitAppender.suppressErrorMessage("No usable ports returned");
+        });
+    }
+
    @BeforeEach
    @Override
    public void setUp() {

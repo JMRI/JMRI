@@ -18,11 +18,17 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.AbstractTableModel;
 
+import jmri.InstanceManager;
+import jmri.UserPreferencesManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.FileUtil;
+import jmri.util.JmriJFrame;
 import jmri.util.swing.JComboBoxUtil;
 import jmri.util.swing.JmriJFileChooser;
 import jmri.util.swing.JmriJOptionPane;
+import jmri.util.swing.JmriMouseAdapter;
+import jmri.util.swing.JmriMouseEvent;
+import jmri.util.swing.JmriMouseListener;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import static org.openlcb.MimicNodeStore.NodeMemo.UPDATE_PROP_SIMPLE_NODE_IDENT;
@@ -68,13 +74,20 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     /**
      * The STL Editor is dependent on the Tower LCC+Q software version
      */
-    private static int TOWER_LCC_Q_NODE_VERSION = 106;
-    private static String TOWER_LCC_Q_NODE_VERSION_STRING = "v1.06";
+    private static int TOWER_LCC_Q_NODE_VERSION = 109;
+    private static String TOWER_LCC_Q_NODE_VERSION_STRING = "v1.09";
 
     private CanSystemConnectionMemo _canMemo;
     private OlcbInterface _iface;
     private ConfigRepresentation _cdi;
     private MimicNodeStore _store;
+
+    /* Preferences setup */
+    final String _previewModeCheck = this.getClass().getName() + ".Preview";
+    private final UserPreferencesManager _pm;
+    private boolean _splitView;
+    private boolean _stlPreview;
+    private String _storeMode;
 
     private boolean _dirty = false;
     private int _logicRow = -1;     // The last selected row, -1 for none
@@ -84,6 +97,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private boolean _compileNeeded = false;
     private boolean _compileInProgress = false;
     PropertyChangeListener _entryListener = new EntryListener();
+    private List<String> _messages = new ArrayList<>();
 
     private String _csvDirectoryPath = "";
 
@@ -91,6 +105,8 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private JComboBox<NodeEntry> _nodeBox;
 
     private JComboBox<Operator> _operators = new JComboBox<>(Operator.values());
+
+    private TreeMap<Integer, Token> _tokenMap;
 
     private List<GroupRow> _groupList = new ArrayList<>();
     private List<InputRow> _inputList = new ArrayList<>();
@@ -105,7 +121,17 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private JTable _receiverTable;
     private JTable _transmitterTable;
 
-    private JTabbedPane _detailTabs;
+    private JTabbedPane _detailTabs;    // Editor tab and table tabs when in single mode.
+    private JTabbedPane _tableTabs;     // Table tabs when in split mode.
+    private JmriJFrame _tableFrame;     // Second window when using split mode.
+    private JmriJFrame _previewFrame;   // Window for displaying the generated STL content.
+    private JTextArea _stlTextArea;
+
+    private JScrollPane _logicScrollPane;
+    private JScrollPane _inputPanel;
+    private JScrollPane _outputPanel;
+    private JScrollPane _receiverPanel;
+    private JScrollPane _transmitterPanel;
 
     private JPanel _editButtons;
     private JButton _addButton;
@@ -118,12 +144,22 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private JButton _storeButton;
     private JButton _exportButton;
     private JButton _importButton;
+    private JButton _loadButton;
 
+    // File menu
     private JMenuItem _refreshItem;
     private JMenuItem _storeItem;
     private JMenuItem _exportItem;
     private JMenuItem _importItem;
     private JMenuItem _loadItem;
+
+    // View menu
+    private JRadioButtonMenuItem _viewSingle = new JRadioButtonMenuItem(Bundle.getMessage("MenuSingle"));
+    private JRadioButtonMenuItem _viewSplit = new JRadioButtonMenuItem(Bundle.getMessage("MenuSplit"));
+    private JRadioButtonMenuItem _viewPreview = new JRadioButtonMenuItem(Bundle.getMessage("MenuPreview"));
+    private JRadioButtonMenuItem _viewReadable = new JRadioButtonMenuItem(Bundle.getMessage("MenuStoreLINE"));
+    private JRadioButtonMenuItem _viewCompact = new JRadioButtonMenuItem(Bundle.getMessage("MenuStoreCLNE"));
+    private JRadioButtonMenuItem _viewCompressed = new JRadioButtonMenuItem(Bundle.getMessage("MenuStoreCOMP"));
 
     // CDI Names
     private static String INPUT_NAME = "Logic Inputs.Group I%s(%s).Input Description";
@@ -141,14 +177,37 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private static String SYNTAX_MESSAGE = "Syntax Messages.Syntax Messages.Message 1";
 
     // Regex Patterns
-    private static Pattern PARSE_VARIABLE = Pattern.compile("[IQYZM](\\d+)\\.(\\d+)");
-    private static Pattern PARSE_LABEL = Pattern.compile("\\D\\w{0,3}:");
-    private static Pattern PARSE_TIMERWORD = Pattern.compile("W#[0123]#\\d{1,3}");
-    private static Pattern PARSE_TIMERVAR = Pattern.compile("T\\d{1,2}");
+    private static Pattern PARSE_VARIABLE = Pattern.compile("[IQYZM](\\d+)\\.(\\d+)", Pattern.CASE_INSENSITIVE);
+    private static Pattern PARSE_NOVAROPER = Pattern.compile("(A\\(|AN\\(|O\\(|ON\\(|X\\(|XN\\(|\\)|NOT|SET|CLR|SAVE)", Pattern.CASE_INSENSITIVE);
+    private static Pattern PARSE_LABEL = Pattern.compile("([a-zA-Z]\\w{0,3}:)");
+    private static Pattern PARSE_JUMP = Pattern.compile("(JNBI|JCN|JCB|JNB|JBI|JU|JC)", Pattern.CASE_INSENSITIVE);
+    private static Pattern PARSE_DEST = Pattern.compile("(\\w{1,4})");
+    private static Pattern PARSE_TIMERWORD = Pattern.compile("([W]#[0123]#\\d{1,3})", Pattern.CASE_INSENSITIVE);
+    private static Pattern PARSE_TIMERVAR = Pattern.compile("([T]\\d{1,2})", Pattern.CASE_INSENSITIVE);
+    private static Pattern PARSE_COMMENT1 = Pattern.compile("//(.*)\\n");
+    private static Pattern PARSE_COMMENT2 = Pattern.compile("/\\*(.*?)\\*/");
     private static Pattern PARSE_HEXPAIR = Pattern.compile("^[0-9a-fA-F]{2}$");
     private static Pattern PARSE_VERSION = Pattern.compile("^.*(\\d+)\\.(\\d+)$");
 
+
     public StlEditorPane() {
+        _pm = InstanceManager.getDefault(UserPreferencesManager.class);
+        _stlPreview = _pm.getSimplePreferenceState(_previewModeCheck);
+
+        var view = _pm.getProperty(this.getClass().getName(), "ViewMode");
+        if (view == null) {
+            _splitView = false;
+        } else {
+            _splitView = "SPLIT".equals(view);
+
+        }
+
+        var mode = _pm.getProperty(this.getClass().getName(), "StoreMode");
+        if (mode == null) {
+            _storeMode = "LINE";
+        } else {
+            _storeMode = (String) mode;
+        }
     }
 
     @Override
@@ -173,6 +232,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         _storeButton = new JButton(Bundle.getMessage("ButtonStore"));
         _exportButton = new JButton(Bundle.getMessage("ButtonExport"));
         _importButton = new JButton(Bundle.getMessage("ButtonImport"));
+        _loadButton = new JButton(Bundle.getMessage("ButtonLoad"));
 
         _refreshButton.setEnabled(false);
         _storeButton.setEnabled(false);
@@ -187,6 +247,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         _storeButton.addActionListener(this::pushedStoreButton);
         _exportButton.addActionListener(this::pushedExportButton);
         _importButton.addActionListener(this::pushedImportButton);
+        _loadButton.addActionListener(this::loadBackupData);
 
         _editButtons = new JPanel();
         _editButtons.add(_addButton);
@@ -198,6 +259,8 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         footer.add(_editButtons, BorderLayout.WEST);
 
         var dataButtons = new JPanel();
+        dataButtons.add(_loadButton);
+        dataButtons.add(new JLabel(" | "));
         dataButtons.add(_importButton);
         dataButtons.add(_exportButton);
         dataButtons.add(new JLabel(" | "));
@@ -226,19 +289,25 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         _nodeBox.setPreferredSize(newDim);
 
         nodeSelector.add(_nodeBox);
-        add(nodeSelector, BorderLayout.NORTH);
+
+        var header = new JPanel();
+        header.setLayout(new BorderLayout());
+        header.add(nodeSelector, BorderLayout.CENTER);
+
+        add(header, BorderLayout.NORTH);
 
         // Define the center section of the window which consists of 5 tabs
         _detailTabs = new JTabbedPane();
 
+        // Build the scroll panels.
         _detailTabs.add(Bundle.getMessage("ButtonG"), buildLogicPanel());  // NOI18N
-        _detailTabs.add(Bundle.getMessage("ButtonI"), buildInputPanel());  // NOI18N
-        _detailTabs.add(Bundle.getMessage("ButtonQ"), buildOutputPanel());  // NOI18N
-        _detailTabs.add(Bundle.getMessage("ButtonY"), buildReceiverPanel());  // NOI18N
-        _detailTabs.add(Bundle.getMessage("ButtonZ"), buildTransmitterPanel());  // NOI18N
+        // The table versions are added to the main panel or a tables panel based on the split mode.
+        _inputPanel = buildInputPanel();
+        _outputPanel = buildOutputPanel();
+        _receiverPanel = buildReceiverPanel();
+        _transmitterPanel = buildTransmitterPanel();
 
         _detailTabs.addChangeListener(this::tabSelected);
-
         _detailTabs.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
 
         add(_detailTabs, BorderLayout.CENTER);
@@ -273,7 +342,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         // Create scroll pane
         var model = new LogicModel();
         _logicTable = new JTable(model);
-        var logicScrollPane = new JScrollPane(_logicTable);
+        _logicScrollPane = new JScrollPane(_logicTable);
 
         // resize columns
         for (int i = 0; i < _logicTable.getColumnCount(); i++) {
@@ -292,7 +361,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         selectionModel.addListSelectionListener(this::handleLogicRowSelection);
 
-        var logicPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, buildGroupPanel(), logicScrollPane);
+        var logicPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, buildGroupPanel(), _logicScrollPane);
         logicPanel.setDividerSize(10);
         logicPanel.setResizeWeight(.10);
         logicPanel.setDividerLocation(150);
@@ -314,6 +383,12 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         _inputTable.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
 
+        var selectionModel = _inputTable.getSelectionModel();
+        selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        var copyRowListener = new CopyRowListener();
+        _inputTable.addMouseListener(JmriMouseListener.adapt(copyRowListener));
+
         return scrollPane;
     }
 
@@ -330,6 +405,12 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         _outputTable.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+
+        var selectionModel = _outputTable.getSelectionModel();
+        selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        var copyRowListener = new CopyRowListener();
+        _outputTable.addMouseListener(JmriMouseListener.adapt(copyRowListener));
 
         return scrollPane;
     }
@@ -348,6 +429,12 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         _receiverTable.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
 
+        var selectionModel = _receiverTable.getSelectionModel();
+        selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        var copyRowListener = new CopyRowListener();
+        _receiverTable.addMouseListener(JmriMouseListener.adapt(copyRowListener));
+
         return scrollPane;
     }
 
@@ -365,6 +452,12 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         _transmitterTable.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
 
+        var selectionModel = _transmitterTable.getSelectionModel();
+        selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        var copyRowListener = new CopyRowListener();
+        _transmitterTable.addMouseListener(JmriMouseListener.adapt(copyRowListener));
+
         return scrollPane;
     }
 
@@ -373,6 +466,49 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             _editButtons.setVisible(true);
         } else {
             _editButtons.setVisible(false);
+        }
+    }
+
+    private class CopyRowListener extends JmriMouseAdapter {
+        @Override
+        public void mouseClicked(JmriMouseEvent e) {
+            if (_logicRow < 0) {
+                return;
+            }
+
+            if (!e.isShiftDown()) {
+                return;
+            }
+
+            var currentTab = -1;
+            if (_detailTabs.getTabCount() == 5) {
+                currentTab = _detailTabs.getSelectedIndex();
+            } else {
+                currentTab = _tableTabs.getSelectedIndex() + 1;
+            }
+
+            var sourceName = "";
+            switch (currentTab) {
+                case 1:
+                    sourceName = _inputList.get(_inputTable.getSelectedRow()).getName();
+                    break;
+                case 2:
+                    sourceName = _outputList.get(_outputTable.getSelectedRow()).getName();
+                    break;
+                case 3:
+                    sourceName = _receiverList.get(_receiverTable.getSelectedRow()).getName();
+                    break;
+                case 4:
+                    sourceName = _transmitterList.get(_transmitterTable.getSelectedRow()).getName();
+                    break;
+                default:
+                    log.debug("CopyRowListener: Invalid tab number: {}", currentTab);
+                    return;
+            }
+
+            _groupList.get(_groupRow)._logicList.get(_logicRow).setName(sourceName);
+            _logicTable.revalidate();
+            _logicScrollPane.repaint();
         }
     }
 
@@ -541,7 +677,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     private String variableToName(String variable) {
-        String name = "";
+        String name = variable;
 
         if (variable.length() > 1) {
             var varType = variable.substring(0, 1);
@@ -582,8 +718,11 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                         row = first;
                         name = _transmitterList.get(row).getName() + "~" + second;
                         break;
+                    case "M":
+                        // No friendly name
+                        break;
                     default:
-                        log.error("Variable '{}' has an invalid first letter (IQYZ)", variable);
+                        log.error("Variable '{}' has an invalid first letter (IQYZM)", variable);
                }
             }
         }
@@ -593,6 +732,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     private void encode(GroupRow groupRow) {
         String longLine = "";
+        String separator = (_storeMode.equals("LINE")) ? " " : "";
 
         var logicList = groupRow.getLogicList();
         for (var row : logicList) {
@@ -626,14 +766,14 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 var name = row.getName().trim();
 
                 if (jumpLabel) {
-                    sb.append(" " + name);
+                    sb.append(" " + name + "\n");
                     jumpLabel = false;
                 } else if (isMemory(name)) {
-                    sb.append(" " + name);
+                    sb.append(separator + name);
                 } else if (isTimerWord(name)) {
-                    sb.append(" " + name);
+                    sb.append(separator + name);
                 } else if (isTimerVar(name)) {
-                    sb.append(" " + name);
+                    sb.append(separator + name);
                 } else {
                     var variable = nameToVariable(name);
                     if (variable == null) {
@@ -643,17 +783,22 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                                 JmriJOptionPane.ERROR_MESSAGE);
                         log.error("bad name: {}", name);
                     } else {
-                        sb.append(" " + variable);
+                        sb.append(separator + variable);
                     }
                 }
             }
 
             if (!row.getComment().isEmpty()) {
                 var comment = row.getComment().trim();
-                sb.append(" // " + comment);
+                sb.append(separator + "//" + separator + comment);
+                if (_storeMode.equals("COMP")) {
+                    sb.append("\n");
+                }
             }
 
-            sb.append("\n");
+            if (!_storeMode.equals("COMP")) {
+                sb.append("\n");
+            }
 
             longLine = longLine + sb.toString();
         }
@@ -670,6 +815,11 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                     JmriJOptionPane.ERROR_MESSAGE);
             log.error("The line overflowed, content truncated:  {}", overflow);
         }
+
+        if (_stlPreview) {
+            _stlTextArea.setText(Bundle.getMessage("PreviewHeader", groupRow.getName()));
+            _stlTextArea.append(longLine);
+        }
     }
 
     private boolean isMemory(String name) {
@@ -684,88 +834,297 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     private boolean isTimerVar(String name) {
         var match = PARSE_TIMERVAR.matcher(name);
-        return match.find();
+        if (match.find()) {
+            return (match.group(1).equals(name));
+        }
+        return false;
     }
 
-    private void decode(GroupRow groupRow) {
-        String[] lines = groupRow.getMultiLine().split("\\n");
+    /**
+     * After the token tree map has been created, build the rows for the STL display.
+     * Each row has an optional label, a required operator, a name as needed and an optional comment.
+     * The operator is always required.  The other fields are added as needed.
+     * The label is found by looking at the previous token.
+     * The name is usually the next token.  If there is no name, it might be a comment.
+     * @param group The CDI group.
+     */
+    private void decode(GroupRow group) {
+        createTokenMap(group);
 
-        for (int i = 0; i < lines.length; i++) {
-            if (lines[i].isEmpty()) {
+        // Get the operator tokens.  They are the anchors for the other values.
+        for (Token token : _tokenMap.values()) {
+            if (token.getType().equals("Oper")) {
+
+                var label = "";
+                var name = "";
+                var comment = "";
+                Operator oper = getEnum(token.getName());
+
+                // Check for a label
+                var prevKey = _tokenMap.lowerKey(token.getStart());
+                if (prevKey != null) {
+                    var prevToken = _tokenMap.get(prevKey);
+                    if (prevToken.getType().equals("Label")) {
+                        label = prevToken.getName();
+                    }
+                }
+
+                // Get the name and comment
+                var nextKey = _tokenMap.higherKey(token.getStart());
+                if (nextKey != null) {
+                    var nextToken = _tokenMap.get(nextKey);
+
+                    if (nextToken.getType().equals("Comment")) {
+                        // There is no name between the operator and the comment
+                        comment = variableToName(nextToken.getName());
+                    } else {
+                        if (!nextToken.getType().equals("Label") &&
+                                !nextToken.getType().equals("Oper")) {
+                            // Set the name value
+                            name = variableToName(nextToken.getName());
+
+                            // Look for comment after the name
+                            var comKey = _tokenMap.higherKey(nextKey);
+                            if (comKey != null) {
+                                var comToken = _tokenMap.get(comKey);
+                                if (comToken.getType().equals("Comment")) {
+                                    comment = comToken.getName();
+                                }
+                            }
+                        }
+                    }
+                }
+
+                var logic = new LogicRow(label, oper, name, comment);
+                group.getLogicList().add(logic);
+            }
+        }
+
+    }
+
+    /**
+     * Create a map of the tokens in the MultiLine string.  The map key contains the offset for each
+     * token in the string.  The tokens are identified using multiple passes of regex tests.
+     * <ol>
+     * <li>Find the labels which consist of 1 to 4 characters and a colon.</li>
+     * <li>Find the table references.  These are the IQYZM tables.  The related operators are found by parsing backwards.</li>
+     * <li>Find the operators that do not have operands.  Note: This might include SETn. These wil be fixed when the timers are processed</li>
+     * <li>Find the jump operators and the jump destinations.</li>
+     * <li>Find the timer word and load operator.</li>
+     * <li>Find timer variable locations and Sx operators.  The SE Tn will update the SET token with the same offset. </li>
+     * <li>Find //...nl comments.</li>
+     * <li>Find /&#42;...&#42;/ comments.</li>
+     * </ol>
+     * An additional check looks for overlaps between jump destinations and labels.  This can occur when
+     * a using the compact mode, a jump destination has less the 4 characters, and is immediatly followed by a label.
+     * @param group The CDI group.
+     */
+    private void createTokenMap(GroupRow group) {
+        _messages.clear();
+        _tokenMap = new TreeMap<>();
+        var line = group.getMultiLine();
+
+        // Find label locations
+        var matchLabel = PARSE_LABEL.matcher(line);
+        while (matchLabel.find()) {
+            var label = line.substring(matchLabel.start(), matchLabel.end());
+            _tokenMap.put(matchLabel.start(), new Token("Label", label, matchLabel.start(), matchLabel.end()));
+        }
+
+        // Find variable locations and operators
+        var matchVar = PARSE_VARIABLE.matcher(line);
+        while (matchVar.find()) {
+            var variable = line.substring(matchVar.start(), matchVar.end());
+            _tokenMap.put(matchVar.start(), new Token("Var", variable, matchVar.start(), matchVar.end()));
+            var operToken = findOperator(matchVar.start() - 1, line);
+            if (operToken != null) {
+                _tokenMap.put(operToken.getStart(), operToken);
+            }
+        }
+
+        // Find operators without variables
+        var matchOper = PARSE_NOVAROPER.matcher(line);
+        while (matchOper.find()) {
+            var oper = line.substring(matchOper.start(), matchOper.end());
+
+            if (isOperInComment(line, matchOper.start())) {
                 continue;
             }
-            String[] tokens = lines[i].split(" ");
 
-            var label = "";
-            var name = "";
-            var comment = "";
-            Operator oper = null;
+            if (getEnum(oper) != null) {
+                _tokenMap.put(matchOper.start(), new Token("Oper", oper, matchOper.start(), matchOper.end()));
+            } else {
+                _messages.add(Bundle.getMessage("ErrStandAlone", oper));
+            }
+        }
 
-            boolean needOperator = true;
+        // Find jump operators and destinations
+        var matchJump = PARSE_JUMP.matcher(line);
+        while (matchJump.find()) {
+            var jump = line.substring(matchJump.start(), matchJump.end());
+            if (getEnum(jump) != null && (jump.startsWith("J") || jump.startsWith("j"))) {
+                _tokenMap.put(matchJump.start(), new Token("Oper", jump, matchJump.start(), matchJump.end()));
 
-            for (int j = 0; j < tokens.length; j++) {
-                var token = tokens[j];
-
-                // Get label
-                if (j == 0) {
-                    var match = PARSE_LABEL.matcher(token);
-                    if (match.find()) {
-                        label = token;
-                        continue;
-                    }
+                // Get the jump destination
+                var matchDest = PARSE_DEST.matcher(line);
+                if (matchDest.find(matchJump.end())) {
+                    var dest = matchDest.group(1);
+                    _tokenMap.put(matchDest.start(), new Token("Dest", dest, matchDest.start(), matchDest.end()));
+                } else {
+                    _messages.add(Bundle.getMessage("ErrJumpDest", jump));
                 }
+            } else {
+                _messages.add(Bundle.getMessage("ErrJumpOper", jump));
+            }
+        }
 
-                // Get operator
-                if (needOperator) {
-                    oper = getEnum(token);
-                    if (oper != null) {
-                        needOperator = false;
-                        continue;
-                    }
+        // Find timer word locations and load operator
+        var matchTimerWord = PARSE_TIMERWORD.matcher(line);
+        while (matchTimerWord.find()) {
+            var timerWord = matchTimerWord.group(1);
+            _tokenMap.put(matchTimerWord.start(), new Token("TimerWord", timerWord, matchTimerWord.start(), matchTimerWord.end()));
+            var operToken = findOperator(matchTimerWord.start() - 1, line);
+            if (operToken != null) {
+                if (operToken.getName().equals("L") || operToken.getName().equals("l")) {
+                    _tokenMap.put(operToken.getStart(), operToken);
+                } else {
+                    _messages.add(Bundle.getMessage("ErrTimerLoad", operToken.getName()));
                 }
+            }
+        }
 
-                // Get comment
-                if (token.equals("//")) {
-                    int commentPosition = lines[i].indexOf("//");
-                    comment = lines[i].substring(commentPosition + 3);
-                    break;
-                }
+        // Find timer variable locations and S operators
+        var matchTimerVar = PARSE_TIMERVAR.matcher(line);
+        while (matchTimerVar.find()) {
+            var timerVar = matchTimerVar.group(1);
+            _tokenMap.put(matchTimerVar.start(), new Token("TimerVar", timerVar, matchTimerVar.start(), matchTimerVar.end()));
+            var operToken = findOperator(matchTimerVar.start() - 1, line);
+            if (operToken != null) {
+                _tokenMap.put(operToken.getStart(), operToken);
+            }
+        }
 
-                // Get name
-                if (oper != null) {
-                    if (oper.name().startsWith("J")) {   // Jump label
-                        name = token;
-                    } else if (isMemory(token)) {  // Memory variable
-                        name = token;
-                    } else if (isTimerWord(token)) { // Load timer
-                        name = token;
-                    } else if (isTimerVar(token)) {  // Timer variable
-                        name = token;
-                    } else {
-                        var match = PARSE_VARIABLE.matcher(token);
-                        if (match.find()) {
-                            name = variableToName(token);
-                        } else {
-                            name = token;
+        // Find comment locations
+        var matchComment1 = PARSE_COMMENT1.matcher(line);
+        while (matchComment1.find()) {
+            var comment = matchComment1.group(1).trim();
+            _tokenMap.put(matchComment1.start(), new Token("Comment", comment, matchComment1.start(), matchComment1.end()));
+        }
+
+        var matchComment2 = PARSE_COMMENT2.matcher(line);
+        while (matchComment2.find()) {
+            var comment = matchComment2.group(1).trim();
+            _tokenMap.put(matchComment2.start(), new Token("Comment", comment, matchComment2.start(), matchComment2.end()));
+        }
+
+        // Check for overlapping jump destinations and following labels
+        for (Token token : _tokenMap.values()) {
+            if (token.getType().equals("Dest")) {
+                var nextKey = _tokenMap.higherKey(token.getStart());
+                if (nextKey != null) {
+                    var nextToken = _tokenMap.get(nextKey);
+                    if (nextToken.getType().equals("Label")) {
+                        if (token.getEnd() > nextToken.getStart()) {
+                            _messages.add(Bundle.getMessage("ErrDestLabel", token.getName(), nextToken.getName()));
                         }
                     }
                 }
             }
-
-            var logic = new LogicRow(label, oper, name, comment);
-            groupRow.getLogicList().add(logic);
         }
+
+        if (_messages.size() > 0) {
+            // Display messages
+            String msgs = _messages.stream().collect(java.util.stream.Collectors.joining("\n"));
+            JmriJOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("MsgParseErr", group.getName(), msgs),
+                    Bundle.getMessage("TitleParseErr"),
+                    JmriJOptionPane.ERROR_MESSAGE);
+            _messages.forEach((msg) -> {
+                log.error(msg);
+            });
+        }
+
+        // Create token debugging output
+        if (log.isDebugEnabled()) {
+            log.info("Line = {}", line);
+            for (Token token : _tokenMap.values()) {
+                log.info("Token = {}", token);
+            }
+        }
+    }
+
+    /**
+     * Starting as the operator location minus one, work backwards to find a valid operator. When
+     * one is found, create and return the token object.
+     * @param index The current location in the line.
+     * @param line The line for the current group.
+     * @return a token or null.
+     */
+    private Token findOperator(int index, String line) {
+        var sb = new StringBuilder();
+        int limit = 10;
+
+        while (limit > 0 && index >= 0) {
+            var ch = line.charAt(index);
+            if (ch != ' ') {
+                sb.insert(0, ch);
+                if (getEnum(sb.toString()) != null) {
+                    String oper = sb.toString();
+                    return new Token("Oper", oper, index, index + oper.length());
+                }
+            }
+            limit--;
+            index--;
+        }
+        _messages.add(Bundle.getMessage("ErrNoOper", index, line));
+        log.error("findOperator: {} :: {}", index, line);
+        return null;
+    }
+
+    /**
+     * Look backwards in the line for the beginning of a comment.  This is not a precise check.
+     * @param line The line that contains the Operator.
+     * @param index The offset of the operator.
+     * @return true if the operator appears to be in a comment.
+     */
+    private boolean isOperInComment(String line, int index) {
+        int limit = 20;     // look back 20 characters
+        char previous = 0;
+
+        while (limit > 0 && index >= 0) {
+            var ch = line.charAt(index);
+
+            if (ch == 10) {
+                // Found the end of a previous statement, new line character.
+                return false;
+            }
+
+            if (ch == '*' && previous == '/') {
+                // Found the end of a previous /*...*/ comment
+                return false;
+            }
+
+            if (ch == '/' && (previous == '/' || previous == '*')) {
+                // Found the start of a comment
+                return true;
+            }
+
+            previous = ch;
+            index--;
+            limit--;
+        }
+        return false;
     }
 
     private Operator getEnum(String name) {
         try {
-            var temp = name;
+            var temp = name.toUpperCase();
             if (name.equals("=")) {
                 temp = "EQ";
             } else if (name.equals(")")) {
                 temp = "Cp";
             } else if (name.endsWith("(")) {
-                temp = name.replace("(", "p");
+                temp = name.toUpperCase().replace("(", "p");
             }
 
             Operator oper = Enum.valueOf(Operator.class, temp);
@@ -807,7 +1166,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 for (Window window : windows) {
                     if (window instanceof JDialog) {
                         JDialog dialog = (JDialog) window;
-                        if (dialog.getTitle().equals(Bundle.getMessage("TitleCdiLoad"))) {
+                        if (Bundle.getMessage("TitleCdiLoad").equals(dialog.getTitle())) {
                             dialog.dispose();
                         }
                     }
@@ -1113,6 +1472,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         _exportItem.setEnabled(true);
         _refreshItem.setEnabled(true);
         _storeItem.setEnabled(true);
+
+        if (_splitView) {
+            _tableTabs.repaint();
+        }
     }
 
     private void pushedRefreshButton(ActionEvent e) {
@@ -1401,6 +1764,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         _exportButton.setEnabled(true);
         _exportItem.setEnabled(true);
+
+        if (_splitView) {
+            _tableTabs.repaint();
+        }
     }
 
     private String getLineValue(String line) {
@@ -1513,6 +1880,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         _groupTable.setRowSelectionInterval(0, 0);
 
         _groupTable.repaint();
+
+        if (_splitView) {
+            _tableTabs.repaint();
+        }
     }
 
     private void importGroupLogic() {
@@ -1586,7 +1957,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             return;
         }
 
-        for (int i = 0; i < 17; i++) {
+        for (int i = 0; i < 129; i++) {
             if (i == 0) {
                 continue;
             }
@@ -2870,6 +3241,44 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     }
 
+    // --------------  Token Class ---------
+
+    static class Token {
+        String _type = "";
+        String _name = "";
+        int _offsetStart = 0;
+        int _offsetEnd = 0;
+
+        Token(String type, String name, int offsetStart, int offsetEnd) {
+            _type = type;
+            _name = name;
+            _offsetStart = offsetStart;
+            _offsetEnd = offsetEnd;
+        }
+
+        public String getType() {
+            return _type;
+        }
+
+        public String getName() {
+            return _name;
+        }
+
+        public int getStart() {
+            return _offsetStart;
+        }
+
+        public int getEnd() {
+            return _offsetEnd;
+        }
+
+        @Override
+        public String toString() {
+            return String.format("Type: %s, Name: %s, Start: %d, End: %d",
+                    _type, _name, _offsetStart, _offsetEnd);
+        }
+    }
+
     // --------------  misc items ---------
     @Override
     public java.util.List<JMenu> getMenus() {
@@ -2901,13 +3310,189 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         _storeItem.setEnabled(false);
         _exportItem.setEnabled(false);
 
+        var viewMenu = new JMenu(Bundle.getMessage("MenuView"));
+
+        // Create a radio button menu group
+        ButtonGroup viewButtonGroup = new ButtonGroup();
+
+        _viewSingle.setActionCommand("SINGLE");
+        _viewSingle.addItemListener(this::setViewMode);
+        viewMenu.add(_viewSingle);
+        viewButtonGroup.add(_viewSingle);
+
+        _viewSplit.setActionCommand("SPLIT");
+        _viewSplit.addItemListener(this::setViewMode);
+        viewMenu.add(_viewSplit);
+        viewButtonGroup.add(_viewSplit);
+
+        // Select the current view
+        if (_splitView) {
+            _viewSplit.setSelected(true);
+        } else {
+            _viewSingle.setSelected(true);
+        }
+
+        viewMenu.addSeparator();
+
+        _viewPreview.addItemListener(this::setPreview);
+        viewMenu.add(_viewPreview);
+
+        // Set the current preview menu item state
+        if (_stlPreview) {
+            _viewPreview.setSelected(true);
+        } else {
+            _viewPreview.setSelected(false);
+        }
+
+        viewMenu.addSeparator();
+
+        // Create a radio button menu group
+        ButtonGroup viewStoreGroup = new ButtonGroup();
+
+        _viewReadable.setActionCommand("LINE");
+        _viewReadable.addItemListener(this::setViewStoreMode);
+        viewMenu.add(_viewReadable);
+        viewStoreGroup.add(_viewReadable);
+
+        _viewCompact.setActionCommand("CLNE");
+        _viewCompact.addItemListener(this::setViewStoreMode);
+        viewMenu.add(_viewCompact);
+        viewStoreGroup.add(_viewCompact);
+
+        _viewCompressed.setActionCommand("COMP");
+        _viewCompressed.addItemListener(this::setViewStoreMode);
+        viewMenu.add(_viewCompressed);
+        viewStoreGroup.add(_viewCompressed);
+
+        // Select the current store mode
+        switch (_storeMode) {
+            case "LINE":
+                _viewReadable.setSelected(true);
+                break;
+            case "CLNE":
+                _viewCompact.setSelected(true);
+                break;
+            case "COMP":
+                _viewCompressed.setSelected(true);
+                break;
+            default:
+                log.error("Invalid store mode: {}", _storeMode);
+        }
+
         retval.add(fileMenu);
+        retval.add(viewMenu);
+
         return retval;
+    }
+
+    private void setViewMode(ItemEvent e) {
+        if (e.getStateChange() == ItemEvent.SELECTED) {
+            var button = (JRadioButtonMenuItem) e.getItem();
+            var cmd = button.getActionCommand();
+            _splitView = "SPLIT".equals(cmd);
+            _pm.setProperty(this.getClass().getName(), "ViewMode", cmd);
+            if (_splitView) {
+                splitTabs();
+            } else if (_detailTabs.getTabCount() == 1) {
+                mergeTabs();
+            }
+        }
+    }
+
+    private void splitTabs() {
+        if (_detailTabs.getTabCount() == 5) {
+            _detailTabs.remove(4);
+            _detailTabs.remove(3);
+            _detailTabs.remove(2);
+            _detailTabs.remove(1);
+        }
+
+        if (_tableTabs == null) {
+            _tableTabs = new JTabbedPane();
+        }
+
+        _tableTabs.add(Bundle.getMessage("ButtonI"), _inputPanel);  // NOI18N
+        _tableTabs.add(Bundle.getMessage("ButtonQ"), _outputPanel);  // NOI18N
+        _tableTabs.add(Bundle.getMessage("ButtonY"), _receiverPanel);  // NOI18N
+        _tableTabs.add(Bundle.getMessage("ButtonZ"), _transmitterPanel);  // NOI18N
+
+        _tableTabs.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+
+        var tablePanel = new JPanel();
+        tablePanel.setLayout(new BorderLayout());
+        tablePanel.add(_tableTabs, BorderLayout.CENTER);
+
+        if (_tableFrame == null) {
+            _tableFrame = new JmriJFrame(Bundle.getMessage("TitleTables"));
+            _tableFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        }
+        _tableFrame.add(tablePanel);
+        _tableFrame.pack();
+        _tableFrame.setVisible(true);
+    }
+
+    private void mergeTabs() {
+        if (_tableTabs != null) {
+            _tableTabs.removeAll();
+        }
+
+        _detailTabs.add(Bundle.getMessage("ButtonI"), _inputPanel);  // NOI18N
+        _detailTabs.add(Bundle.getMessage("ButtonQ"), _outputPanel);  // NOI18N
+        _detailTabs.add(Bundle.getMessage("ButtonY"), _receiverPanel);  // NOI18N
+        _detailTabs.add(Bundle.getMessage("ButtonZ"), _transmitterPanel);  // NOI18N
+
+        if (_tableFrame != null) {
+            _tableFrame.setVisible(false);
+        }
+    }
+
+    private void setPreview(ItemEvent e) {
+        if (e.getStateChange() == ItemEvent.SELECTED) {
+            _stlPreview = true;
+
+            _stlTextArea = new JTextArea();
+            _stlTextArea.setEditable(false);
+            _stlTextArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+            _stlTextArea.setMargin(new Insets(5,10,0,0));
+
+            var previewPanel = new JPanel();
+            previewPanel.setLayout(new BorderLayout());
+            previewPanel.add(_stlTextArea, BorderLayout.CENTER);
+
+            if (_previewFrame == null) {
+                _previewFrame = new JmriJFrame(Bundle.getMessage("TitlePreview"));
+                _previewFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+            }
+            _previewFrame.add(previewPanel);
+            _previewFrame.pack();
+            _previewFrame.setVisible(true);
+        } else {
+            _stlPreview = false;
+
+            if (_previewFrame != null) {
+                _previewFrame.setVisible(false);
+            }
+        }
+        _pm.setSimplePreferenceState(_previewModeCheck, _stlPreview);
+    }
+
+    private void setViewStoreMode(ItemEvent e) {
+        if (e.getStateChange() == ItemEvent.SELECTED) {
+            var button = (JRadioButtonMenuItem) e.getItem();
+            var cmd = button.getActionCommand();
+            _storeMode = cmd;
+            _pm.setProperty(this.getClass().getName(), "StoreMode", cmd);
+        }
     }
 
     @Override
     public void dispose() {
-        // and complete this
+        if (_tableFrame != null) {
+            _tableFrame.dispose();
+        }
+        if (_previewFrame != null) {
+            _previewFrame.dispose();
+        }
         super.dispose();
     }
 
@@ -2933,7 +3518,21 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             super("STL Editor",
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     StlEditorPane.class.getName(),
-                    jmri.InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));
+                    jmri.InstanceManager.getNullableDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));
+        }
+
+        public Default(String name, jmri.util.swing.WindowInterface iface) {
+            super(name,
+                    iface,
+                    StlEditorPane.class.getName(),
+                    jmri.InstanceManager.getNullableDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));        
+        }
+
+        public Default(String name, Icon icon, jmri.util.swing.WindowInterface iface) {
+            super(name,
+                    icon, iface,
+                    StlEditorPane.class.getName(),
+                    jmri.InstanceManager.getNullableDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));        
         }
     }
 

@@ -29,7 +29,8 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
     private DataOutputStream outpipe = null;  // feed pin
     private DataInputStream inpipe = null; // feed pout
     private Z21SystemConnectionMemo _memo;
-    private Thread sourceThread;
+    private final Thread sourceThread;
+    private volatile boolean stopThread = false;
 
     /**
      * Build a new XpressNet tunnel.
@@ -51,6 +52,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {
             log.error("init (pipe): Exception: {}", e.toString());
+            sourceThread = null;
             return;
         }
 
@@ -77,7 +79,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
         // and writes modified data to the output pipe.  This is the heart
         // of the command station simulation.
         log.debug("Simulator Thread Started");
-        for (;;) {
+        while (!stopThread) {
             Z21XNetMessage m = readMessage();
             if(m != null) {
                // don't forward a null message.
@@ -261,15 +263,24 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
 
     @SuppressWarnings("deprecation") // Thread.stop
     public void dispose(){
-       if(xsc != null){
-          xsc.dispose();
-       }
-       sourceThread.stop();
-       try {
-          sourceThread.join();
-       } catch (InterruptedException ie){
-          // interrupted during cleanup.
-       }
+        if (xsc != null) {
+            xsc.dispose();
+        }
+        try {
+            inpipe.close();
+        } catch (IOException ex) {
+            // Ignore IO error
+        }
+
+        if (sourceThread != null) {
+            stopThread = true;
+            sourceThread.interrupt();
+            try {
+                sourceThread.join();
+            } catch (InterruptedException e) {
+                // Do nothing
+            }
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(Z21XPressNetTunnel.class);

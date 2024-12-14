@@ -320,6 +320,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * @param id The id for the RosterEntry.
      * @return The matching RosterEntry or null
      */
+    @CheckForNull
     public RosterEntry getEntryForId(String id) {
         synchronized (_list) {
             for (RosterEntry re : _list) {

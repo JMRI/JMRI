@@ -77,4 +77,9 @@ public class IpocsConnectionConfigXml extends AbstractConnectionConfigXml {
   protected void register() {
     this.register(new IpocsConnectionConfig(portController));
   }
+
+  @Override
+  protected void dispose() {
+    portController.dispose();
+  }
 }

@@ -187,6 +187,16 @@ public class ActiveTrain implements PropertyChangeProvider {
         TRAINDETECTION_HEADANDTAIL
     }
 
+    /**
+     * Scale Length type
+     */
+    public enum TrainLengthUnits {
+        TRAINLENGTH_SCALEFEET,
+        TRAINLENGTH_SCALEMETERS,
+        TRAINLENGTH_ACTUALINCHS,
+        TRAINLENGTH_ACTUALCM
+    }
+
     // instance variables
     private Transit mTransit = null;
     private String mTrainName = "";

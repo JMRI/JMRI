@@ -74,7 +74,8 @@ public class ClientManager implements ThrottleListener {
     }
 
     synchronized public void handleExpiredClients() {
-        for (AppClient c : registeredClients.values()) {
+        var tempMap = new HashMap<>(registeredClients); // to avoid concurrent modification
+        for (AppClient c : tempMap.values()) {
             if (c.isTimestampExpired()) registeredClients.remove(c.getAddress());
         }
     }

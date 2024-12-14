@@ -955,7 +955,7 @@ public final class FnMapPanelESU extends JPanel {
         Attribute a;
 
         if (model == null) {
-            log.debug("configOutputs was given a null model");
+            log.debug("loadModelAttributes was given a null model");
             return;
         }
 

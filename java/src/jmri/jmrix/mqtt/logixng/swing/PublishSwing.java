@@ -12,8 +12,10 @@ import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrix.mqtt.MqttSystemConnectionMemo;
 import jmri.jmrix.mqtt.logixng.Publish;
+import jmri.jmrix.mqtt.logixng.Publish.Retain;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectStringSwing;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an Publish object with a Swing JPanel.
@@ -26,6 +28,8 @@ public class PublishSwing extends AbstractDigitalActionSwing {
 
     private LogixNG_SelectStringSwing _selectTopicSwing;
     private LogixNG_SelectStringSwing _selectMessageSwing;
+
+    private JComboBox<Retain> _retainComboBox;
 
 
     public PublishSwing() {
@@ -82,7 +86,19 @@ public class PublishSwing extends AbstractDigitalActionSwing {
         }
         mqttPanel.add(_mqttConnection);
 
+        JPanel retainPanel = new JPanel();
+        retainPanel.add(new JLabel(Bundle.getMessage("PublishSwing_Retain")));
+
+        _retainComboBox = new JComboBox<>();
+        for (Retain e : Retain.values()) {
+            _retainComboBox.addItem(e);
+        }
+        JComboBoxUtil.setupComboBoxMaxRows(_retainComboBox);
+        _retainComboBox.setSelectedItem(action.getRetain());
+        retainPanel.add(_retainComboBox);
+
         panel.add(internalPanel);
+        panel.add(retainPanel);
         panel.add(mqttPanel);
     }
 
@@ -127,6 +143,7 @@ public class PublishSwing extends AbstractDigitalActionSwing {
         _selectMessageSwing.updateObject(action.getSelectMessage());
 
         action.setMemo(_mqttConnection.getItemAt(_mqttConnection.getSelectedIndex())._memo);
+        action.setRetain(_retainComboBox.getItemAt(_retainComboBox.getSelectedIndex()));
     }
 
     /** {@inheritDoc} */

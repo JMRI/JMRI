@@ -472,6 +472,8 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      *
      * @param v the new state
      */
+    @SuppressWarnings("deprecation")    // The method getId() from the type Thread is deprecated since version 19
+                                        // The replacement Thread.threadId() isn't available before version 19
     @Override
     public void setState(int v) {
         int old = _current;

@@ -5,6 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Iterator;
 import java.awt.geom.Point2D;
 import jmri.Audio;
@@ -79,7 +80,7 @@ public class VSDecoder implements PropertyChangeListener {
     private VSDNavigation navigation;
 
     HashMap<String, VSDSound> sound_list; // list of sounds
-    HashMap<String, SoundEvent> event_list; // list of events
+    LinkedHashMap<String, SoundEvent> event_list; // list of events
 
     /**
      * Construct a VSDecoder with the given system name (id) and configuration
@@ -91,7 +92,7 @@ public class VSDecoder implements PropertyChangeListener {
         config = cfg;
 
         sound_list = new HashMap<>();
-        event_list = new HashMap<>();
+        event_list = new LinkedHashMap<>();
 
         // Force re-initialization
         initialized = _init();
@@ -154,7 +155,7 @@ public class VSDecoder implements PropertyChangeListener {
         config.setId(id);
 
         sound_list = new HashMap<>();
-        event_list = new HashMap<>();
+        event_list = new LinkedHashMap<>();
 
         // Force re-initialization
         initialized = _init();

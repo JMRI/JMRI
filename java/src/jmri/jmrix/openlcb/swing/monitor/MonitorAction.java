@@ -13,6 +13,20 @@ public class MonitorAction extends jmri.jmrix.can.swing.CanNamedPaneAction {
         super(Bundle.getMessage("MonitorTitle"),
                 new jmri.util.swing.sdi.JmriJFrameInterface(),
                 MonitorPane.class.getName(),
-                jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
+                jmri.InstanceManager.getNullableDefault(CanSystemConnectionMemo.class));
+    }
+    
+    public MonitorAction(String name, jmri.util.swing.WindowInterface iface) {
+        super(name,
+                iface,
+                MonitorPane.class.getName(),
+                jmri.InstanceManager.getNullableDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));        
+    }
+
+    public MonitorAction(String name, javax.swing.Icon icon, jmri.util.swing.WindowInterface iface) {
+        super(name,
+                icon, iface, 
+                MonitorPane.class.getName(),
+                jmri.InstanceManager.getNullableDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));        
     }
 }

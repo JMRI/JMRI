@@ -49,6 +49,9 @@ public class Xml {
     static final String PRINT_OPTIONS = "printOptions"; // NOI18N
     static final String DISABLE_PRINT_IF_CUSTOM = "disablePrintIfCustom"; // NOI18N
 
+    static final String SPEED_HPT = "speedHpt";
+    static final String MPH = "MPH";
+
     // Setup.java
     static final String OPERATIONS = "operations"; // NOI18N
     static final String RAIL_ROAD = "railRoad"; // NOI18N
@@ -99,6 +102,7 @@ public class Xml {
     static final String PRINT_HEADERS = "printHeaders"; // NOI18N
     static final String PRINT_CABOOSE_LOAD = "printCabooseLoad"; // NOI18N
     static final String PRINT_PASSENGER_LOAD = "printPassengerLoad"; // NOI18N
+    static final String GROUP_MOVES = "groupCarMoves"; // NOI18N
     
     static final String LENGTH_UNIT = "lengthUnit"; // NOI18N
     static final String YEAR_MODELED = "yearModeled"; // NOI18N

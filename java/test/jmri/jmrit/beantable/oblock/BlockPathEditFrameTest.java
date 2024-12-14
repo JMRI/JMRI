@@ -6,22 +6,22 @@ import jmri.jmrit.logix.OPath;
 import jmri.jmrit.logix.Portal;
 import jmri.jmrit.logix.PortalManager;
 import jmri.util.JUnitUtil;
-import org.junit.jupiter.api.*;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
 
-import java.awt.*;
+import org.junit.jupiter.api.*;
+import org.netbeans.jemmy.operators.*;
+
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  * @author Egbert Broerse Copyright (C) 2020, 2021
  */
+@DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
 public class BlockPathEditFrameTest {
 
     @Test
     public void testCTor() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         OBlock ob = new OBlock("OB1");
         BlockPathEditFrame bpef = new BlockPathEditFrame(
                 "Test BPEF",
@@ -31,11 +31,11 @@ public class BlockPathEditFrameTest {
                 null,
                 null);
         Assertions.assertNotNull(bpef, "exists");
+        JUnitUtil.dispose(bpef);
     }
 
     @Test
     public void testPathCTor() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         OBlock ob = new OBlock("OB1");
         OPath path = new OPath(ob, "path");
         TableFrames tf = new TableFrames();
@@ -48,12 +48,11 @@ public class BlockPathEditFrameTest {
                 bptm,
                 tf);
         Assertions.assertNotNull(bpef, "exists");
+        JUnitUtil.dispose(bpef);
     }
-
 
     @Test
     public void testOkPressed() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         // repeat Ctor
         OBlock ob1 = new OBlock("OB1");
         OBlock ob2 = new OBlock("OB2");
@@ -86,6 +85,8 @@ public class BlockPathEditFrameTest {
         bpef.setVisible(true);
         JUnitUtil.waitFor(()-> !(dialog_thread1.isAlive()), "Path error warning message clicked");
         jmri.util.JUnitAppender.assertErrorMessage("BlockPathEditFrame for OPath path, but it is not part of OBlock OB1");
+        
+        JUnitUtil.dispose(bpef);
 
         // valid parameter values
         bpef = new BlockPathEditFrame(
@@ -96,6 +97,9 @@ public class BlockPathEditFrameTest {
                 bptm,
                 tf);
         bpef.setVisible(true);
+
+        JFrameOperator jfo = new JFrameOperator(bpef.getTitle());
+
         // Set up is ready
         Assertions.assertEquals(0, ob1.getPaths().size(), "initially: 0 paths in oblock 1");
         Assertions.assertEquals("", bpef.fromPortalComboBox.getSelectedItem(), "initial empty toCombo");
@@ -115,6 +119,8 @@ public class BlockPathEditFrameTest {
         Assertions.assertEquals(1, ob1.getPaths().size(), "after edit: 1 path in oblock 1");
         Assertions.assertEquals("Po-1-2-CW", ((OPath)ob1.getPaths().get(0)).getFromPortal().getName(), "portal on path");
 
+        jfo.requestClose();
+        jfo.waitClosed();
     }
 
     @BeforeEach

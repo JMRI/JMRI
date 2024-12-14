@@ -90,6 +90,10 @@
         </li>
 
         <li>
+          <a href="#Permissions">Permissions</a>
+        </li>
+
+        <li>
           <a href="#RailroadName">Railroad Name</a>
         </li>
 
@@ -217,9 +221,11 @@
         <p>Click the <strong>Add &#9662;</strong> button and select the type of start up action to add.
         The new action will be added last.</p>
 
-        <p>Start up action order is important. In most cases, scripts should be the last items in
-        the start up order. Start up order can be changed by selecting a start up item and moving
-        it <em>up</em> or <em>down</em> in the list.</p>
+        <p>Start up action order is important, and can be changed by selecting a start up item and
+        moving it <em>up</em> or <em>down</em> in the list.  For the best performance when loading
+        an XML file, ensure that "Load table content and panels..." occurs <u>before any</u> "Perform
+        Action..." to "Open" <em>any</em> "Table".  And, in most cases, scripts should be the last
+        items in the start up order.</p>
 
         <p>Individual start up actions can be enabled or disabled.  The default is
         <strong>Enabled</strong>.<span class="since">since 5.5.6</span></p>
@@ -242,7 +248,8 @@
           <dt>Load table content and panels...</dt>
 
           <dd>Automatically load a PanelPro xml data file or Configuration file when the program
-          starts up.</dd>
+              starts up.  Generally, "Load table content and panels..." runs more quickly when it
+              is found <em>before</em> any "Perform Action..." item which "Opens" a JMRI "Table".</dd>
 
           <dt>Pause...</dt>
 
@@ -259,7 +266,9 @@
 
           <dd>Automatically run a scripts when the program starts up. You can run as many scripts
           as you'd like; each will be run to completion before the next is started. Note that any
-          files the script depends upon need to be loaded before running the script.</dd>
+          files the script depends upon need to be loaded before running the script.  In most
+          cases, "Run Script..." actions should be run "last" in the set of items in the
+          "Start Up" list.</dd>
 
           <dt>Set route...</dt>
 
@@ -408,13 +417,30 @@
       <h2 id="Messages">Messages</h2>
 
       <div>
-        <a href="images/PrefsMessages.png"><img src="images/PrefsMessages.png" height="194" width=
-        "479" class="floatRight" alt="JMRI v4.17 Messages Prefs tab"></a>
-        <p>This allows you to change the way that information and warning messages are displayed in
-        JMRI.</p>
+        <p>Some of the message dialogs include an option to ignore the message in the future. They
+        provide a checkbox with either <em>Skip message in future?</em> or <em>Remember this setting
+        for next time?</em> as the description.  If the checkbox is selected, the dialog will no
+        longer appear. A second dialog is displayed with a reminder to use this preference to
+        re-display the suppressed message.  This reminder can also be suppressed.</p>
 
-        <p>It will also allow you to configure a default responses and the question being
-        displayed.</p>
+        <p>The Messages preference provides the ability to <strong>undo</strong> the selections.  It
+        can also be used to manually set the preferred settings.</p>
+
+        <p>The Messages preference will show 17 tabs, one for each standard item such sensor or
+        turnout.  Each tab will show the possible messages that can be displayed.  Active Messages
+        will have an active checkbox or the current combo box selection.  There is also a
+        <strong>Misc items</strong> tab for messages that are not related to the standard items.
+        With the exception of the fixed entry for <strong>User Preferences</strong> (the second
+        dialog), these will only be shown when active.</p>
+
+        <p>THe <strong>Misc items</strong> tab also includes the <strong>Tabs Option</strong>.  When
+        the option is selected, only the standard tabs with active messages are displayed.</p>
+
+        <div style="margin-left: 2em">
+          <a href="images/PrefsMessages.png"><img src="images/PrefsMessages.png"
+          alt="Messages Prefs tab"></a>
+        </div>
+
       </div>
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -677,6 +703,15 @@
         how often the server checks for whether the connection has failed via a heartbeat
         message.</p>
       </div>
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h2 id="Permissions">Permissions</h2>
+
+      <p>The <strong>Permissions</strong> feature is used to control access to important functions
+      such as loading and storing PanelPro table and panel files or changing <strong>Preferences</strong>.</p>
+
+      <p>The details are at <a href="../jmri/jmrit/permission/PermissionManager.shtml">Permissions</a>.
+
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h2 id="RailroadName">Railroad Name</h2>

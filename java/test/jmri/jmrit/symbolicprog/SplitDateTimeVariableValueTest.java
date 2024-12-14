@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.CvUtil;
+import jmri.util.junit.annotations.NotApplicable;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -30,7 +31,7 @@ public class SplitDateTimeVariableValueTest extends AbstractVariableValueTestBas
             String cvNum, String mask, int minVal, int maxVal,
             HashMap<String, CvValue> v, JLabel status, String item,
             String highCV, int pFactor, int pOffset, String uppermask, String extra1, String extra2, String extra3, String extra4) {
-        ProgDebugger p = new ProgDebugger();
+        p = new ProgDebugger();
 
         if (!cvNum.equals("")) { // some variables have no CV per se
             List<String> cvList = CvUtil.expandCvList(cvNum);
@@ -97,68 +98,81 @@ public class SplitDateTimeVariableValueTest extends AbstractVariableValueTestBas
     // some of the premade tests don't quite make sense; override them here.
     @Override
     @Test
+    @NotApplicable("mask is ignored by splitAddress tests")
     public void testVariableValueCreate() {
-    } // mask is ignored by splitAddress tests
+    }
 
     @Override
     @Test
+    @NotApplicable("low CV is upper part of address")
     public void testVariableFromCV() {
-    } // low CV is upper part of address
+    }
 
     @Override
     @Test
+    @NotApplicable("mask is ignored")
     public void testVariableValueTwinMask() {
-    } // mask is ignored
+    }
 
     @Override
     @Test
+    @NotApplicable("due to multi-cv nature of splitAddress tests")
     public void testVariableValueRead() {
-    } // due to multi-cv nature of splitAddress tests
+    }
 
     @Override
     @Test
+    @NotApplicable("due to multi-cv nature of splitAddress tests")
     public void testVariableValueWrite() {
-    } // due to multi-cv nature of splitAddress tests
+    }
 
     @Override
     @Test
+    @NotApplicable("due to multi-cv nature of splitAddress tests")
     public void testVariableCvWrite() {
-    } // due to multi-cv nature of splitAddress tests
+    }
 
     @Override
     @Test
+    @NotApplicable("programmer synch is different")
     public void testWriteSynch2() {
-    }        // programmer synch is different
+    }
 
     // at some point, these should pass, but have to think hard about
     // how to define the split/shift/mask operations for long CVs
     @Override
     @Test
+    @Disabled("mask is ignored, Test requires further development")
     public void testVariableValueCreateLargeValue() {
-    } // mask is ignored
+    }
 
     @Override
     @Test
+    @Disabled("Test requires further development")
     public void testVariableSynch() {
     }
 
     @Override
     @Test
+    @Disabled("Test requires further development")
     public void testVariableReadOnly() {
     }
 
     @Override
     @Test
+    @Disabled("Test requires further development")
     public void testVariableValueStates() {
     }
 
     @Override
     @Test
+    @Disabled("Test requires further development")
     public void testVariableRepStateColor() {
     }
 
     @Override
     @Test
+    @Disabled("Test requires further development")
     public void testVariableVarChangeColorRep() {
     }
 
@@ -168,13 +182,15 @@ public class SplitDateTimeVariableValueTest extends AbstractVariableValueTestBas
 
     @Override
     @Test
+    @NotApplicable("mask is ignored")
     public void testVariableValueCreateLargeMaskValue256() {
-    } // mask is ignored
+    }
 
     @Override
     @Test
+    @NotApplicable("mask is ignored")
     public void testVariableValueCreateLargeMaskValue2up16() {
-    } // mask is ignored
+    }
 
     // Local tests
     @Test

@@ -404,7 +404,7 @@ public class TreeEditor extends TreeViewer {
 
         contentPanel.add(p);
 
-        // set up create and cancel buttons
+        // set up Create and Cancel buttons
         JPanel panel5 = new JPanel();
         panel5.setLayout(new FlowLayout());
         // Cancel
@@ -413,8 +413,7 @@ public class TreeEditor extends TreeViewer {
         cancel.addActionListener((ActionEvent e) -> {
             cancelRenameSocketPressed(null);
         });
-//        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
-        cancel.setToolTipText("CancelLogixButtonHint");      // NOI18N
+        cancel.setToolTipText(Bundle.getMessage("CancelRenameLogixNGButtonHint"));      // NOI18N
 
         _renameSocketDialog.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -486,6 +485,8 @@ public class TreeEditor extends TreeViewer {
                             || (_systemName.getText().isEmpty() && _autoSystemName.isSelected())) {
                         _systemName.setText(_addSwingConfiguratorInterface.getAutoSystemName());
                     }
+
+                    checkAndAdjustSystemName();
 
                     if (_addSwingConfiguratorInterface.getManager()
                             .validSystemNameFormat(_systemName.getText()) != Manager.NameValidity.VALID) {
@@ -561,6 +562,33 @@ public class TreeEditor extends TreeViewer {
                 makeAddEditFrame(true, femaleSocket, _create, commentStr);
             }
         }
+    }
+
+    /**
+     * Check the system name format.  Add prefix and/or $ as neeeded.
+     */
+    void checkAndAdjustSystemName() {
+        if (_autoSystemName.isSelected()) {
+            return;
+        }
+
+        var sName = _systemName.getText().trim();
+        var prefix = _addSwingConfiguratorInterface.getManager().getSubSystemNamePrefix();
+
+        if (!sName.isEmpty() && !sName.startsWith(prefix)) {
+            var isNumber = sName.matches("^\\d+$");
+            var hasDollar = sName.startsWith("$");
+
+            var newName = new StringBuilder(prefix);
+            if (!isNumber && !hasDollar) {
+                newName.append("$");
+            }
+            newName.append(sName);
+            sName = newName.toString();
+        }
+
+        _systemName.setText(sName);
+        return;
     }
 
     /**
@@ -840,8 +868,7 @@ public class TreeEditor extends TreeViewer {
                 cancelEditPressed(null);
             }
         });
-//        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
-        cancel.setToolTipText("CancelLogixButtonHint");      // NOI18N
+        cancel.setToolTipText(Bundle.getMessage("LogixNG_CancelButtonHint"));      // NOI18N
 
         panel5.add(button);
 
@@ -877,6 +904,8 @@ public class TreeEditor extends TreeViewer {
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
             _autoSystemName.setSelected(prefMgr.getCheckboxPreferenceState(_systemNameAuto, true));
         });
+
+        _systemName.setEnabled(addOrEdit);
 
         dialog.setVisible(true);
     }
@@ -1012,8 +1041,7 @@ public class TreeEditor extends TreeViewer {
                 _editLocalVariablesDialog = null;
                 setPopupMenuLock(false);
             });
-    //        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
-            cancel.setToolTipText("CancelLogixButtonHint");      // NOI18N
+            cancel.setToolTipText(Bundle.getMessage("LogixNG_CancelButtonHint"));      // NOI18N
 
             buttonPanel.add(_edit);
             _editLocalVariablesDialog.getRootPane().setDefaultButton(_edit);
@@ -1174,8 +1202,7 @@ public class TreeEditor extends TreeViewer {
                 _changeUsernameDialog = null;
                 setPopupMenuLock(false);
             });
-    //        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
-            cancel.setToolTipText("CancelLogixButtonHint");      // NOI18N
+            cancel.setToolTipText(Bundle.getMessage("LogixNG_CancelButtonHint"));      // NOI18N
 
             buttonPanel.add(_edit);
             _changeUsernameDialog.getRootPane().setDefaultButton(_edit);

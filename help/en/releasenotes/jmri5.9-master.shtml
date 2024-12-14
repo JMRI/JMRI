@@ -374,14 +374,30 @@
                 <li></li>
             </ul>
 
-    <h3>DecoderPro</h3>
-        <a id="DecoderPro" name="DecoderPro"></a>
+    <h3>Control Panel Editor</h3>
+        <a id="CPE" name="CPE"></a>
+        <ul>
+            <li></li>
+        </ul>
+        <h4>Circuit Builder</h4>
+            <a id="CPE-CB" name="CPE-CB"></a>
+            <ul>
+                <li></li>
+            </ul>
+        <h4>Palette</h4>
+            <a id="CPE-P" name="CPE-P"></a>
+            <ul>
+                <li></li>
+            </ul>
+
+    <h3>CTC Tool</h3>
+        <a id="PE-CTC" name="PE-CTC"></a>
         <ul>
             <li></li>
         </ul>
 
-    <h3>CTC Tool</h3>
-        <a id="PE-CTC" name="PE-CTC"></a>
+    <h3>DecoderPro</h3>
+        <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
             <li></li>
         </ul>
@@ -433,7 +449,7 @@
             <li></li>
         </ul>
 
-    <h3>Operations</h3>
+    <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
             <li></li>
@@ -445,21 +461,11 @@
             <li></li>
         </ul>
 
-    <h3>Control Panel Editor</h3>
-        <a id="CPE" name="CPE"></a>
+    <h3>Permissions</h3>
+        <a id="Permissions" name="Permissions"></a>
         <ul>
             <li></li>
         </ul>
-        <h4>Circuit Builder</h4>
-            <a id="CPE-CB" name="CPE-CB"></a>
-            <ul>
-                <li></li>
-            </ul>
-        <h4>Palette</h4>
-            <a id="CPE-P" name="CPE-P"></a>
-            <ul>
-                <li></li>
-            </ul>
 
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
@@ -573,6 +579,12 @@
             <li></li>
         </ul>
 
+   <h3>Web Server</h3>
+        <a id="server" name="server"></a>
+        <ul>
+            <li></li>
+        </ul>
+
     <h3>Where Used</h3>
         <a id="WhereUsed" name="WhereUsed"></a>
         <ul>
@@ -585,14 +597,14 @@
             <li></li>
         </ul>
 
-   <h3>Web Server</h3>
-        <a id="server" name="server"></a>
+   <h3>Virtual Sound Decoder</h3>
+        <a id="VSD" name="VSD"></a>
         <ul>
             <li></li>
         </ul>
 
-   <h3>Virtual Sound Decoder</h3>
-        <a id="VSD" name="VSD"></a>
+   <h3>Z21 Server</h3>
+        <a id="Z21" name="Z21"></a>
         <ul>
             <li></li>
         </ul>

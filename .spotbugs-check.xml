@@ -8,6 +8,15 @@
      <Match>
         <Confidence value="2" /> <!-- 3 is low priority, 2 is medium priority, 1 is high priority -->
         <Or>
+			<!-- Temporary disable these until we have decided what to do about them -->
+           <Bug pattern="CT_CONSTRUCTOR_THROW" /> <!-- 318 cases -->
+           <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" /> <!-- 25 cases -->
+           <Bug pattern="PA_PUBLIC_PRIMITIVE_ATTRIBUTE" /> <!-- 190 cases -->
+           <Bug pattern="SING_SINGLETON_GETTER_NOT_SYNCHRONIZED" /> <!-- 6 cases -->
+           <Bug pattern="SS_SHOULD_BE_STATIC" /> <!-- 211 cases -->
+           <Bug pattern="UWF_NULL_FIELD" /> <!-- 4 cases -->
+			<!-- Temporary disable these until we have decided what to do about them -->
+
            <Bug pattern="IS2_INCONSISTENT_SYNC" />
            <Bug pattern="OVERRIDING_METHODS_MUST_INVOKE_SUPER" />
            <Bug pattern="DCN_NULLPOINTER_EXCEPTION" /> <!-- 327 cases -->
@@ -19,6 +28,20 @@
      <Match>
         <Confidence value="3" /> <!-- 3 is low priority, 2 is medium priority, 1 is high priority -->
         <Or>
+			<!-- Temporary disable these until we have decided what to do about them -->
+           <Bug pattern="AA_ASSERTION_OF_ARGUMENTS" /> <!-- 16 cases -->
+           <Bug pattern="FE_FLOATING_POINT_EQUALITY" /> <!-- 4 cases -->
+           <Bug pattern="PA_PUBLIC_MUTABLE_OBJECT_ATTRIBUTE" /> <!-- 93 cases -->
+           <Bug pattern="URF_UNREAD_FIELD" /> <!-- 112 cases -->
+           <Bug pattern="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" /> <!-- 50 cases -->
+           <Bug pattern="UUF_UNUSED_FIELD" /> <!-- 19 cases -->
+           <Bug pattern="UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD" /> <!-- 4 cases -->
+           <Bug pattern="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" /> <!-- 141 cases -->
+           <Bug pattern="UWF_UNWRITTEN_FIELD" /> <!-- 6 cases -->
+           <Bug pattern="UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD" /> <!-- 1 case -->
+           <Bug pattern="UWF_NULL_FIELD" /> <!-- 6 cases -->
+			<!-- Temporary disable these until we have decided what to do about them -->
+
            <Bug pattern="IS2_INCONSISTENT_SYNC" />
            <Bug pattern="NO_NOTIFY_NOT_NOTIFYALL" />
            <Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE" />

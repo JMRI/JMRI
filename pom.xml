@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>5.8-SNAPSHOT</version>
+    <version>5.9.8-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -26,7 +26,7 @@
         <jackson-databind.version>2.13.4.2</jackson-databind.version>
         <jackson-annotations.version>2.13.4</jackson-annotations.version>
         <jogamp.version>2.5.0</jogamp.version>
-        <openlcb.version>0.7.37</openlcb.version>
+        <openlcb.version>0.8.2</openlcb.version>
         <netbeans.version>RELEASE150</netbeans.version>
         <jacoco.version>0.8.11</jacoco.version>
         <jacoco.reportDir>${basedir}/target/</jacoco.reportDir>
@@ -119,7 +119,7 @@
                     <plugin>
                         <groupId>com.github.spotbugs</groupId>
                         <artifactId>spotbugs-maven-plugin</artifactId>
-                        <version>4.7.3.0</version>
+                        <version>4.8.6.2</version>
                         <configuration>
                             <plugins>
                                 <plugin>
@@ -477,7 +477,7 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>4.7.3.0</version>
+                <version>4.8.6.2</version>
                 <!-- configured to fail on medium priority bugs (needs to be done two places)-->
                 <configuration>
                     <plugins>
@@ -649,7 +649,7 @@
                     <!-- change from default 100 warnings; keep number synced with ant javadoc target -->
                     <additionalJOption>-breakiterator -Xmaxwarns 100</additionalJOption><!-- 100 is default, here so we can easily change it -->
                     <!-- remove ",-missing" to get warnings about missing Javadoc tags -->
-                    <doclint>all</doclint>
+                    <doclint>all,-missing,-html</doclint>
                     <author>true</author><!-- default -->
                     <use>true</use><!-- default -->
                     <failOnError>true</failOnError><!-- default -->
@@ -711,19 +711,26 @@
                     </bottom>
                     <links>
                         <link>http://docs.oracle.com/en/java/javase/11/docs/api/</link>
-                        <link>http://java.sun.com/products/javacomm/reference/api/</link>
+                        <!-- Link below removed 2024/09/15 as failing Java21 static JavaDoc build, see https://github.com/JMRI/JMRI/pull/13454 -->
+                        <!-- <link>http://java.sun.com/products/javacomm/reference/api/</link> -->
                         <link>http://www.jdom.org/docs/apidocs/</link>
                         <link>https://commons.apache.org/proper/commons-csv/apidocs/</link>
-                        <link>https://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/${jackson-databind.version}/</link>
                         <link>http://logging.apache.org/log4j/1.2/apidocs/</link>
-                        <link>https://static.javadoc.io/org.openlcb/openlcb/${openlcb.version}/</link>
                         <link>https://commons.apache.org/proper/commons-lang/javadocs/api-release/</link>
-                        <link>https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/4.7.3/</link>
-                        <link>https://javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/</link>
-                        <!-- <link>https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/</link> -->
-                        <link>https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/</link>
-                        <link>https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/</link>
                         <link>https://fazecast.github.io/jSerialComm/javadoc</link>
+                        
+                        <!-- The following are commented out because they throw warnings with Java 17        -->
+                        <!-- yet we want real warnings to fail this check in CI.                             -->
+                        <!-- By commenting them out, we lose links to their Javadoc from ours. But since     -->
+                        <!-- our web production Javadocs are made with Ant, not Maven, this is not a problem -->
+                        <!-- <link>https://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/${jackson-databind.version}/</link> -->
+                        <!-- <link>https://static.javadoc.io/org.openlcb/openlcb/${openlcb.version}/</link> -->
+                        <!-- <link>https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/4.8.6/</link> -->
+                        <!-- <link>https://javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/</link> -->
+                        <!-- <link>https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/</link> -->
+                        <!-- <link>https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/</link> -->
+
+                        <!-- <link>https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/</link> -->
 
                     </links>
                 </configuration>
@@ -1377,7 +1384,7 @@
         <dependency>
             <groupId>org.python</groupId>
             <artifactId>jython-standalone</artifactId>
-            <version>2.7.2</version>
+            <version>2.7.4</version>
         </dependency>
         <!--
         <dependency>
@@ -1494,10 +1501,8 @@
             <!-- The next two lines force use of the local lib/openlcb.jar file. -->
             <!-- This is needed when we're using a custom openlcb.jar file -->
             <!-- not yet available on a maven repository. -->
-<!-- 
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/openlcb.jar</systemPath>
- -->
 
         </dependency>
         <dependency>
@@ -1521,7 +1526,7 @@
         <dependency>
             <groupId>com.github.spotbugs</groupId>
             <artifactId>spotbugs-annotations</artifactId>
-            <version>4.7.3</version>
+            <version>4.8.6</version>
         </dependency>
         <dependency>
             <groupId>xerces</groupId>
@@ -1574,31 +1579,32 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>3.5.11</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-inline</artifactId>
-            <version>3.5.11</version>
+            <version>5.12.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
-            <version>3.5.11</version>
+            <version>5.12.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>net.bytebuddy</groupId>
             <artifactId>byte-buddy</artifactId>
-            <version>1.10.14</version>
+            <version>1.14.15</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>net.bytebuddy</groupId>
             <artifactId>byte-buddy-agent</artifactId>
-            <version>1.10.14</version>
+            <version>1.14.15</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.objenesis/objenesis -->
+        <dependency>
+            <groupId>org.objenesis</groupId>
+            <artifactId>objenesis</artifactId>
+            <version>3.3</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -1710,15 +1716,8 @@
         </dependency>
         <dependency>
             <groupId>org.bidib.jbidib</groupId>
-            <artifactId>jbidibc-purejavacomm</artifactId>
+            <artifactId>jbidibc-jserialcomm</artifactId>
             <version>2.0.18</version>
-            <exclusions>
-				<!-- don't use special purejavacomm mentioned in jbidibc-purejavacomm -->
-                <exclusion>
-                    <groupId>org.bidib.com.github.purejavacomm</groupId>
-                    <artifactId>purejavacomm</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.bidib.jbidib</groupId>

@@ -268,9 +268,8 @@ public class AllocatedSection {
         return mSection.getState();
     }
 
-    public int getLength() {
-        return mSection.getLengthI(InstanceManager.getDefault(DispatcherFrame.class).getUseScaleMeters(),
-                InstanceManager.getDefault(DispatcherFrame.class).getScale());
+    public int getActualLength() {
+        return mSection.getActualLength();
     }
 
     public void reset() {
@@ -287,6 +286,11 @@ public class AllocatedSection {
         } else if (mSection.getOccupancy() == Section.UNOCCUPIED) {
             if (mEntered) {
                 mExited = true;
+                // set colour to still allocated.
+                // release will reset the colour to unoccupied.
+                if (InstanceManager.getDefault(DispatcherFrame.class).getExtraColorForAllocated()) {
+                    mSection.setAlternateColorFromActiveBlock(true);
+                }
             }
         }
         if (mActiveTrain.getAutoActiveTrain() != null) {

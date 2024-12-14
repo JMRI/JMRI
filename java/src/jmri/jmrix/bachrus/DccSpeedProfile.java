@@ -108,11 +108,11 @@ public class DccSpeedProfile {
     }
 
     // Save data as CSV
-    public static void export(DccSpeedProfile sp, int address, String dirString, int units) {
+    public static void export(DccSpeedProfile sp, int address, String dirString, Speed.Unit unit) {
         File file = openExportFile();
         try (CSVPrinter p = new CSVPrinter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)), CSVFormat.DEFAULT)) {
             String unitsString;
-            if (units == Speed.MPH) {
+            if (unit == Speed.Unit.MPH) {
                 unitsString = "MPH";
             } else {
                 unitsString = "KPH";
@@ -122,7 +122,7 @@ public class DccSpeedProfile {
             p.printRecord("Step", "Speed(" + dirString + " " + unitsString + ")");
             // for each data point
             for (int i = 0; i < sp.getLength(); i++) {
-                p.printRecord(i, units == Speed.MPH ? Speed.kphToMph(sp.getPoint(i)) : sp.getPoint(i));
+                p.printRecord(i, unit == Speed.Unit.MPH ? Speed.kphToMph(sp.getPoint(i)) : sp.getPoint(i));
             }
             p.flush();
             p.close();
@@ -131,12 +131,12 @@ public class DccSpeedProfile {
         }
     }
 
-    public static void export(DccSpeedProfile[] sp, int address, int units) {
+    public static void export(DccSpeedProfile[] sp, int address, Speed.Unit unit) {
         File file = openExportFile();
         try (CSVPrinter p = new CSVPrinter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)), CSVFormat.DEFAULT)) {
 
             String unitsString;
-            if (units == Speed.MPH) {
+            if (unit == Speed.Unit.MPH) {
                 unitsString = "MPH";
             } else {
                 unitsString = "KPH";
@@ -150,7 +150,7 @@ public class DccSpeedProfile {
                 list.add(i);
                 // for each profile
                 for (DccSpeedProfile item : sp) {
-                    list.add(units == Speed.MPH ? Speed.kphToMph(item.getPoint(i)) : item.getPoint(i));
+                    list.add(unit == Speed.Unit.MPH ? Speed.kphToMph(item.getPoint(i)) : item.getPoint(i));
                 }
                 p.printRecord(list);
             }
@@ -169,7 +169,7 @@ public class DccSpeedProfile {
         return null;
     }
 
-    public int importDccProfile(int units) {
+    public int importDccProfile(Speed.Unit unit) {
         openImportFile();
         if (dccProfileData.size() < 31) {
             log.error("Not enough lines in reference speed profile file");

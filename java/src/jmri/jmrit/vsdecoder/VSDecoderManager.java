@@ -115,7 +115,7 @@ public class VSDecoderManager implements PropertyChangeListener {
     private float distance_rest_new = 0.0f; // Block distance to go, copy
 
     private float xPosi;
-    public static final int max_decoder = 4; // For now only four locos allowed (arbitrary)
+    public static final int max_decoder = 8;
     boolean geofile_ok = false;
     int num_setups;
     private int lf_version;
@@ -676,8 +676,9 @@ public class VSDecoderManager implements PropertyChangeListener {
         // handle different formats or objects to get the address
         if (blk.getValue() instanceof String) {
             repVal = blk.getValue().toString();
-            if (Roster.getDefault().getEntryForId(repVal) != null) {
-                locoAddress = Integer.parseInt(Roster.getDefault().getEntryForId(repVal).getDccAddress()); // numeric RosterEntry Id
+            RosterEntry entry = Roster.getDefault().getEntryForId(repVal);
+            if (entry != null) {
+                locoAddress = Integer.parseInt(entry.getDccAddress()); // numeric RosterEntry Id
             } else if (org.apache.commons.lang3.StringUtils.isNumeric(repVal)) {
                 locoAddress = Integer.parseInt(repVal);
             } else if (jmri.InstanceManager.getDefault(TrainManager.class).getTrainByName(repVal) != null) {
@@ -1115,7 +1116,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                     if (alf_version == 1) {
                         calcNewPosition(d);
                     } else if (alf_version == 2) {
-                        int ix = getArrayIndex(d.getAddress().getNumber()); // ix = decoder number 0-3 (max_decoder)
+                        int ix = getArrayIndex(d.getAddress().getNumber()); // ix = decoder number 0 - max_decoder-1
                         float actualspeed = d.getEngineSound().getActualSpeed();
                         if (locoInBlock[ix][DIR_FN] != d.dirfn) {
                             // traveling direction has changed

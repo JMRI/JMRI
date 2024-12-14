@@ -27,7 +27,7 @@ public class NceCmdStationMemory {
      * give min cab id
      */
     public int getCabMin() {
-        return 0;    // min number for cab memory slot
+        return 1;    // min number for cab memory slot
     }
     
     /*
@@ -104,7 +104,7 @@ public class NceCmdStationMemory {
      * give number of macro limit
      */
     public int getMacroLimit() {
-        return 255;  // there are 256 possible macros
+        return 256; // there are 256 possible macros
     }
     
     /*

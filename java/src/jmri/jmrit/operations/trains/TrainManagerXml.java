@@ -115,7 +115,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
         
         for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByIdList()) {
             if (train.getStatusCode() == Train.CODE_BUILDING) {
-                log.warn("Reseting train {}, was building when saved", train.getName());
+                log.warn("Reseting train ({}), was building when saved", train.getName());
                 train.reset();
             }
         }

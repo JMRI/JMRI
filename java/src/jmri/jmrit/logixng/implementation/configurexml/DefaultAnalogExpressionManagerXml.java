@@ -47,8 +47,8 @@ public class DefaultAnalogExpressionManagerXml extends AbstractManagerXml {
                     List<Element> elements = new ArrayList<>();
                     // The male socket may be embedded in other male sockets
                     MaleAnalogExpressionSocket a = expression;
+                    elements.add(storeMaleSocket(a));
                     while (!(a instanceof DefaultMaleAnalogExpressionSocket)) {
-                        elements.add(storeMaleSocket(a));
                         a = (MaleAnalogExpressionSocket) a.getObject();
                     }
                     Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(a.getObject());

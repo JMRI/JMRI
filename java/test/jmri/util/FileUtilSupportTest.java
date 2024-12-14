@@ -335,7 +335,7 @@ public class FileUtilSupportTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        this.instance = new FileUtilSupport();
+        this.instance = FileUtilSupport.getDefault();
         this.programTestFile = new File(UUID.randomUUID().toString());
         Assertions.assertTrue(this.programTestFile.createNewFile());
         JUnitUtil.waitFor(() -> {

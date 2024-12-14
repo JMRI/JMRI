@@ -73,6 +73,21 @@
       <h1><img src="images/Speed_Table_Match.png" alt="speed table match" height="315" width="914">
       </h1>
 
+      <p>If you prefer to always see the speed steps rather than hovering over the slider to see
+      the tooltip, you can change DecoderPro to always show some or all of the steps.
+      With the roster entry open, click on file in the top menu. The last option in the drop-down 
+      is Speed Table. That gives 4 options:
+      <ul>
+        <li>Don't show numbers</li>
+        <li>Show all numbers</li>
+        <li>Show 1, 4, 7, 10, ...</li>
+        <li>Show 1, 7, 14, 21, 28</li>
+      </ul>
+      </p>
+
+      <h1><img src="images/Speed_Table_Speedsteps.png" alt="speed steps" height="597" width="848">
+      </h1>
+
       <p>Now if you've used DecoderPro in the past, you're probably wondering what those little
       boxes at the bottom of each slider are used for. Well, they're difficult to explain, but easy
       to use. They basically allow you to set a slider to control every slider in columns to its

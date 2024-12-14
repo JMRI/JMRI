@@ -11,8 +11,8 @@ import org.apiguardian.api.API;
 @API(status=API.Status.EXPERIMENTAL)
 public class DmiCircularSpeedGuideSection {
 
-    final int start;
-    final int stop;
+    final float start;
+    final float stop;
     final int type;
     final Color col;
     final boolean includeHook;
@@ -31,7 +31,7 @@ public class DmiCircularSpeedGuideSection {
      * @param stopSpeed the section End speed.
      * @param hook true to include a hook, else false.
      */
-    public DmiCircularSpeedGuideSection(int csgType, Color colour, int startSpeed, int stopSpeed, boolean hook) {
+    public DmiCircularSpeedGuideSection(int csgType, Color colour, float startSpeed, float stopSpeed, boolean hook) {
         this( csgType, colour, startSpeed, stopSpeed, hook, false);
     }
 
@@ -44,8 +44,8 @@ public class DmiCircularSpeedGuideSection {
      * @param hook true to include a hook, else false.
      * @param includeNegative true to include the negative section.
      */
-    public DmiCircularSpeedGuideSection(int csgType, Color colour, int startSpeed,
-        int stopSpeed, boolean hook, boolean includeNegative ) {
+    public DmiCircularSpeedGuideSection(int csgType, Color colour, float startSpeed,
+        float stopSpeed, boolean hook, boolean includeNegative ) {
         start = startSpeed;
         stop = stopSpeed;
         type = csgType;

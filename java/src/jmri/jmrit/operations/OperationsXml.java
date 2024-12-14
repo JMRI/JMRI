@@ -1,8 +1,6 @@
 package jmri.jmrit.operations;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 
 import org.jdom2.JDOMException;
 import org.slf4j.Logger;
@@ -34,7 +32,7 @@ public abstract class OperationsXml extends XmlFile {
         try {
             writeFile(getDefaultOperationsFilename());
         } catch (IOException e) {
-            log.error("Exception while writing operation file, may not be complete: {}", e.getMessage());
+            log.error("Exception while writing operation file, may not be complete: {}", e.getLocalizedMessage());
         }
     }
 
@@ -42,7 +40,7 @@ public abstract class OperationsXml extends XmlFile {
         try {
             readFile(getDefaultOperationsFilename());
         } catch (IOException | JDOMException e) {
-            log.error("Exception during operations file reading", e);
+            log.error("Exception during operations file reading: {}", e.getLocalizedMessage());
         }
     }
 
@@ -69,7 +67,7 @@ public abstract class OperationsXml extends XmlFile {
                 file = new File(fullPathName);
             }
         } catch (IOException e) {
-            log.error("Exception while creating operations file, may not be complete: {}", e.getMessage());
+            log.error("Exception while creating operations file, may not be complete: {}", e.getLocalizedMessage());
         }
         return file;
     }

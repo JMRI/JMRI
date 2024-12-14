@@ -9,11 +9,15 @@ import jmri.jmrit.logix.OPath;
 import jmri.util.JUnitUtil;
 
 import jmri.util.gui.GuiLafPreferencesManager;
+
 import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 import javax.swing.*;
+
 import java.awt.*;
+
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
@@ -47,8 +51,8 @@ public class PathTurnoutTableModelTest {
     }
 
     @Test
+    @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
     public void testBlockPathTurnoutPanel() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         Turnout t1 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
         OBlock ob1 = new OBlock("OB1");
         OPath p1 = new OPath(ob1, "OP1");
@@ -61,12 +65,13 @@ public class PathTurnoutTableModelTest {
         JFrame pttf = new JFrame("Test");
         pttf.add(pttt);
         pttf.setSize(new Dimension(300, 100));
-        pttf.setVisible(true);
+        jmri.util.ThreadingUtil.runOnGUI( () -> pttf.setVisible(true));
         Assertions.assertNotNull(pttf, "PtToTabledisplay exists");
 //        // Find Add Turnout pane by name (copied from TurnoutTableWindowTest)
         JFrameOperator afo = new JFrameOperator("Test");
 //        // Ask to close Add pane
-        afo.requestClose();
+        JUnitUtil.dispose(afo.getWindow());
+        afo.waitClosed();
 
         tf.openPathTurnoutEditPane(tf.makePathTurnoutName("OB1", "OP1"));
 //        afo = new JFrameOperator(Bundle.getMessage("TitlePathTurnoutTable", "OB1", "OP1"));
@@ -74,15 +79,16 @@ public class PathTurnoutTableModelTest {
 
         tf.addTurnoutPane(p1, pttm);
         afo = new JFrameOperator(Bundle.getMessage("NewTurnoutTitle", "OP1"));
-        afo.requestClose();
+        JUnitUtil.dispose(afo.getWindow());
+        afo.waitClosed();
 
         pttm.removeListener();
         // test?
     }
 
     @Test
+    @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
     public void testBlockPathTurnoutCTor() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         Turnout t1 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
         OBlock ob1 = new OBlock("OB1");
         OPath p1 = new OPath(ob1, "OP1");

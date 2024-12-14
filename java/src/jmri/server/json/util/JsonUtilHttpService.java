@@ -14,8 +14,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.awt.Container;
-import java.awt.Frame;
+
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -27,6 +26,8 @@ import java.util.Objects;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.JFrame;
+
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.Metadata;
@@ -46,7 +47,6 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 import jmri.server.json.JsonRequest;
-import jmri.util.JmriJFrame;
 import jmri.util.node.NodeIdentity;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.util.zeroconf.ZeroConfServiceManager;
@@ -337,9 +337,9 @@ public class JsonUtilHttpService extends JsonHttpService {
 
     public ObjectNode getPanel(Editor editor, String format, int id) {
         if (editor.getAllowInFrameServlet()) {
-            Container container = editor.getTargetPanel().getTopLevelAncestor();
-            if (container instanceof JmriJFrame) {
-                String title = ((Frame) container).getTitle();
+            JFrame frame = editor.getTargetFrame();
+            if (frame != null) {
+                String title = frame.getTitle();
                 if (!title.isEmpty() &&
                         !Arrays.asList(InstanceManager.getDefault(WebServerPreferences.class).getDisallowedFrames())
                                 .contains(title)) {

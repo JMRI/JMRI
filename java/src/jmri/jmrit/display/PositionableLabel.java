@@ -38,9 +38,6 @@ import jmri.util.SystemType;
 import jmri.util.ThreadingUtil;
 import jmri.util.swing.JmriMouseEvent;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * PositionableLabel is a JLabel that can be dragged around the inside of the
  * enclosing Container using a right-drag.
@@ -575,7 +572,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
 
     public void updateIcon(NamedIcon s) {
-        ThreadingUtil.runOnLayoutEventually(() -> {
+        ThreadingUtil.runOnGUIEventually(() -> {
             _namedIcon = s;
             super.setIcon(_namedIcon);
             updateSize();
@@ -1376,6 +1373,6 @@ public class PositionableLabel extends JLabel implements Positionable {
         _logixNG.setInlineLogixNG(this);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionableLabel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionableLabel.class);
 
 }

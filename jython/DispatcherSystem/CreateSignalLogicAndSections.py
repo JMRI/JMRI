@@ -190,12 +190,12 @@ class Update_Signal_Logic():
         return False
 
     def getBlockEntryPointsList(self, b, entryPointList) :
-        list = java.util.ArrayList();
+        mylist = java.util.ArrayList();
         for i in range( 0, entryPointList.size()) :
             ep = entryPointList.get(i)
             if (ep.getBlock() == b) :
-                list.add(ep)
-        return list
+                mylist.add(ep)
+        return mylist
 
     def createBlockSection(self, layout_block):
         SectionManager = jmri.InstanceManager.getDefault(jmri.SectionManager)
@@ -342,7 +342,7 @@ class Update_Signal_Logic():
         ConnectivityUtil=jmri.jmrit.display.layoutEditor.ConnectivityUtil(self.layout_editor)
 
 
-        list = []
+        my_list = []
 
         for index in range(1, LayoutBlock.getNumberOfThroughPaths()):
 
@@ -351,9 +351,9 @@ class Update_Signal_Logic():
             next = LayoutBlock.getThroughPathDestination(index)
 
             prev_curr_next = [prev,curr,next]
-            list.append(prev_curr_next)
+            my_list.append(prev_curr_next)
 
-        return list
+        return my_list
 
     def getLayoutBlockAfterDestMast(self, signal_mast, editor):#, prev_layout_block, last_layout_block):
 
@@ -741,7 +741,7 @@ class Update_Signal_Logic():
         ConnectivityUtil=jmri.jmrit.display.layoutEditor.ConnectivityUtil(self.layout_editor)
 
 
-        list = []
+        my_list = []
 
         for index in range(1, LayoutBlock.getNumberOfThroughPaths()):
 
@@ -750,9 +750,9 @@ class Update_Signal_Logic():
             next = LayoutBlock.getThroughPathDestination(index)
 
             prev_curr_next = [prev,curr,next]
-            list.append(prev_curr_next)
+            my_list.append(prev_curr_next)
 
-        return list
+        return my_list
 
     def getBlockAfterDestMast(self, sm_dest, last_block):
         SignalMastLogicManager = jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager)
@@ -871,8 +871,8 @@ class Update_Signal_Logic():
         # sml.setEnabled(sm_dest)
 
         #set signallogic
-        list = sml.getDestinationList()
-        if self.loglevel > 0:  print "destlist " , list , [ l.getUserName() for l in list]
+        my_list = sml.getDestinationList()
+        if self.loglevel > 0:  print "destlist " , my_list , [ l.getUserName() for l in my_list]
         #
         #sml.setBlocks(hashBlocks, sm_dest)
         if self.loglevel > 0:  print "hashBlocks", hashBlocks

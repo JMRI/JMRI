@@ -1,7 +1,9 @@
 package jmri.util.swing;
 
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.annotation.Nonnull;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
@@ -76,6 +78,10 @@ public class JmriPanel extends JPanel {
     @Nonnull
     public List<JMenu> getMenus() {
         return new ArrayList<>();
+    }
+
+    public Dimension getMinimumDimension() {
+        return new Dimension(10, 10);
     }
 
     public WindowInterface getWindowInterface() {

@@ -566,7 +566,8 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
 
     @Override
     protected String getMasterClassName() {
-        return getClassName();
+        // Force message grouping
+        return jmri.jmrit.beantable.TurnoutTableAction.class.getName();
     }
 
     protected String getClassName() {
@@ -721,7 +722,7 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
      * @param t   turnout
      * @param box JComboBox that triggered the edit
      */
-    protected void editTurnoutOperation(Turnout t, JComboBox<String> box) {
+    protected void editTurnoutOperation( @Nonnull Turnout t, JComboBox<String> box) {
         if (!editingOps.getAndSet(true)) { // don't open a second edit ops pane
             TurnoutOperation op = t.getTurnoutOperation();
             if (op == null) {
@@ -737,7 +738,8 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
                 }
                 // make and show edit dialog
                 log.debug("TurnoutOpsEditDialog starting");
-                TurnoutOperationEditorDialog dialog = new TurnoutOperationEditorDialog(op, t, box);
+                java.awt.Window w = JmriJOptionPane.findWindowForObject(box);
+                TurnoutOperationEditorDialog dialog = new TurnoutOperationEditorDialog(op, t, w);
                 dialog.setVisible(true);
             } else {
                 JmriJOptionPane.showMessageDialog(box, Bundle.getMessage("TurnoutOperationErrorDialog"),
@@ -776,7 +778,7 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
      * @param t  turnout being configured
      * @param cb JComboBox for ops for t in the TurnoutTable
      */
-    protected void setTurnoutOperation(Turnout t, JComboBox<String> cb) {
+    protected void setTurnoutOperation( @Nonnull Turnout t, JComboBox<String> cb) {
         switch (cb.getSelectedIndex()) {
             case 0:   // Off
                 t.setInhibitOperation(true);

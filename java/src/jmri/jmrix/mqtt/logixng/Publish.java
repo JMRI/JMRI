@@ -27,12 +27,15 @@ public class Publish extends AbstractDigitalAction
             new LogixNG_SelectString(this, this);
 
     private MqttSystemConnectionMemo _memo;
+    
+    private Retain _retain;
 
 
     public Publish(String sys, String user, MqttSystemConnectionMemo memo)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
         _memo = memo;
+        _retain = Retain.Default;
     }
 
     @Override
@@ -45,6 +48,7 @@ public class Publish extends AbstractDigitalAction
         copy.setComment(getComment());
         _selectTopic.copy(copy._selectTopic);
         _selectMessage.copy(copy._selectMessage);
+        copy.setRetain(_retain);
         return manager.registerAction(copy);
     }
 
@@ -65,6 +69,15 @@ public class Publish extends AbstractDigitalAction
         return _selectMessage;
     }
 
+    public void setRetain(Retain retain) {
+        assertListenersAreNotRegistered(log, "setRetain");
+        _retain = retain;
+    }
+
+    public Retain getRetain() {
+        return _retain;
+    }
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -77,9 +90,11 @@ public class Publish extends AbstractDigitalAction
 
         String topic = _selectTopic.evaluateValue(getConditionalNG());
         String data = _selectMessage.evaluateValue(getConditionalNG());
+        
+        boolean retain = _retain.getRetainValue(_memo);
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
-            _memo.getMqttAdapter().publish(topic, data);
+            _memo.getMqttAdapter().publish(topic, data, retain);
         });
     }
 
@@ -102,7 +117,8 @@ public class Publish extends AbstractDigitalAction
     public String getLongDescription(Locale locale) {
         return Bundle.getMessage(locale, "Publish_Long",
                 _selectTopic.getDescription(locale),
-                _selectMessage.getDescription(locale));
+                _selectMessage.getDescription(locale),
+                _retain.toString());
     }
 
     /** {@inheritDoc} */
@@ -135,6 +151,39 @@ public class Publish extends AbstractDigitalAction
     @Override
     public void disposeMe() {
     }
+
+
+    public enum Retain {
+        Default(Bundle.getMessage("Publish_Retain_Default")),
+        Yes(Bundle.getMessage("Publish_Retain_Yes")),
+        No(Bundle.getMessage("Publish_Retain_No"));
+
+        private final String _text;
+
+        private Retain(String text) {
+            this._text = text;
+        }
+        
+        public boolean getRetainValue(MqttSystemConnectionMemo memo) {
+            switch (this) {
+                case Default:
+                    return memo.getMqttAdapter().retained;
+                case Yes:
+                    return true;
+                case No:
+                    return false;
+                default:
+                    throw new IllegalArgumentException("invalid retain");
+            }
+        }
+
+        @Override
+        public String toString() {
+            return _text;
+        }
+
+    }
+
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Publish.class);
 

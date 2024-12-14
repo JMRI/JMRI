@@ -912,6 +912,7 @@ public class ImportCars extends ImportRollingStock {
         try {
             in.close();
         } catch (IOException e) {
+            log.error("Import cars failed: {}", e.getLocalizedMessage());
         }
 
         if (importOkay) {

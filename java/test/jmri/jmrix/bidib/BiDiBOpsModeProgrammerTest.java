@@ -2,10 +2,7 @@ package jmri.jmrix.bidib;
 
 import jmri.util.JUnitAppender;
 
-import org.junit.Assert;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.*;
 
 import jmri.util.JUnitUtil;
 
@@ -16,23 +13,25 @@ import jmri.util.JUnitUtil;
  */
 public class BiDiBOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgrammerTestBase {
     
-    BiDiBSystemConnectionMemo memo;
+    private BiDiBSystemConnectionMemo memo;
     
     @Override
     @Test
     public void testGetCanRead() {
         // BiDiB supports railcom!
-        Assert.assertTrue("can read", programmer.getCanRead());
+        Assertions.assertTrue( programmer.getCanRead(), "can read");
     }
 
     @Override
     @Test
+    @Disabled("Test requires further development")
     public void testGetCanReadAddress() {
         //Assert.assertFalse("can read address", programmer.getCanRead("1234"));
     }
 
     @Override
     @Test
+    @Disabled("Test requires further development")
     public void testGetCanWriteAddress() {
         //Assert.assertTrue("can write address", programmer.getCanWrite("1234"));
     }

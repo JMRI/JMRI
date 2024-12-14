@@ -4,6 +4,7 @@ import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmrit.dispatcher.ActiveTrain.TrainDetection;
+import jmri.jmrit.dispatcher.ActiveTrain.TrainLengthUnits;
 import jmri.jmrit.dispatcher.DispatcherFrame.TrainsFrom;
 
 /**
@@ -31,7 +32,7 @@ public class TrainInfo {
     private String trainName = "";
     private String rosterID = "";
     private String trainUserName = "";
-    private String dccAddress = "";
+    private String dccAddress = "3";
     private boolean trainInTransit = false;
     private String startBlockName = "";
     private String startBlockId = "";
@@ -72,12 +73,15 @@ public class TrainInfo {
 
     // instance variables for automatic operation
     private float speedFactor = 1.0f;
-    private float maxSpeed = 0.6f;
+    private float maxSpeed = 1.0f;
+    private float minReliableOperatingSpeed = 0.0f;
     private String rampRate = Bundle.getMessage("RAMP_NONE");
     private TrainDetection trainDetection = TrainDetection.TRAINDETECTION_HEADONLY;
     private boolean runInReverse = false;
     private boolean soundDecoder = false;
-    private float maxTrainLength = 200.0f;
+    private float maxTrainLength = 100.0f;
+    private float maxTrainLengthMeters = 30.0f;
+    private TrainLengthUnits trainLengthUnits = TrainLengthUnits.TRAINLENGTH_SCALEFEET; // units used to enter value
     private boolean useSpeedProfile = false;
     private boolean stopBySpeedProfile = false;
     private float stopBySpeedProfileAdjust = 1.0f;
@@ -544,6 +548,14 @@ public class TrainInfo {
         return maxSpeed;
     }
 
+    public void setMinReliableOperatingSpeed(float f) {
+        minReliableOperatingSpeed = f;
+    }
+
+    public float getMinReliableOperatingSpeed() {
+        return minReliableOperatingSpeed;
+    }
+
     public void setRampRate(String s) {
         rampRate = s;
     }
@@ -609,12 +621,72 @@ public class TrainInfo {
         return soundDecoder;
     }
 
+    /**
+     * @deprecated use {@link #setMaxTrainLengthScaleMeters}
+     *               or {@link #setMaxTrainLengthScaleMeters}
+     * @param f train length
+     */
+    @Deprecated (since="5.9.7",forRemoval=true)
     public void setMaxTrainLength(float f) {
         maxTrainLength = f;
     }
 
+    /**
+     * @deprecated use {@link #getMaxTrainLengthScaleMeters}
+     *              or {@link #getMaxTrainLengthScaleFeet}
+     * @return train length of in units of the writing application
+     */
+    @Deprecated (since="5.9.7",forRemoval=true)
     public float getMaxTrainLength() {
         return maxTrainLength;
+    }
+
+    /**
+     * Sets the max train length expected during run
+     * @param f scale Meters.
+     */
+    public void setMaxTrainLengthScaleMeters(float f) {
+        maxTrainLengthMeters = f;
+    }
+
+    /**
+     * Gets the Max train length expected during run
+     * @return scale meters
+     */
+    public float getMaxTrainLengthScaleMeters() {
+        return maxTrainLengthMeters;
+    }
+
+    /**
+     * Sets the max train length expected
+     * @param f scale Meters.
+     */
+    public void setMaxTrainLengthScaleFeet(float f) {
+        maxTrainLengthMeters = f / 3.28084f;
+    }
+
+    /**
+     * Gets the Max train length expected during route
+     * @return scale meters
+     */
+    public float getMaxTrainLengthScaleFeet() {
+        return maxTrainLengthMeters * 3.28084f;
+    }
+
+   /**
+     * Sets the gui units used to enter or display (The units are always held in scale meters)
+     * @param value {@link ActiveTrain.TrainLengthUnits}
+     */
+    public void setTrainLengthUnits(TrainLengthUnits value) {
+        trainLengthUnits = value;
+    }
+
+    /**
+     * Get the GUI units entered (The data is held in scale Meters)
+     * @return  {@link ActiveTrain.TrainLengthUnits}
+     */
+    public TrainLengthUnits getTrainLengthUnits() {
+        return trainLengthUnits;
     }
 
     public void setWaitTime(float f) { waitTime = f; }

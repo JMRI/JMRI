@@ -39,9 +39,12 @@ public abstract class AbstractThrottleManagerTestBase {
 
     protected class ThrottleListen implements ThrottleListener {
 
+        private DccThrottle foundThrottle = null;
+
         @Override
         public void notifyThrottleFound(DccThrottle t){
             throttleFoundResult = true;
+            foundThrottle = t;
         }
 
         @Override
@@ -55,6 +58,11 @@ public abstract class AbstractThrottleManagerTestBase {
                 throttleStealResult = true;
             }
         }
+
+        protected DccThrottle getThrottle() {
+            return foundThrottle;
+        }
+
     }
 
     @AfterEach
@@ -147,7 +155,7 @@ public abstract class AbstractThrottleManagerTestBase {
         Assert.assertEquals("throttle use 0", 0, tm.getThrottleUsageCount(addr));
         Assert.assertEquals("throttle use 0", 0, tm.getThrottleUsageCount(42, false));
         Assert.assertNull("NULL", tm.getThrottleInfo(addr, Throttle.F28));
-        ThrottleListener throtListen = new ThrottleListen();
+        ThrottleListen throtListen = new ThrottleListen();
         tm.requestThrottle(addr, throtListen, true);
         JUnitUtil.waitFor(()-> (tm.getThrottleInfo(addr, Throttle.ISFORWARD) != null), "reply didn't arrive");
 
@@ -194,7 +202,10 @@ public abstract class AbstractThrottleManagerTestBase {
         Assert.assertEquals("throttle use 0", 0, tm.getThrottleUsageCount(77, true));
         
         // remove listener on throttle created in process
-        tm.cancelThrottleRequest(addr, throtListen);
+        DccThrottle throttle = throtListen.getThrottle();
+        Assert.assertNotNull(throttle);
+        tm.releaseThrottle(throttle, throtListen);
+        JUnitUtil.waitFor(()-> (tm.getThrottleUsageCount(addr) == 0), "throttle still in use after release");
     }
 
     // private final static Logger log = LoggerFactory.getLogger(AbstractThrottleManagerTestBase.class);

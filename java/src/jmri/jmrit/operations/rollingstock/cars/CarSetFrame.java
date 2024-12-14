@@ -49,13 +49,13 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
             .getComboBox();
     protected JComboBox<Track> trackReturnWhenLoadedBox = new JComboBox<>();
     protected JComboBox<String> loadReturnWhenLoadedBox = carLoads.getComboBox(null);
-    JComboBox<String> loadComboBox = carLoads.getComboBox(null);
-    JComboBox<String> kernelComboBox = InstanceManager.getDefault(KernelManager.class).getComboBox();
+    protected JComboBox<String> loadComboBox = carLoads.getComboBox(null);
+    protected JComboBox<String> kernelComboBox = InstanceManager.getDefault(KernelManager.class).getComboBox();
 
     // buttons
-    JButton editDivisionButton = new JButton(Bundle.getMessage("ButtonEdit"));
+    protected JButton editDivisionButton = new JButton(Bundle.getMessage("ButtonEdit"));
     protected JButton editLoadButton = new JButton(Bundle.getMessage("ButtonEdit"));
-    JButton editKernelButton = new JButton(Bundle.getMessage("ButtonEdit"));
+    protected JButton editKernelButton = new JButton(Bundle.getMessage("ButtonEdit"));
 
     // check boxes
     public JCheckBox ignoreDivisionCheckBox = new JCheckBox(Bundle.getMessage(IGNORE));
@@ -456,7 +456,8 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
                 car.setFinalDestinationTrack(finalDestTrack);
                 String status = getTestCar(car, car.getLoadName())
                         .checkDestination(car.getFinalDestination(), finalDestTrack);
-                if (!status.equals(Track.OKAY)) {
+                // ignore custom load warning
+                if (!status.equals(Track.OKAY) && !status.contains(Track.CUSTOM)) {
                     JmriJOptionPane.showMessageDialog(this,
                             Bundle.getMessage("rsCanNotFinalMsg", car.toString(), status),
                             Bundle.getMessage("rsCanNotFinal"), JmriJOptionPane.WARNING_MESSAGE);
@@ -692,6 +693,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
             if (!ignoreFinalDestinationCheckBox.isSelected()) {
                 car.setFinalDestination(_car.getFinalDestination());
                 car.setFinalDestinationTrack(_car.getFinalDestinationTrack());
+                car.setRoutePath(_car.getRoutePath());
             }
             // update car load
             if (!ignoreLoadCheckBox.isSelected() && carLoads.containsName(car.getTypeName(), _car.getLoadName())) {
@@ -901,6 +903,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> {
             lef.dispose();
         }
         if (cef != null) {
+            cef.removePropertyChangeListener(this);
             cef.dispose();
         }
         if (def != null) {

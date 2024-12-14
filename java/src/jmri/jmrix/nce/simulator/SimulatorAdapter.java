@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.jmrix.nce.*;
-import jmri.jmrix.nce.NceCmdStationMemory;
 import jmri.util.ImmediatePipedOutputStream;
 
 /**
@@ -32,8 +31,8 @@ import jmri.util.ImmediatePipedOutputStream;
  * range '!'= command completed successfully
  * <p>
  * For a complete description of Binary Commands see:
- * www.ncecorporation.com/pdf/bincmds.pdf
- * <br>
+ * www.ncecorporation.com/pdf/bincmds.pdf <br>
+ * 
  * <pre>{@literal
  * Command Description (#bytes rtn) Responses
  * 0x80 NOP, dummy instruction (1) !
@@ -87,7 +86,7 @@ import jmri.util.ImmediatePipedOutputStream;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Paul Bender, Copyright (C) 2009
- * @author Daniel Boudreau Copyright (C) 2010
+ * @author Daniel Boudreau Copyright (C) 2010, 2024
  * @author Ken Cameron Copyright (C) 2023
  */
 public class SimulatorAdapter extends NcePortController implements Runnable {
@@ -135,7 +134,7 @@ public class SimulatorAdapter extends NcePortController implements Runnable {
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {
-            log.error("init (pipe): Exception: ", e);
+            log.error("{}: init (pipe): Exception: ", manufacturerName, e);
         }
         opened = true;
         return null; // indicates OK return
@@ -154,8 +153,6 @@ public class SimulatorAdapter extends NcePortController implements Runnable {
         tc = new NceTrafficController();
         this.getSystemConnectionMemo().setNceTrafficController(tc);
         tc.setAdapterMemo(this.getSystemConnectionMemo());
-        tc.connectPort(this);
-        tc.setSimulatorRunning(true);
 
         // setting binary mode
         this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_2006);
@@ -174,8 +171,16 @@ public class SimulatorAdapter extends NcePortController implements Runnable {
             epromRevision = 1;  // default revision if no match
         }
 
-        this.getSystemConnectionMemo().configureManagers();
         tc.csm = new NceCmdStationMemory();
+        tc.connectPort(this);
+        tc.setSimulatorRunning(true);
+
+        this.getSystemConnectionMemo().configureManagers();
+
+        // initialize memory pools
+        turnoutMemory = new byte[tc.csm.getAccyMemSize()];
+        consistMemory = new byte[tc.csm.getConsistMidSize() + 16]; //needs some padding
+        macroMemory = new byte[tc.csm.getMacroLimit() * tc.csm.getMacroSize()];
 
         // start the simulator
         sourceThread = new Thread(this);
@@ -416,9 +421,9 @@ public class SimulatorAdapter extends NcePortController implements Runnable {
         }
     }
 
-    private final byte[] turnoutMemory = new byte[256];
-    private final byte[] macroMemory = new byte[256 * 20 + 16]; // and a little padding
-    private final byte[] consistMemory = new byte[256 * 6 + 16]; // and a little padding
+    byte[] turnoutMemory;
+    byte[] macroMemory;
+    byte[] consistMemory;
 
     /* Read NCE memory.  This implementation simulates reading the NCE
      * command station memory.  There are three memory blocks that are
@@ -451,7 +456,8 @@ public class SimulatorAdapter extends NcePortController implements Runnable {
             }
             return reply;
         }
-        if (nceMemoryAddress >= tc.csm.getMacroAddr() && nceMemoryAddress < tc.csm.getMacroAddr() + tc.csm.getMacroSize()) {
+        if (nceMemoryAddress >= tc.csm.getMacroAddr() &&
+                nceMemoryAddress < tc.csm.getMacroAddr() + (tc.csm.getMacroLimit() * tc.csm.getMacroSize())) {
             log.debug("Reading macro memory: {}", Integer.toHexString(nceMemoryAddress));
             int offset = nceMemoryAddress - tc.csm.getMacroAddr();
             log.debug("offset: {}", offset);
@@ -476,21 +482,24 @@ public class SimulatorAdapter extends NcePortController implements Runnable {
         if (skipbyte) {
             byteDataBegins++;
         }
-        if (nceMemoryAddress >= tc.csm.getMacroAddr() && nceMemoryAddress < tc.csm.getMacroAddr() + 256) {
+        if (nceMemoryAddress >= tc.csm.getAccyMemAddr() &&
+                nceMemoryAddress < tc.csm.getAccyMemAddr() + tc.csm.getAccyMemSize()) {
             log.debug("Writing turnout memory: {}", Integer.toHexString(nceMemoryAddress));
             int offset = m.getElement(2);
             for (int i = 0; i < num; i++) {
                 turnoutMemory[offset + i] = (byte) m.getElement(i + byteDataBegins);
             }
         }
-        if (nceMemoryAddress >= tc.csm.getMacroAddr() && nceMemoryAddress < tc.csm.getMacroAddr() + 256 * 6) {
+        if (nceMemoryAddress >= tc.csm.getConsistHeadAddr() &&
+                nceMemoryAddress < tc.csm.getConsistHeadAddr() + tc.csm.getConsistMidSize()) {
             log.debug("Writing consist memory: {}", Integer.toHexString(nceMemoryAddress));
-            int offset = nceMemoryAddress - tc.csm.getMacroAddr();
+            int offset = nceMemoryAddress - tc.csm.getConsistHeadAddr();
             for (int i = 0; i < num; i++) {
                 consistMemory[offset + i] = (byte) m.getElement(i + byteDataBegins);
             }
         }
-        if (nceMemoryAddress >= tc.csm.getMacroAddr() && nceMemoryAddress < tc.csm.getMacroAddr() + 256 * 20) {
+        if (nceMemoryAddress >= tc.csm.getMacroAddr() &&
+                nceMemoryAddress < tc.csm.getMacroAddr() + (tc.csm.getMacroLimit() * tc.csm.getMacroSize())) {
             log.debug("Writing macro memory: {}", Integer.toHexString(nceMemoryAddress));
             int offset = nceMemoryAddress - tc.csm.getMacroAddr();
             log.debug("offset: {}", offset);

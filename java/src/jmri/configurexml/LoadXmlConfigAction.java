@@ -9,10 +9,8 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JFileChooser;
 
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
+import jmri.*;
 import jmri.jmrit.logixng.LogixNGPreferences;
-import jmri.JmriException;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.logixng.LogixNG_Manager;
@@ -42,6 +40,11 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (! InstanceManager.getDefault(PermissionManager.class)
+                .ensureAtLeastPermission(LoadAndStorePermissionOwner.LOAD_XML_FILE_PERMISSION,
+                        BooleanPermission.BooleanValue.TRUE)) {
+            return;
+        }
         loadFile(getConfigFileChooser(), JmriJOptionPane.findWindowForObject( e == null ? null : e.getSource()));
     }
 

@@ -121,6 +121,117 @@ WARN  - Log local variables done
         </pre>
       </div>
 
+
+      <h3 id="call_module_script"><span class="since">since 5.9.2</span>Call Module Script</h3>
+
+      <p>A LogixNG <strong>Digital Action Module</strong> can be called from other JMRI classes or a
+      Jython script.  Other LogixNG module types are not supported. There are two options for
+      calling a module.</p>
+
+      <dl>
+        <dt>A single parameter</dt>
+        <dd>When the single parameter option is used, the module must have only one input
+        defined and no outputs.</dd>
+
+        <dt>Multiple parameters</dt>
+        <dd>Multiple parameters are passed as a list of key/value pairs.  The <strong>key</strong>
+        is the name of a module input variable. The presence of other input or output variables
+        is not an issue. An empty key/value list can be used for modules that have no inputs. For
+        Jython, the Python<strong> Dictionary</strong> is used for the key/value pairs.  For Java,
+        use a Map, such as <strong>HashMap&lt;String, Object&gt;</strong>.</dd>
+      </dl>
+
+      <p>The module call returns immediately.  The module is executed using the LogixNG thread.
+      Even though the module might have output parameters, they are not returned to the caller.
+      Notification of completion can be implemented using a property change listener for a standard
+      JMRI object, such as a sensor state set by the module logic.</p>
+
+      <p><u>Simple Module Definitions</u></p>
+      <div style="margin-left: 2em">
+        <pre>
+Module: SingleModule ::: In: pinput,
+    ! Root
+        Log local variables
+
+Module: MultiModule ::: In: inputA, inputB,
+    ! Root
+        Log local variables
+        </pre>
+      </div>
+
+      <p><u>Jython Script</u></p>
+      <div style="margin-left: 2em">
+        <pre>
+import java
+import jmri
+
+# Get the LogixNG manager and Module manager
+lngmgr = jmri.InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager)
+modmgr = jmri.InstanceManager.getDefault(jmri.jmrit.logixng.ModuleManager)
+
+# Get the modules using the LogixNG ModuleManager
+single = modmgr.getModule('SingleModule')
+multi = modmgr.getModule('MultiModule')
+
+# Create a single value to be passed to the module
+# Note:  The actual parameter input name is 'pinput'.  The single value is assigned to the single module input.
+param = 'abc'
+lngmgr.executeModule(single, param);
+
+# Define and populate a Python dictionary. The keys are the module parameter names.
+pmap = {}
+pmap['inputA'] = 'qrs'
+pmap['inputB'] = 'xyz'
+lngmgr.executeModule(multi, pmap);
+        </pre>
+      </div>
+
+      <p><u>Log Local Variables Output</u></p>
+      <div style="margin-left: 2em">
+        <pre>
+WARN  - Log local variables:
+WARN  -     Name: pinput, Value: abc, java.lang.String
+WARN  - Log local variables done
+
+WARN  - Log local variables:
+WARN  -     Name: inputB, Value: xyz, java.lang.String
+WARN  -     Name: inputA, Value: qrs, java.lang.String
+WARN  - Global variables:
+WARN  - Log local variables done
+        </pre>
+      </div>
+
+      <hr>
+
+      <p><u>Jython access to LogixNGs and ConditionalNGs</u></p>
+
+      <p>The ability to invoke LogixNGs and ConditionalNGs can also be done using a Jython script.
+      Instead of using <code>lngmgr</code> to get a module, a LogixNG can be accessed.</p>
+
+      <div style="margin-left: 2em">
+        <pre>
+lng = lngmgr.getNamedBean(&lt;name&gt;)    # User name or system name
+        </pre>
+      </div>
+
+      <p>Use the <code>execute()</code> method to process all of the <strong>enabled</strong>
+      ConditionalNGs in the LogixNG.</p>
+
+      <div style="margin-left: 2em">
+        <pre>
+lng.execute()
+        </pre>
+      </div>
+
+      <p>To invoke a single ConditionalNG, get the ConditionalNG from the LogixNG and execute it.</p>
+
+      <div style="margin-left: 2em">
+        <pre>
+cng = lng.getConditionalNGByUserName(&lt;user name&gt;)   # or lng.getConditionalNG(&lt;system name&gt;)
+cng.execute()
+        </pre>
+      </div>
+
       <hr>
 
       <p><a href="index.shtml">Return to the Reference TOC</a>

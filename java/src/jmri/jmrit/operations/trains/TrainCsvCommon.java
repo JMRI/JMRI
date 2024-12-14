@@ -134,7 +134,7 @@ public class TrainCsvCommon extends TrainCommon {
     protected final void printRouteComment(CSVPrinter fileOut, Train train) throws IOException {
         fileOut.printRecord("RC", Bundle.getMessage("csvRouteComment"), train.getRoute().getComment()); // NOI18N
     }
-    
+
     protected void printLogoURL(CSVPrinter fileOut, Train train) throws IOException {
         String logoURL = FileUtil.getExternalFilename(Setup.getManifestLogoURL());
         if (!train.getManifestLogoPathName().equals(Train.NONE)) {
@@ -173,7 +173,10 @@ public class TrainCsvCommon extends TrainCommon {
                 count,
                 car.getFinalDestinationName(),
                 car.getFinalDestinationTrackName(),
-                car.getLoadType());
+                car.getLoadType(),
+                car.getReturnWhenLoadedDestinationName(),
+                car.getReturnWhenLoadedDestTrackName(),
+                car.getRoutePath());
     }
 
     protected void printEngine(CSVPrinter fileOut, Engine engine, String code, String message) throws IOException {

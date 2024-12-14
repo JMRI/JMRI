@@ -804,6 +804,11 @@ LogixNG: IQ:AUTO:0001
       If there is more than one connection, other connections <strong><em>might</em></strong>
       support a throttle.</p>
 
+      <p><span class="since">since 5.9.5</span>When enabled, the <strong>Stop loco when switching loco</strong>
+      option stops the loco before switching to another loco.  This is the default and was the
+      previous behavior. <em><strong>Warning:</strong> When the option is disabled and and a loco
+      change occurs, the previous loco will continue running until some other process tells it to stop.</em></p>
+
       <div style="margin-left: 2em">
         <a href="images/chapter5/throttle_action.png"><img src="images/chapter5/throttle_action.png"
         alt="Chapter 5 throttle action"></a>
@@ -883,7 +888,7 @@ LogixNG: IQ:AUTO:0001
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h4>Warrant</h4>
+      <h4 id="WarrantAction">Warrant</h4>
 
       <ul>
         <li><strong>Allocate Warrant Route:</strong> Allocates (reserves) the OBlocks comprising
@@ -1508,6 +1513,24 @@ LogixNG: IQ:AUTO:0001
         "images/chapter5/mqtt_publish.png" alt="Chapter 5 digital action mqtt publish"></a>
       </div>
 
+      <p><span class="since">since 5.9.1</span><strong>Retain</strong> is used to tell the MQTT
+      broker if it should also send the message to new subscribers or if it should only send
+      the message to current subscribers.</p>
+
+      <div style="margin-left: 2em;">
+        <dl>
+          <dt>Default</dt>
+          <dd>Use the connection setting.</dd>
+
+          <dt>Yes</dt>
+          <dd>Tell the broker to send the message to the current subscribers and also send the
+          message to new subscribers when they subscribe.</dd>
+
+          <dt>No</dt>
+          <dd>Tell the broker to only send the message to the current subscribers. New subscribers
+          will not see the message.</dd>
+        </dl>
+      </div>
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h4>Subscribe</h4>

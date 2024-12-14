@@ -100,6 +100,7 @@ public class HtmlTrainCommon extends TrainCommon {
 
     protected String pickUpCar(Car car, int count, String[] format) {
         StringBuilder builder = new StringBuilder();
+        builder.append("<span style=\"color: " + Setup.getPickupTextColor() + ";\">");
         builder.append(Setup.getPickupCarPrefix()).append(" ");
         // count the number of utility cars
         if (count != 0) {
@@ -121,8 +122,10 @@ public class HtmlTrainCommon extends TrainCommon {
     protected String dropCar(Car car, int count, String[] format, boolean isLocal) {
         StringBuilder builder = new StringBuilder();
         if (!isLocal) {
+            builder.append("<span style=\"color: " + Setup.getDropTextColor() + ";\">");
             builder.append(Setup.getDropCarPrefix()).append(" ");
         } else {
+            builder.append("<span style=\"color: " + Setup.getLocalTextColor() + ";\">");
             builder.append(Setup.getLocalPrefix()).append(" ");
         }
         // count the number of utility cars
@@ -170,6 +173,7 @@ public class HtmlTrainCommon extends TrainCommon {
     @Override
     public String dropEngine(Engine engine) {
         StringBuilder builder = new StringBuilder();
+        builder.append("<span style=\"color: " + Setup.getDropTextColor() + ";\">");
         builder.append(Setup.getDropEnginePrefix()).append(" ");
         for (String attribute : Setup.getDropEngineMessageFormat()) {
             builder.append(
@@ -193,6 +197,7 @@ public class HtmlTrainCommon extends TrainCommon {
     @Override
     public String pickupEngine(Engine engine) {
         StringBuilder builder = new StringBuilder();
+        builder.append("<span style=\"color: " + Setup.getPickupTextColor() + ";\">");
         builder.append(Setup.getPickupEnginePrefix()).append(" ");
         for (String attribute : Setup.getPickupEngineMessageFormat()) {
             builder.append(
@@ -205,7 +210,8 @@ public class HtmlTrainCommon extends TrainCommon {
 
     protected String getCarAttribute(Car car, String attribute, boolean isPickup, boolean isLocal) {
         if (attribute.equals(Setup.LOAD)) {
-            return (car.isCaboose() || car.isPassenger()) ? "" : StringEscapeUtils.escapeHtml4(car.getLoadName()); // NOI18N
+            return (car.isCaboose() || car.isPassenger()) ? ""
+                    : StringEscapeUtils.escapeHtml4(car.getLoadName().split(TrainCommon.HYPHEN)[0]); // NOI18N
         } else if (attribute.equals(Setup.HAZARDOUS)) {
             return car.isHazardous() ? Setup.getHazardousMsg() : ""; // NOI18N
         } else if (attribute.equals(Setup.DROP_COMMENT)) {
@@ -242,6 +248,9 @@ public class HtmlTrainCommon extends TrainCommon {
         if (attribute.equals(Setup.MODEL)) {
             return engine.getModel();
         }
+        if (attribute.equals(Setup.HP)) {
+            return engine.getHp();
+        }
         if (attribute.equals(Setup.CONSIST)) {
             return engine.getConsistName();
         }
@@ -260,6 +269,8 @@ public class HtmlTrainCommon extends TrainCommon {
             return rs.getTypeName().split(TrainCommon.HYPHEN)[0];
         } else if (attribute.equals(Setup.LENGTH)) {
             return rs.getLength();
+        } else if (attribute.equals(Setup.WEIGHT)) {
+            return Integer.toString(rs.getAdjustedWeightTons());
         } else if (attribute.equals(Setup.COLOR)) {
             return rs.getColor();
         } else if (attribute.equals(Setup.LOCATION) && (isPickup || isLocal)

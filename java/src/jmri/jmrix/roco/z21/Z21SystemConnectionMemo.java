@@ -280,6 +280,10 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
             _xnettunnel.dispose();
             _xnettunnel=null;
         }
+        if (_loconettunnel!=null) {
+            _loconettunnel.dispose();
+            _loconettunnel=null;
+        }
     }
 
     @Override

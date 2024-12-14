@@ -43,11 +43,7 @@ import jmri.InstanceManager;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.catalog.ImageIndexEditor;
-import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.EditorManager;
-import jmri.jmrit.display.Positionable;
-import jmri.jmrit.display.PositionablePopupUtil;
-import jmri.jmrit.display.ToolTip;
+import jmri.jmrit.display.*;
 import jmri.util.JmriJFrame;
 import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.JmriColorChooser;
@@ -203,11 +199,8 @@ public class PanelEditor extends Editor implements ItemListener {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    Component ancestor = getTargetPanel().getTopLevelAncestor(); // could be null
-                    String oldName = "";
-                    if (ancestor instanceof JFrame) {
-                        oldName = ((JFrame) ancestor).getTitle();
-                    }
+                    JFrame frame = getTargetFrame();
+                    String oldName = frame.getTitle();
                     // prompt for name
                     String newName = JmriJOptionPane.showInputDialog(null, Bundle.getMessage("PromptNewName"), oldName);
                     if ((newName == null) || (oldName.equals(newName))) {
@@ -218,9 +211,7 @@ public class PanelEditor extends Editor implements ItemListener {
                                 JmriJOptionPane.ERROR_MESSAGE);
                         return;
                     }
-                    if (ancestor instanceof JFrame) {
-                        ((JFrame) ancestor).setTitle(newName);
-                    }
+                    frame.setTitle(newName);
                     editor.setTitle();
                 }
 
@@ -504,7 +495,7 @@ public class PanelEditor extends Editor implements ItemListener {
      * @return the frame.
      */
     public JmriJFrame makeFrame(String name) {
-        JmriJFrame targetFrame = new JmriJFrame(name);
+        JmriJFrame targetFrame = new JmriJFrameWithPermissions(name);
         targetFrame.setVisible(false);
 
         JMenuBar menuBar = new JMenuBar();

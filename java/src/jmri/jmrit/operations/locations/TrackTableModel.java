@@ -171,7 +171,7 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
         tcm.setColumnVisible(tcm.getColumnByModelIndex(ROUTED_COLUMN), _trackType.equals(Track.INTERCHANGE) ||
                 _trackType.equals(Track.STAGING));
         tcm.setColumnVisible(tcm.getColumnByModelIndex(HOLD_COLUMN),
-                _location.hasSchedules() && _trackType.equals(Track.SPUR));
+                _location.hasSchedules() && _location.hasAlternateTracks() && _trackType.equals(Track.SPUR));
         tcm.setColumnVisible(tcm.getColumnByModelIndex(PLANPICKUP_COLUMN), _location.hasPlannedPickups());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(POOL_COLUMN), _location.hasPools());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(ALT_TRACK_COLUMN), _location.hasAlternateTracks());
@@ -336,16 +336,22 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
     @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
-            case ROUTED_COLUMN:
+            case MOVES_COLUMN:
             case DISABLE_LOAD_CHANGE_COLUMN:
-            case HOLD_COLUMN:
+            case ROUTED_COLUMN:
             case COMMENT_COLUMN:
             case EDIT_COLUMN:
-            case MOVES_COLUMN:
                 return true;
+            case HOLD_COLUMN:
+                return isHoldCarEnabled(row);
             default:
                 return false;
         }
+    }
+
+    private boolean isHoldCarEnabled(int row) {
+        Track track = _tracksList.get(row);
+        return track.getAlternateTrack() != null && track.getSchedule() != null;
     }
 
     @Override
@@ -519,7 +525,7 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
     private String getDirection(Track track) {
         int trainDirections = track.getLocation().getTrainDirections() & Setup.getTrainDirection();
         if (trainDirections != (track.getTrainDirections() & trainDirections)) {
-            switch (track.getTrainDirections()) {
+            switch (track.getTrainDirections() & trainDirections) {
                 case Track.EAST:
                     return Setup.EAST_DIR;
                 case Track.WEST:
@@ -529,7 +535,7 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
                 case Track.NORTH:
                     return Setup.NORTH_DIR;
                 case 0:
-                    return "X_LS";
+                    return Bundle.getMessage("None");
                 default:
                     return "X";
             }

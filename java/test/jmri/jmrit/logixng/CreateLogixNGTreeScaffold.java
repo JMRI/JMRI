@@ -1877,6 +1877,56 @@ public class CreateLogixNGTreeScaffold {
         maleSocket = digitalActionManager.registerAction(actionSignalHead);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
+        actionSignalHead = new ActionSignalHead(digitalActionManager.getAutoSystemName(), null);
+        actionSignalHead.getSelectNamedBean().setNamedBean("IH1");
+        actionSignalHead.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionSignalHead.setOperationAddressing(NamedBeanAddressing.Direct);
+        actionSignalHead.setOperationType(ActionSignalHead.OperationType.Appearance);
+        actionSignalHead.setAppearanceAddressing(NamedBeanAddressing.Direct);
+        actionSignalHead.setAppearance(SignalHead.FLASHYELLOW);
+        maleSocket = digitalActionManager.registerAction(actionSignalHead);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionSignalHead = new ActionSignalHead(digitalActionManager.getAutoSystemName(), null);
+        actionSignalHead.getSelectNamedBean().setNamedBean("IH1");
+        actionSignalHead.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionSignalHead.setOperationAddressing(NamedBeanAddressing.Direct);
+        actionSignalHead.setOperationType(ActionSignalHead.OperationType.Lit);
+        actionSignalHead.setAppearanceAddressing(NamedBeanAddressing.Direct);
+        actionSignalHead.setAppearance(SignalHead.FLASHYELLOW);
+        maleSocket = digitalActionManager.registerAction(actionSignalHead);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionSignalHead = new ActionSignalHead(digitalActionManager.getAutoSystemName(), null);
+        actionSignalHead.getSelectNamedBean().setNamedBean("IH1");
+        actionSignalHead.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionSignalHead.setOperationAddressing(NamedBeanAddressing.Direct);
+        actionSignalHead.setOperationType(ActionSignalHead.OperationType.NotLit);
+        actionSignalHead.setAppearanceAddressing(NamedBeanAddressing.Direct);
+        actionSignalHead.setAppearance(SignalHead.FLASHYELLOW);
+        maleSocket = digitalActionManager.registerAction(actionSignalHead);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionSignalHead = new ActionSignalHead(digitalActionManager.getAutoSystemName(), null);
+        actionSignalHead.getSelectNamedBean().setNamedBean("IH1");
+        actionSignalHead.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionSignalHead.setOperationAddressing(NamedBeanAddressing.Direct);
+        actionSignalHead.setOperationType(ActionSignalHead.OperationType.Held);
+        actionSignalHead.setAppearanceAddressing(NamedBeanAddressing.Direct);
+        actionSignalHead.setAppearance(SignalHead.FLASHYELLOW);
+        maleSocket = digitalActionManager.registerAction(actionSignalHead);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionSignalHead = new ActionSignalHead(digitalActionManager.getAutoSystemName(), null);
+        actionSignalHead.getSelectNamedBean().setNamedBean("IH1");
+        actionSignalHead.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionSignalHead.setOperationAddressing(NamedBeanAddressing.Direct);
+        actionSignalHead.setOperationType(ActionSignalHead.OperationType.NotHeld);
+        actionSignalHead.setAppearanceAddressing(NamedBeanAddressing.Direct);
+        actionSignalHead.setAppearance(SignalHead.FLASHYELLOW);
+        maleSocket = digitalActionManager.registerAction(actionSignalHead);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
 
         ActionSignalMast actionSignalMast = new ActionSignalMast(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionSignalMast);
@@ -1957,6 +2007,55 @@ public class CreateLogixNGTreeScaffold {
         actionSignalMast.setAspectFormula("\"IT\"+index3");
         actionSignalMast.setAspectLocalVariable("index3");
         actionSignalMast.setAspectReference("{IM3}");
+        maleSocket = digitalActionManager.registerAction(actionSignalMast);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionSignalMast = new ActionSignalMast(digitalActionManager.getAutoSystemName(), null);
+        actionSignalMast.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionSignalMast.setOperationAddressing(NamedBeanAddressing.Direct);
+        actionSignalMast.setOperationType(ActionSignalMast.OperationType.Aspect);
+        maleSocket = digitalActionManager.registerAction(actionSignalMast);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionSignalMast = new ActionSignalMast(digitalActionManager.getAutoSystemName(), null);
+        actionSignalMast.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionSignalMast.setOperationAddressing(NamedBeanAddressing.Direct);
+        actionSignalMast.setOperationType(ActionSignalMast.OperationType.Lit);
+        maleSocket = digitalActionManager.registerAction(actionSignalMast);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionSignalMast = new ActionSignalMast(digitalActionManager.getAutoSystemName(), null);
+        actionSignalMast.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionSignalMast.setOperationAddressing(NamedBeanAddressing.Direct);
+        actionSignalMast.setOperationType(ActionSignalMast.OperationType.NotLit);
+        maleSocket = digitalActionManager.registerAction(actionSignalMast);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionSignalMast = new ActionSignalMast(digitalActionManager.getAutoSystemName(), null);
+        actionSignalMast.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionSignalMast.setOperationAddressing(NamedBeanAddressing.Direct);
+        actionSignalMast.setOperationType(ActionSignalMast.OperationType.Held);
+        maleSocket = digitalActionManager.registerAction(actionSignalMast);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionSignalMast = new ActionSignalMast(digitalActionManager.getAutoSystemName(), null);
+        actionSignalMast.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionSignalMast.setOperationAddressing(NamedBeanAddressing.Direct);
+        actionSignalMast.setOperationType(ActionSignalMast.OperationType.NotHeld);
+        maleSocket = digitalActionManager.registerAction(actionSignalMast);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionSignalMast = new ActionSignalMast(digitalActionManager.getAutoSystemName(), null);
+        actionSignalMast.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionSignalMast.setOperationAddressing(NamedBeanAddressing.Direct);
+        actionSignalMast.setOperationType(ActionSignalMast.OperationType.PermissiveSmlDisabled);
+        maleSocket = digitalActionManager.registerAction(actionSignalMast);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionSignalMast = new ActionSignalMast(digitalActionManager.getAutoSystemName(), null);
+        actionSignalMast.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionSignalMast.setOperationAddressing(NamedBeanAddressing.Direct);
+        actionSignalMast.setOperationType(ActionSignalMast.OperationType.PermissiveSmlNotDisabled);
         maleSocket = digitalActionManager.registerAction(actionSignalMast);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -2157,12 +2256,14 @@ public class CreateLogixNGTreeScaffold {
         actionThrottle = new ActionThrottle(digitalActionManager.getAutoSystemName(), null);
         actionThrottle.setComment("A comment");
         actionThrottle.setMemo(_locoNetMemo);
+        actionThrottle.setStopLocoWhenSwitchingLoco(true);
         maleSocket = digitalActionManager.registerAction(actionThrottle);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         actionThrottle = new ActionThrottle(digitalActionManager.getAutoSystemName(), null);
         actionThrottle.setComment("A comment");
         actionThrottle.setMemo(null);
+        actionThrottle.setStopLocoWhenSwitchingLoco(false);
         maleSocket = digitalActionManager.registerAction(actionThrottle);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -2842,6 +2943,23 @@ public class CreateLogixNGTreeScaffold {
         publish = new jmri.jmrix.mqtt.logixng.Publish(digitalActionManager.getAutoSystemName(), null, _mqttMemo);
         publish.getSelectTopic().setValue("topic");
         publish.getSelectMessage().setValue("message");
+        publish.setRetain(jmri.jmrix.mqtt.logixng.Publish.Retain.Default);
+        maleSocket = digitalActionManager.registerAction(publish);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        publish = new jmri.jmrix.mqtt.logixng.Publish(digitalActionManager.getAutoSystemName(), null, _mqttMemo);
+        publish.getSelectTopic().setValue("otherTopic");
+        publish.getSelectMessage().setValue("otherMessage");
+        publish.setRetain(jmri.jmrix.mqtt.logixng.Publish.Retain.Yes);
+        maleSocket = digitalActionManager.registerAction(publish);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        publish = new jmri.jmrix.mqtt.logixng.Publish(digitalActionManager.getAutoSystemName(), null, _mqttMemo);
+        publish.getSelectTopic().setValue("topic");
+        publish.getSelectMessage().setValue("message");
+        publish.setRetain(jmri.jmrix.mqtt.logixng.Publish.Retain.No);
         maleSocket = digitalActionManager.registerAction(publish);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
@@ -4909,6 +5027,66 @@ public class CreateLogixNGTreeScaffold {
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalHead);
         and.getChild(indexExpr++).connect(maleSocket);
 
+        expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalHead.getSelectNamedBean().setNamedBean("IH1");
+        expressionSignalHead.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionSignalHead.setQueryAddressing(NamedBeanAddressing.Direct);
+        expressionSignalHead.setQueryType(ExpressionSignalHead.QueryType.Appearance);
+        expressionSignalHead.setAppearanceAddressing(NamedBeanAddressing.Direct);
+        expressionSignalHead.setAppearance(SignalHead.FLASHYELLOW);
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalHead);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalHead.getSelectNamedBean().setNamedBean("IH1");
+        expressionSignalHead.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionSignalHead.setQueryAddressing(NamedBeanAddressing.Direct);
+        expressionSignalHead.setQueryType(ExpressionSignalHead.QueryType.NotAppearance);
+        expressionSignalHead.setAppearanceAddressing(NamedBeanAddressing.Direct);
+        expressionSignalHead.setAppearance(SignalHead.FLASHYELLOW);
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalHead);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalHead.getSelectNamedBean().setNamedBean("IH1");
+        expressionSignalHead.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionSignalHead.setQueryAddressing(NamedBeanAddressing.Direct);
+        expressionSignalHead.setQueryType(ExpressionSignalHead.QueryType.Lit);
+        expressionSignalHead.setAppearanceAddressing(NamedBeanAddressing.Direct);
+        expressionSignalHead.setAppearance(SignalHead.FLASHYELLOW);
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalHead);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalHead.getSelectNamedBean().setNamedBean("IH1");
+        expressionSignalHead.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionSignalHead.setQueryAddressing(NamedBeanAddressing.Direct);
+        expressionSignalHead.setQueryType(ExpressionSignalHead.QueryType.NotLit);
+        expressionSignalHead.setAppearanceAddressing(NamedBeanAddressing.Direct);
+        expressionSignalHead.setAppearance(SignalHead.FLASHYELLOW);
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalHead);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalHead.getSelectNamedBean().setNamedBean("IH1");
+        expressionSignalHead.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionSignalHead.setQueryAddressing(NamedBeanAddressing.Direct);
+        expressionSignalHead.setQueryType(ExpressionSignalHead.QueryType.Held);
+        expressionSignalHead.setAppearanceAddressing(NamedBeanAddressing.Direct);
+        expressionSignalHead.setAppearance(SignalHead.FLASHYELLOW);
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalHead);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalHead.getSelectNamedBean().setNamedBean("IH1");
+        expressionSignalHead.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionSignalHead.setQueryAddressing(NamedBeanAddressing.Direct);
+        expressionSignalHead.setQueryType(ExpressionSignalHead.QueryType.NotHeld);
+        expressionSignalHead.setAppearanceAddressing(NamedBeanAddressing.Direct);
+        expressionSignalHead.setAppearance(SignalHead.FLASHYELLOW);
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalHead);
+        and.getChild(indexExpr++).connect(maleSocket);
+
 
         ExpressionSignalMast expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
@@ -4989,6 +5167,86 @@ public class CreateLogixNGTreeScaffold {
         expressionSignalMast.setAspectFormula("\"IT\"+index3");
         expressionSignalMast.setAspectLocalVariable("index3");
         expressionSignalMast.setAspectReference("{IM3}");
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalMast.getSelectNamedBean().setNamedBean("IF$shsm:AAR-1946:CPL(IH1)");
+        expressionSignalMast.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionSignalMast.setQueryAddressing(NamedBeanAddressing.Direct);
+        expressionSignalMast.setQueryType(ExpressionSignalMast.QueryType.Aspect);
+        expressionSignalMast.setAspectAddressing(NamedBeanAddressing.Direct);
+        expressionSignalMast.setAspect("Medium Approach Slow");
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalMast.getSelectNamedBean().setNamedBean("IF$shsm:AAR-1946:CPL(IH1)");
+        expressionSignalMast.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionSignalMast.setQueryAddressing(NamedBeanAddressing.Direct);
+        expressionSignalMast.setQueryType(ExpressionSignalMast.QueryType.NotAspect);
+        expressionSignalMast.setAspectAddressing(NamedBeanAddressing.Direct);
+        expressionSignalMast.setAspect("Medium Approach Slow");
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalMast.getSelectNamedBean().setNamedBean("IF$shsm:AAR-1946:CPL(IH1)");
+        expressionSignalMast.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionSignalMast.setQueryAddressing(NamedBeanAddressing.Direct);
+        expressionSignalMast.setQueryType(ExpressionSignalMast.QueryType.Lit);
+        expressionSignalMast.setAspectAddressing(NamedBeanAddressing.Direct);
+        expressionSignalMast.setAspect("Medium Approach Slow");
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalMast.getSelectNamedBean().setNamedBean("IF$shsm:AAR-1946:CPL(IH1)");
+        expressionSignalMast.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionSignalMast.setQueryAddressing(NamedBeanAddressing.Direct);
+        expressionSignalMast.setQueryType(ExpressionSignalMast.QueryType.NotLit);
+        expressionSignalMast.setAspectAddressing(NamedBeanAddressing.Direct);
+        expressionSignalMast.setAspect("Medium Approach Slow");
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalMast.getSelectNamedBean().setNamedBean("IF$shsm:AAR-1946:CPL(IH1)");
+        expressionSignalMast.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionSignalMast.setQueryAddressing(NamedBeanAddressing.Direct);
+        expressionSignalMast.setQueryType(ExpressionSignalMast.QueryType.Held);
+        expressionSignalMast.setAspectAddressing(NamedBeanAddressing.Direct);
+        expressionSignalMast.setAspect("Medium Approach Slow");
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalMast.getSelectNamedBean().setNamedBean("IF$shsm:AAR-1946:CPL(IH1)");
+        expressionSignalMast.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionSignalMast.setQueryAddressing(NamedBeanAddressing.Direct);
+        expressionSignalMast.setQueryType(ExpressionSignalMast.QueryType.NotHeld);
+        expressionSignalMast.setAspectAddressing(NamedBeanAddressing.Direct);
+        expressionSignalMast.setAspect("Medium Approach Slow");
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalMast.getSelectNamedBean().setNamedBean("IF$shsm:AAR-1946:CPL(IH1)");
+        expressionSignalMast.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionSignalMast.setQueryAddressing(NamedBeanAddressing.Direct);
+        expressionSignalMast.setQueryType(ExpressionSignalMast.QueryType.IsPermissiveSmlDisabled);
+        expressionSignalMast.setAspectAddressing(NamedBeanAddressing.Direct);
+        expressionSignalMast.setAspect("Medium Approach Slow");
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+        expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalMast.getSelectNamedBean().setNamedBean("IF$shsm:AAR-1946:CPL(IH1)");
+        expressionSignalMast.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionSignalMast.setQueryAddressing(NamedBeanAddressing.Direct);
+        expressionSignalMast.setQueryType(ExpressionSignalMast.QueryType.IsPermissiveSmlNotDisabled);
+        expressionSignalMast.setAspectAddressing(NamedBeanAddressing.Direct);
+        expressionSignalMast.setAspect("Medium Approach Slow");
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
         and.getChild(indexExpr++).connect(maleSocket);
 

@@ -474,7 +474,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         return _manufacturerID;
     }
 
-    public void setProductID(String s) {
+    public void setProductID(@CheckForNull String s) {
         String old = _productID;
         if (s == null) {s="";}
         _productID = s;
@@ -570,7 +570,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     public void setDateModified(@Nonnull Date date) {
         Date old = this.dateModified;
-        this.dateModified = date;
+        this.dateModified = new Date(date.getTime());
         this.firePropertyChange(RosterEntry.DATE_UPDATED, old, date);
     }
 
@@ -758,7 +758,11 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             _isShuntingOn = a.getValue();
         }
         if ((a = e.getAttribute(RosterEntry.MAX_SPEED)) != null) {
-            _maxSpeedPCT = Integer.parseInt(a.getValue());
+            try {
+                _maxSpeedPCT = Integer.parseInt(a.getValue());
+            } catch ( NumberFormatException ex ) {
+                log.error("Could not set maxSpeedPCT from {} , {}", a.getValue(), ex.getMessage());
+            }
         }
 
         if ((a = e.getAttribute(DECODER_DEVELOPERID)) != null) {
@@ -894,7 +898,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 }
                 if ((this.getFunctionLabel(num) == null) || (source.equalsIgnoreCase("model"))) {
                     this.setFunctionLabel(num, val);
-                    this.setFunctionLockable(num, lock.equals("true"));
+                    this.setFunctionLockable(num, "true".equals(lock));
                     Attribute a;
                     if ((a = fn.getAttribute("functionImage")) != null && !a.getValue().isEmpty()) {
                         try {
@@ -934,7 +938,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         }
     }
 
-    boolean soundLoadedOnce = false;
+    private boolean soundLoadedOnce = false;
 
     /**
      * Loads sound names from a JDOM element. Does not change values that are
@@ -1340,38 +1344,39 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     @Override
     public String toString() {
-        String out = "[RosterEntry: "
-                + _id
-                + " "
-                + (_fileName != null ? _fileName : "<null>")
-                + " "
-                + _roadName
-                + " "
-                + _roadNumber
-                + " "
-                + _mfg
-                + " "
-                + _owner
-                + " "
-                + _model
-                + " "
-                + _dccAddress
-                + " "
-                + _comment
-                + " "
-                + _decoderModel
-                + " "
-                + _decoderFamily
-                + " "
-                + _developerID
-                + " "
-                + _manufacturerID
-                + " "
-                + _productID
-                + " "
-                + _decoderComment
-                + "]";
-        return out;
+        return new StringBuilder()
+            .append("[RosterEntry: ")
+            .append(_id)
+            .append(" ")
+            .append (_fileName != null ? _fileName : "<null>")
+            .append(" ")
+            .append(_roadName)
+            .append(" ")
+            .append(_roadNumber)
+            .append(" ")
+            .append(_mfg)
+            .append(" ")
+            .append(_owner)
+            .append(" ")
+            .append(_model)
+            .append(" ")
+            .append(_dccAddress)
+            .append(" ")
+            .append(_comment)
+            .append(" ")
+            .append(_decoderModel)
+            .append(" ")
+            .append(_decoderFamily)
+            .append(" ")
+            .append(_developerID)
+            .append(" ")
+            .append(_manufacturerID)
+            .append(" ")
+            .append(_productID)
+            .append(" ")
+            .append(_decoderComment)
+            .append("]")
+            .toString();
     }
 
     /**
