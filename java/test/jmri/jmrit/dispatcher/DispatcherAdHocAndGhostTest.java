@@ -11,19 +11,15 @@
     import jmri.SensorManager;
     import jmri.SignalMastManager;
     import jmri.implementation.SignalSpeedMap;
-    import jmri.jmrit.dispatcher.TaskAllocateRelease.TaskAction;
     import jmri.jmrit.logix.WarrantPreferences;
     import jmri.util.FileUtil;
     import jmri.util.JUnitUtil;
 
-    import org.junit.Assert;
     import org.junit.jupiter.api.*;
     import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
     import org.netbeans.jemmy.operators.JButtonOperator;
     import org.netbeans.jemmy.operators.JFrameOperator;
-    import org.netbeans.jemmy.operators.JRadioButtonOperator;
-    import org.netbeans.jemmy.operators.JSliderOperator;
-
+    
     import static org.assertj.core.api.Assertions.assertThat;
     import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -68,7 +64,7 @@ public class DispatcherAdHocAndGhostTest {
             DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
             JFrameOperator dw = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
             // signal mast manager - but adhoc uses No Signals, number of sectionsallocated
-            SignalMastManager smm = InstanceManager.getDefault(SignalMastManager.class);
+            // SignalMastManager smm = InstanceManager.getDefault(SignalMastManager.class);
 
             checkAndSetSpeedsSML();
             SensorManager sm = InstanceManager.getDefault(SensorManager.class);
