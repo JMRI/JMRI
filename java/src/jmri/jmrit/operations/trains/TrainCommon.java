@@ -1098,9 +1098,9 @@ public class TrainCommon {
             if (showLocation && car.getTrack() != null) {
                 carAttributes = carAttributes + car.getRouteLocationId();
             }
-            if (car.isLocalMove()) {
-                carAttributes = carAttributes + car.getSplitTrackName();
-            }
+        }
+        if (car.isLocalMove()) {
+            carAttributes = carAttributes + car.getSplitTrackName();
         }
         if (showLength) {
             carAttributes = carAttributes + car.getLength();
