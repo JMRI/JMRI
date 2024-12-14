@@ -38,6 +38,7 @@ public class MarklinMonPane extends jmri.jmrix.AbstractMonPane implements Markli
         }
         // and unwind swing
         super.dispose();
+        memo = null;
     }
 
     @Override
