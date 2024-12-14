@@ -301,6 +301,7 @@ public class NXFrameTest {
             runtimes(route, _OBlockMgr).getDisplayName(), "Train in last block");
 
         // passed test - cleanup.  Do it here so failure leaves traces.
+        warrant.dispose();
         JFrameOperator jfo = new JFrameOperator(tableFrame);
         jfo.requestClose();
         jfo.waitClosed();
@@ -387,6 +388,7 @@ public class NXFrameTest {
             runtimes(route2, _OBlockMgr).getDisplayName(), "Train in last block");
 
         // passed test - cleanup.  Do it here so failure leaves traces.
+        warrant.dispose();
         JFrameOperator jfo = new JFrameOperator(tableFrame);
         jfo.requestClose();
         jfo.waitClosed();

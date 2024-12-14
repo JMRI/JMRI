@@ -12,6 +12,8 @@ import java.io.File;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.junit.jupiter.api.io.TempDir;
+
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -64,7 +66,7 @@ public class PortalManagerTest {
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @jmri.util.junit.annotations.DisabledIfHeadless
     @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
     public void testChangeNames() throws Exception {
         // load and display
@@ -121,6 +123,7 @@ public class PortalManagerTest {
             "Fred made it to block OB11");
 
         // passed test - cleanup.
+        warrant.dispose();
         JFrameOperator jfo = new JFrameOperator(tableFrame);
         jfo.requestClose();
         jfo.waitClosed();
@@ -138,9 +141,11 @@ public class PortalManagerTest {
     }
 
     @BeforeEach
-    public void setUp() {
+    public void setUp(@TempDir File folder) {
         JUnitUtil.setUp();
-        JUnitUtil.resetInstanceManager();
+        assertDoesNotThrow( () ->
+            JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder)));
+
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
