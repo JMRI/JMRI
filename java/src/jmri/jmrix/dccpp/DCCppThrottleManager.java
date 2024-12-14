@@ -111,11 +111,12 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
     }
 
     /**
-     * Local method for deciding short/long address
+     * Local method for deciding short/long address.
      * (is it?)
-     * {@inheritDoc }
+     * @param num the address number to check.
+     * @return true if number greater than or equals 128.
      */
-    static protected boolean isLongAddress(int num) {
+    protected static boolean isLongAddress(int num) {
         return (num >= 128);
     }
 
