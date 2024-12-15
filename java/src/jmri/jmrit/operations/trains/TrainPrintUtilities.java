@@ -129,27 +129,7 @@ public class TrainPrintUtilities {
                         }
                     }
 
-                    // determine if line is a pickup or drop
-                    if ((!Setup.getPickupEnginePrefix().trim().isEmpty() &&
-                            line.startsWith(Setup.getPickupEnginePrefix() + TrainCommon.SPACE)) ||
-                            (!Setup.getPickupCarPrefix().trim().isEmpty() &&
-                                    line.startsWith(Setup.getPickupCarPrefix() + TrainCommon.SPACE)) ||
-                            (!Setup.getSwitchListPickupCarPrefix().trim().isEmpty() &&
-                                    line.startsWith(Setup.getSwitchListPickupCarPrefix() + TrainCommon.SPACE))) {
-                        c = Setup.getPickupColor();
-                    } else if ((!Setup.getDropEnginePrefix().trim().isEmpty() &&
-                            line.startsWith(Setup.getDropEnginePrefix() + TrainCommon.SPACE)) ||
-                            (!Setup.getDropCarPrefix().trim().isEmpty() &&
-                                    line.startsWith(Setup.getDropCarPrefix() + TrainCommon.SPACE)) ||
-                            (!Setup.getSwitchListDropCarPrefix().trim().isEmpty() &&
-                                    line.startsWith(Setup.getSwitchListDropCarPrefix() + TrainCommon.SPACE))) {
-                        c = Setup.getDropColor();
-                    } else if ((!Setup.getLocalPrefix().trim().isEmpty() &&
-                            line.startsWith(Setup.getLocalPrefix() + TrainCommon.SPACE)) ||
-                            (!Setup.getSwitchListLocalPrefix().trim().isEmpty() &&
-                                    line.startsWith(Setup.getSwitchListLocalPrefix() + TrainCommon.SPACE))) {
-                        c = Setup.getLocalColor();
-                    } else if (line.contains(TrainCommon.TEXT_COLOR_START)) {
+                    if (line.contains(TrainCommon.TEXT_COLOR_START)) {
                         c = TrainCommon.getTextColor(line);
                         if (line.contains(TrainCommon.TEXT_COLOR_END)) {
                             printingColor = false;
