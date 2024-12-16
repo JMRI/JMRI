@@ -122,12 +122,12 @@ public class TrainCommon {
         for (String attribute : format) {
             String s = getEngineAttribute(engine, attribute, PICKUP);
             if (!checkStringLength(buf.toString() + s, isManifest)) {
-                addLine(file, buf.toString());
+                addLine(file, buf, Setup.getPickupColor());
                 buf = new StringBuffer(TAB); // new line
             }
             buf.append(s);
         }
-        addLine(file, buf.toString());
+        addLine(file, buf, Setup.getPickupColor());
     }
 
     /**
@@ -159,12 +159,12 @@ public class TrainCommon {
         for (String attribute : format) {
             String s = getEngineAttribute(engine, attribute, !PICKUP);
             if (!checkStringLength(buf.toString() + s, isManifest)) {
-                addLine(file, buf.toString());
+                addLine(file, buf, Setup.getDropColor());
                 buf = new StringBuffer(TAB); // new line
             }
             buf.append(s);
         }
-        addLine(file, buf.toString());
+        addLine(file, buf, Setup.getDropColor());
     }
 
     /**
@@ -722,15 +722,12 @@ public class TrainCommon {
         for (String attribute : format) {
             String s = getCarAttribute(car, attribute, PICKUP, !LOCAL);
             if (!checkStringLength(buf.toString() + s, isManifest)) {
-                addLine(file, buf.toString());
+                addLine(file, buf, Setup.getPickupColor());
                 buf = new StringBuffer(TAB); // new line
             }
             buf.append(s);
         }
-        String s = buf.toString();
-        if (s.trim().length() != 0) {
-            addLine(file, s);
-        }
+        addLine(file, buf, Setup.getPickupColor());
     }
 
     /**
@@ -817,15 +814,12 @@ public class TrainCommon {
         for (String attribute : format) {
             String s = getCarAttribute(car, attribute, !PICKUP, isLocal);
             if (!checkStringLength(buf.toString() + s, isManifest)) {
-                addLine(file, buf.toString());
+                addLine(file, buf, isLocal ? Setup.getLocalColor() : Setup.getDropColor());
                 buf = new StringBuffer(TAB); // new line
             }
             buf.append(s);
         }
-        String s = buf.toString();
-        if (!s.trim().isEmpty()) {
-            addLine(file, s);
-        }
+        addLine(file, buf, isLocal ? Setup.getLocalColor() : Setup.getDropColor());
     }
 
     /**
@@ -1098,9 +1092,9 @@ public class TrainCommon {
             if (showLocation && car.getTrack() != null) {
                 carAttributes = carAttributes + car.getRouteLocationId();
             }
-            if (car.isLocalMove()) {
-                carAttributes = carAttributes + car.getSplitTrackName();
-            }
+        }
+        if (car.isLocalMove()) {
+            carAttributes = carAttributes + car.getSplitTrackName();
         }
         if (showLength) {
             carAttributes = carAttributes + car.getLength();
@@ -2145,6 +2139,13 @@ public class TrainCommon {
             sbuf.setLength(sbuf.length() - 2); // remove trailing separators
         }
         return sbuf.toString();
+    }
+
+    private void addLine(PrintWriter file, StringBuffer buf, Color color) {
+        String s = buf.toString();
+        if (!s.trim().isEmpty()) {
+            addLine(file, formatColorString(s, color));
+        }
     }
 
     /**

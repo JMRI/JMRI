@@ -2,31 +2,53 @@ package jmri.jmrix.marklin;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class MarklinTurnoutManagerTest {
+public class MarklinTurnoutManagerTest  extends jmri.managers.AbstractTurnoutMgrTestBase {
+
+    private MarklinSystemConnectionMemo memo;
+
+    @Override
+    public String getSystemName(int i) {
+        return "MT"+i;
+    }
 
     @Test
     public void testCTor() {
-        MarklinTrafficController tc = new MarklinTrafficController();
-        MarklinSystemConnectionMemo c = new MarklinSystemConnectionMemo(tc);
-        MarklinTurnoutManager t = new MarklinTurnoutManager(c);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(l, "exists");
     }
 
+    @Test
+    @Override
+    @Disabled("Tested class requires further development")
+    public void testMakeSystemNameWithNoPrefixNotASystemName(){}
+
+    @Test
+    @Override
+    @Disabled("Tested class requires further development")
+    public void testMakeSystemNameWithPrefixNotASystemName(){}
+
+
     @BeforeEach
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
+        MarklinTrafficControlScaffold tc = new MarklinTrafficControlScaffold();
+        memo = new MarklinSystemConnectionMemo(tc);
+        l = new MarklinTurnoutManager(memo);
     }
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        l.dispose();
+        l = null;
+        memo.getTrafficController().dispose();
+        memo.dispose();
+        memo = null;
         JUnitUtil.tearDown();
 
     }

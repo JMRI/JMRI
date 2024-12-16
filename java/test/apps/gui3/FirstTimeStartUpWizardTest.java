@@ -79,7 +79,7 @@ public class FirstTimeStartUpWizardTest {
         getNextButton(jfo).doClick();
         getNextButton(jfo).getQueueTool().waitEmpty();
 
-        assertEquals("Select your DCC Connection", getPageTitleOperator(jfo).getText());
+        assertEquals("Select Your System Connection", getPageTitleOperator(jfo).getText());
         assertTrue(getBackButton(jfo).isEnabled());
         assertTrue(getNextButton(jfo).isEnabled());
         assertTrue(getCancelButton(jfo).isEnabled());

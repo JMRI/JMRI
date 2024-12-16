@@ -525,7 +525,7 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
     private String getDirection(Track track) {
         int trainDirections = track.getLocation().getTrainDirections() & Setup.getTrainDirection();
         if (trainDirections != (track.getTrainDirections() & trainDirections)) {
-            switch (track.getTrainDirections()) {
+            switch (track.getTrainDirections() & trainDirections) {
                 case Track.EAST:
                     return Setup.EAST_DIR;
                 case Track.WEST:
@@ -535,7 +535,7 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
                 case Track.NORTH:
                     return Setup.NORTH_DIR;
                 case 0:
-                    return "X_LS";
+                    return Bundle.getMessage("None");
                 default:
                     return "X";
             }

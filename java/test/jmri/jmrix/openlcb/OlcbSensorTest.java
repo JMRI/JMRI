@@ -40,12 +40,12 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
     @Override
     public void checkActiveMsgSent() {
-        Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.8").match(ti.tc.rcvMessage));
+        Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.8", null).match(ti.tc.rcvMessage));
     }
 
     @Override
     public void checkInactiveMsgSent() {
-        Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9").match(ti.tc.rcvMessage));
+        Assert.assertTrue(new OlcbAddress("1.2.3.4.5.6.7.9", null).match(ti.tc.rcvMessage));
     }
 
     @Disabled("Test requires further setup")
@@ -127,7 +127,7 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
     @Test
     public void testMomentarySensor() {
-        OlcbSensor s = new OlcbSensor("M", "1.2.3.4.5.6.7.8", ti.iface);
+        OlcbSensor s = new OlcbSensor("M", "1.2.3.4.5.6.7.8", ti.systemConnectionMemo);
         s.finishLoad();
         // message for Active and Inactive
         CanMessage mActive = new CanMessage(
@@ -212,7 +212,7 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
     @Test
     public void testForgetState() throws JmriException {
         t.dispose(); // dispose of the existing sensor.
-        OlcbSensor s = new OlcbSensor("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", ti.iface);
+        OlcbSensor s = new OlcbSensor("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", ti.systemConnectionMemo);
         s.setProperty(OlcbUtils.PROPERTY_LISTEN, Boolean.FALSE.toString());
         s.finishLoad();
 
@@ -337,7 +337,7 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
      */
     @Test
     public void testListenerOutOfOrder() {
-        final OlcbSensor u = new OlcbSensor("M", "1.2.3.4.5.6.7.a;1.2.3.4.5.6.7.b", ti.iface);
+        final OlcbSensor u = new OlcbSensor("M", "1.2.3.4.5.6.7.a;1.2.3.4.5.6.7.b", ti.systemConnectionMemo);
         final OlcbSensor v = (OlcbSensor)t;
         u.finishLoad();
         v.setKnownState(Sensor.INACTIVE);
@@ -389,10 +389,10 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         // test by putting into a tree set, then extracting and checking order
         TreeSet<Sensor> set = new TreeSet<>(new NamedBeanComparator<>());
 
-        set.add(new OlcbSensor("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", ti.iface));
-        set.add(new OlcbSensor("M", "X0501010114FF2000;X0501010114FF2011", ti.iface));
-        set.add(new OlcbSensor("M", "X0501010114FF2000;X0501010114FF2001", ti.iface));
-        set.add(new OlcbSensor("M", "1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.9", ti.iface));
+        set.add(new OlcbSensor("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", ti.systemConnectionMemo));
+        set.add(new OlcbSensor("M", "X0501010114FF2000;X0501010114FF2011", ti.systemConnectionMemo));
+        set.add(new OlcbSensor("M", "X0501010114FF2000;X0501010114FF2001", ti.systemConnectionMemo));
+        set.add(new OlcbSensor("M", "1.2.3.4.5.6.7.9;1.2.3.4.5.6.7.9", ti.systemConnectionMemo));
 
         Iterator<Sensor> it = set.iterator();
 
@@ -410,9 +410,9 @@ public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
         JUnitUtil.setUp();
         l = new PropertyChangeListenerScaffold();
         // load dummy TrafficController
-        ti = new OlcbTestInterface();
+        ti = new OlcbTestInterface(new OlcbTestInterface.CreateConfigurationManager());
         ti.waitForStartup();
-        t = new OlcbSensor("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", ti.iface);
+        t = new OlcbSensor("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", ti.systemConnectionMemo);
         ((OlcbSensor) t).finishLoad();
     }
 

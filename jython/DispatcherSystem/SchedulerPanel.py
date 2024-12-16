@@ -595,7 +595,7 @@ class MyModelListener4(TableModelListener):
                     if CreateAndShowGUI5_glb != None:
                         CreateAndShowGUI5_glb.frame.dispose()
                 CreateAndShowGUI5_glb = CreateAndShowGUI5(self, route_data, scheduled_start)
-                print "e"
+                # print "e"
                 self.model.setValueAt(False, row, edit_col)
         elif column == delete_col:
             # print "delete col/row"

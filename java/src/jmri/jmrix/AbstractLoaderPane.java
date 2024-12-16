@@ -102,10 +102,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
                     new java.awt.Dimension(5, 20)));
             inputFileNamePanel.add(inputFileName);
 
-            add(inputFileNamePanel);
 
-            JPanel p = new JPanel();
-            p.setLayout(new WrapLayout());
             selectButton = new JButton(Bundle.getMessage("ButtonSelect"));
             selectButton.addActionListener((ActionEvent e) -> {
                 inputContent = new MemoryContents();
@@ -114,9 +111,9 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
                 selectInputFile();
                 doRead(chooser);
             });
-            p.add(selectButton);
+            inputFileNamePanel.add(selectButton);
 
-            add(p);
+            add(inputFileNamePanel);
         }
 
         {
