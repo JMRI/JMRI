@@ -502,7 +502,14 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>Added text coloring to conductor rolling stock movement.</li>
+            <li>Added text coloring to Web Manifest and conductor rolling stock movement.</li>
+            <li>Made a change to always allow a caboose to be set out at terminal if there are moves available.</li>
+            <li>Fixed location table track direction GUI to report single track direction when appropriate.</li>
+            <li>When printing switch list details use track blocking order rather than alphabetically by track name.</li>
+            <li>Fixed bug in Show Staging and Schedules by Car Type and Load</li>
+            <li>Made route path the same for all cars in a kernel</li>
+            <li>Added car's "Route Path" to car export</li>
         </ul>
 
    <h3>Panel Editor</h3>
