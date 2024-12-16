@@ -126,7 +126,8 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Fixed a bug in the LccPro search function on large LCC networks.</li>
+                <li>Added "Node Groups" to LccPro and the Event Table.  
             </ul>
 
         <h4>Powerline</h4>
@@ -434,7 +435,8 @@
     <h3>LccPro</h3>
         <a id="LccPro" name="LccPro"></a>
         <ul>
-          <li></li>
+            <li>Fixed a bug in the LccPro search function on large LCC networks.</li>
+            <li>Added "Node Groups" to LccPro and the Event Table.  
         </ul>
 
     <h3>Logix</h3>
