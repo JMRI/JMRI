@@ -1,11 +1,6 @@
 
     <!-- contains new warnings for the release under development -->
-    <li>If you were using a pre-release version of the
-    <a href="http://jmri.org/help/en/package/apps/gui3/lccpro/LccPro.shtml">LccPro application</a> 
-    and stored some event names, those will not be available 
-    with this version.  Please 
-    <a href="https://groups.io/g/jmriusers">contact us</a>
-    for assistance migrating them so they can be used with this version.
+    <li>
     </li>
     <li>
     </li>
