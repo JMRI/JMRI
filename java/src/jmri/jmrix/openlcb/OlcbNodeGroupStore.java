@@ -22,11 +22,8 @@ public class OlcbNodeGroupStore implements InstanceManagerAutoDefault { // not f
     public OlcbNodeGroupStore() {
         log.debug("Initialising");
         // Load when created
-        loading = true;
         load();
-        loading = false;
         initShutdownTask();
-        initialised = true;
         dirty = false;   // undo changes during load
     }
        
@@ -35,8 +32,6 @@ public class OlcbNodeGroupStore implements InstanceManagerAutoDefault { // not f
      
     private HashMap<NodeID, TreeSet<String>> mapOfNodes = new HashMap<>();
     
-    private boolean initialised = false;
-    private boolean loading = false;
     private boolean dirty = false;
     private Runnable shutDownTask = null;
     
