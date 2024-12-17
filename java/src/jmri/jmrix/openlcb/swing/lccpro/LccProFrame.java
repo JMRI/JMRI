@@ -426,7 +426,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
                 return true;
             }
         };
-        rtable.sorter.setRowFilter(rf);
+        nodetable.sorter.setRowFilter(rf);
     }
 
     /*=============== Getters and Setters for core properties ===============*/
@@ -632,7 +632,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
         }
         JPopupMenu popupMenu = new JPopupMenu();
         
-        NodeID node = new NodeID((String) rtable.getTable().getValueAt(row, LccProTableModel.IDCOL));
+        NodeID node = new NodeID((String) nodetable.getTable().getValueAt(row, LccProTableModel.IDCOL));
         
         var addMenu = new JMenuItem("Add Node To Group");
         addMenu.addActionListener((ActionEvent evt) -> {
