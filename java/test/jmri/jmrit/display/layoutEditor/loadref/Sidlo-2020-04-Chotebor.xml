@@ -2830,6 +2830,7 @@
       <systemName>IB:AUTO:0001</systemName>
       <userName>B-Dub-V1</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Dub-SO-V1</occupancysensor>
       <path todir="80" fromdir="160" block="IB:AUTO:0002">
         <beansetting setting="4">
@@ -2847,6 +2848,7 @@
       <systemName>IB:AUTO:0002</systemName>
       <userName>B-Dub-V2</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Dub-SO-V2</occupancysensor>
       <path todir="160" fromdir="80" block="IB:AUTO:0001">
         <beansetting setting="4">
@@ -2868,6 +2870,7 @@
       <systemName>IB:AUTO:0003</systemName>
       <userName>B-Dub-V3</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Dub-SO-V3</occupancysensor>
       <path todir="96" fromdir="144" block="IB:AUTO:0004">
         <beansetting setting="4">
@@ -2889,6 +2892,7 @@
       <systemName>IB:AUTO:0004</systemName>
       <userName>B-Dub-V4</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Dub-SO-V4</occupancysensor>
       <path todir="144" fromdir="96" block="IB:AUTO:0003">
         <beansetting setting="4">
@@ -2906,6 +2910,7 @@
       <systemName>IB:AUTO:0005</systemName>
       <userName>B-Dub-K1</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Dub-SO-K1-a</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0001">
         <beansetting setting="2">
@@ -2918,6 +2923,7 @@
       <systemName>IB:AUTO:0006</systemName>
       <userName>B-Dub-K3</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Dub-SO-K3-a</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0002">
         <beansetting setting="4">
@@ -2930,6 +2936,7 @@
       <systemName>IB:AUTO:0007</systemName>
       <userName>B-Dub-K5</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Dub-SO-K5</occupancysensor>
       <path todir="160" fromdir="80" block="IB:AUTO:0002">
         <beansetting setting="2">
@@ -2946,6 +2953,7 @@
       <systemName>IB:AUTO:0008</systemName>
       <userName>B-Dub-Trat-Z</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Odb-SO-Primo-Trat</occupancysensor>
       <path todir="64" fromdir="128" block="IB:AUTO:0025">
         <beansetting setting="2">
@@ -2957,6 +2965,7 @@
       <systemName>IB:AUTO:0009</systemName>
       <userName>B-Dub-Trat-K</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Dub-SO-Trat-K</occupancysensor>
       <path todir="16" fromdir="32" block="IB:AUTO:0011" />
     </block>
@@ -2964,6 +2973,7 @@
       <systemName>IB:AUTO:0010</systemName>
       <userName>B-Dub-Zahl-Z</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Dub-SO-Zahl-Z</occupancysensor>
       <path todir="64" fromdir="128" block="IB:AUTO:0001" />
       <path todir="128" fromdir="64" block="IB:AUTO:0025" />
@@ -2972,6 +2982,7 @@
       <systemName>IB:AUTO:0011</systemName>
       <userName>B-Dub-Zahl-K</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Dub-SO-Zahl-K</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0004" />
       <path todir="32" fromdir="16" block="IB:AUTO:0009" />
@@ -2980,6 +2991,7 @@
       <systemName>IB:AUTO:0012</systemName>
       <userName>B-Dub-K1b</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Dub-SO-K1-b</occupancysensor>
       <path todir="64" fromdir="128" block="IB:AUTO:0004">
         <beansetting setting="2">
@@ -2992,6 +3004,7 @@
       <systemName>IB:AUTO:0013</systemName>
       <userName>B-Dub-K3b</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Dub-SO-K3-b</occupancysensor>
       <path todir="64" fromdir="128" block="IB:AUTO:0003">
         <beansetting setting="4">
@@ -3004,6 +3017,7 @@
       <systemName>IB:AUTO:0014</systemName>
       <userName>Roz-B-V1</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Roz-SO-V1</occupancysensor>
       <path todir="64" fromdir="128" block="IB:AUTO:0017">
         <beansetting setting="2">
@@ -3021,6 +3035,7 @@
       <systemName>IB:AUTO:0015</systemName>
       <userName>Roz-B-V2</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Roz-SO-V2</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0018">
         <beansetting setting="2">
@@ -3038,6 +3053,7 @@
       <systemName>IB:AUTO:0016</systemName>
       <userName>Roz-B-V3</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Roz-SO-V3</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0017">
         <beansetting setting="2">
@@ -3055,6 +3071,7 @@
       <systemName>IB:AUTO:0017</systemName>
       <userName>Roz-B-K1</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Roz-SO-K1</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0014">
         <beansetting setting="2">
@@ -3071,6 +3088,7 @@
       <systemName>IB:AUTO:0018</systemName>
       <userName>Roz-B-K2a</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Roz-SO-K2a</occupancysensor>
       <path todir="144" fromdir="96" block="IB:AUTO:0014">
         <beansetting setting="4">
@@ -3087,6 +3105,7 @@
       <systemName>IB:AUTO:0019</systemName>
       <userName>Roz-B-K2b</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Roz-SO-K2b</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0015" />
       <path todir="80" fromdir="160" block="IB:AUTO:0016">
@@ -3099,6 +3118,7 @@
       <systemName>IB:AUTO:0020</systemName>
       <userName>Roz-B-K4</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Roz-SO-K4</occupancysensor>
       <path todir="80" fromdir="160" block="IB:AUTO:0015">
         <beansetting setting="4">
@@ -3110,6 +3130,7 @@
       <systemName>IB:AUTO:0021</systemName>
       <userName>Roz-B-Trat-Z</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Roz-SO-Trat-Z</occupancysensor>
       <path todir="16" fromdir="32" block="IB:AUTO:0022" />
     </block>
@@ -3117,6 +3138,7 @@
       <systemName>IB:AUTO:0022</systemName>
       <userName>Roz-B-Zahl-Z</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Roz-SO-Zahl-Z</occupancysensor>
       <path todir="64" fromdir="128" block="IB:AUTO:0014" />
       <path todir="32" fromdir="16" block="IB:AUTO:0021" />
@@ -3125,6 +3147,7 @@
       <systemName>IB:AUTO:0023</systemName>
       <userName>Roz-B-Zahl-K</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Roz-SO-Zahl-K</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0016" />
       <path todir="32" fromdir="16" block="IB:AUTO:0024" />
@@ -3133,6 +3156,7 @@
       <systemName>IB:AUTO:0024</systemName>
       <userName>Roz-B-Trat-K</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Roz-SO-Trat-K</occupancysensor>
       <path todir="16" fromdir="32" block="IB:AUTO:0023" />
     </block>
@@ -3140,6 +3164,7 @@
       <systemName>IB:AUTO:0025</systemName>
       <userName>B-Odb-V1</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Odb-SO-V1</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0008">
         <beansetting setting="2">
@@ -3157,6 +3182,7 @@
       <systemName>IB:AUTO:0026</systemName>
       <userName>B-Odb-Trat-Primo</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Odb-SO-Primo-Trat</occupancysensor>
       <path todir="32" fromdir="16" block="IB:AUTO:0008" />
       <path todir="64" fromdir="128" block="IB:AUTO:0025">
@@ -3169,12 +3195,14 @@
       <systemName>IB:AUTO:0027</systemName>
       <userName>B-Odb-Trat-Hrot</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Odb-SO-Hrot-Trat</occupancysensor>
     </block>
     <block systemName="IB:AUTO:0028" length="0.0" curve="0">
       <systemName>IB:AUTO:0028</systemName>
       <userName>B-Odb-Trat-DoOdb</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Odb-SO-DoOdb-Trat</occupancysensor>
       <path todir="96" fromdir="144" block="IB:AUTO:0025">
         <beansetting setting="4">
@@ -3186,6 +3214,7 @@
       <systemName>IB:AUTO:0029</systemName>
       <userName>Hli-B-Trat-Z</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Hli-SO-Trat-Z</occupancysensor>
       <path todir="16" fromdir="32" block="IB:AUTO:0030" />
     </block>
@@ -3193,6 +3222,7 @@
       <systemName>IB:AUTO:0030</systemName>
       <userName>Hli-B-Zahl-Z</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Hli-SO-Zahl-Z</occupancysensor>
       <path todir="32" fromdir="16" block="IB:AUTO:0029" />
       <path todir="64" fromdir="128" block="IB:AUTO:0031" />
@@ -3201,6 +3231,7 @@
       <systemName>IB:AUTO:0031</systemName>
       <userName>Hli-B-V1</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Hli-SO-V1</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0030" />
       <path todir="96" fromdir="144" block="IB:AUTO:0032">
@@ -3218,6 +3249,7 @@
       <systemName>IB:AUTO:0032</systemName>
       <userName>Hli-B-V2</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Hli-SO-V2</occupancysensor>
       <path todir="144" fromdir="96" block="IB:AUTO:0031">
         <beansetting setting="4">
@@ -3239,6 +3271,7 @@
       <systemName>IB:AUTO:0033</systemName>
       <userName>Hli-B-K1</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Hli-SO-K1</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0031">
         <beansetting setting="2">
@@ -3255,6 +3288,7 @@
       <systemName>IB:AUTO:0034</systemName>
       <userName>Hli-B-K2a</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Hli-SO-K2a</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0032">
         <beansetting setting="4">
@@ -3271,6 +3305,7 @@
       <systemName>IB:AUTO:0035</systemName>
       <userName>Hli-B-K4</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Hli-SO-K4</occupancysensor>
       <path todir="144" fromdir="96" block="IB:AUTO:0032">
         <beansetting setting="2">
@@ -3287,6 +3322,7 @@
       <systemName>IB:AUTO:0036</systemName>
       <userName>Hli-B-V4</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Hli-SO-V4</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0033">
         <beansetting setting="2">
@@ -3304,6 +3340,7 @@
       <systemName>IB:AUTO:0037</systemName>
       <userName>Hli-B-Zahl-K</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Hli-SO-Zahl-K</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0036" />
       <path todir="32" fromdir="16" block="IB:AUTO:0038" />
@@ -3312,6 +3349,7 @@
       <systemName>IB:AUTO:0038</systemName>
       <userName>Hli-B-Trat-K</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Hli-SO-Trat-K</occupancysensor>
       <path todir="16" fromdir="32" block="IB:AUTO:0037" />
     </block>
@@ -3319,6 +3357,7 @@
       <systemName>IB:AUTO:0039</systemName>
       <userName>B-Vit-Trat-Z</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Vit-SO-Trat-Z</occupancysensor>
       <path todir="16" fromdir="32" block="IB:AUTO:0040" />
     </block>
@@ -3326,6 +3365,7 @@
       <systemName>IB:AUTO:0040</systemName>
       <userName>B-Vit-Zahl-Z</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Vit-SO-Zahl-Z</occupancysensor>
       <path todir="32" fromdir="16" block="IB:AUTO:0039" />
       <path todir="64" fromdir="128" block="IB:AUTO:0041" />
@@ -3334,6 +3374,7 @@
       <systemName>IB:AUTO:0041</systemName>
       <userName>B-Vit-V1</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Vit-SO-V1</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0040" />
       <path todir="64" fromdir="128" block="IB:AUTO:0042">
@@ -3351,6 +3392,7 @@
       <systemName>IB:AUTO:0042</systemName>
       <userName>B-Vit-K1</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Vit-SO-K1</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0041">
         <beansetting setting="2">
@@ -3367,6 +3409,7 @@
       <systemName>IB:AUTO:0043</systemName>
       <userName>B-Vit-K2</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Vit-SO-K2</occupancysensor>
       <path todir="144" fromdir="96" block="IB:AUTO:0041">
         <beansetting setting="4">
@@ -3383,6 +3426,7 @@
       <systemName>IB:AUTO:0044</systemName>
       <userName>B-Vit-V2</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Vit-SO-V2</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0042">
         <beansetting setting="2">
@@ -3400,6 +3444,7 @@
       <systemName>IB:AUTO:0045</systemName>
       <userName>B-Vit-Zahl-K</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Vit-SO-Zahl-K</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0044" />
       <path todir="32" fromdir="16" block="IB:AUTO:0046" />
@@ -3408,6 +3453,7 @@
       <systemName>IB:AUTO:0046</systemName>
       <userName>B-Vit-Trat-K</userName>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Vit-SO-Trat-K</occupancysensor>
       <path todir="16" fromdir="32" block="IB:AUTO:0045" />
     </block>
@@ -3415,11 +3461,13 @@
       <systemName>IB:AUTO:0047</systemName>
       <userName>B-Hli-K4</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
     </block>
     <block systemName="IB:AUTO:0048" length="0.0" curve="0">
       <systemName>IB:AUTO:0048</systemName>
       <userName>Hli-B-K2b</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Hli-SO-K2b</occupancysensor>
       <path todir="80" fromdir="160" block="IB:AUTO:0036">
         <beansetting setting="4">
@@ -3432,6 +3480,7 @@
       <systemName>IB:AUTO:0049</systemName>
       <userName>Hli-B-V3</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Hli-SO-V3</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0034">
         <beansetting setting="2">

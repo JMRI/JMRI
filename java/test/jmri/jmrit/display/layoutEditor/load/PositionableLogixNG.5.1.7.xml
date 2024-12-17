@@ -288,42 +288,52 @@
     <block systemName="IB:AUTO:0001" length="0.0" curve="0">
       <systemName>IB:AUTO:0001</systemName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
     </block>
     <block systemName="IB:AUTO:0002" length="0.0" curve="0">
       <systemName>IB:AUTO:0002</systemName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
     </block>
     <block systemName="IB:AUTO:0003" length="0.0" curve="0">
       <systemName>IB:AUTO:0003</systemName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
     </block>
     <block systemName="IB:AUTO:0004" length="0.0" curve="0">
       <systemName>IB:AUTO:0004</systemName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
     </block>
     <block systemName="IB:AUTO:0005" length="0.0" curve="0">
       <systemName>IB:AUTO:0005</systemName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
     </block>
     <block systemName="IB:AUTO:0006" length="0.0" curve="0">
       <systemName>IB:AUTO:0006</systemName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
     </block>
     <block systemName="IB:AUTO:0007" length="0.0" curve="0">
       <systemName>IB:AUTO:0007</systemName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
     </block>
     <block systemName="IB:AUTO:0008" length="0.0" curve="0">
       <systemName>IB:AUTO:0008</systemName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
     </block>
     <block systemName="IB:AUTO:0009" length="0.0" curve="0">
       <systemName>IB:AUTO:0009</systemName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
     </block>
     <block systemName="IB:AUTO:0010" length="0.0" curve="0">
       <systemName>IB:AUTO:0010</systemName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
     </block>
   </blocks>
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">

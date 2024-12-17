@@ -240,6 +240,7 @@
       <systemName>IB1</systemName>
       <userName>AUTOBLK:1</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="128" fromdir="64" block="IB7" />
       <path todir="64" fromdir="128" block="IB8">
         <beansetting setting="2">
@@ -257,6 +258,7 @@
       <userName>AUTOBLK:2</userName>
       <speed>Normal</speed>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="128" fromdir="64" block="IB8" />
       <path todir="64" fromdir="128" block="IB9">
         <beansetting setting="2">
@@ -273,6 +275,7 @@
       <systemName>IB3</systemName>
       <userName>AUTOBLK:3</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="144" fromdir="96" block="IB10" />
       <path todir="96" fromdir="144" block="IB15">
         <beansetting setting="2">
@@ -289,12 +292,14 @@
       <systemName>IB4</systemName>
       <userName>AUTOBLK:4</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="64" fromdir="128" block="IB5" />
     </block>
     <block systemName="IB5" length="0.0" curve="0">
       <systemName>IB5</systemName>
       <userName>AUTOBLK:5</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="128" fromdir="64" block="IB4" />
       <path todir="64" fromdir="128" block="IB6" />
     </block>
@@ -302,6 +307,7 @@
       <systemName>IB6</systemName>
       <userName>AUTOBLK:6</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="128" fromdir="64" block="IB5" />
       <path todir="64" fromdir="128" block="IB7" />
     </block>
@@ -309,6 +315,7 @@
       <systemName>IB7</systemName>
       <userName>AUTOBLK:7</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="64" fromdir="128" block="IB1" />
       <path todir="128" fromdir="64" block="IB6" />
     </block>
@@ -316,6 +323,7 @@
       <systemName>IB8</systemName>
       <userName>AUTOBLK:8</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="128" fromdir="64" block="IB1">
         <beansetting setting="2">
           <turnout systemName="Turnout:4" />
@@ -327,6 +335,7 @@
       <systemName>IB9</systemName>
       <userName>AUTOBLK:9</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="128" fromdir="64" block="IB2">
         <beansetting setting="2">
           <turnout systemName="Turnout:3" />
@@ -338,6 +347,7 @@
       <systemName>IB10</systemName>
       <userName>AUTOBLK:10</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="144" fromdir="96" block="IB2">
         <beansetting setting="4">
           <turnout systemName="Turnout:3" />
@@ -349,6 +359,7 @@
       <systemName>IB11</systemName>
       <userName>AUTOBLK:11</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="128" fromdir="64" block="IB9" />
       <path todir="64" fromdir="128" block="IB12" />
     </block>
@@ -356,6 +367,7 @@
       <systemName>IB12</systemName>
       <userName>AUTOBLK:12</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="128" fromdir="64" block="IB11" />
       <path todir="64" fromdir="128" block="IB13" />
     </block>
@@ -363,6 +375,7 @@
       <systemName>IB13</systemName>
       <userName>AUTOBLK:13</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="128" fromdir="64" block="IB12" />
       <path todir="64" fromdir="128" block="IB14" />
     </block>
@@ -370,12 +383,14 @@
       <systemName>IB14</systemName>
       <userName>AUTOBLK:14</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="128" fromdir="64" block="IB13" />
     </block>
     <block systemName="IB15" length="0.0" curve="0">
       <systemName>IB15</systemName>
       <userName>AUTOBLK:15</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="144" fromdir="96" block="IB3">
         <beansetting setting="2">
           <turnout systemName="Turnout:2" />
@@ -387,6 +402,7 @@
       <systemName>IB16</systemName>
       <userName>AUTOBLK:16</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="128" fromdir="64" block="IB15" />
       <path todir="64" fromdir="128" block="IB17" />
     </block>
@@ -394,6 +410,7 @@
       <systemName>IB17</systemName>
       <userName>AUTOBLK:17</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="128" fromdir="64" block="IB16" />
       <path todir="64" fromdir="128" block="IB18" />
     </block>
@@ -401,12 +418,14 @@
       <systemName>IB18</systemName>
       <userName>AUTOBLK:18</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="128" fromdir="64" block="IB17" />
     </block>
     <block systemName="IB19" length="0.0" curve="0">
       <systemName>IB19</systemName>
       <userName>AUTOBLK:19</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="128" fromdir="64" block="IB3">
         <beansetting setting="4">
           <turnout systemName="Turnout:2" />
@@ -418,6 +437,7 @@
       <systemName>IB20</systemName>
       <userName>AUTOBLK:20</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="128" fromdir="64" block="IB19" />
       <path todir="64" fromdir="128" block="IB21" />
     </block>
@@ -425,6 +445,7 @@
       <systemName>IB21</systemName>
       <userName>AUTOBLK:21</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="128" fromdir="64" block="IB20" />
       <path todir="64" fromdir="128" block="IB22" />
     </block>
@@ -432,12 +453,14 @@
       <systemName>IB22</systemName>
       <userName>AUTOBLK:22</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="128" fromdir="64" block="IB21" />
     </block>
     <block systemName="IB23" length="0.0" curve="0">
       <systemName>IB23</systemName>
       <userName>AUTOBLK:23</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="144" fromdir="96" block="IB1">
         <beansetting setting="4">
           <turnout systemName="Turnout:4" />
@@ -449,6 +472,7 @@
       <systemName>IB24</systemName>
       <userName>AUTOBLK:24</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="144" fromdir="96" block="IB23" />
       <path todir="64" fromdir="128" block="IB25" />
     </block>
@@ -456,6 +480,7 @@
       <systemName>IB25</systemName>
       <userName>AUTOBLK:25</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="128" fromdir="64" block="IB24" />
       <path todir="64" fromdir="128" block="IB26" />
     </block>
@@ -463,6 +488,7 @@
       <systemName>IB26</systemName>
       <userName>AUTOBLK:26</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="128" fromdir="64" block="IB25" />
       <path todir="64" fromdir="128" block="IB27" />
     </block>
@@ -470,6 +496,7 @@
       <systemName>IB27</systemName>
       <userName>AUTOBLK:27</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="128" fromdir="64" block="IB26" />
     </block>
   </blocks>

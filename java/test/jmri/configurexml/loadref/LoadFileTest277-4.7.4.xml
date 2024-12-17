@@ -122,6 +122,7 @@
       <userName>Block 1</userName>
       <comment>Length 1</comment>
       <permissive>no</permissive>
+      <ghost>no</ghost>
     </block>
   </blocks>
   <routes class="jmri.managers.configurexml.DefaultRouteManagerXml">

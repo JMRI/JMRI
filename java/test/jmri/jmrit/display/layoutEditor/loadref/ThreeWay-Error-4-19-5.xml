@@ -321,6 +321,7 @@
       <systemName>IB:AUTO:0001</systemName>
       <userName>West-B</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>IS17</occupancysensor>
       <path todir="64" fromdir="128" block="IB:AUTO:0005" />
     </block>
@@ -328,6 +329,7 @@
       <systemName>IB:AUTO:0002</systemName>
       <userName>SouthEast-B</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>IS19</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0005">
         <beansetting setting="4">
@@ -339,6 +341,7 @@
       <systemName>IB:AUTO:0003</systemName>
       <userName>CentralEast-B</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>IS20</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0005">
         <beansetting setting="2">
@@ -350,6 +353,7 @@
       <systemName>IB:AUTO:0004</systemName>
       <userName>NorthEast-B</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>IS21</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0005">
         <beansetting setting="4">
@@ -361,6 +365,7 @@
       <systemName>IB:AUTO:0005</systemName>
       <userName>Switch-B</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>IS18</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0001" />
       <path todir="64" fromdir="128" block="IB:AUTO:0002">

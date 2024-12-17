@@ -132,6 +132,8 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                     perm = "yes";
                 }
                 elem.addContent(new Element("permissive").addContent(perm));
+                elem.addContent(new Element("ghost").addContent(b.getIsGhost() ? "yes":"no"));
+
                 // Add content. First, the sensor
                 if (b.getNamedSensor() != null) {
                     elem.addContent(new Element("occupancysensor").addContent(b.getNamedSensor().getName()));
@@ -301,6 +303,9 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                 permissive = true;
             }
             block.setPermissiveWorking(permissive);
+        }
+        if (element.getChild("ghost") != null) {
+            block.setIsGhost(element.getChild("ghost").getText().equals("yes") ? true : false );
         }
         Element deniedBlocks = element.getChild("deniedBlocks");
         if (deniedBlocks != null) {

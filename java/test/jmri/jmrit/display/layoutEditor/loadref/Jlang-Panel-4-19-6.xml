@@ -2339,6 +2339,7 @@
       <userName>Block 43</userName>
       <speed>Medium</speed>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>BLOCK 43</occupancysensor>
       <path todir="64" fromdir="128" block="IB16">
         <beansetting setting="4">
@@ -2355,6 +2356,7 @@
       <systemName>IB2</systemName>
       <userName>Block 12</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>BLOCK 12</occupancysensor>
       <path todir="64" fromdir="128" block="IB23">
         <beansetting setting="2">
@@ -2367,6 +2369,7 @@
       <systemName>IB3</systemName>
       <userName>Block 11</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>BLOCK 11</occupancysensor>
       <path todir="64" fromdir="128" block="IB22" />
       <path todir="64" fromdir="128" block="IB28">
@@ -2379,6 +2382,7 @@
       <systemName>IB4</systemName>
       <userName>Block 01</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>BLOCK 01</occupancysensor>
       <path todir="128" fromdir="64" block="IB22" />
       <path todir="64" fromdir="128" block="IB24" />
@@ -2397,6 +2401,7 @@
       <systemName>IB5</systemName>
       <userName>Block 22</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>BLOCK 22</occupancysensor>
       <path todir="128" fromdir="64" block="IB29">
         <beansetting setting="2">
@@ -2421,6 +2426,7 @@
       <systemName>IB6</systemName>
       <userName>Block 21</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>BLOCK 21</occupancysensor>
       <path todir="16" fromdir="32" block="IB7">
         <beansetting setting="4">
@@ -2451,6 +2457,7 @@
       <systemName>IB7</systemName>
       <userName>Block 23</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>BLOCK 23</occupancysensor>
       <path todir="32" fromdir="16" block="IB6">
         <beansetting setting="4">
@@ -2467,6 +2474,7 @@
       <systemName>IB8</systemName>
       <userName>Block 32</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>BLOCK 32</occupancysensor>
       <path todir="128" fromdir="64" block="IB16" />
       <path todir="16" fromdir="32" block="IB30" />
@@ -2475,6 +2483,7 @@
       <systemName>IB9</systemName>
       <userName>Block 31</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>BLOCK 31</occupancysensor>
       <path todir="128" fromdir="64" block="IB11" />
       <path todir="128" fromdir="64" block="IB31">
@@ -2488,6 +2497,7 @@
       <userName>Staging East</userName>
       <speed>Medium</speed>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Staging East</occupancysensor>
       <path todir="128" fromdir="64" block="IB6">
         <beansetting setting="4">
@@ -2499,6 +2509,7 @@
       <systemName>IB11</systemName>
       <userName>Block 41</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>BLOCK 41</occupancysensor>
       <path todir="64" fromdir="128" block="IB9" />
       <path todir="64" fromdir="128" block="IB14" />
@@ -2507,6 +2518,7 @@
       <systemName>IB12</systemName>
       <userName>Block 42</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>BLOCK 42</occupancysensor>
       <path todir="64" fromdir="128" block="IB16">
         <beansetting setting="2">
@@ -2524,6 +2536,7 @@
       <userName>Dewitt Yard</userName>
       <speed>Slow</speed>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Dewitt yard</occupancysensor>
       <path todir="128" fromdir="64" block="IB23">
         <beansetting setting="4">
@@ -2540,6 +2553,7 @@
       <systemName>IB14</systemName>
       <userName>Block 51</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>BLOCK 51</occupancysensor>
       <path todir="128" fromdir="64" block="IB11" />
       <path todir="128" fromdir="64" block="IB24" />
@@ -2548,6 +2562,7 @@
       <systemName>IB15</systemName>
       <userName>Block 52</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>BLOCK 52</occupancysensor>
       <path todir="128" fromdir="64" block="IB19" />
       <path todir="128" fromdir="64" block="IB25">
@@ -2560,6 +2575,7 @@
       <systemName>IB16</systemName>
       <userName>CP 350</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>CP350</occupancysensor>
       <path todir="128" fromdir="64" block="IB1">
         <beansetting setting="4">
@@ -2577,6 +2593,7 @@
       <systemName>IB17</systemName>
       <userName>Block  42</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>BLOCK 42</occupancysensor>
       <path todir="64" fromdir="128" block="IB12">
         <beansetting setting="2">
@@ -2589,6 +2606,7 @@
       <systemName>IB18</systemName>
       <userName>Block 02</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>BLOCK 02</occupancysensor>
       <path todir="128" fromdir="64" block="IB23">
         <beansetting setting="2">
@@ -2605,6 +2623,7 @@
       <systemName>IB19</systemName>
       <userName>CP 354</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>CP354</occupancysensor>
       <path todir="128" fromdir="64" block="IB1">
         <beansetting setting="4">
@@ -2622,6 +2641,7 @@
       <systemName>IB22</systemName>
       <userName>CP 2831</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>CP2831</occupancysensor>
       <path todir="128" fromdir="64" block="IB3" />
       <path todir="64" fromdir="128" block="IB4" />
@@ -2640,6 +2660,7 @@
       <systemName>IB23</systemName>
       <userName>CP 2832</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>CP2832</occupancysensor>
       <path todir="128" fromdir="64" block="IB2">
         <beansetting setting="2">
@@ -2677,6 +2698,7 @@
       <systemName>IB24</systemName>
       <userName>CP 2761</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>CP2761</occupancysensor>
       <path todir="128" fromdir="64" block="IB4" />
       <path todir="64" fromdir="128" block="IB14" />
@@ -2695,6 +2717,7 @@
       <systemName>IB25</systemName>
       <userName>CP 2762</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>CP2762</occupancysensor>
       <path todir="128" fromdir="64" block="IB13">
         <beansetting setting="4">
@@ -2729,6 +2752,7 @@
       <systemName>IB26</systemName>
       <userName>Block PSW</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>BLOCKPSW</occupancysensor>
       <path todir="128" fromdir="64" block="IB4">
         <beansetting setting="4">
@@ -2741,6 +2765,7 @@
       <systemName>IB27</systemName>
       <userName>Block PSE</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>BLOCKPSE</occupancysensor>
       <path todir="64" fromdir="128" block="IB4">
         <beansetting setting="4">
@@ -2753,6 +2778,7 @@
       <systemName>IB28</systemName>
       <userName>CP 3101</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>CP3101</occupancysensor>
       <path todir="128" fromdir="64" block="IB3">
         <beansetting setting="2">
@@ -2770,6 +2796,7 @@
       <systemName>IB29</systemName>
       <userName>CP 3102</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>CP3102</occupancysensor>
       <path todir="128" fromdir="64" block="IB2" />
       <path todir="64" fromdir="128" block="IB5">
@@ -2787,6 +2814,7 @@
       <systemName>IB30</systemName>
       <userName>CP 3182</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>CP3182</occupancysensor>
       <path todir="128" fromdir="64" block="IB5">
         <beansetting setting="2">
@@ -2804,6 +2832,7 @@
       <systemName>IB31</systemName>
       <userName>CP 3181</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>CP3181</occupancysensor>
       <path todir="128" fromdir="64" block="IB6">
         <beansetting setting="2">
@@ -2830,6 +2859,7 @@
       <systemName>IB:AUTO:0001</systemName>
       <userName>Staging West</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>Staging West</occupancysensor>
       <path todir="16" fromdir="32" block="IB6">
         <beansetting setting="4">
@@ -2841,6 +2871,7 @@
       <systemName>IB:AUTO:0002</systemName>
       <userName>Block Tara J Team</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>TJ Team B Sensor</occupancysensor>
       <path todir="64" fromdir="128" block="IB5">
         <beansetting setting="4">

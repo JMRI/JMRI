@@ -397,6 +397,7 @@
       <systemName>IB:AUTO:0001</systemName>
       <userName>B-Left-Approach</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>S-Left-Approach</occupancysensor>
       <path todir="64" fromdir="128" block="IB:AUTO:0002" />
     </block>
@@ -404,6 +405,7 @@
       <systemName>IB:AUTO:0002</systemName>
       <userName>B-Beta-Left</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>S-Beta-Left</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0001" />
       <path todir="64" fromdir="128" block="IB:AUTO:0003">
@@ -432,6 +434,7 @@
       <systemName>IB:AUTO:0003</systemName>
       <userName>B-Beta-Main</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>S-Beta-Main</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0002">
         <beansetting setting="2">
@@ -456,6 +459,7 @@
       <systemName>IB:AUTO:0004</systemName>
       <userName>B-Beta-Right</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>S-Beta-Right</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0003">
         <beansetting setting="2">
@@ -473,6 +477,7 @@
       <systemName>IB:AUTO:0005</systemName>
       <userName>B-Right-Approach</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>S-Right-Approach</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0004" />
       <path todir="80" fromdir="160" block="IB:AUTO:0009">
@@ -485,6 +490,7 @@
       <systemName>IB:AUTO:0006</systemName>
       <userName>B-Beta-Side</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>S-Beta-Side</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0002">
         <beansetting setting="2">
@@ -501,6 +507,7 @@
       <systemName>IB:AUTO:0007</systemName>
       <userName>B-Beta-Yard</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>S-Beta-Yard</occupancysensor>
       <path todir="144" fromdir="96" block="IB:AUTO:0002">
         <beansetting setting="4">
@@ -512,6 +519,7 @@
       <systemName>IB:AUTO:0008</systemName>
       <userName>B-Beta-Spur</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>S-Beta-Spur</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0003">
         <beansetting setting="4">
@@ -523,6 +531,7 @@
       <systemName>IB:AUTO:0009</systemName>
       <userName>B-Branch</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="160" fromdir="80" block="IB:AUTO:0005">
         <beansetting setting="4">
           <turnout systemName="T-Branch" />

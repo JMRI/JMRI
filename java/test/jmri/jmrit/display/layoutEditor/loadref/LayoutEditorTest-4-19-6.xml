@@ -95,6 +95,7 @@
       <systemName>IB1</systemName>
       <userName>Yard</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="16" fromdir="32" block="IB3" />
       <path todir="64" fromdir="128" block="IB4" />
       <path todir="80" fromdir="160" block="IB4">
@@ -127,6 +128,7 @@
       <systemName>IB3</systemName>
       <userName>West</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="32" fromdir="16" block="IB1" />
       <path todir="16" fromdir="32" block="IB7" />
     </block>
@@ -134,6 +136,7 @@
       <systemName>IB4</systemName>
       <userName>East</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="128" fromdir="64" block="IB1" />
       <path todir="160" fromdir="80" block="IB1">
         <beansetting setting="4">
@@ -150,6 +153,7 @@
       <systemName>IB5</systemName>
       <userName>SW Sliding</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="64" fromdir="128" block="IB1">
         <beansetting setting="2">
           <turnout systemName="IT7" />
@@ -160,6 +164,7 @@
       <systemName>IB6</systemName>
       <userName>SE Sliding</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="128" fromdir="64" block="IB1">
         <beansetting setting="2">
           <turnout systemName="IT9" />
@@ -170,6 +175,7 @@
       <systemName>IB7</systemName>
       <userName>North</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="96" fromdir="144" block="IB1">
         <beansetting setting="4">
           <turnout systemName="IT1" />

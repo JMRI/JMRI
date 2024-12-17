@@ -2136,6 +2136,7 @@
       <systemName>IB1</systemName>
       <userName>SF-South Yard</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="32" fromdir="16" block="IB3">
         <beansetting setting="2">
           <turnout systemName="ITLT39:51/52" />
@@ -2231,6 +2232,7 @@
       <systemName>IB2</systemName>
       <userName>SF-Pocket</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS93</occupancysensor>
       <path todir="128" fromdir="64" block="IB37" />
     </block>
@@ -2238,6 +2240,7 @@
       <systemName>IB3</systemName>
       <userName>SF-51</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="16" fromdir="32" block="IB1">
         <beansetting setting="2">
           <turnout systemName="ITLT39:51/52" />
@@ -2248,6 +2251,7 @@
       <systemName>IB4</systemName>
       <userName>SF-52</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="144" fromdir="96" block="IB1">
         <beansetting setting="4">
           <turnout systemName="ITLT39:51/52" />
@@ -2258,26 +2262,31 @@
       <systemName>IB5</systemName>
       <userName>SF-Turntable</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
     </block>
     <block systemName="IB6" length="0.0" curve="0">
       <systemName>IB6</systemName>
       <userName>Turntable_7</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
     </block>
     <block systemName="IB7" length="0.0" curve="0">
       <systemName>IB7</systemName>
       <userName>Turntable_8</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
     </block>
     <block systemName="IB8" length="0.0" curve="0">
       <systemName>IB8</systemName>
       <userName>Turntable_9</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
     </block>
     <block systemName="IB9" length="0.0" curve="0">
       <systemName>IB9</systemName>
       <userName>SSF-Main 2-East</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS244:BOD-SSF-Main 2</occupancysensor>
       <path todir="128" fromdir="64" block="IB11">
         <beansetting setting="4">
@@ -2313,11 +2322,13 @@
       <systemName>IB10</systemName>
       <userName>SSF-Dead Spur</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
     </block>
     <block systemName="IB11" length="0.0" curve="0">
       <systemName>IB11</systemName>
       <userName>SSF-Main 1-East</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS243:BOD-SSF-Main 1</occupancysensor>
       <path todir="64" fromdir="128" block="IB9">
         <beansetting setting="4">
@@ -2345,6 +2356,7 @@
       <systemName>IB12</systemName>
       <userName>BS-Main 2</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS242:BOD-BS-Main 2</occupancysensor>
       <path todir="32" fromdir="16" block="IB9" />
       <path todir="16" fromdir="32" block="IB23" />
@@ -2353,6 +2365,7 @@
       <systemName>IB13</systemName>
       <userName>BS-Main 1</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS241:BOD-BS-Main 1</occupancysensor>
       <path todir="32" fromdir="16" block="IB11" />
       <path todir="16" fromdir="32" block="IB22" />
@@ -2361,6 +2374,7 @@
       <systemName>IB14</systemName>
       <userName>SSF-Main 2-West</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="64" fromdir="128" block="IB9">
         <beansetting setting="2">
           <turnout systemName="ITLT214:SSF" />
@@ -2371,6 +2385,7 @@
       <systemName>IB15</systemName>
       <userName>SF-23</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS60</occupancysensor>
       <path todir="128" fromdir="64" block="IB37">
         <beansetting setting="4">
@@ -2382,6 +2397,7 @@
       <systemName>IB16</systemName>
       <userName>SF-24</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS59</occupancysensor>
       <path todir="160" fromdir="80" block="IB37">
         <beansetting setting="4">
@@ -2393,6 +2409,7 @@
       <systemName>IB17</systemName>
       <userName>SF-25</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS58</occupancysensor>
       <path todir="128" fromdir="64" block="IB37">
         <beansetting setting="2">
@@ -2404,6 +2421,7 @@
       <systemName>IB18</systemName>
       <userName>SF-27</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS57</occupancysensor>
       <path todir="160" fromdir="80" block="IB1">
         <beansetting setting="2">
@@ -2415,6 +2433,7 @@
       <systemName>IB19</systemName>
       <userName>SF-28</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS56</occupancysensor>
       <path todir="128" fromdir="64" block="IB1">
         <beansetting setting="4">
@@ -2426,6 +2445,7 @@
       <systemName>IB20</systemName>
       <userName>SF-29</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS79:BOD-SF-Siding 29</occupancysensor>
       <path todir="128" fromdir="64" block="IB1">
         <beansetting setting="2">
@@ -2437,6 +2457,7 @@
       <systemName>IB21</systemName>
       <userName>SF-30</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS78:BOD-SF-Siding 30</occupancysensor>
       <path todir="144" fromdir="96" block="IB1">
         <beansetting setting="4">
@@ -2448,6 +2469,7 @@
       <systemName>IB22</systemName>
       <userName>SF-Main 1</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS91:BOD-SF-Main 1</occupancysensor>
       <path todir="16" fromdir="32" block="IB1">
         <beansetting setting="4">
@@ -2470,6 +2492,7 @@
       <systemName>IB23</systemName>
       <userName>SF-Main 2</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS92:BOD-SF-Main 2</occupancysensor>
       <path todir="32" fromdir="16" block="IB12" />
       <path todir="80" fromdir="160" block="IB22">
@@ -2487,6 +2510,7 @@
       <systemName>IB24</systemName>
       <userName>SF-Main 3</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="32" fromdir="16" block="IB1">
         <beansetting setting="2">
           <turnout systemName="ITLT37:SF-Main 3/Yard,27...30" />
@@ -2498,6 +2522,7 @@
       <systemName>IB25</systemName>
       <userName>SF-Terminal 1</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS48:BOD-SF-Terminal 1</occupancysensor>
       <path todir="128" fromdir="64" block="IB37" />
     </block>
@@ -2505,6 +2530,7 @@
       <systemName>IB26</systemName>
       <userName>SF-Terminal 2</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS47</occupancysensor>
       <path todir="128" fromdir="64" block="IB37" />
     </block>
@@ -2512,6 +2538,7 @@
       <systemName>IB27</systemName>
       <userName>SF-Terminal 3</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS46</occupancysensor>
       <path todir="128" fromdir="64" block="IB37" />
     </block>
@@ -2519,6 +2546,7 @@
       <systemName>IB28</systemName>
       <userName>SF-Terminal 4</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS45</occupancysensor>
       <path todir="128" fromdir="64" block="IB37" />
     </block>
@@ -2526,6 +2554,7 @@
       <systemName>IB29</systemName>
       <userName>SF-Terminal 5</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS41</occupancysensor>
       <path todir="128" fromdir="64" block="IB37" />
     </block>
@@ -2533,6 +2562,7 @@
       <systemName>IB30</systemName>
       <userName>SF-Terminal 6</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS42</occupancysensor>
       <path todir="128" fromdir="64" block="IB37" />
     </block>
@@ -2540,6 +2570,7 @@
       <systemName>IB31</systemName>
       <userName>SF-Terminal 7</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS43</occupancysensor>
       <path todir="128" fromdir="64" block="IB37" />
     </block>
@@ -2547,6 +2578,7 @@
       <systemName>IB32</systemName>
       <userName>SF-Terminal 8</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS44</occupancysensor>
       <path todir="128" fromdir="64" block="IB37" />
     </block>
@@ -2554,6 +2586,7 @@
       <systemName>IB33</systemName>
       <userName>SF-Terminal 9</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS64:BOD-SF-Terminal 9</occupancysensor>
       <path todir="128" fromdir="64" block="IB37" />
     </block>
@@ -2561,6 +2594,7 @@
       <systemName>IB34</systemName>
       <userName>SF-Terminal 10</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS63</occupancysensor>
       <path todir="128" fromdir="64" block="IB37" />
     </block>
@@ -2568,6 +2602,7 @@
       <systemName>IB35</systemName>
       <userName>SF-Terminal 11</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS62</occupancysensor>
       <path todir="128" fromdir="64" block="IB37" />
     </block>
@@ -2575,6 +2610,7 @@
       <systemName>IB36</systemName>
       <userName>SF-Terminal 12</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS61</occupancysensor>
       <path todir="128" fromdir="64" block="IB37" />
     </block>
@@ -2582,6 +2618,7 @@
       <systemName>IB37</systemName>
       <userName>SF-Yard</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS94:BOD-SF-Yard</occupancysensor>
       <path todir="160" fromdir="80" block="IB1" />
       <path todir="64" fromdir="128" block="IB2" />
@@ -2703,6 +2740,7 @@
       <systemName>IB38</systemName>
       <userName>SF-Coach Lead</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS95</occupancysensor>
       <path todir="96" fromdir="144" block="IB37" />
     </block>
@@ -2710,6 +2748,7 @@
       <systemName>IB39</systemName>
       <userName>SF-42</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS76:BOD-SF-Siding 42</occupancysensor>
       <path todir="80" fromdir="160" block="IB37">
         <beansetting setting="4">
@@ -2721,6 +2760,7 @@
       <systemName>IB40</systemName>
       <userName>SF-43</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS75:BOD-SF-Siding 43</occupancysensor>
       <path todir="64" fromdir="128" block="IB37">
         <beansetting setting="2">
@@ -2732,6 +2772,7 @@
       <systemName>IB41</systemName>
       <userName>SF-44</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS74</occupancysensor>
       <path todir="64" fromdir="128" block="IB37">
         <beansetting setting="4">
@@ -2743,6 +2784,7 @@
       <systemName>IB42</systemName>
       <userName>SF-45</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS73</occupancysensor>
       <path todir="64" fromdir="128" block="IB37">
         <beansetting setting="4">
@@ -2754,6 +2796,7 @@
       <systemName>IB43</systemName>
       <userName>SF-46</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS96</occupancysensor>
       <path todir="96" fromdir="144" block="IB37">
         <beansetting setting="2">
@@ -2765,6 +2808,7 @@
       <systemName>IB44</systemName>
       <userName>SSF-Main 1-West</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="16" fromdir="32" block="IB46" />
       <path todir="128" fromdir="64" block="IB51">
         <beansetting setting="4">
@@ -2776,6 +2820,7 @@
       <systemName>IB45</systemName>
       <userName>SF-41</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS77:BOD-SF-Siding 41</occupancysensor>
       <path todir="80" fromdir="160" block="IB37">
         <beansetting setting="4">
@@ -2787,6 +2832,7 @@
       <systemName>IB46</systemName>
       <userName>SSF-Main 1</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS243:BOD-SSF-Main 1</occupancysensor>
       <path todir="32" fromdir="16" block="IB11" />
       <path todir="32" fromdir="16" block="IB44" />
@@ -2795,12 +2841,14 @@
       <systemName>IB47</systemName>
       <userName>SSF-Main 2</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ISLS244:BOD-SSF-Main 2</occupancysensor>
     </block>
     <block systemName="IB50" length="0.0" curve="0">
       <systemName>IB50</systemName>
       <userName>SSF-Yard (North)</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="96" fromdir="144" block="IB9">
         <beansetting setting="4">
           <turnout systemName="ITLT205:SSF" />
@@ -2816,6 +2864,7 @@
       <systemName>IB51</systemName>
       <userName>SSF-Yard (South)</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="80" fromdir="160" block="IB11">
         <beansetting setting="4">
           <turnout systemName="ITLT202:SF-Main 1/SF-Main 2 (West)" />
@@ -2831,11 +2880,13 @@
       <systemName>IB:AUTO:0003</systemName>
       <userName>SMILE</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
     </block>
     <block systemName="IB:AUTO:0004" length="0.0" curve="0">
       <systemName>IB:AUTO:0004</systemName>
       <userName>Turntable</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
     </block>
   </blocks>
   <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml">

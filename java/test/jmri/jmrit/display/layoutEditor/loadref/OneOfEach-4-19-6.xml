@@ -31,6 +31,7 @@
       <systemName>IB:AUTO:0001</systemName>
       <userName>BB9</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
     </block>
   </blocks>
   <layoutblocks class="jmri.jmrit.display.layoutEditor.configurexml.LayoutBlockManagerXml">

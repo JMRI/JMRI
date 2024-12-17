@@ -175,11 +175,13 @@
       <userName>Block 1</userName>
       <comment>Length 1</comment>
       <permissive>no</permissive>
+      <ghost>no</ghost>
     </block>
     <block systemName="IB2" length="15.8" curve="0">
       <systemName>IB2</systemName>
       <comment>Length 900</comment>
       <permissive>yes</permissive>
+      <ghost>no</ghost>
     </block>
   </blocks>
   <routes class="jmri.managers.configurexml.DefaultRouteManagerXml">

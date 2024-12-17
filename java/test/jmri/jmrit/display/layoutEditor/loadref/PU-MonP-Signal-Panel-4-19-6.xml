@@ -7600,6 +7600,7 @@
       <systemName>IB1</systemName>
       <userName>EW-M</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>EW-M</occupancysensor>
       <path todir="64" fromdir="128" block="IB58">
         <beansetting setting="2">
@@ -7616,12 +7617,14 @@
       <systemName>IB2</systemName>
       <userName>FV-M</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>FV-M</occupancysensor>
     </block>
     <block systemName="IB3" length="0.0" curve="0">
       <systemName>IB3</systemName>
       <userName>LU-SBT</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="128" fromdir="64" block="IB24">
         <beansetting setting="4">
           <turnout systemName="LU-SBT" />
@@ -7632,6 +7635,7 @@
       <systemName>IB4</systemName>
       <userName>TR-M</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="64" fromdir="128" block="IB97">
         <beansetting setting="4">
           <turnout systemName="TR-M" />
@@ -7642,6 +7646,7 @@
       <systemName>IB5</systemName>
       <userName>CR-M</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>CR-M</occupancysensor>
       <path todir="64" fromdir="128" block="IB50">
         <beansetting setting="2">
@@ -7658,6 +7663,7 @@
       <systemName>IB6</systemName>
       <userName>CR-SA</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>CR-SA</occupancysensor>
       <path todir="64" fromdir="128" block="IB52" />
       <path todir="128" fromdir="64" block="IB82" />
@@ -7666,6 +7672,7 @@
       <systemName>IB7</systemName>
       <userName>BS-NA</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>BS-NA</occupancysensor>
       <path todir="128" fromdir="64" block="IB27" />
       <path todir="128" fromdir="64" block="IB28" />
@@ -7674,6 +7681,7 @@
       <systemName>IB8</systemName>
       <userName>EL-SA</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>EL-SA</occupancysensor>
       <path todir="128" fromdir="64" block="IB9" />
       <path todir="64" fromdir="128" block="IB10" />
@@ -7682,6 +7690,7 @@
       <systemName>IB9</systemName>
       <userName>MS-NA</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>MS-NA</occupancysensor>
       <path todir="64" fromdir="128" block="IB8" />
       <path todir="128" fromdir="64" block="IB36" />
@@ -7690,6 +7699,7 @@
       <systemName>IB10</systemName>
       <userName>EL-SOS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>EL-SOS</occupancysensor>
       <path todir="128" fromdir="64" block="IB8" />
       <path todir="64" fromdir="128" block="IB34">
@@ -7707,6 +7717,7 @@
       <systemName>IB11</systemName>
       <userName>VE-SA</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>VE-SA</occupancysensor>
       <path todir="64" fromdir="128" block="IB48" />
       <path todir="128" fromdir="64" block="IB81" />
@@ -7715,6 +7726,7 @@
       <systemName>IB12</systemName>
       <userName>LU-LOG</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="64" fromdir="128" block="IB27">
         <beansetting setting="4">
           <turnout systemName="LU-LOG" />
@@ -7725,6 +7737,7 @@
       <systemName>IB13</systemName>
       <userName>LA-M</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>LA-M</occupancysensor>
       <path todir="128" fromdir="64" block="IB15">
         <beansetting setting="2">
@@ -7744,6 +7757,7 @@
       <systemName>IB14</systemName>
       <userName>LA-P</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>LA-P</occupancysensor>
       <path todir="128" fromdir="64" block="IB15">
         <beansetting setting="4">
@@ -7760,6 +7774,7 @@
       <systemName>IB15</systemName>
       <userName>LA-SOS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>LA-SOS</occupancysensor>
       <path todir="64" fromdir="128" block="IB13">
         <beansetting setting="2">
@@ -7777,6 +7792,7 @@
       <systemName>IB16</systemName>
       <userName>LA-NOS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>LA-NOS</occupancysensor>
       <path todir="128" fromdir="64" block="IB13">
         <beansetting setting="2">
@@ -7794,6 +7810,7 @@
       <systemName>IB17</systemName>
       <userName>LA-SA</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>LA-SA</occupancysensor>
       <path todir="64" fromdir="128" block="IB15" />
       <path todir="128" fromdir="64" block="IB18" />
@@ -7802,6 +7819,7 @@
       <systemName>IB18</systemName>
       <userName>LU-NA</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>LU-NA</occupancysensor>
       <path todir="64" fromdir="128" block="IB17" />
       <path todir="128" fromdir="64" block="IB19" />
@@ -7810,6 +7828,7 @@
       <systemName>IB19</systemName>
       <userName>LU-NOS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>LU-NOS</occupancysensor>
       <path todir="64" fromdir="128" block="IB18" />
       <path todir="128" fromdir="64" block="IB20">
@@ -7827,6 +7846,7 @@
       <systemName>IB20</systemName>
       <userName>LU-MN</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>LU-MN</occupancysensor>
       <path todir="64" fromdir="128" block="IB19">
         <beansetting setting="2">
@@ -7843,6 +7863,7 @@
       <systemName>IB21</systemName>
       <userName>LU-PN</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>LU-PN</occupancysensor>
       <path todir="64" fromdir="128" block="IB19">
         <beansetting setting="4">
@@ -7858,18 +7879,21 @@
       <systemName>IB22</systemName>
       <userName>LU-MXOS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>LU-MXOS</occupancysensor>
     </block>
     <block systemName="IB23" length="0.0" curve="0">
       <systemName>IB23</systemName>
       <userName>LU-PXOS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>LU-PXOS</occupancysensor>
     </block>
     <block systemName="IB24" length="0.0" curve="0">
       <systemName>IB24</systemName>
       <userName>LU-MS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>LU-MS</occupancysensor>
       <path todir="64" fromdir="128" block="IB3">
         <beansetting setting="4">
@@ -7894,6 +7918,7 @@
       <systemName>IB25</systemName>
       <userName>LU-PS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>LU-PS</occupancysensor>
       <path todir="64" fromdir="128" block="IB21" />
       <path todir="128" fromdir="64" block="IB26">
@@ -7906,6 +7931,7 @@
       <systemName>IB26</systemName>
       <userName>LU-SOS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>LU-SOS</occupancysensor>
       <path todir="64" fromdir="128" block="IB24">
         <beansetting setting="2">
@@ -7923,6 +7949,7 @@
       <systemName>IB27</systemName>
       <userName>LU-SA</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>LU-SA</occupancysensor>
       <path todir="64" fromdir="128" block="IB7" />
       <path todir="128" fromdir="64" block="IB12">
@@ -7940,6 +7967,7 @@
       <systemName>IB28</systemName>
       <userName>BS-NOS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>BS-NOS</occupancysensor>
       <path todir="64" fromdir="128" block="IB7" />
       <path todir="128" fromdir="64" block="IB29">
@@ -7957,6 +7985,7 @@
       <systemName>IB29</systemName>
       <userName>BS-P</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>BS-P</occupancysensor>
       <path todir="64" fromdir="128" block="IB28">
         <beansetting setting="4">
@@ -7973,6 +8002,7 @@
       <systemName>IB30</systemName>
       <userName>BS-M</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>BS-M</occupancysensor>
       <path todir="64" fromdir="128" block="IB28">
         <beansetting setting="2">
@@ -7992,6 +8022,7 @@
       <systemName>IB31</systemName>
       <userName>BS-SOS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>BS-SOS</occupancysensor>
       <path todir="64" fromdir="128" block="IB29">
         <beansetting setting="4">
@@ -8009,6 +8040,7 @@
       <systemName>IB32</systemName>
       <userName>ELB-A</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ELB-A</occupancysensor>
       <path todir="64" fromdir="128" block="IB31" />
       <path todir="128" fromdir="64" block="IB33" />
@@ -8017,6 +8049,7 @@
       <systemName>IB33</systemName>
       <userName>EL-NOS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>EL-NOS</occupancysensor>
       <path todir="64" fromdir="128" block="IB32" />
       <path todir="128" fromdir="64" block="IB34">
@@ -8034,6 +8067,7 @@
       <systemName>IB34</systemName>
       <userName>EL-M</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>EL-M</occupancysensor>
       <path todir="128" fromdir="64" block="IB10">
         <beansetting setting="2">
@@ -8050,6 +8084,7 @@
       <systemName>IB35</systemName>
       <userName>EL-P</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>EL-P</occupancysensor>
       <path todir="128" fromdir="64" block="IB10">
         <beansetting setting="4">
@@ -8066,6 +8101,7 @@
       <systemName>IB36</systemName>
       <userName>MS-NOS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>MS-NOS</occupancysensor>
       <path todir="64" fromdir="128" block="IB9" />
       <path todir="128" fromdir="64" block="IB37">
@@ -8083,6 +8119,7 @@
       <systemName>IB37</systemName>
       <userName>MS-M</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>MS-M</occupancysensor>
       <path todir="64" fromdir="128" block="IB36">
         <beansetting setting="2">
@@ -8105,6 +8142,7 @@
       <systemName>IB38</systemName>
       <userName>MS-P</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>MS-P</occupancysensor>
       <path todir="64" fromdir="128" block="IB36">
         <beansetting setting="4">
@@ -8124,6 +8162,7 @@
       <systemName>IB39</systemName>
       <userName>MS-SOS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>MS-SOS</occupancysensor>
       <path todir="64" fromdir="128" block="IB37">
         <beansetting setting="2">
@@ -8141,6 +8180,7 @@
       <systemName>IB40</systemName>
       <userName>MS-SA</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>MS-SA</occupancysensor>
       <path todir="64" fromdir="128" block="IB39" />
       <path todir="16" fromdir="32" block="IB41" />
@@ -8154,6 +8194,7 @@
       <systemName>IB41</systemName>
       <userName>VE-NA</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>VE-NA</occupancysensor>
       <path todir="32" fromdir="16" block="IB40">
         <beansetting setting="4">
@@ -8180,6 +8221,7 @@
       <systemName>IB42</systemName>
       <userName>LU-P</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="64" fromdir="128" block="IB21">
         <beansetting setting="2">
           <turnout systemName="LU-PX" />
@@ -8191,11 +8233,13 @@
       <systemName>IB43</systemName>
       <userName>LU-MX</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
     </block>
     <block systemName="IB44" length="0.0" curve="0">
       <systemName>IB44</systemName>
       <userName>AR-SA</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="128" fromdir="64" block="IB41">
         <beansetting setting="2">
           <turnout systemName="VE-AR" />
@@ -8206,12 +8250,14 @@
       <systemName>IB45</systemName>
       <userName>VE-NOS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>VE-NA</occupancysensor>
     </block>
     <block systemName="IB46" length="0.0" curve="0">
       <systemName>IB46</systemName>
       <userName>VE-M</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>VE-M</occupancysensor>
       <path todir="64" fromdir="128" block="IB41">
         <beansetting setting="2">
@@ -8228,6 +8274,7 @@
       <systemName>IB47</systemName>
       <userName>VE-P</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>VE-P</occupancysensor>
       <path todir="64" fromdir="128" block="IB41">
         <beansetting setting="4">
@@ -8240,6 +8287,7 @@
       <systemName>IB48</systemName>
       <userName>VE-SOS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>VE-SOS</occupancysensor>
       <path todir="128" fromdir="64" block="IB11" />
       <path todir="64" fromdir="128" block="IB46">
@@ -8257,6 +8305,7 @@
       <systemName>IB50</systemName>
       <userName>CR-NOS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>CR-NOS</occupancysensor>
       <path todir="128" fromdir="64" block="IB5">
         <beansetting setting="2">
@@ -8274,6 +8323,7 @@
       <systemName>IB51</systemName>
       <userName>CR-P</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>CR-P</occupancysensor>
       <path todir="64" fromdir="128" block="IB50">
         <beansetting setting="4">
@@ -8290,6 +8340,7 @@
       <systemName>IB52</systemName>
       <userName>CR-SOS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>CR-SOS</occupancysensor>
       <path todir="64" fromdir="128" block="IB5">
         <beansetting setting="2">
@@ -8307,12 +8358,14 @@
       <systemName>IB53</systemName>
       <userName>FV-NA</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>FV-NA</occupancysensor>
     </block>
     <block systemName="IB54" length="0.0" curve="0">
       <systemName>IB54</systemName>
       <userName>FV-P</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="64" fromdir="128" block="IB88">
         <beansetting setting="4">
           <turnout systemName="FV-NM" />
@@ -8328,18 +8381,21 @@
       <systemName>IB55</systemName>
       <userName>FV-SOS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>FV-SOS</occupancysensor>
     </block>
     <block systemName="IB56" length="0.0" curve="0">
       <systemName>IB56</systemName>
       <userName>FV-SA</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>FV-SA</occupancysensor>
     </block>
     <block systemName="IB57" length="0.0" curve="0">
       <systemName>IB57</systemName>
       <userName>EW-NA</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>EW-NA</occupancysensor>
       <path todir="128" fromdir="64" block="IB58" />
       <path todir="64" fromdir="128" block="IB88" />
@@ -8348,6 +8404,7 @@
       <systemName>IB58</systemName>
       <userName>EW-NOS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>EW-NOS</occupancysensor>
       <path todir="128" fromdir="64" block="IB1">
         <beansetting setting="2">
@@ -8365,6 +8422,7 @@
       <systemName>IB59</systemName>
       <userName>EW-P</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>EW-P</occupancysensor>
       <path todir="64" fromdir="128" block="IB58">
         <beansetting setting="4">
@@ -8381,6 +8439,7 @@
       <systemName>IB60</systemName>
       <userName>EW-SOS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>EW-SOS</occupancysensor>
       <path todir="64" fromdir="128" block="IB1">
         <beansetting setting="2">
@@ -8402,6 +8461,7 @@
       <systemName>IB61</systemName>
       <userName>EW-SA</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>EW-SA</occupancysensor>
       <path todir="64" fromdir="128" block="IB60">
         <beansetting setting="2">
@@ -8414,6 +8474,7 @@
       <systemName>IB62</systemName>
       <userName>RE-NA</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>RE-NA</occupancysensor>
       <path todir="128" fromdir="64" block="IB61" />
       <path todir="128" fromdir="64" block="IB63" />
@@ -8422,6 +8483,7 @@
       <systemName>IB63</systemName>
       <userName>RE-NOS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>RE-NOS</occupancysensor>
       <path todir="64" fromdir="128" block="IB62" />
       <path todir="128" fromdir="64" block="IB64">
@@ -8439,6 +8501,7 @@
       <systemName>IB64</systemName>
       <userName>RE-P</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>RE-P</occupancysensor>
       <path todir="64" fromdir="128" block="IB63">
         <beansetting setting="4">
@@ -8455,6 +8518,7 @@
       <systemName>IB65</systemName>
       <userName>RE-M</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>RE-M</occupancysensor>
       <path todir="64" fromdir="128" block="IB63">
         <beansetting setting="2">
@@ -8474,11 +8538,13 @@
       <systemName>IB66</systemName>
       <userName>LU-X</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
     </block>
     <block systemName="IB67" length="0.0" curve="0">
       <systemName>IB67</systemName>
       <userName>RE-SOS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>RE-SOS</occupancysensor>
       <path todir="64" fromdir="128" block="IB64">
         <beansetting setting="4">
@@ -8496,6 +8562,7 @@
       <systemName>IB68</systemName>
       <userName>RE-SA</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>RE-SA</occupancysensor>
       <path todir="64" fromdir="128" block="IB67" />
       <path todir="128" fromdir="64" block="IB87">
@@ -8508,6 +8575,7 @@
       <systemName>IB69</systemName>
       <userName>CA-NA</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>CA-NA</occupancysensor>
       <path todir="128" fromdir="64" block="IB70" />
       <path todir="64" fromdir="128" block="IB87" />
@@ -8516,6 +8584,7 @@
       <systemName>IB70</systemName>
       <userName>CA-NOS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>CA-NOS</occupancysensor>
       <path todir="64" fromdir="128" block="IB69" />
       <path todir="128" fromdir="64" block="IB89">
@@ -8533,6 +8602,7 @@
       <systemName>IB72</systemName>
       <userName>CA-P</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>CA-P</occupancysensor>
       <path todir="128" fromdir="64" block="IB73">
         <beansetting setting="4">
@@ -8545,6 +8615,7 @@
       <systemName>IB73</systemName>
       <userName>CA-SOS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>CA-SOS</occupancysensor>
       <path todir="64" fromdir="128" block="IB72">
         <beansetting setting="4">
@@ -8562,6 +8633,7 @@
       <systemName>IB76</systemName>
       <userName>CA-SA</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>CA-SA</occupancysensor>
       <path todir="64" fromdir="128" block="IB97">
         <beansetting setting="2">
@@ -8574,6 +8646,7 @@
       <systemName>IB77</systemName>
       <userName>LU-SBTOS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>LU-SBTOS</occupancysensor>
       <path todir="64" fromdir="128" block="IB3">
         <beansetting setting="4">
@@ -8600,12 +8673,14 @@
       <systemName>IB79</systemName>
       <userName>FV-NOS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>FV-NOS</occupancysensor>
     </block>
     <block systemName="IB81" length="0.0" curve="0">
       <systemName>IB81</systemName>
       <userName>LA-NA</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>LA-NA</occupancysensor>
       <path todir="64" fromdir="128" block="IB11" />
       <path todir="128" fromdir="64" block="IB16" />
@@ -8614,6 +8689,7 @@
       <systemName>IB82</systemName>
       <userName>FVC-I</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>FVC-I</occupancysensor>
       <path todir="64" fromdir="128" block="IB6" />
       <path todir="128" fromdir="64" block="IB88">
@@ -8626,11 +8702,13 @@
       <systemName>IB85</systemName>
       <userName>MS-VE</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
     </block>
     <block systemName="IB86" length="0.0" curve="0">
       <systemName>IB86</systemName>
       <userName>FV-PULP</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="128" fromdir="64" block="IB88">
         <beansetting setting="4">
           <turnout systemName="FV-NAM" />
@@ -8641,6 +8719,7 @@
       <systemName>IB87</systemName>
       <userName>ON-OS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>ON-OS</occupancysensor>
       <path todir="64" fromdir="128" block="IB68">
         <beansetting setting="2">
@@ -8658,6 +8737,7 @@
       <systemName>IB88</systemName>
       <userName>FV-MAIN</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>FV-MAIN</occupancysensor>
       <path todir="64" fromdir="128" block="IB54">
         <beansetting setting="4">
@@ -8685,6 +8765,7 @@
       <systemName>IB89</systemName>
       <userName>CA-MSEN</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>CA-MSEN</occupancysensor>
       <path todir="64" fromdir="128" block="IB70">
         <beansetting setting="2">
@@ -8701,6 +8782,7 @@
       <systemName>IB97</systemName>
       <userName>TCA-OS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>TCA-OS</occupancysensor>
       <path todir="128" fromdir="64" block="IB4">
         <beansetting setting="4">
@@ -8718,6 +8800,7 @@
       <systemName>IB98</systemName>
       <userName>VH-OS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>VH-OS</occupancysensor>
       <path todir="128" fromdir="64" block="IB87">
         <beansetting setting="4">
@@ -8730,6 +8813,7 @@
       <systemName>IB99</systemName>
       <userName>VH-M</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>VH-M</occupancysensor>
       <path todir="128" fromdir="64" block="IB98" />
     </block>
@@ -8737,12 +8821,14 @@
       <systemName>IB100</systemName>
       <userName>CG-NA</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <path todir="64" fromdir="128" block="IB76" />
     </block>
     <block systemName="IB101" length="0.0" curve="0">
       <systemName>IB101</systemName>
       <userName>CA-PNOS</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>CA-PNOS</occupancysensor>
       <path todir="64" fromdir="128" block="IB70">
         <beansetting setting="4">
@@ -8755,11 +8841,13 @@
       <systemName>IB102</systemName>
       <userName>VH-SA</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
     </block>
     <block systemName="IB103" length="0.0" curve="0">
       <systemName>IB103</systemName>
       <userName>VE-YTHROAT</userName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
       <occupancysensor>VE-LEAD</occupancysensor>
       <path todir="64" fromdir="128" block="IB47" />
       <path todir="128" fromdir="64" block="IB48">
@@ -8771,6 +8859,7 @@
     <block systemName="IBMS-NM" length="0.0" curve="0">
       <systemName>IBMS-NM</systemName>
       <permissive>no</permissive>
+      <ghost>no</ghost>
     </block>
   </blocks>
   <layoutblocks class="jmri.jmrit.display.layoutEditor.configurexml.LayoutBlockManagerXml">
