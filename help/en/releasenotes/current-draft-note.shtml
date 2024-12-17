@@ -409,7 +409,7 @@
              Dynamic Transits are always run "No Signals". Dynamic Transits are  removed at train termination. If
              they are not removed for any reason they will not be saved. Currently the route must be clear from end to end
              and any flaws in the routing table will cause grief. Avoid having the train stop in them.</li>
-             <li>You can create a Block with a "Ghost" type. It must have a "not real" sensor, internal is best.
+             <li>Add Ghost type block. It must have a "not real" sensor, internal is best.
              The sensor should not be manipulated by logix or logixNG or scripts. Auto trains will
              set and clear these sensors automatically, manual run trains simply ignore them.
              They are useful for adding blocks between 2 turnouts where you would normally add a tiny block with the same block
