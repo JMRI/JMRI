@@ -102,7 +102,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
     // main center window (TODO: rename this; TODO: Does this still need to be split?)
     JSplitPane rosterGroupSplitPane;
     
-    LccProTable rtable;   // node table in center of screen   
+    LccProTable nodetable;   // node table in center of screen   
 
     JComboBox<String> matchGroupName;   // required group name to display; index <= 0 is all
 
@@ -165,18 +165,18 @@ public class LccProFrame extends TwoPaneTBWindow  {
                 log.debug("keyTyped {} content {}", keyEvent.getKeyCode(), searchField.getText());
                 String search = searchField.getText().toLowerCase();
                 // start search process
-                int count = rtable.getModel().getRowCount();
+                int count = nodetable.getModel().getRowCount();
                 for (int row = 0; row < count; row++) {
-                    String value = ((String)rtable.getTable().getValueAt(row, LccProTableModel.NAMECOL)).toLowerCase();
+                    String value = ((String)nodetable.getTable().getValueAt(row, LccProTableModel.NAMECOL)).toLowerCase();
                     if (value.startsWith(search)) {
                         log.trace("  Hit value {} on {}", value, row);
-                        rtable.getTable().setRowSelectionInterval(row, row);
-                        rtable.getTable().scrollRectToVisible(rtable.getTable().getCellRect(row,LccProTableModel.NAMECOL, true)); 
+                        nodetable.getTable().setRowSelectionInterval(row, row);
+                        nodetable.getTable().scrollRectToVisible(nodetable.getTable().getCellRect(row,LccProTableModel.NAMECOL, true)); 
                         return;
                     }
                 }
                 // here we didn't find anything
-                rtable.getTable().clearSelection();
+                nodetable.getTable().clearSelection();
             }
 
             @Override
@@ -322,11 +322,11 @@ public class LccProFrame extends TwoPaneTBWindow  {
         final JPanel rosters = new JPanel();
         rosters.setLayout(new BorderLayout());
         // set up node table
-        rtable = new LccProTable(memo);
-        rosters.add(rtable, BorderLayout.CENTER);
+        nodetable = new LccProTable(memo);
+        rosters.add(nodetable, BorderLayout.CENTER);
          // add selection listener to display selected row
-        rtable.getTable().getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
-            JTable table = rtable.getTable();
+        nodetable.getTable().getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
+            JTable table = nodetable.getTable();
             if (!e.getValueIsAdjusting()) {       
                 if (table.getSelectedRow() >= 0) {
                     int row = table.convertRowIndexToModel(table.getSelectedRow());
@@ -341,23 +341,23 @@ public class LccProFrame extends TwoPaneTBWindow  {
  
         // Set all the sort and width details of the table first.
         String nodetableref = getWindowFrameRef() + ":nodes";
-        rtable.getTable().setName(nodetableref);
+        nodetable.getTable().setName(nodetableref);
 
         // Allow only one column to be sorted at a time -
         // Java allows multiple column sorting, but to effectively persist that, we
         // need to be intelligent about which columns can be meaningfully sorted
         // with other columns; this bypasses the problem by only allowing the
         // last column sorted to affect sorting
-        RowSorterUtil.addSingleSortableColumnListener(rtable.getTable().getRowSorter());
+        RowSorterUtil.addSingleSortableColumnListener(nodetable.getTable().getRowSorter());
 
         // Reset and then persist the table's ui state
         JTablePersistenceManager tpm = InstanceManager.getNullableDefault(JTablePersistenceManager.class);
         if (tpm != null) {
-            tpm.resetState(rtable.getTable());
-            tpm.persist(rtable.getTable());
+            tpm.resetState(nodetable.getTable());
+            tpm.persist(nodetable.getTable());
         }
-        rtable.getTable().setDragEnabled(true);
-        rtable.getTable().setTransferHandler(new TransferHandler() {
+        nodetable.getTable().setDragEnabled(true);
+        nodetable.getTable().setTransferHandler(new TransferHandler() {
 
             @Override
             public int getSourceActions(JComponent c) {
@@ -366,11 +366,11 @@ public class LccProFrame extends TwoPaneTBWindow  {
 
             @Override
             public Transferable createTransferable(JComponent c) {
-                JTable table = rtable.getTable();
+                JTable table = nodetable.getTable();
                 ArrayList<String> Ids = new ArrayList<>(table.getSelectedRowCount());
                 for (int i = 0; i < table.getSelectedRowCount(); i++) {
                     // TODO replace this with something about the nodes to be dragged and dropped
-                    // Ids.add(rtable.getModel().getValueAt(table.getRowSorter().convertRowIndexToModel(table.getSelectedRows()[i]), RosterTableModel.IDCOL).toString());
+                    // Ids.add(nodetable.getModel().getValueAt(table.getRowSorter().convertRowIndexToModel(table.getSelectedRows()[i]), RostenodetableModel.IDCOL).toString());
                 }
                 return new RosterEntrySelection(Ids);
             }
@@ -380,7 +380,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
                 // nothing to do
             }
         });
-        rtable.getTable().addMouseListener(JmriMouseListener.adapt(new NodePopupListener()));
+        nodetable.getTable().addMouseListener(JmriMouseListener.adapt(new NodePopupListener()));
 
         // assemble roster/groups splitpane
         // TODO - figure out what to do with the left side of this and expand the following
@@ -605,7 +605,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
                 newWindow();
                 break;
             case "resettablecolumns":
-                rtable.resetColumnWidths();
+                nodetable.resetColumnWidths();
                 break;
             default:
                 log.error("method {} not found", args[0]);
@@ -626,9 +626,9 @@ public class LccProFrame extends TwoPaneTBWindow  {
     }
 
     protected void showPopup(JmriMouseEvent e) {
-        int row = rtable.getTable().rowAtPoint(e.getPoint());
-        if (!rtable.getTable().isRowSelected(row)) {
-            rtable.getTable().changeSelection(row, 0, false, false);
+        int row = nodetable.getTable().rowAtPoint(e.getPoint());
+        if (!nodetable.getTable().isRowSelected(row)) {
+            nodetable.getTable().changeSelection(row, 0, false, false);
         }
         JPopupMenu popupMenu = new JPopupMenu();
         
