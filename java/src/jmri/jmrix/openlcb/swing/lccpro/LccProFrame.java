@@ -28,11 +28,7 @@ import jmri.jmrix.openlcb.swing.TrafficStatusLabel;
 
 import jmri.util.*;
 import jmri.util.datatransfer.RosterEntrySelection;
-import jmri.util.swing.JmriAbstractAction;
-import jmri.util.swing.JmriJOptionPane;
-import jmri.util.swing.JmriMouseAdapter;
-import jmri.util.swing.JmriMouseEvent;
-import jmri.util.swing.JmriMouseListener;
+import jmri.util.swing.*;
 import jmri.util.swing.multipane.TwoPaneTBWindow;
 
 import org.openlcb.*;
@@ -146,8 +142,10 @@ public class LccProFrame extends TwoPaneTBWindow  {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setAlignmentX(SwingConstants.LEFT);
 
-        panel.add(new JLabel("Search Node Names:"));
-        var searchField = new JTextField() {
+        var searchPanel = new JPanel();
+        searchPanel.setLayout(new WrapLayout());
+        searchPanel.add(new JLabel("Search Node Names:"));
+        var searchField = new JTextField(12) {
             @Override
             public Dimension getMaximumSize() {
                 Dimension size = super.getMaximumSize();
@@ -185,11 +183,15 @@ public class LccProFrame extends TwoPaneTBWindow  {
             public void keyPressed(KeyEvent keyEvent) {
             }
         });
-        panel.add(searchField);
+        searchPanel.add(searchField);
+        panel.add(searchPanel);
         
+        
+        var groupPanel = new JPanel();
+        groupPanel.setLayout(new WrapLayout());
         JLabel display = new JLabel("Display Node Groups:");
         display.setToolTipText("Use the popup menu on a node's row to define node groups");
-        panel.add(display);
+        groupPanel.add(display);
         
         matchGroupName = new JComboBox<>();
         updateMatchGroupName();     // before adding listener
@@ -199,7 +201,8 @@ public class LccProFrame extends TwoPaneTBWindow  {
         groupStore.addPropertyChangeListener((PropertyChangeEvent evt) -> {
             updateMatchGroupName();
         });
-        panel.add(matchGroupName);
+        groupPanel.add(matchGroupName);
+        panel.add(groupPanel);
         
         panel.add(Box.createVerticalGlue());
         
