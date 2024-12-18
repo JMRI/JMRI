@@ -2860,7 +2860,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 if (!nextBlocks.contains(ro.getNextBlock())) {
                     // if(ro.getNextBlock()!=nextBlock){
                     int currentValue;
-                    if (routingMethod == LayoutBlockConnectivityTools.Metric.HOPCOUNT) {
+                    if (routingMethod == LayoutBlockConnectivityTools.Metric.METRIC) {
                         currentValue = routes.get(i).getMetric();
                     } else /*if (routingMethod==InstanceManager.getDefault(
                         LayoutBlockManager.class).HOPCOUNT)*/ {
