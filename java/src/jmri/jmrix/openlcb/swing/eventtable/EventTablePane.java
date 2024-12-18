@@ -2,6 +2,7 @@ package jmri.jmrix.openlcb.swing.eventtable;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.beans.*;
 import java.nio.charset.StandardCharsets;
 import java.io.*;
 import java.util.*;
@@ -11,9 +12,7 @@ import javax.swing.table.*;
 
 import jmri.*;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.openlcb.OlcbEventNameStore;
-import jmri.jmrix.openlcb.OlcbSensor;
-import jmri.jmrix.openlcb.OlcbTurnout;
+import jmri.jmrix.openlcb.*;
 import jmri.util.ThreadingUtil;
 
 import jmri.swing.JmriJTablePersistenceManager;
@@ -43,12 +42,14 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     Connection connection;
     NodeID nid;
     OlcbEventNameStore nameStore;
+    OlcbNodeGroupStore groupStore;
 
-    MimicNodeStore store;
+    MimicNodeStore mimcStore;
     EventTableDataModel model;
     JTable table;
     Monitor monitor;
 
+    JComboBox<String> matchGroupName;   // required group name to display; index <= 0 is all
     JCheckBox showRequiresLabel; // requires a user-provided name to display
     JCheckBox showRequiresMatch; // requires at least one consumer and one producer exist to display
     JCheckBox popcorn;           // popcorn mode displays events in real time
@@ -68,12 +69,12 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         this.connection = memo.get(Connection.class);
         this.nid = memo.get(NodeID.class);
         this.nameStore = memo.get(OlcbEventNameStore.class);
-        
-        store = memo.get(MimicNodeStore.class);
+        this.groupStore = InstanceManager.getDefault(OlcbNodeGroupStore.class);
+        this.mimcStore = memo.get(MimicNodeStore.class);
         EventTable stdEventTable = memo.get(OlcbInterface.class).getEventTable();
         if (stdEventTable == null) log.warn("no OLCB EventTable found");
 
-        model = new EventTableDataModel(store, stdEventTable, nameStore);
+        model = new EventTableDataModel(mimcStore, stdEventTable, nameStore);
         sorter = new TableRowSorter<>(model);
 
 
@@ -119,7 +120,17 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         updateButton.addActionListener(this::sendRequestEvents); 
         updateButton.setToolTipText("Query the network and load results into the table");
         buttonPanel.add(updateButton);
-
+        
+        matchGroupName = new JComboBox<>();
+        updateMatchGroupName();     // before adding listener
+        matchGroupName.addActionListener((ActionEvent e) -> {
+            filter();
+        });
+        groupStore.addPropertyChangeListener((PropertyChangeEvent evt) -> {
+            updateMatchGroupName();
+        });
+        buttonPanel.add(matchGroupName);
+        
         showRequiresLabel = new JCheckBox(Bundle.getMessage("BoxShowRequiresLabel"));
         showRequiresLabel.addActionListener((ActionEvent e) -> {
             filter();
@@ -219,6 +230,19 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     public EventTablePane() {
         // interface and connections built in initComponents(..)
     }
+    
+    // load updateMatchGroup combobox with current contents
+    protected void updateMatchGroupName() {
+        matchGroupName.removeAllItems();
+        matchGroupName.addItem("(All Groups)");
+        
+        var list = groupStore.getGroupNames();
+        for (String group : list) {
+            matchGroupName.addItem(group);
+        }        
+
+        matchGroupName.setVisible(matchGroupName.getItemCount() > 1);
+    }
 
     @Override
     public void dispose() {
@@ -287,7 +311,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
         int nextDelay = 0;
 
         // assumes that a VerifyNodes has been done and all nodes are in the MimicNodeStore
-        for (var memo : store.getNodeMemos()) {
+        for (var memo : mimcStore.getNodeMemos()) {
 
             jmri.util.ThreadingUtil.runOnLayoutDelayed(() -> {
                 var destNodeID = memo.getNodeID();
@@ -575,6 +599,17 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                     }
                 }
 
+                // check for group match
+                if ( matchGroupName.getSelectedIndex() > 0) {  // -1 is empty combobox
+                    String group = matchGroupName.getSelectedItem().toString();
+                    var memo = model.getTripleMemo(row);
+                    if ( (! groupStore.isNodeInGroup(memo.producer, group))
+                        && (! groupStore.isNodeInGroup(memo.consumer, group)) ) {
+                            return false;
+                    }
+                }
+                
+                // passed all filters
                 return true;
             }
         };

@@ -23,27 +23,21 @@ import jmri.jmrix.ActiveSystemsMenu;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.openlcb.OlcbNodeGroupStore;
 import jmri.jmrix.openlcb.swing.TrafficStatusLabel;
 
-import jmri.util.HelpUtil;
-import jmri.util.WindowMenu;
+import jmri.util.*;
 import jmri.util.datatransfer.RosterEntrySelection;
-import jmri.util.swing.JmriAbstractAction;
-import jmri.util.swing.JmriJOptionPane;
-import jmri.util.swing.JmriMouseAdapter;
-import jmri.util.swing.JmriMouseEvent;
-import jmri.util.swing.JmriMouseListener;
+import jmri.util.swing.*;
 import jmri.util.swing.multipane.TwoPaneTBWindow;
 
-import org.openlcb.MimicNodeStore;
+import org.openlcb.*;
 
 /**
  * A window for LCC Network management.
  * <p>
  *
- * @author Bob Jacobsen Copyright (C) 2010, 2016, 2024
- * @author Kevin Dickerson Copyright (C) 2011
- * @author Randall Wood Copyright (C) 2012
+ * @author Bob Jacobsen Copyright (C) 2024
  */
 public class LccProFrame extends TwoPaneTBWindow  {
 
@@ -53,7 +47,8 @@ public class LccProFrame extends TwoPaneTBWindow  {
 
     CanSystemConnectionMemo memo;
     MimicNodeStore nodestore;
-    
+    OlcbNodeGroupStore groupStore;
+
     public LccProFrame(String name) {
         this(name,
             jmri.InstanceManager.getNullableDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));
@@ -85,6 +80,7 @@ public class LccProFrame extends TwoPaneTBWindow  {
             return;
         }
         this.nodestore = memo.get(MimicNodeStore.class);
+        this.groupStore = InstanceManager.getDefault(OlcbNodeGroupStore.class);
         this.allowInFrameServlet = false;
         prefsMgr = InstanceManager.getDefault(UserPreferencesManager.class);
         this.setTitle(name);
@@ -106,7 +102,10 @@ public class LccProFrame extends TwoPaneTBWindow  {
     // main center window (TODO: rename this; TODO: Does this still need to be split?)
     JSplitPane rosterGroupSplitPane;
     
-    LccProTable rtable;   // node table in center of screen
+    LccProTable rtable;   // node table in center of screen   
+
+    JComboBox<String> matchGroupName;   // required group name to display; index <= 0 is all
+
     final JLabel statusField = new JLabel();
     final static Dimension summaryPaneDim = new Dimension(0, 170);
 
@@ -143,8 +142,10 @@ public class LccProFrame extends TwoPaneTBWindow  {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setAlignmentX(SwingConstants.LEFT);
 
-        panel.add(new JLabel("Search Node Names:"));
-        var searchField = new JTextField() {
+        var searchPanel = new JPanel();
+        searchPanel.setLayout(new WrapLayout());
+        searchPanel.add(new JLabel("Search Node Names:"));
+        var searchField = new JTextField(12) {
             @Override
             public Dimension getMaximumSize() {
                 Dimension size = super.getMaximumSize();
@@ -161,10 +162,10 @@ public class LccProFrame extends TwoPaneTBWindow  {
             @Override
             public void keyReleased(KeyEvent keyEvent) {
                 // on release so the searchField has been updated
-                log.trace("keyTyped {} content {}", keyEvent.getKeyCode(), searchField.getText());
+                log.debug("keyTyped {} content {}", keyEvent.getKeyCode(), searchField.getText());
                 String search = searchField.getText().toLowerCase();
                 // start search process
-                int count = rtable.getModel().getColumnCount();
+                int count = rtable.getModel().getRowCount();
                 for (int row = 0; row < count; row++) {
                     String value = ((String)rtable.getTable().getValueAt(row, LccProTableModel.NAMECOL)).toLowerCase();
                     if (value.startsWith(search)) {
@@ -182,11 +183,41 @@ public class LccProFrame extends TwoPaneTBWindow  {
             public void keyPressed(KeyEvent keyEvent) {
             }
         });
-        panel.add(searchField);
+        searchPanel.add(searchField);
+        panel.add(searchPanel);
+        
+        
+        var groupPanel = new JPanel();
+        groupPanel.setLayout(new WrapLayout());
+        JLabel display = new JLabel("Display Node Groups:");
+        display.setToolTipText("Use the popup menu on a node's row to define node groups");
+        groupPanel.add(display);
+        
+        matchGroupName = new JComboBox<>();
+        updateMatchGroupName();     // before adding listener
+        matchGroupName.addActionListener((ActionEvent e) -> {
+            filter();
+        });
+        groupStore.addPropertyChangeListener((PropertyChangeEvent evt) -> {
+            updateMatchGroupName();
+        });
+        groupPanel.add(matchGroupName);
+        panel.add(groupPanel);
+        
         panel.add(Box.createVerticalGlue());
-        panel.add(new JLabel("bottomRight needs more work"));
         
         return panel;
+    }
+
+    // load updateMatchGroup combobox with current contents
+    protected void updateMatchGroupName() {
+        matchGroupName.removeAllItems();
+        matchGroupName.addItem("(All Groups)");
+        
+        var list = groupStore.getGroupNames();
+        for (String group : list) {
+            matchGroupName.addItem(group);
+        }        
     }
 
     protected final void buildWindow() {
@@ -369,6 +400,33 @@ public class LccProFrame extends TwoPaneTBWindow  {
         
         log.trace("createTop returns {}", rosterGroupSplitPane);
         return rosterGroupSplitPane;
+    }
+
+    /**
+     * Set up filtering of displayed rows by group level
+     */
+    private void filter() {
+        RowFilter<LccProTableModel, Integer> rf = new RowFilter<LccProTableModel, Integer>() {
+            /**
+             * @return true if row is to be displayed
+             */
+            @Override
+            public boolean include(RowFilter.Entry<? extends LccProTableModel, ? extends Integer> entry) {
+
+                // check for group match
+                if ( matchGroupName.getSelectedIndex() > 0) {  // -1 is empty combobox
+                    String group = matchGroupName.getSelectedItem().toString();
+                    NodeID node = new NodeID((String)entry.getValue(LccProTableModel.IDCOL));
+                    if ( ! groupStore.isNodeInGroup(node, group)) {
+                            return false;
+                    }
+                }
+                
+                // passed all filters
+                return true;
+            }
+        };
+        rtable.sorter.setRowFilter(rf);
     }
 
     /*=============== Getters and Setters for core properties ===============*/
@@ -573,10 +631,46 @@ public class LccProFrame extends TwoPaneTBWindow  {
             rtable.getTable().changeSelection(row, 0, false, false);
         }
         JPopupMenu popupMenu = new JPopupMenu();
+        
+        NodeID node = new NodeID((String) rtable.getTable().getValueAt(row, LccProTableModel.IDCOL));
+        
+        var addMenu = new JMenuItem("Add Node To Group");
+        addMenu.addActionListener((ActionEvent evt) -> {
+            addToGroupPrompt(node);
+        });
+        popupMenu.add(addMenu);
 
+        var removeMenu = new JMenuItem("Remove Node From Group");
+        removeMenu.addActionListener((ActionEvent evt) -> {
+            removeFromGroupPrompt(node);
+        });
+        popupMenu.add(removeMenu);
+        
        popupMenu.show(e.getComponent(), e.getX(), e.getY());
     }
 
+    void addToGroupPrompt(NodeID node) {
+        var group = JmriJOptionPane.showInputDialog(
+                    null, "Add to Group:", "Add to Group", 
+                    JmriJOptionPane.QUESTION_MESSAGE
+                );
+        if (! group.isEmpty()) {
+            groupStore.addNodeToGroup(node, group);
+        }
+        updateMatchGroupName();
+    }
+    
+    void removeFromGroupPrompt(NodeID node) {
+        var group = JmriJOptionPane.showInputDialog(
+                    null, "Remove from Group:", "Remove from Group", 
+                    JmriJOptionPane.QUESTION_MESSAGE
+                );
+        if (! group.isEmpty()) {
+            groupStore.removeNodeFromGroup(node, group);
+        }
+        updateMatchGroupName();
+    }
+    
     /**
      * Create and display a status bar along the bottom edge of the Roster main
      * pane.
