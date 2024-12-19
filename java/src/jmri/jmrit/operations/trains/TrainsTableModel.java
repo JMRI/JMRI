@@ -531,9 +531,14 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                         Bundle.getMessage("CanNotResetTrain"), JmriJOptionPane.ERROR_MESSAGE);
             }
         } else if (!train.isBuilt()) {
-            JmriJOptionPane.showMessageDialog(null,
+            int reply = JmriJOptionPane.showOptionDialog(null,
                     Bundle.getMessage("TrainNeedsBuild", train.getName()),
-                    Bundle.getMessage("CanNotPerformAction"), JmriJOptionPane.INFORMATION_MESSAGE);
+                    Bundle.getMessage("CanNotPerformAction"), JmriJOptionPane.NO_OPTION,
+                    JmriJOptionPane.INFORMATION_MESSAGE, null,
+                    new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("Build")}, null);
+            if (reply == 1) {
+                train.build();
+            }
         } else if (train.isBuilt() && trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE)) {
             log.debug("Move train ({})", train.getName());
             train.move();
