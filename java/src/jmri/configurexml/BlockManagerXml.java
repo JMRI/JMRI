@@ -306,7 +306,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
             block.setPermissiveWorking(permissive);
         }
         if (element.getChild("ghost") != null) {
-            block.setIsGhost(element.getChild("ghost").getText().equals("yes") ? true : false );
+            block.setIsGhost(element.getChild("ghost").getText().equals("yes"));
         }
         Element deniedBlocks = element.getChild("deniedBlocks");
         if (deniedBlocks != null) {

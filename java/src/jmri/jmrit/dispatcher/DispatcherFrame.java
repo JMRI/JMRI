@@ -1739,6 +1739,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 }
             }
             at.dispose();
+            
         }
         activeTrainsTableModel.fireTableDataChanged();
         if (allocatedSectionTableModel != null) {

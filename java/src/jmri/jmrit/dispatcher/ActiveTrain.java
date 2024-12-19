@@ -2,6 +2,7 @@ package jmri.jmrit.dispatcher;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,7 +14,6 @@ import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Path;
 import jmri.Section;
-import jmri.SectionManager;
 import jmri.Sensor;
 import jmri.Transit;
 import jmri.Transit.TransitType;
@@ -1326,11 +1326,21 @@ public class ActiveTrain implements PropertyChangeProvider {
         if ( mTransit.getTransitType() == TransitType.DYNAMICADHOC) {
             for (TransitSection ts: mTransit.getTransitSectionList()) {
                 if (ts.getSection().getSectionType() == SectionType.DYNAMICADHOC) {
-                    InstanceManager.getDefault(SectionManager.class).deleteSection(ts.getSection());
+                    try {
+                        InstanceManager.getDefault(jmri.SectionManager.class).deleteBean(ts.getSection(), "DoDelete");  // NOI18N
+                    } catch (PropertyVetoException e) {
+                        log.error("Cannot delete adhoc Section.");
+                    }
+                    ts.getSection().dispose();
                 }
             }
             mTransit.removeAllSections();
-            InstanceManager.getDefault(jmri.TransitManager.class).deleteTransit(mTransit);
+            try {
+                InstanceManager.getDefault(jmri.TransitManager.class).deleteBean(mTransit, "DoDelete");  // NOI18N
+            } catch (PropertyVetoException e) {
+                log.error("Cannot delete adhoc transit.");
+            }
+            mTransit.dispose();
         }
     }
 

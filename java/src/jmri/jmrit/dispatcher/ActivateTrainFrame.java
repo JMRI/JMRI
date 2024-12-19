@@ -380,7 +380,7 @@ public class ActivateTrainFrame extends JmriJFrame {
                         transitSelectBox.setEnabled(true);
                         //adHocCloseLoop.setEnabled(false);
                         inTransitBox.setEnabled(true);
-                        inTransitBox.setEnabled(true);
+                        handleInTransitClick();
                         viaBlockBox.setVisible(false);
                         viaBlockBoxLabel.setVisible(false);
                     }
@@ -394,7 +394,7 @@ public class ActivateTrainFrame extends JmriJFrame {
                         transitSelectBox.setEnabled(false);
                         //adHocCloseLoop.setEnabled(true);
                         inTransitBox.setEnabled(false);
-                        inTransitBox.setEnabled(true);
+                        inTransitBox.setSelected(true);
                         initializeStartingBlockComboDynamic();
                         viaBlockBox.setVisible(true);
                         viaBlockBoxLabel.setVisible(true);
@@ -455,7 +455,7 @@ public class ActivateTrainFrame extends JmriJFrame {
             inTransitBox.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    handleInTransitClick(e);
+                    handleInTransitClick();
                 }
             });
             inTransitBox.setToolTipText(Bundle.getMessage("InTransitBoxHint"));
@@ -843,7 +843,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         }
     }
 
-    private void handleInTransitClick(ActionEvent e) {
+    private void handleInTransitClick() {
         if (!inTransitBox.isSelected() && selectedTransit.getEntryBlocksList().isEmpty()) {
             JmriJOptionPane.showMessageDialog(initiateFrame, Bundle
                     .getMessage("NoEntryBlocks"), Bundle.getMessage("MessageTitle"),
@@ -1001,6 +1001,7 @@ public class ActivateTrainFrame extends JmriJFrame {
     private void handleStartingBlockSelectionChanged(ActionEvent e) {
         if (radioTransitsAdHoc.isSelected() ) {
             initializeViaBlockDynamicCombo();
+            initializeDestinationBlockDynamicCombo();
         } else {
             initializeDestinationBlockCombo();
         }
@@ -1137,6 +1138,7 @@ public class ActivateTrainFrame extends JmriJFrame {
     }
 
     private void initializeStartingBlockCombo() {
+        String prevValue = (String)startingBlockBox.getSelectedItem();
         startingBlockBox.removeAllItems();
         startingBlockBoxList.clear();
         if (!inTransitBox.isSelected() && selectedTransit.getEntryBlocksList().isEmpty()) {
@@ -1158,10 +1160,14 @@ public class ActivateTrainFrame extends JmriJFrame {
                 found = true;
             }
         }
+        if (prevValue != null) {
+            startingBlockBox.setSelectedItem(prevValue);
+        }
         JComboBoxUtil.setupComboBoxMaxRows(startingBlockBox);
     }
 
     private void initializeDestinationBlockCombo() {
+        String prevValue = (String)destinationBlockBox.getSelectedItem();
         destinationBlockBox.removeAllItems();
         destinationBlockBoxList.clear();
         int index = startingBlockBox.getSelectedIndex();
@@ -1180,6 +1186,9 @@ public class ActivateTrainFrame extends JmriJFrame {
                 bName = bName + "-" + seq;
             }
             destinationBlockBox.addItem(bName);
+        }
+        if (prevValue != null) {
+            destinationBlockBox.setSelectedItem(prevValue);
         }
         JComboBoxUtil.setupComboBoxMaxRows(destinationBlockBox);
     }
@@ -2039,6 +2048,7 @@ public class ActivateTrainFrame extends JmriJFrame {
     }
 
     private void initializeViaBlockDynamicCombo() {
+        String prevValue = (String) viaBlockBox.getSelectedItem();
         viaBlockBox.removeActionListener(viaBlockBoxListener);
         viaBlockBox.removeAllItems();
         viaBlockBoxList.clear();
@@ -2055,6 +2065,9 @@ public class ActivateTrainFrame extends JmriJFrame {
                     }
                 }
             }
+        }
+        if (prevValue != null) {
+            viaBlockBox.setSelectedItem(prevValue);
         }
         viaBlockBox.addActionListener(viaBlockBoxListener);
     }

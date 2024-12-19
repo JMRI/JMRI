@@ -99,16 +99,10 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                         log.error("Transit name missing when reading TrainInfoFile {}", name);
                     }
                     if (traininfo.getAttribute("dynamictransit") != null ) {
-                        tInfo.setDynamicTransit(false);
-                        if (traininfo.getAttribute("dynamictransit").getValue().equals("yes")) {
-                            tInfo.setDynamicTransit(true);
-                        }
+                        tInfo.setDynamicTransit(traininfo.getAttribute("dynamictransit").getValue().equals("yes"));
                     }
                     if (traininfo.getAttribute("dynamictransitcloseloop") != null ) {
-                        tInfo.setDynamicTransitCloseLoopIfPossible(false);
-                        if (traininfo.getAttribute("dynamictransitcloseloop").getValue().equals("yes")) {
-                            tInfo.setDynamicTransitCloseLoopIfPossible(true);
-                        }
+                        tInfo.setDynamicTransitCloseLoopIfPossible(traininfo.getAttribute("dynamictransitcloseloop").getValue().equals("yes"));
                     }
                     if (version < 6) {
                         if (traininfo.getAttribute("trainname") != null) {
