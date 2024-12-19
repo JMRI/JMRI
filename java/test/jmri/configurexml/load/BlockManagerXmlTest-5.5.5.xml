@@ -348,7 +348,6 @@
       <systemName>IB1</systemName>
       <userName>blocknorthwest</userName>
       <permissive>no</permissive>
-      <ghost>no</ghost>
       <occupancysensor>blocknorthwestoccupied</occupancysensor>
       <path todir="64" fromdir="128" block="IB2">
         <beansetting setting="2">
@@ -392,7 +391,6 @@
       <systemName>IB3</systemName>
       <userName>blocknorthsiding</userName>
       <permissive>no</permissive>
-      <ghost>no</ghost>
       <occupancysensor>blocknorthsidingoccupied</occupancysensor>
       <path todir="128" fromdir="64" block="IB1">
         <beansetting setting="4">
@@ -436,7 +434,6 @@
       <systemName>IB5</systemName>
       <userName>blockeast</userName>
       <permissive>yes</permissive>
-      <ghost>no</ghost>
       <occupancysensor>blockeastoccupied</occupancysensor>
       <path todir="16" fromdir="32" block="IB4">
         <beansetting setting="2">
@@ -470,7 +467,6 @@
       <systemName>IB7</systemName>
       <userName>blocksoutheast</userName>
       <permissive>no</permissive>
-      <ghost>no</ghost>
       <occupancysensor>blocksoutheastoccupied</occupancysensor>
       <path todir="16" fromdir="32" block="IB5">
         <beansetting setting="2">
@@ -497,7 +493,6 @@
       <systemName>IB8</systemName>
       <userName>blocksouth</userName>
       <permissive>no</permissive>
-      <ghost>no</ghost>
       <occupancysensor>blocksouthoccupied</occupancysensor>
       <path todir="64" fromdir="128" block="IB7">
         <beansetting setting="2">
@@ -514,7 +509,6 @@
       <systemName>IB9</systemName>
       <userName>blocksouthsiding</userName>
       <permissive>no</permissive>
-      <ghost>no</ghost>
       <occupancysensor>blocksouthsidingoccupied</occupancysensor>
       <path todir="64" fromdir="128" block="IB7">
         <beansetting setting="4">
@@ -531,7 +525,6 @@
       <systemName>IB10</systemName>
       <userName>blocksouthwest</userName>
       <permissive>no</permissive>
-      <ghost>no</ghost>
       <occupancysensor>blocksouthwestoccupied</occupancysensor>
       <path todir="64" fromdir="128" block="IB8">
         <beansetting setting="2">
@@ -558,7 +551,6 @@
       <systemName>IB11</systemName>
       <userName>blockwest</userName>
       <permissive>no</permissive>
-      <ghost>no</ghost>
       <occupancysensor>blockwestoccupied</occupancysensor>
       <path todir="16" fromdir="32" block="IB1">
         <beansetting setting="2">
@@ -575,7 +567,6 @@
       <systemName>IB12</systemName>
       <userName>blockwestsiding</userName>
       <permissive>no</permissive>
-      <ghost>no</ghost>
       <occupancysensor>blockwestsidingoccupied</occupancysensor>
       <path todir="16" fromdir="32" block="IB1">
         <beansetting setting="4">

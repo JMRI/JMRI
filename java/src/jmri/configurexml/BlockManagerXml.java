@@ -132,8 +132,9 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                     perm = "yes";
                 }
                 elem.addContent(new Element("permissive").addContent(perm));
-                elem.addContent(new Element("ghost").addContent(b.getIsGhost() ? "yes":"no"));
-
+                if (b.getIsGhost()) {
+                    elem.addContent(new Element("ghost").addContent("yes"));
+                }
                 // Add content. First, the sensor
                 if (b.getNamedSensor() != null) {
                     elem.addContent(new Element("occupancysensor").addContent(b.getNamedSensor().getName()));
