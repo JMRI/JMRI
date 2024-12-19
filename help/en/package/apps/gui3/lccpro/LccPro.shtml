@@ -62,8 +62,10 @@
       name.  As you continue typing, this will narrow down to finally
       matching just the right entry. The search ignores the lower vs upper case.
       
-      <p><a name="groups" id="groups">
-      <span class="since">Since <a href="http://jmri.org/releasenotes/jmri5.11.2.shtml">JMRI 5.11.2</a></span>
+
+
+      <p><span class="since">Since <a href="http://jmri.org/releasenotes/jmri5.11.2.shtml">JMRI 5.11.2</a></span>
+      <a name="nodegroups" id="nodegroups">
       Below that is a selection box that will let you display "(All)"
       nodes or just ones that you've entered into a specific "Node Group".
       To add or remove nodes from a group, use the popup menu (right-click or ctrl-click)
@@ -93,7 +95,7 @@
       
       <p>
       Because LccPro is a work in progress, the lower right region is not populated yet.  
-      <a href=https://groups.io/g/jmriusers">Suggestions</a> 
+      <a href="https://groups.io/g/jmriusers">Suggestions</a> 
       about what to put there would be appreciated!
       </p>
       

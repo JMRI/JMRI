@@ -205,7 +205,6 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
                 }
                 break;
             default:
-                // TODO - fire the buttons
                 break;
         }
     }
