@@ -7,6 +7,7 @@ import java.util.SortedSet;
 import jmri.InstanceManager;
 import jmri.Section;
 import jmri.Transit;
+import jmri.Transit.TransitType;
 import jmri.TransitManager;
 import jmri.TransitSection;
 import jmri.TransitSectionAction;
@@ -46,7 +47,9 @@ public class DefaultTransitManagerXml extends jmri.managers.configurexml.Abstrac
             for (Transit transit : tstList) {
                 String tstName = transit.getSystemName();
                 log.debug("Transit system name is {}", tstName);
-
+                if (transit.getTransitType() == TransitType.DYNAMICADHOC) {
+                    continue;
+                }
                 Element elem = new Element("transit");
                 elem.addContent(new Element("systemName").addContent(tstName));
 

@@ -259,4 +259,26 @@ public interface Transit extends NamedBean {
 
     boolean removeLastTemporarySection(Section s);
 
+    enum TransitType {
+        DYNAMICADHOC,   // Created on an as required basis, not to be saved.
+        USERDEFINED    // Default Save all the information
+    }
+
+    /**
+     * Set transit Type.
+     * <ul>
+     * <li>USERDEFINED - Default Save all the information.
+     * <li>DYNAMICADHOC - Created on an as required basis, not to be saved.
+     * </ul>
+     * @param type constant of transit type.
+     */
+    void setTransitType(TransitType type);
+
+    /**
+     * Get Transit Type.
+     * Defaults to USERDEFINED.
+     * @return constant of section type.
+     */
+    TransitType getTransitType();
+
 }

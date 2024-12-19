@@ -231,6 +231,8 @@ public class LoadAtStartUpTest {
 
         // cleanup window
         JUnitUtil.dispose(d);
+        InstanceManager.getDefault(jmri.SignalMastManager.class).dispose();
+        InstanceManager.getDefault(jmri.SignalMastLogicManager.class).dispose();
     }
 
     private float speedStopping = 0.0f;

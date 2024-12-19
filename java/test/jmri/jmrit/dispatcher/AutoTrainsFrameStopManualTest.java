@@ -292,7 +292,9 @@ public class AutoTrainsFrameStopManualTest {
 
         // cleanup window
         JUnitUtil.dispose(d);
-        
+        InstanceManager.getDefault(jmri.SignalMastManager.class).dispose();
+        InstanceManager.getDefault(jmri.SignalMastLogicManager.class).dispose();
+
     }
 
     private float speedMedium = 0.0f;
@@ -383,6 +385,9 @@ public class AutoTrainsFrameStopManualTest {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initRosterConfigManager();
         JUnitUtil.initDebugThrottleManager();
+        JUnitUtil.initDefaultSignalMastManager();
+        JUnitUtil.initSignalMastLogicManager();
+
     }
 
     @AfterEach
