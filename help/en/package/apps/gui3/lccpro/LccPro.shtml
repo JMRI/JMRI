@@ -64,7 +64,7 @@
       
 
 
-      <p><span class="since">Since <a href="http://jmri.org/releasenotes/jmri5.11.1.shtml">JMRI 5.11.1</a></span>
+      <p><span class="since">Since <a href="http://jmri.org/releasenotes/jmri5.11.2.shtml">JMRI 5.11.2</a></span>
       <a name="nodegroups" id="nodegroups">
       Below that is a selection box that will let you display "(All)"
       nodes or just ones that you've entered into a specific "Node Group".
