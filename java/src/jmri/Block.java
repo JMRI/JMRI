@@ -666,7 +666,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     /**
      * Set if the block is a ghost
      * Fires propertyChange "BlockGhost" when changed.
-     * @param w true permissive, false NOT permissive
+     * @param w true ghost, false NOT ghost
      */
     public void setIsGhost(boolean w) {
         if (_ghost != w) {
