@@ -269,6 +269,8 @@ public class DispatcherTrainInfoFileTest {
     public void tearDown() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitUtil.dispose(d);
+        InstanceManager.getDefault(jmri.SignalMastManager.class).dispose();
+        InstanceManager.getDefault(jmri.SignalMastLogicManager.class).dispose();
         JUnitUtil.clearShutDownManager();
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.resetFileUtilSupport();
