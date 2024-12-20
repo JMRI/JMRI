@@ -707,12 +707,20 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                     return memo.consumer != null ? memo.consumer.toString() : "";
                 case COL_CONSUMER_NAME: return memo.consumerName;
                 case COL_CONTEXT_INFO:
-                    // set up for multi-line output in the cell
+
+                    // When table is constrained, these rows don't match up, need to find constrained row
+                    var viewRow = sorter.convertRowIndexToView(row);
+
+                    if (lineIncrement <= 0) { // load cache variable?
+                        if (viewRow >= 0) {
+                            lineIncrement = table.getRowHeight(viewRow); // do this if valid row
+                        } else {
+                            lineIncrement = table.getFont().getSize()*13/10; // line spacing from font if not valid row
+                        }
+                     }
+
                     var result = new StringBuilder();
-                    if (lineIncrement <= 0) { // load cached value
-                        lineIncrement = table.getFont().getSize()*13/10; // line spacing
-                        log.trace("Found font size {}", table.getFont().getSize());
-                    }
+
                     var height = lineIncrement/3; // for margins
                     var first = true;   // no \n before first line
 
@@ -724,33 +732,31 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                         first = false;
                     }
 
-                    // scan the event info as available
+                    // scan the CD/CDI information as available
                     for (var entry : stdEventTable.getEventInfo(memo.eventID).getAllEntries()) {
                         if (!first) result.append("\n");
                         first = false;
                         height += lineIncrement;
                         result.append(entry.getDescription());
                     }
-                    // When table is constrained, these rows don't match up, need to find constrained row
-                    var viewRow = sorter.convertRowIndexToView(row);
-                    if (viewRow >= 0) { // make sure it's a valid row in the table
+
+                    // set height for multi-line output in the cell
+                    if (viewRow >= 0) { // make sure it's a valid visible row in the table; -1 signals not
                         // set height
                         if (height < lineIncrement) {
                             height = height+lineIncrement; // when no lines, assume 1
                         }
-                       log.trace("checking row {} for {} > {}", viewRow, Math.abs(height - table.getRowHeight(row)), lineIncrement/2);
-                       log.trace("   based on {} = {}", height, table.getRowHeight(row)); 
-                       if (Math.abs(height - table.getRowHeight(viewRow)) > lineIncrement/2) { // don't spend time changing if set already
-                            table.setRowHeight(viewRow, height);
-                            log.trace("     Set height to {}", height);
-                        }
+                        table.setRowHeight(viewRow, height);
+                    } else {
+                        lineIncrement = -1;  // reload on next request, hoping for a viewed row
                     }
                     return new String(result);
                 default: return "Illegal row "+row+" "+col;
             }
         }
 
-        int lineIncrement = -1; // cache the line spacing for multi-line cells
+        int lineIncrement = -1; // cache the line spacing for multi-line cells; 
+                                // this gets the value before any adjustments done
 
         @Override
         public void setValueAt(Object value, int row, int col) {
