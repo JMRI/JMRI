@@ -64,8 +64,8 @@ public class ZeroConfClient {
     public List<ServiceInfo> getServices(@Nonnull String service) {
         ArrayList<ServiceInfo> services = new ArrayList<>();
         for (JmDNS server : InstanceManager.getDefault(ZeroConfServiceManager.class).getDNSes().values()) {
-            if (server.list(service) != null) {
-                services.addAll(Arrays.asList(server.list(service)));
+            if (server.list(service,0) != null) {
+                services.addAll(Arrays.asList(server.list(service,0)));
             }
         }
         return services;
