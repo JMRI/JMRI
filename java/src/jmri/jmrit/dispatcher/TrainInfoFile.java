@@ -98,6 +98,12 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                     } else {
                         log.error("Transit name missing when reading TrainInfoFile {}", name);
                     }
+                    if (traininfo.getAttribute("dynamictransit") != null ) {
+                        tInfo.setDynamicTransit(traininfo.getAttribute("dynamictransit").getValue().equals("yes"));
+                    }
+                    if (traininfo.getAttribute("dynamictransitcloseloop") != null ) {
+                        tInfo.setDynamicTransitCloseLoopIfPossible(traininfo.getAttribute("dynamictransitcloseloop").getValue().equals("yes"));
+                    }
                     if (version < 6) {
                         if (traininfo.getAttribute("trainname") != null) {
                             tInfo.setTrainName(traininfo.getAttribute("trainname").getValue());
@@ -142,7 +148,14 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                     } else {
                         log.error("Destination block name missing when reading TrainInfoFile {}", name);
                     }
-
+                    if (tInfo.getDynamicTransit()) {
+                        if (traininfo.getAttribute("viablockname") != null) {
+                            // there is a transit name selected
+                            tInfo.setViaBlockName(traininfo.getAttribute("viablockname").getValue());
+                        } else {
+                            log.error("Via block name missing for dynamic trainsit when reading TrainInfoFile {}", name);
+                        }
+                    }
                     if (traininfo.getAttribute("trainfromroster") != null) {
                         tInfo.setTrainFromRoster(true);
                         if (traininfo.getAttribute("trainfromroster").getValue().equals("no")) {
@@ -506,6 +519,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         traininfo.setAttribute("version", "7");
         traininfo.setAttribute("transitname", tf.getTransitName());
         traininfo.setAttribute("transitid", tf.getTransitId());
+        traininfo.setAttribute("dynamictransit", (tf.getDynamicTransit() ? "yes" : "no"));
         traininfo.setAttribute("trainname", tf.getTrainName());
         traininfo.setAttribute("trainusername", tf.getTrainUserName());
         traininfo.setAttribute("rosterid", tf.getRosterId());
@@ -517,6 +531,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         traininfo.setAttribute("endblockname", tf.getDestinationBlockName());
         traininfo.setAttribute("endblockid", tf.getDestinationBlockId());
         traininfo.setAttribute("endblockseq", Integer.toString(tf.getDestinationBlockSeq()));
+        traininfo.setAttribute("viablockname", tf.getViaBlockName());
         traininfo.setAttribute("trainfromroster", "" + (tf.getTrainFromRoster() ? "yes" : "no"));
         traininfo.setAttribute("trainfromtrains", "" + (tf.getTrainFromTrains() ? "yes" : "no"));
         traininfo.setAttribute("trainfromuser", "" + (tf.getTrainFromUser() ? "yes" : "no"));

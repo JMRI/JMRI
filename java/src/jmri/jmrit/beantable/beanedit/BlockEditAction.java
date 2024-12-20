@@ -49,6 +49,7 @@ public class BlockEditAction extends BeanEditAction<Block> {
     private JSpinner lengthSpinner = new JSpinner(); // 2 digit decimal format field, initialized later as instance
     private BlockCurvatureJComboBox curvatureField = new BlockCurvatureJComboBox();
     private JCheckBox permissiveField = new JCheckBox();
+    private JCheckBox ghostField = new JCheckBox();
     private JComboBox<String> speedField;
 
     JRadioButton inch = new JRadioButton(Bundle.getMessage("LengthInches"));
@@ -140,6 +141,9 @@ public class BlockEditAction extends BeanEditAction<Block> {
 
         permissiveField.setSelected(bean.getPermissiveWorking());
 
+        basic.addItem(new BeanEditItem(ghostField, Bundle.getMessage("BlockGhostColName"), Bundle.getMessage("BlockGhostText")));
+        ghostField.setSelected(bean.getIsGhost());
+
         basic.setSaveItem(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -157,6 +161,7 @@ public class BlockEditAction extends BeanEditAction<Block> {
                 float len = (Float) lengthSpinner.getValue();
                 bean.setLength( metricUi ? len * 10.0f : len * 25.4f);
                 bean.setPermissiveWorking(permissiveField.isSelected());
+                bean.setIsGhost(ghostField.isSelected());
             }
         });
         basic.setResetItem(new AbstractAction() {
@@ -171,6 +176,7 @@ public class BlockEditAction extends BeanEditAction<Block> {
                 speedField.setSelectedItem(speed);
                 updateLength(e);
                 permissiveField.setSelected(bean.getPermissiveWorking());
+                ghostField.setSelected(bean.getIsGhost());
             }
         });
         bei.add(basic);

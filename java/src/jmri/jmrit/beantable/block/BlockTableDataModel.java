@@ -50,6 +50,8 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
     static public final int CURRENTREPCOL = REPORTERCOL + 1;
     static public final int PERMISCOL = CURRENTREPCOL + 1;
     static public final int SPEEDCOL = PERMISCOL + 1;
+    static public final int GHOSTCOL = SPEEDCOL + 1;
+    static public final int COLUMNCOUNT = GHOSTCOL + 1;
 
     private final boolean _graphicState = InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState();
 
@@ -130,7 +132,7 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
 
     @Override
     public int getColumnCount() {
-        return SPEEDCOL + 1;
+        return COLUMNCOUNT;
     }
 
     @Override
@@ -156,6 +158,8 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
                 return (twoDigit.format(metricUi ?  b.getLengthCm() : b.getLengthIn()));
             case PERMISCOL:
                 return b.getPermissiveWorking();
+            case GHOSTCOL:
+                return b.getIsGhost();
             case SPEEDCOL:
                 String speed = b.getBlockSpeed();
                 if (!speedList.contains(speed)) {
@@ -235,6 +239,9 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
             case PERMISCOL:
                 b.setPermissiveWorking((Boolean) value);
                 break;
+            case GHOSTCOL:
+                b.setIsGhost((boolean) value);
+                break;
             case SPEEDCOL:
                 @SuppressWarnings("unchecked")
                 String speed = (String) ((JComboBox<String>) value).getSelectedItem();
@@ -286,6 +293,8 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
                 return Bundle.getMessage("BlockLengthColName");
             case PERMISCOL:
                 return Bundle.getMessage("BlockPermColName");
+            case GHOSTCOL:
+                return Bundle.getMessage("BlockGhostColName");
             case SPEEDCOL:
                 return Bundle.getMessage("BlockSpeedColName");
             case STATECOL:
@@ -323,6 +332,7 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
                 return JComboBox.class;
             case CURRENTREPCOL:
             case PERMISCOL:
+            case GHOSTCOL:
                 return Boolean.class;
             case EDITCOL:
                 return JButton.class;
@@ -337,6 +347,7 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
             case DIRECTIONCOL:
             case LENGTHCOL:
             case PERMISCOL:
+            case GHOSTCOL:
             case SPEEDCOL:
             case CURRENTREPCOL:
             case EDITCOL:
@@ -362,6 +373,7 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
             case CURVECOL:
             case LENGTHCOL:
             case PERMISCOL:
+            case GHOSTCOL:
             case SPEEDCOL:
             case REPORTERCOL:
             case SENSORCOL:

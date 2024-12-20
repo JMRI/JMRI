@@ -36,6 +36,8 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
 import jmri.Block;
+import jmri.jmrit.display.layoutEditor.LayoutBlock;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.Transit;
@@ -101,9 +103,13 @@ public class ActivateTrainFrame extends JmriJFrame {
     private final JSpinner dccAddressSpinner = new JSpinner(new SpinnerNumberModel(3, 1, 9999, 1));
     private final JCheckBox inTransitBox = new JCheckBox(Bundle.getMessage("TrainInTransit"));
     private final JComboBox<String> startingBlockBox = new JComboBox<>();
+    private final JComboBox<String> viaBlockBox = new JComboBox<>();
+    private final JLabel viaBlockBoxLabel = new JLabel(Bundle.getMessage("ViaBlockBoxLabel"));
     private List<Block> startingBlockBoxList = new ArrayList<>();
+    private List<Block> viaBlockBoxList = new ArrayList<>();
     private List<Integer> startingBlockSeqList = new ArrayList<>();
     private final JComboBox<String> destinationBlockBox = new JComboBox<>();
+
     private List<Block> destinationBlockBoxList = new ArrayList<>();
     private List<Integer> destinationBlockSeqList = new ArrayList<>();
     private JButton addNewTrainButton = null;
@@ -119,6 +125,11 @@ public class ActivateTrainFrame extends JmriJFrame {
     private final JRadioButton radioTrainsFromUser = new JRadioButton(Bundle.getMessage("TrainsFromUser"));
     private final JRadioButton radioTrainsFromSetLater = new JRadioButton(Bundle.getMessage("TrainsFromSetLater"));
     private final ButtonGroup trainsFromButtonGroup = new ButtonGroup();
+
+    private final JRadioButton radioTransitsPredefined = new JRadioButton(Bundle.getMessage("TransitsPredefined"));
+    private final JRadioButton radioTransitsAdHoc = new JRadioButton(Bundle.getMessage("TransitsAdHoc"));
+    private final ButtonGroup transitsFromButtonGroup = new ButtonGroup();
+    //private final JCheckBox adHocCloseLoop = new JCheckBox(Bundle.getMessage("TransitCloseLoop"));
 
     private final JRadioButton allocateBySafeRadioButton = new JRadioButton(Bundle.getMessage("ToSafeSections"));
     private final JRadioButton allocateAllTheWayRadioButton = new JRadioButton(Bundle.getMessage("AsFarAsPos"));
@@ -169,6 +180,13 @@ public class ActivateTrainFrame extends JmriJFrame {
     private TrainInfo trainInfo;
 
     private final String nameOfTemplateFile="TrainInfoDefaultTemplate.xml";
+    // to be added and removed.
+    ActionListener viaBlockBoxListener = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            handleViaBlockSelectionChanged(e);
+        }
+    };
 
     /**
      * Open up a new train window for a given roster entry located in a specific
@@ -344,10 +362,51 @@ public class ActivateTrainFrame extends JmriJFrame {
             p0a.add(allocateCustomSpinner);
             initiatePane.add(p0a);
 
-            JPanel p1 = new JPanel();
-            p1.setLayout(new FlowLayout());
-            p1.add(new JLabel(Bundle.getMessage("TransitBoxLabel") + " :"));
-            p1.add(transitSelectBox);
+            JPanel p0b = new JPanel(new FlowLayout());
+            p0b.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TransitsFrom")));
+            radioTransitsPredefined.setActionCommand("USETRANSITS");
+            transitsFromButtonGroup.add(radioTransitsPredefined);
+            radioTransitsAdHoc.setActionCommand("USEADHOC");
+            transitsFromButtonGroup.add(radioTransitsAdHoc);
+            p0b.add(radioTransitsPredefined);
+            radioTransitsPredefined.setToolTipText(Bundle.getMessage("TransitsPredefinedHint"));
+            p0b.add(radioTransitsAdHoc);
+            radioTransitsAdHoc.setToolTipText(Bundle.getMessage("TransitsAdHocHint"));
+
+            radioTransitsPredefined.addItemListener(new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent e)  {
+                    if (e.getStateChange() == ItemEvent.SELECTED) {
+                        transitSelectBox.setEnabled(true);
+                        //adHocCloseLoop.setEnabled(false);
+                        inTransitBox.setEnabled(true);
+                        handleInTransitClick();
+                        viaBlockBox.setVisible(false);
+                        viaBlockBoxLabel.setVisible(false);
+                    }
+                }
+            });
+
+            radioTransitsAdHoc.addItemListener(new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent e)  {
+                    if (e.getStateChange() == ItemEvent.SELECTED) {
+                        transitSelectBox.setEnabled(false);
+                        //adHocCloseLoop.setEnabled(true);
+                        inTransitBox.setEnabled(false);
+                        inTransitBox.setSelected(true);
+                        initializeStartingBlockComboDynamic();
+                        viaBlockBox.setVisible(true);
+                        viaBlockBoxLabel.setVisible(true);
+                    }
+                }
+            });
+            //p0b.add(adHocCloseLoop);
+            //adHocCloseLoop.setToolTipText(Bundle.getMessage("TransitCloseLoopHint"));
+
+            JPanel p1_1a =new JPanel();
+            p1_1a.add(new JLabel(Bundle.getMessage("TransitBoxLabel") + " :"));
+            p1_1a.add(transitSelectBox);
             transitSelectBox.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -355,6 +414,11 @@ public class ActivateTrainFrame extends JmriJFrame {
                 }
             });
             transitSelectBox.setToolTipText(Bundle.getMessage("TransitBoxHint"));
+            p0b.add(p1_1a);
+            initiatePane.add(p0b);
+
+            JPanel p1 = new JPanel();
+            p1.setLayout(new FlowLayout());
             p1.add(trainBoxLabel);
             p1.add(trainSelectBox);
             trainSelectBox.addActionListener(new ActionListener() {
@@ -391,7 +455,7 @@ public class ActivateTrainFrame extends JmriJFrame {
             inTransitBox.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    handleInTransitClick(e);
+                    handleInTransitClick();
                 }
             });
             inTransitBox.setToolTipText(Bundle.getMessage("InTransitBoxHint"));
@@ -407,6 +471,10 @@ public class ActivateTrainFrame extends JmriJFrame {
                     handleStartingBlockSelectionChanged(e);
                 }
             });
+            p3.add(viaBlockBoxLabel);
+            p3.add(viaBlockBox);
+            viaBlockBox.setToolTipText(Bundle.getMessage("ViaBlockBoxHint"));
+            viaBlockBox.addActionListener(viaBlockBoxListener);
             initiatePane.add(p3);
             JPanel p4 = new JPanel();
             p4.setLayout(new FlowLayout());
@@ -775,7 +843,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         }
     }
 
-    private void handleInTransitClick(ActionEvent e) {
+    private void handleInTransitClick() {
         if (!inTransitBox.isSelected() && selectedTransit.getEntryBlocksList().isEmpty()) {
             JmriJOptionPane.showMessageDialog(initiateFrame, Bundle
                     .getMessage("NoEntryBlocks"), Bundle.getMessage("MessageTitle"),
@@ -931,7 +999,21 @@ public class ActivateTrainFrame extends JmriJFrame {
     }
 
     private void handleStartingBlockSelectionChanged(ActionEvent e) {
-        initializeDestinationBlockCombo();
+        if (radioTransitsAdHoc.isSelected() ) {
+            initializeViaBlockDynamicCombo();
+            initializeDestinationBlockDynamicCombo();
+        } else {
+            initializeDestinationBlockCombo();
+        }
+        initiateFrame.pack();
+    }
+
+    private void handleViaBlockSelectionChanged(ActionEvent e) {
+        if (radioTransitsAdHoc.isSelected() ) {
+            initializeDestinationBlockDynamicCombo();
+        } else {
+            initializeDestinationBlockCombo();
+        }
         initiateFrame.pack();
     }
 
@@ -960,6 +1042,21 @@ public class ActivateTrainFrame extends JmriJFrame {
     private void addNewTrain(ActionEvent e) {
         try {
             validateDialog();
+            if (radioTransitsAdHoc.isSelected()) {
+                int ixStart, ixEnd, ixVia;
+                ixStart = startingBlockBox.getSelectedIndex();
+                ixEnd = destinationBlockBox.getSelectedIndex();
+                ixVia = viaBlockBox.getSelectedIndex();
+                Transit tmpTransit = _dispatcher.createTemporaryTransit(startingBlockBoxList.get(ixStart),destinationBlockBoxList.get(ixEnd),
+                        viaBlockBoxList.get(ixVia));
+                if (tmpTransit == null ) {
+                    JmriJOptionPane.showMessageDialog(initiateFrame, "Invalid Transit",
+                            Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                trainInfo.setTransitName(tmpTransit.getDisplayName());
+                trainInfo.setTransitId(tmpTransit.getDisplayName());
+            }
             dialogToTrainInfo(trainInfo);
             _dispatcher.loadTrainFromTrainInfoThrowsException(trainInfo,"NONE","");
         } catch (IllegalArgumentException ex) {
@@ -1040,9 +1137,8 @@ public class ActivateTrainFrame extends JmriJFrame {
         }
     }
 
-
-
     private void initializeStartingBlockCombo() {
+        String prevValue = (String)startingBlockBox.getSelectedItem();
         startingBlockBox.removeAllItems();
         startingBlockBoxList.clear();
         if (!inTransitBox.isSelected() && selectedTransit.getEntryBlocksList().isEmpty()) {
@@ -1064,10 +1160,14 @@ public class ActivateTrainFrame extends JmriJFrame {
                 found = true;
             }
         }
+        if (prevValue != null) {
+            startingBlockBox.setSelectedItem(prevValue);
+        }
         JComboBoxUtil.setupComboBoxMaxRows(startingBlockBox);
     }
 
     private void initializeDestinationBlockCombo() {
+        String prevValue = (String)destinationBlockBox.getSelectedItem();
         destinationBlockBox.removeAllItems();
         destinationBlockBoxList.clear();
         int index = startingBlockBox.getSelectedIndex();
@@ -1086,6 +1186,9 @@ public class ActivateTrainFrame extends JmriJFrame {
                 bName = bName + "-" + seq;
             }
             destinationBlockBox.addItem(bName);
+        }
+        if (prevValue != null) {
+            destinationBlockBox.setSelectedItem(prevValue);
         }
         JComboBoxUtil.setupComboBoxMaxRows(destinationBlockBox);
     }
@@ -1276,15 +1379,20 @@ public class ActivateTrainFrame extends JmriJFrame {
     }
 
     private void trainInfoToDialog(TrainInfo info) {
-        if (!info.getTransitName().isEmpty()) {
-            try {
-                transitSelectBox.setSelectedItemByName(info.getTransitName());
-            } catch (Exception ex) {
-                log.warn("Transit {} from file not in Transit menu", info.getTransitName());
-                JmriJOptionPane.showMessageDialog(initiateFrame,
-                        Bundle.getMessage("TransitWarn", info.getTransitName()),
-                        null, JmriJOptionPane.WARNING_MESSAGE);
+        if (!info.getDynamicTransit()) {
+            radioTransitsPredefined.setSelected(true);
+            if (!info.getTransitName().isEmpty()) {
+                try {
+                    transitSelectBox.setSelectedItemByName(info.getTransitName());
+                } catch (Exception ex) {
+                    log.warn("Transit {} from file not in Transit menu", info.getTransitName());
+                    JmriJOptionPane.showMessageDialog(initiateFrame,
+                            Bundle.getMessage("TransitWarn", info.getTransitName()),
+                            null, JmriJOptionPane.WARNING_MESSAGE);
+                }
             }
+        } else {
+            radioTransitsAdHoc.setSelected(true);
         }
         switch (info.getTrainsFrom()) {
             case TRAINSFROMROSTER:
@@ -1320,10 +1428,23 @@ public class ActivateTrainFrame extends JmriJFrame {
         trainNameField.setText(info.getTrainUserName());
         trainDetectionComboBox.setSelectedItemByValue(info.getTrainDetection());
         inTransitBox.setSelected(info.getTrainInTransit());
-        initializeStartingBlockCombo();
-        initializeDestinationBlockCombo();
+        if (radioTransitsAdHoc.isSelected()) {
+            initializeStartingBlockComboDynamic();
+        } else {
+            initializeStartingBlockCombo();
+        }
         setComboBox(startingBlockBox, info.getStartBlockName());
+        if (radioTransitsAdHoc.isSelected()) {
+            initializeViaBlockDynamicCombo();
+            setComboBox(viaBlockBox, info.getViaBlockName());
+        }
+        if (radioTransitsAdHoc.isSelected()) {
+            initializeDestinationBlockDynamicCombo();
+        } else {
+            initializeDestinationBlockCombo();
+        }
         setComboBox(destinationBlockBox, info.getDestinationBlockName());
+
         setAllocateMethodButtons(info.getAllocationMethod());
         prioritySpinner.setValue(info.getPriority());
         resetWhenDoneBox.setSelected(info.getResetWhenDone());
@@ -1347,7 +1468,6 @@ public class ActivateTrainFrame extends JmriJFrame {
 
         terminateWhenDoneBox.setSelected(info.getTerminateWhenDone());
         nextTrain.setSelectedIndex(-1);
-
         try {
             nextTrain.setSelectedItem(info.getNextTrain());
         } catch (Exception ex){
@@ -1393,6 +1513,12 @@ public class ActivateTrainFrame extends JmriJFrame {
         if (index < 0) {
             throw new IllegalArgumentException(Bundle.getMessage("Error8"));
         }
+        if (radioTransitsAdHoc.isSelected()) {
+            index = viaBlockBox.getSelectedIndex();
+            if (index < 0) {
+                throw new IllegalArgumentException(Bundle.getMessage("Error8"));
+            }
+        }
         if ((!reverseAtEndBox.isSelected()) && resetWhenDoneBox.isSelected()
                 && (!selectedTransit.canBeResetWhenDone())) {
             resetWhenDoneBox.setSelected(false);
@@ -1409,7 +1535,8 @@ public class ActivateTrainFrame extends JmriJFrame {
 
     private boolean dialogToTrainInfo(TrainInfo info) {
         int index = transitSelectBox.getSelectedIndex();
-        if (index >= 0 ) {
+        info.setDynamicTransit(radioTransitsAdHoc.isSelected());
+        if (!info.getDynamicTransit() && index >= 0 ) {
             info.setTransitName(transitSelectBox.getSelectedItem().getDisplayName());
             info.setTransitId(transitSelectBox.getSelectedItem().getDisplayName());
         }
@@ -1439,11 +1566,19 @@ public class ActivateTrainFrame extends JmriJFrame {
         info.setStartBlockName((String) startingBlockBox.getSelectedItem());
         index = startingBlockBox.getSelectedIndex();
         info.setStartBlockId(startingBlockBoxList.get(index).getDisplayName());
-        info.setStartBlockSeq(startingBlockSeqList.get(index).intValue());
-        info.setDestinationBlockName((String) destinationBlockBox.getSelectedItem());
+        if (info.getDynamicTransit()) {
+            info.setStartBlockSeq(1);
+        } else {
+            info.setStartBlockSeq(startingBlockSeqList.get(index).intValue());
+        }
         index = destinationBlockBox.getSelectedIndex();
         info.setDestinationBlockId(destinationBlockBoxList.get(index).getDisplayName());
-        info.setDestinationBlockSeq(destinationBlockSeqList.get(index).intValue());
+        info.setDestinationBlockName(destinationBlockBoxList.get(index).getDisplayName());
+        if (info.getDynamicTransit()) {
+            info.setViaBlockName(viaBlockBoxList.get(viaBlockBox.getSelectedIndex()).getDisplayName());
+        } else {
+            info.setDestinationBlockSeq(destinationBlockSeqList.get(index).intValue());
+        }
         info.setPriority((Integer) prioritySpinner.getValue());
         info.setTrainDetection(((TrainDetectionItem)trainDetectionComboBox.getSelectedItem()).value);
         info.setResetWhenDone(resetWhenDoneBox.isSelected());
@@ -1886,6 +2021,79 @@ public class ActivateTrainFrame extends JmriJFrame {
         }
     }
 
+    /*
+     * Layout block stuff
+     */
+    private ArrayList<LayoutBlock> getOccupiedBlockList() {
+        LayoutBlockManager lBM = jmri.InstanceManager.getDefault(LayoutBlockManager.class);
+        ArrayList<LayoutBlock> lBlocks = new ArrayList<LayoutBlock>();
+        for (LayoutBlock lB : lBM.getNamedBeanSet()) {
+            if (lB.getBlock().getState() == Block.OCCUPIED) {
+                lBlocks.add(lB);
+            }
+        }
+        return lBlocks;
+    }
+
+    private void initializeStartingBlockComboDynamic() {
+        startingBlockBox.removeAllItems();
+        startingBlockBoxList.clear();
+        for (LayoutBlock lB: getOccupiedBlockList()) {
+            if (!startingBlockBoxList.contains(lB.getBlock())) {
+                startingBlockBoxList.add(lB.getBlock());
+                startingBlockBox.addItem(getBlockName(lB.getBlock()));
+            }
+        }
+        JComboBoxUtil.setupComboBoxMaxRows(startingBlockBox);
+    }
+
+    private void initializeViaBlockDynamicCombo() {
+        String prevValue = (String) viaBlockBox.getSelectedItem();
+        viaBlockBox.removeActionListener(viaBlockBoxListener);
+        viaBlockBox.removeAllItems();
+        viaBlockBoxList.clear();
+        LayoutBlockManager lBM = jmri.InstanceManager.getDefault(LayoutBlockManager.class);
+        if (startingBlockBox.getSelectedItem() != null) {
+            LayoutBlock lBSrc = null;
+            if (startingBlockBox.getSelectedIndex() >= 0) {
+                lBSrc = lBM.getByUserName((String) startingBlockBox.getSelectedItem());
+                if (lBSrc != null) {
+                    int rX = lBSrc.getNumberOfNeighbours() - 1;
+                    for (; rX > -1; rX--) {
+                        viaBlockBox.addItem(lBSrc.getNeighbourAtIndex(rX).getDisplayName());
+                        viaBlockBoxList.add(lBSrc.getNeighbourAtIndex(rX));
+                    }
+                }
+            }
+        }
+        if (prevValue != null) {
+            viaBlockBox.setSelectedItem(prevValue);
+        }
+        viaBlockBox.addActionListener(viaBlockBoxListener);
+    }
+
+    private void initializeDestinationBlockDynamicCombo() {
+        destinationBlockBox.removeAllItems();
+        destinationBlockBoxList.clear();
+        LayoutBlockManager lBM = jmri.InstanceManager.getDefault(LayoutBlockManager.class);
+        if (startingBlockBox.getSelectedItem() != null) {
+            LayoutBlock lBSrc = null;
+            if (startingBlockBox.getSelectedIndex() >= 0
+                    && viaBlockBox.getSelectedIndex() >= 0) {
+                lBSrc = lBM.getByUserName((String) startingBlockBox.getSelectedItem());
+                Block b = viaBlockBoxList.get(viaBlockBox.getSelectedIndex());
+                if (lBSrc != null) {
+                    int rX = lBSrc.getNumberOfRoutes() - 1;
+                    for (; rX > -1; rX--) {
+                        if (lBSrc.getRouteNextBlockAtIndex(rX) == b) {
+                            destinationBlockBox.addItem(lBSrc.getRouteDestBlockAtIndex(rX).getDisplayName());
+                            destinationBlockBoxList.add(lBSrc.getRouteDestBlockAtIndex(rX));
+                        }
+                    }
+                }
+            }
+        }
+    }
     /*
      * ComboBox item.
      */

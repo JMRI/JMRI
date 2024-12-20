@@ -28,18 +28,25 @@ import jmri.Block;
 import jmri.EntryPoint;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
+import jmri.JmriException;
 import jmri.Scale;
 import jmri.ScaleManager;
 import jmri.Section;
+import jmri.SectionManager;
 import jmri.Sensor;
 import jmri.SignalMast;
 import jmri.Timebase;
 import jmri.Transit;
 import jmri.TransitManager;
 import jmri.TransitSection;
+import jmri.NamedBean.DisplayOptions;
+import jmri.Transit.TransitType;
 import jmri.jmrit.dispatcher.TaskAllocateRelease.TaskAction;
 import jmri.jmrit.dispatcher.ActiveTrain.TrainDetection;
 import jmri.jmrit.display.EditorManager;
+import jmri.jmrit.display.layoutEditor.LayoutBlock;
+import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
@@ -258,7 +265,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 info.getStartBlockName(), info.getDestinationBlockName());
         // create a new Active Train
 
-        //set updefaults from traininfo
+        //set up defaults from traininfo
         int tSource = 0;
         if (info.getTrainFromRoster()) {
             tSource = ActiveTrain.ROSTER;
@@ -296,6 +303,18 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 break;
             default:
                 /* just leave as in traininfo */
+        }
+        if (info.getDynamicTransit()) {
+            // attempt to build transit
+            Transit tmpTransit = createTemporaryTransit(InstanceManager.getDefault(jmri.BlockManager.class).getBlock(info.getStartBlockName()),
+                    InstanceManager.getDefault(jmri.BlockManager.class).getBlock(info.getDestinationBlockName()),
+                    InstanceManager.getDefault(jmri.BlockManager.class).getBlock(info.getViaBlockName()));
+            if (tmpTransit == null ) {
+                throw new IllegalArgumentException(Bundle.getMessage("Error51"));
+            }
+            info.setTransitName(tmpTransit.getDisplayName());
+            info.setTransitId(tmpTransit.getDisplayName());
+            info.setDestinationBlockSeq(tmpTransit.getMaxSequence());
         }
         if (tSource == 0) {
             log.warn("Invalid Trains From [{}]",
@@ -365,6 +384,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     throw new IllegalArgumentException(Bundle.getMessage("Error27",at.getTrainName()));
                 }
             }
+            // we can go no further without attaching this.
+            at.setDispatcher(this);
             allocateNewActiveTrain(at);
             newTrainDone(at);
 
@@ -372,6 +393,72 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             log.warn("failed to create Active Train '{}'", info.getTrainName());
             throw new IllegalArgumentException(Bundle.getMessage("Error48",info.getTrainName()));
         }
+    }
+
+    protected Transit createTemporaryTransit(Block start, Block dest, Block via) {
+        LayoutBlockManager lBM = jmri.InstanceManager.getDefault(LayoutBlockManager.class);
+        SectionManager sm = jmri.InstanceManager.getDefault(SectionManager.class);
+        LayoutBlock lbStart = lBM.getByUserName(start.getDisplayName(DisplayOptions.USERNAME));
+        LayoutBlock lbEnd = lBM.getByUserName(dest.getDisplayName(DisplayOptions.USERNAME));
+        LayoutBlock lbVia =  lBM.getByUserName(via.getDisplayName(DisplayOptions.USERNAME));
+        List<LayoutBlock> blocks = new ArrayList<LayoutBlock>();
+        try {
+            boolean result = lBM.getLayoutBlockConnectivityTools().checkValidDest(
+                    lbStart, lbVia, lbEnd, blocks, LayoutBlockConnectivityTools.Routing.NONE);
+            if (!result) {
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error51"),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+            }
+            blocks = lBM.getLayoutBlockConnectivityTools().getLayoutBlocks(
+                    lbStart, lbEnd, lbVia, false, LayoutBlockConnectivityTools.Routing.NONE);
+        } catch (JmriException JEx) {
+            log.error("Finding route {}",JEx.getMessage());
+            return null;
+        }
+        Transit tempTransit = null;
+        int wNo = 0;
+        String baseTransitName = "-" + start.getDisplayName() + "-" + dest.getDisplayName();
+        while (tempTransit == null && wNo < 99) {
+            wNo++;
+            try {
+                tempTransit = transitManager.createNewTransit("#" + Integer.toString(wNo) + baseTransitName);
+            } catch (Exception ex) {
+                log.trace("Transit [{}} already used, try next.", "#" + Integer.toString(wNo) + baseTransitName);
+            }
+        }
+        if (tempTransit == null) {
+            log.error("Limit of Dynamic Transits for [{}] has been exceeded!", baseTransitName);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("DynamicTransitsExceeded",baseTransitName),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+        tempTransit.setTransitType(TransitType.DYNAMICADHOC);
+        int seq = 1;
+        TransitSection prevTs = null;
+        TransitSection curTs = null;
+        for (LayoutBlock lB : blocks) {
+            Block b = lB.getBlock();
+            Section currentSection = sm.createNewSection(tempTransit.getUserName() + Integer.toString(seq) + "-" + b.getDisplayName());
+            currentSection.setSectionType(Section.DYNAMICADHOC);
+            currentSection.addBlock(b);
+            if (curTs == null) {
+                //first block shove it in.
+                curTs = new TransitSection(currentSection, seq, Section.FORWARD);
+            } else {
+                prevTs = curTs;
+                EntryPoint fEp = new EntryPoint(prevTs.getSection().getBlockBySequenceNumber(0),b,"up");
+                fEp.setTypeReverse();
+                prevTs.getSection().addToReverseList(fEp);
+                EntryPoint rEp = new EntryPoint(b,prevTs.getSection().getBlockBySequenceNumber(0),"down");
+                rEp.setTypeForward();
+                currentSection.addToForwardList(rEp);
+                curTs = new TransitSection(currentSection, seq, Section.FORWARD);
+            }
+            curTs.setTemporary(true);
+            tempTransit.addTransitSection(curTs);
+            seq++;
+        }
+        return tempTransit;
     }
 
     protected enum TrainsFrom {
@@ -1652,6 +1739,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 }
             }
             at.dispose();
+            
         }
         activeTrainsTableModel.fireTableDataChanged();
         if (allocatedSectionTableModel != null) {
