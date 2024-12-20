@@ -538,7 +538,8 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                     try {
                         eid = new EventID(eventIDname);
                     } catch (IllegalArgumentException e1) {
-                        log.info("Column 0 doesn't contain an EventID: {}", eventIDname);
+                        // really shouldn't happen, as table manages column contents
+                        log.warn("Column 0 doesn't contain an EventID: {}", eventIDname);
                         continue;
                     }
                     // here we have a valid EventID, assign the name if currently blank
@@ -710,6 +711,7 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                     var result = new StringBuilder();
                     if (lineIncrement <= 0) { // load cached value
                         lineIncrement = table.getFont().getSize()*13/10; // line spacing
+                        log.trace("Found font size {}", table.getFont().getSize());
                     }
                     var height = lineIncrement/3; // for margins
                     var first = true;   // no \n before first line
@@ -736,8 +738,11 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                         if (height < lineIncrement) {
                             height = height+lineIncrement; // when no lines, assume 1
                         }
-                       if (Math.abs(height - table.getRowHeight(row)) > lineIncrement/2) {
+                       log.trace("checking row {} for {} > {}", viewRow, Math.abs(height - table.getRowHeight(row)), lineIncrement/2);
+                       log.trace("   based on {} = {}", height, table.getRowHeight(row)); 
+                       if (Math.abs(height - table.getRowHeight(viewRow)) > lineIncrement/2) { // don't spend time changing if set already
                             table.setRowHeight(viewRow, height);
+                            log.trace("     Set height to {}", height);
                         }
                     }
                     return new String(result);
