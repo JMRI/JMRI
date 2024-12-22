@@ -23,7 +23,7 @@
             ],
             "description": "Month and year car was built in MM-YY, MM-YYYY, or YYYY format"
         },
-        "carType": {
+        "type": {
             "type": "string",
             "description": "The car type"
         },
@@ -150,14 +150,14 @@
             ],
             "description": "the current destination of the car"
         },
-        "finalDestination": {
+        "final dest": {
             "type": [
                 "object",
                 "null"
             ],
             "description": "the final destination of the car"
         },
-        "returnWhenEmpty": {
+        "rwe": {
             "type": [
                 "object",
                 "null"

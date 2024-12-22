@@ -23,7 +23,7 @@
             ],
             "description": "Month and year car was built in MM-YY, MM-YYYY, or YYYY format"
         },
-        "carType": {
+        "type": {
             "type": "string",
             "description": "The car type as displayed in manifests and switch lists"
         },
@@ -149,14 +149,14 @@
             ],
             "description": "the current destination of the car"
         },
-        "finalDestination": {
+        "final dest": {
             "type": [
                 "object",
                 "null"
             ],
             "description": "the final destination of the car"
         },
-        "returnWhenEmpty": {
+        "rwe": {
             "type": [
                 "object",
                 "null"
@@ -204,7 +204,7 @@
         "name",
         "road",
         "number",
-        "carType",
+        "type",
         "length",
         "weight",
         "weightTons",
@@ -221,9 +221,9 @@
         "kernel",
         "utility",
         "destination",
-        "finalDestination",
+        "final dest",
         "outOfService",
-        "returnWhenEmpty",
+        "rwe",
         "isLocal"
     ]
 }

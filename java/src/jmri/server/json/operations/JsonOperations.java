@@ -1,5 +1,7 @@
 package jmri.server.json.operations;
 
+import jmri.jmrit.operations.setup.Setup;
+
 /**
  * JSON Tokens used by JSON Operations.
  *
@@ -11,10 +13,6 @@ public class JsonOperations {
      * {@value #CARS}
      */
     public static final String CARS = "cars"; // NOI18N
-    /**
-     * {@value #LOCATIONS}
-     */
-    public static final String LOCATIONS = "locations"; // NOI18N
     /**
      * {@value #TRAINS}
      */
@@ -34,7 +32,7 @@ public class JsonOperations {
     /**
      * {@value #LOCATION}
      */
-    public static final String LOCATION = "location"; // NOI18N
+    public static final String LOCATION = Setup.LOCATION.toLowerCase();
     /**
      * {@value #LOCATION_COMMENT}
      */
@@ -68,17 +66,122 @@ public class JsonOperations {
      */
     public static final String TRAIN = "train"; // NOI18N
     /**
+     * {@value #LENGTH}
+     * <p>
+     * Used for rolling stock length in feet or meters
+     */
+    public static final String LENGTH = Setup.LENGTH.toLowerCase();
+    /**
      * {@value #WEIGHT}
      * <p>
-     * Used for actual weight of rolling stock in ounces or a train's weight in tons
+     * Rolling stock or a train's weight in tons
      */
-    public static final String WEIGHT = "weight"; // NOI18N
+    public static final String WEIGHT = Setup.WEIGHT.toLowerCase();
     /**
      * {@value #WEIGHT_TONS}
      * <p>
      * Used for model weight of rolling stock in tons
      */
     public static final String WEIGHT_TONS = "weightTons"; // NOI18N
+    /**
+     * {@value #TYPE}
+     */
+    public static final String TYPE = Setup.TYPE.toLowerCase();
+    /**
+     * {@value #COLOR}
+     */
+    public static final String COLOR = Setup.COLOR.toLowerCase();
+    /**
+     * {@value #LOAD}
+     */
+    public static final String LOAD = Setup.LOAD.toLowerCase();
+    /**
+     * {@value #MODEL}
+     */
+    public static final String MODEL = Setup.MODEL.toLowerCase();
+    /**
+     * {@value #HP}
+     */
+    public static final String HP = Setup.HP.toLowerCase();
+    /**
+     * UK operations need to match rolling stock attributes
+     * {@value #ROAD}
+     */
+    public static final String ROAD = Setup.ROAD.toLowerCase();
+    /**
+     * {@value #NUMBER}
+     */
+    public static final String NUMBER = Setup.NUMBER.toLowerCase();
+    /**
+     * {@value #OWNER}
+     *
+     */
+    public static final String OWNER = Setup.OWNER.toLowerCase();
+    /**
+     * {@value #HAZARDOUS}
+     *
+     * @since 1.1
+     */
+    public static final String HAZARDOUS = Setup.HAZARDOUS.toLowerCase();
+    /**
+     * {@value #COMMENT}
+     *
+     */
+    public static final String COMMENT = Setup.COMMENT.toLowerCase();
+    /**
+     * {@value #KERNEL}
+     *
+     * @since 1.1
+     */
+    public static final String KERNEL = Setup.KERNEL.toLowerCase();
+    /**
+     * {@value #FINAL_DESTINATION}
+     *
+     * @since 1.1
+     */
+    public static final String FINAL_DESTINATION = Setup.FINAL_DEST.toLowerCase();
+    /**
+     * {@value #RETURN_WHEN_EMPTY}
+     *
+     * @since 1.1
+     */
+    public static final String RETURN_WHEN_EMPTY = Setup.RWE.toLowerCase();
+    /**
+     * {@value #REMOVE_COMMENT}
+     *
+     * @since 1.1
+     */
+    public static final String REMOVE_COMMENT = "removeComment"; // NOI18N
+    /**
+     * {@value #ADD_COMMENT}
+     *
+     * @since 1.1
+     */
+    public static final String ADD_COMMENT = "addComment"; // NOI18N
+    /**
+     * {@value #IS_LOCAL}
+     *
+     * @since 1.1
+     */
+    public static final String IS_LOCAL = "isLocal";
+    /**
+     * {@value #RETURN_WHEN_LOADED}
+     *
+     * @since 5.4.0
+     */
+    public static final String RETURN_WHEN_LOADED = "returnWhenLoaded";
+    /**
+     * {@value #DIVISION}
+     *
+     * @since 5.4.0
+     */
+    public static final String DIVISION = Setup.DIVISION.toLowerCase();
+    /**
+     * {@value #UTILITY}
+     *
+     * @since 1.1
+     */
+    public static final String UTILITY = "utility";
     /**
      * {@value #BUILT}
      */
@@ -108,7 +211,7 @@ public class JsonOperations {
      *
      * @since 1.1
      */
-    public static final String TRACK = "track";
+    public static final String TRACK = Setup.TRACK.toLowerCase();
     /**
      * {@value #DATE}
      *
@@ -118,19 +221,15 @@ public class JsonOperations {
     /**
      * {@value #DESTINATION}
      */
-    public static final String DESTINATION = "destination"; // NOI18N
+    public static final String DESTINATION = Setup.DESTINATION.toLowerCase();
     /**
      * {@value #DESTINATION_TRACK}
      */
-    public static final String DESTINATION_TRACK = "dest&track"; // NOI18N
+    public static final String DESTINATION_TRACK = Setup.DEST_TRACK.toLowerCase();
     /**
      * {@value #LOCATION_TRACK}
      */
     public static final String LOCATION_TRACK = "locationTrack"; // NOI18N
-    /**
-     * {@value #KERNEL}
-     */
-    public static final String KERNEL = "kernel"; // NOI18N
     /**
      * {@value #LEAD}
      */
