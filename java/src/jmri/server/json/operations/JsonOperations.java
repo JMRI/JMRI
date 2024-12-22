@@ -130,21 +130,25 @@ public class JsonOperations {
      */
     public static final String FINAL_DESTINATION = "final dest";
     /**
+     * {@value #FINAL_DEST_TRACK }
+     */
+    public static final String FINAL_DEST_TRACK = "fd&track";
+    /**
      * {@value #RETURN_WHEN_EMPTY}
      */
     public static final String RETURN_WHEN_EMPTY = "rwe";
     /**
-     * {@value #REMOVE_COMMENT}
+     * {@value #SETOUT_COMMENT}
      *
      * @since 1.1
      */
-    public static final String REMOVE_COMMENT = "removeComment"; // NOI18N
+    public static final String SETOUT_COMMENT = "setout msg"; // NOI18N
     /**
-     * {@value #ADD_COMMENT}
+     * {@value #PICKUP_COMMENT}
      *
      * @since 1.1
      */
-    public static final String ADD_COMMENT = "addComment"; // NOI18N
+    public static final String PICKUP_COMMENT = "pickup msg"; // NOI18N
     /**
      * {@value #IS_LOCAL}
      *
@@ -210,7 +214,7 @@ public class JsonOperations {
     /**
      * {@value #DESTINATION_TRACK}
      */
-    public static final String DESTINATION_TRACK = "dest&Track";
+    public static final String DESTINATION_TRACK = "dest&track";
     /**
      * {@value #LEAD}
      */

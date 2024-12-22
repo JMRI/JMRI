@@ -136,8 +136,8 @@ public class JsonUtil {
         data.put(JsonOperations.CABOOSE, car.isCaboose());
         data.put(JsonOperations.PASSENGER, car.isPassenger());
         data.put(JsonOperations.FRED, car.hasFred());
-        data.put(JsonOperations.REMOVE_COMMENT, car.getDropComment());
-        data.put(JsonOperations.ADD_COMMENT, car.getPickupComment());
+        data.put(JsonOperations.SETOUT_COMMENT, car.getDropComment());
+        data.put(JsonOperations.PICKUP_COMMENT, car.getPickupComment());
         data.put(JsonOperations.KERNEL, car.getKernelName());
         data.put(JsonOperations.UTILITY, car.isUtility());
         data.put(JsonOperations.IS_LOCAL, car.isLocalMove());

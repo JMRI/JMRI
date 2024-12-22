@@ -367,6 +367,10 @@ public class HtmlManifest extends HtmlTrainCommon {
                     builder.append(
                             this.getFormattedAttribute(attribute, this.getDropLocation(car.path(attribute),
                                             ShowLocation.track))).append(" "); // NOI18N
+                } else if (attribute.equals(JsonOperations.DESTINATION_TRACK)) {
+                    builder.append(
+                            this.getFormattedAttribute(attribute, this.getDropLocation(car.path(JsonOperations.DESTINATION),
+                                            ShowLocation.both))).append(" "); // NOI18N
                 } else if (attribute.equals(JsonOperations.LOCATION) && isLocal) {
                     builder.append(
                             this.getFormattedAttribute(attribute, this.getPickupLocation(car.path(attribute),
@@ -477,15 +481,15 @@ public class HtmlManifest extends HtmlTrainCommon {
         if (attribute.equals(JsonOperations.HAZARDOUS)) {
             return this.getFormattedAttribute(attribute, (rollingStock.path(attribute).asBoolean() ? Setup
                     .getHazardousMsg() : "")); // NOI18N
-        } else if (attribute.equals(Setup.PICKUP_COMMENT.toLowerCase())) { // NOI18N
-            return this.getFormattedAttribute(JsonOperations.ADD_COMMENT, rollingStock.path(JsonOperations.ADD_COMMENT).textValue());
-        } else if (attribute.equals(Setup.DROP_COMMENT.toLowerCase())) { // NOI18N
-            return this.getFormattedAttribute(JsonOperations.REMOVE_COMMENT, rollingStock.path(JsonOperations.REMOVE_COMMENT).textValue());
-        } else if (attribute.equals(Setup.RWE.toLowerCase())) {
+        } else if (attribute.equals(JsonOperations.PICKUP_COMMENT)) {
+            return this.getFormattedAttribute(JsonOperations.PICKUP_COMMENT, rollingStock.path(JsonOperations.PICKUP_COMMENT).textValue());
+        } else if (attribute.equals(JsonOperations.SETOUT_COMMENT)) {
+            return this.getFormattedAttribute(JsonOperations.SETOUT_COMMENT, rollingStock.path(JsonOperations.SETOUT_COMMENT).textValue());
+        } else if (attribute.equals(JsonOperations.RETURN_WHEN_EMPTY)) {
             return this.getFormattedLocation(rollingStock.path(JsonOperations.RETURN_WHEN_EMPTY), ShowLocation.both, "RWE"); // NOI18N
-        } else if (attribute.equals(Setup.FINAL_DEST.toLowerCase())) {
+        } else if (attribute.equals(JsonOperations.FINAL_DESTINATION)) {
             return this.getFormattedLocation(rollingStock.path(JsonOperations.FINAL_DESTINATION), ShowLocation.location, "FinalDestination"); // NOI18N
-        } else if (attribute.equals(Setup.FINAL_DEST_TRACK.toLowerCase())) {
+        } else if (attribute.equals(JsonOperations.FINAL_DEST_TRACK)) {
             return this.getFormattedLocation(rollingStock.path(JsonOperations.FINAL_DESTINATION), ShowLocation.both, "FinalDestination"); // NOI18N
         }
         return this.getFormattedAttribute(attribute, rollingStock.path(attribute).asText());
