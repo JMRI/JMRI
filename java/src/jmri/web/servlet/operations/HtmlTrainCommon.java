@@ -212,6 +212,8 @@ public class HtmlTrainCommon extends TrainCommon {
         if (attribute.equals(Setup.LOAD)) {
             return (car.isCaboose() || car.isPassenger()) ? ""
                     : StringEscapeUtils.escapeHtml4(car.getLoadName().split(TrainCommon.HYPHEN)[0]); // NOI18N
+        } else if (attribute.equals(Setup.LOAD_TYPE)) {
+            return car.getLoadType();
         } else if (attribute.equals(Setup.HAZARDOUS)) {
             return car.isHazardous() ? Setup.getHazardousMsg() : ""; // NOI18N
         } else if (attribute.equals(Setup.DROP_COMMENT)) {
@@ -220,6 +222,12 @@ public class HtmlTrainCommon extends TrainCommon {
             return car.getPickupComment();
         } else if (attribute.equals(Setup.KERNEL)) {
             return car.getKernelName();
+        } else if (attribute.equals(Setup.KERNEL_SIZE)) {
+            if (car.getKernel() != null) {
+                return Integer.toString(car.getKernel().getSize());
+            } else {
+                return "";
+            }
         } else if (attribute.equals(Setup.RWE)) {
             if (!car.getReturnWhenEmptyDestinationName().isEmpty()) {
                 return String.format(locale, strings.getProperty("RWELocationAndTrack"), StringEscapeUtils
@@ -237,9 +245,11 @@ public class HtmlTrainCommon extends TrainCommon {
             if (!car.getFinalDestinationName().isEmpty()) {
                 return String.format(locale, strings.getProperty("FinalDestinationLocationAndTrack"), StringEscapeUtils
                         .escapeHtml4(car.getSplitFinalDestinationName()), StringEscapeUtils
-                        .escapeHtml4(car.getSplitFinalDestinationTrackName()));
+                                .escapeHtml4(car.getSplitFinalDestinationTrackName()));
             }
             return "";
+        } else if (attribute.equals(Setup.DIVISION)) {
+            return car.getDivisionName();
         }
         return getRollingStockAttribute(car, attribute, isPickup, isLocal);
     }
