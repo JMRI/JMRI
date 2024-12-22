@@ -243,12 +243,17 @@ public class HtmlManifest extends HtmlTrainCommon {
             if (!this.isLocalMove(car)) {
                 if (this.isUtilityCar(car)) {
                     builder.append(pickupUtilityCars(adds, car, location, isManifest));
-                } else if (isManifest &&
-                        Setup.isPrintTruncateManifestEnabled() &&
-                        location.getLocation().isSwitchListEnabled()) {
-                    builder.append(pickUpCar(car, Setup.getPickupTruncatedManifestMessageFormat()));
                 } else {
-                    builder.append(pickUpCar(car, Setup.getPickupManifestMessageFormat()));
+                    String[] messageFormat;
+                    if (isManifest &&
+                            Setup.isPrintTruncateManifestEnabled() &&
+                            location.getLocation().isSwitchListEnabled()) {
+                        messageFormat = Setup.getPickupTruncatedManifestMessageFormat();
+                    } else {
+                        messageFormat = Setup.getPickupManifestMessageFormat();
+                    }
+                    Setup.stringToTagConversion(messageFormat);
+                    builder.append(pickUpCar(car, messageFormat));
                 }
             }
         }
@@ -275,6 +280,7 @@ public class HtmlManifest extends HtmlTrainCommon {
                     format = (!local) ? Setup.getDropSwitchListMessageFormat() : Setup
                             .getLocalSwitchListMessageFormat();
                 }
+                Setup.stringToTagConversion(format);
                 builder.append(dropCar(car, format, local));
             }
         }
@@ -394,7 +400,9 @@ public class HtmlManifest extends HtmlTrainCommon {
         StringBuilder builder = new StringBuilder();
         builder.append("<span style=\"color: " + Setup.getDropTextColor() + ";\">");
         builder.append(Setup.getDropEnginePrefix()).append(" ");
-        for (String attribute : Setup.getDropEngineMessageFormat()) {
+        String[] formatMessage = Setup.getDropEngineMessageFormat();
+        Setup.stringToTagConversion(formatMessage);
+        for (String attribute : formatMessage) {
             if (!attribute.trim().isEmpty()) {
                 attribute = attribute.toLowerCase();
                 if (attribute.equals(JsonOperations.DESTINATION) || attribute.equals(JsonOperations.TRACK)) {
