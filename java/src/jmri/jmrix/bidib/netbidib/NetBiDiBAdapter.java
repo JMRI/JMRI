@@ -29,7 +29,6 @@ import jmri.util.zeroconf.ZeroConfServiceManager;
 
 import org.bidib.jbidibc.core.MessageListener;
 import org.bidib.jbidibc.core.NodeListener;
-import org.bidib.jbidibc.core.node.RootNode;
 import org.bidib.jbidibc.core.node.listener.TransferListener;
 import org.bidib.jbidibc.messages.ConnectionListener;
 import org.bidib.jbidibc.netbidib.client.NetBidibClient;
@@ -467,9 +466,10 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
         log.debug("Listening for service: {}", serviceType);
 
         ZeroConfServiceManager mgr = InstanceManager.getDefault(ZeroConfServiceManager.class);
-        mgr.getPreferences().setUseIPv6(false);
-        mgr.getPreferences().setUseLinkLocal(false);
-        mgr.getPreferences().setUseLoopback(false);
+// the folowing selections are valid only for a zeroconf server, the client does NOT use them...
+//        mgr.getPreferences().setUseIPv6(false);
+//        mgr.getPreferences().setUseLinkLocal(false);
+//        mgr.getPreferences().setUseLoopback(false);
 
         if (mdnsClient == null) {
             mdnsClient = new ZeroConfClient();
