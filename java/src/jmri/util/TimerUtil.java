@@ -27,7 +27,7 @@ import javax.annotation.Nonnull;
  * Please note the comment in the {@link Timer} Javadoc about how
  * {@link java.util.concurrent.ScheduledThreadPoolExecutor} might provide a better
  * underlying implementation.
- *
+ * Method JavaDoc tweaked from java.util.Timer.
  * @author Bob Jacobsen Copyright 2018
  */
 @javax.annotation.concurrent.Immutable
