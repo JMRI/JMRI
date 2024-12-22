@@ -5,9 +5,6 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 
 import org.openlcb.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * OpenLcb implementation of part of the CommandStation interface.
  *
@@ -74,6 +71,6 @@ public class OlcbCommandStation implements CommandStation {
         sendAccSignalDecoderPkt(address+4, aspect, count);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbCommandStation.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbCommandStation.class);
 
 }

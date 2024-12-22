@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.9.5plus+jake+20241108T1305Z+R6f6be4df60a on Fri Nov 08 08:05:51 EST 2024-->
-  <decoderIndex version="617">
+  <!--Written by JMRI version 5.10plus+jake+20241216T2052Z+R35b9e7d3464 on Mon Dec 16 15:53:26 EST 2024-->
+  <decoderIndex version="623">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -27227,6 +27227,18 @@
           <output name="6" label="Aux4" />
         </model>
       </family>
+      <family name="Function Decoders" mfg="Tehnologistic (train-O-matic)" file="TrainOMatic_FD2.xml">
+        <model model="FD Micro II" numOuts="8" numFns="32" lowVersionID="1" highVersionID="7" productID="2010115,2010116,2010117,2010118,2010119,2010120,2010121">
+          <output name="1" />
+          <output name="2" />
+          <output name="3" label="Aux1" />
+          <output name="4" label="Aux2" />
+          <output name="5" label="Aux3" />
+          <output name="6" label="Aux4" />
+          <output name="7" label="Aux5" />
+          <output name="8" label="Aux6" />
+        </model>
+      </family>
       <family name="Lokommander 2 v3" mfg="Tehnologistic (train-O-matic)" file="TrainOMatic_Lokommander_2.xml">
         <model model="Lokommander 2 Micro" numOuts="6" numFns="15" lowVersionID="3" highVersionID="3" productID="2010220,2010221,2010222,2010223,2010227">
           <output name="1" />
@@ -32793,6 +32805,11 @@
           <output name="14" label="   FO 12   " comment="pin-16, right" />
         </model>
         <!-- End sound-only models -->
+      </family>
+      <family name="MX820 Accessory Decoders" mfg="Zimo" comment="Just for MX820E for now" file="Zimo_MX820.xml">
+        <model model="MX820E">
+          <versionCV lowVersionID="5" highVersionID="5" />
+        </model>
       </family>
       <family name="Zimo Unified software (version 25+)" mfg="Zimo" file="Zimo_Unified_software_MX600v31.xml">
         <model model="MX600 version 31+" replacementModel="MX600 version 37+" replacementFamily="query:Zimo Unified software (version 37+)" lowVersionID="31" highVersionID="31" numOuts="4" numFns="14" productID="199">

@@ -391,7 +391,7 @@
         </li>
 
         <li>Jim Exler, <!-- jimexler -->
-         who fixed a Digitrax CV definition.</li>
+         who fixed a Digitrax CV definition and worked on the Soundtraxx definitions.</li>
 
         <li>Dave Falkenburg created the original DecoderPro application (and found the perfect name
         for it!) He created our Mac Classic and Mac OS X icons and worked on the PanelPro logo. He
@@ -527,6 +527,8 @@
         <li>Rob Heikens, who created ESU decoder definitions and programmer pages</li>
 
         <li>Freek Heite, who located some important XpressNet info</li>
+
+        <li>Robert Heller, who added "Close" to the Windows menu</li>
 
         <li>Austin Hendrix, <!-- trainman419 -->
         who improved how the throttle handles speed steps and improved the quality of the code and

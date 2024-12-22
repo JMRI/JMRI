@@ -1,12 +1,8 @@
 package jmri.jmrix.sprog;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  * Test simple functioning of SPROGMenu.
@@ -16,13 +12,10 @@ import org.junit.Assume;
 public class SPROGMenuTest {
 
     @Test
+    @jmri.util.junit.annotations.DisabledIfHeadless
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
-        // the constructor looks for the default ListedTableFrame class, 
-        // which is set by the ListedTableFrame constructor.
-        new jmri.jmrit.beantable.ListedTableFrame();
         SPROGMenu action = new SPROGMenu(new jmri.jmrix.sprog.SprogSystemConnectionMemo());
-        Assert.assertNotNull("exists", action);
+        Assertions.assertNotNull( action, "exists");
     }
 
     @BeforeEach
@@ -32,6 +25,8 @@ public class SPROGMenuTest {
     }
 
     @AfterEach
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
 }

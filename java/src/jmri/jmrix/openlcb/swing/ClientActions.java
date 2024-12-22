@@ -1,24 +1,28 @@
 package jmri.jmrix.openlcb.swing;
 
-import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.Timer;
+import javax.swing.text.JTextComponent;
 
 import jmri.ShutDownTask;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.openlcb.OlcbAddress;
+import jmri.jmrix.openlcb.OlcbEventNameStore;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.WrapLayout;
 
 import org.openlcb.NodeID;
+import org.openlcb.EventID;
 import org.openlcb.OlcbInterface;
 import org.openlcb.cdi.impl.ConfigRepresentation;
 import org.openlcb.cdi.swing.CdiPanel;
+import org.openlcb.swing.EventIdTextField;
 
 /**
  * Shared code for creating UI elements from different places in the application.
@@ -39,7 +43,6 @@ public class ClientActions {
     ShutDownTask shutDownTask;
     
     public void openCdiWindow(NodeID destNode, String description) {
-//        final java.util.ArrayList<JButton> readList = new java.util.ArrayList<>();
         final java.util.ArrayList<JButton> sensorButtonList = new java.util.ArrayList<>();
         final java.util.ArrayList<JButton> turnoutButtonList = new java.util.ArrayList<>();
 
@@ -99,7 +102,6 @@ public class ClientActions {
             private boolean haveButtons = false;
             @Override
             public JButton handleReadButton(JButton button) {
-//                readList.add(button);
                 return button;
             }
 
@@ -138,8 +140,8 @@ public class ClientActions {
                         }
 
                         final JTextField mdesc = desc;
-                        final JFormattedTextField mevt1 = evt1;
-                        final JFormattedTextField mevt2 = evt2;
+                        final JTextComponent mevt1 = evt1;
+                        final JTextComponent mevt2 = evt2;
                     });
                     button = new JButton(Bundle.getMessage("CdiPanelMakeTurnout"));
                     p.add(button);
@@ -156,8 +158,8 @@ public class ClientActions {
                         }
 
                         final JTextField mdesc = desc;
-                        final JFormattedTextField mevt1 = evt1;
-                        final JFormattedTextField mevt2 = evt2;
+                        final JTextComponent mevt1 = evt1;
+                        final JTextComponent mevt2 = evt2;
                     });
                     if (!haveButtons) {
                         haveButtons = true;
@@ -172,7 +174,10 @@ public class ClientActions {
             }
 
             @Override
-            public JFormattedTextField handleEventIdTextField(JFormattedTextField field) {
+            public JTextComponent handleEventIdTextField(EventIdTextField input) {
+                var field = new NamedEventIdTextField(memo);  // return our own constructed field
+
+                // What does this field do entry for?
                 if (evt1 == null) {
                     evt1 = field;
                 } else if (evt2 == null) {
@@ -182,7 +187,7 @@ public class ClientActions {
                 }
                 return field;
             }
-
+            
             @Override
             public JTextField handleStringValue(JTextField value) {
                 desc = value;
@@ -205,10 +210,38 @@ public class ClientActions {
                 log.debug("make sensor MS{} [{}]", ev, mdesc);
             }
 
+            /** Convert a String into an EventID, doing any additional local
+             * dealiasing required.
+             * @param content Content to convert, e.g. from a text component
+             * @return eventID that represents the content
+             */
+             @Override
+             public EventID getEventIDFromString(String content) {
+                var address = new OlcbAddress(content, memo);
+                return address.toEventID();
+             }
+    
+            /** Convert an EventID into a String, doing any additional local
+             * aliasing required.
+             * @param event EventID to convert, e.g. from reading a node
+             * @return local representation fo that EventID, often just the dotted hex
+             */
+             @Override
+             public String getStringFromEventID(EventID event) {
+                var nameStore = memo.get(OlcbEventNameStore.class);
+                if (nameStore != null) {
+                    var name = nameStore.getEventName(event);
+                    if (name != null) {
+                        return name;
+                    }
+                }
+                return event.toShortString();  
+             }
+
             JPanel gpane = null;
             JTextField desc = null;
-            JFormattedTextField evt1 = null;
-            JFormattedTextField evt2 = null;
+            JTextComponent evt1 = null;
+            JTextComponent evt2 = null;
         };
         ConfigRepresentation rep = iface.getConfigForNode(destNode);
 

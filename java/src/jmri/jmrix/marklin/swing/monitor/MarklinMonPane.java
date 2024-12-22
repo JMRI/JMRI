@@ -32,17 +32,20 @@ public class MarklinMonPane extends jmri.jmrix.AbstractMonPane implements Markli
 
     @Override
     public void dispose() {
-        // disconnect from the LnTrafficController
-        memo.getTrafficController().removeMarklinListener(this);
+        // disconnect from the TrafficController
+        if ( memo != null ) {
+            memo.getTrafficController().removeMarklinListener(this);
+        }
         // and unwind swing
         super.dispose();
+        memo = null;
     }
 
     @Override
     public void init() {
     }
 
-    MarklinSystemConnectionMemo memo;
+    private MarklinSystemConnectionMemo memo;
 
     @Override
     public void initContext(Object context) {
@@ -79,7 +82,7 @@ public class MarklinMonPane extends jmri.jmrix.AbstractMonPane implements Markli
     /**
      * Nested class to create one of these using old-style defaults
      */
-    static public class Default extends jmri.jmrix.marklin.swing.MarklinNamedPaneAction {
+    public static class Default extends jmri.jmrix.marklin.swing.MarklinNamedPaneAction {
 
         public Default() {
             super(Bundle.getMessage("MarklinMonitorTitle"),

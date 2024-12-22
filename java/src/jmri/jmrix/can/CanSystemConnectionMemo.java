@@ -13,10 +13,7 @@ import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.jmrix.can.ConfigurationManager.SubProtocol;
 import jmri.jmrix.can.ConfigurationManager.ProgModeSwitch;
 import jmri.util.NamedBeanComparator;
-
 import jmri.util.startup.StartupActionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -66,7 +63,7 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     protected boolean _supportsCVHints = false; // Support for CV read hint values
     private boolean _multipleThrottles = true;  // Support for multiple throttles
     private boolean _powerOnArst = true;        // Turn power on if ARST opcode received
-
+    
     jmri.jmrix.swing.ComponentFactory cf = null;
 
     protected TrafficController tm;
@@ -376,6 +373,6 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
         tm = null;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(CanSystemConnectionMemo.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CanSystemConnectionMemo.class);
 
 }

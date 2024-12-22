@@ -76,7 +76,7 @@ public class MemoryTableDataModel extends BeanTableDataModel<Memory> {
     /** {@inheritDoc} */
     @Override
     protected String getMasterClassName() {
-        return this.getClass().getName();
+        return jmri.jmrit.beantable.MemoryTableAction.class.getName();
     }
 
     /** {@inheritDoc} */

@@ -10,14 +10,15 @@ import org.junit.jupiter.api.*;
 public class BundleTest {
 
     @Test public void testGoodKeys() {
-        Assertions.assertEquals("(none)", jmri.jmrix.can.cbus.swing.modules.sprogdcc.Bundle.getMessage("none"));
-        Assertions.assertEquals("No locomotive detected (301);", jmri.jmrix.can.cbus.swing.modules.sprogdcc.Bundle.getMessage("NoLocoDetected"));
-        Assertions.assertEquals("Turnout", jmri.jmrix.can.cbus.swing.modules.sprogdcc.Bundle.getMessage("BeanNameTurnout"));
+        Assertions.assertEquals("(none)", Bundle.getMessage("none"));
+        Assertions.assertEquals("No locomotive detected (301);", Bundle.getMessage("NoLocoDetected"));
+        Assertions.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));
     }
 
     @Test
     public void testBadKey() {
-        Assertions.assertThrows(java.util.MissingResourceException.class, () -> jmri.jmrix.can.cbus.swing.modules.sprogdcc.Bundle.getMessage("FFFFFTTTTTTT"));
+        var ex = Assertions.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT"));
+        Assertions.assertNotNull(ex);
     }
 
     @Test public void testGoodKeyMessageArg() {
@@ -27,7 +28,9 @@ public class BundleTest {
 
     @Test
     public void testBadKeyMessageArg() {
-        Assertions.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT", new Object[]{}));
+        var ex = Assertions.assertThrows(java.util.MissingResourceException.class,
+            () -> Bundle.getMessage("FFFFFTTTTTTT", new Object[]{}));
+        Assertions.assertNotNull(ex);
     }
 
     @Test public void testLocaleMessage() {

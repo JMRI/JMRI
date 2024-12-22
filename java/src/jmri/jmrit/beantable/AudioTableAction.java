@@ -285,7 +285,7 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
 
         @Override
         protected String getMasterClassName() {
-            return getClassName();
+            return this.getClass().getName();
         }
 
         @Override

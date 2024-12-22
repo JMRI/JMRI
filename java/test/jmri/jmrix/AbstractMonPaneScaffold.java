@@ -4,12 +4,12 @@ import org.netbeans.jemmy.operators.*;
 
 import javax.swing.*;
 
-/*
- *  Helper class for operating AbstractMonPane its descendants.
+/**
+ * Helper class for operating AbstractMonPane its descendants.
  *
- *  @author Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
-public class AbstractMonPaneScaffold extends ContainerOperator {
+public class AbstractMonPaneScaffold extends ContainerOperator<JPanel> {
 
     public AbstractMonPaneScaffold(AbstractMonPane pane) {
         super(pane);
@@ -53,6 +53,10 @@ public class AbstractMonPaneScaffold extends ContainerOperator {
 
     public boolean getFreezeButtonState() {
         return (new JToggleButtonOperator(this, Bundle.getMessage("ButtonFreezeScreen")).isSelected());
+    }
+
+    public void clickClearButton() {
+        new JButtonOperator(this, Bundle.getMessage("ButtonClearScreen")).clickMouse();
     }
 
     public void clickEnterButton() {

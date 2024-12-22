@@ -249,7 +249,7 @@
         <label>Ch. 1 for Address</label>
         <label xml:lang="cs">Kanál 1 Adresa</label>
       </variable>
-      <variable CV="28" mask="XXXXXXVX" item="RailCom Data" default="0">
+      <variable CV="28" mask="XXXXXXVX" item="RailCom Data" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Ch. 2 for Data</label>
         <label xml:lang="cs">Kanál 2 Data</label>
@@ -562,7 +562,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output 6</label>
       </variable>
-      <variable item="F7 controls output 7" CV="41" mask="XVXXXXXX" minOut="7" minFn="0" default="0">
+      <variable item="F7 controls output 7" CV="41" mask="XVXXXXXX" minOut="7" minFn="0" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F7 controls output 7</label>
       </variable>
@@ -1412,7 +1412,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable CV="118" mask="XVXXXXXX" item="Boot Load" default="0">
+      <variable CV="118" mask="XVXXXXXX" item="Boot Load" default="1">
         <enumVal>
           <enumChoice value="0">
             <choice>FL/RL output signaling during boot-load operation</choice>
@@ -1424,11 +1424,11 @@
       </variable>
 
 <!-- FL effect configuration -->
-      <variable item="FL First Function" CV="120" default="64">
+      <variable item="FL First Function" CV="120" default="1">
         <decVal min="0" max="255" /> 
         <tooltip>First function number which turn on FL</tooltip>   
       </variable>
-      <variable item="FL Second Function" CV="121" default="1">
+      <variable item="FL Second Function" CV="121" default="64">
         <decVal min="0" max="255" /> 
         <tooltip>Second function number which turn on FL</tooltip>   
       </variable>
@@ -1474,11 +1474,11 @@
       </variable>
         
 <!-- RL effect configuration -->
-      <variable item="RL First Function" CV="132" default="128">
+      <variable item="RL First Function" CV="132" default="2">
         <decVal min="0" max="255" />
         <tooltip>First function number which turn on RL</tooltip>
       </variable>
-      <variable item="RL Second Function" CV="133" default="2">
+      <variable item="RL Second Function" CV="133" default="128">
         <decVal min="0" max="255" /> 
         <tooltip>Second function number which turn on RL</tooltip>   
       </variable>
@@ -1724,7 +1724,7 @@
       </variable>  
       
 <!-- AUX5 effect configuration -->
-      <variable item="AUX5 First Function" CV="192" default="4">
+      <variable item="AUX5 First Function" CV="192" default="7">
         <decVal min="0" max="255" />
         <tooltip>First function number which turn on AUX5</tooltip>
       </variable>
@@ -1774,7 +1774,7 @@
       </variable>          
                   
 <!-- AUX6 effect configuration -->
-      <variable item="AUX6 First Function" CV="204" default="4">
+      <variable item="AUX6 First Function" CV="204" default="8">
         <decVal min="0" max="255" />
         <tooltip>First function number which turn on AUX6</tooltip>
       </variable>
@@ -1858,7 +1858,7 @@
       </variable>
 
 <!-- CV222 -->
-      <variable item="SPP Timeout" CV="222" default="16">
+      <variable item="SPP Timeout" CV="222" default="255">
         <decVal min="0" max="255" />
         <label>Timeout</label>
         <comment>SPP (Smart Power Pack) Timeout=16ms*Value Ex: =16ms*255=~4s</comment>
@@ -1881,7 +1881,7 @@
       </variable>
 
 <!-- CV227 -->
-      <variable item="FL,RL,AUX1,AUX2 PWM frequency" CV="226" default="2">
+      <variable item="FL,RL,AUX1,AUX2 PWM frequency" CV="227" default="2">
         <decVal min="0" max="7" />
         <label>FL,RL,AUX1,AUX2 PWM frequency</label>
       </variable>
@@ -2414,10 +2414,10 @@
                 <display item="RL Turn OFF Delay"  label=""/>
             </griditem>
             <griditem gridx="3" gridy="7">
-                <display item="AUX3 Turn OFF Delay" label=""/>
+                <display item="AUX1 Turn OFF Delay" label=""/>
             </griditem>
             <griditem gridx="4" gridy="7">
-                <display item="AUX4 Turn OFF Delay" label=""/>
+                <display item="AUX2 Turn OFF Delay" label=""/>
             </griditem>
             <griditem gridx="5" gridy="7">
                 <display item="AUX3 Turn OFF Delay" label=""/>
@@ -2611,9 +2611,11 @@
       </label>
       <display item="QoS Function" />
       <display item="Chip Temperature" />
+      <display item="Temperature protection threshold" />
       <display item="Temperature Limit" />
       <display item="QoS current value" />
-      <display item="Worst QoS value" />      
+      <display item="Worst QoS value" />
+      <display item="Overcurrent protection level" />
 
       <label>
         <text> </text>

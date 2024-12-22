@@ -566,7 +566,8 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
 
     @Override
     protected String getMasterClassName() {
-        return getClassName();
+        // Force message grouping
+        return jmri.jmrit.beantable.TurnoutTableAction.class.getName();
     }
 
     protected String getClassName() {
