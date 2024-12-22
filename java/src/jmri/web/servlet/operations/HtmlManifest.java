@@ -431,8 +431,10 @@ public class HtmlManifest extends HtmlTrainCommon {
         StringBuilder builder = new StringBuilder();
         builder.append("<span style=\"color: " + Setup.getPickupTextColor() + ";\">");
         builder.append(Setup.getPickupEnginePrefix()).append(" ");
-        log.debug("PickupEngineMessageFormat: {}", (Object) Setup.getPickupEngineMessageFormat());
-        for (String attribute : Setup.getPickupEngineMessageFormat()) {
+        String[] messageFormat =  Setup.getPickupEngineMessageFormat();
+        Setup.stringToTagConversion(messageFormat);
+        log.debug("PickupEngineMessageFormat: {}", (Object) messageFormat);
+        for (String attribute : messageFormat) {
             if (!attribute.trim().isEmpty()) {
                 attribute = attribute.toLowerCase();
                 if (attribute.equals(JsonOperations.LOCATION) || attribute.equals(JsonOperations.TRACK)) {

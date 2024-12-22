@@ -1,9 +1,19 @@
 package jmri.server.json.operations;
 
 import static jmri.server.json.JSON.*;
+import static jmri.server.json.JSON.COMMENT;
+import static jmri.server.json.JSON.DESTINATION;
 import static jmri.server.json.JSON.ENGINES;
+import static jmri.server.json.JSON.KERNEL;
+import static jmri.server.json.JSON.LENGTH;
+import static jmri.server.json.JSON.LOCATION;
+import static jmri.server.json.JSON.MODEL;
+import static jmri.server.json.JSON.NUMBER;
+import static jmri.server.json.JSON.ROAD;
+import static jmri.server.json.JSON.TRACK;
+import static jmri.server.json.JSON.TYPE;
+import static jmri.server.json.JSON.WEIGHT;
 import static jmri.server.json.operations.JsonOperations.*;
-import static jmri.server.json.operations.JsonOperations.KERNEL;
 import static jmri.server.json.operations.JsonOperations.OUT_OF_SERVICE;
 import static jmri.server.json.reporter.JsonReporter.REPORTER;
 
@@ -60,7 +70,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
             case ENGINE:
                 result = utilities.getEngine(name, locale, id);
                 break;
-            case jmri.server.json.JSON.KERNEL:
+            case KERNEL:
                 Kernel kernel = InstanceManager.getDefault(KernelManager.class).getKernelByName(name);
                 if (kernel == null) {
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
@@ -68,7 +78,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 }
                 result = getKernel(kernel, locale, id);
                 break;
-            case jmri.server.json.JSON.LOCATION:
+            case LOCATION:
                 result = utilities.getLocation(name, locale, id);
                 break;
             case ROLLING_STOCK:
@@ -79,7 +89,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 type = TRAIN;
                 result = utilities.getTrain(name, locale, id);
                 break;
-            case jmri.server.json.JSON.TRACK:
+            case TRACK:
                 result = utilities.getTrack(getTrackByName(name, data, locale, id), locale);
                 break;
             default:
@@ -106,19 +116,19 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 return message(type, getCarType(newName, locale, id).put(RENAME, name), id);
             case ENGINE:
                 return message(type, postEngine(name, data, locale, id), id);
-            case jmri.server.json.JSON.KERNEL:
+            case KERNEL:
                 if (data.path(RENAME).isTextual()) {
                     newName = data.path(RENAME).asText();
                     InstanceManager.getDefault(KernelManager.class).replaceKernelName(name, newName);
                     InstanceManager.getDefault(KernelManager.class).deleteKernel(name);
                 }
                 return message(type, getKernel(InstanceManager.getDefault(KernelManager.class).getKernelByName(newName), locale, id).put(RENAME, name), id);
-            case jmri.server.json.JSON.LOCATION:
+            case LOCATION:
                 return message(type, postLocation(name, data, locale, id), id);
             case TRAIN:
                 setTrain(name, data, locale, id);
                 break;
-            case jmri.server.json.JSON.TRACK:
+            case TRACK:
                 return message(type, postTrack(name, data, locale, id), id);
             case TRAINS:
                 // do nothing
@@ -138,16 +148,16 @@ public class JsonOperationsHttpService extends JsonHttpService {
         int id = request.id;
         switch (type) {
             case CAR:
-                if (data.path(jmri.server.json.JSON.ROAD).isMissingNode()) {
+                if (data.path(ROAD).isMissingNode()) {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
-                            Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, jmri.server.json.JSON.ROAD, type), id); // NOI18N
+                            Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, ROAD, type), id); // NOI18N
                 }
-                if (data.path(jmri.server.json.JSON.NUMBER).isMissingNode()) {
+                if (data.path(NUMBER).isMissingNode()) {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
-                            Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, jmri.server.json.JSON.NUMBER, type), id); // NOI18N
+                            Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, NUMBER, type), id); // NOI18N
                 }
-                String road = data.path(jmri.server.json.JSON.ROAD).asText();
-                String number = data.path(jmri.server.json.JSON.NUMBER).asText();
+                String road = data.path(ROAD).asText();
+                String number = data.path(NUMBER).asText();
                 if (carManager().getById(name) != null || carManager().getByRoadAndNumber(road, number) != null) {
                     throw new JsonException(HttpServletResponse.SC_CONFLICT,
                             Bundle.getMessage(locale, "ErrorPutRollingStockConflict", type, road, number), id); // NOI18N
@@ -161,28 +171,28 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 InstanceManager.getDefault(CarTypes.class).addName(name);
                 return message(type, getCarType(name, locale, id), id);
             case ENGINE:
-                if (data.path(jmri.server.json.JSON.ROAD).isMissingNode()) {
+                if (data.path(ROAD).isMissingNode()) {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
-                            Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, jmri.server.json.JSON.ROAD, type), id); // NOI18N
+                            Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, ROAD, type), id); // NOI18N
                 }
-                if (data.path(jmri.server.json.JSON.NUMBER).isMissingNode()) {
+                if (data.path(NUMBER).isMissingNode()) {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
-                            Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, jmri.server.json.JSON.NUMBER, type), id); // NOI18N
+                            Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, NUMBER, type), id); // NOI18N
                 }
-                road = data.path(jmri.server.json.JSON.ROAD).asText();
-                number = data.path(jmri.server.json.JSON.NUMBER).asText();
+                road = data.path(ROAD).asText();
+                number = data.path(NUMBER).asText();
                 if (engineManager().getById(name) != null || engineManager().getByRoadAndNumber(road, number) != null) {
                     throw new JsonException(HttpServletResponse.SC_CONFLICT,
                             Bundle.getMessage(locale, "ErrorPutRollingStockConflict", type, road, number), id); // NOI18N
                 }
                 return message(type, postEngine(engineManager().newRS(road, number), data, locale, id), id);
-            case jmri.server.json.JSON.KERNEL:
+            case KERNEL:
                 if (name.isEmpty()) {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
                             Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, NAME, type), id); // NOI18N
                 }
                 return message(type, getKernel(InstanceManager.getDefault(KernelManager.class).newKernel(name), locale, id), id);
-            case jmri.server.json.JSON.LOCATION:
+            case LOCATION:
                 if (data.path(USERNAME).isMissingNode()) {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
                             Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, USERNAME, type), id); // NOI18N
@@ -197,26 +207,26 @@ public class JsonOperationsHttpService extends JsonHttpService {
                             Bundle.getMessage(locale, "ErrorPutUserNameConflict", type, userName), id); // NOI18N
                 }
                 return message(type, postLocation(locationManager().newLocation(userName), data, locale, id), id);
-            case jmri.server.json.JSON.TRACK:
+            case TRACK:
                 if (data.path(USERNAME).isMissingNode()) {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
                             Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, USERNAME, type), id); // NOI18N
                 }
                 userName = data.path(USERNAME).asText();
-                if (data.path(jmri.server.json.JSON.TYPE).isMissingNode()) {
+                if (data.path(TYPE).isMissingNode()) {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
-                            Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, jmri.server.json.JSON.TYPE, type), id); // NOI18N
+                            Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, TYPE, type), id); // NOI18N
                 }
-                String trackType = data.path(jmri.server.json.JSON.TYPE).asText();
-                if (data.path(jmri.server.json.JSON.LOCATION).isMissingNode()) {
+                String trackType = data.path(TYPE).asText();
+                if (data.path(LOCATION).isMissingNode()) {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
-                            Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, jmri.server.json.JSON.LOCATION, type), id); // NOI18N
+                            Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, LOCATION, type), id); // NOI18N
                 }
-                String locationName = data.path(jmri.server.json.JSON.LOCATION).asText();
+                String locationName = data.path(LOCATION).asText();
                 Location location = locationManager().getLocationById(locationName);
                 if (location == null) {
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                            Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, jmri.server.json.JSON.LOCATION, locationName), id); // NOI18N
+                            Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, LOCATION, locationName), id); // NOI18N
                 }
                 if (location.getTrackById(name) != null) {
                     throw new JsonException(HttpServletResponse.SC_CONFLICT,
@@ -246,10 +256,10 @@ public class JsonOperationsHttpService extends JsonHttpService {
             case ENGINE:
             case ENGINES:
                 return message(getEngines(locale, id), id);
-            case jmri.server.json.JSON.KERNEL:
+            case KERNEL:
                 return getKernels(locale, id);
-            case jmri.server.json.JSON.LOCATION:
-            case jmri.server.json.JSON.LOCATIONS:
+            case LOCATION:
+            case LOCATIONS:
                 return getLocations(locale, id);
             case ROLLING_STOCK:
                 return message(getCars(locale, id).addAll(getEngines(locale, id)), id);
@@ -281,7 +291,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
                     ArrayNode conflicts = mapper.createArrayNode();
                     cars.forEach(car -> conflicts.add(message(CAR, utilities.getCar(car, locale), 0)));
                     locations.forEach(
-                            location -> conflicts.add(message(jmri.server.json.JSON.LOCATION, utilities.getLocation(location, locale), 0)));
+                            location -> conflicts.add(message(LOCATION, utilities.getLocation(location, locale), 0)));
                     throwDeleteConflictException(type, name, conflicts, request);
                 }
                 InstanceManager.getDefault(CarTypes.class).deleteName(name);
@@ -290,7 +300,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 // TODO: do not remove an in use engine
                 deleteEngine(name, locale, id);
                 break;
-            case jmri.server.json.JSON.KERNEL:
+            case KERNEL:
                 Kernel kernel = InstanceManager.getDefault(KernelManager.class).getKernelByName(name);
                 if (kernel == null) {
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
@@ -301,11 +311,11 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 }
                 InstanceManager.getDefault(KernelManager.class).deleteKernel(name);
                 break;
-            case jmri.server.json.JSON.LOCATION:
+            case LOCATION:
                 // TODO: do not remove an in use location
                 deleteLocation(name, locale, id);
                 break;
-            case jmri.server.json.JSON.TRACK:
+            case TRACK:
                 // TODO: do not remove an in use track
                 deleteTrack(name, data, locale, id);
                 break;
@@ -342,8 +352,8 @@ public class JsonOperationsHttpService extends JsonHttpService {
     private ObjectNode getKernel(Kernel kernel, Locale locale, int id) {
         ObjectNode data = mapper.createObjectNode();
         data.put(NAME, kernel.getName());
-        data.put(jmri.server.json.JSON.WEIGHT, kernel.getAdjustedWeightTons());
-        data.put(jmri.server.json.JSON.LENGTH, kernel.getTotalLength());
+        data.put(WEIGHT, kernel.getAdjustedWeightTons());
+        data.put(LENGTH, kernel.getTotalLength());
         Car lead = kernel.getLead();
         if (lead != null) {
             data.set(LEAD, utilities.getCar(kernel.getLead(), locale));
@@ -393,7 +403,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
     public JsonNode getLocations(Locale locale, int id) {
         ArrayNode array = mapper.createArrayNode();
         locationManager().getLocationsByIdList()
-                .forEach(location -> array.add(message(jmri.server.json.JSON.LOCATION, utilities.getLocation(location, locale), id)));
+                .forEach(location -> array.add(message(LOCATION, utilities.getLocation(location, locale), id)));
         return message(array, id);
     }
 
@@ -408,8 +418,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
      * Set the properties in the data parameter for the train with the given id.
      * <p>
      * Currently only moves the train to the location given with the key
-     * {@value jmri.server.json.operations.JsonOperations#LOCATION}. If the move
-     * cannot be completed, throws error code 428.
+     * LOCATION. If the move cannot be completed, throws error code 428.
      *
      * @param name   id of the train
      * @param data   train data to change
@@ -420,7 +429,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
      */
     public void setTrain(String name, JsonNode data, Locale locale, int id) throws JsonException {
         Train train = InstanceManager.getDefault(TrainManager.class).getTrainById(name);
-        JsonNode location = data.path(jmri.server.json.JSON.LOCATION);
+        JsonNode location = data.path(LOCATION);
         if (!location.isMissingNode()) {
             if (location.isNull()) {
                 train.terminate();
@@ -448,7 +457,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
             }
         }
         location.setName(data.path(USERNAME).asText(location.getName()));
-        location.setComment(data.path(jmri.server.json.JSON.COMMENT).asText(location.getCommentWithColor()));
+        location.setComment(data.path(COMMENT).asText(location.getCommentWithColor()));
         return utilities.getLocation(location, locale);
     }
 
@@ -469,8 +478,8 @@ public class JsonOperationsHttpService extends JsonHttpService {
             }
         }
         track.setName(data.path(USERNAME).asText(track.getName()));
-        track.setLength(data.path(jmri.server.json.JSON.LENGTH).asInt(track.getLength()));
-        track.setComment(data.path(jmri.server.json.JSON.COMMENT).asText(track.getComment()));
+        track.setLength(data.path(LENGTH).asInt(track.getLength()));
+        track.setComment(data.path(COMMENT).asText(track.getComment()));
         return utilities.getTrack(track, locale);
     }
 
@@ -546,7 +555,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
      */
     public ObjectNode postEngine(@Nonnull Engine engine, JsonNode data, Locale locale, int id) throws JsonException {
         // set model early, since setting other values depend on it
-        engine.setModel(data.path(jmri.server.json.JSON.MODEL).asText(engine.getModel()));
+        engine.setModel(data.path(MODEL).asText(engine.getModel()));
         ObjectNode result = postRollingStock(engine, data, locale, id);
         return utilities.getEngine(engine, result, locale);
     }
@@ -586,7 +595,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
             }
         }
         //handle change in Location
-        node = data.path(jmri.server.json.JSON.LOCATION);
+        node = data.path(LOCATION);
         if (!node.isMissingNode()) {
             //can't move a car that is on a train
             if (rs.getTrain() != null) {
@@ -597,22 +606,22 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 //move car to new location and track
                 Location location = locationManager().getLocationById(node.path(NAME).asText());
                 if (location != null) {
-                    String trackId = node.path(jmri.server.json.JSON.TRACK).path(NAME).asText();
+                    String trackId = node.path(TRACK).path(NAME).asText();
                     Track track = location.getTrackById(trackId);
                     if (trackId.isEmpty() || track != null) {
                         String status = rs.setLocation(location, track);
                         if (!status.equals(Track.OKAY)) {
                             throw new JsonException(HttpServletResponse.SC_CONFLICT,
                                     Bundle.getMessage(locale, "ErrorMovingCar",
-                                            rs.getId(), jmri.server.json.JSON.LOCATION, location.getId(), trackId, status), id);
+                                            rs.getId(), LOCATION, location.getId(), trackId, status), id);
                         }
                     } else {
                         throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                                Bundle.getMessage(locale, "ErrorNotFound", jmri.server.json.JSON.TRACK, trackId), id);
+                                Bundle.getMessage(locale, "ErrorNotFound", TRACK, trackId), id);
                     }
                 } else {
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                            Bundle.getMessage(locale, "ErrorNotFound", jmri.server.json.JSON.LOCATION, node.path(NAME).asText()), id);
+                            Bundle.getMessage(locale, "ErrorNotFound", LOCATION, node.path(NAME).asText()), id);
                 }
             } else { 
                 //if new location is null, remove car from current location
@@ -620,7 +629,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 if (!status.equals(Track.OKAY)) {
                     throw new JsonException(HttpServletResponse.SC_CONFLICT,
                             Bundle.getMessage(locale, "ErrorMovingCar",
-                                    rs.getId(), jmri.server.json.JSON.LOCATION, null, null, status), id);
+                                    rs.getId(), LOCATION, null, null, status), id);
                 }                
             }
         }
@@ -640,7 +649,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
         if (!node.isMissingNode()) {
             Location location = locationManager().getLocationById(node.path(NAME).asText());
             if (location != null) {
-                String trackId = node.path(jmri.server.json.JSON.TRACK).path(NAME).asText();
+                String trackId = node.path(TRACK).path(NAME).asText();
                 Track track = location.getTrackById(trackId);
                 if (trackId.isEmpty() || track != null) {
                     String status = rs.setDestination(location, track);
@@ -652,7 +661,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
                     }
                 } else {
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                            Bundle.getMessage(locale, "ErrorNotFound", jmri.server.json.JSON.TRACK, trackId), id);
+                            Bundle.getMessage(locale, "ErrorNotFound", TRACK, trackId), id);
                 }
             } else {
                 throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
@@ -669,7 +678,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
 
         rs.setWeightTons(data.path(WEIGHT_TONS).asText());
         rs.setRfid(data.path(RFID).asText(rs.getRfid()));
-        rs.setLength(Integer.toString(data.path(jmri.server.json.JSON.LENGTH).asInt(rs.getLengthInteger())));
+        rs.setLength(Integer.toString(data.path(LENGTH).asInt(rs.getLengthInteger())));
         rs.setOutOfService(data.path(OUT_OF_SERVICE).asBoolean(rs.isOutOfService()));
         rs.setTypeName(data.path(JsonOperations.TYPE).asText(rs.getTypeName()));
         ObjectNode result = utilities.getRollingStock(rs, locale);
@@ -727,7 +736,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
         Location location = locationManager().getLocationById(name);
         if (location == null) {
             throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                    Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, jmri.server.json.JSON.LOCATION, name), id);
+                    Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, LOCATION, name), id);
         }
         return location;
     }
@@ -735,15 +744,15 @@ public class JsonOperationsHttpService extends JsonHttpService {
     @Nonnull
     protected Track getTrackByName(@Nonnull String name, @Nonnull JsonNode data, @Nonnull Locale locale,
             int id) throws JsonException {
-        if (data.path(jmri.server.json.JSON.LOCATION).isMissingNode()) {
+        if (data.path(LOCATION).isMissingNode()) {
             throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
-                    Bundle.getMessage(locale, "ErrorMissingAttribute", jmri.server.json.JSON.LOCATION, jmri.server.json.JSON.TRACK), id);
+                    Bundle.getMessage(locale, "ErrorMissingAttribute", LOCATION, TRACK), id);
         }
-        Location location = getLocationByName(data.path(jmri.server.json.JSON.LOCATION).asText(), locale, id);
+        Location location = getLocationByName(data.path(LOCATION).asText(), locale, id);
         Track track = location.getTrackById(name);
         if (track == null) {
             throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                    Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, jmri.server.json.JSON.TRACK, name), id);
+                    Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, TRACK, name), id);
         }
         return track;
     }
@@ -776,9 +785,9 @@ public class JsonOperationsHttpService extends JsonHttpService {
                         "jmri/server/json/operations/car-client.json",
                         id);
             case CAR_TYPE:
-            case jmri.server.json.JSON.KERNEL:
+            case KERNEL:
             case ROLLING_STOCK:
-            case jmri.server.json.JSON.TRACK:
+            case TRACK:
                 return doSchema(type,
                         server,
                         "jmri/server/json/operations/" + type + "-server.json",
@@ -791,7 +800,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
                         "jmri/server/json/operations/engine-server.json",
                         "jmri/server/json/operations/engine-client.json",
                         id);
-            case jmri.server.json.JSON.LOCATION:
+            case LOCATION:
             case LOCATIONS:
                 return doSchema(type,
                         server,

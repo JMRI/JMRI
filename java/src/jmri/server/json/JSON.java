@@ -472,11 +472,14 @@ public final class JSON {
      */
     public static final String TRACK = "track";
     /**
+     * {@value #DESTINATION}
+     */
+    public static final String DESTINATION = "destination"; // NOI18N
+    /**
      * {@value #ADD_HELPERS}
      *
      * @since 1.1
      */
-    
     public static final String ADD_HELPERS = "addHelpers";
     /**
      * {@value #CHANGE_CABOOSE}
