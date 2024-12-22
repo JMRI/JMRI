@@ -445,6 +445,7 @@
         <ul>
             <li>Fixed a bug in the LccPro search function on large LCC networks.</li>
             <li>Added "Node Groups" to LccPro and the Event Table.  
+            <li>Fixed a bug in Event Table display if using large fonts.<li>
         </ul>
 
     <h3>Logix</h3>

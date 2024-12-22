@@ -538,7 +538,8 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                     try {
                         eid = new EventID(eventIDname);
                     } catch (IllegalArgumentException e1) {
-                        log.info("Column 0 doesn't contain an EventID: {}", eventIDname);
+                        // really shouldn't happen, as table manages column contents
+                        log.warn("Column 0 doesn't contain an EventID: {}", eventIDname);
                         continue;
                     }
                     // here we have a valid EventID, assign the name if currently blank
@@ -710,7 +711,6 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                     // When table is constrained, these rows don't match up, need to find constrained row
                     var viewRow = sorter.convertRowIndexToView(row);
 
-                    var result = new StringBuilder();
                     if (lineIncrement <= 0) { // load cache variable?
                         if (viewRow >= 0) {
                             lineIncrement = table.getRowHeight(viewRow); // do this if valid row
@@ -718,6 +718,9 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                             lineIncrement = table.getFont().getSize()*13/10; // line spacing from font if not valid row
                         }
                      }
+
+                    var result = new StringBuilder();
+
                     var height = lineIncrement/3; // for margins
                     var first = true;   // no \n before first line
 
