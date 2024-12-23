@@ -25,22 +25,22 @@ public interface Timebase extends NamedBean {
     /**
      * Property Change sent when the minute value changes.
      */
-    String PROPERTY_MINUTES = "minutes";
+    String PROPERTY_CHANGE_MINUTES = "minutes";
 
     /**
      * Property Change sent when the rate value changes.
      */
-    String PROPERTY_RATE = "rate";
+    String PROPERTY_CHANGE_RATE = "rate";
 
     /**
      * Property Change sent when the run status changes.
      */
-    String PROPERTY_RUN = "run";
+    String PROPERTY_CHANGE_RUN = "run";
 
     /**
      * Property Change sent when the minute value changes.
      */
-    String PROPERTY_TIME = "time";
+    String PROPERTY_CHANGE_TIME = "time";
 
     /**
      * Set the current time.

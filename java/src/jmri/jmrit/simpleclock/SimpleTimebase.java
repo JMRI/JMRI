@@ -186,7 +186,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
                 }
             }
         }
-        firePropertyChange(PROPERTY_RUN, !run, run); // old, then new
+        firePropertyChange(PROPERTY_CHANGE_RUN, !run, run); // old, then new
         handleAlarm(null);
     }
 
@@ -727,8 +727,8 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
             // update memory
             updateMemory(date);
             // notify listeners
-            firePropertyChange(PROPERTY_MINUTES, Double.valueOf(oldMinutes), Double.valueOf(minutes));
-            firePropertyChange(PROPERTY_TIME, oldDate != null ? new Date(oldDate.getTime()) : null,
+            firePropertyChange(PROPERTY_CHANGE_MINUTES, Double.valueOf(oldMinutes), Double.valueOf(minutes));
+            firePropertyChange(PROPERTY_CHANGE_TIME, oldDate != null ? new Date(oldDate.getTime()) : null,
                 new Date(date.getTime())); // to ensure not modified outside
         }
         oldDate = date;
@@ -761,7 +761,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      */
     @Override
     public void addMinuteChangeListener(PropertyChangeListener l) {
-        addPropertyChangeListener(PROPERTY_MINUTES, l);
+        addPropertyChangeListener(PROPERTY_CHANGE_MINUTES, l);
     }
 
     /**
@@ -769,7 +769,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      */
     @Override
     public void removeMinuteChangeListener(PropertyChangeListener l) {
-        removePropertyChangeListener(PROPERTY_MINUTES, l);
+        removePropertyChangeListener(PROPERTY_CHANGE_MINUTES, l);
     }
 
     /**
@@ -777,7 +777,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      */
     @Override
     public PropertyChangeListener[] getMinuteChangeListeners() {
-        return getPropertyChangeListeners(PROPERTY_MINUTES);
+        return getPropertyChangeListeners(PROPERTY_CHANGE_MINUTES);
     }
 
     @Override
@@ -790,7 +790,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     @Override
     public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
         super.addPropertyChangeListener(propertyName, listener);
-        if (propertyName != null && (propertyName.equals(PROPERTY_MINUTES) || propertyName.equals(PROPERTY_TIME))) {
+        if (propertyName != null && (propertyName.equals(PROPERTY_CHANGE_MINUTES) || propertyName.equals(PROPERTY_CHANGE_TIME))) {
             startAlarm();
         }
     }
