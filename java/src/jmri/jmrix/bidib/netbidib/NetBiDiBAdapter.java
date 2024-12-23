@@ -26,6 +26,7 @@ import jmri.jmrix.bidib.BiDiBSystemConnectionMemo;
 import jmri.jmrix.bidib.BiDiBTrafficController;
 import jmri.util.zeroconf.ZeroConfClient;
 import jmri.util.zeroconf.ZeroConfServiceManager;
+import org.apache.commons.compress.archivers.tar.TarConstants;
 
 import org.bidib.jbidibc.core.MessageListener;
 import org.bidib.jbidibc.core.NodeListener;
@@ -75,6 +76,9 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
     private ActionListener pairingListener = null;
     
     private Long uniqueId = null; //also used as mDNS advertisement name
+    long timeout;
+    private ZeroConfClient mdnsClient = null;
+
     private final BiDiBPortController portController = this; //this instance is used from a listener class
     
     protected class NetBiDiDDevice {
@@ -461,9 +465,12 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
         //if (getHostName().equals(DEFAULT_IP_ADDRESS)) {
         //    setHostName(""); // reset the hostname to none.
         //}
-        log.trace("current host address: {} {}, port: {}, UniqueID: {}", getHostAddress(), getHostName(), getPort(), ByteUtils.formatHexUniqueId(getUniqueId()));
+        log.debug("current host address: {} {}, port: {}, UniqueID: {}", getHostAddress(), getHostName(), getPort(), ByteUtils.formatHexUniqueId(getUniqueId()));
         String serviceType = Bundle.getMessage("defaultMDNSServiceType");
-        log.debug("Listening for service: {}", serviceType);
+        log.debug("Listening for mDNS service: {}", serviceType);
+        if (getUniqueId() != null) {
+            log.info("try to find mDNS announcement for unique id: {} (IP: {})", ByteUtils.getUniqueIdAsString(getUniqueId()), getHostName());
+        }
 
         ZeroConfServiceManager mgr = InstanceManager.getDefault(ZeroConfServiceManager.class);
 // the folowing selections are valid only for a zeroconf server, the client does NOT use them...
@@ -474,6 +481,7 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
         if (mdnsClient == null) {
             mdnsClient = new ZeroConfClient();
             mdnsClient.startServiceListener(serviceType);
+            timeout = mdnsClient.getTimeout(); //the original default timeout
         }
         // leave the wait code below commented out for now.  It
         // does not appear to be needed for proper ZeroConf discovery.
@@ -488,64 +496,97 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
         //  return;
         //}
         List<ServiceInfo> infoList = new ArrayList<>();
-        try {
-            infoList = mdnsClient.getServices(serviceType);
-            log.debug("mDNS1: {}", infoList);
-            //log.debug("mDNS2: {}", mdnsClient.getServices(serviceType));
-            //log.debug("mDNS: {}", mdnsClient.getService(serviceType));
-            //log.debug("mDNS: {}", mdnsClient.getHostList(serviceType), mdnsClient.getService(serviceType).getHostAddresses());
-        } catch (Exception e) { log.error("{}", e); }
-        log.debug("*************");
-        
-        deviceList.clear();
-        
-        for (ServiceInfo serviceInfo : infoList) {
-            //log.trace("{}", serviceInfo.getNiceTextString());
-            log.trace("key: {}", serviceInfo.getKey());
-            log.trace("server: {}", serviceInfo.getServer());
-            log.trace("qualified name: {}", serviceInfo.getQualifiedName());
-            log.trace("type: {}", serviceInfo.getType());
-            log.trace("subtype: {}", serviceInfo.getSubtype());
-            log.trace("app: {}, proto: {}", serviceInfo.getApplication(), serviceInfo.getProtocol());
-            log.trace("name: {}, port: {}", serviceInfo.getName(), serviceInfo.getPort());
-            log.trace("inet addresses: {}", new ArrayList<>(Arrays.asList(serviceInfo.getInetAddresses())));
-            log.trace("hostnames: {}", new ArrayList<>(Arrays.asList(serviceInfo.getHostAddresses())));
-            log.trace("urls: ", new ArrayList<>(Arrays.asList(serviceInfo.getURLs())));
-            Enumeration<String> propList = serviceInfo.getPropertyNames();
-            while (propList.hasMoreElements()) {
-                String prop = propList.nextElement();
-                log.trace("  {}: {}", prop, serviceInfo.getPropertyString(prop));
-            }
-            Long uid = ByteUtils.parseHexUniqueId(serviceInfo.getPropertyString("uid")) & 0xFFFFFFFFFFL;
-            NetBiDiDDevice dev = deviceList.getOrDefault(uid, new NetBiDiDDevice());
-            dev.setAddress(serviceInfo.getInetAddresses()[0]);
-            dev.setPort(serviceInfo.getPort());
-            dev.setUniqueId(uid);
-            dev.setProductName(serviceInfo.getPropertyString("prod"));
-            dev.setUserName(serviceInfo.getPropertyString("user"));
-            deviceList.put(uid, dev);
-            
-            // if no current unique id is known, try the known IP address if valid
-            if (getUniqueId() == null) {
-                try {
-                    InetAddress curHostAddr = InetAddress.getByName(getHostName());
-                    if (dev.getAddress().equals(curHostAddr)) {
-                        setUniqueId(dev.getUniqueId());
-                    }
+        mdnsClient.setTimeout(0); //set minimum timeout
+        long startTime = System.currentTimeMillis();
+        Long foundUniqueId = null;
+        while (System.currentTimeMillis() < startTime + timeout) {
+            try {
+                // getServices() looks for each other on all interfaces using the timeout set by
+                // setTimeout(). Therefor we have set the timeout to 0 to get the current services list
+                // almost immediately (the real minimum timeout is 200ms - a "feature" of the Jmdns library).
+                // If the mDNS announcement for the requested unique id is not found on any of the interfaces,
+                // we wait a while (1000ms) and try again until the overall timeout is reached.
+                infoList = mdnsClient.getServices(serviceType);
+                log.debug("mDNS: \n{}", infoList);
+            } catch (Exception e) { log.error("{}", e); }
+
+            // Fill the device list with the found info from mDNS records.
+            // infoList always contains the complete list of the mDNS announcements found so far,
+            // so the clear our internal list before filling it (again).
+            deviceList.clear();
+
+            for (ServiceInfo serviceInfo : infoList) {
+                //log.trace("{}", serviceInfo.getNiceTextString());
+                log.trace("key: {}", serviceInfo.getKey());
+                log.trace("server: {}", serviceInfo.getServer());
+                log.trace("qualified name: {}", serviceInfo.getQualifiedName());
+                log.trace("type: {}", serviceInfo.getType());
+                log.trace("subtype: {}", serviceInfo.getSubtype());
+                log.trace("app: {}, proto: {}", serviceInfo.getApplication(), serviceInfo.getProtocol());
+                log.trace("name: {}, port: {}", serviceInfo.getName(), serviceInfo.getPort());
+                log.trace("inet addresses: {}", new ArrayList<>(Arrays.asList(serviceInfo.getInetAddresses())));
+                log.trace("hostnames: {}", new ArrayList<>(Arrays.asList(serviceInfo.getHostAddresses())));
+                log.trace("urls: ", new ArrayList<>(Arrays.asList(serviceInfo.getURLs())));
+                Enumeration<String> propList = serviceInfo.getPropertyNames();
+                while (propList.hasMoreElements()) {
+                    String prop = propList.nextElement();
+                    log.trace("  {}: {}", prop, serviceInfo.getPropertyString(prop));
                 }
-                catch (Exception e) { log.trace("No known hostname {}", getHostName()); } //no known host address is not an error
+                Long uid = ByteUtils.parseHexUniqueId(serviceInfo.getPropertyString("uid")) & 0xFFFFFFFFFFL;
+                // if the same UID is announced twice (or more) overwrite the previous entry
+                NetBiDiDDevice dev = deviceList.getOrDefault(uid, new NetBiDiDDevice());
+                dev.setAddress(serviceInfo.getInetAddresses()[0]);
+                dev.setPort(serviceInfo.getPort());
+                dev.setUniqueId(uid);
+                dev.setProductName(serviceInfo.getPropertyString("prod"));
+                dev.setUserName(serviceInfo.getPropertyString("user"));
+                deviceList.put(uid, dev);
+                
+                log.info("Found announcement: {}", dev.getString());
+
+                // if no current unique id is known, try the known IP address if valid
+                if (getUniqueId() == null) {
+                    try {
+                        InetAddress curHostAddr = InetAddress.getByName(getHostName());
+                        if (dev.getAddress().equals(curHostAddr)) {
+                            setUniqueId(dev.getUniqueId());
+                        }
+                    }
+                    catch (Exception e) { log.trace("No known hostname {}", getHostName()); } //no known host address is not an error
+                }
+
+                // set current hostname and port from the list if the this entry is the requested unique id
+                if (uid.equals(getUniqueId())) {
+                    setHostName(dev.getAddress().getHostAddress());
+                    setPort(dev.getPort());
+                    foundUniqueId = uid; //we have found what we have looked for
+                    //break; //exit the for loop as 
+                }
             }
-            
-            // set current hostname and port from the list if the this entry is the requested unique id
-            if (uid.equals(getUniqueId())) {
-                setHostName(dev.getAddress().getHostAddress());
-                setPort(dev.getPort());
+            if (foundUniqueId != null) {
+                break; //the while loop
+            }
+            try {
+                Thread.sleep(1000); //wait a moment and then try again until timeout has been reached or the announcement was found
+            } catch (final InterruptedException e) {
+                /* Stub */
             }
         }
+        
+        // some log info
+        if (foundUniqueId == null) {
+            // Write out a warning if we have been looking for a known uid.
+            // If we don't have a request uid, this is no warning as we just collect the announcements.
+            if (getUniqueId() != null) {
+                log.warn("no mDNS announcement found for requested unique id {} - last known IP: {}", ByteUtils.formatHexUniqueId(getUniqueId()), getHostName());
+            }
+        }
+        else {
+            log.info("using mDNS announcement: {}", deviceList.get(foundUniqueId).getString());
+        }
+
         deviceListAddFromPairingStore(); //add "paired" status from the pairing store to the device list
     }
-
-    ZeroConfClient mdnsClient = null;
 
     /**
      * Get and set the ZeroConf/mDNS advertisement name.
