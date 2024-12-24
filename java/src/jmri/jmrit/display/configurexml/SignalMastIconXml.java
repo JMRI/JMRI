@@ -6,8 +6,6 @@ import jmri.jmrit.display.*;
 
 import org.jdom2.Attribute;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle configuration for display.SignalMastIcon objects.
@@ -36,12 +34,20 @@ public class SignalMastIconXml extends PositionableLabelXml {
         element.setAttribute("signalmast", "" + p.getNamedSignalMast().getName());
         storeCommonAttributes(p, element);
         element.setAttribute("clickmode", "" + p.getClickMode());
+        element.setAttribute("controlclickmode", "" + p.getControlClickMode());
         element.setAttribute("litmode", "" + p.getLitMode());
         element.setAttribute("degrees", String.valueOf(p.getDegrees()));
         element.setAttribute("scale", String.valueOf(p.getScale()));
         element.setAttribute("imageset", p.useIconSet());
         element.setAttribute("class", "jmri.jmrit.display.configurexml.SignalMastIconXml");
-        //storeIconInfo(p, element);
+        var s = p.getClickSensor();
+        if ( s != null ) {
+            element.setAttribute("clicksensor", s.getSystemName() );
+        }
+        s = p.getControlClickSensor();
+        if ( s != null ) {
+            element.setAttribute("controlclicksensor", s.getSystemName() );
+        }
 
         storeLogixNG_Data(p, element);
 
@@ -88,9 +94,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
                 text = attr.getValue();
             }
             l.setScale(scale);
-            if (log.isDebugEnabled()) {
-                log.debug("Load SignalMast rotation= {} scale= {} attr text= {}", rotation, scale, text);
-            }
+            log.debug("Load SignalMast rotation= {} scale= {} attr text= {}", rotation, scale, text);
         } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert rotation or scale attribute");
         }
@@ -101,9 +105,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
             return;
         } else {
             name = attr.getValue();
-            if (log.isDebugEnabled()) {
-                log.debug("Load SignalMast {}", name);
-            }
+            log.debug("Load SignalMast {}", name);
         }
 
         SignalMast sh = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name);
@@ -126,6 +128,16 @@ public class SignalMastIconXml extends PositionableLabelXml {
             l.useIconSet(attr.getValue());
         }
 
+        attr = element.getAttribute("clicksensor");
+        if (attr != null) {
+            l.setClickSensor(attr.getValue());
+        }
+
+        attr = element.getAttribute("controlclicksensor");
+        if (attr != null) {
+            l.setControlClickSensor(attr.getValue());
+        }
+
         try {
             attr = element.getAttribute("clickmode");
             if (attr != null) {
@@ -133,6 +145,15 @@ public class SignalMastIconXml extends PositionableLabelXml {
             }
         } catch (org.jdom2.DataConversionException e) {
             log.error("Failed on clickmode attribute", e);
+        }
+
+        try {
+            attr = element.getAttribute("controlclickmode");
+            if (attr != null) {
+                l.setControlClickMode(attr.getIntValue());
+            }
+        } catch (org.jdom2.DataConversionException e) {
+            log.error("Failed on controlclickmode attribute", e);
         }
 
         try {
@@ -156,6 +177,6 @@ public class SignalMastIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.SIGNALS, element);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalMastIconXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalMastIconXml.class);
 
 }
