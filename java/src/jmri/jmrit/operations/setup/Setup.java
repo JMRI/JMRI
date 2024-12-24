@@ -2975,7 +2975,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
      * Converts the strings into English tags for xml storage
      *
      */
-    private static void stringToTagConversion(String[] strings) {
+    public static void stringToTagConversion(String[] strings) {
         for (int i = 0; i < strings.length; i++) {
             if (strings[i].equals(BLANK)) {
                 continue;
