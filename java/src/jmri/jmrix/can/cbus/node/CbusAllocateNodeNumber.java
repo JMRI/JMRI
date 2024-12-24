@@ -113,6 +113,8 @@ public class CbusAllocateNodeNumber implements CanListener {
 
         rqNNpane.add(bottomrqNNpane, BorderLayout.PAGE_END);
 
+        rqNNpane.setPreferredSize( new java.awt.Dimension(280, 80));
+
         Toolkit.getDefaultToolkit().beep();
 
         if ( _paramsArr==null ) {
@@ -166,7 +168,7 @@ public class CbusAllocateNodeNumber implements CanListener {
         return rqnnSpinner;
     }
 
-    protected TimerTask sendSNNTask;
+    private TimerTask sendSNNTask;
 
     private void clearSendSNNTimeout(){
         if (sendSNNTask != null ) {
@@ -208,10 +210,8 @@ public class CbusAllocateNodeNumber implements CanListener {
         if ( m.extendedOrRtr() ) {
             return;
         }
-        if (CbusMessage.getOpcode(m) == CbusConstants.CBUS_QNN) {
-            if (!NODE_NUM_DIALOGUE_OPEN) {
-                send.nodeRequestParamSetup();
-            }
+        if (CbusMessage.getOpcode(m) == CbusConstants.CBUS_QNN && !NODE_NUM_DIALOGUE_OPEN ) {
+            send.nodeRequestParamSetup();
         }
     }
 

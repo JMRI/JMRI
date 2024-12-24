@@ -9,10 +9,10 @@ import jmri.jmrix.can.cbus.simulator.moduletypes.MergCanpan;
 
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 import jmri.util.swing.JemmyUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.io.TempDir;
 
 import org.netbeans.jemmy.operators.*;
@@ -41,7 +41,7 @@ public class CbusAllocateNodeNumberTest {
     }
 
     @Test
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @DisabledIfHeadless
     public void testDisplayDialogue() {
         memo.get(CbusPreferences.class).setAddNodes(false);
         t = new CbusAllocateNodeNumber(memo,nodeModel);
@@ -104,12 +104,16 @@ public class CbusAllocateNodeNumberTest {
             jtfo.setText("123");
             JLabelOperator labelOper4 = new JLabelOperator(jdo, CbusNodeConstants.getReservedModule(123));
             assertNotNull(labelOper4);
-
+            // JUnitUtil.waitFor(1000);
 
             jtfo.setText("789");
             JLabelOperator labelOper5 = new JLabelOperator(jdo,
                 Bundle.getMessage("NdNumInUse",nodeModel.getNodeNumberName(789)));
             assertNotNull(labelOper5);
+            // JUnitUtil.waitFor(1000);
+
+            jtfo.setText("120");
+            // JUnitUtil.waitFor(1000);
 
             CanMessage rmes = new CanMessage(tcis.getCanid());
             rmes.setNumDataElements(1);
@@ -117,6 +121,7 @@ public class CbusAllocateNodeNumberTest {
             t.message(rmes); // ignored as dialogue already open
 
             jtfo.setText("65432");
+            // JUnitUtil.waitFor(1000);
 
             JemmyUtil.pressButton(jdo, "OK");
             jdo.waitClosed();
@@ -175,7 +180,7 @@ public class CbusAllocateNodeNumberTest {
     }
 
     @Test
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @DisabledIfHeadless
     public void testCanMessage() {
         t = new CbusAllocateNodeNumber(memo,nodeModel);
 
@@ -200,7 +205,7 @@ public class CbusAllocateNodeNumberTest {
     }
 
     @Test
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @DisabledIfHeadless
     public void testAllocateTimeout() {
         t = new CbusAllocateNodeNumber(memo,nodeModel);
 
