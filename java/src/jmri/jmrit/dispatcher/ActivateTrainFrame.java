@@ -1550,7 +1550,7 @@ public class ActivateTrainFrame extends JmriJFrame {
             case "TRAINSFROMOPS":
                 info.setTrainName(((Train) trainSelectBox.getSelectedItem()).getId());
                 info.setDccAddress(String.valueOf(dccAddressSpinner.getValue()));
-                trainInfo.setTrainsFrom(TrainsFrom.TRAINSFROMUSER);
+                trainInfo.setTrainsFrom(TrainsFrom.TRAINSFROMOPS);
                 setTrainsFromOptions(trainInfo.getTrainsFrom());
                 break;
             case "TRAINSFROMUSER":
