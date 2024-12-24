@@ -31,7 +31,8 @@
       </ul>
 
       <h2>Using StringIOs with Logix</h2>
-      A Logix can test a StringIO for particular contents, and set the contents of a StringIO to
+      A Logix or LogixNG can test a StringIO for particular contents, 
+      and set the contents of a StringIO to
       whatever string is needed. 
 
       <h3 id="addBlock">Saving StringIOs to disk</h3>
