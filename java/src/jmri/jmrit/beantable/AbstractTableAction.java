@@ -298,7 +298,9 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
      */
     protected void configureManagerComboBox(ManagerComboBox<E> comboBox, Manager<E> manager,
             Class<? extends Manager<E>> managerClass) {
+        log.trace("configureManagerComboBox called with manager {}", manager);
         Manager<E> defaultManager = InstanceManager.getDefault(managerClass);
+        log.trace("default manager is {}", defaultManager);
         // populate comboBox
         if (defaultManager instanceof ProxyManager) {
             comboBox.setManagers(defaultManager);
@@ -314,6 +316,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
                 SystemConnectionMemo memo = SystemConnectionMemoManager.getDefault()
                         .getSystemConnectionMemoForUserName(userPref);
                 if (memo!=null) {
+                    log.trace("managerClass is {}, memo is {}", managerClass, memo);
                     comboBox.setSelectedItem(memo.get(managerClass));
                 } else {
                     ProxyManager<E> proxy = (ProxyManager<E>) manager;
@@ -518,7 +521,6 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
         }
 
     }
-
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractTableAction.class);
 

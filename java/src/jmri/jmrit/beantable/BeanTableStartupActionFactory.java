@@ -45,6 +45,8 @@ public final class BeanTableStartupActionFactory extends AbstractStartupActionFa
             return Bundle.getMessage(locale, "StartupRailComTableAction"); // NOI18N
         } else if (clazz.equals(ReporterTableAction.class)) {
             return Bundle.getMessage(locale, "StartupReporterTableAction"); // NOI18N
+        } else if (clazz.equals(StringIOTableAction.class)) {
+            return Bundle.getMessage(locale, "StartupStringIOTableAction"); // NOI18N
         } else if (clazz.equals(RouteTableAction.class)) {
             return Bundle.getMessage(locale, "StartupRouteTableAction"); // NOI18N
         } else if (clazz.equals(SectionTableAction.class)) {
@@ -88,6 +90,7 @@ public final class BeanTableStartupActionFactory extends AbstractStartupActionFa
             SignalGroupTableAction.class,
             SignalHeadTableAction.class,
             SignalMastTableAction.class,
+            StringIOTableAction.class,
             TransitTableAction.class,
             TurnoutTableAction.class};
     }
