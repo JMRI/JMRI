@@ -354,6 +354,7 @@ public class DmiPanelTest {
         JUnitUtil.waitThreadTerminated("Play S_info.wav");
         JUnitUtil.waitThreadTerminated("Play S1_toofast.wav");
         JUnitUtil.waitThreadTerminated("Loop S2_warning.wav");
+        JUnitUtil.waitThreadTerminated("Play click.wav");
     }
 
     @BeforeEach
