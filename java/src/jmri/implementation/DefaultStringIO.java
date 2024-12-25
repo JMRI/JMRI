@@ -19,29 +19,13 @@ public class DefaultStringIO extends AbstractStringIO {
         super(systemName, userName);
     }
 
-    /**
-     * Sends the string to the layout.
-     * The string [u]must not be longer than the value of getMaximumLength()
-     * unless that value is zero. Some microcomputers have little memory and
-     * it's very important that this method is never called with too long strings.
-     *
-     * @param value the desired string value
-     * @throws jmri.JmriException general error when setting the value fails
-     */
+    /** {@inheritDoc} */ 
     @Override
     protected void sendStringToLayout(@Nonnull String value) throws JmriException {
         // does nothing in this implementation
     }
 
-    /**
-     * Cut long strings instead of throwing an exception?
-     * For example, if the StringIO is a display, it could be desired to
-     * accept too long strings.
-     * On the other hand, if the StringIO is used to send a command, a too
-     * long string is an error.
-     *
-     * @return true if long strings should be cut
-     */
+    /** {@inheritDoc} */ 
     @Override
     protected boolean cutLongStrings() {
         return false;
