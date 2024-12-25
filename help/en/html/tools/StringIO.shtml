@@ -30,8 +30,8 @@
         </li>
       </ul>
 
-      <h2>Using StringIOs with Logix</h2>
-      A Logix or LogixNG can test a StringIO for particular contents, 
+      <h2>Using StringIOs with LogixNG</h2>
+      A LogixNG can test a StringIO for particular contents, 
       and set the contents of a StringIO to
       whatever string is needed. 
 
