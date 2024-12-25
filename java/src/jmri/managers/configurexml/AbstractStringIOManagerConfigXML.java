@@ -63,9 +63,9 @@ public abstract class AbstractStringIOManagerConfigXML extends AbstractNamedBean
      * including the type information. Default implementation is to use the
      * local class here.
      *
-     * @param signalIOs The top-level element being created
+     * @param stringIOs The top-level element being created
      */
-    abstract public void setStoreElementClass(Element signalIOs);
+    abstract public void setStoreElementClass(Element stringIOs);
 
     /**
      * Utility method to load the individual StringIO objects. If there's no

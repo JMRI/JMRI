@@ -21,7 +21,7 @@ public class DefaultStringIO extends AbstractStringIO {
 
     /**
      * Sends the string to the layout.
-     * The string [u]must not[/u] be longer than the value of getMaximumLength()
+     * The string [u]must not be longer than the value of getMaximumLength()
      * unless that value is zero. Some microcomputers have little memory and
      * it's very important that this method is never called with too long strings.
      *

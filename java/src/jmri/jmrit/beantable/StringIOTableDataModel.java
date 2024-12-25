@@ -13,7 +13,6 @@ import jmri.StringIOManager;
 
 /**
  * Data model for a StringIO Table.
- * Code originally within StringIOTableAction.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2024
  * @author Steve Young Copyright (C) 2021
