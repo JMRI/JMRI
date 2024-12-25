@@ -34,7 +34,7 @@ import jmri.util.table.*;
 public class LccProTable extends JmriPanel {
 
     private LccProTableModel dataModel;
-    private TableRowSorter<LccProTableModel> sorter;
+    TableRowSorter<LccProTableModel> sorter;
     private JTable dataTable;
     private JScrollPane dataScroll;
     private final XTableColumnModel columnModel = new XTableColumnModel();

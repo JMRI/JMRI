@@ -122,7 +122,7 @@
             ],
             "description": "The timestamp of the last reported sighting of the tag"
         },
-        "carType": {
+        "type": {
             "type": "string",
             "description": "The engine type as displayed in manifests and switch lists"
         },
@@ -159,7 +159,7 @@
         "outOfService",
         "owner",
         "rfid",
-        "carType",
+        "type",
         "weight",
         "weightTons"
     ]

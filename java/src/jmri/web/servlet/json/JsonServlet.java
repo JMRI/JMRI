@@ -1,54 +1,37 @@
 package jmri.web.servlet.json;
 
-import static jmri.server.json.JSON.DATA;
-import static jmri.server.json.JSON.ID;
-import static jmri.server.json.JSON.NAME;
-import static jmri.server.json.JSON.STATE;
-import static jmri.server.json.JSON.V5;
-import static jmri.server.json.JSON.VALUE;
-import static jmri.server.json.JSON.VERSIONS;
+import static jmri.server.json.JSON.*;
 import static jmri.server.json.JsonException.CODE;
-import static jmri.server.json.operations.JsonOperations.LOCATION;
 import static jmri.server.json.power.JsonPowerServiceFactory.POWER;
-import static jmri.web.servlet.ServletUtil.APPLICATION_JSON;
-import static jmri.web.servlet.ServletUtil.UTF8;
-import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
+import static jmri.web.servlet.ServletUtil.*;
+
+import java.io.IOException;
+import java.net.URLDecoder;
+import java.util.*;
+
+import javax.annotation.Nonnull;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
+
+import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
+import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
+import org.openide.util.lookup.ServiceProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.io.IOException;
-import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.ServiceLoader;
 
-import javax.annotation.Nonnull;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
-import jmri.server.json.JsonServerPreferences;
-import jmri.server.json.JsonException;
-import jmri.server.json.JsonHttpService;
-import jmri.server.json.JsonRequest;
-import jmri.server.json.JsonWebSocket;
+import jmri.server.json.*;
 import jmri.server.json.schema.JsonSchemaServiceCache;
 import jmri.spi.JsonServiceFactory;
 import jmri.util.FileUtil;
 import jmri.web.servlet.ServletUtil;
-import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
-import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
-import org.openide.util.lookup.ServiceProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide JSON formatted responses to requests for information from the JMRI

@@ -96,6 +96,15 @@
       Note that the "Update from Network" button does a "Verify Events" operation
       on the network.  Some nodes consider this to be a start-of-day, power-up
       operation and might change the status of their outputs due to that.
+      <li>If you've defined
+      <a href="../../../../../apps/gui3/lccpro/LccPro.shtml#nodegroups">Node Groups</a>
+      in the 
+      <a href="../../../../../apps/gui3/lccpro/LccPro.shtml">LccPro</a>
+      window, there will be a selection box that lets you display events
+      from "(All)" nodes or just the ones in a specific group.  This 
+      can be helpful if e.g. you're only interested in events from some
+      small part of the layout's network.
+      
       <li>
       Checking the "Require label" box will display only events with labels.
       This lets you ignore events that you haven't labeled as interesting.
