@@ -610,7 +610,9 @@ public class TrainCommon {
             }
         }
     }
-    
+
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification = "Only when exception")
     public static String getTrainMessage(Train train, RouteLocation rl) {
         String expectedArrivalTime = train.getExpectedArrivalTime(rl);
         String routeLocationName = rl.getSplitName();
@@ -664,7 +666,9 @@ public class TrainCommon {
             return msg;
         }
     }
-    
+
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification = "Only when exception")
     public static String getSwitchListTrainStatus(Train train, RouteLocation rl) {
         String expectedArrivalTime = train.getExpectedArrivalTime(rl);
         String msg = "";
@@ -683,7 +687,8 @@ public class TrainCommon {
                         new Object[]{splitString(train.getTrainDepartsName()), rl.getTrainDirectionString(),
                                 train.getFormatedDepartureTime()});
             } else if (Setup.isUseSwitchListDepartureTimeEnabled() &&
-                    rl != train.getTrainTerminatesRouteLocation() && !expectedArrivalTime.equals(Train.ALREADY_SERVICED)) {
+                    rl != train.getTrainTerminatesRouteLocation() &&
+                    !expectedArrivalTime.equals(Train.ALREADY_SERVICED)) {
                 // Departs {0} at {1} expected arrival {2}, arrives {3}bound
                 msg = MessageFormat.format(
                         messageFormatText = TrainSwitchListText.getStringDepartsAtExpectedArrival(),
