@@ -581,7 +581,10 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>
+                <a href="https://www.jmri.org/help/en/html/tools/StringIO.shtml">StringIOs</li>
+                are a new type of object within JMRI.  They're a way to exchange informational strings
+                with the layout hardware.  Over time, we'll build-out more system connections for these.
         </ul>
 
    <h3>Warrants</h3>
