@@ -17,6 +17,17 @@ public interface StringIOManager extends ProvidingManager<StringIO>, NameIncreme
     StringIO provideStringIO(@Nonnull String name) throws IllegalArgumentException;
 
     /**
+     * Get an existing StringIO or return null if it doesn't exist. 
+     * 
+     * Locates via user name, then system name if needed.
+     *
+     * @param name User name or system name to match
+     * @return null if no match found
+     */
+    @CheckForNull
+    StringIO getStringIO(@Nonnull String name);
+
+    /**
      * Return a StringIO with the specified user or system name.
      * Return StringIO by UserName else provide by SystemName.
      * <p>

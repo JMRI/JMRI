@@ -41,6 +41,12 @@ public class ProxyStringIOManager extends AbstractProvidingProxyManager<StringIO
 
     /** {@inheritDoc} */
     @Override
+    public StringIO getStringIO(@Nonnull String name) {
+        return super.getNamedBean(name);
+    }
+
+    /** {@inheritDoc} */
+    @Override
     @Nonnull
     public StringIO newStringIO(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         return newNamedBean(systemName, userName);
