@@ -439,6 +439,14 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         return minutes;
     }
 
+    /**
+     * Used to determine when a train will arrive at a train's route location.
+     * Once a train departs, provides an estimated time in route and ignores the
+     * departure times from each route location.
+     * 
+     * @param routeLocation where in the train's route to get time
+     * @return Time in minutes
+     */
     public int getExpectedTravelTimeInMinutes(RouteLocation routeLocation) {
         int minutes = 0;
         if (!isTrainEnRoute()) {
@@ -466,7 +474,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                     continue;
                 }
                 // is there a departure time from this location?
-                if (!rl.getDepartureTime().equals(RouteLocation.NONE)) {
+                if (!rl.getDepartureTime().equals(RouteLocation.NONE) && !isTrainEnRoute()) {
                     String dt = rl.getDepartureTime();
                     log.debug("Location {} departure time {}", rl.getName(), dt);
                     String[] time = dt.split(":");
@@ -482,7 +490,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                     minutes += Setup.getTravelTime();
                 }
                 // don't count work if there's a departure time
-                if (i == 0 || !rl.getDepartureTime().equals(RouteLocation.NONE)) {
+                if (i == 0 || !rl.getDepartureTime().equals(RouteLocation.NONE) && !isTrainEnRoute()) {
                     continue;
                 }
                 // now add the work at the location
