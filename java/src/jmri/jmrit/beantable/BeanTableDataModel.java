@@ -163,10 +163,11 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      * @return true if the property name is of interest, false otherwise
      */
     protected boolean matchPropertyName(PropertyChangeEvent e) {
-        return (e.getPropertyName().contains("State")
-                || e.getPropertyName().contains("Appearance")
-                || e.getPropertyName().contains("Comment"))
-                || e.getPropertyName().contains("UserName");
+        var name = e.getPropertyName().toLowerCase();
+        return (name.contains("state")
+                || name.contains("appearance")
+                || name.contains("comment"))
+                || name.contains("username");
     }
 
     /**

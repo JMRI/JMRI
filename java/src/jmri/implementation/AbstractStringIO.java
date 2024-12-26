@@ -61,6 +61,7 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
     /** {@inheritDoc} */
     @Override
     public void setCommandedStringValue(@Nonnull String value) throws JmriException {
+        var _old = _commandedString; 
         int maxLength = getMaximumLength();
         if ((maxLength > 0) && (value.length() > maxLength)) {
             if (cutLongStrings()) {
@@ -71,6 +72,7 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
         }
         _commandedString = value;
         sendStringToLayout(_commandedString);
+        firePropertyChange(PROPERTY_STATE, _old, _commandedString); // NOI18N
     }
 
     /** {@inheritDoc} */
@@ -107,7 +109,7 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
     /** {@inheritDoc} */
     @Override
     public void setState(int newState) {
-        // A StringIO doesn't have a state
+        // A StringIO doesn't have an integer state
     }
 
     /** {@inheritDoc} */
