@@ -9,11 +9,13 @@ import jmri.NamedBean;
 import jmri.implementation.AbstractStringIO;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
+import org.openlcb.Connection;
 import org.openlcb.EventID;
+import org.openlcb.MessageDecoder;
 import org.openlcb.OlcbInterface;
+import org.openlcb.ProducerConsumerEventReportMessage;
 import org.openlcb.implementations.BitProducerConsumer;
 import org.openlcb.implementations.EventTable;
-import org.openlcb.implementations.VersionedValueListener;
 
 /**
  * Send a message to the OpenLCB/LCC network
@@ -29,15 +31,13 @@ public class OlcbStringIO extends AbstractStringIO {
 
     BitProducerConsumer pc;
     EventTable.EventTableEntryHolder activeEventTableEntryHolder = null;
-    private static final boolean DEFAULT_IS_AUTHORITATIVE = true;
-    private static final boolean DEFAULT_LISTEN = true;
     private static final int PC_DEFAULT_FLAGS = BitProducerConsumer.DEFAULT_FLAGS &
             (~BitProducerConsumer.LISTEN_INVALID_STATE);
 
 
     public OlcbStringIO(String prefix, String address, CanSystemConnectionMemo memo) {
         super(prefix + "C" + address);
-        log.info("ctor with {} and {}", prefix, address);
+        log.trace("ctor with {} and {}", prefix, address);
         this.memo = memo;
         if (memo != null) { // greatly simplify testing
             this.iface = memo.get(OlcbInterface.class);
@@ -68,6 +68,8 @@ public class OlcbStringIO extends AbstractStringIO {
                 log.error("Can't parse OpenLCB StringIO system name: {}", address);
         }
 
+        iface.registerMessageListener(new EWPListener());
+
     }
 
     /**
@@ -76,7 +78,7 @@ public class OlcbStringIO extends AbstractStringIO {
      * XML.
      */
     void finishLoad() {
-        log.info("finishLoad runs");
+        log.trace("finishLoad runs");
         int flags = PC_DEFAULT_FLAGS;
         flags = OlcbUtils.overridePCFlagsFromProperties(this, flags);
         log.debug("StringIO Flags: default {} overridden {} listen bit {}", PC_DEFAULT_FLAGS, flags,
@@ -102,13 +104,13 @@ public class OlcbStringIO extends AbstractStringIO {
 
     /**
      * Computes the display name of a given event to be entered into the Event Table.
-     * @param isActive true for StringIO active, false for inactive.
+     * @param isActive left over from interface for Turnout and Sensor, this is ignored
      * @return user-visible string to represent this event.
      */
     public String getEventName(boolean isActive) {
         String name = getUserName();
         if (name == null) name = mSystemName;
-        String msgName = isActive ? "SensorActiveEventName": "SensorInactiveEventName";
+        String msgName = "StringIOEventName";
         return Bundle.getMessage(msgName, name);
     }
 
@@ -151,8 +153,17 @@ public class OlcbStringIO extends AbstractStringIO {
     /** {@inheritDoc} */
     @Override
     protected void sendStringToLayout(String value) throws JmriException {
-        // Only sets the known string and fires listeners.
-        setString(value);
+        // Does not set the known value immediately.  Instead, it waits
+        // for the OpenLCB message to be received on the network, and reacts then.
+        // This is JMRI's standard MONITORING feedback.
+
+        // Send the message to the network
+        iface.getOutputConnection().put(
+            new ProducerConsumerEventReportMessage(iface.getNodeId(), 
+                    getEventID(true), 
+                    value.getBytes(java.nio.charset.StandardCharsets.UTF_8)), 
+            null);
+
     }
 
     /** {@inheritDoc} */
@@ -165,6 +176,23 @@ public class OlcbStringIO extends AbstractStringIO {
     @Override
     protected boolean cutLongStrings() {
         return true;
+    }
+
+    class EWPListener extends MessageDecoder {
+        @Override
+        public void handleProducerConsumerEventReport(ProducerConsumerEventReportMessage msg, Connection sender){
+            if (!msg.getEventID().equals(getEventID(true))) {
+                return;
+            }
+            // found contents, set the string on Swing thread
+            jmri.util.ThreadingUtil.runOnGUI( () -> {
+                try {
+                    setString(new String(msg.getPayloadArray(), java.nio.charset.StandardCharsets.UTF_8));
+                } catch (Exception e) {
+                    log.warn("EWP processing got exception", e);
+                }
+            });
+        }
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbStringIO.class);

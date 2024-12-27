@@ -5,7 +5,6 @@ import java.util.*;
 import javax.annotation.Nonnull;
 
 import jmri.StringIO;
-import jmri.implementation.DefaultStringIO;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
 /**
@@ -87,6 +86,12 @@ public class OlcbStringIOManager extends jmri.managers.AbstractStringIOManager {
             pendingStringIOs.clear();
             isLoading = false;
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getEntryToolTip() {
+        return Bundle.getMessage("AddStringIOEntryToolTip");
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbStringIOManager.class);

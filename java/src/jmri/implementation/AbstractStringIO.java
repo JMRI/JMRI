@@ -59,7 +59,7 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
     protected void setString(@Nonnull String newValue) {
         Object _old = this._knownString;
         this._knownString = newValue;
-        firePropertyChange("KnownString", _old, _knownString); // NOI18N
+        firePropertyChange("KnownValue", _old, _knownString); // NOI18N
     }
 
     /** {@inheritDoc} */
@@ -76,7 +76,7 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
         }
         _commandedString = value;
         sendStringToLayout(_commandedString);
-        firePropertyChange("CommandedString", _old, _commandedString); // NOI18N
+        firePropertyChange("CommandedValue", _old, _commandedString); // NOI18N
     }
 
     /** {@inheritDoc} */
@@ -133,5 +133,7 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
     public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull NamedBean n) {
         return suffix1.compareTo(suffix2);
     }
+
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractStringIO.class);
 
 }

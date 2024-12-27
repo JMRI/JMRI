@@ -128,7 +128,7 @@ public class StringIOTableDataModel extends BeanTableDataModel<StringIO> {
                 if (r == null) {
                     return "";
                 }
-                return r.getCommandedStringValue();
+                return r.getKnownStringValue();
             default:
                 return super.getValueAt(row, col);
         }
