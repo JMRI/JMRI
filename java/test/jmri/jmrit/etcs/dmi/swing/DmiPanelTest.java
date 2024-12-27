@@ -9,14 +9,14 @@ import jmri.jmrit.etcs.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.operators.*;
 
 /**
  * Tests for DmiPanel.
  * @author Steve Young Copyright (C) 2024
  */
-@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class DmiPanelTest {
 
     @Test
@@ -24,6 +24,39 @@ public class DmiPanelTest {
         DmiPanel p = new DmiPanel();
         Assertions.assertNotNull(p);
         p.dispose();
+    }
+
+    @Test
+    public void testCsg() {
+        DmiFrame df = new DmiFrame("DmiCsgTest");
+        DmiPanel dmiPanel = df.getDmiPanel();
+        Assertions.assertNotNull(dmiPanel);
+        df.setVisible(true);
+        JFrameOperator jfo = new JFrameOperator(df.getTitle());
+
+        dmiPanel.messageDriver(new CabMessage("My Message", 1, false));
+
+        // create an empty list of CSG Sections
+        java.util.ArrayList<DmiCircularSpeedGuideSection> csgSectionList = new java.util.ArrayList<>();
+
+        // add the negative area of the dial which is normal section type,
+        // grey, start speed -2, stop speed 1, hook false.
+        csgSectionList.add(new DmiCircularSpeedGuideSection(DmiCircularSpeedGuideSection.CSG_TYPE_NORMAL,
+            DmiPanel.DARK_GREY, -2, 1, false ));
+
+        // add the main area of the circular dial which is normal section type,
+        // yellow, start speed 0, stop speed 80, hook true
+        csgSectionList.add(new DmiCircularSpeedGuideSection(DmiCircularSpeedGuideSection.CSG_TYPE_NORMAL,
+            DmiPanel.YELLOW, 0, 80, true));
+
+        // add list to panel
+        dmiPanel.setCsgSections(csgSectionList);
+
+        // JUnitUtil.waitFor(10000);
+
+        JUnitUtil.dispose(df);
+        jfo.waitClosed();
+
     }
 
     @Test
@@ -143,7 +176,7 @@ public class DmiPanelTest {
         p.setMode(21);
         // JUnitUtil.waitFor(4000);
 
-        jfo.requestClose();
+        JUnitUtil.dispose(df);
         jfo.waitClosed();
     }
 
@@ -165,23 +198,30 @@ public class DmiPanelTest {
         p.setLevel(-1);
         p.setMode(11);
         p.playDmiSound(4);
+        waitSoundsTerminated();
         // JUnitUtil.waitFor(2500);
-        
+
         p.setMode(DmiPanel.MODE_POST_TRIP);
         p.playDmiSound(3);
+        waitSoundsTerminated();
         // JUnitUtil.waitFor(2500);
-        
+
         p.setMode(DmiPanel.MODE_REVERSING);
         p.playDmiSound(1);
-        // JUnitUtil.waitFor(2500);
+        waitSoundsTerminated();
         
+        // JUnitUtil.waitFor(2500);
+
         p.setMode(DmiPanel.MODE_NON_LEADING);
         p.playDmiSound(2);
-        // JUnitUtil.waitFor(10000);
+        JUnitUtil.waitFor(20);
 
         p.stopDmiSound(2);
+        JUnitUtil.waitFor(20);
 
-        jfo.requestClose();
+        waitSoundsTerminated();
+
+        JUnitUtil.dispose(df);
         jfo.waitClosed();
 
     }
@@ -268,7 +308,7 @@ public class DmiPanelTest {
         
         // JUnitUtil.waitFor(10000);
         
-        jfo.requestClose();
+        JUnitUtil.dispose(df);
         jfo.waitClosed();
     }
     
@@ -308,6 +348,13 @@ public class DmiPanelTest {
         }
 
         p.setCsgSections(csgSectionList);
+    }
+
+    protected static void waitSoundsTerminated() {
+        JUnitUtil.waitThreadTerminated("Play S_info.wav");
+        JUnitUtil.waitThreadTerminated("Play S1_toofast.wav");
+        JUnitUtil.waitThreadTerminated("Loop S2_warning.wav");
+        JUnitUtil.waitThreadTerminated("Play click.wav");
     }
 
     @BeforeEach
