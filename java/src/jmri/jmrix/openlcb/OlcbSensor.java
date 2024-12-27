@@ -211,7 +211,7 @@ public final class OlcbSensor extends AbstractSensor {
     }
 
     /**
-     * Changes how the turnout reacts to inquire state events. With authoritative == false the
+     * Changes how the sensor reacts to inquire state events. With authoritative == false the
      * state will always be reported as UNKNOWN to the layout when queried.
      *
      * @param authoritative whether we should respond true state or unknown to the layout event
@@ -257,7 +257,7 @@ public final class OlcbSensor extends AbstractSensor {
     }
 
     /**
-     * Changes how the turnout reacts to state declaration messages. With listen == true state
+     * Changes how the sensor reacts to state declaration messages. With listen == true state
      * declarations will update local state at all times. With listen == false state declarations
      * will update local state only if local state is unknown.
      *
