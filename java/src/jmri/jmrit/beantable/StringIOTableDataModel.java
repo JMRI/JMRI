@@ -110,6 +110,17 @@ public class StringIOTableDataModel extends BeanTableDataModel<StringIO> {
      * {@inheritDoc}
      */
     @Override
+    public int getPreferredWidth(int col) {
+        if (col == KNOWNCOL) {
+            return new JTextField(15).getPreferredSize().width; // TODO I18N using Bundle.getMessage()
+        }
+        return super.getPreferredWidth(col);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Object getValueAt(int row, int col) {
         switch (col) {
             case KNOWNCOL:
