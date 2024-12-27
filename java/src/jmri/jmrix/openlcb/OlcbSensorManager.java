@@ -25,7 +25,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
 
     // Whether we accumulate partially loaded objects in pendingSensors.
     private boolean isLoading = false;
-    // Turnouts that are being loaded from XML.
+    // Sensors that are being loaded from XML.
     private final ArrayList<OlcbSensor> pendingSensors = new ArrayList<>();
 
     /**
@@ -88,15 +88,13 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
      */
     @Override
     @Nonnull
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "SLF4J_FORMAT_SHOULD_BE_CONST",
-        justification = "passing exception text")
     protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         String addr = systemName.substring(getSystemNamePrefix().length());
         // first, check validity
         try {
             validateSystemNameFormat(systemName,Locale.getDefault());
         } catch (jmri.NamedBean.BadSystemNameException e) {
-            log.error(e.getMessage());
+            log.error("Exception: {}", e.getMessage());
             throw e;
         }
         // OK, make
