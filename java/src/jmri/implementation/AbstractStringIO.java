@@ -41,6 +41,10 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
      * The string [u]must not[/u] be longer than the value of getMaximumLength()
      * unless that value is zero. Some microcomputers have little memory and
      * it's very important that this method is never called with too long strings.
+     * <p>
+     * For systems that don't provide another form of feedback, this call is 
+     * responsible for setting the known state to the new commanded state, and 
+     * firing all listeners.
      *
      * @param value the desired string value
      * @throws jmri.JmriException general error when setting the value fails
@@ -55,7 +59,7 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
     protected void setString(@Nonnull String newValue) {
         Object _old = this._knownString;
         this._knownString = newValue;
-        firePropertyChange(PROPERTY_STATE, _old, _knownString); // NOI18N
+        firePropertyChange("KnownString", _old, _knownString); // NOI18N
     }
 
     /** {@inheritDoc} */
@@ -72,7 +76,7 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
         }
         _commandedString = value;
         sendStringToLayout(_commandedString);
-        firePropertyChange(PROPERTY_STATE, _old, _commandedString); // NOI18N
+        firePropertyChange("CommandedString", _old, _commandedString); // NOI18N
     }
 
     /** {@inheritDoc} */

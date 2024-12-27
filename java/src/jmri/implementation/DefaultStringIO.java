@@ -22,7 +22,8 @@ public class DefaultStringIO extends AbstractStringIO {
     /** {@inheritDoc} */ 
     @Override
     protected void sendStringToLayout(@Nonnull String value) throws JmriException {
-        // does nothing in this implementation
+        // Only sets the known string and fires listeners.
+        setString(value);
     }
 
     /** {@inheritDoc} */ 
