@@ -28,5 +28,5 @@ public class InternalStringIOManagerXml extends jmri.managers.configurexml.Abstr
         return load;
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LnStringIOManagerXml.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InternalStringIOManagerXml.class);
 }
