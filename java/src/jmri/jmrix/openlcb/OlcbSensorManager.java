@@ -153,7 +153,6 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
         catch ( jmri.NamedBean.BadSystemNameException ex ){
             throw new JmriException(ex.getMessage());
         }
-        // don't check for integer; should check for validity here
         return prefix + typeLetter() + curAddress;
     }
 
