@@ -26,7 +26,11 @@
       <ul>
         <li>Below the StringIO Table you'll find the <a href=
         "../../package/jmri/jmrit/beantable/StringIOAddEdit.shtml">Add...</a> button to add new
-        Memories.
+        StringIOs. The exact format of the hardware address depends on what type of
+        hardware is being addressed.  Consult the documentation for StringIOs for your
+        particular connection type.  Internal StringIOs, which don't connect to hardware,
+        use a free-form name:  Any alphanumeric characters except dollar sign ($)
+        colon (:) and quotes.
         </li>
       </ul>
 
