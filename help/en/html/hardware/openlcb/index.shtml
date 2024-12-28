@@ -51,7 +51,7 @@
       <p>Another format for Event ID's is a continuous hexadecimal string, such as
       "<code>x0102030405060709</code>".</p>
 
-      <p>You can also assign your own names to EventID and use those to create 
+      <p>You can also assign your own names to EventIDs and use those to create 
       Turnouts, Sensors, Lights, Signal Masts and StringIOs.  See the 
       <a href="Names.shtml">page on OpenLCB names</a>
       for more information on this.</p>
@@ -168,7 +168,9 @@
       the layout hardware.  Different systems use them in different ways.
       <p>
       OpenLCB connections can use StringIOs to create shared variables across
-      multiple JMRI instances.  You create the same StringIO with each JMRI
+      multiple JMRI instances, and perhaps someday other OpenLCB hardware that supports 
+      string input and output.  
+      To do this, you create the same StringIO within each JMRI
       instance, using the same Event ID.  Once you've done that, updating the 
       string value in one instance will update the value in all of the others
       in the different JMRI instances connected to the same OpenLCB network.
