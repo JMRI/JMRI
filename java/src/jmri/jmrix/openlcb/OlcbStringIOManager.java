@@ -50,7 +50,7 @@ public class OlcbStringIOManager extends jmri.managers.AbstractStringIOManager {
     @Override
     @Nonnull
     public StringIO createNewStringIO(String sName, String uName) {
-        String name = sName.substring(getSystemPrefix().length()+1);
+        String name = sName.substring(getSystemPrefix().length()+1);  // plus one for type letter
         var s = new OlcbStringIO(getSystemPrefix(), name, (CanSystemConnectionMemo) memo);
         if (uName != null) s.setUserName(uName);
         synchronized (pendingStringIOs) {
@@ -93,6 +93,18 @@ public class OlcbStringIOManager extends jmri.managers.AbstractStringIOManager {
     @Override
     public String getEntryToolTip() {
         return Bundle.getMessage("AddStringIOEntryToolTip");
+    }
+
+    /**
+     * Validates to OpenLCB format.
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        name = super.validateSystemNameFormat(name,locale);
+        name = OlcbAddress.validateSystemNameFormat(name,locale,getSystemNamePrefix(), (CanSystemConnectionMemo) memo);
+        return name;
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbStringIOManager.class);
