@@ -13,6 +13,7 @@
 
     <div id="mainContent">
       <h1>JMRI: StringIO Documentation</h1>
+      <span class="since">since 5.11.2</span>
       A JMRI StringIO object usually connects to some ability of a hardware
       system to get and put strings.
       <h2>The StringIO Table</h2>

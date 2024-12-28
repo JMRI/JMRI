@@ -161,6 +161,7 @@
       from one aspect to another.</p>
 
       <h2 id="stringios">StringIOs</h2>
+      <span class="since">since 5.11.2</span>
       A 
       <a href="../../tools/StringIO.shtml ">StringIO</a>
       is a general-purpose tool for sending and receiving strings of characters to 
