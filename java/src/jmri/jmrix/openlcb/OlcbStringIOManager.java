@@ -52,6 +52,7 @@ public class OlcbStringIOManager extends jmri.managers.AbstractStringIOManager {
     public StringIO createNewStringIO(String sName, String uName) {
         String name = sName.substring(getSystemPrefix().length()+1);
         var s = new OlcbStringIO(getSystemPrefix(), name, (CanSystemConnectionMemo) memo);
+        if (uName != null) s.setUserName(uName);
         synchronized (pendingStringIOs) {
             if (isLoading) {
                 pendingStringIOs.add(s);
