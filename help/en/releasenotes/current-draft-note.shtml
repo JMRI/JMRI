@@ -469,7 +469,9 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>Added train departure times to Yardmaster and Conductor</li>
+            <li>Fixed internationalization for Web Manifest, UK and other languages.</li>
+            <li>Added the option of building train when selecting Conductor and train not built</li>
         </ul>
 
    <h3>Panel Editor</h3>
