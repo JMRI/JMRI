@@ -746,7 +746,19 @@ public class BlockTest {
         Assert.assertEquals("new value", 20.0f, (float)listen.getNewValue(1),0.01);
         
     }
-    
+
+    @Test
+    public void testDescribeState() {
+        Block t = new Block("testDescribeState");
+        Assertions.assertEquals("Unknown", t.describeState(Block.UNKNOWN));
+        Assertions.assertEquals("Inconsistent", t.describeState(Block.INCONSISTENT));
+        Assertions.assertEquals("Occupied", t.describeState(Block.OCCUPIED));
+        Assertions.assertEquals("UnOccupied", t.describeState(Block.UNOCCUPIED));
+        Assertions.assertEquals("Undetected", t.describeState(Block.UNDETECTED));
+        Assertions.assertEquals("Unexpected value: 777", t.describeState(777));
+        t.dispose();
+    }
+
     /**
      * Class to log Property Changes.
      */
