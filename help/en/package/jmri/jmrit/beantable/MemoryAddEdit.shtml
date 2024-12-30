@@ -4,7 +4,8 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Adding Memory Variables Help</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help Memory Add Edit"><!--#include virtual="/help/en/parts/Style.shtml" -->
+  <meta name="keywords" content="JMRI help Memory Add Edit">
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
   <!--#include virtual="/help/en/parts/Header.shtml" -->
@@ -19,8 +20,7 @@
       bottom.</p>
       <img src="images/MemoryAdd.png" width="594" height="162" alt="add memory variable dialog">
       <p>You must enter a unique System Name. System Names for Memory Variables have no set
-      pattern. You can call them whatever you want. There's a weak convention of starting them with
-      "IM" for "Internal Memory", but that's not required.</p>
+      pattern. You can call them whatever you want.</p>
 
       <p>The User Name is optional, unless you check "Automatically generate System Name", and if
       you enter one it has to be unique in your JMRI setup. See the "<a href=

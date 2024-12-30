@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: StringIO Table Help</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help StringIO Table">
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>The StringIO Table</h1>
+
+      <p>You can use the StringIO Table to look at the contents of JMRI StringIO
+      objects.</p>
+
+      <p>Note that you can sort the table by each of the columns, just click on the column
+      heading.</p>
+
+      <p>To change the value stored in a particular StringIO, just double click on the Value
+      column in the desired row. Enter a new value, followed by hitting the Return or Enter key to
+      store the string value. For system-specific StringIOs, this will send
+      the value out to the layout immediately
+      <br>Entering an empty value will store an empty String value to the variable.</p>
+
+      <h2 id="addMemory">Adding a new StringIO</h2>
+
+      <p>To create a new StringIO, click on the "<a href="StringIOAddEdit.shtml">Add...</a>"
+      button at the bottom left of the pane.</p>
+
+      <p>For more information on StringIOs, see the <a href=
+      "../../../../html/tools/StringIO.shtml">StringIOs help page</a>.</p>
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/help.js"></script>
+</body>
+</html>

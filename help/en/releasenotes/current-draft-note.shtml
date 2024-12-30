@@ -127,7 +127,13 @@
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
                 <li>Fixed a bug in the LccPro search function on large LCC networks.</li>
-                <li>Added "Node Groups" to LccPro and the Event Table.  
+                <li>Added "Node Groups" to LccPro and the Event Table.</li>
+                <li>You can now create an LCC/OpenLCB
+                    <a href="help/en/html/hardware/openlcb/index.shtml#stringios">StringIO</li>
+                    that's shared across multiple JMRI instances on the same LCC/OpenLCB network.
+                    If you change the StringIO value in one JMRI instance, it will be propagated to the 
+                    other ones over the network. You can then use LogixNG or scripts to 
+                    use that information to communicate between JMRI instances.
             </ul>
 
         <h4>Powerline</h4>
@@ -583,7 +589,10 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>
+                <a href="https://www.jmri.org/help/en/html/tools/StringIO.shtml">StringIOs</li>
+                are a new type of object within JMRI.  They're a way to exchange informational strings
+                with the layout hardware.  Over time, we'll build-out more system connections for these.
         </ul>
 
    <h3>Warrants</h3>

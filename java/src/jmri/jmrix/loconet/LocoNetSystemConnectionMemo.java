@@ -200,7 +200,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         InstanceManager.setLightManager(
                 getLightManager());
 
-        InstanceManager.setDefault(StringIOManager.class, getStringIOManager());
+        InstanceManager.setStringIOManager(getStringIOManager());
 
         InstanceManager.setThrottleManager(
                 getThrottleManager());

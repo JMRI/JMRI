@@ -41,6 +41,10 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
      * The string [u]must not[/u] be longer than the value of getMaximumLength()
      * unless that value is zero. Some microcomputers have little memory and
      * it's very important that this method is never called with too long strings.
+     * <p>
+     * For systems that don't provide another form of feedback, this call is 
+     * responsible for setting the known state to the new commanded state, and 
+     * firing all listeners.
      *
      * @param value the desired string value
      * @throws jmri.JmriException general error when setting the value fails
@@ -55,12 +59,13 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
     protected void setString(@Nonnull String newValue) {
         Object _old = this._knownString;
         this._knownString = newValue;
-        firePropertyChange(PROPERTY_STATE, _old, _knownString); // NOI18N
+        firePropertyChange("KnownValue", _old, _knownString); // NOI18N
     }
 
     /** {@inheritDoc} */
     @Override
     public void setCommandedStringValue(@Nonnull String value) throws JmriException {
+        var _old = _commandedString; 
         int maxLength = getMaximumLength();
         if ((maxLength > 0) && (value.length() > maxLength)) {
             if (cutLongStrings()) {
@@ -71,6 +76,7 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
         }
         _commandedString = value;
         sendStringToLayout(_commandedString);
+        firePropertyChange("CommandedValue", _old, _commandedString); // NOI18N
     }
 
     /** {@inheritDoc} */
@@ -107,7 +113,7 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
     /** {@inheritDoc} */
     @Override
     public void setState(int newState) {
-        // A StringIO doesn't have a state
+        // A StringIO doesn't have an integer state
     }
 
     /** {@inheritDoc} */
@@ -127,5 +133,7 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
     public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull NamedBean n) {
         return suffix1.compareTo(suffix2);
     }
+
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractStringIO.class);
 
 }
