@@ -14,8 +14,8 @@ public class JComboBoxEditor extends javax.swing.DefaultCellEditor {
         super(comboBox);
         onChangeCallback = callback;
         jmri.util.swing.JComboBoxUtil.setupComboBoxMaxRows(comboBox);
-        if ( comboBox instanceof NamedBeanComboBox ) {
-            ((NamedBeanComboBox)comboBox).setAllowNull(true);
+        if ( comboBox instanceof NamedBeanComboBox<?> ) {
+            ((NamedBeanComboBox<?>)comboBox).setAllowNull(true);
         }
     }
 
