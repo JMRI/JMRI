@@ -13,13 +13,14 @@ import jmri.StringIOManager;
 
 /**
  * Data model for a StringIO Table.
- * Code originally within StringIOTableAction.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2024
  * @author Steve Young Copyright (C) 2021
  */
 public class StringIOTableDataModel extends BeanTableDataModel<StringIO> {
 
+    static final int KNOWNCOL = NUMCOLUMN;
+    
     public StringIOTableDataModel(Manager<StringIO> mgr){
         super();
         setManager(mgr);
@@ -104,6 +105,35 @@ public class StringIOTableDataModel extends BeanTableDataModel<StringIO> {
         // we override setValueAt
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getPreferredWidth(int col) {
+        if (col == KNOWNCOL) {
+            return new JTextField(15).getPreferredSize().width; // TODO I18N using Bundle.getMessage()
+        }
+        return super.getPreferredWidth(col);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Object getValueAt(int row, int col) {
+        switch (col) {
+            case KNOWNCOL:
+                StringIO r = getManager().getBySystemName(sysNameList.get(row));
+                if (r == null) {
+                    return "";
+                }
+                return r.getKnownStringValue();
+            default:
+                return super.getValueAt(row, col);
+        }
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -129,7 +159,7 @@ public class StringIOTableDataModel extends BeanTableDataModel<StringIO> {
      */
     @Override
     public int getColumnCount() {
-        return NUMCOLUMN + getPropertyColumnCount();
+        return NUMCOLUMN + getPropertyColumnCount() + 1;  // +1 for known column
     }
 
     /**
@@ -139,7 +169,9 @@ public class StringIOTableDataModel extends BeanTableDataModel<StringIO> {
     public String getColumnName(int col) {
         switch (col) {
             case VALUECOL:
-                return Bundle.getMessage("BlockValue");
+                return Bundle.getMessage("StringIOCommanded");
+            case KNOWNCOL:
+                return Bundle.getMessage("StringIOKnown");
             default:
                 return super.getColumnName(col);
         }
@@ -152,6 +184,8 @@ public class StringIOTableDataModel extends BeanTableDataModel<StringIO> {
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case VALUECOL:
+                return String.class;
+            case KNOWNCOL:
                 return String.class;
             default:
                 return super.getColumnClass(col);

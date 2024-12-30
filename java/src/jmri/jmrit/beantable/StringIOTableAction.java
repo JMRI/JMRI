@@ -169,7 +169,7 @@ public class StringIOTableAction extends AbstractTableAction<StringIO> {
             return;
         }
         String rName;
-        String stringIOPrefix = prefixBox.getSelectedItem().getSystemPrefix(); // Add "R" later
+        String stringIOPrefix = prefixBox.getSelectedItem().getSystemPrefix(); 
         String curAddress = hardwareAddressTextField.getText();
         // initial check for empty entry
         if (curAddress.isEmpty()) {

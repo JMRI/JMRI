@@ -17,16 +17,29 @@ public interface StringIOManager extends ProvidingManager<StringIO>, NameIncreme
     StringIO provideStringIO(@Nonnull String name) throws IllegalArgumentException;
 
     /**
+     * Get an existing StringIO or return null if it doesn't exist. 
+     * 
+     * Locates via user name, then system name if needed.
+     *
+     * @param name User name or system name to match
+     * @return null if no match found
+     */
+    @CheckForNull
+    StringIO getStringIO(@Nonnull String name);
+
+    /**
      * Return a StringIO with the specified user or system name.
      * Return StringIO by UserName else provide by SystemName.
      * <p>
      * Note that
      * two calls with the same arguments will get the same instance; there is
-     * only one StringIO object representing a given physical turnout and
-     * therefore only one with a specific system or user name.
+     * only one StringIO object with a specific system or user name.
      * <p>
      * This will always return a valid object reference; a new object will be
-     * created if necessary. In that case:
+     * created if necessary. If that's not possible, an IllegalArgumentException
+     * is thrown.
+     * <p>
+     * If a new object has to be created:
      * <ul>
      * <li>If a null reference is given for user name, no user name will be
      * associated with the Sensor object created; a valid system name must be

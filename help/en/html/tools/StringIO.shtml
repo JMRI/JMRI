@@ -13,6 +13,7 @@
 
     <div id="mainContent">
       <h1>JMRI: StringIO Documentation</h1>
+      <span class="since">since 5.11.2</span>
       A JMRI StringIO object usually connects to some ability of a hardware
       system to get and put strings.
       <h2>The StringIO Table</h2>
@@ -26,12 +27,17 @@
       <ul>
         <li>Below the StringIO Table you'll find the <a href=
         "../../package/jmri/jmrit/beantable/StringIOAddEdit.shtml">Add...</a> button to add new
-        Memories.
+        StringIOs. The exact format of the hardware address depends on what type of
+        hardware is being addressed.  Consult the documentation for StringIOs for your
+        particular connection type.  Internal StringIOs, which don't connect to hardware,
+        use a free-form name:  Any alphanumeric characters except dollar sign ($)
+        colon (:) and quotes.
         </li>
       </ul>
 
-      <h2>Using StringIOs with Logix</h2>
-      A Logix can test a StringIO for particular contents, and set the contents of a StringIO to
+      <h2>Using StringIOs with LogixNG</h2>
+      A LogixNG can test a StringIO for particular contents, 
+      and set the contents of a StringIO to
       whatever string is needed. 
 
       <h3 id="addBlock">Saving StringIOs to disk</h3>

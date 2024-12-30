@@ -31,7 +31,7 @@
       </ul>
 
       <h2>Using Memories with Logix</h2>
-      A Logix can test a memory for particular contents, and set the contents of a Memory to
+      A Logix or LogixNG can test a memory for particular contents, and set the contents of a Memory to
       whatever string is needed. This lets you use a Memory as a status indicator, counter or just
       about anything else you can imagine. Because of their user interface, Logix generally only
       put string values into Memory Variables.

@@ -3,7 +3,6 @@ package jmri.jmrix.loconet;
 import javax.annotation.Nonnull;
 
 import jmri.StringIO;
-import jmri.implementation.DefaultStringIO;
 
 /**
  * Manage the LocoNet-specific Sensor implementation.
@@ -55,20 +54,23 @@ public class LnStringIOManager extends jmri.managers.AbstractStringIOManager imp
     @Override
     @Nonnull
     public StringIO provideStringIO(@Nonnull String sName) throws IllegalArgumentException {
-        return new DefaultStringIO(sName);
+        throw new IllegalArgumentException("Generic LocoNet StringIOs are not yet supported");
+        // in the alternative, return provideStringIO(name); 
     }
 
     /** {@inheritDoc} */
     @Override
     @Nonnull
     public StringIO provide(@Nonnull String name) throws IllegalArgumentException { 
-        return provideStringIO(name); 
+        throw new IllegalArgumentException("Generic LocoNet StringIOs are not yet supported");
+        // in the alternative, return provideStringIO(name); 
     }
 
     @Override
     @Nonnull
     public StringIO createNewStringIO(String sName, String uName) {
-        return new DefaultStringIO(sName);
+        throw new IllegalArgumentException("Generic LocoNet StringIOs are not yet supported");
+        // in the alternative, return provideStringIO(name); 
     }
 
     // LocoNet-specific methods

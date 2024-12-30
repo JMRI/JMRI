@@ -45,7 +45,7 @@ public abstract class AbstractStringIOManager extends AbstractManager<StringIO>
         return t;
     }
 
-    private StringIO getStringIO(@Nonnull String name) {
+    public StringIO getStringIO(@Nonnull String name) {
         var t = getByUserName(name);
         if (t != null) {
             return t;
