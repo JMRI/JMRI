@@ -744,18 +744,19 @@ public class VSDecoderManager implements PropertyChangeListener {
             // the appropriate place...
             // "state" => Get loco address from Block's Reporter if present
             // "value" => Get loco address from event's newValue.
-            if (eventName.equals("state")) { // NOI18N
+            if ("state".equals(eventName)) { // NOI18N
                 // Need to decide which reporter it is, so we can use different methods
                 // to extract the address and the location.
                 if ((Integer) event.getNewValue() == Block.OCCUPIED) {
                     // Is there a Block's Reporter?
-                    if (blk.getReporter() == null) {
+                    var blockReporter = blk.getReporter();
+                    if ( blockReporter == null) {
                         log.debug("Block {} has no reporter!  Skipping state-type report", blk.getSystemName());
                         return;
                     }
                     // Get this Block's Reporter's current/last report value
                     if (blk.isReportingCurrent()) {
-                        Object currentReport = blk.getReporter().getCurrentReport();
+                        Object currentReport = blockReporter.getCurrentReport();
                         if ( currentReport != null) {
                             if(currentReport instanceof jmri.Reportable) {
                                 repVal = ((jmri.Reportable)currentReport).toReportString();
@@ -764,7 +765,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                             }
                         }
                     } else {
-                        Object lastReport = blk.getReporter().getLastReport();
+                        Object lastReport = blockReporter.getLastReport();
                         if ( lastReport != null) {
                             if(lastReport instanceof jmri.Reportable) {
                                 repVal = ((jmri.Reportable)lastReport).toReportString();
@@ -778,7 +779,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                     return;
                 }
                 log.debug("block repVal: {}", repVal);
-            } else if (eventName.equals("value")) { // NOI18N
+            } else if ("value".equals(eventName)) { // NOI18N
                 if (event.getNewValue() == null ) {
                     return; // block value was cleared, nothing to do
                 }
@@ -795,11 +796,11 @@ public class VSDecoderManager implements PropertyChangeListener {
             if (repVal != null && blk.getDirection(repVal) == PhysicalLocationReporter.Direction.ENTER) {
                 setDecoderPositionByAddr(blk.getLocoAddress(repVal), blk.getPhysicalLocation());
             }
-            return;
+
         } else {
             log.debug("Reporter doesn't support physical location reporting.");
         }
-        return;
+
     }
 
     public void reporterPropertyChange(PropertyChangeEvent event) {

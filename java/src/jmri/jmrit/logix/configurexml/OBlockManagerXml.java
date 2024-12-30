@@ -83,9 +83,10 @@ public class OBlockManagerXml // extends XmlFile
                     se.setAttribute("systemName", block.getNamedErrorSensor().getName());
                     elem.addContent(se);
                 }
-                if (block.getReporter() != null) {
+                var reporter = block.getReporter();
+                if ( reporter != null) {
                     Element se = new Element("reporter");
-                    se.setAttribute("systemName", block.getReporter().getSystemName());
+                    se.setAttribute("systemName", reporter.getSystemName());
                     se.setAttribute("reportCurrent", block.isReportingCurrent() ? "true" : "false");
                     elem.addContent(se);
                 }
