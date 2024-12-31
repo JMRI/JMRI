@@ -46,6 +46,7 @@ abstract public class AbstractProvidingProxyManager<E extends NamedBean> extends
         }
         // Doesn't exist. If the systemName was specified, find that system
         Manager<E> manager = getManager(name);
+        log.trace("{} doesn't exist, make with {}", name, manager);
         if (manager != null) {
             return makeBean(manager, name, null);
         }

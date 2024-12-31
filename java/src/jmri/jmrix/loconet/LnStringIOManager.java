@@ -2,6 +2,8 @@ package jmri.jmrix.loconet;
 
 import javax.annotation.Nonnull;
 
+import jmri.StringIO;
+
 /**
  * Manage the LocoNet-specific Sensor implementation.
  * System names are "LSnnn", where L is the user configurable system prefix,
@@ -47,6 +49,28 @@ public class LnStringIOManager extends jmri.managers.AbstractStringIOManager imp
     public void dispose() {
         tc.removeLocoNetListener(~0, this);
         super.dispose();
+    }
+
+    @Override
+    @Nonnull
+    public StringIO provideStringIO(@Nonnull String sName) throws IllegalArgumentException {
+        throw new IllegalArgumentException("Generic LocoNet StringIOs are not yet supported");
+        // in the alternative, return provideStringIO(name); 
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @Nonnull
+    public StringIO provide(@Nonnull String name) throws IllegalArgumentException { 
+        throw new IllegalArgumentException("Generic LocoNet StringIOs are not yet supported");
+        // in the alternative, return provideStringIO(name); 
+    }
+
+    @Override
+    @Nonnull
+    public StringIO createNewStringIO(String sName, String uName) {
+        throw new IllegalArgumentException("Generic LocoNet StringIOs are not yet supported");
+        // in the alternative, return provideStringIO(name); 
     }
 
     // LocoNet-specific methods

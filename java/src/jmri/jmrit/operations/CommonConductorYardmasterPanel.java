@@ -68,6 +68,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     protected JTextPane textTrainRouteCommentPane = new JTextPane();
     protected JTextPane textTrainRouteLocationCommentPane = new JTextPane();
     protected JTextPane textSwitchListCommentPane = new JTextPane();
+    protected JTextPane textTrainStatusPane = new JTextPane();
 
     // panels
     protected JPanel pRailRoadName = new JPanel();
@@ -168,7 +169,12 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         textSwitchListCommentPane.setBackground(null);
         textSwitchListCommentPane.setEditable(false);
         textSwitchListCommentPane.setMaximumSize(new Dimension(2000, 200));
-
+        
+        // Train status
+        textTrainStatusPane.setBorder(BorderFactory.createTitledBorder(""));
+        textTrainStatusPane.setBackground(null);
+        textTrainStatusPane.setEditable(false);
+        textTrainStatusPane.setMaximumSize(new Dimension(2000, 200));
 
         // row 12
         pLocos.setLayout(new BoxLayout(pLocos, BoxLayout.Y_AXIS));

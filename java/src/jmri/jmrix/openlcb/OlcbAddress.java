@@ -94,6 +94,7 @@ public final class OlcbAddress {
             match = true;
             fromName = true;
             // leave aString as original argument
+            aString = s;
             return;
         }
         

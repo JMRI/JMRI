@@ -84,6 +84,7 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
         add(textTrainRouteCommentPane);
         add(textTrainRouteLocationCommentPane);
         add(pTrackComments);
+        add(textTrainStatusPane);
         add(locoPane);
         add(pWorkPanes);
         add(movePane);
@@ -104,7 +105,7 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
 
         addButtonAction(nextButton);
 
-        // listen for trains being built
+        // listen for trains
         addTrainListeners();
     }
 
@@ -177,11 +178,12 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
             textTrainCommentPane.setVisible(false);
             textTrainRouteCommentPane.setVisible(false);
             textTrainRouteLocationCommentPane.setVisible(false);
+            textTrainStatusPane.setVisible(false);
 
             textTrainDescription.setText("");
             textStatus.setText("");
 
-            if (_train != null && _train.getRoute() != null) {
+            if (_train != null && _train.isBuilt() && _train.getRoute() != null) {
                 pButtons.setVisible(true);
 
                 loadTrainDescription();
@@ -221,6 +223,10 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
                     textLocationName.setText(rl.getLocation().getName()); // show name including hyphen and number
 
                     updateTrackComments(rl, !IS_MANIFEST);
+                    
+                    String msg = TrainCommon.getSwitchListTrainStatus(_train, rl);
+                    textTrainStatusPane.setText(msg);
+                    textTrainStatusPane.setVisible(!msg.isBlank());
 
                     // check for locos
                     updateLocoPanes(rl);
@@ -299,6 +305,9 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
         }
         if (e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)) {
             updateTrainsComboBox();
+        }
+        if (e.getPropertyName().equals(Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY) && e.getSource() == _train) {
+            update();
         }
     }
 

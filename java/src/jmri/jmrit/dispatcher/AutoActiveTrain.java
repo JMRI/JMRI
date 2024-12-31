@@ -788,6 +788,7 @@ public class AutoActiveTrain implements ThrottleListener {
             } else {
                 // Note: null signal head will result when exiting throat-to-throat blocks.
                 log.debug("new current signal is null - sometimes OK");
+                checkForGhost();
             }
         } else if (_activeTrain.getSignalType() == DispatcherFrame.SIGNALMAST) {
             //SignalMast
@@ -828,11 +829,14 @@ public class AutoActiveTrain implements ThrottleListener {
                         sm.getAspect(), as.getSection().getDisplayName(USERSYS));
                 if ( weAreAtSpeedChangingMast ) {
                     setSpeedBySignal();
+                } else {
+                    checkForGhost();
                 }
             } // Note: null signal head will result when exiting throat-to-throat blocks.
             else {
                 log.debug("{}: new current signalmast is null for section {} - sometimes OK", _activeTrain.getTrainName(),
                         as == null ? "Null" : as.getSection().getDisplayName(USERSYS));
+                checkForGhost();
             }
         } else {
             setSpeedBySignal();
@@ -934,6 +938,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 log.trace("{}:Set Speed by BlocksAllocated",_activeTrain.getActiveTrainName());
                 setSpeedBySectionsAllocated();
             }
+            checkForGhost();
         } else {
             // This might be the last section....
             if (_currentAllocatedSection != null && _currentAllocatedSection.getNextSection() == null) {
@@ -945,6 +950,9 @@ public class AutoActiveTrain implements ThrottleListener {
                 waitingOnAllocation = true;  // flag setSpeedBySignal required when another allocation made.
             }
         }
+    }
+    
+    private void checkForGhost() {
         if ( !(getTargetSpeed() == 0.0f || isStopping())
                 && _nextBlock != null
                 && _currentBlock != null
