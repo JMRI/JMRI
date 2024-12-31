@@ -1602,7 +1602,10 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
                 InstanceManager.getDefault(SignalHeadManager.class).register(s);
             } catch ( jmri.NamedBean.DuplicateSystemNameException ex) {
                 s.dispose();
-                handleCreateException(ex, s.getSystemName());
+                JmriJOptionPane.showMessageDialog(this,
+                        "<html>" + Bundle.getMessage("DuplicateSignalSystemName", s.getDisplayName())
+                        + "<br>" + ex.getLocalizedMessage()+"</html>",
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.ERROR_MESSAGE);
             }
         } else {
             // couldn't create turnouts, error
