@@ -1598,7 +1598,12 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
                         t2.getSystemName(), userNameField.getText());
                 return; // without creating any
             }
-            InstanceManager.getDefault(SignalHeadManager.class).register(s);
+            try {
+                InstanceManager.getDefault(SignalHeadManager.class).register(s);
+            } catch ( jmri.NamedBean.DuplicateSystemNameException ex) {
+                s.dispose();
+                handleCreateException(ex, s.getSystemName());
+            }
         } else {
             // couldn't create turnouts, error
             String msg;
