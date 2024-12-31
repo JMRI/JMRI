@@ -1603,7 +1603,7 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
             } catch ( jmri.NamedBean.DuplicateSystemNameException ex) {
                 s.dispose();
                 JmriJOptionPane.showMessageDialog(this,
-                        "<html>" + Bundle.getMessage("DuplicateSignalSystemName", s.getDisplayName())
+                    "<html>" + Bundle.getMessage("DuplicateSignalSystemName", s.getDisplayName())
                         + "<br>" + ex.getLocalizedMessage()+"</html>",
                     Bundle.getMessage("WarningTitle"), JmriJOptionPane.ERROR_MESSAGE);
             }
