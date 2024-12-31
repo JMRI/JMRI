@@ -15,18 +15,10 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     private static final String RS_TYPE = "rsType";
     private static final String X_NET_REPLY_LI_BAUD = "XNetReplyLIBaud";
-    private static final String COLUMN_STATE = "ColumnState";
-    private static final String MAKE_LABEL = "MakeLabel";
     private static final String POWER_STATE_ON = "PowerStateOn";
     private static final String POWER_STATE_OFF = "PowerStateOff";
     private static final String FUNCTION_MOMENTARY = "FunctionMomentary";
     private static final String FUNCTION_CONTINUOUS = "FunctionContinuous";
-    private static final String BEAN_NAME_TURNOUT = "BeanNameTurnout";
-    private static final String X_NET_REPLY_NOT_OPERATED = "XNetReplyNotOperated";
-    private static final String X_NET_REPLY_THROWN_LEFT = "XNetReplyThrownLeft";
-    private static final String X_NET_REPLY_THROWN_RIGHT = "XNetReplyThrownRight";
-    private static final String X_NET_REPLY_INVALID = "XNetReplyInvalid";
-    private static final String X_NET_REPLY_CONTACT_LABEL = "XNetReplyContactLabel";
     private static final String SPEED_STEP_MODE_X = "SpeedStepModeX";
     // unsolicited by message type.
 
@@ -927,23 +919,14 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                     text = new StringBuilder(Bundle.getMessage("XNetReplyDHErrorOther", (getElement(1) - 0x80)));
             }
             // Loco Information Response Messages
-        } else if (getElement(0) == XNetConstants.LOCO_INFO_NORMAL_UNIT) {
-            if (getElement(1) == XNetConstants.LOCO_FUNCTION_STATUS_HIGH_MOM) {
+        } else if (getElement(0) == XNetConstants.LOCO_INFO_NORMAL_UNIT &&
+               getElement(1) == XNetConstants.LOCO_FUNCTION_STATUS_HIGH_MOM) {
                 text = new StringBuilder(Bundle.getMessage("XNetReplyLocoStatus13Label") + " ");
                 // message byte 3, contains F20,F19,F18,F17,F16,F15,F14,F13
                 int element3 = getElement(2);
                 // message byte 4, contains F28,F27,F26,F25,F24,F23,F22,F21
                 int element4 = getElement(3);
                 text.append(parseFunctionHighMomentaryStatus(element3, element4));
-            } else {
-                text = new StringBuilder(Bundle.getMessage("XNetReplyLocoNormalLabel") + ",");
-                text.append(parseSpeedAndDirection(getElement(1), getElement(2))).append(" ");
-                // message byte 4, contains F0,F1,F2,F3,F4
-                int element3 = getElement(3);
-                // message byte 5, contains F12,F11,F10,F9,F8,F7,F6,F5
-                int element4 = getElement(4);
-                text.append(parseFunctionStatus(element3, element4));
-            }
         } else if (getElement(0) == XNetConstants.LOCO_INFO_MUED_UNIT) {
             if (getElement(1) == 0xF8) {
                 // This message is a Hornby addition to the protocol
@@ -1008,11 +991,6 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                     text.append(Bundle.getMessage("XNetReplySearchFailedLabel")).append(" ");
                     text.append(getThrottleMsgAddr());
                     break;
-                case XNetConstants.LOCO_NOT_AVAILABLE:
-                    text.append(Bundle.getMessage(RS_TYPE)).append(" ");
-                    text.append(getThrottleMsgAddr()).append(" ");
-                    text.append(Bundle.getMessage("XNetReplyLocoOperated"));
-                    break;
                 case XNetConstants.LOCO_FUNCTION_STATUS:
                     locoFunctionStatusText(text);
                     break;
@@ -1022,43 +1000,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                 default:
                     text = new StringBuilder(toString());
             }
-            // Feedback Response Messages
-        } else if (isFeedbackBroadcastMessage()) {
-            text = new StringBuilder().append(Bundle.getMessage("XNetReplyFeedbackLabel")).append(" ");
-            int numDataBytes = getElement(0) & 0x0f;
-            for (int i = 1; i < numDataBytes; i += 2) {
-                switch (getFeedbackMessageType(i)) {
-                    case 0:
-                        text.append(getTurnoutReplyMonitorString(i, "TurnoutWoFeedback"));
-                        break;
-                    case 1:
-                        text.append(getTurnoutReplyMonitorString(i, "TurnoutWFeedback"));
-                        break;
-                    case 2:
-                        text.append(Bundle.getMessage("XNetReplyFeedbackEncoder")).append(" ").append(getFeedbackEncoderMsgAddr(i));
-                        boolean highnibble = ((getElement(i + 1) & 0x10) == 0x10);
-                        text.append(" ").append(Bundle.getMessage(X_NET_REPLY_CONTACT_LABEL)).append(" ").append(highnibble ? 5 : 1);
 
-                        text.append(" ").append(Bundle.getMessage(MAKE_LABEL, Bundle.getMessage(COLUMN_STATE))).append(" ")
-                                .append(((getElement(i + 1) & 0x01) == 0x01) ? Bundle.getMessage(POWER_STATE_ON) : Bundle.getMessage(POWER_STATE_OFF));
-                        text.append("; ").append(Bundle.getMessage(X_NET_REPLY_CONTACT_LABEL)).append(" ").append(highnibble ? 6 : 2);
-
-                        text.append(" ").append(Bundle.getMessage(MAKE_LABEL, Bundle.getMessage(COLUMN_STATE))).append(" ")
-                                .append(((getElement(i + 1) & 0x02) == 0x02) ? Bundle.getMessage(POWER_STATE_ON) : Bundle.getMessage(POWER_STATE_OFF));
-                        text.append("; ").append(Bundle.getMessage(X_NET_REPLY_CONTACT_LABEL)).append(" ").append(highnibble ? 7 : 3);
-
-                        text.append(" ").append(Bundle.getMessage(MAKE_LABEL, Bundle.getMessage(COLUMN_STATE))).append(" ")
-                                .append(((getElement(i + 1) & 0x04) == 0x04) ? Bundle.getMessage(POWER_STATE_ON) : Bundle.getMessage(POWER_STATE_OFF));
-                        text.append("; ").append(Bundle.getMessage(X_NET_REPLY_CONTACT_LABEL)).append(" ").append(highnibble ? 8 : 4);
-
-                        text.append(" ").append(Bundle.getMessage(MAKE_LABEL, Bundle.getMessage(COLUMN_STATE))).append(" ")
-                                .append(((getElement(i + 1) & 0x08) == 0x08) ? Bundle.getMessage(POWER_STATE_ON) : Bundle.getMessage(POWER_STATE_OFF));
-                        text.append("; ");
-                        break;
-                    default:
-                        text.append(getElement(i)).append(" ").append(getElement(i + 1));
-                }
-            }
         } else {
             text = new StringBuilder(toString());
         }
@@ -1083,50 +1025,6 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         // message byte 4, contains F12,F11,F10,F9,F8,F7,F6,F5
         int element4 = getElement(3);
         text.append(parseFunctionMomentaryStatus(element3, element4));
-    }
-
-    private String getTurnoutReplyMonitorString(int startByte, String typeBundleKey) {
-        StringBuilder text = new StringBuilder();
-        int turnoutMsgAddr = getTurnoutMsgAddr(startByte);
-        Optional<FeedbackItem> feedBackOdd = selectTurnoutFeedback(turnoutMsgAddr);
-        if(feedBackOdd.isPresent()){
-            FeedbackItem feedbackItem = feedBackOdd.get();
-            text.append(singleTurnoutMonitorMessage(Bundle.getMessage(typeBundleKey), turnoutMsgAddr, feedbackItem));
-            text.append(";");
-            FeedbackItem pairedItem = feedbackItem.pairedAccessoryItem();
-            text.append(singleTurnoutMonitorMessage("", turnoutMsgAddr + 1, pairedItem));
-
-        }
-        return text.toString();
-    }
-
-    private String singleTurnoutMonitorMessage(String prefix, int turnoutMsgAddr, FeedbackItem feedbackItem) {
-        StringBuilder outputBuilder = new StringBuilder();
-        outputBuilder.append(prefix).append(" ")
-                .append(Bundle.getMessage(MAKE_LABEL, Bundle.getMessage(BEAN_NAME_TURNOUT))).append(" ")
-                .append(turnoutMsgAddr).append(" ").append(Bundle.getMessage(MAKE_LABEL, Bundle.getMessage(COLUMN_STATE))).append(" ");
-        switch (feedbackItem.getAccessoryStatus()){
-            case 0:
-                outputBuilder.append(Bundle.getMessage(X_NET_REPLY_NOT_OPERATED)); // last items on line, no trailing space
-               break;
-            case 1:
-                outputBuilder.append(Bundle.getMessage(X_NET_REPLY_THROWN_LEFT));
-               break;
-            case 2:
-                outputBuilder.append(Bundle.getMessage(X_NET_REPLY_THROWN_RIGHT));
-                break;
-            default:
-                outputBuilder.append(Bundle.getMessage(X_NET_REPLY_INVALID));
-        }
-        if(feedbackItem.getType()==1){
-            outputBuilder.append(" ");
-            if(feedbackItem.isMotionComplete()){
-                outputBuilder.append(Bundle.getMessage("XNetReplyMotionComplete"));
-            } else {
-                outputBuilder.append(Bundle.getMessage("XNetReplyMotionIncomplete"));
-            }
-        }
-        return outputBuilder.toString();
     }
 
     /**
