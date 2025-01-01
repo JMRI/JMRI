@@ -114,7 +114,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                         }
                     } else {
                         if (traininfo.getAttribute("trainname") != null) {
-                            tInfo.setRosterId(traininfo.getAttribute("trainname").getValue());
+                            tInfo.setTrainName(traininfo.getAttribute("trainname").getValue());
                         }
                         if (traininfo.getAttribute("rosterid") != null) {
                             tInfo.setRosterId(traininfo.getAttribute("rosterid").getValue());
@@ -351,7 +351,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                             tInfo.setTrainLengthUnits(trainlengthFromEnumMap.inputFromAttribute(traininfo.getAttribute("trainlengthunits")));
                         }
                     }
-                    if (traininfo.getAttribute("maxtrainlengthMeters") != null) {
+                    if (traininfo.getAttribute("maxtrainlengthscalemeters") != null) {
                         tInfo.setMaxTrainLengthScaleMeters(Float.parseFloat(traininfo.getAttribute("maxtrainlengthscalemeters").getValue()));
                     } else {
                         if (traininfo.getAttribute("maxtrainlength") != null) {
