@@ -1,19 +1,11 @@
 package jmri.jmrit.beantable.turnout;
 
 import java.awt.Component;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 
-import java.util.EventObject;
-import java.util.Hashtable;
+import java.util.HashMap;
 
-import javax.annotation.Nonnull;
-import javax.swing.border.Border;
-import javax.swing.BorderFactory;
-import javax.swing.DefaultCellEditor;
 import javax.swing.JTable;
 import javax.swing.table.*;
-import javax.swing.UIManager;
 
 import jmri.InstanceManager;
 import jmri.NamedBean;
@@ -21,11 +13,6 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.Turnout;
 import jmri.swing.NamedBeanComboBox;
-import jmri.util.SystemType;
-import jmri.util.swing.JComboBoxUtil;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * JTable to display a TurnoutTableDataModel.
@@ -33,77 +20,47 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2004, 2007
  * @author Egbert Broerse Copyright (C) 2017
- * @author Steve Young Copyright (C) 2021
+ * @author Steve Young Copyright (C) 2021, 2024
  */
-public class TurnoutTableJTable extends JTable {
+public class TurnoutTableJTable extends jmri.jmrit.beantable.BeanTableJTable<Turnout> {
 
-    final TurnoutTableDataModel model;
+    final HashMap<Turnout, TableCellRenderer> rendererMapSensor1 = new HashMap<>();
+    final HashMap<Turnout, TableCellEditor> editorMapSensor1 = new HashMap<>();
 
-    final Hashtable<Turnout, TableCellRenderer> rendererMapSensor1 = new Hashtable<>();
-    final Hashtable<Turnout, TableCellEditor> editorMapSensor1 = new Hashtable<>();
-
-    final Hashtable<Turnout, TableCellRenderer> rendererMapSensor2 = new Hashtable<>();
-    final Hashtable<Turnout, TableCellEditor> editorMapSensor2 = new Hashtable<>();
+    final HashMap<Turnout, TableCellRenderer> rendererMapSensor2 = new HashMap<>();
+    final HashMap<Turnout, TableCellEditor> editorMapSensor2 = new HashMap<>();
 
     public TurnoutTableJTable(TurnoutTableDataModel mdl){
         super(mdl);
-        model = mdl;
-    }
-
-    @Override
-    public String getToolTipText(@Nonnull MouseEvent e) {
-        java.awt.Point p = e.getPoint();
-        int rowIndex = rowAtPoint(p);
-        int colIndex = columnAtPoint(p);
-        int realRowIndex = convertRowIndexToModel(rowIndex);
-        int realColumnIndex = convertColumnIndexToModel(colIndex);
-        return model.getCellToolTip(this, realRowIndex, realColumnIndex);
-    }
-
-    /**
-     * Disable Windows Key or Mac Meta Keys being pressed acting
-     * as a trigger for editing the focused cell.
-     * Causes unexpected behaviour, i.e. button presses.
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean editCellAt(int row, int column, EventObject e) {
-        if (e instanceof KeyEvent) {
-            if ( ((KeyEvent) e).getKeyCode() == KeyEvent.VK_WINDOWS
-                || ( (KeyEvent) e).getKeyCode() == KeyEvent.VK_META ) {
-                return false;
-            }
-        }
-        return super.editCellAt(row, column, e);
     }
 
     @Override
     public TableCellRenderer getCellRenderer(int row, int column) {
         // Convert the displayed index to the model index, rather than the displayed index
-        int modelColumn = this.convertColumnIndexToModel(column);
+        int modelColumn = convertColumnIndexToModel(column);
         if (modelColumn == TurnoutTableDataModel.SENSOR1COL || modelColumn == TurnoutTableDataModel.SENSOR2COL) {
-            return getRenderer(row, modelColumn);
+            return getRenderer(convertRowIndexToModel(row), modelColumn);
         } else {
             return super.getCellRenderer(row, column);
         }
     }
 
     @Override
-    public TableCellEditor getCellEditor(int row, int column) {
+    public TableCellEditor getCellEditor(final int row, final int column) {
         //Convert the displayed index to the model index, rather than the displayed index
         int modelColumn = this.convertColumnIndexToModel(column);
         if (modelColumn == TurnoutTableDataModel.SENSOR1COL || modelColumn == TurnoutTableDataModel.SENSOR2COL) {
-            return getEditor(row, modelColumn);
+            return getEditor(convertRowIndexToModel(row), modelColumn);
         } else {
             return super.getCellEditor(row, column);
         }
     }
 
-    TableCellRenderer getRenderer(int row, int column) {
+    private TableCellRenderer getRenderer(int modelRow, int modelColumn) {
         TableCellRenderer retval;
-        Turnout t = (Turnout) getModel().getValueAt(row, TurnoutTableDataModel.SYSNAMECOL);
+        Turnout t = (Turnout) getModel().getValueAt(modelRow, TurnoutTableDataModel.SYSNAMECOL);
         java.util.Objects.requireNonNull(t, "SYSNAMECOL column content must be nonnull");
-        switch (column) {
+        switch (modelColumn) {
             case TurnoutTableDataModel.SENSOR1COL:
                 retval = rendererMapSensor1.get(t);
                 break;
@@ -115,7 +72,7 @@ public class TurnoutTableJTable extends JTable {
         }
 
         if (retval == null) {
-            if (column == TurnoutTableDataModel.SENSOR1COL) {
+            if (modelColumn == TurnoutTableDataModel.SENSOR1COL) {
                 loadRenderEditMaps(rendererMapSensor1, editorMapSensor1, t, t.getFirstSensor());
             } else {
                 loadRenderEditMaps(rendererMapSensor2, editorMapSensor2, t, t.getSecondSensor());
@@ -126,11 +83,11 @@ public class TurnoutTableJTable extends JTable {
         return retval;
     }
 
-    TableCellEditor getEditor(int row, int column) {
+    private TableCellEditor getEditor(int modelRow, int modelColumn) {
         TableCellEditor retval;
-        Turnout t = (Turnout) getModel().getValueAt(row, TurnoutTableDataModel.SYSNAMECOL);
+        Turnout t = (Turnout) getModel().getValueAt(modelRow, TurnoutTableDataModel.SYSNAMECOL);
         java.util.Objects.requireNonNull(t, "SYSNAMECOL column content must be nonnull");
-        switch (column) {
+        switch (modelColumn) {
             case TurnoutTableDataModel.SENSOR1COL:
                 retval = editorMapSensor1.get(t);
                 break;
@@ -141,7 +98,7 @@ public class TurnoutTableJTable extends JTable {
                 return null;
         }
         if (retval == null) {
-            if (column == TurnoutTableDataModel.SENSOR1COL) {
+            if (modelColumn == TurnoutTableDataModel.SENSOR1COL) {
                 loadRenderEditMaps(rendererMapSensor1, editorMapSensor1, t, t.getFirstSensor());
                 retval = editorMapSensor1.get(t);
             } else { //Must be two
@@ -153,45 +110,32 @@ public class TurnoutTableJTable extends JTable {
         return retval;
     }
 
-    protected void loadRenderEditMaps(Hashtable<Turnout, TableCellRenderer> r, Hashtable<Turnout, TableCellEditor> e,
+    private void loadRenderEditMaps(HashMap<Turnout, TableCellRenderer> r, HashMap<Turnout, TableCellEditor> e,
             Turnout t, Sensor s) {
-        NamedBeanComboBox<Sensor> c = new NamedBeanComboBox<>(InstanceManager.getDefault(SensorManager.class), s, NamedBean.DisplayOptions.DISPLAYNAME);
-        c.setAllowNull(true);
-        JComboBoxUtil.setupComboBoxMaxRows(c);
+        NamedBeanComboBox<Sensor> c = new NamedBeanComboBox<>(InstanceManager.getDefault(
+            SensorManager.class), s, NamedBean.DisplayOptions.DISPLAYNAME);
 
-        BeanBoxRenderer renderer = new BeanBoxRenderer();
-        renderer.setSelectedItem(s);
+        TurnoutTableSensorBoxRenderer renderer = new TurnoutTableSensorBoxRenderer();
         r.put(t, renderer);
 
-        TableCellEditor editor = new BeanComboBoxEditor(c);
+        TableCellEditor editor = new jmri.util.table.JComboBoxEditor(c, null);
         e.put(t, editor);
         log.debug("initialize for Turnout \"{}\" Sensor \"{}\"", t, s);
     }
 
-    static class BeanBoxRenderer extends NamedBeanComboBox<Sensor> implements TableCellRenderer {
+    private static class TurnoutTableSensorBoxRenderer extends jmri.util.table.NamedBeanBoxRenderer<Sensor> {
 
-        private final Border existingBorder;
-        private final Border errorBorder = BorderFactory.createLineBorder(java.awt.Color.RED);
-
-        public BeanBoxRenderer() {
+        TurnoutTableSensorBoxRenderer() {
             super(InstanceManager.getDefault(SensorManager.class));
             setAllowNull(true);
-            existingBorder = this.getBorder();
         }
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value,
                 boolean isSelected, boolean hasFocus, int row, int column) {
-            if (!(SystemType.isMacOSX() && UIManager.getLookAndFeel().isNativeLookAndFeel())) {
-                if (isSelected) {
-                    setForeground(table.getSelectionForeground());
-                    super.setBackground(table.getSelectionBackground());
-                } else {
-                    setForeground(table.getForeground());
-                    setBackground(table.getBackground());
-                }
-            }
-            
+
+            super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
             int tableCol = table.convertColumnIndexToModel(column);
             int tableRow = table.convertRowIndexToModel(row);
             
@@ -200,38 +144,28 @@ public class TurnoutTableJTable extends JTable {
                 return this;
             }
             if (value instanceof Sensor) {
-                setSelectedItem(value);
                 if (( tableCol == TurnoutTableDataModel.SENSOR1COL ) && 
                     (t.getFeedbackMode() != Turnout.ONESENSOR && t.getFeedbackMode() != Turnout.TWOSENSOR )) {
-                    setBorder(errorBorder);
+                    setErrorBorder();
                 } else if ( tableCol == TurnoutTableDataModel.SENSOR2COL && t.getFeedbackMode() != Turnout.TWOSENSOR ) {
-                    setBorder(errorBorder);
+                    setErrorBorder();
                 } else {
-                    setBorder(existingBorder);
+                    setNormalBorder();
                 }
             } else {
-                setSelectedItem(null);
                 if (( tableCol == TurnoutTableDataModel.SENSOR1COL ) && 
                         (t.getFeedbackMode() == Turnout.ONESENSOR || t.getFeedbackMode() == Turnout.TWOSENSOR )) {
-                    setBorder(errorBorder);
+                    setErrorBorder();
                 } else if ( tableCol == TurnoutTableDataModel.SENSOR2COL && t.getFeedbackMode() == Turnout.TWOSENSOR ) {
-                    setBorder(errorBorder);
+                    setErrorBorder();
                 } else {
-                    setBorder(existingBorder);
+                    setNormalBorder();
                 }
             }
             return this;
         }
     }
 
-    static class BeanComboBoxEditor extends DefaultCellEditor {
-
-        public BeanComboBoxEditor(NamedBeanComboBox<Sensor> beanBox) {
-            super(beanBox);
-        }
-    }
-
-
-private final static Logger log = LoggerFactory.getLogger(TurnoutTableJTable.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TurnoutTableJTable.class);
 
 }
