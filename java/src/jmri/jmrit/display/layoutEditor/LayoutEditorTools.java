@@ -6339,7 +6339,7 @@ final public class LayoutEditorTools {
 
             JPanel panel31 = new JPanel(new FlowLayout());
             panel31.add(new JLabel(Bundle.getMessage("MakeLabel",
-                    divergingBString)));
+                    divergingAString)));
             panel31.add(b_3WaySignalHeadComboBox);
             b_3WaySignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
             theContentPane.add(panel31);
