@@ -202,10 +202,11 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
 
     // override to determine if not UNDETECTED
     @Override
-    public void setNamedSensor(NamedBeanHandle<Sensor> namedSensor) {
+    public void setNamedSensor(@CheckForNull NamedBeanHandle<Sensor> namedSensor) {
         super.setNamedSensor(namedSensor);
-        if (namedSensor != null) {
-            setState(getSensor().getState() & ~UNDETECTED);
+        Sensor s = getSensor();
+        if ( s != null) {
+            setState( s.getState() & ~UNDETECTED);
         }
     }
 
