@@ -139,6 +139,7 @@ public class Xml {
     static final String FONT_NAME = "fontName"; // NOI18N
     static final String FONT_SIZE = "fontSize"; // NOI18N
     static final String SIZE = "size"; // NOI18N
+    static final String PRINT_DUPLEX = "printDuplex"; // NOI18N
 
     static final String PAGE_ORIENTATION = "pageOrientation"; // NOI18N
     static final String MANIFEST = "manifest"; // NOI18N
