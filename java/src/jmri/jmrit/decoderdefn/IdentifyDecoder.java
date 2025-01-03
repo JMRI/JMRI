@@ -242,7 +242,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
                     readCV("200");
                     return false;
             } else { // other than HN7000
-               productID = value;
+               if (isOptionalCv()) {
                     return true;
                 }
                 if (value == 143) {
