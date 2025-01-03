@@ -81,7 +81,7 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
 
     private final BiDiBPortController portController = this; //this instance is used from a listener class
     
-    private class NetBiDiDDevice {
+    class NetBiDiDDevice {
         private PairingStoreEntry pairingStoreEntry = new PairingStoreEntry();
         private BidibNetAddress bidibAddress = null;
 
