@@ -5,9 +5,6 @@ import java.util.LinkedList;
 import java.util.SortedSet;
 
 import jmri.InstanceManager;
-import jmri.ShutDownManager;
-import jmri.ShutDownTask;
-import jmri.implementation.AbstractShutDownTask;
 
 import org.bidib.jbidibc.core.BidibInterface;
 import org.bidib.jbidibc.core.node.BidibNode;

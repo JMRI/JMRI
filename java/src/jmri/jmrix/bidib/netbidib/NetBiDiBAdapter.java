@@ -26,7 +26,6 @@ import jmri.jmrix.bidib.BiDiBSystemConnectionMemo;
 import jmri.jmrix.bidib.BiDiBTrafficController;
 import jmri.util.zeroconf.ZeroConfClient;
 import jmri.util.zeroconf.ZeroConfServiceManager;
-import org.apache.commons.compress.archivers.tar.TarConstants;
 
 import org.bidib.jbidibc.core.MessageListener;
 import org.bidib.jbidibc.core.NodeListener;
@@ -472,8 +471,8 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
             log.info("try to find mDNS announcement for unique id: {} (IP: {})", ByteUtils.getUniqueIdAsString(getUniqueId()), getHostName());
         }
 
-        ZeroConfServiceManager mgr = InstanceManager.getDefault(ZeroConfServiceManager.class);
 // the folowing selections are valid only for a zeroconf server, the client does NOT use them...
+//        ZeroConfServiceManager mgr = InstanceManager.getDefault(ZeroConfServiceManager.class);
 //        mgr.getPreferences().setUseIPv6(false);
 //        mgr.getPreferences().setUseLinkLocal(false);
 //        mgr.getPreferences().setUseLoopback(false);
