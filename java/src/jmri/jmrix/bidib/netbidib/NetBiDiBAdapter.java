@@ -19,13 +19,13 @@ import java.net.UnknownHostException;
 import java.util.Arrays;
 import javax.jmdns.ServiceInfo;
 
-import jmri.InstanceManager;
+//import jmri.InstanceManager;
 import jmri.jmrix.bidib.BiDiBNetworkPortController;
 import jmri.jmrix.bidib.BiDiBPortController;
 import jmri.jmrix.bidib.BiDiBSystemConnectionMemo;
 import jmri.jmrix.bidib.BiDiBTrafficController;
 import jmri.util.zeroconf.ZeroConfClient;
-import jmri.util.zeroconf.ZeroConfServiceManager;
+//import jmri.util.zeroconf.ZeroConfServiceManager;
 
 import org.bidib.jbidibc.core.MessageListener;
 import org.bidib.jbidibc.core.NodeListener;
