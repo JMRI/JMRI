@@ -1218,9 +1218,9 @@ value="<xsl:value-of select="@dataString"/>"
                  <td>
                  <xsl:value-of select="./csvType"/>: <xsl:value-of select="./fileName"/></td>
               </xsl:when>
-              <xsl:if test="string-length(comment)!=0" > 
+              <xsl:when test="string-length(comment)!=0" > 
                  <td><xsl:value-of select="comment"/></td>
-              </xsl:if>
+              </xsl:when>
             </xsl:choose>
         </tr>
      </xsl:for-each>
