@@ -165,9 +165,9 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             return false;
         case HORNBY:
             if (modelID == 254) { // HN7000
-               statusUpdate("Read optional decoder ID CV 159");
-                setOptionalCv(true);
-                readCV("159");
+               statusUpdate("Read Product ID High Byte CV 200");
+               
+                readCV("200");
                 return false;
             } else { // other than HN7000
                 statusUpdate("Read optional decoder ID CV 159");
@@ -237,9 +237,9 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             }
         case HORNBY:
             if (modelID == 254) { // HN7000
-                productIDlow = value;
-                    statusUpdate("Read Product ID High Byte");
-                    readCV("200");
+                productIDhigh = value;
+                    statusUpdate("ProductID High - " + productIDhigh + " - reading CV201");
+                    readCV("201");
                     return false;
             } else { // other than HN7000
                if (isOptionalCv()) {
@@ -308,8 +308,9 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             return false;
         case HORNBY:
             if (modelID == 254) { // HN7000
-                productIDhigh = value;
-                productID = (productIDhigh << 8) | productIDlow;
+                productIDlow = value;
+                productID = productIDlow + (productIDhigh * 256);
+                statusUpdate("ProductID is " + productID);
                 return true;
             } else { // other than HN7000
                 productIDhigh = value;
