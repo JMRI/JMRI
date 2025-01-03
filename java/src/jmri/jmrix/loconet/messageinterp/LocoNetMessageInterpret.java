@@ -4810,7 +4810,8 @@ public class LocoNetMessageInterpret {
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_PM74");
             case LnConstants.RE_IPL_DIGITRAX_HOST_SE74:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_SE74");
-
+            case LnConstants.RE_IPL_DIGITRAX_HOST_BDL716:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_BDL716");
 
             default:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_UNKNOWN", type);

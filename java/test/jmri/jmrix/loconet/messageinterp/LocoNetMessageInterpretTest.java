@@ -1615,6 +1615,9 @@ public class LocoNetMessageInterpretTest {
                 case 0x3E:
                     s = "Digitrax DT602(x) host";
                     break;
+                case 0x43:
+                    s = "Digitrax BDL716 host";
+                    break;
                 case 0x51:
                     s = "Digitrax BXPA1 host";
                     break;
