@@ -310,7 +310,7 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             if (modelID == 254) { // HN7000
                 productIDhigh = value;
                 productID = (productIDhigh << 8) | productIDlow;
-                return false;
+                return true;
             } else { // other than HN7000
                 productIDhigh = value;
                 productID = (productIDhigh << 8) | productIDlow;
