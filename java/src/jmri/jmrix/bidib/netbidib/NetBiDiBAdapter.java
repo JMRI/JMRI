@@ -34,6 +34,7 @@ import org.bidib.jbidibc.messages.ConnectionListener;
 import org.bidib.jbidibc.netbidib.client.NetBidibClient;
 import org.bidib.jbidibc.netbidib.client.BidibNetAddress;
 import org.bidib.jbidibc.netbidib.pairingstore.LocalPairingStore;
+import org.bidib.jbidibc.messages.Node;
 import org.bidib.jbidibc.messages.enums.NetBidibRole;
 import org.bidib.jbidibc.messages.helpers.Context;
 import org.bidib.jbidibc.messages.message.netbidib.NetBidibLinkData;
@@ -80,7 +81,7 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
 
     private final BiDiBPortController portController = this; //this instance is used from a listener class
     
-    protected class NetBiDiDDevice {
+    private class NetBiDiDDevice {
         private PairingStoreEntry pairingStoreEntry = new PairingStoreEntry();
         private BidibNetAddress bidibAddress = null;
 
@@ -507,7 +508,7 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
                 // we wait a while (1000ms) and try again until the overall timeout is reached.
                 infoList = mdnsClient.getServices(serviceType);
                 log.debug("mDNS: \n{}", infoList);
-            } catch (Exception e) { log.error("{}", e); }
+            } catch (Exception e) { log.error("Error getting mDNS services list: {}", e); }
 
             // Fill the device list with the found info from mDNS records.
             // infoList always contains the complete list of the mDNS announcements found so far,
@@ -529,7 +530,7 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
                 Enumeration<String> propList = serviceInfo.getPropertyNames();
                 while (propList.hasMoreElements()) {
                     String prop = propList.nextElement();
-                    log.trace("  {}: {}", prop, serviceInfo.getPropertyString(prop));
+                    log.trace("service info property {}: {}", prop, serviceInfo.getPropertyString(prop));
                 }
                 Long uid = ByteUtils.parseHexUniqueId(serviceInfo.getPropertyString("uid")) & 0xFFFFFFFFFFL;
                 // if the same UID is announced twice (or more) overwrite the previous entry
@@ -551,7 +552,7 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
                             setUniqueId(dev.getUniqueId());
                         }
                     }
-                    catch (Exception e) { log.trace("No known hostname {}", getHostName()); } //no known host address is not an error
+                    catch (UnknownHostException e) { log.trace("No known hostname {}", getHostName()); } //no known host address is not an error
                 }
 
                 // set current hostname and port from the list if the this entry is the requested unique id
@@ -667,12 +668,11 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
      */
     public Long getUniqueId() {
         if (uniqueId == null) {
-            try {
-                if (bidib.isOpened()  &&  !isDetached()) {
-                    uniqueId = getSystemConnectionMemo().getBiDiBTrafficController().getRootNode().getUniqueId() & 0xFFFFFFFFFFL;
-                }
+            if (bidib != null  &&  bidib.isOpened()  &&  !isDetached()) {
+                Node rootNode = getSystemConnectionMemo().getBiDiBTrafficController().getRootNode();
+                if (rootNode != null  &&  rootNode.getUniqueId() != 0)
+                uniqueId = rootNode.getUniqueId() & 0xFFFFFFFFFFL;
             }
-            catch (Exception e) {}
         }
         return uniqueId;
     }
