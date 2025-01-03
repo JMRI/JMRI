@@ -31,7 +31,7 @@
       done: each change propagates consistently to all generated parts.</p>
 
       <p>To give some example of simplification possible - let's take the decoder file
-      <code>Public_Domain_dccdoma_ARD_SCOM_MX.xm</code>. It configures a decoder, capable of
+      <code>Public_Domain_dccdoma_ARD_SCOM_MX.xml</code>. It configures a decoder, capable of
       displaying signal aspects on several signal masts. The configuration contains over 500 of CVs
       - yet the basic idea behind the configuration is dead simple:</p>
 
@@ -78,7 +78,7 @@
       JMRI installation. It is <strong>based on Petr Sidlo's dccdoma.cz - ARD-SCOM-MX
       decoder</strong> - generates the same decoder panels as the original one (as of 12/2019). The
       stylesheet (<strong>scom.xsl</strong>) should be placed also into
-      <strong><code>xml/decoder</code></strong> folder of the JMRI installation.</p>
+      <strong><code>xml/decoders</code></strong> folder of the JMRI installation.</p>
 
       <p>The template can be processed from the commandline to generate the decoder XML, so you can
       inspect effects of changing the stylesheet and/or data embedded in the decoder template. The
