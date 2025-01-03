@@ -65,6 +65,7 @@ public class CreateLogixNGTreeScaffold {
     private DestinationPoints dp1;
     private DestinationPoints dp2;
     private NamedTable csvTable;
+    private StringIO stringIO;
 
     private LogixManager logixManager = InstanceManager.getDefault(LogixManager.class);
     private ConditionalManager conditionalManager = InstanceManager.getDefault(ConditionalManager.class);
@@ -192,6 +193,10 @@ public class CreateLogixNGTreeScaffold {
         Warrant warrant = InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class).getWarrant("IW99");
         warrant.addBlockOrder(new BlockOrder(InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock("OB98")));
         warrant.addBlockOrder(new BlockOrder(InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock("OB99")));
+
+        stringIO = InstanceManager.getDefault(StringIOManager.class).provideStringIO("MyStringIO");
+        Assert.assertNotNull(stringIO);
+        Assert.assertEquals("ICMyStringIO", stringIO.getSystemName());
 
         logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
         conditionalNGManager = InstanceManager.getDefault(ConditionalNG_Manager.class);
@@ -5867,6 +5872,32 @@ public class CreateLogixNGTreeScaffold {
         stringFormula.setFormula("sin(a)*2 + 14");
         maleSocket = stringExpressionManager.registerExpression(stringFormula);
         doStringAction.getChild(0).connect(maleSocket);
+
+        stringActionStringIO = new StringActionStringIO(stringActionManager.getAutoSystemName(), null);
+        stringActionStringIO.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        stringActionStringIO.getSelectNamedBean().setNamedBean(stringIO);
+        maleSocket = stringActionManager.registerAction(stringActionStringIO);
+        maleSocket.setEnabled(false);
+        doStringAction.getChild(1).connect(maleSocket);
+
+
+        doStringAction = new DoStringAction(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(doStringAction);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        StringExpressionStringIO stringExpressionStringIO = new StringExpressionStringIO(stringExpressionManager.getAutoSystemName(), null);
+        stringExpressionStringIO.setComment("A comment");
+        stringExpressionStringIO.getSelectNamedBean().setNamedBean(stringIO);
+        maleSocket = stringExpressionManager.registerExpression(stringExpressionStringIO);
+        doStringAction.getChild(0).connect(maleSocket);
+
+        stringActionMemory = new StringActionMemory(stringActionManager.getAutoSystemName(), null);
+        stringActionMemory.setComment("A comment");
+        stringActionMemory.getSelectNamedBean().setNamedBean(memory2);
+        stringActionMemory.setValue("Hello");
+        maleSocket = stringActionManager.registerAction(stringActionMemory);
+        doStringAction.getChild(1).connect(maleSocket);
 
 
 

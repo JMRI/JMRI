@@ -21,10 +21,14 @@ public final class CbusConstants {
      * CBUS Manufacturer definitions
      * Where the manufacturer already has an NMRA code, this is used
      */
+    public static final int MANU_DEV = 13;
     public static final int SPROG_DCC = 44;         // http://www.merg.co.uk
-    public static final int MANU_MERG = 165;        // http://www.merg.co.uk
     public static final int MANU_ROCRAIL = 70;      // http://www.rocrail.net
     public static final int MANU_SPECTRUM = 80;     // http://animatedmodeler.com  (Spectrum Engineering)
+    public static final int MANU_MERG = 165;        // http://www.merg.co.uk
+    public static final int MANU_RME = 248;
+    public static final int MANU_SYSPIXIE = 249;
+    public static final int MANU_VLCB = 250;
 
     /**
      * SPROG DCC module types

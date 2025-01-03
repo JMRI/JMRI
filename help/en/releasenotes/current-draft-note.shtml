@@ -127,7 +127,13 @@
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
                 <li>Fixed a bug in the LccPro search function on large LCC networks.</li>
-                <li>Added "Node Groups" to LccPro and the Event Table.  
+                <li>Added "Node Groups" to LccPro and the Event Table.</li>
+                <li>You can now create an LCC/OpenLCB
+                    <a href="help/en/html/hardware/openlcb/index.shtml#stringios">StringIO</li>
+                    that's shared across multiple JMRI instances on the same LCC/OpenLCB network.
+                    If you change the StringIO value in one JMRI instance, it will be propagated to the 
+                    other ones over the network. You can then use LogixNG or scripts to 
+                    use that information to communicate between JMRI instances.
             </ul>
 
         <h4>Powerline</h4>
@@ -416,6 +422,7 @@
              They are useful for adding blocks between 2 turnouts where you would normally add a tiny block with the same block
              as one of the turnouts which causes errors in the routing tables. With care they can be used for placing turnouts
              in their own block.</li>
+             <li>Fix errors in loading maxlength and Maxspeed</li>
         </ul>
     <h3>Dispatcher System</h3>
         <a id="Dispatcher_System" name="Dispatcher_System"></a>
@@ -457,6 +464,8 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li>The expression <strong>StringIO as string value</strong>
+              has been added.</li>
           <li></li>
         </ul>
 
@@ -469,7 +478,9 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>Added train departure times to Yardmaster and Conductor</li>
+            <li>Fixed internationalization for Web Manifest, UK and other languages.</li>
+            <li>Added the option of building train when selecting Conductor and train not built</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -581,7 +592,10 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>
+                <a href="https://www.jmri.org/help/en/html/tools/StringIO.shtml">StringIOs</li>
+                are a new type of object within JMRI.  They're a way to exchange informational strings
+                with the layout hardware.  Over time, we'll build-out more system connections for these.
         </ul>
 
    <h3>Warrants</h3>
@@ -629,6 +643,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Fixed a bug in the XSLT transforms used to make 
+                panel files human-readable: "if" was used when "when" was required.</li>
         </ul>
 

@@ -1953,8 +1953,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       lists by selecting the appropriate drop down menus. To remove a loco or car attribute (Road,
       Number, Type, Length, Color, Load, etc.) select blank. You can also edit and or replace the "[
       ] Set out", "[ ] Pick up" and "[ ] Move" prefixes. Two popular prefixes are "Spot" and "Pull"
-      for set outs and pick ups respectively. If you want to use the text color options, the set
-      out, pick up, and move prefixes must be unique.
+      for set outs and pick ups respectively.
 
       <p>For locomotive or car pick ups, the "Location" or "Track" attribute provides the track
         name where the rolling stock is currently residing. For set outs, the "Destination" or
@@ -1977,18 +1976,26 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h3 id="ManifestComments">Manifests and Switch List Options</h3>
       OperationsPro&trade; allows you to customize the text used in the train Manifest and switch
       lists to your liking. You can modify the Manifest or switch list text by using the "Edit
-      Manifest Text" or "Edit Switch List Text" windows found under the <a
-        href="#ManifestPrintOptionsTools">Tools</a> menu.
+      Manifest Text" or "Edit Switch List Text" windows found under the
+      <a href="#ManifestPrintOptionsTools">Tools</a> menu.
 
       <h4>Switch List Options</h4>
-      The first option "By Track Summary" when selected, lists all car pick ups, set outs, and holds
-      at a location by track and train. This summary is appended to the end of the switch list. This
-      option is only available when you operate the switch list in <a href="#SwitchListOptions">Real
-        Time</a>.
+      There are three checkboxes that allow you to modify the content of your switch lists. They are
+      labeled "By Track Summary", "Route Location", and "Departure Time".
+
+      <p>
+        The first option "By Track Summary" when selected, lists all car pick ups, set outs, and
+        holds at a location by track and train. This summary is appended to the end of the switch
+        list. This option is only available when you operate the switch list in <a
+          href="#SwitchListOptions">Real Time</a>.
+      </p>
       <p>
         You can include in your switch lists the train's <a href="#EditRoute">route</a> location
         comments by selecting the "Route Location" checkbox.
       </p>
+
+      <p>A switch list normally shows the estimated arrival time for a train. Selecting the
+        "Departure Time" checkbox changes the format to showing the departure time.</p>
 
       <h4>Manifests Options</h4>
       There are four checkboxes that allow you to modify the content of your Manifests. They are

@@ -5,7 +5,6 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
@@ -15,7 +14,6 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
-import java.util.EventObject;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -163,10 +161,14 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      * @return true if the property name is of interest, false otherwise
      */
     protected boolean matchPropertyName(PropertyChangeEvent e) {
-        return (e.getPropertyName().contains("State")
-                || e.getPropertyName().contains("Appearance")
-                || e.getPropertyName().contains("Comment"))
-                || e.getPropertyName().contains("UserName");
+        var name = e.getPropertyName().toLowerCase();
+        return (name.contains("state")
+                || name.contains("value")
+                || name.contains("appearance")
+                || name.contains("comment")
+                || name.contains("username")
+                || name.contains("commanded")
+                || name.contains("known"));
     }
 
     /**
@@ -729,7 +731,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         }
 
     }
-    
+
     /**
      * Create and configure a new table using the given model and row sorter.
      *
@@ -740,41 +742,17 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      * @return the table
      * @throws NullPointerException if name or model is null
      */
-    public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @CheckForNull RowSorter<? extends TableModel> sorter) {
+    public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model,
+        @CheckForNull RowSorter<? extends TableModel> sorter) {
         Objects.requireNonNull(name, "the table name must be nonnull");
         Objects.requireNonNull(model, "the table model must be nonnull");
-        JTable table = new JTable(model) {
 
-            // TODO: Create base BeanTableJTable.java,
-            // extend TurnoutTableJTable from it as next 2 classes duplicate.
-
-            @Override
-            public String getToolTipText(java.awt.event.MouseEvent e) {
-                java.awt.Point p = e.getPoint();
-                int rowIndex = rowAtPoint(p);
-                int colIndex = columnAtPoint(p);
-                int realRowIndex = convertRowIndexToModel(rowIndex);
-                int realColumnIndex = convertColumnIndexToModel(colIndex);
-                return getCellToolTip(this, realRowIndex, realColumnIndex);
-            }
-
-            /**
-             * Disable Windows Key or Mac Meta Keys being pressed acting
-             * as a trigger for editing the focused cell.
-             * Causes unexpected behaviour, i.e. button presses.
-             * {@inheritDoc}
-             */
-            @Override
-            public boolean editCellAt(int row, int column, EventObject e) {
-                if (e instanceof KeyEvent) {
-                    if ( ((KeyEvent) e).getKeyCode() == KeyEvent.VK_WINDOWS
-                        || ( (KeyEvent) e).getKeyCode() == KeyEvent.VK_META ) {
-                        return false;
-                    }
-                }
-                return super.editCellAt(row, column, e);
-            }
-        };
+        if (!( model instanceof BeanTableDataModel<?> ) ) {
+            throw new IllegalArgumentException(model.getClass() + " is Not a BeanTableDataModel");
+        }
+        @SuppressWarnings("unchecked")
+        BeanTableDataModel<T> vv = (BeanTableDataModel<T>)model;
+        JTable table = new BeanTableJTable<>(vv);
         return this.configureJTable(name, table, sorter);
     }
 
@@ -788,7 +766,8 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      * @return the table
      * @throws NullPointerException if table or the table name is null
      */
-    protected JTable configureJTable(@Nonnull String name, @Nonnull JTable table, @CheckForNull RowSorter<? extends TableModel> sorter) {
+    protected JTable configureJTable(@Nonnull String name, @Nonnull JTable table,
+        @CheckForNull RowSorter<? extends TableModel> sorter) {
         Objects.requireNonNull(table, "the table must be nonnull");
         Objects.requireNonNull(name, "the table name must be nonnull");
         table.setRowSorter(sorter);
@@ -797,7 +776,8 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         table.setColumnModel(new XTableColumnModel());
         table.createDefaultColumnsFromModel();
         addMouseListenerToHeader(table);
-        table.getTableHeader().setDefaultRenderer(new BeanTableTooltipHeaderRenderer(table.getTableHeader().getDefaultRenderer()));
+        table.getTableHeader().setDefaultRenderer(
+            new BeanTableTooltipHeaderRenderer(table.getTableHeader().getDefaultRenderer()));
         return table;
     }
 
@@ -962,9 +942,11 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         }
     }
 
-    public void removeName(int row, int column) {
-        T nBean = getBySystemName(sysNameList.get(row));
-        if (!allowBlockNameChange("Remove", nBean, "")) return;  // NOI18N
+    public void removeName(int modelRow, int column) {
+        T nBean = getBySystemName(sysNameList.get(modelRow));
+        if (!allowBlockNameChange("Remove", nBean, "")) { // NOI18N
+            return;
+        }
         String msg = Bundle.getMessage("UpdateToSystemName", getBeanType());
         int optionPane = JmriJOptionPane.showConfirmDialog(null,
                 msg, Bundle.getMessage("UpdateToSystemNameTitle"),
@@ -973,7 +955,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             nbMan.updateBeanFromUserToSystem(nBean);
         }
         nBean.setUserName(null);
-        fireTableRowsUpdated(row, row);
+        fireTableRowsUpdated(modelRow, modelRow);
     }
 
     /**
@@ -1091,13 +1073,13 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      * Most of the bean tables use the standard model with comments in column 3.
      *
      * @param table The current table.
-     * @param row The current row.
-     * @param col The current column.
+     * @param modelRow The current row.
+     * @param modelCol The current column.
      * @return a formatted tool tip or null if there is none.
      */
-    public String getCellToolTip(JTable table, int row, int col) {
+    public String getCellToolTip(JTable table, int modelRow, int modelCol) {
         String tip = null;
-        T nBean = getBySystemName(sysNameList.get(row));
+        T nBean = getBySystemName(sysNameList.get(modelRow));
         if (nBean != null) {
             tip = formatToolTip(nBean.getRecommendedToolTip());
         }

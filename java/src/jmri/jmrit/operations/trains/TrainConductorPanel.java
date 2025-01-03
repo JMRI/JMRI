@@ -92,6 +92,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
         add(textTrainRouteLocationCommentPane); // train route location comment
         add(textLocationCommentPane);
         add(pTrackComments);
+        add(textTrainStatusPane);
         add(locoPane);
         add(pWorkPanes);
         add(movePane);
@@ -156,6 +157,8 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                                     : TrainCommon.splitString(_train.getNextLocationName()));
                     
                     updateTrackComments(rl, IS_MANIFEST);
+                    
+                    textTrainStatusPane.setText(TrainCommon.getTrainMessage(_train, rl));
                             
                     // check for locos
                     updateLocoPanes(rl);
