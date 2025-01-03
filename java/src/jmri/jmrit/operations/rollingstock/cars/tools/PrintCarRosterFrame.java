@@ -218,17 +218,17 @@ public class PrintCarRosterFrame extends OperationsFrame {
     int numberCharPerLine;
 
     private void printCars() {
-        boolean landscape = false;
+        boolean isLandscape = false;
         if (manifestOrientationComboBox.getSelectedItem() != null &&
                 manifestOrientationComboBox.getSelectedItem().equals(Setup.LANDSCAPE)) {
-            landscape = true;
+            isLandscape = true;
         }
 
         int fontSize = (int) fontSizeComboBox.getSelectedItem();
 
         // obtain a HardcopyWriter to do this
         try (HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleCarRoster"), fontSize, .5,
-                .5, .5, .5, _isPreview, "", landscape, true, null)) {
+                .5, .5, .5, _isPreview, "", isLandscape, true, false, null)) {
 
             numberCharPerLine = writer.getCharactersPerLine();
 
