@@ -12,6 +12,8 @@ import jmri.jmrix.PortAdapter;
 import jmri.jmrix.bidib.BiDiBConstants;
 import jmri.util.ThreadingUtil;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import org.bidib.jbidibc.messages.utils.ByteUtils;
 import org.bidib.jbidibc.netbidib.client.NetBidibClient;
 
@@ -203,6 +205,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
      * {@inheritDoc}
      */
     @Override
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST",justification = "Cast safe by design") //parameter adapter always is a NetBiDiBAdapter here
     public int addStandardDetails(PortAdapter adapter, boolean incAdvanced, int i) {
 
         log.trace("add Details to JPanel");
