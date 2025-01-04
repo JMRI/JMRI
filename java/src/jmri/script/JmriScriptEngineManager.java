@@ -675,7 +675,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
         try {
             return Bundle.getMessage(language);
         } catch (MissingResourceException ex) {
-            log.warn("Translation not found for language \"{}\"", language);
+            log.warn("Translation not found for language \"{}\"", language, ex);
             if (!language.endsWith(Bundle.getMessage("files"))) { // NOI18N
                 return language + " " + Bundle.getMessage("files");
             }
