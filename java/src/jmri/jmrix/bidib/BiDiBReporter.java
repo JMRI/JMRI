@@ -92,7 +92,7 @@ public class BiDiBReporter extends jmri.implementation.AbstractRailComReporter i
         messageListener = new DefaultMessageListener() {
             @Override
             public void address(byte[] address, int messageNum, int detectorNumber, List<AddressData> addressData) {
-                log.trace("address: node UID: {}, node addr: {}, address: {}, detectorNumber: {}, addressData: {}", addr.getNodeUID(), addr.getNodeAddr(), address, detectorNumber, addressData);
+                //log.trace("address: node UID: {}, node addr: {}, address: {}, detectorNumber: {}, addressData: {}", addr.getNodeUID(), addr.getNodeAddr(), address, detectorNumber, addressData);
                 if (NodeUtils.isAddressEqual(addr.getNodeAddr(), address)  &&  addr.getAddr() == detectorNumber) {
                     log.info("REPORTER address was signalled, locos: {}, BM Number: {}, node: {}", addressData, detectorNumber, addr);
                     if (addressData.size() > 0) {
@@ -126,7 +126,7 @@ public class BiDiBReporter extends jmri.implementation.AbstractRailComReporter i
             }
             @Override
             public void occupancyMultiple(byte[] address, int messageNum, int baseAddress, int detectorCount, byte[] detectorData) {
-            log.trace("occupation: node UID: {}, node addr: {}, address: {}, baseAddress: {}, detectorCount: {}, occ states: {}", 
+                log.trace("occupation: node UID: {}, node addr: {}, address: {}, baseAddress: {}, detectorCount: {}, occ states: {}", 
                         addr.getNodeUID(), addr.getNodeAddr(), address, baseAddress, 
                         detectorCount, detectorData);
                 if (NodeUtils.isAddressEqual(addr.getNodeAddr(), address)  &&  !addr.isPortAddr()  &&  addr.getAddr() >= baseAddress  &&  addr.getAddr() < (baseAddress + detectorCount)) {

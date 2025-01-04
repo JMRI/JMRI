@@ -22,7 +22,7 @@ import org.bidib.jbidibc.simulation.SimulationInterface;
  * Provide access to a simulated BiDiB system.
  *
  * @author Paul Bender, Copyright (C) 2009-2010
- * @author Eckart Meyer Copyright (C) 2019-2023
+ * @author Eckart Meyer Copyright (C) 2019-2024
  *
  */
 public class BiDiBSimulatorAdapter extends BiDiBSerialPortController {
@@ -142,6 +142,8 @@ public class BiDiBSimulatorAdapter extends BiDiBSerialPortController {
 //        // open the port in XpressNet mode, check ability to set moderators
 //        //setPort(portName);
 //        //return "---- TEST ----";
+
+
         return null; // normal operation
     }
 
@@ -157,14 +159,14 @@ public class BiDiBSimulatorAdapter extends BiDiBSerialPortController {
         
         bidib = SimulationBidib.createInstance(getContext());
         BiDiBTrafficController tc = new BiDiBTrafficController(bidib);
-        context = tc.connnectPort(this); //must be done before configuring managers since they may need features from the device
         log.debug("memo: {}, bidib simulator: {}", this.getSystemConnectionMemo(), bidib);
         this.getSystemConnectionMemo().setBiDiBTrafficController(tc);
+        context = tc.connnectPort(this); //must be done before configuring managers since they may need features from the device
+        opened = false;
         if (context != null) {
             opened = true;
         }
         else {
-            opened = false;
             log.warn("Simulation cannot be opened: {} ({}})",
                     getCurrentPortName(), getCurrentPortName());
         }

@@ -191,9 +191,9 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
             bidib = createSerialBidib(context);
         }
         BiDiBTrafficController tc = new BiDiBTrafficController(bidib);
-        context  = tc.connnectPort(this); //must be done before configuring managers since they may need features from the device
         log.debug("memo: {}", this.getSystemConnectionMemo());
         this.getSystemConnectionMemo().setBiDiBTrafficController(tc);
+        context  = tc.connnectPort(this); //must be done before configuring managers since they may need features from the device
         if (context != null) {
             opened = true;
             Long uid = tc.getRootNode().getUniqueId() & 0x0000ffffffffffL; //mask the classid
@@ -235,8 +235,8 @@ public class SerialDriverAdapter extends BiDiBSerialPortController {
     
     /**
      * Create a BiDiB object. jbidibc has support for various serial implementations.
-     * We tested SCM and PUREJAVACOMM. Both worked without problems. Since
-     * JMRI generally uses PUREJAVACOMM, we also use it here
+     * We tested SCM, PUREJAVACOMM and later JSerialComm. All worked without problems. Since
+     * JMRI generally uses JSerialComm, we also use it here
      * 
      * @return a BiDiB object from jbidibc
      */

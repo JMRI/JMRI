@@ -8,12 +8,15 @@ import jmri.InstanceManager;
 
 import org.bidib.jbidibc.core.BidibInterface;
 import org.bidib.jbidibc.core.node.BidibNode;
+import org.bidib.jbidibc.core.node.RootNode;
 import org.bidib.jbidibc.messages.BidibLibrary;
 import org.bidib.jbidibc.messages.Feature;
 import org.bidib.jbidibc.messages.FeatureData;
 import org.bidib.jbidibc.messages.Node;
 import org.bidib.jbidibc.messages.StringData;
+import org.bidib.jbidibc.messages.enums.CommandStationState;
 import org.bidib.jbidibc.messages.exception.ProtocolException;
+import org.bidib.jbidibc.messages.message.CommandStationSetStateMessage;
 import org.bidib.jbidibc.messages.utils.ByteUtils;
 
 import org.slf4j.Logger;
@@ -160,15 +163,86 @@ public class BiDiBNodeInitializer implements Runnable {
         startNodeUpdate(node, true);
     }
     
+    /**
+     * Remove all nodes
+     */
+    public void connectionLost() {
+        if (!nodes.isEmpty()) {
+            log.warn("remove all nodes from connection.");
+            for(Map.Entry<Long, Node> entry : nodes.entrySet()) {
+                Node node = entry.getValue();
+                startNodeUpdate(node, false);
+            }
+        }
+    }
     
-    // private methods to execute nodeLost/nodeNew in one low priority thread
+    /**
+     * Get data from root node and from all other nodes
+     * 
+     * @return true on success
+     */
+    
+    public boolean connectionInit() {
+        try {
+            log.debug("get relevant node data");
+            BidibNode rootNode = bidib.getRootNode();
+            int magic = rootNode.getMagic(0);
+            log.debug("Root Node returned magic: 0x{}", ByteUtils.magicToHex(magic));
+            if (magic != 0xAFFE) {
+                return false;
+            }
+            log.trace("root node: {}, node: {}", rootNode, ((RootNode)rootNode).getMasterNode());
+            int count = rootNode.getNodeCount();
+            log.debug("node count: {}", count);
+            byte[] nodeaddr = rootNode.getAddr();
+            log.debug("node addr length: {}", nodeaddr.length);
+            log.debug("node addr: {}", nodeaddr);
+            for (int i = 0; i < nodeaddr.length; i++) {
+                log.debug("  byte {}: {}", i, nodeaddr[i]);
+            }
+    //DEBUG
+    //            int featureCount = rootNode.getFeatureCount();
+    //            log.debug("feature count: {}", featureCount);
+    //            log.debug("** Unique ID: {}", String.format("0x%X",rootNode.getUniqueId()));
+
+            for (int index = 1; index <= count; index++) {
+                Node node = rootNode.getNextNode(null); //TODO org.bidib.jbidibc.messages.logger.Logger
+                initNode(node);
+                long uid = node.getUniqueId() & 0x0000ffffffffffL; //mask the classid
+                nodes.put(uid, node);
+            }
+            rootNode.sysEnable();
+            log.info("--- node init finished ---");
+
+            Node csnode = tc.getFirstCommandStationNode();
+            if (csnode != null) {
+                tc.sendBiDiBMessage(new CommandStationSetStateMessage(CommandStationState.QUERY), csnode);
+                // TODO: Should we remove all Locos from command station? MSG_SET_DRIVE with loco 0 and bitfields = 0 (see BiDiB spec)
+                // TODO: use MSG_CS_ALLOCATE every second to disable direct control from local controllers like handhelds?
+            }
+
+            return true;
+        }
+        catch (ProtocolException ex) {
+            log.error("The connection was not unavailable: {}. Verify that the BiDiB device is connected.", ex.getMessage());
+        }
+//        catch (Exception ex) {
+//            log.error("Execute command failed: ", ex); // NOSONAR
+//        }
+        return false;
+        
+    }
+    
+    
+    // private methods to execute nodeLost/nodeNew in a low priority thread
         
     private <T> void nodeLost(SortedSet<T> beanSet, long uniqueId) {
         beanSet.forEach( (nb) -> {
             if (nb instanceof BiDiBNamedBeanInterface) {
                 BiDiBAddress addr = ((BiDiBNamedBeanInterface)nb).getAddr();
-                log.trace("check bean: {}", nb);
+                //log.trace("check bean: {}", nb);
                 if (addr.getNodeUID() == uniqueId) {
+                    log.trace("-invalidate {}", nb);
                     addr.invalidate();
                     ((BiDiBNamedBeanInterface)nb).nodeLost();
                 }
@@ -190,8 +264,9 @@ public class BiDiBNodeInitializer implements Runnable {
         beanSet.forEach( (nb) -> {
             if (nb instanceof BiDiBNamedBeanInterface) {
                 BiDiBAddress addr = ((BiDiBNamedBeanInterface)nb).getAddr();
-                log.trace("check bean: {}", nb);
+                //log.trace("check bean: {}", nb);
                 if (!addr.isValid()) {
+                    log.trace("+new bean {}", nb);
                     ((BiDiBNamedBeanInterface)nb).nodeNew();
                 }
             }

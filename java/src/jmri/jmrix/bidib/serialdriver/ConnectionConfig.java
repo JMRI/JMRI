@@ -23,17 +23,17 @@ import org.slf4j.LoggerFactory;
  * SerialDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
- * @author Eckart Meyer Copyright (C) 2019
+ * @author Eckart Meyer Copyright (C) 2019, 2024
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     public final static String NAME = Bundle.getMessage("TypeSerial");
 //    protected JCheckBox useAutoScan = new JCheckBox(Bundle.getMessage("Use Autoscan"));
     // TODO: use Bundle for localization of the field text
-    protected JCheckBox useAutoScan = new JCheckBox("Use Autoscan");
-    protected JLabel rootNodeLabel = new JLabel("Root Node (hex):");
+    protected JCheckBox useAutoScan = new JCheckBox(Bundle.getMessage("SerialConnectionUseAutoscan"));
+    protected JLabel rootNodeLabel = new JLabel(Bundle.getMessage("UniqueIDHex") + ":");
     protected JTextField rootNodeField = new JTextField(16);
-    protected JLabel portNameFilterLabel = new JLabel("Port Name Filter:");
+    protected JLabel portNameFilterLabel = new JLabel(Bundle.getMessage("SerialConnectionPortNameFilter") + ":");
     protected JTextField portNameFilterField = new JTextField(15);
 
     /**
@@ -63,7 +63,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
      */
     @Override
     protected void setInstance() {
-        log.debug("BiDiB Simulator ConnectionConfig.setInstance: {}", adapter);
+        log.debug("BiDiB Serial ConnectionConfig.setInstance: {}", adapter);
         if (adapter == null) {
             adapter = new SerialDriverAdapter();
             log.debug("-- adapter created: {}", adapter);

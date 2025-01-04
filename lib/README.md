@@ -401,8 +401,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - version 2.6
 - batik related
 
-##### BiDiB protocol implementation: jbidibc-*-2.0.18.jar, bidibwizard-*-2.0.18.jar
-- version 2.0.18
+##### BiDiB protocol implementation: jbidibc-*-2.0.29.jar, bidibwizard-*-2.0.30.jar
+- version 2.0.29 / 2.0.30
 - bidibwizard*.jar supports the BiDiB connection simulation
 
 ##### commons-collections4-4.4.jar
