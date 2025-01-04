@@ -53,7 +53,9 @@ public class JythonWindowsTest {
         JUnitUtil.dispose(f);
 
         // error messages are a fail
+        System.err.println("JythonWindowsTest.testExec about to check backlog");
         if ( ! jmri.util.JUnitAppender.verifyNoBacklog() ) {
+            System.err.println("JythonWindowsTest.testExec found backlog");
            Assert.fail("Emitted error messages caused test to fail");
         }
     }
