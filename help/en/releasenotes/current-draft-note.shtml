@@ -423,6 +423,7 @@
              as one of the turnouts which causes errors in the routing tables. With care they can be used for placing turnouts
              in their own block.</li>
              <li>Fix errors in loading maxlength and Maxspeed</li>
+             <li>Clean up AdHoc Transits after use.</li>
         </ul>
     <h3>Dispatcher System</h3>
         <a id="Dispatcher_System" name="Dispatcher_System"></a>

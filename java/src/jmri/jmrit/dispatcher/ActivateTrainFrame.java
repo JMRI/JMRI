@@ -1045,15 +1045,14 @@ public class ActivateTrainFrame extends JmriJFrame {
                 ixStart = startingBlockBox.getSelectedIndex();
                 ixEnd = destinationBlockBox.getSelectedIndex();
                 ixVia = viaBlockBox.getSelectedIndex();
-                Transit tmpTransit = _dispatcher.createTemporaryTransit(startingBlockBoxList.get(ixStart),destinationBlockBoxList.get(ixEnd),
+                List<LayoutBlock>blockList = _dispatcher.getAdHocRoute(startingBlockBoxList.get(ixStart),
+                        destinationBlockBoxList.get(ixEnd),
                         viaBlockBoxList.get(ixVia));
-                if (tmpTransit == null ) {
+                if (blockList == null ) {
                     JmriJOptionPane.showMessageDialog(initiateFrame, "Invalid Transit",
                             Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                trainInfo.setTransitName(tmpTransit.getDisplayName());
-                trainInfo.setTransitId(tmpTransit.getDisplayName());
             }
             dialogToTrainInfo(trainInfo);
             _dispatcher.loadTrainFromTrainInfoThrowsException(trainInfo,"NONE","");
