@@ -112,7 +112,7 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
                 address = InetAddress.getByName(addr);
             }
             catch (UnknownHostException e) {
-                log.error("unable to resolve remote server address: {}", e);
+                log.error("unable to resolve remote server address {}:", e.toString());
             }
             int portAsInt;
             try {
@@ -310,7 +310,7 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
                     localClientLinkData.setUserString(myHostName);
                 }
                 catch (UnknownHostException ex) {
-                    log.warn("Cannot determine local host name: {}", ex);
+                    log.warn("Cannot determine local host name: {}", ex.toString());
                 }
                 localClientLinkData.setProtocolVersion(ProtocolVersion.VERSION_0_8);
                 localClientLinkData.setNetBidibRole(NetBidibRole.INTERFACE);
@@ -508,7 +508,7 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
                 // we wait a while (1000ms) and try again until the overall timeout is reached.
                 infoList = mdnsClient.getServices(serviceType);
                 log.debug("mDNS: \n{}", infoList);
-            } catch (Exception e) { log.error("Error getting mDNS services list: {}", e); }
+            } catch (Exception e) { log.error("Error getting mDNS services list: {}", e.toString()); }
 
             // Fill the device list with the found info from mDNS records.
             // infoList always contains the complete list of the mDNS announcements found so far,
@@ -526,7 +526,7 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
                 log.trace("name: {}, port: {}", serviceInfo.getName(), serviceInfo.getPort());
                 log.trace("inet addresses: {}", new ArrayList<>(Arrays.asList(serviceInfo.getInetAddresses())));
                 log.trace("hostnames: {}", new ArrayList<>(Arrays.asList(serviceInfo.getHostAddresses())));
-                log.trace("urls: ", new ArrayList<>(Arrays.asList(serviceInfo.getURLs())));
+                log.trace("urls: {}", new ArrayList<>(Arrays.asList(serviceInfo.getURLs())));
                 Enumeration<String> propList = serviceInfo.getPropertyNames();
                 while (propList.hasMoreElements()) {
                     String prop = propList.nextElement();

@@ -571,7 +571,10 @@ public class BiDiBTrafficController implements CommandStation {
             else {
                 // even in non-async mode (all but netBiDiB) the node init is done in another thread
                 // so we wait here for the node init has been completed.
-                continueLock.await(30, TimeUnit.SECONDS);
+                boolean success = continueLock.await(30, TimeUnit.SECONDS);
+                if (!success) {
+                    log.warn("node init timeout!");
+                }
             }
             
             if (!bidib.isOpened()  ||  !connectionIsReady) {
@@ -655,7 +658,7 @@ public class BiDiBTrafficController implements CommandStation {
                 return rootNode.getMasterNode().isDetached();
             }
             catch (Exception e) {
-                log.trace("cannot determine detached flag: {}", e);
+                log.trace("cannot determine detached flag: {}", e.toString());
             }
         }
         return false;
@@ -683,7 +686,7 @@ public class BiDiBTrafficController implements CommandStation {
             uid = providedClientLinkData.getUniqueId() & 0xFFFFFFFFFFL;
         }
         catch (Exception e) {
-            log.error("cannot determine our own Unique ID: {}", e);
+            log.error("cannot determine our own Unique ID: {}", e.toString());
             return;
         }
         if (logon) {
