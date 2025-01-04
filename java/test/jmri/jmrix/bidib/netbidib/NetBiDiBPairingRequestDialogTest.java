@@ -1,5 +1,6 @@
 package jmri.jmrix.bidib.netbidib;
 
+import java.awt.GraphicsEnvironment;
 import org.junit.Assert;
 import jmri.util.JUnitUtil;
 //import jmri.util.JUnitAppender;
@@ -19,8 +20,10 @@ public class NetBiDiBPairingRequestDialogTest {
     @Test
     public void testCTor() {
         Context context = new DefaultContext();
-        NetBiDiBPairingRequestDialog t = new NetBiDiBPairingRequestDialog(context, null, null);
-        Assert.assertNotNull("exists", t);
+        if(!GraphicsEnvironment.isHeadless()) {
+            NetBiDiBPairingRequestDialog t = new NetBiDiBPairingRequestDialog(context, null, null);
+            Assert.assertNotNull("exists", t);
+        }
     }
 
     // The minimal setup for log4J
