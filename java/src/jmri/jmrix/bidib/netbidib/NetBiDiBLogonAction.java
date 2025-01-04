@@ -46,7 +46,7 @@ public class NetBiDiBLogonAction extends AbstractAction {
      * - the menu entry was activated
      * - the traffic controller signals a change of the connection
      * 
-     * @param e 
+     * @param e - Action event
      */
     @Override
     public void actionPerformed(ActionEvent e) {

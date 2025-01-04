@@ -88,7 +88,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
         deviceListField.removeAllItems();
         for ( Entry<Long, String> entry: devlist.entrySet()) { //don't use keySet - CI Tests doesn't like it :-(
             Long uid = entry.getKey();
-            log.info("get device list entry for uid {}: [{}]", ByteUtils.getUniqueIdAsString(uid), devlist.get(uid));
+            log.trace("get device list entry for uid {}: [{}]", ByteUtils.getUniqueIdAsString(uid), devlist.get(uid));
             deviceListField.addItem(devlist.get(uid));
         }
         deviceListField.setEnabled(true); //re-enable the combo box
@@ -189,7 +189,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
     /**
      * connection changed action event
      * 
-     * @param e 
+     * @param e - Action event
      */
     @Override
     public void actionPerformed(ActionEvent e) {
