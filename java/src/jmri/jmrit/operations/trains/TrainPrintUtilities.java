@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.trains;
 
 import java.awt.*;
+import java.awt.JobAttributes.SidesType;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
@@ -40,11 +41,11 @@ public class TrainPrintUtilities {
      * @param orientation   Setup.LANDSCAPE, Setup.PORTRAIT, or Setup.HANDHELD
      * @param fontSize      font size
      * @param isPrintHeader when true print page header
-     * @param isPrintDuplex when true print both sides of paper
+     * @param sidesType     two sides long or short can be null
      */
     public static void printReport(File file, String name, boolean isPreview, String fontName, boolean isBuildReport,
             String logoURL, String printerName, String orientation, int fontSize, boolean isPrintHeader,
-            boolean isPrintDuplex) {
+            SidesType sidesType) {
         // obtain a HardcopyWriter to do this
 
         boolean isLandScape = false;
@@ -62,7 +63,7 @@ public class TrainPrintUtilities {
                     TrainCommon.getPageSize(orientation).height + TrainCommon.PAPER_MARGINS.height);
         }
         try (HardcopyWriter writer = new HardcopyWriter(new Frame(), name, fontSize, margin,
-                margin, .5, .5, isPreview, printerName, isLandScape, isPrintHeader, isPrintDuplex, pagesize);
+                margin, .5, .5, isPreview, printerName, isLandScape, isPrintHeader, sidesType, pagesize);
                 BufferedReader in = new BufferedReader(new InputStreamReader(
                         new FileInputStream(file), StandardCharsets.UTF_8));) {
 

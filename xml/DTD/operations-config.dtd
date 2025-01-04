@@ -110,7 +110,7 @@
 
 <!ATTLIST fontName name				CDATA #IMPLIED> 
 <!ATTLIST fontSize size				CDATA #IMPLIED>  
-<!ATTLIST printDuplex enabled		(true | false ) "false"> 
+<!ATTLIST printDuplex name			CDATA #IMPLIED> 
 <!ATTLIST pickupEngFormat prefix	CDATA #IMPLIED>
 <!ATTLIST dropEngFormat prefix		CDATA #IMPLIED>
 <!ATTLIST pickupCarFormat prefix	CDATA #IMPLIED>
