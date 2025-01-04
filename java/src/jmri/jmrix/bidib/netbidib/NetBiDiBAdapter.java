@@ -1,5 +1,6 @@
 package jmri.jmrix.bidib.netbidib;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.DataInputStream;
@@ -228,6 +229,7 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
      * 
      */
     @Override
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST",justification = "Cast safe by design")
     public void connect() {// throws IOException {
         log.debug("connect() starts to {}:{}", getHostName(), getPort());
         
