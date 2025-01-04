@@ -11,7 +11,8 @@ import javax.swing.JPanel;
 import jmri.jmrix.PortAdapter;
 import jmri.jmrix.bidib.BiDiBConstants;
 import jmri.util.ThreadingUtil;
-
+import java.util.Map.Entry;
+        
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import org.bidib.jbidibc.messages.utils.ByteUtils;
@@ -85,8 +86,9 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
         Map<Long, String> devlist =  ((NetBiDiBAdapter)adapter).getDeviceListEntries();
         deviceListField.setEnabled(false); //signal the combo box action listener to do nothing while filling
         deviceListField.removeAllItems();
-        for ( Long uid : devlist.keySet()) {
-            log.trace("get device list entry for uid {}: [{}]", ByteUtils.getUniqueIdAsString(uid), devlist.get(uid));
+        for ( Entry<Long, String> entry: devlist.entrySet()) { //don't use keySet - CI Tests doesn't like it :-(
+            Long uid = entry.getKey();
+            log.info("get device list entry for uid {}: [{}]", ByteUtils.getUniqueIdAsString(uid), devlist.get(uid));
             deviceListField.addItem(devlist.get(uid));
         }
         deviceListField.setEnabled(true); //re-enable the combo box
