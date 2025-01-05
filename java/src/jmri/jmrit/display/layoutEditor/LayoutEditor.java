@@ -161,6 +161,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private JCheckBoxMenuItem turnoutFillControlCirclesCheckBoxMenuItem = null;
     private JCheckBoxMenuItem hideTrackSegmentConstructionLinesCheckBoxMenuItem = null;
     private JCheckBoxMenuItem useDirectTurnoutControlCheckBoxMenuItem = null;
+    private JCheckBoxMenuItem immediateFeedbackCheckBoxMenuItem = null;
     private ButtonGroup turnoutCircleSizeButtonGroup = null;
 
     private boolean turnoutDrawUnselectedLeg = true;
@@ -308,7 +309,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private double xOverHWid = LayoutTurnout.xOverHWidDefault;
     private double xOverShort = LayoutTurnout.xOverShortDefault;
     private boolean useDirectTurnoutControl = false; // Uses Left click for closing points, Right click for throwing.
-    private boolean immediateFeedback = false; // Highlight mouse press/drag area, good for touchscreens
+    private boolean immediateFeedback = false; // Highlight finger/mouse press/drag area, good for touchscreens
 
     // saved state of options when panel was loaded or created
     private boolean savedEditMode = true;
@@ -1528,6 +1529,15 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             redrawPanel();
         });
         turnoutDrawUnselectedLegCheckBoxMenuItem.setSelected(turnoutDrawUnselectedLeg);
+
+        // add "enable immediate feedback" - useful for touchscreens
+        immediateFeedbackCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("ImmediateFeedback"));
+        turnoutOptionsMenu.add(immediateFeedbackCheckBoxMenuItem);
+        immediateFeedbackCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            immediateFeedback = immediateFeedbackCheckBoxMenuItem.isSelected();
+            redrawPanel();
+        });
+        immediateFeedbackCheckBoxMenuItem.setSelected(immediateFeedback);
 
         return optionMenu;
     }
@@ -7526,6 +7536,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         return turnoutDrawUnselectedLeg;
     }
 
+    public boolean isImmediateFeedback() {
+        return immediateFeedback;
+    }
+
     public String getLayoutName() {
         return layoutName;
     }
@@ -7736,6 +7750,19 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         if (turnoutDrawUnselectedLeg != state) {
             turnoutDrawUnselectedLeg = state;
             turnoutDrawUnselectedLegCheckBoxMenuItem.setSelected(turnoutDrawUnselectedLeg);
+        }
+    }
+
+    /**
+     * Should only be invoked on the GUI (Swing) thread.
+     *
+     * @param state true to enable immediate feedback
+     */
+    @InvokeOnGuiThread
+    public void setImmediateFeedback(boolean state) {
+        if (immediateFeedback != state) {
+            immediateFeedback = state;
+            immediateFeedbackCheckBoxMenuItem.setSelected(immediateFeedback);
         }
     }
 
@@ -8059,14 +8086,6 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     // TODO: Java standard pattern for boolean getters is "isShowHelpBar()"
     public boolean getDirectTurnoutControl() {
         return useDirectTurnoutControl;
-    }
-
-    public void setImmediateFeedback(boolean imm) {
-        immediateFeedback = imm;
-    }
-
-    public boolean isImmediateFeedback() {
-        return immediateFeedback;
     }
 
     // final initialization routine for loading a LayoutEditor
