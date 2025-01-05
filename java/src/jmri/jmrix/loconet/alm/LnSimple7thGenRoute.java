@@ -1,7 +1,7 @@
 package jmri.jmrix.loconet.alm;
 
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -14,6 +14,7 @@ public class LnSimple7thGenRoute {
         this.routeEntries = new LnSimpleRouteEntry[8];
         for(int i=0; i < 8; ++i) {
             this.routeEntries[i] = new LnSimpleRouteEntry();
+            log.warn("establishe default route {}",i);
         }
     }
 
@@ -51,5 +52,5 @@ public class LnSimple7thGenRoute {
         return this.routeEntries[entryNum];
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(LnSimple7thGenRoute.class);
+    private final static Logger log = LoggerFactory.getLogger(LnSimple7thGenRoute.class);
 }
