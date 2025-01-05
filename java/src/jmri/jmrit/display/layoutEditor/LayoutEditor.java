@@ -2955,6 +2955,29 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     /**
+     * Check for immediate mode feedback.
+     *
+     * If in "immediate" mode, draw a square at the location of the
+     * event. If there was already a square, just move its location.
+     * In either case, redraw the panel so the previous square will
+     * disappear and the new one will appear immediately.
+     */
+    private void checkImmediate() {
+        if (!isEditable() && immediateFeedback) {
+            // rectangle size based on turnout circle size: rectangle should
+            // be bigger so it can more easily surround turnout on screen
+            int halfSize = (int)(circleRadius) + 8;
+            if (_highlightcomponent == null) {
+                _highlightcomponent = new Rectangle(
+                        xLoc - halfSize, yLoc - halfSize, halfSize * 2, halfSize * 2);
+            } else {
+                _highlightcomponent.setLocation(xLoc - halfSize, yLoc - halfSize);
+            }
+            redrawPanel();
+        }
+    }
+
+    /**
      * Handle a mouse pressed event
      * <p>
      * Side-effects on _anchorX, _anchorY,_lastX, _lastY, xLoc, yLoc, dLoc,
@@ -2971,15 +2994,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         _lastY = _anchorY;
         calcLocation(event);
 
-        if (!isEditable() && immediateFeedback) {
-            if (_highlightcomponent == null) {
-                // TODO: rectangle size based on turnout circle size
-                _highlightcomponent = new Rectangle(xLoc - 20, yLoc - 20, 40, 40);
-            } else {
-                _highlightcomponent.setLocation(xLoc - 20, yLoc - 20);
-            }
-            redrawPanel();
-        }
+        checkImmediate();
 
         // TODO: Add command-click on nothing to pan view?
         if (isEditable()) {
@@ -4869,15 +4884,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         // initialize mouse position
         calcLocation(event);
 
-        if (!isEditable() && immediateFeedback) {
-            if (_highlightcomponent == null) {
-                // TODO: rectangle size based on turnout circle size
-                _highlightcomponent = new Rectangle(xLoc - 20, yLoc - 20, 40, 40);
-            } else {
-                _highlightcomponent.setLocation(xLoc - 20, yLoc - 20);
-            }
-            redrawPanel();
-        }
+        checkImmediate();
 
         // ignore this event if still at the original point
         if ((!isDragging) && (xLoc == getAnchorX()) && (yLoc == getAnchorY())) {
