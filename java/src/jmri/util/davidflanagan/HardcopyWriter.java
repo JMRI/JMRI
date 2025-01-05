@@ -86,7 +86,8 @@ public class HardcopyWriter extends Writer {
     // constructor modified to add default printer name, page orientation, print header, print duplex, and page size
     public HardcopyWriter(Frame frame, String jobname, int fontsize, double leftmargin, double rightmargin,
             double topmargin, double bottommargin, boolean isPreview, String printerName, boolean isLandscape,
-            boolean isPrintHeader, boolean isPrintDuplex, Dimension pagesize) throws HardcopyWriter.PrintCanceledException {
+            boolean isPrintHeader, SidesType sidesType, Dimension pagesize)
+            throws HardcopyWriter.PrintCanceledException {
 
         // print header?
         this.printHeader = isPrintHeader;
@@ -94,8 +95,8 @@ public class HardcopyWriter extends Writer {
         // set default print name
         jobAttributes.setPrinter(printerName);
 
-        if (isPrintDuplex) {
-            jobAttributes.setSides(SidesType.TWO_SIDED_LONG_EDGE);
+        if (sidesType != null) {
+            jobAttributes.setSides(sidesType);
         }
         if (isLandscape) {
             pageAttributes.setOrientationRequested(PageAttributes.OrientationRequestedType.LANDSCAPE);

@@ -16,6 +16,7 @@ public class ScaleManagerTest {
         Assertions.assertEquals(12, list.size());
 
         Scale scale = ScaleManager.getScale("HO");
+        Assertions.assertNotNull(scale);
         Assertions.assertEquals(87.1, scale.getScaleRatio(), .1);
 
         scale = ScaleManager.getScaleByName("QR");
