@@ -17,7 +17,7 @@ public class DmiFrameTest {
     public void testCTor() {
         DmiFrame t = new DmiFrame();
         Assertions.assertNotNull(t);
-        t.dispose();
+        JUnitUtil.dispose(t);
     }
 
     @Test
@@ -33,7 +33,7 @@ public class DmiFrameTest {
         Assertions.assertTrue( jfo.getSize().getHeight() >= 480 );
 
         // JUnitUtil.waitFor(15000);        
-        jfo.requestClose();
+        JUnitUtil.dispose(jfo.getWindow());
         jfo.waitClosed();
     }
 

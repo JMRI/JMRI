@@ -208,6 +208,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private int buildReportFontSize = 10;
     private String manifestOrientation = PORTRAIT;
     private String switchListOrientation = PORTRAIT;
+    private boolean printDuplex = false;
     private boolean printHeader = true;
     private Color pickupColor = Color.black;
     private Color dropColor = Color.black;
@@ -1090,6 +1091,14 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         getDefault().manifestFontSize = size;
     }
 
+    public static boolean isPrintDuplexEnabled() {
+        return getDefault().printDuplex;
+    }
+
+    public static void setPrintDuplexEnabled(boolean enable) {
+        getDefault().printDuplex = enable;
+    }
+
     public static boolean isPrintPageHeaderEnabled() {
         return getDefault().printHeader;
     }
@@ -1957,6 +1966,9 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         values.setAttribute(Xml.MANIFEST, getManifestOrientation());
         values.setAttribute(Xml.SWITCH_LIST, getSwitchListOrientation());
 
+        e.addContent(values = new Element(Xml.PRINT_DUPLEX));
+        values.setAttribute(Xml.ENABLED, isPrintDuplexEnabled() ? Xml.TRUE : Xml.FALSE);
+
         e.addContent(values = new Element(Xml.MANIFEST_COLORS));
         values.setAttribute(Xml.DROP_COLOR, getDropTextColor());
         values.setAttribute(Xml.PICKUP_COLOR, getPickupTextColor());
@@ -2484,6 +2496,13 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 setSwitchListOrientation(orientation);
             }
         }
+        if ((operations.getChild(Xml.PRINT_DUPLEX) != null)) {
+            if ((a = operations.getChild(Xml.PRINT_DUPLEX).getAttribute(Xml.ENABLED)) != null) {
+                String enable = a.getValue();
+                log.debug("Print duplex: {}", enable);
+                setPrintDuplexEnabled(enable.equals(Xml.TRUE));
+            }
+        }
         if ((operations.getChild(Xml.MANIFEST_COLORS) != null)) {
             if ((a = operations.getChild(Xml.MANIFEST_COLORS).getAttribute(Xml.DROP_COLOR)) != null) {
                 String dropColor = a.getValue();
@@ -2975,7 +2994,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
      * Converts the strings into English tags for xml storage
      *
      */
-    private static void stringToTagConversion(String[] strings) {
+    public static void stringToTagConversion(String[] strings) {
         for (int i = 0; i < strings.length; i++) {
             if (strings[i].equals(BLANK)) {
                 continue;

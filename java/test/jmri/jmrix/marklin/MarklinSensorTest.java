@@ -33,6 +33,7 @@ public class MarklinSensorTest extends jmri.implementation.AbstractSensorTestBas
     @AfterEach
     public void tearDown() {
         t.dispose();
+        t = null;
         JUnitUtil.tearDown();
     }
 

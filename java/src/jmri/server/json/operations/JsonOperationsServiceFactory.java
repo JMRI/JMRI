@@ -1,22 +1,18 @@
 package jmri.server.json.operations;
 
 import static jmri.server.json.JSON.ENGINES;
-import static jmri.server.json.operations.JsonOperations.CAR;
-import static jmri.server.json.operations.JsonOperations.CARS;
-import static jmri.server.json.operations.JsonOperations.CAR_TYPE;
-import static jmri.server.json.operations.JsonOperations.ENGINE;
-import static jmri.server.json.operations.JsonOperations.KERNEL;
-import static jmri.server.json.operations.JsonOperations.LOCATION;
-import static jmri.server.json.operations.JsonOperations.LOCATIONS;
-import static jmri.server.json.operations.JsonOperations.ROLLING_STOCK;
-import static jmri.server.json.operations.JsonOperations.TRACK;
-import static jmri.server.json.operations.JsonOperations.TRAIN;
-import static jmri.server.json.operations.JsonOperations.TRAINS;
+import static jmri.server.json.JSON.KERNEL;
+import static jmri.server.json.JSON.LOCATION;
+import static jmri.server.json.JSON.LOCATIONS;
+import static jmri.server.json.JSON.TRACK;
+import static jmri.server.json.operations.JsonOperations.*;
+
+import org.openide.util.lookup.ServiceProvider;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import jmri.server.json.JsonConnection;
 import jmri.spi.JsonServiceFactory;
-import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Service factory for the JSON Operations services.

@@ -15,9 +15,6 @@ import jmri.server.json.sensor.JsonSensor;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import static jmri.server.json.oblock.JsonOblock.OBLOCK;
 import static jmri.server.json.oblock.JsonOblock.OBLOCKS;
 
@@ -52,9 +49,12 @@ public class JsonOblockHttpService extends JsonNamedBeanHttpService<OBlock> {
                 // add OBlock status, includes special values for Allocated 0x10, OutOfService 0x40 etc.
                 data.put(JsonOblock.STATUS, oblock.getState());
         }
-        data.put(JsonSensor.SENSOR, oblock.getSensor() != null ? oblock.getSensor().getSystemName() : null);
-        data.put(JsonOblock.WARRANT, oblock.getWarrant() != null ? oblock.getWarrant().getDisplayName() : null); // add OBlock Warrant name
-        data.put(JsonOblock.TRAIN, oblock.getWarrant() != null ? oblock.getWarrant().getTrainName() : null); // add OBlock Warrant name
+        var sens = oblock.getSensor();
+        data.put(JsonSensor.SENSOR, sens != null ? sens.getSystemName() : null);
+        // add OBlock Warrant name and TrainName
+        var warrant = oblock.getWarrant();
+        data.put(JsonOblock.WARRANT, warrant != null ? warrant.getDisplayName() : null);
+        data.put(JsonOblock.TRAIN, warrant != null ? warrant.getTrainName() : null);
 
         return root;
     }
@@ -152,6 +152,6 @@ public class JsonOblockHttpService extends JsonNamedBeanHttpService<OBlock> {
         return InstanceManager.getDefault(OBlockManager.class);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JsonOblockHttpService.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JsonOblockHttpService.class);
 
 }

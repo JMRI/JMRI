@@ -70,7 +70,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
              */
             @Override
             void extras() {
-                
+
                 addBottomButtons(this, dataTable);
             }
         };
@@ -255,6 +255,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
         options.put(0x02, Bundle.getMessage("DeleteAlways"));
         jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMessageItemDetails(getClassName(),
                 "deleteInUse", Bundle.getMessage("DeleteItemInUse"), options, 0x00);
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).setPreferenceItemDetails(getClassName(), "remindSaveReLoad", Bundle.getMessage("HideMoveUserReminder"));
     }
 
     protected abstract String getClassName();
@@ -297,7 +298,9 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
      */
     protected void configureManagerComboBox(ManagerComboBox<E> comboBox, Manager<E> manager,
             Class<? extends Manager<E>> managerClass) {
+        log.trace("configureManagerComboBox called with manager {}", manager);
         Manager<E> defaultManager = InstanceManager.getDefault(managerClass);
+        log.trace("default manager is {}", defaultManager);
         // populate comboBox
         if (defaultManager instanceof ProxyManager) {
             comboBox.setManagers(defaultManager);
@@ -313,6 +316,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
                 SystemConnectionMemo memo = SystemConnectionMemoManager.getDefault()
                         .getSystemConnectionMemoForUserName(userPref);
                 if (memo!=null) {
+                    log.trace("managerClass is {}, memo is {}", managerClass, memo);
                     comboBox.setSelectedItem(memo.get(managerClass));
                 } else {
                     ProxyManager<E> proxy = (ProxyManager<E>) manager;
@@ -503,7 +507,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
          */
         @Override
         public void columnMarginChanged(ChangeEvent e) {}
-        
+
         protected void dispose() {
             if (dataTable !=null ) {
                 dataTable.getColumnModel().removeColumnModelListener(this);
@@ -517,8 +521,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
         }
 
     }
-    
-    
+
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractTableAction.class);
 
 }

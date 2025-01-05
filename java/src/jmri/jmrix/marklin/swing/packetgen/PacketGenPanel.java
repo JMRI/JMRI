@@ -27,11 +27,11 @@ import jmri.util.swing.JmriJOptionPane;
 public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implements MarklinListener {
 
     // member declarations
-    JLabel entryLabel = new JLabel();
-    JLabel replyLabel = new JLabel();
-    JButton sendButton = new JButton();
-    JTextField packetTextField = new JTextField(20);
-    JTextField packetReplyField = new JTextField(20);
+    private final JLabel entryLabel = new JLabel();
+    private final JLabel replyLabel = new JLabel();
+    private final JButton sendButton = new JButton();
+    private final JTextField packetTextField = new JTextField(20);
+    private final JTextField packetReplyField = new JTextField(20);
 
     public PacketGenPanel() {
         super();
@@ -48,9 +48,11 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
         JPanel entrybox = new JPanel();
         entryLabel.setText(Bundle.getMessage("CommandLabel"));
         entryLabel.setVisible(true);
+        entryLabel.setLabelFor(packetTextField);
 
         replyLabel.setText(Bundle.getMessage("ReplyLabel"));
         replyLabel.setVisible(true);
+        replyLabel.setLabelFor(packetReplyField);
 
         sendButton.setText(Bundle.getMessage("ButtonSend"));
         sendButton.setVisible(true);
@@ -129,7 +131,7 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
                 }
             } else {
                 log.error("Only hex commands are supported");
-                JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("HexOnlyDialog"),
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("HexOnlyDialog"),
                         Bundle.getMessage("WarningTitle"), JmriJOptionPane.ERROR_MESSAGE);
             }
         }

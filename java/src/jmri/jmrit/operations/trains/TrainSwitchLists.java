@@ -157,7 +157,7 @@ public class TrainSwitchLists extends TrainCommon {
                     // save current location in case there's back to back location with the same name
                     rlPrevious = rl;
 
-                    // add route comment
+                    // add route location comment
                     if (Setup.isSwitchListRouteLocationCommentEnabled() && !rl.getComment().trim().isEmpty()) {
                         newLine(fileOut, rl.getCommentWithColor());
                     }
@@ -238,47 +238,11 @@ public class TrainSwitchLists extends TrainCommon {
      * Messages for the switch list when the train first arrives
      */
     private void firstTimeMessages(PrintWriter fileOut, Train train, RouteLocation rl) {
-        String expectedArrivalTime = train.getExpectedArrivalTime(rl);
         newLine(fileOut);
         newLine(fileOut,
                 MessageFormat.format(messageFormatText = TrainSwitchListText.getStringScheduledWork(),
                         new Object[]{train.getName(), train.getDescription()}));
-        if (train.isTrainEnRoute()) {
-            if (!expectedArrivalTime.equals(Train.ALREADY_SERVICED)) {
-                // Departed {0}, expect to arrive in {1}, arrives {2}bound
-                newLine(fileOut,
-                        MessageFormat.format(
-                                messageFormatText = TrainSwitchListText.getStringDepartedExpected(),
-                                new Object[]{splitString(train.getTrainDepartsName()),
-                                        expectedArrivalTime, rl.getTrainDirectionString(),
-                                        train.getCurrentLocationName()}));
-            }
-        } else if (!train.isLocalSwitcher()) {
-            // train hasn't departed
-            if (rl == train.getTrainDepartsRouteLocation()) {
-                // Departs {0} {1}bound at {2}
-                newLine(fileOut, MessageFormat.format(
-                        messageFormatText = TrainSwitchListText.getStringDepartsAt(),
-                        new Object[]{splitString(train.getTrainDepartsName()),
-                                rl.getTrainDirectionString(),
-                                train.getFormatedDepartureTime()}));
-            } else if (Setup.isUseSwitchListDepartureTimeEnabled() &&
-                    rl != train.getTrainTerminatesRouteLocation()) {
-                // Departs {0} at {1} expected arrival {2}, arrives {3}bound
-                newLine(fileOut, MessageFormat.format(
-                        messageFormatText = TrainSwitchListText.getStringDepartsAtExpectedArrival(),
-                        new Object[]{splitString(rl.getName()),
-                                train.getExpectedDepartureTime(rl), expectedArrivalTime,
-                                rl.getTrainDirectionString()}));
-            } else {
-                // Departs {0} at {1} expected arrival {2}, arrives {3}bound
-                newLine(fileOut, MessageFormat.format(
-                        messageFormatText = TrainSwitchListText.getStringDepartsAtExpectedArrival(),
-                        new Object[]{splitString(train.getTrainDepartsName()),
-                                train.getFormatedDepartureTime(), expectedArrivalTime,
-                                rl.getTrainDirectionString()}));
-            }
-        }
+        newLine(fileOut, getSwitchListTrainStatus(train, rl));
     }
 
     /*
@@ -539,7 +503,8 @@ public class TrainSwitchLists extends TrainCommon {
         } else {
             TrainPrintUtilities.printReport(switchListFile, location.getName(), isPreview, Setup.getFontName(), false,
                     FileUtil.getExternalFilename(Setup.getManifestLogoURL()), location.getDefaultPrinterName(),
-                    Setup.getSwitchListOrientation(), Setup.getManifestFontSize(), Setup.isPrintPageHeaderEnabled());
+                    Setup.getSwitchListOrientation(), Setup.getManifestFontSize(), Setup.isPrintPageHeaderEnabled(),
+                    Setup.isPrintDuplexEnabled());
         }
         if (!isPreview) {
             location.setStatus(Location.PRINTED);

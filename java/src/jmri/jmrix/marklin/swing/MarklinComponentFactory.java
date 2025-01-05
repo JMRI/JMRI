@@ -12,7 +12,8 @@ public class MarklinComponentFactory extends jmri.jmrix.swing.ComponentFactory {
     public MarklinComponentFactory(MarklinSystemConnectionMemo memo) {
         this.memo = memo;
     }
-    MarklinSystemConnectionMemo memo;
+
+    private final MarklinSystemConnectionMemo memo;
 
     /**
      * Provide a menu with all items attached to this system connection

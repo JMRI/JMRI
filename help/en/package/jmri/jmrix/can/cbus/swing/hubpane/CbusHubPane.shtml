@@ -26,6 +26,7 @@
       <li>The port number is set to 5550.</li>
       <li>The default for sending line termination characters is set to false.</li>
       <li>CAN Frames are converted into the CBUS variant of the GridConnect format.</li>
+      <li>The JmDNS ZeroConf is advertised as <code>_cbus-can._tcp.local</code></li>
       </ul>
 
       <p>The Hub Control will need to be running on the host JMRI instance before remote connections connect.

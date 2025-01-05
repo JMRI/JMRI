@@ -2,6 +2,7 @@ package jmri.jmrit.operations.trains;
 
 import java.awt.*;
 import java.io.PrintWriter;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
@@ -122,12 +123,12 @@ public class TrainCommon {
         for (String attribute : format) {
             String s = getEngineAttribute(engine, attribute, PICKUP);
             if (!checkStringLength(buf.toString() + s, isManifest)) {
-                addLine(file, buf.toString());
+                addLine(file, buf, Setup.getPickupColor());
                 buf = new StringBuffer(TAB); // new line
             }
             buf.append(s);
         }
-        addLine(file, buf.toString());
+        addLine(file, buf, Setup.getPickupColor());
     }
 
     /**
@@ -159,12 +160,12 @@ public class TrainCommon {
         for (String attribute : format) {
             String s = getEngineAttribute(engine, attribute, !PICKUP);
             if (!checkStringLength(buf.toString() + s, isManifest)) {
-                addLine(file, buf.toString());
+                addLine(file, buf, Setup.getDropColor());
                 buf = new StringBuffer(TAB); // new line
             }
             buf.append(s);
         }
-        addLine(file, buf.toString());
+        addLine(file, buf, Setup.getDropColor());
     }
 
     /**
@@ -610,6 +611,115 @@ public class TrainCommon {
         }
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification = "Only when exception")
+    public static String getTrainMessage(Train train, RouteLocation rl) {
+        String expectedArrivalTime = train.getExpectedArrivalTime(rl);
+        String routeLocationName = rl.getSplitName();
+        String msg = "";
+        String messageFormatText = ""; // the text being formated in case there's an exception
+        try {
+            // Scheduled work at {0}
+            msg = MessageFormat.format(messageFormatText = TrainManifestText
+                    .getStringScheduledWork(),
+                    new Object[]{routeLocationName, train.getName(),
+                            train.getDescription(), rl.getLocation().getDivisionName()});
+            if (train.isShowArrivalAndDepartureTimesEnabled()) {
+                if (rl == train.getTrainDepartsRouteLocation()) {
+                    // Scheduled work at {0}, departure time {1}
+                    msg = MessageFormat.format(messageFormatText = TrainManifestText
+                            .getStringWorkDepartureTime(),
+                            new Object[]{routeLocationName,
+                                    train.getFormatedDepartureTime(), train.getName(),
+                                    train.getDescription(), rl.getLocation().getDivisionName()});
+                } else if (!rl.getDepartureTime().equals(RouteLocation.NONE)) {
+                    // Scheduled work at {0}, departure time {1}
+                    msg = MessageFormat.format(messageFormatText = TrainManifestText
+                            .getStringWorkDepartureTime(),
+                            new Object[]{routeLocationName,
+                                    rl.getFormatedDepartureTime(), train.getName(), train.getDescription(),
+                                    rl.getLocation().getDivisionName()});
+                } else if (Setup.isUseDepartureTimeEnabled() &&
+                        rl != train.getTrainTerminatesRouteLocation() &&
+                        !train.getExpectedDepartureTime(rl).equals(Train.ALREADY_SERVICED)) {
+                    // Scheduled work at {0}, departure time {1}
+                    msg = MessageFormat.format(messageFormatText = TrainManifestText
+                            .getStringWorkDepartureTime(),
+                            new Object[]{routeLocationName,
+                                    train.getExpectedDepartureTime(rl), train.getName(),
+                                    train.getDescription(), rl.getLocation().getDivisionName()});
+                } else if (!expectedArrivalTime.equals(Train.ALREADY_SERVICED)) {
+                    // Scheduled work at {0}, arrival time {1}
+                    msg = MessageFormat.format(messageFormatText = TrainManifestText
+                            .getStringWorkArrivalTime(),
+                            new Object[]{routeLocationName, expectedArrivalTime,
+                                    train.getName(), train.getDescription(),
+                                    rl.getLocation().getDivisionName()});
+                }
+            }
+            return msg;
+        } catch (IllegalArgumentException e) {
+            msg = Bundle.getMessage("ErrorIllegalArgument",
+                    Bundle.getMessage("TitleSwitchListText"), e.getLocalizedMessage()) + NEW_LINE + messageFormatText;
+            log.error(msg);
+            log.error("Illegal argument", e);
+            return msg;
+        }
+    }
+
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification = "Only when exception")
+    public static String getSwitchListTrainStatus(Train train, RouteLocation rl) {
+        String expectedArrivalTime = train.getExpectedArrivalTime(rl);
+        String msg = "";
+        String messageFormatText = ""; // the text being formated in case there's an exception
+        try {
+            if (train.isLocalSwitcher()) {
+                // Use Manifest text for local departure
+                // Scheduled work at {0}, departure time {1}
+                msg = MessageFormat.format(messageFormatText = TrainManifestText.getStringWorkDepartureTime(),
+                        new Object[]{splitString(train.getTrainDepartsName()), train.getFormatedDepartureTime(),
+                                train.getName(), train.getDescription(),
+                                rl.getLocation().getDivisionName()});
+            } else if (rl == train.getTrainDepartsRouteLocation()) {
+                // Departs {0} {1}bound at {2}
+                msg = MessageFormat.format(messageFormatText = TrainSwitchListText.getStringDepartsAt(),
+                        new Object[]{splitString(train.getTrainDepartsName()), rl.getTrainDirectionString(),
+                                train.getFormatedDepartureTime()});
+            } else if (Setup.isUseSwitchListDepartureTimeEnabled() &&
+                    rl != train.getTrainTerminatesRouteLocation() &&
+                    !expectedArrivalTime.equals(Train.ALREADY_SERVICED)) {
+                // Departs {0} at {1} expected arrival {2}, arrives {3}bound
+                msg = MessageFormat.format(
+                        messageFormatText = TrainSwitchListText.getStringDepartsAtExpectedArrival(),
+                        new Object[]{splitString(rl.getName()),
+                                train.getExpectedDepartureTime(rl), expectedArrivalTime,
+                                rl.getTrainDirectionString()});
+            } else if (train.isTrainEnRoute()) {
+                if (!expectedArrivalTime.equals(Train.ALREADY_SERVICED)) {
+                    // Departed {0}, expect to arrive in {1}, arrives {2}bound
+                    msg = MessageFormat.format(messageFormatText = TrainSwitchListText.getStringDepartedExpected(),
+                            new Object[]{splitString(train.getTrainDepartsName()), expectedArrivalTime,
+                                    rl.getTrainDirectionString(), train.getCurrentLocationName()});
+                }
+            } else {
+                // Departs {0} at {1} expected arrival {2}, arrives {3}bound
+                msg = MessageFormat.format(
+                        messageFormatText = TrainSwitchListText.getStringDepartsAtExpectedArrival(),
+                        new Object[]{splitString(train.getTrainDepartsName()),
+                                train.getFormatedDepartureTime(), expectedArrivalTime,
+                                rl.getTrainDirectionString()});
+            }
+            return msg;
+        } catch (IllegalArgumentException e) {
+            msg = Bundle.getMessage("ErrorIllegalArgument",
+                    Bundle.getMessage("TitleSwitchListText"), e.getLocalizedMessage()) + NEW_LINE + messageFormatText;
+            log.error(msg);
+            log.error("Illegal argument", e);
+            return msg;
+        }
+    }
+
     int index = 0;
 
     /*
@@ -722,15 +832,12 @@ public class TrainCommon {
         for (String attribute : format) {
             String s = getCarAttribute(car, attribute, PICKUP, !LOCAL);
             if (!checkStringLength(buf.toString() + s, isManifest)) {
-                addLine(file, buf.toString());
+                addLine(file, buf, Setup.getPickupColor());
                 buf = new StringBuffer(TAB); // new line
             }
             buf.append(s);
         }
-        String s = buf.toString();
-        if (s.trim().length() != 0) {
-            addLine(file, s);
-        }
+        addLine(file, buf, Setup.getPickupColor());
     }
 
     /**
@@ -817,15 +924,12 @@ public class TrainCommon {
         for (String attribute : format) {
             String s = getCarAttribute(car, attribute, !PICKUP, isLocal);
             if (!checkStringLength(buf.toString() + s, isManifest)) {
-                addLine(file, buf.toString());
+                addLine(file, buf, isLocal ? Setup.getLocalColor() : Setup.getDropColor());
                 buf = new StringBuffer(TAB); // new line
             }
             buf.append(s);
         }
-        String s = buf.toString();
-        if (!s.trim().isEmpty()) {
-            addLine(file, s);
-        }
+        addLine(file, buf, isLocal ? Setup.getLocalColor() : Setup.getDropColor());
     }
 
     /**
@@ -1098,9 +1202,9 @@ public class TrainCommon {
             if (showLocation && car.getTrack() != null) {
                 carAttributes = carAttributes + car.getRouteLocationId();
             }
-            if (car.isLocalMove()) {
-                carAttributes = carAttributes + car.getSplitTrackName();
-            }
+        }
+        if (car.isLocalMove()) {
+            carAttributes = carAttributes + car.getSplitTrackName();
         }
         if (showLength) {
             carAttributes = carAttributes + car.getLength();
@@ -1452,7 +1556,7 @@ public class TrainCommon {
             return padAndTruncateIfNeeded(car.getKernelName(),
                     InstanceManager.getDefault(KernelManager.class).getMaxNameLength());
         } else if (attribute.equals(Setup.KERNEL_SIZE)) {
-            if (car.isLead()) {
+            if (car.getKernel() != null) {
                 return padAndTruncateIfNeeded(Integer.toString(car.getKernel().getSize()), 2);
             } else {
                 return SPACE + SPACE; // assumes that kernel size is 99 or less
@@ -2145,6 +2249,13 @@ public class TrainCommon {
             sbuf.setLength(sbuf.length() - 2); // remove trailing separators
         }
         return sbuf.toString();
+    }
+
+    private void addLine(PrintWriter file, StringBuffer buf, Color color) {
+        String s = buf.toString();
+        if (!s.trim().isEmpty()) {
+            addLine(file, formatColorString(s, color));
+        }
     }
 
     /**

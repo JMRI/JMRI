@@ -63,6 +63,7 @@ public class TreePaneDemo {
 
     @BeforeEach
     public void setUp() {
+        jmri.util.JUnitUtil.setUp();
         store = new MimicNodeStore(connection, nid1);
         Message msg = new ProducerIdentifiedMessage(nid1, eventA, EventState.Unknown);
         store.put(msg, null);

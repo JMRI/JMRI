@@ -9,8 +9,6 @@ import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.ThrottleListener;
 import jmri.jmrix.AbstractThrottleManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * DCC++ implementation of a ThrottleManager based on the
@@ -23,7 +21,7 @@ import org.slf4j.LoggerFactory;
  */
 public class DCCppThrottleManager extends AbstractThrottleManager implements DCCppListener {
 
-    protected HashMap<LocoAddress, DCCppThrottle> throttles = new HashMap<LocoAddress, DCCppThrottle>(5);
+    protected HashMap<LocoAddress, DCCppThrottle> throttles = new HashMap<>(5);
 
     protected DCCppTrafficController tc;
     
@@ -33,21 +31,19 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
      */
     public DCCppThrottleManager(DCCppSystemConnectionMemo memo) {
         super(memo);
-        DCCppMessage msg;
         // connect to the TrafficController manager
         tc = memo.getDCCppTrafficController();
 
         // Register to listen for throttle messages
-        tc.addDCCppListener(DCCppInterface.THROTTLE, this);
+        tc.addDCCppListener(DCCppInterface.THROTTLE, DCCppThrottleManager.this);
         //Request number of available slots
-        msg = DCCppMessage.makeCSMaxNumSlotsMsg();
-        tc.sendDCCppMessage(msg, this);
+        tc.sendDCCppMessage(DCCppMessage.makeCSMaxNumSlotsMsg(), DCCppThrottleManager.this);
     }
 
     /**
      * Request a new throttle object be created for the address, and let the
      * throttle listeners know about it.
-     *
+     * {@inheritDoc }
      */
     @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
@@ -70,6 +66,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
     /**
      * DCC++ based systems DO NOT use the Dispatch Function
      * (do they?)
+     * {@inheritDoc }
      */
     @Override
     public boolean hasDispatchFunction() {
@@ -113,18 +110,19 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
         return true;
     }
 
-    /*
-     * Local method for deciding short/long address
+    /**
+     * Local method for deciding short/long address.
      * (is it?)
+     * @param num the address number to check.
+     * @return true if number greater than or equals 128.
      */
-    static protected boolean isLongAddress(int num) {
+    protected static boolean isLongAddress(int num) {
         return (num >= 128);
     }
 
     /**
-     * What speed modes are supported by this system? value should be xor of
-     * possible modes specifed by the DccThrottle interface DCC++ supports
-     * 14,27,28 and 128 speed step modes
+     * {@inheritDoc }
+     * DCC++ supports 14,27,28 and 128 speed step modes
      */
     @Override
     public EnumSet<SpeedStepMode> supportedSpeedModes() {
@@ -170,11 +168,6 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
     }
 
     @Override
-    public void releaseThrottle(DccThrottle t, ThrottleListener l) {
-        super.releaseThrottle(t, l);
-    }
-
-    @Override
     public boolean disposeThrottle(DccThrottle t, ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {
             //ask command station to forget this cab
@@ -201,6 +194,6 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
         //stopThrottleRequestTimer(); no timer used in this tm
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppThrottleManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DCCppThrottleManager.class);
 
 }

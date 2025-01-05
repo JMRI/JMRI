@@ -13,8 +13,6 @@ import jmri.SystemConnectionMemo;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.configurexml.DefaultIdTagManagerXml;
 import org.openide.util.lookup.ServiceProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Concrete implementation for the Internal {@link jmri.IdTagManager} interface.
@@ -394,7 +392,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
         return IdTag.class;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(DefaultIdTagManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultIdTagManager.class);
 
     @ServiceProvider(service = InstanceInitializer.class)
     public static class Initializer extends AbstractInstanceInitializer {

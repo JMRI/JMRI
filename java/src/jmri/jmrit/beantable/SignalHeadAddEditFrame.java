@@ -1598,7 +1598,16 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
                         t2.getSystemName(), userNameField.getText());
                 return; // without creating any
             }
-            InstanceManager.getDefault(SignalHeadManager.class).register(s);
+            try {
+                InstanceManager.getDefault(SignalHeadManager.class).register(s);
+            } catch ( jmri.NamedBean.DuplicateSystemNameException ex) {
+                s.dispose();
+                JmriJOptionPane.showMessageDialog(this,"<html>"
+                    + Bundle.getMessage("ErrorSe8cDuplicateSysName", t1.getDisplayName(), t2.getDisplayName())
+                    + "<br>" + Bundle.getMessage("ErrorReplaceHead")
+                    + "<br>" + ex.getLocalizedMessage() + "</html>",
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.ERROR_MESSAGE);
+            }
         } else {
             // couldn't create turnouts, error
             String msg;

@@ -210,6 +210,9 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnec
         if (type.equals(jmri.ReporterManager.class)) {
             return true;
         }
+        if (type.equals(jmri.StringIOManager.class)) {
+            return true;
+        }
         if (type.equals(jmri.TurnoutManager.class)) {
             return true;
         }
@@ -256,6 +259,9 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnec
         }
         if (type.equals(jmri.ReporterManager.class)) {
             return (T) getReporterManager();
+        }
+        if (type.equals(jmri.StringIOManager.class)) {
+            return (T) getStringIOManager();
         }
         if (type.equals(jmri.TurnoutManager.class)) {
             return (T) getTurnoutManager();
