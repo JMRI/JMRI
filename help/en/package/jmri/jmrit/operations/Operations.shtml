@@ -116,6 +116,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#PrintOptions">Manifest Print Options</a>
                   <ul>
                     <li><a href="#PrintOrientation">Orientation and Paper Size</a></li>
+                    
+                    <li><a href="#PrintSides">Print on One or Two Sides</a></li>
 
                     <li><a href="#ManifestComments">Manifests and Switch List Options</a></li>
 
@@ -1934,6 +1936,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       bar under "Edit" select "Preferences..." then "Display" and then select the "Locale" tab. Some
       printers require the English (United States) locale in order to print out a Manifest or switch
       list with the correct number of lines for paper size "Letter".
+
+      <h3 id="PrintSides">Print on One or Two Sides</h3>
+      You have the option of printing your Manifest or switch lists on one side of the paper or
+      both. Select "two sided long edge" or "two sided short edge" if you wish to print using both
+      sides of your paper. Short edge means the pages are bound along the short edge of the page.
+      Long edge means the pages are bound along the long edge of the page.
+
 
       <h3>Set Out Text Color</h3>
       You can select the text color of your Manifest when the operation is to set out a car or

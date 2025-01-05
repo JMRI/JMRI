@@ -134,7 +134,7 @@ public class PrintTrainsFrame extends OperationsFrame {
 
         int fontSize = (int) fontSizeComboBox.getSelectedItem();
         try (HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleTrainsTable"),
-                fontSize, .5, .5, .5, .5, _isPreview, "", isLandscape, true, false, null);) {
+                fontSize, .5, .5, .5, .5, _isPreview, "", isLandscape, true, null, null);) {
 
             List<Train> trains = _trainsTableFrame.getSortByList((String) sortByComboBox.getSelectedItem());
 
