@@ -39,10 +39,12 @@ public class TrainPrintUtilities {
      * @param printerName   optional default printer name
      * @param orientation   Setup.LANDSCAPE, Setup.PORTRAIT, or Setup.HANDHELD
      * @param fontSize      font size
-     * @param printHeader   when true print page header
+     * @param isPrintHeader when true print page header
+     * @param isPrintDuplex when true print both sides of paper
      */
     public static void printReport(File file, String name, boolean isPreview, String fontName, boolean isBuildReport,
-            String logoURL, String printerName, String orientation, int fontSize, boolean printHeader) {
+            String logoURL, String printerName, String orientation, int fontSize, boolean isPrintHeader,
+            boolean isPrintDuplex) {
         // obtain a HardcopyWriter to do this
 
         boolean isLandScape = false;
@@ -54,13 +56,13 @@ public class TrainPrintUtilities {
             isLandScape = true;
         }
         if (orientation.equals(Setup.HANDHELD) || orientation.equals(Setup.HALFPAGE)) {
-            printHeader = false;
+            isPrintHeader = false;
             // add margins to page size
             pagesize = new Dimension(TrainCommon.getPageSize(orientation).width + TrainCommon.PAPER_MARGINS.width,
                     TrainCommon.getPageSize(orientation).height + TrainCommon.PAPER_MARGINS.height);
         }
         try (HardcopyWriter writer = new HardcopyWriter(new Frame(), name, fontSize, margin,
-                margin, .5, .5, isPreview, printerName, isLandScape, printHeader, pagesize);
+                margin, .5, .5, isPreview, printerName, isLandScape, isPrintHeader, isPrintDuplex, pagesize);
                 BufferedReader in = new BufferedReader(new InputStreamReader(
                         new FileInputStream(file), StandardCharsets.UTF_8));) {
 
