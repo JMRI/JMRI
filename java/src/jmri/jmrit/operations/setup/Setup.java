@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.setup;
 
 import java.awt.Color;
+import java.awt.JobAttributes.SidesType;
 import java.io.IOException;
 import java.util.*;
 
@@ -208,7 +209,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private int buildReportFontSize = 10;
     private String manifestOrientation = PORTRAIT;
     private String switchListOrientation = PORTRAIT;
-    private boolean printDuplex = false;
+    private SidesType sidesType = SidesType.ONE_SIDED;
     private boolean printHeader = true;
     private Color pickupColor = Color.black;
     private Color dropColor = Color.black;
@@ -1091,12 +1092,12 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         getDefault().manifestFontSize = size;
     }
 
-    public static boolean isPrintDuplexEnabled() {
-        return getDefault().printDuplex;
+    public static SidesType getPrintDuplexSides() {
+        return getDefault().sidesType;
     }
 
-    public static void setPrintDuplexEnabled(boolean enable) {
-        getDefault().printDuplex = enable;
+    public static void setPrintDuplexSides(SidesType sidesType) {
+        getDefault().sidesType = sidesType;
     }
 
     public static boolean isPrintPageHeaderEnabled() {
@@ -1967,7 +1968,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         values.setAttribute(Xml.SWITCH_LIST, getSwitchListOrientation());
 
         e.addContent(values = new Element(Xml.PRINT_DUPLEX));
-        values.setAttribute(Xml.ENABLED, isPrintDuplexEnabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.NAME, getPrintDuplexSides().toString());
 
         e.addContent(values = new Element(Xml.MANIFEST_COLORS));
         values.setAttribute(Xml.DROP_COLOR, getDropTextColor());
@@ -2497,10 +2498,15 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
             }
         }
         if ((operations.getChild(Xml.PRINT_DUPLEX) != null)) {
-            if ((a = operations.getChild(Xml.PRINT_DUPLEX).getAttribute(Xml.ENABLED)) != null) {
-                String enable = a.getValue();
-                log.debug("Print duplex: {}", enable);
-                setPrintDuplexEnabled(enable.equals(Xml.TRUE));
+            if ((a = operations.getChild(Xml.PRINT_DUPLEX).getAttribute(Xml.NAME)) != null) {
+                String sides = a.getValue();
+                log.debug("Print duplex: {}", sides);
+                if (sides.equals(SidesType.TWO_SIDED_LONG_EDGE.toString())) {
+                    setPrintDuplexSides(SidesType.TWO_SIDED_LONG_EDGE);
+                }
+                if (sides.equals(SidesType.TWO_SIDED_SHORT_EDGE.toString())) {
+                    setPrintDuplexSides(SidesType.TWO_SIDED_SHORT_EDGE);
+                }
             }
         }
         if ((operations.getChild(Xml.MANIFEST_COLORS) != null)) {

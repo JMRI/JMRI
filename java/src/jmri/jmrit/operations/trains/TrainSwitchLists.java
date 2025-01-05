@@ -504,7 +504,7 @@ public class TrainSwitchLists extends TrainCommon {
             TrainPrintUtilities.printReport(switchListFile, location.getName(), isPreview, Setup.getFontName(), false,
                     FileUtil.getExternalFilename(Setup.getManifestLogoURL()), location.getDefaultPrinterName(),
                     Setup.getSwitchListOrientation(), Setup.getManifestFontSize(), Setup.isPrintPageHeaderEnabled(),
-                    Setup.isPrintDuplexEnabled());
+                    Setup.getPrintDuplexSides());
         }
         if (!isPreview) {
             location.setStatus(Location.PRINTED);
