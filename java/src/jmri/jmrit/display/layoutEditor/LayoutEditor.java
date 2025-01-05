@@ -3674,7 +3674,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     timer.addActionListener(new ActionListener(){
                         int count = 1;
                         public void actionPerformed(ActionEvent ae){
-                          if(count % 2 == 1) t.setDisabled(true);
+                          if(count % 2 != 0) t.setDisabled(true);
                           else t.setDisabled(false);
                           if(++count > 8) timer.stop();
                         }
