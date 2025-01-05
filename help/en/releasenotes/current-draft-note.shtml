@@ -406,13 +406,12 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Hornby TXS Sound Decoders use CVs200 and 201 to identify the specific Sound Profiles Uploaded to the Chip. 
-Currently IdentifyDecoder.java interrogates CV47, 48 and 49 for these decoders. These CVs contain firmware update information 
-which is not useful when creating conditional decoder definitions for TXS chips. 
-I have amended IdentifyDecoder.java to interrogate Cvs 201 and 200 and have run tests on version 5.9.6 to prove that this change 
-operates as expected for Hornby TXS decoders and has no adverse effects on Hornby TTS decoders. 
-I am currently 90% the way to produce a full Hornby TXS decoder definition xml which will utilise this revision to correctly 
-display conditional CVs for Steam/Diesel and Electric Locomotives.</li>
+            <li>Hornby TXS Sound Decoders use CVs 200 and 201 to identify the specific Sound Profiles Uploaded to the Chip. 
+                Previously the product-id verification process used CV47, 48 and 49 for these decoders. 
+                Those CVs contain firmware update information which is not useful when creating conditional decoder definitions for TXS chips. 
+                The product-id verification process has been modified to interrogate CVs 201 and 200 for Hornby TXS decoders.
+                (This should have no effect on identification for Hornby TTS decoders.)
+             </li>
         </ul>
 
    <h3>Dispatcher</h3>
