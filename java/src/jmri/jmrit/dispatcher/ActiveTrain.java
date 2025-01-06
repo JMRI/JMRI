@@ -2,7 +2,6 @@ package jmri.jmrit.dispatcher;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -1323,29 +1322,29 @@ public class ActiveTrain implements PropertyChangeProvider {
         }
         setMode(TERMINATED);
         mTransit.setState(Transit.IDLE);
-        if ( mTransit.getTransitType() == TransitType.DYNAMICADHOC) {
-            for (TransitSection ts: mTransit.getTransitSectionList()) {
+        deleteAdHocTransit(mTransit);
+    }
+
+    private void deleteAdHocTransit(Transit sysname) {
+        Transit adht = sysname;
+        if (adht != null && adht.getTransitType() == TransitType.DYNAMICADHOC) {
+            List<Section> tmpSecs = new ArrayList<Section>();
+            for (TransitSection ts : adht.getTransitSectionList()) {
                 if (ts.getSection().getSectionType() == SectionType.DYNAMICADHOC) {
-                    try {
-                        InstanceManager.getDefault(jmri.SectionManager.class).deleteBean(ts.getSection(), "DoDelete");  // NOI18N
-                    } catch (PropertyVetoException e) {
-                        log.error("Cannot delete adhoc Section.");
-                    }
-                    ts.getSection().dispose();
+                    tmpSecs.add(ts.getSection());
                 }
             }
-            mTransit.removeAllSections();
-            try {
-                InstanceManager.getDefault(jmri.TransitManager.class).deleteBean(mTransit, "DoDelete");  // NOI18N
-            } catch (PropertyVetoException e) {
-                log.error("Cannot delete adhoc transit.");
+            InstanceManager.getDefault(jmri.TransitManager.class).deleteTransit(adht);
+            for (Section ts : tmpSecs) {
+                InstanceManager.getDefault(jmri.SectionManager.class).deleteSection(ts);
             }
-            mTransit.dispose();
         }
     }
 
     public void dispose() {
-        getTransit().removeTemporarySections();
+        if (getTransit()!=null) {
+            getTransit().removeTemporarySections();
+        }
     }
 
     // Property Change Support
