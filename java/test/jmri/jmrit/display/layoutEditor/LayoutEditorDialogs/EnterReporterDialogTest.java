@@ -6,7 +6,6 @@ import javax.swing.JTextField;
 
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.Bundle;
 import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
 
