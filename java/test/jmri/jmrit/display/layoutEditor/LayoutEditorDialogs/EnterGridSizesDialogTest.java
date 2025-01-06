@@ -1,14 +1,15 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
 import java.awt.geom.Rectangle2D;
+
 import javax.swing.JTextField;
 
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -21,7 +22,7 @@ import org.netbeans.jemmy.operators.JTextFieldOperator;
  * @author George Warner Copyright (C) 2019
  */
 @Timeout(10)
-@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class EnterGridSizesDialogTest {
 
     @Test
@@ -33,7 +34,7 @@ public class EnterGridSizesDialogTest {
     @Test
     public void testEnterGridSizesCanceled() {
 
-        enterGridSizesDialog.enterGridSizes();
+        ThreadingUtil.runOnGUI(() -> enterGridSizesDialog.enterGridSizes() );
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SetGridSizes"));
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel")).doClick();  // NOI18N
@@ -43,7 +44,7 @@ public class EnterGridSizesDialogTest {
     @Test
     public void testEnterGridSizes() {
 
-        enterGridSizesDialog.enterGridSizes();
+        ThreadingUtil.runOnGUI(() -> enterGridSizesDialog.enterGridSizes() );
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SetGridSizes"));
 
         JLabelOperator primaryGridSizeLabelOperator = new JLabelOperator(
@@ -114,7 +115,7 @@ public class EnterGridSizesDialogTest {
         layoutEditor = new LayoutEditor(this.getClass().getName());
         enterGridSizesDialog = new EnterGridSizesDialog(layoutEditor);
         layoutEditor.setPanelBounds(new Rectangle2D.Double(0, 0, 640, 480));
-        layoutEditor.setVisible(true);
+        ThreadingUtil.runOnGUI(() -> layoutEditor.setVisible(true) );
 
     }
 
@@ -125,7 +126,7 @@ public class EnterGridSizesDialogTest {
     public void tearDown() {
 
         // new EditorFrameOperator(layoutEditor).closeFrameWithConfirmations();
-        layoutEditor.dispose();
+        JUnitUtil.dispose(layoutEditor);
         layoutEditor = null;
         enterGridSizesDialog = null;
 
