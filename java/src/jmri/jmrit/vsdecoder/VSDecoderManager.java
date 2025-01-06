@@ -670,36 +670,36 @@ public class VSDecoderManager implements PropertyChangeListener {
             return 0;
         }
 
-        String repVal = null;
+        var blkVal = blk.getValue();
         int locoAddress = 0;
 
         // handle different formats or objects to get the address
-        if (blk.getValue() instanceof String) {
-            repVal = blk.getValue().toString();
-            RosterEntry entry = Roster.getDefault().getEntryForId(repVal);
+        if (blkVal instanceof String) {
+            String val = blkVal.toString();
+            RosterEntry entry = Roster.getDefault().getEntryForId(val);
             if (entry != null) {
                 locoAddress = Integer.parseInt(entry.getDccAddress()); // numeric RosterEntry Id
-            } else if (org.apache.commons.lang3.StringUtils.isNumeric(repVal)) {
-                locoAddress = Integer.parseInt(repVal);
-            } else if (jmri.InstanceManager.getDefault(TrainManager.class).getTrainByName(repVal) != null) {
+            } else if (org.apache.commons.lang3.StringUtils.isNumeric(val)) {
+                locoAddress = Integer.parseInt(val);
+            } else if (jmri.InstanceManager.getDefault(TrainManager.class).getTrainByName(val) != null) {
                 // Operations Train
-                Train selected_train = jmri.InstanceManager.getDefault(TrainManager.class).getTrainByName(repVal);
+                Train selected_train = jmri.InstanceManager.getDefault(TrainManager.class).getTrainByName(val);
                 if (selected_train.getLeadEngineDccAddress().isEmpty()) {
                     locoAddress = 0;
                 } else {
                     locoAddress = Integer.parseInt(selected_train.getLeadEngineDccAddress());
                 }
             }
-        } else if (blk.getValue() instanceof jmri.BasicRosterEntry) {
-            locoAddress = Integer.parseInt(((RosterEntry) blk.getValue()).getDccAddress());
-        } else if (blk.getValue() instanceof jmri.implementation.DefaultIdTag) {
+        } else if (blkVal instanceof jmri.BasicRosterEntry) {
+            locoAddress = Integer.parseInt(((RosterEntry) blkVal).getDccAddress());
+        } else if (blkVal instanceof jmri.implementation.DefaultIdTag) {
             // Covers TranspondingTag also
-            repVal = ((DefaultIdTag) blk.getValue()).getTagID();
-            if (org.apache.commons.lang3.StringUtils.isNumeric(repVal)) {
-                locoAddress = Integer.parseInt(repVal);
+            String val = ((DefaultIdTag) blkVal).getTagID();
+            if (org.apache.commons.lang3.StringUtils.isNumeric(val)) {
+                locoAddress = Integer.parseInt(val);
             }
         } else {
-            log.warn("Block Value \"{}\" found - unsupported object!", blk.getValue());
+            log.warn("Block Value \"{}\" found - unsupported object!", blkVal);
         }
         log.debug("loco address: {}", locoAddress);
         return locoAddress;
