@@ -1106,6 +1106,15 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         });
         drawLayoutTracksLabelCheckBoxMenuItem.setSelected(drawLayoutTracksLabel);
 
+        // add "enable immediate feedback" - useful for touchscreens
+        immediateFeedbackCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("ImmediateFeedback"));
+        optionMenu.add(immediateFeedbackCheckBoxMenuItem);
+        immediateFeedbackCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            immediateFeedback = immediateFeedbackCheckBoxMenuItem.isSelected();
+            redrawPanel();
+        });
+        immediateFeedbackCheckBoxMenuItem.setSelected(immediateFeedback);
+
         //
         // edit title
         //
@@ -1529,15 +1538,6 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             redrawPanel();
         });
         turnoutDrawUnselectedLegCheckBoxMenuItem.setSelected(turnoutDrawUnselectedLeg);
-
-        // add "enable immediate feedback" - useful for touchscreens
-        immediateFeedbackCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("ImmediateFeedback"));
-        turnoutOptionsMenu.add(immediateFeedbackCheckBoxMenuItem);
-        immediateFeedbackCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            immediateFeedback = immediateFeedbackCheckBoxMenuItem.isSelected();
-            redrawPanel();
-        });
-        immediateFeedbackCheckBoxMenuItem.setSelected(immediateFeedback);
 
         return optionMenu;
     }
