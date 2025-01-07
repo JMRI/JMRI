@@ -1607,7 +1607,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         }
 
         addRouteLog.debug("From {} ===== valid from size path {} ====", getDisplayName(), validFromPath.size());
-        addRouteLog.debug(newblock.getDisplayName());
+        addRouteLog.debug("To {}", newblock.getDisplayName());
 
         // We only send packets on to our neighbour that are registered as being on a valid through path and are mutual.
         LayoutBlock lBnewblock = null;
