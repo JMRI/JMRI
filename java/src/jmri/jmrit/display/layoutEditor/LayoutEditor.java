@@ -161,7 +161,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private JCheckBoxMenuItem turnoutFillControlCirclesCheckBoxMenuItem = null;
     private JCheckBoxMenuItem hideTrackSegmentConstructionLinesCheckBoxMenuItem = null;
     private JCheckBoxMenuItem useDirectTurnoutControlCheckBoxMenuItem = null;
-    private JCheckBoxMenuItem immediateFeedbackCheckBoxMenuItem = null;
+    private JCheckBoxMenuItem highlightCursorCheckBoxMenuItem = null;
     private ButtonGroup turnoutCircleSizeButtonGroup = null;
 
     private boolean turnoutDrawUnselectedLeg = true;
@@ -309,7 +309,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private double xOverHWid = LayoutTurnout.xOverHWidDefault;
     private double xOverShort = LayoutTurnout.xOverShortDefault;
     private boolean useDirectTurnoutControl = false; // Uses Left click for closing points, Right click for throwing.
-    private boolean immediateFeedback = false; // Highlight finger/mouse press/drag area, good for touchscreens
+    private boolean highlightCursor = false; // Highlight finger/mouse press/drag area, good for touchscreens
 
     // saved state of options when panel was loaded or created
     private boolean savedEditMode = true;
@@ -1106,14 +1106,14 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         });
         drawLayoutTracksLabelCheckBoxMenuItem.setSelected(drawLayoutTracksLabel);
 
-        // add "enable immediate feedback" - useful for touchscreens
-        immediateFeedbackCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("ImmediateFeedback"));
-        optionMenu.add(immediateFeedbackCheckBoxMenuItem);
-        immediateFeedbackCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            immediateFeedback = immediateFeedbackCheckBoxMenuItem.isSelected();
+        // add "Highlight cursor position" - useful for touchscreens
+        highlightCursorCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("HighlightCursor"));
+        optionMenu.add(highlightCursorCheckBoxMenuItem);
+        highlightCursorCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            highlightCursor = highlightCursorCheckBoxMenuItem.isSelected();
             redrawPanel();
         });
-        immediateFeedbackCheckBoxMenuItem.setSelected(immediateFeedback);
+        highlightCursorCheckBoxMenuItem.setSelected(highlightCursor);
 
         //
         // edit title
@@ -2965,15 +2965,15 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     /**
-     * Check for immediate mode feedback.
+     * Check for highlighting of cursor position.
      *
-     * If in "immediate" mode, draw a square at the location of the
+     * If in "highlight" mode, draw a square at the location of the
      * event. If there was already a square, just move its location.
      * In either case, redraw the panel so the previous square will
      * disappear and the new one will appear immediately.
      */
-    private void checkImmediate() {
-        if (!isEditable() && immediateFeedback) {
+    private void checkHighlightCursor() {
+        if (!isEditable() && highlightCursor) {
             // rectangle size based on turnout circle size: rectangle should
             // be bigger so it can more easily surround turnout on screen
             int halfSize = (int)(circleRadius) + 8;
@@ -3004,7 +3004,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         _lastY = _anchorY;
         calcLocation(event);
 
-        checkImmediate();
+        checkHighlightCursor();
 
         // TODO: Add command-click on nothing to pan view?
         if (isEditable()) {
@@ -3537,7 +3537,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         // initialize mouse position
         calcLocation(event);
 
-        if (!isEditable() && _highlightcomponent != null && immediateFeedback) {
+        if (!isEditable() && _highlightcomponent != null && highlightCursor) {
             _highlightcomponent = null;
             // see if we moused up on an object
             checkControls(true);
@@ -3693,7 +3693,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 t.setState(Turnout.CLOSED);
             } else {
                 t.toggleTurnout();
-                if (immediateFeedback && !t.isDisabled()) {
+                if (highlightCursor && !t.isDisabled()) {
                     // flash the turnout circle a few times so the user knows it's being toggled
                     javax.swing.Timer timer = new javax.swing.Timer(150, null);
                     timer.addActionListener(new ActionListener(){
@@ -4049,7 +4049,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         // initialize mouse position
         calcLocation(event);
 
-        if (!isEditable() && _highlightcomponent != null && immediateFeedback) {
+        if (!isEditable() && _highlightcomponent != null && highlightCursor) {
             _highlightcomponent = null;
             redrawPanel();
         }
@@ -4894,7 +4894,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         // initialize mouse position
         calcLocation(event);
 
-        checkImmediate();
+        checkHighlightCursor();
 
         // ignore this event if still at the original point
         if ((!isDragging) && (xLoc == getAnchorX()) && (yLoc == getAnchorY())) {
@@ -7536,8 +7536,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         return turnoutDrawUnselectedLeg;
     }
 
-    public boolean isImmediateFeedback() {
-        return immediateFeedback;
+    public boolean isHighlightCursor() {
+        return highlightCursor;
     }
 
     public String getLayoutName() {
@@ -7756,13 +7756,13 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     /**
      * Should only be invoked on the GUI (Swing) thread.
      *
-     * @param state true to enable immediate feedback
+     * @param state true to enable highlighting the cursor (mouse/finger press/drag)
      */
     @InvokeOnGuiThread
-    public void setImmediateFeedback(boolean state) {
-        if (immediateFeedback != state) {
-            immediateFeedback = state;
-            immediateFeedbackCheckBoxMenuItem.setSelected(immediateFeedback);
+    public void setHighlightCursor(boolean state) {
+        if (highlightCursor != state) {
+            highlightCursor = state;
+            highlightCursorCheckBoxMenuItem.setSelected(highlightCursor);
         }
     }
 

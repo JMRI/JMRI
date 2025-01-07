@@ -435,7 +435,7 @@
             <li>Fix slip turnout control circle colors when using closed/thrown colors.</li>
         </ul>
         <ul>
-            <li>Added "Immediate Feedback" option to enable immediate drawing of a square around finger/mouse press/drag area. Useful for touchscreens.
+            <li>Added "Highlight cursor position" option to enable drawing of a square around finger/mouse press/drag area. Useful for touchscreens.
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>

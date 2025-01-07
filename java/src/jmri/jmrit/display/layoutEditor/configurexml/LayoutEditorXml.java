@@ -115,8 +115,8 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         p.resetDirty();
         panel.setAttribute("openDispatcher", p.getOpenDispatcherOnLoad() ? "yes" : "no");
         panel.setAttribute("useDirectTurnoutControl", p.getDirectTurnoutControl() ? "yes" : "no");
-        if (p.isImmediateFeedback()) {
-            panel.setAttribute("immediateFeedback", "yes");
+        if (p.isHighlightCursor()) {
+            panel.setAttribute("highlightCursor", "yes");
         }
 
         // store layout track drawing options
@@ -605,11 +605,11 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         }
 
         try {
-            panel.setImmediateFeedback(shared.getAttribute("immediateFeedback").getBooleanValue());
+            panel.setHighlightCursor(shared.getAttribute("highlightCursor").getBooleanValue());
         } catch (DataConversionException e) {
-            log.warn("unable to convert immediateFeedback attribute");
+            log.warn("unable to convert highlightCursor attribute");
         } catch (NullPointerException e) {  // considered normal if the attribute is not present
-            log.debug("missing immediateFeedback attribute");
+            log.debug("missing highlightCursor attribute");
         }
 
 
