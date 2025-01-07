@@ -21,7 +21,7 @@
 
         <h4><a href="http://bidib.org/index_e.html">BiDiB</a></h4>
             <ul>
-                <li></li>
+                <li>Added netBiDiB as another BiDiB connection type.</li>
             </ul>
 
         <h4>CBUS</h4>
@@ -406,7 +406,13 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Hornby TXS Sound Decoders use CVs200 and 201 to identify the specific Sound Profiles Uploaded to the Chip. 
+Currently IdentifyDecoder.java interrogates CV47, 48 and 49 for these decoders. These CVs contain firmware update information 
+which is not useful when creating conditional decoder definitions for TXS chips. 
+I have amended IdentifyDecoder.java to interrogate Cvs 201 and 200 and have run tests on version 5.9.6 to prove that this change 
+operates as expected for Hornby TXS decoders and has no adverse effects on Hornby TTS decoders. 
+I am currently 90% the way to produce a full Hornby TXS decoder definition xml which will utilise this revision to correctly 
+display conditional CVs for Steam/Diesel and Electric Locomotives.</li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -423,6 +429,7 @@
              as one of the turnouts which causes errors in the routing tables. With care they can be used for placing turnouts
              in their own block.</li>
              <li>Fix errors in loading maxlength and Maxspeed</li>
+             <li>Clean up AdHoc Transits after use.</li>
         </ul>
     <h3>Dispatcher System</h3>
         <a id="Dispatcher_System" name="Dispatcher_System"></a>
@@ -478,9 +485,10 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>Added train departure times to Yardmaster and Conductor</li>
+            <li>Added train departure times to Yardmaster and Conductor.</li>
             <li>Fixed internationalization for Web Manifest, UK and other languages.</li>
-            <li>Added the option of building train when selecting Conductor and train not built</li>
+            <li>Added the option of building train when selecting Conductor and train not built.</li>
+            <li>New print option, Manifests and switch lists can now be printed double sided.</li>
         </ul>
 
    <h3>Panel Editor</h3>

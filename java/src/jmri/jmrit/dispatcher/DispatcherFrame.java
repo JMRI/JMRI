@@ -395,9 +395,15 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
     }
 
-    protected Transit createTemporaryTransit(Block start, Block dest, Block via) {
+    /**
+     * Get a list of {@link jmri.jmrit.display.layoutEditor.LayoutBlock} that represent a route
+     * @param start First Block
+     * @param dest Last Block
+     * @param via Next Block
+     * @return null if a route cannot be found, else the list.
+     */
+    protected List<LayoutBlock> getAdHocRoute(Block start, Block dest, Block via) {
         LayoutBlockManager lBM = jmri.InstanceManager.getDefault(LayoutBlockManager.class);
-        SectionManager sm = jmri.InstanceManager.getDefault(SectionManager.class);
         LayoutBlock lbStart = lBM.getByUserName(start.getDisplayName(DisplayOptions.USERNAME));
         LayoutBlock lbEnd = lBM.getByUserName(dest.getDisplayName(DisplayOptions.USERNAME));
         LayoutBlock lbVia =  lBM.getByUserName(via.getDisplayName(DisplayOptions.USERNAME));
@@ -415,6 +421,22 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             log.error("Finding route {}",JEx.getMessage());
             return null;
         }
+        return blocks;
+    }
+
+    /**
+     * Converts a list of {@link jmri.jmrit.display.layoutEditor.LayoutBlock} that represent a route to a transit.
+     * @param start First Block
+     * @param dest Last Block
+     * @param via Next Block
+     * @return null if the transit is valid. Else an AdHoc transit
+     */
+    protected Transit createTemporaryTransit(Block start, Block dest, Block via) {
+        List<LayoutBlock> blocks =  getAdHocRoute( start,  dest,  via);
+        if (blocks == null) {
+            return null;
+        }
+        SectionManager sm = jmri.InstanceManager.getDefault(SectionManager.class);
         Transit tempTransit = null;
         int wNo = 0;
         String baseTransitName = "-" + start.getDisplayName() + "-" + dest.getDisplayName();
@@ -1726,6 +1748,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 aat.dispose();
             }
             removeHeldMast(null, at);
+
             at.terminate();
             if (runNextTrain && !at.getNextTrain().isEmpty() && !at.getNextTrain().equals("None")) {
                 log.debug("Loading Next Train[{}]", at.getNextTrain());
@@ -1739,7 +1762,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 }
             }
             at.dispose();
-            
         }
         activeTrainsTableModel.fireTableDataChanged();
         if (allocatedSectionTableModel != null) {

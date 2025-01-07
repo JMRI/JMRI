@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.setup;
 
 import java.awt.GridBagLayout;
+import java.awt.JobAttributes.SidesType;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.*;
@@ -51,7 +52,6 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
 
     // check boxes
     JCheckBox tabFormatCheckBox = new JCheckBox(Bundle.getMessage("TabFormat"));
-    JCheckBox printDuplexCheckBox = new JCheckBox(Bundle.getMessage("Duplex"));
     JCheckBox formatSwitchListCheckBox = new JCheckBox(Bundle.getMessage("SameAsManifest"));
     JCheckBox editManifestCheckBox = new JCheckBox(Bundle.getMessage("UseTextEditor"));
     JCheckBox printLocCommentsCheckBox = new JCheckBox(Bundle.getMessage("PrintLocationComments"));
@@ -95,7 +95,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
     JComboBox<String> manifestOrientationComboBox = Setup.getOrientationComboBox();
     JComboBox<Integer> fontSizeComboBox = new JComboBox<>();
     JComboBox<String> switchListOrientationComboBox = Setup.getOrientationComboBox();
-
+    JComboBox<SidesType> printDuplexComboBox = new JComboBox<>();
     JColorChooser pickupColorChooser = new JColorChooser();
     JColorChooser dropColorChooser = new JColorChooser();
     JColorChooser localColorChooser = new JColorChooser();
@@ -132,7 +132,6 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         addLogoButton.setToolTipText(Bundle.getMessage("AddLogoToolTip"));
         removeLogoButton.setToolTipText(Bundle.getMessage("RemoveLogoToolTip"));
         tabFormatCheckBox.setToolTipText(Bundle.getMessage("TabComment"));
-        printDuplexCheckBox.setToolTipText(Bundle.getMessage("DuplexTip"));
         printLocCommentsCheckBox.setToolTipText(Bundle.getMessage("AddLocationComments"));
         printRouteCommentsCheckBox.setToolTipText(Bundle.getMessage("AddRouteComments"));
         printLoadsEmptiesCheckBox.setToolTipText(Bundle.getMessage("LoadsEmptiesComment"));
@@ -200,7 +199,11 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
 
         JPanel pDuplex = new JPanel();
         pDuplex.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutDuplex")));
-        pDuplex.add(printDuplexCheckBox);
+        pDuplex.add(printDuplexComboBox);
+
+        printDuplexComboBox.addItem(SidesType.ONE_SIDED);
+        printDuplexComboBox.addItem(SidesType.TWO_SIDED_LONG_EDGE);
+        printDuplexComboBox.addItem(SidesType.TWO_SIDED_SHORT_EDGE);
 
         p1.add(pFont);
         p1.add(pFontSize);
@@ -336,7 +339,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         switchListOrientationComboBox.setSelectedItem(Setup.getSwitchListOrientation());
 
         tabFormatCheckBox.setSelected(Setup.isTabEnabled());
-        printDuplexCheckBox.setSelected(Setup.isPrintDuplexEnabled());
+        printDuplexComboBox.setSelectedItem(Setup.getPrintDuplexSides());
 
         formatSwitchListCheckBox.setSelected(Setup.isSwitchListFormatSameAsManifest());
         printLocCommentsCheckBox.setSelected(Setup.isPrintLocationCommentsEnabled());
@@ -742,7 +745,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         // page orientation
         Setup.setManifestOrientation((String) manifestOrientationComboBox.getSelectedItem());
         Setup.setSwitchListOrientation((String) switchListOrientationComboBox.getSelectedItem());
-        Setup.setPrintDuplexEnabled(printDuplexCheckBox.isSelected());
+        Setup.setPrintDuplexSides((SidesType) printDuplexComboBox.getSelectedItem());
         // format
         Setup.setManifestFormat((String) manifestFormatComboBox.getSelectedItem());
         // drop and pick up color option
@@ -855,7 +858,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
     public boolean isDirty() {
         if (!Setup.getFontName().equals(fontComboBox.getSelectedItem()) ||
                 Setup.getManifestFontSize() != (Integer) fontSizeComboBox.getSelectedItem() ||
-                Setup.isPrintDuplexEnabled() != printDuplexCheckBox.isSelected() ||
+                Setup.getPrintDuplexSides() != printDuplexComboBox.getSelectedItem() ||
                 !Setup.getManifestOrientation().equals(manifestOrientationComboBox.getSelectedItem()) ||
                 !Setup.getSwitchListOrientation().equals(switchListOrientationComboBox.getSelectedItem()) ||
                 !Setup.getManifestFormat().equals(manifestFormatComboBox.getSelectedItem()) ||
