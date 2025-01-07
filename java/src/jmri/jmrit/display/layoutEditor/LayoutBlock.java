@@ -78,10 +78,12 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     @Deprecated (since="5.11.2",forRemoval=true) // please use the SLF4J categories.
     public void enableDeleteRouteLog() {
+        jmri.util.LoggingUtil.warnOnce( log, "Deprecated, please use the SLF4J categories");
     }
 
     @Deprecated (since="5.11.2",forRemoval=true) // please use the SLF4J categories.
     public void disableDeleteRouteLog() {
+        jmri.util.LoggingUtil.warnOnce( log, "Deprecated, please use the SLF4J categories");
     }
 
     // constants
