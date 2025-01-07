@@ -1405,7 +1405,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 int neighwork = blk.getAdjacencyPacketFlow(this.getBlock());
                 addRouteLog.debug("{}.getAdjacencyPacketFlow({}): {}, {}",
                     blk.getDisplayName(), getBlock().getDisplayName(),
-                    decodePacketFlow(neighwork), neighwork);
+                    ( neighwork==-1 ? "Unset" : decodePacketFlow(neighwork)), neighwork);
 
                 if (neighwork != -1) {
                     addRouteLog.debug("From {} Updating flow direction to {} for block {} choice of {} {}",
@@ -2566,7 +2566,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         log.info("Adjacencies for block {}", this.getDisplayName());
         log.info("Neighbour, Direction, mutual, relationship, metric");
         for (Adjacencies neighbour : neighbours) {
-            log.info(" neighbor: {}, {}, {}, {}, {}",neighbour.getBlock().getDisplayName(), Path.decodeDirection(neighbour.getDirection()), neighbour.isMutual(), decodePacketFlow(neighbour.getPacketFlow()), neighbour.getMetric());
+            log.info(" neighbor: {}, {}, {}, {}, {}", neighbour.getBlock().getDisplayName(),
+                Path.decodeDirection(neighbour.getDirection()), neighbour.isMutual(),
+                decodePacketFlow(neighbour.getPacketFlow()), neighbour.getMetric());
         }
     }
 
@@ -2588,7 +2590,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 activeString = ", *";
             }
 
-            log.info(" neighbor: {}, {}, {}, {}, {}, {}{}", (r.getDestBlock()).getDisplayName(), nexthop, r.getHopCount(), Path.decodeDirection(r.getDirection()), r.getState(), r.getMetric(), activeString);
+            log.info(" neighbor: {}, {}, {}, {}, {}, {}{}", r.getDestBlock().getDisplayName(),
+                nexthop, r.getHopCount(), Path.decodeDirection(r.getDirection()),
+                r.getState(), r.getMetric(), activeString);
         }
     }
 
