@@ -1004,9 +1004,29 @@ LogixNG: IQ:AUTO:0001
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h4>Read string and set string</h4>
+      <h4 id="string_values">Read string and set string</h4>
 
-      <p>Read a string child expression and execute a string child action.</p>
+      <p>Read a string child expression and execute a string child action.  This is used to copy
+      string values from a Memory, a StringIO or as a constant.  The destination will be a Memory
+      or a StringIO.  There are special expressions and actions.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/read_set_string.png"><img src="images/chapter5/read_set_string.png"
+        class="image-border" alt="Chapter 5 read set string"></a>
+      </div>
+
+      <p>Expressions</p>
+      <ul>
+        <li><a href="chapter6.shtml#mem_expression">Memory</a></li>
+        <li><a href="chapter6.shtml#con_expression">Constant</a></li>
+        <li><a href="chapter6.shtml#sio_expression">StringIO</a></li>
+      </ul>
+
+      <p>Actions</p>
+      <ul>
+        <li><a href="#mem_action">Memory</a></li>
+        <li><a href="#sio_action">StringIO</a></li>
+      </ul>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -2217,17 +2237,17 @@ LogixNG: IQ:AUTO:0001
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h4>Memory</h4>
+      <h4 id="mem_action">Memory</h4>
 
       <p>Sets a memory to a string value.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h4>StringIO</h4>
+      <h4 id="sio_action">StringIO</h4>
 
-      <p>The StringIO sets the string of a StringIO. There is currently one StringIO that can be
-      used with this action: The LocoNet "LCThrottles" StringIO that sends a message to the LocoNet
-      throttles.</p>
+      <p>The <strong>StringIO</strong> action sets the string value of a StringIO.  StringIOs are
+      defined in the <a href="../../StringIO.shtml">StringIO</a> table.  LCThrottles is a default
+      StringIO for LocoNet.  This is used to send a message to the LocoNet throttles.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
