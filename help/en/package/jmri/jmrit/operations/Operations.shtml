@@ -6593,7 +6593,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       down JMRI, otherwise you will lose all of the changes that the operations program made to move
       a train to the next location. Pressing the "Save Builds" button before quitting JMRI allows
       the operations program to resume exactly at the point where you pressed the "Save Builds"
-      button.
+      button. If you attempt to close the
+      <a href="#Trains">Trains</a> window before pressing the "Save Builds" button, a warning will
+      pop up asking you to save your files. Note that if you enabled
+      <a href="#AutoSave">Auto Save</a> no warning will appear and the program will automatically
+      save your files.
 
       <p style="page-break-after: always">
         <a href="#toc">[Click to go back to TOC]</a>
