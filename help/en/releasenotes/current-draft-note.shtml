@@ -488,6 +488,7 @@
             <li>Fixed internationalization for Web Manifest, UK and other languages.</li>
             <li>Added the option of building train when selecting Conductor and train not built.</li>
             <li>New print option, Manifests and switch lists can now be printed double sided.</li>
+            <li>Export Schedules now includes spur name and mode</li>
         </ul>
 
    <h3>Panel Editor</h3>
