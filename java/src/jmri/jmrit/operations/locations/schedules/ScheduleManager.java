@@ -1,10 +1,7 @@
 package jmri.jmrit.operations.locations.schedules;
 
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.JComboBox;
 
@@ -12,14 +9,9 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
-import jmri.InstanceManagerAutoInitialize;
+import jmri.*;
 import jmri.beans.PropertyChangeSupport;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.LocationManagerXml;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Control;
@@ -308,15 +300,25 @@ public class ScheduleManager extends PropertyChangeSupport implements InstanceMa
     public JComboBox<LocationTrackPair> getSpursByScheduleComboBox(Schedule schedule) {
         JComboBox<LocationTrackPair> box = new JComboBox<>();
         // search all spurs for that use schedule
-        for (Location location : InstanceManager.getDefault(LocationManager.class).getLocationsByNameList()) {
-            for (Track spur : location.getTracksByNameList(Track.SPUR)) {
-                if (spur.getScheduleId().equals(schedule.getId())) {
-                    LocationTrackPair ltp = new LocationTrackPair(spur);
-                    box.addItem(ltp);
-                }
+        for (Track spur : getListSpurs(schedule)) {
+            if (spur.getScheduleId().equals(schedule.getId())) {
+                LocationTrackPair ltp = new LocationTrackPair(spur);
+                box.addItem(ltp);
             }
         }
         return box;
+    }
+
+    public List<Track> getListSpurs(Schedule schedule) {
+        List<Track> spurs = new ArrayList<Track>();
+        for (Location location : InstanceManager.getDefault(LocationManager.class).getLocationsByNameList()) {
+            for (Track spur : location.getTracksByNameList(Track.SPUR)) {
+                if (spur.getScheduleId().equals(schedule.getId())) {
+                    spurs.add(spur);
+                }
+            }
+        }
+        return spurs;
     }
 
     public void load(Element root) {
