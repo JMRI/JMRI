@@ -632,7 +632,8 @@ public class TrainCommon {
                             new Object[]{routeLocationName,
                                     train.getFormatedDepartureTime(), train.getName(),
                                     train.getDescription(), rl.getLocation().getDivisionName()});
-                } else if (!rl.getDepartureTime().equals(RouteLocation.NONE)) {
+                } else if (!rl.getDepartureTime().equals(RouteLocation.NONE) &&
+                        rl != train.getTrainTerminatesRouteLocation()) {
                     // Scheduled work at {0}, departure time {1}
                     msg = MessageFormat.format(messageFormatText = TrainManifestText
                             .getStringWorkDepartureTime(),
@@ -688,13 +689,21 @@ public class TrainCommon {
                                 train.getFormatedDepartureTime()});
             } else if (Setup.isUseSwitchListDepartureTimeEnabled() &&
                     rl != train.getTrainTerminatesRouteLocation() &&
-                    !expectedArrivalTime.equals(Train.ALREADY_SERVICED)) {
+                    !train.isTrainEnRoute()) {
                 // Departs {0} at {1} expected arrival {2}, arrives {3}bound
                 msg = MessageFormat.format(
                         messageFormatText = TrainSwitchListText.getStringDepartsAtExpectedArrival(),
                         new Object[]{splitString(rl.getName()),
                                 train.getExpectedDepartureTime(rl), expectedArrivalTime,
                                 rl.getTrainDirectionString()});
+            } else if (Setup.isUseSwitchListDepartureTimeEnabled() &&
+                    rl == train.getCurrentRouteLocation() &&
+                    rl != train.getTrainTerminatesRouteLocation() &&
+                    !rl.getDepartureTime().equals(RouteLocation.NONE)) {
+                // Departs {0} {1}bound at {2}
+                msg = MessageFormat.format(messageFormatText = TrainSwitchListText.getStringDepartsAt(),
+                        new Object[]{splitString(rl.getName()), rl.getTrainDirectionString(),
+                                rl.getFormatedDepartureTime()});
             } else if (train.isTrainEnRoute()) {
                 if (!expectedArrivalTime.equals(Train.ALREADY_SERVICED)) {
                     // Departed {0}, expect to arrive in {1}, arrives {2}bound
