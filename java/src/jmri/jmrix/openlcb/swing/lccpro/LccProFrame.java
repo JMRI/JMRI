@@ -24,6 +24,7 @@ import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.openlcb.OlcbNodeGroupStore;
+import jmri.jmrix.openlcb.swing.NodeSpecificFrame;
 import jmri.jmrix.openlcb.swing.TrafficStatusLabel;
 
 import jmri.util.*;
@@ -652,6 +653,12 @@ public class LccProFrame extends TwoPaneTBWindow  {
         });
         popupMenu.add(rebootMenu);
         
+        var clearCdiMenu = new JMenuItem("Clear CDI Cache");
+        clearCdiMenu.addActionListener((ActionEvent evt) -> {
+            clearCDI(node);
+        });
+        popupMenu.add(clearCdiMenu);
+        
        popupMenu.show(e.getComponent(), e.getX(), e.getY());
     }
 
@@ -680,6 +687,39 @@ public class LccProFrame extends TwoPaneTBWindow  {
     void reboot(NodeID node) {
         memo.get(OlcbInterface.class).getDatagramService()
             .sendData(node, new int[] {0x20, 0xA9});
+    }
+    
+    void clearCDI(NodeID destNodeID) {
+        // close relevant frames
+        var frames = jmri.util.JmriJFrame.getFrames();
+        for (var frame : frames) {
+            log.trace("frame: {} type:{}", frame, frame.getClass());
+            if (frame instanceof NodeSpecificFrame) {
+                if ( ((NodeSpecificFrame)frame).getNodeID().equals(destNodeID)) {
+                    // This window references the node and should be closed
+                    
+                    // Notify the user to handle any prompts before continuing.
+                    jmri.util.swing.JmriJOptionPane.showMessageDialog(this, 
+                        Bundle.getMessage("OpenWindowMessage")
+                    );
+                    
+                    // Depending on the state of the window, and how the user handles
+                    // a prompt to discard changes or cancel, this might be 
+                    // presented multiple times until the user finally
+                    // allows the window to close. See the message in the Bundle.properties
+                    // file for how we handle this.
+
+                    // Close this window - force onto the queue before a possible next modal dialog
+                    jmri.util.ThreadingUtil.runOnGUI(() -> {
+                        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+                    });
+                    
+                }
+            }
+        }
+
+        // de-cache CDI information so next window opening will reload
+        memo.get(OlcbInterface.class).dropConfigForNode(destNodeID);
     }
     
     /**
