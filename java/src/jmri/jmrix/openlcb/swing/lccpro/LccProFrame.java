@@ -646,6 +646,12 @@ public class LccProFrame extends TwoPaneTBWindow  {
         });
         popupMenu.add(removeMenu);
         
+        var rebootMenu = new JMenuItem("Reboot Node");
+        rebootMenu.addActionListener((ActionEvent evt) -> {
+            reboot(node);
+        });
+        popupMenu.add(rebootMenu);
+        
        popupMenu.show(e.getComponent(), e.getX(), e.getY());
     }
 
@@ -669,6 +675,11 @@ public class LccProFrame extends TwoPaneTBWindow  {
             groupStore.removeNodeFromGroup(node, group);
         }
         updateMatchGroupName();
+    }
+    
+    void reboot(NodeID node) {
+        memo.get(OlcbInterface.class).getDatagramService()
+            .sendData(node, new int[] {0x20, 0xA9});
     }
     
     /**

@@ -240,6 +240,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         pane2 = new JPanel();
         pane2.setLayout(new WrapLayout());
         add(pane2);
+        
         pane2.add(new JLabel("Send OpenLCB memory request with address: "));
         pane2.add(configAddressField);
         pane2.add(new JLabel("Address Space: "));
@@ -265,8 +266,16 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         writeDataField.setText("00 00");   // NOI18N
         pane2.add(writeDataField);
 
+        pane2 = new JPanel();
+        pane2.setLayout(new WrapLayout());
+        add(pane2);
+
+        var rebootButton = new JButton("Reboot");
+        pane2.add(rebootButton);
+        rebootButton.addActionListener(this::rebootNode);
+        
         cdiButton = new JButton("Open CDI Config Tool");
-        add(cdiButton);
+        pane2.add(cdiButton);
         cdiButton.addActionListener(e -> openCdiPane());
         cdiButton.setToolTipText("If this button is disabled, please select another node.");
         setCdiButton(); // get initial state
@@ -462,6 +471,12 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         connection.put(m, null);
     }
 
+    public void rebootNode(java.awt.event.ActionEvent e) {
+        Message m = new DatagramMessage(srcNodeID, destNodeID(),
+                new byte[] {0x20, (byte) 0xA9});
+        connection.put(m, null);        
+    }
+    
     public void readPerformed(java.awt.event.ActionEvent e) {
         int space = addrSpace.getMemorySpace();
         long addr = Integer.parseInt(configAddressField.getText(), 16);
