@@ -429,6 +429,7 @@
              in their own block.</li>
              <li>Fix errors in loading maxlength and Maxspeed</li>
              <li>Clean up AdHoc Transits after use.</li>
+             <li>Fix minor bugs in min speed settings.</li>
         </ul>
     <h3>Dispatcher System</h3>
         <a id="Dispatcher_System" name="Dispatcher_System"></a>
