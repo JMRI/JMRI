@@ -566,9 +566,10 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.11.2+R3295d40b64.dmg](https://github.com/JMRI/JMRI/releases/download/v5.11.2/JMRI.5.11.2+R3295d40b64.dmg) | 646e3c770d9461199adc6dfa1c70bc0e0625a7669f556c20140b05ba3c3c86ca
-[JMRI.5.11.2+R3295d40b64.exe](https://github.com/JMRI/JMRI/releases/download/v5.11.2/JMRI.5.11.2+R3295d40b64.exe) | c00ddc2e199718fc32e672c92cade55361c89ee05f688c54c54dba8cdce3dc54
-[JMRI.5.11.2+R3295d40b64.tgz](https://github.com/JMRI/JMRI/releases/download/v5.11.2/JMRI.5.11.2+R3295d40b64.tgz) | 4f0ae4bcfce3fac8e6254c3928efb434efb0765c9d1b7626285a219ddf08a995
+[JMRI.5.11.2+R741bb1427e.dmg](https://github.com/JMRI/JMRI/releases/download/v5.11.2/JMRI.5.11.2+R741bb1427e.dmg) | 4919a9803177620e72b70f652167f2dfb316c1ebe96a71b0779a42e25c3dde88
+[JMRI.5.11.2+R741bb1427e.exe](https://github.com/JMRI/JMRI/releases/download/v5.11.2/JMRI.5.11.2+R741bb1427e.exe) | 649d20fbb3352c35eeb5ee05fde663a76ced0b79d5101da5c8acbeacc2321790
+[JMRI.5.11.2+R741bb1427e.tgz](https://github.com/JMRI/JMRI/releases/download/v5.11.2/JMRI.5.11.2+R741bb1427e.tgz) | 1cbf7c2d580210ec727970befa9632b7961ce1283b274782a0455c8145d7cf44
+
 
 ```
 
@@ -618,7 +619,7 @@ If there are any changes in other files, do both of:
 
 - Create the [next GitHub Issue](https://github.com/JMRI/JMRI/issues/new) to hold discussion with conventional title "Create Test Release 5.11.3". Add the next release milestone (created above) to it. Typical text (get the date from the [milestone page](https://github.com/JMRI/JMRI/milestones)); for later releases in the series copy specific text from the milestone page:
 ```
-This is the next release in the 5.10 cycle. It's intended to be created from the `HEAD` of the `master` branch.
+This is the next release in the 5.12 cycle. It's intended to be created from the `HEAD` of the `master` branch.
 ```
 - Add the 5.11.3 milestone to the issue.
 
@@ -668,7 +669,7 @@ Subject:
 
    "Test release 5.11.2 of JMRI/DecoderPro is available for download"
     or
-   "JMRI 5.4 is available for download"
+   "JMRI 5.12 is available for download"
 
 Content:
 
