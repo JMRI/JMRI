@@ -1,5 +1,6 @@
 package jmri.jmrix.bidib;
 
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
@@ -320,6 +321,7 @@ public class BiDiBProgrammer extends AbstractProgrammer {
         // clear the current listener _first_
         jmri.ProgListener temp = _usingProgrammer;
         _usingProgrammer = null;
+        PropertyChangeListener[] list = getPropertyChangeListeners();
         notifyProgListenerEnd(temp, value, status);
     }
 

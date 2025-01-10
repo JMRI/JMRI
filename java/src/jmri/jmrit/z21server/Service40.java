@@ -5,6 +5,9 @@ import org.slf4j.LoggerFactory;
 
 import java.net.InetAddress;
 import java.util.Arrays;
+import jmri.InstanceManager;
+import jmri.JmriException;
+import jmri.PowerManager;
 
 public class Service40 {
     private static final String moduleIdent = "[Service 40] ";
@@ -24,7 +27,7 @@ public class Service40 {
             case (byte)0xE4:
                 return handleHeaderE4(Arrays.copyOfRange(data, 1, 5), clientAddress);
             default:
-                log.debug("{} Header {} not yet supported", moduleIdent, Integer.toHexString(command));
+                log.debug("{} Header {} not yet supported", moduleIdent, Integer.toHexString(command & 0xFF));
                 break;
         }
         return null;
@@ -47,18 +50,45 @@ public class Service40 {
                 answer[4] = (byte) 0x62;
                 answer[5] = (byte) 0x22;
                 answer[6] = (byte) 0x00;
+                PowerManager powerMgr = InstanceManager.getNullableDefault(PowerManager.class);
+                if (powerMgr != null) {
+                    if (powerMgr.getPower() != PowerManager.ON) {
+                        answer[6] |= 0x02;
+                    }
+                }
                 answer[7] = ClientManager.xor(answer);
                 return answer;
-            case 0x80:
+            case (byte) 0x80:
                 log.debug("{} Set track power to off", moduleIdent);
-                break;
-            case 0x81:
+                return setTrackPower(false);
+            case (byte) 0x81:
                 log.debug("{} Set track power to on", moduleIdent);
-                break;
+                return setTrackPower(true);
             default:
                 break;
         }
         return null;
+    }
+    
+    private static byte[] setTrackPower(boolean state) {
+        byte[] answer = new byte[7];
+        answer[0] = (byte) 0x07;
+        answer[1] = (byte) 0x00;
+        answer[2] = (byte) 0x40;
+        answer[3] = (byte) 0x00;
+        answer[4] = (byte) 0x61;
+        answer[5] = (byte) 0x00; //preset power off
+        PowerManager powerMgr = InstanceManager.getNullableDefault(PowerManager.class);
+        if (powerMgr != null) {
+            try {
+                powerMgr.setPower(state ? PowerManager.ON : PowerManager.OFF);
+                answer[5] = (byte) (powerMgr.getPower() == PowerManager.ON ? 0x01 : 0x00);
+            } catch (JmriException ex) {
+                log.error("Cannot set power from z21");
+            }
+        }
+        answer[6] = ClientManager.xor(answer);
+        return answer;
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
@@ -96,11 +126,20 @@ public class Service40 {
         }
         if (data[0] == (byte)0xF8) {
             int locomotiveAddress = (((data[1] & 0xFF) & 0x3F) << 8) + (data[2] & 0xFF);
-            boolean bOn = (((data[3] & 0xFF) & 0x40) >> 6) == 1;
+            // function switch type: 0x00 = OFF, 0x01 = ON, 0x20 = TOGGLE
+            // Z21 app always sends ON or OFF, WLANmaus always TOGGLE
+            // TOGGLE is done in clientManager.setLocoFunction().
+            int functionState = ((data[3] & 0xFF) & 0xC0) >> 6;
             int functionNumber = (data[3] & 0xFF) & 0x3F;
-            log.debug("Set loco no {} function no {} to {}", locomotiveAddress, functionNumber, (bOn ? "ON" : "OFF"));
+            if (log.isDebugEnabled()) {
+                String cmd = ((functionState & 0x01) == 0x01) ? "ON" : "OFF";
+                if ((functionState & 0x03) == 0x02) {
+                    cmd = "TOGGLE";
+                }
+                log.debug("Set loco no {} function no {}: {}", locomotiveAddress, functionNumber, cmd);
+            }
 
-            ClientManager.getInstance().setLocoFunction(clientAddress, locomotiveAddress, functionNumber, bOn);
+            ClientManager.getInstance().setLocoFunction(clientAddress, locomotiveAddress, functionNumber, functionState);
 
             return ClientManager.getInstance().getLocoStatusMessage(clientAddress, locomotiveAddress);
         }

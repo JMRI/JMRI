@@ -54,11 +54,17 @@ public class ClientManager implements ThrottleListener {
         }
     }
 
-    synchronized public void setLocoFunction(InetAddress clientAddress, int locoAddress, int functionNumber, boolean bOn) {
+    synchronized public void setLocoFunction(InetAddress clientAddress, int locoAddress, int functionNumber, int functionState) {
         AppClient client = registeredClients.get(clientAddress);
         if (client != null) {
             DccThrottle throttle = client.getThrottleFromLocoAddress(locoAddress);
             if (throttle != null) {
+                boolean bOn = (functionState & 0x01) == 0x01;
+                if ( (functionState & 0x03) == 0x02) {
+                    log.trace("Toggle! old state: {}", throttle.getFunction(functionNumber));
+                    bOn = !throttle.getFunction(functionNumber);
+                }
+                log.trace("set function {} to value: {}", functionNumber, bOn);
                 throttle.setFunction(functionNumber, bOn);
             } else {
                 log.info("Unable to find throttle for loco {} from client {}", locoAddress, clientAddress);
@@ -74,7 +80,8 @@ public class ClientManager implements ThrottleListener {
     }
 
     synchronized public void handleExpiredClients() {
-        var tempMap = new HashMap<>(registeredClients); // to avoid concurrent modification
+        //var tempMap = new HashMap<>(registeredClients); // to avoid concurrent modification
+        HashMap<InetAddress, AppClient> tempMap = new HashMap<>(registeredClients); // to avoid concurrent modification
         for (AppClient c : tempMap.values()) {
             if (c.isTimestampExpired()) registeredClients.remove(c.getAddress());
         }

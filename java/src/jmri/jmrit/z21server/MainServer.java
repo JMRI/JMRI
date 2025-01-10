@@ -47,7 +47,7 @@ public class MainServer implements Runnable {
                 int dataLenght = rawData[0];
                 byte[] actualData = Arrays.copyOf(rawData, dataLenght);
                 String ident = "[" + clientAddress + "]  ";
-                log.debug("{}: raw frame {} ", ident, bytesToHex(actualData));
+                log.debug("{}: recv raw frame {} ", ident, bytesToHex(actualData));
 
                 if (actualData.length < 3) {
                     log.debug("error, frame : {}", bytesToHex(actualData));
@@ -68,13 +68,19 @@ public class MainServer implements Runnable {
                         byte[] payloadData = Arrays.copyOfRange(actualData, HEADER_SIZE, dataLenght);
                         response = Service40.handleService(payloadData, clientAddress);
                         break;
+                    case 0x10:
+                        // send a serial number as 32bit number - we always send 0x00000000
+                        log.debug("Send 32bit serialnumber");
+                        response = new byte[] {0x08, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00};
+                        break;
 
                     default:
-                        log.debug("{} Service not yet implemented : 0x{}", ident,  Integer.toHexString(actualData[2]));
+                        log.debug("{} Service not yet implemented : 0x{}", ident,  Integer.toHexString(actualData[2] & 0xFF));
                 }
 
                 if (response != null) {
                     DatagramPacket responsePacket = new DatagramPacket(response, response.length, clientAddress, port);
+                    log.trace("{}: send raw frame {} ", ident, bytesToHex(response));
                     try {
                         mySS.send(responsePacket);
                     } catch (Exception e) {
