@@ -19,6 +19,10 @@ import java.util.HashMap;
 // - notify clients if changes are from JMRI (e.g. speed change from JMRI throttle, power button)
 // - handle MultiPacket datagrams (though neither the Z21 App not the WlanMaus seem to use them)
 // - long loco addresses
+// - implement z21 server autostart
+// - implement support for turnouts using a user table translating numeric turnout numbers into
+//   JMRI turnouts identified by system name or user name
+// - create unit test classes
 
 public class MainServer implements Runnable {
 

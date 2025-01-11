@@ -321,7 +321,6 @@ public class BiDiBProgrammer extends AbstractProgrammer {
         // clear the current listener _first_
         jmri.ProgListener temp = _usingProgrammer;
         _usingProgrammer = null;
-        PropertyChangeListener[] list = getPropertyChangeListeners();
         notifyProgListenerEnd(temp, value, status);
     }
 
