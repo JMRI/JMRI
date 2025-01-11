@@ -8,6 +8,17 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.Arrays;
+import java.util.HashMap;
+
+/**
+ * @author Jean-Yves Roda (C) 2023
+ * @author Eckart Meyer (C) 2025 (enhancements, WlanMaus support)
+ */
+
+// TODO:
+// - notify clients if changes are from JMRI (e.g. speed change from JMRI throttle, power button)
+// - handle MultiPacket datagrams (though neither the Z21 App not the WlanMaus seem to use them)
+// - long loco addresses
 
 public class MainServer implements Runnable {
 
@@ -79,12 +90,46 @@ public class MainServer implements Runnable {
                 }
 
                 if (response != null) {
-                    DatagramPacket responsePacket = new DatagramPacket(response, response.length, clientAddress, port);
-                    log.trace("{}: send raw frame {} ", ident, bytesToHex(response));
-                    try {
-                        mySS.send(responsePacket);
-                    } catch (Exception e) {
-                        log.debug("Unable to send packet to client {}", clientAddress.toString());
+                    // Some response packets should be sent to all clients which have requested broadcast packets when a status
+                    // has changed. An explicit request for status (e.g. LAN_X_GET_LOCO_INFO) does not initiate a broadcast.
+                    // Currently we only send broadcasts for the requests:
+                    // - LAN_X_SET_LOCO_xxxx (0x40, 0xE4)
+                    // - LAN_X_SET_TRACK_POWER_ON/OFF (0x40, 0x21, 0x81/0x80)
+                    //
+                    // Since this Z21 server only supports the Z21 App and the WlanMaus, we simply ignore all other broadcast
+                    // packages mentioned in the Z21 Spec.
+                    //
+                    // Also: We observed that the Z21 App always send the Broadcast Mask and the WlanMaus never send a Mask.
+                    // So we just ignore all the masks and always send the above packets to all registered clients.
+                    // This is dirty, but we are pragmatic here...
+                    
+                    HashMap<InetAddress, AppClient> registeredClients;
+                    
+                    if (actualData[3] == 0x00
+                            && ((actualData[2] == 0x40  && actualData[4] == (byte) 0xE4)
+                             || (actualData[2] == 0x40  && actualData[4] == (byte) 0x21  &&  actualData[5] == (byte)0x80)
+                             || (actualData[2] == 0x40  && actualData[4] == (byte) 0x21  &&  actualData[5] == (byte)0x81))
+                        ) {
+                        registeredClients = ClientManager.getInstance().getRegisteredClients(); //send to all registered clients
+                        log.trace("Sending as broadcast");
+                    }
+                    else {
+                        registeredClients = new HashMap<>();
+                        registeredClients.put(clientAddress, null); //send only to requesting clients the AppClient object is not used then
+                    }
+                    
+                    for (HashMap.Entry<InetAddress, AppClient> entry : registeredClients.entrySet()) {   
+                        InetAddress respAddress = entry.getKey();
+                        DatagramPacket responsePacket = new DatagramPacket(response, response.length, respAddress, port);
+                        if (log.isTraceEnabled()) {
+                            String sendIdent = "[-> " + respAddress + "]  ";
+                            log.trace("{}: send raw frame {} ", sendIdent, bytesToHex(response));
+                        }
+                        try {
+                            mySS.send(responsePacket);
+                        } catch (Exception e) {
+                            log.debug("Unable to send packet to client {}", respAddress.toString());
+                        }
                     }
                 }
 

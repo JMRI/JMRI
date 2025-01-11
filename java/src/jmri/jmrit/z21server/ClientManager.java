@@ -27,6 +27,10 @@ public class ClientManager implements ThrottleListener {
         }
         return instance;
     }
+    
+    public HashMap<InetAddress, AppClient> getRegisteredClients() {
+        return registeredClients;
+    }
 
     synchronized public void registerLocoIfNeeded(InetAddress clientAddress, int locoAddress) {
         if (!registeredClients.containsKey(clientAddress)) {

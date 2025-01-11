@@ -129,17 +129,17 @@ public class Service40 {
             // function switch type: 0x00 = OFF, 0x01 = ON, 0x20 = TOGGLE
             // Z21 app always sends ON or OFF, WLANmaus always TOGGLE
             // TOGGLE is done in clientManager.setLocoFunction().
-            int functionState = ((data[3] & 0xFF) & 0xC0) >> 6;
+            int functionSwitchType = ((data[3] & 0xFF) & 0xC0) >> 6;
             int functionNumber = (data[3] & 0xFF) & 0x3F;
             if (log.isDebugEnabled()) {
-                String cmd = ((functionState & 0x01) == 0x01) ? "ON" : "OFF";
-                if ((functionState & 0x03) == 0x02) {
+                String cmd = ((functionSwitchType & 0x01) == 0x01) ? "ON" : "OFF";
+                if ((functionSwitchType & 0x03) == 0x02) {
                     cmd = "TOGGLE";
                 }
                 log.debug("Set loco no {} function no {}: {}", locomotiveAddress, functionNumber, cmd);
             }
 
-            ClientManager.getInstance().setLocoFunction(clientAddress, locomotiveAddress, functionNumber, functionState);
+            ClientManager.getInstance().setLocoFunction(clientAddress, locomotiveAddress, functionNumber, functionSwitchType);
 
             return ClientManager.getInstance().getLocoStatusMessage(clientAddress, locomotiveAddress);
         }
