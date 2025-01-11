@@ -601,7 +601,7 @@
         panel is displayed with the internal names for track items such as anchor points,
         track sengments, turnouts, etc.</li>
 
-        <li><strong>Highlight Cursor Position</strong> <span class="since">since 5.11.2</span>
+        <li><strong>Highlight Cursor Position</strong> <span class="since">since 5.11.3</span>
         - If this item is selected, the cursor will have a colored box drawn around the mouse
         pointer when the mouse has been clicked and held. This option is not active when the
         panel is in edit mode. The primary purpose is to provide an enhanced mouse pointer on touch
