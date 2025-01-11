@@ -1,6 +1,5 @@
 package jmri.jmrix.bidib;
 
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
