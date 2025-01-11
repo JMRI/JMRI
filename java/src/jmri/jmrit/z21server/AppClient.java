@@ -74,8 +74,14 @@ public class AppClient {
         locoPacket[3] = (byte) 0x00;
         locoPacket[4] = (byte) 0xEF;
         // Loco address
-        locoPacket[5] = (byte) (t.getLocoAddress().getNumber() >> 8);
-        locoPacket[6] = (byte) t.getLocoAddress().getNumber();
+        int locoAddress = t.getLocoAddress().getNumber();
+        locoPacket[5] = (byte) (locoAddress >> 8);
+        locoPacket[6] = (byte) locoAddress;
+        // set upper two bits of loco address MSB if loco address >= 128
+        // see Z21 spec.
+        if (locoAddress >= 128) {
+            locoPacket[5] |= 0xC0;
+        }
         //Loco drive and speed data
         locoPacket[7] = (byte) 0x04;
         float speed = t.getSpeedSetting();
