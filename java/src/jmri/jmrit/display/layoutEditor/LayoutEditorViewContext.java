@@ -272,6 +272,7 @@ Probably not View graphical:
 
       <xs:attribute name="openDispatcher" type="yesNoType" default="no"/>
       <xs:attribute name="useDirectTurnoutControl" type="yesNoType" default="no"/>
+      <xs:attribute name="highlightCursor" type="yesNoType" default="no"/>
 
  */
 

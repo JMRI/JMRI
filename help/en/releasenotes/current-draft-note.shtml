@@ -425,6 +425,9 @@
         <ul>
             <li></li>
         </ul>
+        <ul>
+            <li>Added "Highlight cursor position" option to enable drawing of a square around finger/mouse press/drag area. Useful for touchscreens.
+        </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
             <ul>
