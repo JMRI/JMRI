@@ -65,7 +65,7 @@ public class AppClient implements PropertyChangeListener  {
 
     public boolean isTimestampExpired() {
         Duration duration = Duration.between(timestamp.toInstant(), new Date().toInstant());
-        log.trace("** {}", duration);
+        log.trace("Duration without heartbeat: {}", duration);
         //return (duration.toSeconds() >= 60);
         return (duration.toSeconds() >= 5); //debug
         /* Per Z21 Spec, clients are deemed lost after one minute of inactivity. */

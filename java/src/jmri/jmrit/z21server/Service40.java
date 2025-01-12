@@ -86,6 +86,8 @@ public class Service40 {
         return null;
     }
     
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+    justification = "Messages can be of any length, null is used to indicate absence of message for caller")
     private static byte[] setTrackPower(boolean state) {
         PowerManager powerMgr = InstanceManager.getNullableDefault(PowerManager.class);
         if (powerMgr != null) {

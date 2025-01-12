@@ -51,7 +51,7 @@ public class MainServer implements Runnable, PropertyChangeListener {
                 if (Thread.interrupted()) break;
                 boolean bReceivedData;
 
-                log.trace("****");
+                log.trace("Loop ****");
                 ClientManager.getInstance().handleExpiredClients();
 
                 //mySS.setSoTimeout(500);
