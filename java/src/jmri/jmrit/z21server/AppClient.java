@@ -7,21 +7,29 @@ import java.net.InetAddress;
 import java.time.Duration;
 import java.util.Date;
 import java.util.HashMap;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 import static jmri.jmrit.z21server.ClientManager.speedMultiplier;
 
-public class AppClient {
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-    private InetAddress address;
-    private HashMap<Integer, DccThrottle> throttles;
+public class AppClient implements PropertyChangeListener  {
+
+    private final static Logger log = LoggerFactory.getLogger(AppClient.class);
+    private final InetAddress address;
+    private final HashMap<Integer, DccThrottle> throttles;
+    private final PropertyChangeListener changeListener;
 
     private Date timestamp;
 
     private static final int packetLenght = 14;
 
 
-    public AppClient(InetAddress address) {
+    public AppClient(InetAddress address, PropertyChangeListener changeListener) {
         this.address = address;
+        this.changeListener = changeListener;
         throttles = new HashMap<>();
         heartbeat();
     }
@@ -29,9 +37,16 @@ public class AppClient {
     public void addThrottle(int locoAddress, DccThrottle throttle) {
         if (!throttles.containsKey(locoAddress)) {
             throttles.put(locoAddress, throttle);
+            throttle.addPropertyChangeListener(this);
         }
     }
-
+    
+    public void clear() {
+        for (DccThrottle t: throttles.values()) {
+            t.removePropertyChangeListener(this);
+        }
+    }
+    
     public DccThrottle getThrottleFromLocoAddress(int locoAddress) {
         if (throttles.containsKey(locoAddress)) {
             return throttles.get(locoAddress);
@@ -50,7 +65,9 @@ public class AppClient {
 
     public boolean isTimestampExpired() {
         Duration duration = Duration.between(timestamp.toInstant(), new Date().toInstant());
-        return (duration.toMinutes() >= 60);
+        log.trace("** {}", duration);
+        //return (duration.toSeconds() >= 60);
+        return (duration.toSeconds() >= 5); //debug
         /* Per Z21 Spec, clients are deemed lost after one minute of inactivity. */
     }
 
@@ -64,6 +81,14 @@ public class AppClient {
         }
     }
 
+    @Override
+    public void propertyChange(PropertyChangeEvent pce) {
+        if (changeListener != null) {
+            log.trace("AppClient: Throttle change event: loco: {}, {}", ((DccThrottle)pce.getSource()).getLocoAddress(), pce);
+            changeListener.propertyChange(new PropertyChangeEvent(pce.getSource(), "throttle-change", null, buildLocoPacket( ((DccThrottle)pce.getSource()) )));
+        }
+    }
+    
     private byte[] buildLocoPacket(DccThrottle t) {
         byte[] locoPacket =  new byte[packetLenght];
 
