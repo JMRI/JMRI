@@ -12,6 +12,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.net.InetAddress;
 
+/**
+ * User interface.
+ * 
+ * @author Jean-Yves Roda (C) 2023
+ * @author Eckart Meyer (C) 2025 (enhancements, WlanMaus support)
+ */
+
 public class UserInterface extends JmriJFrame {
 
 

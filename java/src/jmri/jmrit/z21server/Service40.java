@@ -12,6 +12,14 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
 
+/**
+ * Handle X-BUS Protokoll (header type 0x40).
+ * Only function to handle a loco throttle have been implemented.
+ * 
+ * @author Jean-Yves Roda (C) 2023
+ * @author Eckart Meyer (C) 2025 (enhancements, WlanMaus support)
+ */
+
 public class Service40 {
     private static final String moduleIdent = "[Service 40] ";
     private static PropertyChangeListener changeListener = null;

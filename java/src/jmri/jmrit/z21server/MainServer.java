@@ -27,6 +27,7 @@ import java.beans.PropertyChangeEvent;
 // - implement support for turnouts using a user table translating numeric turnout numbers into
 //      JMRI turnouts identified by system name or user name
 // - create unit test classes
+// - help page
 
 public class MainServer implements Runnable, PropertyChangeListener {
 

@@ -1,6 +1,5 @@
 package jmri.jmrit.z21server;
 
-
 import jmri.DccThrottle;
 
 import java.net.InetAddress;
@@ -14,6 +13,14 @@ import static jmri.jmrit.z21server.ClientManager.speedMultiplier;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+/**
+ * This class represents a connected and registered client, e.g. a Z21 app or a WlanMaus
+ * JMRI throttles a bound to this client.
+ * 
+ * @author Jean-Yves Roda (C) 2023
+ * @author Eckart Meyer (C) 2025 (enhancements, WlanMaus support)
+ */
 
 public class AppClient implements PropertyChangeListener  {
 

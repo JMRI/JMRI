@@ -12,6 +12,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.beans.PropertyChangeListener;
 
+/**
+ * Register and unregister clients, set loco throttle
+ * 
+ * @author Jean-Yves Roda (C) 2023
+ * @author Eckart Meyer (C) 2025 (enhancements, WlanMaus support)
+ */
+
 public class ClientManager implements ThrottleListener {
 
     private static ClientManager instance;
