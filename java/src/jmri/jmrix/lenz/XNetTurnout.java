@@ -349,8 +349,6 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                 handleMonitoringModeFeedback(l);
                 break;
             case ONESENSOR:
-                handleSensorModeFeedback(l);
-                break;
             case TWOSENSOR:
                 handleSensorModeFeedback(l);
                 break;
