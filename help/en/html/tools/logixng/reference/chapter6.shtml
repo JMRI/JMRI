@@ -90,7 +90,7 @@
       typical digital expression item dialog is described below.</p>
 
       <p>The dialog for adding and editing expressions consists of an upper part that contains the
-      item and the states for that item. The lower part is common to all expresssions.</p>
+      item and the states for that item. The lower part is common to all expressions.</p>
 
       <div style="margin-left: 2em;">
         <a href="images/chapter6/typical_expression.png"><img src=
@@ -624,7 +624,7 @@
         mast is not held.</li>
 
         <li><strong>is permissive sml disabled:</strong> Evaluate to true if the specified signal
-        mast has permissive sml disbled.</li>
+        mast has permissive sml disabled.</li>
 
         <li><strong>is not permissive sml disabled:</strong> Evaluate to true if the specified
         signal does not have permissive sml disabled.</li>
@@ -704,7 +704,7 @@
       expression, R2 is the second child expression, and so on. Note that this differs from other
       expressions in LogixNG. Other LogixNG expressions use the socket name, but since the
       Antecedent expression is included to work as Antecedent works in Logix, the antecedent has
-      been kept from Logix Antecedent as well. <em>Note: Antecedent is included for compability
+      been kept from Logix Antecedent as well. <em>Note: Antecedent is included for compatibility
       with Logix but it's recommended to use Formula instead. Formula is much more powerful, uses
       the socket names and also works with numbers and strings.</em></p>
 
@@ -846,7 +846,7 @@
 
       <p>This can be used to determine whether JMRI is using a real layout connection or a simulated
       connection.  For example, a startup LogixNG can set an internal sensor that indicates the
-      simulation state.  Other LogixNG defintions can then check the state to determine what actions
+      simulation state.  Other LogixNG definitions can then check the state to determine what actions
       are appropriate.  A good example is whether the <a href="chapter5.shtml#simfeedback">Simulate
       turnout feedback</a> action should be used.</p>
 
@@ -1038,15 +1038,30 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Memory as string value</h5>
+      <h5 id="mem_expression">Memory as string value</h5>
 
-      <p>Return value of a memory variable as a string value.</p>
+      <p>Return the value of a memory variable as a string value.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>String constant</h5>
+      <h5 id="con_expression">String constant</h5>
 
-      <p>Return a constant as an string value.</p>
+      <p>Return a constant as a string value.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h5 id="sio_expression">StringIO as string value</h5>
+
+      <p><span class="since">since 5.11.2</span>Return the value of a StringIO as a string value.
+      StringIOs are defined in the <a href="../../StringIO.shtml">StringIO</a> table.</p>
+
+      <p>This can be used to provide an argument for an If statement. The following example tests a
+      StringIO value for a match.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter6/if_stringio_value.png"><img class="image-border" src=
+        "images/chapter6/if_stringio_value.png" alt="Chapter 6 if stringio value"></a>
+      </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
