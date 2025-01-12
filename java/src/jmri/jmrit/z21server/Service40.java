@@ -7,10 +7,14 @@ import java.net.InetAddress;
 import java.util.Arrays;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import java.util.Iterator;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
+import jmri.jmrit.throttle.ThrottleFrame;
+import jmri.jmrit.throttle.ThrottleFrameManager;
+import jmri.DccThrottle;
 
 /**
  * Handle X-BUS Protokoll (header type 0x40).
@@ -44,12 +48,14 @@ public class Service40 {
     public static byte[] handleService(byte[] data, InetAddress clientAddress) {
         int command = data[0];
         switch (command){
-            case 0x21:
+            case (byte)0x21:
                 return handleHeader21(data[1]);
             case (byte)0xE3:
                 return handleHeaderE3(Arrays.copyOfRange(data, 1, 4), clientAddress);
             case (byte)0xE4:
                 return handleHeaderE4(Arrays.copyOfRange(data, 1, 5), clientAddress);
+            case (byte)0x80:
+                return handleHeader80();
             default:
                 log.debug("{} Header {} not yet supported", moduleIdent, Integer.toHexString(command & 0xFF));
                 break;
@@ -83,10 +89,10 @@ public class Service40 {
                 answer[7] = ClientManager.xor(answer);
                 return answer;
             case (byte) 0x80:
-                log.debug("{} Set track power to off", moduleIdent);
+                log.info("{} Set track power to off", moduleIdent);
                 return setTrackPower(false);
             case (byte) 0x81:
-                log.debug("{} Set track power to on", moduleIdent);
+                log.info("{} Set track power to on", moduleIdent);
                 return setTrackPower(true);
             default:
                 break;
@@ -184,4 +190,26 @@ public class Service40 {
         }
         return null;
     }
+    
+    private static byte[] handleHeader80() {
+        log.info("{} Stop all locos", moduleIdent);
+        Iterator<ThrottleFrame> tpi = InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getTableModel().iterator();
+        while (tpi.hasNext()) {
+            DccThrottle t = tpi.next().getAddressPanel().getThrottle();
+            if (t != null) {
+                t.setSpeedSetting(-1);
+            }
+        }
+        // send LAN_X_BC_STOPPED packet
+        byte[] stoppedPacket =  new byte[7];
+        stoppedPacket[0] = (byte) 0x07;
+        stoppedPacket[1] = (byte) 0x00;
+        stoppedPacket[2] = (byte) 0x40;
+        stoppedPacket[3] = (byte) 0x00;
+        stoppedPacket[4] = (byte) 0x81;
+        stoppedPacket[5] = (byte) 0x00;
+        stoppedPacket[6] = ClientManager.xor(stoppedPacket);
+        return stoppedPacket;
+    }
+
 }
