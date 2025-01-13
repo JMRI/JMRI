@@ -207,7 +207,7 @@ public class LenzCommandStation implements jmri.CommandStation {
                 part3 = part3 >> 1 ;
                 
                 address = part2 | part1 | part3;
-                address = address - 3;
+                address = address + 1;
                 
                 return (address) ;
             }

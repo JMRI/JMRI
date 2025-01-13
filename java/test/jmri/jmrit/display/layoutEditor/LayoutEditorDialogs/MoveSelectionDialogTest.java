@@ -5,10 +5,11 @@ import javax.swing.JTextField;
 
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JLabelOperator;
@@ -20,7 +21,7 @@ import org.netbeans.jemmy.operators.JTextFieldOperator;
  * @author George Warner Copyright (C) 2019
  */
 @Timeout(10)
-@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class MoveSelectionDialogTest {
 
     @Test
@@ -31,7 +32,7 @@ public class MoveSelectionDialogTest {
 
     @Test
     public void testMoveSelectionCanceled() {
-        moveSelectionDialog.moveSelection();
+        ThreadingUtil.runOnGUI(() -> moveSelectionDialog.moveSelection() );
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("TranslateSelection"));
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel")).doClick();  // NOI18N
@@ -41,7 +42,7 @@ public class MoveSelectionDialogTest {
     @Test
     public void testMoveSelection() {
 
-        moveSelectionDialog.moveSelection();
+        ThreadingUtil.runOnGUI(() -> moveSelectionDialog.moveSelection() );
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("TranslateSelection"));
 
         // get MoveSelection button
@@ -95,7 +96,7 @@ public class MoveSelectionDialogTest {
     public void setUp() {
         JUnitUtil.setUp();
         layoutEditor = new LayoutEditor(this.getClass().getName());
-        layoutEditor.setVisible(true);
+        ThreadingUtil.runOnGUI(() -> layoutEditor.setVisible(true) );
         moveSelectionDialog = new MoveSelectionDialog(layoutEditor);
         layoutEditor.setPanelBounds(new Rectangle2D.Double(0, 0, 640, 480));
     }
@@ -107,7 +108,7 @@ public class MoveSelectionDialogTest {
     public void tearDown() {
         // new jmri.jmrit.display.EditorFrameOperator(layoutEditor).closeFrameWithConfirmations();
         Assertions.assertNotNull(layoutEditor);
-        layoutEditor.dispose();
+        JUnitUtil.dispose(layoutEditor);
         layoutEditor = null;
         moveSelectionDialog = null;
         JUnitUtil.deregisterBlockManagerShutdownTask();

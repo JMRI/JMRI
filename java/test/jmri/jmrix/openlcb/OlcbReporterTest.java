@@ -87,9 +87,9 @@ public class OlcbReporterTest extends jmri.implementation.AbstractReporterTestBa
         JUnitUtil.initDefaultUserMessagePreferences();
         l = new PropertyChangeListenerScaffold();
         // prepare an interface
-        ti = new OlcbTestInterface();
+        ti = new OlcbTestInterface(new OlcbTestInterface.CreateConfigurationManager());
         ti.waitForStartup();
-        r = new OlcbReporter("M", "1.2.3.4.5.6.00.00", ti.iface);
+        r = new OlcbReporter("M", "1.2.3.4.5.6.00.00", ti.systemConnectionMemo);
         ((OlcbReporter) r).finishLoad();
     }
 

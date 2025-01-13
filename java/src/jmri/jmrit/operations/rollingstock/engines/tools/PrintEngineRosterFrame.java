@@ -125,17 +125,17 @@ public class PrintEngineRosterFrame extends OperationsFrame {
     }
 
     private void printEngines() {
-        boolean landscape = false;
+        boolean isLandscape = false;
         if (manifestOrientationComboBox.getSelectedItem() != null &&
                 manifestOrientationComboBox.getSelectedItem().equals(Setup.LANDSCAPE)) {
-            landscape = true;
+            isLandscape = true;
         }
 
         int fontSize = (int) fontSizeComboBox.getSelectedItem();
 
         // obtain a HardcopyWriter to do this
         try (HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleEngineRoster"),
-                fontSize, .5, .5, .5, .5, _isPreview, "", landscape, true, null);) {
+                fontSize, .5, .5, .5, .5, _isPreview, "", isLandscape, true, null, null);) {
 
             numberCharPerLine = writer.getCharactersPerLine();
 

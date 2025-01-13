@@ -19,7 +19,8 @@ public class MarklinConnectionTypeList implements jmri.jmrix.ConnectionTypeList 
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.marklin.networkdriver.ConnectionConfig",
-            "jmri.jmrix.marklin.cdb.serialdriver.ConnectionConfig"
+            "jmri.jmrix.marklin.cdb.serialdriver.ConnectionConfig",
+            "jmri.jmrix.marklin.simulation.MarklinSimConnectionConfig"
         };
     }
 

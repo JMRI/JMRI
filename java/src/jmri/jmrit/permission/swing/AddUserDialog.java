@@ -84,8 +84,6 @@ public class AddUserDialog extends JDialog {
         buttonCancel.addActionListener((ActionEvent e) -> {
             dispose();
         });
-//        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
-        buttonCancel.setToolTipText("CancelLogixButtonHint");      // NOI18N
 
         // OK
         JButton buttonOK = new JButton(Bundle.getMessage("ButtonOK"));    // NOI18N
@@ -95,8 +93,7 @@ public class AddUserDialog extends JDialog {
                 dispose();
             }
         });
-//        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
-        buttonOK.setToolTipText("CancelLogixButtonHint");      // NOI18N
+        buttonOK.setToolTipText(Bundle.getMessage("AddUserDialogOkHint"));      // NOI18N
 
         c.gridx = 0;
         c.gridy = 5;

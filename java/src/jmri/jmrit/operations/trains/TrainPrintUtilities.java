@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.trains;
 
 import java.awt.*;
+import java.awt.JobAttributes.SidesType;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
@@ -39,10 +40,12 @@ public class TrainPrintUtilities {
      * @param printerName   optional default printer name
      * @param orientation   Setup.LANDSCAPE, Setup.PORTRAIT, or Setup.HANDHELD
      * @param fontSize      font size
-     * @param printHeader   when true print page header
+     * @param isPrintHeader when true print page header
+     * @param sidesType     two sides long or short can be null
      */
     public static void printReport(File file, String name, boolean isPreview, String fontName, boolean isBuildReport,
-            String logoURL, String printerName, String orientation, int fontSize, boolean printHeader) {
+            String logoURL, String printerName, String orientation, int fontSize, boolean isPrintHeader,
+            SidesType sidesType) {
         // obtain a HardcopyWriter to do this
 
         boolean isLandScape = false;
@@ -54,13 +57,13 @@ public class TrainPrintUtilities {
             isLandScape = true;
         }
         if (orientation.equals(Setup.HANDHELD) || orientation.equals(Setup.HALFPAGE)) {
-            printHeader = false;
+            isPrintHeader = false;
             // add margins to page size
             pagesize = new Dimension(TrainCommon.getPageSize(orientation).width + TrainCommon.PAPER_MARGINS.width,
                     TrainCommon.getPageSize(orientation).height + TrainCommon.PAPER_MARGINS.height);
         }
         try (HardcopyWriter writer = new HardcopyWriter(new Frame(), name, fontSize, margin,
-                margin, .5, .5, isPreview, printerName, isLandScape, printHeader, pagesize);
+                margin, .5, .5, isPreview, printerName, isLandScape, isPrintHeader, sidesType, pagesize);
                 BufferedReader in = new BufferedReader(new InputStreamReader(
                         new FileInputStream(file), StandardCharsets.UTF_8));) {
 
@@ -129,27 +132,7 @@ public class TrainPrintUtilities {
                         }
                     }
 
-                    // determine if line is a pickup or drop
-                    if ((!Setup.getPickupEnginePrefix().trim().isEmpty() &&
-                            line.startsWith(Setup.getPickupEnginePrefix() + TrainCommon.SPACE)) ||
-                            (!Setup.getPickupCarPrefix().trim().isEmpty() &&
-                                    line.startsWith(Setup.getPickupCarPrefix() + TrainCommon.SPACE)) ||
-                            (!Setup.getSwitchListPickupCarPrefix().trim().isEmpty() &&
-                                    line.startsWith(Setup.getSwitchListPickupCarPrefix() + TrainCommon.SPACE))) {
-                        c = Setup.getPickupColor();
-                    } else if ((!Setup.getDropEnginePrefix().trim().isEmpty() &&
-                            line.startsWith(Setup.getDropEnginePrefix() + TrainCommon.SPACE)) ||
-                            (!Setup.getDropCarPrefix().trim().isEmpty() &&
-                                    line.startsWith(Setup.getDropCarPrefix() + TrainCommon.SPACE)) ||
-                            (!Setup.getSwitchListDropCarPrefix().trim().isEmpty() &&
-                                    line.startsWith(Setup.getSwitchListDropCarPrefix() + TrainCommon.SPACE))) {
-                        c = Setup.getDropColor();
-                    } else if ((!Setup.getLocalPrefix().trim().isEmpty() &&
-                            line.startsWith(Setup.getLocalPrefix() + TrainCommon.SPACE)) ||
-                            (!Setup.getSwitchListLocalPrefix().trim().isEmpty() &&
-                                    line.startsWith(Setup.getSwitchListLocalPrefix() + TrainCommon.SPACE))) {
-                        c = Setup.getLocalColor();
-                    } else if (line.contains(TrainCommon.TEXT_COLOR_START)) {
+                    if (line.contains(TrainCommon.TEXT_COLOR_START)) {
                         c = TrainCommon.getTextColor(line);
                         if (line.contains(TrainCommon.TEXT_COLOR_END)) {
                             printingColor = false;

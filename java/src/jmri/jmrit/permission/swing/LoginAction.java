@@ -26,7 +26,7 @@ public class LoginAction extends JmriAbstractAction {
     }
 
     public LoginAction() {
-        super(Bundle.getMessage("LoginAction_Title"));
+        super(Bundle.getMessage("LoginAction_Menu"));
         checkPermission();
     }
 

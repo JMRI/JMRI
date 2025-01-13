@@ -68,6 +68,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     protected JTextPane textTrainRouteCommentPane = new JTextPane();
     protected JTextPane textTrainRouteLocationCommentPane = new JTextPane();
     protected JTextPane textSwitchListCommentPane = new JTextPane();
+    protected JTextPane textTrainStatusPane = new JTextPane();
 
     // panels
     protected JPanel pRailRoadName = new JPanel();
@@ -168,7 +169,12 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         textSwitchListCommentPane.setBackground(null);
         textSwitchListCommentPane.setEditable(false);
         textSwitchListCommentPane.setMaximumSize(new Dimension(2000, 200));
-
+        
+        // Train status
+        textTrainStatusPane.setBorder(BorderFactory.createTitledBorder(""));
+        textTrainStatusPane.setBackground(null);
+        textTrainStatusPane.setEditable(false);
+        textTrainStatusPane.setMaximumSize(new Dimension(2000, 200));
 
         // row 12
         pLocos.setLayout(new BoxLayout(pLocos, BoxLayout.Y_AXIS));
@@ -480,7 +486,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                     checkBox = checkBoxes.get("ep" + engine.getId());
                 } else {
                     checkBox = new JCheckBox(trainCommon.pickupEngine(engine));
-                    setCheckBoxFont(checkBox);
+                    setCheckBoxFont(checkBox, Setup.getPickupColor());
                     addCheckBoxAction(checkBox);
                     checkBoxes.put("ep" + engine.getId(), checkBox);
                 }
@@ -500,7 +506,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                     checkBox = checkBoxes.get("es" + engine.getId());
                 } else {
                     checkBox = new JCheckBox(trainCommon.dropEngine(engine));
-                    setCheckBoxFont(checkBox);
+                    setCheckBoxFont(checkBox, Setup.getDropColor());
                     addCheckBoxAction(checkBox);
                     checkBoxes.put("es" + engine.getId(), checkBox);
                 }
@@ -603,7 +609,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                                 text = trainCommon.pickupCar(car, isManifest, !TrainCommon.IS_TWO_COLUMN_TRACK);
                             }
                             JCheckBox checkBox = new JCheckBox(text);
-                            setCheckBoxFont(checkBox);
+                            setCheckBoxFont(checkBox, Setup.getPickupColor());
                             addCheckBoxAction(checkBox);
                             pPickups.add(checkBox);
                             checkBoxes.put("p" + car.getId(), checkBox);
@@ -651,7 +657,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                             text = trainCommon.dropCar(car, isManifest, !TrainCommon.IS_TWO_COLUMN_TRACK);
                         }
                         JCheckBox checkBox = new JCheckBox(text);
-                        setCheckBoxFont(checkBox);
+                        setCheckBoxFont(checkBox, Setup.getDropColor());
                         addCheckBoxAction(checkBox);
                         pSetouts.add(checkBox);
                         checkBoxes.put("s" + car.getId(), checkBox);
@@ -684,7 +690,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                             text = trainCommon.localMoveCar(car, isManifest);
                         }
                         JCheckBox checkBox = new JCheckBox(text);
-                        setCheckBoxFont(checkBox);
+                        setCheckBoxFont(checkBox, Setup.getLocalColor());
                         addCheckBoxAction(checkBox);
                         pMoves.add(checkBox);
                         checkBoxes.put("m" + car.getId(), checkBox);
@@ -727,10 +733,11 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
         return pSet;
     }
 
-    protected void setCheckBoxFont(JCheckBox checkBox) {
+    protected void setCheckBoxFont(JCheckBox checkBox, Color color) {
         if (Setup.isTabEnabled()) {
             Font font = new Font(Setup.getFontName(), Font.PLAIN, checkBox.getFont().getSize());
             checkBox.setFont(font);
+            checkBox.setForeground(color);
         }
     }
 

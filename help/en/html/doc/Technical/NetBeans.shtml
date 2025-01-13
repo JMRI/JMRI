@@ -114,6 +114,10 @@
             <a href="#loading_a_specific_branch_from_github">Loading a Specific Branch from
             GitHub</a>
           </li>
+
+          <li>
+            <a href="#NetBeansGuiForms">Using NetBeans "GUI-building" tools</a>
+          </li>
         </ul>
       </div>
 
@@ -537,7 +541,7 @@
         SourceForge.</p>
 
         <p>Comments in <a href="https://github.com/JMRI/JMRI/blob/master/scripts/WinInstallFiles/LaunchJMRI.nsi#L21"
-        >LaunchJMRI.nsi</a> suggest that it is also necessary to install ( extract ) the 
+        >LaunchJMRI.nsi</a> suggest that it is also necessary to install ( extract ) the
         &quot;Large strings&quot; build available from
         <a href="https://nsis.sourceforge.io/Special_Builds">NSIS Special Builds<a>.
 
@@ -703,6 +707,17 @@
         type <code>master</code> in the <em>Checkout Selected Revision</em> box, and
         click <span class="textbutton">Checkout</span>.
         </p>
+
+      <h2 id="NetBeansGuiForms">Using NetBeans "GUI-building" tools</h2>
+        <p>Several of JMRI's ".java" files have been defined using the NetBeans IDE
+            and its ability to create "forms" which use Java "Swing" components.
+            The NetBeans IDE provides a mechanism allows a developer to lay-out
+            the Swing components of a GUI object, generate the Java code from that
+            layout, and add the user-code to complete the implementation.
+
+            <p>This is
+            discussed in <a href='NetBeansGUIEditor.shtml'>JMRI Code: Using the
+            NetBeans Swing GUI Builder</a>.
 
       <div id="footer-text">
         Last updated 2022-11-10

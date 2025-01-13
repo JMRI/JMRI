@@ -137,8 +137,8 @@ which checks the dates of the control files to make sure they've been updated wh
 - from https://mvnrepository.com/artifact/org.slf4j/jul-to-slf4j/2.0.7
 
 ##### openlcb.jar
- - 0.8.1 from https://repo.maven.apache.org/maven2/org/openlcb/openlcb/0.8.1/openlcb-0.8.1.jar
- - including PR #279 as of 2024-11-22
+ - 0.8.2 from https://repo.maven.apache.org/maven2/org/openlcb/openlcb/0.8.2/openlcb-0.8.2.jar
+    Includes PR #283 through 2024-12-13
  
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
@@ -401,8 +401,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - version 2.6
 - batik related
 
-##### BiDiB protocol implementation: jbidibc-*-2.0.18.jar, bidibwizard-*-2.0.18.jar
-- version 2.0.18
+##### BiDiB protocol implementation: jbidibc-*-2.0.29.jar, bidibwizard-*-2.0.30.jar
+- version 2.0.29 / 2.0.30
 - bidibwizard*.jar supports the BiDiB connection simulation
 
 ##### commons-collections4-4.4.jar

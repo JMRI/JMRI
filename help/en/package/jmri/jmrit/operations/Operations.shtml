@@ -116,6 +116,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#PrintOptions">Manifest Print Options</a>
                   <ul>
                     <li><a href="#PrintOrientation">Orientation and Paper Size</a></li>
+                    
+                    <li><a href="#PrintSides">Print on One or Two Sides</a></li>
 
                     <li><a href="#ManifestComments">Manifests and Switch List Options</a></li>
 
@@ -1935,6 +1937,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       printers require the English (United States) locale in order to print out a Manifest or switch
       list with the correct number of lines for paper size "Letter".
 
+      <h3 id="PrintSides">Print on One or Two Sides</h3>
+      You have the option of printing your Manifest or switch lists on one side of the paper or
+      both. Select "two sided long edge" or "two sided short edge" if you wish to print using both
+      sides of your paper. Short edge means the pages are bound along the short edge of the page.
+      Long edge means the pages are bound along the long edge of the page.
+
+
       <h3>Set Out Text Color</h3>
       You can select the text color of your Manifest when the operation is to set out a car or
       locomotive. Select the desired color from the drop down box.
@@ -1953,8 +1962,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       lists by selecting the appropriate drop down menus. To remove a loco or car attribute (Road,
       Number, Type, Length, Color, Load, etc.) select blank. You can also edit and or replace the "[
       ] Set out", "[ ] Pick up" and "[ ] Move" prefixes. Two popular prefixes are "Spot" and "Pull"
-      for set outs and pick ups respectively. If you want to use the text color options, the set
-      out, pick up, and move prefixes must be unique.
+      for set outs and pick ups respectively.
 
       <p>For locomotive or car pick ups, the "Location" or "Track" attribute provides the track
         name where the rolling stock is currently residing. For set outs, the "Destination" or
@@ -1977,18 +1985,26 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h3 id="ManifestComments">Manifests and Switch List Options</h3>
       OperationsPro&trade; allows you to customize the text used in the train Manifest and switch
       lists to your liking. You can modify the Manifest or switch list text by using the "Edit
-      Manifest Text" or "Edit Switch List Text" windows found under the <a
-        href="#ManifestPrintOptionsTools">Tools</a> menu.
+      Manifest Text" or "Edit Switch List Text" windows found under the
+      <a href="#ManifestPrintOptionsTools">Tools</a> menu.
 
       <h4>Switch List Options</h4>
-      The first option "By Track Summary" when selected, lists all car pick ups, set outs, and holds
-      at a location by track and train. This summary is appended to the end of the switch list. This
-      option is only available when you operate the switch list in <a href="#SwitchListOptions">Real
-        Time</a>.
+      There are three checkboxes that allow you to modify the content of your switch lists. They are
+      labeled "By Track Summary", "Route Location", and "Departure Time".
+
+      <p>
+        The first option "By Track Summary" when selected, lists all car pick ups, set outs, and
+        holds at a location by track and train. This summary is appended to the end of the switch
+        list. This option is only available when you operate the switch list in <a
+          href="#SwitchListOptions">Real Time</a>.
+      </p>
       <p>
         You can include in your switch lists the train's <a href="#EditRoute">route</a> location
         comments by selecting the "Route Location" checkbox.
       </p>
+
+      <p>A switch list normally shows the estimated arrival time for a train. Selecting the
+        "Departure Time" checkbox changes the format to showing the departure time.</p>
 
       <h4>Manifests Options</h4>
       There are four checkboxes that allow you to modify the content of your Manifests. They are
@@ -6577,7 +6593,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       down JMRI, otherwise you will lose all of the changes that the operations program made to move
       a train to the next location. Pressing the "Save Builds" button before quitting JMRI allows
       the operations program to resume exactly at the point where you pressed the "Save Builds"
-      button.
+      button. If you attempt to close the
+      <a href="#Trains">Trains</a> window before pressing the "Save Builds" button, a warning will
+      pop up asking you to save your files. Note that if you enabled
+      <a href="#AutoSave">Auto Save</a> no warning will appear and the program will automatically
+      save your files.
 
       <p style="page-break-after: always">
         <a href="#toc">[Click to go back to TOC]</a>

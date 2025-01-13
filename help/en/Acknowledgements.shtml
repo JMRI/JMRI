@@ -374,8 +374,8 @@
         <li>Michael Dunn, who provided a decoder definition for the MRC 1645 decoder</li>
 
         <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3Aatanisoft+">Mike Dunston</a>, <!-- atanisoft -->
-           who provided <a href="https://github.com/JMRI/JMRI/pulls?q=author%3Aatanisoft+">several
-          updates</a> for the DCC++ code <a id="E"></a>
+        who provided <a href="https://github.com/JMRI/JMRI/pulls?q=author%3Aatanisoft+">several
+        updates</a> for the DCC++ code <a id="E"></a>
         </li>
 
         <li>Frederik Elestedt, <!--elestedt -->
@@ -387,11 +387,13 @@
         <li>Wayne Eric, who provided the MRC AD370 decoder definition</li>
 
         <li>Max Ettinger, who made JMRI work with the QSI Quantum Programmer on Windows and wrote
-        <a href="https://www.jmri.org/install/qsidriver/">great instructions</a>. <a id="F"></a>
+        <a href="https://www.jmri.org/install/qsidriver/">great instructions</a>.
         </li>
 
         <li>Jim Exler, <!-- jimexler -->
-         who fixed a Digitrax CV definition.</li>
+        who fixed a Digitrax CV definition and worked on the Soundtraxx definitions.
+        <a id="F"></a>
+        </li>
 
         <li>Dave Falkenburg created the original DecoderPro application (and found the perfect name
         for it!) He created our Mac Classic and Mac OS X icons and worked on the PanelPro logo. He
@@ -405,14 +407,14 @@
         <li>Don Fiehmann provided MRC decoders for testing</li>
 
         <li>Bill Fitch, <!-- bill-fitch14; note it's his JMRI-1 repo -->
-           who created the <a href="html/apps/DispatcherSystem/DispatcherSystem.shtml">Dispatcher
-          System</a> tools for working with Dispatcher.
+        who created the <a href="html/apps/DispatcherSystem/DispatcherSystem.shtml">Dispatcher
+        System</a> tools for working with Dispatcher.
         </li>
+
+        <li>Dan Foltz created the Manifest Creator and Switch List Creator for operations</li>
 
         <li>Marco Forcone, who sacrificed two turnouts motors to the cause of debugging XPressNet
         Turnout support</li>
-
-        <li>Dan Foltz created the Manifest Creator and Switch List Creator for operations</li>
 
         <li>John Forsythe, who helped with the timing needs of TCS decoders</li>
 
@@ -420,9 +422,12 @@
         who created the Italian translation</li>
 
         <li>Marc Fournier, <!-- Marcfour  MarcFoum-->
-         who improved the TCS decoder definition, did the detail work to update the Soundtraxx
+        who improved the TCS decoder definition, did the detail work to update the Soundtraxx
         manufacturer name, and fixed some Soundtraxx variable names.</li>
 
+        <li>Pete Fowler,  <!--  CdreKidd -->
+        who improved the Hornby product ID and contributed HN7000 decoder definitions.</li>
+        
         <li>Paul Fraker, who wrote the documentation for the Throttles and provided MRC decoder
         definitions</li>
 
@@ -527,6 +532,8 @@
         <li>Rob Heikens, who created ESU decoder definitions and programmer pages</li>
 
         <li>Freek Heite, who located some important XpressNet info</li>
+
+        <li>Robert Heller, who added "Close" to the Windows menu</li>
 
         <li>Austin Hendrix, <!-- trainman419 -->
         who improved how the throttle handles speed steps and improved the quality of the code and

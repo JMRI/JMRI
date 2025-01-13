@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.setup;
 
 import java.awt.Color;
+import java.awt.JobAttributes.SidesType;
 import java.io.IOException;
 import java.util.*;
 
@@ -208,6 +209,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private int buildReportFontSize = 10;
     private String manifestOrientation = PORTRAIT;
     private String switchListOrientation = PORTRAIT;
+    private SidesType sidesType = SidesType.ONE_SIDED;
     private boolean printHeader = true;
     private Color pickupColor = Color.black;
     private Color dropColor = Color.black;
@@ -1090,6 +1092,14 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         getDefault().manifestFontSize = size;
     }
 
+    public static SidesType getPrintDuplexSides() {
+        return getDefault().sidesType;
+    }
+
+    public static void setPrintDuplexSides(SidesType sidesType) {
+        getDefault().sidesType = sidesType;
+    }
+
     public static boolean isPrintPageHeaderEnabled() {
         return getDefault().printHeader;
     }
@@ -1957,6 +1967,9 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         values.setAttribute(Xml.MANIFEST, getManifestOrientation());
         values.setAttribute(Xml.SWITCH_LIST, getSwitchListOrientation());
 
+        e.addContent(values = new Element(Xml.PRINT_DUPLEX));
+        values.setAttribute(Xml.NAME, getPrintDuplexSides().toString());
+
         e.addContent(values = new Element(Xml.MANIFEST_COLORS));
         values.setAttribute(Xml.DROP_COLOR, getDropTextColor());
         values.setAttribute(Xml.PICKUP_COLOR, getPickupTextColor());
@@ -2484,6 +2497,18 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 setSwitchListOrientation(orientation);
             }
         }
+        if ((operations.getChild(Xml.PRINT_DUPLEX) != null)) {
+            if ((a = operations.getChild(Xml.PRINT_DUPLEX).getAttribute(Xml.NAME)) != null) {
+                String sides = a.getValue();
+                log.debug("Print duplex: {}", sides);
+                if (sides.equals(SidesType.TWO_SIDED_LONG_EDGE.toString())) {
+                    setPrintDuplexSides(SidesType.TWO_SIDED_LONG_EDGE);
+                }
+                if (sides.equals(SidesType.TWO_SIDED_SHORT_EDGE.toString())) {
+                    setPrintDuplexSides(SidesType.TWO_SIDED_SHORT_EDGE);
+                }
+            }
+        }
         if ((operations.getChild(Xml.MANIFEST_COLORS) != null)) {
             if ((a = operations.getChild(Xml.MANIFEST_COLORS).getAttribute(Xml.DROP_COLOR)) != null) {
                 String dropColor = a.getValue();
@@ -2975,7 +3000,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
      * Converts the strings into English tags for xml storage
      *
      */
-    private static void stringToTagConversion(String[] strings) {
+    public static void stringToTagConversion(String[] strings) {
         for (int i = 0; i < strings.length; i++) {
             if (strings[i].equals(BLANK)) {
                 continue;

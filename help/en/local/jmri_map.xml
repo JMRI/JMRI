@@ -153,6 +153,7 @@
 <mapID target="html.tools.Routes" url="html/tools/Routes.shtml"/>
 <mapID target="html.tools.Sections" url="html/tools/Sections.shtml"/>
 <mapID target="html.tools.Sensors" url="html/tools/Sensors.shtml"/>
+<mapID target="html.tools.StringIOs" url="html/tools/StringIOs.shtml"/>
 <mapID target="html.tools.TimeTable" url="html/tools/TimeTable.shtml"/>
 <mapID target="html.tools.Transits" url="html/tools/Transits.shtml"/>
 <mapID target="html.tools.Turnouts" url="html/tools/Turnouts.shtml"/>
@@ -228,6 +229,7 @@
 <mapID target="package.apps.InstallTest.InstallTest" url="package/apps/InstallTest/InstallTest.shtml"/>
 <mapID target="package.apps.SystemConsole" url="package/apps/SystemConsole.shtml"/>
 <mapID target="package.apps.TabbedPreferences" url="package/apps/TabbedPreferences.shtml"/>
+<mapID target="package.apps.gui3.lccpro.LccPro" url="package/apps/gui3/lccpro/LccPro.shtml"/>
 <mapID target="package.apps.util.issuereporter.swing.IssueReporter" url="package/apps/util/issuereporter/swing/IssueReporter.shtml"/>
 <mapID target="package.jmri.configurexml.ErrorHandler" url="package/jmri/configurexml/ErrorHandler.shtml"/>
 <mapID target="package.jmri.jmrit.MemoryFrameAction" url="package/jmri/jmrit/MemoryFrameAction.shtml"/>
@@ -269,6 +271,8 @@
 <mapID target="package.jmri.jmrit.beantable.SignalMastLogicTable" url="package/jmri/jmrit/beantable/SignalMastLogicTable.shtml"/>
 <mapID target="package.jmri.jmrit.beantable.SignalMastRepeater" url="package/jmri/jmrit/beantable/SignalMastRepeater.shtml"/>
 <mapID target="package.jmri.jmrit.beantable.SignalMastTable" url="package/jmri/jmrit/beantable/SignalMastTable.shtml"/>
+<mapID target="package.jmri.jmrit.beantable.StringIOAddEdit" url="package/jmri/jmrit/beantable/StringIOAddEdit.shtml"/>
+<mapID target="package.jmri.jmrit.beantable.StringIOTable" url="package/jmri/jmrit/beantable/StringIOTable.shtml"/>
 <mapID target="package.jmri.jmrit.beantable.TransitAddEdit" url="package/jmri/jmrit/beantable/TransitAddEdit.shtml"/>
 <mapID target="package.jmri.jmrit.beantable.TransitTable" url="package/jmri/jmrit/beantable/TransitTable.shtml"/>
 <mapID target="package.jmri.jmrit.beantable.TurnoutAddEdit" url="package/jmri/jmrit/beantable/TurnoutAddEdit.shtml"/>

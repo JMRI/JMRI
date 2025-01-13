@@ -30,6 +30,12 @@ public class MonitorPaneTest extends AbstractMonPaneTestBase {
         assertThat(thrown).isNull();
     }
 
+    @Test
+    @Override
+    public void testGetHelpTarget(){
+        assertThat(panel.getHelpTarget()).isEqualTo("package.jmri.jmrix.openlcb.swing.monitor.MonitorPane");
+    }
+
     @BeforeEach
     @Override
     public void setUp() {

@@ -815,6 +815,11 @@ public class RosterSpeedProfile {
         }
 
         float calculatingStep = _throttle.getSpeedSetting();
+        if (increaseSpeed) {
+            if (calculatingStep < minReliableOperatingSpeed) {
+                calculatingStep = minReliableOperatingSpeed;
+            }
+        }
 
         float endspd = 0;
         if (calculatingStep != 0.0 && desiredSpeedStep > 0) { // current speed

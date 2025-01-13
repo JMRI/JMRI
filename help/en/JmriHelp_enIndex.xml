@@ -328,6 +328,8 @@
 
  <indexitem text="Layout Editor (Panels) " target="package.jmri.jmrit.display.LayoutEditor"/>
 
+ <indexitem text="LccPro " target="package.apps.gui3.lccpro.LccPro"/>
+
  <indexitem text="LDT Signals " target="html.tools.signaling.ldt.output"/>
 
  <indexitem text="Lenz XpressNet - Hardware, Connection, Tools " target="html.hardware.XPressNet.index"/>
@@ -739,6 +741,14 @@
   <indexitem text="See also: CBUS " target="html.hardware.can.cbus.index"/>
 
  </indexitem>
+
+ <indexitem text="StringIO " target="html.tools.StringIOs">
+  <indexitem text="Add/Edit a StringIO " target="package.jmri.jmrit.beantable.StringIOAddEdit"/>
+
+  <indexitem text="StringIO Table " target="package.jmri.jmrit.beantable.StringIOTable"/>
+
+ </indexitem>
+
  <indexitem text="Supported Decoders " target="html.apps.DecoderPro.index_decoderlisting"/>
 
  <indexitem text="Supported Digital Control Hardware " target="html.hardware.index"/>

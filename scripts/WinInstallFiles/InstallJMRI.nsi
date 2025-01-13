@@ -50,6 +50,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.28.0
+; - Add LccPro app
+; -------------------------------------------------------------------------
 ; - Version 0.1.27.0
 ; - Updated "-CleanUp" so that old/error files are removed before installation in jython directory
 ; -------------------------------------------------------------------------
@@ -673,6 +676,7 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$SMPROGRAMS\$0\DecoderPro3.lnk"
     Delete "$SMPROGRAMS\$0\PanelPro.lnk"
     Delete "$SMPROGRAMS\$0\SoundPro.lnk"
+    Delete "$SMPROGRAMS\$0\LccPro.lnk"
     Delete "$SMPROGRAMS\$0\Tools and Demos\JmriDemo.lnk"
     Delete "$SMPROGRAMS\$0\Tools and Demos\LocoTools.lnk"
     Delete "$SMPROGRAMS\$0\Tools and Demos\CornwallRR.lnk"
@@ -693,6 +697,7 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$DESKTOP\DecoderPro3.lnk"
     Delete "$DESKTOP\PanelPro.lnk"
     Delete "$DESKTOP\SoundPro.lnk"
+    Delete "$DESKTOP\LccPro.lnk"
 
   SectionEnd ; SEC_CLEANUP
 
@@ -836,6 +841,11 @@ SectionGroup "Start menu shortcuts" SEC_SMSC
                    "apps.SoundPro.SoundPro" \
                    "$INSTDIR\SoundPro80x80.ico" 0 "" "" \
                    "Start SoundPro"
+    CreateShortcut "$SMPROGRAMS\$SMFOLDER\LccPro.lnk" \
+                   "$INSTDIR\LaunchJMRI.exe" \
+                   "apps.gui3.lccpro.LccPro" \
+                   "$INSTDIR\LccPro80x80.ico" 0 "" "" \
+                   "Start LccPro"
     CreateDirectory "$SMPROGRAMS\$SMFOLDER\Tools"
     CreateShortcut "$SMPROGRAMS\$SMFOLDER\Tools\InstallTest.lnk" \
                    "$INSTDIR\InstallTest.bat" \
@@ -888,6 +898,15 @@ SectionGroup "Desktop Shortcuts" SEC_DTSC
                    "$INSTDIR\SoundPro80x80.ico" 0 "" "" \
                    "Start SoundPro"
   SectionEnd ; SEC_SPDTSC
+
+  Section /o "LccPro" SEC_LPDTSC
+    SectionIn 2
+    CreateShortcut "$DESKTOP\LccPro.lnk" \
+                   "$INSTDIR\LaunchJMRI.exe" \
+                   "apps.gui3.lccpro.LccPro" \
+                   "$INSTDIR\LccPro80x80.ico" 0 "" "" \
+                   "Start LccPro"
+  SectionEnd ; SEC_LPDTSC
 
 SectionGroupEnd ; SEC_DTSC
 
@@ -965,6 +984,7 @@ Section "Uninstall" ; SEC_CRUNINST
   Delete "$SMPROGRAMS\$0\DecoderPro3.lnk"
   Delete "$SMPROGRAMS\$0\PanelPro.lnk"
   Delete "$SMPROGRAMS\$0\SoundPro.lnk"
+  Delete "$SMPROGRAMS\$0\LccPro.lnk"
   Delete "$SMPROGRAMS\$0\Tools and Demos\JmriDemo.lnk"
   Delete "$SMPROGRAMS\$0\Tools and Demos\LocoTools.lnk"
   Delete "$SMPROGRAMS\$0\Tools and Demos\CornwallRR.lnk"
@@ -981,6 +1001,7 @@ Section "Uninstall" ; SEC_CRUNINST
   Delete "$DESKTOP\DecoderPro.lnk"
   Delete "$DESKTOP\PanelPro.lnk"
   Delete "$DESKTOP\SoundPro.lnk"
+  Delete "$DESKTOP\LccPro.lnk"
   Delete "$DESKTOP\DecoderPro3.lnk"
 
   ; -- Remove registry entries
@@ -1017,6 +1038,7 @@ LangString DESC_SEC_DTSC ${LANG_ENGLISH} "Select Desktop Shortcuts to create."
 LangString DESC_SEC_DPDTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for DecoderPro"
 LangString DESC_SEC_PPDTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for PanelPro"
 LangString DESC_SEC_SPDTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for SoundPro"
+LangString DESC_SEC_LPDTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for LccPro"
 LangString DESC_SEC_CRUNINST ${LANG_ENGLISH} "Creates an Uninstaller for ${APP}"
 LangString MESSAGE_INVALID_DIRECTORY ${LANG_ENGLISH} "This not a valid installation directory. Please reselect"
 LangString MESSAGE_WIN2K_OR_LATER ${LANG_ENGLISH} "${APP} version ${JMRI_VER} is not supported on this version of Windows. Installation cannot continue."

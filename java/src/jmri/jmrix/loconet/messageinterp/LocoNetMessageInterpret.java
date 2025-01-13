@@ -4188,7 +4188,7 @@ public class LocoNetMessageInterpret {
                             * */
                             int addr = getExtendedAccessoryAddressFromDCCPacket(packetInt);
                             log.debug("Long-format Extended Accessory Ops-mode CV access: Extended Acceccory Address {}", addr);
-                            int cvnum = 1 + ((packetInt[2] & 0x03) << 2) + (packetInt[3] & 0xff);
+                            int cvnum = 1 + ((packetInt[2] & 0x03) << 8) + (packetInt[3] & 0xff);
                             switch (packetInt[2] & 0x0C) {
                                 case 0x04:
                                     //  GG=01 Verify byte
@@ -4810,7 +4810,8 @@ public class LocoNetMessageInterpret {
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_PM74");
             case LnConstants.RE_IPL_DIGITRAX_HOST_SE74:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_SE74");
-
+            case LnConstants.RE_IPL_DIGITRAX_HOST_BDL716:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_BDL716");
 
             default:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_UNKNOWN", type);

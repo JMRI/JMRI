@@ -65,7 +65,6 @@
     <tooltip xml:lang="de">0 = keine Folgeadresse, 1 = Eine Folgeadresse für F5-F8, 2 = Zwei Folgeadressen für F5-F12, 3 = Drei Folgeadressen für F5-F16.</tooltip>
   </variable>
 
-  <variable item="Decoder Operating Mode" CV="12" default="117"/>
   <variable item="Operating Mode DC Analogue" CV="12" mask="XXXXXXXV" default="1">
       <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       <label>Decoder Operating Mode DC Analogue</label>

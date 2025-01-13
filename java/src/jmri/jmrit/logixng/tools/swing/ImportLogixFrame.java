@@ -136,7 +136,6 @@ public final class ImportLogixFrame extends JmriJFrame {
             _cancelDone.setText(Bundle.getMessage("ButtonDone"));
 //            dispose();
         });
-//        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
         _importLogix.setToolTipText("ImportLogixButtonHint");      // NOI18N
 //        panel5.setAlignmentX(LEFT_ALIGNMENT);
         // Cancel
@@ -145,8 +144,7 @@ public final class ImportLogixFrame extends JmriJFrame {
         _cancelDone.addActionListener((ActionEvent e) -> {
             dispose();
         });
-//        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
-        _cancelDone.setToolTipText("CancelLogixButtonHint");      // NOI18N
+        _cancelDone.setToolTipText(Bundle.getMessage("LogixNG_CancelButtonHint"));      // NOI18N
 //        panel5.setAlignmentX(LEFT_ALIGNMENT);
         contentPanel.add(panel5);
 
