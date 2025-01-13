@@ -1943,14 +1943,21 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       sides of your paper. Short edge means the pages are bound along the short edge of the page.
       Long edge means the pages are bound along the long edge of the page.
 
+      <h3>Pick Up Locomotive Text Color</h3>
+      You can select the text color of your Manifest when the operation is to pick up a locomotive.
+      Select the desired color from the drop down box.
 
-      <h3>Set Out Text Color</h3>
-      You can select the text color of your Manifest when the operation is to set out a car or
-      locomotive. Select the desired color from the drop down box.
+      <h3>Set Out Locomotive Text Color</h3>
+      You can select the text color of your Manifest when the operation is to set out a locomotive.
+      Select the desired color from the drop down box.
 
-      <h3>Pick Up Text Color</h3>
-      You can select the text color of your Manifest when the operation is to pick up a car or
-      locomotive. Select the desired color from the drop down box.
+      <h3>Pick Up Car Text Color</h3>
+      You can select the text color of your Manifest when the operation is to pick up a car. Select
+      the desired color from the drop down box.
+
+      <h3>Set Out Car Text Color</h3>
+      You can select the text color of your Manifest when the operation is to set out a car. Select
+      the desired color from the drop down box.
 
       <h3>Local Move Text Color</h3>
       You can select the text color of your Manifest when the operation is to move a car from one

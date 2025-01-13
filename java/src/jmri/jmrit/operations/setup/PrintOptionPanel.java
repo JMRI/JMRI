@@ -298,12 +298,14 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         pLogo.add(addLogoButton);
         pLogo.add(logoURL);
 
+        // Hazardous comment
+        JPanel pHazardous = new JPanel();
+        pHazardous.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutHazardous")));
+        pHazardous.add(hazardousTextField);
+
         p2.add(pEdit);
         p2.add(pLogo);
-
-        // comments
-        JPanel pComments = new JPanel();
-        pComments.setLayout(new BoxLayout(pComments, BoxLayout.X_AXIS));
+        p2.add(pHazardous);
 
         // missing cars comment
         JPanel pCommentMia = new JPanel();
@@ -311,14 +313,6 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         pCommentMia.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutCommentOptions")));
         addItem(pCommentMia, commentScroller, 0, 0);
         addItem(pCommentMia, getColorChooserPanel(Setup.getMiaComment(), missingCarColorChooser), 2, 0);
-
-        // Hazardous comment
-        JPanel pHazardous = new JPanel();
-        pHazardous.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutHazardous")));
-        pHazardous.add(hazardousTextField);
-
-        pComments.add(pCommentMia);
-        pComments.add(pHazardous);
 
         pManifest.add(p1);
         pManifest.add(pColor);
@@ -334,7 +328,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         pManifest.add(pM);
         pManifest.add(pManifestSwtichListOptions);
         pManifest.add(p2);
-        pManifest.add(pComments);
+        pManifest.add(pCommentMia);
 
         // row 11
         JPanel pControl = new JPanel();
