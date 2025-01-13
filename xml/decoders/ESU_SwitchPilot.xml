@@ -141,7 +141,7 @@
                     <protocol>motorola</protocol>
                 </protocols>
             </model>
-            <model model="SwitchPilot Servo V3.0" numOuts="2" numFns="14" lowVersionID="201" highVersionID="201" connector ="Wires" productID="33554522">
+            <model model="SwitchPilot Servo V3.0" numOuts="8" numFns="8" lowVersionID="201" highVersionID="201" connector ="Wires">
                 <output name="1" label="Servo|1"/>
                 <output name="2" label="Servo|2"/>
                 <output name="3" label="Servo|3"/>
@@ -282,42 +282,42 @@
                 </variable>
             </variables>
             <variables include="SwitchPilot Servo V3.0">
-                <variable CV="118" mask="XXXXXVXX" item="Relay 1 Delay" default="0">
+                <variable CV="118" mask="XXXXVXXX" item="Relay 1 Delay" default="0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                     <label>Enable Relay 3 Delay</label>
                     <label xml:lang="de">Relais 3 verzögert</label>
                 </variable>
-                <variable CV="119" mask="XXXXXVXX" item="Relay 2 Delay" default="0">
+                <variable CV="119" mask="XXXXVXXX" item="Relay 2 Delay" default="0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                     <label>Enable Relay 3 Delay</label>
                     <label xml:lang="de">Relais 3 verzögert</label>
                 </variable>
-                <variable CV="120" mask="XXXXXVXX" item="Relay 3 Delay" default="0">
+                <variable CV="120" mask="XXXXVXXX" item="Relay 3 Delay" default="0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                     <label>Enable Relay 3 Delay</label>
                     <label xml:lang="de">Relais 3 verzögert</label>
                 </variable>
-                <variable CV="121" mask="XXXXXVXX" item="Relay 4 Delay" default="0">
+                <variable CV="121" mask="XXXXVXXX" item="Relay 4 Delay" default="0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                     <label>Enable Relay 3 Delay</label>
                     <label xml:lang="de">Relais 3 verzögert</label>
                 </variable>
-                <variable CV="122" mask="XXXXXVXX" item="Relay 5 Delay" default="0">
+                <variable CV="122" mask="XXXXVXXX" item="Relay 5 Delay" default="0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                     <label>Enable Relay 3 Delay</label>
                     <label xml:lang="de">Relais 3 verzögert</label>
                 </variable>
-                <variable CV="123" mask="XXXXXVXX" item="Relay 6 Delay" default="0">
+                <variable CV="123" mask="XXXXVXXX" item="Relay 6 Delay" default="0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                     <label>Enable Relay 3 Delay</label>
                     <label xml:lang="de">Relais 3 verzögert</label>
                 </variable>
-                <variable CV="124" mask="XXXXXVXX" item="Relay 7 Delay" default="0">
+                <variable CV="124" mask="XXXXVXXX" item="Relay 7 Delay" default="0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                     <label>Enable Relay 3 Delay</label>
                     <label xml:lang="de">Relais 3 verzögert</label>
                 </variable>
-                <variable CV="125" mask="XXXXXVXX" item="Relay 8 Delay" default="0">
+                <variable CV="125" mask="XXXXVXXX" item="Relay 8 Delay" default="0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                     <label>Enable Relay 3 Delay</label>
                     <label xml:lang="de">Relais 3 verzögert</label>
@@ -340,7 +340,7 @@
                     <label xml:lang="de">Stromversorgung nur bei Bewegung anschalten</label>
                 </variable>
             </variables>
-            <variables exclude="SwitchPilot,SwitchPilot Servo,SwitchPilot V2.0">
+            <variables exclude="SwitchPilot,SwitchPilot Servo,SwitchPilot V2.0,SwitchPilot V3.0">
                 <variable CV="51" mask="XXXXXXXV" item="F1 controls output 1" default="1">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 </variable>
@@ -863,6 +863,10 @@
                     <display item="Relay 2 Delay" layout="right" format="checkbox"/>
                     <display item="Relay 3 Delay" layout="right" format="checkbox"/>
                     <display item="Relay 4 Delay" layout="right" format="checkbox"/>
+                    <display item="Relay 5 Delay" layout="right" format="checkbox"/>
+                    <display item="Relay 6 Delay" layout="right" format="checkbox"/>
+                    <display item="Relay 7 Delay" layout="right" format="checkbox"/>
+                    <display item="Relay 8 Delay" layout="right" format="checkbox"/>
                     <label>
                         <text> </text>
                     </label>
