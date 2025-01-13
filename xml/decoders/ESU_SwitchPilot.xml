@@ -281,12 +281,12 @@
                 <label xml:lang="de">Relais 2 verzögert</label>
             </variable>
             <variables exclude="SwitchPilot V2.0,SwitchPilot Servo V3.0">
-                <variable CV="49" mask="XXXXXVXX" item="Relay 3 Delay" default="0">
+                <variable CV="49" mask="XXXXXVXX" item="Relay 3 Delay" default="0" exclude="SwitchPilot V2.0,SwitchPilot Servo V3.0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                     <label>Enable Relay 3 Delay</label>
                     <label xml:lang="de">Relais 3 verzögert</label>
                 </variable>
-                <variable CV="49" mask="XXXXVXXX" item="Relay 4 Delay" default="0">
+                <variable CV="49" mask="XXXXVXXX" item="Relay 4 Delay" default="0" exclude="SwitchPilot V2.0,SwitchPilot Servo V3.0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                     <label>Enable Relay 4 Delay</label>
                     <label xml:lang="de">Relais 4 verzögert</label>
@@ -335,17 +335,17 @@
                 </variable>
             </variables>
             <variables exclude="SwitchPilot,SwitchPilot Servo,SwitchPilot Servo V3.0">
-                <variable CV="50" mask="XXXXXXXV" item="Servo Control 1" default="0">
+                <variable CV="50" mask="XXXXXXXV" item="Servo Control 1" default="0" exclude="SwitchPilot,SwitchPilot Servo,SwitchPilot Servo V3.0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                     <label>Initial impulse only after command received</label>
                     <label xml:lang="de">Servoimpuls nach empfangenem Kommando einschalten</label>
                 </variable>
-                <variable CV="50" mask="XXXXXXVX" item="Servo Control 2" default="0">
+                <variable CV="50" mask="XXXXXXVX" item="Servo Control 2" default="0" exclude="SwitchPilot,SwitchPilot Servo,SwitchPilot Servo V3.0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                     <label>Timeout impulse after position reached</label>
                     <label xml:lang="de">Servo nach Erreichen der Endstellung abschalten</label>
                 </variable>
-                <variable CV="50" mask="XXXXXVXX" item="Servo Control 3" default="0" exclude="SwitchPilot Servo (MA)">
+                <variable CV="50" mask="XXXXXVXX" item="Servo Control 3" default="0" exclude="SwitchPilot Servo (MA),SwitchPilot,SwitchPilot Servo,SwitchPilot Servo V3.0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                     <label>Power on servo only while moving</label>
                     <label xml:lang="de">Stromversorgung nur bei Bewegung anschalten</label>
@@ -368,52 +368,52 @@
                 </variable>
             </variables>
             <variables exclude="SwitchPilot,SwitchPilot Servo,SwitchPilot V2.0,SwitchPilot Servo V3.0">
-                <variable CV="51" mask="XXXXXXXV" item="F1 controls output 1" default="1">
+                <variable CV="51" mask="XXXXXXXV" item="F1 controls output 1" default="1" exclude="SwitchPilot Servo V3.0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 </variable>
-                <variable CV="51" mask="XXXXXXVX" item="F1 controls output 2" default="0">
+                <variable CV="51" mask="XXXXXXVX" item="F1 controls output 2" default="0" exclude="SwitchPilot Servo V3.0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 </variable>
-                <variable CV="51" mask="XXXXXVXX" item="F1 controls output 3" default="0">
+                <variable CV="51" mask="XXXXXVXX" item="F1 controls output 3" default="0" exclude="SwitchPilot Servo V3.0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 </variable>
-                <variable CV="51" mask="XXXXVXXX" item="F1 controls output 4" default="0">
+                <variable CV="51" mask="XXXXVXXX" item="F1 controls output 4" default="0" exclude="SwitchPilot Servo V3.0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 </variable>
-                <variable CV="52" mask="XXXXXXXV" item="F2 controls output 1" default="0">
+                <variable CV="52" mask="XXXXXXXV" item="F2 controls output 1" default="0" exclude="SwitchPilot Servo V3.0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 </variable>
-                <variable CV="52" mask="XXXXXXVX" item="F2 controls output 2" default="1">
+                <variable CV="52" mask="XXXXXXVX" item="F2 controls output 2" default="1" exclude="SwitchPilot Servo V3.0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 </variable>
-                <variable CV="52" mask="XXXXXVXX" item="F2 controls output 3" default="0">
+                <variable CV="52" mask="XXXXXVXX" item="F2 controls output 3" default="0" exclude="SwitchPilot Servo V3.0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 </variable>
-                <variable CV="52" mask="XXXXVXXX" item="F2 controls output 4" default="0">
+                <variable CV="52" mask="XXXXVXXX" item="F2 controls output 4" default="0" exclude="SwitchPilot Servo V3.0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 </variable>
-                <variable CV="53" mask="XXXXXXXV" item="F3 controls output 1" default="0">
+                <variable CV="53" mask="XXXXXXXV" item="F3 controls output 1" default="0" exclude="SwitchPilot Servo V3.0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 </variable>
-                <variable CV="53" mask="XXXXXXVX" item="F3 controls output 2" default="0">
+                <variable CV="53" mask="XXXXXXVX" item="F3 controls output 2" default="0" exclude="SwitchPilot Servo V3.0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 </variable>
-                <variable CV="53" mask="XXXXXVXX" item="F3 controls output 3" default="1">
+                <variable CV="53" mask="XXXXXVXX" item="F3 controls output 3" default="1" exclude="SwitchPilot Servo V3.0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 </variable>
-                <variable CV="53" mask="XXXXVXXX" item="F3 controls output 4" default="0">
+                <variable CV="53" mask="XXXXVXXX" item="F3 controls output 4" default="0" exclude="SwitchPilot Servo V3.0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 </variable>
-                <variable CV="54" mask="XXXXXXXV" item="F4 controls output 1" default="0">
+                <variable CV="54" mask="XXXXXXXV" item="F4 controls output 1" default="0" exclude="SwitchPilot Servo V3.0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 </variable>
-                <variable CV="54" mask="XXXXXXVX" item="F4 controls output 2" default="0">
+                <variable CV="54" mask="XXXXXXVX" item="F4 controls output 2" default="0" exclude="SwitchPilot Servo V3.0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 </variable>
-                <variable CV="54" mask="XXXXXVXX" item="F4 controls output 3" default="0">
+                <variable CV="54" mask="XXXXXVXX" item="F4 controls output 3" default="0" exclude="SwitchPilot Servo V3.0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 </variable>
-                <variable CV="54" mask="XXXXVXXX" item="F4 controls output 4" default="1">
+                <variable CV="54" mask="XXXXVXXX" item="F4 controls output 4" default="1" exclude="SwitchPilot Servo V3.0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 </variable>
             </variables>
