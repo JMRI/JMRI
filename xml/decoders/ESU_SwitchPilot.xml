@@ -284,13 +284,13 @@
             <variables include="SwitchPilot Servo V3.0">
                 <variable CV="118" mask="XXXXVXXX" item="Relay 1 Delay" default="0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                    <label>Enable Relay 3 Delay</label>
-                    <label xml:lang="de">Relais 3 verzögert</label>
+                    <label>Enable Relay 1 Delay</label>
+                    <label xml:lang="de">Relais 1 verzögert</label>
                 </variable>
                 <variable CV="119" mask="XXXXVXXX" item="Relay 2 Delay" default="0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                    <label>Enable Relay 3 Delay</label>
-                    <label xml:lang="de">Relais 3 verzögert</label>
+                    <label>Enable Relay 2 Delay</label>
+                    <label xml:lang="de">Relais 2 verzögert</label>
                 </variable>
                 <variable CV="120" mask="XXXXVXXX" item="Relay 3 Delay" default="0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -299,28 +299,28 @@
                 </variable>
                 <variable CV="121" mask="XXXXVXXX" item="Relay 4 Delay" default="0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                    <label>Enable Relay 3 Delay</label>
-                    <label xml:lang="de">Relais 3 verzögert</label>
+                    <label>Enable Relay 4 Delay</label>
+                    <label xml:lang="de">Relais 4 verzögert</label>
                 </variable>
                 <variable CV="122" mask="XXXXVXXX" item="Relay 5 Delay" default="0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                    <label>Enable Relay 3 Delay</label>
-                    <label xml:lang="de">Relais 3 verzögert</label>
+                    <label>Enable Relay 5 Delay</label>
+                    <label xml:lang="de">Relais 5 verzögert</label>
                 </variable>
                 <variable CV="123" mask="XXXXVXXX" item="Relay 6 Delay" default="0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                    <label>Enable Relay 3 Delay</label>
-                    <label xml:lang="de">Relais 3 verzögert</label>
+                    <label>Enable Relay 6 Delay</label>
+                    <label xml:lang="de">Relais 6 verzögert</label>
                 </variable>
                 <variable CV="124" mask="XXXXVXXX" item="Relay 7 Delay" default="0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                    <label>Enable Relay 3 Delay</label>
-                    <label xml:lang="de">Relais 3 verzögert</label>
+                    <label>Enable Relay 7 Delay</label>
+                    <label xml:lang="de">Relais 7 verzögert</label>
                 </variable>
                 <variable CV="125" mask="XXXXVXXX" item="Relay 8 Delay" default="0">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                    <label>Enable Relay 3 Delay</label>
-                    <label xml:lang="de">Relais 3 verzögert</label>
+                    <label>Enable Relay 8 Delay</label>
+                    <label xml:lang="de">Relais 8 verzögert</label>
                 </variable>
             </variables>
             <variables exclude="SwitchPilot,SwitchPilot Servo,SwitchPilot Servo V3.0">
@@ -340,7 +340,7 @@
                     <label xml:lang="de">Stromversorgung nur bei Bewegung anschalten</label>
                 </variable>
             </variables>
-            <variables exclude="SwitchPilot,SwitchPilot Servo,SwitchPilot V2.0,SwitchPilot V3.0">
+            <variables exclude="SwitchPilot,SwitchPilot Servo,SwitchPilot V2.0,SwitchPilot Servo V3.0">
                 <variable CV="51" mask="XXXXXXXV" item="F1 controls output 1" default="1">
                     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 </variable>
