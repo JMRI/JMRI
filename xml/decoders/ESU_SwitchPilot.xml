@@ -146,10 +146,10 @@
                 <output name="2" label="Servo|2"/>
                 <output name="3" label="Servo|3"/>
                 <output name="4" label="Servo|4"/>
-                <output name="1" label="Servo|5"/>
-                <output name="2" label="Servo|6"/>
-                <output name="3" label="Servo|7"/>
-                <output name="4" label="Servo|8"/>
+                <output name="5" label="Servo|5"/>
+                <output name="6" label="Servo|6"/>
+                <output name="7" label="Servo|7"/>
+                <output name="8" label="Servo|8"/>
                 <size length="86" width="86" height="25" units="mm"/>
                 <protocols>
                     <protocol>dcc</protocol>
