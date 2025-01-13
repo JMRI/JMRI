@@ -1,5 +1,9 @@
 package jmri.jmrix.loconet.locobuffer;
 
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Vector;
 import jmri.jmrix.loconet.LnCommandStationType;
@@ -65,13 +69,27 @@ public class LocoBufferAdapter extends LnPortController {
     @Override
     public String openPort(String portName, String appName) {
         // get and open the primary port
-        if (mPort.startsWith("pipe:") || mPort.startsWith("iopipe:")) {
-            // do nothing here its done when getting datastreams
-            opened = true;
-
-            return null; // indicates OK return
+        if (mPort.startsWith("pipe:")) {
+            File f = new File(portName.substring(5));
+            if (f.isFile() && f.canRead()) {
+                log.error("failed to connect pipe to {}", portName);
+                return Bundle.getMessage("SerialPortNotFound", portName);
+            }
+            return null;
         }
-
+        if (mPort.startsWith("iopipe:")   ) {
+            File f = new File(portName.substring(7).concat("_IN"));
+            if (!f.canRead()) {
+                log.error("failed to connect IN stream to {}", portName);
+                return Bundle.getMessage("SerialPortNotFound", portName);
+            }
+            f = new File(portName.substring(7).concat("_OUT"));
+            if ( ! f.canWrite()) {
+                log.error("failed to connect OUT stream to {}", portName);
+                return Bundle.getMessage("SerialPortNotFound", portName);
+            }
+            return null;
+        }
         currentSerialPort = activatePort(portName, log);
         if (currentSerialPort == null) {
             log.error("failed to connect LocoBuffer to {}", portName);
