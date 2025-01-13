@@ -486,7 +486,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                     checkBox = checkBoxes.get("ep" + engine.getId());
                 } else {
                     checkBox = new JCheckBox(trainCommon.pickupEngine(engine));
-                    setCheckBoxFont(checkBox, Setup.getPickupColor());
+                    setCheckBoxFont(checkBox, Setup.getPickupEngineColor());
                     addCheckBoxAction(checkBox);
                     checkBoxes.put("ep" + engine.getId(), checkBox);
                 }
@@ -506,7 +506,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                     checkBox = checkBoxes.get("es" + engine.getId());
                 } else {
                     checkBox = new JCheckBox(trainCommon.dropEngine(engine));
-                    setCheckBoxFont(checkBox, Setup.getDropColor());
+                    setCheckBoxFont(checkBox, Setup.getDropEngineColor());
                     addCheckBoxAction(checkBox);
                     checkBoxes.put("es" + engine.getId(), checkBox);
                 }
