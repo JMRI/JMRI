@@ -86,7 +86,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     @Override
     public void connect() throws java.io.IOException {
         if (mPort.startsWith("pipe:") || mPort.startsWith("iopipe:")) {
-            log.info("Skipping connect for mPort[{}]",mPort);
+            log.info("AbstractSerialPortController connect() mPort[{}]",mPort);
             // do nothing here its done when getting datastreams
             return;
         }

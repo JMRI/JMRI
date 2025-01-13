@@ -1,9 +1,6 @@
 package jmri.jmrix.loconet.locobuffer;
 
-import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Vector;
 import jmri.jmrix.loconet.LnCommandStationType;
@@ -71,7 +68,7 @@ public class LocoBufferAdapter extends LnPortController {
         // get and open the primary port
         if (mPort.startsWith("pipe:")) {
             File f = new File(portName.substring(5));
-            if (f.isFile() && f.canRead()) {
+            if ( ! (f.canWrite() && f.canRead())) {
                 log.error("failed to connect pipe to {}", portName);
                 return Bundle.getMessage("SerialPortNotFound", portName);
             }
