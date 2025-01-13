@@ -29,6 +29,12 @@
                 <surname>Kuhn</surname>
             </personname>
         </author>
+        <author>
+            <personname>
+                <firstname>Pierre</firstname>
+                <surname>Billon</surname>
+            </personname>
+        </author>
     </authorgroup>
     <revhistory xmlns="http://docbook.org/ns/docbook">
         <revision>
@@ -66,6 +72,14 @@
             <authorinitials>DGH</authorinitials>
             <revremark>
                 Refactored to use new splitVal syntax.
+            </revremark>
+        </revision>
+        <revision>
+            <revnumber>6</revnumber>
+            <date>2025-01-13</date>
+            <authorinitials>PB</authorinitials>
+            <revremark>
+                Added definition for SwitchPilot Servo v3.0
             </revremark>
         </revision>
     </revhistory>
