@@ -553,7 +553,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
      *  @param l an {@link XNetReply} message
      */
     private synchronized void handleSensorModeFeedback(XNetReply l) {
-        /* If none sendOff was sent we are
+        /* If no sendOff was sent we are
          going to check to see if one of the following conditions
          applies:
          1) The received message is a feedback message for a turnout
