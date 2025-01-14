@@ -2009,7 +2009,7 @@
         <label>Play Mode while running</label>
         <comment>Play Mode while running</comment>
         </variable>  
-<!--CV60 Loco Running Spot Sound Select F2 – F7-->            
+<!--CV60 Loco Running Spot Sound Select F2 to F7-->            
       <variable item="Running Option 1" CV="60" mask="XXXXXVXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Include F2</label>
@@ -2034,7 +2034,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Include F7</label>
       </variable>
-    <!--CV61 Loco Running Spot Sound Select F8 – F15-->            
+    <!--CV61 Loco Running Spot Sound Select F8 to F15-->            
       <variable item="Running Option 7" CV="61" mask="XXXXXXXV">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Include F8</label>
@@ -2067,7 +2067,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Include F15</label>
       </variable>
-    <!--CV62 Loco Running Spot Sound Select F16 – F20-->            
+    <!--CV62 Loco Running Spot Sound Select F16 to F20-->            
       <variable item="Running Option 15" CV="62" mask="XXXXXXXV">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Include F16</label>
@@ -2101,7 +2101,7 @@
         <label>Play Mode while stationary</label>
         <comment>Play Mode while stationary</comment>
       </variable>    
-    <!--CV60 Loco Running Spot Sound Select F2 – F7-->            
+    <!--CV60 Loco Running Spot Sound Select F2 to F7-->            
       <variable item="Stationary Option 1" CV="64" mask="XXXXXVXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Include F2</label>
@@ -2126,7 +2126,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Include F7</label>
       </variable>
-    <!--CV61 Loco Running Spot Sound Select F8 – F15-->            
+    <!--CV61 Loco Running Spot Sound Select F8 to F15-->            
       <variable item="Stationary Option 7" CV="65" mask="XXXXXXXV">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Include F8</label>
@@ -2159,7 +2159,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Include F15</label>
       </variable>
-    <!--CV62 Loco Running Spot Sound Select F16 – F20-->            
+    <!--CV62 Loco Running Spot Sound Select F16 to F20-->            
       <variable item="Stationary Option 15" CV="66" mask="XXXXXXXV">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Include F16</label>
@@ -2582,11 +2582,11 @@
       <!-- CHUFF/PUFF Puff Adjustment - ASU/Sensor equipped Steam Locomotives -->
       <variable CV="211" default="127" item="Sound Option 3" tooltip="Puff Strength… During Chuff … High level steam"  include="33,34,35,48">
         <decVal min="0" max="127"/>
-        <label>Puff Strength… During Chuff … High level steam</label>
+        <label>Puff Strength During Chuff High level steam</label>
       </variable>
       <variable CV="212" default="30" item="Sound Option 4" tooltip="Puff Strength… During Idle … Idle Steam"  include="33,34,35,48">
         <decVal min="25" max="45"/>
-        <label>Puff Strength… During Idle … Idle Steam</label>
+        <label>Puff Strength During Idle Idle Steam</label>
       </variable>           
       
       <!-- CHUFF/PUFF Puff Adjustment - ASU/Sensor equipped Steam Locomotives --> 
