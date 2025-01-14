@@ -2563,19 +2563,19 @@
         <label>ELECTRIC Trigger Threshold 1 (ETT 1)</label>
       </variable>
       <variable CV="219" default="30" item="Sound Option 3" tooltip="ELECTRIC Trigger Threshold 2 (ETT 2) "  include="5,6,7,9,12,13,15,18,22,23,27,30,64">
-        <decVal min="1" max="277"/>
+        <decVal min="1" max="255"/>
         <label>ELECTRIC Trigger Threshold 2 (ETT 2)</label>
       </variable>
       <variable CV="220" default="60" item="Sound Option 4" tooltip="ELECTRIC Trigger Threshold 3 (ETT 3) "  include="5,6,7,9,12,13,15,18,22,23,27,30,64">
-        <decVal min="1" max="277"/>
+        <decVal min="1" max="255"/>
         <label>ELECTRIC Trigger Threshold 3 (ETT 3)</label>
       </variable>
       <variable CV="221" default="80" item="Sound Option 5" tooltip="ELECTRIC Trigger Threshold 4 (ETT 4)"  include="5,6,7,9,12,13,15,18,22,23,27,30,64">
-        <decVal min="1" max="277"/>
+        <decVal min="1" max="255"/>
         <label>ELECTRIC Trigger Threshold 4 (ETT 4)</label>
       </variable>
       <variable CV="222" default="100" item="Sound Option 6" tooltip="ELECTRIC Trigger Threshold 5 (ETT 5) " include="5,6,7,9,12,13,15,18,22,23,27,30,64">
-        <decVal min="1" max="277"/>
+        <decVal min="1" max="255"/>
         <label>ELECTRIC Trigger Threshold 5 (ETT 5)</label>
       </variable>
       
