@@ -160,7 +160,6 @@
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       
       <variable CV="19" item="Consist setup" default="0" tooltip="Decoder based consist set up">
@@ -999,7 +998,7 @@
         <decVal min="4" max="64"/>
         <label>ABC voltage detection threshold (Range 4-64)</label>
         <label xml:lang="de">ABC-Modus "Empfindlichkeit"</label>
-        <label xml:lang="ca">Límit de detecció de voltatge sistema ABC</label>
+        <label xml:lang="ca">LÃ­mit de detecciÃ³ de voltatge sistema ABC</label>
       </variable>
       <!-- End of ABC -->
       
