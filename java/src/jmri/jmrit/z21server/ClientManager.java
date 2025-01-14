@@ -4,6 +4,8 @@ import java.beans.PropertyChangeEvent;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.ThrottleListener;
+import jmri.Turnout;
+import jmri.TurnoutManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,8 @@ import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.beans.PropertyChangeListener;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 /**
  * Register and unregister clients, set loco throttle
@@ -52,6 +56,8 @@ public class ClientManager implements ThrottleListener {
     public HashMap<InetAddress, AppClient> getRegisteredClients() {
         return registeredClients;
     }
+    
+// Loco handling
 
     synchronized public void registerLocoIfNeeded(InetAddress clientAddress, int locoAddress) {
         if (!registeredClients.containsKey(clientAddress)) {
@@ -105,6 +111,17 @@ public class ClientManager implements ThrottleListener {
         }
     }
     
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+    justification = "Messages can be of any length, null is used to indicate absence of message for caller")
+    synchronized public byte[] getLocoStatusMessage(InetAddress address, Integer locoAddress) {
+        if (registeredClients.containsKey(address)) {
+            AppClient client = registeredClients.get(address);
+            return client.getLocoStatusMessage(locoAddress);
+        } else {
+            return null;
+        }
+    }
+    
     private void setActiveThrottle(AppClient client, DccThrottle throttle) {
         if (client.getActiveThrottle() != throttle) {
             client.setActiveThrottle(throttle);
@@ -113,6 +130,77 @@ public class ClientManager implements ThrottleListener {
             }
         }
     }
+    
+// Turnout handling
+    
+    synchronized public void setTurnout(InetAddress clientAddress, int turnoutNumber, boolean state) {
+        Turnout t = getTurnoutFromNumber(turnoutNumber);
+        if (t != null) {
+            try {
+                int turnoutState = state ? Turnout.THROWN : Turnout.CLOSED;
+                log.debug("set state to {}", turnoutState);
+                t.setState(turnoutState);
+            }
+            catch (Exception e) {
+                log.warn("Cannot switch the turnout", e); // NOSONAR
+            }
+        }
+    }
+    
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+    justification = "Messages can be of any length, null is used to indicate absence of message for caller")
+    synchronized public byte[] getTurnoutStatusMessage(InetAddress address, Integer turnoutNumber) {
+        Turnout t = getTurnoutFromNumber(turnoutNumber);
+        if (t != null) {
+            // send LAN_X_TURNOUT_INFO packet
+            byte[] turnoutPacket =  new byte[9];
+            turnoutPacket[0] = (byte) 0x09;
+            turnoutPacket[1] = (byte) 0x00;
+            turnoutPacket[2] = (byte) 0x40;
+            turnoutPacket[3] = (byte) 0x00;
+            turnoutPacket[4] = (byte) 0x43;
+            turnoutPacket[5] = (byte) (turnoutNumber >> 8); //MSB
+            turnoutPacket[6] = (byte) (turnoutNumber & 0xFF); //LSB
+            turnoutPacket[7] = (byte) 0x00; //preset UNKNOWN
+            if (t.getState() == Turnout.CLOSED) {
+                turnoutPacket[7] = (byte) 0x02;
+            }
+            if (t.getState() == Turnout.THROWN) {
+                turnoutPacket[7] = (byte) 0x01;
+            }
+            turnoutPacket[8] = ClientManager.xor(turnoutPacket);
+            return turnoutPacket;
+        }
+        return null;
+    }
+
+    public Turnout getTurnoutFromNumber(int turnoutNumber) {
+        // Find first turnout where the comment field contains the requested number in the format #n !!
+        // This is quick and very dirty and should be replaced by somewhat more intelligent.
+        // But it is a pragmatic solution for now.
+        TurnoutManager turnouts = jmri.InstanceManager.getNullableDefault(jmri.TurnoutManager.class);
+        if (turnouts != null) {
+            Pattern numPattern = Pattern.compile(".*?#(\\d+).*");
+            for (Turnout t : turnouts.getNamedBeanSet()) {
+                if (t.getComment() != null) {
+                    try {
+                        Matcher m = numPattern.matcher(t.getComment());
+                        if (m.matches()) {
+                            log.trace("check turnout {}, comment: {}, number: {}", t.getUserName(), t.getComment(), m.group(1));
+                            int num = Integer.parseInt(m.group(1));
+                            if (num == (turnoutNumber + 1)) {
+                                return t;
+                            }                        
+                        }
+                    }
+                    catch (Exception e) {} //silently ignore
+                }
+            }
+        }
+        return null;
+    }
+    
+// client handling
 
     synchronized public void heartbeat(InetAddress clientAddress) {
         AppClient client = registeredClients.get(clientAddress);
@@ -149,17 +237,8 @@ public class ClientManager implements ThrottleListener {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
-    justification = "Messages can be of any length, null is used to indicate absence of message for caller")
-    synchronized public byte[] getLocoStatusMessage(InetAddress address, Integer locoAddress) {
-        if (registeredClients.containsKey(address)) {
-            AppClient client = registeredClients.get(address);
-            return client.getLocoStatusMessage(locoAddress);
-        } else {
-            return null;
-        }
-    }
-
+// ThrottleListener implementation
+    
     @Override
     synchronized public void notifyThrottleFound(DccThrottle t) {
         int locoAddress = t.getLocoAddress().getNumber();
@@ -182,6 +261,7 @@ public class ClientManager implements ThrottleListener {
         jmri.InstanceManager.throttleManagerInstance().responseThrottleDecision(address, ClientManager.getInstance(), ThrottleListener.DecisionType.SHARE);
     }
 
+    
     public static byte xor(byte[] packet) {
         byte xor = (byte) (packet[0] ^ packet[1]);
         for (int i = 2; i < (packet.length - 1); i++) {

@@ -54,10 +54,14 @@ public class Service40 {
                 return handleHeaderE3(Arrays.copyOfRange(data, 1, 4), clientAddress);
             case (byte)0xE4:
                 return handleHeaderE4(Arrays.copyOfRange(data, 1, 5), clientAddress);
+            case (byte)0x43:
+                return handleHeader43(Arrays.copyOfRange(data, 1, 3), clientAddress);
+            case (byte)0x53:
+                return handleHeader53(Arrays.copyOfRange(data, 1, 4), clientAddress);
             case (byte)0x80:
                 return handleHeader80();
-//            case (byte)0xF1:
-//                return handleHeaderF1();
+            case (byte)0xF1:
+                return handleHeaderF1();
             default:
                 log.debug("{} Header {} not yet supported", moduleIdent, Integer.toHexString(command & 0xFF));
                 break;
@@ -193,6 +197,27 @@ public class Service40 {
         return null;
     }
     
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+    justification = "Messages can be of any length, null is used to indicate absence of message for caller")
+    private static byte[] handleHeader43(byte[] data, InetAddress clientAddress) {
+        // Get turnout status command
+        int turnoutNumber = ((data[0] & 0xFF) << 8) + (data[1] & 0xFF);
+        log.debug("{} Get turnout no {} status", moduleIdent, turnoutNumber);
+        return ClientManager.getInstance().getTurnoutStatusMessage(clientAddress, turnoutNumber);
+    }
+
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+    justification = "Messages can be of any length, null is used to indicate absence of message for caller")
+    private static byte[] handleHeader53(byte[] data, InetAddress clientAddress) {
+        // Set turnout
+        int turnoutNumber = ((data[0] & 0xFF) << 8) + (data[1] & 0xFF);
+        log.debug("{} Set turnout no {} to state {}", moduleIdent, turnoutNumber, data[2] & 0xFF);
+        if ( (data[2] & 0x08) == 0x08) { //only use "activation", ignore "deactivation"
+            ClientManager.getInstance().setTurnout(clientAddress, turnoutNumber, (data[2] & 0x1) == 0x00);
+        }
+        return ClientManager.getInstance().getTurnoutStatusMessage(clientAddress, turnoutNumber);
+    }
+
     private static byte[] handleHeader80() {
         log.info("{} Stop all locos", moduleIdent);
         Iterator<ThrottleFrame> tpi = InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getTableModel().iterator();
@@ -214,20 +239,20 @@ public class Service40 {
         return stoppedPacket;
     }
 
-//    private static byte[] handleHeaderF1() {
-//        log.info("{} Get Firmware Version", moduleIdent);
-//        
-//        // send Firmware Version Packet - always return 1.43
-//        byte[] fwVersionPacket =  new byte[9];
-//        fwVersionPacket[0] = (byte) 0x09;
-//        fwVersionPacket[1] = (byte) 0x00;
-//        fwVersionPacket[2] = (byte) 0x40;
-//        fwVersionPacket[3] = (byte) 0x00;
-//        fwVersionPacket[4] = (byte) 0xF3;
-//        fwVersionPacket[5] = (byte) 0x0A;
-//        fwVersionPacket[6] = (byte) 0x01;
-//        fwVersionPacket[7] = (byte) 0x43;
-//        fwVersionPacket[8] = ClientManager.xor(fwVersionPacket);
-//        return fwVersionPacket;
-//    }
+    private static byte[] handleHeaderF1() {
+        log.info("{} Get Firmware Version", moduleIdent);
+        
+        // send Firmware Version Packet - always return 1.43
+        byte[] fwVersionPacket =  new byte[9];
+        fwVersionPacket[0] = (byte) 0x09;
+        fwVersionPacket[1] = (byte) 0x00;
+        fwVersionPacket[2] = (byte) 0x40;
+        fwVersionPacket[3] = (byte) 0x00;
+        fwVersionPacket[4] = (byte) 0xF3;
+        fwVersionPacket[5] = (byte) 0x0A;
+        fwVersionPacket[6] = (byte) 0x01;
+        fwVersionPacket[7] = (byte) 0x43;
+        fwVersionPacket[8] = ClientManager.xor(fwVersionPacket);
+        return fwVersionPacket;
+    }
 }
