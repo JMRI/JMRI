@@ -81,13 +81,13 @@ public class TrainCommon {
         for (Engine engine : engineList) {
             if (engine.getRouteLocation() == rl && !engine.getTrackName().equals(Engine.NONE)) {
                 String pullText = padAndTruncate(pickupEngine(engine).trim(), lineLength / 2);
-                pullText = formatColorString(pullText, Setup.getPickupColor());
+                pullText = formatColorString(pullText, Setup.getPickupEngineColor());
                 String s = pullText + VERTICAL_LINE_CHAR + tabString("", lineLength / 2 - 1);
                 addLine(file, s);
             }
             if (engine.getRouteDestination() == rl) {
                 String dropText = padAndTruncate(dropEngine(engine).trim(), lineLength / 2 - 1);
-                dropText = formatColorString(dropText, Setup.getDropColor());
+                dropText = formatColorString(dropText, Setup.getDropEngineColor());
                 String s = tabString("", lineLength / 2) + VERTICAL_LINE_CHAR + dropText;
                 addLine(file, s);
             }
@@ -123,12 +123,12 @@ public class TrainCommon {
         for (String attribute : format) {
             String s = getEngineAttribute(engine, attribute, PICKUP);
             if (!checkStringLength(buf.toString() + s, isManifest)) {
-                addLine(file, buf, Setup.getPickupColor());
+                addLine(file, buf, Setup.getPickupEngineColor());
                 buf = new StringBuffer(TAB); // new line
             }
             buf.append(s);
         }
-        addLine(file, buf, Setup.getPickupColor());
+        addLine(file, buf, Setup.getPickupEngineColor());
     }
 
     /**
@@ -160,12 +160,12 @@ public class TrainCommon {
         for (String attribute : format) {
             String s = getEngineAttribute(engine, attribute, !PICKUP);
             if (!checkStringLength(buf.toString() + s, isManifest)) {
-                addLine(file, buf, Setup.getDropColor());
+                addLine(file, buf, Setup.getDropEngineColor());
                 buf = new StringBuffer(TAB); // new line
             }
             buf.append(s);
         }
-        addLine(file, buf, Setup.getDropColor());
+        addLine(file, buf, Setup.getDropEngineColor());
     }
 
     /**

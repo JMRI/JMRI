@@ -20,9 +20,7 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainCommon;
-import jmri.jmrit.operations.trains.TrainSwitchListText;
+import jmri.jmrit.operations.trains.*;
 
 /**
  * Yardmaster frame by track. Shows work at one location listed by track.
@@ -211,7 +209,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                         engine.addPropertyChangeListener(this);
                         rollingStock.add(engine);
                         JCheckBox checkBox = new JCheckBox(trainCommon.pickupEngine(engine));
-                        setCheckBoxFont(checkBox, Setup.getPickupColor());
+                        setCheckBoxFont(checkBox, Setup.getPickupEngineColor());
                         pPickups.add(checkBox);
                         pickupEngine = true;
                         checkBoxes.put(engine.getId() + "p", checkBox);
@@ -234,7 +232,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                         engine.addPropertyChangeListener(this);
                         rollingStock.add(engine);
                         JCheckBox checkBox = new JCheckBox(trainCommon.dropEngine(engine));
-                        setCheckBoxFont(checkBox, Setup.getDropColor());
+                        setCheckBoxFont(checkBox, Setup.getDropEngineColor());
                         pSetouts.add(checkBox);
                         setoutEngine = true;
                         checkBoxes.put(engine.getId(), checkBox);
