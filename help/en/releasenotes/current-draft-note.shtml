@@ -83,7 +83,7 @@
             <ul>
                 <li>Correct behavior of the ONESENSOR and TWOSENSOR turnout feedback mode. 
                     The turnout's KnownState is set after turnout feedback is received. 
-                    In Layout Editor - Entry Exit - Full Interlocking - Signal mast sets the acpect Clear 
+                    In Layout Editor - Entry Exit - Full Interlocking - Signal mast sets the aspect Clear 
                     only after all turnouts are correctly positioned.</li>
                 <li></li>
             </ul>
