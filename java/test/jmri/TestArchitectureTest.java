@@ -87,6 +87,7 @@ public class TestArchitectureTest {
     @ArchTest
     public static final ArchRule noLog4JinJmriTestsRule = noClasses()
         .that().doNotHaveFullyQualifiedName("jmri.util.JUnitAppender")
+        .and().doNotHaveFullyQualifiedName("jmri.util.JUnitAppenderTest")
         .and().doNotHaveFullyQualifiedName("jmri.util.TestingLoggerConfiguration")
         .and().doNotHaveFullyQualifiedName("apps.jmrit.log.Log4JTreePaneTest")
         .should().dependOnClassesThat().resideInAPackage("org.apache.logging.log4j")
