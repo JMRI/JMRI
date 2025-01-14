@@ -184,6 +184,10 @@
           <li></li>
         </ul>
 
+        <h4>AE Model</h4>
+            <ul>
+                <li>Added AEModels.xml to add support for AE Model decoders</li>
+            </ul>
         <h4>Arnold</h4>
             <ul>
                 <li></li>
@@ -209,6 +213,11 @@
                 <li></li>
             </ul>
 
+        <h4>DCC Concepts</h4>
+            <ul>
+                <li>DCC_Concepts_Zen_ABC.xml to add definitions for DCC Concepts Zen Blue/Black V12 </li>
+            </ul>
+
         <h4>Digikeijs (Digirails)</h4>
             <ul>
                 <li></li>
@@ -229,9 +238,13 @@
                 <li></li>
             </ul>
 
+        <h4>Hattoms</h4>
+            <ul>
+                <li>Added Hattons-Neo.xml to add Hattons Neo decoders</li>
+            </ul>
         <h4>Hornby</h4>
             <ul>
-                <li></li>
+                <li>Added HornbyTXS.xml to add Hornby HM7000 sound decoder definitions and updated HornbyTTS.xml to address error for Hall Class Sound definition</li>
             </ul>
 
         <h4>Kuehn</h4>
