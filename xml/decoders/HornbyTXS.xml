@@ -2547,6 +2547,7 @@
         <label>Trigger Threshold 4 - Notch 4</label>
       </variable>
       <variable CV="217" default="5" item="Sound Option 9" tooltip="Trigger Threshold Window 4"  include="3,4,14,28,32,41,42,43,44,45,46,49,50,51,57,58,60">
+        <decVal min="5" max="14"/>
         <label>Trigger Threshold Window 4</label>
       </variable>
       
@@ -2616,15 +2617,7 @@
         <decVal min="15" max="75"/>
         <label>Wheel Slip Deactivating Speed (High Range) </label>
       </variable>            
- 
- 
- 
     </variables>
-    
-    
-    
-    
-
     <resets>
       <factReset label="Reset All CVs" CV="8" default="8">
       </factReset>
@@ -2632,7 +2625,6 @@
       </factReset>
     </resets>
   </decoder>
-  
 <pane>
   <name>ABC Breaking</name>
   <column>
