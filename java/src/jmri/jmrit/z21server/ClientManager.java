@@ -193,7 +193,9 @@ public class ClientManager implements ThrottleListener {
                             }                        
                         }
                     }
-                    catch (Exception e) {} //silently ignore
+                    catch (Exception e) {
+                        log.warn("regex exception", e);
+                    }
                 }
             }
         }
