@@ -2461,23 +2461,23 @@
       <!-- SOUND IDs -->
       
       
-      <variable CV="200" item="Decoder Sound Version" readOnly="Yes" tooltip="ID of the Sound File" >
+      <variable CV="200" item="Decoder Sound Version" readOnly="yes" tooltip="ID of the Sound File" >
         <decVal />
         <label>Sound ID (High Byte):</label>
       </variable>
-      <variable CV="201" item="Product Number" readOnly="Yes"  >
+      <variable CV="201" item="Product Number" readOnly="yes"  >
         <decVal />
         <label>Sound ID (Low Byte):</label>
       </variable>
-      <variable CV="202" item="Sound Version (High Byte)" readOnly="Yes" tooltip="Version of the Sound File" >
+      <variable CV="202" item="Sound Version (High Byte)" readOnly="yes" tooltip="Version of the Sound File" >
         <decVal />
         <label>Sound Version (High Byte):</label>
       </variable>
-      <variable CV="203" item="Sound Version (Low Byte)" readOnly="Yes" tooltip="Version of the Sound File" >
+      <variable CV="203" item="Sound Version (Low Byte)" readOnly="yes" tooltip="Version of the Sound File" >
         <decVal />
         <label>Sound Version (Low Byte):</label>
       </variable>
-      <variable CV="201,200"  item="ProductID1" readOnly="Yes" tooltip="Version of the Sound File"  >
+      <variable CV="201,200"  item="ProductID1" readOnly="yes" tooltip="Version of the Sound File"  >
         <splitVal factor="1" min="0" />
         <label>ProductID(Sound Profile ID):</label>
       </variable>       
@@ -2498,7 +2498,7 @@
         </enumVal>
         <label>Sound Play Mode F2</label>
       </variable> 
-      <variable CV="207" item="Sound Selection F3" readOnly="Yes" tooltip="Bits 0-7 linked to available sounds" >
+      <variable CV="207" item="Sound Selection F3" readOnly="yes" tooltip="Bits 0-7 linked to available sounds" >
         <decVal max="255"/>
         <label>Sound Selection F3</label>
       </variable>
