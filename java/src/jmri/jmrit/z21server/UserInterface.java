@@ -1,11 +1,9 @@
 package jmri.jmrit.z21server;
 
-import jmri.InstanceManager;
 import jmri.jmrit.throttle.LargePowerManagerButton;
 import jmri.jmrit.throttle.StopAllButton;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.prefs.JmriPreferencesActionFactory;
 
 import javax.swing.*;
 import java.awt.*;
