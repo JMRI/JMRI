@@ -165,15 +165,6 @@ public class UserInterface extends JmriJFrame implements PropertyChangeListener 
         panel.add(scrollTable, con);
 
         
-//        con.gridx = 0;
-//        con.gridy = 4;
-//        con.weighty = 1.0;
-//        con.ipadx = 10;
-//        con.ipady = 10;
-//        con.gridheight = 3;
-//        con.gridwidth = GridBagConstraints.REMAINDER;
-//        con.fill = GridBagConstraints.BOTH;
-
         //  Create the menu to use with the window. Has to be before pack() for Windows.
         buildMenu();
 

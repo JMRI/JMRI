@@ -118,7 +118,7 @@ public class Service40 {
                 return buildTrackPowerPacket(); //return power off
             }
         }
-        // response packet is now sent from the property change event
+        // response packet is sent from the property change event
         //return buildTrackPowerPacket();
         return null;
     }
@@ -171,7 +171,7 @@ public class Service40 {
 
             ClientManager.getInstance().setLocoSpeedAndDirection(clientAddress, locomotiveAddress, actualSpeed, bForward);
 
-            // response packet is now sent from the property change event
+            // response packet is sent from the property change event
             //return ClientManager.getInstance().getLocoStatusMessage(clientAddress, locomotiveAddress);
         }
         else if (data[0] == (byte)0xF8) {
@@ -191,7 +191,7 @@ public class Service40 {
 
             ClientManager.getInstance().setLocoFunction(clientAddress, locomotiveAddress, functionNumber, functionSwitchType);
 
-            // response packet is now sent from the property change event
+            // response packet is sent from the property change event
             //return ClientManager.getInstance().getLocoStatusMessage(clientAddress, locomotiveAddress);
         }
         return null;
