@@ -202,7 +202,7 @@
           <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
           <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
         </functionlabels> 
-      </model>      
+      </model>
       <model model="Hornby TXS Princess Coronation Class Steam" numOuts="4" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="11,52" >
         <versionCV lowVersionID="254" highVersionID="254"/>
         <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
@@ -226,7 +226,7 @@
           <functionlabel num="14" lockable="true">Blower</functionlabel>
           <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
           <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
-          <functionlabel num="17" lockable="true">Blow Down</functionlabel>       
+          <functionlabel num="17" lockable="true">Blow Down</functionlabel>
           <functionlabel num="18" lockable="false">Coal Pusher</functionlabel>
           <functionlabel num="19" lockable="false">Water Fill</functionlabel>
           <functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
@@ -263,7 +263,7 @@
           <functionlabel num="14" lockable="true">Blower</functionlabel>
           <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
           <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
-          <functionlabel num="17" lockable="true">Blow Down</functionlabel>       
+          <functionlabel num="17" lockable="true">Blow Down</functionlabel>
           <functionlabel num="18" lockable="false">Water Fill</functionlabel>
           <functionlabel num="19" lockable="false">Buffer Up</functionlabel>
           <functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
@@ -2617,7 +2617,9 @@
         <decVal min="15" max="75"/>
         <label>Wheel Slip Deactivating Speed (High Range) </label>
       </variable>            
+
     </variables>
+
     <resets>
       <factReset label="Reset All CVs" CV="8" default="8">
       </factReset>
@@ -2625,6 +2627,7 @@
       </factReset>
     </resets>
   </decoder>
+  
 <pane>
   <name>ABC Breaking</name>
   <column>

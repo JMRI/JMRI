@@ -15,6 +15,7 @@
   <version author="Bob Jacobsen" version="2" lastUpdated="20190727"/> <!-- xinclude for CV19 -->
   <version author="Peter MacKenzie" version="1" lastUpdated="20130809"/>
   <!-- Version 1.0 - based on DCC Concepts decoders by Nigel Cliffe & John Stather -->
+  <!--Version 2.1 - Updated Momentum Pane to align with DCC Concepts V12-->
   <decoder>
     <family name="Hattons DCC Loco Decoders" mfg="Hattons Model Railways">
       <model model="MD4 4 Function" numOuts="4" numFns="14" lowVersionID="21" highVersionID="21" maxMotorCurrent="1.1A (peak=2A)">
@@ -83,7 +84,7 @@
         </enumVal>
         <label>Analog Mode White/Yellow</label>
       </variable>
-      <variable CV="13" item="Analog Mode Function Status - FL(r)" mask="XXXXXXVX" default="1" minOut="3">
+      <variable CV="13" item="Analog Mode Function Status - FL(r)" mask="XXXXXXVX" default="1" minOut="2">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -94,7 +95,7 @@
         </enumVal>
         <label>Analog Mode Green</label>
       </variable>
-      <variable CV="13" item="Analog Mode Function Status - F1" mask="XXXXXVXX" default="1" minOut="4">
+      <variable CV="13" item="Analog Mode Function Status - F1" mask="XXXXXVXX" default="1" minOut="3">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -931,44 +932,44 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output Ditch</label>
       </variable>
-      <variable item="Decel 2 Rate End Point" CV="125" default="0" tooltip="Sets the Decel 2 Rate End Point, range 0(default)-255, CV125" comment="Range 0-255">
+      <variable item="Decel Rate 4 End Point" CV="125" default="0" tooltip="Sets the Decel Rate 4 End Point, range 0(default)-255, CV125" comment="Range 0-255">
         <decVal max="255"/>
-        <label>Decel 2 Rate End Point</label>
+        <label>Decel 4 Rate End Point</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable item="Decel 2 Rate" CV="126" default="0" tooltip="Sets the Decel 2 Rate, range 0(default)-255, CV126" comment="Range 0-255">
+      <variable item="Decel Rate 4" CV="126" default="0" tooltip="Sets the Decel Rate 4, range 0(default)-255, CV126" comment="Range 0-255">
         <decVal max="255"/>
-        <label>Decel 2 Rate</label>
+        <label>Decel Rate 4</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable item="Decel 3 Rate End Point" CV="127" default="0" tooltip="Sets the Decel 3 Rate End Point, range 0(default)-255, CV127" comment="Range 0-255">
+      <variable item="Decel 5 Rate End Point" CV="127" default="0" tooltip="Sets the Decel Rate 5 End Point, range 0(default)-255, CV127" comment="Range 0-255">
         <decVal max="255"/>
-        <label>Decel 3 Rate End Point</label>
+        <label>Decel Rate 5 End Point</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable item="Decel 3 Rate" CV="128" default="0" tooltip="Sets the Decel 3 Rate, range 0(default)-255, CV128" comment="Range 0-255">
+      <variable item="Decel Rate 5" CV="128" default="0" tooltip="Sets the Decel Rate 5, range 0(default)-255, CV128" comment="Range 0-255">
         <decVal max="255"/>
-        <label>Decel 3 Rate</label>
+        <label>Decel Rate 5</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable item="Accel 2 Rate Start Point" CV="129" default="0" tooltip="Sets the Accel 2 Rate Start point, range 0(default)-255, CV129" comment="Range 0-255">
+      <variable item="Accel Rate 2 Start Point" CV="129" default="0" tooltip="Sets the Accel Rate 2 Start point, range 0(default)-255, CV129" comment="Range 0-255">
         <decVal max="255"/>
-        <label>Accel 2 Rate Start Point</label>
+        <label>Accel Rate 2 Start Point</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable item="Accel 2 Rate" CV="130" default="0" tooltip="Sets the Accel 2 rate, range 0(default)-255, CV130" comment="Range 0-255">
+      <variable item="Accel Rate 2" CV="130" default="0" tooltip="Sets the Accel Rate 2, range 0(default)-255, CV130" comment="Range 0-255">
         <decVal max="255"/>
         <label>Accel 2 Rate</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable item="Accel 3 Rate Start Point" CV="131" default="0" tooltip="Sets the Accel Rate 3 Start point, range 0(default)-255, CV131" comment="Range 0-255">
+      <variable item="Accel Rate 3 Start Point" CV="131" default="0" tooltip="Sets the Accel Rate 3 Start point, range 0(default)-255, CV131" comment="Range 0-255">
         <decVal max="255"/>
         <label>Accel 3 Start Point</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable item="Accel 3 Rate" CV="132" default="0" tooltip="Sets the Accel 3 Rate, range 0(default)-255, CV132" comment="Range 0-255">
+      <variable item="Accel Rate 3" CV="132" default="0" tooltip="Sets the Accel Rate 3, range 0(default)-255, CV132" comment="Range 0-255">
         <decVal max="255"/>
-        <label>Accel 3 Rate</label>
+        <label>Accel Rate 3</label>
         <comment>Range 0-255</comment>
       </variable>
       <variable CV="133" item="EMF Droop Config" default="255" tooltip="If button control of motor is active, range 0-255, CV133">
@@ -1044,79 +1045,97 @@
         <label>F12 controls output BEMF</label>
       </variable>
     </variables>
+    
     <resets>
       <factReset label="Reset All CVs" CV="8" default="8"/>
     </resets>
   </decoder>
+  
   <pane> 
     <name>Momentum</name>
     <column>
-      <label label="If Accel 2, 3 and Decel 2, 3 are all set to zero,"/>
-      <label label="base rates (CV3,CV4) apply to whole speed range"/>
-      <label label=" "/>
-      <label label=" "/>
-      <display item="Accel 2 Rate Start Point" format="hslider" label="">
-        <label/>
-      </display>
-      <display item="Accel 2 Rate Start Point"/>
-      <label label=" "/>
-      <display item="Accel 3 Rate Start Point" format="hslider" label="">
-        <label/>
-      </display>
-      <display item="Accel 3 Rate Start Point"/>
-      <label label=" "/>
-      <label label=" "/>
-      <display item="Decel 3 Rate End Point" format="hslider" label="">
-        <label/>
-      </display>
-      <display item="Decel 3 Rate End Point"/>
-      <label label=" "/>
-      <display item="Decel 2 Rate End Point" format="hslider" label="">
-        <label/>
-      </display>
-      <display item="Decel 2 Rate End Point"/>
-      <label label=" "/>
-      <label label=" "/>
-      <label label=" "/>
+      <label>
+        <text>If Acceleration Rates 2 &amp; 3 and Deceleration Rates 5 &amp; 4 are all set to zero,</text>
+      </label>
+      <label>
+        <text>then Base accel/decel rates (CV3 &amp; CV4) apply to the whole speed range.</text>
+      </label>
+      <label><text> </text></label>
+      <label><text> </text></label>
+      <row>
+        <display item="Accel Rate 2 Start Point" layout="above" label=""/>
+        <label><text> </text></label>
+        <display item="Accel Rate 2 Start Point" layout="above" format="hslider"/>
+      </row>
+      <label><text> </text></label>
+      <row>
+        <display item="Accel Rate 3 Start Point" layout="above" label=""/>
+        <label><text> </text></label>
+        <display item="Accel Rate 3 Start Point" layout="above" format="hslider"/>
+      </row>
+      <label><text> </text></label>
+      <label><text> </text></label>
+      <label><text> </text></label>
+      <label><text> </text></label>
+      <row>
+        <display item="Decel Rate 4 End Point" layout="above" label=""/>
+        <label><text> </text></label>
+        <display item="Decel Rate 4 End Point" layout="above" format="hslider"/>
+      </row>
+      <label><text> </text></label>
+      <row>
+        <display item="Decel Rate 5 End Point" layout="above" label=""/>
+        <label><text> </text></label>
+        <display item="Decel Rate 5 End Point" layout="above" format="hslider"/>
+      </row>
+      <label><text> </text></label>
+      <label><text> </text></label>
+      <label><text> </text></label>
     </column>
     <column>
-      <label label=" "/>
-      <label label=" "/>
-      <label label=" "/>
-      <display item="Accel Base Rate (CV3)" format="hslider" label="">
-        <label/>
-      </display>
-      <display item="Accel Base Rate (CV3)"/>
-      <label label=" "/>
-      <display item="Accel 2 Rate" format="hslider" label="">
-        <label/>
-      </display>
-      <display item="Accel 2 Rate"/>
-      <label label=" "/>
-      <display item="Accel 3 Rate" format="hslider" label="">
-        <label/>
-      </display>
-      <display item="Accel 3 Rate"/>
-      <label label=" "/>
-      <label label=" "/>
-      <display item="Decel 3 Rate" format="hslider" label="">
-        <label/>
-      </display>
-      <display item="Decel 3 Rate"/>
-      <label label=" "/>
-      <display item="Decel 2 Rate" format="hslider" label="">
-        <label/>
-      </display>
-      <display item="Decel 2 Rate"/>
-      <label label=" "/>
-      <display item="Decel Base Rate (CV4)" format="hslider" label="">
-        <label/>
-      </display>
-      <display item="Decel Base Rate (CV4)"/>
-      <label label=" "/>
-      <label label=" "/>
+      <label><text> </text></label>
+      <label><text> </text></label>     <label><text> </text></label>
+
+      <row>
+        <display item="Accel" layout="above" label=""/>
+        <label><text> </text></label>
+        <display item="Accel" layout="above" label="Base Acceleration Rate" format="hslider"/>
+      </row>
+      <label><text> </text></label>
+      <row>
+        <display item="Accel Rate 2" layout="above" label=""/>
+        <label><text> </text></label>
+        <display item="Accel Rate 2" layout="above" format="hslider"/>
+      </row>
+      <label><text> </text></label>
+      <row>
+        <display item="Accel Rate 3" layout="above" label=""/>
+        <label><text> </text></label>
+        <display item="Accel Rate 3" layout="above" format="hslider"/>
+      </row>
+      <label><text> </text></label>
+
+ 
+      <row>
+        <display item="Decel Rate 4" layout="above" label=""/>
+        <label><text> </text></label>
+        <display item="Decel Rate 4" layout="above" format="hslider"/>
+      </row>
+      <label><text> </text></label>
+      <row>
+        <display item="Decel Rate 5" layout="above" label=""/>
+        <label><text> </text></label>
+        <display item="Decel Rate 5" layout="above" format="hslider"/>
+      </row>
+      <label><text> </text></label>
+      <row>
+        <display item="Decel" layout="above" label=""/>
+        <label><text> </text></label>
+        <display item="Decel" layout="above" label="Base Deceleration Rate" format="hslider"/>
+      </row>
+      <label><text> </text></label>
+      <label><text> </text></label>
     </column>
-    <name>Momentum</name>
   </pane>
   <pane>
     <name>Decoder Locking</name>
