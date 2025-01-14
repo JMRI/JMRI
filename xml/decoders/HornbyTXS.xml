@@ -610,7 +610,7 @@
           <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
         </functionlabels> 
       </model>
-      <model model="Hornby TXS A1 A3 Class Flying Scotsman Steam" numOuts="4" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="33" >
+      <model model="Hornby TXS A1/A3 Class Flying Scotsman Steam" numOuts="4" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="33" >
         <versionCV lowVersionID="254" highVersionID="254"/>
         <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
         <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
