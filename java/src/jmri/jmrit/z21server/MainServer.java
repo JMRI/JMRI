@@ -32,7 +32,7 @@ import java.beans.PropertyChangeEvent;
 public class MainServer implements Runnable, PropertyChangeListener {
 
     private final static Logger log = LoggerFactory.getLogger(MainServer.class);
-    private final static int port = 21105;
+    public final static int port = 21105;
     DatagramSocket mySS;
     @Override
     public void run() {
@@ -53,7 +53,7 @@ public class MainServer implements Runnable, PropertyChangeListener {
                 boolean bReceivedData;
 
                 log.trace("Loop ****");
-                ClientManager.getInstance().handleExpiredClients();
+                ClientManager.getInstance().handleExpiredClients(false);
 
                 //mySS.setSoTimeout(500);
                 mySS.setSoTimeout(2000);// since almost everything is asynchroneous now, we need the forced exec only for expired clients
@@ -90,6 +90,7 @@ public class MainServer implements Runnable, PropertyChangeListener {
                         break;
                     case 0x30:
                         log.debug("{} Disconnect frame", ident);
+                        ClientManager.getInstance().unregisterClient(clientAddress);
                         break;
                     case 0x40:
                         byte[] payloadData = Arrays.copyOfRange(actualData, HEADER_SIZE, dataLenght);

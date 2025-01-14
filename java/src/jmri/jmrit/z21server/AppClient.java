@@ -11,6 +11,11 @@ import java.beans.PropertyChangeEvent;
 
 import static jmri.jmrit.z21server.ClientManager.speedMultiplier;
 
+import java.util.List;
+import jmri.DccLocoAddress;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +33,8 @@ public class AppClient implements PropertyChangeListener  {
     private final InetAddress address;
     private final HashMap<Integer, DccThrottle> throttles;
     private final PropertyChangeListener changeListener;
+    private DccThrottle activeThrottle = null; //last modified throttle
+    private RosterEntry activeRosterEntry = null; //cached roster entry for activeThrottle
 
     private Date timestamp;
 
@@ -46,12 +53,28 @@ public class AppClient implements PropertyChangeListener  {
             throttles.put(locoAddress, throttle);
             throttle.addPropertyChangeListener(this);
         }
+        log.trace("addThrottle: list: {}", throttles.keySet());
+    }
+    
+    public DccThrottle getActiveThrottle() {
+        return activeThrottle;
+    }
+    
+    public String getActiveRosterIdString() {
+        return (activeRosterEntry != null) ? activeRosterEntry.getId() : null;
+    }
+    
+    public void setActiveThrottle(DccThrottle t) {
+        activeThrottle = t;
+        activeRosterEntry = findRosterEntry(t);
     }
     
     public void clear() {
+        log.trace("clear: list: {}", throttles.keySet());
         for (DccThrottle t: throttles.values()) {
             t.removePropertyChangeListener(this);
         }
+        throttles.clear();
     }
     
     public DccThrottle getThrottleFromLocoAddress(int locoAddress) {
@@ -73,8 +96,8 @@ public class AppClient implements PropertyChangeListener  {
     public boolean isTimestampExpired() {
         Duration duration = Duration.between(timestamp.toInstant(), new Date().toInstant());
         log.trace("Duration without heartbeat: {}", duration);
-        //return (duration.toSeconds() >= 60);
-        return (duration.toSeconds() >= 5); //debug
+        return (duration.toSeconds() >= 60);
+        //return (duration.toSeconds() >= 5); //debug
         /* Per Z21 Spec, clients are deemed lost after one minute of inactivity. */
     }
 
@@ -94,6 +117,18 @@ public class AppClient implements PropertyChangeListener  {
             log.trace("AppClient: Throttle change event: loco: {}, {}", ((DccThrottle)pce.getSource()).getLocoAddress(), pce);
             changeListener.propertyChange(new PropertyChangeEvent(pce.getSource(), "throttle-change", null, buildLocoPacket( ((DccThrottle)pce.getSource()) )));
         }
+    }
+    
+    public static RosterEntry findRosterEntry(DccThrottle t) {
+        RosterEntry re = null;
+        if (t.getLocoAddress() != null) {
+            List<RosterEntry> l = Roster.getDefault().matchingList(null, null, "" + ((DccLocoAddress) t.getLocoAddress()).getNumber(), null, null, null, null);
+            if (l.size() > 0) {
+                log.debug("Roster Loco found: {}", l.get(0).getDccAddress());
+                re = l.get(0);
+            }
+        }
+        return re;
     }
     
     private byte[] buildLocoPacket(DccThrottle t) {

@@ -1,5 +1,6 @@
 package jmri.jmrit.z21server;
 
+import java.beans.PropertyChangeEvent;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.ThrottleListener;
@@ -25,6 +26,7 @@ public class ClientManager implements ThrottleListener {
     private static final HashMap<InetAddress, AppClient> registeredClients = new HashMap<>();
     private static final HashMap<Integer, InetAddress> requestedThrottlesList = new HashMap<>(); //temporary store client InetAddress
     private PropertyChangeListener changeListener = null;
+    private PropertyChangeListener clientListener = null; //the listener will be notified if a client is registered or unregistered
     public static float speedMultiplier = 1.0f / 128.0f;
 
     private final static Logger log = LoggerFactory.getLogger(ClientManager.class);
@@ -43,6 +45,10 @@ public class ClientManager implements ThrottleListener {
         this.changeListener = changeListener;
     }
     
+    public void setClientListener(PropertyChangeListener clientListener) {
+        this.clientListener = clientListener;
+    }
+    
     public HashMap<InetAddress, AppClient> getRegisteredClients() {
         return registeredClients;
     }
@@ -51,6 +57,9 @@ public class ClientManager implements ThrottleListener {
         if (!registeredClients.containsKey(clientAddress)) {
             AppClient client = new AppClient(clientAddress, changeListener);
             registeredClients.put(clientAddress, client);
+            if (clientListener != null) {
+                clientListener.propertyChange(new PropertyChangeEvent(this, "client-registered", null, null));
+            }
         }
         if (registeredClients.get(clientAddress).getThrottleFromLocoAddress(locoAddress) == null) {
             // save loco address and client address temporary, so that notifyThrottleFound() knows the client for the Throttle
@@ -66,6 +75,7 @@ public class ClientManager implements ThrottleListener {
             if (throttle != null) {
                 if (throttle.getIsForward() != forward) throttle.setIsForward(forward);
                 throttle.setSpeedSetting(speed * speedMultiplier);
+                setActiveThrottle(client, throttle);
             } else {
                 log.info("Unable to find throttle for loco {} from client {}", locoAddress, clientAddress);
             }
@@ -86,11 +96,21 @@ public class ClientManager implements ThrottleListener {
                 }
                 log.trace("set function {} to value: {}", functionNumber, bOn);
                 throttle.setFunction(functionNumber, bOn);
+                setActiveThrottle(client, throttle);
             } else {
                 log.info("Unable to find throttle for loco {} from client {}", locoAddress, clientAddress);
             }
         } else {
             log.info("App client {} is not registered", clientAddress);
+        }
+    }
+    
+    private void setActiveThrottle(AppClient client, DccThrottle throttle) {
+        if (client.getActiveThrottle() != throttle) {
+            client.setActiveThrottle(throttle);
+            if (clientListener != null) {
+                clientListener.propertyChange(new PropertyChangeEvent(this, "active-throttle", null, null));
+            }
         }
     }
 
@@ -99,23 +119,33 @@ public class ClientManager implements ThrottleListener {
         if (client != null) client.heartbeat();
     }
 
-    synchronized public void handleExpiredClients() {
+    synchronized public void handleExpiredClients(boolean removeAll) {
         HashMap<InetAddress, AppClient> tempMap = new HashMap<>(registeredClients); // to avoid concurrent modification
         for (AppClient c : tempMap.values()) {
-            if (c.isTimestampExpired()) {
-                log.info("Remove expired client [{}]",c.getAddress());
-                c.clear();
-                registeredClients.remove(c.getAddress());
-
-                // the list should definitly be empty, so just in case...
-                for (Iterator<HashMap.Entry<Integer, InetAddress>> it = requestedThrottlesList.entrySet().iterator(); it.hasNext(); ) {
-                    HashMap.Entry<Integer, InetAddress> e = it.next();
-                    if (e.getValue().equals(c.getAddress())) {
-                        log.error("The list requestedThrottlesList should be empty, but is not. Remove {}", e);
-                        it.remove();
-                    }
-                }
+            if (c.isTimestampExpired()  ||  removeAll) {
+                log.debug("Remove expired client [{}]",c.getAddress());
+                unregisterClient(c.getAddress());
              }
+        }
+    }
+    
+    synchronized public void unregisterClient(InetAddress clientAddress) {
+        log.info("Remove client [{}]", clientAddress);
+        if (registeredClients.containsKey(clientAddress)) {
+            registeredClients.get(clientAddress).clear();
+        }
+        registeredClients.remove(clientAddress);
+        if (clientListener != null) {
+            clientListener.propertyChange(new PropertyChangeEvent(this, "client-unregistered", null, null));
+        }
+
+        // the list should definitly be empty, so just in case...
+        for (Iterator<HashMap.Entry<Integer, InetAddress>> it = requestedThrottlesList.entrySet().iterator(); it.hasNext(); ) {
+            HashMap.Entry<Integer, InetAddress> e = it.next();
+            if (e.getValue().equals(clientAddress)) {
+                log.error("The list requestedThrottlesList should be empty, but is not. Remove {}", e);
+                it.remove();
+            }
         }
     }
 

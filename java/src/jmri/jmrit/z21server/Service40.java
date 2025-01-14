@@ -56,6 +56,8 @@ public class Service40 {
                 return handleHeaderE4(Arrays.copyOfRange(data, 1, 5), clientAddress);
             case (byte)0x80:
                 return handleHeader80();
+//            case (byte)0xF1:
+//                return handleHeaderF1();
             default:
                 log.debug("{} Header {} not yet supported", moduleIdent, Integer.toHexString(command & 0xFF));
                 break;
@@ -212,4 +214,20 @@ public class Service40 {
         return stoppedPacket;
     }
 
+//    private static byte[] handleHeaderF1() {
+//        log.info("{} Get Firmware Version", moduleIdent);
+//        
+//        // send Firmware Version Packet - always return 1.43
+//        byte[] fwVersionPacket =  new byte[9];
+//        fwVersionPacket[0] = (byte) 0x09;
+//        fwVersionPacket[1] = (byte) 0x00;
+//        fwVersionPacket[2] = (byte) 0x40;
+//        fwVersionPacket[3] = (byte) 0x00;
+//        fwVersionPacket[4] = (byte) 0xF3;
+//        fwVersionPacket[5] = (byte) 0x0A;
+//        fwVersionPacket[6] = (byte) 0x01;
+//        fwVersionPacket[7] = (byte) 0x43;
+//        fwVersionPacket[8] = ClientManager.xor(fwVersionPacket);
+//        return fwVersionPacket;
+//    }
 }
