@@ -1763,7 +1763,7 @@
         </functionlabels> 
       </model>
     </family>
-  <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable CV="2" item="Vstart" default="02" tooltip="sets the motor voltage at Speed Step 1, range 0(default - 02)-255, CV5" comment="Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration">
@@ -2616,10 +2616,8 @@
       <variable CV="216" default="25" item="Sound Option 8" tooltip="Wheel Slip Deactivating Speed (High Range) "  include="1,2,10,11,16,17,19,20,21,24,25,26,29,31,36,37,38,40,52,53,54,56,59,61,62,65,66,67,68,69,71,999,33,34,35,48">
         <decVal min="15" max="75"/>
         <label>Wheel Slip Deactivating Speed (High Range) </label>
-      </variable>            
-
+      </variable>
     </variables>
-
     <resets>
       <factReset label="Reset All CVs" CV="8" default="8">
       </factReset>
