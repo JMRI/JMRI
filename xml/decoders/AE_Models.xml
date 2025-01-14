@@ -103,7 +103,7 @@
       </variable>
       
       
-      <variable CV="13" item="Analog Mode Function Status - FL" mask="XXXXXXXV" default="0" minout="1">
+      <variable CV="13" item="Analog Mode Function Status - FL" mask="XXXXXXXV" default="0" minOut="1">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -114,7 +114,7 @@
         </enumVal>
         <label>Analog Mode White/Yellow FoF+FoR</label>
       </variable>
-      <variable CV="13" item="Analog Mode Function Status - F1" mask="XXXXXXVX" default="0" minout="2">
+      <variable CV="13" item="Analog Mode Function Status - F1" mask="XXXXXXVX" default="0" minOut="2">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -125,7 +125,7 @@
         </enumVal>
         <label>Analog Mode Green</label>
       </variable>
-      <variable CV="13" item="Analog Mode Function Status - F2" mask="XXXXXVXX" default="0" minout="4" >
+      <variable CV="13" item="Analog Mode Function Status - F2" mask="XXXXXVXX" default="0" minOut="4" >
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -136,7 +136,7 @@
         </enumVal>
         <label>Analog Mode Purple</label>
       </variable>
-      <variable CV="13" item="Analog Mode Function Status - F3" mask="XXXXVXXX" default="0" minout="5" >
+      <variable CV="13" item="Analog Mode Function Status - F3" mask="XXXXVXXX" default="0" minOut="5" >
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -147,7 +147,7 @@
         </enumVal>
         <label>Analog Mode Brown</label>
       </variable>
-      <variable CV="13" item="Analog Mode Function Status - F4" mask="XXXVXXXX" default="0" minout="6">
+      <variable CV="13" item="Analog Mode Function Status - F4" mask="XXXVXXXX" default="0" minOut="6">
         <enumVal>
           <enumChoice choice="off">
             <choice>off</choice>
@@ -999,7 +999,7 @@
         <decVal min="4" max="64"/>
         <label>ABC voltage detection threshold (Range 4-64)</label>
         <label xml:lang="de">ABC-Modus "Empfindlichkeit"</label>
-        <label xml:lang="ca">Límit de detecció de voltatge sistema ABC</label>
+        <label xml:lang="ca">LÃ­mit de detecciÃ³ de voltatge sistema ABC</label>
       </variable>
       <!-- End of ABC -->
       
