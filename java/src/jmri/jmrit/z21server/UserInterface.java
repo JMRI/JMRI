@@ -217,7 +217,7 @@ public class UserInterface extends JmriJFrame implements PropertyChangeListener 
         this.getJMenuBar().add(menu);
 
         // add help menu
-        addHelpMenu("package.jmri.jmrit.z21server.UserInterface", true);
+        addHelpMenu("package.jmri.jmrit.z21server.z21server", true);
     }
 
     /**

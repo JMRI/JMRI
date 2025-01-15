@@ -615,7 +615,9 @@
    <h3>Z21 Server</h3>
         <a id="Z21" name="Z21"></a>
         <ul>
-            <li></li>
+            <li>Add support for Roco WlanMaus</li>
+            <li>Improve UI to show connected clients</li>
+            <li>Add help page</li>
         </ul>
 
     <h3>Miscellaneous</h3>
