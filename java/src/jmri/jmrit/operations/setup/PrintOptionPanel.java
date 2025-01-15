@@ -96,6 +96,8 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
     JComboBox<Integer> fontSizeComboBox = new JComboBox<>();
     JComboBox<String> switchListOrientationComboBox = Setup.getOrientationComboBox();
     JComboBox<SidesType> printDuplexComboBox = new JComboBox<>();
+    JColorChooser pickupEngineColorChooser = new JColorChooser();
+    JColorChooser dropEngineColorChooser = new JColorChooser();
     JColorChooser pickupColorChooser = new JColorChooser();
     JColorChooser dropColorChooser = new JColorChooser();
     JColorChooser localColorChooser = new JColorChooser();
@@ -210,11 +212,19 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         p1.add(pFormat);
         p1.add(pOrientation);
         p1.add(pDuplex);
-        p1.add(getColorChooserPanel(Bundle.getMessage("BorderLayoutPickupColor"), Setup.getPickupColor(),
+
+        JPanel pColor = new JPanel();
+        pColor.setLayout(new BoxLayout(pColor, BoxLayout.X_AXIS));
+        pColor.add(
+                getColorChooserPanel(Bundle.getMessage("BorderLayoutPickupEngineColor"), Setup.getPickupEngineColor(),
+                pickupEngineColorChooser));
+        pColor.add(getColorChooserPanel(Bundle.getMessage("BorderLayoutDropEngineColor"), Setup.getDropEngineColor(),
+                dropEngineColorChooser));
+        pColor.add(getColorChooserPanel(Bundle.getMessage("BorderLayoutPickupColor"), Setup.getPickupColor(),
                 pickupColorChooser));
-        p1.add(getColorChooserPanel(Bundle.getMessage("BorderLayoutDropColor"), Setup.getDropColor(),
+        pColor.add(getColorChooserPanel(Bundle.getMessage("BorderLayoutDropColor"), Setup.getDropColor(),
                 dropColorChooser));
-        p1.add(getColorChooserPanel(Bundle.getMessage("BorderLayoutLocalColor"), Setup.getLocalColor(),
+        pColor.add(getColorChooserPanel(Bundle.getMessage("BorderLayoutLocalColor"), Setup.getLocalColor(),
                 localColorChooser));
 
         // load all of the message combo boxes, rows 2 through 5
@@ -288,12 +298,14 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         pLogo.add(addLogoButton);
         pLogo.add(logoURL);
 
+        // Hazardous comment
+        JPanel pHazardous = new JPanel();
+        pHazardous.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutHazardous")));
+        pHazardous.add(hazardousTextField);
+
         p2.add(pEdit);
         p2.add(pLogo);
-
-        // comments
-        JPanel pComments = new JPanel();
-        pComments.setLayout(new BoxLayout(pComments, BoxLayout.X_AXIS));
+        p2.add(pHazardous);
 
         // missing cars comment
         JPanel pCommentMia = new JPanel();
@@ -302,15 +314,8 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         addItem(pCommentMia, commentScroller, 0, 0);
         addItem(pCommentMia, getColorChooserPanel(Setup.getMiaComment(), missingCarColorChooser), 2, 0);
 
-        // Hazardous comment
-        JPanel pHazardous = new JPanel();
-        pHazardous.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutHazardous")));
-        pHazardous.add(hazardousTextField);
-
-        pComments.add(pCommentMia);
-        pComments.add(pHazardous);
-
         pManifest.add(p1);
+        pManifest.add(pColor);
         pManifest.add(pEngPickup);
         pManifest.add(pEngDrop);
         pManifest.add(pPickup);
@@ -323,7 +328,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         pManifest.add(pM);
         pManifest.add(pManifestSwtichListOptions);
         pManifest.add(p2);
-        pManifest.add(pComments);
+        pManifest.add(pCommentMia);
 
         // row 11
         JPanel pControl = new JPanel();
@@ -749,6 +754,8 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         // format
         Setup.setManifestFormat((String) manifestFormatComboBox.getSelectedItem());
         // drop and pick up color option
+        Setup.setDropEngineColor(dropEngineColorChooser.getColor());
+        Setup.setPickupEngineColor(pickupEngineColorChooser.getColor());
         Setup.setDropColor(dropColorChooser.getColor());
         Setup.setPickupColor(pickupColorChooser.getColor());
         Setup.setLocalColor(localColorChooser.getColor());
@@ -862,6 +869,8 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
                 !Setup.getManifestOrientation().equals(manifestOrientationComboBox.getSelectedItem()) ||
                 !Setup.getSwitchListOrientation().equals(switchListOrientationComboBox.getSelectedItem()) ||
                 !Setup.getManifestFormat().equals(manifestFormatComboBox.getSelectedItem()) ||
+                !Setup.getDropEngineColor().equals(dropEngineColorChooser.getColor()) ||
+                !Setup.getPickupEngineColor().equals(pickupEngineColorChooser.getColor()) ||
                 !Setup.getDropColor().equals(dropColorChooser.getColor()) ||
                 !Setup.getPickupColor().equals(pickupColorChooser.getColor()) ||
                 !Setup.getLocalColor().equals(localColorChooser.getColor()) ||
