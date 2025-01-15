@@ -59,7 +59,7 @@ public class ArchitectureTest {
 
                                 .doNotHaveFullyQualifiedName("apps.SystemConsole$PopupListener").and()
                                 .doNotHaveFullyQualifiedName("apps.startup.StartupActionsPreferencesPanel$1").and()
-                                .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.BeanTableDataModel$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.BeanTableJTable").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.ListedTableFrame$ActionJList").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.RowComboBoxPanel").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.RowComboBoxPanel$1").and()
@@ -69,7 +69,6 @@ public class ArchitectureTest {
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.oblock.TableFrames").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.sensor.SensorTableDataModel$ImageIconRenderer$1").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.turnout.TurnoutTableDataModel$ImageIconRenderer$1").and()
-                                .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.turnout.TurnoutTableJTable").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.catalog.ImageIndexEditor").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.catalog.ImageIndexEditor$2").and()
                                 .doNotHaveFullyQualifiedName("mri.jmrit.display.layoutEditor.LayoutEditorToolBarPanel$1").and()

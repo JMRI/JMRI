@@ -3,8 +3,6 @@ package jmri.jmrit.audio;
 import com.jogamp.openal.AL;
 import java.util.Queue;
 import javax.vecmath.Vector3f;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * JOAL implementation of the Audio Source sub-class.
@@ -314,9 +312,11 @@ public class JoalAudioSource extends AbstractAudioSource {
     @Override
     protected void changePosition(Vector3f pos) {
         if (_initialised && isAudioAlive()) {
-            al.alSource3f(_source[0], AL.AL_POSITION, pos.x, pos.y, pos.z);
-            if (JoalAudioFactory.checkALError()) {
-                log.warn("Error updating position of JoalAudioSource ({})", this.getSystemName());
+            if (_source != null) {
+                al.alSource3f(_source[0], AL.AL_POSITION, pos.x, pos.y, pos.z);
+                if (JoalAudioFactory.checkALError()) {
+                    log.warn("Error updating position of JoalAudioSource ({})", this.getSystemName());
+                }
             }
         }
     }
@@ -408,7 +408,7 @@ public class JoalAudioSource extends AbstractAudioSource {
 
     @Override
     public int getState() {
-        if (isAudioAlive()) {
+        if (_source != null && isAudioAlive()) {
             int old = _alState[0];
             al.alGetSourcei(_source[0], AL.AL_SOURCE_STATE, _alState, 0);
             if (_alState[0] != old) {
@@ -428,13 +428,15 @@ public class JoalAudioSource extends AbstractAudioSource {
     public void stateChanged(int oldState) {
         super.stateChanged(oldState);
         if (_initialised && isAudioAlive()) {
-            al.alSourcef(_source[0], AL.AL_PITCH, this.getPitch());
-            al.alSourcef(_source[0], AL.AL_GAIN, this.getGain());
-            al.alSource3f(_source[0], AL.AL_POSITION, this.getCurrentPosition().x, this.getCurrentPosition().y, this.getCurrentPosition().z);
-            al.alSource3f(_source[0], AL.AL_VELOCITY, this.getVelocity().x, this.getVelocity().y, this.getVelocity().z);
-            al.alSourcei(_source[0], AL.AL_LOOPING, this.isLooped() ? AL.AL_TRUE : AL.AL_FALSE);
-            if (JoalAudioFactory.checkALError()) {
-                log.warn("Error updating JoalAudioSource ({})", this.getSystemName());
+            if (_source != null) {
+                al.alSourcef(_source[0], AL.AL_PITCH, this.getPitch());
+                al.alSourcef(_source[0], AL.AL_GAIN, this.getGain());
+                al.alSource3f(_source[0], AL.AL_POSITION, this.getCurrentPosition().x, this.getCurrentPosition().y, this.getCurrentPosition().z);
+                al.alSource3f(_source[0], AL.AL_VELOCITY, this.getVelocity().x, this.getVelocity().y, this.getVelocity().z);
+                al.alSourcei(_source[0], AL.AL_LOOPING, this.isLooped() ? AL.AL_TRUE : AL.AL_FALSE);
+                if (JoalAudioFactory.checkALError()) {
+                    log.warn("Error updating JoalAudioSource ({})", this.getSystemName());
+                }
             }
         } else {
             _initialised = init();
@@ -454,22 +456,24 @@ public class JoalAudioSource extends AbstractAudioSource {
     @Override
     protected void doStop() {
         log.debug("Stop JoalAudioSource ({})", this.getSystemName());
-        if (_initialised && isAudioAlive() && (isBound() || isQueued())) {
-            al.alSourceStop(_source[0]);
-            doRewind();
-        }
-        int[] myState = new int[1];
-        al.alGetSourcei(_source[0], AL.AL_SOURCE_STATE, myState, 0);
-        boolean stopped = myState[0] != AL.AL_LOOPING;
-        while (!stopped) {
-            try {
-                Thread.sleep(5);
-            } catch (InterruptedException ex) {
+        if (_source != null) {
+            if (_initialised && isAudioAlive() && (isBound() || isQueued())) {
+                al.alSourceStop(_source[0]);
+                doRewind();
             }
+            int[] myState = new int[1];
             al.alGetSourcei(_source[0], AL.AL_SOURCE_STATE, myState, 0);
-            stopped = myState[0] != AL.AL_LOOPING;
+            boolean stopped = myState[0] != AL.AL_LOOPING;
+            while (!stopped) {
+                try {
+                    Thread.sleep(5);
+                } catch (InterruptedException ex) {
+                }
+                al.alGetSourcei(_source[0], AL.AL_SOURCE_STATE, myState, 0);
+                stopped = myState[0] != AL.AL_LOOPING;
+            }
+            this.setState(STATE_STOPPED);
         }
-        this.setState(STATE_STOPPED);
     }
 
     @Override
@@ -567,7 +571,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         return this._source;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(JoalAudioSource.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JoalAudioSource.class);
 
     /**
      * An internal class used to create a new thread to monitor looping as,

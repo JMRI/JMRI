@@ -71,7 +71,7 @@ public class CarRoutingReportAction extends AbstractAction {
             TrainUtilities.openDesktop(file);
         } else {
             TrainPrintUtilities.printReport(file, Bundle.getMessage("RoutingReportCar", car.toString()), _isPreview,
-                    Car.NONE, false, Car.NONE, Car.NONE, Setup.PORTRAIT, Setup.getBuildReportFontSize(), true);
+                    Car.NONE, false, Car.NONE, Car.NONE, Setup.PORTRAIT, Setup.getBuildReportFontSize(), true, null);
         }
     }
 

@@ -133,7 +133,8 @@ public class TrainSwitchLists extends TrainCommon {
                         rlPrevious = rl;
                         continue;
                     }
-                    if (train.getExpectedArrivalTime(rl).equals(Train.ALREADY_SERVICED)) {
+                    if (train.getExpectedArrivalTime(rl).equals(Train.ALREADY_SERVICED) &&
+                            train.getCurrentRouteLocation() != rl) {
                         trainDone = true;
                     }
                     // first time at this location?
@@ -503,7 +504,8 @@ public class TrainSwitchLists extends TrainCommon {
         } else {
             TrainPrintUtilities.printReport(switchListFile, location.getName(), isPreview, Setup.getFontName(), false,
                     FileUtil.getExternalFilename(Setup.getManifestLogoURL()), location.getDefaultPrinterName(),
-                    Setup.getSwitchListOrientation(), Setup.getManifestFontSize(), Setup.isPrintPageHeaderEnabled());
+                    Setup.getSwitchListOrientation(), Setup.getManifestFontSize(), Setup.isPrintPageHeaderEnabled(),
+                    Setup.getPrintDuplexSides());
         }
         if (!isPreview) {
             location.setStatus(Location.PRINTED);

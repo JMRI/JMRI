@@ -3216,7 +3216,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         } else {
             TrainPrintUtilities.printReport(buildFile,
                     Bundle.getMessage("buildReport", getDescription()),
-                    isPreview, NONE, true, NONE, NONE, Setup.PORTRAIT, Setup.getBuildReportFontSize(), true);
+                    isPreview, NONE, true, NONE, NONE, Setup.PORTRAIT, Setup.getBuildReportFontSize(), true, null);
         }
         return true;
     }
@@ -3314,7 +3314,8 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             name = name.substring(0, TrainCommon.getManifestHeaderLineLength() / 2);
         }
         TrainPrintUtilities.printReport(file, name, isPreview, Setup.getFontName(), false, logoURL, printerName,
-                Setup.getManifestOrientation(), Setup.getManifestFontSize(), Setup.isPrintPageHeaderEnabled());
+                Setup.getManifestOrientation(), Setup.getManifestFontSize(), Setup.isPrintPageHeaderEnabled(),
+                Setup.getPrintDuplexSides());
         if (!isPreview) {
             setPrinted(true);
         }

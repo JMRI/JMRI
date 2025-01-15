@@ -2091,7 +2091,9 @@ public class AutoActiveTrain implements ThrottleListener {
             // target already adjusted.
             log.debug("RampToTarget[{}]current[{}]", getTargetSpeed(), throttle.getSpeedSetting());
             stepQueue = new LinkedList<>();
-            if (throttle.getSpeedSetting() <= getTargetSpeed()) {
+            if (throttle.getSpeedSetting() == getTargetSpeed()) {
+                return;
+            } else if (throttle.getSpeedSetting() < getTargetSpeed()) {
                 // Up
                 float newSpeed = throttle.getSpeedSetting();
                 if (newSpeed < minReliableOperatingSpeed) {

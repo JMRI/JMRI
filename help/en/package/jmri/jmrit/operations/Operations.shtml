@@ -116,6 +116,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#PrintOptions">Manifest Print Options</a>
                   <ul>
                     <li><a href="#PrintOrientation">Orientation and Paper Size</a></li>
+                    
+                    <li><a href="#PrintSides">Print on One or Two Sides</a></li>
 
                     <li><a href="#ManifestComments">Manifests and Switch List Options</a></li>
 
@@ -1935,13 +1937,27 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       printers require the English (United States) locale in order to print out a Manifest or switch
       list with the correct number of lines for paper size "Letter".
 
-      <h3>Set Out Text Color</h3>
-      You can select the text color of your Manifest when the operation is to set out a car or
-      locomotive. Select the desired color from the drop down box.
+      <h3 id="PrintSides">Print on One or Two Sides</h3>
+      You have the option of printing your Manifest or switch lists on one side of the paper or
+      both. Select "two sided long edge" or "two sided short edge" if you wish to print using both
+      sides of your paper. Short edge means the pages are bound along the short edge of the page.
+      Long edge means the pages are bound along the long edge of the page.
 
-      <h3>Pick Up Text Color</h3>
-      You can select the text color of your Manifest when the operation is to pick up a car or
-      locomotive. Select the desired color from the drop down box.
+      <h3>Pick Up Locomotive Text Color</h3>
+      You can select the text color of your Manifest when the operation is to pick up a locomotive.
+      Select the desired color from the drop down box.
+
+      <h3>Set Out Locomotive Text Color</h3>
+      You can select the text color of your Manifest when the operation is to set out a locomotive.
+      Select the desired color from the drop down box.
+
+      <h3>Pick Up Car Text Color</h3>
+      You can select the text color of your Manifest when the operation is to pick up a car. Select
+      the desired color from the drop down box.
+
+      <h3>Set Out Car Text Color</h3>
+      You can select the text color of your Manifest when the operation is to set out a car. Select
+      the desired color from the drop down box.
 
       <h3>Local Move Text Color</h3>
       You can select the text color of your Manifest when the operation is to move a car from one
@@ -6584,7 +6600,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       down JMRI, otherwise you will lose all of the changes that the operations program made to move
       a train to the next location. Pressing the "Save Builds" button before quitting JMRI allows
       the operations program to resume exactly at the point where you pressed the "Save Builds"
-      button.
+      button. If you attempt to close the
+      <a href="#Trains">Trains</a> window before pressing the "Save Builds" button, a warning will
+      pop up asking you to save your files. Note that if you enabled
+      <a href="#AutoSave">Auto Save</a> no warning will appear and the program will automatically
+      save your files.
 
       <p style="page-break-after: always">
         <a href="#toc">[Click to go back to TOC]</a>

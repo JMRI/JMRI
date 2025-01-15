@@ -126,15 +126,15 @@ public class PrintTrainsFrame extends OperationsFrame {
         }
 
         // obtain a HardcopyWriter to do this
-        boolean landscape = false;
+        boolean isLandscape = false;
         if (manifestOrientationComboBox.getSelectedItem() != null &&
                 manifestOrientationComboBox.getSelectedItem().equals(Setup.LANDSCAPE)) {
-            landscape = true;
+            isLandscape = true;
         }
 
         int fontSize = (int) fontSizeComboBox.getSelectedItem();
         try (HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleTrainsTable"),
-                fontSize, .5, .5, .5, .5, _isPreview, "", landscape, true, null);) {
+                fontSize, .5, .5, .5, .5, _isPreview, "", isLandscape, true, null, null);) {
 
             List<Train> trains = _trainsTableFrame.getSortByList((String) sortByComboBox.getSelectedItem());
 

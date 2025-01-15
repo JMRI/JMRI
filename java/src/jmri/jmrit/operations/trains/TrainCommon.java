@@ -81,13 +81,13 @@ public class TrainCommon {
         for (Engine engine : engineList) {
             if (engine.getRouteLocation() == rl && !engine.getTrackName().equals(Engine.NONE)) {
                 String pullText = padAndTruncate(pickupEngine(engine).trim(), lineLength / 2);
-                pullText = formatColorString(pullText, Setup.getPickupColor());
+                pullText = formatColorString(pullText, Setup.getPickupEngineColor());
                 String s = pullText + VERTICAL_LINE_CHAR + tabString("", lineLength / 2 - 1);
                 addLine(file, s);
             }
             if (engine.getRouteDestination() == rl) {
                 String dropText = padAndTruncate(dropEngine(engine).trim(), lineLength / 2 - 1);
-                dropText = formatColorString(dropText, Setup.getDropColor());
+                dropText = formatColorString(dropText, Setup.getDropEngineColor());
                 String s = tabString("", lineLength / 2) + VERTICAL_LINE_CHAR + dropText;
                 addLine(file, s);
             }
@@ -123,12 +123,12 @@ public class TrainCommon {
         for (String attribute : format) {
             String s = getEngineAttribute(engine, attribute, PICKUP);
             if (!checkStringLength(buf.toString() + s, isManifest)) {
-                addLine(file, buf, Setup.getPickupColor());
+                addLine(file, buf, Setup.getPickupEngineColor());
                 buf = new StringBuffer(TAB); // new line
             }
             buf.append(s);
         }
-        addLine(file, buf, Setup.getPickupColor());
+        addLine(file, buf, Setup.getPickupEngineColor());
     }
 
     /**
@@ -160,12 +160,12 @@ public class TrainCommon {
         for (String attribute : format) {
             String s = getEngineAttribute(engine, attribute, !PICKUP);
             if (!checkStringLength(buf.toString() + s, isManifest)) {
-                addLine(file, buf, Setup.getDropColor());
+                addLine(file, buf, Setup.getDropEngineColor());
                 buf = new StringBuffer(TAB); // new line
             }
             buf.append(s);
         }
-        addLine(file, buf, Setup.getDropColor());
+        addLine(file, buf, Setup.getDropEngineColor());
     }
 
     /**
@@ -632,7 +632,8 @@ public class TrainCommon {
                             new Object[]{routeLocationName,
                                     train.getFormatedDepartureTime(), train.getName(),
                                     train.getDescription(), rl.getLocation().getDivisionName()});
-                } else if (!rl.getDepartureTime().equals(RouteLocation.NONE)) {
+                } else if (!rl.getDepartureTime().equals(RouteLocation.NONE) &&
+                        rl != train.getTrainTerminatesRouteLocation()) {
                     // Scheduled work at {0}, departure time {1}
                     msg = MessageFormat.format(messageFormatText = TrainManifestText
                             .getStringWorkDepartureTime(),
@@ -688,13 +689,21 @@ public class TrainCommon {
                                 train.getFormatedDepartureTime()});
             } else if (Setup.isUseSwitchListDepartureTimeEnabled() &&
                     rl != train.getTrainTerminatesRouteLocation() &&
-                    !expectedArrivalTime.equals(Train.ALREADY_SERVICED)) {
+                    !train.isTrainEnRoute()) {
                 // Departs {0} at {1} expected arrival {2}, arrives {3}bound
                 msg = MessageFormat.format(
                         messageFormatText = TrainSwitchListText.getStringDepartsAtExpectedArrival(),
                         new Object[]{splitString(rl.getName()),
                                 train.getExpectedDepartureTime(rl), expectedArrivalTime,
                                 rl.getTrainDirectionString()});
+            } else if (Setup.isUseSwitchListDepartureTimeEnabled() &&
+                    rl == train.getCurrentRouteLocation() &&
+                    rl != train.getTrainTerminatesRouteLocation() &&
+                    !rl.getDepartureTime().equals(RouteLocation.NONE)) {
+                // Departs {0} {1}bound at {2}
+                msg = MessageFormat.format(messageFormatText = TrainSwitchListText.getStringDepartsAt(),
+                        new Object[]{splitString(rl.getName()), rl.getTrainDirectionString(),
+                                rl.getFormatedDepartureTime()});
             } else if (train.isTrainEnRoute()) {
                 if (!expectedArrivalTime.equals(Train.ALREADY_SERVICED)) {
                     // Departed {0}, expect to arrive in {1}, arrives {2}bound

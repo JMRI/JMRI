@@ -213,7 +213,10 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         if (myOperator == null) {
             forwardCommandChangeToLayout(s);
             synchronized (this) {
-                newKnownState(INCONSISTENT);
+                // for mode ONESENSOR or TWOSENSOR CommandedState not set KnownState
+                if ( ! (getFeedbackMode() == ONESENSOR || getFeedbackMode() == TWOSENSOR)) {
+                    newKnownState(INCONSISTENT);
+                }
             }
         } else {
             myOperator.start();
@@ -319,7 +322,10 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
             if (l.isOkMessage() && !l.isUnsolicited()) {
                 /* the command was successfully received */
                 synchronized (this) {
-                    newKnownState(getCommandedState());
+                    // for mode ONESENSOR or TWOSENSOR CommandedState not set KnownState
+                    if ( ! (getFeedbackMode() == ONESENSOR || getFeedbackMode() == TWOSENSOR)) {
+                        newKnownState(getCommandedState());
+                    }
                 }
                 sendQueuedMessage();
                 return;
@@ -341,6 +347,10 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                 break;
             case MONITORING:
                 handleMonitoringModeFeedback(l);
+                break;
+            case ONESENSOR:
+            case TWOSENSOR:
+                handleSensorModeFeedback(l);
                 break;
             case DIRECT:
             default:
@@ -532,6 +542,46 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     }
     
     /**
+     *  Derived from handleDirectModeFeedback.
+     *  With ONESENSOR od TWOSENSOR Mode feedback, if we see ANY valid response to our
+     *  request, we ask the command station to stop sending information
+     *  to the stationary decoder.
+     *  Only one OffMessage is sent.
+     *  <p>
+     *  No effort is made to interpret feedback when using direct mode.
+     *
+     *  @param l an {@link XNetReply} message
+     */
+    private synchronized void handleSensorModeFeedback(XNetReply l) {
+        /* If no sendOff was sent we are
+         going to check to see if one of the following conditions
+         applies:
+         1) The received message is a feedback message for a turnout
+         and one of the two addresses to which it applies is our
+         address
+         2) We receive an "OK" message, indicating the command was
+         successfully sent
+
+         If either of these two cases occur, we trigger an off message
+         */
+
+        log.debug("Handle Message for turnout {} in ONESENOSR or TWOSENSOR feedback mode   ", mNumber);
+        if (internalState != OFFSENT) { 
+            if (l.isOkMessage()) {
+                // Finally, we may just receive an OK message.
+                log.debug("Turnout {} DIRECT feedback mode - OK message triggering OFF message.", mNumber);
+            } else {
+                // implicitly checks for isFeedbackBroadcastMessage()
+                if (!l.selectTurnoutFeedback(mNumber).isPresent()) {
+                    return;
+                }
+                log.debug("Turnout {} DIRECT feedback mode - directed reply received.", mNumber);
+            }
+            sendOffMessage();
+        }
+    }
+
+    /**
      * Send an "Off" message to the decoder for this output. 
      */
     @SuppressWarnings("deprecation")    // The method getId() from the type Thread is deprecated since version 19
@@ -545,7 +595,10 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         XNetMessage msg = getOffMessage();
         lastMsg = new RequestMessage(msg,OFFSENT,this);
         this.internalState = OFFSENT;
-        newKnownState(getCommandedState());
+        // for mode ONESENSOR or TWOSENSOR CommandedState not set KnownState
+        if ( ! (getFeedbackMode() == ONESENSOR || getFeedbackMode() == TWOSENSOR)) {
+            newKnownState(getCommandedState());
+        }
         // Then send the message.
         tc.sendHighPriorityXNetMessage(msg, this);
     }

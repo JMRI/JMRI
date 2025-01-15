@@ -15,10 +15,7 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainManagerXml;
-import jmri.jmrit.operations.trains.TrainPrintUtilities;
-import jmri.jmrit.operations.trains.TrainUtilities;
+import jmri.jmrit.operations.trains.*;
 import jmri.util.FileUtil;
 
 /**
@@ -82,7 +79,8 @@ public class PrintSavedTrainManifestAction extends AbstractAction implements jav
             }
         }
         TrainPrintUtilities.printReport(file, file.getName(), _isPreview, Setup.getFontName(), false, logoURL,
-                printerName, Setup.getManifestOrientation(), Setup.getManifestFontSize(), Setup.isPrintPageHeaderEnabled());
+                printerName, Setup.getManifestOrientation(), Setup.getManifestFontSize(),
+                Setup.isPrintPageHeaderEnabled(), Setup.getPrintDuplexSides());
         return;
     }
 

@@ -81,6 +81,10 @@
 
         <h4>Lenz XPressNet</h4>
             <ul>
+                <li>Correct behavior of the ONESENSOR and TWOSENSOR turnout feedback mode. 
+                    The turnout's KnownState is set after turnout feedback is received. 
+                    In Layout Editor - Entry Exit - Full Interlocking - Signal mast sets the aspect Clear 
+                    only after all turnouts are correctly positioned.</li>
                 <li></li>
             </ul>
 
@@ -126,14 +130,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Fixed a bug in the LccPro search function on large LCC networks.</li>
-                <li>Added "Node Groups" to LccPro and the Event Table.</li>
-                <li>You can now create an LCC/OpenLCB
-                    <a href="help/en/html/hardware/openlcb/index.shtml#stringios">StringIO</li>
-                    that's shared across multiple JMRI instances on the same LCC/OpenLCB network.
-                    If you change the StringIO value in one JMRI instance, it will be propagated to the 
-                    other ones over the network. You can then use LogixNG or scripts to 
-                    use that information to communicate between JMRI instances.
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -191,6 +188,10 @@
           <li></li>
         </ul>
 
+        <h4>AE Model</h4>
+            <ul>
+                <li>Added AEModels.xml to add support for AE Model decoders</li>
+            </ul>
         <h4>Arnold</h4>
             <ul>
                 <li></li>
@@ -216,6 +217,11 @@
                 <li></li>
             </ul>
 
+        <h4>DCC Concepts</h4>
+            <ul>
+                <li>DCC_Concepts_Zen_ABC.xml to add definitions for DCC Concepts Zen Blue/Black V12 </li>
+            </ul>
+
         <h4>Digikeijs (Digirails)</h4>
             <ul>
                 <li></li>
@@ -236,9 +242,13 @@
                 <li></li>
             </ul>
 
+        <h4>Hattoms</h4>
+            <ul>
+                <li>Added Hattons-Neo.xml to add Hattons Neo decoders</li>
+            </ul>
         <h4>Hornby</h4>
             <ul>
-                <li></li>
+                <li>Added HornbyTXS.xml to add Hornby HM7000 sound decoder definitions and updated HornbyTTS.xml to address error for Hall Class Sound definition</li>
             </ul>
 
         <h4>Kuehn</h4>
@@ -412,17 +422,9 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>Add the ability to use an AdHoc transit, which is created dynamically between 2 blocks
-             Dynamic Transits are always run "No Signals". Dynamic Transits are  removed at train termination. If
-             they are not removed for any reason they will not be saved. Currently the route must be clear from end to end
-             and any flaws in the routing table will cause grief. Avoid having the train stop in them.</li>
-             <li>Add Ghost type block. It must have a "not real" sensor, internal is best.
-             The sensor should not be manipulated by logix or logixNG or scripts. Auto trains will
-             set and clear these sensors automatically, manual run trains simply ignore them.
-             They are useful for adding blocks between 2 turnouts where you would normally add a tiny block with the same block
-             as one of the turnouts which causes errors in the routing tables. With care they can be used for placing turnouts
-             in their own block.</li>
+             <li></li>
         </ul>
+
     <h3>Dispatcher System</h3>
         <a id="Dispatcher_System" name="Dispatcher_System"></a>
         <ul>
@@ -440,6 +442,9 @@
         <ul>
             <li></li>
         </ul>
+        <ul>
+            <li>Added "Highlight cursor position" option to enable drawing of a square around finger/mouse press/drag area. Useful for touchscreens.
+        </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
             <ul>
@@ -449,9 +454,7 @@
     <h3>LccPro</h3>
         <a id="LccPro" name="LccPro"></a>
         <ul>
-            <li>Fixed a bug in the LccPro search function on large LCC networks.</li>
-            <li>Added "Node Groups" to LccPro and the Event Table.  
-            <li>Fixed a bug in Event Table display if using large fonts.<li>
+          <li></li>
         </ul>
 
     <h3>Logix</h3>
@@ -475,9 +478,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>Added train departure times to Yardmaster and Conductor</li>
-            <li>Fixed internationalization for Web Manifest, UK and other languages.</li>
-            <li>Added the option of building train when selecting Conductor and train not built</li>
+            <li>New feature, you can now select locomotive pick up and set out text colors.</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -589,10 +590,7 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li>
-                <a href="https://www.jmri.org/help/en/html/tools/StringIO.shtml">StringIOs</li>
-                are a new type of object within JMRI.  They're a way to exchange informational strings
-                with the layout hardware.  Over time, we'll build-out more system connections for these.
+            <li></li>
         </ul>
 
    <h3>Warrants</h3>

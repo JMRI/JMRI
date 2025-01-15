@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.setup;
 
 import java.awt.Color;
+import java.awt.JobAttributes.SidesType;
 import java.io.IOException;
 import java.util.*;
 
@@ -208,7 +209,10 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private int buildReportFontSize = 10;
     private String manifestOrientation = PORTRAIT;
     private String switchListOrientation = PORTRAIT;
+    private SidesType sidesType = SidesType.ONE_SIDED;
     private boolean printHeader = true;
+    private Color pickupEngineColor = Color.black;
+    private Color dropEngineColor = Color.black;
     private Color pickupColor = Color.black;
     private Color dropColor = Color.black;
     private Color localColor = Color.black;
@@ -1090,6 +1094,14 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         getDefault().manifestFontSize = size;
     }
 
+    public static SidesType getPrintDuplexSides() {
+        return getDefault().sidesType;
+    }
+
+    public static void setPrintDuplexSides(SidesType sidesType) {
+        getDefault().sidesType = sidesType;
+    }
+
     public static boolean isPrintPageHeaderEnabled() {
         return getDefault().printHeader;
     }
@@ -1532,6 +1544,32 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         return format;
     }
 
+    public static String getDropEngineTextColor() {
+        return ColorUtil.colorToColorName(getDefault().dropEngineColor);
+    }
+
+    public static void setDropEngineTextColor(String color) {
+        setDropEngineColor(ColorUtil.stringToColor(color));
+    }
+
+    public static void setDropEngineColor(Color c) {
+        getDefault().dropEngineColor = c;
+        JmriColorChooser.addRecentColor(c);
+    }
+
+    public static String getPickupEngineTextColor() {
+        return ColorUtil.colorToColorName(getDefault().pickupEngineColor);
+    }
+
+    public static void setPickupEngineTextColor(String color) {
+        setPickupEngineColor(ColorUtil.stringToColor(color));
+    }
+
+    public static void setPickupEngineColor(Color c) {
+        getDefault().pickupEngineColor = c;
+        JmriColorChooser.addRecentColor(c);
+    }
+
     public static String getDropTextColor() {
         return ColorUtil.colorToColorName(getDefault().dropColor);
     }
@@ -1569,6 +1607,14 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static void setLocalColor(Color c) {
         getDefault().localColor = c;
         JmriColorChooser.addRecentColor(c);
+    }
+
+    public static Color getPickupEngineColor() {
+        return getDefault().pickupEngineColor;
+    }
+
+    public static Color getDropEngineColor() {
+        return getDefault().dropEngineColor;
     }
 
     public static Color getPickupColor() {
@@ -1957,7 +2003,12 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         values.setAttribute(Xml.MANIFEST, getManifestOrientation());
         values.setAttribute(Xml.SWITCH_LIST, getSwitchListOrientation());
 
+        e.addContent(values = new Element(Xml.PRINT_DUPLEX));
+        values.setAttribute(Xml.NAME, getPrintDuplexSides().toString());
+
         e.addContent(values = new Element(Xml.MANIFEST_COLORS));
+        values.setAttribute(Xml.DROP_ENGINE_COLOR, getDropEngineTextColor());
+        values.setAttribute(Xml.PICKUP_ENGINE_COLOR, getPickupEngineTextColor());
         values.setAttribute(Xml.DROP_COLOR, getDropTextColor());
         values.setAttribute(Xml.PICKUP_COLOR, getPickupTextColor());
         values.setAttribute(Xml.LOCAL_COLOR, getLocalTextColor());
@@ -2484,6 +2535,18 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 setSwitchListOrientation(orientation);
             }
         }
+        if ((operations.getChild(Xml.PRINT_DUPLEX) != null)) {
+            if ((a = operations.getChild(Xml.PRINT_DUPLEX).getAttribute(Xml.NAME)) != null) {
+                String sides = a.getValue();
+                log.debug("Print duplex: {}", sides);
+                if (sides.equals(SidesType.TWO_SIDED_LONG_EDGE.toString())) {
+                    setPrintDuplexSides(SidesType.TWO_SIDED_LONG_EDGE);
+                }
+                if (sides.equals(SidesType.TWO_SIDED_SHORT_EDGE.toString())) {
+                    setPrintDuplexSides(SidesType.TWO_SIDED_SHORT_EDGE);
+                }
+            }
+        }
         if ((operations.getChild(Xml.MANIFEST_COLORS) != null)) {
             if ((a = operations.getChild(Xml.MANIFEST_COLORS).getAttribute(Xml.DROP_COLOR)) != null) {
                 String dropColor = a.getValue();
@@ -2499,6 +2562,22 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 String localColor = a.getValue();
                 log.debug("localColor: {}", localColor);
                 setLocalTextColor(localColor);
+            }
+            if ((a = operations.getChild(Xml.MANIFEST_COLORS).getAttribute(Xml.DROP_ENGINE_COLOR)) != null) {
+                String dropColor = a.getValue();
+                log.debug("dropEngineColor: {}", dropColor);
+                setDropEngineTextColor(dropColor);
+            } else {
+                // Engine drop color didn't exist before 5.11.3
+                setDropEngineTextColor(getDropTextColor());
+            }
+            if ((a = operations.getChild(Xml.MANIFEST_COLORS).getAttribute(Xml.PICKUP_ENGINE_COLOR)) != null) {
+                String pickupColor = a.getValue();
+                log.debug("pickupEngineColor: {}", pickupColor);
+                setPickupEngineTextColor(pickupColor);
+            } else {
+                // Engine pick up color didn't exist before 5.11.3
+                setPickupEngineTextColor(getPickupTextColor());
             }
         }
         if ((operations.getChild(Xml.TAB) != null)) {

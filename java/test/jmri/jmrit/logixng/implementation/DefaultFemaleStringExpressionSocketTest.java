@@ -89,6 +89,7 @@ public class DefaultFemaleStringExpressionSocketTest extends FemaleSocketTestBas
         List<Class<? extends Base>> classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.expressions.StringExpressionConstant.class);
         classes.add(jmri.jmrit.logixng.expressions.StringExpressionMemory.class);
+        classes.add(jmri.jmrit.logixng.expressions.StringExpressionStringIO.class);
         map.put(Category.ITEM, classes);
 
         classes = new ArrayList<>();
