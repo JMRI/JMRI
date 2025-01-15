@@ -618,6 +618,14 @@
             <li></li>
         </ul>
 
+    <h3>Test Infrastructure</h3>
+        <a id="Test" name="Testing"></a>
+        <ul>
+            <li>JUnitAppender - <code>assertNoErrorMessage</code> and <code>assertMessage(String msg)</code>
+                functionality updated to match JavaDoc.</li>
+            <li>JUnitAppender - Updated JavaDoc.</li>
+        </ul>
+
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
