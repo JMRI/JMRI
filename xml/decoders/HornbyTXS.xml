@@ -1766,30 +1766,30 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable CV="2" item="Vstart" default="02" tooltip="sets the motor voltage at Speed Step 1, range 0(default - 02)-255, CV5" comment="Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration">
+      <variable CV="2" item="Vstart" default="02" tooltip="sets the motor voltage at Speed Step 1, range 0-255, (default - 02) CV5" comment="Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration">
         <decVal/>
         <label>Start voltage</label>
         <comment>Range 1-255, 0 in CV 2, 6, 5 produces straight line acceleration</comment>
       </variable>
-      <variable CV="3" item="Accel" default="15" tooltip="Sets the acceleration rate (delay or momentum), range 0(default - 15)-255, CV3" comment="Range 0-255">
+      <variable CV="3" item="Accel" default="15" tooltip="Sets the acceleration rate (delay or momentum), range 0-255, (default - 15) CV3" comment="Range 0-255">
         <decVal max="255"/>
         <label>Accel Base Rate (CV3)</label>
         <comment>Range 0-255 - If the content of this parameter equals "0" then there is no programmed momentum during acceleration. (i.e., there will be no throttle lag</comment>
       </variable>
-      <variable CV="4" item="Decel" default="15" tooltip="Sets the deceleration rate (delay or momentum), range 0(default - 15)-255, CV4" comment="Range 0-255">
+      <variable CV="4" item="Decel" default="15" tooltip="Sets the deceleration rate (delay or momentum), range 0-255, (default - 15) CV4" comment="Range 0-255">
         <decVal max="255"/>
         <label>Decel Base Rate (CV4)</label>
         <comment>Range 0-255 - If the content of this parameter equals "0" then there is no programmed momentum during deceleration.</comment>
       </variable>
-      <variable CV="5" item="Vhigh" default="255" tooltip="sets the motor voltage at top throttle Speed Setting, range 0(default - 255)-255, CV5">
+      <variable CV="5" item="Vhigh" default="255" tooltip="sets the motor voltage at top throttle Speed Setting, range 0-255, (default - 255) CV5">
         <decVal/>
         <label>Maximum Voltage</label>
         <comment>Range 0-255, A value of 255 corresponds to 100%. 0 in CV 2, 6, 5 produces straight line acceleration</comment>
       </variable>
-      <variable CV="6" item="Vmid" tooltip="sets the motor voltage at midrange throttle Speed Setting, range 0(default - 71)-255, CV5">
+      <variable CV="6" item="Vmid" tooltip="sets the motor voltage at midrange throttle Speed Setting, range 0-255,(default - 71) CV6">
         <decVal/>
         <label>Midpoint Voltage</label>
-        <comment>Range 0-255 (default - 72)5, 0 in CV 2, 6, 5 produces straight line acceleration</comment>
+        <comment>Range 0-255 (default - 72), 0 in CV 2, 6, 5 produces straight line acceleration</comment>
       </variable>
       <variable CV="7" readOnly="yes" item="Decoder Version" default="254">
         <decVal/>
@@ -1809,16 +1809,7 @@
         <label>Decoder Control mode select</label>
         <comment>0:DCC(NMRA) 1:DC 2:Radio(BLE)</comment>
       </variable>
-      <variable CV="17" item="Extended Address High Byte" default="192" tooltip="Storing Long Addresses">
-        <decVal min="192" max="231"/>
-        <label>Extended Address High Byte</label>
-        <comment>Range 192-231</comment>
-      </variable>
-      <variable CV="18" item="Extended Address Low Byte" default="100" tooltip="Storing Long Addresses">
-        <decVal min="1" max="255"/>
-        <label>Extended Address Low Byte</label>
-        <comment>Range 1-255</comment>
-      </variable>
+
       <variable CV="19" item="Consist setup" default="0" tooltip="Decoder based consist set up">
         <decVal min="0" max="255"/>
         <label>Extended Address Low Byte</label>
@@ -2559,7 +2550,7 @@
       <!-- ELECTRIC ENGINE SOUND STEPS -->>
       
       <variable CV="218" default="3" item="Sound Option 2" tooltip="ELECTRIC Trigger Threshold 1 (ETT 1) "  include="5,6,7,9,12,13,15,18,22,23,27,30,64">
-        <decVal min="1" max="277"/>
+        <decVal min="1" max="255"/>
         <label>ELECTRIC Trigger Threshold 1 (ETT 1)</label>
       </variable>
       <variable CV="219" default="30" item="Sound Option 3" tooltip="ELECTRIC Trigger Threshold 2 (ETT 2) "  include="5,6,7,9,12,13,15,18,22,23,27,30,64">
