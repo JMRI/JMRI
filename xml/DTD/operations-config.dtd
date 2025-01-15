@@ -131,6 +131,8 @@
 <!ATTLIST missingCarFormat prefix	CDATA #IMPLIED>
 <!ATTLIST missingCarFormat setting	CDATA #IMPLIED>
 
+<!ATTLIST manifestColors dropEngineColor	CDATA #IMPLIED> 
+<!ATTLIST manifestColors pickupEngineColor	CDATA #IMPLIED>  
 <!ATTLIST manifestColors dropColor	CDATA #IMPLIED> 
 <!ATTLIST manifestColors pickupColor	CDATA #IMPLIED>  
 <!ATTLIST manifestColors localColor	CDATA #IMPLIED>

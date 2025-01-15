@@ -81,6 +81,10 @@
 
         <h4>Lenz XPressNet</h4>
             <ul>
+                <li>Correct behavior of the ONESENSOR and TWOSENSOR turnout feedback mode. 
+                    The turnout's KnownState is set after turnout feedback is received. 
+                    In Layout Editor - Entry Exit - Full Interlocking - Signal mast sets the aspect Clear 
+                    only after all turnouts are correctly positioned.</li>
                 <li></li>
             </ul>
 
@@ -184,6 +188,10 @@
           <li></li>
         </ul>
 
+        <h4>AE Model</h4>
+            <ul>
+                <li>Added AEModels.xml to add support for AE Model decoders</li>
+            </ul>
         <h4>Arnold</h4>
             <ul>
                 <li></li>
@@ -209,6 +217,11 @@
                 <li></li>
             </ul>
 
+        <h4>DCC Concepts</h4>
+            <ul>
+                <li>DCC_Concepts_Zen_ABC.xml to add definitions for DCC Concepts Zen Blue/Black V12 </li>
+            </ul>
+
         <h4>Digikeijs (Digirails)</h4>
             <ul>
                 <li></li>
@@ -229,9 +242,13 @@
                 <li>SwitchPilot Servo V3.0</li>
             </ul>
 
+        <h4>Hattoms</h4>
+            <ul>
+                <li>Added Hattons-Neo.xml to add Hattons Neo decoders</li>
+            </ul>
         <h4>Hornby</h4>
             <ul>
-                <li></li>
+                <li>Added HornbyTXS.xml to add Hornby HM7000 sound decoder definitions and updated HornbyTTS.xml to address error for Hall Class Sound definition</li>
             </ul>
 
         <h4>Kuehn</h4>
@@ -461,7 +478,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>New feature, you can now select locomotive pick up and set out text colors.</li>
         </ul>
 
    <h3>Panel Editor</h3>
