@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.CheckForNull;
-import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
 import org.apache.commons.lang3.StringUtils;
@@ -313,9 +312,11 @@ public class JUnitAppender extends AbstractAppender {
     }
 
     /**
-     * Remove any messages stored up, returning how many there were. This is
-     * used to skip over messages that don't matter, e.g. during setting up a
-     * test.
+     * Remove any messages stored up, returning how many there were.
+     * This is used to skip over messages that don't matter,
+     * e.g. during setting up a test.
+     * Please check the return value of this method against the expected number.
+     * Please do not use this method to clear the backlog without checking.
      * The majority of tests are set to only log at the Levels WARN / ERROR so
      * INFO / DEBUG levels are not normally included.
      * Removed messages are not sent for further logging.
@@ -325,12 +326,10 @@ public class JUnitAppender extends AbstractAppender {
      * @return count of skipped messages
      * @see #clearBacklog()
      */
-    @CheckReturnValue
     public static int clearBacklog(org.slf4j.event.Level l) {
         return clearBacklog(convertSlf4jLevelToLog4jLevel(l));
     }
 
-    @CheckReturnValue
     private static int clearBacklog(Level level) {
         if (list.isEmpty()) {
             return 0;
@@ -351,11 +350,11 @@ public class JUnitAppender extends AbstractAppender {
      * This is used to skip over messages that don't matter,
      * e.g. during setting up a test.
      * Removed messages are not sent for further logging.
-     *
+     * Please check the return value of this method against the expected number.
+     * Please do not use this method to clear the backlog without checking.
      * @return count of skipped messages of WARN or more specific level
      * @see #clearBacklog(Level)
      */
-    @CheckReturnValue
     public static int clearBacklog() {
         return clearBacklog(Level.WARN);
     }
