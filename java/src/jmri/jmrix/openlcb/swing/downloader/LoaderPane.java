@@ -1,6 +1,5 @@
 package jmri.jmrix.openlcb.swing.downloader;
 
-import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,7 +12,6 @@ import javax.swing.JPanel;
 
 import jmri.jmrit.MemoryContents;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.openlcb.swing.NodeSpecificFrame;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WrapLayout;
 

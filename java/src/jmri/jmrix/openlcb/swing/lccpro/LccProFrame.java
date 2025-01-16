@@ -24,7 +24,6 @@ import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.openlcb.OlcbNodeGroupStore;
-import jmri.jmrix.openlcb.swing.NodeSpecificFrame;
 import jmri.jmrix.openlcb.swing.TrafficStatusLabel;
 
 import jmri.util.*;

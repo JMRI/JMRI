@@ -2,7 +2,6 @@ package jmri.jmrix.openlcb.swing.send;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
@@ -26,7 +25,6 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.CbusAddress;
 import jmri.jmrix.openlcb.swing.ClientActions;
-import jmri.jmrix.openlcb.swing.NodeSpecificFrame;
 import jmri.util.StringUtil;
 import jmri.util.javaworld.GridLayout2;
 import jmri.util.swing.WrapLayout;

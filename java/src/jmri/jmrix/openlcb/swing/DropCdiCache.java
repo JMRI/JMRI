@@ -3,7 +3,6 @@ package jmri.jmrix.openlcb.swing;
 import jmri.util.swing.JmriJOptionPane;
 import jmri.util.JmriJFrame;
 
-import java.awt.Window;
 import java.awt.event.WindowEvent;
 
 import org.openlcb.NodeID;
@@ -52,7 +51,7 @@ public class DropCdiCache {
                     // Depending on the state of the window, and how the user handles
                     // a prompt to discard changes or cancel, the window might 
                     // still be open.  If so, don't clear the cache.
-                    if (JmriJFrame.getFrameList().contains(frame)) {return;};
+                    if (JmriJFrame.getFrameList().contains(frame)) {return;}
                 }
             }
         }
