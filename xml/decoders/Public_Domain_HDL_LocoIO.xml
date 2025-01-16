@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2002, 2004, 2007, 2018, 2019, 2020 All rights reserved -->
+<!-- Copyright (C) JMRI 2002, 2004, 2007, 2018, 2019, 2020, 2025 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -17,6 +17,7 @@
     <year>2018</year>
     <year>2019</year>
     <year>2020</year>
+    <year>2025</year>
     <holder>JMRI</holder>
   </copyright>
   <authorgroup xmlns="http://docbook.org/ns/docbook">
@@ -65,12 +66,18 @@
         correct triple mask to store sensor address, LocoRCD(2) experimental
       </revremark>
     </revision>
+    <revision>
+      <revnumber>5</revnumber>
+      <date>2025-01-15</date>
+      <authorinitials>EB</authorinitials>
+      <revremark>Add GCA50/GCA51 P Giling LocoIO boards</revremark>
+    </revision>
   </revhistory>
   <version author="Bob Jacobsen" version="1" lastUpdated="20150812"/>
   <version author="Egbert Broerse" version="2" lastUpdated="20180426"/>
   <version author="Egbert Broerse" version="3" lastUpdated="20190410"/>
   <version author="Egbert Broerse" version="4" lastUpdated="20200920"/>
-
+  <version author="Egbert Broerse" version="5" lastUpdated="20250115"/>
   <decoder>
     <family name="Hans Deloof LocoIO" mfg="Public-domain and DIY">
       <model model="HDL LocoIO v1.54" productID="154"/>
@@ -110,6 +117,11 @@
       <model model="HDL LocoRCD v2.0" productID="200"/>
       <model model="HDL LocoRCD2 v2.10" productID="210"/>
       <model model="HDL LocoRCD2 v2.11" productID="211"/>
+
+      <model model="GCA50(a) LocoIO v1.48" productID="148"/>
+      <!--GCA50 classic PIC v1.48 or GCA50a with Arduino Nano, same options-->
+      <model model="GCA51 2x RFID + 8x LocoIO v1.48" productID="GCA51"/>
+      <!-- GCA51 uses ports 9-16 for 2 RFID RC522 cards, no config -->
 
       <model model="Original LocoIO" productID="135"/>
     </family>
@@ -232,8 +244,8 @@
       </variable>
 
       <variable CV="177" item="Special Ports" default="0">
-        <!-- not used for, but can't exclude here for "003,101,102,103,135,139,140,141,142,144,145,146,148,149"-->
-        <!-- because CV is used as as qualifier variable -->
+        <!-- not used for, but can't exclude here for "003,101,102,103,135,139,140,141,142,144,145,146,148,149,GCA51"-->
+        <!-- because CV is used as a qualifier variable -->
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Special Ports 1-4:</label>
         <label xml:lang="de">Sonderfunktion Anschlüsse 1-4:</label>
@@ -531,7 +543,7 @@
 
       <!--Port1 Opcode2-->
 
-      <variable item="Port1 Opcode2 Address" CV="129" mask="XVVVVVVV" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port1 Opcode2 Address" CV="129" mask="XVVVVVVV" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port1 Config</variableref>
@@ -552,7 +564,7 @@
 
       <!--TODO complete qualifiers to hide Opcode2 ARG1, 2 and OPCfor RCD(2) ports 2-16-->
 
-      <variable item="Port1 Opcode2 Opc" CV="128" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port1 Opcode2 Opc" CV="128" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port1 Config</variableref>
@@ -569,7 +581,7 @@
         <tooltip>Port 1 Opcode2 OPC, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port1 Opcode2 Arg1" CV="129" default="1" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port1 Opcode2 Arg1" CV="129" default="1" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port1 Config</variableref>
@@ -591,7 +603,7 @@
         <decVal/>
       </variable>
 
-      <variable item="Port1 Opcode2 Arg2" CV="130" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port1 Opcode2 Arg2" CV="130" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port1 Config</variableref>
@@ -608,7 +620,7 @@
         <tooltip>Port 1 Opcode2 ARG2, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port1 Opcode2 Type" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port1 Opcode2 Type" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs-->
         <qualifier>
           <variableref>Port1 Config</variableref>
@@ -874,7 +886,7 @@
       </variable>
 
       <!--Port2 Opcode2-->
-      <variable item="Port2 Opcode2 Address" CV="132" mask="XVVVVVVV" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port2 Opcode2 Address" CV="132" mask="XVVVVVVV" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port2 Config</variableref>
@@ -893,7 +905,7 @@
         <tooltip>Port 2 Opcode2 DCC Address (decimal, 1-2048)</tooltip>
       </variable>
 
-      <variable item="Port2 Opcode2 Opc" CV="131" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port2 Opcode2 Opc" CV="131" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port2 Config</variableref>
@@ -910,7 +922,7 @@
         <tooltip>Port 2 Opcode2 OPC, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port2 Opcode2 Arg1" CV="132" default="1" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port2 Opcode2 Arg1" CV="132" default="1" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port2 Config</variableref>
@@ -932,7 +944,7 @@
         <decVal/>
       </variable>
 
-      <variable item="Port2 Opcode2 Arg2" CV="133" mask="VVVVXXXX" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port2 Opcode2 Arg2" CV="133" mask="VVVVXXXX" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port2 Config</variableref>
@@ -949,7 +961,7 @@
         <tooltip>Port 2 Opcode2 ARG2, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port2 Opcode2 Type" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port2 Opcode2 Type" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port2 Config</variableref>
@@ -1244,7 +1256,7 @@
       </variable>
 
       <!--Port3 Opcode2-->
-      <variable item="Port3 Opcode2 Address" CV="135" mask="XVVVVVVV" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port3 Opcode2 Address" CV="135" mask="XVVVVVVV" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port3 Config</variableref>
@@ -1263,7 +1275,7 @@
         <tooltip>Port 3 Opcode2 DCC Address (decimal, 1-2048)</tooltip>
       </variable>
 
-      <variable item="Port3 Opcode2 Opc" CV="134" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port3 Opcode2 Opc" CV="134" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port3 Config</variableref>
@@ -1280,7 +1292,7 @@
         <tooltip>Port 3 Opcode2 OPC, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port3 Opcode2 Arg1" CV="135" default="1" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port3 Opcode2 Arg1" CV="135" default="1" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port3 Config</variableref>
@@ -1302,7 +1314,7 @@
         <decVal/>
       </variable>
 
-      <variable item="Port3 Opcode2 Arg2" CV="136" mask="VVVVXXXX" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port3 Opcode2 Arg2" CV="136" mask="VVVVXXXX" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port3 Config</variableref>
@@ -1319,7 +1331,7 @@
         <tooltip>Port 3 Opcode2 ARG2, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port3 Opcode2 Type" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port3 Opcode2 Type" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port3 Config</variableref>
@@ -1584,7 +1596,7 @@
       </variable>
 
       <!--Port4 Opcode2-->
-      <variable item="Port4 Opcode2 Address" CV="138" mask="XVVVVVVV" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port4 Opcode2 Address" CV="138" mask="XVVVVVVV" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port4 Config</variableref>
@@ -1603,7 +1615,7 @@
         <tooltip>Port 4 Opcode2 DCC Address (decimal, 1-2048)</tooltip>
       </variable>
 
-      <variable item="Port4 Opcode2 Opc" CV="137" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port4 Opcode2 Opc" CV="137" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port4 Config</variableref>
@@ -1620,7 +1632,7 @@
         <tooltip>Port 4 Opcode2 OPC, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port4 Opcode2 Arg1" CV="138" default="1" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port4 Opcode2 Arg1" CV="138" default="1" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port4 Config</variableref>
@@ -1642,7 +1654,7 @@
         <decVal/>
       </variable>
 
-      <variable item="Port4 Opcode2 Arg2" CV="139" mask="VVVVXXXX" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port4 Opcode2 Arg2" CV="139" mask="VVVVXXXX" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port4 Config</variableref>
@@ -1659,7 +1671,7 @@
         <tooltip>Port 4 Opcode2 ARG2, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port4 Opcode2 Type" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port4 Opcode2 Type" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port4 Config</variableref>
@@ -1956,7 +1968,7 @@
       </variable>
 
       <!--Port5 Opcode2-->
-      <variable item="Port5 Opcode2 Address" CV="141" mask="XVVVVVVV" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port5 Opcode2 Address" CV="141" mask="XVVVVVVV" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port5 Config</variableref>
@@ -1975,7 +1987,7 @@
         <tooltip>Port 5 Opcode2 DCC Address (decimal, 1-2048)</tooltip>
       </variable>
 
-      <variable item="Port5 Opcode2 Opc" CV="140" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port5 Opcode2 Opc" CV="140" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port5 Config</variableref>
@@ -1992,7 +2004,7 @@
         <tooltip>Port 5 Opcode2 OPC, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port5 Opcode2 Arg1" CV="141" default="1" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port5 Opcode2 Arg1" CV="141" default="1" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port5 Config</variableref>
@@ -2014,7 +2026,7 @@
         <decVal/>
       </variable>
 
-      <variable item="Port5 Opcode2 Arg2" CV="142" mask="VVVVXXXX" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port5 Opcode2 Arg2" CV="142" mask="VVVVXXXX" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port5 Config</variableref>
@@ -2031,7 +2043,7 @@
         <tooltip>Port 5 Opcode2 ARG2, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port5 Opcode2 Type" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port5 Opcode2 Type" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port5 Config</variableref>
@@ -2291,7 +2303,7 @@
       </variable>
 
       <!--Port6 Opcode2-->
-      <variable item="Port6 Opcode2 Address" CV="144" mask="XVVVVVVV" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port6 Opcode2 Address" CV="144" mask="XVVVVVVV" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port6 Config</variableref>
@@ -2310,7 +2322,7 @@
         <tooltip>Port 6 Opcode2 DCC Address (decimal, 1-2048)</tooltip>
       </variable>
 
-      <variable item="Port6 Opcode2 Opc" CV="143" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port6 Opcode2 Opc" CV="143" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port6 Config</variableref>
@@ -2327,7 +2339,7 @@
         <tooltip>Port 6 Opcode2 OPC, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port6 Opcode2 Arg1" CV="144" default="1" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port6 Opcode2 Arg1" CV="144" default="1" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port6 Config</variableref>
@@ -2349,7 +2361,7 @@
         <decVal/>
       </variable>
 
-      <variable item="Port6 Opcode2 Arg2" CV="145" mask="VVVVXXXX" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port6 Opcode2 Arg2" CV="145" mask="VVVVXXXX" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port6 Config</variableref>
@@ -2366,7 +2378,7 @@
         <tooltip>Port 6 Opcode2 ARG2, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port6 Opcode2 Type" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port6 Opcode2 Type" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port6 Config</variableref>
@@ -2655,7 +2667,7 @@
       </variable>
 
       <!--Port7 Opcode2-->
-      <variable item="Port7 Opcode2 Address" CV="147" mask="XVVVVVVV" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port7 Opcode2 Address" CV="147" mask="XVVVVVVV" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port7 Config</variableref>
@@ -2674,7 +2686,7 @@
         <tooltip>Port 7 Opcode2 DCC Address (decimal, 1-2048)</tooltip>
       </variable>
 
-      <variable item="Port7 Opcode2 Opc" CV="146" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port7 Opcode2 Opc" CV="146" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port7 Config</variableref>
@@ -2691,7 +2703,7 @@
         <tooltip>Port 7 Opcode2 OPC, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port7 Opcode2 Arg1" CV="147" default="1" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port7 Opcode2 Arg1" CV="147" default="1" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port7 Config</variableref>
@@ -2713,7 +2725,7 @@
         <decVal/>
       </variable>
 
-      <variable item="Port7 Opcode2 Arg2" CV="148" mask="VVVVXXXX" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port7 Opcode2 Arg2" CV="148" mask="VVVVXXXX" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port7 Config</variableref>
@@ -2730,7 +2742,7 @@
         <tooltip>Port 7 Opcode2 ARG2, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port7 Opcode2 Type" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port7 Opcode2 Type" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port7 Config</variableref>
@@ -2990,7 +3002,7 @@
       </variable>
 
       <!--Port8 Opcode2-->
-      <variable item="Port8 Opcode2 Address" CV="150" mask="XVVVVVVV" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port8 Opcode2 Address" CV="150" mask="XVVVVVVV" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port8 Config</variableref>
@@ -3009,7 +3021,7 @@
         <tooltip>Port 8 Opcode2 DCC Address (decimal, 1-2048)</tooltip>
       </variable>
 
-      <variable item="Port8 Opcode2 Opc" CV="149" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port8 Opcode2 Opc" CV="149" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port8 Config</variableref>
@@ -3026,7 +3038,7 @@
         <tooltip>Port 8 Opcode2 OPC, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port8 Opcode2 Arg1" CV="150" default="1" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port8 Opcode2 Arg1" CV="150" default="1" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port8 Config</variableref>
@@ -3048,7 +3060,7 @@
         <decVal/>
       </variable>
 
-      <variable item="Port8 Opcode2 Arg2" CV="151" mask="VVVVXXXX" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port8 Opcode2 Arg2" CV="151" mask="VVVVXXXX" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port8 Config</variableref>
@@ -3065,7 +3077,7 @@
         <tooltip>Port 8 Opcode2 ARG2, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port8 Opcode2 Type" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port8 Opcode2 Type" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port8 Config</variableref>
@@ -3142,7 +3154,7 @@
       <!-- Port 9 -->
 
       <!--handles display of proper Address field from non-contiguous Mode values-->
-      <variable item="Port9 OccuMode" CV="176" mask="VXXXXXXX" writeOnly="yes" exclude="101,102,103,104,105,106">
+      <variable item="Port9 OccuMode" CV="176" mask="VXXXXXXX" writeOnly="yes" exclude="101,102,103,104,105,106,GCA51">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
         <tooltip>Is this Port used for Occupancy N/Y (set by Type combo)</tooltip>
@@ -3157,7 +3169,7 @@
         <tooltip>Port 9 DCC Address (decimal, 1-4096)</tooltip>
       </variable>
 
-      <variable item="Port9 SensorAddress" CV="29,28,29" mask="XXVXXXXX XVVVVVVV XXXXVVVV" exclude="101,102,103,104,105,106">
+      <variable item="Port9 SensorAddress" CV="29,28,29" mask="XXVXXXXX XVVVVVVV XXXXVVVV" exclude="101,102,103,104,105,106,GCA51">
         <!-- Detector In/Outputs store address differently -->
         <splitVal factor="1" offset="1" min="1" max="4096" default="1"/>
         <label>Address :</label>
@@ -3353,7 +3365,7 @@
       </variable>
 
       <!--Port9 Opcode2-->
-      <variable item="Port9 Opcode2 Address" CV="153" mask="XVVVVVVV" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port9 Opcode2 Address" CV="153" mask="XVVVVVVV" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port9 Config</variableref>
@@ -3372,7 +3384,7 @@
         <tooltip>Port 9 Opcode2 DCC Address (decimal, 1-2048)</tooltip>
       </variable>
 
-      <variable item="Port9 Opcode2 Opc" CV="152" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port9 Opcode2 Opc" CV="152" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port9 Config</variableref>
@@ -3389,7 +3401,7 @@
         <tooltip>Port 9 Opcode2 OPC, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port9 Opcode2 Arg1" CV="153" default="1" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port9 Opcode2 Arg1" CV="153" default="1" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port9 Config</variableref>
@@ -3411,7 +3423,7 @@
         <decVal/>
       </variable>
 
-      <variable item="Port9 Opcode2 Arg2" CV="154" mask="VVVVXXXX" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port9 Opcode2 Arg2" CV="154" mask="VVVVXXXX" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port9 Config</variableref>
@@ -3428,7 +3440,7 @@
         <tooltip>Port 9 Opcode2 ARG2, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port9 Opcode2 Type" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port9 Opcode2 Type" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port9 Config</variableref>
@@ -3687,7 +3699,7 @@
       </variable>
 
       <!--Port10 Opcode2-->
-      <variable item="Port10 Opcode2 Address" CV="156" mask="XVVVVVVV" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port10 Opcode2 Address" CV="156" mask="XVVVVVVV" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port10 Config</variableref>
@@ -3706,7 +3718,7 @@
         <tooltip>Port 10 Opcode2 DCC Address (decimal, 1-2048)</tooltip>
       </variable>
 
-      <variable item="Port10 Opcode2 Opc" CV="155" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port10 Opcode2 Opc" CV="155" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port10 Config</variableref>
@@ -3723,7 +3735,7 @@
         <tooltip>Port 10 Opcode2 OPC, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port10 Opcode2 Arg1" CV="156" default="1" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port10 Opcode2 Arg1" CV="156" default="1" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port10 Config</variableref>
@@ -3745,7 +3757,7 @@
         <decVal/>
       </variable>
 
-      <variable item="Port10 Opcode2 Arg2" CV="157" mask="VVVVXXXX" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port10 Opcode2 Arg2" CV="157" mask="VVVVXXXX" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port10 Config</variableref>
@@ -3762,7 +3774,7 @@
         <tooltip>Port 10 Opcode2 ARG2, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port10 Opcode2 Type" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port10 Opcode2 Type" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port10 Config</variableref>
@@ -4050,7 +4062,7 @@
       </variable>
 
       <!--Port11 Opcode2-->
-      <variable item="Port11 Opcode2 Address" CV="159" mask="XVVVVVVV" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port11 Opcode2 Address" CV="159" mask="XVVVVVVV" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port11 Config</variableref>
@@ -4069,7 +4081,7 @@
         <tooltip>Port 11 Opcode2 DCC Address (decimal, 1-2048)</tooltip>
       </variable>
 
-      <variable item="Port11 Opcode2 Opc" CV="158" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port11 Opcode2 Opc" CV="158" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port11 Config</variableref>
@@ -4086,7 +4098,7 @@
         <tooltip>Port 11 Opcode2 OPC, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port11 Opcode2 Arg1" CV="159" default="1" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port11 Opcode2 Arg1" CV="159" default="1" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port11 Config</variableref>
@@ -4108,7 +4120,7 @@
         <decVal/>
       </variable>
 
-      <variable item="Port11 Opcode2 Arg2" CV="160" mask="VVVVXXXX" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port11 Opcode2 Arg2" CV="160" mask="VVVVXXXX" default="0" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port11 Config</variableref>
@@ -4125,7 +4137,7 @@
         <tooltip>Port 11 Opcode2 ARG2, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port11 Opcode2 Type" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port11 Opcode2 Type" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149,GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port11 Config</variableref>
@@ -13276,7 +13288,7 @@
     <name>Loco...</name>
 
     <column>
-      <group exclude="003,004,005,101,102,103,104,105,106,200,210,211">
+      <group exclude="003,004,005,101,102,103,104,105,106,200,210,211,GCA51">
         <label>
           <text>&lt;html&gt;&lt;strong&gt;LocoIO Board Settings&lt;/strong&gt;&lt;/html&gt;</text>
           <text xml:lang="de">&lt;html&gt;&lt;strong&gt;LocoIO Modulkonfiguration&lt;/strong&gt;&lt;/html&gt;</text>
@@ -13309,6 +13321,13 @@
           <text>&lt;html&gt;&lt;strong&gt;LocoRCD2 Board Settings&lt;/strong&gt;&lt;/html&gt;</text>
           <text xml:lang="de">&lt;html&gt;&lt;strong&gt;LocoRCD2 Modulkonfiguration&lt;/strong&gt;&lt;/html&gt;</text>
           <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;LocoRCD2 Module-instellingen&lt;/strong&gt;&lt;/html&gt;</text>
+        </label>
+      </group>
+      <group include="GCA51">
+        <label>
+          <text>&lt;html&gt;&lt;strong&gt;GCA51 LocoIO 1-8 + 2x RFID Board Settings&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="de">&lt;html&gt;&lt;strong&gt;GCA51 LocoIO 1-8 + 2x RFID Modulkonfiguration&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;GCA51 LocoIO 1-8 + 2x RFID Module-instellingen&lt;/strong&gt;&lt;/html&gt;</text>
         </label>
       </group>
 
@@ -13354,7 +13373,7 @@
       </row>
       <display item="Board Active High" format="checkbox"/>
       <!-- next item must exist as qualifier variable, but not shown on pane/supported in older versions-->
-      <group exclude="003,101,102,103,135,139,140,141,142,144,145,146,148,149,210,211">
+      <group exclude="003,101,102,103,135,139,140,141,142,144,145,146,148,149,210,211,GCA51">
         <row>
           <display item="Special Ports" format="checkbox"/>
         </row>
@@ -14176,7 +14195,7 @@
         </label>
       </group>
 
-      <group exclude="003,004,005"><!--hide Port8-Port16 on LocoBooster-->
+      <group exclude="003,004,005"><!--hide Port8 on LocoBooster-->
         <separator/>
 
         <row>
@@ -14298,7 +14317,9 @@
             </row>
           </column>
         </row>
+      </group>
 
+      <group exclude="003,004,005,GCA51"><!--hide Port9-Port16 on LocoBooster and GCA51-->
         <separator/>
 
         <row>
@@ -15118,10 +15139,15 @@
             &lt;/html&gt;</text>
       </label>
       <label>
-        <text>&lt;html&gt;For further information on this hardware and how to install it, please consult the manual available at http://users.telenet.be/deloof/&lt;html&gt;</text>
-        <text xml:lang="de">&lt;html&gt;Weitere Informationen zur Anwendung dieser Hardware finden Sie in der digitalen Anleitung, verfügbar über http://users.telenet.be/deloof/&lt;html&gt;</text>
-        <text xml:lang="nl">&lt;html&gt;Raadpleeg voor meer informatie over installatie en toepassing van deze hardware de handleiding, te vinden op &lt;a href="http://users.telenet.be/deloof"&gt;users.telenet.be/deloof&lt;/a&gt;/&lt;html&gt;</text>
-      </label>
+        <text>&lt;html&gt;For further information on this hardware and how to install it, please consult the manual available at https://locohdl.synology.me/&lt;/html&gt;</text>
+        <text xml:lang="de">&lt;html&gt;Weitere Informationen zur Anwendung dieser Hardware finden Sie in der digitalen Anleitung, verfügbar über https://locohdl.synology.me/&lt;/html&gt;</text>
+        <text xml:lang="nl">&lt;html&gt;Raadpleeg voor meer informatie over installatie en toepassing van deze hardware de handleiding, te vinden op &lt;a href="https://locohdl.synology.me/"&gt;https://locohdl.synology.me/&lt;/a&gt;&lt;/html&gt;</text>
+       </label>
+       <group include="148,GCA51">
+         <label>
+           <text>&lt;html&gt;For Peter Giling/GCA/ClubNCaldes LocoIO and GCA51, check out &lt;a href="https://wiki.rocrail.net/doku.php?id=gca51-en"&gt;GCA51 docs&lt;/a&gt;&lt;/html&gt;</text>
+         </label>
+       </group>
     </column>
   </pane>
 
