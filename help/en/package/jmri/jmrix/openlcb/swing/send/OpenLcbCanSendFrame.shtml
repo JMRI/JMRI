@@ -104,7 +104,7 @@
 
       <p>Finally, there are some high-level operations:
       <ul>
-      <li>The "Reboot Node" button will reboot (restart) the selected
+      <li>The "Restart" button will restart (reboot) the selected
       node.</li>
       <li>The "Open CDI Config Tool" button will open a configuration window
       for the node selected above. The button is only enabled if that node

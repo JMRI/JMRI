@@ -272,9 +272,9 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         pane2.setLayout(new WrapLayout());
         add(pane2);
 
-        var rebootButton = new JButton("Reboot");
-        pane2.add(rebootButton);
-        rebootButton.addActionListener(this::rebootNode);
+        var restartButton = new JButton("Restart");
+        pane2.add(restartButton);
+        restartButton.addActionListener(this::restartNode);
         
         cdiButton = new JButton("Open CDI Config Tool");
         pane2.add(cdiButton);
@@ -478,41 +478,14 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         connection.put(m, null);
     }
 
-    public void rebootNode(java.awt.event.ActionEvent e) {
+    public void restartNode(java.awt.event.ActionEvent e) {
         Message m = new DatagramMessage(srcNodeID, destNodeID(),
                 new byte[] {0x20, (byte) 0xA9});
         connection.put(m, null);        
     }
     
     public void clearCache(java.awt.event.ActionEvent e) {
-        var frames = jmri.util.JmriJFrame.getFrames();
-        for (var frame : frames) {
-            if (frame instanceof NodeSpecificFrame) {
-                if ( ((NodeSpecificFrame)frame).getNodeID() == destNodeID() ) {
-                    // This window references the node and should be closed
-                    
-                    // Notify the user to handle any prompts before continuing.
-                    jmri.util.swing.JmriJOptionPane.showMessageDialog(this, 
-                        Bundle.getMessage("OpenWindowMessage")
-                    );
-                    
-                    // Depending on the state of the window, and how the user handles
-                    // a prompt to discard changes or cancel, this might be 
-                    // presented multiple times until the user finally
-                    // allows the window to close. See the message in the Bundle.properties
-                    // file for how we handle this.
-
-                    // Close this window - force onto the queue before a possible next modal dialog
-                    jmri.util.ThreadingUtil.runOnGUI(() -> {
-                        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-                    });
-                    
-                }
-            }
-        }
-
-        // de-cache CDI information so next window opening will reload
-        iface.dropConfigForNode(destNodeID());
+        jmri.jmrix.openlcb.swing.DropCdiCache.drop(destNodeID(), memo.get(OlcbInterface.class));
     }
     
     public void readPerformed(java.awt.event.ActionEvent e) {
