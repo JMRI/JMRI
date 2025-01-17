@@ -241,6 +241,33 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
     }
 
     /**
+     * Describe SignalHead state.
+     * Does not have to be a valid state for this SignalHead instance.
+     * SignalHead.RED uses NamedBean.UNKNOWN ( 0x01 )
+     * SignalHead.FLASHYELLOW uses NamedBean.INCONSISTENT ( 0x08 )
+     * Includes SignalHead.HELD
+     * @param state the state to describe.
+     * @return description of state from Bundle.
+     */
+    @Override
+    public String describeState(int state) {
+
+        int index = java.util.stream.IntStream.range(0, validStates.length)
+                         .filter(i -> validStates[i] == state)
+                         .findFirst()
+                         .orElse(-1);
+
+        if (index != -1) {
+            return Bundle.getMessage(validStateKeys[index]);
+        }
+
+        if ( state == SignalHead.HELD ) {
+                return Bundle.getMessage("SignalHeadStateHeld");
+        }
+        return "Unknown SignalHead State: " + state;
+    }
+
+    /**
      * Check if a given turnout is used on this head.
      *
      * @param t Turnout object to check
