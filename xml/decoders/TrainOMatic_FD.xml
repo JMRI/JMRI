@@ -1543,7 +1543,7 @@
     </variables>
 
     <resets>
-      <factReset CV="8" default="78">
+      <factReset CV="8" default="8">
           <label>HARD RESET all CVs reset to default values</label>
           <label xml:lang="cs">HARD RESET všechny CV se resetují na výchozí hodnoty</label>
       </factReset>
