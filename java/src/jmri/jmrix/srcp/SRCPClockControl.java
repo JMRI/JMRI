@@ -6,7 +6,7 @@ import jmri.implementation.DefaultClockControl;
 
 /**
  * Class providing SRCP Clock Control to the SRCP client.
- *
+ * @see <a href="https://srcpd.sourceforge.net/srcp/srcp-084.html#TIME">SRCP TIME documentation</a>
  * @author Paul Bender Copyright (C) 2014
  */
 public class SRCPClockControl extends DefaultClockControl {
@@ -101,5 +101,3 @@ public class SRCPClockControl extends DefaultClockControl {
     public void initializeHardwareClock(double rate, Date now, boolean getTime) {
     }
 }
-
-
