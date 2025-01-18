@@ -25,6 +25,8 @@ import jmri.util.ImmediatePipedOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.umd.cs.findbugs.annotations.*;
+
 /**
  * Provide access to a simulated DCC++ system.
  *
@@ -256,6 +258,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
     // generateReply is the heart of the simulation.  It translates an
     // incoming DCCppMessage into an outgoing DCCppReply.
+    @SuppressFBWarnings( value="FS_BAD_DATE_FORMAT_FLAG_COMBO", justification = "both am/pm and 24hr flags present ok as only used for display output")
     private DCCppReply generateReply(DCCppMessage msg) {
         String s, r = null;
         Pattern p;
