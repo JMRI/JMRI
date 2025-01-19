@@ -273,7 +273,6 @@ abstract public class AbstractPortController implements PortAdapter {
 
         public Option(String displayText, @Nonnull String[] options,
             boolean advanced, Type type, @CheckForNull String defaultValue ) {
-            System.out.println("Setting default to " + defaultValue);
             this.displayText = displayText;
             this.options = java.util.Arrays.copyOf(options, options.length);
             this.advancedOption = advanced;
