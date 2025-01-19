@@ -8,7 +8,7 @@ import java.nio.file.StandardCopyOption;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.junit.jupiter.api.io.TempDir;
 
 import org.netbeans.jemmy.operators.JFrameOperator;
 
@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Tests the LoadAtStartUp function for Dispatcher In addition it tests auto
  * running of a train.
  */
-@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class LoadAtStartUpTest {
 
     // Only one aat at a time
@@ -278,11 +278,10 @@ public class LoadAtStartUpTest {
 
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp(@TempDir File tempDir) throws Exception  {
         JUnitUtil.setUp();
-        JUnitUtil.resetFileUtilSupport();
-        JUnitUtil.resetProfileManager();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir));
+
         JUnitUtil.initRosterConfigManager();
         JUnitUtil.initDebugThrottleManager();
 
@@ -326,27 +325,6 @@ public class LoadAtStartUpTest {
     public void tearDown() throws Exception {
 
         JUnitUtil.clearShutDownManager();
-        try {
-            Files.delete(outPathTrainInfo1);
-        } catch  (IOException e) {
-            // doesnt matter its gonezo
-        }
-        try {
-            Files.delete(outPathTrainInfo2);
-        } catch  (IOException e) {
-            // doesnt matter its gonezo
-        }
-        try {
-            Files.delete(outPathTrainInfo3);
-        } catch  (IOException e) {
-            // doesnt matter its gonezo
-        }
-        try {
-            Files.delete(outPathWarrentPreferences);
-        } catch  (IOException e) {
-            // doesnt matter its gonezo
-        }
-        JUnitUtil.resetFileUtilSupport();
         JUnitUtil.tearDown();
     }
 }

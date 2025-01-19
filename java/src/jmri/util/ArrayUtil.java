@@ -1,5 +1,7 @@
 package jmri.util;
 
+import java.util.Objects;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -9,17 +11,20 @@ import javax.annotation.Nonnull;
  */
 public final class ArrayUtil {
 
+    // Class only supplies static methods
+    private ArrayUtil() {}
+
     /**
       * Reverse an array of objects.
       * <p>
       * Not suitable for primitive types.
       *
       * @param <T> the Type of the array contents
-      * @param elements the array
+      * @param elementsArray the array
       * @return the reversed array
       */
-    public static <T> T[] reverse(@Nonnull T[] elements) {
-        assert (elements != null);
+    public static <T> T[] reverse(@Nonnull T[] elementsArray) {
+        T[] elements = Objects.requireNonNull(elementsArray);
         var results = java.util.Arrays.copyOf(elements, elements.length);
         for (int i = 0; i < elements.length; i++) {
             results[i] = elements[elements.length-i-1];
@@ -30,11 +35,11 @@ public final class ArrayUtil {
     /**
       * Reverse an array of ints.
       *
-      * @param elements the array
+      * @param elementsArray the array
       * @return the reversed array
       */
-    public static int[] reverse(@Nonnull int[] elements) {
-        assert (elements != null);
+    public static int[] reverse(@Nonnull int[] elementsArray) {
+        int[] elements = Objects.requireNonNull(elementsArray);
         var results = new int[elements.length];
         for (int i = 0; i < elements.length; i++) {
             results[i] = elements[elements.length-i-1];
@@ -45,11 +50,11 @@ public final class ArrayUtil {
     /**
       * Reverse an array of longs.
       *
-      * @param elements the array
+      * @param elementsArray the array
       * @return the reversed array
       */
-    public static long[] reverse(@Nonnull long[] elements) {
-        assert (elements != null);
+    public static long[] reverse(@Nonnull long[] elementsArray) {
+        long[] elements = Objects.requireNonNull(elementsArray);
         var results = new long[elements.length];
         for (int i = 0; i < elements.length; i++) {
             results[i] = elements[elements.length-i-1];
@@ -60,11 +65,11 @@ public final class ArrayUtil {
     /**
       * Reverse an array of doubles.
       *
-      * @param elements the array
+      * @param elementsArray the array
       * @return the reversed array
       */
-    public static double[] reverse(@Nonnull double[] elements) {
-        assert (elements != null);
+    public static double[] reverse(@Nonnull double[] elementsArray) {
+        double[] elements = Objects.requireNonNull(elementsArray);
         var results = new double[elements.length];
         for (int i = 0; i < elements.length; i++) {
             results[i] = elements[elements.length-i-1];
@@ -75,11 +80,11 @@ public final class ArrayUtil {
     /**
       * Reverse an array of floats.
       *
-      * @param elements the array
+      * @param elementsArray the array
       * @return the reversed array
       */
-    public static float[] reverse(@Nonnull float[] elements) {
-        assert (elements != null);
+    public static float[] reverse(@Nonnull float[] elementsArray) {
+        float[] elements = Objects.requireNonNull(elementsArray);
         var results = new float[elements.length];
         for (int i = 0; i < elements.length; i++) {
             results[i] = elements[elements.length-i-1];
@@ -90,11 +95,11 @@ public final class ArrayUtil {
     /**
       * Reverse an array of booleans.
       *
-      * @param elements the array
+      * @param elementsArray the array
       * @return the reversed array
       */
-    public static boolean[] reverse(@Nonnull boolean[] elements) {
-        assert (elements != null);
+    public static boolean[] reverse(@Nonnull boolean[] elementsArray) {
+        boolean[] elements = Objects.requireNonNull(elementsArray);
         var results = new boolean[elements.length];
         for (int i = 0; i < elements.length; i++) {
             results[i] = elements[elements.length-i-1];
