@@ -132,8 +132,8 @@ public class ClientManager implements ThrottleListener {
  * 
  * @param clientAddress - the client's InetAddress
  * @param locoAddress - the loco address
- * @param functionNumber
- * @param functionState 
+ * @param functionNumber - the function number to set
+ * @param functionState - the new state of the function
  */
     synchronized public void setLocoFunction(InetAddress clientAddress, int locoAddress, int functionNumber, int functionState) {
         AppClient client = registeredClients.get(clientAddress);
