@@ -2117,7 +2117,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       The menu bar of the "Manifest Print Options" provides additional features that can be found
       under "Tools". The first "More Print Options" allows you to adjust the length of the tab
       character when using the "Tabular" feature. The next three options "Edit Manifest Header
-      Text", "Edit Manifest Text" and "Edit Switch List Text" allows you to modify any of the text
+      Text", "Edit Manifest Text" and "Edit Switch List Text" allows you to modify all of the text
       found in a Manifest or switch list. Each text line used by the program is shown along with a
       text box with the same message. Edit the text box to change the default message to your liking
       and press "Save" to complete your change. You can always return the text to the original
@@ -2711,8 +2711,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         options</a> for this spur.
 
       <h5>Receive</h5>
-      You can optionally specify the car load received. Leaving the "Receive" field blank allows any
-      load to be received by the spur/industry. The "Receive" pull down menu will only show the
+      You can optionally specify the car load received. Leaving the "Receive" field blank allows all
+      loads to be received by the spur/industry. The "Receive" pull down menu will only show the
       loads that the spur can service for that particular car type. To review which car loads are
       available see the <a href="#LoadOptions">load options</a> for this spur.
 
@@ -2757,7 +2757,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <p>
         Reading the entire schedule line for the two SP boxcars, it also states that there isn't a
         random delivery for the cars, the cars can be delivered any day of the week. The load
-        received selection is blank meaning any load is accepted, including the default "E" and "L"
+        received selection is blank meaning all loads are accepted, including the default "E" and "L"
         loads, and all boxcar custom loads. The load shipped is also blank, therefore the ship load
         for the boxcars can be the default empty "E" or default load "L", or the car's <a
           href="#ReturnWhenEmpty">Return When Empty</a> or <a href="#ReturnWhenLoaded">Return
@@ -5317,7 +5317,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       You can decide which car loads the train will service. Select under the "Edit
       Train&rArr;Tools&rArr;Train Load Options". This will bring up a new window with several
       options.
-      <p>If the train will service any load name, select the "Accept all" radio button. If you
+      <p>If the train will service all load names, select the "Accept all" radio button. If you
         want the train to service only some load names, select "Accept only" radio button. To build
         a list of load names that the train will not service, select the "Exclude" radio button.</p>
 
@@ -5337,7 +5337,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         <img src="images/TrainRoadOptions.png" alt="">
       </p>
 
-      <p>If the train will service any road, select the "Accept all" radio button. If you want
+      <p>If the train will service all road names, select the "Accept all" radio button. If you want
         to accept only some roads, select "Accept only" radio button. Then use the menu of roads and
         "Add Road" button to make a list of roads that the train will service. To remove a road from
         your list, select the road from the menu and use the "Delete Road" button.</p>
@@ -6595,7 +6595,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <h3 id="SaveBuilds">Save Builds</h3>
       Pressing the "Save Builds" button causes the program to update the train, car, locomotive, and
-      location xml files. Any time you "Move" a train the operations program will make changes to
+      location xml files. Anytime you "Move" a train the operations program will make changes to
       the train, car, locomotive, and location databases. The data must be saved before you shut
       down JMRI, otherwise you will lose all of the changes that the operations program made to move
       a train to the next location. Pressing the "Save Builds" button before quitting JMRI allows

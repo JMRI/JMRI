@@ -158,6 +158,11 @@
                 <li></li>
             </ul>
 
+        <h4>SRCP</h4>
+            <ul>
+                <li>Fast-clock TIME commands now use the 00-23 format for the hour value and do not repeat 01-12 in the afternoon.</li>
+            </ul>
+
         <h4>TAMS</h4>
             <ul>
                 <li></li>
@@ -188,6 +193,10 @@
           <li></li>
         </ul>
 
+        <h4>AE Model</h4>
+            <ul>
+                <li>Added AEModels.xml to add support for AE Model decoders</li>
+            </ul>
         <h4>Arnold</h4>
             <ul>
                 <li></li>
@@ -213,6 +222,11 @@
                 <li></li>
             </ul>
 
+        <h4>DCC Concepts</h4>
+            <ul>
+                <li>DCC_Concepts_Zen_ABC.xml to add definitions for DCC Concepts Zen Blue/Black V12 </li>
+            </ul>
+
         <h4>Digikeijs (Digirails)</h4>
             <ul>
                 <li></li>
@@ -233,9 +247,13 @@
                 <li></li>
             </ul>
 
+        <h4>Hattoms</h4>
+            <ul>
+                <li>Added Hattons-Neo.xml to add Hattons Neo decoders</li>
+            </ul>
         <h4>Hornby</h4>
             <ul>
-                <li></li>
+                <li>Added HornbyTXS.xml to add Hornby HM7000 sound decoder definitions and updated HornbyTTS.xml to address error for Hall Class Sound definition</li>
             </ul>
 
         <h4>Kuehn</h4>
@@ -370,7 +388,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li></li>
+                <li>Updated Zimo_MS_small_v4.xml and Zimo_MN_small_v4.xml </li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -466,6 +484,8 @@
         <a id="Operations" name="Operations"></a>
         <ul>
             <li>New feature, you can now select locomotive pick up and set out text colors.</li>
+            <li>Added track move count to "Export Locations".</li>
+            <li>Improved "Train logger" to include the number of cars in train, the number of pick ups and set outs, train length and weight.</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -495,7 +515,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li></li>
+            <li>Roster Table - Fixes initial editing of Last Operated date / time values using 1-12hr values instead of 0-23.</li>
         </ul>
 
     <h3>Routes</h3>
@@ -623,6 +643,14 @@
             <li>Improve UI to show connected clients</li>
             <li>Add UI for mapping of Z21 turnout numbers to JMRI turnouts, routes etc.</li>
             <li>Add help page</li>
+        </ul>
+
+    <h3>Test Infrastructure</h3>
+        <a id="Test" name="Testing"></a>
+        <ul>
+            <li>JUnitAppender - <code>assertNoErrorMessage</code> and <code>assertMessage(String msg)</code>
+                functionality updated to match JavaDoc.</li>
+            <li>JUnitAppender - Updated JavaDoc.</li>
         </ul>
 
     <h3>Miscellaneous</h3>

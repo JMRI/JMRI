@@ -150,6 +150,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     public static final String TRAIN_ROW_COLOR_CHANGED_PROPERTY = "TrianRowColor"; // NOI18N
     public static final String TRAIN_ROW_COLOR_RESET_CHANGED_PROPERTY = "TrianRowColorReset"; // NOI18N
     public static final String TRAIN_MODIFIED_CHANGED_PROPERTY = "TrainModified"; // NOI18N
+    public static final String TRAIN_CURRENT_CHANGED_PROPERTY = "TrainCurrentLocation"; // NOI18N
 
     // Train status
     public static final String TRAIN_RESET = Bundle.getMessage("TrainReset");
@@ -686,7 +687,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         RouteLocation old = _current;
         _current = location;
         if ((old != null && !old.equals(location)) || (old == null && location != null)) {
-            setDirtyAndFirePropertyChange("current", old, location); // NOI18N
+            setDirtyAndFirePropertyChange(TRAIN_CURRENT_CHANGED_PROPERTY, old, location); // NOI18N
         }
     }
 
@@ -803,8 +804,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         int oldCode = getStatusCode();
         _statusCode = code;
         setDate(Calendar.getInstance().getTime());
-        // always fire property change for train en route
-        if (oldCode != getStatusCode() || code == CODE_TRAIN_EN_ROUTE) {
+        if (oldCode != getStatusCode()) {
             setDirtyAndFirePropertyChange(STATUS_CHANGED_PROPERTY, oldStatus, getStatus());
         }
         updateTrainTableRowColor();
@@ -2243,6 +2243,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         return getNumberCarsInTrain(routeLocation) - getNumberEmptyCarsInTrain(routeLocation);
     }
 
+    public int getNumberCarsPickedUp() {
+        return getNumberCarsPickedUp(getCurrentRouteLocation());
+    }
+
     /**
      * Gets the number of cars pulled from a location
      *
@@ -2252,11 +2256,15 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     public int getNumberCarsPickedUp(RouteLocation routeLocation) {
         int number = 0;
         for (Car rs : InstanceManager.getDefault(CarManager.class).getList(this)) {
-            if (rs.getRouteLocation() == routeLocation) {
+            if (rs.getRouteLocation() == routeLocation && rs.getTrack() != null) {
                 number++;
             }
         }
         return number;
+    }
+
+    public int getNumberCarsSetout() {
+        return getNumberCarsSetout(getCurrentRouteLocation());
     }
 
     /**
