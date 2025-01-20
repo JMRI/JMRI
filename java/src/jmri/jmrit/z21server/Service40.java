@@ -292,8 +292,6 @@ public class Service40 {
  * Handle LAN_X_SET_STOP command.
  * Stop the locos for all throttles found in JMRI.
  * 
- * @param data - the Z21 packet bytes without data length, header and X-header
- * @param clientAddress - the sending client's InetAddress
  * @return a response packet to be sent to the client or null if nothing is to sent (yet).
  */
     private static byte[] handleHeader80() {
@@ -324,8 +322,6 @@ public class Service40 {
  * for Z21 command station software version, we just return the
  * currently newest version 1.43 (January 2025).
  * 
- * @param data - the Z21 packet bytes without data length, header and X-header
- * @param clientAddress - the sending client's InetAddress
  * @return a response packet to be sent to the client or null if nothing is to sent (yet).
  */
     private static byte[] handleHeaderF1() {

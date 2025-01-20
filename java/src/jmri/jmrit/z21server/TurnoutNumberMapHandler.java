@@ -31,7 +31,7 @@ public class TurnoutNumberMapHandler implements PropertyChangeListener {
     public final static String beanProperty = "Z21TurnoutMap";
 
     // NOTE: This list should match the classes used in NumberMapFrame.java
-    public final static Class[] mgrList = {
+    public final static Class<?>[] mgrList = {
         TurnoutManager.class,
         RouteManager.class,
         LightManager.class,
@@ -141,7 +141,7 @@ public class TurnoutNumberMapHandler implements PropertyChangeListener {
  */
     public void loadNumberList() {
         turnoutNumberList.clear();
-        for (Class clazz : mgrList) {
+        for (Class<?> clazz : mgrList) {
             loadNumberTable(clazz);
         }        
     }
@@ -153,7 +153,7 @@ public class TurnoutNumberMapHandler implements PropertyChangeListener {
  * @param clazz - the manager class to be used expressed as a classname, e.g. TurnoutManager.class
  */
     @SuppressWarnings("unchecked")
-    private <T extends NamedBean> void loadNumberTable(Class clazz) {
+    private <T extends NamedBean> void loadNumberTable(Class<?> clazz) {
         Pattern pattern = Pattern.compile("^(\\d+)$");
         Manager<T> mgr = (Manager<T>)InstanceManager.getNullableDefault(clazz);
         if (mgr != null) {
@@ -181,8 +181,8 @@ public class TurnoutNumberMapHandler implements PropertyChangeListener {
  */
     @SuppressWarnings("unchecked")
     private void addPropertyChangeListeners() {
-        for (Class clazz : mgrList) {
-            Manager mgr = (Manager)InstanceManager.getNullableDefault(clazz);
+        for (Class<?> clazz : mgrList) {
+            Manager<?> mgr = (Manager<?>)InstanceManager.getNullableDefault(clazz);
             if (mgr != null) {
                 mgr.addPropertyChangeListener(instance);
             }
@@ -194,8 +194,8 @@ public class TurnoutNumberMapHandler implements PropertyChangeListener {
  */    
     @SuppressWarnings("unchecked")
     private void removePropertyChangeListeners() {
-        for (Class clazz : mgrList) {
-            Manager mgr = (Manager)InstanceManager.getNullableDefault(clazz);
+        for (Class<?> clazz : mgrList) {
+            Manager<?> mgr = (Manager<?>)InstanceManager.getNullableDefault(clazz);
             if (mgr != null) {
                 mgr.removePropertyChangeListener(instance);
             }

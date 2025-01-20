@@ -85,7 +85,7 @@ public class NumberMapFrame extends JmriJFrame implements TableModelListener {
  * @param tabbedPane - the pane to which to add the tab
  */
     @SuppressWarnings("unchecked")
-    private <T extends NamedBean> void addTab(@Nonnull Class<T> type, @Nonnull Class mgrType, String tabName, String tabToolTip, String tabLabel, JTabbedPane tabbedPane ) {
+    private <T extends NamedBean> void addTab(@Nonnull Class<T> type, @Nonnull Class<?> mgrType, String tabName, String tabToolTip, String tabLabel, JTabbedPane tabbedPane ) {
         
         
         Manager<T> mgr = (Manager<T>)InstanceManager.getNullableDefault(mgrType);
@@ -264,7 +264,7 @@ public class NumberMapFrame extends JmriJFrame implements TableModelListener {
  * @param messageField - JLabel field to write messages to
  */
         @SuppressWarnings("unchecked")
-        MapTableModel(Class mgrType, JLabel messageField) {
+        MapTableModel(Class<?> mgrType, JLabel messageField) {
             mgr = (Manager<E>)InstanceManager.getDefault(mgrType);
             sysNameList = new java.util.ArrayList<>(mgr.getNamedBeanSet().size());
             mgr.getNamedBeanSet().forEach(bean -> {

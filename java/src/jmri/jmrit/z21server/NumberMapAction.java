@@ -26,7 +26,7 @@ public class NumberMapAction extends AbstractAction {
     public NumberMapAction(String name) {
         super(name);
         boolean mgrFound = false;
-        for (Class clazz : jmri.jmrit.z21server.TurnoutNumberMapHandler.mgrList) {
+        for (Class<?> clazz : jmri.jmrit.z21server.TurnoutNumberMapHandler.mgrList) {
             if (jmri.InstanceManager.getNullableDefault(clazz) != null) {
                 mgrFound = true;
             }
