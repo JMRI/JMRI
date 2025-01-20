@@ -31,8 +31,8 @@ public class AppClient implements PropertyChangeListener  {
 
     private final static Logger log = LoggerFactory.getLogger(AppClient.class);
     private final InetAddress address;
-    private final HashMap<Integer, DccThrottle> throttles;
-    private final PropertyChangeListener changeListener;
+    private final HashMap<Integer, DccThrottle> throttles; //list of throttles the client uses
+    private final PropertyChangeListener changeListener; //a throttle change event will be forwarded to this listener
     private DccThrottle activeThrottle = null; //last modified throttle
     private RosterEntry activeRosterEntry = null; //cached roster entry for activeThrottle
 
@@ -41,6 +41,12 @@ public class AppClient implements PropertyChangeListener  {
     private static final int packetLenght = 14;
 
 
+/**
+ * Constructor.
+ * 
+ * @param address of the connected client
+ * @param changeListener to be called if one of the throttles has changed
+ */
     public AppClient(InetAddress address, PropertyChangeListener changeListener) {
         this.address = address;
         this.changeListener = changeListener;
@@ -48,6 +54,13 @@ public class AppClient implements PropertyChangeListener  {
         heartbeat();
     }
 
+/**
+ * Add a throttle to the clients list of throttles.
+ * The throttle instance is created by the caller.
+ * 
+ * @param locoAddress
+ * @param throttle 
+ */
     public void addThrottle(int locoAddress, DccThrottle throttle) {
         if (!throttles.containsKey(locoAddress)) {
             throttles.put(locoAddress, throttle);
@@ -56,19 +69,37 @@ public class AppClient implements PropertyChangeListener  {
         log.trace("addThrottle: list: {}", throttles.keySet());
     }
     
+/**
+ * Get the last used throttle
+ * 
+ * @return last used throttle
+ */
     public DccThrottle getActiveThrottle() {
         return activeThrottle;
     }
     
+/**
+ * Get the roster ID for the last used throttle
+ * 
+ * @return roster ID as String
+ */
     public String getActiveRosterIdString() {
         return (activeRosterEntry != null) ? activeRosterEntry.getId() : null;
     }
     
+/**
+ * Set last used throttle
+ * 
+ * @param t is the throttle
+ */
     public void setActiveThrottle(DccThrottle t) {
         activeThrottle = t;
         activeRosterEntry = findRosterEntry(t);
     }
     
+/**
+ * Remove the listener from all throttles and clear the list of throttles.
+ */
     public void clear() {
         log.trace("clear: list: {}", throttles.keySet());
         for (DccThrottle t: throttles.values()) {
@@ -77,6 +108,12 @@ public class AppClient implements PropertyChangeListener  {
         throttles.clear();
     }
     
+/**
+ * Get a throttle by loco address
+ * 
+ * @param locoAddress
+ * @return the throttle
+ */
     public DccThrottle getThrottleFromLocoAddress(int locoAddress) {
         if (throttles.containsKey(locoAddress)) {
             return throttles.get(locoAddress);
@@ -85,14 +122,27 @@ public class AppClient implements PropertyChangeListener  {
         }
     }
 
+/**
+ * Get clients IP address
+ * 
+ * @return the InetAddress
+ */
     public InetAddress getAddress() {
         return address;
     }
 
+/**
+ * The heartbeat for client expire
+ */
     public void heartbeat() {
         timestamp = new Date();
     }
 
+/**
+ * Check if the client has not been seen (see heartbeat()) for at least 60 seconds.
+ * 
+ * @return true if not seen for more than 60 seconds
+ */
     public boolean isTimestampExpired() {
         Duration duration = Duration.between(timestamp.toInstant(), new Date().toInstant());
         log.trace("Duration without heartbeat: {}", duration);
@@ -101,6 +151,12 @@ public class AppClient implements PropertyChangeListener  {
         /* Per Z21 Spec, clients are deemed lost after one minute of inactivity. */
     }
 
+/**
+ * Return a Z21 LAN_X_LOCO_INFO packet for a given loco address
+ * 
+ * @param locoAddress
+ * @return Z21 LAN_X_LOCO_INFO packet
+ */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
        justification = "Messages can be of any length, null is used to indicate absence of message for caller")
     public byte[] getLocoStatusMessage(Integer locoAddress) {
@@ -111,6 +167,12 @@ public class AppClient implements PropertyChangeListener  {
         }
     }
 
+/**
+ * Listener for throttle events.
+ * Will call the changeListener (in MainServer) with the Z21 LAN_X_LOCO_INFO packet as new value.
+ * 
+ * @param pce - throttle change event
+ */
     @Override
     public void propertyChange(PropertyChangeEvent pce) {
         if (changeListener != null) {
@@ -119,6 +181,12 @@ public class AppClient implements PropertyChangeListener  {
         }
     }
     
+/**
+ * Find the roster entry from a given throttle instance.
+ * 
+ * @param t - the throttle instance
+ * @return the roster entry
+ */
     public static RosterEntry findRosterEntry(DccThrottle t) {
         RosterEntry re = null;
         if (t.getLocoAddress() != null) {
@@ -131,6 +199,12 @@ public class AppClient implements PropertyChangeListener  {
         return re;
     }
     
+/**
+ * Build a Z21 LAN_X_LOCO_INFO packet from a given throttle instance
+ * 
+ * @param t - the throttle instance
+ * @return the Z21 LAN_X_LOCO_INFO packet
+ */
     private byte[] buildLocoPacket(DccThrottle t) {
         byte[] locoPacket =  new byte[packetLenght];
 

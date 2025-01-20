@@ -24,13 +24,17 @@ import java.beans.PropertyChangeEvent;
 // - handle MultiPacket datagrams (though neither the Z21 App not the WlanMaus seem to use them)
 // - implement CV programming
 // - create unit test classes
-// - help page
 
 public class MainServer implements Runnable, PropertyChangeListener {
 
     private final static Logger log = LoggerFactory.getLogger(MainServer.class);
     public final static int port = 21105;
     DatagramSocket mySS;
+    
+/**
+ * The main server running in a separate thread.
+ * Do some setup and then read from the network in loop.
+ */
     @Override
     public void run() {
         try {
@@ -62,6 +66,7 @@ public class MainServer implements Runnable, PropertyChangeListener {
                 }
 
                 if (!bReceivedData) continue;
+                
 
                 InetAddress clientAddress = packet.getAddress();
 
@@ -79,24 +84,28 @@ public class MainServer implements Runnable, PropertyChangeListener {
 
                 byte[] response = null;
 
+                // parse header byte.
                 switch (actualData[2]) {
                     case 0x50:
+                        // LAN_SET_BROADCASTFLAGS - currently ignored, but accepted
                         byte[] maskArray = Arrays.copyOfRange(actualData, HEADER_SIZE, dataLenght);
                         int mask = fromByteArrayLittleEndian(maskArray);
                         log.debug("{} Broadcast request with mask : {}", ident, Integer.toBinaryString(mask));
                         break;
                     case 0x30:
+                        // LAN_LOGOFF - the client wants to exit
                         log.debug("{} Disconnect frame", ident);
                         ClientManager.getInstance().unregisterClient(clientAddress);
                         break;
-                    case 0x40:
-                        byte[] payloadData = Arrays.copyOfRange(actualData, HEADER_SIZE, dataLenght);
-                        response = Service40.handleService(payloadData, clientAddress);
-                        break;
                     case 0x10:
-                        // send a serial number as 32bit number - we always send 0x00000000
+                        // LAN_GET_SERIAL_NUMBER - send a serial number as 32bit number - we always send 0x00000000
                         log.debug("Send 32bit serialnumber");
                         response = new byte[] {0x08, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00};
+                        break;
+                    case 0x40:
+                        // X-Bus commands - here is the real work
+                        byte[] payloadData = Arrays.copyOfRange(actualData, HEADER_SIZE, dataLenght);
+                        response = Service40.handleService(payloadData, clientAddress);
                         break;
 
                     default:
@@ -104,6 +113,7 @@ public class MainServer implements Runnable, PropertyChangeListener {
                 }
 
                 if (response != null) {
+                    // send back a response packet to the sending client
                     sendResponse(clientAddress, response);
                 }
             }
@@ -120,6 +130,11 @@ public class MainServer implements Runnable, PropertyChangeListener {
 
     }
     
+/**
+ * Send a Z21 packet to all registered clients.
+ * 
+ * @param response - a Z21 packet
+ */
     public void sendResponseToRegisteredClients(byte[] response) {
         HashMap<InetAddress, AppClient> registeredClients = ClientManager.getInstance().getRegisteredClients(); //send to all registered clients
         log.trace("Sending to all registered clients (broadcast)");
@@ -128,6 +143,12 @@ public class MainServer implements Runnable, PropertyChangeListener {
         }
     }
     
+/**
+ * Send a Z21 packet to a single client.
+ * 
+ * @param respAddress - client's InetAdress
+ * @param response - a Z21 packet
+ */
     public void sendResponse(InetAddress respAddress, byte[] response) {
         if (response != null) {
             DatagramPacket responsePacket = new DatagramPacket(response, response.length, respAddress, port);
@@ -143,6 +164,12 @@ public class MainServer implements Runnable, PropertyChangeListener {
         }
     }
     
+/**
+ * Change listener.
+ * If new value contains a Z21 packet, send it to all registered clients.
+ * 
+ * @param pce - property change event from the caller
+ */
     @Override
     public void propertyChange(PropertyChangeEvent pce) {
         log.trace("change event: {}", pce);
@@ -150,6 +177,8 @@ public class MainServer implements Runnable, PropertyChangeListener {
             sendResponseToRegisteredClients( (byte [])pce.getNewValue() );
         }
     }
+    
+// helper functions
 
     private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
 

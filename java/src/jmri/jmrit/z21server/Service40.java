@@ -30,6 +30,15 @@ public class Service40 {
 
     private final static Logger log = LoggerFactory.getLogger(Service40.class);
 
+/**
+ * Set a listener to be called on track power manager events.
+ * The listener is called with the Z21 LAN_X_BC_TRACK_POWER_ON/OFF packet to
+ * be sent to the client.
+ * 
+ * Note that throttle changes are handled in the AppClient class.
+ * 
+ * @param cl - listener class
+ */
     public static void setChangeListener(PropertyChangeListener cl) {
         changeListener = cl;
         PowerManager powerMgr = InstanceManager.getNullableDefault(PowerManager.class);
@@ -43,6 +52,13 @@ public class Service40 {
         }
     }
 
+/**
+ * Handle a X-Bus command.
+ * 
+ * @param data - the Z21 packet bytes without data length and header.
+ * @param clientAddress - the sending client's InetAddress
+ * @return a response packet to be sent to the client or null if nothing is to sent (yet).
+ */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
     justification = "Messages can be of any length, null is used to indicate absence of message for caller")
     public static byte[] handleService(byte[] data, InetAddress clientAddress) {
@@ -69,6 +85,12 @@ public class Service40 {
         return null;
     }
 
+/**
+ * Handle a LAN_X_GET_* commands.
+ * 
+ * @param db0 - X-Bus subcommand
+ * @return a response packet to be sent to the client or null if nothing is to sent (yet).
+ */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
     justification = "Messages can be of any length, null is used to indicate absence of message for caller")
     private static byte[] handleHeader21(int db0){
@@ -106,6 +128,12 @@ public class Service40 {
         return null;
     }
     
+/**
+ * Set track power on to JMRI.
+ * 
+ * @param state - true to switch ON, false to switch OFF
+ * @return a response packet to be sent to the client or null if nothing is to sent (yet).
+ */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
     justification = "Messages can be of any length, null is used to indicate absence of message for caller")
     private static byte[] setTrackPower(boolean state) {
@@ -123,7 +151,12 @@ public class Service40 {
         return null;
     }
 
+/**
+ * Build a LAN_X_BC_TRACK_POWER_ON or LAN_X_BC_TRACK_POWER_OFF packet.
+ * @return the packet
+ */
     private static byte[] buildTrackPowerPacket() {
+        // LAN_X_BC_TRACK_POWER_ON/OFF
         byte[] trackPowerPacket =  new byte[7];
         trackPowerPacket[0] = (byte) 0x07;
         trackPowerPacket[1] = (byte) 0x00;
@@ -140,6 +173,13 @@ public class Service40 {
     }
 
     
+/**
+ * Handle a LAN_X_GET_LOCO_INFO command
+ * 
+ * @param data - the Z21 packet bytes without data length, header and X-header
+ * @param clientAddress - the sending client's InetAddress
+ * @return a response packet to be sent to the client or null if nothing is to sent (yet).
+ */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
     justification = "Messages can be of any length, null is used to indicate absence of message for caller")
     private static byte[] handleHeaderE3(byte[] data, InetAddress clientAddress) {
@@ -159,10 +199,18 @@ public class Service40 {
         return null;
     }
 
+/**
+ * Handle LAN_X_SET_LOCO_* commands
+ * 
+ * @param data - the Z21 packet bytes without data length, header and X-header
+ * @param clientAddress - the sending client's InetAddress
+ * @return a response packet to be sent to the client or null if nothing is to sent (yet).
+ */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
     justification = "Messages can be of any length, null is used to indicate absence of message for caller")
     private static byte[] handleHeaderE4(byte[] data, InetAddress clientAddress) {
         if (data[0] == 0x13) {
+            // handle LAN_X_SET_LOCO_DRIVE - 128 steps only, others are not supported
             int locomotiveAddress = (((data[1] & 0xFF) & 0x3F) << 8) + (data[2] & 0xFF);
             int rawSpeedData = data[3] & 0xFF;
             boolean bForward = ((rawSpeedData & 0x80) >> 7) == 1;
@@ -175,6 +223,7 @@ public class Service40 {
             //return ClientManager.getInstance().getLocoStatusMessage(clientAddress, locomotiveAddress);
         }
         else if (data[0] == (byte)0xF8) {
+            // handle LAN_X_SET_LOCO_FUNCTION
             int locomotiveAddress = (((data[1] & 0xFF) & 0x3F) << 8) + (data[2] & 0xFF);
             // function switch type: 0x00 = OFF, 0x01 = ON, 0x20 = TOGGLE
             // Z21 app always sends ON or OFF, WLANmaus always TOGGLE
@@ -197,6 +246,15 @@ public class Service40 {
         return null;
     }
     
+/**
+ * Handle LAN_X_GET_TURNOUT_INFO command.
+ * Note: JMRI has no concept of turnout numbers as with the Z21 protocol.
+ * So this would only work of mapping tables have already been set by user.
+ * 
+ * @param data - the Z21 packet bytes without data length, header and X-header
+ * @param clientAddress - the sending client's InetAddress
+ * @return a response packet to be sent to the client or null if nothing is to sent (yet).
+ */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
     justification = "Messages can be of any length, null is used to indicate absence of message for caller")
     private static byte[] handleHeader43(byte[] data, InetAddress clientAddress) {
@@ -206,10 +264,22 @@ public class Service40 {
         return ClientManager.getInstance().getTurnoutStatusMessage(clientAddress, turnoutNumber);
     }
 
+/**
+ * Handle LAN_X_SET_TURNOUT command.
+ * Note: JMRI has no concept of turnout numbers as with the Z21 protocol.
+ * So this would only work of mapping tables have already been set by user.
+ * 
+ * @param data - the Z21 packet bytes without data length, header and X-header
+ * @param clientAddress - the sending client's InetAddress
+ * @return a response packet to be sent to the client or null if nothing is to sent (yet).
+ */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
     justification = "Messages can be of any length, null is used to indicate absence of message for caller")
     private static byte[] handleHeader53(byte[] data, InetAddress clientAddress) {
         // Set turnout
+        // WlanMaus sends in bit 0 of data[2]:
+        // 0x00 - Turnout thrown button pressed (diverging, unstraight, not main line)
+        // 0x01 / Turnout closed button pressed (straight, main line)
         int turnoutNumber = ((data[0] & 0xFF) << 8) + (data[1] & 0xFF);
         log.debug("{} Set turnout no {} to state {}", moduleIdent, turnoutNumber, data[2] & 0xFF);
         if ( (data[2] & 0x08) == 0x08) { //only use "activation", ignore "deactivation"
@@ -218,6 +288,14 @@ public class Service40 {
         return ClientManager.getInstance().getTurnoutStatusMessage(clientAddress, turnoutNumber);
     }
 
+/**
+ * Handle LAN_X_SET_STOP command.
+ * Stop the locos for all throttles found in JMRI.
+ * 
+ * @param data - the Z21 packet bytes without data length, header and X-header
+ * @param clientAddress - the sending client's InetAddress
+ * @return a response packet to be sent to the client or null if nothing is to sent (yet).
+ */
     private static byte[] handleHeader80() {
         log.info("{} Stop all locos", moduleIdent);
         Iterator<ThrottleFrame> tpi = InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getTableModel().iterator();
@@ -239,6 +317,17 @@ public class Service40 {
         return stoppedPacket;
     }
 
+/**
+ * Handle LAN_X_GET_FIRMWARE_VERSION command.
+ * Of course, since we are not a Z21 command station, the version number
+ * does not make sense. But for the case that the client behaves different
+ * for Z21 command station software version, we just return the
+ * currently newest version 1.43 (January 2025).
+ * 
+ * @param data - the Z21 packet bytes without data length, header and X-header
+ * @param clientAddress - the sending client's InetAddress
+ * @return a response packet to be sent to the client or null if nothing is to sent (yet).
+ */
     private static byte[] handleHeaderF1() {
         log.info("{} Get Firmware Version", moduleIdent);
         

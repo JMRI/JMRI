@@ -44,12 +44,26 @@
       depending on the setting in the WlanMaus.
       The Z21 app also has such a button in the top right corner. The Z21 server supports both methods.</p>
       
-      <h2 id="turnouts">Experimental support for turnouts</h2>
+      <h2 id="turnouts">Support for Turnouts</h2>
       
       <p>Both the Z21 app and the WlanMaus have the functionality to operate turnouts, but the turnout can only be selected by a number.
-      Since JMRI has no concept of turnout numbers, a mapping of the turnout number to a JMRI turnout component is required.
-      The current quick and easy method is to check if the comment field in the turnout table contains a number prefixed with "#",
-      e.g. #101 for turnout W0101, as seen on the WlanMaus. This should be replaced by a better mapping in the future.</p>
+      Since JMRI has no concept of turnout numbers, a mapping of the turnout number to a JMRI component is required.</p>
+      
+      <p>The mapping has been implemented by providing mapping tables. This window can be opened by selecting "Z21 Turnout Number Map..." from the Z21 Server UI menu.
+      A list of all turnouts will appear with system name, user name and a third column "Z21 Turnout Number". If you enter a number in this field, the turnout will be
+      mapped to the specified turnout number. The mapping can even be used to operate other components such as routes, lights, signal masts, signal heads and sensors.
+      The tables can be accessed via the corresponding tabs.</p>
+      
+      <p>The result of pressing the "Turned" or "Closed" buttons on the handheld depends on the component type:
+      <ul>
+        <li>Turnouts: buttons map directly</li>
+        <li>Lights: Thrown = ON, Closed = OFF</li>
+        <li>Routes: Thrown sets the route, Closed does nothing</li>
+        <li>Signal Masts and Signal Heads: Closed = HELD, Thrown = not HELD, the aspect/appearance itself can not be modified</li>
+        <li>Sensors: Thrown = ACTIVE, Closed = INACTIVE. Used to triggers all actions bound to the sensor</li>
+      </ul>
+      </p>
+      <p>The mapping is written to the panel xml file as a <i>property</i> entry.</p>
 
       <h2 id="programming">CV Programming</h2>
       

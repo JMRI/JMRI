@@ -17,6 +17,13 @@ import java.util.Enumeration;
 
 /**
  * User interface.
+ * Create a window with a menu bar and some controls:
+ * - IP name, address and port number of the running Z21 Server
+ * - a power on/off button
+ * - an all locos off button
+ * - menu entry for Z21 Server start/stop
+ * - menu entry for opening a mapping table window for turnout numbers
+ * - a table showing connected clients and their last used loco number
  * 
  * @author Jean-Yves Roda (C) 2023
  * @author Eckart Meyer (C) 2025 (enhancements, WlanMaus support)
@@ -206,7 +213,7 @@ public class UserInterface extends JmriJFrame implements PropertyChangeListener 
 
         menu.add(serverOnOff);
 
-        //menu.add(new ControllerFilterAction());
+        menu.add(new NumberMapAction());
 
 //        Action prefsAction = InstanceManager.getDefault(JmriPreferencesActionFactory.class).getCategorizedAction(
 //                Bundle.getMessage("MenuMenuPrefs"),

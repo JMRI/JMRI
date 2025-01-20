@@ -1,12 +1,14 @@
 package jmri.jmrit.z21server;
 
 /**
- * z21server - connected clients table
+ * z21server - Model for connected clients table
  *
  * @author Brett Hoffman Copyright (C) 2009
  * @author Created by Brett Hoffman on:
  * @author 11/11/09.
  * @author Eckart Meyer (C) 2025
+ * 
+ * based on jmri.jmrit.withrottle.WiThrottlesListModel
  */
 import java.net.InetAddress;
 import java.util.ArrayList;
@@ -17,20 +19,10 @@ import org.slf4j.LoggerFactory;
 
 public class Z21ClientsListModel extends AbstractTableModel {
 
-    //ArrayList<DeviceServer> deviceList;
-    //DeviceServer[] deviceList;
     ArrayList<InetAddress> addrList = new ArrayList<>(ClientManager.getInstance().getRegisteredClients().keySet());
 
-    //static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.z21serverBundle");
-
     Z21ClientsListModel() {
-    
     }
-//    Z21ClientsListModel(ArrayList<DeviceServer> deviceList) {
-//
-//        this.deviceList = deviceList;
-//
-//    }
 
     @Override
     public int getColumnCount() {
@@ -71,7 +63,6 @@ public class Z21ClientsListModel extends AbstractTableModel {
 
     @Override
     public String getValueAt(int row, int col) {
-        //ArrayList<InetAddress> addrList = new ArrayList<>(ClientManager.getInstance().getRegisteredClients().keySet());
         if (addrList.size() < 1) {
             return null;
         }
@@ -82,7 +73,6 @@ public class Z21ClientsListModel extends AbstractTableModel {
         }
         AppClient client = ClientManager.getInstance().getRegisteredClients().get(addrList.get(row));
         if (col == 0) {
-            //return ClientManager.getInstance().getRegisteredClients().get(addrList.get(row)).toString();
             return addrList.get(row).toString();
         } else if (col == 1) {
             return (client != null  &&  client.getActiveThrottle() != null) ? client.getActiveThrottle().getLocoAddress().toString() : "";
@@ -93,7 +83,6 @@ public class Z21ClientsListModel extends AbstractTableModel {
 
     public void updateClientList() {
         addrList = new ArrayList<>(ClientManager.getInstance().getRegisteredClients().keySet());
-//        this.deviceList = deviceList;
         this.fireTableDataChanged();
     }
 
