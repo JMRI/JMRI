@@ -250,7 +250,7 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
      * Can include multiple head states, with exception of DARK,
      * the only state which must exist on its own.
      * Includes the HELD state if present.
-     * @see SignalHead#getAppearanceName(java.lang.Integer)
+     * @see SignalHead#getAppearanceName(int)
      * @param state the state to describe.
      * @return description of state from Bundle.
      */
