@@ -159,7 +159,7 @@ public class NumberMapFrame extends JmriJFrame implements TableModelListener {
  * @param fm - the table model to be used with action events when a button is pressed.
  * @return a new panel containing the new elements.
  */
-    private JPanel addButtonsPanel(JLabel messageField, final MapTableModel fm) {
+    private JPanel addButtonsPanel(JLabel messageField, final MapTableModel<?,?> fm) {
         JPanel pane = new JPanel();
         pane.setLayout(new BoxLayout(pane, BoxLayout.X_AXIS));
         pane.add(Box.createHorizontalGlue());
@@ -233,7 +233,7 @@ public class NumberMapFrame extends JmriJFrame implements TableModelListener {
     public void dispose() {
         log.trace("dispose - remove table models and its listeners from ");
         for (JTable t : tablelList) {
-            MapTableModel model = (MapTableModel)t.getModel();
+            MapTableModel<?,?> model = (MapTableModel<?,?>)t.getModel();
             model.dispose();
         }
         tablelList.clear();
