@@ -148,7 +148,12 @@ public abstract class AbstractSignalHeadTestBase {
         Assertions.assertEquals(Bundle.getMessage("SignalHeadStateLunar"), s.describeState(SignalHead.LUNAR) );
         Assertions.assertEquals(Bundle.getMessage("SignalHeadStateFlashingLunar"), s.describeState(SignalHead.FLASHLUNAR) );
         Assertions.assertEquals(Bundle.getMessage("SignalHeadStateHeld"), s.describeState(SignalHead.HELD) );
-        Assertions.assertEquals("Unknown SignalHead State: 999", s.describeState(999) );
+        Assertions.assertEquals(
+            Bundle.getMessage("SignalHeadStateYellow") + " " + Bundle.getMessage("SignalHeadStateHeld"),
+            s.describeState( SignalHead.YELLOW + SignalHead.HELD ) );
+        Assertions.assertEquals(
+            Bundle.getMessage("SignalHeadStateRed") + " " + Bundle.getMessage("SignalHeadStateFlashingRed"),
+            s.describeState( SignalHead.RED + SignalHead.FLASHRED ) );
     }
 
 }
