@@ -158,6 +158,11 @@
                 <li></li>
             </ul>
 
+        <h4>SRCP</h4>
+            <ul>
+                <li>Fast-clock TIME commands now use the 00-23 format for the hour value and do not repeat 01-12 in the afternoon.</li>
+            </ul>
+
         <h4>TAMS</h4>
             <ul>
                 <li></li>
@@ -383,7 +388,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li></li>
+                <li>Updated Zimo_MS_small_v4.xml and Zimo_MN_small_v4.xml </li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -479,6 +484,8 @@
         <a id="Operations" name="Operations"></a>
         <ul>
             <li>New feature, you can now select locomotive pick up and set out text colors.</li>
+            <li>Added track move count to "Export Locations".</li>
+            <li>Improved "Train logger" to include the number of cars in train, the number of pick ups and set outs, train length and weight.</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -508,7 +515,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li></li>
+            <li>Roster Table - Fixes initial editing of Last Operated date / time values using 1-12hr values instead of 0-23.</li>
         </ul>
 
     <h3>Routes</h3>
@@ -633,6 +640,14 @@
         <a id="Z21" name="Z21"></a>
         <ul>
             <li></li>
+        </ul>
+
+    <h3>Test Infrastructure</h3>
+        <a id="Test" name="Testing"></a>
+        <ul>
+            <li>JUnitAppender - <code>assertNoErrorMessage</code> and <code>assertMessage(String msg)</code>
+                functionality updated to match JavaDoc.</li>
+            <li>JUnitAppender - Updated JavaDoc.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
