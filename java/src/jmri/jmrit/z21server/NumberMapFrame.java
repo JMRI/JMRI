@@ -248,7 +248,7 @@ public class NumberMapFrame extends JmriJFrame implements TableModelListener {
  * @param <E> - type of component, e.g. Turnout, Light
  * @param <M> - type of component manager, e.g. TurnoutManager, LightManager.
  */
-    private class MapTableModel<E extends NamedBean, M extends Manager<E>> extends AbstractTableModel implements PropertyChangeListener {
+    private static class MapTableModel<E extends NamedBean, M extends Manager<E>> extends AbstractTableModel implements PropertyChangeListener {
         
         private final Manager<E> mgr;
         private final JLabel messageField;

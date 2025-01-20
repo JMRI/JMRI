@@ -42,6 +42,9 @@ public class TurnoutNumberMapHandler implements PropertyChangeListener {
 
     private final Map<Integer, NamedBean> turnoutNumberList = new HashMap<>(); //cache for faster access
     
+    private TurnoutNumberMapHandler() {
+    }
+    
     synchronized public static TurnoutNumberMapHandler getInstance() {
         if (instance == null) {
             instance = new TurnoutNumberMapHandler();
