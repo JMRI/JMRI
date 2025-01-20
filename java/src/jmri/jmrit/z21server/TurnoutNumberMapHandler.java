@@ -63,7 +63,7 @@ public class TurnoutNumberMapHandler implements PropertyChangeListener {
  * the hash map. The state is either THROWN, CLOSED or UNKNOWN. For other components than
  * turnouts, their state will be converted into a turnout state.
  * 
- * @param turnoutNumber
+ * @param turnoutNumber - the Z21 Turnout Number
  * @return the current state converted to a turnout state
  */    
     public int getStateForNumber(int turnoutNumber) {
@@ -102,7 +102,7 @@ public class TurnoutNumberMapHandler implements PropertyChangeListener {
 /**
  * Set the state of a component identified by the mapped number from a turnout state (THROWN or CLOSED)
  * 
- * @param turnoutNumber
+ * @param turnoutNumber - the Z21 Turnout Number
  * @param state - a turnout state
  */
     public void setStateForNumber(int turnoutNumber, int state) {

@@ -58,8 +58,8 @@ public class AppClient implements PropertyChangeListener  {
  * Add a throttle to the clients list of throttles.
  * The throttle instance is created by the caller.
  * 
- * @param locoAddress
- * @param throttle 
+ * @param locoAddress - the loco address
+ * @param throttle - the throttle to be added
  */
     public void addThrottle(int locoAddress, DccThrottle throttle) {
         if (!throttles.containsKey(locoAddress)) {
@@ -111,7 +111,7 @@ public class AppClient implements PropertyChangeListener  {
 /**
  * Get a throttle by loco address
  * 
- * @param locoAddress
+ * @param locoAddress - the loco address
  * @return the throttle
  */
     public DccThrottle getThrottleFromLocoAddress(int locoAddress) {
@@ -154,7 +154,7 @@ public class AppClient implements PropertyChangeListener  {
 /**
  * Return a Z21 LAN_X_LOCO_INFO packet for a given loco address
  * 
- * @param locoAddress
+ * @param locoAddress - the loco address
  * @return Z21 LAN_X_LOCO_INFO packet
  */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",

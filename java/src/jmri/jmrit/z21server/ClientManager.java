@@ -51,7 +51,7 @@ public class ClientManager implements ThrottleListener {
 /**
  * Set the throttle change listener.
  * 
- * @param changeListener 
+ * @param changeListener - the property change listener instance
  */
     public void setChangeListener(PropertyChangeListener changeListener) {
         this.changeListener = changeListener;
@@ -62,7 +62,7 @@ public class ClientManager implements ThrottleListener {
  * The listener is called if a new is registered or a registered client is
  * unregistered.
  * 
- * @param clientListener 
+ * @param clientListener - the property change listener instance
  */
     public void setClientListener(PropertyChangeListener clientListener) {
         this.clientListener = clientListener;
@@ -105,10 +105,10 @@ public class ClientManager implements ThrottleListener {
  * Set a JMRI throttle to new speed and direction.
  * Called when a Z21 client's user changes speed and/or direction.
  * 
- * @param clientAddress
- * @param locoAddress
- * @param speed
- * @param forward 
+ * @param clientAddress - the client's InetAddress
+ * @param locoAddress - the loco address
+ * @param speed - the speed to set
+ * @param forward - true of forward, false if reverse
  */
     synchronized public void setLocoSpeedAndDirection(InetAddress clientAddress, int locoAddress, int speed, boolean forward) {
         AppClient client = registeredClients.get(clientAddress);
@@ -130,8 +130,8 @@ public class ClientManager implements ThrottleListener {
  * Set a JMRI throttle to new function state.
  * Called when a Z21 client's user changes function status.
  * 
- * @param clientAddress
- * @param locoAddress
+ * @param clientAddress - the client's InetAddress
+ * @param locoAddress - the loco address
  * @param functionNumber
  * @param functionState 
  */
@@ -160,7 +160,7 @@ public class ClientManager implements ThrottleListener {
  * Return a Z21 LAN_X_LOCO_INFO packet for a given client and loco address
  * 
  * @param address - client InetAddress
- * @param locoAddress
+ * @param locoAddress - the loco address
  * @return Z21 LAN_X_LOCO_INFO packet
  */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
@@ -214,7 +214,7 @@ public class ClientManager implements ThrottleListener {
  * Get a Z21 LAN_X_TURNOUT_INFO packet to be sent to the client fpr a given turnout number.
  * 
  * @param address - client's InetAdress
- * @param turnoutNumber
+ * @param turnoutNumber - the Z21 Turnout Number
  * @return a Z21 LAN_X_TURNOUT_INFO packet
  */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
