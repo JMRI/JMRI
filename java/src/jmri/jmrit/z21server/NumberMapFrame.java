@@ -248,7 +248,7 @@ public class NumberMapFrame extends JmriJFrame implements TableModelListener {
  * @param <E> - type of component, e.g. Turnout, Light
  * @param <M> - type of component manager, e.g. TurnoutManager, LightManager.
  */
-    public class MapTableModel<E extends NamedBean, M extends Manager<E>> extends AbstractTableModel implements PropertyChangeListener {
+    private class MapTableModel<E extends NamedBean, M extends Manager<E>> extends AbstractTableModel implements PropertyChangeListener {
         
         private final Manager<E> mgr;
         private final JLabel messageField;
@@ -350,7 +350,7 @@ public class NumberMapFrame extends JmriJFrame implements TableModelListener {
                             }
                             else {
                                 log.warn("Invalid value: '{}'", type);
-                                if (lastInvalid == getValueAt(r, c)) {
+                                if (lastInvalid.equals(getValueAt(r, c))) {
                                     t.removeProperty(TurnoutNumberMapHandler.beanProperty); //remove value on double failure
                                     lastInvalid = null;
                                 }

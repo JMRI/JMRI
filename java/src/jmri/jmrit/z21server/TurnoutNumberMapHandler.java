@@ -31,7 +31,7 @@ public class TurnoutNumberMapHandler implements PropertyChangeListener {
     public final static String beanProperty = "Z21TurnoutMap";
 
     // NOTE: This list should match the classes used in NumberMapFrame.java
-    public final static Class<?>[] mgrList = {
+    private final static Class<?>[] mgrList = {
         TurnoutManager.class,
         RouteManager.class,
         LightManager.class,
@@ -49,6 +49,10 @@ public class TurnoutNumberMapHandler implements PropertyChangeListener {
             instance.addPropertyChangeListeners();
         }
         return instance;
+    }
+    
+    public static Class<?>[] getManagerClassList() {
+        return mgrList;
     }
 
 /**
