@@ -1,8 +1,11 @@
 package jmri.implementation;
 
 import java.util.Arrays;
+
 import jmri.SignalHead;
 import jmri.Turnout;
+import jmri.util.ArrayUtil;
+import jmri.util.StringUtil;
 
 import javax.annotation.Nonnull;
 
@@ -51,7 +54,7 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
     @Nonnull
     @Override
     public String getAppearanceKey(int appearance) {
-        String ret = jmri.util.StringUtil.getNameFromState(
+        String ret = StringUtil.getNameFromState(
                 appearance, getValidStates(), getValidStateKeys());
         if (ret != null) {
             return ret;
@@ -242,30 +245,31 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
 
     /**
      * Describe SignalHead state.
-     * Does not have to be a valid state for this SignalHead instance.
-     * SignalHead.RED uses NamedBean.UNKNOWN ( 0x01 )
-     * SignalHead.FLASHYELLOW uses NamedBean.INCONSISTENT ( 0x08 )
-     * Includes SignalHead.HELD
+     * Does not have to be a valid state for this SignalHead instance hence
+     * suitable for state error logging.
+     * Can include multiple head states, with exception of DARK,
+     * the only state which must exist on its own.
+     * Includes the HELD state if present.
+     * @see SignalHead#getAppearanceName(java.lang.Integer)
      * @param state the state to describe.
      * @return description of state from Bundle.
      */
     @Override
     public String describeState(int state) {
-
-        int index = java.util.stream.IntStream.range(0, validStates.length)
-                         .filter(i -> validStates[i] == state)
-                         .findFirst()
-                         .orElse(-1);
-
-        if (index != -1) {
-            return Bundle.getMessage(validStateKeys[index]);
+        var bundleStrings = StringUtil.getNamesFromState(state, allStateNumbers, allStateNames);
+        StringBuilder sb = new StringBuilder();
+        for (String str : bundleStrings) {
+            sb.append(Bundle.getMessage(str));
+            sb.append(" ");
         }
-
-        if ( state == SignalHead.HELD ) {
-                return Bundle.getMessage("SignalHeadStateHeld");
-        }
-        return "Unknown SignalHead State: " + state;
+        return sb.toString().trim();
     }
+
+    // all states, including HELD
+    private static final int[] allStateNumbers = ArrayUtil.appendArray(validStates, new int[]{HELD});
+
+    // all state names, including HELD
+    private static final String[] allStateNames = ArrayUtil.appendArray(validStateKeys, new String[]{"SignalHeadStateHeld"});
 
     /**
      * Check if a given turnout is used on this head.
