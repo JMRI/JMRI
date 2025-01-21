@@ -430,6 +430,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#SetTrainIconCoordinates">Set Train Icon Coordinates</a></li>
 
                 <li><a href="#ExportRoutes">Export Routes</a></li>
+                
+                <li><a href="#ImportRoutes">Import Routes</a></li>
 
                 <li><a href="#ShowRoutesServicingThisLocation">Show Routes Servicing
                     Location</a></li>
@@ -4923,6 +4925,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h4 id="ExportRoutes">Export Routes</h4>
       The "Export Routes" tool produces a comma separated values (.csv) file called
       "ExportOperationsRoutes.csv" containing details of the existing routes.
+
+      <h4 id="ImportRoutes">Import Routes</h4>
+      The "Import Routes" tool reads a comma separated values (.csv) file that you can select. Use
+      the "Export Routes" tool to see the proper formating. The import tool will not replace an
+      existing route. To modify an existing route, delete or change the route's name before doing
+      the import.
+
 
       <p style="page-break-after: always">
         <a href="#toc">[Click to go back to TOC]</a>
