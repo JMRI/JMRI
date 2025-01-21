@@ -1,12 +1,8 @@
 package jmri.jmrix.can.cbus.swing;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import jmri.util.JUnitUtil;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of CbusEventHighlightPanel
@@ -16,12 +12,12 @@ import org.junit.jupiter.api.Test;
 public class CbusEventHighlightPanelTest {
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @jmri.util.junit.annotations.DisabledIfHeadless
     public void testCtor() {
         CbusEventHighlightFrame frame = new CbusEventHighlightFrame();
         CbusEventHighlightPanel panel = new CbusEventHighlightPanel(frame,1);
-        assertThat(panel).isNotNull();
-        frame.dispose();
+        Assertions.assertNotNull(panel);
+        JUnitUtil.dispose(frame);
     }
 
     @BeforeEach
