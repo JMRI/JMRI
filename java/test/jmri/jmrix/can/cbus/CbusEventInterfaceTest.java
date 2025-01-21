@@ -1,12 +1,11 @@
 package jmri.jmrix.can.cbus;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
@@ -17,17 +16,17 @@ public class CbusEventInterfaceTest {
 
     @Test
     public void testCTor() {
-        
+
         TestInterface t = new TestInterface();
-        assertThat(t).isNotNull();
-        
-        assertThat(t.checkEvent(t.getBeanOnMessage())).isNull();
-        assertThat(t.checkEvent(t.getBeanOffMessage())).isEqualTo(t.getBeanOffMessage());
-        
+        assertNotNull(t);
+
+        assertNull(t.checkEvent(t.getBeanOnMessage()));
+        assertEquals( t.getBeanOffMessage(), t.checkEvent(t.getBeanOffMessage()) );
+
     }
-    
+
     private static class TestInterface implements CbusEventInterface{
-        
+
         @Override
         public jmri.jmrix.can.CanMessage getBeanOnMessage(){
             return CbusMessage.getRequestTrackOff(1);
@@ -37,7 +36,7 @@ public class CbusEventInterfaceTest {
         public jmri.jmrix.can.CanMessage getBeanOffMessage(){
             return new CbusEvent(0,0).getCanMessage(0, 123, 456, CbusEvent.EvState.ON);
         }
-    
+
     }
 
     @BeforeEach

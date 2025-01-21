@@ -1,14 +1,14 @@
 package jmri.jmrix.can.cbus;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
@@ -20,9 +20,9 @@ public class CbusEventTest {
     @Test
     public void testCTor() {
         CbusEvent t = new CbusEvent(0,1);
-        assertThat(t).isNotNull();
+        assertNotNull(t);
     }
-    
+
     @Test
     public void testSetandGet() {
         CbusEvent t = new CbusEvent(123,456);
@@ -40,23 +40,23 @@ public class CbusEventTest {
         assertEquals(7,t.getNn());
         assertEquals(4,t.getEn());
     }    
-    
+
     @Test
     public void testMatches() {
         CbusEvent t = new CbusEvent(123,456);
-        assertThat(t.matches(123,111)).isFalse();
-        assertThat(t.matches(111,456)).isFalse();
-        assertThat(t.matches(111,222)).isFalse();
-        assertThat(t.matches(123,456)).isTrue();
+        assertFalse(t.matches(123,111));
+        assertFalse(t.matches(111,456));
+        assertFalse(t.matches(111,222));
+        assertTrue(t.matches(123,456));
     }
-    
+
     @Test
     public void testSending() {
         CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
         TrafficControllerScaffold tc = new TrafficControllerScaffold();
         memo.setTrafficController(tc);
         memo.configureManagers();
-        
+
         CbusEvent t = new CbusEvent(123,456);
         t.sendOn();
         assertEquals("[5f8] 90 00 7B 01 C8" , 
@@ -85,11 +85,11 @@ public class CbusEventTest {
         assertEquals(CbusEvent.EvState.OFF,ta.getState());
         ta.sendEvent(CbusEvent.EvState.TOGGLE);    
         assertEquals(CbusEvent.EvState.ON,ta.getState());
-        
+
         tc.terminateThreads();
         memo.dispose();
     }    
-    
+
     @Test
     public void testToString() {
         CbusEvent t = new CbusEvent(0,456);
@@ -97,31 +97,31 @@ public class CbusEventTest {
         t.setName("Jon Smith");
         assertEquals("EN:456 Jon Smith ",t.toString());
     }
-    
+
     @Test
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "EC_UNRELATED_TYPES",
         justification = "CanReply and CanMessage are CanFrame with custom equals")
-    @SuppressWarnings("unlikely-arg-type")
+    @SuppressWarnings({"unlikely-arg-type", "IncompatibleEquals"})
     public void testEquals(){
     
         CbusEvent t = new CbusEvent(123,456);
-        assertThat(t.equals(new CbusEvent(123,456))).isTrue();
-        assertThat(t.equals(new CbusEvent(0,456))).isFalse();
-        assertThat(t.equals(new CbusEvent(123,0))).isFalse();
-        assertThat(t.equals(new CbusEvent(4,4))).isFalse();
-        assertThat(t.equals("123456")).isFalse();
+        assertTrue(t.equals(new CbusEvent(123,456)));
+        assertFalse(t.equals(new CbusEvent(0,456)));
+        assertFalse(t.equals(new CbusEvent(123,0)));
+        assertFalse(t.equals(new CbusEvent(4,4)));
+        assertFalse(t.equals("123456"));
         
     }
-    
+
     @Test
     public void testHashCode(){
         int hash = new CbusEvent(123,456).hashCode();
-        assertThat(hash==new CbusEvent(123,456).hashCode()).isTrue();
-        assertThat(hash==new CbusEvent(0,456).hashCode()).isFalse();
-        assertThat(hash==new CbusEvent(123,0).hashCode()).isFalse();
-        assertThat(hash==new CbusEvent(4,4).hashCode()).isFalse();
+        assertTrue(hash==new CbusEvent(123,456).hashCode());
+        assertFalse(hash==new CbusEvent(0,456).hashCode());
+        assertFalse(hash==new CbusEvent(123,0).hashCode());
+        assertFalse(hash==new CbusEvent(4,4).hashCode());
     }
-    
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

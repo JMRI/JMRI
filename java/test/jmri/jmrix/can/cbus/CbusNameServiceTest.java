@@ -1,8 +1,5 @@
 package jmri.jmrix.can.cbus;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.io.File;
 
 import jmri.Light;
@@ -16,8 +13,7 @@ import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
 
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
@@ -29,13 +25,13 @@ public class CbusNameServiceTest {
     @Test
     public void testCTor() {
         CbusNameService t = new CbusNameService();
-        assertThat(t).isNotNull();
+        assertNotNull(t);
     }
 
     @Test
     public void testgetEventName() {
         CbusNameService t = new CbusNameService();
-        assertThat(t.getEventName(123,456)).isEmpty();
+        assertEquals( "", t.getEventName(123,456) );
 
         CbusEventTableDataModel m = new CbusEventTableDataModel(memo, 2,CbusEventTableDataModel.MAX_COLUMN);
         jmri.InstanceManager.setDefault(CbusEventTableDataModel.class,m );
@@ -95,7 +91,7 @@ public class CbusNameServiceTest {
         CbusNameService t = new CbusNameService(memo);
 
         CbusEventBeanData bd = t.getJmriBeans(0, 4, CbusEventDataElements.EvState.ON);
-        assertThat(bd.toString()).isEmpty();
+        assertEquals( "", bd.toString() );
 
         CbusEventTableDataModel evModel = memo.get(CbusConfigurationManager.class)
             .provide(CbusEventTableDataModel.class);
@@ -140,6 +136,6 @@ public class CbusNameServiceTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusNameServiceTest.class);
+    // private final static org.slf4j.LoggerLogger log = org.slf4j.LoggerLoggerFactory.getLogger(CbusNameServiceTest.class);
 
 }
