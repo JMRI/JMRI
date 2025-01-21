@@ -158,6 +158,11 @@
                 <li></li>
             </ul>
 
+        <h4>SRCP</h4>
+            <ul>
+                <li>Fast-clock TIME commands now use the 00-23 format for the hour value and do not repeat 01-12 in the afternoon.</li>
+            </ul>
+
         <h4>TAMS</h4>
             <ul>
                 <li></li>
@@ -510,7 +515,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li></li>
+            <li>Roster Table - Fixes initial editing of Last Operated date / time values using 1-12hr values instead of 0-23.</li>
         </ul>
 
     <h3>Routes</h3>
