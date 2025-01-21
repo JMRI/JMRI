@@ -118,10 +118,10 @@
       <model model="HDL LocoRCD2 v2.10" productID="210"/>
       <model model="HDL LocoRCD2 v2.11" productID="211"/>
 
-      <model model="GCA50(a) LocoIO v1.00" productID="GCA50"/>
-      <!--GCA50 (classic PIC) or GCA50a (Arduino Nano) v1.00, support same options as v1.48-->
+      <model model="GCA50(a) LocoIO v1.06" productID="GCA50"/>
+      <!--GCA50 (classic PIC) or GCA50a (Arduino Nano) v1.00, support same options as v1.48 uses LOCONETSV2MODE? -->
       <model model="GCA51 2x RFID + 8x LocoIO v1.48" productID="GCA51"/>
-      <!-- GCA51 only allows confix of ports 9-16 for input/output -->
+      <!-- GCA51 only allows config of ports 9-16 for input/output -->
       <!-- GCA51 uses ports 1-8 for 2 RFID RC522 cards, only as inputs. Only config is address of ports 1-2 -->
 
       <model model="Original LocoIO" productID="135"/>
@@ -263,8 +263,8 @@
         <tooltip>This provides the full address by combining the LocoIO Address lower and LocoIO Subaddress upper parts</tooltip>
       </variable>
 
-      <!-- This repurposes the UserID fields on the Basic pane to show -->
-      <!-- the individual address bytes.                               -->
+      <!-- This repurposes the UserID fields on the Basic pane         -->
+      <!-- to show the individual address bytes.                       -->
       <!-- Note defaults must be present at both locations and agree   -->
       <variable item="User Id #3" CV="1" default="81">
         <decVal min="1" max="127"/>
