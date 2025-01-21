@@ -8,6 +8,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.ImportRollingStock;
 import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.ThreadingUtil;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
@@ -21,6 +22,7 @@ public class ImportRoutes extends ImportRollingStock {
 
     boolean importOkay = false;
     int lineNum = 0;
+    int routesAdded = 0;
     static final String[] BREAK = new String[0];
 
     // each route starts with name and comment
@@ -58,7 +60,7 @@ public class ImportRoutes extends ImportRollingStock {
         createStatusFrame(Bundle.getMessage("TitleImportRoutes"));
 
         boolean headerFound = false;
-        int routesAdded = 0;
+
         String[] inputLine;
         Route route = null;
 
@@ -113,13 +115,15 @@ public class ImportRoutes extends ImportRollingStock {
             }
         }
 
-        if (importOkay) {
-            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("ImportRoutesAdded", routesAdded),
-                    Bundle.getMessage("SuccessfulImport"), JmriJOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("ImportRoutesAdded", routesAdded),
-                    Bundle.getMessage("ImportFailed"), JmriJOptionPane.ERROR_MESSAGE);
-        }
+        ThreadingUtil.runOnGUI(()->{
+            if (importOkay) {
+                JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("ImportRoutesAdded", routesAdded),
+                        Bundle.getMessage("SuccessfulImport"), JmriJOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("ImportRoutesAdded", routesAdded),
+                        Bundle.getMessage("ImportFailed"), JmriJOptionPane.ERROR_MESSAGE);
+            }
+        });
         fstatus.dispose();
     }
 
