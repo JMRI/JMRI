@@ -10,6 +10,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
@@ -73,7 +74,7 @@ public class ExportRoutes extends XmlFile {
                                 rl.getRandomControl(),
                                 rl.isPickUpAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"),
                                 rl.isDropAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"),
-                                rl.getWait(),
+                                rl.getWait() + Setup.getTravelTime(),
                                 rl.getFormatedDepartureTime(),
                                 rl.getMaxTrainLength(),
                                 rl.getGrade(),
