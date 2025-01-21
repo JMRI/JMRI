@@ -580,7 +580,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Lionel Jeanson added a driver for the <a href="https://www.zuiki.co.jp/product_info/denshadegomascon_black/"> Densha de GO controler</a> USB controller for the USBThrottle Jynstrument</li>
         </ul>
 
     <h3>Timetable</h3>
