@@ -82,8 +82,11 @@ public class FileUtilSupport extends Bean {
 
     // initialize logging
     private static final Logger log = LoggerFactory.getLogger(FileUtilSupport.class);
-    // default instance
-    volatile private static FileUtilSupport defaultInstance = null;
+
+    // Synchronized lazy initialization, default instance created the 1st time requested
+    private static class InstanceHolder {
+        private static final FileUtilSupport defaultInstance = new FileUtilSupport();
+    }
 
     private FileUtilSupport() {
         super(false);
@@ -1752,10 +1755,7 @@ public class FileUtilSupport extends Bean {
      * @return the default FileUtilSupport instance, creating it if necessary
      */
     public static FileUtilSupport getDefault() {
-        if (FileUtilSupport.defaultInstance == null) {
-            FileUtilSupport.defaultInstance = new FileUtilSupport();
-        }
-        return FileUtilSupport.defaultInstance;
+        return InstanceHolder.defaultInstance;
     }
 
     /**
