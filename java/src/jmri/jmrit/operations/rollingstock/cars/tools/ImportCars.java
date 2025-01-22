@@ -7,7 +7,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.locations.divisions.Division;
 import jmri.jmrit.operations.locations.divisions.DivisionManager;
-import jmri.jmrit.operations.rollingstock.ImportRollingStock;
+import jmri.jmrit.operations.rollingstock.ImportCommon;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.setup.Control;
@@ -23,7 +23,7 @@ import jmri.util.swing.JmriJOptionPane;
  *
  * @author Dan Boudreau Copyright (C) 2008 2010 2011, 2013, 2016, 2021, 2024
  */
-public class ImportCars extends ImportRollingStock {
+public class ImportCars extends ImportCommon {
 
     CarManager carManager = InstanceManager.getDefault(CarManager.class);
 

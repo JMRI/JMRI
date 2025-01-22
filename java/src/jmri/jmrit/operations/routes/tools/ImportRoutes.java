@@ -1,11 +1,12 @@
 package jmri.jmrit.operations.routes.tools;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.rollingstock.ImportRollingStock;
+import jmri.jmrit.operations.rollingstock.ImportCommon;
 import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.ThreadingUtil;
@@ -14,16 +15,15 @@ import jmri.util.swing.JmriJOptionPane;
 /**
  * This routine will import Routes from a CSV file into the operations database.
  * The field order is as defined below.
+ * 
+ * @author Daniel Boudreau Copyright (C) 2025
  */
-public class ImportRoutes extends ImportRollingStock {
+public class ImportRoutes extends ImportCommon {
 
     RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
     LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
-    boolean importOkay = false;
-    int lineNum = 0;
     int routesAdded = 0;
-    static final String[] BREAK = new String[0];
 
     // each route starts with name and comment
     protected static final int FIELD_ROUTE_NAME = 0;
@@ -134,31 +134,5 @@ public class ImportRoutes extends ImportRollingStock {
         fstatus.dispose();
     }
 
-    private String[] readNextLine(BufferedReader rdr) {
-        String line = " ";
-        lineNumber.setText(Bundle.getMessage("LineNumber", Integer.toString(++lineNum)));
-        try {
-            line = rdr.readLine();
-        } catch (IOException e) {
-            return BREAK;
-        }
-        if (line == null) {
-            importOkay = true;
-            return BREAK;
-        }
-        if (!fstatus.isShowing()) {
-            //user canceled input!
-            return BREAK;
-        }
-        line = line.trim();
-        importLine.setText(line);
-
-        String[] inputLine = parseCommaLine(line);
-        log.debug("Import line number {} has {} elements", lineNum, inputLine.length);
-
-        return inputLine;
-    }
-
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ImportRoutes.class);
-
 }
