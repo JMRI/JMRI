@@ -63,17 +63,18 @@ public class ImportLocations extends ImportCommon {
     protected static final int FIELD_TRACK_DESTINATIONS = 27;
     protected static final int FIELD_DESTINATIONS = 28;
     protected static final int FIELD_HOLD_CARS_CUSTOM_LOADS = 29;
-    protected static final int FIELD_SWAP_DEFAULT = 30;
-    protected static final int FIELD_EMPTY_DEFAULT_LOADS = 31;
-    protected static final int FIELD_EMPTY_CUSTOM_LOADS = 32;
-    protected static final int FIELD_GENERATE_SPUR = 33;
-    protected static final int FIELD_GENERATE_ANY_SPUR = 34;
-    protected static final int FIELD_GENERATE_STAGING = 35;
-    protected static final int FIELD_BLOCK_CARS_BY_PICKUP = 36;
-    protected static final int FIELD_COMMENT = 37;
-    protected static final int FIELD_COMMENT_BOTH = 38;
-    protected static final int FIELD_COMMENT_PICKUPS = 39;
-    protected static final int FIELD_COMMENT_SETOUTS = 40;
+    protected static final int FIELD_DISABLE_LOAD_CHANGE = 30;
+    protected static final int FIELD_SWAP_DEFAULT = 31;
+    protected static final int FIELD_EMPTY_DEFAULT_LOADS = 32;
+    protected static final int FIELD_EMPTY_CUSTOM_LOADS = 33;
+    protected static final int FIELD_GENERATE_SPUR = 34;
+    protected static final int FIELD_GENERATE_ANY_SPUR = 35;
+    protected static final int FIELD_GENERATE_STAGING = 36;
+    protected static final int FIELD_BLOCK_CARS_BY_PICKUP = 37;
+    protected static final int FIELD_COMMENT = 38;
+    protected static final int FIELD_COMMENT_BOTH = 39;
+    protected static final int FIELD_COMMENT_PICKUPS = 40;
+    protected static final int FIELD_COMMENT_SETOUTS = 41;
 
     @Override
     public void run() {
