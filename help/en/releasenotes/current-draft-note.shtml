@@ -244,7 +244,7 @@
 
         <h4>ESU</h4>
             <ul>
-                <li></li>
+                <li>SwitchPilot Servo V3.0</li>
             </ul>
 
         <h4>Hattoms</h4>
@@ -358,7 +358,7 @@
 
         <h4>Technologistic (train-O-matic)</h4>
             <ul>
-                <li></li>
+                <li>Fix for resetting Train-O-Matic decoders</li>
             </ul>
 
         <h4>Trix Modelleisenbahn</h4>
@@ -486,6 +486,7 @@
             <li>New feature, you can now select locomotive pick up and set out text colors.</li>
             <li>Added track move count to "Export Locations".</li>
             <li>Improved "Train logger" to include the number of cars in train, the number of pick ups and set outs, train length and weight.</li>
+            <li>New feature, import routes.</li>
         </ul>
 
    <h3>Panel Editor</h3>
