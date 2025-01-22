@@ -126,7 +126,13 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Added "Restart" and "Clear CDI cache" to the Send Frame developer screen</li>
+                <li>Added "Restart" and "Clear CDI cache" to the contextual (popup) menu in LccPro</li>
+                <li>Converted on "Restart" terminology; references to "Reboot" have been changed</li>
+                <li>Added overwrite mode to EventID-entry fields. This accessed by using the "insert" key, which 
+                    changes the cursor to an underline so you know you're in the mode.  Mac keyboards do not
+                    support an insert key, so this feature is not available on the Mac.</li>
+                <li>Updated the OpenLCB library being used to version 0.8.5</li>
             </ul>
 
         <h4>Powerline</h4>
