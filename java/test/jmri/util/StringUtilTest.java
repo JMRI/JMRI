@@ -71,6 +71,27 @@ public class StringUtilTest {
     }
 
     @Test
+    public void testGetNamesFromState() {
+
+        String[] s = new String[]{"A", "B", "C", "D"};
+        int[] num = new int[]{0, 1, 2, 4};
+
+        Assertions.assertEquals( 1, StringUtil.getNamesFromState(0, num, s).length);
+        Assertions.assertEquals( "A", StringUtil.getNamesFromState(0, num, s)[0]);
+
+        Assertions.assertEquals( 1, StringUtil.getNamesFromState(1, num, s).length);
+        Assertions.assertEquals( "B", StringUtil.getNamesFromState(1, num, s)[0]);
+
+        Assertions.assertEquals( 1, StringUtil.getNamesFromState(2, num, s).length);
+        Assertions.assertEquals( "C", StringUtil.getNamesFromState(2, num, s)[0]);
+
+        Assertions.assertEquals( 2, StringUtil.getNamesFromState(3, num, s).length);
+        Assertions.assertEquals( "B", StringUtil.getNamesFromState(3, num, s)[0]);
+        Assertions.assertEquals( "C", StringUtil.getNamesFromState(3, num, s)[1]);
+
+    }
+
+    @Test
     public void testFindState() {
         String[] s = new String[]{"A", "B", "C"};
         int[] n = new int[]{20, 30, 40};
