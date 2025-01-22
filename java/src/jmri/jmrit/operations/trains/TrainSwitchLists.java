@@ -133,7 +133,8 @@ public class TrainSwitchLists extends TrainCommon {
                         rlPrevious = rl;
                         continue;
                     }
-                    if (train.getExpectedArrivalTime(rl).equals(Train.ALREADY_SERVICED)) {
+                    if (train.getExpectedArrivalTime(rl).equals(Train.ALREADY_SERVICED) &&
+                            train.getCurrentRouteLocation() != rl) {
                         trainDone = true;
                     }
                     // first time at this location?
