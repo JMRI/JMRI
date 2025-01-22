@@ -1,24 +1,21 @@
 package jmri.jmrit.operations.locations.tools;
 
-import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
-import jmri.util.JUnitOperationsUtil;
-import jmri.util.swing.JemmyUtil;
+import java.awt.GraphicsEnvironment;
+import java.io.File;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.Test;
-
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
-import java.io.File;
-import java.util.List;
+import jmri.InstanceManager;
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.locations.*;
+import jmri.util.JUnitOperationsUtil;
+import jmri.util.swing.JemmyUtil;
 
 /**
  * @author J. Scott Walton Copyright (C) 2022
@@ -92,7 +89,8 @@ public class ImportLocationsActionTest extends OperationsTestCase {
 
     @Test
     public void verifyFieldDivision() {
-        Assert.assertEquals("FIELD_DIVISION should be 4 unless the inputLine length is verified", 4, ImportLocations.FIELD_DIVISION);
+        Assert.assertEquals("FIELD_DIVISION should be 5 unless the inputLine length is verified", 5,
+                ImportLocations.FIELD_DIVISION);
 
     }
 

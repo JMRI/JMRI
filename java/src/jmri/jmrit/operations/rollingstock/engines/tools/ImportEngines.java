@@ -4,7 +4,7 @@ import java.io.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.*;
-import jmri.jmrit.operations.rollingstock.ImportRollingStock;
+import jmri.jmrit.operations.rollingstock.ImportCommon;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.engines.*;
 import jmri.jmrit.operations.setup.Control;
@@ -18,7 +18,7 @@ import jmri.util.swing.JmriJOptionPane;
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2013
  */
-public class ImportEngines extends ImportRollingStock {
+public class ImportEngines extends ImportCommon {
 
     private static final String DEFAULT_ENGINE_TYPE = Bundle.getMessage("engineDefaultType");
     private static final String DEFAULT_ENGINE_HP = Bundle.getMessage("engineDefaultHp");
