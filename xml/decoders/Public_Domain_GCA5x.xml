@@ -17,17 +17,17 @@
   <decoder>
     <family name="GCA5x boards" mfg="Public-domain and DIY">
       <model model="GCA50(a) LocoIO v1.06" productID="GCA50"/>
-      <!--GCA50 (classic PIC) or GCA50a (Arduino Nano) v1.00, support same options as v1.48 uses LOCONETSV2MODE? -->
+      <!--GCA50 (classic PIC) or GCA50a (Arduino Nano) v1.06, support same options as v1.48 uses LOCONETSV2MODE? -->
       <model model="GCA51 2x RFID + 8x LocoIO v1.48" productID="GCA51"/>
       <!-- GCA51 only allows config of ports 9-16 for input/output -->
       <!-- GCA51 uses ports 1-8 for 2 RFID RC522 cards, only as inputs. Only config is address of ports 1-2 -->
     </family>
     <programming direct="no" paged="no" register="no" ops="no">
-        <mode>LOCONETSV2MODE</mode>
+        <mode>LOCONETSV1MODE</mode>
     </programming>
     <variables>
 
-     <!-- Copied from HDL_LocoIO, plus Arduino Ln docs -->
+     <!-- Copied from HDL_LocoIO, plus MRRwA Arduino LocoNet docs -->
       <variable CV="100" readOnly="yes" default="999" item="Decoder Version">
         <decVal/>
         <label>PIC Version: </label>
@@ -38,26 +38,12 @@
         <tooltip>Open the LocoNet Monitor to confirm the actual firmware version number (shown after you click Read Full Sheet)</tooltip>
       </variable>
 
-      <variable CV="0" mask="VVVVXXXX" comment="Board Blink Rate" item="Blink Rate" default="0" exclude="135,139,140,200,210,211">
+      <variable CV="0" mask="VVVVXXXX" comment="Board Blink Rate" item="Blink Rate" default="0">
         <decVal min="0" max="15"/>
         <label>Blink Rate:</label>
         <label xml:lang="de">Blinkgeschw.:</label>
         <label xml:lang="nl">Knippertempo:</label>
         <tooltip>Choose from 0=none to 15=fast</tooltip>
-      </variable>
-
-      <variable CV="0" mask="XXXVXXXX" comment="Display Light Intensity" item="Light Intensity" default="7" include="200,210,211">
-        <decVal min="0" max="14"/>
-        <label>Light Intensity:</label>
-        <label xml:lang="de">Helligkeit:</label>
-        <label xml:lang="nl">Lichtintensiteit:</label>
-        <tooltip>Choose from 0=dim to 14=bright</tooltip>
-      </variable>
-
-      <variable CV="0" mask="XXXVXXXX" item="Board Active High" default="0" include="135,139,140">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>All Block Detection ports Active High:</label>
-        <tooltip>Default: unselected = Active Low</tooltip>
       </variable>
 
       <!-- no choice, but item="Action Mode" is required to hide elements in UI unless it's a LocoServo -->
@@ -87,12 +73,16 @@
           </enumChoice>
         </enumVal>
         <label>Code for buttons:</label>
+        <label xml:lang="de">Knopfberichte:</label>
+        <label xml:lang="nl">Code voor knoppen:</label>
         <tooltip>Button sends alternating or fixed code, default: fixed</tooltip>
       </variable>
 
       <variable CV="0" mask="XXXXXXXV" item="Port Refresh" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Port Refresh:</label>
+        <label xml:lang="de">Anschluss aktualis.:</label>
+        <label xml:lang="nl">Poort bijwerken:</label>
         <tooltip>Refresh Ports, default: unselected = off</tooltip>
       </variable>
 
@@ -907,4 +897,69 @@
 
     </variables>
   </decoder>
+
+  <!-- LocoIO Board Settings Pane -->
+  <pane>
+    <name>Loco...</name>
+
+    <column>
+      <group exclude="GCA51">
+        <label>
+          <text>&lt;html&gt;&lt;strong&gt;GCA50(a) LocoIO Board Settings&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="de">&lt;html&gt;&lt;strong&gt;LocoIO Modulkonfiguration&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;LocoIO Module-instellingen&lt;/strong&gt;&lt;/html&gt;</text>
+        </label>
+      </group>
+      <group include="GCA51">
+        <label>
+          <text>&lt;html&gt;&lt;strong&gt;GCA51 2x RFID + LocoIO 9-16 Board Settings&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="de">&lt;html&gt;&lt;strong&gt;GCA51 2x RFID + LocoIO 9-16 Modulkonfiguration&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;GCA51 2x RFID + LocoIO 9-16 Module-instellingen&lt;/strong&gt;&lt;/html&gt;</text>
+        </label>
+      </group>
+
+      <group><!--address 80 reserved for LocoBuffer-->
+        <qualifier>
+          <variableref>Short Address</variableref>
+          <relation>eq</relation>
+          <value>80</value>
+        </qualifier>
+        <separator/>
+        <label>
+          <text>WARNING: LocoIO board main address is incorrectly set to 80, reserved value for LocoBuffer. Please correct on tab Basic.</text>
+          <text xml:lang="de">ACHTUNG: LocoIO Moduladresse 80 nicht gültig. Wert reserviert für LocoBuffer. Bitte sofort ändern.</text>
+          <text xml:lang="nl">WAARSCHUWING: LocoIO hoofdadres is foutief ingesteld op 80, dit adres is gereserveerd voor LocoBuffer. Direct verbeteren.</text>
+        </label>
+        <separator/>
+      </group>
+
+      <display item="Decoder Version"/>
+      <row>
+        <display item="Blink Rate"/>
+        <display item="Blink Rate" format="hslider" label=""/>
+      </row>
+      <row>
+        <!--LocoRCD2 only-->
+        <display item="Detection Delay"/>
+        <display item="Detection Delay" format="hslider" label=""/>
+      </row>
+      <row>
+        <!--LocoRCD2 only-->
+        <display item="Light Intensity"/>
+        <display item="Light Intensity" format="hslider-percent" label=""/>
+      </row>
+
+      <row>
+        <display item="Action Mode"/>
+      </row>
+      <row>
+        <display item="Alternate Mode"/>
+      </row>
+      <row>
+        <display item="Port Refresh" format="checkbox"/>
+      </row>
+      <display item="Board Active High" format="checkbox"/>
+    </column>
+  </pane>
+
 </decoder-config>

@@ -235,12 +235,16 @@
           </enumChoice>
         </enumVal>
         <label>Code for buttons:</label>
+        <label xml:lang="de">Knopfberichte:</label>
+        <label xml:lang="nl">Code voor knoppen:</label>
         <tooltip>Button sends alternating or fixed code, default: fixed</tooltip>
       </variable>
 
       <variable CV="0" mask="XXXXXXXV" item="Port Refresh" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Port Refresh:</label>
+        <label xml:lang="de">Anschluss aktualis.:</label>
+        <label xml:lang="nl">Poort bijwerken:</label>
         <tooltip>Refresh Ports, default: unselected = off</tooltip>
       </variable>
 
