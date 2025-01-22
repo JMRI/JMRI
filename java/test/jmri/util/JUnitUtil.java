@@ -676,14 +676,9 @@ public class JUnitUtil {
      * tests of {@code git-working-copy/temp}.
      */
     public static void resetFileUtilSupport() {
-        try {
-            Field field = FileUtilSupport.class.getDeclaredField("defaultInstance");
-            field.setAccessible(true);
-            field.set(null, null);
-            FileUtilSupport.getDefault().setUserFilesPath(ProfileManager.getDefault().getActiveProfile(), FileUtil.getPreferencesPath());
-        } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
-            log.error("Exception resetting FileUtilSupport", ex);
-        }
+        FileUtilSupport.resetInstance();
+        FileUtilSupport.getDefault().setUserFilesPath(
+            ProfileManager.getDefault().getActiveProfile(), FileUtil.getPreferencesPath());
     }
 
     static public interface ReleaseUntil {
