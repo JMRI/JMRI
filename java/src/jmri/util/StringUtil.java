@@ -102,6 +102,8 @@ public class StringUtil {
     /**
      * Starting with two arrays, one of names, one of corresponding numeric
      * state values, find the name string(s) that match a given state value.
+     * <p>State is considered to be bit-encoded, so that its bits are taken to
+     * represent multiple independent states.
      * <p>e.g. for 3, [1, 2, 4], ["A","B","C"], the method would return ["A","B"]</p>
      * <p>Values of 0 are only included if the state is 0, zero is NOT
      * matched for all numbers.</p>
