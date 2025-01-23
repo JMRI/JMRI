@@ -54,7 +54,7 @@ import org.jdom2.Element;
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
- * @author Klaus Killinger Copyright (C) 2018-2024
+ * @author Klaus Killinger Copyright (C) 2018-2025
  */
 public class VSDecoderManager implements PropertyChangeListener {
 
@@ -239,7 +239,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                                     } else {
                                         config.setVolume(0.8f);
                                     }
-                                    VSDecoder newDecoder = VSDecoderManager.instance().getVSDecoder(config);
+                                    VSDecoder newDecoder = getVSDecoder(config);
                                     if (newDecoder != null) {
                                         log.info("VSD {}, profile \"{}\" ready.", config.getLocoAddress(), config.getProfileName());
                                         entry_counter++;
@@ -307,17 +307,22 @@ public class VSDecoderManager implements PropertyChangeListener {
             decoderInBlock.put(vsd.getAddress().getNumber(), vsd);
             locoInBlock[getNextlocorow()][ADDRESS] = vsd.getAddress().getNumber();
 
-            // set volume for this decoder
-            vsd.setDecoderVolume(vsd.getDecoderVolume());
+            if (vsd.isEnabled()) {
+                // set volume for this decoder
+                vsd.setDecoderVolume(vsd.getDecoderVolume());
 
-            if (geofile_ok) {
-                if (vsd.topspeed == 0) {
-                    log.info("Top-speed not defined. No advanced location following possible.");
-                } else {
-                    initSoundPositionTimer(vsd);
+                if (geofile_ok) {
+                    if (vsd.topspeed == 0) {
+                        log.info("Top-speed not defined. No advanced location following possible.");
+                    } else {
+                        initSoundPositionTimer(vsd);
+                    }
                 }
+                return vsd;
+            } else {
+                deleteDecoder(vsd.getAddress().toString());
+                return null;
             }
-            return vsd;
         } else {
             // Don't have enough info to try to load from file.
             log.error("Requested profile not loaded: {}", profile_name);
@@ -601,6 +606,7 @@ public class VSDecoderManager implements PropertyChangeListener {
         decoderInBlock.remove(d.getAddress().getNumber());
         locoInBlockRemove(d.getAddress().getNumber());
         timertable.remove(d.getId()); // Remove timer
+
         locorow--; // prepare array index for eventually adding a new decoder
 
         d.sound_list.clear();
@@ -609,26 +615,18 @@ public class VSDecoderManager implements PropertyChangeListener {
         jmri.AudioManager am = jmri.InstanceManager.getDefault(jmri.AudioManager.class);
         ArrayList<Audio> sources = new ArrayList<>(am.getNamedBeanSet(Audio.SOURCE));
         ArrayList<Audio> buffers = new ArrayList<>(am.getNamedBeanSet(Audio.BUFFER));
-        // wait until audio threads are finished and then run audio cleanup via dispose()
-        jmri.util.ThreadingUtil.newThread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException ex) {
-                }
-                for (Audio source: sources) {
-                    if (source.getSystemName().contains(d.getId())) {
-                        source.dispose();
-                    }
-                }
-                for (Audio buffer: buffers) {
-                    if (buffer.getSystemName().contains(d.getId())) {
-                        buffer.dispose();
-                    }
-                }
+        for (Audio source: sources) {
+            if (source.getSystemName().contains(d.getId())) {
+                source.dispose();
             }
-        }).start();
+        }
+        for (Audio buffer: buffers) {
+            if (buffer.getSystemName().contains(d.getId())) {
+                buffer.dispose();
+            }
+        }
+        log.info("New number of buffers used after deletion: {}, max: {}",
+                am.getNamedBeanSet(jmri.Audio.BUFFER).size(), jmri.AudioManager.MAX_BUFFERS);
     }
 
     /**

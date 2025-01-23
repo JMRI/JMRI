@@ -28,7 +28,7 @@ import org.jdom2.Element;
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
- * @author Klaus Killinger Copyright (C) 2018-2021, 2023
+ * @author Klaus Killinger Copyright (C) 2018-2021, 2023, 2025
  */
 class Diesel3Sound extends EngineSound {
 
@@ -142,6 +142,7 @@ class Diesel3Sound extends EngineSound {
         D3Notch sb;
         int frame_size = 0;
         int freq = 0;
+        boolean buffer_ok = true;
 
         // Handle the common stuff.
         super.setXml(e, vf);
@@ -225,10 +226,16 @@ class Diesel3Sound extends EngineSound {
 
                     // Add some helper Buffers to the first notch
                     for (int j = 0; j < number_helper_buffers; j++) {
-                        AudioBuffer bh = D3Notch.getBufferHelper(name + "_BUFFERHELPER_" + j, name + "_BUFFERHELPER_" + j);
-                        if (bh != null) {
-                            log.debug("helper buffer created: {}, name: {}", bh, bh.getSystemName());
-                            sb.addHelper(bh);
+                        if (checkForFreeBuffer()) {
+                            AudioBuffer bh = D3Notch.getBufferHelper(name + "_BUFFERHELPER_" + j, name + "_BUFFERHELPER_" + j);
+                            if (bh != null) {
+                                log.debug("helper buffer created: {}, name: {}", bh, bh.getSystemName());
+                                sb.addHelper(bh);
+                            } else {
+                                buffer_ok = false;
+                            }
+                        } else {
+                           buffer_ok = false;
                         }
                     }
                 }
@@ -248,12 +255,20 @@ class Diesel3Sound extends EngineSound {
             sb.setDecelLimit(el.getChildText("decel-limit"));
 
             if (el.getChildText("accel-file") != null) {
-                sb.setAccelBuffer(D3Notch.getBuffer(vf, el.getChildText("accel-file"), name + "_na" + i, name + "_na" + i));
+                if (checkForFreeBuffer()) {
+                    sb.setAccelBuffer(D3Notch.getBuffer(vf, el.getChildText("accel-file"), name + "_na" + i, name + "_na" + i));
+                } else {
+                    buffer_ok = false;
+                }
             } else {
                 sb.setAccelBuffer(null);
             }
             if (el.getChildText("decel-file") != null) {
-                sb.setDecelBuffer(D3Notch.getBuffer(vf, el.getChildText("decel-file"), name + "_nd" + i, name + "_nd" + i));
+                if (checkForFreeBuffer()) {
+                    sb.setDecelBuffer(D3Notch.getBuffer(vf, el.getChildText("decel-file"), name + "_nd" + i, name + "_nd" + i));
+                } else {
+                    buffer_ok = false;
+                }
             } else {
                 sb.setDecelBuffer(null);
             }
@@ -266,14 +281,22 @@ class Diesel3Sound extends EngineSound {
         el = e.getChild("start-sound");
         if (el != null) {
             fn = el.getChild("file").getValue();
-            start_buffer = D3Notch.getBuffer(vf, fn, name + "_start", name + "_Start");
-            log.debug("Start sound: {}, buffer {} created, length: {}", fn, start_buffer, SoundBite.calcLength(start_buffer));
+            if (checkForFreeBuffer()) {
+                start_buffer = D3Notch.getBuffer(vf, fn, name + "_start", name + "_Start");
+                log.debug("Start sound: {}, buffer {} created, length: {}", fn, start_buffer, SoundBite.calcLength(start_buffer));
+            } else {
+                buffer_ok = false;
+            }
         }
         el = e.getChild("shutdown-sound");
         if (el != null) {
             fn = el.getChild("file").getValue();
-            stop_buffer = D3Notch.getBuffer(vf, fn, name + "_shutdown", name + "_Shutdown");
-            log.debug("Shutdown sound: {}, buffer {} created, length: {}", fn, stop_buffer, SoundBite.calcLength(stop_buffer));
+            if (checkForFreeBuffer()) {
+                stop_buffer = D3Notch.getBuffer(vf, fn, name + "_shutdown", name + "_Shutdown");
+                log.debug("Shutdown sound: {}, buffer {} created, length: {}", fn, stop_buffer, SoundBite.calcLength(stop_buffer));
+            } else {
+                buffer_ok = false;
+            }
         }
 
         // Handle "grandfathering" the idle notch indication
@@ -298,11 +321,15 @@ class Diesel3Sound extends EngineSound {
             }
         }
 
-        // Kick-start the loop thread.
-        this.startThread();
-
-        // Check auto-start setting
-        autoStartCheck();
+        if (buffer_ok) {
+            setBuffersFreeState(true);
+            // Kick-start the loop thread.
+            this.startThread();
+            // Check auto-start setting
+            autoStartCheck();
+        } else {
+            setBuffersFreeState(false);
+        }
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Diesel3Sound.class);
