@@ -1,6 +1,7 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.jmrix.lenz.XNetReply;
+import jmri.jmrix.lenz.messageformatters.XNetLocoInfoReplyUtilities;
 
 /**
  * Represents a single response from the XpressNet, with extensions
@@ -85,15 +86,15 @@ public class Z21XNetReply extends XNetReply {
             // byte 2 contains the speed step mode and availability
             // information.
             // byte 3 contains the direction and the speed information
-            text += " " + parseSpeedAndDirection(b2, b3);
+            text += " " + XNetLocoInfoReplyUtilities.parseSpeedAndDirection(b2, b3);
             // byte 4 contains flags for whether or not the locomotive
             // is in a double header and for smart search.  These aren't used
             // here.
 
             // byte 4 and 5 contain function information for F0-F12
-            text += " " + parseFunctionStatus(b4, b5);
+            text += " " + XNetLocoInfoReplyUtilities.parseFunctionStatus(b4, b5);
             // byte 6 and 7 contain function information for F13-F28
-            text += " " + parseFunctionHighStatus(b6, b7);
+            text += " " + XNetLocoInfoReplyUtilities.parseFunctionHighStatus(b6, b7);
         } else if(getElement(0) == Z21Constants.LAN_X_TURNOUT_INFO) {
              int address = (getElement(1) << 8 ) + getElement(2) +1;
              String state = "";
