@@ -1,12 +1,9 @@
 package jmri.jmrix.can.cbus.swing;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Test simple functioning of CbusMenu
@@ -18,10 +15,10 @@ public class CbusMenuTest {
     private CanSystemConnectionMemo m = null;
  
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @jmri.util.junit.annotations.DisabledIfHeadless
     public void testCtor() {
         CbusMenu action = new CbusMenu(m);
-        assertThat(action).isNotNull();
+        Assertions.assertNotNull(action);
     }
 
     @BeforeEach

@@ -16,15 +16,18 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Provides common routes for importing cars and locomotives
  *
- * @author Dan Boudreau Copyright (C) 2013
- *
+ * @author Dan Boudreau Copyright (C) 2013, 2025
  */
-public abstract class ImportRollingStock extends Thread {
+public abstract class ImportCommon extends Thread {
 
     protected static final String NEW_LINE = "\n"; // NOI18N
 
     protected JLabel lineNumber = new JLabel();
     protected JLabel importLine = new JLabel();
+
+    protected boolean importOkay = false;
+    protected static final String[] BREAK = new String[0];
+    protected int lineNum = 0;
 
     protected static final String LOCATION_TRACK_SEPARATOR = "-";
 
@@ -86,5 +89,30 @@ public abstract class ImportRollingStock extends Thread {
         return outLine;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ImportRollingStock.class);
+    protected String[] readNextLine(BufferedReader rdr) {
+        String line = " ";
+        try {
+            line = rdr.readLine();
+        } catch (IOException e) {
+            return BREAK;
+        }
+        if (line == null) {
+            importOkay = true;
+            return BREAK;
+        }
+        if (!fstatus.isShowing()) {
+            //user canceled input!
+            return BREAK;
+        }
+        lineNumber.setText(Bundle.getMessage("LineNumber", Integer.toString(++lineNum)));
+        line = line.trim();
+        importLine.setText(line);
+
+        String[] inputLine = parseCommaLine(line);
+        log.debug("Import line number {} has {} elements", lineNum, inputLine.length);
+
+        return inputLine;
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(ImportCommon.class);
 }

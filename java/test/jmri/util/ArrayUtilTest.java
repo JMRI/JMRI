@@ -86,5 +86,25 @@ public class ArrayUtilTest {
         Assert.assertEquals(stringArray.length, reversedStringArray.length);
     }
 
+    @Test
+    public void testAppendIntArrays() {
+        int[] arrayA = new int[]{0};
+        int[] arrayB = new int[]{1};
+        int[] t = ArrayUtil.appendArray(arrayA, arrayB);
+        Assertions.assertEquals(2, t.length);
+        Assertions.assertEquals( 0, t[0] );
+        Assertions.assertEquals( 1, t[1] );
+    }
+
+    @Test
+    public void testAppendStringArrays() {
+        String[] arrayA = new String[]{"A"};
+        String[] arrayB = new String[]{"B"};
+        String[] t = ArrayUtil.appendArray(arrayA, arrayB);
+        Assertions.assertEquals(2, t.length);
+        Assertions.assertEquals( "A", t[0] );
+        Assertions.assertEquals( "B", t[1] );
+    }
+
     // private final static Logger log = LoggerFactory.getLogger(ArrayUtilTest.class);
 }

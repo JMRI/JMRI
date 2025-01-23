@@ -107,5 +107,37 @@ public final class ArrayUtil {
         return results;
     }
 
+    /**
+     * Combines two String arrays into a single array.
+     * No sorting, first comes before second.
+     * @param first  the first String array to be combined
+     * @param second the second String array to be combined
+     * @return a new String array containing all elements from both input arrays
+     */
+    @Nonnull
+    public static String[] appendArray( @Nonnull String[] first, @Nonnull String[] second){
+        int length = first.length + second.length;
+        String[] result = new String[length];
+        System.arraycopy(first, 0, result, 0, first.length);
+        System.arraycopy(second, 0, result, first.length, second.length);
+        return result;
+    }
+
+    /**
+     * Combines two int arrays into a single array.
+     * No sorting, first comes before second.
+     * @param first the first int array to be combined
+     * @param second the second int array to be combined
+     * @return new int array containing all elements from both input arrays
+     */
+    @Nonnull
+    public static int[] appendArray(@Nonnull int[] first, @Nonnull int[] second){
+        int length = first.length + second.length;
+        int[] result = new int[length];
+        System.arraycopy(first, 0, result, 0, first.length);
+        System.arraycopy(second, 0, result, first.length, second.length);
+        return result;
+    }
+
     // private transient final static Logger log = LoggerFactory.getLogger(ArrayUtil.class);
 }
