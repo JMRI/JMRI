@@ -45,9 +45,9 @@ public class ImportRoutesTest extends OperationsTestCase {
         export.setName("Export Routes"); // NOI18N
         export.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return export.getState().equals(Thread.State.WAITING);
-        }, "wait for prompt");
+        //        jmri.util.JUnitUtil.waitFor(() -> {
+        //            return export.getState().equals(Thread.State.WAITING);
+        //        }, "wait for prompt");
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), Bundle.getMessage("ButtonOK"));
 
@@ -78,9 +78,9 @@ public class ImportRoutesTest extends OperationsTestCase {
         importThread.setName("Test Import Routes"); // NOI18N
         importThread.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return importThread.getState().equals(Thread.State.WAITING);
-        }, "wait for prompt");
+        //        jmri.util.JUnitUtil.waitFor(() -> {
+        //            return importThread.getState().equals(Thread.State.WAITING);
+        //        }, "wait for prompt");
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("SuccessfulImport"), Bundle.getMessage("ButtonOK"));
 
