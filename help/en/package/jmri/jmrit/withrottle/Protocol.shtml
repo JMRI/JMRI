@@ -737,6 +737,8 @@ MTA*&lt;;&gt;qR
 
         <li>'m' momentary. Format m<em>{0|1}</em><em>Function</em>.</li>
 
+        <li>'PPA' track power.</li>
+
         <li>'q' ask for current settings, such as speed or direction</li>
 
         <li>'Q' quit</li>
@@ -849,6 +851,39 @@ MTA*&lt;;&gt;m012
       <p class="note">The global wiThrottle preference "F2 always momentary" will override this
       setting for F2</p>
 
+      <h3>'PPA' Track Power</h3>
+
+      <p>The following commands are used to set track power on or off.</p>
+
+      <table class="data">
+        <tr>
+          <td>PPA0</td>
+          <td>Track Power off</td>
+        </tr>
+
+        <tr>
+          <td>PPA1</td>
+          <td>Track Power on</td>
+        </tr>
+      </table>
+
+      <p>A response is always provided for a track power command as shown below.</p>
+
+      <p>Track power state is off:</p>
+
+      <pre class="code">
+PPA0
+</pre>
+      <p>Track power state is on:</p>
+
+      <pre class="code">
+PPA1
+</pre> 
+      <p>Track power state is unknown:</p>
+
+      <pre class="code">
+PPA2
+</pre>
       <h3>'R' Set Direction</h3>
 
       <p>Used to change between forward and reverse:</p>
