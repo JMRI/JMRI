@@ -32,7 +32,6 @@ public class ImportLocationsTest extends OperationsTestCase {
     }
 
     @Test
-    @jmri.util.junit.annotations.DisabledIfHeadless
     public void testImport() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);

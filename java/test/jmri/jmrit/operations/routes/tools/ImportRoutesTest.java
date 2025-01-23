@@ -1,8 +1,10 @@
 package jmri.jmrit.operations.routes.tools;
 
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
@@ -25,7 +27,7 @@ public class ImportRoutesTest extends OperationsTestCase {
 
     @Test
     public void testImport() {
-
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData();
 
         JUnitOperationsUtil.createFiveLocationTurnRoute();
