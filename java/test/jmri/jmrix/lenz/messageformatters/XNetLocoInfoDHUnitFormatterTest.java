@@ -1,7 +1,6 @@
 package jmri.jmrix.lenz.messageformatters;
 
 import jmri.jmrix.lenz.XNetReply;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
