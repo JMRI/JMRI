@@ -19,10 +19,11 @@ import jmri.util.swing.JemmyUtil;
 
 /**
  * @author J. Scott Walton Copyright (C) 2022
+ * @author Daniel Boudreau Copyright (C) 2025
  */
-public class ImportLocationsActionTest extends OperationsTestCase {
+public class ImportLocationsTest extends OperationsTestCase {
 
-    private final static Logger log = LoggerFactory.getLogger(ImportLocationsActionTest.class);
+    private final static Logger log = LoggerFactory.getLogger(ImportLocationsTest.class);
 
     @Test
     public void testCTor() {
@@ -31,7 +32,7 @@ public class ImportLocationsActionTest extends OperationsTestCase {
     }
 
     @Test
-    public void testImportToEmpty() {
+    public void testImport() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
         ExportLocations exportLoc = new ExportLocations();
@@ -42,14 +43,23 @@ public class ImportLocationsActionTest extends OperationsTestCase {
                 exportLoc.writeOperationsLocationFile();
             }
         });
+
+        // set comment for tracks, these are the last elements to be exported / imported
+        Location gulf = locationManager.getLocationByName("Gulf");
+        Track gulfYard2 = gulf.getTrackByName("Gulf Yard 2", null);
+        gulfYard2.setComment("Comment for gulf yard 2");
+        gulfYard2.setCommentSetout("Setout comment for gulf yard 2");
+
         exportThread.setName("Export Locations"); // NOI18N
         exportThread.start();
         jmri.util.JUnitUtil.waitFor(() -> {
             return exportThread.getState().equals(Thread.State.WAITING);
         }, "Wait for prompt");
         JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), Bundle.getMessage("ButtonOK"));
+        // get exported file
         java.io.File file = new File(ExportLocations.defaultOperationsFilename());
         Assert.assertTrue("Confirm file creation", file.exists());
+        // delete all tracks and locations
         for (Location thisLocation : locationManager.getList()) {
             List<Track> trackList = thisLocation.getTracksList();
             for (Track thisTrack : trackList) {
@@ -61,7 +71,7 @@ public class ImportLocationsActionTest extends OperationsTestCase {
         OperationsXml.save();
         // should have deleted all tracks now;
         List<Location> emptyList = locationManager.getList();
-        Assert.assertEquals("Verify that delete was correct", 0, emptyList.size());
+        Assert.assertEquals("Verify delete", 0, emptyList.size());
         Thread importThread = new ImportLocations() {
             @Override
             protected File getFile() {
@@ -85,14 +95,17 @@ public class ImportLocationsActionTest extends OperationsTestCase {
          List<Location> newLocations = locationManager.getList();
         Assert.assertEquals( "Expect to have 7 new locations", 7, newLocations.size());
 
+        // confirm comment for tracks
+        gulf = locationManager.getLocationByName("Gulf");
+        gulfYard2 = gulf.getTrackByName("Gulf Yard 2", null);
+        Assert.assertEquals("Comment", "Comment for gulf yard 2", gulfYard2.getComment());
+        Assert.assertEquals("Setout Comment", "Setout comment for gulf yard 2", gulfYard2.getCommentSetout());
     }
 
     @Test
-    public void verifyFieldDivision() {
-        Assert.assertEquals("FIELD_DIVISION should be 5 unless the inputLine length is verified", 5,
-                ImportLocations.FIELD_DIVISION);
-
+    public void verifyFields() {
+        Assert.assertEquals("FIELD_LOCATION", 0, ImportLocations.FIELD_LOCATION);
+        Assert.assertEquals("FIELD_DIVISION", 5, ImportLocations.FIELD_DIVISION);
+        Assert.assertEquals("FIELD_COMMENT_SETOUTS", 41, ImportLocations.FIELD_COMMENT_SETOUTS);
     }
-
-
 }
