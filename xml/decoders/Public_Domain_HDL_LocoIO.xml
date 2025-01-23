@@ -120,7 +120,7 @@
 
       <model model="GCA50(a) LocoIO v1.06" productID="GCA50"/>
       <!--GCA50 (classic PIC) or GCA50a (Arduino Nano) v1.00, support same options as v1.48 uses LOCONETSV2MODE? -->
-      <model model="GCA51 2x RFID + 8x LocoIO v1.48" productID="GCA51"/>
+      <model model="GCA51 2x RFID + 8x LocoIO v1.50" productID="GCA51"/>
       <!-- GCA51 only allows config of ports 9-16 for input/output -->
       <!-- GCA51 uses ports 1-8 for 2 RFID RC522 cards, only as inputs. Only config is address of ports 1-2 -->
 
