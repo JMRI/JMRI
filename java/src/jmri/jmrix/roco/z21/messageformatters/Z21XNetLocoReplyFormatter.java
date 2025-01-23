@@ -2,7 +2,6 @@ package jmri.jmrix.roco.z21.messageformatters;
 
 import jmri.jmrix.lenz.XPressNetMessageFormatter;
 import jmri.jmrix.lenz.messageformatters.XNetLocoInfoReplyUtilities;
-import jmri.jmrix.roco.z21.Z21Constants;
 import jmri.jmrix.roco.z21.Z21XNetReply;
 
 /**

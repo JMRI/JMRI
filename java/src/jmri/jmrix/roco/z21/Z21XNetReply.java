@@ -2,7 +2,6 @@ package jmri.jmrix.roco.z21;
 
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XPressNetMessageFormatter;
-import jmri.jmrix.lenz.messageformatters.XNetLocoInfoReplyUtilities;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

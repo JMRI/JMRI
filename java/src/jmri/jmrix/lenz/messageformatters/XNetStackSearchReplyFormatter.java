@@ -52,6 +52,9 @@ public class XNetStackSearchReplyFormatter implements XPressNetMessageFormatter 
                 text.append(Bundle.getMessage("XNetReplySearchFailedLabel")).append(" ");
                 text.append(r.getThrottleMsgAddr());
                 break;
+            default:
+                // Should never happen
+                throw new IllegalArgumentException("Message not supported by this formatter");
         }
         return text.toString();
     }
