@@ -25,13 +25,16 @@ public class ImportRoutesTest extends OperationsTestCase {
 
     @Test
     public void testImport() {
+
+        JUnitOperationsUtil.initOperationsData();
+
         JUnitOperationsUtil.createFiveLocationTurnRoute();
         Route route3 = JUnitOperationsUtil.createThreeLocationRoute();
         Assert.assertEquals("Route name", "Route Acton-Boston-Chelmsford", route3.getName());
 
         // confirm two routes exist
         RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
-        Assert.assertEquals("Number of routes", 2, routeManager.getRoutesByNameList().size());
+        Assert.assertEquals("Number of routes", 3, routeManager.getRoutesByNameList().size());
 
         // modify route, route location comment is one of the last exported elements
         RouteLocation rl = route3.getTerminatesRouteLocation();
@@ -45,9 +48,9 @@ public class ImportRoutesTest extends OperationsTestCase {
         export.setName("Export Routes"); // NOI18N
         export.start();
 
-        //        jmri.util.JUnitUtil.waitFor(() -> {
-        //            return export.getState().equals(Thread.State.WAITING);
-        //        }, "wait for prompt");
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return export.getState().equals(Thread.State.WAITING);
+        }, "wait for prompt");
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), Bundle.getMessage("ButtonOK"));
 
@@ -78,15 +81,15 @@ public class ImportRoutesTest extends OperationsTestCase {
         importThread.setName("Test Import Routes"); // NOI18N
         importThread.start();
 
-        //        jmri.util.JUnitUtil.waitFor(() -> {
-        //            return importThread.getState().equals(Thread.State.WAITING);
-        //        }, "wait for prompt");
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return importThread.getState().equals(Thread.State.WAITING);
+        }, "wait for prompt");
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("SuccessfulImport"), Bundle.getMessage("ButtonOK"));
 
         jmri.util.JUnitUtil.waitFor(() -> !importThread.isAlive(), "wait for export to complete");
 
-        Assert.assertEquals("Number of routes", 2, routeManager.getRoutesByNameList().size());
+        Assert.assertEquals("Number of routes", 3, routeManager.getRoutesByNameList().size());
 
         // confirm import included comment and color
         route3 = routeManager.getRouteByName("Route Acton-Boston-Chelmsford");
