@@ -32,7 +32,8 @@ class SoundOn2xF0(Jynstrument, AddressListener, MouseListener):
 
     def quit(self):   # very important to clean up everything to make sure GC will collect us
         self.cleanThrottle()
-        self.getContext().getAddressPanel().removeAddressListener(self)
+        if (( self.getContext() != None) and ( self.getContext().getAddressPanel() != None)) :
+            self.getContext().getAddressPanel().removeAddressListener(self)
 
 # this is a good way to make sure that we're are actaully GCed 
 # using memory watcher in development menu, we can force a GC from there
