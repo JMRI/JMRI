@@ -245,6 +245,6 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage {
         return(msg);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(Z21Message.class);
+    private static final Logger log = LoggerFactory.getLogger(Z21XNetMessage.class);
 
 }

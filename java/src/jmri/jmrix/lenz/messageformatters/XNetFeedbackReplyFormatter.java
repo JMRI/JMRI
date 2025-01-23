@@ -2,6 +2,7 @@ package jmri.jmrix.lenz.messageformatters;
 
 import jmri.jmrix.Message;
 import jmri.jmrix.lenz.FeedbackItem;
+import jmri.jmrix.lenz.XNetConstants;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XPressNetMessageFormatter;
 
@@ -26,8 +27,7 @@ public class XNetFeedbackReplyFormatter implements XPressNetMessageFormatter {
 
     @Override
     public Boolean handlesMessage(Message m) {
-        return m instanceof XNetReply &&
-                ((XNetReply)m).isFeedbackMessage();
+        return m instanceof XNetReply && m.getElement(0) == XNetConstants.ACC_INFO_RESPONSE;
     }
 
     @Override
