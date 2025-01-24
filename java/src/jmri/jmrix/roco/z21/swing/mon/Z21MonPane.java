@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -44,7 +45,8 @@ public class Z21MonPane extends jmri.jmrix.AbstractMonPane implements Z21Listene
                     Constructor<?> ctor = c.getConstructor();
                     formatterList.add((Z21MessageFormatter) ctor.newInstance());
                 }
-            } catch (Exception e){
+            } catch (NoSuchMethodException | SecurityException | InstantiationException |
+                     IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
                 log.error("Error instantiating formatter", e);
             }
         }

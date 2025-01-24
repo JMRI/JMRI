@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -741,7 +742,8 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                     Constructor<?> ctor = c.getConstructor();
                     formatterList.add((XPressNetMessageFormatter) ctor.newInstance());
                 }
-            } catch (Exception e) {
+            } catch (NoSuchMethodException | SecurityException | InstantiationException |
+                     IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
                 log.error("Error instantiating formatter", e);
             }
         }

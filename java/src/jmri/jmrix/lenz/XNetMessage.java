@@ -2,10 +2,12 @@ package jmri.jmrix.lenz;
 
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1483,7 +1485,6 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     */
     @Override
    public String toMonitorString() {
-
         if (formatterList.isEmpty()) {
             try {
                 Reflections reflections = new Reflections("jmri.jmrix");
@@ -1493,7 +1494,8 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
                     Constructor<?> ctor = c.getConstructor();
                     formatterList.add((XPressNetMessageFormatter) ctor.newInstance());
                 }
-            } catch (Exception e) {
+            } catch (NoSuchMethodException | SecurityException | InstantiationException |
+                     IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
                 log.error("Error instantiating formatter", e);
             }
         }
