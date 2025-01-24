@@ -3707,8 +3707,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       Import locations allows you to populate your locations using a CSV file. First do an Export
       Locations and examine the file to see the order the data has to be entered. The import
-      locations code hasn't implemented all of the exports fields. Columns 14 through 22, and
-      columns 26 though 35 are currently ignored during an import.
+      locations code hasn't implemented all of the exports fields. Columns 15 through 23, and
+      columns 27 though 37 are currently ignored during an import.
 
       <h4 id="PrintLocation">Print or Preview</h4>
       This tool provides several options with regards to printing or previewing your locations.

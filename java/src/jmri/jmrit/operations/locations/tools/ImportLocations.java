@@ -15,16 +15,17 @@ import jmri.util.swing.JmriJOptionPane;
 
 /**
  * This routine will import Locations from a CSV file into the operations
- * database. The field order is: Location, Track, Type, Length, Division,
- * Serviced by Trains Traveling, Rolling Stock, Order, Road Option, Roads, Load
- * Option, Loads, Ship Load Option, Ships, Set Out Restrictions, Restrictions,
- * Pick up Restrictions, Restrictions, Schedule Name, Mode, Alternate Track,
- * Pool name, Minimum, Track Blocking Order, Planned Pick Ups, Track
- * Destinations, Destinations, Swap default loads and empties, Empty cars with
- * default loads, Generate custom loads for spurs serviced by this train,
- * Generate custom loads for any spur (multiple trains), Generate custom loads
- * for any staging track, Block cars by pick up location, Comment, Comment when
- * there is only pick ups, Comment when there is only set outs
+ * database. The field order is: Location, Track, Type, Length, Moves, Division,
+ * Serviced by Trains Traveling, Rolling Stock, Track Service Order, Road
+ * Option, Roads, Load Option, Loads, Ship Load Option, Ships, Set Out
+ * Restrictions, Restrictions, Pick up Restrictions, Restrictions, Schedule
+ * Name, Mode, Alternate Track, Pool name, Minimum, Track Blocking Order,
+ * Planned Pick Ups, Track Destinations, Destinations, Hold Cars, Disable Load
+ * Change, Swap default loads and empties, Empty cars with default loads,
+ * Generate custom loads for spurs serviced by this train, Generate custom loads
+ * for any spur (multiple trains), Generate custom loads for any staging track,
+ * Block cars by pick up location, Comment, Comment when there is only pick ups,
+ * Comment when there is only set outs
  */
 public class ImportLocations extends ImportCommon {
 
@@ -57,7 +58,7 @@ public class ImportLocations extends ImportCommon {
     protected static final int FIELD_PERCENT_STAGING = 21;
     protected static final int FIELD_ALTERNATE_TRACK = 22;
     protected static final int FIELD_POOL_NAME = 23;
-    protected static final int FIELD_IGNORE_MINIMUM = 24;
+    protected static final int FIELD_TRACK_MINIMUM_POOL = 24;
     protected static final int FIELD_TRACK_BLOCKING_ORDER = 25;
     protected static final int FIELD_PLANNED_PICK_UPS = 26;
     protected static final int FIELD_TRACK_DESTINATIONS = 27;
@@ -167,6 +168,9 @@ public class ImportLocations extends ImportCommon {
             if (trackLength != null) {
                 thisTrack.setLength(trackLength);
             }
+
+            // ignore FIELD_MOVES
+
             if (inputLine.length >= FIELD_DIVISION) {
                 // division was included in import
                 String fieldDivision = inputLine[FIELD_DIVISION].trim();
@@ -290,18 +294,16 @@ public class ImportLocations extends ImportCommon {
                 }
             }
 
-            // TODO import fields 14 through 22
+            // TODO import fields 15 through 23
 
-            if (inputLine.length >= FIELD_IGNORE_MINIMUM) {
-                String ignoreMin = inputLine[FIELD_IGNORE_MINIMUM].trim();
-                if (ignoreMin.length() > 0) {
-                    log.debug("setting the ignore minimum to {}", ignoreMin);
-                    Integer ignoreValue = null;
+            if (inputLine.length >= FIELD_TRACK_MINIMUM_POOL) {
+                String minPool = inputLine[FIELD_TRACK_MINIMUM_POOL].trim();
+                if (minPool.length() > 0) {
+                    log.debug("setting track pool minimum: {}", minPool);
                     try {
-                        ignoreValue = Integer.valueOf(ignoreMin);
-                        thisTrack.setBlockingOrder(ignoreValue);
+                        thisTrack.setMinimumLength(Integer.valueOf(minPool));
                     } catch (NumberFormatException exception) {
-                        log.debug("Exception converting the ignore minimum to a number - value was {}", ignoreMin);
+                        log.debug("Exception converting the ignore minimum to a number - value was {}", minPool);
                     }
                 }
             }
@@ -331,7 +333,7 @@ public class ImportLocations extends ImportCommon {
                     }
                 }
             }
-            // TODO import fields 26 though 35
+            // TODO import fields 27 though 37
 
             if (inputLine.length >= FIELD_COMMENT) {
                 String fieldComment = inputLine[FIELD_COMMENT].trim();
