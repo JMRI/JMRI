@@ -42,7 +42,7 @@ import org.jdom2.Element;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
- * @author Klaus Killinger Copyright (C) 2018-2023
+ * @author Klaus Killinger Copyright (C) 2018-2023, 2025
  */
 public class VSDecoder implements PropertyChangeListener {
 
@@ -114,29 +114,37 @@ public class VSDecoder implements PropertyChangeListener {
             // would be nice to pop up a dialog here...
         }
 
-        // Since the Config already has the address set, we need to call
-        // our own setAddress() to register the throttle listener
-        this.setAddress(config.getLocoAddress());
-        this.enable();
+        if (this.getEngineSound().getBuffersFreeState()) {
+            // Since the Config already has the address set, we need to call
+            // our own setAddress() to register the throttle listener
+            this.setAddress(config.getLocoAddress());
+            this.enable();
 
-        // Handle Advanced Location Following (if the parameter file is OK)
-        if (VSDecoderManager.instance().geofile_ok) {
-            // ALF1 needs this
-            this.setup_index = 0;
-            // create a navigator for this VSDecoder
-            if (VSDecoderManager.instance().alf_version == 2) {
-                navigation = new VSDNavigation(this);
+            // Handle Advanced Location Following (if the parameter file is OK)
+            if (VSDecoderManager.instance().geofile_ok) {
+                // ALF1 needs this
+                this.setup_index = 0;
+                // create a navigator for this VSDecoder
+                if (VSDecoderManager.instance().alf_version == 2) {
+                    navigation = new VSDNavigation(this);
+                }
             }
-        }
 
-        if (log.isDebugEnabled()) {
-            log.debug("VSDecoder Init Complete.  Audio Objects Created:");
-            jmri.InstanceManager.getDefault(jmri.AudioManager.class).getNamedBeanSet(Audio.SOURCE).forEach((s) -> {
-                log.debug("\tSource: {}", s);
-            });
-            jmri.InstanceManager.getDefault(jmri.AudioManager.class).getNamedBeanSet(Audio.BUFFER).forEach((s) -> {
-                log.debug("\tBuffer: {}", s);
-            });
+            if (log.isDebugEnabled()) {
+                log.debug("VSDecoder Init Complete.  Audio Objects Created:");
+                jmri.InstanceManager.getDefault(jmri.AudioManager.class).getNamedBeanSet(Audio.SOURCE).forEach((s) -> {
+                    log.debug("\tSource: {}", s);
+                });
+                jmri.InstanceManager.getDefault(jmri.AudioManager.class).getNamedBeanSet(Audio.BUFFER).forEach((s) -> {
+                    log.debug("\tBuffer: {}", s);
+                });
+            }
+
+            log.info("Number of used buffers: {}, max: {}",
+                    jmri.InstanceManager.getDefault(jmri.AudioManager.class).getNamedBeanSet(Audio.BUFFER).size(),
+                    jmri.AudioManager.MAX_BUFFERS);
+        } else {
+            this.disable(); // not a valid VSDecoder
         }
     }
 
@@ -584,15 +592,19 @@ public class VSDecoder implements PropertyChangeListener {
     /**
      * Enable this VSDecoder.
      */
-    public void enable() {
+    void enable() {
         enabled = true;
     }
 
     /**
      * Disable this VSDecoder.
      */
-    public void disable() {
+    void disable() {
         enabled = false;
+    }
+
+    boolean isEnabled() {
+        return enabled;
     }
 
     /**
