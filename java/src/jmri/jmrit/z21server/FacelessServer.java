@@ -7,6 +7,13 @@ import org.slf4j.LoggerFactory;
 import static java.lang.Thread.State.NEW;
 import static java.lang.Thread.State.TERMINATED;
 
+/**
+ * Creates a thread for the Z21 server.
+ * 
+ * @author Jean-Yves Roda (C) 2023
+ * @author Eckart Meyer (C) 2025 (enhancements, WlanMaus support)
+ */
+
 public class FacelessServer {
 
     private static FacelessServer instance;

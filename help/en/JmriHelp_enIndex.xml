@@ -777,6 +777,8 @@
   <indexitem text="Add a Throttle " target="package.jmri.jmrit.throttle.ThrottleFrame"/>
 
   <indexitem text="Android Phone as Throttle " target="package.jmri.jmrit.withrottle.UserInterface"/>
+  
+  <indexitem text="Z21 Throttle (Z21 App and WlanMaus) " target="package.jmri.jmrit.z21server.z21server"/>
 
   <indexitem text="inControl - Web Throttles and Panels (older version) " target="package.jmri.jmrit.inControl.inControl"/>
 
