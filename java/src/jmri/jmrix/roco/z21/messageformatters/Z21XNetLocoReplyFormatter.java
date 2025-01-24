@@ -20,17 +20,16 @@ public class Z21XNetLocoReplyFormatter implements XPressNetMessageFormatter {
         if (!handlesMessage(m)) {
             throw new IllegalArgumentException("Message is not a Z21XNetReply");
         }
-        Z21XNetReply r = (Z21XNetReply) m;
         //Data Byte 0 and 1 contain the locomotive address
-        int messageaddress = ((r.getElement(1) & 0x3F) << 8) + (r.getElement(2) & 0xff);
+        int messageaddress = ((m.getElement(1) & 0x3F) << 8) + (m.getElement(2) & 0xff);
         String text = "Z21 Mobile decoder info reply for address " + messageaddress + ":";
         //The message is for this throttle.
-        int b2 = r.getElement(3) & 0xff;
-        int b3 = r.getElement(4) & 0xff;
-        int b4 = r.getElement(5) & 0xff;
-        int b5 = r.getElement(6) & 0xff;
-        int b6 = r.getElement(7) & 0xff;
-        int b7 = r.getElement(8) & 0xff;
+        int b2 = m.getElement(3) & 0xff;
+        int b3 = m.getElement(4) & 0xff;
+        int b4 = m.getElement(5) & 0xff;
+        int b5 = m.getElement(6) & 0xff;
+        int b6 = m.getElement(7) & 0xff;
+        int b7 = m.getElement(8) & 0xff;
         // byte 2 contains the speed step mode and availability
         // information.
         // byte 3 contains the direction and the speed information

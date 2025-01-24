@@ -27,25 +27,24 @@ public class HornbyEliteMultiUnitInfoReplyFormatter implements XPressNetMessageF
         if(!handlesMessage(m)){
             throw new IllegalArgumentException("Message is not supported");
         }
-        XNetReply r = (XNetReply) m;
         StringBuilder text = new StringBuilder();
-        if (r.getElement(1) == 0xF8) {
+        if (m.getElement(1) == 0xF8) {
             // This message is a Hornby addition to the protocol
             // indicating the speed and direction of a locomoitve
             // controlled by the elite's built in throttles
             text = new StringBuilder(Bundle.getMessage("XNetReplyLocoEliteSLabel") + " ");
-            text.append(LenzCommandStation.calcLocoAddress(r.getElement(2), r.getElement(3)));
-            text.append(",").append(XNetLocoInfoReplyUtilities.parseSpeedAndDirection(r.getElement(4), r.getElement(5))).append(" ");
-        } else if (r.getElement(1) == 0xF9) {
+            text.append(LenzCommandStation.calcLocoAddress(m.getElement(2), m.getElement(3)));
+            text.append(",").append(XNetLocoInfoReplyUtilities.parseSpeedAndDirection(m.getElement(4), m.getElement(5))).append(" ");
+        } else if (m.getElement(1) == 0xF9) {
             // This message is a Hornby addition to the protocol
             // indicating the function on/off status of a locomoitve
             // controlled by the elite's built in throttles
             text = new StringBuilder(Bundle.getMessage("XNetReplyLocoEliteFLabel") + " ");
-            text.append(LenzCommandStation.calcLocoAddress(r.getElement(2), r.getElement(3))).append(" ");
+            text.append(LenzCommandStation.calcLocoAddress(m.getElement(2), m.getElement(3))).append(" ");
             // message byte 5, contains F0,F1,F2,F3,F4
-            int element4 = r.getElement(4);
+            int element4 = m.getElement(4);
             // message byte 5, contains F12,F11,F10,F9,F8,F7,F6,F5
-            int element5 = r.getElement(5);
+            int element5 = m.getElement(5);
             text.append(XNetLocoInfoReplyUtilities.parseFunctionStatus(element4, element5));
         }
         return text.toString();

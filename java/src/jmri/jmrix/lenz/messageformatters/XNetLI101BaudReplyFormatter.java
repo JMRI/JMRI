@@ -25,8 +25,7 @@ public class XNetLI101BaudReplyFormatter implements XPressNetMessageFormatter {
         if (!handlesMessage(m)) {
             throw new IllegalArgumentException("Message is not supported");
         }
-        XNetReply r = (XNetReply) m;
-        switch (r.getElement(2)) {
+        switch (m.getElement(2)) {
             case 1:
                 return Bundle.getMessage(X_NET_REPLY_LI_BAUD, Bundle.getMessage("LIBaud19200"));
             case 2:

@@ -21,10 +21,9 @@ public class Z21XNetTurnoutReplyFormatter implements XPressNetMessageFormatter {
         if(!handlesMessage(m)) {
             throw new IllegalArgumentException("Message not supported");
         }
-        Z21XNetReply r = (Z21XNetReply) m;
-        int address = (r.getElement(1) << 8 ) + r.getElement(2) +1;
+        int address = (m.getElement(1) << 8 ) + m.getElement(2) +1;
         String state = "";
-        switch(r.getElement(3)) {
+        switch(m.getElement(3)) {
             case 0x03:
                 state += "inconsistent";
                 break;

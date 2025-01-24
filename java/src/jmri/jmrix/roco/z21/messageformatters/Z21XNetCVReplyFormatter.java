@@ -23,10 +23,9 @@ public class Z21XNetCVReplyFormatter implements XPressNetMessageFormatter {
         if (!handlesMessage(m)) {
             throw new IllegalArgumentException("Message is not a Z21XNetReply");
         }
-        Z21XNetReply r = (Z21XNetReply) m;
-        int value = r.getElement(4) & 0xFF;
-        int cv = ( (r.getElement(2)&0xFF) << 8) +
-                        ( r.getElement(3)& 0xFF ) + 1;
+        int value = m.getElement(4) & 0xFF;
+        int cv = ( (m.getElement(2)&0xFF) << 8) +
+                        ( m.getElement(3)& 0xFF ) + 1;
         return Bundle.getMessage("Z21LAN_X_CV_RESULT",cv,value);
     }
 }
