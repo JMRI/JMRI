@@ -147,7 +147,7 @@ public class ImportLocations extends ImportCommon {
             Track thisTrack = location.getTrackByName(fieldTrack, null);
             Integer trackLength = null;
             try {
-                trackLength = Integer.valueOf(fieldLength);
+                trackLength = Integer.parseInt(fieldLength);
             } catch (NumberFormatException exception) {
                 log.info(
                         "Import caught an exception converting the length field of the new track - value was {} at line number {}",
@@ -301,7 +301,7 @@ public class ImportLocations extends ImportCommon {
                 if (minPool.length() > 0) {
                     log.debug("setting track pool minimum: {}", minPool);
                     try {
-                        thisTrack.setMinimumLength(Integer.valueOf(minPool));
+                        thisTrack.setMinimumLength(Integer.parseInt(minPool));
                     } catch (NumberFormatException exception) {
                         log.debug("Exception converting the ignore minimum to a number - value was {}", minPool);
                     }
@@ -313,7 +313,7 @@ public class ImportLocations extends ImportCommon {
                     log.debug("setting the blocking order to {}", fieldTrackBlockingOrder);
                     Integer blockingOrder = null;
                     try {
-                        blockingOrder = Integer.valueOf(fieldTrackBlockingOrder);
+                        blockingOrder = Integer.parseInt(fieldTrackBlockingOrder);
                         thisTrack.setBlockingOrder(blockingOrder);
                     } catch (NumberFormatException exception) {
                         log.debug("Exception converting the track blocking order to a number - value was {}",
@@ -325,7 +325,7 @@ public class ImportLocations extends ImportCommon {
                 String ignoreUsedLength = inputLine[FIELD_PLANNED_PICK_UPS].trim();
                 if (ignoreUsedLength.length() > 0) {
                     try {
-                        Integer ignorePercentage = Integer.valueOf(ignoreUsedLength);
+                        Integer ignorePercentage = Integer.parseInt(ignoreUsedLength);
                         thisTrack.setIgnoreUsedLengthPercentage(ignorePercentage);
                     } catch (NumberFormatException exception) {
                         log.debug("Exception converting field Ignore Used track Percentage - value was {}",
