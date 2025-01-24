@@ -624,6 +624,8 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Added a <code>jmri.util.swing.OvertypeTextArea</code> class
+                for data entry with overwrite mode, controlled by the insert key.
+                (Mac keyboards don't support an insert key, so this is not available on them.)</li>
         </ul>
 
