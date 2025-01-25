@@ -634,13 +634,16 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>Added checks to prevent errors due to not enough AudioBuffers.</li>
         </ul>
 
    <h3>Z21 Server</h3>
         <a id="Z21" name="Z21"></a>
         <ul>
-            <li></li>
+            <li>Add support for Roco WlanMaus</li>
+            <li>Improve UI to show connected clients</li>
+            <li>Add UI for mapping of Z21 turnout numbers to JMRI turnouts, routes etc.</li>
+            <li>Add help page</li>
         </ul>
 
     <h3>Test Infrastructure</h3>

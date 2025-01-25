@@ -57,7 +57,7 @@ public class ProfileManager extends Bean {
     private boolean autoStartActiveProfile = false;
     private File defaultSearchPath = new File(FileUtil.getPreferencesPath());
     private int autoStartActiveProfileTimeout = 10;
-    volatile private static ProfileManager defaultInstance = null;
+
     public static final String ACTIVE_PROFILE = "activeProfile"; // NOI18N
     public static final String NEXT_PROFILE = "nextProfile"; // NOI18N
     private static final String AUTO_START = "autoStart"; // NOI18N
@@ -71,6 +71,11 @@ public class ProfileManager extends Bean {
     public static final String DEFAULT_SEARCH_PATH = "defaultSearchPath"; // NOI18N
     public static final String SYSTEM_PROPERTY = "org.jmri.profile"; // NOI18N
     private static final Logger log = LoggerFactory.getLogger(ProfileManager.class);
+
+    // Synchronized lazy initialization, default instance created the 1st time requested
+    private static class InstanceHolder {
+        private static final ProfileManager defaultInstance = new ProfileManager();
+    }
 
     /**
      * Create a new ProfileManager using the default catalog.
@@ -97,10 +102,7 @@ public class ProfileManager extends Bean {
      */
     @Nonnull
     public static ProfileManager getDefault() {
-        if (defaultInstance == null) {
-            defaultInstance = new ProfileManager();
-        }
-        return defaultInstance;
+        return InstanceHolder.defaultInstance;
     }
 
     /**

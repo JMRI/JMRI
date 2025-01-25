@@ -50,7 +50,7 @@ import jmri.util.swing.JmriJOptionPane;
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
- * @author Klaus Killinger Copyright (C) 2024
+ * @author Klaus Killinger Copyright (C) 2024-2025
  */
 public class VSDManagerFrame extends JmriJFrame {
 
@@ -238,12 +238,15 @@ public class VSDManagerFrame extends JmriJFrame {
      */
     protected void addButtonPressed(ActionEvent e) {
         log.debug("Add button pressed");
-
         // If the maximum number of VSDecoders (Controls) is reached, don't create a new Control
-        // In Viewing Mode up to 4 existing VSDecoders are possible, so skip the check
+        // In Viewing Mode up to <max_decoder> existing VSDecoders are possible, so skip the check
         if (! is_viewing && VSDecoderManager.instance().getVSDecoderList().size() >= VSDecoderManager.max_decoder) {
             JmriJOptionPane.showMessageDialog(null,
                     "VSDecoder cannot be created. Maximal number is " + String.valueOf(VSDecoderManager.max_decoder));
+        } else if (jmri.InstanceManager.getDefault(jmri.AudioManager.class).
+                getNamedBeanSet(jmri.Audio.BUFFER).size() == jmri.AudioManager.MAX_BUFFERS) {
+            JmriJOptionPane.showMessageDialog(null,
+                    "Decoder cannot be created! No more free buffers.");
         } else {
             config = new VSDConfig(); // Create a new Config for the new VSDecoder.
             // Do something here.  Create a new VSDecoder and add it to the window.
@@ -266,49 +269,46 @@ public class VSDManagerFrame extends JmriJFrame {
     protected void addButtonPropertyChange(PropertyChangeEvent event) {
         log.debug("internal config dialog handler");
         // If this decoder already exists, don't create a new Control
-        // In Viewing Mode up to 4 existing VSDecoders are possible, so skip the check
+        // In Viewing Mode up to <max_decoder> existing VSDecoders are possible, so skip the check
         VSDecoder newDecoder = null;
         if (! is_viewing && VSDecoderManager.instance().getVSDecoderByAddress(config.getLocoAddress().toString()) != null) {
             JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("MgrAddDuplicateMessage"));
         } else {
             newDecoder = VSDecoderManager.instance().getVSDecoder(config);
-            if (newDecoder == null) {
-                log.error("Lost context, VSDecoder is null. Quit JMRI and start over. No New Decoder constructed! Address: {}, profile: {}",
-                        config.getLocoAddress(), config.getProfileName());
-                return;
-            }
-            VSDControl newControl = new VSDControl(config);
-            // Set the Decoder to listen to PropertyChanges from the control
-            newControl.addPropertyChangeListener(newDecoder);
-            this.addPropertyChangeListener(newDecoder);
-            // Set US to listen to PropertyChanges from the control (mainly for DELETE)
-            newControl.addPropertyChangeListener(new PropertyChangeListener() {
-                @Override
-                public void propertyChange(PropertyChangeEvent event) {
-                    log.debug("property change name {}, old: {}, new: {}",
-                            event.getPropertyName(), event.getOldValue(), event.getNewValue());
-                    vsdControlPropertyChange(event);
+            if (newDecoder != null) {
+                VSDControl newControl = new VSDControl(config);
+                // Set the Decoder to listen to PropertyChanges from the control
+                newControl.addPropertyChangeListener(newDecoder);
+                this.addPropertyChangeListener(newDecoder);
+                // Set US to listen to PropertyChanges from the control (mainly for DELETE)
+                newControl.addPropertyChangeListener(new PropertyChangeListener() {
+                    @Override
+                    public void propertyChange(PropertyChangeEvent event) {
+                        log.debug("property change name {}, old: {}, new: {}",
+                                event.getPropertyName(), event.getOldValue(), event.getNewValue());
+                        vsdControlPropertyChange(event);
+                    }
+                });
+                if (decoderPane.isAncestorOf(decoderBlank)) {
+                    decoderPane.remove(decoderBlank);
                 }
-            });
-            if (decoderPane.isAncestorOf(decoderBlank)) {
-                decoderPane.remove(decoderBlank);
+
+                decoderPane.add(newControl);
+                newControl.addSoundButtons(new ArrayList<SoundEvent>(newDecoder.getEventList()));
+
+                firePropertyChange(VOLUME_CHANGE, master_volume, null);
+                log.debug("Master volume set to {}", master_volume);
+
+                decoderPane.revalidate();
+                decoderPane.repaint();
+
+                this.pack();
+                //this.setVisible(true);
+                // Do we need to make newControl a listener to newDecoder?
+
+                getStartBlock(newDecoder);
+
             }
-
-            decoderPane.add(newControl);
-            newControl.addSoundButtons(new ArrayList<SoundEvent>(newDecoder.getEventList()));
-
-            firePropertyChange(VOLUME_CHANGE, master_volume, null);
-            log.debug("Master volume set to {}", master_volume);
-
-            decoderPane.revalidate();
-            decoderPane.repaint();
-
-            this.pack();
-            //this.setVisible(true);
-            // Do we need to make newControl a listener to newDecoder?
-        }
-        if (newDecoder != null) {
-            getStartBlock(newDecoder);
         }
     }
 
