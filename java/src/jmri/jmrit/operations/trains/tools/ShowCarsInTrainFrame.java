@@ -113,7 +113,7 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
         getContentPane().add(textStatus);
 
         if (_train != null) {
-            setTitle(Bundle.getMessage("TitleShowCarsInTrain") + " (" + _train.getName() + ")");
+            setTitle(Bundle.getMessage("TitleShowCarsInTrain", _train.getName()));
 
             // listen for train changes
             _train.addPropertyChangeListener(this);
