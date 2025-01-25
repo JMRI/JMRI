@@ -42,7 +42,7 @@ public class XNetMonPane extends jmri.jmrix.AbstractMonPane implements XNetListe
             try {
                 formatterList = new ArrayList<>();
 
-                Reflections reflections = new Reflections("jmri.jmrix.lenz.messageFormatters");
+                Reflections reflections = new Reflections("jmri.jmrix.lenz.messageformatters");
                 Set<Class<? extends XPressNetMessageFormatter>> f = reflections.getSubTypesOf(XPressNetMessageFormatter.class);
                 for(Class<?> c : f){
                     log.debug("Found formatter: {}", f.getClass().getName());

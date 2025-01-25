@@ -104,7 +104,7 @@ public class Z21Reply extends AbstractMRReply {
            case 0x0040:
                return Bundle.getMessage("Z21XpressNetTunnelReply", getXNetReply().toMonitorString());
            case 0x0051:
-                return Bundle.getMessage("Z21ReplyBroadcastFlags",Z21MessageUtils.interpretBroadcastFlags(_dataChars));
+                return Bundle.getMessage("Z21ReplyBroadcastFlags",Z21MessageUtils.interpretBroadcastFlags(this));
            case 0x0080:
                int groupIndex = getElement(4) & 0xff;
                int offset = (groupIndex * 10) + 1;

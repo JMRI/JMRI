@@ -1,5 +1,6 @@
 package jmri.jmrix.roco.z21.swing.mon;
 
+import jmri.jmrix.Message;
 import jmri.jmrix.roco.z21.*;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
@@ -65,6 +66,22 @@ public class Z21MonPane extends jmri.jmrix.AbstractMonPane implements Z21Listene
         memo.getTrafficController().removez21Listener(this);
         // and unwind swing
         super.dispose();
+    }
+
+    @Override
+    public void logMessage(String messagePrefix, String rawPrefix, Message message){
+        // display the raw data if requested
+        StringBuilder raw = new StringBuilder(rawPrefix);
+        if (rawCheckBox.isSelected()) {
+            raw.append(message.toString());
+        }
+
+        // display the decoded data
+        String text = formatterList.stream()
+                .filter(f -> f.handlesMessage(message))
+                .findFirst().map(f -> f.formatMessage(message))
+                .orElse(message.toString());
+        nextLine(messagePrefix + " " + text + "\n", raw.toString());
     }
 
     @Override
