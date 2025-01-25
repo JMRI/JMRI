@@ -2,7 +2,6 @@ package jmri.jmrix.roco.z21.messageformatters;
 
 import jmri.jmrix.lenz.XPressNetMessageFormatter;
 import jmri.jmrix.roco.z21.Z21Constants;
-import jmri.jmrix.roco.z21.Z21XNetReply;
 
 /**
  * Format Z21XNet Turnout Replies for display.

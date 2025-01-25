@@ -2,7 +2,6 @@ package jmri.jmrix.roco.z21.messageformatters;
 
 import jmri.jmrix.lenz.XPressNetMessageFormatter;
 import jmri.jmrix.roco.z21.Z21Constants;
-import jmri.jmrix.roco.z21.Z21XNetReply;
 
 /**
  * Format Z21XNetReply CV Programming results for display in the XpressNet monitor.
