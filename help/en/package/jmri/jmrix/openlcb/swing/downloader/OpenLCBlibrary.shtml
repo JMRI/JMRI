@@ -78,7 +78,7 @@
 
           <li>Optionally, Unlock</li>
 
-          <li>Reboot/reset</li>
+          <li>Reset (reboot)</li>
         </ol>
 
         <p>If the node needs time to write the downloaded code to memory, the write operations
@@ -98,7 +98,7 @@
 
         <p>A node can reset itself at any time, and the process for this is well defined. So if a
         very simple download routine can't go straight back into operation after downloading, it
-        can reset the node without waiting for the Reboot/reset command.</p>
+        can reset the node without waiting for the reset (reboot) command.</p>
 
         <p>A node manufacturer can implement a very simple (and not very strong) form of download
         security against download of invalid contents by compiling in some locations at known low
@@ -114,7 +114,7 @@
 
   <p>If the only thing that a node can do is &quot;jump to the bootloader, and accept data for
   reprogramming&quot;, the &quot;Freeze&quot; and &quot;Enter
-  Bootloader&quot; are the same. Just reboot/restart when done.</p>
+  Bootloader&quot; are the same. Just restart (reboot) when done.</p>
 
   <p>If a node can allow configuration memory to be rewritten on the fly, even while doing what it
   normally does, then neither &quot;Freeze&quot; nor &quot;Enter
