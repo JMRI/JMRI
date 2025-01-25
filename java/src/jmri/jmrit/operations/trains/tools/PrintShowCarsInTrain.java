@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.cars.*;
-import jmri.jmrit.operations.rollingstock.cars.tools.PrintCarLoadsAction;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
@@ -98,5 +97,5 @@ public class PrintShowCarsInTrain {
         return TrainCommon.padString(s, fieldSize);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintCarLoadsAction.class);
+    private final static Logger log = LoggerFactory.getLogger(PrintShowCarsInTrain.class);
 }
