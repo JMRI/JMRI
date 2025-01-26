@@ -1,7 +1,6 @@
 package jmri.jmrix.roco.z21.messageformatters;
 
 import jmri.jmrix.roco.z21.Z21Reply;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
