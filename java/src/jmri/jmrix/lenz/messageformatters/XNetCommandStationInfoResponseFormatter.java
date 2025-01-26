@@ -22,8 +22,8 @@ public class XNetCommandStationInfoResponseFormatter implements XPressNetMessage
         if(!handlesMessage(m)){
             throw new IllegalArgumentException("Message is not a XNetReply or is not a CS Info message");
         }
-        XNetReply r = (XNetReply) m;
-        switch (r.getElement(1)) {
+        //XNetReply r = (XNetReply) m;
+        switch (m.getElement(1)) {
             case XNetConstants.BC_NORMAL_OPERATIONS:
                 return Bundle.getMessage("XNetReplyBCNormalOpsResumed");
             case XNetConstants.BC_EVERYTHING_OFF:
@@ -54,7 +54,7 @@ public class XNetCommandStationInfoResponseFormatter implements XPressNetMessage
             case XNetConstants.CS_DH_ERROR_NONZERO_SPD:
                 return Bundle.getMessage("XNetReplyV1DHErrorNonZeroSpeed");
             default:
-                return r.toString();
+                return m.toString();
         }
     }
 

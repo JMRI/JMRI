@@ -25,21 +25,27 @@ public class Z21RMBusFeedbackReplyFormatter implements Z21MessageFormatter {
                int offset = (groupIndex * 10) + 1;
                String[] moduleStatus = new String[10];
         for(int i=0;i<10;i++){
-               moduleStatus[i]= Bundle.getMessage("RMModuleFeedbackStatus",offset + i,
-                   Bundle.getMessage("RMModuleContactStatus",1, ((m.getElement(i+5)&0x01)==0x01)? Bundle.getMessage("PowerStateOn") : Bundle.getMessage("PowerStateOff")),
-                   Bundle.getMessage("RMModuleContactStatus",2, ((m.getElement(i+5)&0x02)==0x02)? Bundle.getMessage("PowerStateOn") : Bundle.getMessage("PowerStateOff")),
-                   Bundle.getMessage("RMModuleContactStatus",3, ((m.getElement(i+5)&0x04)==0x04)? Bundle.getMessage("PowerStateOn") : Bundle.getMessage("PowerStateOff")),
-                   Bundle.getMessage("RMModuleContactStatus",4, ((m.getElement(i+5)&0x08)==0x08)? Bundle.getMessage("PowerStateOn") : Bundle.getMessage("PowerStateOff")),
-                   Bundle.getMessage("RMModuleContactStatus",5, ((m.getElement(i+5)&0x10)==0x10)? Bundle.getMessage("PowerStateOn") : Bundle.getMessage("PowerStateOff")),
-                   Bundle.getMessage("RMModuleContactStatus",6, ((m.getElement(i+5)&0x20)==0x20)? Bundle.getMessage("PowerStateOn") : Bundle.getMessage("PowerStateOff")),
-                   Bundle.getMessage("RMModuleContactStatus",7, ((m.getElement(i+5)&0x40)==0x40)? Bundle.getMessage("PowerStateOn") : Bundle.getMessage("PowerStateOff")),
-                   Bundle.getMessage("RMModuleContactStatus",8, ((m.getElement(i+5)&0x80)==0x80)? Bundle.getMessage("PowerStateOn") : Bundle.getMessage("PowerStateOff")));
+               moduleStatus[i]= Bundle.getMessage("RMModuleFeedbackStatus",offset+i,
+                   getState(1,(m.getElement(i+5)&0x01)==0x01),
+                   getState(2,(m.getElement(i+5)&0x02)==0x02),
+                   getState(3,(m.getElement(i+5)&0x04)==0x04),
+                   getState(4,(m.getElement(i+5)&0x08)==0x08),
+                   getState(5,(m.getElement(i+5)&0x10)==0x10),
+                   getState(6,(m.getElement(i+5)&0x20)==0x20),
+                   getState(7,(m.getElement(i+5)&0x40)==0x40),
+                   getState(8,(m.getElement(i+5)&0x80)==0x80));
         }
         return Bundle.getMessage("RMBusFeedbackStatus",groupIndex,
                moduleStatus[0],moduleStatus[1],moduleStatus[2],
                moduleStatus[3],moduleStatus[4],moduleStatus[5],
                moduleStatus[6],moduleStatus[7],moduleStatus[8],
                moduleStatus[9]);
+    }
+
+    String getState(int contact,boolean on){
+
+        return Bundle.getMessage("RMModuleContactStatus",contact,
+                on ? Bundle.getMessage("PowerStateOn") : Bundle.getMessage("PowerStateOff"));
     }
 
 }

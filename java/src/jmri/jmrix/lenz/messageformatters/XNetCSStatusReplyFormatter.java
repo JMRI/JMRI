@@ -24,9 +24,8 @@ public class XNetCSStatusReplyFormatter implements XPressNetMessageFormatter {
         if(!handlesMessage(m)) { 
             throw new IllegalArgumentException("Message is not supported");
         }
-        XNetReply r = (XNetReply) m;
         StringBuilder text = new StringBuilder(Bundle.getMessage("XNetReplyCSStatus") + " ");
-        int statusByte = r.getElement(2);
+        int statusByte = m.getElement(2);
         if ((statusByte & 0x01) == 0x01) {
             // Command station is in Emergency Off Mode
             text.append(Bundle.getMessage("XNetCSStatusEmergencyOff")).append("; ");

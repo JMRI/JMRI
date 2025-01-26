@@ -9,8 +9,6 @@ import jmri.jmrix.roco.z21.Z21Constants;
  * @author Paul Bender Copyright (C) 2025
  */
 public class Z21XNetTurnoutReplyFormatter implements XPressNetMessageFormatter {
-    public Z21XNetTurnoutReplyFormatter() {
-    }
 
     public boolean handlesMessage(jmri.jmrix.Message m) {
         return (m instanceof jmri.jmrix.roco.z21.Z21XNetReply && (m.getElement(0) == Z21Constants.LAN_X_TURNOUT_INFO));
