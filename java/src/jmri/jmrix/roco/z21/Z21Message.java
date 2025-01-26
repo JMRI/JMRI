@@ -265,14 +265,12 @@ public class Z21Message extends AbstractMRMessage {
         return retval;
     }
 
-    private static List<Z21MessageFormatter> formatterList;
+    private static List<Z21MessageFormatter> formatterList = new ArrayList<>();
 
     @Override
     public String toMonitorString() {
-        if(formatterList==null) {
+        if(formatterList.isEmpty()) {
             try {
-
-                formatterList = new ArrayList<>();
 
                 Reflections reflections = new Reflections("jmri.jmrix.roco.z21.messageformatters");
                 Set<Class<? extends Z21MessageFormatter>> f = reflections.getSubTypesOf(Z21MessageFormatter.class);
