@@ -14,7 +14,7 @@ import jmri.jmrix.lenz.XPressNetMessageFormatter;
 public class XNetDHandMUErrorMessageFormatter implements XPressNetMessageFormatter {
 
     @Override
-    public Boolean handlesMessage(Message m) {
+    public boolean handlesMessage(Message m) {
         return m instanceof XNetReply && ((XNetReply) m).getElement(0) == XNetConstants.LOCO_MU_DH_ERROR;
     }
 

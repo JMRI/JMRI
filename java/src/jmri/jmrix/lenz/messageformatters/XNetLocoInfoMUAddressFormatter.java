@@ -12,7 +12,7 @@ import jmri.jmrix.lenz.XPressNetMessageFormatter;
 public class XNetLocoInfoMUAddressFormatter implements XPressNetMessageFormatter {
 
     @Override
-    public Boolean handlesMessage(Message m) {
+    public boolean handlesMessage(Message m) {
         return m instanceof XNetReply &&
                 m.getElement(0) == XNetConstants.LOCO_INFO_MU_ADDRESS;
     }

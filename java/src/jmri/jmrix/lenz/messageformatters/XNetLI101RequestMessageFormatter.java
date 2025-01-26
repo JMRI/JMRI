@@ -11,7 +11,7 @@ public class XNetLI101RequestMessageFormatter implements XPressNetMessageFormatt
 
     private static final String X_NET_MESSAGE_REQUEST_LI_BAUD = "XNetMessageRequestLIBaud";
 
-    public Boolean handlesMessage(jmri.jmrix.Message m) {
+    public boolean handlesMessage(jmri.jmrix.Message m) {
         return m instanceof jmri.jmrix.lenz.XNetMessage && ((jmri.jmrix.lenz.XNetMessage) m).getElement(0) == XNetConstants.LI101_REQUEST;
     }
 

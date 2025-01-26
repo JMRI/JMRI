@@ -12,7 +12,7 @@ import jmri.jmrix.roco.z21.Z21Reply;
 public class Z21LocoNetTunnelReplyFormatter implements Z21MessageFormatter {
 
     @Override
-    public Boolean handlesMessage(Message m) {
+    public boolean handlesMessage(Message m) {
         return m instanceof Z21Reply &&
                 (((Z21Reply) m).getOpCode() == 0x00A0 ||
                 ((Z21Reply) m).getOpCode() == 0x00A1 ||

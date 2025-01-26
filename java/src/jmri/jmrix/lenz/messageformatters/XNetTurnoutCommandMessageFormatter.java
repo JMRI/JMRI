@@ -13,7 +13,7 @@ public class XNetTurnoutCommandMessageFormatter implements XPressNetMessageForma
     public XNetTurnoutCommandMessageFormatter() {
     }
 
-    public Boolean handlesMessage(jmri.jmrix.Message m) {
+    public boolean handlesMessage(jmri.jmrix.Message m) {
         return m instanceof jmri.jmrix.lenz.XNetMessage && ((XNetMessage) m).getElement(0)==XNetConstants.ACC_OPER_REQ;
     }
 

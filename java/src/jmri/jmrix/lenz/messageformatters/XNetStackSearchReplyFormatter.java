@@ -14,7 +14,7 @@ public class XNetStackSearchReplyFormatter implements XPressNetMessageFormatter 
 
 
     @Override
-    public Boolean handlesMessage(Message m) {
+    public boolean handlesMessage(Message m) {
         return m instanceof XNetReply &&
                 m.getElement(0) == XNetConstants.LOCO_INFO_RESPONSE &&
                 (m.getElement(1) == XNetConstants.LOCO_SEARCH_NO_RESULT ||

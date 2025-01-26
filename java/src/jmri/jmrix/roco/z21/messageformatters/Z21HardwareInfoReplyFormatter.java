@@ -13,7 +13,7 @@ import jmri.jmrix.roco.z21.Z21Reply;
 public class Z21HardwareInfoReplyFormatter implements Z21MessageFormatter {
 
     @Override
-    public Boolean handlesMessage(Message m) {
+    public boolean handlesMessage(Message m) {
         return m instanceof Z21Reply && ((Z21Reply)m).getOpCode() == 0x001A;
     }
 

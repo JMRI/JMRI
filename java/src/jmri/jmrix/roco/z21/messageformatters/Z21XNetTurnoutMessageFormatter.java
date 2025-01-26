@@ -23,7 +23,7 @@ public class Z21XNetTurnoutMessageFormatter implements XPressNetMessageFormatter
     }
 
     @Override
-    public Boolean handlesMessage(jmri.jmrix.Message m) {
+    public boolean handlesMessage(jmri.jmrix.Message m) {
         return (m instanceof Z21XNetMessage &&
                 (m.getElement(0) == Z21Constants.LAN_X_SET_TURNOUT || m.getElement(0) == Z21Constants.LAN_X_GET_TURNOUT_INFO));
     }

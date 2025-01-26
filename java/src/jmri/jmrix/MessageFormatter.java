@@ -12,7 +12,7 @@ public interface MessageFormatter {
      * @param m message to check
      * @return true if this formatter can handle the message
      */
-    public Boolean handlesMessage(Message m);
+    public boolean handlesMessage(Message m);
 
     /**
      * Format the message into a string

@@ -14,7 +14,7 @@ public class XNetLI101BaudReplyFormatter implements XPressNetMessageFormatter {
     private static final String X_NET_REPLY_LI_BAUD = "XNetReplyLIBaud";
 
     @Override
-    public Boolean handlesMessage(Message m) {
+    public boolean handlesMessage(Message m) {
         return m instanceof XNetReply && 
                 m.getElement(0) == XNetConstants.LI101_REQUEST && 
                 m.getElement(1) == XNetConstants.LI101_REQUEST_BAUD;

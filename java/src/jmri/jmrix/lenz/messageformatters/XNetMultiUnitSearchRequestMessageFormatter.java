@@ -12,7 +12,7 @@ import jmri.jmrix.lenz.XPressNetMessageFormatter;
 
 public class XNetMultiUnitSearchRequestMessageFormatter implements XPressNetMessageFormatter {
     @Override
-    public Boolean handlesMessage(Message m) {
+    public boolean handlesMessage(Message m) {
         return m instanceof XNetMessage &&
                 (m.getElement(0) == XNetConstants.CS_MULTI_UNIT_REQ);
     }

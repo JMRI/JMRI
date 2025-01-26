@@ -24,7 +24,7 @@ public class XNet14SpeedStepModeSpeedAndDirectionFormatter implements XPressNetM
     private static final String SPEED_STEP_MODE_X = "SpeedStepModeX";
 
     @Override
-    public Boolean handlesMessage(Message m) {
+    public boolean handlesMessage(Message m) {
         return m instanceof XNetMessage &&
                 ((XNetMessage) m).getElement(0) == XNetConstants.LOCO_OPER_REQ &&
                         ((XNetMessage) m).getElement(1) == XNetConstants.LOCO_SPEED_14;

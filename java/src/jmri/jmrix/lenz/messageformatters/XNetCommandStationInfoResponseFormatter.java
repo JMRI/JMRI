@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.XPressNetMessageFormatter;
 public class XNetCommandStationInfoResponseFormatter implements XPressNetMessageFormatter {
 
     @Override
-    public Boolean handlesMessage(Message m) {
+    public boolean handlesMessage(Message m) {
         return m instanceof XNetReply && ((XNetReply) m).getElement(0) == XNetConstants.CS_INFO;
     }
 

@@ -15,7 +15,7 @@ public class XNetLocoFunctionStatusHighReplyFormatter implements XPressNetMessag
     private static final String RS_TYPE = "rsType";
 
     @Override
-    public Boolean handlesMessage(Message m) {
+    public boolean handlesMessage(Message m) {
         return m instanceof XNetReply &&
                 m.getElement(0) == XNetConstants.LOCO_INFO_RESPONSE &&
                 m.getElement(1) == XNetConstants.LOCO_FUNCTION_STATUS_HIGH;

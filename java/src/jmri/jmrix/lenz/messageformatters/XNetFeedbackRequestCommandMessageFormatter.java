@@ -9,7 +9,7 @@ import jmri.jmrix.lenz.XPressNetMessageFormatter;
  */
 public class XNetFeedbackRequestCommandMessageFormatter implements XPressNetMessageFormatter {
 
-    public Boolean handlesMessage(jmri.jmrix.Message m) {
+    public boolean handlesMessage(jmri.jmrix.Message m) {
         return m instanceof jmri.jmrix.lenz.XNetMessage && ((jmri.jmrix.lenz.XNetMessage) m).getElement(0) == XNetConstants.ACC_INFO_REQ;
     }
 

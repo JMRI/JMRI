@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.XPressNetMessageFormatter;
 public class XNetDoubleHeaderRequestMessageFormatter implements XPressNetMessageFormatter {
 
     @Override
-    public Boolean handlesMessage(Message m) {
+    public boolean handlesMessage(Message m) {
         return m instanceof XNetMessage &&
                 (m.getElement(0) == XNetConstants.LOCO_DOUBLEHEAD
                 && m.getElement(1) == XNetConstants.LOCO_DOUBLEHEAD_BYTE2);

@@ -12,7 +12,7 @@ import jmri.jmrix.lenz.XNetConstants;
  */
 public class XNetEstopAllRequestMessageFormatter implements XPressNetMessageFormatter {
     @Override
-    public Boolean handlesMessage(Message m) {
+    public boolean handlesMessage(Message m) {
         return m instanceof XNetMessage &&
                 m.getElement(0) == XNetConstants.ALL_ESTOP;
     }

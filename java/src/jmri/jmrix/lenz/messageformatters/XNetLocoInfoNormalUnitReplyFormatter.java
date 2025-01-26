@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.XPressNetMessageFormatter;
 public class XNetLocoInfoNormalUnitReplyFormatter implements XPressNetMessageFormatter {
 
     @Override
-    public Boolean handlesMessage(Message m) {
+    public boolean handlesMessage(Message m) {
         return m instanceof XNetReply &&
                 ((XNetReply) m).getElement(0) == XNetConstants.LOCO_INFO_NORMAL_UNIT
                 && ((XNetReply) m).getElement(1) != XNetConstants.LOCO_FUNCTION_STATUS_HIGH;

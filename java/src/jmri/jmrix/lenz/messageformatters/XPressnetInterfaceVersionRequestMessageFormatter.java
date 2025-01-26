@@ -8,7 +8,7 @@ import jmri.jmrix.lenz.XPressNetMessageFormatter;
 public class XPressnetInterfaceVersionRequestMessageFormatter implements XPressNetMessageFormatter {
 
     @Override
-    public Boolean handlesMessage(Message m) {
+    public boolean handlesMessage(Message m) {
         return m instanceof XNetMessage &&
                 m.getElement(0) == XNetConstants.LI_VERSION_REQUEST;
     }

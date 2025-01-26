@@ -15,7 +15,7 @@ import jmri.jmrix.lenz.messageformatters.XNetLocoInfoReplyUtilities;
 public class HornbyEliteMultiUnitInfoReplyFormatter implements XPressNetMessageFormatter {
 
     @Override
-    public Boolean handlesMessage(Message m) {
+    public boolean handlesMessage(Message m) {
         return m instanceof XNetReply &&
                 ((XNetReply) m).getElement(0) == XNetConstants.LOCO_INFO_MUED_UNIT && (
                 ((XNetReply) m).getElement(1) == 0xF8 ||  // only handle the two Hornby Elite specific messages

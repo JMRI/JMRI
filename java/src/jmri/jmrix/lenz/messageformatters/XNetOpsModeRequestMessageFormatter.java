@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.XPressNetMessageFormatter;
  */
 public class XNetOpsModeRequestMessageFormatter implements XPressNetMessageFormatter{
     @Override
-    public Boolean handlesMessage(Message m) {
+    public boolean handlesMessage(Message m) {
         return m instanceof XNetMessage &&
                 m.getElement(0)  == XNetConstants.OPS_MODE_PROG_REQ;
     }

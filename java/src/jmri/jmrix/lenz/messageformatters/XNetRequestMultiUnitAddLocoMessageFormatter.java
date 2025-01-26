@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.XPressNetMessageFormatter;
  */
 public class XNetRequestMultiUnitAddLocoMessageFormatter implements XPressNetMessageFormatter {
     @Override
-    public Boolean handlesMessage(Message m) {
+    public boolean handlesMessage(Message m) {
         return m instanceof XNetMessage &&
                 m.getElement(0) == XNetConstants.LOCO_OPER_REQ &&
                 (m.getElement(1) == XNetConstants.LOCO_ADD_MULTI_UNIT_REQ ||

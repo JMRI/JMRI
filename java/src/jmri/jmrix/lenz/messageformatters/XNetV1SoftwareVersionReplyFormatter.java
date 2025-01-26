@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.XPressNetMessageFormatter;
 public class XNetV1SoftwareVersionReplyFormatter implements XPressNetMessageFormatter {
 
     @Override
-    public Boolean handlesMessage(Message m) {
+    public boolean handlesMessage(Message m) {
         return m instanceof XNetReply &&
                 ((XNetReply) m).getElement(0) == XNetConstants.CS_REQUEST_RESPONSE &&
                 ((XNetReply) m).getElement(1) == XNetConstants.CS_SOFTWARE_VERSION;

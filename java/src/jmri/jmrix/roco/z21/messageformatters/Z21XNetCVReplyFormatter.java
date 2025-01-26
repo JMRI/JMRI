@@ -12,7 +12,7 @@ public class Z21XNetCVReplyFormatter implements XPressNetMessageFormatter {
     public Z21XNetCVReplyFormatter() {
     }
 
-    public Boolean handlesMessage(jmri.jmrix.Message m) {
+    public boolean handlesMessage(jmri.jmrix.Message m) {
         return m instanceof jmri.jmrix.roco.z21.Z21XNetReply &&
                 m.getElement(0) == Z21Constants.LAN_X_CV_RESULT_XHEADER &&
                 m.getElement(1) == Z21Constants.LAN_X_CV_RESULT_DB0;

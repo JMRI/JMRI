@@ -12,7 +12,7 @@ import jmri.jmrix.lenz.XPressNetMessageFormatter;
  * @author Paul Bender Copyright (C) 2024
  */
 public class XNetEstopLocoRequestMessageFormatter implements XPressNetMessageFormatter {
-    public Boolean handlesMessage(Message m) {
+    public boolean handlesMessage(Message m) {
         return m instanceof XNetMessage &&
                 m.getElement(0) == XNetConstants.EMERGENCY_STOP;
     }

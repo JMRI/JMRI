@@ -13,7 +13,7 @@ public class XNetProgWriteMessageFormatter implements XPressNetMessageFormatter 
     private static final String X_NET_MESSAGE_REQUEST_SERVICE_MODE_WRITE_DIRECT_V_36 = "XNetMessageRequestServiceModeWriteDirectV36";
 
     @Override
-    public Boolean handlesMessage(Message m) {
+    public boolean handlesMessage(Message m) {
         return m instanceof XNetMessage &&
            m.getElement(0) == XNetConstants.PROG_WRITE_REQUEST;
     }

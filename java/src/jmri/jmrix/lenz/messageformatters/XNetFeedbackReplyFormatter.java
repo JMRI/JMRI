@@ -26,7 +26,7 @@ public class XNetFeedbackReplyFormatter implements XPressNetMessageFormatter {
     private static final String X_NET_REPLY_CONTACT_LABEL = "XNetReplyContactLabel";
 
     @Override
-    public Boolean handlesMessage(Message m) {
+    public boolean handlesMessage(Message m) {
         return m instanceof XNetReply && m.getElement(0) == XNetConstants.ACC_INFO_RESPONSE;
     }
 

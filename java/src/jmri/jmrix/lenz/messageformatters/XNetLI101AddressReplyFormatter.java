@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.XPressNetMessageFormatter;
 public class XNetLI101AddressReplyFormatter implements XPressNetMessageFormatter {
 
     @Override
-    public Boolean handlesMessage(Message m) {
+    public boolean handlesMessage(Message m) {
         return m instanceof XNetReply &&
                 m.getElement(0) == XNetConstants.LI101_REQUEST &&
                 m.getElement(1) == XNetConstants.LI101_REQUEST_ADDRESS;

@@ -17,7 +17,7 @@ public class XNetFunctionGroup7MomentaryRequestMessageFormatter implements XPres
     private static final String FUNCTION_MOMENTARY = "FunctionMomentary";
 
     @Override
-    public Boolean handlesMessage(Message m) {
+    public boolean handlesMessage(Message m) {
         return m instanceof XNetMessage &&
                 m.getElement(0) == XNetConstants.LOCO_OPER_REQ &&
                 m.getElement(1) == XNetConstants.LOCO_SET_FUNC_GROUP7_MOMENTARY;

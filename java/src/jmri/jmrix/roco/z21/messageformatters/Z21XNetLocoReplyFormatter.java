@@ -11,7 +11,7 @@ import jmri.jmrix.roco.z21.Z21XNetReply;
  */
 public class Z21XNetLocoReplyFormatter implements XPressNetMessageFormatter {
 
-    public Boolean handlesMessage(jmri.jmrix.Message m) {
+    public boolean handlesMessage(jmri.jmrix.Message m) {
         return m instanceof Z21XNetReply &&
         (m.getElement(0)&0xE0)==0xE0 && ((m.getElement(0)&0x0f) >= 7 && (m.getElement(0)&0x0f) <=15 );
     }

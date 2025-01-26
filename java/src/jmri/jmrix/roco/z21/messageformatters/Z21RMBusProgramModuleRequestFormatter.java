@@ -12,7 +12,7 @@ import jmri.jmrix.roco.z21.Z21MessageFormatter;
 public class Z21RMBusProgramModuleRequestFormatter implements Z21MessageFormatter {
 
     @Override
-    public Boolean handlesMessage(Message m) {
+    public boolean handlesMessage(Message m) {
         return m instanceof Z21Message && ((Z21Message) m).getOpCode() == 0x0082;
     }
 

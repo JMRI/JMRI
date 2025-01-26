@@ -12,7 +12,7 @@ import jmri.jmrix.lenz.XPressNetMessageFormatter;
  */
 public class XNetBroadcastEmergencyStopFormatter implements XPressNetMessageFormatter {
     @Override
-    public Boolean handlesMessage(Message m) {
+    public boolean handlesMessage(Message m) {
         return m instanceof XNetReply &&
                 ((XNetReply) m).getElement(0) == XNetConstants.BC_EMERGENCY_STOP &&
                 ((XNetReply) m).getElement(1) == XNetConstants.BC_EVERYTHING_STOP;
