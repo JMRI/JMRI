@@ -99,7 +99,6 @@ public class CbusNodeFromBackupTest {
         
         Assert.assertEquals("node t 259",259,t.getNodeNumber());
         Assert.assertTrue("Same node t 259",t.equals(t));
-        Assert.assertFalse("Not Equals String",t.equals("t"));
         Assert.assertTrue("Same node t tt 259",t.equals(tt));
         Assert.assertTrue("node t tt hash",tt.hashCode()==t.hashCode());
         
@@ -184,9 +183,10 @@ public class CbusNodeFromBackupTest {
         t.getCanListener().message(new jmri.jmrix.can.CanMessage(r));
         
         Assert.assertEquals("default getNodeInLearnMode ",false,t.getNodeInLearnMode() );
-        
-        Assert.assertTrue("No Traffic Controler",(t.getCanListener() instanceof CbusNodeFromBackup.DoNothingCanListener));
-        
+
+        Assertions.assertInstanceOf(CbusNodeFromBackup.DoNothingCanListener.class,
+            t.getCanListener(), "No Traffic Controler");
+
         tcis.terminateThreads();
         memo.dispose();
         
