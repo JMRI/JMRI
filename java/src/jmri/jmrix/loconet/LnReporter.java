@@ -66,16 +66,20 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
     }
 
     /**
-      * Process loconet message handed to us from the LnReporterManager
-      * @param l - a loconetmessage.
+      * Process LocoNet message handed to us from the LnReporterManager
+      * @param l - a LocoNetMessage.
       */
     public void messageFromManager(LocoNetMessage l) {
         // check message type
         if (isTranspondingLocationReport(l) || isTranspondingFindReport(l)) {
             transpondingReport(l);
         }
-        if ((l.getOpCode() == LnConstants.OPC_LISSY_UPDATE) && (l.getElement(1) == 0x08)) {
-            lissyReport(l);
+        if (l.getOpCode() == LnConstants.OPC_LISSY_UPDATE) {
+            if (l.getElement(1) == 0x08) {
+                lissyReport(l);
+            } else if (l.getElement(2) == 0x41) {
+                lissyRfidReport(l);
+            }
         } else {
             return; // nothing
         }
@@ -196,6 +200,34 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
             notify(idTag);
             setState(loco);
         }
+    }
+
+    /**
+     * Handle LISSY RFID-7 and RFID-5 messages
+     * @param l Message from which to extract RFID content (UID)
+     */
+    void lissyRfidReport(LocoNetMessage l) {
+        String tag;
+        StringBuilder tg = new StringBuilder();
+        int max = l.getElement(1) - 2; // GCA51 RFID-7 elem(3) = size = 0x0E; RFID-5 elem(3) = size = 0x0C
+        int rfidHi = l.getElement(max); // MSbits are transmitted via element(max)
+        for (int j = 5; j < max; j++) {
+            int shift = j-5;
+            int hi = 0x0;
+            if((rfidHi >> shift)%2 == 1) hi = 0x80;
+            tg.append(String.format("%1$02X", l.getElement(j) + hi));
+        }
+        tag = tg.toString();
+
+        int rfidSensorAddress = l.getElement(3) << 7 | l.getElement(4);
+
+        notify(null); // set report to null to make sure listeners update
+        // get rfid tag
+        IdTag idTag = InstanceManager.getDefault(TranspondingTagManager.class).provideIdTag(""+tag);
+        // add info from reader
+        idTag.setProperty("rfid", rfidSensorAddress);
+        log.debug("Tag: {}", idTag);
+        notify(idTag); // sets report of this reporter to tag
     }
 
     /**
