@@ -240,9 +240,11 @@ class WiimoteThrottle(Jynstrument, PropertyChangeListener, AddressListener, WiiD
         self.speedAction = None
         self.speedTimer = None
         self.throttle = None
-        self.getContext().removePropertyChangeListener(self)
-        self.addressPanel.removeAddressListener(self)
-        self.addressPanel = None
+        if (self.getContext() != None):
+            self.getContext().removePropertyChangeListener(self)
+        if (self.addressPanel != None):
+            self.addressPanel.removeAddressListener(self)
+            self.addressPanel = None
 
 #AddressListener part: to listen for address changes in address panel (release, acquired)
     def notifyAddressChosen(self, address):

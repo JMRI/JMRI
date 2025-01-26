@@ -22,6 +22,7 @@ import org.jdom2.Element;
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
+ * @author Klaus Killinger Copyright (C) 2025
  */
 abstract public class VSDSound {
 
@@ -113,6 +114,15 @@ abstract public class VSDSound {
 
     boolean getTunnel() {
         return is_tunnel;
+    }
+
+    boolean checkForFreeBuffer() {
+        jmri.AudioManager am = jmri.InstanceManager.getDefault(jmri.AudioManager.class);
+        if (am.getNamedBeanSet(jmri.Audio.BUFFER).size() < jmri.AudioManager.MAX_BUFFERS) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public Element getXml() {

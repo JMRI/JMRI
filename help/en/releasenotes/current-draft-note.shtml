@@ -130,7 +130,13 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Added "Restart" and "Clear CDI cache" to the Send Frame developer screen</li>
+                <li>Added "Restart" and "Clear CDI cache" to the contextual (popup) menu in LccPro</li>
+                <li>Converted on "Restart" terminology; references to "Reboot" have been changed</li>
+                <li>Added overwrite mode to EventID-entry fields. This accessed by using the "insert" key, which 
+                    changes the cursor to an underline so you know you're in the mode.  Mac keyboards do not
+                    support an insert key, so this feature is not available on the Mac.</li>
+                <li>Updated the OpenLCB library being used to version 0.8.5</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -580,7 +586,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Lionel Jeanson added a driver for the <a href="https://www.zuiki.co.jp/product_info/denshadegomascon_black/"> Densha de GO controler</a> USB controller for the USBThrottle Jynstrument</li>
         </ul>
 
     <h3>Timetable</h3>
@@ -634,13 +640,16 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>Added checks to prevent errors due to not enough AudioBuffers.</li>
         </ul>
 
    <h3>Z21 Server</h3>
         <a id="Z21" name="Z21"></a>
         <ul>
-            <li></li>
+            <li>Add support for Roco WlanMaus</li>
+            <li>Improve UI to show connected clients</li>
+            <li>Add UI for mapping of Z21 turnout numbers to JMRI turnouts, routes etc.</li>
+            <li>Add help page</li>
         </ul>
 
     <h3>Test Infrastructure</h3>
@@ -654,6 +663,8 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Added a <code>jmri.util.swing.OvertypeTextArea</code> class
+                for data entry with overwrite mode, controlled by the insert key.
+                (Mac keyboards don't support an insert key, so this is not available on them.)</li>
         </ul>
 
