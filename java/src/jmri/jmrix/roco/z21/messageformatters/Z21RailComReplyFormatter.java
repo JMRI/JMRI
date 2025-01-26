@@ -1,5 +1,6 @@
 package jmri.jmrix.roco.z21.messageformatters;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.DccLocoAddress;
 import jmri.jmrix.Message;
 import jmri.jmrix.roco.z21.Z21MessageFormatter;
@@ -17,6 +18,7 @@ public class Z21RailComReplyFormatter implements Z21MessageFormatter {
         return m instanceof Z21Reply && ((Z21Reply) m).getOpCode() == 0x0088;
     }
 
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST", justification = "cast is checked in handlesMessage")
     @Override
     public String formatMessage(Message m) {
         if (!handlesMessage(m)) {
