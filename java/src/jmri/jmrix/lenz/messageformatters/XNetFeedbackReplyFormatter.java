@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz.messageformatters;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrix.Message;
 import jmri.jmrix.lenz.FeedbackItem;
 import jmri.jmrix.lenz.XNetConstants;
@@ -30,6 +31,7 @@ public class XNetFeedbackReplyFormatter implements XPressNetMessageFormatter {
         return m instanceof XNetReply && m.getElement(0) == XNetConstants.ACC_INFO_RESPONSE;
     }
 
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST", justification = "cast is checked in handlesMessage")
     @Override
     public String formatMessage(Message m) {
         if (!handlesMessage(m)) {

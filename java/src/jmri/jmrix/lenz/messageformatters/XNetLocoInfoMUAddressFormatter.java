@@ -22,9 +22,8 @@ public class XNetLocoInfoMUAddressFormatter implements XPressNetMessageFormatter
         if (!handlesMessage(m)) {
             throw new IllegalArgumentException("Message is not supported");
         }
-        XNetReply r = (XNetReply) m;
         return Bundle.getMessage("XNetReplyLocoMUBaseLabel") + "," +
-            XNetLocoInfoReplyUtilities.parseSpeedAndDirection(r.getElement(1), r.getElement(2)) + " ";
+            XNetLocoInfoReplyUtilities.parseSpeedAndDirection(m.getElement(1), m.getElement(2)) + " ";
 
     }
 

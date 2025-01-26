@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz.messageformatters;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrix.Message;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetConstants;
@@ -23,6 +24,7 @@ public class XNetFunctionGroup1OperateRequestMessageFormatter implements XPressN
                 m.getElement(1) == XNetConstants.LOCO_SET_FUNC_GROUP1;
     }
 
+    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST", justification = "cast is checked in handlesMessage")
     @Override
     public String formatMessage(Message m) {
         if(!handlesMessage(m)) {

@@ -23,8 +23,7 @@ public class XNetDHandMUErrorMessageFormatter implements XPressNetMessageFormatt
         if (!handlesMessage(m)) {
             throw new IllegalArgumentException("Message is not supported");
         }
-        XNetReply r = (XNetReply) m;
-        switch (r.getElement(1)) {
+        switch (m.getElement(1)) {
             case 0x81:
                 return Bundle.getMessage("XNetReplyDHErrorNotOperated");
             case 0x82:
@@ -42,7 +41,7 @@ public class XNetDHandMUErrorMessageFormatter implements XPressNetMessageFormatt
             case 0x88:
                 return Bundle.getMessage("XNetReplyDHErrorStackFull");
             default:
-                return Bundle.getMessage("XNetReplyDHErrorOther", (r.getElement(1) - 0x80));
+                return Bundle.getMessage("XNetReplyDHErrorOther", (m.getElement(1) - 0x80));
         }
     }
 

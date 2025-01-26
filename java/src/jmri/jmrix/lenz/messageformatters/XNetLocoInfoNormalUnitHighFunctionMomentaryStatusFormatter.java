@@ -23,9 +23,8 @@ public class XNetLocoInfoNormalUnitHighFunctionMomentaryStatusFormatter implemen
         if(!handlesMessage(m)) {
             return Bundle.getMessage("XNetReplyLocoStatus13Label");
         }
-        XNetReply reply = (XNetReply) m;
         return Bundle.getMessage("XNetReplyLocoStatus13Label") + " " +
-               parseFunctionHighMomentaryStatus(reply.getElement(2), reply.getElement(3));
+               parseFunctionHighMomentaryStatus(m.getElement(2), m.getElement(3));
     }
 
 

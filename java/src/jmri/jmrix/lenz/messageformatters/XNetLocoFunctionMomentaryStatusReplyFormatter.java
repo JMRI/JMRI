@@ -27,11 +27,10 @@ public class XNetLocoFunctionMomentaryStatusReplyFormatter implements XPressNetM
         if(!handlesMessage(m)) { 
             throw new IllegalArgumentException("Message is not supported");
         }
-        XNetReply r = (XNetReply) m;
         return Bundle.getMessage("XNetReplyLocoLabel") + " " + 
                Bundle.getMessage(RS_TYPE) + " " + // "Locomotive", key in NBBundle, shared with Operations
                Bundle.getMessage("XNetReplyFStatusLabel") + " " +
-               parseFunctionMomentaryStatus(r.getElement(2), r.getElement(3));
+               parseFunctionMomentaryStatus(m.getElement(2), m.getElement(3));
     }
 
     /**

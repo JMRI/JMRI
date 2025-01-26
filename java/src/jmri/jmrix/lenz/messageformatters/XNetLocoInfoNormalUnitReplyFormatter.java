@@ -24,13 +24,12 @@ public class XNetLocoInfoNormalUnitReplyFormatter implements XPressNetMessageFor
         if(!handlesMessage(m)){
             throw new IllegalArgumentException("Message is not supported");
         }
-        XNetReply r = (XNetReply) m;
         // message byte 4, contains F0,F1,F2,F3,F4
-        int element3 = r.getElement(3);
+        int element3 = m.getElement(3);
         // message byte 5, contains F12,F11,F10,F9,F8,F7,F6,F5
-        int element4 = r.getElement(4);
+        int element4 = m.getElement(4);
         return Bundle.getMessage("XNetReplyLocoNormalLabel") + ","+
-                XNetLocoInfoReplyUtilities.parseSpeedAndDirection(r.getElement(1), r.getElement(2)) + " " +
+                XNetLocoInfoReplyUtilities.parseSpeedAndDirection(m.getElement(1), m.getElement(2)) + " " +
                 XNetLocoInfoReplyUtilities.parseFunctionStatus(element3, element4);
     }
 

@@ -22,8 +22,7 @@ public class XNetLIReplyFormatter implements XPressNetMessageFormatter {
         if(!handlesMessage(m)) {
             throw new IllegalArgumentException("Message is not supported");
         }
-        XNetReply r = (XNetReply) m;
-        switch(r.getElement(1)) {
+        switch(m.getElement(1)) {
             case XNetConstants.LI_MESSAGE_RESPONSE_PC_DATA_ERROR:
                 return Bundle.getMessage("XNetReplyErrorPCtoLI");
             case XNetConstants.LI_MESSAGE_RESPONSE_CS_DATA_ERROR:
@@ -45,7 +44,7 @@ public class XNetLIReplyFormatter implements XPressNetMessageFormatter {
             case XNetConstants.LIUSB_RETRANSMIT_REQUEST:
                 return Bundle.getMessage("XNetReplyRetransmitRequest");
             default:
-                return r.toString();
+                return m.toString();
         }
     }
 

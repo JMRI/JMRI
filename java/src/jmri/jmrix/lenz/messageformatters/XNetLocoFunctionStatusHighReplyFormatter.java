@@ -26,11 +26,10 @@ public class XNetLocoFunctionStatusHighReplyFormatter implements XPressNetMessag
         if(!handlesMessage(m)) {
             throw new IllegalArgumentException("Message is not supported");
         }
-        XNetReply r = (XNetReply) m;
         return Bundle.getMessage("XNetReplyLocoLabel") + " " +
                 Bundle.getMessage(RS_TYPE) + " " +
                Bundle.getMessage("XNetReplyF13StatusLabel") + " "+
-               XNetLocoInfoReplyUtilities.parseFunctionHighStatus(r.getElement(2), r.getElement(3));
+               XNetLocoInfoReplyUtilities.parseFunctionHighStatus(m.getElement(2), m.getElement(3));
     }
 
 }

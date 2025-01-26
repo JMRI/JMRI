@@ -24,8 +24,7 @@ public class XNetLI101AddressReplyFormatter implements XPressNetMessageFormatter
         if(!handlesMessage(m)) {
             throw new IllegalArgumentException("Message is not supported");
         }
-        XNetReply r = (XNetReply) m;
-        return Bundle.getMessage("XNetReplyLIAddress", r.getElement(2));
+        return Bundle.getMessage("XNetReplyLIAddress", m.getElement(2));
     }
 
 }

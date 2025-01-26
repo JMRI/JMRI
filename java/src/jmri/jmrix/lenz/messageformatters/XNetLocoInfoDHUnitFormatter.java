@@ -23,12 +23,11 @@ public class XNetLocoInfoDHUnitFormatter implements XPressNetMessageFormatter {
         if(!handlesMessage(m)) {
             throw new IllegalArgumentException("Message is not supported");
         }
-        XNetReply r = (XNetReply) m;
         return Bundle.getMessage("XNetReplyLocoDHLabel") + "," +
-               XNetLocoInfoReplyUtilities.parseSpeedAndDirection(r.getElement(1), r.getElement(2)) + " " +
-               XNetLocoInfoReplyUtilities.parseFunctionStatus(r.getElement(3), r.getElement(4)) +
+               XNetLocoInfoReplyUtilities.parseSpeedAndDirection(m.getElement(1), m.getElement(2)) + " " +
+               XNetLocoInfoReplyUtilities.parseFunctionStatus(m.getElement(3), m.getElement(4)) +
                " " + Bundle.getMessage("XNetReplyLoco2DHLabel") + " " +
-               LenzCommandStation.calcLocoAddress(r.getElement(5), r.getElement(6));
+               LenzCommandStation.calcLocoAddress(m.getElement(5), m.getElement(6));
 
     }
 }
