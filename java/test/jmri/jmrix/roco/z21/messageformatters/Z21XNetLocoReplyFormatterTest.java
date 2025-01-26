@@ -2,8 +2,8 @@ package jmri.jmrix.roco.z21.messageformatters;
 
 import jmri.jmrix.Message;
 import jmri.jmrix.roco.z21.Z21XNetReply;
-import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the jmri.jmrix.roco.z21.messageformatters.Z21XNetLocoReplyFormatter class
