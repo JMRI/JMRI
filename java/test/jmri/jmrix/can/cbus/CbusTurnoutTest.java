@@ -62,7 +62,7 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
     }
     
     @Test
-    public void testRequestUpdateSensors() throws Exception {
+    public void testRequestUpdateSensors() {
         
         CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tcis);
@@ -90,7 +90,7 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
     }    
 
     @Test
-    public void testNullEvent() throws Exception {
+    public void testNullEvent() {
         Exception ex = Assertions.assertThrows(NullPointerException.class, () -> { t = new CbusTurnout("MT",null,tcis); });
         
         // On Java 11 and below, the message is null.
