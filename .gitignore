@@ -57,6 +57,7 @@ nohup.out
 /web/app/nbproject/private
 /scripts/config-portable/nbproject/private
 /.idea/workspace.xml
+/.idea/modules.xml
 local.properties
 /test
 /test/jmri.conf
