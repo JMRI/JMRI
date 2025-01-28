@@ -12,16 +12,17 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrit.operations.trains.Train;
 
 /**
- * Action to print the cars in the train.
+ * Action to print the cars in the train for every location in the train's
+ * route.
  * <p>
  * This uses the older style printing, for compatibility with Java 1.1.8 in
  * Macintosh MRJ
  *
  * @author Daniel Boudreau Copyright (C) 2025
  */
-public class PrintShowCarsInTrainAction extends AbstractAction implements PropertyChangeListener {
+public class PrintShowCarsInTrainRouteAction extends AbstractAction implements PropertyChangeListener {
 
-    public PrintShowCarsInTrainAction(Train train, boolean isPreview) {
+    public PrintShowCarsInTrainRouteAction(Train train, boolean isPreview) {
         super(isPreview ? Bundle.getMessage("MenuItemCarsInTrainPreview")
                 : Bundle.getMessage("MenuItemCarsInTrainPrint"));
         _isPreview = isPreview;
@@ -34,7 +35,7 @@ public class PrintShowCarsInTrainAction extends AbstractAction implements Proper
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        new PrintShowCarsInTrain().printCarsInTrain(_train, _isPreview);
+        new PrintShowCarsInTrain().printCarsInTrainRoute(_train, _isPreview);
     }
 
     @Override
@@ -46,5 +47,5 @@ public class PrintShowCarsInTrainAction extends AbstractAction implements Proper
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintShowCarsInTrainAction.class);
+    private final static Logger log = LoggerFactory.getLogger(PrintShowCarsInTrainRouteAction.class);
 }
