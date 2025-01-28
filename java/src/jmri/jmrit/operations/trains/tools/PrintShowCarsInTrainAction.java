@@ -21,7 +21,7 @@ import jmri.jmrit.operations.trains.Train;
  */
 public class PrintShowCarsInTrainAction extends AbstractAction implements PropertyChangeListener {
 
-    public PrintShowCarsInTrainAction(Train train, boolean isPreview) {
+    public PrintShowCarsInTrainAction(boolean isPreview, Train train) {
         super(isPreview ? Bundle.getMessage("MenuItemCarsInTrainPreview")
                 : Bundle.getMessage("MenuItemCarsInTrainPrint"));
         _isPreview = isPreview;

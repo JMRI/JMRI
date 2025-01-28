@@ -15,7 +15,7 @@ public class PrintShowCarsInTrainRouteActionTest extends OperationsTestCase {
     @Test
     public void testCTor() {
         Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
-        PrintShowCarsInTrainRouteAction t = new PrintShowCarsInTrainRouteAction(train1, true);
+        PrintShowCarsInTrainRouteAction t = new PrintShowCarsInTrainRouteAction(true, train1);
         Assert.assertNotNull("exists", t);
     }
 }

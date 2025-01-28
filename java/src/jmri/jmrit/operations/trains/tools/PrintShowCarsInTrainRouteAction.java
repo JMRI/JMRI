@@ -22,12 +22,15 @@ import jmri.jmrit.operations.trains.Train;
  */
 public class PrintShowCarsInTrainRouteAction extends AbstractAction implements PropertyChangeListener {
 
-    public PrintShowCarsInTrainRouteAction(Train train, boolean isPreview) {
+    public PrintShowCarsInTrainRouteAction(boolean isPreview, Train train) {
         super(isPreview ? Bundle.getMessage("MenuItemCarsInTrainPreview")
                 : Bundle.getMessage("MenuItemCarsInTrainPrint"));
         _isPreview = isPreview;
         _train = train;
-        train.addPropertyChangeListener(this);
+        if (train != null) {
+            setEnabled(train.isBuilt());
+            train.addPropertyChangeListener(this);
+        }
     }
 
     boolean _isPreview;

@@ -123,8 +123,8 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
         JMenuBar menuBar = new JMenuBar();
         if (train != null) {
             JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
-            toolMenu.add(new PrintShowCarsInTrainAction(train, false));
-            toolMenu.add(new PrintShowCarsInTrainAction(train, true));
+            toolMenu.add(new PrintShowCarsInTrainAction(false, train));
+            toolMenu.add(new PrintShowCarsInTrainAction(true, train));
             menuBar.add(toolMenu);
         }
         setJMenuBar(menuBar);
