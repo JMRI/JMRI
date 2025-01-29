@@ -456,8 +456,17 @@
                     });
                 }
             };
+            // React to live updates on railroad name via socket
             jmri.getRailroad = function (name) {
-                jmri.socket.send("railroad", { name: name });
+                jmri.socket.send("railroad", { name: name } );
+            };
+            // Change Railroad name
+            jmri.setRailroad = function (name) {
+                if (jmri.socket) {
+                    jmri.socket.send("railroad", { name: name }, 'post');
+                } else {
+                    jmri.warn("Tried to send change railroad name message but socket is unavailable and no fallback implemented");
+                }
             };
             jmri.getReporter = function (name) {
                 if (jmri.socket) {

@@ -48,7 +48,7 @@
                     railroad: function(state) {
                         console.log(state);
                         railroadName = state;
-                        $('#railroadName').text(railroadName);
+                        $('#railroadName').val(railroadName);
                     }
                 });
                 // trigger the initial connection to the JMRI server; this
@@ -57,6 +57,11 @@
                 // items on the JMRI server even if a WebSocket connection
                 // cannot be established
                 jmri.connect();
+                $("input[name=changeRailroadNameButton]" ).on( "click", function() {
+                  newName = $('#railroadName').val();
+                  console.log("Firing outgoing message for railroad name change to '" + newName + "'");
+                  jmri.setRailroad(newName);
+                } );
             });
         </script>
 
@@ -67,6 +72,10 @@
         <p>This sample page loads the railroad name from the socket server and listens if the railroad name is changed through JMRI's menu</p>
         <p>It also provides a button to change the railroad name. You can change it here and check in JMRI to see it really changed.</p>
         <p>Railroad name below will update in browser if changed in the application window</p>
-        <p id="railroadName"></p>
+        <p><form name="changeRailroadNameForm" action="" method="get">
+          <input id="railroadName" type="text" name="railroadName" value="">
+          <input type="button" name="changeRailroadNameButton" value="Change Name">
+        </form>
+        </p>
     </body>
 </html>
