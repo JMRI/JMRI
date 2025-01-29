@@ -154,6 +154,9 @@ public class JsonUtilHttpService extends JsonHttpService {
             case JSON.RAILROAD:
                 InstanceManager.getDefault(WebServerPreferences.class).setRailroadName(name);
                 break;
+            default:
+                log.debug("Received unexpected POST command: '{}'", type);
+                break;
         }
         // Implicitly answer all doPost the way an equivalent doGet would be answered.
         return this.doGet(type, name, data, request);
