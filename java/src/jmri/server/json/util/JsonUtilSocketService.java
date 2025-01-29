@@ -12,6 +12,8 @@ import jmri.server.json.JsonException;
 import jmri.server.json.JsonRequest;
 import jmri.server.json.JsonSocketService;
 import jmri.web.server.WebServerPreferences;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -20,6 +22,7 @@ import jmri.web.server.WebServerPreferences;
 public class JsonUtilSocketService extends JsonSocketService<JsonUtilHttpService> {
 
     private PropertyChangeListener rrNameListener;
+    private static final Logger log = LoggerFactory.getLogger(JsonUtilSocketService.class);
 
     public JsonUtilSocketService(JsonConnection connection) {
         super(connection, new JsonUtilHttpService(connection.getObjectMapper()));
@@ -50,6 +53,11 @@ public class JsonUtilSocketService extends JsonSocketService<JsonUtilHttpService
                 this.connection.sendMessage(this.connection.getObjectMapper().createObjectNode().put(JSON.TYPE, JSON.GOODBYE), request.id);
                 break;
             case JSON.RAILROAD:
+                // Follow up handling a POST (change railroad name command) with the same answer as a GET (ask)
+                if (request.method.equals(JSON.POST)) {
+                    log.debug("Processing change railroad name to {} from socket service", name);
+                    this.connection.sendMessage(this.service.doPost(type, name, data, request), request.id);
+                }
                 this.connection.sendMessage(this.service.doGet(type, name, data, request), request.id);
                 this.rrNameListener = (PropertyChangeEvent evt) -> {
                     try {
