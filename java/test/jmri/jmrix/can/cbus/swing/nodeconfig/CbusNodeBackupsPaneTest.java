@@ -1,9 +1,8 @@
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.io.File;
+
+import javax.swing.JFrame;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusConfigurationManager;
@@ -11,13 +10,14 @@ import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.io.TempDir;
 import org.netbeans.jemmy.operators.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Test simple functioning of CbusNodeBackupsPane
@@ -25,21 +25,20 @@ import org.netbeans.jemmy.operators.*;
  * @author Paul Bender Copyright (C) 2016
  * @author Steve Young Copyright (C) 2019
  */
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class CbusNodeBackupsPaneTest {
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testCtor() {
 
         t = new CbusNodeBackupsPane(null);
 
-        assertThat(t).isNotNull();
-        assertThat(nodeToEdit).isNotNull();
+        assertNotNull(t);
+        assertNotNull(nodeToEdit);
 
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testTableData() {
 
         Assertions.assertNotNull(nodeToEdit);
@@ -51,26 +50,28 @@ public class CbusNodeBackupsPaneTest {
         t.setNode(nodeToEdit);
 
         // check pane has loaded something
-        JmriJFrame f = new JmriJFrame();
+        JFrame f = new JFrame("CBUS Node Backups Pane");
         f.add(t);
-        f.setTitle("CBUS Node Backups Pane");
-        f.pack();
-        f.setVisible(true);
+        jmri.util.ThreadingUtil.runOnGUI( () -> {
+            f.pack();
+            f.setVisible(true);
+        });
 
-        JFrameOperator frame = new JFrameOperator(f);
+        JFrameOperator jfo = new JFrameOperator(f);
 
         JTableOperator tbl = new JTableOperator(new JFrameOperator(f), 0);
 
         assertEquals(0, nodeToEdit.getNodeBackupManager().getBackups().size(),"0 entry in node xml");
 
-        assertThat(tbl.getRowCount()).withFailMessage("No Rows at Startup").isEqualTo(0);
-        assertThat(tbl.getColumnCount()).withFailMessage("column count").isEqualTo(5);
+        assertEquals( 0, tbl.getRowCount(), "No Rows at Startup");
+        assertEquals( 5, tbl.getColumnCount(), "column count");
 
-        JemmyUtil.pressButton(frame,("Create New Backup"));
+        JemmyUtil.pressButton(jfo,("Create New Backup"));
 
         assertEquals(1, nodeToEdit.getNodeBackupManager().getBackups().size(),"1 entry in node xml");
 
-        f.dispose();
+        JUnitUtil.dispose(jfo.getWindow());
+        jfo.waitClosed();
         t.dispose();
         // JemmyUtil.pressButton(frame,("Pause Test"));
 
@@ -101,11 +102,11 @@ public class CbusNodeBackupsPaneTest {
 
     @AfterEach
     public void tearDown() {
-        Assertions.assertNotNull(nodeModel);
+        assertNotNull(nodeModel);
         nodeModel.dispose();
-        Assertions.assertNotNull(nodeToEdit);
+        assertNotNull(nodeToEdit);
         nodeToEdit.dispose();
-        Assertions.assertNotNull(memo);
+        assertNotNull(memo);
         memo.dispose();
         memo = null;
 
