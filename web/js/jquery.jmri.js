@@ -1021,6 +1021,9 @@
                 power: function (e) {
                     jmri.power(e.data.state);
                 },
+                railroad: function (e) {
+                    jmri.railroad(e.data.name);
+                },
                 reporter: function (e) {
                     jmri.reporter(e.data.name, e.data.value, e.data);
                 },
@@ -1147,7 +1150,7 @@
                                 } else if (!o.type) {
                                     log.error("ERROR: missing type property in " + o);
                                 } else if (!h) {
-                                    jmri.log("Ignoring JSON type '" + o.type + "'");
+                                    jmri.log("Ignoring unhandled JSON type '" + o.type + "'");
                                 }
                             })
                         } else {
@@ -1158,7 +1161,7 @@
                             } else if (!m.type) {
                                 log.error("ERROR: missing type property in " + m);
                             } else if (!h) {
-                                jmri.log("Ignoring JSON type '" + m.type + "'");
+                                jmri.log("Ignoring unhandled JSON type '" + m.type + "'");
                             }
                         }
                     }

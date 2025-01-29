@@ -40,10 +40,13 @@
                     // on the JMRI server.
                     open: function() {
                         jmri.getRailroad();
+                        // Keep this for learner's visibility - this is not production code
+                        console.log("getRailroad fired");
                     },
                     // when the JMRI object receives an update to the railroad name, call this
                     // function, regardless of source of update
                     railroad: function(state) {
+                        console.log(state);
                         railroadName = state;
                         $('#railroadName').text(railroadName);
                     }
@@ -54,8 +57,6 @@
                 // items on the JMRI server even if a WebSocket connection
                 // cannot be established
                 jmri.connect();
-                // make it possible to click on the power button to turn track
-                // power on or off without using a javascript URI
             });
         </script>
 
