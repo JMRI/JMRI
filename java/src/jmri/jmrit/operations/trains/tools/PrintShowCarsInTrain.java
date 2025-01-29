@@ -96,7 +96,6 @@ public class PrintShowCarsInTrain {
      * @param isPreview if true preview, otherwise print
      */
     public void printCarsInTrainRoute(Train train, boolean isPreview) {
-        loadCarsInTrain(train);
         if (train.isBuilt()) {
             // obtain a HardcopyWriter to do this
             try (HardcopyWriter writer =
@@ -113,6 +112,7 @@ public class PrintShowCarsInTrain {
     }
 
     public void printCarsRoute(HardcopyWriter writer, Train train) throws IOException {
+        loadCarsInTrain(train);
         // start printing at the train's current location
         boolean foundTrainLoc = false;
         for (RouteLocation rl : train.getRoute().getLocationsBySequenceList()) {
