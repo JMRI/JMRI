@@ -9,6 +9,5 @@
       "description": "Railroad name the client wants to update on the server"
     }
   },
-  "additionalProperties": false,
-  "required": []
+  "additionalProperties": false
 }
