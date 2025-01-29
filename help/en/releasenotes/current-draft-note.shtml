@@ -500,6 +500,8 @@
             <li>Improved "Train logger" to include the number of cars in train, 
                 the number of pick ups and set outs, train length and weight.</li>
             <li>New feature, import routes.</li>
+            <li>New feature, print "Cars In Train" AKA train blocking order</li>
+            <li>New print option, show locomotive set outs at end of Manifest or switch list.</li>
         </ul>
 
    <h3>Panel Editor</h3>
