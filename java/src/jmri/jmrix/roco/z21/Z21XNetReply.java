@@ -1,6 +1,16 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.jmrix.lenz.XNetReply;
+import jmri.jmrix.lenz.XPressNetMessageFormatter;
+import org.reflections.Reflections;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Represents a single response from the XpressNet, with extensions
@@ -53,68 +63,34 @@ public class Z21XNetReply extends XNetReply {
                  super.isFeedbackMessage());
     }
 
+
+    private static final List<XPressNetMessageFormatter> formatterList = new ArrayList<>();
     /**
      * @return a string representation of the reply suitable for display in the
      * XpressNet monitor.
      */
     @Override
     public String toMonitorString(){
-        String text;
-
-        if (getElement(0) == Z21Constants.LAN_X_CV_RESULT_XHEADER ) {
-            if (getElement(1) == Z21Constants.LAN_X_CV_RESULT_DB0 ) {
-                int value = getElement(4) & 0xFF;
-                int cv = ( (getElement(2)&0xFF) << 8) + 
-                          ( getElement(3)& 0xFF ) + 1;
-                text = Bundle.getMessage("Z21LAN_X_CV_RESULT",cv,value);
-            } else {
-                text = super.toMonitorString();
+        if(formatterList.isEmpty()) {
+            try {
+                Reflections reflections = new Reflections("jmri.jmrix");
+                Set<Class<? extends XPressNetMessageFormatter>> f = reflections.getSubTypesOf(XPressNetMessageFormatter.class);
+                for (Class<?> c : f) {
+                    log.debug("Found formatter: {}", f.getClass().getName());
+                    Constructor<?> ctor = c.getConstructor();
+                    formatterList.add((XPressNetMessageFormatter) ctor.newInstance());
+                }
+            } catch (NoSuchMethodException | SecurityException | InstantiationException |
+                     IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                log.error("Error instantiating formatter", e);
             }
-        } else if((getElement(0)&0xE0)==0xE0 && ((getElement(0)&0x0f) >= 7 && (getElement(0)&0x0f) <=15 )) {
-            //This is a Roco specific throttle information message.
-            //Data Byte 0 and 1 contain the locomotive address
-            int messageaddress = ((getElement(1) & 0x3F) << 8) + (getElement(2) & 0xff);
-            text = "Z21 Mobile decoder info reply for address " + messageaddress + ":";
-            //The message is for this throttle.
-            int b2 = getElement(3) & 0xff;
-            int b3 = getElement(4) & 0xff;
-            int b4 = getElement(5) & 0xff;
-            int b5 = getElement(6) & 0xff;
-            int b6 = getElement(7) & 0xff;
-            int b7 = getElement(8) & 0xff;
-            // byte 2 contains the speed step mode and availability
-            // information.
-            // byte 3 contains the direction and the speed information
-            text += " " + parseSpeedAndDirection(b2, b3);
-            // byte 4 contains flags for whether or not the locomotive
-            // is in a double header and for smart search.  These aren't used
-            // here.
-
-            // byte 4 and 5 contain function information for F0-F12
-            text += " " + parseFunctionStatus(b4, b5);
-            // byte 6 and 7 contain function information for F13-F28
-            text += " " + parseFunctionHighStatus(b6, b7);
-        } else if(getElement(0) == Z21Constants.LAN_X_TURNOUT_INFO) {
-             int address = (getElement(1) << 8 ) + getElement(2) +1;
-             String state = "";
-             switch(getElement(3)) {
-                 case 0x03:
-                     state += "inconsistent";
-                     break;
-                 case 0x02:
-                     state += "Thrown";
-                     break;
-                 case 0x01:
-                     state += "Closed";
-                     break;
-                 default:
-                     state += "Unknown";
-             }
-             text = Bundle.getMessage("Z21LAN_X_TURNOUT_INFO",address, state);
-        } else {
-            text = super.toMonitorString();
         }
-        return text;
+
+        return formatterList.stream()
+                .filter(f -> f.handlesMessage(this))
+                .findFirst().map(f -> f.formatMessage(this))
+                .orElse(this.toString());
     }
 
+    private static final Logger log = LoggerFactory.getLogger(Z21XNetReply.class);
 }

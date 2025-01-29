@@ -97,7 +97,7 @@ public class Z21MessageTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void toMonitorStringLanLogoffRequest() {
         msg = Z21Message.getLanLogoffRequestMessage();
-        Assert.assertEquals("Monitor String", "04 00 30 00", msg.toMonitorString());
+        Assert.assertEquals("Monitor String", "Z21 Lan Logoff Request", msg.toMonitorString());
     }
 
     @Test
@@ -166,7 +166,7 @@ public class Z21MessageTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testToMonitorStringSystemStateDataChangedRequest() {
         msg = Z21Message.getLanSystemStateDataChangedRequestMessage();
-        Assert.assertEquals("Monitor String", "04 00 85 00", msg.toMonitorString());
+        Assert.assertEquals("Monitor String", "Z21 Request System State Change Data", msg.toMonitorString());
     }
 
     @Test
@@ -183,7 +183,7 @@ public class Z21MessageTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("1st byte", 0x0E, x.getElement(1) & 0xFF);
         Assert.assertEquals("2nd byte", 0x03, x.getElement(2) & 0xFF);
         Assert.assertEquals("4nd byte", 0x03, x.getElement(4) & 0xFF);
-        Assert.assertEquals("two messaes the same", l, x);
+        Assert.assertEquals("two messages the same", l, x);
     }
 
     @Test
