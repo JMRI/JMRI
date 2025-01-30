@@ -271,7 +271,7 @@
 					</enumChoice>
 					<enumChoice value="1">
 						<choice>Permanent Off</choice>
-						<choice xml:lang="de">Permanent An</choice>
+						<choice xml:lang="de">Permanent Aus</choice>
 					</enumChoice>
 					<enumChoice value="2">
 						<choice>Permanent On</choice>
@@ -329,7 +329,7 @@
 					</enumChoice>
 					<enumChoice value="1">
 						<choice>Permanent Off</choice>
-						<choice xml:lang="de">Permanent An</choice>
+						<choice xml:lang="de">Permanent Aus</choice>
 					</enumChoice>
 					<enumChoice value="2">
 						<choice>Permanent On</choice>
