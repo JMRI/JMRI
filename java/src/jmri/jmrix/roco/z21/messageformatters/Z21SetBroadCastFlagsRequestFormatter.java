@@ -1,6 +1,7 @@
 package jmri.jmrix.roco.z21.messageformatters;
 
 import jmri.jmrix.Message;
+import jmri.jmrix.roco.z21.RocoZ21CommandStation;
 import jmri.jmrix.roco.z21.Z21Message;
 import jmri.jmrix.roco.z21.Z21MessageFormatter;
 import jmri.jmrix.roco.z21.Z21MessageUtils;
@@ -21,7 +22,8 @@ public class Z21SetBroadCastFlagsRequestFormatter implements Z21MessageFormatter
         if (!handlesMessage(m)) {
             return Bundle.getMessage("Z21MessageTypeMismatch", "Set BroadCast Flags");
         }
-        return Bundle.getMessage("Z21MessageSetBroadcastFlags", Z21MessageUtils.interpretBroadcastFlags((m)));
+        return Bundle.getMessage("Z21MessageSetBroadcastFlags",
+                RocoZ21CommandStation.getZ21BroadcastFlagsString(Z21MessageUtils.interpretBroadcastFlags((m))));
 
     }
 
