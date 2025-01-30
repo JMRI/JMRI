@@ -22,15 +22,14 @@ public class Z21FastClockDataReplyFormatter implements Z21MessageFormatter {
         if (!handlesMessage(m)) {
             throw new IllegalArgumentException("Message is not supported");
         }
-        Z21Reply r = (Z21Reply) m;
-        int day = ((r.getElement(6) & 0xE0) >>5);
-        int hour = ((r.getElement(6) & 0x1F));
-        int minute = r.getElement(7) & 0x3F;
-        int second = r.getElement(8) & 0x3F;
-        boolean stopped = (r.getElement(8) & 0x10000000) != 0;
-        boolean paused = (r.getElement(8) & 0x01000000) != 0;
-        int rate = r.getElement(9) & 0x3F;
-        int settings = r.getElement(10);
+        int day = ((m.getElement(6) & 0xE0) >>5);
+        int hour = ((m.getElement(6) & 0x1F));
+        int minute = m.getElement(7) & 0x3F;
+        int second = m.getElement(8) & 0x3F;
+        boolean stopped = (m.getElement(8) & 0x10000000) != 0;
+        boolean paused = (m.getElement(8) & 0x01000000) != 0;
+        int rate = m.getElement(9) & 0x3F;
+        int settings = m.getElement(10);
         return Bundle.getMessage("Z21ClockMessageString",day,hour,minute,second,rate,
                 stopped?Bundle.getMessage("ClockStopped"):"",
                 paused?Bundle.getMessage("ClockPaused"):"",
