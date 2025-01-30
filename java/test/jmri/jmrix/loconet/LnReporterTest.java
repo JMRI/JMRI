@@ -85,6 +85,14 @@ public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase
     }
 
     @Test
+    public void testLnRfidReporterLissy() {
+        LnReporter a4 = new LnReporter(4, tc, "L");
+        LocoNetMessage l = new LocoNetMessage(new int[]{0xE4, 0x0E, 0x41, 0x00, 0x04, 0x53, 0x17, 0x78, 0x31, 0x00, 0x00, 0x00, 0x02, 0x5A});
+        a4.messageFromManager(l);
+        Assert.assertEquals("Lissy message 3", "53977831000000 4", ((Reportable) a4.getLastReport()).toReportString());
+    }
+
+    @Test
     public void testMessageFromManagerFindReport() {
         Assert.assertEquals("MessageFromManagerFindReport- check initial state",
                 -1, r.getState());
