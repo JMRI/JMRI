@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CbusCreateBeanPaneTest  {
 
     @Test
-    public void testInitComponents() throws Exception{
+    public void testInitComponents() {
         // for now, just makes sure there isn't an exception.
         assertNotNull(new CbusCreateBeanPane(mainPane));
     }
