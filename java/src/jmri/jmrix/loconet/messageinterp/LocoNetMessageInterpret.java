@@ -3899,6 +3899,7 @@ public class LocoNetMessageInterpret {
                     if (max == 9) msgType = 5;
                     return Bundle.getMessage("LN_MSG_LISSY_RFIDX_REPORT", msgType, portAddress, tg.toString());
                 }
+                break;
             default:
                 break;
         }
