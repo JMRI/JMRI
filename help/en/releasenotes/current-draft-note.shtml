@@ -438,7 +438,16 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>When setting up a new train use detection Entire Train, unless overridden by custom defaults.</li>
+             <li>Always check allocation and switch settings before any signaling system.</li>
+             <li>Correctly identify and handle changing position of DoubleXOver switch to prevent switch
+                 changing under a train.</li>
+             <li>Identify conflicting routes when checking allocations thru DoubleXOvers with four blocks.
+                 DoubleXOvers with less than four blocks require no additional checks.</li>
+             <li>When stopping on previous block going unoccupied and speed profile ramping and minimum speed,
+                 use a 75% stopping length factor for the ramp.</li>
+             <li>When a train has been stopped with a missing signal mast attempt to restart use BlockAllocation.</li>
+             <li>When a missing signal mast has been found use BlockAllocation method to stop if next block not allocated.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
