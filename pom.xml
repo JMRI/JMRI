@@ -1792,6 +1792,11 @@
             <version>1.8.1</version>
         </dependency>
  		<!-- //BiDiB -->
+      <dependency>
+        <groupId>org.reflections</groupId>
+        <artifactId>reflections</artifactId>
+        <version>0.10.2</version>
+      </dependency>
     </dependencies>
 
     <repositories>

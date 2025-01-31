@@ -181,13 +181,13 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
    @Test
     public void testToMonitorStringServiceModeDirectResponse(){
         XNetReply r = new XNetReply("63 14 01 04 72");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyServiceModeDirectResponse",1,4),r.toMonitorString());
+        Assert.assertEquals("Monitor String","Service Mode: Direct Programming Mode Response: CV:1 Value:4",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringServiceModePagedResponse(){
         XNetReply r = new XNetReply("63 10 01 04 76");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyServiceModePagedResponse",1,4),r.toMonitorString());
+        Assert.assertEquals("Monitor String","Service Mode: Register or Paged Mode Response: CV:1 Value:4",r.toMonitorString());
     }
 
     // check is paged mode response
@@ -522,149 +522,42 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         // feedback message for turnout
         XNetReply r = new XNetReply("42 05 00 47");
         String targetString =
-             Bundle.getMessage("XNetReplyFeedbackLabel") + " " +
-             Bundle.getMessage("TurnoutWoFeedback")
-             + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
-             + " " + 21 + " "
-             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " " 
-             + Bundle.getMessage("XNetReplyNotOperated")+ "; " 
-             + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
-             + " " + 22 + " "
-             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " "
-             + Bundle.getMessage("XNetReplyNotOperated");
+             "Feedback Response: Turnout without Feedback Turnout: 21 State: Not Operated; Turnout: 22 State: Not Operated";
         Assert.assertEquals("Monitor String",targetString, r.toMonitorString());
         r = new XNetReply("42 05 05 42");
         targetString =
-             Bundle.getMessage("XNetReplyFeedbackLabel") + " " +
-             Bundle.getMessage("TurnoutWoFeedback")
-             + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
-             + " " + 21 + " "
-             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " " 
-             + Bundle.getMessage("XNetReplyThrownLeft")+ "; " 
-             + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
-             + " " + 22 + " "
-             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " "
-             + Bundle.getMessage("XNetReplyThrownLeft");
+             "Feedback Response: Turnout without Feedback Turnout: 21 State: Thrown Left; Turnout: 22 State: Thrown Left";
         Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
         r = new XNetReply("42 05 0A 4C");
         targetString =
-             Bundle.getMessage("XNetReplyFeedbackLabel") + " " +
-             Bundle.getMessage("TurnoutWoFeedback")
-             + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
-             + " " + 21 + " "
-             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " " 
-             + Bundle.getMessage("XNetReplyThrownRight")+ "; " 
-             + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
-             + " " + 22 + " "
-             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " "
-             + Bundle.getMessage("XNetReplyThrownRight");
+             "Feedback Response: Turnout without Feedback Turnout: 21 State: Thrown Right; Turnout: 22 State: Thrown Right";
         Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
         r = new XNetReply("42 05 0F 48");
         targetString =
-             Bundle.getMessage("XNetReplyFeedbackLabel") + " " +
-             Bundle.getMessage("TurnoutWoFeedback")
-             + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
-             + " " + 21 + " "
-             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " " 
-             + Bundle.getMessage("XNetReplyInvalid")+ "; " 
-             + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
-             + " " + 22 + " "
-             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " "
-             + Bundle.getMessage("XNetReplyInvalid");
+             "Feedback Response: Turnout without Feedback Turnout: 21 State: <invalid>; Turnout: 22 State: <invalid>";
         Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
         r = new XNetReply("42 05 20 67");
         targetString =
-             Bundle.getMessage("XNetReplyFeedbackLabel") + " " +
-             Bundle.getMessage("TurnoutWFeedback")
-             + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
-             + " " + 21 + " "
-             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " " 
-             + Bundle.getMessage("XNetReplyNotOperated")+ " "
-             + Bundle.getMessage("XNetReplyMotionComplete") + "; "
-             + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
-             + " " + 22 + " "
-             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " "
-             + Bundle.getMessage("XNetReplyNotOperated") + " "
-             + Bundle.getMessage("XNetReplyMotionComplete");
+              "Feedback Response: Turnout with Feedback Turnout: 21 State: Not Operated Motion Complete; Turnout: 22 State: Not Operated Motion Complete";
         Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
         r = new XNetReply("42 05 25 62");
-        targetString =
-             Bundle.getMessage("XNetReplyFeedbackLabel") + " " +
-             Bundle.getMessage("TurnoutWFeedback")
-             + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
-             + " " + 21 + " "
-             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " " 
-             + Bundle.getMessage("XNetReplyThrownLeft")+ " "
-             + Bundle.getMessage("XNetReplyMotionComplete") + "; "
-             + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
-             + " " + 22 + " "
-             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " "
-             + Bundle.getMessage("XNetReplyThrownLeft") + " "
-             + Bundle.getMessage("XNetReplyMotionComplete");
+        targetString = "Feedback Response: Turnout with Feedback Turnout: 21 State: Thrown Left Motion Complete; Turnout: 22 State: Thrown Left Motion Complete";
         Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
         r = new XNetReply("42 05 2A 6C");
         targetString =
-             Bundle.getMessage("XNetReplyFeedbackLabel") + " " +
-             Bundle.getMessage("TurnoutWFeedback")
-             + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
-             + " " + 21 + " "
-             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " " 
-             + Bundle.getMessage("XNetReplyThrownRight") + " "
-             + Bundle.getMessage("XNetReplyMotionComplete") + "; "
-             + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
-             + " " + 22 + " "
-             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " "
-             + Bundle.getMessage("XNetReplyThrownRight") + " "
-             + Bundle.getMessage("XNetReplyMotionComplete");
+              "Feedback Response: Turnout with Feedback Turnout: 21 State: Thrown Right Motion Complete; Turnout: 22 State: Thrown Right Motion Complete";
         Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
         r = new XNetReply("42 05 2F 68");
         targetString =
-             Bundle.getMessage("XNetReplyFeedbackLabel") + " " +
-             Bundle.getMessage("TurnoutWFeedback")
-             + " " + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
-             + " " + 21 + " "
-             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " " 
-             + Bundle.getMessage("XNetReplyInvalid")+ " "
-             + Bundle.getMessage("XNetReplyMotionComplete") + "; "
-             + Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))
-             + " " + 22 + " "
-             + Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState")) + " "
-             + Bundle.getMessage("XNetReplyInvalid") + " "
-             + Bundle.getMessage("XNetReplyMotionComplete");
+              "Feedback Response: Turnout with Feedback Turnout: 21 State: <invalid> Motion Complete; Turnout: 22 State: <invalid> Motion Complete";
         Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
         r = new XNetReply("42 05 48 0F");
         targetString =
-             Bundle.getMessage("XNetReplyFeedbackLabel") + " " +
-             Bundle.getMessage("XNetReplyFeedbackEncoder") + " " + 5 + " ";
-        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 1 ";
-        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
-        targetString += " " + Bundle.getMessage("PowerStateOff") + "; ";
-        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 2 ";
-        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
-        targetString += " " + Bundle.getMessage("PowerStateOff") + "; ";
-        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 3 ";
-        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
-        targetString += " " + Bundle.getMessage("PowerStateOff") + "; ";
-        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 4 "; 
-        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
-        targetString += " " + Bundle.getMessage("PowerStateOn") + "; ";
+              "Feedback Response: Feedback Encoder Base Address: 5 Contact: 1 State: Off; Contact: 2 State: Off; Contact: 3 State: Off; Contact: 4 State: On; ";
         Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
         r = new XNetReply("42 05 57 0F");
         targetString =
-             Bundle.getMessage("XNetReplyFeedbackLabel") + " " +
-             Bundle.getMessage("XNetReplyFeedbackEncoder") + " " + 5 + " ";
-        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 5 ";
-        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
-        targetString += " " + Bundle.getMessage("PowerStateOn") + "; ";
-        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 6 ";
-        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
-        targetString += " " + Bundle.getMessage("PowerStateOn") + "; ";
-        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 7 ";
-        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
-        targetString += " " + Bundle.getMessage("PowerStateOn") + "; ";
-        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 8 "; 
-        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
-        targetString += " " + Bundle.getMessage("PowerStateOff") + "; ";
+              "Feedback Response: Feedback Encoder Base Address: 5 Contact: 5 State: On; Contact: 6 State: On; Contact: 7 State: On; Contact: 8 State: Off; ";
         Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
     }
 
@@ -723,18 +616,10 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testToMonitorStringThrottleTakeoverMsg() {
         XNetReply r = new XNetReply("E3 40 00 04 57");
-        String targetString = 
-               Bundle.getMessage("XNetReplyLocoLabel") + " ";
-        targetString += Bundle.getMessage("rsType") + " ";
-        targetString += 4 + " ";
-        targetString += Bundle.getMessage("XNetReplyLocoOperated");
+        String targetString = "Locomotive Information Response: Locomotive 4 is being operated by another device.";
         Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
         r = new XNetReply("E3 40 C1 04 61");
-        targetString = 
-               Bundle.getMessage("XNetReplyLocoLabel") + " ";
-        targetString += Bundle.getMessage("rsType") + " ";
-        targetString += 260 + " ";
-        targetString += Bundle.getMessage("XNetReplyLocoOperated");
+        targetString = "Locomotive Information Response: Locomotive 260 is being operated by another device.";
         Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
     }
 
@@ -757,7 +642,7 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         r= new XNetReply("E4 00 04 00 00 E0");
         Assert.assertEquals("Monitor String","Locomotive Information Response: Normal Unit,Reverse,in 14 Speed Step Mode,Speed Step: 3. Address is Free for Operation. F0 Off; F1 Off; F2 Off; F3 Off; F4 Off; F5 Off; F6 Off; F7 Off; F8 Off; F9 Off; F10 Off; F11 Off; F12 Off; ",r.toMonitorString());
     }
- 
+
     @Test
     public void testToMonitorStringMULocoInfoResponse() {
         XNetReply r = new XNetReply("E5 14 C1 04 00 00 34");
@@ -857,7 +742,7 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         // Normal Locomotive Information reply
         XNetReply r = new XNetReply("E3 40 C1 04 61");
         Assert.assertTrue(r.isThrottleTakenOverMessage());
-        // Function reply 
+        // Function reply
         r = new XNetReply("E3 08 00 00 E6");
         Assert.assertFalse(r.isThrottleTakenOverMessage());
         // CV 1 in register mode.
@@ -901,7 +786,7 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testToMonitorStringOKMessage(){
         XNetReply r = new XNetReply("01 04 05");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyOkMessage"),r.toMonitorString());
+        Assert.assertEquals("Monitor String", "Command Successfully Sent/Normal Operations Resumed after timeout",r.toMonitorString());
     }
 
    // check is this an Timeslot Restored message
@@ -931,7 +816,7 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         r = new XNetReply("63 10 01 04 76");
         Assert.assertFalse(r.isTimeSlotRevoked());
     }
- 
+
     // check is this a CS Busy message
     @Test
     public void testIsCSBusyMessage() {
@@ -946,9 +831,9 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testToMonitorStringCSBusyMessage(){
         XNetReply r = new XNetReply("61 81 e0");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyCSBusy"),r.toMonitorString());
+        Assert.assertEquals("Monitor String", "Command Station Busy",r.toMonitorString());
     }
-   
+
     // check is this a CS transfer error message
     @Test
     public void testIsCSTransferError() {
@@ -963,7 +848,7 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testToMonitorStringCSTransferError(){
         XNetReply r = new XNetReply("61 80 e1");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyCSTransferError"),r.toMonitorString());
+        Assert.assertEquals("Monitor String", "Command Station Reported Transfer Error",r.toMonitorString());
     }
 
 
@@ -1002,55 +887,55 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testToMonitorStringErrorPCtoLI(){
         XNetReply r = new XNetReply("01 01 00");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyErrorPCtoLI"),r.toMonitorString());
+        Assert.assertEquals("Monitor String", "Error occurred between the interface and the PC",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringErrorLItoCS(){
         XNetReply r = new XNetReply("01 02 03");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyErrorLItoCS"),r.toMonitorString());
+        Assert.assertEquals("Monitor String", "Error occurred between the interface and the command station.",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringErrorUnknown(){
         XNetReply r = new XNetReply("01 03 02");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyErrorUnknown"),r.toMonitorString());
+        Assert.assertEquals("Monitor String", "Unknown Communication Error",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringErrorNoTimeslot(){
         XNetReply r = new XNetReply("01 05 04");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyErrorNoTimeSlot"),r.toMonitorString());
+        Assert.assertEquals("Monitor String", "The Command Station is no longer providing the LI a timeslot for communication",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringErrorBufferOverflow(){
         XNetReply r = new XNetReply("01 06 07");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyErrorBufferOverflow"),r.toMonitorString());
+        Assert.assertEquals("Monitor String", "Buffer overflow in the LI",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringTimeSlotRestored(){
         XNetReply r = new XNetReply("01 07 06");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyTimeSlotRestored"),r.toMonitorString());
+        Assert.assertEquals("Monitor String", "Timeslot Restored",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringDataSentNoTimeslot(){
         XNetReply r = new XNetReply("01 08 09");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyRequestSentWhileNoTimeslot"),r.toMonitorString());
+        Assert.assertEquals("Monitor String", "Request Sent while the CS is not providing a Timeslot",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringErrorBadData(){
         XNetReply r = new XNetReply("01 09 08");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyBadDataInRequest"),r.toMonitorString());
+        Assert.assertEquals("Monitor String", "Bad Data in Request sent to CS",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringRetransmissionRequested(){
         XNetReply r = new XNetReply("01 0A 0B");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyRetransmitRequest"),r.toMonitorString());
+        Assert.assertEquals("Monitor String", "Retransmission Requested",r.toMonitorString());
     }
 
     // check is this a Timeslot message  message
@@ -1104,184 +989,177 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testToMonitorStringBCEmergencyOff(){
         XNetReply r = new XNetReply("61 00 61");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyBCEverythingOff"),r.toMonitorString());
+        Assert.assertEquals("Monitor String","Broadcast: Emergency Off (short circuit)",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringBCNormalOpers(){
         XNetReply r = new XNetReply("61 01 60");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyBCNormalOpsResumed"),r.toMonitorString());
+        Assert.assertEquals("Monitor String","Broadcast: Normal Operations Resumed",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringBCServiceModeEntry(){
         XNetReply r = new XNetReply("61 02 63");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyBCServiceEntry"),r.toMonitorString());
+        Assert.assertEquals("Monitor String", "Broadcast: Service Mode Entry",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringServiceModeCSReady(){
         XNetReply r = new XNetReply("61 11 70");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyServiceModeCSReady"),r.toMonitorString());
+        Assert.assertEquals("Monitor String","Service Mode: Command Station Ready",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringServiceModeShortCircuit(){
         XNetReply r = new XNetReply("61 12 73");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyServiceModeShort"),r.toMonitorString());
+        Assert.assertEquals("Monitor String","Service Mode: Short Circuit",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringServiceModeByteNotFound(){
         XNetReply r = new XNetReply("61 13 72");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyServiceModeDataByteNotFound"),r.toMonitorString());
+        Assert.assertEquals("Monitor String","Service Mode: Data Byte Not Found",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringServiceModeCSBusy(){
         XNetReply r = new XNetReply("61 1F 7E");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyServiceModeCSBusy"),r.toMonitorString());
+        Assert.assertEquals("Monitor String","Service Mode: Command Station Busy",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringCSNotSupported(){
         XNetReply r = new XNetReply("61 82 E3");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyCSNotSupported"),r.toMonitorString());
+        Assert.assertEquals("Monitor String","XpressNet Instruction not supported by Command Station",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringDHV1_V2ErrorNotOperated(){
         XNetReply r = new XNetReply("61 83 E2");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyV1DHErrorNotOperated"),r.toMonitorString());
+        Assert.assertEquals("Monitor String","XBus V1 and V2 MU+DH error: Selected Locomotive has not been operated by this XpressNet device or address 0 selected",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringDHV1_V2ErrorInUse(){
         XNetReply r = new XNetReply("61 84 E5");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyV1DHErrorInUse"),r.toMonitorString());
+        Assert.assertEquals("Monitor String","XBus V1 and V2 MU+DH error: Selected Locomotive is being operated by another XpressNet device",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringDHV1_V2ErrorAlreadyDH(){
         XNetReply r = new XNetReply("61 85 E4");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyV1DHErrorAlreadyDH"),r.toMonitorString());
+        Assert.assertEquals("Monitor String","XBus V1 and V2 MU+DH error: Selected Locomotive already in MU or DH",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringDHV1_V2ErrorNonZeroSpeed(){
         XNetReply r = new XNetReply("61 86 E7");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyV1DHErrorNonZeroSpeed"),r.toMonitorString());
+        Assert.assertEquals("Monitor String","XBus V1 and V2 MU+DH error: Unit selected for MU or DH has speed setting other than 0",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringErrorNotOperated(){
         XNetReply r = new XNetReply("E1 81 60");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyDHErrorNotOperated"),r.toMonitorString());
+        Assert.assertEquals("Monitor String","XpressNet MU+DH error: Selected Locomotive has not been operated by this XpressNet device or address 0 selected",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringDHErrorInUse(){
         XNetReply r = new XNetReply("E1 82 63");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyDHErrorInUse"),r.toMonitorString());
+        Assert.assertEquals("Monitor String","XpressNet MU+DH error: Selected Locomotive is being operated by another XpressNet device",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringDHErrorAlreadyDH(){
         XNetReply r = new XNetReply("E1 83 62");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyDHErrorAlreadyDH"),r.toMonitorString());
+        Assert.assertEquals("Monitor String","XpressNet MU+DH error: Selected Locomotive already in MU or DH",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringDHErrorNonZeroSpeed(){
         XNetReply r = new XNetReply("E1 84 65");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyDHErrorNonZeroSpeed"),r.toMonitorString());
+        Assert.assertEquals("Monitor String","XpressNet MU+DH error: Unit selected for MU or DH has speed setting other than 0",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringDHErrorLocoNotMUed(){
         XNetReply r = new XNetReply("E1 85 64");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyDHErrorLocoNotMU"),r.toMonitorString());
+        Assert.assertEquals("Monitor String","XpressNet MU+DH error: Locomotive not in a MU",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringDHErrorAddressNotMUBase(){
         XNetReply r = new XNetReply("E1 86 67");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyDHErrorLocoNotMUBase"),r.toMonitorString());
+        Assert.assertEquals("Monitor String","XpressNet MU+DH error: Locomotive address not a multi-unit base address",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringDHErrorCanNotDelete(){
         XNetReply r = new XNetReply("E1 87 66");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyDHErrorCanNotDelete"),r.toMonitorString());
+        Assert.assertEquals("Monitor String","XpressNet MU+DH error: It is not possible to delete the locomotive",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringDHErrorCSStackFull(){
         XNetReply r = new XNetReply("E1 88 69");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyDHErrorStackFull"),r.toMonitorString());
+        Assert.assertEquals("Monitor String","XpressNet MU+DH error: The Command Station Stack is Full",r.toMonitorString());
     }
- 
+
    @Test
     public void testToMonitorStringDHErrorOther(){
         XNetReply r = new XNetReply("E1 89 69");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyDHErrorOther",9),r.toMonitorString());
+        Assert.assertEquals("Monitor String","XpressNet MU+DH error: 9",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringLIVersionReply(){
         XNetReply r = new XNetReply("02 01 36 34");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyLIVersion",0.1,3.6),r.toMonitorString());
+        Assert.assertEquals("Monitor String","LI10x Hardware Version: 0.1 Software Version: 3.6",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringLIAddressReply(){
         XNetReply r = new XNetReply("F2 01 01 F2");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyLIAddress",1),r.toMonitorString());
+        Assert.assertEquals("Monitor String","RESPONSE LI101 Address 1",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringLIBaud1Reply(){
         XNetReply r = new XNetReply("F2 02 01 F1");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyLIBaud","19,200 bps (default)" ),r.toMonitorString());
+        Assert.assertEquals("Monitor String","RESPONSE LI101 Baud Rate: 19,200 bps (default)",r.toMonitorString());
     }
     @Test
     public void testToMonitorStringLIBaud2Reply(){
         XNetReply r = new XNetReply("F2 02 02 F2");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyLIBaud","38,400 bps" ),r.toMonitorString());
+        Assert.assertEquals("Monitor String","RESPONSE LI101 Baud Rate: 38,400 bps",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringLIBaud3Reply(){
         XNetReply r = new XNetReply("F2 02 03 F1");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyLIBaud","57,600 bps"),r.toMonitorString());
+        Assert.assertEquals("Monitor String","RESPONSE LI101 Baud Rate: 57,600 bps",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringLIBaud4Reply(){
         XNetReply r = new XNetReply("F2 02 04 F4");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyLIBaud","115,200 bps"),r.toMonitorString());
+        Assert.assertEquals("Monitor String","RESPONSE LI101 Baud Rate: 115,200 bps",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringLIBaud5Reply(){
         XNetReply r = new XNetReply("F2 02 05 F1");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyLIBaud","<undefined>"),r.toMonitorString());
+        Assert.assertEquals("Monitor String","RESPONSE LI101 Baud Rate: <undefined>",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringCSStatusReply(){
         XNetReply r = new XNetReply("62 22 00 40");
-        String targetString = Bundle.getMessage("XNetReplyCSStatus") + " ";
-        targetString += Bundle.getMessage("XNetCSStatusPowerModeManual") + "; ";
+        String targetString =  "Command Station Status: Manual power-up Mode; ";
         Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
         r = new XNetReply("62 22 FF BF");
-        targetString = Bundle.getMessage("XNetReplyCSStatus") + " ";
-        targetString += Bundle.getMessage("XNetCSStatusEmergencyOff") + "; ";
-        targetString += Bundle.getMessage("XNetCSStatusEmergencyStop") + "; ";
-        targetString += Bundle.getMessage("XNetCSStatusServiceMode") + "; ";
-        targetString += Bundle.getMessage("XNetCSStatusPoweringUp") + "; ";
-        targetString += Bundle.getMessage("XNetCSStatusPowerModeAuto") + "; ";
-        targetString += Bundle.getMessage("XNetCSStatusRamCheck");
+        targetString =  "Command Station Status: Emergency Off; Emergency Stop; Service Mode; Powering up; Auto power-up Mode; RAM check error!";
         Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
     }
 
@@ -1289,66 +1167,61 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     public void testToMonitorStringCSVersionReply(){
         jmri.util.IntlUtilities.valueOf(3.6);
         XNetReply r = new XNetReply("63 21 36 00 55");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyCSVersion",3.6,Bundle.getMessage("CSTypeLZ100")),r.toMonitorString());
+        Assert.assertEquals("Monitor String","Command Station Software Version: 3.6 Type: LZ100/LZV100",r.toMonitorString());
         r = new XNetReply("63 21 36 01 55");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyCSVersion",3.6,Bundle.getMessage("CSTypeLH200")),r.toMonitorString());
+        Assert.assertEquals("Monitor String","Command Station Software Version: 3.6 Type: LH200",r.toMonitorString());
         r = new XNetReply("63 21 36 02 55");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyCSVersion",3.6,Bundle.getMessage("CSTypeCompact")),r.toMonitorString());
+        Assert.assertEquals("Monitor String","Command Station Software Version: 3.6 Type: Compact or Other",r.toMonitorString());
         r = new XNetReply("63 21 36 10 55");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyCSVersion",3.6,Bundle.getMessage("CSTypeMultiMaus")),r.toMonitorString());
+        Assert.assertEquals("Monitor String","Command Station Software Version: 3.6 Type: multiMaus",r.toMonitorString());
         r = new XNetReply("63 21 36 20 55");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyCSVersion",3.6,"32"),r.toMonitorString());
+        Assert.assertEquals("Monitor String","Command Station Software Version: 3.6 Type: 32",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringCSV1VersionReply(){
         XNetReply r = new XNetReply("62 21 21 62");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyCSVersionV1",2.1,"32"),r.toMonitorString());
+        Assert.assertEquals("Monitor String","Command Station Software Version: 2.1 Type: Unknown (X-Bus V1 or V2)",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringBCEmeregncyStop(){
         XNetReply r = new XNetReply("81 00 81");
-        Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyBCEverythingStop"),r.toMonitorString());
+        Assert.assertEquals("Monitor String","Broadcast: Emergency Stop (track power on)",r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringSearchResponseNormalLoco(){
         XNetReply r = new XNetReply("E3 30 C1 04 11");
-        String targetString = Bundle.getMessage("XNetReplyLocoLabel") + " ";
-        targetString += Bundle.getMessage("XNetReplySearchNormalLabel") + " 260";
+        String targetString = "Locomotive Information Response: Search Response: Normal Locomotive: 260";
         Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringSearchResponseDoubleHeaderLoco(){
         XNetReply r = new XNetReply("E3 31 C1 04 17");
-        String targetString = Bundle.getMessage("XNetReplyLocoLabel") + " ";
-        targetString += Bundle.getMessage("XNetReplySearchDHLabel") + " 260";
+        String targetString = "Locomotive Information Response: Search Response: Loco in Double Header: 260";
         Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringSearchResponseMUBaseLoco(){
         XNetReply r = new XNetReply("E3 32 00 04 C5");
-        String targetString = Bundle.getMessage("XNetReplyLocoLabel") + " ";
-        targetString += Bundle.getMessage("XNetReplySearchMUBaseLabel") + " 4";
+        String targetString = "Locomotive Information Response: Search Response: MU Base Address: 4";
         Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringSearchResponseMULoco(){
         XNetReply r = new XNetReply("E3 33 C1 04 15");
-        String targetString = Bundle.getMessage("XNetReplyLocoLabel") + " ";
-        targetString += Bundle.getMessage("XNetReplySearchMULabel") + " 260";
+        String targetString = "Locomotive Information Response: Search Response: Loco in MU: 260";
         Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
     }
 
     @Test
     public void testToMonitorStringSearchResponseFail(){
         XNetReply r = new XNetReply("E3 34 C1 04 15");
-        String targetString = Bundle.getMessage("XNetReplyLocoLabel") + " ";
-        targetString += Bundle.getMessage("XNetReplySearchFailedLabel") + " 260";
+        String targetString = "Locomotive Information Response: Search Response: Search failed for: 260";
         Assert.assertEquals("Monitor String",targetString,r.toMonitorString());
     }
 

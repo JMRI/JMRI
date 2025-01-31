@@ -294,7 +294,7 @@ public class XNetMessageTest extends jmri.jmrix.AbstractMessageTestBase {
        msg = XNetMessage.getFeedbackRequestMsg(5,false);
        Assert.assertEquals("Monitor String","Accessory Decoder/Feedback Encoder Status Request: Base Address 1,Upper Nibble.",msg.toMonitorString());
     }
- 
+
     @Test
     public void testGetServiceModeResultMsg(){
        msg = XNetMessage.getServiceModeResultsMsg();
@@ -599,7 +599,7 @@ public class XNetMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void testGetDisolveDoubleHeaderMessage(){
+    public void testGetDissolveDoubleHeaderMessage(){
        msg = XNetMessage.getDisolveDoubleHeaderMsg(1234);
        Assert.assertEquals(0xE5,msg.getElement(0));
        Assert.assertEquals(0x43,msg.getElement(1));
@@ -611,7 +611,7 @@ public class XNetMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
-    public void testToMonitorStringDisolveDoubleHeaderMessage(){
+    public void testToMonitorStringDissolveDoubleHeaderMessage(){
        msg = XNetMessage.getDisolveDoubleHeaderMsg(1234);
        Assert.assertEquals("Monitor String","Double Header Request: Dissolve Double Header that includes mobile decoder 1234",msg.toMonitorString());
     }

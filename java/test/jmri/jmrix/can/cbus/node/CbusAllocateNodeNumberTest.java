@@ -73,6 +73,7 @@ public class CbusAllocateNodeNumberTest {
             rs.setElement(5, 0x05); // param 5 -
             rs.setElement(6, 0x06); // param 6 -
             rs.setElement(7, 0x07); // param 7 -
+            assertNotNull(t);
             t.reply(rs);
 
             JLabelOperator labelOper2 = new JLabelOperator(jdo, CbusNodeConstants.getManu(1));
@@ -91,6 +92,7 @@ public class CbusAllocateNodeNumberTest {
             rsn.setElement(5, 76); // L
             rsn.setElement(6, 65); // A
             rsn.setElement(7, 80); // P
+            assertNotNull(t);
             t.reply(rsn);
 
             JLabelOperator labelOper3 = new JLabelOperator(jdo, "Manufacturer 1 CANCATFLAP");
