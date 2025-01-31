@@ -170,7 +170,7 @@ public class TrainSwitchLists extends TrainCommon {
                         if (Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {
                             pickupEngines(fileOut, engineList, rl, !IS_MANIFEST);
                             // if switcher show loco drop at end of list
-                            if (train.isLocalSwitcher()) {
+                            if (train.isLocalSwitcher() || Setup.isPrintLocoLastEnabled()) {
                                 blockCarsByTrack(fileOut, train, carList, rl, IS_PRINT_HEADER, !IS_MANIFEST);
                                 dropEngines(fileOut, engineList, rl, !IS_MANIFEST);
                             } else {
