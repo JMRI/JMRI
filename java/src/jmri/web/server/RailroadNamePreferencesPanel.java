@@ -17,7 +17,6 @@ import org.openide.util.lookup.ServiceProvider;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.IOException;
 
 @ServiceProvider(service = PreferencesPanel.class)
 public class RailroadNamePreferencesPanel extends JPanel implements PreferencesPanel, PropertyChangeListener {
