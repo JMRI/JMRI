@@ -53,25 +53,30 @@ public class JsonUtilSocketService extends JsonSocketService<JsonUtilHttpService
                 this.connection.sendMessage(this.connection.getObjectMapper().createObjectNode().put(JSON.TYPE, JSON.GOODBYE), request.id);
                 break;
             case JSON.RAILROAD:
-                // Follow up handling a POST (change railroad name command) with the same answer as a GET (ask)
-                if (request.method.equals(JSON.POST)) {
-                    log.debug("Processing change railroad name to {} from socket service", name);
-                    this.connection.sendMessage(this.service.doPost(type, name, data, request), request.id);
-                }
-                this.connection.sendMessage(this.service.doGet(type, name, data, request), request.id);
-                this.rrNameListener = (PropertyChangeEvent evt) -> {
-                    try {
-                        this.handleRailroadChange();
-                    } catch (IOException ex) {
-                        InstanceManager.getDefault(WebServerPreferences.class).removePropertyChangeListener(this.rrNameListener);
-                    }
-                };
-                InstanceManager.getOptionalDefault(WebServerPreferences.class).ifPresent(preferences -> preferences.addPropertyChangeListener(this.rrNameListener));
+                this.onRailroadNameMessage(type, data, request);
                 break;
             default:
                 this.connection.sendMessage(this.service.doPost(type, name, data, request), request.id);
                 break;
         }
+    }
+
+    private void onRailroadNameMessage(String type, JsonNode data, JsonRequest request) throws IOException, JmriException, JsonException {
+        String name = data.path(JSON.NAME).asText();
+        // Follow up handling a POST (change railroad name command) with the same answer as a GET (ask)
+        if (request.method.equals(JSON.POST)) {
+            log.debug("Processing change railroad name to {} from socket service", name);
+            this.connection.sendMessage(this.service.doPost(type, name, data, request), request.id);
+        }
+        this.connection.sendMessage(this.service.doGet(type, name, data, request), request.id);
+        this.rrNameListener = (PropertyChangeEvent evt) -> {
+            try {
+                this.handleRailroadChange();
+            } catch (IOException ex) {
+                InstanceManager.getDefault(WebServerPreferences.class).removePropertyChangeListener(this.rrNameListener);
+            }
+        };
+        InstanceManager.getOptionalDefault(WebServerPreferences.class).ifPresent(preferences -> preferences.addPropertyChangeListener(this.rrNameListener));
     }
 
     @Override
