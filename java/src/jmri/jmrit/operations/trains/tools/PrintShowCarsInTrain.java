@@ -33,10 +33,6 @@ public class PrintShowCarsInTrain {
             InstanceManager.getDefault(CarRoads.class).getMaxNameLength() + Control.max_len_string_road_number;
     static final String TAB = padString("", fieldSize);
 
-    public PrintShowCarsInTrain() {
-        super();
-    }
-
     /**
      * Prints the block order for a train at the train's current location.
      * 
