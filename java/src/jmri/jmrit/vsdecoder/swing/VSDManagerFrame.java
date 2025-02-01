@@ -306,8 +306,11 @@ public class VSDManagerFrame extends JmriJFrame {
                 //this.setVisible(true);
                 // Do we need to make newControl a listener to newDecoder?
 
-                getStartBlock(newDecoder);
-
+                if (is_viewing) {
+                    VSDecoderManager.instance().doResume();
+                } else {
+                    getStartBlock(newDecoder);
+                }
             }
         }
     }
@@ -335,7 +338,7 @@ public class VSDManagerFrame extends JmriJFrame {
             }
         }
         if (start_block != null) {
-           VSDecoderManager.instance().atStart(start_block);
+            VSDecoderManager.instance().atStart(start_block);
         }
     }
 
