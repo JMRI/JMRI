@@ -60,14 +60,18 @@ public class TrainManifest extends TrainCommon {
             String valid = MessageFormat.format(messageFormatText = TrainManifestText.getStringValid(),
                     new Object[]{getDate(true)});
 
+            String schName = "";
+
             if (Setup.isPrintTrainScheduleNameEnabled()) {
                 TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class).getActiveSchedule();
                 if (sch != null) {
-                    valid = valid + " (" + sch.getName() + ")";
+                    schName = "(" + sch.getName() + ")";
                 }
             }
             if (Setup.isPrintValidEnabled()) {
-                newLine(fileOut, valid);
+                newLine(fileOut, valid + " " + schName);
+            } else {
+                newLine(fileOut, schName);
             }
             if (!train.getCommentWithColor().equals(Train.NONE)) {
                 newLine(fileOut, train.getCommentWithColor());
