@@ -67,13 +67,53 @@ public class JsonUtilSocketService extends JsonSocketService<JsonUtilHttpService
         }
     }
 
+    /**
+     * Process an incoming POST login message
+     *
+     * Extract username, password
+     * Check against authentication backend
+     *
+     * On success, send a response containing a valid token
+     * On Failure, send an exception message
+     *
+     * @param type Message type
+     * @param data JSON payload
+     * @param request The original request as received
+     * @throws IOException
+     * @throws JmriException
+     * @throws JsonException
+     */
     private void onSessionLoginMessage(String type, JsonNode data, JsonRequest request) throws IOException, JmriException, JsonException {
-        
+        String username = data.path("username").asText();
+        if (request.method.equals(JSON.POST)) {
+            log.debug("Processing login {} from socket service", username);
+            JsonNode resultNode = this.connection.sendMessage(this.service.doPost(type, username, data, request), request.id);
+        }
+//        this.connection.sendMessage(this.service.doGet(type, name, data, request), request.id);
     }
 
+    /**
+     * Process an incoming POST logout message
+     *
+     * Extract credential
+     * Check against authentication backend
+     *
+     * On success, invalidate token. Send invalidated token.
+     * On Failure, send an exception message.
+     *
+     * @param type
+     * @param data
+     * @param request
+     * @throws IOException
+     * @throws JmriException
+     * @throws JsonException
+     */
     private void onSessionLogoutMessage(String type, JsonNode data, JsonRequest request) throws IOException, JmriException, JsonException {
+        if (request.method.equals(JSON.POST)) {
+            // Do we really want the token logged?
+            JsonNode resultNode = this.connection.sendMessage(this.service.doPost(type, 'REDACTED', data, request), request.id);
+        }
     }
-
 
     private void onRailroadNameMessage(String type, JsonNode data, JsonRequest request) throws IOException, JmriException, JsonException {
         String name = data.path(JSON.NAME).asText();
