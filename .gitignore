@@ -56,14 +56,20 @@ nohup.out
 /nbproject
 /web/app/nbproject/private
 /scripts/config-portable/nbproject/private
-/.idea/workspace.xml
-/.idea/modules.xml
 local.properties
 /test
 /test/jmri.conf
 *.original~
 .metadata
 RemoteSystemsTempFiles
+
+# IntelliJ IDEA files - Maybe we should ignore the whole dir but I am hesitant. These are different by developer and not useful to share.
+/.idea/workspace.xml
+/.idea/modules.xml
+.idea/JMRI.iml
+.idea/compiler.xml
+.idea/encodings.xml
+.idea/misc.xml
 .idea/codeStyles/Project.xml
 .idea/jarRepositories.xml
 .idea/libraries/**
