@@ -55,11 +55,25 @@ public class JsonUtilSocketService extends JsonSocketService<JsonUtilHttpService
             case JSON.RAILROAD:
                 this.onRailroadNameMessage(type, data, request);
                 break;
+            case JSON.SESSION_LOGIN:
+                this.onSessionLoginMessage(type, data, request);
+                break;
+            case JSON.SESSION_LOGOUT:
+                this.onSessionLogoutMessage(type, data, request);
+                break;
             default:
                 this.connection.sendMessage(this.service.doPost(type, name, data, request), request.id);
                 break;
         }
     }
+
+    private void onSessionLoginMessage(String type, JsonNode data, JsonRequest request) throws IOException, JmriException, JsonException {
+        
+    }
+
+    private void onSessionLogoutMessage(String type, JsonNode data, JsonRequest request) throws IOException, JmriException, JsonException {
+    }
+
 
     private void onRailroadNameMessage(String type, JsonNode data, JsonRequest request) throws IOException, JmriException, JsonException {
         String name = data.path(JSON.NAME).asText();
