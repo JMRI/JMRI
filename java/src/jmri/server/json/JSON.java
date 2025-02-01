@@ -635,6 +635,21 @@ public final class JSON {
      */
     public static final String RATE = "rate"; // NOI18N
 
+    /* Permission System JSON API */
+    /**
+     * {@value #USER_LOGIN}
+     *
+     * @since 5.11
+     */
+    public static final String SESSION_LOGIN = "sessionLogin";
+    /**
+     * {@value #SESSION_LOGIN}
+     *
+     * @since 5.11
+     */
+    public static final String SESSION_LOGOUT = "sessionLogout";
+
+
     /*
      * JSON State (an unsigned integer)
      */
