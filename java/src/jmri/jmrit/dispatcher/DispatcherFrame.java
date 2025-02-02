@@ -50,6 +50,7 @@ import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
+import jmri.jmrit.display.layoutEditor.LayoutDoubleXOver;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
@@ -2401,9 +2402,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     }
 
     /*
-     * returns a list of double XOvers  (0 to n) in a list of blocks
+     * returns a list of XOvers  (0 to n) in a list of blocks
      */
-    private List<LayoutTurnout> containedDoubleXOver( Section s ) {
+    private List<LayoutTurnout> containedXOver( Section s ) {
         List<LayoutTurnout> _XOverList = new ArrayList<>();
         LayoutBlockManager lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
         for (var panel : editorManager.getAll(LayoutEditor.class)) {
@@ -2497,32 +2498,39 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                             bls.add(bBD);
                         }
                     }
-                    for (LayoutTurnout lx : containedDoubleXOver(s)) {
-                        HashSet<Block> bhs = new HashSet<Block>(4);
-                        /* quickest way to count number of unique blocks */
-                        bhs.add(lx.getLayoutBlock().getBlock());
-                        bhs.add(lx.getLayoutBlockB().getBlock());
-                        bhs.add(lx.getLayoutBlockC().getBlock());
-                        bhs.add(lx.getLayoutBlockD().getBlock());
-                        if (bhs.size() == 4) {
-                            for (Block b : bhs) {
-                                if ( checkBlockInAnyAllocatedSection(b, at)
-                                        || b.getState() == Block.OCCUPIED) {
-                                    // the die is cast and switch can not be changed.
-                                    // Check diagonal. If we are going continuing or divergeing
-                                    // we need to check the diagonal.
-                                    if (lx.getTurnout().getKnownState() != Turnout.CLOSED) {
-                                        if (bls.contains(lx.getLayoutBlock().getBlock()) ||
-                                                bls.contains(lx.getLayoutBlockC().getBlock())) {
-                                            bls.add(lx.getLayoutBlockB().getBlock());
-                                            bls.add(lx.getLayoutBlockD().getBlock());
-                                        } else {
-                                            bls.add(lx.getLayoutBlock().getBlock());
-                                            bls.add(lx.getLayoutBlockC().getBlock());
+                    for (LayoutTurnout lx : containedXOver(s)) {
+                        if (lx instanceof LayoutDoubleXOver) {
+                            HashSet<Block> bhs = new HashSet<Block>(4);
+                            /* quickest way to count number of unique blocks */
+                            bhs.add(lx.getLayoutBlock().getBlock());
+                            bhs.add(lx.getLayoutBlockB().getBlock());
+                            bhs.add(lx.getLayoutBlockC().getBlock());
+                            bhs.add(lx.getLayoutBlockD().getBlock());
+                            if (bhs.size() == 4) {
+                                for (Block b : bhs) {
+                                    if ( checkBlockInAnyAllocatedSection(b, at)
+                                            || b.getState() == Block.OCCUPIED) {
+                                        // the die is cast and switch can not be changed.
+                                        // Check diagonal. If we are going continuing or divergeing
+                                        // we need to check the diagonal.
+                                        if (lx.getTurnout().getKnownState() != Turnout.CLOSED) {
+                                            if (bls.contains(lx.getLayoutBlock().getBlock()) ||
+                                                    bls.contains(lx.getLayoutBlockC().getBlock())) {
+                                                bls.add(lx.getLayoutBlockB().getBlock());
+                                                bls.add(lx.getLayoutBlockD().getBlock());
+                                            } else {
+                                                bls.add(lx.getLayoutBlock().getBlock());
+                                                bls.add(lx.getLayoutBlockC().getBlock());
+                                            }
                                         }
                                     }
                                 }
                             }
+ /*                     If further processing needed for other crossover types it goes here.
+                        } else if (lx instanceof LayoutRHXOver) {
+                        } else if (lx instanceof LayoutLHXOver) {
+                        } else {
+*/
                         }
                     }
                 }

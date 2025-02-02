@@ -11,6 +11,8 @@ import jmri.Turnout;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
 import jmri.jmrit.display.layoutEditor.LayoutDoubleXOver;
+import jmri.jmrit.display.layoutEditor.LayoutLHXOver;
+import jmri.jmrit.display.layoutEditor.LayoutRHXOver;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
@@ -404,7 +406,40 @@ public class AutoTurnouts {
                         (setting == Turnout.CLOSED ? closedText : thrownText));
                 return(false);
             }
+        } else if (layoutTurnout instanceof LayoutRHXOver) {
+            LayoutRHXOver lds = (LayoutRHXOver) layoutTurnout;
+            if ((lds.getLayoutBlock().getBlock().getState() == Block.OCCUPIED)
+                    || (lds.getLayoutBlockC().getBlock().getState() == Block.OCCUPIED)) {
+                log.debug("{}: turnout {} cannot be set to {} RHXOver occupied.",
+                        at.getTrainName(),layoutTurnout.getTurnout().getDisplayName(),
+                        (setting == Turnout.CLOSED ? closedText : thrownText));
+                return(false);
+            }
+            if ((_dispatcher.checkForBlockInAllocatedSection(lds.getLayoutBlock().getBlock(), s))
+                    || (_dispatcher.checkForBlockInAllocatedSection(lds.getLayoutBlockC().getBlock(), s))) {
+                log.debug("{}: turnout {} cannot be set to {} RHXOver already allocated to another train.",
+                        at.getTrainName(), layoutTurnout.getTurnout().getDisplayName(),
+                        (setting == Turnout.CLOSED ? closedText : thrownText));
+                return(false);
+            }
+        } else if (layoutTurnout instanceof LayoutLHXOver) {
+            LayoutLHXOver lds = (LayoutLHXOver) layoutTurnout;
+            if ((lds.getLayoutBlockB().getBlock().getState() == Block.OCCUPIED)
+                    || (lds.getLayoutBlockD().getBlock().getState() == Block.OCCUPIED)) {
+                log.debug("{}: turnout {} cannot be set to {} LHXOver occupied.",
+                        at.getTrainName(),layoutTurnout.getTurnout().getDisplayName(),
+                        (setting == Turnout.CLOSED ? closedText : thrownText));
+                return(false);
+            }
+            if ((_dispatcher.checkForBlockInAllocatedSection(lds.getLayoutBlockB().getBlock(), s))
+                    || (_dispatcher.checkForBlockInAllocatedSection(lds.getLayoutBlockD().getBlock(), s))) {
+                log.debug("{}: turnout {} cannot be set to {} RHXOver already allocated to another train.",
+                        at.getTrainName(), layoutTurnout.getTurnout().getDisplayName(),
+                        (setting == Turnout.CLOSED ? closedText : thrownText));
+                return(false);
+            }
         }
+
         if (s.getState() == Section.FREE && b.getState() != Block.OCCUPIED) {
             return true;
         }
