@@ -84,7 +84,7 @@ public class VSDecoderManager implements PropertyChangeListener {
     private HashMap<String, String> profiletable; // list of loaded profiles key = profile name, value = path
     HashMap<VSDecoder, Block> currentBlock; // list of active blocks by decoders
     public HashMap<Block, LayoutEditor> possibleStartBlocks; // list of possible start blocks and their LE panel
-    private HashMap<String, Timer> timertable; // list of active timers by decoder System ID
+    private Timer timer;
 
     private int locoInBlock[][]; // Block status for locos
     private float blockParameter[][][];
@@ -128,7 +128,6 @@ public class VSDecoderManager implements PropertyChangeListener {
         listenerTable = new HashMap<>();
         decodertable = new HashMap<>();
         decoderAddressMap = new HashMap<>();
-        timertable = new HashMap<>();
         decoderInBlock = new HashMap<>(); // Key = decoder number
         profiletable = new HashMap<>(); // key = profile name, value = path
         currentBlock = new HashMap<>(); // key = decoder, value = block
@@ -206,6 +205,13 @@ public class VSDecoderManager implements PropertyChangeListener {
      */
     public void setMasterVolume(int mv) {
         getVSDecoderPreferences().setMasterVolume(mv);
+    }
+
+    public void doResume() {
+        // prepare a re-open of the VSD manager window
+        if (geofile_ok && getVSDecoderList().size() > 0) {
+            initSoundPositionTimer();
+        }
     }
 
     /**
@@ -315,7 +321,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                     if (vsd.topspeed == 0) {
                         log.info("Top-speed not defined. No advanced location following possible.");
                     } else {
-                        initSoundPositionTimer(vsd);
+                        initSoundPositionTimer();
                     }
                 }
                 return vsd;
@@ -596,7 +602,12 @@ public class VSDecoderManager implements PropertyChangeListener {
     private void removeVSDecoder(String sa) {
         VSDecoder d = this.getVSDecoderByAddress(sa);
         jmri.InstanceManager.getDefault(jmri.ThrottleManager.class).removeListener(d.getAddress(), d);
-        stopSoundPositionTimer(d);
+        // sound position timer is based on GeoFile
+        if (geofile_ok && getVSDecoderList().size() == 1) {
+            // last VSDecoder
+            stopSoundPositionTimer();
+            timer = null;
+        }
         d.shutdown();
         d.disable();
 
@@ -605,7 +616,6 @@ public class VSDecoderManager implements PropertyChangeListener {
         currentBlock.remove(d);
         decoderInBlock.remove(d.getAddress().getNumber());
         locoInBlockRemove(d.getAddress().getNumber());
-        timertable.remove(d.getId()); // Remove timer
 
         locorow--; // prepare array index for eventually adding a new decoder
 
@@ -721,6 +731,8 @@ public class VSDecoderManager implements PropertyChangeListener {
                 removeVSDecoder((String) evt.getOldValue());
             } else if (evt.getPropertyName().equals(VSDManagerFrame.CLOSE_WINDOW)) {
                 // Note this assumes there is only one VSDManagerFrame open at a time.
+                stopSoundPositionTimer();
+                timer = null;
                 if (managerFrame != null) {
                     managerFrame = null;
                 }
@@ -924,8 +936,6 @@ public class VSDecoderManager implements PropertyChangeListener {
                 log.debug("address {}: position to set: {}", d.getAddress(), d.posToSet);
                 d.setPosition(d.posToSet); // Sound set position
                 changeDirection(d, locoAddress, new_rp_index);
-                stopSoundPositionTimer(d);
-                startSoundPositionTimer(d); // timer restart
             } else {
                 log.info(" Validation failed! Last reporter: {}, new reporter: {}, dirfn: {} for {}", old_rp, new_rp, d.dirfn, locoAddress);
             }
@@ -1024,7 +1034,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                     }
                 }
             }
-            startSoundPositionTimer(d);
+            //startSoundPositionTimer(d);
         } else {
            log.warn(" Same PhysicalLocationReporter, position not set!");
         }
@@ -1107,73 +1117,64 @@ public class VSDecoderManager implements PropertyChangeListener {
         }
     }
 
-    void initSoundPositionTimer(VSDecoder d) {
-        if (geofile_ok) {
-            Timer t = new Timer(check_time, new ActionListener() {
+    void initSoundPositionTimer() {
+        if (timer == null) {
+            timer = new Timer(check_time, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (alf_version == 1) {
-                        calcNewPosition(d);
-                    } else if (alf_version == 2) {
-                        int ix = getArrayIndex(d.getAddress().getNumber()); // ix = decoder number 0 - max_decoder-1
-                        float actualspeed = d.getEngineSound().getActualSpeed();
-                        if (locoInBlock[ix][DIR_FN] != d.dirfn) {
-                            // traveling direction has changed
-                            if (d.getEngineSound().isEngineStarted()) {
-                                locoInBlock[ix][DIR_FN] = d.dirfn; // save traveling direction info
-                                if (d.distanceOnTrack <= d.getReturnDistance()) {
-                                    d.distanceOnTrack = d.getReturnDistance() - d.distanceOnTrack;
-                                } else {
-                                    d.distanceOnTrack = d.getReturnDistance();
+                    for (VSDecoder d : getVSDecoderList()) {
+                        if (alf_version == 1) {
+                            calcNewPosition(d);
+                        } else if (alf_version == 2 && d.getLayoutTrack() != null) {
+                            int ix = getArrayIndex(d.getAddress().getNumber()); // ix = decoder number 0 - max_decoder-1
+                            float actualspeed = d.getEngineSound().getActualSpeed();
+                            if (locoInBlock[ix][DIR_FN] != d.dirfn) {
+                                // traveling direction has changed
+                                if (d.getEngineSound().isEngineStarted()) {
+                                    locoInBlock[ix][DIR_FN] = d.dirfn; // save traveling direction info
+                                    if (d.distanceOnTrack <= d.getReturnDistance()) {
+                                        d.distanceOnTrack = d.getReturnDistance() - d.distanceOnTrack;
+                                    } else {
+                                        d.distanceOnTrack = d.getReturnDistance();
+                                    }
+                                    d.setLayoutTrack(d.getReturnTrack());
+                                    d.setLastTrack(d.getReturnLastTrack());
+                                    log.debug("direction changed to {}, layout: {}, last: {}, return: {}, d.getReturnDistance: {}, d.distanceOnTrack: {}, d.getDistance: {}",
+                                            d.dirfn, d.getLayoutTrack(), d.getLastTrack(), d.getReturnTrack(), d.getReturnDistance(), d.distanceOnTrack, d.getDistance());
+                                    d.setDistance(0);
                                 }
-                                d.setLayoutTrack(d.getReturnTrack());
-                                d.setLastTrack(d.getReturnLastTrack());
-                                log.debug("direction changed to {}, layout: {}, last: {}, return: {}, d.getReturnDistance: {}, d.distanceOnTrack: {}, d.getDistance: {}",
-                                        d.dirfn, d.getLayoutTrack(), d.getLastTrack(), d.getReturnTrack(), d.getReturnDistance(), d.distanceOnTrack, d.getDistance());
-                                d.setDistance(0);
-                                d.navigate();
                             }
-                        }
-                        if ((d.getEngineSound().isEngineStarted() && actualspeed > 0.0f) || d.getLayoutTrack() instanceof LayoutTurntable) {
-                            float speed_ms = actualspeed * (d.dirfn == 1 ? d.topspeed : d.topspeed_rev) * 0.44704f / layout_scale; // calculate the speed
-                            d.setDistance(d.getDistance() + speed_ms * check_time / 10.0); // d.getDistance() normally is 0, but can content an overflow
-                            d.navigate();
-                            Point2D loc = d.getLocation();
-                            Point2D loc2 = new Point2D.Double(((float) loc.getX() - models_origin.x) * 0.01f, (models_origin.y - (float) loc.getY()) * 0.01f);
-                            d.posToSet.x = (float) loc2.getX();
-                            d.posToSet.y = (float) loc2.getY();
-                            d.posToSet.z = 0.0f;
-                            log.debug("address {} position to set: {}, location: {}", d.getAddress(), d.posToSet, loc);
-                            d.setPosition(d.posToSet);
+                            if ((d.getEngineSound().isEngineStarted() && actualspeed > 0.0f) || d.getLayoutTrack() instanceof LayoutTurntable) {
+                                float speed_ms = actualspeed * (d.dirfn == 1 ? d.topspeed : d.topspeed_rev) * 0.44704f / layout_scale; // calculate the speed
+                                d.setDistance(d.getDistance() + speed_ms * check_time / 10.0); // d.getDistance() normally is 0, but can content an overflow
+                                d.navigate();
+                                if (d.getLocation() != null) {
+                                    Point2D loc = d.getLocation();
+                                    Point2D loc2 = new Point2D.Double(((float) loc.getX() - models_origin.x) * 0.01f, (models_origin.y - (float) loc.getY()) * 0.01f);
+                                    d.posToSet.x = (float) loc2.getX();
+                                    d.posToSet.y = (float) loc2.getY();
+                                    d.posToSet.z = 0.0f;
+                                    log.debug("address {} position to set: {}, location: {}", d.getAddress(), d.posToSet, loc);
+                                    d.setPosition(d.posToSet);
+                                }
+                            }
                         }
                     }
                 }
             });
-            t.setRepeats(true);
-            timertable.put(d.getId(), t);
-            log.debug("timer {} created for decoder {}, id: {}", t, d, d.getId());
-        } else {
-            log.debug("No timer created, GeoData not available");
+            timer.setRepeats(true);
+            timer.setInitialDelay(check_time);
+            timer.start();
+            log.debug("timer {} started, check time: {}", timer, check_time);
         }
     }
 
-    void startSoundPositionTimer(VSDecoder d) {
-        Timer t = timertable.get(d.getId());
-        if (t != null) {
-            t.setInitialDelay(check_time);
-            t.start();
-            log.debug("timer {} started for decoder id {}, {}, check time: {}", t, d.getId(), d, check_time);
-        }
-    }
-
-    void stopSoundPositionTimer(VSDecoder d) {
-        Timer t = timertable.get(d.getId());
-        if (t != null) {
-            if (t.isRunning()) {
-                t.stop();
-                log.debug("timer {} stopped for {}", t, d);
+    void stopSoundPositionTimer() {
+        if (timer != null) {
+            if (timer.isRunning()) {
+                timer.stop();
             } else {
-                log.debug("timer {} was not running", t);
+                log.debug("timer {} was not running", timer);
             }
         }
     }
