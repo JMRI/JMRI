@@ -11,7 +11,8 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no">    
+    
     
    <!-- Decoder definition of the Rampino Elektronic Loco decoder              -->
    <!-- Original files by Dieter Flunkert (dieter.flunkert@experimentalme.com) -->
@@ -171,7 +172,6 @@
          </variable>
          
          <!-- Motor control -->
-               
          <variable item="EMF Option 1" CV="54" default="6" comment="Length of time interval for PWM pulses">
             <decVal min="0" max="255" />
             <label>Load control PWM on time</label>
@@ -230,8 +230,8 @@
              </enumVal>
              <label>Decoder mode</label>
          </variable>
-         
-         <!-- ABC braking - Loco-1 only -->>
+
+         <!-- ABC braking - Loco-1 only -->
          <variable item="Advanced Group 2 Option 11" CV="27" mask="XXXXXXXV" default="0" include="Loco-1">
              <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
              <label>Automatic stop with asymmetrical DCC signal right track</label>
@@ -240,7 +240,7 @@
              <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
              <label>Automatic stop with asymmetrical DCC signal left track</label>
          </variable>
-         
+
          <variable item="Function 11 effect generated" CV="112" default="0">
              <decVal min="0" max="255" />
              <label>AUX output dimming, speed step 0</label>
@@ -318,7 +318,7 @@
             <decVal min="0" max="255" />
             <label>Flash sequence T2OFF</label>
          </variable>
-         
+
          <variable item="Global lighting option 1" CV="134" default="0">
              <enumVal>
                  <enumChoice choice="Normal" value="0">
@@ -348,6 +348,7 @@
              </enumVal>
              <label>Effect AUX1</label>
          </variable>
+
          <variable item="Global lighting option 2" CV="141" default="0">
              <enumVal>
                  <enumChoice choice="Normal" value="0">
@@ -436,8 +437,8 @@
              <label>Effect AUX4</label>
          </variable>
 
-         <!-- Dummy variables for CV's that will be implemented in a future update of the decoder definition -->
 
+         <!-- Dummy variables for CVs that will be implemented in a future update of the decoder definition -->
          <variable item="Dummy 162" CV="162">
             <decVal />
             <label>Dummy 162</label>
@@ -498,6 +499,8 @@
             <decVal />
             <label>Dummy 254</label>
          </variable>
+
+
          <!-- Lights Dimming -->
          <variable item="Function F0F option 1" CV="47" default="100" minOut="1">
             <decVal max="100" />
