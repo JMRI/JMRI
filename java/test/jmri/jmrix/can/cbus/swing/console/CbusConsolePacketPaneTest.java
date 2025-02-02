@@ -5,7 +5,6 @@ import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Test simple functioning of CbusConsolePacketPane
@@ -13,13 +12,12 @@ import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
  * @author Paul Bender Copyright (C) 2016
  * @author Steve Young Copyright (C) 2020
 */
-@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class CbusConsolePacketPaneTest  {
 
     @Test
-    public void testInitComponents() throws Exception{
+    public void testCbusConsolePacketPaneCtor() {
 
-        // for now, just makes sure there isn't an exception.
         CbusConsolePacketPane t = new CbusConsolePacketPane(mainConsolePane);
         Assertions.assertNotNull(t);
         

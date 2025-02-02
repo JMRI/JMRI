@@ -26,7 +26,7 @@ import org.junit.jupiter.api.io.TempDir;
 public class CbusConsoleDisplayOptionsPaneTest  {
 
     @Test
-    public void testInitComponents() throws Exception{
+    public void testInitComponents() {
         // for now, just makes sure there isn't an exception.
         CbusConsoleDisplayOptionsPane t = new CbusConsoleDisplayOptionsPane(mainConsolePane);
         assertNotNull(t);

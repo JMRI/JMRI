@@ -867,6 +867,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         ((CbusThrottleManager)tm).reply(r);
 
         JUnitAppender.assertErrorMessage("created a throttle");
+        Assertions.assertNotNull(throttle);
 
         throttle.dispose(throtListen);
 
