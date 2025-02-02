@@ -51,6 +51,8 @@ import jmri.util.node.NodeIdentity;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.util.zeroconf.ZeroConfServiceManager;
 import jmri.web.server.WebServerPreferences;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Randall Wood Copyright 2016, 2017, 2018
@@ -58,6 +60,7 @@ import jmri.web.server.WebServerPreferences;
 public class JsonUtilHttpService extends JsonHttpService {
 
     private static final String RESOURCE_PATH = "jmri/server/json/util/";
+    private static final Logger log = LoggerFactory.getLogger(JsonUtilHttpService.class);
 
     public JsonUtilHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -145,6 +148,17 @@ public class JsonUtilHttpService extends JsonHttpService {
     // Use @CheckForNull to override non-null requirement of superclass
     public JsonNode doPost(String type, @CheckForNull String name,
             JsonNode data, JsonRequest request) throws JsonException {
+        log.debug("doPost(type='{}', name='{}', data='{}')", type, name, data);
+        // This will be expanded with more cases and warrants a CASE rather than an IF
+        switch (type) {
+            case JSON.RAILROAD:
+                InstanceManager.getDefault(WebServerPreferences.class).setRailroadName(name);
+                break;
+            default:
+                log.debug("Received unexpected POST command: '{}'", type);
+                break;
+        }
+        // Implicitly answer all doPost the way an equivalent doGet would be answered.
         return this.doGet(type, name, data, request);
     }
 

@@ -32,7 +32,7 @@ public abstract class AbstractStringIOManagerConfigXML extends AbstractNamedBean
      */
     @Override
     public Element store(Object o) {
-        log.warn("AbstractStringIOManagerConfigXML store with {}",o);
+        log.debug("AbstractStringIOManagerConfigXML store with {}",o);
         Element stringIOs = new Element("stringios");
         setStoreElementClass(stringIOs);
         StringIOManager rm = (StringIOManager) o;

@@ -137,6 +137,8 @@
                     changes the cursor to an underline so you know you're in the mode.  Mac keyboards do not
                     support an insert key, so this feature is not available on the Mac.</li>
                 <li>Updated the OpenLCB library being used to version 0.8.5</li>
+                <li>Improved handling of memory service timeouts, including
+                    variable timeout lengths defined by the datagram responses.
             </ul>
 
         <h4>Powerline</h4>
@@ -166,7 +168,8 @@
 
         <h4>SRCP</h4>
             <ul>
-                <li>Fast-clock TIME commands now use the 00-23 format for the hour value and do not repeat 01-12 in the afternoon.</li>
+                <li>Fast-clock TIME commands now use the 00-23 format for
+                    the hour value and do not repeat 01-12 in the afternoon.</li>
             </ul>
 
         <h4>TAMS</h4>
@@ -259,7 +262,9 @@
             </ul>
         <h4>Hornby</h4>
             <ul>
-                <li>Added HornbyTXS.xml to add Hornby HM7000 sound decoder definitions and updated HornbyTTS.xml to address error for Hall Class Sound definition</li>
+                <li>Added HornbyTXS.xml to add Hornby HM7000 sound decoder definitions
+                    and updated HornbyTTS.xml to address error for
+                    Hall Class Sound definition</li>
             </ul>
 
         <h4>Kuehn</h4>
@@ -284,7 +289,7 @@
 
         <h4>MD Electronics</h4>
              <ul>
-                <li></li>
+                <li>Corrections to the translation into German</li>
              </ul>
 
         <h4>MGP</h4>
@@ -459,7 +464,8 @@
             <li></li>
         </ul>
         <ul>
-            <li>Added "Highlight cursor position" option to enable drawing of a square around finger/mouse press/drag area. Useful for touchscreens.
+            <li>Added "Highlight cursor position" option to enable drawing of a 
+                square around finger/mouse press/drag area. Useful for touchscreens.
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -496,8 +502,11 @@
         <ul>
             <li>New feature, you can now select locomotive pick up and set out text colors.</li>
             <li>Added track move count to "Export Locations".</li>
-            <li>Improved "Train logger" to include the number of cars in train, the number of pick ups and set outs, train length and weight.</li>
+            <li>Improved "Train logger" to include the number of cars in train, 
+                the number of pick ups and set outs, train length and weight.</li>
             <li>New feature, import routes.</li>
+            <li>New feature, print "Cars In Train" AKA train blocking order</li>
+            <li>New print option, show locomotive set outs at end of Manifest or switch list.</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -527,7 +536,8 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li>Roster Table - Fixes initial editing of Last Operated date / time values using 1-12hr values instead of 0-23.</li>
+            <li>Roster Table - Fixes initial editing of Last Operated date / time values 
+                using 1-12hr values instead of 0-23.</li>
         </ul>
 
     <h3>Routes</h3>
@@ -591,7 +601,9 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li>Lionel Jeanson added a driver for the <a href="https://www.zuiki.co.jp/product_info/denshadegomascon_black/"> Densha de GO controler</a> USB controller for the USBThrottle Jynstrument</li>
+            <li>Lionel Jeanson added a driver for 
+                the <a href="https://www.zuiki.co.jp/product_info/denshadegomascon_black/"> Densha de GO controler</a> 
+                USB controller for the USBThrottle Jynstrument</li>
         </ul>
 
     <h3>Timetable</h3>

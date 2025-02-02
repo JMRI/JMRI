@@ -381,6 +381,7 @@ public class CbusNodeTableDataModelTest {
 
     @AfterEach
     public void tearDown() {
+        Assertions.assertNotNull(t);
         t.dispose();
         tcis.terminateThreads();
         memo.dispose();

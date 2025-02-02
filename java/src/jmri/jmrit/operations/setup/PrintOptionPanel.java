@@ -71,6 +71,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
     JCheckBox trackSummaryCheckBox = new JCheckBox(Bundle.getMessage("TrackSummary"));
     JCheckBox routeLocationCheckBox = new JCheckBox(Bundle.getMessage("RouteLocation"));
     JCheckBox groupCarMovesCheckBox = new JCheckBox(Bundle.getMessage("GroupCarMoves"));
+    JCheckBox printLocoLastCheckBox = new JCheckBox(Bundle.getMessage("PrintLocoLast"));
 
     // text field
     JTextField pickupEngPrefix = new JTextField(10);
@@ -152,6 +153,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         editManifestCheckBox.setToolTipText(Bundle.getMessage("UseTextEditorTip"));
         trackSummaryCheckBox.setToolTipText(Bundle.getMessage("TrackSummaryTip"));
         groupCarMovesCheckBox.setToolTipText(Bundle.getMessage("GroupCarsTip"));
+        printLocoLastCheckBox.setToolTipText(Bundle.getMessage("LocoLastTip"));
 
         addEngPickupComboboxButton.setToolTipText(Bundle.getMessage("AddMessageComboboxTip"));
         deleteEngPickupComboboxButton.setToolTipText(Bundle.getMessage("DeleteMessageComboboxTip"));
@@ -274,8 +276,9 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         addItemLeft(pManifestSwtichListOptions, printValidCheckBox, 0, 0);
         addItemLeft(pManifestSwtichListOptions, printLoadsEmptiesCheckBox, 1, 0);
         addItemLeft(pManifestSwtichListOptions, groupCarMovesCheckBox, 2, 0);
-        addItemLeft(pManifestSwtichListOptions, printCabooseLoadCheckBox, 3, 0);
-        addItemLeft(pManifestSwtichListOptions, printPassengerLoadCheckBox, 4, 0);
+        addItemLeft(pManifestSwtichListOptions, printLocoLastCheckBox, 3, 0);
+        addItemLeft(pManifestSwtichListOptions, printCabooseLoadCheckBox, 4, 0);
+        addItemLeft(pManifestSwtichListOptions, printPassengerLoadCheckBox, 5, 0);
 
         addItemLeft(pManifestSwtichListOptions, use12hrFormatCheckBox, 0, 1);
         addItemLeft(pManifestSwtichListOptions, printTrainScheduleNameCheckBox, 1, 1);
@@ -366,6 +369,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         switchListDepartureTimeCheckBox.setSelected(Setup.isUseSwitchListDepartureTimeEnabled());
         editManifestCheckBox.setSelected(Setup.isManifestEditorEnabled());
         groupCarMovesCheckBox.setSelected(Setup.isGroupCarMovesEnabled());
+        printLocoLastCheckBox.setSelected(Setup.isPrintLocoLastEnabled());
 
         commentTextArea.setText(TrainCommon.getTextColorString(Setup.getMiaComment()));
         hazardousTextField.setText(Setup.getHazardousMsg());
@@ -847,6 +851,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         Setup.setUseSwitchListDepartureTimeEnabled(switchListDepartureTimeCheckBox.isSelected());
         Setup.setSwitchListRouteLocationCommentEnabled(routeLocationCheckBox.isSelected());
         Setup.setGroupCarMoves(groupCarMovesCheckBox.isSelected());
+        Setup.setPrintLocoLast(printLocoLastCheckBox.isSelected());
 
         // reload combo boxes if tab changed
         boolean oldTabEnabled = Setup.isTabEnabled();
@@ -896,6 +901,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
                 Setup.isPrintTrackSummaryEnabled() != trackSummaryCheckBox.isSelected() ||
                 Setup.isUseSwitchListDepartureTimeEnabled() != switchListDepartureTimeCheckBox.isSelected() ||
                 Setup.isGroupCarMovesEnabled() != groupCarMovesCheckBox.isSelected() ||
+                Setup.isPrintLocoLastEnabled() != printLocoLastCheckBox.isSelected() ||
                 Setup.isTabEnabled() != tabFormatCheckBox.isSelected()) {
             return true;
         }
