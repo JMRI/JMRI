@@ -848,7 +848,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 // If the next block is allocated to this train we can continue.
                 // If the train was stopped here we can try and restart it. Either way we use
                 // setting setSpeedBySectionsAllocated as a way out of the dilemma.
-                log.info("{}: new current signalmast is null for section {} - sometimes OK", _activeTrain.getTrainName(),
+                log.debug("{}: new current signalmast is null for section {} - sometimes OK", _activeTrain.getTrainName(),
                         as == null ? "Null" : as.getSection().getDisplayName(USERSYS));
                 if (_nextBlock == null || ! _activeTrain.getBlockList().contains(_nextBlock) ||  _autoEngineer.isStopped()) {
                     log.warn("{}: new current signalmast is null for section {} and next block is not this trains. Temporarily continuing by allocations", _activeTrain.getTrainName(),
