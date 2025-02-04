@@ -165,7 +165,8 @@
             will be recognized by JMRI, you must manually create an entry in the <i>Reporters Table</i> for each reader. Enter the "System Name"
             to be topic component used in the MQTT messages. [See the <a href="../mqtt/index.shtml">MQTT help pages</a> for more information.]
           </li>
-          <li>
+          <li><span class="since">Since <a href="https://www.jmri.org/releasenotes/jmri5.11.3.shtml"
+                                           target="_blank">JMRI 5.11.3</a></span>
             If your readers communicate via LocoNet, JMRI will create a <i>Reporter Table</i> entry automatically
             when a (new) reader sends a properly formatted message through the indicated connection.<br>
             For each new RFID tag passing over one of the Reporters, a new ID Tag entry is added to the ID Tag Table.
@@ -274,7 +275,7 @@
         <a href="_Toc141">following section</a> tells you how to link OperationsPro tables.]</p>
         
         <p>
-          To identiy which RFID tag is attached to which piece of rolling stock, use the "User Name" 
+          To identify which RFID tag is attached to which piece of rolling stock, use the "User Name"
           field in the <i>ID Tag Table</i>. Enter the locomotive or car number (must be unique) into the
           "User Name" by right-clicking on the field and selecting <strong>Rename</strong>). Other choices
           are <strong>Remove</strong> (useful if you mistype a number) or <strong>Move User Name</strong> if you are
