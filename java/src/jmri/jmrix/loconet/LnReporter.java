@@ -18,17 +18,18 @@ import org.slf4j.LoggerFactory;
  * Extend jmri.AbstractIdTagReporter for LocoNet layouts.
  * <p>
  * This implementation reports Transponding messages from LocoNet-based "Reporters".
- *
- * For LocoNet connections, a "Reporter" represents either a Digitrax "transponding zone" or a
- * Lissy "measurement zone".  The messages from these Reporters are handled by this code.
- *
+ * <p>
+ * For LocoNet connections, a "Reporter" represents either a Digitrax "transponding zone", a
+ * Lissy "measurement zone" or a Lissy RFID reader location.
+ * <br>
+ * The messages from these Reporters are handled by this code.
+ * <br>
  * The LnReporterManager is responsible for decode of appropriate LocoNet messages
  * and passing only those messages to the Reporter which match its Reporter address.
- *
- * <p>
+ * <br>
  * Each transponding message creates a new current report. The last report is
  * always available, and is the same as the contents of the last transponding
- * message received.
+ * message received. Based on the report, for new tags a new Id Tag is created by the LnReporter.
  * <p>
  * Reports are Strings, formatted as
  * <ul>
@@ -80,9 +81,8 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
             } else if (l.getElement(2) == 0x41) {
                 lissyRfidReport(l);
             }
-        } else {
-            return; // nothing
-        }
+        }  // else nothing
+
     }
 
     /**
@@ -214,7 +214,7 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
         for (int j = 5; j < max; j++) {
             int shift = j-5;
             int hi = 0x0;
-            if((rfidHi >> shift)%2 == 1) hi = 0x80;
+            if(((rfidHi >> shift) & 0x1) == 1) hi = 0x80;
             tg.append(String.format("%1$02X", l.getElement(j) + hi));
         }
         tag = tg.toString();
@@ -306,7 +306,6 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
                 case "enter":
                     // NOI18N
                     // LocoNet Enter message
-                    return (PhysicalLocationReporter.Direction.ENTER);
                 case "seen":
                     // NOI18N
                     // Lissy message.  Treat them all as "entry" messages.
@@ -347,8 +346,8 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
      }
 
     // data members
-    private int _number;   // LocoNet Reporter number
-    private HashSet<Object> entrySet=null;
+    private final int _number;   // LocoNet Reporter number
+    private final HashSet<Object> entrySet;
 
     private final static Logger log = LoggerFactory.getLogger(LnReporter.class);
 
