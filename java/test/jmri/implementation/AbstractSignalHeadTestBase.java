@@ -135,4 +135,25 @@ public abstract class AbstractSignalHeadTestBase {
          Assert.assertEquals("bean type",s.getBeanType(),Bundle.getMessage("BeanNameSignalHead"));
     }
 
+    @Test
+    public void testDescribeState() {
+        SignalHead s = getHeadToTest();
+        Assertions.assertEquals(Bundle.getMessage("SignalHeadStateDark"), s.describeState(SignalHead.DARK) );
+        Assertions.assertEquals(Bundle.getMessage("SignalHeadStateRed"), s.describeState(SignalHead.RED) );
+        Assertions.assertEquals(Bundle.getMessage("SignalHeadStateFlashingRed"), s.describeState(SignalHead.FLASHRED) );
+        Assertions.assertEquals(Bundle.getMessage("SignalHeadStateYellow"), s.describeState(SignalHead.YELLOW) );
+        Assertions.assertEquals(Bundle.getMessage("SignalHeadStateFlashingYellow"), s.describeState(SignalHead.FLASHYELLOW) );
+        Assertions.assertEquals(Bundle.getMessage("SignalHeadStateGreen"), s.describeState(SignalHead.GREEN) );
+        Assertions.assertEquals(Bundle.getMessage("SignalHeadStateFlashingGreen"), s.describeState(SignalHead.FLASHGREEN) );
+        Assertions.assertEquals(Bundle.getMessage("SignalHeadStateLunar"), s.describeState(SignalHead.LUNAR) );
+        Assertions.assertEquals(Bundle.getMessage("SignalHeadStateFlashingLunar"), s.describeState(SignalHead.FLASHLUNAR) );
+        Assertions.assertEquals(Bundle.getMessage("SignalHeadStateHeld"), s.describeState(SignalHead.HELD) );
+        Assertions.assertEquals(
+            Bundle.getMessage("SignalHeadStateYellow") + " " + Bundle.getMessage("SignalHeadStateHeld"),
+            s.describeState( SignalHead.YELLOW + SignalHead.HELD ) );
+        Assertions.assertEquals(
+            Bundle.getMessage("SignalHeadStateRed") + " " + Bundle.getMessage("SignalHeadStateFlashingRed"),
+            s.describeState( SignalHead.RED + SignalHead.FLASHRED ) );
+    }
+
 }

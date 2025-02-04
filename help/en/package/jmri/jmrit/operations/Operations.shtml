@@ -430,6 +430,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#SetTrainIconCoordinates">Set Train Icon Coordinates</a></li>
 
                 <li><a href="#ExportRoutes">Export Routes</a></li>
+                
+                <li><a href="#ImportRoutes">Import Routes</a></li>
 
                 <li><a href="#ShowRoutesServicingThisLocation">Show Routes Servicing
                     Location</a></li>
@@ -2036,7 +2038,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         cars are being removed and added to the train.</p>
 
       <h4>Manifests and Switch List Options</h4>
-      There are ten checkboxes that modify both Manifests and switch lists and are as follows:
+      There are eleven checkboxes that modify both Manifests and switch lists and are as follows:
       <p>The "Print Valid" checkbox causes the program to print date and time the train was
         built, which isn't the same as when the Manifest was printed. The print time is always shown
         at the top right of the Manifest or switch list.</p>
@@ -2049,6 +2051,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         Moves" checkbox. Otherwise the program will list and mix the car set outs and local moves by
         the <a href="#TrackBlockingOrder">Track Blocking Order</a>.
       </p>
+
+      <p>If you want your locomotive set outs to appear after your car set outs select the
+        option "Print Loco Set Outs Last".</p>
 
       <p>The default is not to show load names for caboose or passenger cars on your Manifests
         and switch lists, if however you want to see load names for those cars select the
@@ -3705,8 +3710,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       Import locations allows you to populate your locations using a CSV file. First do an Export
       Locations and examine the file to see the order the data has to be entered. The import
-      locations code hasn't implemented all of the exports fields. Columns 14 through 22, and
-      columns 26 though 35 are currently ignored during an import.
+      locations code hasn't implemented all of the exports fields. Columns 15 through 23, and
+      columns 27 though 37 are currently ignored during an import.
 
       <h4 id="PrintLocation">Print or Preview</h4>
       This tool provides several options with regards to printing or previewing your locations.
@@ -4215,9 +4220,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       also overrides the generation of custom loads out of staging since the "E" load isn't used by
       the program for this car. However, if a car does arrive into staging with the RWE load name,
       the program will set the load name to the default "E", and not use the RWE addresses.
-      <p>Note that manually changing the load name will not cause the Return When Empty (RWE)
-        destination to become active, only when the car is set out by the program will the RWE
-        destination and RWE load become active.</p>
+      <p>
+        RWE uses the <a href="#CarRouting">Car Routing</a> feature to return cars to the specified
+        location. The RWE fields are disabled if routing is disabled. Note that manually changing
+        the load name will not cause the Return When Empty (RWE) destination to become active, only
+        when the car is set out by the program will the RWE destination and RWE load become active.
+      </p>
 
       <h4 id="ReturnWhenLoaded">Return When Loaded</h4>
       You can optionally enter the location and track that you want the car to return to when the
@@ -4230,9 +4238,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       the RWL load and addresses. Also when a car arrives into staging and has a custom load type of
       empty and the option to remove custom load names is enabled, the program will activate the RWL
       load and addresses.
-      <p>Note that manually changing the load name will not cause the Return When Loaded (RWL)
-        destination to become active, only when the car is set out by the program will the RWL
-        destination and RWL load name become active.</p>
+      <p>
+        RWL uses the <a href="#CarRouting">Car Routing</a> feature to return cars to the specified
+        location. The RWL fields are disabled if routing is disabled. Note that manually changing
+        the load name will not cause the Return When Loaded (RWL) destination to become active, only
+        when the car is set out by the program will the RWL destination and RWL load name become
+        active.
+      </p>
 
       <h4 id="HomeDivision">Home Division</h4>
       You can optionally select the car's home division for more prototypical car movements. See <a
@@ -4923,6 +4935,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h4 id="ExportRoutes">Export Routes</h4>
       The "Export Routes" tool produces a comma separated values (.csv) file called
       "ExportOperationsRoutes.csv" containing details of the existing routes.
+
+      <h4 id="ImportRoutes">Import Routes</h4>
+      The "Import Routes" tool reads a comma separated values (.csv) file that you can select. Use
+      the "Export Routes" tool to see the proper formating. The import tool will not replace an
+      existing route. To modify an existing route, delete or change the route's name before doing
+      the import.
+
 
       <p style="page-break-after: always">
         <a href="#toc">[Click to go back to TOC]</a>

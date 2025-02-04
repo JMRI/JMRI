@@ -1,7 +1,6 @@
 package jmri.jmrix.openlcb.swing;
 
 import java.awt.event.*;
-import javax.swing.*;
 
 import jmri.util.swing.*;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -15,7 +14,7 @@ import org.openlcb.swing.EventIdTextField;
  *
  * @author Bob Jacobsen  (C) 2024
  */
-public class NamedEventIdTextField extends JTextField {
+public class NamedEventIdTextField extends OvertypeTextArea {
         
     public NamedEventIdTextField(CanSystemConnectionMemo memo) {
         this(23, memo);  // heuristically-found default size

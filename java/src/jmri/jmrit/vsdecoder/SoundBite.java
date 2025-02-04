@@ -5,8 +5,6 @@ import jmri.AudioManager;
 import jmri.jmrit.audio.AudioBuffer;
 import jmri.jmrit.audio.AudioSource;
 import jmri.util.PhysicalLocation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * VSD implementation of an audio sound.
@@ -25,6 +23,7 @@ import org.slf4j.LoggerFactory;
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
+ * @author Klaus Killinger Copyright (C) 2025
  */
 class SoundBite extends VSDSound {
 
@@ -87,21 +86,25 @@ class SoundBite extends VSDSound {
                 sound_src.setUserName(SrcUserNamePrefix + user_name);
                 setLooped(false);
                 if (mode == BufferMode.BOUND_MODE) {
-                    sound_buf = (AudioBuffer) am.provideAudio(BufSysNamePrefix + system_name);
-                    sound_buf.setUserName(BufUserNamePrefix + user_name);
-                    if (vf == null) {
-                        log.debug("No VSD File! Filename: {}", filename);
-                        sound_buf.setURL(filename); // Path must be provided by caller.
-                    } else {
-                        java.io.InputStream ins = vf.getInputStream(filename);
-                        if (ins != null) {
-                            sound_buf.setInputStream(ins);
+                   if (checkForFreeBuffer()) {
+                        sound_buf = (AudioBuffer) am.provideAudio(BufSysNamePrefix + system_name);
+                        sound_buf.setUserName(BufUserNamePrefix + user_name);
+                        if (vf == null) {
+                            log.debug("No VSD File! Filename: {}", filename);
+                            sound_buf.setURL(filename); // Path must be provided by caller.
                         } else {
-                            return false;
+                            java.io.InputStream ins = vf.getInputStream(filename);
+                            if (ins != null) {
+                                sound_buf.setInputStream(ins);
+                            } else {
+                                return false;
+                            }
                         }
+                        sound_src.setAssignedBuffer(sound_buf);
+                        setLength();
+                    } else {
+                        return false;
                     }
-                    sound_src.setAssignedBuffer(sound_buf);
-                    setLength();
                 }
             } catch (AudioException | IllegalArgumentException ex) {
                 log.warn("Problem creating SoundBite", ex);
@@ -350,5 +353,5 @@ class SoundBite extends VSDSound {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(SoundBite.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SoundBite.class);
 }

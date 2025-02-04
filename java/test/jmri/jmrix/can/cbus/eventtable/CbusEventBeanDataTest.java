@@ -1,8 +1,5 @@
 package jmri.jmrix.can.cbus.eventtable;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.HashSet;
 
 import jmri.Light;
@@ -13,6 +10,7 @@ import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
@@ -24,44 +22,44 @@ public class CbusEventBeanDataTest {
     @Test
     public void testCTor() {
         CbusEventBeanData t = new CbusEventBeanData(new HashSet<>(0),new HashSet<>(0));
-        assertThat(t).isNotNull();
+        assertNotNull(t);
     }
-    
+
     @Test
     public void testToString(){
-        
+
         CbusLightManager lm = new CbusLightManager(memo);
         HashSet<NamedBean> hsA = new HashSet<>();
         HashSet<NamedBean> hsB = new HashSet<>();
-    
+
         Light lightA = lm.provideLight("+17");
         lightA.setUserName("MyLightA");
 
         Light lightB = lm.provideLight("+18");
         lightB.setUserName("MyLightB");
-        
+
         hsA.add(lightA);
         hsB.add(lightB);
-        
+
         CbusEventBeanData t = new CbusEventBeanData(hsA,hsB);
         assertEquals("Light On: MyLightA Light Off: MyLightB",t.toString());
 
-        assertThat(t.getActionA().size()).isEqualTo(1);
-        assertThat(t.getActionB().size()).isEqualTo(1);
-        
-        assertThat(t.getActionA().contains(lightA)).isTrue();
-        assertThat(t.getActionB().contains(lightB)).isTrue();
-        
-        
+        assertEquals( 1, t.getActionA().size());
+        assertEquals( 1, t.getActionB().size());
+
+        assertTrue( t.getActionA().contains(lightA));
+        assertTrue( t.getActionB().contains(lightB));
+
+
         t = new CbusEventBeanData(new HashSet<>(0),new HashSet<>(0));
-        assertThat(t.toString()).isEmpty();
-        
+        assertTrue(t.toString().isEmpty());
+
         lm.dispose();
-        
+
     }
-    
+
     private CanSystemConnectionMemo memo = null;
-    
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
@@ -70,7 +68,7 @@ public class CbusEventBeanDataTest {
 
     @AfterEach
     public void tearDown() {
-        Assertions.assertNotNull(memo);
+        assertNotNull(memo);
         memo.dispose();
         memo = null;
         JUnitUtil.tearDown();

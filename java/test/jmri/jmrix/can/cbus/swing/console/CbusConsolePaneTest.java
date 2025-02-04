@@ -5,9 +5,9 @@ import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import org.netbeans.jemmy.operators.*;
 
@@ -20,27 +20,27 @@ public class CbusConsolePaneTest extends jmri.util.swing.JmriPanelTest {
 
     @Override 
     @Test
-    public void testInitComponents() throws Exception{
-        // for now, just makes ure there isn't an exception.
-        ((CbusConsolePane) panel).initComponents(memo);
+    public void testInitComponents() {
+        Assertions.assertDoesNotThrow( () ->
+            ((CbusConsolePane) panel).initComponents(memo));
     }
 
     @Test
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true" )
-    public void testInitComponentsNoArgs() throws Exception{
-        // for now, just makes ure there isn't an exception.
-        ((CbusConsolePane) panel).initComponents();
+    @DisabledIfHeadless
+    public void testInitComponentsNoArgs() {
+        Assertions.assertDoesNotThrow( () ->
+            ((CbusConsolePane) panel).initComponents());
     }
 
     @Test
-    public void testInitContext() throws Exception {
-        // for now, just makes ure there isn't an exception.
-        ((CbusConsolePane) panel).initContext(memo);
+    public void testInitContext() {
+        Assertions.assertDoesNotThrow( () ->
+            ((CbusConsolePane) panel).initContext(memo));
     }
     
     @Test
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true" )
-    public void testSendCanMessageCanReply() throws Exception{
+    @DisabledIfHeadless
+    public void testSendCanMessageCanReply() {
         
         cbPanel.initComponents(memo);
         JFrameOperator jfo = createNewFrameWithPanel( cbPanel );
@@ -72,7 +72,7 @@ public class CbusConsolePaneTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @Test
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true" )
+    @DisabledIfHeadless
     public void testDisplayRtrFrame() {
     
         cbPanel.initComponents(memo);
@@ -126,11 +126,12 @@ public class CbusConsolePaneTest extends jmri.util.swing.JmriPanelTest {
     }
 
     private JFrameOperator createNewFrameWithPanel(CbusConsolePane p){
-        JmriJFrame f = new JmriJFrame();
+        JmriJFrame f = new JmriJFrame(p.getName());
         f.add(p);
-        f.setTitle(p.getName());
-        f.pack();
-        f.setVisible(true);
+        jmri.util.ThreadingUtil.runOnGUI( () -> {
+            f.pack();
+            f.setVisible(true);
+        });
         return new JFrameOperator( p.getName() );
     }
 
@@ -155,7 +156,8 @@ public class CbusConsolePaneTest extends jmri.util.swing.JmriPanelTest {
         tc = new TrafficControllerScaffold();
         memo.setTrafficController(tc);
         memo.setProtocol(ConfigurationManager.MERGCBUS);
-        panel = cbPanel = new CbusConsolePane();
+        cbPanel = new CbusConsolePane();
+        panel = cbPanel;
         helpTarget="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame";
         title="CBUS Console";
     }

@@ -770,9 +770,10 @@
 
         <li>Larry Meaney provided decoder ID for the Digitrax DN163K0b decoder</li>
 
-        <li>Eckart Meyer, <!-- emey05 -->
-         who updated the aspect controls in the DB HV 1969 signals
-         and provided the BiDiB implementation.</li>
+        <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3Aemey05">Eckart Meyer</a>, <!-- emey05 -->
+         who provided the BiDiB implementation,
+         updated the aspect controls in the DB HV 1969 signals
+         and provided enhanced Z21 server support.</li>
 
         <li>Philip Middlemiss provided a decoder definition Hornby R8215 decoder.</li>
 

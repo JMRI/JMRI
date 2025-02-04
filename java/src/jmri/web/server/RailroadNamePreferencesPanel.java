@@ -15,13 +15,17 @@ import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
 import org.openide.util.lookup.ServiceProvider;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 @ServiceProvider(service = PreferencesPanel.class)
-public class RailroadNamePreferencesPanel extends JPanel implements PreferencesPanel {
+public class RailroadNamePreferencesPanel extends JPanel implements PreferencesPanel, PropertyChangeListener {
 
     private JTextField railroadName;
     private WebServerPreferences preferences;
     public RailroadNamePreferencesPanel() {
         preferences = InstanceManager.getDefault(WebServerPreferences.class);
+        preferences.addPropertyChangeListener(this);
         initGUI();
         setGUI();
     }
@@ -103,5 +107,12 @@ public class RailroadNamePreferencesPanel extends JPanel implements PreferencesP
     @Override
     public boolean isPreferencesValid() {
         return true; // no validity checking performed
+    }
+
+    public void propertyChange(PropertyChangeEvent evt) {
+        String newRrName = evt.getNewValue().toString();
+        if (evt.getPropertyName().equals(WebServerPreferences.RAILROAD_NAME) && !this.railroadName.getText().equals(newRrName)) {
+            this.railroadName.setText(newRrName);
+        }
     }
 }

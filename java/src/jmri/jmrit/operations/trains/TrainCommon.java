@@ -2001,7 +2001,7 @@ public class TrainCommon {
                 buf.append(attribute + SPACE);
             }
         }
-        return buf.toString().trim();
+        return buf.toString().stripTrailing();
     }
 
     protected void printTrackNameHeader(PrintWriter file, String trackName, boolean isManifest) {

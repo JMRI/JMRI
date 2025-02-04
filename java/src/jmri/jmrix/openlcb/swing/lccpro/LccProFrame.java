@@ -646,6 +646,18 @@ public class LccProFrame extends TwoPaneTBWindow  {
         });
         popupMenu.add(removeMenu);
         
+        var restartMenu = new JMenuItem("Restart Node");
+        restartMenu.addActionListener((ActionEvent evt) -> {
+            restart(node);
+        });
+        popupMenu.add(restartMenu);
+        
+        var clearCdiMenu = new JMenuItem("Clear CDI Cache");
+        clearCdiMenu.addActionListener((ActionEvent evt) -> {
+            clearCDI(node);
+        });
+        popupMenu.add(clearCdiMenu);
+        
        popupMenu.show(e.getComponent(), e.getX(), e.getY());
     }
 
@@ -669,6 +681,15 @@ public class LccProFrame extends TwoPaneTBWindow  {
             groupStore.removeNodeFromGroup(node, group);
         }
         updateMatchGroupName();
+    }
+    
+    void restart(NodeID node) {
+        memo.get(OlcbInterface.class).getDatagramService()
+            .sendData(node, new int[] {0x20, 0xA9});
+    }
+    
+    void clearCDI(NodeID destNodeID) {
+        jmri.jmrix.openlcb.swing.DropCdiCache.drop(destNodeID, memo.get(OlcbInterface.class));
     }
     
     /**

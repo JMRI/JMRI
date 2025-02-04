@@ -51,8 +51,9 @@ class DCCThrottle(Jynstrument, PropertyChangeListener, AddressListener, jmri.Thr
         self.advFunctions = None
         if (self.addressPanel != None):
             self.addressPanel.removeAddressListener(self)
-            self.addressPanel = None            
-        self.getContext().removePropertyChangeListener(self)               
+            self.addressPanel = None
+        if (self.getContext() != None):
+            self.getContext().removePropertyChangeListener(self)               
 
     #Property listener part
     def propertyChange(self, event):
