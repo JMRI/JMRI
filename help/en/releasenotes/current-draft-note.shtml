@@ -90,7 +90,8 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>LocoNet Monitor and Reporters now parse LISSY RFID-7 messages as sent by the Arduino-based GCA51
+                  LocoIO 2xRFID board.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -148,7 +149,8 @@
 
         <h4>RFID</h4>
             <ul>
-                <li></li>
+                <li>A new method was added to receive RFID messages as IdTags over LocoNet, for example using the
+                  Arduino-based GCA51 LocoIO 2xRFID board.</li>
             </ul>
 
         <h4>Roco z21/Z21</h4>
