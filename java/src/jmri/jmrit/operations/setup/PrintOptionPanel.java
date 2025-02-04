@@ -153,6 +153,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         editManifestCheckBox.setToolTipText(Bundle.getMessage("UseTextEditorTip"));
         trackSummaryCheckBox.setToolTipText(Bundle.getMessage("TrackSummaryTip"));
         groupCarMovesCheckBox.setToolTipText(Bundle.getMessage("GroupCarsTip"));
+        printLocoLastCheckBox.setToolTipText(Bundle.getMessage("LocoLastTip"));
 
         addEngPickupComboboxButton.setToolTipText(Bundle.getMessage("AddMessageComboboxTip"));
         deleteEngPickupComboboxButton.setToolTipText(Bundle.getMessage("DeleteMessageComboboxTip"));

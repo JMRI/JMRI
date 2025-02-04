@@ -289,7 +289,7 @@
 
         <h4>MD Electronics</h4>
              <ul>
-                <li></li>
+                <li>Corrections to the translation into German</li>
              </ul>
 
         <h4>MGP</h4>
@@ -335,6 +335,11 @@
         <h4>Rautenhaus</h4>
             <ul>
                 <li></li>
+            </ul>
+        
+        <h4>Rampino Elektronic</h4>
+            <ul>
+                <li>Added support for the Loco-1 and Loco-2 decoders.</li>
             </ul>
 
         <h4>RR-CirKits</h4>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.11.1plus+jake+20250110T1658Z+R55020332ff8 on Fri Jan 10 11:58:44 EST 2025-->
-  <decoderIndex version="625">
+  <!--Written by JMRI version 5.11.2plus+jake+20250201T2042Z+Rfa7fd40ddb3 on Sat Feb 01 15:42:35 EST 2025-->
+  <decoderIndex version="627">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -225,6 +225,64 @@
       </family>
       <family name="No Decoder" mfg="No Decoder" file="0NoDecoder.xml">
         <model model="No Decoder" />
+      </family>
+      <family name="AE Models Loco Decoders" mfg="AE Electronic Ltd" file="AE_Models.xml">
+        <model model="AED-8PH-4-Function" numOuts="4" numFns="20" lowVersionID="0" highVersionID="255">
+          <output name="FoF" label="White" />
+          <!-- CV49-->
+          <output name="FoR" label="Yellow" />
+          <!-- CV50-->
+          <output name="F1" label="Green" />
+          <!-- CV51-->
+          <output name="F2" label="Purple" />
+          <!-- CV52-->
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <!-- CV61-->
+        </model>
+        <model model="AED-8PH-2-Function" numOuts="2" numFns="20" lowVersionID="0" highVersionID="255">
+          <output name="FoF" label="White" />
+          <!-- CV49-->
+          <output name="FoR" label="Yellow" />
+          <!-- CV50-->
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <!-- CV61-->
+        </model>
+        <model model="AED-6Pin-2-Function" numOuts="2" numFns="20" lowVersionID="0" highVersionID="255">
+          <output name="FoF" label="White" />
+          <!-- CV49-->
+          <output name="FoR" label="Yellow" />
+          <!-- CV50-->
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <!-- CV61-->
+        </model>
+        <model model="AED-8PH-6-Function" numOuts="6" numFns="20" lowVersionID="0" highVersionID="255">
+          <output name="FoF" label="White" />
+          <!-- CV49-->
+          <output name="FoR" label="Yellow" />
+          <!-- CV50-->
+          <output name="F1" label="Green" />
+          <!-- CV51-->
+          <output name="F2" label="Purple" />
+          <!-- CV52-->
+          <output name="F3" label="Brown" />
+          <!-- CV53 6 function models-->
+          <output name="F4" label="Pink" />
+          <!-- CV54 6 function models-->
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <!-- CV61-->
+        </model>
       </family>
       <family name="LocoCruiser" mfg="ANE Model Co, Ltd" lowVersionID="201" highVersionID="201" file="ANE_LC201.xml">
         <model model="LC201" numOuts="5" numFns="5">
@@ -1344,6 +1402,22 @@
         <model model="ZN8H" numOuts="2" numFns="14" productID="ZN8H" comment="Nano 8-pin wired with NEM652 harness">
           <output name="1" label="White|Pin 6" />
           <output name="2" label="Yellow|Pin 2" />
+          <output name="7" label="Rule 17|Dimming" />
+          <!-- virtual "output" -->
+          <output name="8" label="Ditch|Blink" />
+          <!-- virtual "output" -->
+          <output name="9" label="Motor|Control" />
+          <!-- virtual "output" -->
+          <output name="10" label="BEMF|Control" />
+          <!-- virtual "output" -->
+        </model>
+      </family>
+      <family name="DCC Concepts Zen Black" mfg="DCCconcepts" lowVersionID="12" highVersionID="35" file="DCC_Concepts_Zen_ABC.xml">
+        <model model="Zen Mini.4 Black" numOuts="4" numFns="14" productID="Z218" comment="HO-scale, 8 pin/21pin NEM652 harness">
+          <output name="1" label="White|Pin 8" />
+          <output name="2" label="Yellow|Pin 7" />
+          <output name="3" label="Green|Pin 15" />
+          <output name="4" label="Purple|Pin 14" />
           <output name="7" label="Rule 17|Dimming" />
           <!-- virtual "output" -->
           <output name="8" label="Ditch|Blink" />
@@ -8163,6 +8237,20 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
+        <model model="SwitchPilot Servo V3.0" numOuts="8" numFns="8" lowVersionID="201" highVersionID="201">
+          <output name="1" label="Servo|1" />
+          <output name="2" label="Servo|2" />
+          <output name="3" label="Servo|3" />
+          <output name="4" label="Servo|4" />
+          <output name="5" label="Servo|5" />
+          <output name="6" label="Servo|6" />
+          <output name="7" label="Servo|7" />
+          <output name="8" label="Servo|8" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
       </family>
       <family name="Fl decoders RailCom" mfg="Fleischmann" file="Fl_decoders_RailCom.xml">
         <model model="685303" numOuts="8" numFns="14" productID="685303">
@@ -8393,6 +8481,46 @@
           <output name="6" label="Output F" />
           <output name="7" label="Output G" />
           <output name="8" label="Output H" />
+        </model>
+      </family>
+      <family name="Hattons DCC Neo Decoders" mfg="Hattons Model Railways" file="Hattons-Neo.xml">
+        <model model="Neo 8pin 4 Function" numOuts="4" numFns="14" lowVersionID="48" highVersionID="48">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <output name="4" label="Purple" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+        </model>
+        <model model="Mini Neo 8 pin 2 Function" numOuts="2" numFns="14" lowVersionID="28" highVersionID="28">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+        </model>
+        <model model="Neo 6 pin 2 Function" numOuts="2" numFns="14" lowVersionID="68" highVersionID="68">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+        </model>
+        <model model="Neo 21 pin 6 Function" numOuts="6" numFns="14" lowVersionID="218" highVersionID="218">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="1" label="Green" />
+          <output name="2" label="Purple" />
+          <output name="3" label="Brown" />
+          <output name="4" label="Pink" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
         </model>
       </family>
       <family name="Hattons DCC Loco Decoders" mfg="Hattons Model Railways" file="Hattons.xml">
@@ -9072,8 +9200,8 @@
             <functionlabel num="22" lockable="false">Whistle Very Short Alternative</functionlabel>
           </functionlabels>
         </model>
-        <model model="Hornby TTS Hall Class 4-6-0" numOuts="3" numFns="30" productID="2699">
-          <versionCV lowVersionID="10" highVersionID="120" />
+        <model model="Hornby TTS Hall Class 4-6-0" numOuts="3" numFns="30" productID="2955">
+          <versionCV lowVersionID="10" highVersionID="132" />
           <output name="Headlight" label="Wh" />
           <output name="Rear Light" label="Ye" />
           <output name="Aux" label="Gr" />
@@ -9465,6 +9593,1750 @@
             <functionlabel num="26" lockable="True">Emergency Vehicle Bell 1920-1970</functionlabel>
             <functionlabel num="27" lockable="True">Emergency Vehicle Nee-Nah 1970-2000</functionlabel>
             <functionlabel num="28" lockable="True">Emergency Vehicle Yelper 2000-present</functionlabel>
+          </functionlabels>
+        </model>
+      </family>
+      <family name="Hornby TXS Sound Decoder" mfg="Hornby" comment="" file="HornbyTXS.xml">
+        <!-- Steam Locomotives-->
+        <model model="Hornby TXS Generic Steam" numOuts="4" numFns="30" productID="999">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Background Steam/exhaust/coasting</functionlabel>
+            <functionlabel num="2" lockable="false">Whistle Play 1(5)</functionlabel>
+            <functionlabel num="3" lockable="false">Whistle Play 2(5)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Cylinder Cock</functionlabel>
+            <functionlabel num="6" lockable="true">Wheel Slip</functionlabel>
+            <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+            <functionlabel num="8" lockable="true">Injector</functionlabel>
+            <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+            <functionlabel num="10" lockable="false">Guard's Whistle</functionlabel>
+            <functionlabel num="11" lockable="false">Coupling</functionlabel>
+            <functionlabel num="12" lockable="false">Cariage Break Squeal</functionlabel>
+            <functionlabel num="13" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Blower</functionlabel>
+            <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
+            <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+            <functionlabel num="17" lockable="true">Blow Down</functionlabel>
+            <functionlabel num="18" lockable="false">Westinghouse Pump</functionlabel>
+            <functionlabel num="19" lockable="false">Water Fill</functionlabel>
+            <functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS A1/A3 Class Steam" numOuts="4" numFns="30" productID="1,37">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Background Steam/exhaust/coasting</functionlabel>
+            <functionlabel num="2" lockable="false">Whistle Play 1(5)</functionlabel>
+            <functionlabel num="3" lockable="false">Whistle Play 2(5)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Cylinder Cock</functionlabel>
+            <functionlabel num="6" lockable="true">Wheel Slip</functionlabel>
+            <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+            <functionlabel num="8" lockable="true">Injector</functionlabel>
+            <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+            <functionlabel num="10" lockable="false">Guard's Whistle</functionlabel>
+            <functionlabel num="11" lockable="false">Coupling</functionlabel>
+            <functionlabel num="12" lockable="false">Cariage Break Squeal</functionlabel>
+            <functionlabel num="13" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Blower</functionlabel>
+            <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
+            <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+            <functionlabel num="17" lockable="true">Blow Down</functionlabel>
+            <functionlabel num="18" lockable="false">Westinghouse Pump</functionlabel>
+            <functionlabel num="19" lockable="false">Water Fill</functionlabel>
+            <functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS A4 Class Steam" numOuts="4" numFns="30" productID="2,38">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Background Steam/exhaust/coasting</functionlabel>
+            <functionlabel num="2" lockable="false">Whistle Play 1(5)</functionlabel>
+            <functionlabel num="3" lockable="false">Whistle Play 2(5)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Cylinder Cock</functionlabel>
+            <functionlabel num="6" lockable="true">Wheel Slip</functionlabel>
+            <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+            <functionlabel num="8" lockable="true">Injector</functionlabel>
+            <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+            <functionlabel num="10" lockable="false">Guard's Whistle</functionlabel>
+            <functionlabel num="11" lockable="false">Coupling</functionlabel>
+            <functionlabel num="12" lockable="false">Cariage Break Squeal</functionlabel>
+            <functionlabel num="13" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Blower</functionlabel>
+            <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
+            <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+            <functionlabel num="17" lockable="true">Blow Down</functionlabel>
+            <functionlabel num="18" lockable="false">Bell</functionlabel>
+            <functionlabel num="19" lockable="false">Water Fill</functionlabel>
+            <functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS P2 Class Steam" numOuts="4" numFns="30" productID="8">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Background Steam/exhaust/coasting</functionlabel>
+            <functionlabel num="2" lockable="false">Whistle Play 1(4)</functionlabel>
+            <functionlabel num="3" lockable="false">Whistle Play 2(4)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Cylinder Cock</functionlabel>
+            <functionlabel num="6" lockable="true">Wheel Slip</functionlabel>
+            <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+            <functionlabel num="8" lockable="true">Injector</functionlabel>
+            <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+            <functionlabel num="10" lockable="false">Guard's Whistle</functionlabel>
+            <functionlabel num="11" lockable="false">Coupling</functionlabel>
+            <functionlabel num="12" lockable="false">Cariage Break Squeal</functionlabel>
+            <functionlabel num="13" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Blower</functionlabel>
+            <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
+            <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+            <functionlabel num="17" lockable="true">Blow Down</functionlabel>
+            <functionlabel num="18" lockable="false">Water Fill</functionlabel>
+            <functionlabel num="19" lockable="false">Buffering Up</functionlabel>
+            <functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS A1 Class Tornado Steam" numOuts="4" numFns="30" productID="10">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Background Steam/exhaust/coasting</functionlabel>
+            <functionlabel num="2" lockable="false">Whistle Play 1(4)</functionlabel>
+            <functionlabel num="3" lockable="false">Whistle Play 2(4)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Cylinder Cock</functionlabel>
+            <functionlabel num="6" lockable="true">Wheel Slip</functionlabel>
+            <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+            <functionlabel num="8" lockable="true">Injector</functionlabel>
+            <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+            <functionlabel num="10" lockable="false">Guard's Whistle</functionlabel>
+            <functionlabel num="11" lockable="false">Coupling</functionlabel>
+            <functionlabel num="12" lockable="false">Cariage Break Squeal</functionlabel>
+            <functionlabel num="13" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Blower</functionlabel>
+            <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
+            <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+            <functionlabel num="17" lockable="true">Blow Down</functionlabel>
+            <functionlabel num="18" lockable="false">Westinghouse Pump</functionlabel>
+            <functionlabel num="19" lockable="false">Water Fill</functionlabel>
+            <functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS Princess Coronation Class Steam" numOuts="4" numFns="30" productID="11,52">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Background Steam/exhaust/coasting</functionlabel>
+            <functionlabel num="2" lockable="false">Whistle Play 1(4)</functionlabel>
+            <functionlabel num="3" lockable="false">Whistle Play 2(4)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Cylinder Cock</functionlabel>
+            <functionlabel num="6" lockable="true">Wheel Slip</functionlabel>
+            <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+            <functionlabel num="8" lockable="true">Injector</functionlabel>
+            <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+            <functionlabel num="10" lockable="false">Guard's Whistle</functionlabel>
+            <functionlabel num="11" lockable="false">Coupling</functionlabel>
+            <functionlabel num="12" lockable="false">Cariage Break Squeal</functionlabel>
+            <functionlabel num="13" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Blower</functionlabel>
+            <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
+            <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+            <functionlabel num="17" lockable="true">Blow Down</functionlabel>
+            <functionlabel num="18" lockable="false">Coal Pusher</functionlabel>
+            <functionlabel num="19" lockable="false">Water Fill</functionlabel>
+            <functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS 2P Class Steam" numOuts="4" numFns="30" productID="16">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Background Steam/exhaust/coasting</functionlabel>
+            <functionlabel num="2" lockable="false">Whistle Play 1(4)</functionlabel>
+            <functionlabel num="3" lockable="false">Whistle Play 2(2)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Cylinder Cock</functionlabel>
+            <functionlabel num="6" lockable="true">Wheel Slip</functionlabel>
+            <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+            <functionlabel num="8" lockable="true">Injector</functionlabel>
+            <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+            <functionlabel num="10" lockable="false">Guard's Whistle</functionlabel>
+            <functionlabel num="11" lockable="false">Coupling</functionlabel>
+            <functionlabel num="12" lockable="false">Cariage Break Squeal</functionlabel>
+            <functionlabel num="13" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Blower</functionlabel>
+            <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
+            <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+            <functionlabel num="17" lockable="true">Blow Down</functionlabel>
+            <functionlabel num="18" lockable="false">Water Fill</functionlabel>
+            <functionlabel num="19" lockable="false">Buffer Up</functionlabel>
+            <functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS 4F Class Steam" numOuts="4" numFns="30" productID="17">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Background Steam/exhaust/coasting</functionlabel>
+            <functionlabel num="2" lockable="false">Whistle Play 1(3)</functionlabel>
+            <functionlabel num="3" lockable="false">Whistle Play 2(3)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Cylinder Cock</functionlabel>
+            <functionlabel num="6" lockable="true">Wheel Slip</functionlabel>
+            <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+            <functionlabel num="8" lockable="true">Injector</functionlabel>
+            <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+            <functionlabel num="10" lockable="false">Guard's Whistle</functionlabel>
+            <functionlabel num="11" lockable="false">Coupling</functionlabel>
+            <functionlabel num="12" lockable="false">Cariage Break Squeal</functionlabel>
+            <functionlabel num="13" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Blower</functionlabel>
+            <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
+            <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+            <functionlabel num="17" lockable="true">Blow Down</functionlabel>
+            <functionlabel num="18" lockable="false">Water Fill</functionlabel>
+            <functionlabel num="19" lockable="false">Buffer Up</functionlabel>
+            <functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS Britannia Class Steam" numOuts="4" numFns="30" productID="19">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Background Steam/exhaust/coasting</functionlabel>
+            <functionlabel num="2" lockable="false">Whistle Play 1(4)</functionlabel>
+            <functionlabel num="3" lockable="false">Whistle Play 2(3)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Cylinder Cock</functionlabel>
+            <functionlabel num="6" lockable="true">Wheel Slip</functionlabel>
+            <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+            <functionlabel num="8" lockable="true">Injector</functionlabel>
+            <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+            <functionlabel num="10" lockable="false">Guard's Whistle</functionlabel>
+            <functionlabel num="11" lockable="false">Coupling</functionlabel>
+            <functionlabel num="12" lockable="false">Cariage Break Squeal</functionlabel>
+            <functionlabel num="13" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Blower</functionlabel>
+            <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
+            <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+            <functionlabel num="17" lockable="true">Blow Down</functionlabel>
+            <functionlabel num="18" lockable="false">Coal Pusher</functionlabel>
+            <functionlabel num="19" lockable="false">Water Fill</functionlabel>
+            <functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS Merchant Navy Class Steam" numOuts="4" numFns="30" productID="20">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Background Steam/exhaust/coasting</functionlabel>
+            <functionlabel num="2" lockable="false">Whistle Play 1(4)</functionlabel>
+            <functionlabel num="3" lockable="false">Whistle Play 2(4)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Cylinder Cock</functionlabel>
+            <functionlabel num="6" lockable="true">Wheel Slip</functionlabel>
+            <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+            <functionlabel num="8" lockable="true">Injector</functionlabel>
+            <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+            <functionlabel num="10" lockable="false">Guard's Whistle</functionlabel>
+            <functionlabel num="11" lockable="false">Coupling</functionlabel>
+            <functionlabel num="12" lockable="false">Cariage Break Squeal</functionlabel>
+            <functionlabel num="13" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Blower</functionlabel>
+            <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
+            <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+            <functionlabel num="17" lockable="true">Blow Down</functionlabel>
+            <functionlabel num="18" lockable="false">Westinghouse Pump</functionlabel>
+            <functionlabel num="19" lockable="false">Water Fill</functionlabel>
+            <functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS S15 Class Steam" numOuts="4" numFns="30" productID="21">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Background Steam/exhaust/coasting</functionlabel>
+            <functionlabel num="2" lockable="false">Whistle Play 1(4)</functionlabel>
+            <functionlabel num="3" lockable="false">Whistle Play 2(3)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Cylinder Cock</functionlabel>
+            <functionlabel num="6" lockable="true">Wheel Slip</functionlabel>
+            <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+            <functionlabel num="8" lockable="true">Injector</functionlabel>
+            <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+            <functionlabel num="10" lockable="false">Guard's Whistle</functionlabel>
+            <functionlabel num="11" lockable="false">Coupling</functionlabel>
+            <functionlabel num="12" lockable="false">Cariage Break Squeal</functionlabel>
+            <functionlabel num="13" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Blower</functionlabel>
+            <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
+            <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+            <functionlabel num="17" lockable="true">Blow Down</functionlabel>
+            <functionlabel num="18" lockable="false">Water Fill</functionlabel>
+            <functionlabel num="19" lockable="false">Buffer Up</functionlabel>
+            <functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS B12 Class Steam" numOuts="4" numFns="30" productID="24">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Background Steam/exhaust/coasting</functionlabel>
+            <functionlabel num="2" lockable="false">Whistle Play 1(4)</functionlabel>
+            <functionlabel num="3" lockable="false">Whistle Play 2(2)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Cylinder Cock</functionlabel>
+            <functionlabel num="6" lockable="true">Wheel Slip</functionlabel>
+            <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+            <functionlabel num="8" lockable="true">Injector</functionlabel>
+            <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+            <functionlabel num="10" lockable="false">Guard's Whistle</functionlabel>
+            <functionlabel num="11" lockable="false">Coupling</functionlabel>
+            <functionlabel num="12" lockable="false">Cariage Break Squeal</functionlabel>
+            <functionlabel num="13" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Blower</functionlabel>
+            <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
+            <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+            <functionlabel num="17" lockable="true">Blow Down</functionlabel>
+            <functionlabel num="18" lockable="false">Water Fill</functionlabel>
+            <functionlabel num="19" lockable="false">Buffer Up</functionlabel>
+            <functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS W1 Class (Original) Steam" numOuts="4" numFns="30" productID="25">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Background Steam/exhaust/coasting</functionlabel>
+            <functionlabel num="2" lockable="false">Whistle Play 1(5)</functionlabel>
+            <functionlabel num="3" lockable="false">Whistle Play 2(5)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Cylinder Cock</functionlabel>
+            <functionlabel num="6" lockable="true">Wheel Slip</functionlabel>
+            <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+            <functionlabel num="8" lockable="true">Injector</functionlabel>
+            <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+            <functionlabel num="10" lockable="false">Guard's Whistle</functionlabel>
+            <functionlabel num="11" lockable="false">Coupling</functionlabel>
+            <functionlabel num="12" lockable="false">Cariage Break Squeal</functionlabel>
+            <functionlabel num="13" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Blower</functionlabel>
+            <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
+            <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+            <functionlabel num="17" lockable="true">Blow Down</functionlabel>
+            <functionlabel num="18" lockable="false">Water Fill</functionlabel>
+            <functionlabel num="19" lockable="false">Buffer Up</functionlabel>
+            <functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS 9F 2-10-0" numOuts="4" numFns="30" productID="26">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Background Steam/exhaust/coasting</functionlabel>
+            <functionlabel num="2" lockable="false">Whistle Play 1(4)</functionlabel>
+            <functionlabel num="3" lockable="false">Whistle Play 2(4)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Cylinder Cock</functionlabel>
+            <functionlabel num="6" lockable="true">Wheel Slip</functionlabel>
+            <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+            <functionlabel num="8" lockable="true">Injector</functionlabel>
+            <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+            <functionlabel num="10" lockable="false">Guard's Whistle</functionlabel>
+            <functionlabel num="11" lockable="false">Coupling</functionlabel>
+            <functionlabel num="12" lockable="false">Cariage Break Squeal</functionlabel>
+            <functionlabel num="13" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Blower</functionlabel>
+            <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
+            <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+            <functionlabel num="17" lockable="true">Blow Down</functionlabel>
+            <functionlabel num="18" lockable="false">Wagons Passing</functionlabel>
+            <functionlabel num="19" lockable="false">Water Fill</functionlabel>
+            <functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS 5MT Black 5 4-6-0" numOuts="4" numFns="30" productID="29">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Background Steam/exhaust/coasting</functionlabel>
+            <functionlabel num="2" lockable="false">Whistle Play 1(4)</functionlabel>
+            <functionlabel num="3" lockable="false">Whistle Play 2(4)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Cylinder Cock</functionlabel>
+            <functionlabel num="6" lockable="true">Wheel Slip</functionlabel>
+            <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+            <functionlabel num="8" lockable="true">Injector</functionlabel>
+            <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+            <functionlabel num="10" lockable="false">Guard's Whistle</functionlabel>
+            <functionlabel num="11" lockable="false">Coupling</functionlabel>
+            <functionlabel num="12" lockable="false">Cariage Break Squeal</functionlabel>
+            <functionlabel num="13" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Blower</functionlabel>
+            <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
+            <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+            <functionlabel num="17" lockable="true">Blow Down</functionlabel>
+            <functionlabel num="18" lockable="false">Water Fill</functionlabel>
+            <functionlabel num="19" lockable="false">Buffering Up</functionlabel>
+            <functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode(CV120)</functionlabel>
+            <functionlabel num="26" lockable="true">Activate Coupling Mode(CV121,122)</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS Turbomotive" numOuts="4" numFns="30" productID="31">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Background Steam/exhaust/coasting</functionlabel>
+            <functionlabel num="2" lockable="false">Whistle Play 1(5)</functionlabel>
+            <functionlabel num="3" lockable="false">Whistle Fancy(2)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Engage Reverse Turbine</functionlabel>
+            <functionlabel num="6" lockable="true">Oil Pump</functionlabel>
+            <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+            <functionlabel num="8" lockable="true">Injector</functionlabel>
+            <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+            <functionlabel num="10" lockable="false">Guard's Whistle</functionlabel>
+            <functionlabel num="11" lockable="false">Coupling</functionlabel>
+            <functionlabel num="12" lockable="false">Cariage Break Squeal</functionlabel>
+            <functionlabel num="13" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Blower</functionlabel>
+            <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
+            <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+            <functionlabel num="17" lockable="true">Blow Down</functionlabel>
+            <functionlabel num="18" lockable="false">Steam Train Passing</functionlabel>
+            <functionlabel num="19" lockable="false">Water Fill</functionlabel>
+            <functionlabel num="20" lockable="true">Buffer Up</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS A1/A3 Class Flying Scotsman Steam" numOuts="4" numFns="30" productID="33">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Background Steam/exhaust/coasting</functionlabel>
+            <functionlabel num="2" lockable="false">Whistle Play (5)</functionlabel>
+            <functionlabel num="3" lockable="false">Whistle Play Fancy (5)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Cylinder Cock</functionlabel>
+            <functionlabel num="6" lockable="true">Wheel Slip</functionlabel>
+            <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+            <functionlabel num="8" lockable="true">Injector</functionlabel>
+            <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+            <functionlabel num="10" lockable="false">Guard's Whistle</functionlabel>
+            <functionlabel num="11" lockable="false">Coupling</functionlabel>
+            <functionlabel num="12" lockable="false">Cariage Break Squeal</functionlabel>
+            <functionlabel num="13" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Blower</functionlabel>
+            <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
+            <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+            <functionlabel num="17" lockable="true">Blow Down</functionlabel>
+            <functionlabel num="18" lockable="false">Scotland the Brave</functionlabel>
+            <functionlabel num="19" lockable="false">Water Fill</functionlabel>
+            <functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS P2 Prince of Wales Class Steam - ASU fitted" numOuts="4" numFns="30" productID="34">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Background Steam/exhaust/coasting</functionlabel>
+            <functionlabel num="2" lockable="false">Whistle Play 1(3)</functionlabel>
+            <functionlabel num="3" lockable="false">Whistle Play 2(3)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Cylinder Cock</functionlabel>
+            <functionlabel num="6" lockable="true">Wheel Slip</functionlabel>
+            <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+            <functionlabel num="8" lockable="true">Injector</functionlabel>
+            <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+            <functionlabel num="10" lockable="false">Guard's Whistle</functionlabel>
+            <functionlabel num="11" lockable="false">Coupling</functionlabel>
+            <functionlabel num="12" lockable="false">Cariage Break Squeal</functionlabel>
+            <functionlabel num="13" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Blower</functionlabel>
+            <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
+            <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+            <functionlabel num="17" lockable="true">Blow Down</functionlabel>
+            <functionlabel num="18" lockable="false">Westinghouse Pump</functionlabel>
+            <functionlabel num="19" lockable="false">Water Fill</functionlabel>
+            <functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS A1 A3 Class Flying Scotsman Steam" numOuts="4" numFns="30" productID="36,40">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Background Steam/exhaust/coasting</functionlabel>
+            <functionlabel num="2" lockable="false">Whistles UK (5)</functionlabel>
+            <functionlabel num="3" lockable="false">Whistles USA/Australia (5)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Cylinder Cock</functionlabel>
+            <functionlabel num="6" lockable="true">Wheel Slip</functionlabel>
+            <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+            <functionlabel num="8" lockable="true">Injector</functionlabel>
+            <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+            <functionlabel num="10" lockable="false">Guard's Whistle</functionlabel>
+            <functionlabel num="11" lockable="false">Coupling</functionlabel>
+            <functionlabel num="12" lockable="false">Cariage Break Squeal</functionlabel>
+            <functionlabel num="13" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Blower</functionlabel>
+            <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
+            <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+            <functionlabel num="17" lockable="true">Blow Down</functionlabel>
+            <functionlabel num="18" lockable="false">Scotland the Brave</functionlabel>
+            <functionlabel num="19" lockable="false">Water Fill</functionlabel>
+            <functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS B17 Streamline Class Steam" numOuts="4" numFns="30" productID="53">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Background Steam/exhaust/coasting</functionlabel>
+            <functionlabel num="2" lockable="false">Whistle Play 1(4)</functionlabel>
+            <functionlabel num="3" lockable="false">Whistle Play 2(4)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Cylinder Cock</functionlabel>
+            <functionlabel num="6" lockable="true">Wheel Slip</functionlabel>
+            <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+            <functionlabel num="8" lockable="true">Injector</functionlabel>
+            <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+            <functionlabel num="10" lockable="false">Guard's Whistle</functionlabel>
+            <functionlabel num="11" lockable="false">Coupling</functionlabel>
+            <functionlabel num="12" lockable="false">Cariage Break Squeal</functionlabel>
+            <functionlabel num="13" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Blower</functionlabel>
+            <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
+            <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+            <functionlabel num="17" lockable="true">Blow Down</functionlabel>
+            <functionlabel num="18" lockable="false">Water Fill</functionlabel>
+            <functionlabel num="19" lockable="false">Buffer Up</functionlabel>
+            <functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS BR 2MT Class Steam" numOuts="4" numFns="30" productID="54">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Background Steam/exhaust/coasting</functionlabel>
+            <functionlabel num="2" lockable="false">Whistle Play 1(4)</functionlabel>
+            <functionlabel num="3" lockable="false">Whistle Play 2(2)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Cylinder Cock</functionlabel>
+            <functionlabel num="6" lockable="true">Wheel Slip</functionlabel>
+            <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+            <functionlabel num="8" lockable="true">Injector</functionlabel>
+            <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+            <functionlabel num="10" lockable="false">Guard's Whistle</functionlabel>
+            <functionlabel num="11" lockable="false">Coupling</functionlabel>
+            <functionlabel num="12" lockable="false">Cariage Break Squeal</functionlabel>
+            <functionlabel num="13" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Blower</functionlabel>
+            <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
+            <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+            <functionlabel num="17" lockable="true">Blow Down</functionlabel>
+            <functionlabel num="18" lockable="false">Water Fill</functionlabel>
+            <functionlabel num="19" lockable="false">Buffer Up</functionlabel>
+            <functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS King Class Steam" numOuts="4" numFns="30" productID="59">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Background Steam/exhaust/coasting</functionlabel>
+            <functionlabel num="2" lockable="false">Whistle Play 1(6)</functionlabel>
+            <functionlabel num="3" lockable="false">Whistle Play 2(6)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Cylinder Cock</functionlabel>
+            <functionlabel num="6" lockable="true">Wheel Slip</functionlabel>
+            <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+            <functionlabel num="8" lockable="true">Injector</functionlabel>
+            <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+            <functionlabel num="10" lockable="false">Guard's Whistle</functionlabel>
+            <functionlabel num="11" lockable="false">Coupling</functionlabel>
+            <functionlabel num="12" lockable="false">Cariage Break Squeal</functionlabel>
+            <functionlabel num="13" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Blower</functionlabel>
+            <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
+            <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+            <functionlabel num="17" lockable="true">Blow Down</functionlabel>
+            <functionlabel num="18" lockable="false">Water Fill</functionlabel>
+            <functionlabel num="19" lockable="false">Buffering Up</functionlabel>
+            <functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS Hall Class Steam" numOuts="4" numFns="30" productID="61">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Background Steam/exhaust/coasting</functionlabel>
+            <functionlabel num="2" lockable="false">Whistle Play 1(8)</functionlabel>
+            <functionlabel num="3" lockable="false">Whistle Play 2(8)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Cylinder Cock</functionlabel>
+            <functionlabel num="6" lockable="true">Wheel Slip</functionlabel>
+            <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+            <functionlabel num="8" lockable="true">Injector</functionlabel>
+            <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+            <functionlabel num="10" lockable="false">Guard's Whistle</functionlabel>
+            <functionlabel num="11" lockable="false">Coupling</functionlabel>
+            <functionlabel num="12" lockable="false">Cariage Break Squeal</functionlabel>
+            <functionlabel num="13" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Blower</functionlabel>
+            <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
+            <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+            <functionlabel num="17" lockable="true">Blow Down</functionlabel>
+            <functionlabel num="18" lockable="false">Water Fill</functionlabel>
+            <functionlabel num="19" lockable="false">Buffering Up</functionlabel>
+            <functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS W1 Class (Rebuilt) Steam" numOuts="4" numFns="30" productID="65">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Background Steam/exhaust/coasting</functionlabel>
+            <functionlabel num="2" lockable="false">Whistle Play 1(5)</functionlabel>
+            <functionlabel num="3" lockable="false">Whistle Play 2(5)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Cylinder Cock</functionlabel>
+            <functionlabel num="6" lockable="true">Wheel Slip</functionlabel>
+            <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+            <functionlabel num="8" lockable="true">Injector</functionlabel>
+            <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+            <functionlabel num="10" lockable="false">Guard's Whistle</functionlabel>
+            <functionlabel num="11" lockable="false">Coupling</functionlabel>
+            <functionlabel num="12" lockable="false">Cariage Break Squeal</functionlabel>
+            <functionlabel num="13" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Blower</functionlabel>
+            <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
+            <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+            <functionlabel num="17" lockable="true">Blow Down</functionlabel>
+            <functionlabel num="18" lockable="false">Water Fill</functionlabel>
+            <functionlabel num="19" lockable="false">Buffering Up</functionlabel>
+            <functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS Duke of Gloucester Class Steam" numOuts="4" numFns="30" productID="66">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Background Steam/exhaust/coasting</functionlabel>
+            <functionlabel num="2" lockable="false">Whistle Play 1(4)</functionlabel>
+            <functionlabel num="3" lockable="false">Whistle Play 2(4)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Cylinder Cock</functionlabel>
+            <functionlabel num="6" lockable="true">Wheel Slip</functionlabel>
+            <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+            <functionlabel num="8" lockable="true">Injector</functionlabel>
+            <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+            <functionlabel num="10" lockable="false">Guard's Whistle</functionlabel>
+            <functionlabel num="11" lockable="false">Coupling</functionlabel>
+            <functionlabel num="12" lockable="false">Cariage Break Squeal</functionlabel>
+            <functionlabel num="13" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Blower</functionlabel>
+            <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
+            <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+            <functionlabel num="17" lockable="true">Blow Down</functionlabel>
+            <functionlabel num="18" lockable="false">Water Fill</functionlabel>
+            <functionlabel num="19" lockable="false">Westinghouse Pump</functionlabel>
+            <functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS Castle Class Steam" numOuts="4" numFns="30" productID="67">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Background Steam/exhaust/coasting</functionlabel>
+            <functionlabel num="2" lockable="false">Whistle Play 1(6)</functionlabel>
+            <functionlabel num="3" lockable="false">Whistle Play 2(6)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Cylinder Cock</functionlabel>
+            <functionlabel num="6" lockable="true">Wheel Slip</functionlabel>
+            <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+            <functionlabel num="8" lockable="true">Injector</functionlabel>
+            <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+            <functionlabel num="10" lockable="false">Guard's Whistle</functionlabel>
+            <functionlabel num="11" lockable="false">Coupling</functionlabel>
+            <functionlabel num="12" lockable="false">Cariage Break Squeal</functionlabel>
+            <functionlabel num="13" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Blower</functionlabel>
+            <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
+            <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+            <functionlabel num="17" lockable="true">Blow Down</functionlabel>
+            <functionlabel num="18" lockable="false">Water Fill</functionlabel>
+            <functionlabel num="19" lockable="false">Buffer Up</functionlabel>
+            <functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS Princess Royal Class Steam" numOuts="4" numFns="30" productID="68">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Background Steam/exhaust/coasting</functionlabel>
+            <functionlabel num="2" lockable="false">Whistle Play 1(6)</functionlabel>
+            <functionlabel num="3" lockable="false">Whistle Play 2(6)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Cylinder Cock</functionlabel>
+            <functionlabel num="6" lockable="true">Wheel Slip</functionlabel>
+            <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+            <functionlabel num="8" lockable="true">Injector</functionlabel>
+            <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+            <functionlabel num="10" lockable="false">Guard's Whistle</functionlabel>
+            <functionlabel num="11" lockable="false">Coupling</functionlabel>
+            <functionlabel num="12" lockable="false">Cariage Break Squeal</functionlabel>
+            <functionlabel num="13" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Blower</functionlabel>
+            <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
+            <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+            <functionlabel num="17" lockable="true">Blow Down</functionlabel>
+            <functionlabel num="18" lockable="false">Water Fill</functionlabel>
+            <functionlabel num="19" lockable="false">Buffer Up</functionlabel>
+            <functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS Lord Nelson Class Steam" numOuts="4" numFns="30" productID="69">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Background Steam/exhaust/coasting</functionlabel>
+            <functionlabel num="2" lockable="false">Whistle Play 1(8)</functionlabel>
+            <functionlabel num="3" lockable="false">Whistle Play 2(8)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Cylinder Cock</functionlabel>
+            <functionlabel num="6" lockable="true">Wheel Slip</functionlabel>
+            <functionlabel num="7" lockable="true">Coal Shovelling</functionlabel>
+            <functionlabel num="8" lockable="true">Injector</functionlabel>
+            <functionlabel num="9" lockable="true">Safety Valve</functionlabel>
+            <functionlabel num="10" lockable="false">Guard's Whistle</functionlabel>
+            <functionlabel num="11" lockable="false">Coupling</functionlabel>
+            <functionlabel num="12" lockable="false">Cariage Break Squeal</functionlabel>
+            <functionlabel num="13" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Blower</functionlabel>
+            <functionlabel num="15" lockable="false">Door Slamming</functionlabel>
+            <functionlabel num="16" lockable="true">Fireman's Breakfast</functionlabel>
+            <functionlabel num="17" lockable="true">Blow Down</functionlabel>
+            <functionlabel num="18" lockable="false">Water Fill</functionlabel>
+            <functionlabel num="19" lockable="false">Buffer Up</functionlabel>
+            <functionlabel num="20" lockable="true">Toggle Chuff/Coast</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <!-- Diesel Locomotives-->
+        <model model="Hornby TXS Class 43 Valenta Diesel" numOuts="4" numFns="30" productID="3,41">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Sound Enable/Engine Start</functionlabel>
+            <functionlabel num="2" lockable="false">Multiple Horns (4)</functionlabel>
+            <functionlabel num="3" lockable="false">Mutiple Horns Fancy (4)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="false">Notch Up</functionlabel>
+            <functionlabel num="6" lockable="false">Notch Down</functionlabel>
+            <functionlabel num="7" lockable="false">Return to Idle</functionlabel>
+            <functionlabel num="8" lockable="true">Thrash</functionlabel>
+            <functionlabel num="9" lockable="true">Diesel Cold Start overide</functionlabel>
+            <functionlabel num="10" lockable="true">Compressor (Manual)</functionlabel>
+            <functionlabel num="11" lockable="true">Windscreen Wipers</functionlabel>
+            <functionlabel num="12" lockable="true">Roof Fan</functionlabel>
+            <functionlabel num="13" lockable="false">Guard to Driver Buzzer</functionlabel>
+            <functionlabel num="14" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="15" lockable="false">Cab Door Shut</functionlabel>
+            <functionlabel num="16" lockable="true">Primer</functionlabel>
+            <functionlabel num="17" lockable="false">Fire Bell Test</functionlabel>
+            <functionlabel num="18" lockable="false">Guards Whistle</functionlabel>
+            <functionlabel num="19" lockable="false">Automatic Warning System Test</functionlabel>
+            <functionlabel num="20" lockable="false">Drivers Safety Beeper</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS Class 43 MTU Diesel" numOuts="4" numFns="30" productID="4,44">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Sound Enable/Engine Start</functionlabel>
+            <functionlabel num="2" lockable="false">Multiple Horns (5)</functionlabel>
+            <functionlabel num="3" lockable="false">Mutiple Horns Fancy (4)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="false">Notch Up</functionlabel>
+            <functionlabel num="6" lockable="false">Notch Down</functionlabel>
+            <functionlabel num="7" lockable="false">Return to Idle</functionlabel>
+            <functionlabel num="8" lockable="true">Thrash</functionlabel>
+            <functionlabel num="9" lockable="true">Diesel Cold Start overide</functionlabel>
+            <functionlabel num="10" lockable="true">Compressor (Manual)</functionlabel>
+            <functionlabel num="11" lockable="true">Windscreen Wipers</functionlabel>
+            <functionlabel num="12" lockable="true">Roof Fan</functionlabel>
+            <functionlabel num="13" lockable="false">Guard to Driver Buzzer</functionlabel>
+            <functionlabel num="14" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="15" lockable="false">Cab Door Shut</functionlabel>
+            <functionlabel num="16" lockable="true">Primer</functionlabel>
+            <functionlabel num="17" lockable="false">Fire Bell Test</functionlabel>
+            <functionlabel num="18" lockable="false">Guards Whistle</functionlabel>
+            <functionlabel num="19" lockable="false">Automatic Warning System Test</functionlabel>
+            <functionlabel num="20" lockable="false">Drivers Safety Beeper</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS Class 08 Diesel" numOuts="4" numFns="30" productID="9">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Sound Enable/Engine Start</functionlabel>
+            <functionlabel num="2" lockable="false">Multiple Horns (2)</functionlabel>
+            <functionlabel num="3" lockable="false">Mutiple Whistles (2)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="false">Notch Up</functionlabel>
+            <functionlabel num="6" lockable="false">Notch Down</functionlabel>
+            <functionlabel num="7" lockable="false">Return to Idle</functionlabel>
+            <functionlabel num="8" lockable="true">Thrash</functionlabel>
+            <functionlabel num="9" lockable="true">Diesel Cold Start overide</functionlabel>
+            <functionlabel num="10" lockable="true">Compressor (Manual)</functionlabel>
+            <functionlabel num="11" lockable="false">Reverser</functionlabel>
+            <functionlabel num="12" lockable="true">Spirax Valve</functionlabel>
+            <functionlabel num="13" lockable="false">Air Dump</functionlabel>
+            <functionlabel num="14" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="15" lockable="false">Air Release</functionlabel>
+            <functionlabel num="16" lockable="false">Detonators</functionlabel>
+            <functionlabel num="17" lockable="false">Coupling</functionlabel>
+            <functionlabel num="18" lockable="true">Primer</functionlabel>
+            <functionlabel num="19" lockable="true">Exhauster</functionlabel>
+            <functionlabel num="20" lockable="false">Hand Brake</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS Class 37 Diesel" numOuts="4" numFns="30" productID="13">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Sound Enable/Engine Start</functionlabel>
+            <functionlabel num="2" lockable="false">Multiple Horns (4)</functionlabel>
+            <functionlabel num="3" lockable="false">Mutiple Horns Fancy (5)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="false">Notch Up</functionlabel>
+            <functionlabel num="6" lockable="false">Notch Down</functionlabel>
+            <functionlabel num="7" lockable="false">Return to Idle</functionlabel>
+            <functionlabel num="8" lockable="true">Thrash</functionlabel>
+            <functionlabel num="9" lockable="true">Diesel Cold Start overide</functionlabel>
+            <functionlabel num="10" lockable="true">Compressor (Manual)</functionlabel>
+            <functionlabel num="11" lockable="true">Spirax Valve</functionlabel>
+            <functionlabel num="12" lockable="true">Fan</functionlabel>
+            <functionlabel num="13" lockable="false">AWS Warning System Test</functionlabel>
+            <functionlabel num="14" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="15" lockable="false">Air Release</functionlabel>
+            <functionlabel num="16" lockable="false">Cab Door</functionlabel>
+            <functionlabel num="17" lockable="false">AWS Warning Siren</functionlabel>
+            <functionlabel num="18" lockable="true">Primer</functionlabel>
+            <functionlabel num="19" lockable="false">Guards Whistle</functionlabel>
+            <functionlabel num="20" lockable="false">Wagons Clanging</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS Class 67 Diesel" numOuts="4" numFns="30" productID="15">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Sound Enable/Engine Start</functionlabel>
+            <functionlabel num="2" lockable="false">Multiple Horns (8)</functionlabel>
+            <functionlabel num="3" lockable="false">Mutiple Horns Fancy (7)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="false">Notch Up</functionlabel>
+            <functionlabel num="6" lockable="false">Notch Down</functionlabel>
+            <functionlabel num="7" lockable="false">Return to Idle</functionlabel>
+            <functionlabel num="8" lockable="true">Thrash</functionlabel>
+            <functionlabel num="9" lockable="true">Diesel Cold Start overide</functionlabel>
+            <functionlabel num="10" lockable="true">Compressor (Manual)</functionlabel>
+            <functionlabel num="11" lockable="true">Cooling Fan</functionlabel>
+            <functionlabel num="12" lockable="true">Spirax Valve</functionlabel>
+            <functionlabel num="13" lockable="false">Carriage Brake Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="15" lockable="false">Cab Door</functionlabel>
+            <functionlabel num="16" lockable="false">Buffering</functionlabel>
+            <functionlabel num="17" lockable="false">AWS Warning Siren</functionlabel>
+            <functionlabel num="18" lockable="false">Guards Whistle</functionlabel>
+            <functionlabel num="19" lockable="false">Coupling</functionlabel>
+            <functionlabel num="20" lockable="true">Carriages Passing</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS Class 31 Diesel" numOuts="4" numFns="30" productID="18">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Sound Enable/Engine Start</functionlabel>
+            <functionlabel num="2" lockable="false">Multiple Horns (3)</functionlabel>
+            <functionlabel num="3" lockable="false">Mutiple Horns Fancy (5)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="false">Notch Up</functionlabel>
+            <functionlabel num="6" lockable="false">Notch Down</functionlabel>
+            <functionlabel num="7" lockable="false">Return to Idle</functionlabel>
+            <functionlabel num="8" lockable="true">Thrash</functionlabel>
+            <functionlabel num="9" lockable="true">Diesel Cold Start overide</functionlabel>
+            <functionlabel num="10" lockable="true">Compressor (Manual)</functionlabel>
+            <functionlabel num="11" lockable="true">Fan</functionlabel>
+            <functionlabel num="12" lockable="true">Spirax Valve</functionlabel>
+            <functionlabel num="13" lockable="false">Carriage Brake Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="15" lockable="false">Cab Door</functionlabel>
+            <functionlabel num="16" lockable="false">Buffering Up</functionlabel>
+            <functionlabel num="17" lockable="true">Primer</functionlabel>
+            <functionlabel num="18" lockable="false">Guards Whistle</functionlabel>
+            <functionlabel num="19" lockable="false">Coupling</functionlabel>
+            <functionlabel num="20" lockable="false">Wagons Clanging</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS Class 50 Diesel" numOuts="4" numFns="30" productID="22,50">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Sound Enable/Engine Start</functionlabel>
+            <functionlabel num="2" lockable="false">Multiple Horns (4)</functionlabel>
+            <functionlabel num="3" lockable="false">Mutiple Horns Fancy (4)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="false">Notch Up</functionlabel>
+            <functionlabel num="6" lockable="false">Notch Down</functionlabel>
+            <functionlabel num="7" lockable="false">Return to Idle</functionlabel>
+            <functionlabel num="8" lockable="true">Thrash</functionlabel>
+            <functionlabel num="9" lockable="true">Diesel Cold Start overide</functionlabel>
+            <functionlabel num="10" lockable="true">Radiator Fan</functionlabel>
+            <functionlabel num="11" lockable="false">Air Release</functionlabel>
+            <functionlabel num="12" lockable="true">Spirax Valve</functionlabel>
+            <functionlabel num="13" lockable="true">Traction Motor Blowers</functionlabel>
+            <functionlabel num="14" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="15" lockable="false">Oil Primer</functionlabel>
+            <functionlabel num="16" lockable="false">Cab Door</functionlabel>
+            <functionlabel num="17" lockable="true">BIS Fire Bell</functionlabel>
+            <functionlabel num="18" lockable="false">Guards Whistle</functionlabel>
+            <functionlabel num="19" lockable="true">Lift Pump</functionlabel>
+            <functionlabel num="20" lockable="false">Buffering Up</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS Class 66 Diesel" numOuts="4" numFns="30" productID="23">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Sound Enable/Engine Start</functionlabel>
+            <functionlabel num="2" lockable="false">Multiple Horns (5)</functionlabel>
+            <functionlabel num="3" lockable="false">Mutiple Horns Fancy (2)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="false">Notch Up</functionlabel>
+            <functionlabel num="6" lockable="false">Notch Down</functionlabel>
+            <functionlabel num="7" lockable="false">Return to Idle</functionlabel>
+            <functionlabel num="8" lockable="true">Thrash</functionlabel>
+            <functionlabel num="9" lockable="true">Diesel Cold Start overide</functionlabel>
+            <functionlabel num="10" lockable="true">Radiator Fan</functionlabel>
+            <functionlabel num="11" lockable="true">Wipers</functionlabel>
+            <functionlabel num="12" lockable="true">Spirax Valve</functionlabel>
+            <functionlabel num="13" lockable="false">Brake Application</functionlabel>
+            <functionlabel num="14" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="15" lockable="false">Brake Release</functionlabel>
+            <functionlabel num="16" lockable="false">Door Slam</functionlabel>
+            <functionlabel num="17" lockable="false">Buffering</functionlabel>
+            <functionlabel num="18" lockable="true">Primer and Alarm</functionlabel>
+            <functionlabel num="19" lockable="false">Guards Whistle</functionlabel>
+            <functionlabel num="20" lockable="false">Wagons Buffering</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS Class 55 Diesel" numOuts="4" numFns="30" productID="32">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Sound Enable/Engine Start</functionlabel>
+            <functionlabel num="2" lockable="false">Multiple Horns (5)</functionlabel>
+            <functionlabel num="3" lockable="false">Mutiple Horns Fancy (2)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="false">Notch Up</functionlabel>
+            <functionlabel num="6" lockable="false">Notch Down</functionlabel>
+            <functionlabel num="7" lockable="false">Return to Idle</functionlabel>
+            <functionlabel num="8" lockable="true">Thrash</functionlabel>
+            <functionlabel num="9" lockable="true">Diesel Cold Start overide</functionlabel>
+            <functionlabel num="10" lockable="true">Radiator Fan</functionlabel>
+            <functionlabel num="11" lockable="true">Windscreen Wipers</functionlabel>
+            <functionlabel num="12" lockable="true">Spirax Valve</functionlabel>
+            <functionlabel num="13" lockable="false">Carriage Brake Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="15" lockable="false">Brake Release</functionlabel>
+            <functionlabel num="16" lockable="true">Passing Carriages</functionlabel>
+            <functionlabel num="17" lockable="false">Coupling</functionlabel>
+            <functionlabel num="18" lockable="false">Guards Whistle</functionlabel>
+            <functionlabel num="19" lockable="false">Wagons Buffering</functionlabel>
+            <functionlabel num="20" lockable="false">Cab Door</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS Class 56 Diesel" numOuts="4" numFns="30" productID="42">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Sound Enable/Engine Start</functionlabel>
+            <functionlabel num="2" lockable="false">Multiple Horns (5)</functionlabel>
+            <functionlabel num="3" lockable="false">Mutiple Horns Fancy (2)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="false">Notch Up</functionlabel>
+            <functionlabel num="6" lockable="false">Notch Down</functionlabel>
+            <functionlabel num="7" lockable="false">Return to Idle</functionlabel>
+            <functionlabel num="8" lockable="true">Thrash</functionlabel>
+            <functionlabel num="9" lockable="true">Diesel Cold Start overide</functionlabel>
+            <functionlabel num="10" lockable="true">Compressor</functionlabel>
+            <functionlabel num="11" lockable="false">Wagons Buffering</functionlabel>
+            <functionlabel num="12" lockable="true">Spirax Valve</functionlabel>
+            <functionlabel num="13" lockable="false">Bell</functionlabel>
+            <functionlabel num="14" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="15" lockable="false">Brake Release</functionlabel>
+            <functionlabel num="16" lockable="false">Cab Door</functionlabel>
+            <functionlabel num="17" lockable="false">Coupling</functionlabel>
+            <functionlabel num="18" lockable="false">Guards Whistle</functionlabel>
+            <functionlabel num="19" lockable="false">Buffer Up</functionlabel>
+            <functionlabel num="20" lockable="false">Cab Beep</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS Class 47 Diesel" numOuts="4" numFns="30" productID="43">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Sound Enable/Engine Start</functionlabel>
+            <functionlabel num="2" lockable="false">Multiple Horns (5)</functionlabel>
+            <functionlabel num="3" lockable="false">Mutiple Horns Fancy (2)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="false">Notch Up</functionlabel>
+            <functionlabel num="6" lockable="false">Notch Down</functionlabel>
+            <functionlabel num="7" lockable="false">Return to Idle</functionlabel>
+            <functionlabel num="8" lockable="true">Thrash</functionlabel>
+            <functionlabel num="9" lockable="true">Diesel Cold Start overide</functionlabel>
+            <functionlabel num="10" lockable="true">Compressor</functionlabel>
+            <functionlabel num="11" lockable="true">Spirax Valve</functionlabel>
+            <functionlabel num="12" lockable="true">Cooling Fan</functionlabel>
+            <functionlabel num="13" lockable="false">Carriage Brake Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="15" lockable="true">Tripple Pump</functionlabel>
+            <functionlabel num="16" lockable="false">Buffer Up</functionlabel>
+            <functionlabel num="17" lockable="false">Door Slam</functionlabel>
+            <functionlabel num="18" lockable="false">Coupling</functionlabel>
+            <functionlabel num="19" lockable="false">Guards Whistle</functionlabel>
+            <functionlabel num="20" lockable="false">Wagons Clanging</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS Class 60 Diesel" numOuts="4" numFns="30" productID="45">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Sound Enable/Engine Start</functionlabel>
+            <functionlabel num="2" lockable="false">Multiple Horns (4)</functionlabel>
+            <functionlabel num="3" lockable="false">Mutiple Horns Fancy (2)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="false">Notch Up</functionlabel>
+            <functionlabel num="6" lockable="false">Notch Down</functionlabel>
+            <functionlabel num="7" lockable="false">Return to Idle</functionlabel>
+            <functionlabel num="8" lockable="true">Thrash</functionlabel>
+            <functionlabel num="9" lockable="true">Diesel Cold Start overide</functionlabel>
+            <functionlabel num="10" lockable="true">Compressor</functionlabel>
+            <functionlabel num="11" lockable="false">Wagons Buffering</functionlabel>
+            <functionlabel num="12" lockable="true">Spirax Valve</functionlabel>
+            <functionlabel num="13" lockable="true">Fan</functionlabel>
+            <functionlabel num="14" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="15" lockable="false">Coulping</functionlabel>
+            <functionlabel num="16" lockable="false">Door Slam</functionlabel>
+            <functionlabel num="17" lockable="false">Buffering</functionlabel>
+            <functionlabel num="18" lockable="true">Primer</functionlabel>
+            <functionlabel num="19" lockable="false">Guards Whistle</functionlabel>
+            <functionlabel num="20" lockable="false">Wagons Clanging</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS Class 66 Diesel - Coronation Edition" numOuts="4" numFns="30" productID="46">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Sound Enable/Engine Start</functionlabel>
+            <functionlabel num="2" lockable="false">Multiple Horns (5)</functionlabel>
+            <functionlabel num="3" lockable="false">Mutiple Horns Fancy (3)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="false">Notch Up</functionlabel>
+            <functionlabel num="6" lockable="false">Notch Down</functionlabel>
+            <functionlabel num="7" lockable="false">Return to Idle</functionlabel>
+            <functionlabel num="8" lockable="true">Thrash</functionlabel>
+            <functionlabel num="9" lockable="true">Diesel Cold Start overide</functionlabel>
+            <functionlabel num="10" lockable="true">Compressor</functionlabel>
+            <functionlabel num="11" lockable="true">Wipers</functionlabel>
+            <functionlabel num="12" lockable="true">Spirax Valve</functionlabel>
+            <functionlabel num="13" lockable="false">Brake Application</functionlabel>
+            <functionlabel num="14" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="15" lockable="false">Brake Release</functionlabel>
+            <functionlabel num="16" lockable="false">Door Slam</functionlabel>
+            <functionlabel num="17" lockable="false">Buffering</functionlabel>
+            <functionlabel num="18" lockable="true">Primer and Alarm</functionlabel>
+            <functionlabel num="19" lockable="false">Guards Whistle</functionlabel>
+            <functionlabel num="20" lockable="false">God Save The King</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS Class 20 Diesel" numOuts="4" numFns="30" productID="58">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Sound Enable/Engine Start</functionlabel>
+            <functionlabel num="2" lockable="false">Multiple Horns (6)</functionlabel>
+            <functionlabel num="3" lockable="false">Mutiple Horns Fancy (6)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="false">Notch Up</functionlabel>
+            <functionlabel num="6" lockable="false">Notch Down</functionlabel>
+            <functionlabel num="7" lockable="false">Return to Idle</functionlabel>
+            <functionlabel num="8" lockable="true">Thrash</functionlabel>
+            <functionlabel num="9" lockable="true">Diesel Cold Start overide</functionlabel>
+            <functionlabel num="10" lockable="true">Destroying Vacuum</functionlabel>
+            <functionlabel num="11" lockable="true">Spirax Valve</functionlabel>
+            <functionlabel num="12" lockable="true">Cooling Fan</functionlabel>
+            <functionlabel num="13" lockable="true">Primer</functionlabel>
+            <functionlabel num="14" lockable="false">Flange Squeal</functionlabel>
+            <functionlabel num="15" lockable="false">Brake Release</functionlabel>
+            <functionlabel num="16" lockable="false">Door Slam</functionlabel>
+            <functionlabel num="17" lockable="false">Buffer Up</functionlabel>
+            <functionlabel num="18" lockable="false">Coupling</functionlabel>
+            <functionlabel num="19" lockable="false">Guards Whistle</functionlabel>
+            <functionlabel num="20" lockable="false">Wagons Clanging</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <!-- Electric and Electric/Diesel-->
+        <model model="Hornby TXS Class 91 Electric" numOuts="4" numFns="30" productID="5">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Sound Enable/Engine Start</functionlabel>
+            <functionlabel num="2" lockable="false">Multiple Horns (4)</functionlabel>
+            <functionlabel num="3" lockable="false">Mutiple Horns Fancy (3)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="false">Cab Start Up</functionlabel>
+            <functionlabel num="6" lockable="false">Detonators</functionlabel>
+            <functionlabel num="7" lockable="true">Spirax Valve</functionlabel>
+            <functionlabel num="8" lockable="true">Mk4 Doors Open/Close</functionlabel>
+            <functionlabel num="9" lockable="false">AWS Warning System</functionlabel>
+            <functionlabel num="10" lockable="true">Compressor</functionlabel>
+            <functionlabel num="11" lockable="true">Wipers</functionlabel>
+            <functionlabel num="12" lockable="true">Slow Speed Rail Clack</functionlabel>
+            <functionlabel num="13" lockable="false">Pantograph Arc</functionlabel>
+            <functionlabel num="14" lockable="false">Flange Squeal</functionlabel>
+            <functionlabel num="15" lockable="false">Cab Door Close</functionlabel>
+            <functionlabel num="16" lockable="false">Door Slam</functionlabel>
+            <functionlabel num="17" lockable="true">General Station Sounds</functionlabel>
+            <functionlabel num="18" lockable="false">Passing at Speed</functionlabel>
+            <functionlabel num="19" lockable="false">Guards Whistle</functionlabel>
+            <functionlabel num="20" lockable="false">Air Release</functionlabel>
+            <functionlabel num="21" lockable="true">White Headlights Off</functionlabel>
+            <functionlabel num="22" lockable="true">Red Rear Lights Off</functionlabel>
+            <functionlabel num="23" lockable="true">Cab Light</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS Class 73 Diesel/Electric" numOuts="4" numFns="30" productID="6">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Sound Enable/Engine Start</functionlabel>
+            <functionlabel num="2" lockable="false">Multiple Horns (6)</functionlabel>
+            <functionlabel num="3" lockable="false">Mutiple Horns Fancy (6)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Engine Mode Select/Transition (Diesel Default)</functionlabel>
+            <functionlabel num="6" lockable="true">Ignition</functionlabel>
+            <functionlabel num="7" lockable="false">General sounds just before moving off</functionlabel>
+            <functionlabel num="8" lockable="false">Air Release</functionlabel>
+            <functionlabel num="9" lockable="false">Diesel Cold Start overide</functionlabel>
+            <functionlabel num="10" lockable="true">Compressor</functionlabel>
+            <functionlabel num="11" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="12" lockable="true">Passing with Electric Arcing</functionlabel>
+            <functionlabel num="13" lockable="false">Carriages Passing</functionlabel>
+            <functionlabel num="14" lockable="false">Moving @20mph over points with bell</functionlabel>
+            <functionlabel num="15" lockable="true">Moving @20mph over points</functionlabel>
+            <functionlabel num="16" lockable="false">Cab Warning Bell</functionlabel>
+            <functionlabel num="17" lockable="true">General Station Sounds</functionlabel>
+            <functionlabel num="18" lockable="false">Coupling</functionlabel>
+            <functionlabel num="19" lockable="false">Guards Whistle</functionlabel>
+            <functionlabel num="20" lockable="true">Wagons Clanging</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS Class 800 Diesel/Electric" numOuts="4" numFns="30" productID="7">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Sound Enable/Engine Start</functionlabel>
+            <functionlabel num="2" lockable="false">Multiple Horns (8)</functionlabel>
+            <functionlabel num="3" lockable="false">Mutiple Horns Fancy (8)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="true">Engine Mode Select/Transition (Diesel Default)</functionlabel>
+            <functionlabel num="6" lockable="true">Detonators</functionlabel>
+            <functionlabel num="7" lockable="true">Air Conditioning</functionlabel>
+            <functionlabel num="8" lockable="true">Doors Open/Close</functionlabel>
+            <functionlabel num="9" lockable="false">AWS Warning Siren</functionlabel>
+            <functionlabel num="10" lockable="true">Compressor</functionlabel>
+            <functionlabel num="11" lockable="true">Wipers</functionlabel>
+            <functionlabel num="12" lockable="true">Slow Speed Rail Clack</functionlabel>
+            <functionlabel num="13" lockable="false">Pantograph Arc</functionlabel>
+            <functionlabel num="14" lockable="false">Flange Squeal</functionlabel>
+            <functionlabel num="15" lockable="false">Cab Door Close</functionlabel>
+            <functionlabel num="16" lockable="true">Coupling Engage</functionlabel>
+            <functionlabel num="17" lockable="true">General Station Sounds</functionlabel>
+            <functionlabel num="18" lockable="false">Passing at Speed</functionlabel>
+            <functionlabel num="19" lockable="false">Guards Whistle</functionlabel>
+            <functionlabel num="20" lockable="false">Communications</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS Class 423 VEP Electric" numOuts="4" numFns="30" productID="27">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Sound Enable/Engine Start</functionlabel>
+            <functionlabel num="2" lockable="false">Multiple Horns (4)</functionlabel>
+            <functionlabel num="3" lockable="false">Mutiple Horns Fancy (3)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="false">Cab Start Up</functionlabel>
+            <functionlabel num="6" lockable="false">Route Blinds</functionlabel>
+            <functionlabel num="7" lockable="true">Poppet Valve</functionlabel>
+            <functionlabel num="8" lockable="false">Coach Doors Slam</functionlabel>
+            <functionlabel num="9" lockable="false">AWS Warning Siren</functionlabel>
+            <functionlabel num="10" lockable="true">Compressor</functionlabel>
+            <functionlabel num="11" lockable="true">Wipers</functionlabel>
+            <functionlabel num="12" lockable="true">Slow Speed Rail Clack</functionlabel>
+            <functionlabel num="13" lockable="false">3rd Rail Arc</functionlabel>
+            <functionlabel num="14" lockable="true">Flange Squeal</functionlabel>
+            <functionlabel num="15" lockable="false">Door Slam</functionlabel>
+            <functionlabel num="16" lockable="false">Coupling</functionlabel>
+            <functionlabel num="17" lockable="true">General Station Sounds</functionlabel>
+            <functionlabel num="18" lockable="false">Communication Ring</functionlabel>
+            <functionlabel num="19" lockable="false">Guards Whistle</functionlabel>
+            <functionlabel num="20" lockable="false">Guard to Drive Bell</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Aux 3</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Hornby TXS Mk4 DVT (unpowered)" numOuts="4" numFns="30" productID="70">
+          <versionCV lowVersionID="254" highVersionID="254" />
+          <output name="Headlight" label="Wh" />
+          <output name="Rear Light" label="Ye" />
+          <output name="Aux" label="Gr" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true">Lights</functionlabel>
+            <functionlabel num="1" lockable="true">Sound Enable/Engine Start</functionlabel>
+            <functionlabel num="2" lockable="false">Multiple Horns (4)</functionlabel>
+            <functionlabel num="3" lockable="false">Mutiple Horns Fancy (5)</functionlabel>
+            <functionlabel num="4" lockable="false">Brake</functionlabel>
+            <functionlabel num="5" lockable="false">Cab Start Up</functionlabel>
+            <functionlabel num="6" lockable="false">Detonators</functionlabel>
+            <functionlabel num="7" lockable="true">Spirax Valve</functionlabel>
+            <functionlabel num="8" lockable="true">Mk4 Doors Open/Close</functionlabel>
+            <functionlabel num="9" lockable="false">AWS Warning System</functionlabel>
+            <functionlabel num="10" lockable="true">Compressor</functionlabel>
+            <functionlabel num="11" lockable="true">Wipers</functionlabel>
+            <functionlabel num="12" lockable="true">Slow Speed Rail Clack</functionlabel>
+            <functionlabel num="13" lockable="false">Pantograph Arc</functionlabel>
+            <functionlabel num="14" lockable="false">Flange Squeal</functionlabel>
+            <functionlabel num="15" lockable="false">Cab Door Close</functionlabel>
+            <functionlabel num="16" lockable="false">Door Slam</functionlabel>
+            <functionlabel num="17" lockable="true">General Station Sounds</functionlabel>
+            <functionlabel num="18" lockable="false">Passing at Speed</functionlabel>
+            <functionlabel num="19" lockable="false">Guards Whistle</functionlabel>
+            <functionlabel num="20" lockable="false">Air Release</functionlabel>
+            <functionlabel num="21" lockable="true">Aux 1</functionlabel>
+            <functionlabel num="22" lockable="true">Aux 2</functionlabel>
+            <functionlabel num="23" lockable="true">Cab Light</functionlabel>
+            <functionlabel num="24" lockable="true">Aux 4</functionlabel>
+            <functionlabel num="25" lockable="true">Shunting Mode</functionlabel>
+            <functionlabel num="26" lockable="false">Activate Coupling Mode</functionlabel>
+            <functionlabel num="27" lockable="false">Dynamic Brake (CV123)</functionlabel>
+            <functionlabel num="28" lockable="true">AFC Enable</functionlabel>
           </functionlabels>
         </model>
       </family>
@@ -13711,6 +15583,18 @@
           <output name="03" label="Violet" />
           <output name="04" label="Green" />
           <output name="05" label="Brown" />
+        </model>
+      </family>
+      <family name="Paco Canada" mfg="Public-domain and DIY" lowVersionID="25" highVersionID="25" comment="Paco UniSemaf25 semaphore decoder" file="Public_Domain_Paco_UniSemaf25.xml">
+        <model model="UniSemaf25" />
+      </family>
+      <family name="Paco Canada" mfg="Public-domain and DIY" lowVersionID="35" highVersionID="35" comment="Paco dccFunc5 function decoder" file="Public_Domain_Paco_dccFunc5.xml">
+        <model model="dccFunc5">
+          <output name="1" label="FA " />
+          <output name="2" label="FB " />
+          <output name="3" label="FC " />
+          <output name="4" label="FD " />
+          <output name="5" label="FE " />
         </model>
       </family>
       <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_ARD_8SCOM_4VYH_TC.xml">
