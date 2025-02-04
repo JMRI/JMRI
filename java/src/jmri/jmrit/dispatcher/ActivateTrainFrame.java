@@ -416,6 +416,7 @@ public class ActivateTrainFrame extends JmriJFrame {
                 @Override
                 public void itemStateChanged(ItemEvent e)  {
                     if (e.getStateChange() == ItemEvent.SELECTED) {
+                        checkAdvancedRouting();
                         transitSelectBox.setEnabled(false);
                         //adHocCloseLoop.setEnabled(true);
                         inTransitBox.setEnabled(false);
@@ -2099,6 +2100,24 @@ public class ActivateTrainFrame extends JmriJFrame {
             }
         }
     }
+
+    /*
+     * Check Advanced routing
+    */
+    private boolean checkAdvancedRouting() {
+        if (!InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
+            int response = JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("AdHocNeedsEnableBlockRouting"),
+                    Bundle.getMessage("AdHocNeedsBlockRouting"), JmriJOptionPane.YES_NO_OPTION);
+            if (response == 0) {
+                InstanceManager.getDefault(LayoutBlockManager.class).enableAdvancedRouting(true);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("AdhocNeedsBlockRoutingEnabled"));
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /*
      * ComboBox item.
      */
