@@ -110,8 +110,8 @@ public class JsonUtilSocketService extends JsonSocketService<JsonUtilHttpService
      */
     private void onSessionLogoutMessage(String type, JsonNode data, JsonRequest request) throws IOException, JmriException, JsonException {
         if (request.method.equals(JSON.POST)) {
-            // Do we really want the token logged?
-            JsonNode resultNode = this.connection.sendMessage(this.service.doPost(type, 'REDACTED', data, request), request.id);
+            // JMRI developers assess the risk of logging the token further down the stack as low
+            JsonNode resultNode = this.connection.sendMessage(this.service.doPost(type, data.path(JSON.USERNAME).asText(), data, request), request.id);
         }
     }
 
