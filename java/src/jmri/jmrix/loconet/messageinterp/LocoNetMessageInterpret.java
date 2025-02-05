@@ -3891,7 +3891,7 @@ public class LocoNetMessageInterpret {
                     for (int j = 5; j < max; j++) {
                         int shift = j-5;
                         int hi = 0x0;
-                        if((rfidHi >> shift)%2 == 1) hi = 0x80;
+                        if(((rfidHi >> shift) & 0x1) == 1) hi = 0x80;
                         tg.append(String.format("%1$02X", l.getElement(j) + hi));
                     }
                     int portAddress = l.getElement(3) << 7 | l.getElement(4);
