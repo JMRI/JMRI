@@ -303,12 +303,8 @@ public class LnReporter extends AbstractIdTagReporter implements CollectingRepor
         if (m.find()) {
             log.debug("Parsed direction: {}", m.group(2)); // NOI18N
             switch (m.group(2)) {
-                case "enter":
-                    // NOI18N
-                    // LocoNet Enter message
-                case "seen":
-                    // NOI18N
-                    // Lissy message.  Treat them all as "entry" messages.
+                case "enter":  // LocoNet Enter message // NOI18N
+                case "seen":   // Lissy message. Treat both as "entry" messages. // NOI18N
                     return (PhysicalLocationReporter.Direction.ENTER);
                 default:
                     return (PhysicalLocationReporter.Direction.EXIT);
