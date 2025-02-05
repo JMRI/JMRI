@@ -979,7 +979,8 @@ LogixNG: IQ:AUTO:0001
       action.  It can be a complex action by using an <strong>If-Then-Else</strong> action.</p>
 
       <p class="noted">Note:  When using If-Then-Else, the <strong>Always execute</strong> option is
-      required.  Any expressions that refer to JMRI table items need to use the <strong>No Listen</strong> option.</p>
+      required.  Any expressions that refer to JMRI table items, such as sensors, turnouts, signals, etc.,
+      need to use the <strong>No Listen</strong> option.</p>
 
       <p>When the timer starts, a copy of the current local variables is attached to the
       <strong><em>action</em></strong> that will be run when the timer delay is done.  This makes it
