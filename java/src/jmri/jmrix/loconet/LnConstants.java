@@ -187,7 +187,7 @@ public final class LnConstants {
      * Encode consisting status as a string
      *
      * @param s  consist status bits
-     * @return string contaning a description of the consisting state
+     * @return string containing a description of the consisting state
      */
     public final static String CONSIST_STAT(int s) {
         return ((s & CONSIST_MASK) == CONSIST_MID) ? "Mid Consist" // NOI18N
