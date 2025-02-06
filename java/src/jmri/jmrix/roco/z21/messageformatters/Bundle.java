@@ -25,7 +25,7 @@ import java.util.Locale;
 public class Bundle extends jmri.jmrix.roco.z21.Bundle {
 
     @CheckForNull
-    private static final String name = "jmri.jmrix.roco.z21.z21Bundle"; // NOI18N
+    private static final String name = "jmri.jmrix.roco.z21.messageformatters.Z21MessageFormattersBundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly

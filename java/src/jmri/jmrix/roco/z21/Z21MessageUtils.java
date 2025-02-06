@@ -10,9 +10,8 @@ import jmri.jmrix.Message;
  */
 public class Z21MessageUtils {
 
-    public static String interpretBroadcastFlags(Message m) {
-        int flags = m.getElement(4) + (m.getElement(5) << 8) + (m.getElement(6) << 16) + (m.getElement(7) << 24);
-        return Integer.toString(flags);
+    public static int interpretBroadcastFlags(Message m) {
+        return m.getElement(4) + (m.getElement(5) << 8) + (m.getElement(6) << 16) + (m.getElement(7) << 24);
     }
 
     static int integer16BitFromOffeset(int[] elements,int offset){

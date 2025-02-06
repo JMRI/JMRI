@@ -134,7 +134,7 @@ public class Z21MessageTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void toMonitorStringSetBroadCastFlagsRequest() {
         msg = Z21Message.getLanSetBroadcastFlagsRequestMessage(0x01020304);
-        Assert.assertEquals("Monitor String", "Set Z21 Broadcast flags to 16909060", msg.toMonitorString());
+        Assert.assertEquals("Monitor String", "Set Z21 Broadcast flags to Railcom Messages\nSystem State Messages\nLocoNet Messages\nCAN Booster Status Messages\n", msg.toMonitorString());
     }
 
     @Test
