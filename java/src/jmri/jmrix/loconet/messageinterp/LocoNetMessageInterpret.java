@@ -1985,11 +1985,14 @@ public class LocoNetMessageInterpret {
                             Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                     StringUtil.twoHexFromInt(opcode)));
                 }
-                break;
+                //$FALL-THROUGH$
             default:
-                break;
+                return Bundle.getMessage("LN_MSG_LONG_ACK_NOT_KNOWN",
+                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                StringUtil.twoHexFromInt(opcode | 0x80)),
+                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                StringUtil.twoHexFromInt(l.getElement(2))));
         }
-        return "";
     }
 
     private static String interpretPm4xPowerEvent(LocoNetMessage l) {
@@ -3794,7 +3797,11 @@ public class LocoNetMessageInterpret {
                 return Bundle.getMessage("LN_MSG_OPC_D7_TETHERLESS_REPORT_UR91",
                         l.getElement(3) & 0x07);
             }
-            default: {
+            case 0x22: {
+                return Bundle.getMessage("LN_MSG_OPC_D7_TETHERLESS_REPORT_UR93",
+                        l.getElement(3) & 0x07);
+            }
+           default: {
                 return "";
             }
         }

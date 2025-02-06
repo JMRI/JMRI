@@ -512,6 +512,8 @@ public final class LnConstants {
                 return "PM74";
             case RE_IPL_DIGITRAX_HOST_SE74:
                 return "SE74";
+            case RE_IPL_DIGITRAX_HOST_BDL716:
+                return "BDL716";
             default: return "<unknown>"; // NOI18N
         }
     }
