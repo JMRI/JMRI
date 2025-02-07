@@ -302,6 +302,18 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertTrue(r.getTOIsThrown());
         Assert.assertFalse(r.getTOIsClosed());
 
+        //RosterID replies
+        r = DCCppReply.parseDCCppReply("jR 1 2 3 4");
+        Assert.assertTrue(r.isRosterIDsReply());
+        r = DCCppReply.parseDCCppReply("jR 123 \"desc\" \"fkeys go here\"");
+        Assert.assertTrue(r.isRosterIDReply());
+
+        //AutomationID replies
+        r = DCCppReply.parseDCCppReply("jA 4 3 2 1");
+        Assert.assertTrue(r.isAutomationIDsReply());
+        r = DCCppReply.parseDCCppReply("jA 456 R \"description\"");
+        Assert.assertTrue(r.isAutomationIDReply());
+
         //max Num Slots
         r = DCCppReply.parseDCCppReply("# 50");
         Assert.assertTrue(r.isMaxNumSlotsReply());
@@ -369,6 +381,26 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertTrue(r.isTurnoutIDsReply());
         Assert.assertEquals(0, r.getTurnoutIDList().size());
         Assert.assertEquals("Monitor string", "Turnout IDs:[]", r.toMonitorString());
+        r = DCCppReply.parseDCCppReply("jR");
+        Assert.assertTrue(r.isRosterIDsReply());
+        Assert.assertEquals(0, r.getRosterIDList().size());
+        Assert.assertEquals("Monitor string", "RosterIDs:[]", r.toMonitorString());
+        r = DCCppReply.parseDCCppReply("jR 123 456 789");
+        Assert.assertTrue(r.isRosterIDsReply());
+        Assert.assertFalse(r.isRosterIDReply());
+        Assert.assertEquals(789, (int) r.getRosterIDList().get(2));
+        Assert.assertEquals(3, r.getRosterIDList().size());
+        Assert.assertEquals("Monitor string", "RosterIDs:[123, 456, 789]", r.toMonitorString());
+        r = DCCppReply.parseDCCppReply("jA");
+        Assert.assertTrue(r.isAutomationIDsReply());
+        Assert.assertEquals(0, r.getAutomationIDList().size());
+        Assert.assertEquals("Monitor string", "AutomationIDs:[]", r.toMonitorString());
+        r = DCCppReply.parseDCCppReply("jA 123 456 789");
+        Assert.assertTrue(r.isAutomationIDsReply());
+        Assert.assertFalse(r.isAutomationIDReply());
+        Assert.assertEquals(789, (int) r.getAutomationIDList().get(2));
+        Assert.assertEquals(3, r.getAutomationIDList().size());
+        Assert.assertEquals("Monitor string", "AutomationIDs:[123, 456, 789]", r.toMonitorString());
         r = DCCppReply.parseDCCppReply("jC 222 4"); //time and rate
         Assert.assertTrue(r.isClockReply());
         Assert.assertEquals(222, r.getClockMinutesInt());
@@ -383,6 +415,14 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertFalse(r.isTurnoutIDsReply());
         r = DCCppReply.parseDCCppReply("jT 123 X \"turnout description\"");
         Assert.assertFalse(r.isTurnoutIDReply());
+        r = DCCppReply.parseDCCppReply("jR 123 456 789 notint");        
+        Assert.assertFalse(r.isRosterIDsReply());
+        r = DCCppReply.parseDCCppReply("jR 123 noquotes \"\\F1\\F2\\F3\\\"");
+        Assert.assertFalse(r.isRosterIDReply());
+        r = DCCppReply.parseDCCppReply("jA 123 456 789 notint");        
+        Assert.assertFalse(r.isAutomationIDsReply());
+        r = DCCppReply.parseDCCppReply("jA 123 toolong \"gooddescription\"");
+        Assert.assertFalse(r.isAutomationIDReply());
         r = DCCppReply.parseDCCppReply("jC 222 4 xx"); //time and rate
         Assert.assertFalse(r.isClockReply());
         r = DCCppReply.parseDCCppReply("jC x222 4 xx"); //time and rate
