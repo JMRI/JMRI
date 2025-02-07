@@ -64,6 +64,8 @@ local.properties
 *.original~
 .metadata
 RemoteSystemsTempFiles
+.idea/codeStyles/Project.xml
+.idea/jarRepositories.xml
 .idea/libraries/**
 .idea/sonarlint/issuestore
 .factorypath

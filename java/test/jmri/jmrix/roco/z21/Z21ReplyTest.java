@@ -413,7 +413,7 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     public void testMonitorStringZ21BroadcastFlagsReply() {
         byte msg[] = {(byte) 0x08, (byte) 0x00, (byte) 0x51, (byte) 0x00, (byte) 0xcd, (byte) 0xab, (byte) 0x01, (byte) 0x00};
         Z21Reply reply = new Z21Reply(msg, 8);
-        Assert.assertEquals("Z21 Broadcast flags 43725", reply.toMonitorString());
+        Assert.assertEquals("Z21 Broadcast flags XpressNet Messages\nRailcom Messages\n", reply.toMonitorString());
     }
 
     @BeforeEach

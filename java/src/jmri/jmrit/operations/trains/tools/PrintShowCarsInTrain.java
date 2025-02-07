@@ -24,7 +24,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
  *
  * @author Daniel Boudreau Copyright (C) 2025
  */
-public class PrintShowCarsInTrain {
+public class PrintShowCarsInTrain extends TrainCommon {
 
     static final String NEW_LINE = "\n"; // NOI18N
 
@@ -32,10 +32,6 @@ public class PrintShowCarsInTrain {
     static int fieldSize =
             InstanceManager.getDefault(CarRoads.class).getMaxNameLength() + Control.max_len_string_road_number;
     static final String TAB = padString("", fieldSize);
-
-    public PrintShowCarsInTrain() {
-        super();
-    }
 
     /**
      * Prints the block order for a train at the train's current location.
@@ -70,7 +66,7 @@ public class PrintShowCarsInTrain {
             for (RouteLocation rld : train.getRoute().getBlockingOrder()) {
                 log.debug("RouteLocation rld: {}", rld.getName());
                 for (Car car : carManager.getByTrainDestinationList(train)) {
-                    if (TrainCommon.isNextCar(car, rl, rld, true)) {
+                    if (isNextCar(car, rl, rld, true)) {
                         log.debug("car ({}) routelocation ({}) track ({}) route destination ({})",
                                 car.toString(), car.getRouteLocation().getName(),
                                 car.getTrackName(), car.getRouteDestination().getName());
@@ -124,9 +120,11 @@ public class PrintShowCarsInTrain {
                 log.debug("RouteLocation rl: {}", rl.getName());
                 // print location name followed by header
                 writer.write(rl.getSplitName() + NEW_LINE);
-                writer.write(getHeader());
-                printCars(writer, train, rl);
-                writer.write(NEW_LINE);
+                if (isThereWorkAtLocation(carManager.getByTrainDestinationList(train), null, rl)) {
+                    writer.write(getHeader());
+                    printCars(writer, train, rl);
+                    writer.write(NEW_LINE);
+                }
             }
         }
     }
@@ -157,9 +155,9 @@ public class PrintShowCarsInTrain {
     }
 
     private String getCarId(Car car) {
-        return car.getRoadName().split(TrainCommon.HYPHEN)[0] +
+        return car.getRoadName().split(HYPHEN)[0] +
                 " " +
-                TrainCommon.splitString(car.getNumber());
+                splitString(car.getNumber());
     }
 
     private String getHeader() {
@@ -170,10 +168,6 @@ public class PrintShowCarsInTrain {
                 padString(Bundle.getMessage("SetOut"), fieldSize) +
                 NEW_LINE;
         return header;
-    }
-
-    private static String padString(String s, int fieldSize) {
-        return TrainCommon.padString(s, fieldSize);
     }
 
     private final static Logger log = LoggerFactory.getLogger(PrintShowCarsInTrain.class);

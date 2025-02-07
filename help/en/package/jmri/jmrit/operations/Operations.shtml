@@ -2038,7 +2038,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         cars are being removed and added to the train.</p>
 
       <h4>Manifests and Switch List Options</h4>
-      There are ten checkboxes that modify both Manifests and switch lists and are as follows:
+      There are eleven checkboxes that modify both Manifests and switch lists and are as follows:
       <p>The "Print Valid" checkbox causes the program to print date and time the train was
         built, which isn't the same as when the Manifest was printed. The print time is always shown
         at the top right of the Manifest or switch list.</p>
@@ -2051,6 +2051,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         Moves" checkbox. Otherwise the program will list and mix the car set outs and local moves by
         the <a href="#TrackBlockingOrder">Track Blocking Order</a>.
       </p>
+
+      <p>If you want your locomotive set outs to appear after your car set outs select the
+        option "Print Loco Set Outs Last".</p>
 
       <p>The default is not to show load names for caboose or passenger cars on your Manifests
         and switch lists, if however you want to see load names for those cars select the

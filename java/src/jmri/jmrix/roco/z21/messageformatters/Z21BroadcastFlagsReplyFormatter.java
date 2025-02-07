@@ -1,6 +1,7 @@
 package jmri.jmrix.roco.z21.messageformatters;
 
 import jmri.jmrix.Message;
+import jmri.jmrix.roco.z21.RocoZ21CommandStation;
 import jmri.jmrix.roco.z21.Z21MessageFormatter;
 import jmri.jmrix.roco.z21.Z21MessageUtils;
 import jmri.jmrix.roco.z21.Z21Reply;
@@ -22,7 +23,7 @@ public class Z21BroadcastFlagsReplyFormatter implements Z21MessageFormatter {
         if(!handlesMessage(m)) {
             throw new IllegalArgumentException("Z21BroadcastFlagsReplyFormatter cannot format message");
         }
-        return Bundle.getMessage("Z21ReplyBroadcastFlags", Z21MessageUtils.interpretBroadcastFlags(m));
+        return Bundle.getMessage("Z21ReplyBroadcastFlags", RocoZ21CommandStation.getZ21BroadcastFlagsString(Z21MessageUtils.interpretBroadcastFlags(m)));
     }
 
 }

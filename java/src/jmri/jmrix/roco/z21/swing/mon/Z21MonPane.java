@@ -39,7 +39,7 @@ public class Z21MonPane extends jmri.jmrix.AbstractMonPane implements Z21Listene
             try {
                 formatterList = new ArrayList<>();
 
-                Reflections reflections = new Reflections("jmri.jmrix.roco.z21.messageFormatters");
+                Reflections reflections = new Reflections("jmri.jmrix.roco.z21");
                 Set<Class<? extends Z21MessageFormatter>> f = reflections.getSubTypesOf(Z21MessageFormatter.class);
                 for(Class<?> c : f){
                     log.debug("Found formatter: {}", f.getClass().getName());

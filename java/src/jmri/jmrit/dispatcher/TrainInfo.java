@@ -79,7 +79,7 @@ public class TrainInfo {
     private float maxSpeed = 1.0f;
     private float minReliableOperatingSpeed = 0.0f;
     private String rampRate = Bundle.getMessage("RAMP_NONE");
-    private TrainDetection trainDetection = TrainDetection.TRAINDETECTION_HEADONLY;
+    private TrainDetection trainDetection = TrainDetection.TRAINDETECTION_WHOLETRAIN;
     private boolean runInReverse = false;
     private boolean soundDecoder = false;
     private float maxTrainLength = 100.0f;

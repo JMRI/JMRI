@@ -15,6 +15,6 @@ public class Z21SetBroadCastFlagsRequestFormatterTest {
         Z21SetBroadCastFlagsRequestFormatter formatter = new Z21SetBroadCastFlagsRequestFormatter();
         Z21Message msg = Z21Message.getLanSetBroadcastFlagsRequestMessage(0x01020304);
         Assertions.assertTrue(formatter.handlesMessage(msg));
-        Assertions.assertEquals("Set Z21 Broadcast flags to 16909060", formatter.formatMessage(msg));
+        Assertions.assertEquals("Set Z21 Broadcast flags to Railcom Messages\nSystem State Messages\nLocoNet Messages\nCAN Booster Status Messages\n", formatter.formatMessage(msg));
     }
 }
