@@ -499,6 +499,11 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li>The formula function <strong>currentTimeMillis()</strong>
+              has been added to the <strong>Clock</strong> module. It
+              returns the current system time in milliseconds and is
+              useful if you want to measure how long time it takes for
+              JMRI to do a task.</li>
           <li></li>
         </ul>
 
