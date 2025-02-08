@@ -91,7 +91,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
               <ul>
                 <li><a href="#SettingsOptions">Options</a>
                   <ul>
-                    <li><a href="#BuildOptions">Build Options</a></li>
+                    <li><a href="#BuildOptions">Build Options</a>
+                    <ul>
+                        <li><a href="#StagingOptions">Staging Options</a></li>
+                    </ul></li>
 
                     <li><a href="#CarRouting">Car Routing</a></li>
 
@@ -1342,7 +1345,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
           has a custom load or FD</a>.
       </p>
 
-      <h3>Staging Options</h3>
+      <h3 id="StagingOptions">Staging Options</h3>
 
       <h4 id="TypeRoadLoadRestrictionsStaging">Enable Type, Road and Load Restrictions into
         Staging</h4>
@@ -5185,11 +5188,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       destinations on the layout. Selecting this option allows a turn to transport cars from and to
       the same staging location. Note that when this options is selected, that the program will only
       return cars to staging when destinations are not available on the layout. Although not
-      recommended, you can also set this option for all turns, see <a href="#SettingsOptions">Options</a>.
+      recommended, you can also set this option for all turns, see <a href="#StagingOptions">Staging Options</a>.
 
       <p>
         You have the option of either leaving the cars in staging or having the cars ride the train
-        and return to the same staging track. If you want the cars to remain in staging, in the
+        and return to the same staging location. If you want the cars to remain in staging, in the
         train's <a href="#EditRoute">route</a> at the departure location allow set outs. If you want
         the cars to ride the train, disable set outs at the departure route location.
       </p>
@@ -5200,7 +5203,14 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         staging and can send cars from the layout to staging without regard to the cars sitting
         there since the expectation is that all cars in staging will be sent to the layout. The
         recommendation is to leave this option disabled unless you need your train to carry cars
-        from and to the same staging track.</p>
+        from and to the same staging location.</p>
+
+      <p>
+        There are several <a href="#StagingOptions">Staging Options</a> avialable with regards to
+        trains, including returning to the same departure track, prompting for the departure or
+        arrival staging track, along with locomotive, car type, road, and load restrictions into
+        staging.
+      </p>
 
       <h5 id="TrainLocalMoveOption">Allow local moves when a car has a custom load or FD</h5>
       The program when generating car movement normally doesn't create local moves. A local move is
