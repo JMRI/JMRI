@@ -94,7 +94,7 @@ While doing the release, it might be useful to have [GitHub Desktop](https://git
 
 - Update this note by executing the following line in your JMRI repository directory while you _don't_ have this file open in an editor. There are more details in the update-HOWTO.sh comments; arguments when you run it should be last release, this release you're making, the next release; you may need to update what's below:
 ```
-  ./scripts/update-HOWTO.sh 5.11.3 5.11.4 5.11.4
+  ./scripts/update-HOWTO.sh 5.11.3 5.11.4 5.11.5
 ```
 (if you have this file open in an editor, refresh the contents from disk after running the script)
 then manually update the end of that line above in this document to be this version being made today, next version to be made later, one after that; i.e. when starting to do *.4, the arguments _after_ you edit it here are *.4 *.5 *.6
@@ -325,12 +325,12 @@ For each, if it doesn't have the right milestone set, add the current milestone 
 ```
         git checkout master
         git pull
-        sed -i.bak s/5.11.1-SNAPSHOT/5.11.3-SNAPSHOT/g pom.xml
+        sed -i.bak s/5.11.2-SNAPSHOT/5.11.3-SNAPSHOT/g pom.xml
 ```
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field now, so check the numbers in the following line)
 ```
-        sed -i.bak s/release.build=1/release.build=2/g release.properties
+        sed -i.bak s/release.build=2/release.build=3/g release.properties
 ```
  - Check that both those edits left 5.11.3 defined in the two files
  
@@ -566,10 +566,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.11.3+R741bb1427e.dmg](https://github.com/JMRI/JMRI/releases/download/v5.11.3/JMRI.5.11.3+R741bb1427e.dmg) | 4919a9803177620e72b70f652167f2dfb316c1ebe96a71b0779a42e25c3dde88
-[JMRI.5.11.3+R741bb1427e.exe](https://github.com/JMRI/JMRI/releases/download/v5.11.3/JMRI.5.11.3+R741bb1427e.exe) | 649d20fbb3352c35eeb5ee05fde663a76ced0b79d5101da5c8acbeacc2321790
-[JMRI.5.11.3+R741bb1427e.tgz](https://github.com/JMRI/JMRI/releases/download/v5.11.3/JMRI.5.11.3+R741bb1427e.tgz) | 1cbf7c2d580210ec727970befa9632b7961ce1283b274782a0455c8145d7cf44
-
+[JMRI.5.11.3+Rc13c39a938.dmg](https://github.com/JMRI/JMRI/releases/download/v5.11.3/JMRI.5.11.3+Rc13c39a938.dmg) | 585dc8ef1571c89cea95688b89c38bbaf5b5e5921628d58086747bb1f8664644
+[JMRI.5.11.3+Rc13c39a938.exe](https://github.com/JMRI/JMRI/releases/download/v5.11.3/JMRI.5.11.3+Rc13c39a938.exe) | 8c7842e08942ed8629fe23e0432041377bd74f99bc38e5870796b67863c502da
+[JMRI.5.11.3+Rc13c39a938.tgz](https://github.com/JMRI/JMRI/releases/download/v5.11.3/JMRI.5.11.3+Rc13c39a938.tgz) | 35813526030fdb55642d175d170bf6e545e1b5a4b075389e37a94a6a94b8549c
 
 ```
 
