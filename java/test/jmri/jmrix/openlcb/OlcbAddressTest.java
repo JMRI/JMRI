@@ -47,7 +47,6 @@ public class OlcbAddressTest {
 
     @Test
     public void testTurnoutAddressing() {
-        OlcbAddress addr;
         assertEquals(new OlcbAddress("T1",    null).toString(),  "0101020000FF0008;0101020000FF0009");
         assertEquals(new OlcbAddress("T2044", null).toString(),  "0101020000FF0FFE;0101020000FF0FFF");
         assertEquals(new OlcbAddress("T2045", null).toString(),  "0101020000FF0000;0101020000FF0001");
