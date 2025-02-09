@@ -472,6 +472,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
     }
 
     private void setMultiPointRoute(PointDetails fromPd, PointDetails toPd) {
+        log.debug("[setMultiPointRoute] Start, from = {}, to = {}", fromPd.getSensor().getDisplayName(), toPd.getSensor().getDisplayName());
         boolean cleardown = false;
         if (fromPd.isRouteFromPointSet() && toPd.isRouteToPointSet()) {
             cleardown = true;
@@ -488,8 +489,9 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
                     List<LayoutBlock> blkList = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(fromPd.getFacing(), toPd.getFacing(), pro, cleardown, LayoutBlockConnectivityTools.Routing.NONE);
                     if (!blkList.isEmpty()) {
                         if (log.isDebugEnabled()) {
+                            log.debug("[setMultiPointRoute] blocks and sensors");
                             for (LayoutBlock blk : blkList) {
-                                log.debug("blk = {}", blk.getDisplayName());
+                                log.debug("  blk = {}", blk.getDisplayName());
                             }
                         }
                         List<jmri.NamedBean> beanList = lbm.getLayoutBlockConnectivityTools().getBeansInPath(blkList, null, jmri.Sensor.class);
@@ -498,7 +500,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
                         if (!beanList.isEmpty()) {
                             if (log.isDebugEnabled()) {
                                 for (NamedBean xnb : beanList) {
-                                    log.debug("xnb = {}", xnb.getDisplayName());
+                                    log.debug("  sensor = {}", xnb.getDisplayName());
                                 }
                             }
                             for (int i = 1; i < beanList.size(); i++) {
@@ -517,16 +519,24 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
                                 routesToSet.add(new SourceToDest(s, s.getDestForPoint(toPd), false, refCounter));
                             }
                         }
+                        log.debug("[setMultiPointRoute] Invoke processRoutesToSet");
                         processRoutesToSet();
+                        log.debug("[setMultiPointRoute] processRoutesToSet is done");
                         return;
                     }
                 }
             } catch (jmri.JmriException e) {
-                //Can be considered normal if route is blocked
+                // Can be considered normal if route is blocked
+                JmriJOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("MultiPointBlocked"),  // NOI18N
+                        Bundle.getMessage("WarningTitle"),  // NOI18N
+                        JmriJOptionPane.WARNING_MESSAGE);
+
             }
         }
         fromPd.setNXButtonState(NXBUTTONINACTIVE);
         toPd.setNXButtonState(NXBUTTONINACTIVE);
+        log.debug("[setMultiPointRoute] Done, from = {}, to = {}", fromPd.getSensor().getDisplayName(), toPd.getSensor().getDisplayName());
     }
 
     int refCounter = 0;
@@ -570,9 +580,10 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
      */
     synchronized void processRoutesToSet() {
         if (log.isDebugEnabled()) {
+            log.debug("[processRoutesToSet] Current routesToSet list");
             for (SourceToDest sd : routesToSet) {
                 String dpName = (sd.dp == null) ? "- null -" : sd.dp.getDestPoint().getSensor().getDisplayName();
-                log.debug("processRoutesToSet: {} -- {} -- {}", sd.s.getPoint().getSensor().getDisplayName(), dpName, sd.ref);
+                log.debug("  from = {}, to = {}, ref = {}", sd.s.getPoint().getSensor().getDisplayName(), dpName, sd.ref);
             }
         }
 
