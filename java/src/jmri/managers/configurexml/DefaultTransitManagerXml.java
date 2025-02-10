@@ -217,7 +217,7 @@ public class DefaultTransitManagerXml extends jmri.managers.configurexml.Abstrac
                     int tWhatData2 = 0;
                     String tWhatString = elemx.getAttribute("whatstring").getValue();
                     String tWhatString2 = "";
-                    if (elemx.getAttribute("whatstring2").getValue() != null) {
+                    if (elemx.getAttribute("whatstring2") != null) {
                         tWhatString2=elemx.getAttribute("whatstring2").getValue();
                     }
                     try {
