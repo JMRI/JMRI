@@ -81,17 +81,12 @@
 
         <h4>Lenz XPressNet</h4>
             <ul>
-                <li>Correct behavior of the ONESENSOR and TWOSENSOR turnout feedback mode. 
-                    The turnout's KnownState is set after turnout feedback is received. 
-                    In Layout Editor - Entry Exit - Full Interlocking - Signal mast sets the aspect Clear 
-                    only after all turnouts are correctly positioned.</li>
                 <li></li>
             </ul>
 
         <h4>LocoNet</h4>
             <ul>
-                <li>LocoNet Monitor and Reporters now parse LISSY RFID-7 messages as sent by the Arduino-based GCA51
-                  LocoIO 2xRFID board.</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -131,15 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Added "Restart" and "Clear CDI cache" to the Send Frame developer screen</li>
-                <li>Added "Restart" and "Clear CDI cache" to the contextual (popup) menu in LccPro</li>
-                <li>Converted on "Restart" terminology; references to "Reboot" have been changed</li>
-                <li>Added overwrite mode to EventID-entry fields. This accessed by using the "insert" key, which 
-                    changes the cursor to an underline so you know you're in the mode.  Mac keyboards do not
-                    support an insert key, so this feature is not available on the Mac.</li>
-                <li>Updated the OpenLCB library being used to version 0.8.5</li>
-                <li>Improved handling of memory service timeouts, including
-                    variable timeout lengths defined by the datagram responses.
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -149,8 +136,7 @@
 
         <h4>RFID</h4>
             <ul>
-                <li>A new method was added to receive RFID messages as IdTags over LocoNet, for example using the
-                  Arduino-based GCA51 LocoIO 2xRFID board.</li>
+                <li></li>
             </ul>
 
         <h4>Roco z21/Z21</h4>
@@ -170,8 +156,7 @@
 
         <h4>SRCP</h4>
             <ul>
-                <li>Fast-clock TIME commands now use the 00-23 format for
-                    the hour value and do not repeat 01-12 in the afternoon.</li>
+                <li></li>
             </ul>
 
         <h4>TAMS</h4>
@@ -206,8 +191,9 @@
 
         <h4>AE Model</h4>
             <ul>
-                <li>Added AEModels.xml to add support for AE Model decoders</li>
+                <li></li>
             </ul>
+
         <h4>Arnold</h4>
             <ul>
                 <li></li>
@@ -235,7 +221,7 @@
 
         <h4>DCC Concepts</h4>
             <ul>
-                <li>DCC_Concepts_Zen_ABC.xml to add definitions for DCC Concepts Zen Blue/Black V12 </li>
+                <li></li>
             </ul>
 
         <h4>Digikeijs (Digirails)</h4>
@@ -255,18 +241,17 @@
 
         <h4>ESU</h4>
             <ul>
-                <li>SwitchPilot Servo V3.0</li>
+                <li></li>
             </ul>
 
         <h4>Hattoms</h4>
             <ul>
-                <li>Added Hattons-Neo.xml to add Hattons Neo decoders</li>
+                <li></li>
             </ul>
+
         <h4>Hornby</h4>
             <ul>
-                <li>Added HornbyTXS.xml to add Hornby HM7000 sound decoder definitions
-                    and updated HornbyTTS.xml to address error for
-                    Hall Class Sound definition</li>
+                <li></li>
             </ul>
 
         <h4>Kuehn</h4>
@@ -291,7 +276,7 @@
 
         <h4>MD Electronics</h4>
              <ul>
-                <li>Corrections to the translation into German</li>
+                <li></li>
              </ul>
 
         <h4>MGP</h4>
@@ -334,14 +319,14 @@
                 <li></li>
             </ul>
 
-        <h4>Rautenhaus</h4>
+        <h4>Rampino Elektronic</h4>
             <ul>
                 <li></li>
             </ul>
-        
-        <h4>Rampino Elektronic</h4>
+
+        <h4>Rautenhaus</h4>
             <ul>
-                <li>Added support for the Loco-1 and Loco-2 decoders.</li>
+                <li></li>
             </ul>
 
         <h4>RR-CirKits</h4>
@@ -376,7 +361,7 @@
 
         <h4>Technologistic (train-O-matic)</h4>
             <ul>
-                <li>Fix for resetting Train-O-Matic decoders</li>
+                <li></li>
             </ul>
 
         <h4>Trix Modelleisenbahn</h4>
@@ -406,7 +391,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li>Updated Zimo_MS_small_v4.xml and Zimo_MN_small_v4.xml </li>
+                <li></li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -445,16 +430,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>When setting up a new train use detection Entire Train, unless overridden by custom defaults.</li>
-             <li>Always check allocation and switch settings before any signaling system.</li>
-             <li>Correctly identify and handle changing position of DoubleXOver switch to prevent switch
-                 changing under a train.</li>
-             <li>Identify conflicting routes when checking allocations thru DoubleXOvers with four blocks.
-                 DoubleXOvers with less than four blocks require no additional checks.</li>
-             <li>When stopping on previous block going unoccupied and speed profile ramping and minimum speed,
-                 use a 75% stopping length factor for the ramp.</li>
-             <li>When a train has been stopped with a missing signal mast attempt to restart use BlockAllocation.</li>
-             <li>When a missing signal mast has been found use BlockAllocation method to stop if next block not allocated.</li>
+             <li></li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -473,10 +449,6 @@
         <a id="LE" name="LE"></a>
         <ul>
             <li></li>
-        </ul>
-        <ul>
-            <li>Added "Highlight cursor position" option to enable drawing of a 
-                square around finger/mouse press/drag area. Useful for touchscreens.
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -511,13 +483,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>New feature, you can now select locomotive pick up and set out text colors.</li>
-            <li>Added track move count to "Export Locations".</li>
-            <li>Improved "Train logger" to include the number of cars in train, 
-                the number of pick ups and set outs, train length and weight.</li>
-            <li>New feature, import routes.</li>
-            <li>New feature, print "Cars In Train" AKA train blocking order</li>
-            <li>New print option, show locomotive set outs at end of Manifest or switch list.</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -547,8 +513,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li>Roster Table - Fixes initial editing of Last Operated date / time values 
-                using 1-12hr values instead of 0-23.</li>
+            <li></li>
         </ul>
 
     <h3>Routes</h3>
@@ -612,9 +577,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li>Lionel Jeanson added a driver for 
-                the <a href="https://www.zuiki.co.jp/product_info/denshadegomascon_black/"> Densha de GO controler</a> 
-                USB controller for the USBThrottle Jynstrument</li>
+            <li></li>
         </ul>
 
     <h3>Timetable</h3>
@@ -668,31 +631,18 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>Added checks to prevent errors due to not enough AudioBuffers.</li>
+            <li></li>
         </ul>
 
    <h3>Z21 Server</h3>
         <a id="Z21" name="Z21"></a>
         <ul>
-            <li>Add support for Roco WlanMaus</li>
-            <li>Improve UI to show connected clients</li>
-            <li>Add UI for mapping of Z21 turnout numbers to JMRI turnouts, routes etc.</li>
-            <li>Add help page</li>
-        </ul>
-
-    <h3>Test Infrastructure</h3>
-        <a id="Test" name="Testing"></a>
-        <ul>
-            <li>JUnitAppender - <code>assertNoErrorMessage</code> and <code>assertMessage(String msg)</code>
-                functionality updated to match JavaDoc.</li>
-            <li>JUnitAppender - Updated JavaDoc.</li>
+            <li></li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Added a <code>jmri.util.swing.OvertypeTextArea</code> class
-                for data entry with overwrite mode, controlled by the insert key.
-                (Mac keyboards don't support an insert key, so this is not available on them.)</li>
+            <li></li>
         </ul>
 

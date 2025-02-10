@@ -45,7 +45,6 @@ public class XmlLoadTest extends OperationsTestCase {
     // XmlLoadTest.testDemoWithBuildLoad:51 Unexpected exception thrown: java.lang.NullPointerException
     
     @Test
-    @Disabled("Fails intermittently")
     public void testDemoWithBuildLoad() {
         runTest("java/test/jmri/jmrit/operations/xml/DemoFilesWithBuiltTrains/", 12, 12, 10, 210, 19);
         Assertions.assertDoesNotThrow( () -> {

@@ -46,6 +46,15 @@ public class OlcbAddressTest {
     }
 
     @Test
+    public void testTurnoutAddressing() {
+        assertEquals(new OlcbAddress("T1",    null).toString(),  "0101020000FF0008;0101020000FF0009");
+        assertEquals(new OlcbAddress("T2044", null).toString(),  "0101020000FF0FFE;0101020000FF0FFF");
+        assertEquals(new OlcbAddress("T2045", null).toString(),  "0101020000FF0000;0101020000FF0001");
+        assertEquals(new OlcbAddress("T2048", null).toString(),  "0101020000FF0006;0101020000FF0007");
+        assertEquals(new OlcbAddress("T509",  null).toString(),  "0101020000FF0400;0101020000FF0401");
+    }
+    
+    @Test
     public void testCbusIdParseMatchReply() {
         CanReply c = new CanReply(
                 new int[]{0x12, 0x34, 0x56, 0x78,
