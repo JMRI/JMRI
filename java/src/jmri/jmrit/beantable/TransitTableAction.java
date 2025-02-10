@@ -2269,7 +2269,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 break;
             case TransitSectionAction.SETSENSORACTIVE:
             case TransitSectionAction.SETSENSORINACTIVE:
-                if (doneSensorComboBox.getSelectedIndex() != 0) {
+                if (doneSensorComboBox.getSelectedIndex() > 0) {
                     tWhatString = doneSensorComboBox.getSelectedItemSystemName();
                 }
                 if (!validateSensor(tWhatString, false)) {
