@@ -531,7 +531,6 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
                         Bundle.getMessage("MultiPointBlocked"),  // NOI18N
                         Bundle.getMessage("WarningTitle"),  // NOI18N
                         JmriJOptionPane.WARNING_MESSAGE);
-
             }
         }
         fromPd.setNXButtonState(NXBUTTONINACTIVE);
