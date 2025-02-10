@@ -453,7 +453,8 @@
 
         <h4>NX - Entry/Exit Tool</h4>
             <ul>
-                <li></li>
+                <li>Enable panel updates while the NX route is being created.</li>
+                <li>Display a warning dialog when creating a multipoint route fails.</li>
             </ul>
 
     <h3>LccPro</h3>
