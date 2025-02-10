@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import jmri.Block;
+import jmri.EntryPoint;
 import jmri.InstanceManager;
 import jmri.Section;
 import jmri.Sensor;
@@ -1617,14 +1618,13 @@ public class AutoAllocate implements Runnable {
 
         Block facingBlock;
         Block protectingBlock;
-        if (ar.getSectionDirection() == jmri.Section.FORWARD) {
-            protectingBlock = sec.getBlockBySequenceNumber(0);
-            facingBlock = lastSec.getBlockBySequenceNumber(lastSec.getNumBlocks() - 1);
-        } else {
-            // Reverse
-            protectingBlock = sec.getBlockBySequenceNumber(sec.getNumBlocks() - 1);
-            facingBlock = lastSec.getBlockBySequenceNumber(0);
+        EntryPoint protectingEP = sec.getEntryPointFromSection(lastSec, ar.getSectionDirection());
+        EntryPoint facingEP =  lastSec.getExitPointToSection(sec, lastSec.getState());
+        if (protectingEP == null || facingEP == null ) {
+            return false;
         }
+        protectingBlock = protectingEP.getBlock();
+        facingBlock = facingEP.getBlock();
         if (protectingBlock == null || facingBlock == null) {
             return false;
         }
