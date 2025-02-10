@@ -1068,7 +1068,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         } else if (this.isTurnoutReply()) { // single turnout response
             return (this.getValueInt(2));
         } else {
-            log.error("TurnoutReply Parser called on non-TurnoutReply message type {}", this.getOpCodeChar());
+            log.error("TOStateInt Parser called on non-TOStateInt message type {}", this.getOpCodeChar());
             return (0);
         }
     }
@@ -1088,7 +1088,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         if (this.isRosterIDReply()) {
             return (this.getValueInt(1));
         } else {
-            log.error("RosterReply Parser called on non-RosterReply message type {}", this.getOpCodeChar());
+            log.error("RosterIDInt Parser called on non-RosterIDInt message type {}", this.getOpCodeChar());
             return (0);
         }
     }
@@ -1099,7 +1099,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         if (this.isAutomationIDReply()) {
             return (this.getValueInt(1));
         } else {
-            log.error("AutomationReply Parser called on non-AutomationReply message type {}", this.getOpCodeChar());
+            log.error("AutomationIDInt Parser called on non-AutomationIDInt message type {}", this.getOpCodeChar());
             return (0);
         }
     }
@@ -1639,7 +1639,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         if (this.isTurnoutIDReply()) {
             return (this.getValueString(3));
         } else {
-            log.error("getTurnoutIDString Parser called on non-TurnoutID message type {}", this.getOpCodeChar());
+            log.error("getTurnoutDescString Parser called on non-TurnoutID message type {}", this.getOpCodeChar());
             return ("0");
         }
     }
@@ -1679,7 +1679,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         if (this.isAutomationIDReply()) {
             return (this.getValueString(2));
         } else {
-            log.error("getAutomationFKeysString called on non-AutomationIDReply message type {}", this.getOpCodeChar());
+            log.error("getAutomationTypeString called on non-AutomationIDReply message type {}", this.getOpCodeChar());
             return ("");
         }
     }

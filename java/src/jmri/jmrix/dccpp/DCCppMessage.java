@@ -297,7 +297,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                         myRegex = DCCppConstants.ROSTER_ID_REGEX;
                 } else if ((match(toString(), DCCppConstants.AUTOMATION_IDS_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.AUTOMATION_IDS_REGEX;
-            } else if ((match(toString(), DCCppConstants.AUTOMATION_ID_REGEX, "ctor")) != null) {
+                } else if ((match(toString(), DCCppConstants.AUTOMATION_ID_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.AUTOMATION_ID_REGEX;
                 } else if ((match(toString(), DCCppConstants.CLOCK_REQUEST_TIME_REGEX, "ctor")) != null) { //<JC>
                     myRegex = DCCppConstants.CLOCK_REQUEST_TIME_REGEX;

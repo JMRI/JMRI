@@ -181,6 +181,20 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertFalse(r.isMeterTypeVolt());
         Assert.assertTrue(r.isMeterTypeCurrent());
 
+        r = DCCppReply.parseDCCppReply("c CurrentMAIN 19701 C Milli 0 -31744 1 -31744"); //sometimes returns negatives
+        Assert.assertTrue(r.isMeterReply());
+        Assert.assertFalse(r.isCurrentReply());
+        Assert.assertFalse(r.isNamedCurrentReply());
+        Assert.assertEquals("CurrentMAIN", r.getMeterName());
+        Assert.assertEquals(19701.0,  r.getMeterValue(), 0.00001);
+        Assert.assertEquals(jmri.Meter.Unit.Milli, r.getMeterUnit());
+        Assert.assertEquals(0.0,      r.getMeterMinValue(),   0.00001);
+        Assert.assertEquals(-31744.0, r.getMeterMaxValue(),   0.00001);
+        Assert.assertEquals(1.0,      r.getMeterResolution(), 0.00001);
+        Assert.assertEquals(-31744.0, r.getMeterWarnValue(),  0.00001);
+        Assert.assertFalse(r.isMeterTypeVolt());
+        Assert.assertTrue(r.isMeterTypeCurrent());
+        
         r = DCCppReply.parseDCCppReply("c BadMeterType 0.3 X NoPrefix 0.0 5.0 0.01 5.0"); //bad meter type 'X' passed
         Assert.assertTrue( r.isMeterReply());
         Assert.assertFalse(r.isMeterTypeCurrent());
