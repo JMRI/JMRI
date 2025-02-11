@@ -1474,18 +1474,23 @@ public class TrainCommon {
         }
         newLine(file);
         newLine(file, Setup.getMiaComment(), isManifest);
+        if (Setup.isPrintHeadersEnabled()) {
+            printHorizontalLine(file, isManifest);
+            newLine(file, SPACE + getHeader(Setup.getMissingCarMessageFormat(), false, false, false), isManifest);
+            printHorizontalLine(file, isManifest);
+        }
         for (Car car : cars) {
-            addSearchForCar(file, car);
+            addSearchForCar(file, car, isManifest);
         }
     }
 
-    private void addSearchForCar(PrintWriter file, Car car) {
+    private void addSearchForCar(PrintWriter file, Car car, boolean isManifest) {
         StringBuffer buf = new StringBuffer();
         String[] format = Setup.getMissingCarMessageFormat();
         for (String attribute : format) {
             buf.append(getCarAttribute(car, attribute, false, false));
         }
-        addLine(file, buf.toString());
+        newLine(file, buf.toString(), isManifest);
     }
 
     /*
