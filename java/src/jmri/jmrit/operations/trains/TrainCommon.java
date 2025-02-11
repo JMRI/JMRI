@@ -37,10 +37,10 @@ public class TrainCommon {
     protected static final String NEW_LINE = "\n"; // NOI18N
     public static final String SPACE = " ";
     protected static final String BLANK_LINE = " ";
-    protected static final String HORIZONTAL_LINE_CHAR = "-";
+    protected static final char HORIZONTAL_LINE_CHAR = '-';
     protected static final String BUILD_REPORT_CHAR = "-";
     public static final String HYPHEN = "-";
-    protected static final String VERTICAL_LINE_CHAR = "|";
+    protected static final char VERTICAL_LINE_CHAR = '|';
     protected static final String TEXT_COLOR_START = "<FONT color=\"";
     protected static final String TEXT_COLOR_DONE = "\">";
     protected static final String TEXT_COLOR_END = "</FONT>";
