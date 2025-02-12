@@ -149,8 +149,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
         // start firmware load operation
         setOperationAborted(false);
-        abortButton.setEnabled(false);
-        abortButton.setToolTipText(Bundle.getMessage("TipAbortDisabled"));
+
         int ispace = spaceField.getMemorySpace();
         long addr = 0;
         loaderClient.doLoad(nid, destNodeID(), ispace, addr, fdata, new LoaderStatusReporter() {

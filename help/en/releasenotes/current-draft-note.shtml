@@ -126,7 +126,8 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Improved how Event with Payload messages are displayed in the monitor.</li>
+                <li>Enabled the Abort button in the Update Firmware window.</li>
             </ul>
 
         <h4>Powerline</h4>
