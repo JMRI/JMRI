@@ -36,7 +36,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>Add parsing for JR, jR, JA and jA messages, handle negative current</li>
             </ul>
 
         <h4>DCC4pc</h4>

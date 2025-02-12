@@ -291,6 +291,14 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                     myRegex = DCCppConstants.TURNOUT_IDS_REGEX;
                 } else if ((match(toString(), DCCppConstants.TURNOUT_ID_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.TURNOUT_ID_REGEX;
+                } else if ((match(toString(), DCCppConstants.ROSTER_IDS_REGEX, "ctor")) != null) {
+                        myRegex = DCCppConstants.ROSTER_IDS_REGEX;
+                } else if ((match(toString(), DCCppConstants.ROSTER_ID_REGEX, "ctor")) != null) {
+                        myRegex = DCCppConstants.ROSTER_ID_REGEX;
+                } else if ((match(toString(), DCCppConstants.AUTOMATION_IDS_REGEX, "ctor")) != null) {
+                    myRegex = DCCppConstants.AUTOMATION_IDS_REGEX;
+                } else if ((match(toString(), DCCppConstants.AUTOMATION_ID_REGEX, "ctor")) != null) {
+                    myRegex = DCCppConstants.AUTOMATION_ID_REGEX;
                 } else if ((match(toString(), DCCppConstants.CLOCK_REQUEST_TIME_REGEX, "ctor")) != null) { //<JC>
                     myRegex = DCCppConstants.CLOCK_REQUEST_TIME_REGEX;
                 } else if ((match(toString(), DCCppConstants.CLOCK_SET_REGEX, "ctor")) != null) {
@@ -422,7 +430,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                     text += "ID: " + getTOIDString();
                     text += ", State: " + getTOStateString();
                 } else if (isTurnoutImplementationMessage()) {
-                    text = "Request implementation for Turnout ";
+                    text = "Request implementation for TurnoutID ";
                     text += getTOIDString();
                 } else {
                     text = "Unmatched Turnout Cmd: " + toString();
@@ -564,10 +572,22 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                 break;
             case DCCppConstants.THROTTLE_COMMANDS:
                 if (isTurnoutIDsMessage()) {    
-                    text = "Request Turnout ID list";
+                    text = "Request TurnoutID list";
                     break;
                 } else if (isTurnoutIDMessage()) {    
-                    text = "Request details for Turnout " + getTOIDString();
+                    text = "Request details for TurnoutID " + getTOIDString();
+                    break;
+                } else if (isRosterIDsMessage()) {    
+                    text = "Request RosterID list";
+                    break;
+                } else if (isRosterIDMessage()) {    
+                    text = "Request details for RosterID " + getRosterIDString();
+                    break;
+                } else if (isAutomationIDsMessage()) {    
+                    text = "Request AutomationID list";
+                    break;
+                } else if (isAutomationIDMessage()) {    
+                    text = "Request details for AutomationID " + getAutomationIDString();
                     break;
                 } else if (isClockRequestTimeMessage()) {    
                     text = "Request clock update from CS";
@@ -926,6 +946,18 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
     public boolean isTurnoutIDMessage() {
         return (this.match(DCCppConstants.TURNOUT_ID_REGEX) != null);
+    }
+    public boolean isRosterIDsMessage() {
+        return (this.match(DCCppConstants.ROSTER_IDS_REGEX) != null);
+    }
+    public boolean isRosterIDMessage() {
+        return (this.match(DCCppConstants.ROSTER_ID_REGEX) != null);
+    }
+    public boolean isAutomationIDsMessage() {
+        return (this.match(DCCppConstants.AUTOMATION_IDS_REGEX) != null);
+    }
+    public boolean isAutomationIDMessage() {
+        return (this.match(DCCppConstants.AUTOMATION_ID_REGEX) != null);
     }
     public boolean isClockRequestTimeMessage() {
         return (this.match(DCCppConstants.CLOCK_REQUEST_TIME_REGEX) != null);
@@ -1426,6 +1458,31 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             return (0);
         }
     }
+
+    public String getRosterIDString() {
+        return (Integer.toString(getRosterIDInt()));
+    }
+    public int getRosterIDInt() {
+        if (isRosterIDMessage()) {
+            return (getValueInt(1));
+        } else {
+            log.error("RosterID Parser called on non-RosterID message type {} message {}", this.getOpCodeChar(), this);
+            return (0);
+        }
+    }  
+    
+    public String getAutomationIDString() {
+        return (Integer.toString(getAutomationIDInt()));
+    }
+    public int getAutomationIDInt() {
+        if (isAutomationIDMessage()) {
+            return (getValueInt(1));
+        } else {
+            log.error("AutomationID Parser called on non-AutomationID message type {} message {}", this.getOpCodeChar(), this);
+            return (0);
+        }
+    }  
+    
     public String getClockMinutesString() {
         if (this.isClockSetTimeMessage()) {
             return (this.getValueString(1));
@@ -1887,6 +1944,33 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         m._nDataChars = m.toString().length();
         return (m);
     }
+
+    public static DCCppMessage makeRosterIDsMsg() {
+        DCCppMessage m = makeMessage(DCCppConstants.ROSTER_IDS); // <JR>
+        m.myRegex = DCCppConstants.ROSTER_IDS_REGEX;
+        m._nDataChars = m.toString().length();
+        return (m);
+    }
+    public static DCCppMessage makeRosterIDMsg(int id) {
+        DCCppMessage m = makeMessage(DCCppConstants.ROSTER_IDS + " " + id); //<JR 123>
+        m.myRegex = DCCppConstants.ROSTER_ID_REGEX;
+        m._nDataChars = m.toString().length();
+        return (m);
+    }
+
+    public static DCCppMessage makeAutomationIDsMsg() {
+        DCCppMessage m = makeMessage(DCCppConstants.AUTOMATION_IDS); // <JA>
+        m.myRegex = DCCppConstants.AUTOMATION_IDS_REGEX;
+        m._nDataChars = m.toString().length();
+        return (m);
+    }
+    public static DCCppMessage makeAutomationIDMsg(int id) {
+        DCCppMessage m = makeMessage(DCCppConstants.AUTOMATION_IDS + " " + id); //<JA 123>
+        m.myRegex = DCCppConstants.AUTOMATION_ID_REGEX;
+        m._nDataChars = m.toString().length();
+        return (m);
+    }
+
     public static DCCppMessage makeClockRequestTimeMsg() {
         DCCppMessage m = makeMessage(DCCppConstants.CLOCK_REQUEST_TIME); // <JC>
         m.myRegex = DCCppConstants.CLOCK_REQUEST_TIME_REGEX;
