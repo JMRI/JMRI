@@ -91,12 +91,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
               <ul>
                 <li><a href="#SettingsOptions">Options</a>
                   <ul>
-                    <li><a href="#BuildOptions">Build Options</a>
-                    <ul>
-                        <li><a href="#StagingOptions">Staging Options</a></li>
-                    </ul></li>
+                    <li><a href="#BuildOptions">Build Options (Normal or Aggressive)</a></li>
 
-                    <li><a href="#CarRouting">Car Routing</a></li>
+                    <li><a href="#AllowLocalCarMovements">Switcher Service Options (Local
+                        Car Movement with Default Loads)</a></li>
+                    <li><a href="#StagingOptions">Staging Options</a></li>
+
+                    <li><a href="#CarRouting">Car Routing Options</a></li>
 
                     <li><a href="#LoggingOptions">Logging Options</a></li>
 
@@ -1335,7 +1336,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       same location when using a switcher. This type of move can be very unrealistic, picture moving
       a boxcar from a shoe manufacture directly to an auto manufacture. Also moving a car from one
       yard track to another can have your crew wondering what kind of busy work is being generated!
-      We recommend that you leave all of the checkboxes deselected, but if you need these types of
+      We recommend that you leave all of the checkboxes unselected, but if you need these types of
       moves for cars without a final destination or custom load, select the appropriate checkbox.
 
       <p>
@@ -1414,18 +1415,20 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <h4>Enable Car Routing</h4>
       When car routing is enabled, the program will use multiple trains to deliver a car to its
-      final destination. It is recommended that you leave this option enabled. The <a
-        href="#LocationDivision">railroad division</a> feature and schedules use routing to move
-      cars. With car routing enabled, you can use a <a href="#Schedules">Schedule</a> to deliver a
-      car to a specific location using the car's final destination fields. The car routing algorithm
-      will search for the most efficient route for the car to travel. The router will attempt to use
-      classification/interchange tracks and then optionally by yards to move cars. If you don't want
-      to use yards when routing, you can deselect the <a href="#EnableRoutingYards">Enable Car
-        Routing via Yards</a> checkbox. The program will try and find a route using a maximum of seven
-      trains to complete the car move. Note that the program never gives up trying to route a car.
-      If a car has been assigned a <a href="#CarsSet">Final Destination</a> or <a
-        href="#EditCarLoads">custom load</a> the program will try and route the car during every
-      train build that has access to the car.
+      final destination. It is recommended that you leave this option enabled. The
+      <a href="#LocationDivision">railroad division</a> feature, <a
+        href="#ReturnWhenEmpty">RWE</a>, <a href="#ReturnWhenLoaded">RWL</a>, and schedules use
+      routing to move cars. With car routing enabled, you can use a
+      <a href="#Schedules">Schedule</a> to deliver a car to a specific location using the car's
+      final destination fields. The car routing algorithm will search for the most efficient route
+      for the car to travel. The router will attempt to use classification/interchange tracks and
+      then optionally by yards to move cars. If you don't want to use yards when routing, you can
+      deselect the
+      <a href="#EnableRoutingYards">Enable Car Routing via Yards</a> checkbox. The program will try
+      and find a route using a maximum of seven trains to complete the car move. Note that the
+      program never gives up trying to route a car. If a car has been assigned a
+      <a href="#CarsSet">Final Destination</a> or <a href="#EditCarLoads">custom load</a> the
+      program will try and route the car during every train build that has access to the car.
 
       <h4 id="EnableRoutingYards">Enable Car Routing via Yards</h4>
       The program when routing a car will first try to find classification/interchange tracks to
@@ -4982,7 +4985,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </p>
 
       <p>There are several checkboxes along the bottom of the Trains window. The "Show All" when
-        selected shows all trains in your roster. When deselected, only trains that have the "Build"
+        selected shows all trains in your roster. When unselected, only trains that have the "Build"
         checkbox selected are shown.
       <p>
         The function "Preview" checkbox when selected, allows you to preview rather than printing
@@ -5206,7 +5209,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         from and to the same staging location.</p>
 
       <p>
-        There are several <a href="#StagingOptions">Staging Options</a> avialable with regards to
+        There are several <a href="#StagingOptions">Staging Options</a> available with regards to
         trains, including returning to the same departure track, prompting for the departure or
         arrival staging track, along with locomotive, car type, road, and load restrictions into
         staging.
@@ -5653,7 +5656,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       the train arrives at the location selected. Note that if the train is already at the location
       chosen, that the program will wait until the next time the train arrives at that location. You
       must choose a train using the "Train" menu. If the "Build" checkbox for the train being waited
-      on is manually changed from selected to deselected while the "Wait for Train" action is
+      on is manually changed from selected to unselected while the "Wait for Train" action is
       running, the program will cancel the wait and move to the next action in the table.
       <p>The program also allows you to wait for more than one train. Just enter each of the
         trains you want to wait for in consecutive rows. The program will then continue when all of
@@ -6624,7 +6627,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <h3 id="SaveBuilds">Save Builds</h3>
       Pressing the "Save Builds" button causes the program to update the train, car, locomotive, and
-      location xml files. Anytime you "Move" a train the operations program will make changes to
+      location xml files. Any time you "Move" a train the operations program will make changes to
       the train, car, locomotive, and location databases. The data must be saved before you shut
       down JMRI, otherwise you will lose all of the changes that the operations program made to move
       a train to the next location. Pressing the "Save Builds" button before quitting JMRI allows
