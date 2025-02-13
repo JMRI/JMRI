@@ -310,6 +310,11 @@
                 <li></li>
             </ul>
 
+        <h4>Piko decoders</h4>
+            <ul>
+                <li>Support for XP5.1 decoders up to FW 1.16.0 </li>
+            </ul>
+
         <h4>Public Domain and DIY decoders</h4>
             <ul>
                 <li></li>
