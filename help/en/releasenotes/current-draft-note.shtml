@@ -431,7 +431,9 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Restore TSA data to the correct place.</li>
+             <li>When checking for a hold mast do not assume the section join is at the end of a section.</li>
+             <li>For AdHoc trains check to see if a transit can be used.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
