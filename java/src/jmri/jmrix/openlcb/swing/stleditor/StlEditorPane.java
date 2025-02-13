@@ -21,6 +21,7 @@ import javax.swing.table.AbstractTableModel;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.openlcb.OlcbEventNameStore;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JComboBoxUtil;
@@ -1143,6 +1144,9 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         if (isValidNodeVersionNumber(node.getNodeMemo())) {
             _cdi = _iface.getConfigForNode(node.getNodeID());
+            // make sure that the EventNameStore is present
+            _cdi.eventNameStore = _canMemo.get(OlcbEventNameStore.class);
+            
             if (_cdi.getRoot() != null) {
                 loadCdiData();
             } else {

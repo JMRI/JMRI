@@ -12,13 +12,11 @@ import javax.swing.text.JTextComponent;
 
 import jmri.ShutDownTask;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.openlcb.OlcbAddress;
 import jmri.jmrix.openlcb.OlcbEventNameStore;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.WrapLayout;
 
 import org.openlcb.NodeID;
-import org.openlcb.EventID;
 import org.openlcb.OlcbInterface;
 import org.openlcb.cdi.impl.ConfigRepresentation;
 import org.openlcb.cdi.swing.CdiPanel;
@@ -210,41 +208,14 @@ public class ClientActions {
                 log.debug("make sensor MS{} [{}]", ev, mdesc);
             }
 
-            /** Convert a String into an EventID, doing any additional local
-             * dealiasing required.
-             * @param content Content to convert, e.g. from a text component
-             * @return eventID that represents the content
-             */
-             @Override
-             public EventID getEventIDFromString(String content) {
-                var address = new OlcbAddress(content, memo);
-                return address.toEventID();
-             }
-    
-            /** Convert an EventID into a String, doing any additional local
-             * aliasing required.
-             * @param event EventID to convert, e.g. from reading a node
-             * @return local representation fo that EventID, often just the dotted hex
-             */
-             @Override
-             public String getStringFromEventID(EventID event) {
-                var nameStore = memo.get(OlcbEventNameStore.class);
-                if (nameStore != null) {
-                    var name = nameStore.getEventName(event);
-                    if (name != null) {
-                        return name;
-                    }
-                }
-                return event.toShortString();  
-             }
-
             JPanel gpane = null;
             JTextField desc = null;
             JTextComponent evt1 = null;
             JTextComponent evt2 = null;
         };
         ConfigRepresentation rep = iface.getConfigForNode(destNode);
-
+        rep.eventNameStore = memo.get(OlcbEventNameStore.class);
+        
         cdiPanel.initComponents(rep, factory);
 
         f.pack();
