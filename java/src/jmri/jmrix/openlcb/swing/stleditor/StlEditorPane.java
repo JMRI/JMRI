@@ -1621,14 +1621,14 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 var event = (ConfigRepresentation.EventEntry) _cdi.getVariableForKey(String.format(INPUT_TRUE, i, j));
                 if (!row.getEventTrue().equals(event.getValue())) {
                     event.addPropertyChangeListener(_entryListener);
-                    event.setValue(new EventID(row.getEventTrue()));
+                    event.setValue(row.getEventTrue());
                     currentCount = _storeQueueLength.incrementAndGet();
                 }
 
                 event = (ConfigRepresentation.EventEntry) _cdi.getVariableForKey(String.format(INPUT_FALSE, i, j));
                 if (!row.getEventFalse().equals(event.getValue())) {
                     event.addPropertyChangeListener(_entryListener);
-                    event.setValue(new EventID(row.getEventFalse()));
+                    event.setValue(row.getEventFalse());
                     currentCount = _storeQueueLength.incrementAndGet();
                 }
             }
@@ -1653,14 +1653,14 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 var event = (ConfigRepresentation.EventEntry) _cdi.getVariableForKey(String.format(OUTPUT_TRUE, i, j));
                 if (!row.getEventTrue().equals(event.getValue())) {
                     event.addPropertyChangeListener(_entryListener);
-                    event.setValue(new EventID(row.getEventTrue()));
+                    event.setValue(row.getEventTrue());
                     currentCount = _storeQueueLength.incrementAndGet();
                 }
 
                 event = (ConfigRepresentation.EventEntry) _cdi.getVariableForKey(String.format(OUTPUT_FALSE, i, j));
                 if (!row.getEventFalse().equals(event.getValue())) {
                     event.addPropertyChangeListener(_entryListener);
-                    event.setValue(new EventID(row.getEventFalse()));
+                    event.setValue(row.getEventFalse());
                     currentCount = _storeQueueLength.incrementAndGet();
                 }
             }
@@ -1684,7 +1684,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             var event = (ConfigRepresentation.EventEntry) _cdi.getVariableForKey(String.format(RECEIVER_EVENT, i));
             if (!row.getEventId().equals(event.getValue())) {
                 event.addPropertyChangeListener(_entryListener);
-                event.setValue(new EventID(row.getEventId()));
+                event.setValue(row.getEventId());
                 currentCount = _storeQueueLength.incrementAndGet();
             }
         }
@@ -2280,6 +2280,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     static boolean isEventValid(String event) {
         var valid = true;
 
+/* 
         if (event.isEmpty()) {
             return valid;
         }
@@ -2304,6 +2305,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                     JmriJOptionPane.ERROR_MESSAGE);
             log.error("bad event: {}", event);
         }
+ */
 
         return valid;
     }
