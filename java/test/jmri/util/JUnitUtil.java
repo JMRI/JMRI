@@ -255,7 +255,7 @@ public class JUnitUtil {
         // ideally this would be resetWindows(false, true) to force an error if an earlier
         // test left a window open, but different platforms seem to have just
         // enough differences that this is, for now, turned off
-        resetWindows(false, false);
+        resetWindows(false, false, "before");
 
         // Log and/or check the use of setUp and tearDown
         if (checkSetUpTearDownSequence || printSetUpTearDownNames) {
@@ -430,7 +430,7 @@ public class JUnitUtil {
         // ideally this would be resetWindows(false, true) to force an error if an earlier
         // test left a window open, but different platforms seem to have just
         // enough differences that this is, for now, turned off
-        resetWindows(false, false);
+        resetWindows(false, false, "after");
 
         // Check final status of logging in the test just completed
         JUnitAppender.end();
@@ -676,14 +676,9 @@ public class JUnitUtil {
      * tests of {@code git-working-copy/temp}.
      */
     public static void resetFileUtilSupport() {
-        try {
-            Field field = FileUtilSupport.class.getDeclaredField("defaultInstance");
-            field.setAccessible(true);
-            field.set(null, null);
-            FileUtilSupport.getDefault().setUserFilesPath(ProfileManager.getDefault().getActiveProfile(), FileUtil.getPreferencesPath());
-        } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
-            log.error("Exception resetting FileUtilSupport", ex);
-        }
+        FileUtilSupport.resetInstance();
+        FileUtilSupport.getDefault().setUserFilesPath(
+            ProfileManager.getDefault().getActiveProfile(), FileUtil.getPreferencesPath());
     }
 
     static public interface ReleaseUntil {
@@ -888,6 +883,9 @@ public class JUnitUtil {
         InstanceManager.store(cs, jmri.CommandStation.class);
     }
 
+    /**
+     * Creates a new DebugThrottleManager and stores it to InstanceManager.
+     */
     public static void initDebugThrottleManager() {
         jmri.ThrottleManager m = new DebugThrottleManager();
         InstanceManager.store(m, ThrottleManager.class);
@@ -1193,8 +1191,8 @@ public class JUnitUtil {
         InstanceManager.setDefault(RosterConfigManager.class, manager);
     }
 
-    /*
-     * Use reflection to reset the jmri.Application instance
+    /**
+     * Use reflection to reset the jmri.Application instance.
      */
     public static void resetApplication() {
         try {
@@ -1207,8 +1205,8 @@ public class JUnitUtil {
         }
     }
 
-    /*
-     * Use reflection to reset the jmri.util.node.NodeIdentity instance
+    /**
+     * Use reflection to reset the jmri.util.node.NodeIdentity instance.
      */
     public static void resetNodeIdentity() {
         try {
@@ -1345,22 +1343,37 @@ public class JUnitUtil {
      * @param error log an error (failing the test) for each window if true
      */
     public static void resetWindows(boolean warn, boolean error) {
+        resetWindows(warn, error, "in");
+    }
+
+    /**
+     * Dispose of any disposable windows. This should only be used if there is
+     * no ability to actually close windows opened by a test using
+     * {@link #dispose(java.awt.Window)} or
+     * {@link #disposeFrame(java.lang.String, boolean, boolean)}, since this may
+     * mask other side effects that should be dealt with explicitly.
+     *
+     * @param warn  log a warning for each window if true
+     * @param error log an error (failing the test) for each window if true
+     * @param testLocation where in the JUnitUtil process the check is undertaken, e.g. before
+     */
+    private static void resetWindows(boolean warn, boolean error, String testLocation ) {
         // close any open remaining windows from earlier tests
         for (Frame frame : Frame.getFrames()) {
             if (frame.isDisplayable()) {
                 if (frame.getClass().getName().equals("javax.swing.SwingUtilities$SharedOwnerFrame")) {
-                    String message = "Cleaning up nameless invisible frame created by creating a dialog with a null parent in {}.";
+                    String message = "Cleaning up nameless invisible frame created by creating a dialog with a null parent {} {}.";
                     if (error) {
-                        log.error(message, getTestClassName());
+                        log.error(message, testLocation, getTestClassName());
                     } else if (warn) {
-                        log.warn(message, getTestClassName());
+                        log.warn(message, testLocation, getTestClassName());
                     }
                 } else {
-                    String message = "Cleaning up frame \"{}\" (a {}) in {}.";
+                    String message = "Cleaning up frame \"{}\" (a {}) {} {}.";
                     if (error) {
-                        log.error(message, frame.getTitle(), frame.getClass(), getTestClassName());
+                        log.error(message, frame.getTitle(), frame.getClass(), testLocation, getTestClassName());
                     } else if (warn) {
-                        log.warn(message, frame.getTitle(), frame.getClass(), getTestClassName());
+                        log.warn(message, frame.getTitle(), frame.getClass(), testLocation, getTestClassName());
                     }
                 }
                 JUnitUtil.dispose(frame);
@@ -1369,18 +1382,18 @@ public class JUnitUtil {
         for (Window window : Window.getWindows()) {
             if (window.isDisplayable()) {
                 if (window.getClass().getName().equals("javax.swing.SwingUtilities$SharedOwnerFrame")) {
-                    String message = "Cleaning up nameless invisible window created by creating a dialog with a null parent in {}.";
+                    String message = "Cleaning up nameless invisible window created by creating a dialog with a null parent {} {}.";
                     if (error) {
-                        log.error(message, getTestClassName());
+                        log.error(message, testLocation, getTestClassName());
                     } else if (warn) {
-                        log.warn(message, getTestClassName());
+                        log.warn(message, testLocation, getTestClassName());
                     }
                 } else {
-                    String message = "Cleaning up window \"{}\" (a {}) in {}.";
+                    String message = "Cleaning up window \"{}\" (a {}) {} {}.";
                     if (error) {
-                        log.error(message, window.getName(), window.getClass(), getTestClassName());
+                        log.error(message, window.getName(), window.getClass(), testLocation, getTestClassName());
                     } else if (warn) {
-                        log.warn(message, window.getName(), window.getClass(), getTestClassName());
+                        log.warn(message, window.getName(), window.getClass(), testLocation, getTestClassName());
                     }
                 }
                 JUnitUtil.dispose(window);

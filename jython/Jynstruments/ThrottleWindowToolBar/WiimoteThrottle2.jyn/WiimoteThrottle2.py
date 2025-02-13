@@ -102,9 +102,11 @@ class WiimoteThrottle2(Jynstrument, PropertyChangeListener, AddressListener, Wii
         self.speedTimer = None
         self.throttle = None
         self.advFunctions = None
-        self.getContext().removePropertyChangeListener(self)
-        self.addressPanel.removeAddressListener(self)
-        self.addressPanel = None    
+        if (self.getContext() != None):
+            self.getContext().removePropertyChangeListener(self)
+        if (self.addressPanel != None):
+            self.addressPanel.removeAddressListener(self)
+            self.addressPanel = None    
     #Wiimote discoverer events
         
     def findFinished(self, nb):

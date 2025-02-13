@@ -110,7 +110,7 @@
 
 <!ATTLIST fontName name				CDATA #IMPLIED> 
 <!ATTLIST fontSize size				CDATA #IMPLIED>  
-<!ATTLIST printDuplex enabled		(true | false ) "false"> 
+<!ATTLIST printDuplex name			CDATA #IMPLIED> 
 <!ATTLIST pickupEngFormat prefix	CDATA #IMPLIED>
 <!ATTLIST dropEngFormat prefix		CDATA #IMPLIED>
 <!ATTLIST pickupCarFormat prefix	CDATA #IMPLIED>
@@ -131,6 +131,8 @@
 <!ATTLIST missingCarFormat prefix	CDATA #IMPLIED>
 <!ATTLIST missingCarFormat setting	CDATA #IMPLIED>
 
+<!ATTLIST manifestColors dropEngineColor	CDATA #IMPLIED> 
+<!ATTLIST manifestColors pickupEngineColor	CDATA #IMPLIED>  
 <!ATTLIST manifestColors dropColor	CDATA #IMPLIED> 
 <!ATTLIST manifestColors pickupColor	CDATA #IMPLIED>  
 <!ATTLIST manifestColors localColor	CDATA #IMPLIED>
@@ -194,6 +196,7 @@
 <!ATTLIST manifest printCabooseLoad		(true | false ) "false"> 
 <!ATTLIST manifest printPassengerLoad	(true | false ) "false"> 
 <!ATTLIST manifest groupCarMoves		(true | false ) "false"> 
+<!ATTLIST manifest printLocoLast		(true | false ) "false"> 
 <!ATTLIST manifest hazardousMsg			CDATA #IMPLIED> 
 
 <!ATTLIST columnFormat twoColumns		(true | false ) "false">

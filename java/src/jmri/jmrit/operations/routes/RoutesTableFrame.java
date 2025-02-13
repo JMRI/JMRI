@@ -81,6 +81,7 @@ public class RoutesTableFrame extends OperationsFrame {
         toolMenu.add(new RouteCopyAction());
         toolMenu.add(new SetTrainIconPositionAction());
         toolMenu.add(new ExportRoutesAction());
+        toolMenu.add(new ImportRoutesAction());
         toolMenu.addSeparator();
         toolMenu.add(new ShowRoutesServingLocationAction(null));
         toolMenu.addSeparator();

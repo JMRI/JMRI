@@ -27,6 +27,7 @@ public class BiDiBConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
             "jmri.jmrix.bidib.serialdriver.ConnectionConfig",
             "jmri.jmrix.bidib.simulator.ConnectionConfig",
             "jmri.jmrix.bidib.bidibovertcp.ConnectionConfig",
+            "jmri.jmrix.bidib.netbidib.ConnectionConfig",
         };
     }
 

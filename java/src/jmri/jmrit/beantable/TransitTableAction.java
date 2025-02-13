@@ -2269,7 +2269,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 break;
             case TransitSectionAction.SETSENSORACTIVE:
             case TransitSectionAction.SETSENSORINACTIVE:
-                if (doneSensorComboBox.getSelectedIndex() != 0) {
+                if (doneSensorComboBox.getSelectedIndex() > 0) {
                     tWhatString = doneSensorComboBox.getSelectedItemSystemName();
                 }
                 if (!validateSensor(tWhatString, false)) {
@@ -2278,9 +2278,9 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 break;
             case TransitSectionAction.HOLDSIGNAL:
             case TransitSectionAction.RELEASESIGNAL:
-                if (signalMastComboBox.getSelectedIndex() != 0) {
+                if (signalMastComboBox.getSelectedIndex() > 0) {
                     tWhatString = signalMastComboBox.getSelectedItemSystemName();
-                } else if (signalHeadComboBox.getSelectedIndex() != 0) {
+                } else if (signalHeadComboBox.getSelectedIndex() > 0) {
                     tWhatString = signalHeadComboBox.getSelectedItemSystemName();
                 }
                 if (!validateSignal(tWhatString, false)) {

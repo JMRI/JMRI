@@ -196,7 +196,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
     }
 
     /**
-     * set a specific byte at a specific index in the message
+     * Set a specific byte at a specific index in the message
      * <p>
      * Logs an error and aborts if the index is beyond the length of the message.
      *

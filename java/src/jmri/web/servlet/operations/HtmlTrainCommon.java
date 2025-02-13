@@ -173,7 +173,7 @@ public class HtmlTrainCommon extends TrainCommon {
     @Override
     public String dropEngine(Engine engine) {
         StringBuilder builder = new StringBuilder();
-        builder.append("<span style=\"color: " + Setup.getDropTextColor() + ";\">");
+        builder.append("<span style=\"color: " + Setup.getDropEngineTextColor() + ";\">");
         builder.append(Setup.getDropEnginePrefix()).append(" ");
         for (String attribute : Setup.getDropEngineMessageFormat()) {
             builder.append(
@@ -197,7 +197,7 @@ public class HtmlTrainCommon extends TrainCommon {
     @Override
     public String pickupEngine(Engine engine) {
         StringBuilder builder = new StringBuilder();
-        builder.append("<span style=\"color: " + Setup.getPickupTextColor() + ";\">");
+        builder.append("<span style=\"color: " + Setup.getPickupEngineTextColor() + ";\">");
         builder.append(Setup.getPickupEnginePrefix()).append(" ");
         for (String attribute : Setup.getPickupEngineMessageFormat()) {
             builder.append(

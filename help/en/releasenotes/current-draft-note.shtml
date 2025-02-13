@@ -36,7 +36,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>Add parsing for JR, jR, JA and jA messages, handle negative current</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -126,14 +126,8 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Fixed a bug in the LccPro search function on large LCC networks.</li>
-                <li>Added "Node Groups" to LccPro and the Event Table.</li>
-                <li>You can now create an LCC/OpenLCB
-                    <a href="help/en/html/hardware/openlcb/index.shtml#stringios">StringIO</li>
-                    that's shared across multiple JMRI instances on the same LCC/OpenLCB network.
-                    If you change the StringIO value in one JMRI instance, it will be propagated to the 
-                    other ones over the network. You can then use LogixNG or scripts to 
-                    use that information to communicate between JMRI instances.
+                <li>Improved how Event with Payload messages are displayed in the monitor.</li>
+                <li>Enabled the Abort button in the Update Firmware window.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -157,6 +151,11 @@
             </ul>
 
         <h4>SPROG</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>SRCP</h4>
             <ul>
                 <li></li>
             </ul>
@@ -191,6 +190,11 @@
           <li></li>
         </ul>
 
+        <h4>AE Model</h4>
+            <ul>
+                <li></li>
+            </ul>
+
         <h4>Arnold</h4>
             <ul>
                 <li></li>
@@ -216,6 +220,11 @@
                 <li></li>
             </ul>
 
+        <h4>DCC Concepts</h4>
+            <ul>
+                <li></li>
+            </ul>
+
         <h4>Digikeijs (Digirails)</h4>
             <ul>
                 <li></li>
@@ -232,6 +241,11 @@
             </ul>
 
         <h4>ESU</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Hattoms</h4>
             <ul>
                 <li></li>
             </ul>
@@ -302,6 +316,11 @@
             </ul>
 
         <h4>QSI</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Rampino Elektronic</h4>
             <ul>
                 <li></li>
             </ul>
@@ -412,18 +431,9 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>Add the ability to use an AdHoc transit, which is created dynamically between 2 blocks
-             Dynamic Transits are always run "No Signals". Dynamic Transits are  removed at train termination. If
-             they are not removed for any reason they will not be saved. Currently the route must be clear from end to end
-             and any flaws in the routing table will cause grief. Avoid having the train stop in them.</li>
-             <li>Add Ghost type block. It must have a "not real" sensor, internal is best.
-             The sensor should not be manipulated by logix or logixNG or scripts. Auto trains will
-             set and clear these sensors automatically, manual run trains simply ignore them.
-             They are useful for adding blocks between 2 turnouts where you would normally add a tiny block with the same block
-             as one of the turnouts which causes errors in the routing tables. With care they can be used for placing turnouts
-             in their own block.</li>
-             <li>Fix errors in loading maxlength and Maxspeed</li>
+             <li></li>
         </ul>
+
     <h3>Dispatcher System</h3>
         <a id="Dispatcher_System" name="Dispatcher_System"></a>
         <ul>
@@ -444,15 +454,14 @@
 
         <h4>NX - Entry/Exit Tool</h4>
             <ul>
-                <li></li>
+                <li>Enable panel updates while the NX route is being created.</li>
+                <li>Display a warning dialog when creating a multipoint route fails.</li>
             </ul>
 
     <h3>LccPro</h3>
         <a id="LccPro" name="LccPro"></a>
         <ul>
-            <li>Fixed a bug in the LccPro search function on large LCC networks.</li>
-            <li>Added "Node Groups" to LccPro and the Event Table.  
-            <li>Fixed a bug in Event Table display if using large fonts.<li>
+          <li></li>
         </ul>
 
     <h3>Logix</h3>
@@ -464,8 +473,6 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The expression <strong>StringIO as string value</strong>
-              has been added.</li>
           <li></li>
         </ul>
 
@@ -478,9 +485,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>Added train departure times to Yardmaster and Conductor</li>
-            <li>Fixed internationalization for Web Manifest, UK and other languages.</li>
-            <li>Added the option of building train when selecting Conductor and train not built</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -592,10 +597,7 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li>
-                <a href="https://www.jmri.org/help/en/html/tools/StringIO.shtml">StringIOs</li>
-                are a new type of object within JMRI.  They're a way to exchange informational strings
-                with the layout hardware.  Over time, we'll build-out more system connections for these.
+            <li></li>
         </ul>
 
    <h3>Warrants</h3>
@@ -643,7 +645,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Fixed a bug in the XSLT transforms used to make 
-                panel files human-readable: "if" was used when "when" was required.</li>
+            <li></li>
         </ul>
 

@@ -402,7 +402,7 @@ public class HtmlManifest extends HtmlTrainCommon {
 
     protected String dropEngine(JsonNode engine) {
         StringBuilder builder = new StringBuilder();
-        builder.append("<span style=\"color: " + Setup.getDropTextColor() + ";\">");
+        builder.append("<span style=\"color: " + Setup.getDropEngineTextColor() + ";\">");
         builder.append(Setup.getDropEnginePrefix()).append(" ");
         String[] formatMessage = Setup.getDropEngineMessageFormat();
         Setup.stringToTagConversion(formatMessage);
@@ -441,7 +441,7 @@ public class HtmlManifest extends HtmlTrainCommon {
 
     protected String pickupEngine(JsonNode engine) {
         StringBuilder builder = new StringBuilder();
-        builder.append("<span style=\"color: " + Setup.getPickupTextColor() + ";\">");
+        builder.append("<span style=\"color: " + Setup.getPickupEngineTextColor() + ";\">");
         builder.append(Setup.getPickupEnginePrefix()).append(" ");
         String[] messageFormat =  Setup.getPickupEngineMessageFormat();
         Setup.stringToTagConversion(messageFormat);

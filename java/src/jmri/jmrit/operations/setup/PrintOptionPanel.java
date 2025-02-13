@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.setup;
 
 import java.awt.GridBagLayout;
+import java.awt.JobAttributes.SidesType;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.*;
@@ -51,7 +52,6 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
 
     // check boxes
     JCheckBox tabFormatCheckBox = new JCheckBox(Bundle.getMessage("TabFormat"));
-    JCheckBox printDuplexCheckBox = new JCheckBox(Bundle.getMessage("Duplex"));
     JCheckBox formatSwitchListCheckBox = new JCheckBox(Bundle.getMessage("SameAsManifest"));
     JCheckBox editManifestCheckBox = new JCheckBox(Bundle.getMessage("UseTextEditor"));
     JCheckBox printLocCommentsCheckBox = new JCheckBox(Bundle.getMessage("PrintLocationComments"));
@@ -71,6 +71,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
     JCheckBox trackSummaryCheckBox = new JCheckBox(Bundle.getMessage("TrackSummary"));
     JCheckBox routeLocationCheckBox = new JCheckBox(Bundle.getMessage("RouteLocation"));
     JCheckBox groupCarMovesCheckBox = new JCheckBox(Bundle.getMessage("GroupCarMoves"));
+    JCheckBox printLocoLastCheckBox = new JCheckBox(Bundle.getMessage("PrintLocoLast"));
 
     // text field
     JTextField pickupEngPrefix = new JTextField(10);
@@ -95,7 +96,9 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
     JComboBox<String> manifestOrientationComboBox = Setup.getOrientationComboBox();
     JComboBox<Integer> fontSizeComboBox = new JComboBox<>();
     JComboBox<String> switchListOrientationComboBox = Setup.getOrientationComboBox();
-
+    JComboBox<SidesType> printDuplexComboBox = new JComboBox<>();
+    JColorChooser pickupEngineColorChooser = new JColorChooser();
+    JColorChooser dropEngineColorChooser = new JColorChooser();
     JColorChooser pickupColorChooser = new JColorChooser();
     JColorChooser dropColorChooser = new JColorChooser();
     JColorChooser localColorChooser = new JColorChooser();
@@ -132,7 +135,6 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         addLogoButton.setToolTipText(Bundle.getMessage("AddLogoToolTip"));
         removeLogoButton.setToolTipText(Bundle.getMessage("RemoveLogoToolTip"));
         tabFormatCheckBox.setToolTipText(Bundle.getMessage("TabComment"));
-        printDuplexCheckBox.setToolTipText(Bundle.getMessage("DuplexTip"));
         printLocCommentsCheckBox.setToolTipText(Bundle.getMessage("AddLocationComments"));
         printRouteCommentsCheckBox.setToolTipText(Bundle.getMessage("AddRouteComments"));
         printLoadsEmptiesCheckBox.setToolTipText(Bundle.getMessage("LoadsEmptiesComment"));
@@ -151,6 +153,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         editManifestCheckBox.setToolTipText(Bundle.getMessage("UseTextEditorTip"));
         trackSummaryCheckBox.setToolTipText(Bundle.getMessage("TrackSummaryTip"));
         groupCarMovesCheckBox.setToolTipText(Bundle.getMessage("GroupCarsTip"));
+        printLocoLastCheckBox.setToolTipText(Bundle.getMessage("LocoLastTip"));
 
         addEngPickupComboboxButton.setToolTipText(Bundle.getMessage("AddMessageComboboxTip"));
         deleteEngPickupComboboxButton.setToolTipText(Bundle.getMessage("DeleteMessageComboboxTip"));
@@ -200,18 +203,30 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
 
         JPanel pDuplex = new JPanel();
         pDuplex.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutDuplex")));
-        pDuplex.add(printDuplexCheckBox);
+        pDuplex.add(printDuplexComboBox);
+
+        printDuplexComboBox.addItem(SidesType.ONE_SIDED);
+        printDuplexComboBox.addItem(SidesType.TWO_SIDED_LONG_EDGE);
+        printDuplexComboBox.addItem(SidesType.TWO_SIDED_SHORT_EDGE);
 
         p1.add(pFont);
         p1.add(pFontSize);
         p1.add(pFormat);
         p1.add(pOrientation);
         p1.add(pDuplex);
-        p1.add(getColorChooserPanel(Bundle.getMessage("BorderLayoutPickupColor"), Setup.getPickupColor(),
+
+        JPanel pColor = new JPanel();
+        pColor.setLayout(new BoxLayout(pColor, BoxLayout.X_AXIS));
+        pColor.add(
+                getColorChooserPanel(Bundle.getMessage("BorderLayoutPickupEngineColor"), Setup.getPickupEngineColor(),
+                pickupEngineColorChooser));
+        pColor.add(getColorChooserPanel(Bundle.getMessage("BorderLayoutDropEngineColor"), Setup.getDropEngineColor(),
+                dropEngineColorChooser));
+        pColor.add(getColorChooserPanel(Bundle.getMessage("BorderLayoutPickupColor"), Setup.getPickupColor(),
                 pickupColorChooser));
-        p1.add(getColorChooserPanel(Bundle.getMessage("BorderLayoutDropColor"), Setup.getDropColor(),
+        pColor.add(getColorChooserPanel(Bundle.getMessage("BorderLayoutDropColor"), Setup.getDropColor(),
                 dropColorChooser));
-        p1.add(getColorChooserPanel(Bundle.getMessage("BorderLayoutLocalColor"), Setup.getLocalColor(),
+        pColor.add(getColorChooserPanel(Bundle.getMessage("BorderLayoutLocalColor"), Setup.getLocalColor(),
                 localColorChooser));
 
         // load all of the message combo boxes, rows 2 through 5
@@ -261,8 +276,9 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         addItemLeft(pManifestSwtichListOptions, printValidCheckBox, 0, 0);
         addItemLeft(pManifestSwtichListOptions, printLoadsEmptiesCheckBox, 1, 0);
         addItemLeft(pManifestSwtichListOptions, groupCarMovesCheckBox, 2, 0);
-        addItemLeft(pManifestSwtichListOptions, printCabooseLoadCheckBox, 3, 0);
-        addItemLeft(pManifestSwtichListOptions, printPassengerLoadCheckBox, 4, 0);
+        addItemLeft(pManifestSwtichListOptions, printLocoLastCheckBox, 3, 0);
+        addItemLeft(pManifestSwtichListOptions, printCabooseLoadCheckBox, 4, 0);
+        addItemLeft(pManifestSwtichListOptions, printPassengerLoadCheckBox, 5, 0);
 
         addItemLeft(pManifestSwtichListOptions, use12hrFormatCheckBox, 0, 1);
         addItemLeft(pManifestSwtichListOptions, printTrainScheduleNameCheckBox, 1, 1);
@@ -285,12 +301,14 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         pLogo.add(addLogoButton);
         pLogo.add(logoURL);
 
+        // Hazardous comment
+        JPanel pHazardous = new JPanel();
+        pHazardous.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutHazardous")));
+        pHazardous.add(hazardousTextField);
+
         p2.add(pEdit);
         p2.add(pLogo);
-
-        // comments
-        JPanel pComments = new JPanel();
-        pComments.setLayout(new BoxLayout(pComments, BoxLayout.X_AXIS));
+        p2.add(pHazardous);
 
         // missing cars comment
         JPanel pCommentMia = new JPanel();
@@ -299,15 +317,8 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         addItem(pCommentMia, commentScroller, 0, 0);
         addItem(pCommentMia, getColorChooserPanel(Setup.getMiaComment(), missingCarColorChooser), 2, 0);
 
-        // Hazardous comment
-        JPanel pHazardous = new JPanel();
-        pHazardous.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutHazardous")));
-        pHazardous.add(hazardousTextField);
-
-        pComments.add(pCommentMia);
-        pComments.add(pHazardous);
-
         pManifest.add(p1);
+        pManifest.add(pColor);
         pManifest.add(pEngPickup);
         pManifest.add(pEngDrop);
         pManifest.add(pPickup);
@@ -320,7 +331,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         pManifest.add(pM);
         pManifest.add(pManifestSwtichListOptions);
         pManifest.add(p2);
-        pManifest.add(pComments);
+        pManifest.add(pCommentMia);
 
         // row 11
         JPanel pControl = new JPanel();
@@ -336,7 +347,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         switchListOrientationComboBox.setSelectedItem(Setup.getSwitchListOrientation());
 
         tabFormatCheckBox.setSelected(Setup.isTabEnabled());
-        printDuplexCheckBox.setSelected(Setup.isPrintDuplexEnabled());
+        printDuplexComboBox.setSelectedItem(Setup.getPrintDuplexSides());
 
         formatSwitchListCheckBox.setSelected(Setup.isSwitchListFormatSameAsManifest());
         printLocCommentsCheckBox.setSelected(Setup.isPrintLocationCommentsEnabled());
@@ -358,6 +369,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         switchListDepartureTimeCheckBox.setSelected(Setup.isUseSwitchListDepartureTimeEnabled());
         editManifestCheckBox.setSelected(Setup.isManifestEditorEnabled());
         groupCarMovesCheckBox.setSelected(Setup.isGroupCarMovesEnabled());
+        printLocoLastCheckBox.setSelected(Setup.isPrintLocoLastEnabled());
 
         commentTextArea.setText(TrainCommon.getTextColorString(Setup.getMiaComment()));
         hazardousTextField.setText(Setup.getHazardousMsg());
@@ -742,10 +754,12 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         // page orientation
         Setup.setManifestOrientation((String) manifestOrientationComboBox.getSelectedItem());
         Setup.setSwitchListOrientation((String) switchListOrientationComboBox.getSelectedItem());
-        Setup.setPrintDuplexEnabled(printDuplexCheckBox.isSelected());
+        Setup.setPrintDuplexSides((SidesType) printDuplexComboBox.getSelectedItem());
         // format
         Setup.setManifestFormat((String) manifestFormatComboBox.getSelectedItem());
         // drop and pick up color option
+        Setup.setDropEngineColor(dropEngineColorChooser.getColor());
+        Setup.setPickupEngineColor(pickupEngineColorChooser.getColor());
         Setup.setDropColor(dropColorChooser.getColor());
         Setup.setPickupColor(pickupColorChooser.getColor());
         Setup.setLocalColor(localColorChooser.getColor());
@@ -837,6 +851,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
         Setup.setUseSwitchListDepartureTimeEnabled(switchListDepartureTimeCheckBox.isSelected());
         Setup.setSwitchListRouteLocationCommentEnabled(routeLocationCheckBox.isSelected());
         Setup.setGroupCarMoves(groupCarMovesCheckBox.isSelected());
+        Setup.setPrintLocoLast(printLocoLastCheckBox.isSelected());
 
         // reload combo boxes if tab changed
         boolean oldTabEnabled = Setup.isTabEnabled();
@@ -855,10 +870,12 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
     public boolean isDirty() {
         if (!Setup.getFontName().equals(fontComboBox.getSelectedItem()) ||
                 Setup.getManifestFontSize() != (Integer) fontSizeComboBox.getSelectedItem() ||
-                Setup.isPrintDuplexEnabled() != printDuplexCheckBox.isSelected() ||
+                Setup.getPrintDuplexSides() != printDuplexComboBox.getSelectedItem() ||
                 !Setup.getManifestOrientation().equals(manifestOrientationComboBox.getSelectedItem()) ||
                 !Setup.getSwitchListOrientation().equals(switchListOrientationComboBox.getSelectedItem()) ||
                 !Setup.getManifestFormat().equals(manifestFormatComboBox.getSelectedItem()) ||
+                !Setup.getDropEngineColor().equals(dropEngineColorChooser.getColor()) ||
+                !Setup.getPickupEngineColor().equals(pickupEngineColorChooser.getColor()) ||
                 !Setup.getDropColor().equals(dropColorChooser.getColor()) ||
                 !Setup.getPickupColor().equals(pickupColorChooser.getColor()) ||
                 !Setup.getLocalColor().equals(localColorChooser.getColor()) ||
@@ -884,6 +901,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel implements java
                 Setup.isPrintTrackSummaryEnabled() != trackSummaryCheckBox.isSelected() ||
                 Setup.isUseSwitchListDepartureTimeEnabled() != switchListDepartureTimeCheckBox.isSelected() ||
                 Setup.isGroupCarMovesEnabled() != groupCarMovesCheckBox.isSelected() ||
+                Setup.isPrintLocoLastEnabled() != printLocoLastCheckBox.isSelected() ||
                 Setup.isTabEnabled() != tabFormatCheckBox.isSelected()) {
             return true;
         }

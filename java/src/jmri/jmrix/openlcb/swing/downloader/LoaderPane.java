@@ -1,6 +1,5 @@
 package jmri.jmrix.openlcb.swing.downloader;
 
-import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,7 +12,6 @@ import javax.swing.JPanel;
 
 import jmri.jmrit.MemoryContents;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.openlcb.swing.NodeSpecificFrame;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WrapLayout;
 
@@ -146,39 +144,12 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         super.doLoad();
         
         // if window referencing this node is open, close it
-        var frames = jmri.util.JmriJFrame.getFrames();
-        for (var frame : frames) {
-            if (frame instanceof NodeSpecificFrame) {
-                if ( ((NodeSpecificFrame)frame).getNodeID() == destNodeID() ) {
-                    // This window references the node and should be closed
-                    
-                    // Notify the user to handle any prompts before continuing.
-                    jmri.util.swing.JmriJOptionPane.showMessageDialog(this, 
-                        Bundle.getMessage("OpenWindowMessage")
-                    );
-                    
-                    // Depending on the state of the window, and how the user handles
-                    // a prompt to discard changes or cancel, this might be 
-                    // presented multiple times until the user finally
-                    // allows the window to close. See the message in the Bundle.properties
-                    // file for how we handle this.
-
-                    // Close this window - force onto the queue before a possible next modal dialog
-                    jmri.util.ThreadingUtil.runOnGUI(() -> {
-                        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-                    });
-                    
-                }
-            }
-        }
-
-        // de-cache CDI information so next window opening will reload
-        iface.dropConfigForNode(destNodeID());
+        // Then decache any CDI for the node
+        jmri.jmrix.openlcb.swing.DropCdiCache.drop(destNodeID(), memo.get(OlcbInterface.class));
 
         // start firmware load operation
         setOperationAborted(false);
-        abortButton.setEnabled(false);
-        abortButton.setToolTipText(Bundle.getMessage("TipAbortDisabled"));
+
         int ispace = spaceField.getMemorySpace();
         long addr = 0;
         loaderClient.doLoad(nid, destNodeID(), ispace, addr, fdata, new LoaderStatusReporter() {

@@ -133,7 +133,8 @@ public class TrainSwitchLists extends TrainCommon {
                         rlPrevious = rl;
                         continue;
                     }
-                    if (train.getExpectedArrivalTime(rl).equals(Train.ALREADY_SERVICED)) {
+                    if (train.getExpectedArrivalTime(rl).equals(Train.ALREADY_SERVICED) &&
+                            train.getCurrentRouteLocation() != rl) {
                         trainDone = true;
                     }
                     // first time at this location?
@@ -169,7 +170,7 @@ public class TrainSwitchLists extends TrainCommon {
                         if (Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {
                             pickupEngines(fileOut, engineList, rl, !IS_MANIFEST);
                             // if switcher show loco drop at end of list
-                            if (train.isLocalSwitcher()) {
+                            if (train.isLocalSwitcher() || Setup.isPrintLocoLastEnabled()) {
                                 blockCarsByTrack(fileOut, train, carList, rl, IS_PRINT_HEADER, !IS_MANIFEST);
                                 dropEngines(fileOut, engineList, rl, !IS_MANIFEST);
                             } else {
@@ -504,7 +505,7 @@ public class TrainSwitchLists extends TrainCommon {
             TrainPrintUtilities.printReport(switchListFile, location.getName(), isPreview, Setup.getFontName(), false,
                     FileUtil.getExternalFilename(Setup.getManifestLogoURL()), location.getDefaultPrinterName(),
                     Setup.getSwitchListOrientation(), Setup.getManifestFontSize(), Setup.isPrintPageHeaderEnabled(),
-                    Setup.isPrintDuplexEnabled());
+                    Setup.getPrintDuplexSides());
         }
         if (!isPreview) {
             location.setStatus(Location.PRINTED);

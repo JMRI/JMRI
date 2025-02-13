@@ -103,6 +103,7 @@ public class Xml {
     static final String PRINT_CABOOSE_LOAD = "printCabooseLoad"; // NOI18N
     static final String PRINT_PASSENGER_LOAD = "printPassengerLoad"; // NOI18N
     static final String GROUP_MOVES = "groupCarMoves"; // NOI18N
+    static final String PRINT_LOCO_LAST = "printLocoLast"; // NOI18N
     
     static final String LENGTH_UNIT = "lengthUnit"; // NOI18N
     static final String YEAR_MODELED = "yearModeled"; // NOI18N
@@ -146,6 +147,8 @@ public class Xml {
     static final String SWITCH_LIST = "switchList"; // NOI18N
 
     static final String MANIFEST_COLORS = "manifestColors"; // NOI18N
+    static final String DROP_ENGINE_COLOR = "dropEngineColor"; // NOI18N
+    static final String PICKUP_ENGINE_COLOR = "pickupEngineColor"; // NOI18N
     static final String DROP_COLOR = "dropColor"; // NOI18N
     static final String PICKUP_COLOR = "pickupColor"; // NOI18N
     static final String LOCAL_COLOR = "localColor"; // NOI18N

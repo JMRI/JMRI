@@ -228,7 +228,7 @@
           "Screenshot LocoIO Config step 9a"></a>
         </li>
 
-        <li>Turn to the Cheat Sheet tab reference, in the Config column look up "95". It's is a
+        <li>Turn to the Cheat Sheet tab reference, in the Config column look up "95". It's a
         Block Detector - Active High:<br>
           <a href="images/LocoIoDefinition/Create9b_CheatSheet.png"><img src=
           "images/LocoIoDefinition/Create9b_CheatSheet.png" width="274" height="195" alt=
@@ -274,12 +274,18 @@
       <h3>Third Party info</h3>
 
       <ul>
-        <li>For more information on the LocoIO and how to use the boards, see <a href=
+        <li><span class="since">Since <a href="https://www.jmri.org/releasenotes/jmri5.11.3.shtml"
+        target="_blank">JMRI 5.11.3</a></span>There is an Arduino Nano based DIY LocoIO, see <a href=
+        "https://github.com/ClubNCaldes/SVLocoIO/blob/master/SVLocoIO/SVLocoIO.ino">GCA50a</a>. Based on this design, a
+        dual RFID reader <a href="https://github.com/silverailscolo/Arduino-GCA51">GCA51</a> is also supported in JMRI.
+        </li>
+
+        <li>For more information on the HDL LocoIO and how to use the boards, see <a href=
         "https://locohdl.synology.me/">LocoHDL</a>.
         </li>
 
-        <li>Original LocoIO DIY project description is available at <a href=
-        "http://www.locobuffer.com/LocoIO/LocoIO.htm">www.locobuffer.com</a>
+        <li>A copy of the original LocoIO DIY project description is available courtesy of <a href=
+        "https://www.rr-cirkits.com/locobuffer/LocoIO/">www.rr-cirkits.com</a>
         </li>
       </ul>
 

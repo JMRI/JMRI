@@ -228,7 +228,7 @@ public class PrintCarRosterFrame extends OperationsFrame {
 
         // obtain a HardcopyWriter to do this
         try (HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleCarRoster"), fontSize, .5,
-                .5, .5, .5, _isPreview, "", isLandscape, true, false, null)) {
+                .5, .5, .5, _isPreview, "", isLandscape, true, null, null)) {
 
             numberCharPerLine = writer.getCharactersPerLine();
 

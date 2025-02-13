@@ -575,6 +575,8 @@
 
    <tocitem text="iPhone/iPod Touch as Throttle " target="package.jmri.jmrit.withrottle.UserInterface"/>
 
+   <tocitem text="Z21 Throttle (Z21 App and WlanMaus) " target="package.jmri.jmrit.z21server.z21server"/>
+   
    <tocitem text="webThrottle - Web Throttles and Panels " target="package.jmri.jmrit.webThrottle.webThrottle"/>
 
    <tocitem text="inControl - Web Throttles and Panels (older version) " target="package.jmri.jmrit.inControl.inControl"/>
