@@ -104,8 +104,8 @@
 		<decVal max="31"/>
 		<label>Extended central station compatibility (CV 250)</label>
 		<label xml:lang="de">Erweiterte Zentralen Kompatibilität (CV 250)</label>
-		<tooltip>Enhanced Central Station Compatibility</tooltip>
-		<tooltip xml:lang="de">Erweiterte Zentralen Kompatibilität  (0-7)</tooltip>
+		<tooltip>Enhanced Central Station Compatibility bit 0 - 4</tooltip>
+		<tooltip xml:lang="de">Erweiterte Zentralen Kompatibilität Bit 0 bis Bit 4 (0-31)</tooltip>
 	</variable>
 	<variable item="Motor Management 9 Bit 0" CV="250" default="0" mask="XXXXXXXV">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
