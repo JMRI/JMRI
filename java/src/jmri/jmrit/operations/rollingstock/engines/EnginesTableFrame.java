@@ -10,8 +10,7 @@ import javax.swing.table.TableColumnModel;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.rollingstock.engines.tools.EnginesSetFrameAction;
-import jmri.jmrit.operations.rollingstock.engines.tools.NceConsistEngineAction;
+import jmri.jmrit.operations.rollingstock.engines.tools.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.swing.JTablePersistenceManager;
@@ -21,11 +20,11 @@ import jmri.util.swing.JmriJOptionPane;
  * Frame for adding and editing the engine roster for operations.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012, 2013
+ * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012, 2013, 2025
  */
 public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener {
 
-    public EnginesTableModel enginesModel;
+    public EnginesTableModel enginesTableModel;
     javax.swing.JTable enginesTable;
     JScrollPane enginesPane;
     EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
@@ -67,11 +66,11 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         // Set up the jtable in a Scroll Pane..
-        enginesModel = new EnginesTableModel();
-        enginesTable = new JTable(enginesModel);
+        enginesTableModel = new EnginesTableModel();
+        enginesTable = new JTable(enginesTableModel);
         enginesPane = new JScrollPane(enginesTable);
         enginesPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-        enginesModel.initTable(enginesTable, this);
+        enginesTableModel.initTable(enginesTable, this);
 
         // load the number of engines and listen for changes
         numEngines.setText(Integer.toString(engineManager.getNumEntries()));
@@ -190,6 +189,10 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new EngineRosterMenu(Bundle.getMessage("TitleEngineRoster"), EngineRosterMenu.MAINMENU, this));
+        toolMenu.addSeparator();
+        toolMenu.add(new ShowCheckboxesEnginesTableAction(enginesTableModel));
+        toolMenu.add(new ResetCheckboxesEnginesTableAction(enginesTableModel));
+        toolMenu.addSeparator();
         toolMenu.add(new EnginesSetFrameAction(enginesTable));
         toolMenu.add(new NceConsistEngineAction());
         menuBar.add(toolMenu);
@@ -211,54 +214,54 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         // clear any sorts by column
         clearTableSort(enginesTable);
         if (ae.getSource() == sortByNumber) {
-            enginesModel.setSort(enginesModel.SORTBY_NUMBER);
+            enginesTableModel.setSort(enginesTableModel.SORTBY_NUMBER);
         }
         if (ae.getSource() == sortByRoad) {
-            enginesModel.setSort(enginesModel.SORTBY_ROAD);
+            enginesTableModel.setSort(enginesTableModel.SORTBY_ROAD);
         }
         if (ae.getSource() == sortByModel) {
-            enginesModel.setSort(enginesModel.SORTBY_MODEL);
+            enginesTableModel.setSort(enginesTableModel.SORTBY_MODEL);
         }
         if (ae.getSource() == sortByConsist) {
-            enginesModel.setSort(enginesModel.SORTBY_CONSIST);
+            enginesTableModel.setSort(enginesTableModel.SORTBY_CONSIST);
         }
         if (ae.getSource() == sortByLocation) {
-            enginesModel.setSort(enginesModel.SORTBY_LOCATION);
+            enginesTableModel.setSort(enginesTableModel.SORTBY_LOCATION);
         }
         if (ae.getSource() == sortByDestination) {
-            enginesModel.setSort(enginesModel.SORTBY_DESTINATION);
+            enginesTableModel.setSort(enginesTableModel.SORTBY_DESTINATION);
         }
         if (ae.getSource() == sortByTrain) {
-            enginesModel.setSort(enginesModel.SORTBY_TRAIN);
+            enginesTableModel.setSort(enginesTableModel.SORTBY_TRAIN);
         }
         if (ae.getSource() == sortByMoves) {
-            enginesModel.setSort(enginesModel.SORTBY_MOVES);
+            enginesTableModel.setSort(enginesTableModel.SORTBY_MOVES);
         }
         if (ae.getSource() == sortByBuilt) {
-            enginesModel.setSort(enginesModel.SORTBY_BUILT);
+            enginesTableModel.setSort(enginesTableModel.SORTBY_BUILT);
         }
         if (ae.getSource() == sortByOwner) {
-            enginesModel.setSort(enginesModel.SORTBY_OWNER);
+            enginesTableModel.setSort(enginesTableModel.SORTBY_OWNER);
         }
         if (ae.getSource() == sortByValue) {
-            enginesModel.setSort(enginesModel.SORTBY_VALUE);
+            enginesTableModel.setSort(enginesTableModel.SORTBY_VALUE);
         }
         if (ae.getSource() == sortByRfid) {
-            enginesModel.setSort(enginesModel.SORTBY_RFID);
+            enginesTableModel.setSort(enginesTableModel.SORTBY_RFID);
         }
         if (ae.getSource() == sortByLast) {
-            enginesModel.setSort(enginesModel.SORTBY_LAST);
+            enginesTableModel.setSort(enginesTableModel.SORTBY_LAST);
         }
         if (ae.getSource() == sortByDcc) {
-            enginesModel.setSort(enginesModel.SORTBY_DCC_ADDRESS);
+            enginesTableModel.setSort(enginesTableModel.SORTBY_DCC_ADDRESS);
         }
         if (ae.getSource() == sortByComment) {
-            enginesModel.setSort(enginesModel.SORTBY_COMMENT);
+            enginesTableModel.setSort(enginesTableModel.SORTBY_COMMENT);
         }
     }
 
     public List<Engine> getSortByList() {
-        return enginesModel.getSelectedEngineList();
+        return enginesTableModel.getSelectedEngineList();
     }
 
     EngineEditFrame engineEditFrame = null;
@@ -268,7 +271,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         // log.debug("engine button activated");
         if (ae.getSource() == findButton) {
-            int rowindex = enginesModel.findEngineByRoadNumber(findEngineTextBox.getText());
+            int rowindex = enginesTableModel.findEngineByRoadNumber(findEngineTextBox.getText());
             if (rowindex < 0) {
                 JmriJOptionPane.showMessageDialog(this, 
                         Bundle.getMessage("engineWithRoadNumNotFound", findEngineTextBox.getText()),
@@ -312,7 +315,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     @Override
     public void dispose() {
         engineManager.removePropertyChangeListener(this);
-        enginesModel.dispose();
+        enginesTableModel.dispose();
         if (engineEditFrame != null) {
             engineEditFrame.dispose();
         }
