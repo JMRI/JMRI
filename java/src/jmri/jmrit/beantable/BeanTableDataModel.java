@@ -879,9 +879,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     }
 
     public void copySystemName(int row, int column) {
-        T nBean = getBySystemName(sysNameList.get(row));
+        String systemName = sysNameList.get(row);
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        StringSelection name = new StringSelection(nBean.getSystemName());
+        StringSelection name = new StringSelection(systemName);
         clipboard.setContents(name, null);
     }
 
