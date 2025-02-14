@@ -495,49 +495,49 @@ public class CbusMessageTest {
     @Test
     public void testgetBootNop() {
         CanMessage m = CbusMessage.getBootNop(0x123456,0x12);
-        Assert.assertEquals("getBootNop","[4] 56 34 12 00 0D 00 00 00",m.toString());
-    }    
+        Assert.assertEquals("getBootNop","[4] 56 34 12 00 1D 00 00 00",m.toString());
+    }
 
     @Test
     public void testgetBootReset() {
         CanMessage m = CbusMessage.getBootReset(0x12);
-        Assert.assertEquals("getBootReset","[4] 00 00 00 00 0D 01 00 00",m.toString());
+        Assert.assertEquals("getBootReset","[4] 00 00 00 00 1D 01 00 00",m.toString());
     }
 
     @Test
     public void testgetBootInitialise() {
         CanMessage m = CbusMessage.getBootInitialise(0x123456,0x12);
-        Assert.assertEquals("getBootInitialise","[4] 56 34 12 00 0D 02 00 00",m.toString());
+        Assert.assertEquals("getBootInitialise","[4] 56 34 12 00 1D 02 00 00",m.toString());
     }
 
     @Test
     public void testgetBootCheck() {
         CanMessage m = CbusMessage.getBootCheck(123,0x12);
-        Assert.assertEquals("getBootCheck","[4] 00 00 00 00 0D 03 7B 00",m.toString());
+        Assert.assertEquals("getBootCheck","[4] 00 00 00 00 1D 03 7B 00",m.toString());
     }
 
     @Test
     public void testgetBootTest() {
         CanMessage m = CbusMessage.getBootTest(0x12);
-        Assert.assertEquals("getBootTest","[4] 00 00 00 00 0D 04 00 00",m.toString());
+        Assert.assertEquals("getBootTest","[4] 00 00 00 00 1D 04 00 00",m.toString());
     }
 
     @Test
     public void testgetBootDevId() {
         CanMessage m = CbusMessage.getBootDevId(0x12);
-        Assert.assertEquals("getBootDevid","[4] 00 00 00 00 0D 05 00 00",m.toString());
+        Assert.assertEquals("getBootDevid","[4] 00 00 00 00 1D 05 00 00",m.toString());
     }
 
     @Test
     public void testgetBootId() {
         CanMessage m = CbusMessage.getBootId(0x12);
-        Assert.assertEquals("getBootBootid","[4] 00 00 00 00 0D 06 00 00",m.toString());
+        Assert.assertEquals("getBootBootid","[4] 00 00 00 00 1D 06 00 00",m.toString());
     }
 
     @Test
     public void testgetBootEnables() {
         CanMessage m = CbusMessage.getBootEnables(0x3, 0x12);
-        Assert.assertEquals("getBootEnables","[4] 00 00 00 00 0D 07 03 00",m.toString());
+        Assert.assertEquals("getBootEnables","[4] 00 00 00 00 1D 07 03 00",m.toString());
     }
 
     @Test

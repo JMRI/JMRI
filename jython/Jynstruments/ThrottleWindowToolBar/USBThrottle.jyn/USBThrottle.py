@@ -96,7 +96,7 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
                     # Release current throttle
                     try:
                         if ((component == self.driver.componentThrottleRelease) and (value == self.driver.valueThrottleRelease)):
-                            self.addressPanel.dispatchAddress()
+                            self.addressPanel.releaseAddress()
                     except AttributeError:
                         pass
                     
@@ -123,14 +123,18 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
                     try:
                         # Speed v2 - static controler (lever on RailDriver or AAR105)
                         if (component == self.driver.componentSpeedSet):
-                            # negative is lever front, positive is lever back
-                            # limit range to only positive side of lever
-                            if (value < self.driver.valueSpeedSetMinValue) : value = self.driver.valueSpeedSetMinValue
-                            if (value > self.driver.valueSpeedSetMaxValue) : value = self.driver.valueSpeedSetMaxValue
-                            # convert fraction of input to speed step
-                            self.throttle.setSpeedSetting((value-self.driver.valueSpeedSetMinValue)/(self.driver.valueSpeedSetMaxValue-self.driver.valueSpeedSetMinValue))
-                            print "Slider Speed:", self.controlPanel.getDisplaySlider()
-                    except AttributeError:
+                            setSpeed = value * self.driver.componentValueSpeedMaxForward * self.driver.componentSpeedMaxForward
+                            if ((setSpeed > 0) and (self.isReversed)) : # it was previously going backward
+                                self.throttle.setIsForward(not self.throttle.getIsForward())
+                                self.isReversed = False
+                            if (setSpeed == -0) : setSpeed = 0 # avoid neg 0
+                            if (setSpeed < 0):  # going backward
+                                setSpeed = value * self.driver.componentValueSpeedMaxReverse * self.driver.componentSpeedMaxReverse
+                                if (not self.isReversed): # going backward for the first time
+                                    self.throttle.setIsForward(not self.throttle.getIsForward())
+                                    self.isReversed = True                            
+                            self.throttle.setSpeedSetting(setSpeed)
+                    except AttributeError:                        
                         pass
                     # Direction
                     try:
@@ -176,7 +180,10 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
                             if ( Calendar.getInstance().getTimeInMillis() - self.lastTimeCruiseButton < delay4doubleTap ) : # EStop on double tap
                                 self.throttle.setSpeedSetting(speedMaxSpeed) # Max speed on double tap
                             else:
-                                self.throttle.setSpeedSetting(speedCruiseSpeed)
+                                if (self.driver.cruiseSpeed == None) :
+                                    self.throttle.setSpeedSetting(speedCruiseSpeed)
+                                else:
+                                    self.throttle.setSpeedSetting(self.driver.cruiseSpeed)
                             self.lastTimeCruiseButton = Calendar.getInstance().getTimeInMillis()
                     except AttributeError:
                         pass
@@ -431,6 +438,7 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
         self.ctrlMenuItem = []
         self.USBDriver = None
         self.driver = None
+        self.isReversed = False
         mi = JCheckBoxMenuItem ("None")
         self.getPopUpMenu().add( mi )
         mi.addItemListener( ControllerItemListener(None, self) )
@@ -460,9 +468,13 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
         self.addressPanel = None
         self.driver = None
         self.USBDriver = None
-        self.getContext().removePropertyChangeListener(self)
-        self.model.removePropertyChangeListener(self)
-        self.getContext().getCurrentThrottleFrame().getAddressPanel().removeAddressListener(self)
+        if (self.model != None) :
+            self.model.removePropertyChangeListener(self)
+        if (self.getContext() != None) :
+            self.getContext().removePropertyChangeListener(self)        
+            if (self.getContext().getCurrentThrottleFrame() != None) :
+                if (self.getContext().getCurrentThrottleFrame().getAddressPanel() != None) :
+                    self.getContext().getCurrentThrottleFrame().getAddressPanel().removeAddressListener(self)
 
 # Menu entry changed for Current controller and update driver
     def setSelectedController(self, ctrl, item):

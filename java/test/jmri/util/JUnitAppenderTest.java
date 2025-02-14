@@ -1,11 +1,13 @@
 package jmri.util;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.config.Configuration;
+import org.apache.logging.log4j.core.config.LoggerConfig;
+
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Assume;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
 
 /**
@@ -107,11 +109,11 @@ public class JUnitAppenderTest {
 
     // this is testing how the end of a test works, so continues
     // into the tearDown routine
-    boolean testingUnexpected = false;
-    boolean cacheFatal;
-    boolean cacheError;
-    boolean cacheWarn;
-    boolean cacheInfo;
+    private boolean testingUnexpected = false;
+    private boolean cacheFatal;
+    private boolean cacheError;
+    private boolean cacheWarn;
+    private boolean cacheInfo;
 
     @Test
     public void testUnexpectedCheck() {
@@ -161,21 +163,23 @@ public class JUnitAppenderTest {
     }
 
     @Test
-    @Disabled("last line was commented out under JUnit 3, ignoring under JUnit 4")
     public void testExpectedMessageAsInfo() {
-        // info is usually turned off, so this doesn't pass in most cases
-        Assume.assumeTrue(log.isInfoEnabled());
+
+        setLogLevelTo( org.apache.logging.log4j.Level.INFO);
+        Assertions.assertTrue(log.isInfoEnabled(), "log set to INFO level");
+
         String msg = "Message for testing";
         log.info(msg);
         JUnitAppender.assertMessage(msg);
     }
 
     @Test
-    @Disabled("last line was commented out under JUnit 3, ignoring under JUnit 4")
     public void testExpectedMessageAsDebug() {
-        // debug is usually turned off, so this doesn't pass in most cases
-        Assume.assumeTrue(log.isDebugEnabled());
-        String msg = "Message for testing";
+
+        setLogLevelTo(org.apache.logging.log4j.Level.DEBUG);
+        Assertions.assertTrue(log.isDebugEnabled(), "log set to DEBUG level");
+
+        String msg = "testExpectedMessageAsDebug";
         log.debug(msg);
         JUnitAppender.assertMessage(msg);
     }
@@ -243,7 +247,10 @@ public class JUnitAppenderTest {
 
     @Test
     public void testClearBacklogAtInfoWithInfo() {
-        Assume.assumeTrue(log.isInfoEnabled());
+
+        setLogLevelTo( org.apache.logging.log4j.Level.INFO);
+        Assertions.assertTrue(log.isInfoEnabled());
+
         log.info("info message");
         Assert.assertEquals(1,JUnitAppender.clearBacklog(Level.INFO));
         Assert.assertEquals(0,JUnitAppender.clearBacklog(Level.INFO));
@@ -256,7 +263,9 @@ public class JUnitAppenderTest {
         Assert.assertEquals(0,JUnitAppender.clearBacklog(Level.INFO));
     }
 
-    public void suppressErrorMessage() {
+    @Test
+    @Disabled("Test requires further development")
+    public void testSuppressErrorMessage() {
         String msg = "Message for testing to find";
 
         log.warn("Dummy");        
@@ -280,13 +289,50 @@ public class JUnitAppenderTest {
         Assert.assertFalse(JUnitAppender.verifyNoBacklog());
     }
 
+    @Test
+    public void testAssertNoErrorMessage(){
+        log.warn("Warn Message");
+        JUnitAppender.assertNoErrorMessage();
+        JUnitAppender.assertWarnMessage("Warn Message");
+    }
+
+    @Test
+    public void testTestLogLevels(){
+
+        LoggerContext loggerContext = (LoggerContext) LogManager.getContext(false);
+        Configuration config = loggerContext.getConfiguration();
+        Assertions.assertEquals(org.apache.logging.log4j.Level.WARN, config.getRootLogger().getLevel(),
+            "Test Root Logger set to WARN");
+
+        Assertions.assertEquals(org.apache.logging.log4j.Level.INFO, originalLevel,
+            "JUnitAppenderTest set to INFO ( via tests_lcf.xml )");
+    }
+
+    private static void setLogLevelTo( org.apache.logging.log4j.Level newLevel) {
+
+        LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
+        Configuration config = ctx.getConfiguration();
+
+        LoggerConfig loggerConfig = config.getLoggerConfig(log.getName());
+        loggerConfig.setLevel(newLevel);
+        ctx.updateLoggers();
+    }
+
+    private org.apache.logging.log4j.Level originalLevel;
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+
+        LoggerContext loggerContext = (LoggerContext) LogManager.getContext(false);
+        Configuration config = loggerContext.getConfiguration();
+        originalLevel = config.getLoggerConfig(log.getName()).getLevel();
     }
 
     @AfterEach
     public void tearDown() {
+
+        setLogLevelTo(originalLevel);
 
         JUnitUtil.tearDown();     
 
@@ -307,6 +353,6 @@ public class JUnitAppenderTest {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JUnitAppenderTest.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JUnitAppenderTest.class);
 
 }

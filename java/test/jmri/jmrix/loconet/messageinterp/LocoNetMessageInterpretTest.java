@@ -7185,6 +7185,32 @@ public class LocoNetMessageInterpretTest {
 
     }
 
+    @Test
+    public void testVariousLAKs() {
+        // general nothing known
+        LocoNetMessage m;
+        String s = "LONG_ACK: previous message with opcode 0xD5 returned 0x59.\n";
+        m = new LocoNetMessage(
+                    new int[] {LnConstants.OPC_LONG_ACK, 0x55, 0x59, 0x47});
+        Assert.assertEquals("Verify data ",
+                s, LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
+
+        // Alm known return.
+        m = new LocoNetMessage(
+                new int[] {LnConstants.OPC_LONG_ACK, LnConstants.OPC_ALM_READ  & 0x7f, 0x0, 0x00});
+        s = "LONG_ACK: opcode 0x66 does not support requested slot.\n";
+        Assert.assertEquals("Verify data ",
+                s, LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
+
+        // Alm fall thru. to general unknown.
+        m = new LocoNetMessage(
+                new int[] {LnConstants.OPC_LONG_ACK, LnConstants.OPC_ALM_READ  & 0x7f, 0x0f, 0x00});
+        s = "LONG_ACK: previous message with opcode 0xE6 returned 0x0F.\n";
+        Assert.assertEquals("Verify data ",
+                s, LocoNetMessageInterpret.interpretMessage(m, "LT", "LS", "LR"));
+
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

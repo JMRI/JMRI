@@ -440,7 +440,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
             super();
         }
 
-        private static final String EDITOR_DATE_FORMAT =  "yyyy-MM-dd hh:mm";
+        private static final String EDITOR_DATE_FORMAT =  "yyyy-MM-dd HH:mm";
         private Date startDate = new Date();
 
         @Override

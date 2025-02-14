@@ -41,6 +41,23 @@ public class ClockFunctionsTest {
     }
 
     @Test
+    public void testCurrentTimeMillisFunction() throws Exception {
+        Function currentTimeMillisFunction = InstanceManager.getDefault(FunctionManager.class).get("currentTimeMillis");
+        Assert.assertEquals("strings matches", "currentTimeMillis", currentTimeMillisFunction.getName());
+
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+
+        long currentTimeBefore = System.currentTimeMillis();
+        Thread.sleep(10);
+        long result = (long) currentTimeMillisFunction.calculate(symbolTable, getParameterList());
+        Thread.sleep(10);
+        long currentTimeAfter = System.currentTimeMillis();
+
+        Assert.assertTrue(currentTimeBefore < result);
+        Assert.assertTrue(currentTimeAfter > result);
+    }
+
+    @Test
     @SuppressWarnings("deprecation")        // Date.getMinutes, Date.getHours
     public void testSystemClockFunction() throws Exception {
         Function systemClockFunction = InstanceManager.getDefault(FunctionManager.class).get("systemClock");

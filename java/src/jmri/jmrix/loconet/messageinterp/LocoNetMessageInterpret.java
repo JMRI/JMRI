@@ -56,7 +56,7 @@ import org.slf4j.LoggerFactory;
  * Reverse-engineering of device-specific OpSw messages, throttle text message,
  * and throttle semaphore message was provided by B. Milhaupt, used with
  * permission.
- *
+ * <p>
  * Reverse-engineering of device-specific LNSV messages was provided by K. Drenth,
  * used with permission.
  *
@@ -1985,11 +1985,14 @@ public class LocoNetMessageInterpret {
                             Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                     StringUtil.twoHexFromInt(opcode)));
                 }
-                break;
+                //$FALL-THROUGH$
             default:
-                break;
+                return Bundle.getMessage("LN_MSG_LONG_ACK_NOT_KNOWN",
+                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                StringUtil.twoHexFromInt(opcode | 0x80)),
+                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                StringUtil.twoHexFromInt(l.getElement(2))));
         }
-        return "";
     }
 
     private static String interpretPm4xPowerEvent(LocoNetMessage l) {
@@ -3794,7 +3797,11 @@ public class LocoNetMessageInterpret {
                 return Bundle.getMessage("LN_MSG_OPC_D7_TETHERLESS_REPORT_UR91",
                         l.getElement(3) & 0x07);
             }
-            default: {
+            case 0x22: {
+                return Bundle.getMessage("LN_MSG_OPC_D7_TETHERLESS_REPORT_UR93",
+                        l.getElement(3) & 0x07);
+            }
+           default: {
                 return "";
             }
         }
@@ -3806,6 +3813,7 @@ public class LocoNetMessageInterpret {
          *
          * LISSY is an automatic train detection system made by Uhlenbrock.
          * All documentation appears to be in German.
+         * Also used by LocoIO-based RFID readers eg. GCA51
          */
         log.debug("Message from LISSY: {}", Bundle.getMessage("LN_MONITOR_MESSAGE_RAW_HEX_INFO", l.toString()));
         switch (l.getElement(1)) {
@@ -3875,6 +3883,28 @@ public class LocoNetMessageInterpret {
                 if (l.getElement(4) == 0x00) {
                     return Bundle.getMessage("LN_MSG_UNRECOGNIZED_SIG_STATE_REPORT_MAY_BE_FROM_CML_HW")+
                                 Bundle.getMessage("LN_MONITOR_MESSAGE_RAW_HEX_INFO", l.toString());
+                }
+                break;
+            case 0x0C:
+            case 0x0E:
+                if (l.getElement(2) == 0x41 ) {
+                    // RFID-5 or 7 reader report
+                    // RFID-7 reader report [E4 0E 41 00 02 04 3A 4B 4A 60 60 01 50 38]
+                    // elem[3] = sensorAddr >> 7; addr.high
+                    // elem[4] = sensorAddr & 0x7F; addr.low
+                    StringBuilder tg = new StringBuilder();
+                    int max = l.getElement(1) - 2; // GCA51 RFID-7 elem(1) = size = 0x0E; RFID-5 elem(1) = size = 0x0C
+                    int rfidHi = l.getElement(max); // MSbits are transmitted via element(max)
+                    for (int j = 5; j < max; j++) {
+                        int shift = j-5;
+                        int hi = 0x0;
+                        if(((rfidHi >> shift) & 0x1) == 1) hi = 0x80;
+                        tg.append(String.format("%1$02X", l.getElement(j) + hi));
+                    }
+                    int portAddress = l.getElement(3) << 7 | l.getElement(4);
+                    int msgType = 7;
+                    if (max == 9) msgType = 5;
+                    return Bundle.getMessage("LN_MSG_LISSY_RFIDX_REPORT", msgType, portAddress, tg.toString());
                 }
                 break;
             default:

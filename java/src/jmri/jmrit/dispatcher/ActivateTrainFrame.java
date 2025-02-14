@@ -416,6 +416,7 @@ public class ActivateTrainFrame extends JmriJFrame {
                 @Override
                 public void itemStateChanged(ItemEvent e)  {
                     if (e.getStateChange() == ItemEvent.SELECTED) {
+                        checkAdvancedRouting();
                         transitSelectBox.setEnabled(false);
                         //adHocCloseLoop.setEnabled(true);
                         inTransitBox.setEnabled(false);
@@ -1040,21 +1041,93 @@ public class ActivateTrainFrame extends JmriJFrame {
     private void addNewTrain(ActionEvent e) {
         try {
             validateDialog();
+            trainInfo = new TrainInfo();
+            dialogToTrainInfo(trainInfo);
             if (radioTransitsAdHoc.isSelected()) {
                 int ixStart, ixEnd, ixVia;
                 ixStart = startingBlockBox.getSelectedIndex();
                 ixEnd = destinationBlockBox.getSelectedIndex();
                 ixVia = viaBlockBox.getSelectedIndex();
-                List<LayoutBlock>blockList = _dispatcher.getAdHocRoute(startingBlockBoxList.get(ixStart),
-                        destinationBlockBoxList.get(ixEnd),
-                        viaBlockBoxList.get(ixVia));
-                if (blockList == null ) {
-                    JmriJOptionPane.showMessageDialog(initiateFrame, "Invalid Transit",
-                            Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
-                    return;
+                // search for a transit if ones available.
+                Transit tmpTransit = null;
+                int routeCount = 9999;
+                int startBlockSeq = 0;
+                int endBlockSeq = 0;
+                log.debug("Start[{}]Via[{}]Dest[{}}]",
+                        startingBlockBoxList.get(ixStart).getDisplayName(),
+                        viaBlockBoxList.get(ixVia).getDisplayName(),
+                        destinationBlockBoxList.get(ixEnd).getDisplayName());
+                for (Transit tr : InstanceManager.getDefault(jmri.TransitManager.class)
+                        .getListUsingBlock(startingBlockBoxList.get(ixStart))) {
+                    if (tr.getState() == Transit.IDLE
+                            && tr.containsBlock(startingBlockBoxList.get(ixStart))
+                            && tr.containsBlock(viaBlockBoxList.get(ixVia)) &&
+                            tr.containsBlock(destinationBlockBoxList.get(ixEnd))) {
+                        log.debug("[{}]  contains all blocks", tr.getDisplayName());
+                        int ixCountStart = -1, ixCountVia = -1, ixCountDest = -1, ixCount = 0;
+                        List<Block> transitBlocks = tr.getInternalBlocksList();
+                        List<Integer> transitBlockSeq = tr.getBlockSeqList();
+                        for (Block blk : transitBlocks) {
+                            log.debug("Checking Block[{}] t[{}] BlockSequ[{}]",
+                                    blk.getDisplayName(),
+                                    ixCount,
+                                    transitBlockSeq.get(ixCount));
+                            if (ixCountStart == -1 && blk == startingBlockBoxList.get(ixStart)) {
+                                log.trace("ixOne[{}]block[{}]",ixCount,blk.getDisplayName());
+                                ixCountStart = ixCount;
+                            } else if (ixCountStart != -1 && ixCountVia == -1 && blk == viaBlockBoxList.get(ixVia)) {
+                                log.trace("ixTwo[{}]block[{}]",ixCount,blk.getDisplayName());
+                                if (ixCount != ixCountStart + 1) {
+                                    log.debug("AdHoc {}:via and start not ajacent",tr.getDisplayName());
+                                    break;
+                                }
+                                ixCountVia = ixCount;
+                            } else if (ixCountStart != -1 && ixCountVia != -1 && ixCountDest == -1 && blk == destinationBlockBoxList.get(ixEnd)) {
+                                ixCountDest = ixCount;
+                                log.trace("ixThree[{}]block[{}]",ixCountDest,blk.getDisplayName());
+                                break;
+                            }
+                            ixCount++;
+                        }
+                        if (ixCountVia == (ixCountStart + 1) && ixCountDest > ixCountStart) {
+                            log.debug("Canuse [{}", tr.getDisplayName());
+                            Integer routeBlockLength =
+                                    transitBlockSeq.get(ixCountDest) - transitBlockSeq.get(ixCountStart);
+                            if (routeBlockLength < routeCount) {
+                                routeCount = ixCountDest - ixCountStart;
+                                tmpTransit = tr;
+                                startBlockSeq = transitBlockSeq.get(ixCountStart).intValue();
+                                endBlockSeq = transitBlockSeq.get(ixCountDest).intValue();
+                            }
+                        }
+                    }
+                }
+                if (tmpTransit != null &&
+                        (JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("Question6",tmpTransit.getDisplayName()),
+                                "Question",
+                                JmriJOptionPane.YES_NO_OPTION,
+                                JmriJOptionPane.QUESTION_MESSAGE) == JmriJOptionPane.YES_OPTION)) {
+                    // use transit found
+                    trainInfo.setDynamicTransit(false);
+                    trainInfo.setTransitName(tmpTransit.getDisplayName());
+                    trainInfo.setTransitId(tmpTransit.getDisplayName());
+                    trainInfo.setStartBlockSeq(startBlockSeq);
+                    trainInfo.setStartBlockName(getBlockName(startingBlockBoxList.get(ixStart)) + "-" + startBlockSeq);
+                    trainInfo.setDestinationBlockSeq(endBlockSeq);
+                    trainInfo.setDestinationBlockName(getBlockName(destinationBlockBoxList.get(ixEnd)) + "-" + endBlockSeq);
+                    trainInfoToDialog(trainInfo);
+                } else {
+                    // use a true ad-hoc
+                    List<LayoutBlock> blockList = _dispatcher.getAdHocRoute(startingBlockBoxList.get(ixStart),
+                            destinationBlockBoxList.get(ixEnd),
+                            viaBlockBoxList.get(ixVia));
+                    if (blockList == null) {
+                        JmriJOptionPane.showMessageDialog(initiateFrame, Bundle.getMessage("Error51"),
+                                Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
                 }
             }
-            dialogToTrainInfo(trainInfo);
             _dispatcher.loadTrainFromTrainInfoThrowsException(trainInfo,"NONE","");
         } catch (IllegalArgumentException ex) {
             JmriJOptionPane.showMessageDialog(initiateFrame, ex.getMessage(),
@@ -1092,7 +1165,8 @@ public class ActivateTrainFrame extends JmriJFrame {
 
     private void initializeFreeTrainsCombo() {
         Train prevValue = null;
-        if (trainSelectBox.getSelectedIndex() > -1) {
+        if (trainSelectBox.getSelectedIndex() > 0) {
+            // item zero is a string
             prevValue = (Train)trainSelectBox.getSelectedItem();
         }
         ActionListener[] als = trainSelectBox.getActionListeners();
@@ -2099,6 +2173,24 @@ public class ActivateTrainFrame extends JmriJFrame {
             }
         }
     }
+
+    /*
+     * Check Advanced routing
+    */
+    private boolean checkAdvancedRouting() {
+        if (!InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
+            int response = JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("AdHocNeedsEnableBlockRouting"),
+                    Bundle.getMessage("AdHocNeedsBlockRouting"), JmriJOptionPane.YES_NO_OPTION);
+            if (response == 0) {
+                InstanceManager.getDefault(LayoutBlockManager.class).enableAdvancedRouting(true);
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("AdhocNeedsBlockRoutingEnabled"));
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /*
      * ComboBox item.
      */

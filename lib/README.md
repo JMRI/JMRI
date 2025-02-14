@@ -137,8 +137,8 @@ which checks the dates of the control files to make sure they've been updated wh
 - from https://mvnrepository.com/artifact/org.slf4j/jul-to-slf4j/2.0.7
 
 ##### openlcb.jar
- - 0.8.2 from https://repo.maven.apache.org/maven2/org/openlcb/openlcb/0.8.2/openlcb-0.8.2.jar
-    Includes PR #283 through 2024-12-13
+ - 0.8.5 from https://repo.maven.apache.org/maven2/org/openlcb/openlcb/0.8.5/openlcb-0.8.5.jar
+    with PR #287 from 2024-01-27
  
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
@@ -368,7 +368,7 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 ##### javacc.jar
 - version 7.0.3
 
-##### javassist-3.20.0-GA.jar
+##### javassist-3.28.0-GA.jar
 - initially used to mock an XBee Connection for testing.
 
 ##### javax.servlet-api-3.1.0.jar
@@ -428,6 +428,9 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 ##### jgoodies-common-1.8.1.jar
 - version 1.8.1
 - used by jbidibc/bidibwizard
+
+##### reflections-0.10.2.jar
+- used for runtime intraspection of classes.
 
 ## For unit tests & development work only:
 

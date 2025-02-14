@@ -291,6 +291,22 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     text += " State:" + getTurnoutStateString();
                     text += " Desc:'" + getTurnoutDescString() + "'";
                     break;
+                } else if (isRosterIDsReply()) {    
+                    text = "RosterIDs:" + getRosterIDList();
+                    break;
+                } else if (isRosterIDReply()) {    
+                    text = "RosterID:" + getRosterIDString();
+                    text += " Desc:'" + getRosterDescString() + "'";
+                    text += " Fkeys:'" + getRosterFKeysString() + "'";
+                    break;
+                } else if (isAutomationIDsReply()) {    
+                    text = "AutomationIDs:" + getAutomationIDList();
+                    break;
+                } else if (isAutomationIDReply()) {    
+                    text = "AutomationID:" + getAutomationIDString();
+                    text += " Type:" + getAutomationTypeString();
+                    text += " Desc:'" + getAutomationDescString() + "'";
+                    break;
                 } else if (isClockReply()) {    
                     String hhmm = String.format("%02d:%02d",
                             getClockMinutesInt() / 60,
@@ -580,6 +596,14 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     r.myRegex = DCCppConstants.TURNOUT_IDS_REPLY_REGEX;
                 } else if (s.matches(DCCppConstants.TURNOUT_ID_REPLY_REGEX)) {
                     r.myRegex = DCCppConstants.TURNOUT_ID_REPLY_REGEX;
+                } else if (s.matches(DCCppConstants.ROSTER_IDS_REPLY_REGEX)) {
+                    r.myRegex = DCCppConstants.ROSTER_IDS_REPLY_REGEX;
+                } else if (s.matches(DCCppConstants.ROSTER_ID_REPLY_REGEX)) {
+                    r.myRegex = DCCppConstants.ROSTER_ID_REPLY_REGEX;
+                } else if (s.matches(DCCppConstants.AUTOMATION_IDS_REPLY_REGEX)) {
+                    r.myRegex = DCCppConstants.AUTOMATION_IDS_REPLY_REGEX;
+                } else if (s.matches(DCCppConstants.AUTOMATION_ID_REPLY_REGEX)) {
+                    r.myRegex = DCCppConstants.AUTOMATION_ID_REPLY_REGEX;
                 } else if (s.matches(DCCppConstants.CLOCK_REPLY_REGEX)) {
                     r.myRegex = DCCppConstants.CLOCK_REPLY_REGEX;
                 }
@@ -944,7 +968,6 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             return ("0");
         }
     }
-
     public int getTOIDInt() {
         if (this.isTurnoutReply() || this.isTurnoutIDReply()) {
             return (this.getValueInt(1));
@@ -1045,7 +1068,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         } else if (this.isTurnoutReply()) { // single turnout response
             return (this.getValueInt(2));
         } else {
-            log.error("TurnoutReply Parser called on non-TurnoutReply message type {}", this.getOpCodeChar());
+            log.error("TOStateInt Parser called on non-TOStateInt message type {}", this.getOpCodeChar());
             return (0);
         }
     }
@@ -1058,6 +1081,29 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         return (!this.getTOIsThrown());
     }
 
+    public String getRosterIDString() {
+        return (Integer.toString(this.getRosterIDInt()));
+    }
+    public int getRosterIDInt() {
+        if (this.isRosterIDReply()) {
+            return (this.getValueInt(1));
+        } else {
+            log.error("RosterIDInt Parser called on non-RosterIDInt message type {}", this.getOpCodeChar());
+            return (0);
+        }
+    }
+    public String getAutomationIDString() {
+        return (Integer.toString(this.getAutomationIDInt()));
+    }
+    public int getAutomationIDInt() {
+        if (this.isAutomationIDReply()) {
+            return (this.getValueInt(1));
+        } else {
+            log.error("AutomationIDInt Parser called on non-AutomationIDInt message type {}", this.getOpCodeChar());
+            return (0);
+        }
+    }
+    
     // ------------------------------------------------------
     // Helper methods for Program Replies
 
@@ -1585,7 +1631,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         if (this.isTurnoutIDReply()) {
             return (this.getValueString(2));
         } else {
-            log.error("getTurnoutIDString Parser called on non-getTurnoutIDString message type {}", this.getOpCodeChar());
+            log.error("getTurnoutStateString Parser called on non-TurnoutID message type {}", this.getOpCodeChar());
             return ("0");
         }
     }
@@ -1593,10 +1639,74 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         if (this.isTurnoutIDReply()) {
             return (this.getValueString(3));
         } else {
-            log.error("getTurnoutIDString Parser called on non-getTurnoutIDString message type {}", this.getOpCodeChar());
+            log.error("getTurnoutDescString Parser called on non-TurnoutID message type {}", this.getOpCodeChar());
             return ("0");
         }
     }
+    public String getRosterDescString() {
+        if (this.isRosterIDReply()) {
+            return (this.getValueString(2));
+        } else {
+            log.error("getRosterDescString called on non-RosterIDReply message type {}", this.getOpCodeChar());
+            return ("");
+        }
+    }
+    public String getRosterFKeysString() {
+        if (this.isRosterIDReply()) {
+            return (this.getValueString(3));
+        } else {
+            log.error("getRosterFKeysString called on non-RosterIDReply message type {}", this.getOpCodeChar());
+            return ("");
+        }
+    }
+    public ArrayList<Integer> getRosterIDList() {
+        ArrayList<Integer> ids=new ArrayList<Integer>(); 
+        if (this.isRosterIDsReply()) {
+            String idList = this.getValueString(1);
+            if (!idList.isEmpty()) {
+                String[] idStrings = idList.split(" ");
+                for (String idString : idStrings) {
+                    ids.add(Integer.parseInt(idString));
+                }
+            }
+        } else {
+            log.error("getRosterIDList called on non-RosterIDsReply message type {}", this.getOpCodeChar());
+        }
+        return ids;
+    }
+
+    public String getAutomationTypeString() {
+        if (this.isAutomationIDReply()) {
+            return (this.getValueString(2));
+        } else {
+            log.error("getAutomationTypeString called on non-AutomationIDReply message type {}", this.getOpCodeChar());
+            return ("");
+        }
+    }
+    public String getAutomationDescString() {
+        if (this.isAutomationIDReply()) {
+            return (this.getValueString(3));
+        } else {
+            log.error("getAutomationDescString called on nonAutomationIDReply message type {}", this.getOpCodeChar());
+            return ("");
+        }
+    }
+    public ArrayList<Integer> getAutomationIDList() {
+        ArrayList<Integer> ids=new ArrayList<Integer>(); 
+        if (this.isAutomationIDsReply()) {
+            String idList = this.getValueString(1);
+            if (!idList.isEmpty()) {
+                String[] idStrings = idList.split(" ");
+                for (String idString : idStrings) {
+                    ids.add(Integer.parseInt(idString));
+                }
+            }
+        } else {
+            log.error("getAutomationIDList called on non-AutomationIDsReply message type {}", this.getOpCodeChar());
+        }
+        return ids;
+    }
+
     public String getClockMinutesString() {
         if (this.isClockReply()) {
             return (this.getValueString(1));
@@ -1794,6 +1904,18 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public boolean isTurnoutIDReply() {
         return (this.matches(DCCppConstants.TURNOUT_ID_REPLY_REGEX));
     }
+    public boolean isRosterIDsReply() {
+        return (this.matches(DCCppConstants.ROSTER_IDS_REPLY_REGEX));
+    }
+    public boolean isRosterIDReply() {
+        return (this.matches(DCCppConstants.ROSTER_ID_REPLY_REGEX));
+    }
+    public boolean isAutomationIDsReply() {
+        return (this.matches(DCCppConstants.AUTOMATION_IDS_REPLY_REGEX));
+    }
+    public boolean isAutomationIDReply() {
+        return (this.matches(DCCppConstants.AUTOMATION_ID_REPLY_REGEX));
+    }
     public boolean isClockReply() {
         return (this.matches(DCCppConstants.CLOCK_REPLY_REGEX));
     }
@@ -1830,6 +1952,10 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 (this.matches(DCCppConstants.LOCO_STATE_REGEX)) ||
                 (this.matches(DCCppConstants.TURNOUT_IDS_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.TURNOUT_ID_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.ROSTER_IDS_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.ROSTER_ID_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.AUTOMATION_IDS_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.AUTOMATION_ID_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.TURNOUT_IMPL_REGEX)) ||
                 (this.matches(DCCppConstants.TURNOUT_DEF_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.TURNOUT_DEF_DCC_REPLY_REGEX)) ||

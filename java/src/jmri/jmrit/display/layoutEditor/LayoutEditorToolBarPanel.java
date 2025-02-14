@@ -32,7 +32,7 @@ import org.apache.commons.lang3.StringUtils;
  *
  * @author George Warner Copyright: (c) 2017-2019
  */
-public class LayoutEditorToolBarPanel extends JPanel {
+public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
 
     final protected LayoutEditor layoutEditor; // initialized in constuctor
 
@@ -822,6 +822,22 @@ public class LayoutEditorToolBarPanel extends JPanel {
         }   // if is in edit mode
     }
 
-    //initialize logging
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorToolBarPanel.class);
+    @Override
+    public void dispose() {
+        if (sensorFrame != null) {
+            sensorFrame.dispose();
+            sensorFrame = null;
+        }
+        if (signalFrame != null) {
+            signalFrame.dispose();
+            signalFrame = null;
+        }
+        if (iconFrame != null) {
+            iconFrame.dispose();
+            iconFrame = null;
+        }
+    }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorToolBarPanel.class);
+
 }

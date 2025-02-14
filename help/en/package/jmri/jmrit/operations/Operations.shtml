@@ -91,9 +91,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
               <ul>
                 <li><a href="#SettingsOptions">Options</a>
                   <ul>
-                    <li><a href="#BuildOptions">Build Options</a></li>
+                    <li><a href="#BuildOptions">Build Options (Normal or Aggressive)</a></li>
 
-                    <li><a href="#CarRouting">Car Routing</a></li>
+                    <li><a href="#AllowLocalCarMovements">Switcher Service Options (Local
+                        Car Movement with Default Loads)</a></li>
+                    <li><a href="#StagingOptions">Staging Options</a></li>
+
+                    <li><a href="#CarRouting">Car Routing Options</a></li>
 
                     <li><a href="#LoggingOptions">Logging Options</a></li>
 
@@ -430,6 +434,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#SetTrainIconCoordinates">Set Train Icon Coordinates</a></li>
 
                 <li><a href="#ExportRoutes">Export Routes</a></li>
+                
+                <li><a href="#ImportRoutes">Import Routes</a></li>
 
                 <li><a href="#ShowRoutesServicingThisLocation">Show Routes Servicing
                     Location</a></li>
@@ -1330,7 +1336,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       same location when using a switcher. This type of move can be very unrealistic, picture moving
       a boxcar from a shoe manufacture directly to an auto manufacture. Also moving a car from one
       yard track to another can have your crew wondering what kind of busy work is being generated!
-      We recommend that you leave all of the checkboxes deselected, but if you need these types of
+      We recommend that you leave all of the checkboxes unselected, but if you need these types of
       moves for cars without a final destination or custom load, select the appropriate checkbox.
 
       <p>
@@ -1340,7 +1346,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
           has a custom load or FD</a>.
       </p>
 
-      <h3>Staging Options</h3>
+      <h3 id="StagingOptions">Staging Options</h3>
 
       <h4 id="TypeRoadLoadRestrictionsStaging">Enable Type, Road and Load Restrictions into
         Staging</h4>
@@ -1409,18 +1415,20 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <h4>Enable Car Routing</h4>
       When car routing is enabled, the program will use multiple trains to deliver a car to its
-      final destination. It is recommended that you leave this option enabled. The <a
-        href="#LocationDivision">railroad division</a> feature and schedules use routing to move
-      cars. With car routing enabled, you can use a <a href="#Schedules">Schedule</a> to deliver a
-      car to a specific location using the car's final destination fields. The car routing algorithm
-      will search for the most efficient route for the car to travel. The router will attempt to use
-      classification/interchange tracks and then optionally by yards to move cars. If you don't want
-      to use yards when routing, you can deselect the <a href="#EnableRoutingYards">Enable Car
-        Routing via Yards</a> checkbox. The program will try and find a route using a maximum of seven
-      trains to complete the car move. Note that the program never gives up trying to route a car.
-      If a car has been assigned a <a href="#CarsSet">Final Destination</a> or <a
-        href="#EditCarLoads">custom load</a> the program will try and route the car during every
-      train build that has access to the car.
+      final destination. It is recommended that you leave this option enabled. The
+      <a href="#LocationDivision">railroad division</a> feature, <a
+        href="#ReturnWhenEmpty">RWE</a>, <a href="#ReturnWhenLoaded">RWL</a>, and schedules use
+      routing to move cars. With car routing enabled, you can use a
+      <a href="#Schedules">Schedule</a> to deliver a car to a specific location using the car's
+      final destination fields. The car routing algorithm will search for the most efficient route
+      for the car to travel. The router will attempt to use classification/interchange tracks and
+      then optionally by yards to move cars. If you don't want to use yards when routing, you can
+      deselect the
+      <a href="#EnableRoutingYards">Enable Car Routing via Yards</a> checkbox. The program will try
+      and find a route using a maximum of seven trains to complete the car move. Note that the
+      program never gives up trying to route a car. If a car has been assigned a
+      <a href="#CarsSet">Final Destination</a> or <a href="#EditCarLoads">custom load</a> the
+      program will try and route the car during every train build that has access to the car.
 
       <h4 id="EnableRoutingYards">Enable Car Routing via Yards</h4>
       The program when routing a car will first try to find classification/interchange tracks to
@@ -2036,7 +2044,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         cars are being removed and added to the train.</p>
 
       <h4>Manifests and Switch List Options</h4>
-      There are ten checkboxes that modify both Manifests and switch lists and are as follows:
+      There are eleven checkboxes that modify both Manifests and switch lists and are as follows:
       <p>The "Print Valid" checkbox causes the program to print date and time the train was
         built, which isn't the same as when the Manifest was printed. The print time is always shown
         at the top right of the Manifest or switch list.</p>
@@ -2049,6 +2057,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         Moves" checkbox. Otherwise the program will list and mix the car set outs and local moves by
         the <a href="#TrackBlockingOrder">Track Blocking Order</a>.
       </p>
+
+      <p>If you want your locomotive set outs to appear after your car set outs select the
+        option "Print Loco Set Outs Last".</p>
 
       <p>The default is not to show load names for caboose or passenger cars on your Manifests
         and switch lists, if however you want to see load names for those cars select the
@@ -3705,8 +3716,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       Import locations allows you to populate your locations using a CSV file. First do an Export
       Locations and examine the file to see the order the data has to be entered. The import
-      locations code hasn't implemented all of the exports fields. Columns 14 through 22, and
-      columns 26 though 35 are currently ignored during an import.
+      locations code hasn't implemented all of the exports fields. Columns 15 through 23, and
+      columns 27 though 37 are currently ignored during an import.
 
       <h4 id="PrintLocation">Print or Preview</h4>
       This tool provides several options with regards to printing or previewing your locations.
@@ -4215,9 +4226,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       also overrides the generation of custom loads out of staging since the "E" load isn't used by
       the program for this car. However, if a car does arrive into staging with the RWE load name,
       the program will set the load name to the default "E", and not use the RWE addresses.
-      <p>Note that manually changing the load name will not cause the Return When Empty (RWE)
-        destination to become active, only when the car is set out by the program will the RWE
-        destination and RWE load become active.</p>
+      <p>
+        RWE uses the <a href="#CarRouting">Car Routing</a> feature to return cars to the specified
+        location. The RWE fields are disabled if routing is disabled. Note that manually changing
+        the load name will not cause the Return When Empty (RWE) destination to become active, only
+        when the car is set out by the program will the RWE destination and RWE load become active.
+      </p>
 
       <h4 id="ReturnWhenLoaded">Return When Loaded</h4>
       You can optionally enter the location and track that you want the car to return to when the
@@ -4230,9 +4244,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       the RWL load and addresses. Also when a car arrives into staging and has a custom load type of
       empty and the option to remove custom load names is enabled, the program will activate the RWL
       load and addresses.
-      <p>Note that manually changing the load name will not cause the Return When Loaded (RWL)
-        destination to become active, only when the car is set out by the program will the RWL
-        destination and RWL load name become active.</p>
+      <p>
+        RWL uses the <a href="#CarRouting">Car Routing</a> feature to return cars to the specified
+        location. The RWL fields are disabled if routing is disabled. Note that manually changing
+        the load name will not cause the Return When Loaded (RWL) destination to become active, only
+        when the car is set out by the program will the RWL destination and RWL load name become
+        active.
+      </p>
 
       <h4 id="HomeDivision">Home Division</h4>
       You can optionally select the car's home division for more prototypical car movements. See <a
@@ -4924,6 +4942,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       The "Export Routes" tool produces a comma separated values (.csv) file called
       "ExportOperationsRoutes.csv" containing details of the existing routes.
 
+      <h4 id="ImportRoutes">Import Routes</h4>
+      The "Import Routes" tool reads a comma separated values (.csv) file that you can select. Use
+      the "Export Routes" tool to see the proper formating. The import tool will not replace an
+      existing route. To modify an existing route, delete or change the route's name before doing
+      the import.
+
+
       <p style="page-break-after: always">
         <a href="#toc">[Click to go back to TOC]</a>
       </p>
@@ -4960,7 +4985,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </p>
 
       <p>There are several checkboxes along the bottom of the Trains window. The "Show All" when
-        selected shows all trains in your roster. When deselected, only trains that have the "Build"
+        selected shows all trains in your roster. When unselected, only trains that have the "Build"
         checkbox selected are shown.
       <p>
         The function "Preview" checkbox when selected, allows you to preview rather than printing
@@ -5166,11 +5191,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       destinations on the layout. Selecting this option allows a turn to transport cars from and to
       the same staging location. Note that when this options is selected, that the program will only
       return cars to staging when destinations are not available on the layout. Although not
-      recommended, you can also set this option for all turns, see <a href="#SettingsOptions">Options</a>.
+      recommended, you can also set this option for all turns, see <a href="#StagingOptions">Staging Options</a>.
 
       <p>
         You have the option of either leaving the cars in staging or having the cars ride the train
-        and return to the same staging track. If you want the cars to remain in staging, in the
+        and return to the same staging location. If you want the cars to remain in staging, in the
         train's <a href="#EditRoute">route</a> at the departure location allow set outs. If you want
         the cars to ride the train, disable set outs at the departure route location.
       </p>
@@ -5181,7 +5206,14 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         staging and can send cars from the layout to staging without regard to the cars sitting
         there since the expectation is that all cars in staging will be sent to the layout. The
         recommendation is to leave this option disabled unless you need your train to carry cars
-        from and to the same staging track.</p>
+        from and to the same staging location.</p>
+
+      <p>
+        There are several <a href="#StagingOptions">Staging Options</a> available with regards to
+        trains, including returning to the same departure track, prompting for the departure or
+        arrival staging track, along with locomotive, car type, road, and load restrictions into
+        staging.
+      </p>
 
       <h5 id="TrainLocalMoveOption">Allow local moves when a car has a custom load or FD</h5>
       The program when generating car movement normally doesn't create local moves. A local move is
@@ -5624,7 +5656,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       the train arrives at the location selected. Note that if the train is already at the location
       chosen, that the program will wait until the next time the train arrives at that location. You
       must choose a train using the "Train" menu. If the "Build" checkbox for the train being waited
-      on is manually changed from selected to deselected while the "Wait for Train" action is
+      on is manually changed from selected to unselected while the "Wait for Train" action is
       running, the program will cancel the wait and move to the next action in the table.
       <p>The program also allows you to wait for more than one train. Just enter each of the
         trains you want to wait for in consecutive rows. The program will then continue when all of
@@ -6595,7 +6627,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <h3 id="SaveBuilds">Save Builds</h3>
       Pressing the "Save Builds" button causes the program to update the train, car, locomotive, and
-      location xml files. Anytime you "Move" a train the operations program will make changes to
+      location xml files. Any time you "Move" a train the operations program will make changes to
       the train, car, locomotive, and location databases. The data must be saved before you shut
       down JMRI, otherwise you will lose all of the changes that the operations program made to move
       a train to the next location. Pressing the "Save Builds" button before quitting JMRI allows

@@ -285,10 +285,10 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
     }
 
     //For a clear down we need to add a message, if it is a cancel, manual clear down or I didn't mean it.
+    // For creating routes, this is run in a thread.
     void setRoute(boolean state) {
-        if (log.isDebugEnabled()) {
-            log.debug("Set route {}", src.getPoint().getDisplayName());  // NOI18N
-        }
+        log.debug("[setRoute] Start, dp = {}", getUserName());
+
         if (disposed) {
             log.error("Set route called even though interlock has been disposed of");  // NOI18N
             return;
@@ -326,9 +326,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                     cancelClearOptionBox();
                     break;
             }
-            if (log.isDebugEnabled()) {
-                log.debug("Exit {}", src.getPoint().getDisplayName());
-            }
+            log.debug("[setRoute] Cancel/Clear/Stack route, dp = {}", getUserName());
             return;
         }
         if (manager.isRouteStacked(this, false)) {
@@ -604,9 +602,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         } catch (InterruptedException e) {
             log.error("Interuption exception {}", e.toString());  // NOI18N
         }
-        if (log.isDebugEnabled()) {
-            log.debug("finish route {}", src.getPoint().getDisplayName());  // NOI18N
-        }
+        log.debug("[setRoute] Done, dp = {}", getUserName());
     }
 
     /**
@@ -641,7 +637,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                         }
                         Thread.sleep(500);
                     }
-                    log.debug("Release mast: {}", mast.getDisplayName());
+                    log.debug("[releaseMast] mast = {}", mast.getDisplayName());
                     mast.setHeld(false);
                 } catch (InterruptedException ex) {
                     Thread.currentThread().interrupt();
@@ -1196,25 +1192,30 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                 destinationLBlock = pathToUse.getDestinationBlock();
                 routeDetails = pathToUse.getListOfBlocks();
 
-                if (log.isDebugEnabled()) {
-                    log.debug("Path chosen start = {}, dest = {}, protect = {}", startlBlock.getDisplayName(),  // NOI18N
-                            destinationLBlock.getDisplayName(), protectLBlock.getDisplayName());
-                }
                 synchronized (this) {
                     destination = destinationLBlock;
                 }
 
                 if (log.isDebugEnabled()) {
-                    log.debug("Route details:");
+                    log.debug("[activeBean] Path chosen start = {}, dest = {}, protect = {}", startlBlock.getDisplayName(),  // NOI18N
+                            destinationLBlock.getDisplayName(), protectLBlock.getDisplayName());
                     for (LayoutBlock blk : routeDetails) {
-                        log.debug(" block {}", blk.getDisplayName());
+                        log.debug("  block {}", blk.getDisplayName());
                     }
                 }
 
                 if (getEntryExitType() == EntryExitPairs.FULLINTERLOCK) {
                     setActiveEntryExit(true, reverseDirection);
                 }
-                setRoute(true);
+
+                log.debug("[activeBean] Start setRoute thread, dp = {}", getUserName());
+                ThreadingUtil.newThread(() -> {
+                    try {
+                        setRoute(true);
+                    } catch (Exception e) {
+                        log.error("[activeBean] setRoute thread exception: {}", e.getMessage());
+                    }
+                }).start();
             }
         }
     }

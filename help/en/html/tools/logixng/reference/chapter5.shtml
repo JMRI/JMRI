@@ -972,16 +972,44 @@ LogixNG: IQ:AUTO:0001
 
       <h4  id="ExecuteDelayed">Execute delayed</h4>
 
-      <p>Delay the execution of the following action for a specified amount of time. This is the
-      same as the Logix <strong>Delayed Set ...</strong>. The main difference is that this can be
-      used with any action, such as signals. The time delay units are milliseconds, seconds,
-      minutes and hours.</p>
+      <p>Delay the execution of the following <strong><em>action</em></strong> for a specified amount
+      of time.  The <strong><em>action</em></strong> can be a single action similar to the Logix
+      <strong>Delayed Set ...</strong>, but this can be any item, such as signals.  The
+      <strong><em>action</em></strong> can be a series of actions by using the <strong>Many</strong>
+      action.  It can be a complex action by using an <strong>If-Then-Else</strong> action.</p>
 
-      <p>The default mode is that once a timer starts, subsequent requests will be ignored. If
-      <strong>Restart timer if already started</strong> is selected and a timer is already running,
-      it will be canceled and started again.  The subsequent action will be delayed until the timer
-      finishes.  If <strong>Use individual timers</strong> is selected, each request will be
-      independent.</p>
+      <p class="noted">Note:  When using If-Then-Else, the <strong>Always execute</strong> option is
+      required.  Any expressions that refer to JMRI table items, such as sensors, turnouts, signals, etc.,
+      need to use the <strong>No Listen</strong> option.</p>
+
+      <p>When the timer starts, a copy of the current local variables is attached to the
+      <strong><em>action</em></strong> that will be run when the timer delay is done.  This makes it
+      possible to pass data to the future <strong><em>action</em></strong>.</p>
+
+      <dl>
+        <dt>Delay duration</dt>
+        <dd>
+          <p>The time delay units are milliseconds, seconds, minutes and hours.</p>
+        </dd>
+
+        <dt>Reset timer if already started</dt>
+        <dd>
+          <p>The default mode is that once a timer starts, subsequent requests will be ignored. If
+          this option is enabled and a timer is already running, it will be canceled and started
+          again.  The local variables will be based on the current values at the time of the reset.</p>
+        </dd>
+
+        <dt>Use individual timers</dt>
+        <dd>
+          <p>This option makes it possible to pass different local variable values to a series of
+          timers.  The actions will be the same but the data can be different.  Note:  This option
+          disables the reset option.</p>
+        </dd>
+      </dl>
+
+      <p>There is no <strong>Cancel timer</strong> capability.  If there might be a need to prevent
+      the action from running, an If-Then-Else as the first step of the action can be used to check
+      some item, such as a sensor, to see if the action should proceed.</p>
 
       <p>See <a href="#timeout">Timeout</a> for a conditional delayed execution.</p>
 

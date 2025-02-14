@@ -37,10 +37,10 @@ public class TrainCommon {
     protected static final String NEW_LINE = "\n"; // NOI18N
     public static final String SPACE = " ";
     protected static final String BLANK_LINE = " ";
-    protected static final String HORIZONTAL_LINE_CHAR = "-";
+    protected static final char HORIZONTAL_LINE_CHAR = '-';
     protected static final String BUILD_REPORT_CHAR = "-";
     public static final String HYPHEN = "-";
-    protected static final String VERTICAL_LINE_CHAR = "|";
+    protected static final char VERTICAL_LINE_CHAR = '|';
     protected static final String TEXT_COLOR_START = "<FONT color=\"";
     protected static final String TEXT_COLOR_DONE = "\">";
     protected static final String TEXT_COLOR_END = "</FONT>";
@@ -1474,18 +1474,23 @@ public class TrainCommon {
         }
         newLine(file);
         newLine(file, Setup.getMiaComment(), isManifest);
+        if (Setup.isPrintHeadersEnabled()) {
+            printHorizontalLine(file, isManifest);
+            newLine(file, SPACE + getHeader(Setup.getMissingCarMessageFormat(), false, false, false), isManifest);
+            printHorizontalLine(file, isManifest);
+        }
         for (Car car : cars) {
-            addSearchForCar(file, car);
+            addSearchForCar(file, car, isManifest);
         }
     }
 
-    private void addSearchForCar(PrintWriter file, Car car) {
+    private void addSearchForCar(PrintWriter file, Car car, boolean isManifest) {
         StringBuffer buf = new StringBuffer();
         String[] format = Setup.getMissingCarMessageFormat();
         for (String attribute : format) {
             buf.append(getCarAttribute(car, attribute, false, false));
         }
-        addLine(file, buf.toString());
+        newLine(file, buf.toString(), isManifest);
     }
 
     /*
@@ -2001,7 +2006,7 @@ public class TrainCommon {
                 buf.append(attribute + SPACE);
             }
         }
-        return buf.toString().trim();
+        return buf.toString().stripTrailing();
     }
 
     protected void printTrackNameHeader(PrintWriter file, String trackName, boolean isManifest) {

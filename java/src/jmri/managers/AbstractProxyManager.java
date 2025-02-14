@@ -112,16 +112,18 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
         }
         mgrs.add(m);
 
-        if (defaultManager == null) defaultManager = m;  // 1st one is default
+        if (defaultManager == null) {
+            defaultManager = m;  // 1st one is default
+        }
 
         Arrays.stream(getPropertyChangeListeners()).forEach(l -> m.addPropertyChangeListener(l));
         Arrays.stream(getVetoableChangeListeners()).forEach(l -> m.addVetoableChangeListener(l));
 
-        for (String propertyName : boundPropertyNames) {
+        for (String propertyName : new ArrayList<>(boundPropertyNames)) {
             PropertyChangeListener[] pcls = getPropertyChangeListeners(propertyName);
             Arrays.stream(pcls).forEach( l -> m.addPropertyChangeListener(propertyName, l));
         }
-        for (String vetoablePropertyName : vetoablePropertyNames) {
+        for (String vetoablePropertyName : new ArrayList<>(vetoablePropertyNames)) {
             VetoableChangeListener[] vcls = getVetoableChangeListeners(vetoablePropertyName);
             Arrays.stream(vcls).forEach( l -> m.addVetoableChangeListener(vetoablePropertyName, l));
         }

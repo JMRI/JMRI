@@ -409,19 +409,19 @@
       system name "MTabcd1" by concatenating:</p>
 
       <ol>
-        <li>the MQTT channel: "mytrains/"</li>
+        <li>the MQTT channel: "trains/"</li>
 
-        <li>the object-type-specific "send" topic: "Jsend/to/"</li>
+        <li>the object-type-specific "send" topic: "jSend/to/"</li>
 
         <li>the object's system name suffix: "abcd1"</li>
       </ol>
 
-      <p>yielding the complete MQTT message topic: "<em>mytrains/Jsend/to/abcd1</em>".</p>
+      <p>yielding the complete MQTT message topic: "<em>trains/jSend/to/abcd1</em>".</p>
 
       <p><em>Advanced Usage</em>: If you want the object's system name suffix to be in the topic string at some place other
       than at the end, you can use a placeholder of "{0}" within the string to put the object's
       system name suffix at that place. This allows you to set up topics like
-      "Jsend/to/{0}/state" so JMRI will generate "<em>mytrains/Jsend/to/abcd1/state</em>" for
+      "jSend/to/{0}/state" so JMRI will generate "<em>trains/jSend/to/abcd1/state</em>" for
       turnout "MTabcd1".</p>
 
       <p><a href="images/MQTTPrefs_example_rel5_5_6.jpg"><img src="images/MQTTPrefs_example_rel5_5_6.jpg" alt=

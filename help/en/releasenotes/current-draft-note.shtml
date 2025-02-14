@@ -36,7 +36,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>Add parsing for JR, jR, JA and jA messages, handle negative current</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -81,10 +81,6 @@
 
         <h4>Lenz XPressNet</h4>
             <ul>
-                <li>Correct behavior of the ONESENSOR and TWOSENSOR turnout feedback mode. 
-                    The turnout's KnownState is set after turnout feedback is received. 
-                    In Layout Editor - Entry Exit - Full Interlocking - Signal mast sets the aspect Clear 
-                    only after all turnouts are correctly positioned.</li>
                 <li></li>
             </ul>
 
@@ -130,7 +126,8 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Improved how Event with Payload messages are displayed in the monitor.</li>
+                <li>Enabled the Abort button in the Update Firmware window.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -154,6 +151,11 @@
             </ul>
 
         <h4>SPROG</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>SRCP</h4>
             <ul>
                 <li></li>
             </ul>
@@ -190,8 +192,9 @@
 
         <h4>AE Model</h4>
             <ul>
-                <li>Added AEModels.xml to add support for AE Model decoders</li>
+                <li></li>
             </ul>
+
         <h4>Arnold</h4>
             <ul>
                 <li></li>
@@ -219,7 +222,7 @@
 
         <h4>DCC Concepts</h4>
             <ul>
-                <li>DCC_Concepts_Zen_ABC.xml to add definitions for DCC Concepts Zen Blue/Black V12 </li>
+                <li></li>
             </ul>
 
         <h4>Digikeijs (Digirails)</h4>
@@ -244,11 +247,12 @@
 
         <h4>Hattoms</h4>
             <ul>
-                <li>Added Hattons-Neo.xml to add Hattons Neo decoders</li>
+                <li></li>
             </ul>
+
         <h4>Hornby</h4>
             <ul>
-                <li>Added HornbyTXS.xml to add Hornby HM7000 sound decoder definitions and updated HornbyTTS.xml to address error for Hall Class Sound definition</li>
+                <li></li>
             </ul>
 
         <h4>Kuehn</h4>
@@ -312,6 +316,11 @@
             </ul>
 
         <h4>QSI</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Rampino Elektronic</h4>
             <ul>
                 <li></li>
             </ul>
@@ -383,7 +392,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li>Updated Zimo_MS_small_v4.xml and Zimo_MN_small_v4.xml </li>
+                <li></li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -422,7 +431,9 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Restore TSA data to the correct place.</li>
+             <li>When checking for a hold mast do not assume the section join is at the end of a section.</li>
+             <li>For AdHoc trains check to see if a transit can be used.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -442,13 +453,11 @@
         <ul>
             <li></li>
         </ul>
-        <ul>
-            <li>Added "Highlight cursor position" option to enable drawing of a square around finger/mouse press/drag area. Useful for touchscreens.
-        </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
             <ul>
-                <li></li>
+                <li>Enable panel updates while the NX route is being created.</li>
+                <li>Display a warning dialog when creating a multipoint route fails.</li>
             </ul>
 
     <h3>LccPro</h3>
@@ -478,9 +487,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>New feature, you can now select locomotive pick up and set out text colors.</li>
-            <li>Added track move count to "Export Locations".</li>
-            <li>Improved "Train logger" to include the number of cars in train, the number of pick ups and set outs, train length and weight.</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>

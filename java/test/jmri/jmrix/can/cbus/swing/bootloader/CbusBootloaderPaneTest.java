@@ -3,14 +3,13 @@ package jmri.jmrix.can.cbus.swing.bootloader;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Tests for the BootloaderPane class
  *
  * @author Bob Andrew Crosland (C) 2020
  */
-@DisabledIfSystemProperty( named = "java.awt.headless", matches = "true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class CbusBootloaderPaneTest extends jmri.util.swing.JmriPanelTest {
 
     private jmri.jmrix.can.CanSystemConnectionMemo memo = null;
@@ -18,21 +17,27 @@ public class CbusBootloaderPaneTest extends jmri.util.swing.JmriPanelTest {
 
     @Override 
     @Test
-    public void testInitComponents() throws Exception{
+    public void testInitComponents() {
         // for now, just makes ure there isn't an exception.
-        ((CbusBootloaderPane) panel).initComponents(memo);
+        Assertions.assertDoesNotThrow( () -> {
+            ((CbusBootloaderPane) panel).initComponents(memo);
+        });
     }
 
     @Test
-    public void testInitComponentsNoArgs() throws Exception{
+    public void testInitComponentsNoArgs() {
         // for now, just makes ure there isn't an exception.
-        ((CbusBootloaderPane) panel).initComponents();
+        Assertions.assertDoesNotThrow( () -> {
+            ((CbusBootloaderPane) panel).initComponents();
+        });
     }
 
     @Test
-    public void testInitContext() throws Exception {
+    public void testInitContext() {
         // for now, just makes ure there isn't an exception.
-        ((CbusBootloaderPane) panel).initContext(memo);
+        Assertions.assertDoesNotThrow( () -> {
+            ((CbusBootloaderPane) panel).initContext(memo);
+        });
     }
 
 
