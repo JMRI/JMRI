@@ -100,6 +100,7 @@
                 <li>Updated LocoNet Monitor to show certain current-generation
                     Digitrax command stations as "sourcing" certain LocoNet 
                     messages.</li>
+                <li>Updated LocoNet Monitor to better decode certain messages.</li>
             </ul>
 
         <h4>Maple</h4>

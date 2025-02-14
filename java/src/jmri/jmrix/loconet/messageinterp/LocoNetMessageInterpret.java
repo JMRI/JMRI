@@ -76,6 +76,11 @@ public class LocoNetMessageInterpret {
      * string contains a message indicating that the message is not decoded followed
      * by the individual bytes of the message (in hexadecimal).
      *
+     * Note that many message types are "poorly defined" here, with many 
+     * "reverse-engineered" messages, and many that do not define actual bits.  This 
+     * means that this code can give interpretations that may not actually "decode"
+     * an actual message. 
+     * 
      * @param l Message to parse
      * @param turnoutPrefix "System Name+ prefix which designates the connection's
      *          Turnouts, such as "LT"
@@ -4905,6 +4910,13 @@ public class LocoNetMessageInterpret {
         if ((dest >= 0x79) && (dest <= 0x7f)) {
             return "";
         }
+        
+        if ((l.getElement(1) & 0x78) != 0x38) {
+            // Ignore if message is not one from a DCS240 (or newer) command
+            // station's "Expanded" slot messaging.   The message is probably
+            // from an Intellibox or other non-Digitrax command station.
+            return "";
+        }
 
         boolean isSettingStatus = ((l.getElement(3) & 0b01110000) == 0b01100000);
         if (isSettingStatus) {
@@ -4930,19 +4942,15 @@ public class LocoNetMessageInterpret {
        /* check special cases */
         if (src == 0) {
             /* DISPATCH GET */
-            // maybe
             return Bundle.getMessage("LN_MSG_MOVE_SL_GET_DISP");
         } else if (src == dest) {
             /* IN USE */
-            // correct
             return Bundle.getMessage("LN_MSG_MOVE_SL_NULL_MOVE", src);
         } else if (dest == 0) {
             /* DISPATCH PUT */
-
             return Bundle.getMessage("LN_MSG_MOVE_SL_DISPATCH_PUT", src);
         } else {
             /* general move */
-
             return Bundle.getMessage("LN_MSG_MOVE_SL_MOVE", src, dest);
         }
     }
